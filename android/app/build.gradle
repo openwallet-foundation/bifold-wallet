@@ -141,7 +141,7 @@ android {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86", "arm64-v8a" //TODO(JamesKEbert): add x86_64 support from libindy
+            include "armeabi-v7a", "x86", "arm64-v8a"/*, "x86_64" */ //TODO(JamesKEbert): add x86_64 support from libindy
         }
     }
     signingConfigs {
@@ -181,7 +181,6 @@ android {
 }
 
 dependencies {
-    implementation project(':aries-mobileagent-react-native')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

@@ -1,0 +1,2 @@
+# Aries Mobile Agent React Native Sample App
+A sample [Aries Mobile Agent React Native](https://github.com/Indicio-tech/aries-mobileagent-react-native) app. This app is created to demonstrate library usage as well as enable library testing.
