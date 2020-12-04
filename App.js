@@ -1,4 +1,4 @@
-import React, {useState, useEffect, NativeModules} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View
@@ -10,25 +10,21 @@ import {
   useHistory,
   useLocation 
 } from 'react-router-native'
-import Agent from 'aries-mobileagent-react-native'
+
+import { v4 as uuidv4 } from 'uuid'
 
 import Notifications from './components/Notifications.js'
 import Errors from './components/Errors.js'
 import EntryPoint from './components/EntryPoint.js'
 
 
-
-//Libindy Native Bridging
-const {Indy} = NativeModules
-
-
-
-const App: () => React$Node = (props) => {
+const App = (props) => {
   let location = useLocation();
   useEffect(()=>{
     console.log("Route Change:", location.pathname)
   }, [location])
 
+  
   const [authenticated, setAuthenticated] = useState(false)
   /*
     /
