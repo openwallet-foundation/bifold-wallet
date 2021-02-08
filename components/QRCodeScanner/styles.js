@@ -1,6 +1,9 @@
 import React from 'react'
 
-import {StyleSheet} from 'react-native'
+import {Dimensions, StyleSheet} from 'react-native'
+
+// setting camera dimensions based on width of screen
+let CameraWidth = 0.82 * Dimensions.get('window').width
 
 const styles = StyleSheet.create({
   header: {
@@ -8,8 +11,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   camera: {
-    width: 250,
-    height: 250,
+    width: CameraWidth,
+    height: CameraWidth,
     borderWidth: 3,
     borderStyle: 'solid',
     borderColor: '#0A1C40',

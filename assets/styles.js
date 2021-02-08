@@ -75,7 +75,8 @@ const Styles = StyleSheet.create({
         textAlign: 'center',
         borderColor: '#000',
         backgroundColor: '#fff',
-        fontSize: 20,
+        fontSize: 22,
+        letterSpacing: 12,
         color: '#000',
     },
     formLabelFocused: {
@@ -89,6 +90,11 @@ const Styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 30,
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {height: 2, width: 2},
+        shadowOpacity: 1,
+        shadowRadius: 4,
+        elevation: 5,
     },
     buttonGreen: {
         backgroundColor: '#388e48',
