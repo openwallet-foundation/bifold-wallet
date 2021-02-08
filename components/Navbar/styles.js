@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     marginLeft: '-0.5%',
     justifyContent: 'center',
     height: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: '#E4E4E4',
     padding: 20,
     paddingTop: 14,
     display: 'flex',
@@ -16,11 +16,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     bottom: 0,
     borderTopWidth: 2,
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderRightWidth: 0.1,
+    borderLeftWidth: 0.1,
+    borderColor: 'rgba(0,0,0,0.2)',
     borderBottomWidth: 0,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
   navButton: {
     alignItems: 'center',
+    width: '20%'
+  },
+  textSmall: {
+    fontSize: 10,
   },
 })
 

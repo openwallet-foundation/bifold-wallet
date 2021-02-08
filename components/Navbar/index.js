@@ -24,47 +24,44 @@ import Styles from './styles'
 function Navbar(props) {
   return (
     <>
-      {props.authenticated ? (
-        <View style={Styles.navView}>
-          <Link
-            style={Styles.navButton}
-            component={TouchableOpacity}
-            to="/home">
-            <Image source={Images.navHome} />
-            <Text>Home</Text>
-          </Link>
-          <Link
-            style={Styles.navButton}
-            component={TouchableOpacity}
-            to="/credentials">
-            <Image source={Images.navCredential} />
-            <Text>Credentials</Text>
-          </Link>
-          <Link
-            style={Styles.navButton}
-            component={TouchableOpacity}
-            to="/workflow/connect">
-            <Image
-              source={Images.navAdd}
-              style={{width: 50, height: 50, top: -5}}
-            />
-          </Link>
-          <Link
-            style={Styles.navButton}
-            component={TouchableOpacity}
-            to="/contacts">
-            <Image source={Images.navContact} />
-            <Text>Contacts</Text>
-          </Link>
-          <Link
-            style={Styles.navButton}
-            component={TouchableOpacity}
-            to="/settings">
-            <Image source={Images.navSetting} />
-            <Text>Settings</Text>
-          </Link>
-        </View>
-      ) : null}
+    {props.authenticated ? (
+      <View style={Styles.navView}>
+      <Link style={Styles.navButton} component={TouchableOpacity} to="/home">
+        <Image source={Images.navHome} style={{width: 32, height: 28}} />
+        <Text style={Styles.textSmall}>Home</Text>
+      </Link>
+      <Link
+        style={Styles.navButton}
+        component={TouchableOpacity}
+        to="/contacts">
+        <Image source={Images.navContacts} style={{width: 22, height: 28}} />
+        <Text style={Styles.textSmall}>Contacts</Text>
+      </Link>
+      <Link
+        style={Styles.navButton}
+        component={TouchableOpacity}
+        to="/workflow/connect">
+        <Image
+          source={Images.navConnect}
+          style={{width: 38, height: 43, top: -7}}
+        />
+      </Link>
+      <Link
+        style={Styles.navButton}
+        component={TouchableOpacity}
+        to="/credentials">
+        <Image source={Images.navCredentials} style={{width: 32, height: 28}} />
+        <Text style={Styles.textSmall}>Credentials</Text>
+      </Link>
+      <Link
+        style={Styles.navButton}
+        component={TouchableOpacity}
+        to="/settings">
+        <Image source={Images.navSettings} style={{width: 28, height: 28}} />
+        <Text style={Styles.textSmall}>Settings</Text>
+      </Link>
+    </View>
+    ): null}
     </>
   )
 }

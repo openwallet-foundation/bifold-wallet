@@ -104,7 +104,6 @@ function CurrentContact(props) {
                   style={[
                     {fontSize: 18},
                     AppStyles.textBlueDark,
-                    AppStyles.textUpper,
                   ]}>
                   <Text style={AppStyles.textBold}>Email: </Text>
                   {props.contact.email}
