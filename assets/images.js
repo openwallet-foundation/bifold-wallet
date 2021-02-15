@@ -1,14 +1,18 @@
 const images = {
     arrow: require('./img/arrow.png'),
     arrowDown: require('./img/arrow-down.png'),
+    infoBlue: require('./img/info-blue.png'),
+    infoWhite: require('./img/info-white.png'),
     logo: require('./img/logo.png'),
     logoLarge: require('./img/logo-large.png'),
     logoText: require('./img/logo-text.png'),
-    navAdd: require('./img/nav-add.png'),
-    navContact: require('./img/nav-contact.png'),
-    navCredential: require('./img/nav-credential.png'),
+    navConnect: require('./img/nav-connect.png'),
+    navContacts: require('./img/nav-contacts.png'),
+    navCredentials: require('./img/nav-credentials.png'),
     navHome: require('./img/nav-home.png'),
-    navSetting: require('./img/nav-setting.png'),
+    navSettings: require('./img/nav-settings.png'),
+    receive: require('./img/receive.png'),
+    send: require('./img/send.png'),
     waiting: require('./img/waiting.png'),
   }
   

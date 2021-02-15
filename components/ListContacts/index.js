@@ -71,7 +71,10 @@ function ListContacts(props) {
                     setViewContact(false)
                   }}
                 >
-                  <Text style={[{marginRight: 18, fontSize: 24}, AppStyles.textWhite]}>?</Text>
+                  <Image
+                    source={Images.infoWhite}
+                    style={[AppStyles.info, {marginRight: 10, top: 10}]}
+                  />
                 </TouchableOpacity>
               </View>
           ))}

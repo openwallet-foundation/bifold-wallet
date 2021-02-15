@@ -19,6 +19,7 @@ const Styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
     alignItems: 'center',
+    backgroundColor: '#0A1C40'
   },
   buttonText: {
     maxWidth: 120,
@@ -33,6 +34,10 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between',
     left: -10,
     top: 40,
+  },
+  buttonIcon: {
+    width: 30,
+    height: 43,
   },
 })
 

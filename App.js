@@ -16,7 +16,7 @@ import Errors from './components/Errors/index.js'
 import Notifications from './components/Notifications/index.js'
 
 import CredentialOffered from './components/Credential/Offered/index.js'
-import CredentialReceived from './components/Credential/Received/index.js'
+import CredentialRequested from './components/Credential/Requested/index.js'
 import CurrentContact from './components/CurrentContact/index.js'
 import CurrentCredential from './components/CurrentCredential/index.js'
 import EntryPoint from './components/EntryPoint/index.js'
@@ -55,16 +55,16 @@ const App = (props) => {
   // Mock Credentials
   const mockCredentials = [
     {
-      label: 'Credential',
-      sublabel: 'From verified company',
+      label: 'COVID-19 Vaccination',
+      sublabel: 'General Health Clinic',
       first_name: 'John',
       last_name: 'Doe',
-      credential_date: 'Oct 28, 2020',
+      credential_date: 'Jan 28, 2021',
       cred_id: 1234567,
     },
     {
-      label: 'Credential 2',
-      sublabel: 'From verified company',
+      label: 'COVID-19 Test',
+      sublabel: 'General Testing Clinic',
       first_name: 'John',
       last_name: 'Doe',
       credential_date: 'Oct 29, 2020',
@@ -75,19 +75,19 @@ const App = (props) => {
   // Mock Contacts
   const mockContacts = [
     {
-      label: 'Issuing Agency',
-      sublabel: 'Credential Issuer',
+      label: 'General Health Clinic',
+      sublabel: 'Vaccine Administrator',
       address: '123 ABC Street',
-      phone: '000-000-0000',
-      email: 'issuer@credential',
+      phone: '505-555-1234',
+      email: 'genhealthclinic@credential.com',
       contact_id: 7654321,
     },
     {
-      label: 'Issuing Agency 2',
-      sublabel: 'Credential Issuer',
-      address: '123 ABC Street',
-      phone: '000-000-0000',
-      email: 'issuer@credential',
+      label: 'General Testing Clinic',
+      sublabel: 'Test Distributer',
+      address: '456 DEF Street',
+      phone: '123-555-4321',
+      email: 'gentestclinic@credential.com',
       contact_id: 7654567,
     },
   ]
@@ -107,7 +107,7 @@ const App = (props) => {
   <View>
     <Errors>
       <Notifications>
-        <View style={authenticated ? {height: '86.5%'} : {height: '100%'}}>
+        <View style={authenticated ? {height: '90.5%'} : {height: '100%'}}>
           <Route
             exact
             path="/"
@@ -151,7 +151,11 @@ const App = (props) => {
           />
           <Route
             path="/workflow"
-            render={() => <Workflow authenticated={authenticated} />}
+            render={() => <Workflow 
+                            authenticated={authenticated} 
+                            contacts={mockContacts} 
+                            credentials={mockCredentials}
+                          />}
           />
           <Route
             exact
@@ -168,16 +172,15 @@ const App = (props) => {
             path="/setup-wizard"
             render={() => (
               <SetupWizard setAuthenticated={setAuthenticated}>
-                <PinCreate />
                 <Terms title={mockTitle} message={mockMessage} />
                 <Terms title={mockEulaTitle} message={mockEulaMessage} />
-                <PinEnter setAuthenticated={setAuthenticated} />
+                <PinCreate />
               </SetupWizard>
             )}
           />
         </View>
         {authenticated ? (
-          <View style={{height: '13.5%'}}>
+          <View style={{height: '9.5%'}}>
             <Navbar authenticated={authenticated} />
           </View>
         ) : null}
