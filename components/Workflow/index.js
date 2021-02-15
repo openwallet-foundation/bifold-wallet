@@ -16,7 +16,7 @@ import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 
 import CredentialOffered from '../Credential/Offered/index.js'
-import CredentialReceived from '../Credential/Received/index.js'
+import CredentialRequested from '../Credential/Requested/index.js'
 import QRCodeScanner from '../QRCodeScanner/index.js'
 import Message from '../Message/index.js'
 
@@ -37,48 +37,6 @@ function Workflow(props) {
       setFirstRender(true)
     }
   }, [workflow])
-
-  /*
-    useEffect(()=>{
-        if(goToConnect === true){
-            //Ask for user confirmation, probably with Alert()
-            history.push('/connect');
-        }
-    }, [goToConnect]);
-    /*
-    Event
-    {
-        message:{},
-        nextScreen:'/workflow/connecting',
-        contactID: UUID
-    }
-    */
-  //manually test -> workflowEvent({})
-  //setTimeouts()
-  /*
-    const workflowEvent = (event) => {
-        if(event.contactID == contactID){
-            history.push(event.nextScreen)
-        }
-    }*/
-
-  /* Connecting Screen JSX
-
-<Message 
-    title={'Connecting'}
-    bgColor={'#F5C155'}
->
-    <Image 
-        source={Images.arrow} 
-        style={{
-            alignSelf: 'center', 
-            width: 60, 
-            height: 68,
-        }} 
-    />
-</Message>
-
-*/
 
   return (
     <View>
@@ -113,7 +71,11 @@ function Workflow(props) {
       />
       <Route
         path={`${url}/requested`}
-        render={() => <CredentialOffered setWorkflow={setWorkflow} />}
+        render={() => <CredentialOffered 
+                        setWorkflow={setWorkflow} 
+                        contact={props.contacts[0]}
+                        credential={props.credentials[0]}
+                      />}
       />
 
       <Prompt

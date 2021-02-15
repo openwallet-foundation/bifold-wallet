@@ -67,6 +67,7 @@ function SetupWizard(props) {
       if (setupScreens >= props.children.length) {
         props.setAuthenticated(true)
         setupComplete = 'true'
+        history.push('home')
       }
       await Keychain.resetGenericPassword({service: 'setupWizard'})
       await Keychain.setGenericPassword(currentScreen, setupComplete, {
@@ -86,20 +87,9 @@ function SetupWizard(props) {
   return (
     <>
     <BackButton backExit={true} />
-      {setupScreens < 0 ? (
+      {setupScreens < 0 || setupScreens >= props.children.length ? (
         <LoadingOverlay />
       ) : (
-        <>
-          {setupScreens >= props.children.length ? (
-            <Message
-              title={'Ready to Go!'}
-              text={"Now you're all set!\nGet Scanning!"}
-              image={true}
-              path={'/home'}
-              bgColor={'#fff'}>
-              <Image source={Images.arrow} style={Styles.image} />
-            </Message>
-          ) : (
             <View style={{height: '100%'}}>
               <KeyboardAvoidingView behavior={'height'} style={{height: '92%'}}>
                 {React.cloneElement(props.children[setupScreens], {
@@ -117,8 +107,6 @@ function SetupWizard(props) {
                 })}
               </View>
             </View>
-          )}
-        </>
       )}
     </>
   )

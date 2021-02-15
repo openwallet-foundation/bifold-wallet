@@ -26,6 +26,7 @@ const Styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    elevation: 10,
   },
 })
 
