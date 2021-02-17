@@ -13,10 +13,11 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 10,
   },
   textBorder: {
     borderBottomWidth: 3,
-    borderColor: '#0A1C40',
+    borderColor: '#1b2624',
   },
 })
 

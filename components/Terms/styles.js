@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     top: -28,
   },
   message: {
-    backgroundColor: '#eee',
+    borderRadius: 10,
     width: '80%',
     maxHeight: '50%',
     top: -20,
@@ -34,11 +34,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   checkContainer: {
-    backgroundColor: '#eee',
+    borderRadius: 10,
     padding: 12,
     display: 'flex',
     flexDirection: 'row',
-    borderRadius: 4,
     width: '100%',
     height: 66,
     alignItems: 'center',

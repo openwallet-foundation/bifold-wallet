@@ -32,10 +32,10 @@ function Terms(props) {
     <View style={AppStyles.viewFull}>
       <AppHeaderLarge disabled={true} />
       <View style={AppStyles.tab}>
-        <Text style={[AppStyles.h2, AppStyles.textBlueDark, Styles.title]}>
+        <Text style={[AppStyles.h2, AppStyles.textSecondary, Styles.title]}>
           {props.title}
         </Text>
-        <ScrollView style={Styles.message}>
+        <ScrollView style={[Styles.message, AppStyles.backgroundWhite]}>
           <View style={Styles.messageFill}>
             <Text>{props.message}</Text>
           </View>
@@ -46,15 +46,15 @@ function Terms(props) {
           onPress={() => {
             setIsChecked((previousState) => !previousState)
           }}>
-          <View style={Styles.checkContainer}>
-            <View style={Styles.checkbox}>
+          <View style={[Styles.checkContainer, AppStyles.backgroundWhite]}>
+            <View style={[Styles.checkbox, AppStyles.backgroundWhite]}>
               {isChecked ? (
-                <Text style={[AppStyles.textBlueDark, Styles.checkmark]}>
+                <Text style={[AppStyles.textBlack, Styles.checkmark]}>
                   &#10003;
                 </Text>
               ) : null}
             </View>
-            <Text style={[Styles.checktext, AppStyles.textBlueDark]}>
+            <Text style={[Styles.checktext, AppStyles.textBlack]}>
               I have read and agree to{'\n'}
               {props.title}
             </Text>
@@ -64,7 +64,7 @@ function Terms(props) {
           style={[
             AppStyles.button,
             Styles.nextButton,
-            isChecked ? AppStyles.buttonGreen : {backgroundColor: '#bbb'},
+            isChecked ? AppStyles.backgroundPrimary : AppStyles.backgroundGray,
           ]}
           disabled={isChecked ? false : true}
           onPress={() => {

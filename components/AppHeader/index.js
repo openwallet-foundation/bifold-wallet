@@ -26,17 +26,19 @@ function AppHeader(props) {
           history.push('/home')
         }}>
         <View style={Styles.headerView}>
-          <Image source={Images.logo} style={{marginRight: 10}} />
           {props.headerText ? (
+            <>
+            <Image source={Images.logo} style={{marginRight: 10}} />
             <Text
               style={[
                 AppStyles.h1,
-                AppStyles.textBlueDark,
+                AppStyles.textSecondary,
                 Styles.textBorder,
                 AppStyles.textUpper,
               ]}>
               {props.headerText}
             </Text>
+            </>
           ) : (
             <Image source={Images.logoText} style={{}} />
           )}

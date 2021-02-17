@@ -5,10 +5,10 @@ import {StyleSheet} from 'react-native'
 const styles = StyleSheet.create({
   navView: {
     width: '101%',
+    top: -8,
     marginLeft: '-0.5%',
     justifyContent: 'center',
     height: '100%',
-    backgroundColor: '#E4E4E4',
     padding: 20,
     paddingTop: 14,
     display: 'flex',

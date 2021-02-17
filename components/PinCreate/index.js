@@ -47,7 +47,7 @@ function PinCreate(props) {
   }
 
   const confirmEntry = (x, y) => {
-    if (x.length > 6 || y.length > 6) {
+    if (x.length < 6 || y.length < 6) {
       Alert.alert('Pin must be 6 digits in length')
     } else if (x !== y) {
       textInput.clear()
@@ -68,15 +68,15 @@ function PinCreate(props) {
       <KeyboardAvoidingView
         behavior={'height'}
         keyboardVerticalOffset={20}
-        style={{height: '100%'}}>
+        style={AppStyles.viewFull}>
         <AppHeaderLarge disabled={true} />
         <View style={AppStyles.tab}>
           <Text
-            style={[AppStyles.h1, AppStyles.textBlueDark, {marginBottom: 20}]}>
+            style={[AppStyles.h1, AppStyles.textSecondary, {marginBottom: 20}]}>
             Create a 6-Digit Pin
           </Text>
           <View>
-            <Text style={[AppStyles.h3, AppStyles.textBlueDark]}>
+            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
               Enter Pin:
             </Text>
             <TextInput
@@ -104,7 +104,7 @@ function PinCreate(props) {
             />
           </View>
           <View>
-            <Text style={[AppStyles.h3, AppStyles.textBlueDark]}>
+            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
               Re-Enter Pin:
             </Text>
             <TextInput
@@ -131,7 +131,7 @@ function PinCreate(props) {
             />
           </View>
           <TouchableOpacity
-            style={[AppStyles.button, AppStyles.buttonGreen, {marginTop: 30}]}
+            style={[AppStyles.button, AppStyles.backgroundPrimary, {marginTop: 30}]}
             onPress={() => {
               Keyboard.dismiss()
               confirmEntry(pin, pinTwo)

@@ -36,7 +36,7 @@ function QRCodeScanner(props) {
     <BackButton backPath={'/home'} />
     <View style={AppStyles.viewFull}>
       <View style={AppStyles.header}>
-        <AppHeader headerText={'SCAN QR CODE'} />
+        <AppHeader headerText={'SCAN CODE'} />
       </View>
       <View style={AppStyles.tab}>
         <RNCamera

@@ -56,7 +56,7 @@ function CredentialOffered(props) {
         </View>
         <View style={[AppStyles.tab, Styles.tabView]}>
           <Text
-            style={[AppStyles.h3, AppStyles.textBlueDark, AppStyles.textUpper, AppStyles.textBold]}>
+            style={[AppStyles.h3, AppStyles.textSecondary, AppStyles.textUpper, AppStyles.textBold]}>
             Connected to:
           </Text>
           <View style={AppStyles.tableItem}>
@@ -64,13 +64,13 @@ function CredentialOffered(props) {
               <Text
                 style={[
                   {fontSize: 18},
-                  AppStyles.textBlueDark,
+                  AppStyles.textSecondary,
                   AppStyles.textUpper,
                   AppStyles.textBold
                 ]}>
                 {props.contact.label}
               </Text>
-              <Text style={[{fontSize: 14}, AppStyles.textBlueDark]}>
+              <Text style={[{fontSize: 14}, AppStyles.textSecondary]}>
                 {props.contact.sublabel}
               </Text>
             </View>
@@ -79,7 +79,7 @@ function CredentialOffered(props) {
                   setViewContact(!viewContact)
                 }}>
               <Image
-                source={Images.infoBlue}
+                source={Images.infoGray}
                 style={[AppStyles.info, {marginRight: 0, top: 10}]}
               />
             </TouchableOpacity>
@@ -89,13 +89,13 @@ function CredentialOffered(props) {
               <Text
                 style={[
                   {fontSize: 18},
-                  AppStyles.textBlueDark,
+                  AppStyles.textSecondary,
                   AppStyles.textUpper,
                   AppStyles.textBold
                 ]}>
                 {props.credential.label}
               </Text>
-              <Text style={[{fontSize: 14}, AppStyles.textBlueDark]}>
+              <Text style={[{fontSize: 14}, AppStyles.textSecondary]}>
               {props.credential.sublabel}
               </Text>
             </View>
@@ -104,7 +104,7 @@ function CredentialOffered(props) {
                   setViewCredential(!viewCredential)
                 }}>
               <Image
-                source={Images.infoBlue}
+                source={Images.infoGray}
                 style={[AppStyles.info, {marginRight: 0, top: 10}]}
               />
             </TouchableOpacity>
@@ -113,21 +113,21 @@ function CredentialOffered(props) {
             <Text
               style={[
                 {fontSize: 18},
-                AppStyles.textBlueDark,
+                AppStyles.textSecondary,
                 AppStyles.textUpper,
                 Styles.buttonText,
                 AppStyles.textBold
               ]}>
               ACCEPT CREDENTIALS
             </Text>
-            <TouchableOpacity style={Styles.button}>
+            <TouchableOpacity style={[Styles.button, AppStyles.backgroundPrimary]}>
               <Image source={Images.receive} style={Styles.buttonIcon} />
             </TouchableOpacity>
           </View>
           <TouchableOpacity
             style={{top: 60}}
             onPress={() => history.push('/home')}>
-            <Text style={[{fontSize: 14}, AppStyles.textGrayDark, AppStyles.textCenter]}>
+            <Text style={[{fontSize: 14}, AppStyles.textGray, AppStyles.textCenter]}>
               Decline{'\n'}Offer
             </Text>
           </TouchableOpacity>

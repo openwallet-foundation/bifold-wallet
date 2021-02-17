@@ -51,16 +51,19 @@ function LoadingOverlay(props) {
         <Animated.View
           style={[
             Styles.loadingRectangle,
+            AppStyles.backgroundPrimary,
             {transform: [{scaleY: loadAnim1}]},
           ]}></Animated.View>
         <Animated.View
           style={[
             Styles.loadingRectangle,
+            AppStyles.backgroundPrimary,
             {transform: [{scaleY: loadAnim2}]},
           ]}></Animated.View>
         <Animated.View
           style={[
             Styles.loadingRectangle,
+            AppStyles.backgroundPrimary,
             {transform: [{scaleY: loadAnim3}]},
           ]}></Animated.View>
       </View>
