@@ -1,4 +1,4 @@
-package com.sampleapp;
+package com.ariesbifold;
 
 import android.app.Application;
 import android.content.Context;

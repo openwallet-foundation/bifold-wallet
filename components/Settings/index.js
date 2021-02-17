@@ -39,7 +39,10 @@ function Settings(props) {
           <Image source={Images.arrowDown} style={AppStyles.arrow} />
         </TouchableOpacity>
         <Text style={[AppStyles.textSecondary, AppStyles.h3]}>
-          <Text style={AppStyles.textBold}>Version: </Text> 0.1
+          <Text style={AppStyles.textBold}>Version: </Text> 0.0.1
+        </Text>
+        <Text style={[AppStyles.textSecondary, AppStyles.h3]}>
+          <Text style={AppStyles.textBold}>AMA-RN Version: </Text> 0.1.0
         </Text>
       </View>
     </View>

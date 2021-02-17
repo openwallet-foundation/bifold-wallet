@@ -34,5 +34,6 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://repo.sovrin.org/repository/maven-public' }
     }
 }
