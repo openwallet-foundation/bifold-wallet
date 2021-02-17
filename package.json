@@ -1,14 +1,13 @@
 {
-  "name": "SampleApp",
-  "version": "0.1.0",
-  "private": true,
+  "name": "aries-bifold",
+  "version": "0.0.1",
   "scripts": {
     "style-watch": "onchange '**/*.js' -- prettier --write {{changed}}",
     "style-check": "prettier --check '**/*.js'",
     "style-format": "prettier --write '**/*.js'",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
+    "start": "npx react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -33,7 +32,6 @@
     "@commitlint/cli": "^11.0.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
-    "babel-plugin-transform-remove-console": "^6.9.4",
     "commitlint": "^11.0.0",
     "eslint": "^7.12.1",
     "husky": "^4.3.0",

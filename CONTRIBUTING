@@ -1,0 +1,37 @@
+## Contributor's Guide TODO:
+
+Thanks for your interest in the project! We welcome pull requests from
+developers of all skill levels. 
+
+If you would like to contribute but don't already have something in mind,
+we invite you to take a look at our roadmap list. If you see one you'd like
+to work on, please leave a quick comment so that we don't end up with
+duplicated effort. Thanks in advance!
+
+Please note that all contributors and maintainers of this project are subject to our [Code of Conduct][coc].
+
+### Pull Requests
+
+Before submitting a pull request, please ensure you have added or updated tests as appropriate, and that all existing tests still pass with your changes. Please also ensure that your coding style is consistent with existing code in the project. A checklist is included in the PR template as a friendly reminder.
+
+### Commit Messages
+
+We require all contributors to agree to the [DCO](https://developercertificate.org/). Every commit must contain a DCO `Signed-off-by` line. To automatically add this line, simply include the `-s` flag when executing `git commit`.
+
+### Test coverage
+
+Pull requests must maintain 100% test coverage of all code branches. This helps ensure the quality of the project. To check coverage before submitting a pull request:
+
+### Coding Style
+
+One of the easiest ways to ensure your contributions adhere to the project's coding style is to use [Prettier](https://prettier.io/) (included as a dev dependency).
+
+To have Prettier monitor your files and make changes as you do, open a terminal window to the project folder and type `npm run style-watch`.<br />
+To check your files, you can type `npm run style-check"`<br />
+To have Prettier format all your files, type `npm run style-format`<br />
+
+More Prettier CLI options can be found here: [https://prettier.io/docs/en/cli.html](https://prettier.io/docs/en/cli.html)
+
+
+
+[coc]: ./CODE_OF_CONDUCT.md
