@@ -7,13 +7,10 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderStyle: 'solid',
     borderWidth: 2,
-    borderColor: '#388e48',
+    borderColor: '#343f40',
     width: 18,
     height: 18,
     marginHorizontal: 8,
-  },
-  dotFilled: {
-    backgroundColor: '#388e48',
   },
   dotContainer: {
     alignItems: 'center',
@@ -23,7 +20,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    //elevation: -99,
+    backgroundColor: '#eee',
+    elevation: 2,
   },
   image: {
     alignSelf: 'center',

@@ -31,11 +31,10 @@ function Home() {
     <>
     <BackButton backExit={true} />
     <View style={AppStyles.viewFull}>
+      <View style={[AppStyles.tab, {top: 80}]}>
       <AppHeaderLarge />
-      <View style={AppStyles.tab}>
-        <Text style={[AppStyles.h2, AppStyles.textBlueDark]}>Home</Text>
         <TouchableOpacity
-          style={[AppStyles.button, AppStyles.buttonGreen, {marginTop: 80}]}
+          style={[AppStyles.button, AppStyles.backgroundPrimary, {marginTop: 10}]}
           onPress={() => {
             /*errors.setVisible(true)
             errors.setText("Workflows not\nyet created")

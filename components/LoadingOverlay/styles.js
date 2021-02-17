@@ -6,7 +6,6 @@ let ScreenHeight = Dimensions.get('window').height
 
 const Styles = StyleSheet.create({
   loadingRectangle: {
-    backgroundColor: '#6A9545',
     marginHorizontal: 7,
     height: 40,
     width: 10,
@@ -26,7 +25,7 @@ const Styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.92)',
-    elevation: 10,
+    elevation: 99,
   },
 })
 

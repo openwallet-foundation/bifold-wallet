@@ -1,6 +1,14 @@
 import React from 'react'
 
-import {StyleSheet} from 'react-native'
+import {Dimensions, StyleSheet} from 'react-native'
+
+let screenWidth = Dimensions.get('window').width
+
+const primaryColor = "#343f40"
+const secondaryColor = "#1b2624"
+const white = "#d9d2d0"
+const gray = "#a6a39f"
+const black = "#0d0d0d"
 
 const Styles = StyleSheet.create({
     mainView: {
@@ -8,10 +16,11 @@ const Styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         height: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: '#eee',
     },
     viewFull: {
         height: '100%',
+        backgroundColor: '#eee',
     },
     messageBox: {
         alignSelf: 'center',
@@ -33,11 +42,20 @@ const Styles = StyleSheet.create({
     textUpper: {
         textTransform: 'uppercase',
     },
-    textWhite: {
-        color: '#fff',
+    textPrimary: {
+        color: primaryColor
     },
-    textGrayDark: {
-        color: '#111'
+    textSecondary: {
+        color: secondaryColor
+    },
+    textWhite: {
+        color: '#eee'
+    },
+    textGray: {
+        color: gray
+    },
+    textBlack: {
+        color: black
     },
     textGreen: {
         color: '#388e48',
@@ -54,6 +72,21 @@ const Styles = StyleSheet.create({
     textBold: {
         fontWeight: 'bold',
     },
+    backgroundPrimary: {
+        backgroundColor: primaryColor
+    },
+    backgroundSecondary: {
+        backgroundColor: secondaryColor
+    },
+    backgroundWhite: {
+        backgroundColor: white
+    },
+    backgroundGray: {
+        backgroundColor: gray
+    },
+    backgroundBlack: {
+        backgroundColor: black
+    },
     header: {
         height: '28%',
         justifyContent: 'center',
@@ -69,19 +102,19 @@ const Styles = StyleSheet.create({
     },
     formLabel: {
         height: 46,
-        width: 150,
-        borderStyle: 'solid',
-        borderWidth: 2,
+        width: (0.5 * screenWidth),
+        marginBottom: 10,
+        borderBottomWidth: 1.5,
+        borderRadius: 1,
         textAlign: 'center',
-        borderColor: '#000',
-        backgroundColor: '#fff',
+        letterSpacing: 16,
+        borderColor: gray,
         fontSize: 22,
-        letterSpacing: 12,
         color: '#000',
     },
     formLabelFocused: {
-        borderColor: '#388e48',
-        borderWidth: 3,
+        borderColor: secondaryColor,
+        borderBottomWidth: 2,
     },
     button: {
         marginVertical: 7,
@@ -128,7 +161,26 @@ const Styles = StyleSheet.create({
     },
     rotate90: {
         transform: [{ rotate: '90deg'}]
-    }
+    },
+    backbutton: {
+        marginBottom: 30,
+      },
+    tableListItem: {
+        paddingLeft: 30,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    tableSubItem: {
+        height: 50,
+    },
+    credView: {
+        alignItems: 'center',
+        backgroundColor: '#ddd',
+        padding: 12,
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        height: '100%',
+    },
 })
 
 export default Styles

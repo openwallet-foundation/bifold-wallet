@@ -25,7 +25,7 @@ function Navbar(props) {
   return (
     <>
     {props.authenticated ? (
-      <View style={Styles.navView}>
+      <View style={[Styles.navView, AppStyles.backgroundWhite]}>
       <Link style={Styles.navButton} component={TouchableOpacity} to="/home">
         <Image source={Images.navHome} style={{width: 32, height: 28}} />
         <Text style={Styles.textSmall}>Home</Text>

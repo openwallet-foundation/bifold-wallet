@@ -28,9 +28,9 @@ function CurrentCredential(props) {
       <View style={AppStyles.header}>
         <AppHeader headerText={'CREDENTIALS'} />
       </View>
-      <View style={Styles.credView}>
+      <View style={[AppStyles.credView, AppStyles.backgroundWhite]}>
         <TouchableOpacity
-          style={Styles.backbutton}
+          style={AppStyles.backbutton}
           hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
           onPress={() => props.setViewCredential(true)}>
           <Image source={Images.arrowDown} style={AppStyles.arrow} />
@@ -40,8 +40,8 @@ function CurrentCredential(props) {
             <View
               style={[
                 AppStyles.tableItem,
-                Styles.tableItem,
-                {backgroundColor: '#0A1C40'},
+                AppStyles.tableListItem,
+                AppStyles.backgroundSecondary,
               ]}>
               <View>
                 <Text
@@ -67,7 +67,7 @@ function CurrentCredential(props) {
                 <Text
                   style={[
                     {fontSize: 18},
-                    AppStyles.textBlueDark,
+                    AppStyles.textSecondary,
                     AppStyles.textUpper,
                   ]}>
                   <Text style={AppStyles.textBold}>Name: </Text>
@@ -85,7 +85,7 @@ function CurrentCredential(props) {
                 <Text
                   style={[
                     {fontSize: 18},
-                    AppStyles.textBlueDark,
+                    AppStyles.textSecondary,
                     AppStyles.textUpper,
                   ]}>
                   <Text style={AppStyles.textBold}>Date Received: </Text>

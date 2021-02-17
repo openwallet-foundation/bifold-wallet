@@ -64,15 +64,15 @@ function PinEnter(props) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{height: '100%'}}>
+      <View style={AppStyles.viewFull}>
         <AppHeaderLarge disabled={true} />
         <View style={AppStyles.tab}>
           <Text
-            style={[AppStyles.h1, AppStyles.textBlueDark, {marginBottom: 30}]}>
+            style={[AppStyles.h1, AppStyles.textSecondary, {marginBottom: 30}]}>
             Enter Your Pin
           </Text>
           <View>
-            <Text style={[AppStyles.h3, AppStyles.textBlueDark]}>
+            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
               Enter Pin:
             </Text>
             <TextInput
@@ -99,7 +99,7 @@ function PinEnter(props) {
             />
           </View>
           <TouchableOpacity
-            style={[AppStyles.button, AppStyles.buttonGreen, {marginTop: 30}]}
+            style={[AppStyles.button, AppStyles.backgroundPrimary, {marginTop: 30}]}
             onPress={() => {
               Keyboard.dismiss()
               checkPin(pin)
