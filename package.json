@@ -1,6 +1,6 @@
 {
   "name": "aries-bifold",
-  "version": "0.1.0-pre",
+  "version": "0.0.1",
   "scripts": {
     "style-watch": "onchange '**/*.js' -- prettier --write {{changed}}",
     "style-check": "prettier --check '**/*.js'",

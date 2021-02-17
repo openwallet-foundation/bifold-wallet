@@ -2,7 +2,7 @@
 Aries Bifold is an open source Aries mobile agent app. This is a project that has been created to focus the community's efforts towards a central open source project. Various different organizations and people have expressed interest in a open source community project to help focus efforts to help prevent duplication of work between projects. Aries Bifold is also intended to help get complex or specific use-case projects started faster by cloning and having a basis of an Aries agent.
 
 ## Code
-The code present in this repo and the [mobile agent library](https://github.com/Indicio-tech/aries-mobileagent-react-native) Aries Bifold relies on has not been polished and not very mature. Indicio found the urgency for a community project to focus our efforts very compelling to contribute the code even without the polish we give to our work.
+The code present in this repo and the [mobile agent library](https://github.com/Indicio-tech/aries-mobileagent-react-native) that Aries Bifold relies on has not been polished and not very mature. Indicio found the urgency for a community project to focus our efforts very compelling to contribute the code even without the polish we give to our work.
 
 This project is intended to be contributed to Hyperledger after the initial conversations regarding the project within the community
 
@@ -10,11 +10,11 @@ This project is intended to be contributed to Hyperledger after the initial conv
 For this mobile app, Indicio was unable to find a suitable star name (a nod to the awesome Aries Askar name), but would propose 'Aries Bifold'. We are looking for community thoughts and ideas, and are only bringing this one idea to the table for discussion.
 
 ### Mobile Library
-Aries Bifold relies on a [mobile agent library](https://github.com/Indicio-tech/aries-mobileagent-react-native). This library, following current community conventions, was named Aries Mobile Agent React Native (AMA-RN). However, developed in parallel, separately from Animo, is the project [Aries Mobile Agent React Native](https://github.com/animo/aries-mobile-agent-react-native). This deserves some community discussion as to project name conventions as additional projects begin to be created within the community.
+Aries Bifold relies on a [mobile agent library](https://github.com/Indicio-tech/aries-mobileagent-react-native). This library, following current community conventions, was named Aries Mobile Agent React Native (AMA-RN). However, developed in parallel, separately from Animo, is the project [Aries Mobile Agent React Native](https://github.com/animo/aries-mobile-agent-react-native). So, this library needs a different name, and would benefit from some community discussion as to project name conventions as additional projects begin to be created within the community.
 
 ## Community
 Indicio has scheduled a [working group call](https://wiki.hyperledger.org/display/ARIES/Aries+Bifold+User+Group+Meetings) to kick off the community discussions on the project on Wednesday, 2-24-2021. 
-Everyone are more than welcome to attend and contribute at the working group call.
+Everyone is more than welcome to attend and contribute at the working group call.
 
 Indicio has provided existing code, but we really want to make this into a community effort.
 
@@ -28,14 +28,14 @@ As of now Aries Bifold targets Android API 29.0.3, with plans to support API 30 
 IOS support is being actively being worked on, with the focus surrounding the indy-sdk consumption from within an iOS context.
 
 ### Functionality
-Aries Bifold as of now has mocked the UI interactions of the connect and exchange processes, and have developed functionality within the underlying library, however the two have not been integrated with each as of yet. 
+Aries Bifold as of now has mocked the UI interactions of the connect and exchange processes, and have developed functionality within the underlying library, however the two pieces have not been integrated with each as of yet. 
 
 ### Testing
 Aries Bifold's [mobile agent library](https://github.com/Indicio-tech/aries-mobileagent-react-native) currently aims to utilize the [Aries Protocols Test Suite (APTS)](https://github.com/hyperledger/aries-protocol-test-suite) and the [Aries Agent Test Harness (AATH)](https://github.com/hyperledger/aries-agent-test-harness) to test for Aries Agent compatibility and interoperability.
 
 ## Running the App
 ### APKs
-Generated APKs can be found in each github release, with further discussion regarding App Stores and the strategy/desire around that.
+Generated APKs can be found in each github release, with further discussion regarding App Stores and the strategy/desires around that.
 
 ### App Development Setup
 Clone the app:

@@ -10,6 +10,8 @@ import {
   useLocation,
 } from 'react-router-native'
 
+//For UUIDv4 within React Native
+import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import Errors from './components/Errors/index.js'
@@ -42,7 +44,7 @@ const App = (props) => {
 
   useEffect(() => {
     const agentTest = async () => {
-        //Optional Library Generation of a MasterSecretID
+      //Optional Library Generation of a MasterSecretID
       const masterSecretID = await AMARN.generateMasterSecretID()
 
       const walletName = uuidv4()
