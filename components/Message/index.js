@@ -38,7 +38,7 @@ function Message(props) {
               AppStyles.h2,
               AppStyles.textBold,
               {marginTop: 25},
-              props.textLight ? AppStyles.textWhite : AppStyles.textBlueDark,
+              props.textLight ? AppStyles.textWhite : AppStyles.textSecondary,
             ]}>
             {props.title}
             {'\n'}
@@ -48,7 +48,7 @@ function Message(props) {
           <Text
             style={[
               Styles.msgText,
-              props.textLight ? AppStyles.textWhite : AppStyles.textBlueDark,
+              props.textLight ? AppStyles.textWhite : AppStyles.textSecondary,
             ]}>
             {props.text}
             {'\n'}
@@ -56,7 +56,7 @@ function Message(props) {
         ) : null}
         {props.path ? (
           <TouchableOpacity
-            style={[AppStyles.button, AppStyles.buttonGreen, {marginTop: 30}]}
+            style={[AppStyles.button, AppStyles.backgroundPrimary, {marginTop: 30}]}
             onPress={() => history.push(props.path)}>
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Continue</Text>
           </TouchableOpacity>

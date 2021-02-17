@@ -26,7 +26,7 @@ function Notification(props) {
             <Text
               style={[
                 AppStyles.h2,
-                AppStyles.textBlueDark,
+                AppStyles.textSecondary,
                 AppStyles.textBold,
               ]}>
               {props.title}
@@ -34,7 +34,7 @@ function Notification(props) {
             </Text>
           ) : null}
           {props.text ? (
-            <Text style={AppStyles.textBlueDark}>
+            <Text style={AppStyles.textSecondary}>
               {props.text}
               {'\n'}
             </Text>

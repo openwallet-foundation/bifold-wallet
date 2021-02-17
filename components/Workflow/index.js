@@ -56,7 +56,7 @@ function Workflow(props) {
             setWorkflow('requested')
           }, 2200)
           return (
-            <Message title={'Connecting'} bgColor={'#0A1C40'} textLight={true}>
+            <Message title={'Connecting'} bgColor={'#1B2624'} textLight={true}>
               <Image
                 source={Images.waiting}
                 style={{
@@ -71,7 +71,7 @@ function Workflow(props) {
       />
       <Route
         path={`${url}/requested`}
-        render={() => <CredentialOffered 
+        render={() => <CredentialRequested 
                         setWorkflow={setWorkflow} 
                         contact={props.contacts[0]}
                         credential={props.credentials[0]}

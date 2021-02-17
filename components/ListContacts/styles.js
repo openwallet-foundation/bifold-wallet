@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   },
   credView: {
     alignItems: 'center',
-    backgroundColor: '#0A1C40',
     padding: 12,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,

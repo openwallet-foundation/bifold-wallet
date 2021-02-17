@@ -36,7 +36,7 @@ function ListCredentials(props) {
       <View style={AppStyles.header}>
         <AppHeader headerText={'CREDENTIALS'} />
       </View>
-      <View style={Styles.credView}>
+      <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
         <TouchableOpacity
           style={Styles.backbutton}
           hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
@@ -49,7 +49,7 @@ function ListCredentials(props) {
               style={[
                 AppStyles.tableItem,
                 Styles.tableItem,
-                {backgroundColor: '#0A1C40'},
+                AppStyles.backgroundSecondary,
               ]}>
               <View>
                 <Text
