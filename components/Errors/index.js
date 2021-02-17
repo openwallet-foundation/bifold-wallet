@@ -18,14 +18,14 @@ function ErrorDialog(props) {
       <View style={Styles.errorView}>
         <View style={[AppStyles.messageBox, Styles.errorMessage]}>
           <Text
-            style={[AppStyles.h2, AppStyles.textRedDark, AppStyles.textBold]}>
+            style={[AppStyles.h2, AppStyles.textSecondary, AppStyles.textBold]}>
             ERROR{'\n'}
           </Text>
-          <Text style={[AppStyles.h3, AppStyles.textBlueDark]}>
+          <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
             {props.text}
           </Text>
           <TouchableOpacity
-            style={[AppStyles.button, AppStyles.buttonRed, {marginTop: 30}]}
+            style={[AppStyles.button, AppStyles.backgroundSecondary, {marginTop: 30}]}
             onPress={() => {
               errors.setVisible(false)
               history.push(props.path)

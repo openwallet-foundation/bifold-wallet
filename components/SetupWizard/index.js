@@ -90,7 +90,7 @@ function SetupWizard(props) {
       {setupScreens < 0 || setupScreens >= props.children.length ? (
         <LoadingOverlay />
       ) : (
-            <View style={{height: '100%'}}>
+            <View style={AppStyles.viewFull}>
               <KeyboardAvoidingView behavior={'height'} style={{height: '92%'}}>
                 {React.cloneElement(props.children[setupScreens], {
                   setupScreens: setupScreens,
@@ -101,7 +101,7 @@ function SetupWizard(props) {
                 {props.children.map((child, index) => {
                   let dotStyle = [Styles.dot]
                   if (index <= setupScreens) {
-                    dotStyle.push(Styles.dotFilled)
+                    dotStyle.push(AppStyles.backgroundPrimary)
                   }
                   return <View key={index} style={dotStyle} />
                 })}

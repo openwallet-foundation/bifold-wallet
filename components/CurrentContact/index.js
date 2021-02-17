@@ -28,9 +28,9 @@ function CurrentContact(props) {
       <View style={AppStyles.header}>
         <AppHeader headerText={'CONTACTS'} />
       </View>
-      <View style={Styles.credView}>
+      <View style={[AppStyles.credView, AppStyles.backgroundWhite]}>
         <TouchableOpacity
-          style={Styles.backbutton}
+          style={AppStyles.backbutton}
           hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
           onPress={() => props.setViewContact(true)}>
           <Image source={Images.arrowDown} style={AppStyles.arrow} />
@@ -40,8 +40,8 @@ function CurrentContact(props) {
             <View
               style={[
                 AppStyles.tableItem,
-                Styles.tableItem,
-                {backgroundColor: '#0A1C40'},
+                AppStyles.tableListItem,
+                AppStyles.backgroundSecondary,
               ]}>
               <View>
                 <Text
@@ -67,7 +67,7 @@ function CurrentContact(props) {
                 <Text
                   style={[
                     {fontSize: 18},
-                    AppStyles.textBlueDark,
+                    AppStyles.textSecondary,
                     AppStyles.textUpper,
                   ]}>
                   <Text style={AppStyles.textBold}>Address: </Text>
@@ -85,7 +85,7 @@ function CurrentContact(props) {
                 <Text
                   style={[
                     {fontSize: 18},
-                    AppStyles.textBlueDark,
+                    AppStyles.textSecondary,
                     AppStyles.textUpper,
                   ]}>
                   <Text style={AppStyles.textBold}>Phone: </Text>
@@ -103,7 +103,7 @@ function CurrentContact(props) {
                 <Text
                   style={[
                     {fontSize: 18},
-                    AppStyles.textBlueDark,
+                    AppStyles.textSecondary,
                   ]}>
                   <Text style={AppStyles.textBold}>Email: </Text>
                   {props.contact.email}

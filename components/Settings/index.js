@@ -38,7 +38,7 @@ function Settings(props) {
           onPress={() => history.push('/home')}>
           <Image source={Images.arrowDown} style={AppStyles.arrow} />
         </TouchableOpacity>
-        <Text style={[AppStyles.textBlueDark, AppStyles.h3]}>
+        <Text style={[AppStyles.textSecondary, AppStyles.h3]}>
           <Text style={AppStyles.textBold}>Version: </Text> 0.1
         </Text>
       </View>

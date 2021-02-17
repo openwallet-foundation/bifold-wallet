@@ -180,7 +180,7 @@ const App = (props) => {
           />
         </View>
         {authenticated ? (
-          <View style={{height: '9.5%'}}>
+          <View style={{height: '10%'}}>
             <Navbar authenticated={authenticated} />
           </View>
         ) : null}

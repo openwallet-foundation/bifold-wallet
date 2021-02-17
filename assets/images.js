@@ -2,6 +2,7 @@ const images = {
     arrow: require('./img/arrow.png'),
     arrowDown: require('./img/arrow-down.png'),
     infoBlue: require('./img/info-blue.png'),
+    infoGray: require('./img/info-gray.png'),
     infoWhite: require('./img/info-white.png'),
     logo: require('./img/logo.png'),
     logoLarge: require('./img/logo-large.png'),
