@@ -9,13 +9,15 @@
     "ios": "npx react-native run-ios",
     "start": "npx react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/async-storage": "^1.12.0",
     "aries-mobileagent-react-native": "file:aries-mobileagent-react-native",
     "axios": "^0.21.0",
+    "patch-package": "^6.4.4",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-camera": "^3.31.1",
