@@ -36,7 +36,7 @@ import Terms from './components/Terms/index.js'
 import Workflow from './components/Workflow/index.js'
 
 import Images from './assets/images'
-import AMARN from 'aries-mobileagent-react-native'
+// import AMARN from './aries-mobileagent-react-native'
 
 const App = (props) => {
   let location = useLocation()
@@ -68,7 +68,7 @@ const App = (props) => {
         }
       )
     }
-    agentTest()
+    // agentTest()
   }, [])
 
   const [currentLocation, setCurrentLocation] = useState('')
