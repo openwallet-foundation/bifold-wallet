@@ -19,12 +19,16 @@ import {useHistory} from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
-import AppHeaderLarge from '../AppHeaderLarge/index.js'
-import LoadingOverlay from '../LoadingOverlay/index.js'
+import AppHeaderLarge from '../AppHeaderLarge/index'
+import LoadingOverlay from '../LoadingOverlay/index'
 
 import AppStyles from '../../assets/styles'
 
-function PinCreate(props) {
+interface IPinCreate {
+  setupScreens: any
+}
+
+function PinCreate(props: IPinCreate) {
   let history = useHistory()
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
@@ -131,7 +135,11 @@ function PinCreate(props) {
             />
           </View>
           <TouchableOpacity
-            style={[AppStyles.button, AppStyles.backgroundPrimary, {marginTop: 30}]}
+            style={[
+              AppStyles.button,
+              AppStyles.backgroundPrimary,
+              {marginTop: 30},
+            ]}
             onPress={() => {
               Keyboard.dismiss()
               confirmEntry(pin, pinTwo)

@@ -1,13 +1,13 @@
 import React, {useContext, useRef} from 'react'
 import {Animated, Text, View} from 'react-native'
 
-import AppHeader from '../AppHeader/index.js'
-import {NotificationsContext} from '../Notifications/index.js'
+import AppHeader from '../AppHeader/index'
+import {NotificationsContext} from '../Notifications/index'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
-function LoadingOverlay(props) {
+function LoadingOverlay() {
   const loadAnim1 = useRef(new Animated.Value(1)).current
   const loadAnim2 = useRef(new Animated.Value(1)).current
   const loadAnim3 = useRef(new Animated.Value(1)).current

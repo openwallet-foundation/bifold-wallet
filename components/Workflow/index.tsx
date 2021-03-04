@@ -15,12 +15,19 @@ import {
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 
-import CredentialOffered from '../Credential/Offered/index.js'
-import CredentialRequested from '../Credential/Requested/index.js'
-import QRCodeScanner from '../QRCodeScanner/index.js'
-import Message from '../Message/index.js'
+import CredentialOffered from '../Credential/Offered/index'
+import CredentialRequested from '../Credential/Requested/index'
+import QRCodeScanner from '../QRCodeScanner/index'
+import Message from '../Message/index'
+import { IContact, ICredential } from '../../types'
 
-function Workflow(props) {
+interface IWorkflow {
+  contacts: IContact[]
+  credentials: ICredential[]
+
+}
+
+function Workflow(props: IWorkflow) {
   let history = useHistory()
   let {url} = useRouteMatch()
 
@@ -71,18 +78,23 @@ function Workflow(props) {
       />
       <Route
         path={`${url}/requested`}
-        render={() => <CredentialRequested 
-                        setWorkflow={setWorkflow} 
-                        contact={props.contacts[0]}
-                        credential={props.credentials[0]}
-                      />}
+        render={() => (
+          <CredentialRequested
+            //setWorkflow={setWorkflow}
+            contact={props.contacts[0]}
+            credential={props.credentials[0]}
+          />
+        )}
       />
 
       <Prompt
         message={(location, action) => {
           //Back button checking
           console.log(action)
-          if ((location.pathname != '/workflow/requested') && workflowInProgress) {
+          if (
+            location.pathname != '/workflow/requested' &&
+            workflowInProgress
+          ) {
             return `Are you sure you want to exit and lose unsaved progress?`
           }
         }}

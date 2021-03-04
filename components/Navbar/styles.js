@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   navButton: {
     alignItems: 'center',
-    width: '20%'
+    width: '20%',
   },
   textSmall: {
     fontSize: 10,
