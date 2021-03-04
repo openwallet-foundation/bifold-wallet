@@ -12,13 +12,18 @@ import {
 
 import {useHistory} from 'react-router-native'
 
-import AppHeader from '../AppHeader/index.js'
+import AppHeader from '../AppHeader/index'
 
-import {ErrorsContext} from '../Errors/index.js'
+import {ErrorsContext} from '../Errors/index'
 
 import AppStyles from '../../assets/styles'
-import Images from '../../assets/images.js'
+import Images from '../../assets/images'
 import Styles from './styles'
+import { ICredential } from '../../types'
+
+interface ICurrentCredential {
+  credential: ICredential
+}
 
 function CurrentCredential(props) {
   let history = useHistory()

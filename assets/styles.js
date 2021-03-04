@@ -4,11 +4,11 @@ import {Dimensions, StyleSheet} from 'react-native'
 
 let screenWidth = Dimensions.get('window').width
 
-const primaryColor = "#343f40"
-const secondaryColor = "#1b2624"
-const white = "#d9d2d0"
-const gray = "#a6a39f"
-const black = "#0d0d0d"
+const primaryColor = '#343f40'
+const secondaryColor = '#1b2624'
+const white = '#d9d2d0'
+const gray = '#a6a39f'
+const black = '#0d0d0d'
 
 const Styles = StyleSheet.create({
     mainView: {
