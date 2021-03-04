@@ -1,3 +1,6 @@
+This patch enables images to appear on iOS 14
+Required for React Native 0.61.5
+
 diff --git a/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m b/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
 index 01aa75f..4ef8307 100644
 --- a/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
