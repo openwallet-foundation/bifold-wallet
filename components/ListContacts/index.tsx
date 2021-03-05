@@ -24,7 +24,7 @@ import Styles from './styles'
 import { IContact } from '../../types'
 
 interface IListContacts {
-  contacts: IContact
+  contacts: IContact[] 
 
 }
 
