@@ -23,6 +23,7 @@ import {NotificationsContext} from '../Notifications/index'
 import Styles from './styles'
 import AppStyles from '../../assets/styles'
 
+//  TODO - Add props interface
 function QRCodeScanner(props) {
   let history = useHistory()
 
