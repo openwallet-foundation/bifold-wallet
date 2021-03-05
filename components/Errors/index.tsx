@@ -8,7 +8,12 @@ import {useHistory} from 'react-router-native'
 
 const ErrorsContext = React.createContext({})
 
-function ErrorDialog(props) {
+interface IErrorDialog {
+  path: string
+  text: string
+}
+
+function ErrorDialog(props: IErrorDialog) {
   let history = useHistory()
 
   const errors = useContext(ErrorsContext)

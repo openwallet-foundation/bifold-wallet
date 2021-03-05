@@ -4,7 +4,12 @@ import {Alert, BackHandler} from 'react-native'
 
 import {useHistory, useLocation} from 'react-router-native'
 
-function BackButton(props) {
+interface IBackButton {
+  backPath?: string
+  backExit?: boolean
+}
+
+function BackButton(props: IBackButton) {
   let history = useHistory()
   let location = useLocation()
 

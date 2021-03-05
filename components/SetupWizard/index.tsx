@@ -18,17 +18,23 @@ import {useHistory} from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
-import BackButton from '../BackButton/index.js'
-import LoadingOverlay from '../LoadingOverlay/index.js'
-import Message from '../Message/index.js'
+import BackButton from '../BackButton/index'
+import LoadingOverlay from '../LoadingOverlay/index'
+import Message from '../Message/index'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 import Images from '../../assets/images'
 
-import {NotificationsContext} from '../Notifications/index.js'
+import { NotificationsContext } from '../Notifications/index'
 
-function SetupWizard(props) {
+interface ISetupWizard {
+
+  children: JSX.Element[]
+
+}
+
+function SetupWizard(props: ISetupWizard) {
   let history = useHistory()
 
   const notifications = useContext(NotificationsContext)
@@ -86,27 +92,27 @@ function SetupWizard(props) {
 
   return (
     <>
-    <BackButton backExit={true} />
+      <BackButton backExit={true} />
       {setupScreens < 0 || setupScreens >= props.children.length ? (
         <LoadingOverlay />
       ) : (
-            <View style={AppStyles.viewFull}>
-              <KeyboardAvoidingView behavior={'height'} style={{height: '92%'}}>
-                {React.cloneElement(props.children[setupScreens], {
-                  setupScreens: setupScreens,
-                  setSetupScreens: setSetupScreens,
-                })}
-              </KeyboardAvoidingView>
-              <View style={Styles.dotContainer}>
-                {props.children.map((child, index) => {
-                  let dotStyle = [Styles.dot]
-                  if (index <= setupScreens) {
-                    dotStyle.push(AppStyles.backgroundPrimary)
-                  }
-                  return <View key={index} style={dotStyle} />
-                })}
-              </View>
-            </View>
+        <View style={AppStyles.viewFull}>
+          <KeyboardAvoidingView behavior={'height'} style={{height: '92%'}}>
+            {React.cloneElement(props.children[setupScreens], {
+              setupScreens: setupScreens,
+              setSetupScreens: setSetupScreens,
+            })}
+          </KeyboardAvoidingView>
+          <View style={Styles.dotContainer}>
+            {props.children.map((child, index) => {
+              let dotStyle = [Styles.dot]
+              if (index <= setupScreens) {
+                dotStyle.push(AppStyles.backgroundPrimary)
+              }
+              return <View key={index} style={dotStyle} />
+            })}
+          </View>
+        </View>
       )}
     </>
   )

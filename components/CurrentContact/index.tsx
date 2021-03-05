@@ -12,15 +12,21 @@ import {
 
 import {useHistory} from 'react-router-native'
 
-import AppHeader from '../AppHeader/index.js'
+import AppHeader from '../AppHeader/index'
 
-import {ErrorsContext} from '../Errors/index.js'
+import {ErrorsContext} from '../Errors/index'
 
 import AppStyles from '../../assets/styles'
-import Images from '../../assets/images.js'
+import Images from '../../assets/images'
 import Styles from './styles'
+import { IContact } from '../../types'
 
-function CurrentContact(props) {
+interface ICurrentContact {
+  setViewContact: (toggle: boolean) => void
+  contact: IContact
+}
+
+function CurrentContact(props: ICurrentContact) {
   let history = useHistory()
 
   return (
@@ -100,11 +106,7 @@ function CurrentContact(props) {
                 Styles.tableSubItem,
               ]}>
               <View>
-                <Text
-                  style={[
-                    {fontSize: 18},
-                    AppStyles.textSecondary,
-                  ]}>
+                <Text style={[{fontSize: 18}, AppStyles.textSecondary]}>
                   <Text style={AppStyles.textBold}>Email: </Text>
                   {props.contact.email}
                 </Text>
