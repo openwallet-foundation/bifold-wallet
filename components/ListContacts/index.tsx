@@ -23,13 +23,13 @@ import Images from '../../assets/images'
 import Styles from './styles'
 import { IContact } from '../../types'
 
-interface IListContracts {
+interface IListContacts {
   contacts: IContact
 
 }
 
 
-function ListContacts(props: IListContracts) {
+function ListContacts(props: IListContacts) {
   let history = useHistory()
 
   const [viewContact, setViewContact] = useState(true)

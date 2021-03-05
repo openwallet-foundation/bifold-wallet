@@ -30,7 +30,7 @@ import { NotificationsContext } from '../Notifications/index'
 
 interface ISetupWizard {
 
-  children: JSX.Element
+  children: JSX.Element[]
 
 }
 

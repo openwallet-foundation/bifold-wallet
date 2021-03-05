@@ -25,7 +25,7 @@ interface IMessage {
   textLight: String
   text: string
   path: string
-  children: JSX.Element
+  children: JSX.Element[]
 }
 
 function Message(props: IMessage) {

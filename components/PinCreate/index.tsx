@@ -25,7 +25,8 @@ import LoadingOverlay from '../LoadingOverlay/index'
 import AppStyles from '../../assets/styles'
 
 interface IPinCreate {
-  setupScreens: any
+  setupScreens: number
+  setSetupScreens: (setupScreens: number) => (void)
 }
 
 function PinCreate(props: IPinCreate) {

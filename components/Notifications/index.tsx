@@ -59,7 +59,7 @@ function Notification(props: INotification) {
 }
 
 interface INotifications {
-  children: JSX.Element
+  children: JSX.Element[]
 }
 
 function Notifications(props: INotifications) {
