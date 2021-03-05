@@ -12,17 +12,24 @@ import {
 
 import {useHistory} from 'react-router-native'
 
-import AppHeader from '../AppHeader/index.js'
-import BackButton from '../BackButton/index.js'
-import CurrentContact from '../CurrentContact/index.js'
+import AppHeader from '../AppHeader/index'
+import BackButton from '../BackButton/index'
+import CurrentContact from '../CurrentContact/index'
 
-import {ErrorsContext} from '../Errors/index.js'
+import {ErrorsContext} from '../Errors/index'
 
 import AppStyles from '../../assets/styles'
-import Images from '../../assets/images.js'
+import Images from '../../assets/images'
 import Styles from './styles'
+import { IContact } from '../../types'
 
-function ListContacts(props) {
+interface IListContacts {
+  contacts: IContact[] 
+
+}
+
+
+function ListContacts(props: IListContacts) {
   let history = useHistory()
 
   const [viewContact, setViewContact] = useState(true)
@@ -30,20 +37,20 @@ function ListContacts(props) {
 
   return (
     <>
-    <BackButton backPath={'/home'} />
-    {viewContact ? (
-      <View style={AppStyles.viewFull}>
-        <View style={AppStyles.header}>
-          <AppHeader headerText={'CONTACTS'} />
-        </View>
-        <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
-          <TouchableOpacity
-            style={Styles.backbutton}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-            onPress={() => history.push('/home')}>
-            <Image source={Images.arrowDown} style={AppStyles.arrow} />
-          </TouchableOpacity>
-          {props.contacts.map((contact, i) => (
+      <BackButton backPath={'/home'} />
+      {viewContact ? (
+        <View style={AppStyles.viewFull}>
+          <View style={AppStyles.header}>
+            <AppHeader headerText={'CONTACTS'} />
+          </View>
+          <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
+            <TouchableOpacity
+              style={Styles.backbutton}
+              hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+              onPress={() => history.push('/home')}>
+              <Image source={Images.arrowDown} style={AppStyles.arrow} />
+            </TouchableOpacity>
+            {props.contacts.map((contact, i) => (
               <View
                 key={i}
                 style={[
@@ -69,23 +76,19 @@ function ListContacts(props) {
                     console.log(contact.label)
                     setContactInfo(contact)
                     setViewContact(false)
-                  }}
-                >
+                  }}>
                   <Image
                     source={Images.infoWhite}
                     style={[AppStyles.info, {marginRight: 10, top: 10}]}
                   />
                 </TouchableOpacity>
               </View>
-          ))}
+            ))}
+          </View>
         </View>
-    </View>
-      ) : 
-        <CurrentContact 
-          contact={contactInfo}
-          setViewContact={setViewContact}
-        />
-      }
+      ) : (
+        <CurrentContact contact={contactInfo} setViewContact={setViewContact} />
+      )}
     </>
   )
 }

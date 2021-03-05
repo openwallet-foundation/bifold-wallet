@@ -12,14 +12,23 @@ import {
 
 import {useHistory} from 'react-router-native'
 
-import AppHeaderLarge from '../AppHeaderLarge/index.js'
-import LoadingOverlay from '../LoadingOverlay/index.js'
+import AppHeaderLarge from '../AppHeaderLarge/index'
+import LoadingOverlay from '../LoadingOverlay/index'
 
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
-function Message(props) {
+interface IMessage {
+  bgColor: string
+  title: string
+  textLight: String
+  text: string
+  path: string
+  children: JSX.Element[]
+}
+
+function Message(props: IMessage) {
   let history = useHistory()
 
   return (
@@ -56,7 +65,11 @@ function Message(props) {
         ) : null}
         {props.path ? (
           <TouchableOpacity
-            style={[AppStyles.button, AppStyles.backgroundPrimary, {marginTop: 30}]}
+            style={[
+              AppStyles.button,
+              AppStyles.backgroundPrimary,
+              {marginTop: 30},
+            ]}
             onPress={() => history.push(props.path)}>
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Continue</Text>
           </TouchableOpacity>

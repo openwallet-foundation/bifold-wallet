@@ -16,7 +16,11 @@ import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
-function AppHeaderLarge(props) {
+interface IAppHeaderLarge {
+  disabled?: boolean
+}
+
+function AppHeaderLarge(props: IAppHeaderLarge)  {
   let history = useHistory()
 
   return (

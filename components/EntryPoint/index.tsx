@@ -3,11 +3,16 @@ import {useHistory} from 'react-router-native'
 import * as Keychain from 'react-native-keychain'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import LoadingOverlay from '../LoadingOverlay/index.js'
+import LoadingOverlay from '../LoadingOverlay/index'
 
-import {ErrorsContext} from '../Errors/index.js'
+import { ErrorsContext } from '../Errors/index'
 
-function EntryPoint(props) {
+interface IEntryPoint {
+  authenticated: boolean
+
+}
+
+function EntryPoint(props: IEntryPoint) {
   let history = useHistory()
   const errors = useContext(ErrorsContext)
 

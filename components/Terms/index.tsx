@@ -11,15 +11,20 @@ import {
 
 import {useHistory} from 'react-router-native'
 
-import AppHeaderLarge from '../AppHeaderLarge/index.js'
-import LoadingOverlay from '../LoadingOverlay/index.js'
+import AppHeaderLarge from '../AppHeaderLarge/index'
+import LoadingOverlay from '../LoadingOverlay/index'
 
-import {ErrorsContext} from '../Errors/index.js'
+import {ErrorsContext} from '../Errors/index'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
-function Terms(props) {
+interface ITerms {
+  title: string
+  message: string
+}
+
+function Terms(props: ITerms) {
   let history = useHistory()
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)

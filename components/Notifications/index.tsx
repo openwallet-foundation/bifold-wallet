@@ -9,7 +9,14 @@ import {useHistory} from 'react-router-native'
 
 const NotificationsContext = React.createContext({})
 
-function Notification(props) {
+interface INotification {
+  title: string
+  text: string
+  image: string
+  path: string
+}
+
+function Notification(props: INotification) {
   let history = useHistory()
 
   const notifications = useContext(NotificationsContext)
@@ -51,7 +58,11 @@ function Notification(props) {
   )
 }
 
-function Notifications(props) {
+interface INotifications {
+  children: JSX.Element[]
+}
+
+function Notifications(props: INotifications) {
   const [visible, setVisible] = useState(false)
   const [text, setText] = useState('')
   const [path, setPath] = useState('')
