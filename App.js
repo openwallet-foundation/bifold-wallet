@@ -37,7 +37,7 @@ import Images from './assets/images'
 
 import { downloadGenesis, storeGenesis } from './genesis-utils'
 import { HttpOutboundTransporter, PollingInboundTransporter } from './transporters'
-import { Agent, InitConfig } from 'aries-framework-javascript'
+import { Agent, InboundTransporter, OutboundTransporter, InitConfig } from 'aries-framework-javascript'
 import indy from 'rn-indy-sdk'
 import LoadingOverlay from './components/LoadingOverlay/index.js';
 
@@ -90,7 +90,7 @@ const App = (props) => {
     const initAgent = async () => {
 
       let agentConfig={
-        mediatorUrl: 'https://3f782d2976b3.ngrok.io',
+        mediatorUrl: 'https://72ee1a01122b.ngrok.io',
         genesisUrl: 'http://dev.greenlight.bcovrin.vonx.io/genesis',
       }
   
@@ -103,10 +103,10 @@ const App = (props) => {
   
       agentConfig = {
         label: 'javascript',
-        walletConfig: { id: 'wallet' },
+        walletConfig: { id: 'wallet2' },
         walletCredentials: { key: '123' },
         autoAcceptConnections: true,
-        poolName: 'test-103',
+        poolName: 'test-183',
         ...agentConfig,
         genesisPath,
       }
@@ -120,7 +120,7 @@ const App = (props) => {
       console.log('---------NEW AGENT HAS BEEN CREATED: ', newAgent)
   
       setLoading(false)
-      setAgent(newAgent)
+      setAgent(true)
 
     }
 

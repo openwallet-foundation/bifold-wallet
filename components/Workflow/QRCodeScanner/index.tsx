@@ -20,6 +20,8 @@ import LoadingOverlay from '../../LoadingOverlay/index'
 import {ErrorsContext} from '../../Errors/index'
 import {NotificationsContext} from '../../Notifications/index'
 
+import { decodeInvitationFromUrl } from 'aries-framework-javascript';
+
 import Styles from './styles'
 import AppStyles from '../../../assets/styles'
 
@@ -31,6 +33,19 @@ function QRCodeScanner(props) {
 
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)
+
+  const barcodeRecognized = ({barcodes}) => {
+    barcodes.forEach((barcode) => {
+      console.log(`Scanned QR Code`)
+      console.log('BARCODE: ', barcode)
+
+      // decodeInvitationFromUrl(barcode.data)
+
+
+      
+    })
+  }
+
 
   return (
     <>
@@ -49,7 +64,14 @@ function QRCodeScanner(props) {
               message: 'We need your permission to use your camera',
               buttonPositive: 'Ok',
               buttonNegative: 'Cancel',
-            }}>
+            }}
+            googleVisionBarcodeType={
+              RNCamera.Constants.GoogleVisionBarcodeDetection.BarcodeType.QR_CODE
+            }
+            onGoogleVisionBarcodesDetected={({barcodes}) => {
+              barcodeRecognized({barcodes})
+            }}
+            >
             <TouchableOpacity
               style={{width: '100%', height: '100%'}}
               onPress={() => {
