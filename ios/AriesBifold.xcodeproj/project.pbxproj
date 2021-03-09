@@ -20,7 +20,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* AriesBifoldTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AriesBifoldTests.m */; };
 		67256256192B77414B173AF1 /* libPods-AriesBifold.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C26CB7EB9AE3983B95378E1 /* libPods-AriesBifold.a */; };
 		B574915DB999ADDA493ADA8C /* libPods-AriesBifoldTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1ABBDF2233E2E32E328E00 /* libPods-AriesBifoldTests.a */; };
-		FA7EEFDD25EFDFF300A56305 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = FA7EEFDC25EFDFF300A56305 /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -341,7 +340,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA7EEFDD25EFDFF300A56305 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -367,17 +365,19 @@
 /* Begin PBXShellScriptBuildPhase section */
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			name = "Bundle React Native code and images";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		1042655C0F7DC37639206174 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -644,7 +644,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = tech.indicio.ariesbifold;
 				PRODUCT_NAME = AriesBifold;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -664,7 +664,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = tech.indicio.ariesbifold;
 				PRODUCT_NAME = AriesBifold;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
