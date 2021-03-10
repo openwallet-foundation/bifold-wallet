@@ -25,8 +25,9 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   checkmark: {
-    fontSize: 54,
-    bottom: 26,
+    width: '140%',
+    height: '140%',
+    bottom: '20%'
   },
   checktext: {
     justifyContent: 'center',
