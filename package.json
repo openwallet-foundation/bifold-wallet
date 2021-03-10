@@ -20,6 +20,7 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-camera": "^3.31.1",
+    "react-native-config": "^1.4.2",
     "react-native-fs": "^2.16.6",
     "react-native-get-random-values": "^1.4.0",
     "react-native-keychain": "^6.2.0",
