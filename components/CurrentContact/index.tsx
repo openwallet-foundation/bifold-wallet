@@ -92,7 +92,7 @@ function CurrentContact(props: ICurrentContact) {
                       {fontSize: 18},
                       AppStyles.textSecondary,
                     ]}>
-                    <Text style={AppStyles.textBold}>State: </Text>{props.contact.state}
+                    <Text style={AppStyles.textBold}>Connection State: </Text>{props.contact.state}
                   </Text>
                 </View>
                 </View>
