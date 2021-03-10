@@ -141,7 +141,7 @@ function CredentialOffered(props: ICredentialOffered) {
                       AppStyles.textGray,
                       AppStyles.textCenter,
                     ]}>
-                    Decline{'\n'}Request
+                    Decline{'\n'}Offer
                   </Text>
                 </TouchableOpacity>
               </View>
