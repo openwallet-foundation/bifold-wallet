@@ -51,7 +51,7 @@ function CredentialOffered(props: ICredentialOffered) {
 
     //TODO:
     //Push to pending issuance screen
-    history.push('/home')
+    history.push('/workflow/pending')
   }
 
   return (
