@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 
 import {
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -17,6 +18,7 @@ import LoadingOverlay from '../LoadingOverlay/index'
 import {ErrorsContext} from '../Errors/index'
 
 import AppStyles from '../../assets/styles'
+import Images from '../../assets/images'
 import Styles from './styles'
 
 interface ITerms {
@@ -54,9 +56,7 @@ function Terms(props: ITerms) {
           <View style={[Styles.checkContainer, AppStyles.backgroundWhite]}>
             <View style={[Styles.checkbox, AppStyles.backgroundWhite]}>
               {isChecked ? (
-                <Text style={[AppStyles.textBlack, Styles.checkmark]}>
-                  &#10003;
-                </Text>
+                <Image source={Images.checkmark} style={Styles.checkmark} />
               ) : null}
             </View>
             <Text style={[Styles.checktext, AppStyles.textBlack]}>
