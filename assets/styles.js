@@ -22,6 +22,12 @@ const Styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#eee',
     },
+    viewOverlay: {
+        height: '50%',
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+    },
     messageBox: {
         alignSelf: 'center',
         alignItems: 'center',

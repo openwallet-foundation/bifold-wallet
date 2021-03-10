@@ -30,13 +30,12 @@ interface IListCredentials {
 function ListCredentials(props: IListCredentials) {
   let history = useHistory()
 
-  const [viewCredential, setViewCredential] = useState(true)
-  const [credentialInfo, setCredentialInfo] = useState('')
+  const [viewInfo, setViewInfo] = useState('')
+  const [viewCredential, setViewCredential] = useState(false)
 
   return (
     <>
       <BackButton backPath={'/home'} />
-      {viewCredential ? (
         <View style={AppStyles.viewFull}>
           <View style={AppStyles.header}>
             <AppHeader headerText={'CREDENTIALS'} />
@@ -71,9 +70,8 @@ function ListCredentials(props: IListCredentials) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    console.log(credential.label)
-                    setCredentialInfo(credential)
-                    setViewCredential(false)
+                    setViewInfo(credential)
+                    setViewCredential(true)
                   }}>
                   <Image
                     source={Images.infoWhite}
@@ -84,12 +82,12 @@ function ListCredentials(props: IListCredentials) {
             ))}
           </View>
         </View>
-      ) : (
-        <CurrentCredential
-          credential={credentialInfo}
-          setViewCredential={setViewCredential}
-        />
-      )}
+        {viewCredential ? (
+              <CurrentCredential
+                credential={viewInfo}
+                setViewCredential={setViewCredential}
+              />
+            ) : null}
     </>
   )
 }

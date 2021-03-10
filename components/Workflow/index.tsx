@@ -15,9 +15,9 @@ import {
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 
-import CredentialOffered from '../Credential/Offered/index'
-import CredentialRequested from '../Credential/Requested/index'
-import QRCodeScanner from '../QRCodeScanner/index'
+import CredentialOffered from './Credential/Offered/index'
+import CredentialRequested from './Credential/Requested/index'
+import QRCodeScanner from './QRCodeScanner/index'
 import Message from '../Message/index'
 import { IContact, ICredential } from '../../types'
 
@@ -79,8 +79,8 @@ function Workflow(props: IWorkflow) {
       <Route
         path={`${url}/requested`}
         render={() => (
-          <CredentialRequested
-            //setWorkflow={setWorkflow}
+          <CredentialOffered
+            setWorkflow={setWorkflow}
             contact={props.contacts[0]}
             credential={props.credentials[0]}
           />

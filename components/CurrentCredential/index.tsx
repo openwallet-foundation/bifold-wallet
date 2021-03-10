@@ -29,15 +29,12 @@ function CurrentCredential(props) {
   let history = useHistory()
 
   return (
-    <View style={AppStyles.viewFull}>
-      <View style={AppStyles.header}>
-        <AppHeader headerText={'CREDENTIALS'} />
-      </View>
+    <View style={AppStyles.viewOverlay}>
       <View style={[AppStyles.credView, AppStyles.backgroundWhite]}>
         <TouchableOpacity
           style={AppStyles.backbutton}
           hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-          onPress={() => props.setViewCredential(true)}>
+          onPress={() => props.setViewCredential(false)}>
           <Image source={Images.arrowDown} style={AppStyles.arrow} />
         </TouchableOpacity>
         {props.credential ? (
