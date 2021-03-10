@@ -16,7 +16,7 @@ import AppHeader from '../AppHeader/index'
 import BackButton from '../BackButton/index'
 import CurrentContact from '../CurrentContact/index'
 
-import AgentContext from '../AgentProvider/index.js'
+import AgentContext from '../AgentProvider/'
 import { ConnectionEventType } from 'aries-framework-javascript'
 
 

@@ -33,7 +33,7 @@ function AgentProvider(props) {
         
             agentConfig = {
                 label: 'javascript',
-                walletConfig: { id: 'wallet3' },
+                walletConfig: { id: 'wallet4' },
                 walletCredentials: { key: '123' },
                 autoAcceptConnections: true,
                 poolName: 'test-183',

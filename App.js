@@ -15,28 +15,28 @@ import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid'
 
 import { AgentProvider } from './components/AgentProvider/'
-import Errors from './components/Errors/index.js'
-import Notifications from './components/Notifications/index.js'
+import Errors from './components/Errors/index'
+import Notifications from './components/Notifications/index'
 
-import CurrentContact from './components/CurrentContact/index.tsx'
-import CurrentCredential from './components/CurrentCredential/index.tsx'
-import EntryPoint from './components/EntryPoint/index.tsx'
-import Home from './components/Home/index.tsx'
-import ListContacts from './components/ListContacts/index.tsx'
-import ListCredentials from './components/ListCredentials/index.tsx'
-import Message from './components/Message/index.tsx'
-import Navbar from './components/Navbar/index.tsx'
-import PinCreate from './components/PinCreate/index.tsx'
-import PinEnter from './components/PinEnter/index.tsx'
-import Settings from './components/Settings/index.tsx'
-import SetupWizard from './components/SetupWizard/index.tsx'
-import Terms from './components/Terms/index.tsx'
-import Workflow from './components/Workflow/index.tsx'
+import CurrentContact from './components/CurrentContact/index'
+import CurrentCredential from './components/CurrentCredential/index'
+import EntryPoint from './components/EntryPoint/index'
+import Home from './components/Home/index'
+import ListContacts from './components/ListContacts/index'
+import ListCredentials from './components/ListCredentials/index'
+import Message from './components/Message/index'
+import Navbar from './components/Navbar/index'
+import PinCreate from './components/PinCreate/index'
+import PinEnter from './components/PinEnter/index'
+import Settings from './components/Settings/index'
+import SetupWizard from './components/SetupWizard/index'
+import Terms from './components/Terms/index'
+import Workflow from './components/Workflow/index'
 
 import Images from './assets/images'
 
 
-import LoadingOverlay from './components/LoadingOverlay/index.js';
+import LoadingOverlay from './components/LoadingOverlay/index';
 
 
 const App = (props) => {
