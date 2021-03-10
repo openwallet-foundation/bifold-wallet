@@ -106,14 +106,10 @@ function ListContacts(props: IListContacts) {
                 <View>
                   <Text
                     style={[
-                      {fontSize: 18},
+                      {fontSize: 18, top: 8},
                       AppStyles.textWhite,
-                      contact.alias ? null : {top:8} 
                     ]}>
-                    {contact.invitation.label}
-                  </Text>
-                  <Text style={[{fontSize: 14}, AppStyles.textWhite]}>
-                    {contact.alias}
+                    {contact.alias ? contact.alias : contact.invitation.label}
                   </Text>
                 </View>
                 <TouchableOpacity

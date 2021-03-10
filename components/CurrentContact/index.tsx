@@ -49,14 +49,10 @@ function CurrentContact(props: ICurrentContact) {
               <View>
                 <Text
                   style={[
-                    {fontSize: 18},
-                    AppStyles.textWhite,
-                    props.contact.alias ? null : {top:10} 
+                    {fontSize: 18, top: 10},
+                    AppStyles.textWhite, 
                   ]}>
-                  {props.contact.invitation.label}
-                </Text>
-                <Text style={[{fontSize: 14}, AppStyles.textWhite]}>
-                  {props.contact.alias}
+                  {props.contact.alias ? props.contact.alias : props.contact.invitation.label}
                 </Text>
               </View>
             </View>
