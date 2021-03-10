@@ -17,7 +17,7 @@ function AgentProvider(props) {
 
     useEffect(() => {
         const initAgent = async () => {
-            let agentConfig={
+            let agentConfig = {
                 mediatorUrl: Config.MEDIATOR_URL,
                 genesisUrl: Config.GENESIS_URL,
             }
@@ -32,7 +32,7 @@ function AgentProvider(props) {
             const outbound = new HttpOutboundTransporter()
         
             agentConfig = {
-                label: 'javascript',
+                label: 'Aries Bifold',
                 walletConfig: { id: 'wallet4' },
                 walletCredentials: { key: '123' },
                 autoAcceptConnections: true,
@@ -42,7 +42,7 @@ function AgentProvider(props) {
             }
 
             const newAgent = new Agent(agentConfig, inbound, outbound, indy)
-
+            
             await newAgent.init()
         
             setAgent(newAgent)
@@ -50,7 +50,7 @@ function AgentProvider(props) {
 
             console.info('Agent has been initialized')
         
-            //newAgent.credentials.acceptCredential()
+            
 
             const handleBasicMessageReceive = (event) => {
                 console.log(`New Basic Message with verkey ${event.verkey}:`, event.message)

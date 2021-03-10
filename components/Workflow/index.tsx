@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 
 import {Alert, Image, Text, View, TouchableWithoutFeedback} from 'react-native'
 
@@ -14,6 +14,9 @@ import {
 
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
+
+import AgentContext from '../AgentProvider/'
+import { CredentialEventType } from 'aries-framework-javascript'
 
 import CredentialOffered from './Credential/Offered/index'
 import CredentialRequested from './Credential/Requested/index'
@@ -34,10 +37,71 @@ function Workflow(props: IWorkflow) {
   const [workflow, setWorkflow] = useState('connect')
   const [workflowInProgress, setWorkflowInProgress] = useState(true)
   const [firstRender, setFirstRender] = useState(false)
-  const [contactID, setContactID] = useState('')
+
+  const [connection, setConnection] = useState(undefined)
+  const [credential, setCredential] = useState(undefined)
+
+  //Reference to the agent context
+  const agentContext = useContext(AgentContext)
+
+  //Credential Event Callback
+  const handleCredentialStateChange = async (event) => {
+    console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
+
+    if(event.credentialRecord.state === 'offer-received'){
+      //TODO:
+      //if(event.credentialRecord.connectionId === contactID){
+
+        const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
+
+        setConnection(connectionRecord)
+
+        const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
+
+        let attributes = {}
+        for(const index in previewAttributes){
+          attributes[previewAttributes[index].name] = previewAttributes[index].value
+        }
+
+        let credentialToDisplay = {
+          attributes,
+          connectionId: event.credentialRecord.connectionId,
+          id: event.credentialRecord.id
+        }
+
+        console.log("credentialToDisplay", credentialToDisplay)
+
+        setCredential(credentialToDisplay)
+
+        setWorkflow('offered')
+      //}
+      
+    }
+    else if(event.credentialRecord.state === 'credential-received'){
+      console.log("attempting to send ack")
+
+      await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
+      //TODO:
+      //Push to credential issued screen
+    }
+
+    //TODO: Update Credentials List
+  }
+
+  //Register Event Listener
+  useEffect(() => {
+    if(!agentContext.loading){
+      agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)
+      agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
+    }
+  }, [agentContext.loading])
+
 
   useEffect(() => {
     setWorkflowInProgress(true)
+
+    //Don't re-push the first workflow screen for back-up functionality
+    //TODO: Refactor
     if (firstRender) {
       history.push(`${url}/${workflow}`)
     } else {
@@ -59,9 +123,6 @@ function Workflow(props: IWorkflow) {
       <Route
         path={`${url}/connecting`}
         render={() => {
-          setTimeout(() => {
-            setWorkflow('requested')
-          }, 2200)
           return (
             <Message title={'Connecting'} bgColor={'#1B2624'} textLight={true}>
               <Image
@@ -77,12 +138,12 @@ function Workflow(props: IWorkflow) {
         }}
       />
       <Route
-        path={`${url}/requested`}
+        path={`${url}/offered`}
         render={() => (
           <CredentialOffered
             setWorkflow={setWorkflow}
-            contact={props.contacts[0]}
-            credential={props.credentials[0]}
+            contact={connection}
+            credential={credential}
           />
         )}
       />
@@ -92,7 +153,7 @@ function Workflow(props: IWorkflow) {
           //Back button checking
           console.log(action)
           if (
-            location.pathname != '/workflow/requested' &&
+            location.pathname != '/workflow/issued' &&
             workflowInProgress
           ) {
             return `Are you sure you want to exit and lose unsaved progress?`

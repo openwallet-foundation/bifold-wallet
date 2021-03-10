@@ -48,14 +48,11 @@ function CurrentCredential(props) {
               <View>
                 <Text
                   style={[
-                    {fontSize: 18},
+                    {fontSize: 20, top: 8},
                     AppStyles.textWhite,
-                    AppStyles.textUpper,
+                    AppStyles.textBold
                   ]}>
-                  {props.credential.label}
-                </Text>
-                <Text style={[{fontSize: 14}, AppStyles.textWhite]}>
-                  {props.credential.sublabel}
+                  Driver's License
                 </Text>
               </View>
             </View>
@@ -69,11 +66,10 @@ function CurrentCredential(props) {
                 <Text
                   style={[
                     {fontSize: 18},
-                    AppStyles.textSecondary,
-                    AppStyles.textUpper,
+                    AppStyles.textBlack,
                   ]}>
                   <Text style={AppStyles.textBold}>Name: </Text>
-                  {props.credential.first_name} {props.credential.last_name}
+                  {props.credential.attributes.first_name} {props.credential.attributes.last_name}
                 </Text>
               </View>
             </View>
@@ -88,10 +84,26 @@ function CurrentCredential(props) {
                   style={[
                     {fontSize: 18},
                     AppStyles.textSecondary,
-                    AppStyles.textUpper,
                   ]}>
-                  <Text style={AppStyles.textBold}>Date Received: </Text>
-                  {props.credential.credential_date}
+                  <Text style={AppStyles.textBold}>Gender: </Text>
+                  {props.credential.attributes.gender} 
+                </Text>
+              </View>
+            </View>
+            <View
+              style={[
+                AppStyles.tableItem,
+                Styles.tableItem,
+                Styles.tableSubItem,
+              ]}>
+              <View>
+                <Text
+                  style={[
+                    {fontSize: 18},
+                    AppStyles.textSecondary,
+                  ]}>
+                  <Text style={AppStyles.textBold}>Age: </Text>
+                  {props.credential.attributes.age} 
                 </Text>
               </View>
             </View>

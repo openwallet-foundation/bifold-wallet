@@ -16,7 +16,8 @@ import AppHeader from '../AppHeader/index'
 import BackButton from '../BackButton/index'
 import CurrentCredential from '../CurrentCredential/index'
 
-import {ErrorsContext} from '../Errors/index'
+import AgentContext from '../AgentProvider/'
+import { CredentialEventType } from 'aries-framework-javascript'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
@@ -24,11 +25,63 @@ import Styles from './styles'
 import { ICredential } from '../../types'
 
 interface IListCredentials {
-  credentials: [ICredential]
 }
 
 function ListCredentials(props: IListCredentials) {
   let history = useHistory()
+
+  //Reference to the agent context
+  const agentContext = useContext(AgentContext)
+
+  //Credential List State
+  const [credentials, setCredentials] = useState([])
+
+  //Function to get all credentials and set the state
+  const getCredentials = async () => {
+    const credentials = await agentContext.agent.credentials.getAll()
+    console.log(credentials)
+
+    let credentialsForDisplay = []
+
+    for(const credential of credentials){
+      if(credential.state === "done"){
+        let credentialToDisplay = {
+          ...await agentContext.agent.credentials.getIndyCredential(credential.credentialId),
+          connectionId: credential.connectionId,
+          id: credential.id
+        }
+        credentialsForDisplay.push(credentialToDisplay)
+      }
+    }
+    console.log("credentialsForDisplay", credentialsForDisplay)
+    //TODO: Filter credentials for display
+    setCredentials(credentialsForDisplay)
+  }
+
+  //On Component Load Fetch all Connections
+  useEffect(() => {
+    if(!agentContext.loading){
+      getCredentials()
+    }
+  }, [agentContext.loading])
+
+  //Credential Event Callback
+  const handleCredentialStateChange = async (event) => {
+    console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
+    
+    getCredentials()
+  }
+
+  //Register Event Listener
+  useEffect(() => {
+    if(!agentContext.loading){
+      agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)
+      agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
+    }
+  }, [agentContext.loading])
+
+
+
 
   const [viewInfo, setViewInfo] = useState('')
   const [viewCredential, setViewCredential] = useState(false)
@@ -47,7 +100,7 @@ function ListCredentials(props: IListCredentials) {
               onPress={() => history.push('/home')}>
               <Image source={Images.arrowDown} style={AppStyles.arrow} />
             </TouchableOpacity>
-            {props.credentials.map((credential, i) => (
+            {credentials.map((credential, i) => (
               <View
                 key={i}
                 style={[
@@ -58,14 +111,11 @@ function ListCredentials(props: IListCredentials) {
                 <View>
                   <Text
                     style={[
-                      {fontSize: 18},
+                      {fontSize: 18, top: 8},
                       AppStyles.textWhite,
-                      AppStyles.textUpper,
+                      AppStyles.textBold
                     ]}>
-                    {credential.label}
-                  </Text>
-                  <Text style={[{fontSize: 14}, AppStyles.textWhite]}>
-                    {credential.sublabel}
+                    Driver's License
                   </Text>
                 </View>
                 <TouchableOpacity
