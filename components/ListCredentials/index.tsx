@@ -44,12 +44,14 @@ function ListCredentials(props: IListCredentials) {
     let credentialsForDisplay = []
 
     for(const credential of credentials){
-      let credentialToDisplay = {
-        ...await agentContext.agent.credentials.getIndyCredential(credential.credentialId),
-        connectionId: credential.connectionId,
-        id: credential.id
+      if(credential.state === "done"){
+        let credentialToDisplay = {
+          ...await agentContext.agent.credentials.getIndyCredential(credential.credentialId),
+          connectionId: credential.connectionId,
+          id: credential.id
+        }
+        credentialsForDisplay.push(credentialToDisplay)
       }
-      credentialsForDisplay.push(credentialToDisplay)
     }
     console.log("credentialsForDisplay", credentialsForDisplay)
     //TODO: Filter credentials for display

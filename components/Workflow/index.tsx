@@ -56,8 +56,15 @@ function Workflow(props: IWorkflow) {
 
         setConnection(connectionRecord)
 
+        const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
+
+        let attributes = {}
+        for(const index in previewAttributes){
+          attributes[previewAttributes[index].name] = previewAttributes[index].value
+        }
+
         let credentialToDisplay = {
-          ...await agentContext.agent.credentials.getIndyCredential(event.credentialRecord.credentialId),
+          attributes,
           connectionId: event.credentialRecord.connectionId,
           id: event.credentialRecord.id
         }
@@ -146,7 +153,7 @@ function Workflow(props: IWorkflow) {
           //Back button checking
           console.log(action)
           if (
-            location.pathname != '/workflow/requested' &&
+            location.pathname != '/workflow/issued' &&
             workflowInProgress
           ) {
             return `Are you sure you want to exit and lose unsaved progress?`
