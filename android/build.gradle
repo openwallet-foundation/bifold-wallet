@@ -30,6 +30,9 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+        maven {
+            url 'https://repo.sovrin.org/repository/maven-public'
+        }
 
         google()
         jcenter()
