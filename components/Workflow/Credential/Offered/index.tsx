@@ -36,6 +36,11 @@ function CredentialOffered(props: ICredentialOffered) {
   //Reference to the agent context
   const agentContext = useContext(AgentContext)
 
+
+  useEffect(() => {
+    console.log(props.credential)
+  }, [])
+
   const [viewInfo, setViewInfo] = useState('')
   const [viewContact, setViewContact] = useState(false)
   const [viewCredential, setViewCredential] = useState(false)
@@ -70,13 +75,12 @@ function CredentialOffered(props: ICredentialOffered) {
                 <View style={AppStyles.tableItem}>
                   <View>
                     <Text
-                      style={[
-                        {fontSize: 18},
-                        AppStyles.textSecondary,
-                        AppStyles.textUpper,
-                        AppStyles.textBold,
+                    style={[
+                      {fontSize: 20, top: 8},
+                      AppStyles.textBlack,
+                      AppStyles.textBold,
                       ]}>
-                      {props.contact.label}
+                      {props.contact.alias ? props.contact.alias : props.contact.invitation.label}
                     </Text>
                     <Text style={[{fontSize: 14}, AppStyles.textSecondary]}>
                       {props.contact.sublabel}
@@ -97,15 +101,12 @@ function CredentialOffered(props: ICredentialOffered) {
                   <View>
                     <Text
                       style={[
-                        {fontSize: 18},
+                        {fontSize: 20, top: 8},
                         AppStyles.textSecondary,
-                        AppStyles.textUpper,
                         AppStyles.textBold,
                       ]}>
-                      {props.credential.label}
-                    </Text>
-                    <Text style={[{fontSize: 14}, AppStyles.textSecondary]}>
-                      {props.credential.sublabel}
+                      {/*Temporary hardcoding*/}
+                      Driver's License
                     </Text>
                   </View>
                   <TouchableOpacity
