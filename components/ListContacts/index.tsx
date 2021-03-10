@@ -32,13 +32,12 @@ interface IListContacts {
 function ListContacts(props: IListContacts) {
   let history = useHistory()
 
-  const [viewContact, setViewContact] = useState(true)
-  const [contactInfo, setContactInfo] = useState('')
+  const [viewInfo, setViewInfo] = useState('')
+  const [viewContact, setViewContact] = useState(false)
 
   return (
     <>
       <BackButton backPath={'/home'} />
-      {viewContact ? (
         <View style={AppStyles.viewFull}>
           <View style={AppStyles.header}>
             <AppHeader headerText={'CONTACTS'} />
@@ -73,9 +72,8 @@ function ListContacts(props: IListContacts) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    console.log(contact.label)
-                    setContactInfo(contact)
-                    setViewContact(false)
+                    setViewInfo(contact)
+                    setViewContact(true)
                   }}>
                   <Image
                     source={Images.infoWhite}
@@ -86,9 +84,9 @@ function ListContacts(props: IListContacts) {
             ))}
           </View>
         </View>
-      ) : (
-        <CurrentContact contact={contactInfo} setViewContact={setViewContact} />
-      )}
+        {viewContact ? (
+              <CurrentContact contact={viewInfo} setViewContact={setViewContact} />
+            ) : null}
     </>
   )
 }

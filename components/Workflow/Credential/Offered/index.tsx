@@ -12,50 +12,39 @@ import {
 
 import {useHistory} from 'react-router-native'
 
-import AppHeader from '../../AppHeader/index'
-import BackButton from '../../BackButton/index'
-import CurrentContact from '../../CurrentContact/index'
-import CurrentCredential from '../../CurrentCredential/index'
-import LoadingOverlay from '../../LoadingOverlay/index'
+import AppHeader from '../../../AppHeader/index'
+import BackButton from '../../../BackButton/index'
+import CurrentContact from '../../../CurrentContact/index'
+import CurrentCredential from '../../../CurrentCredential/index'
+import LoadingOverlay from '../../../LoadingOverlay/index'
 
-import {ErrorsContext} from '../../Errors/index'
-import {NotificationsContext} from '../../Notifications/index'
+import {ErrorsContext} from '../../../Errors/index'
+import {NotificationsContext} from '../../../Notifications/index'
 
+import Images from '../../../../assets/images'
 import Styles from '../styles'
-import Images from '../../../assets/images'
-import AppStyles from '../../../assets/styles'
-import { IContact, ICredential } from '../../../types'
+import AppStyles from '../../../../assets/styles'
+import { IContact, ICredential } from '../../../../types'
 
-interface ICredentialRequested {
+interface ICredentialOffered {
   contact: IContact
   credential: ICredential
 }
 
-function CredentialRequested(props: ICredentialRequested) {
+function CredentialOffered(props: ICredentialOffered) {
   let history = useHistory()
 
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)
 
-  const [viewContact, setViewContact] = useState(true)
-  const [viewCredential, setViewCredential] = useState(true)
+  const [viewInfo, setViewInfo] = useState('')
+  const [viewContact, setViewContact] = useState(false)
+  const [viewCredential, setViewCredential] = useState(false)
 
   return (
     <>
       <BackButton backPath={'/workflow/connect'} />
-      {!viewContact ? (
-        <CurrentContact
-          contact={props.contact}
-          setViewContact={setViewContact}
-        />
-      ) : (
         <>
-          {!viewCredential ? (
-            <CurrentCredential
-              credential={props.credential}
-              setViewCredential={setViewCredential}
-            />
-          ) : (
             <View style={AppStyles.viewFull}>
               <View style={AppStyles.header}>
                 <AppHeader headerText={'CREDENTIALS'} />
@@ -68,7 +57,7 @@ function CredentialRequested(props: ICredentialRequested) {
                     AppStyles.textUpper,
                     AppStyles.textBold,
                   ]}>
-                  Connected to:
+                  Credential from:
                 </Text>
                 <View style={AppStyles.tableItem}>
                   <View>
@@ -87,7 +76,8 @@ function CredentialRequested(props: ICredentialRequested) {
                   </View>
                   <TouchableOpacity
                     onPress={() => {
-                      setViewContact(!viewContact)
+                      setViewInfo(props.contact)
+                      setViewContact(true)
                     }}>
                     <Image
                       source={Images.infoGray}
@@ -112,7 +102,8 @@ function CredentialRequested(props: ICredentialRequested) {
                   </View>
                   <TouchableOpacity
                     onPress={() => {
-                      setViewCredential(!viewCredential)
+                      setViewInfo(props.credential)
+                      setViewCredential(true)
                     }}>
                     <Image
                       source={Images.infoGray}
@@ -129,32 +120,44 @@ function CredentialRequested(props: ICredentialRequested) {
                       Styles.buttonText,
                       AppStyles.textBold,
                     ]}>
-                    Send Credentials
+                    Claim Credentials
                   </Text>
                   <TouchableOpacity
-                    style={[Styles.button, AppStyles.backgroundPrimary]}>
-                    <Image source={Images.send} style={Styles.buttonIcon} />
+                    style={[Styles.button, AppStyles.backgroundPrimary]}
+                    onPress={() => {
+                      history.push('/home')
+                    }}>
+                    <Image source={Images.receive} style={Styles.buttonIcon} />
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                   style={{top: 60}}
-                  onPress={() => history.push('/home')}>
+                  onPress={() => {
+                    history.push('/home')
+                  }}>
                   <Text
                     style={[
                       {fontSize: 14},
                       AppStyles.textGray,
                       AppStyles.textCenter,
                     ]}>
-                    Decline{'\n'}Request
+                    Decline{'\n'}Offer
                   </Text>
                 </TouchableOpacity>
               </View>
             </View>
-          )}
+            {viewCredential ? (
+              <CurrentCredential
+                credential={viewInfo}
+                setViewCredential={setViewCredential}
+              />
+            ) : null}
+            {viewContact ? (
+              <CurrentContact contact={viewInfo} setViewContact={setViewContact} />
+            ) : null}
         </>
-      )}
     </>
   )
 }
 
-export default CredentialRequested
+export default CredentialOffered

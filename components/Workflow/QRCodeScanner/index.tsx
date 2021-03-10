@@ -13,15 +13,15 @@ import {useHistory} from 'react-router-native'
 
 import {RNCamera} from 'react-native-camera'
 
-import AppHeader from '../AppHeader/index'
-import BackButton from '../BackButton/index'
-import LoadingOverlay from '../LoadingOverlay/index'
+import AppHeader from '../../AppHeader/index'
+import BackButton from '../../BackButton/index'
+import LoadingOverlay from '../../LoadingOverlay/index'
 
-import {ErrorsContext} from '../Errors/index'
-import {NotificationsContext} from '../Notifications/index'
+import {ErrorsContext} from '../../Errors/index'
+import {NotificationsContext} from '../../Notifications/index'
 
 import Styles from './styles'
-import AppStyles from '../../assets/styles'
+import AppStyles from '../../../assets/styles'
 
 //  TODO - Add props interface
 function QRCodeScanner(props) {
