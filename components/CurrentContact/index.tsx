@@ -71,7 +71,6 @@ function CurrentContact(props: ICurrentContact) {
                       AppStyles.textSecondary,
                     ]}>
                     <Text style={AppStyles.textBold}>Created: </Text>{new Date(props.contact.createdAt).toDateString()}
-                    {props.contact.address}
                   </Text>
                 </View>
                 </View>
@@ -94,7 +93,6 @@ function CurrentContact(props: ICurrentContact) {
                       AppStyles.textSecondary,
                     ]}>
                     <Text style={AppStyles.textBold}>State: </Text>{props.contact.state}
-                    {props.contact.address}
                   </Text>
                 </View>
                 </View>
