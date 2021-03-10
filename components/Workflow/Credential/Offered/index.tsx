@@ -123,13 +123,18 @@ function CredentialOffered(props: ICredentialOffered) {
                     Claim Credentials
                   </Text>
                   <TouchableOpacity
-                    style={[Styles.button, AppStyles.backgroundPrimary]}>
+                    style={[Styles.button, AppStyles.backgroundPrimary]}
+                    onPress={() => {
+                      history.push('/home')
+                    }}>
                     <Image source={Images.receive} style={Styles.buttonIcon} />
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                   style={{top: 60}}
-                  onPress={() => history.push('/home')}>
+                  onPress={() => {
+                    history.push('/home')
+                  }}>
                   <Text
                     style={[
                       {fontSize: 14},

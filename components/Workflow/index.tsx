@@ -79,8 +79,8 @@ function Workflow(props: IWorkflow) {
       <Route
         path={`${url}/requested`}
         render={() => (
-          <CredentialRequested
-            //setWorkflow={setWorkflow}
+          <CredentialOffered
+            setWorkflow={setWorkflow}
             contact={props.contacts[0]}
             credential={props.credentials[0]}
           />
