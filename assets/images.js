@@ -1,6 +1,7 @@
 const images = {
   arrow: require('./img/arrow.png'),
   arrowDown: require('./img/arrow-down.png'),
+  checkmark: require('./img/checkmark.png'),
   infoBlue: require('./img/info-blue.png'),
   infoGray: require('./img/info-gray.png'),
   infoWhite: require('./img/info-white.png'),
