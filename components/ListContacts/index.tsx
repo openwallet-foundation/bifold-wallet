@@ -43,7 +43,7 @@ function ListContacts(props: IListContacts) {
    //Function to get all connections and set the state
    const getConnections = async () => {
      const connections = await agentContext.agent.connections.getAll()
-     console.log(connections)
+     console.log('CONNECTIONS: ', connections)
      setContacts(connections)
    }
  
@@ -57,7 +57,13 @@ function ListContacts(props: IListContacts) {
    //Connection Event Callback
    const handleConnectionStateChange = (event) => {
      console.info("Connections State Change", event)
- 
+     let allConnections = [...contacts]
+     for(let connection of allConnections) {
+         if(connection.id == event.connectionRecord.id) {
+             connection = event.connectionRecord
+         }
+     }
+     setContacts(allConnections)
      //TODO: Update Connections List
    }
  
@@ -102,12 +108,12 @@ function ListContacts(props: IListContacts) {
                     style={[
                       {fontSize: 18},
                       AppStyles.textWhite,
-                      AppStyles.textUpper,
+                      contact.alias ? null : {top:8} 
                     ]}>
-                    {contact.label}
+                    {contact.invitation.label}
                   </Text>
                   <Text style={[{fontSize: 14}, AppStyles.textWhite]}>
-                    {contact.sublabel}
+                    {contact.alias}
                   </Text>
                 </View>
                 <TouchableOpacity

@@ -51,64 +51,61 @@ function CurrentContact(props: ICurrentContact) {
                   style={[
                     {fontSize: 18},
                     AppStyles.textWhite,
-                    AppStyles.textUpper,
+                    props.contact.alias ? null : {top:10} 
                   ]}>
-                  {props.contact.label}
+                  {props.contact.invitation.label}
                 </Text>
                 <Text style={[{fontSize: 14}, AppStyles.textWhite]}>
-                  {props.contact.sublabel}
+                  {props.contact.alias}
                 </Text>
               </View>
             </View>
-            <View
+              {props.contact.createdAt ? 
+              (
+                <View
               style={[
                 AppStyles.tableItem,
                 Styles.tableItem,
                 Styles.tableSubItem,
               ]}>
-              <View>
-                <Text
-                  style={[
-                    {fontSize: 18},
-                    AppStyles.textSecondary,
-                    AppStyles.textUpper,
-                  ]}>
-                  <Text style={AppStyles.textBold}>Address: </Text>
-                  {props.contact.address}
-                </Text>
-              </View>
-            </View>
-            <View
+                <View>
+                  <Text
+                    style={[
+                      {fontSize: 18},
+                      AppStyles.textSecondary,
+                    ]}>
+                    <Text style={AppStyles.textBold}>Created: </Text>{new Date(props.contact.createdAt).toDateString()}
+                    {props.contact.address}
+                  </Text>
+                </View>
+                </View>
+              )
+              :
+              null
+              }
+              {props.contact.state ? 
+              (
+                <View
               style={[
                 AppStyles.tableItem,
                 Styles.tableItem,
                 Styles.tableSubItem,
               ]}>
-              <View>
-                <Text
-                  style={[
-                    {fontSize: 18},
-                    AppStyles.textSecondary,
-                    AppStyles.textUpper,
-                  ]}>
-                  <Text style={AppStyles.textBold}>Phone: </Text>
-                  {props.contact.phone}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={[
-                AppStyles.tableItem,
-                Styles.tableItem,
-                Styles.tableSubItem,
-              ]}>
-              <View>
-                <Text style={[{fontSize: 18}, AppStyles.textSecondary]}>
-                  <Text style={AppStyles.textBold}>Email: </Text>
-                  {props.contact.email}
-                </Text>
-              </View>
-            </View>
+                <View>
+                  <Text
+                    style={[
+                      {fontSize: 18},
+                      AppStyles.textSecondary,
+                    ]}>
+                    <Text style={AppStyles.textBold}>State: </Text>{props.contact.state}
+                    {props.contact.address}
+                  </Text>
+                </View>
+                </View>
+              )
+              :
+              null
+              }
           </>
         ) : null}
       </View>
