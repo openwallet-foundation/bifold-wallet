@@ -18,7 +18,7 @@ import BackButton from '../../BackButton/index'
 import LoadingOverlay from '../../LoadingOverlay/index'
 
 import { decodeInvitationFromUrl } from 'aries-framework-javascript';
-import AgentContext from '../../AgentProvider/index.js'
+import AgentContext from '../../AgentProvider/'
 
 import Styles from './styles'
 import AppStyles from '../../../assets/styles'
