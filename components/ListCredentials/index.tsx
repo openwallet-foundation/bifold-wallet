@@ -16,7 +16,8 @@ import AppHeader from '../AppHeader/index'
 import BackButton from '../BackButton/index'
 import CurrentCredential from '../CurrentCredential/index'
 
-import {ErrorsContext} from '../Errors/index'
+import AgentContext from '../AgentProvider/'
+import { CredentialEventType } from 'aries-framework-javascript'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
@@ -24,11 +25,52 @@ import Styles from './styles'
 import { ICredential } from '../../types'
 
 interface IListCredentials {
-  credentials: [ICredential]
 }
 
 function ListCredentials(props: IListCredentials) {
   let history = useHistory()
+
+  //Reference to the agent context
+  const agentContext = useContext(AgentContext)
+
+  //Credential List State
+  const [credentials, setCredentials] = useState([])
+
+  //Function to get all credentials and set the state
+  const getCredentials = async () => {
+    const credentials = await agentContext.agent.credentials.getAll()
+    console.log(credentials)
+
+    //TODO: Filter credentials for display
+    setCredentials(credentials)
+  }
+
+  //On Component Load Fetch all Connections
+  useEffect(() => {
+    if(!agentContext.loading){
+      getCredentials()
+    }
+  }, [agentContext.loading])
+
+  //Credential Event Callback
+  const handleCredentialStateChange = async (event) => {
+    console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
+
+
+    //TODO: Filter credentials for display
+    //TODO: Update Credentials List
+  }
+
+  //Register Event Listener
+  useEffect(() => {
+    if(!agentContext.loading){
+      agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)
+      agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
+    }
+  }, [agentContext.loading])
+
+
+
 
   const [viewInfo, setViewInfo] = useState('')
   const [viewCredential, setViewCredential] = useState(false)
@@ -47,7 +89,7 @@ function ListCredentials(props: IListCredentials) {
               onPress={() => history.push('/home')}>
               <Image source={Images.arrowDown} style={AppStyles.arrow} />
             </TouchableOpacity>
-            {props.credentials.map((credential, i) => (
+            {credentials.map((credential, i) => (
               <View
                 key={i}
                 style={[

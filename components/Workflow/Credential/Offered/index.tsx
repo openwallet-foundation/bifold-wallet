@@ -18,8 +18,7 @@ import CurrentContact from '../../../CurrentContact/index'
 import CurrentCredential from '../../../CurrentCredential/index'
 import LoadingOverlay from '../../../LoadingOverlay/index'
 
-import {ErrorsContext} from '../../../Errors/index'
-import {NotificationsContext} from '../../../Notifications/index'
+import AgentContext from '../../../AgentProvider/'
 
 import Images from '../../../../assets/images'
 import Styles from '../styles'
@@ -34,12 +33,21 @@ interface ICredentialOffered {
 function CredentialOffered(props: ICredentialOffered) {
   let history = useHistory()
 
-  const errors = useContext(ErrorsContext)
-  const notifications = useContext(NotificationsContext)
+  //Reference to the agent context
+  const agentContext = useContext(AgentContext)
 
   const [viewInfo, setViewInfo] = useState('')
   const [viewContact, setViewContact] = useState(false)
   const [viewCredential, setViewCredential] = useState(false)
+
+  const acceptOffer = async () => {
+    console.log("Attempting to accept offer")
+    await agentContext.agent.credentials.acceptOffer(props.credential.id)
+
+    //TODO:
+    //Push to pending issuance screen
+    history.push('/home')
+  }
 
   return (
     <>
@@ -125,7 +133,7 @@ function CredentialOffered(props: ICredentialOffered) {
                   <TouchableOpacity
                     style={[Styles.button, AppStyles.backgroundPrimary]}
                     onPress={() => {
-                      history.push('/home')
+                      acceptOffer()
                     }}>
                     <Image source={Images.receive} style={Styles.buttonIcon} />
                   </TouchableOpacity>

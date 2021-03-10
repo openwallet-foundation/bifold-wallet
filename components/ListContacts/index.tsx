@@ -26,7 +26,6 @@ import Styles from './styles'
 import { IContact } from '../../types'
 
 interface IListContacts {
-  contacts: IContact[] 
 
 }
 
@@ -34,8 +33,8 @@ interface IListContacts {
 function ListContacts(props: IListContacts) {
   let history = useHistory()
 
-   //Reference to the agent context
-   const agentContext = useContext(AgentContext)
+  //Reference to the agent context
+  const agentContext = useContext(AgentContext)
 
    //Contacts List State
    const [contacts, setContacts] = useState([])
