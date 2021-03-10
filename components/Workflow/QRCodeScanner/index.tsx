@@ -17,8 +17,8 @@ import AppHeader from '../../AppHeader/index'
 import BackButton from '../../BackButton/index'
 import LoadingOverlay from '../../LoadingOverlay/index'
 
-import {ErrorsContext} from '../../Errors/index'
-import {NotificationsContext} from '../../Notifications/index'
+import { decodeInvitationFromUrl } from 'aries-framework-javascript';
+import AgentContext from '../../AgentProvider/'
 
 import Styles from './styles'
 import AppStyles from '../../../assets/styles'
@@ -27,40 +27,68 @@ import AppStyles from '../../../assets/styles'
 function QRCodeScanner(props) {
   let history = useHistory()
 
-  props.setWorkflowInProgress(false)
+   //Reference to the agent context
+   const agentContext = useContext(AgentContext)
 
-  const errors = useContext(ErrorsContext)
-  const notifications = useContext(NotificationsContext)
-
-  return (
-    <>
-      <BackButton backPath={'/home'} />
-      <View style={AppStyles.viewFull}>
-        <View style={AppStyles.header}>
-          <AppHeader headerText={'SCAN CODE'} />
-        </View>
-        <View style={AppStyles.tab}>
-          <RNCamera
-            style={Styles.camera}
-            type={RNCamera.Constants.Type.back}
-            captureAudio={false}
-            androidCameraPermissionOptions={{
-              title: 'Permission to use camera',
-              message: 'We need your permission to use your camera',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
-            }}>
-            <TouchableOpacity
-              style={{width: '100%', height: '100%'}}
-              onPress={() => {
-                props.setWorkflow('connecting')
+   props.setWorkflowInProgress(false)
+   
+   //State to determine if we should show the camera any longer
+   const [cameraActive, setCameraActive] = useState(true)
+ 
+   const barcodeRecognized = ({barcodes}) => {
+     barcodes.forEach(async (barcode) => {
+       console.log(`Scanned QR Code`)
+       console.log('BARCODE: ', barcode)
+ 
+       //Turn off camera so that we don't scan again
+       setCameraActive(false)
+ 
+       const decodedInvitation = await decodeInvitationFromUrl(barcode.data)
+   
+       console.log("New Invitation:", decodedInvitation)
+   
+       const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, { autoAcceptConnection: true })
+       
+       console.log("New Connection Record", connectionRecord)
+ 
+       props.setWorkflow('connecting')
+     })
+   }
+ 
+  if (cameraActive) {
+    return (
+      <>
+        <BackButton backPath={'/home'} />
+        <View style={AppStyles.viewFull}>
+          <View style={AppStyles.header}>
+            <AppHeader headerText={'SCAN CODE'} />
+          </View>
+          <View style={AppStyles.tab}>
+            <RNCamera
+              style={Styles.camera}
+              type={RNCamera.Constants.Type.back}
+              captureAudio={false}
+              androidCameraPermissionOptions={{
+                title: 'Permission to use camera',
+                message: 'We need your permission to use your camera',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
               }}
-            />
-          </RNCamera>
+              googleVisionBarcodeType={
+                RNCamera.Constants.GoogleVisionBarcodeDetection.BarcodeType.QR_CODE
+              }
+              onGoogleVisionBarcodesDetected={({barcodes}) => {
+                barcodeRecognized({barcodes})
+              }}
+              >
+            </RNCamera>
+          </View>
         </View>
-      </View>
-    </>
-  )
+      </>
+    )
+  } else {
+    return <LoadingOverlay />
+  }
 }
 
 export default QRCodeScanner
