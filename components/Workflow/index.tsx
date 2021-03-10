@@ -15,9 +15,9 @@ import {
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 
-import CredentialOffered from '../Credential/Offered/index'
-import CredentialRequested from '../Credential/Requested/index'
-import QRCodeScanner from '../QRCodeScanner/index'
+import CredentialOffered from './Credential/Offered/index'
+import CredentialRequested from './Credential/Requested/index'
+import QRCodeScanner from './QRCodeScanner/index'
 import Message from '../Message/index'
 import { IContact, ICredential } from '../../types'
 
