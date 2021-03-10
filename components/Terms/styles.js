@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   checkmark: {
     width: '140%',
     height: '140%',
-    bottom: '20%'
+    bottom: '20%',
   },
   checktext: {
     justifyContent: 'center',

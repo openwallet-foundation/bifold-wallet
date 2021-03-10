@@ -14,7 +14,7 @@ import {
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid'
 
-import { AgentProvider } from './components/AgentProvider/'
+import {AgentProvider} from './components/AgentProvider/'
 import Errors from './components/Errors/index'
 import Notifications from './components/Notifications/index'
 
@@ -35,9 +35,7 @@ import Workflow from './components/Workflow/index'
 
 import Images from './assets/images'
 
-
-import LoadingOverlay from './components/LoadingOverlay/index';
-
+import LoadingOverlay from './components/LoadingOverlay/index'
 
 const App = (props) => {
   let location = useLocation()
@@ -155,12 +153,13 @@ const App = (props) => {
               />
               <Route
                 path="/workflow"
-                render={() => 
-                <Workflow 
-                  authenticated={authenticated} 
-                  contacts={mockContacts} 
-                  credentials={mockCredentials}
-                />}
+                render={() => (
+                  <Workflow
+                    authenticated={authenticated}
+                    contacts={mockContacts}
+                    credentials={mockCredentials}
+                  />
+                )}
               />
               <Route
                 exact
