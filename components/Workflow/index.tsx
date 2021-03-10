@@ -55,7 +55,16 @@ function Workflow(props: IWorkflow) {
         const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
 
         setConnection(connectionRecord)
-        setCredential(event.credentialRecord)
+
+        let credentialToDisplay = {
+          ...await agentContext.agent.credentials.getIndyCredential(event.credentialRecord.credentialId),
+          connectionId: event.credentialRecord.connectionId,
+          id: event.credentialRecord.id
+        }
+
+        console.log("credentialToDisplay", credentialToDisplay)
+
+        setCredential(credentialToDisplay)
 
         setWorkflow('offered')
       //}

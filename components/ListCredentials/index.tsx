@@ -41,8 +41,19 @@ function ListCredentials(props: IListCredentials) {
     const credentials = await agentContext.agent.credentials.getAll()
     console.log(credentials)
 
+    let credentialsForDisplay = []
+
+    for(const credential of credentials){
+      let credentialToDisplay = {
+        ...await agentContext.agent.credentials.getIndyCredential(credential.credentialId),
+        connectionId: credential.connectionId,
+        id: credential.id
+      }
+      credentialsForDisplay.push(credentialToDisplay)
+    }
+    console.log("credentialsForDisplay", credentialsForDisplay)
     //TODO: Filter credentials for display
-    setCredentials(credentials)
+    setCredentials(credentialsForDisplay)
   }
 
   //On Component Load Fetch all Connections
@@ -55,10 +66,8 @@ function ListCredentials(props: IListCredentials) {
   //Credential Event Callback
   const handleCredentialStateChange = async (event) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
-
-
-    //TODO: Filter credentials for display
-    //TODO: Update Credentials List
+    
+    getCredentials()
   }
 
   //Register Event Listener
