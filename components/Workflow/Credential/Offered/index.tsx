@@ -103,7 +103,7 @@ function CredentialOffered(props: ICredentialOffered) {
                   <TouchableOpacity
                     onPress={() => {
                       setViewInfo(props.credential)
-                      setViewContact(true)
+                      setViewCredential(true)
                     }}>
                     <Image
                       source={Images.infoGray}
