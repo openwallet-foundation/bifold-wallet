@@ -16,7 +16,9 @@ import AppHeader from '../AppHeader/index'
 import BackButton from '../BackButton/index'
 import CurrentContact from '../CurrentContact/index'
 
-import {ErrorsContext} from '../Errors/index'
+import AgentContext from '../AgentProvider/index.js'
+import { ConnectionEventType } from 'aries-framework-javascript'
+
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
@@ -31,6 +33,44 @@ interface IListContacts {
 
 function ListContacts(props: IListContacts) {
   let history = useHistory()
+
+   //Reference to the agent context
+   const agentContext = useContext(AgentContext)
+
+   //Contacts List State
+   const [contacts, setContacts] = useState([])
+ 
+   //Function to get all connections and set the state
+   const getConnections = async () => {
+     const connections = await agentContext.agent.connections.getAll()
+     console.log(connections)
+     setContacts(connections)
+   }
+ 
+   //On Component Load Fetch all Connections
+   useEffect(() => {
+     if(!agentContext.loading){
+       getConnections()
+     }
+   }, [agentContext.loading])
+ 
+   //Connection Event Callback
+   const handleConnectionStateChange = (event) => {
+     console.info("Connections State Change", event)
+ 
+     //TODO: Update Connections List
+   }
+ 
+   //Register Event Listener
+   useEffect(() => {
+     if(!agentContext.loading){
+       agentContext.agent.connections.events.removeAllListeners(ConnectionEventType.StateChanged)
+       agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
+     }
+   }, [agentContext.loading])
+ 
+ 
+ 
 
   const [viewInfo, setViewInfo] = useState('')
   const [viewContact, setViewContact] = useState(false)
@@ -49,7 +89,7 @@ function ListContacts(props: IListContacts) {
               onPress={() => history.push('/home')}>
               <Image source={Images.arrowDown} style={AppStyles.arrow} />
             </TouchableOpacity>
-            {props.contacts.map((contact, i) => (
+            {contacts.map((contact, i) => (
               <View
                 key={i}
                 style={[

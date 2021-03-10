@@ -10,8 +10,6 @@ class HttpOutboundTransporter implements OutboundTransporter {
       throw new Error(`Missing endpoint. I don't know how and where to send the message.`)
     }
 
-    console.log('REPLY: ', receiveReply)
-    console.log('PACKAGE: ', outboundPackage)
     try {
       if (receiveReply) {
         const response = await fetch(endpoint, {
@@ -23,12 +21,12 @@ class HttpOutboundTransporter implements OutboundTransporter {
         })
 
         const data:any = await response.text()
-        console.log('Response: ', response)
+        //console.log('Response: ', response)
         if(response.status == 200) {
           const wireMessage = JSON.parse(data)
           return wireMessage
         } else {
-          console.warn('Error connecting to endpoint: ', response.status, data)
+          console.warn('Mediation Error: ', response.status, data)
           return null
         }
       } else {
