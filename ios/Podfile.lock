@@ -227,6 +227,8 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
+  - rn-indy-sdk (0.1.8):
+    - React
   - RNCAsyncStorage (1.12.1):
     - React-Core
   - RNFS (2.16.6):
@@ -267,6 +269,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-indy-sdk (from `../node_modules/rn-indy-sdk`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
@@ -330,6 +333,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-indy-sdk:
+    :path: "../node_modules/rn-indy-sdk"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNFS:
@@ -357,7 +362,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-camera: 5c1fbfecf63b802b8ca4a71c60d30a71550fb348
+  react-native-camera: 35854c4f764a4a6cf61c1c3525888b92f0fe4b31
   react-native-get-random-values: 1404bd5cc0ab0e287f75ee1c489555688fc65f89
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -369,12 +374,13 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNCAsyncStorage: cb9a623793918c6699586281f0b51cbc38f046f9
+  rn-indy-sdk: 07144a068412b3604b3131442f4fc1ed8827e15e
+  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: af011ddf2e9d09b9d5ba8ee2377eaf1dc3ed4c4f
+PODFILE CHECKSUM: cdc34ee3a6f1733a25d689b46c4032a7a4350dc8
 
 COCOAPODS: 1.10.1
