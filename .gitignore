@@ -64,6 +64,7 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+!aries-framework-javascript.tgz
 
 # Yarn Integrity file
 .yarn-integrity
