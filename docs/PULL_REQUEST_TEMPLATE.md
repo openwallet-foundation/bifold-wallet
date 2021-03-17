@@ -14,7 +14,7 @@ If an item doesn't apply to your pull request, **check it anyway** to make it ap
 
 - [ ] All commits contain a DCO `Signed-off-by` line (we use the [DCO GitHub app](https://github.com/apps/dco) to enforce this).
 - [ ] Updated LICENSE-3RD-PARTY.md for any added dependencies or vendored components.
-- [ ] Run prettier - Instructions [here](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [ ] Run prettier: `npm run style-format`
 - [ ] Updated **documentation** for changed code and new or modified features.
 
 If you have _any_ questions to _any_ of the points above, just **submit and ask**! This checklist is here to _help_ you, not to deter you from contributing!
