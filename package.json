@@ -6,7 +6,7 @@
     "style-check": "prettier --check '**/*.js'",
     "style-format": "prettier --write '**/*.js'",
     "android": "npx react-native run-android",
-    "ios": "npx react-native run-ios",
+    "ios": "npx react-native run-ios --device",
     "start": "npx react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint .",
