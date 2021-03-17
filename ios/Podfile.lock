@@ -190,6 +190,10 @@ PODS:
     - React-Core
   - react-native-camera/RN (3.40.0):
     - React-Core
+  - react-native-config (1.4.2):
+    - react-native-config/App (= 1.4.2)
+  - react-native-config/App (1.4.2):
+    - React-Core
   - react-native-get-random-values (1.5.0):
     - React
   - React-RCTActionSheet (0.61.5):
@@ -257,6 +261,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - react-native-config (from `../node_modules/react-native-config`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -311,6 +316,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-config:
+    :path: "../node_modules/react-native-config"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
   React-RCTActionSheet:
@@ -362,7 +369,8 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-camera: 35854c4f764a4a6cf61c1c3525888b92f0fe4b31
+  react-native-camera: 5c1fbfecf63b802b8ca4a71c60d30a71550fb348
+  react-native-config: c98128a72bc2c3a1ca72caec0b021f0fa944aa29
   react-native-get-random-values: 1404bd5cc0ab0e287f75ee1c489555688fc65f89
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -375,7 +383,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   rn-indy-sdk: 07144a068412b3604b3131442f4fc1ed8827e15e
-  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCAsyncStorage: cb9a623793918c6699586281f0b51cbc38f046f9
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
