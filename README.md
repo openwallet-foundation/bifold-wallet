@@ -40,7 +40,7 @@ In order to use Aries Bifold, you must have a mediator to use with the app. Inst
 
 #### Network
 Aries Bifold as of right now is tied to one ledger with the intention of making this more flexible/dynamic in the future. You must have a genesis file url for your chosen network, such as:
-* Indicio TestNet: https://raw.githubusercontent.com/Indiciotech/indicionetwork/main/genesis_files/pool_transactions_testnet_genesis
+* Indicio TestNet: https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
 * Sovrin StagingNet: https://raw.githubusercontent.com/sovrin-foundation/sovrin/master/sovrin/pool_transactions_sandbox_genesis
 * Local network: _TODO: Insert instructions to run local network_
 
@@ -55,7 +55,7 @@ npm install
 In the root directory add a .env file for the following environment variables, such as the following:
 ```
 MEDIATOR_URL=https://dd652a260851.ngrok.io
-GENESIS_URL=https://raw.githubusercontent.com/Indiciotech/indicionetwork/main/genesis_files/pool_transactions_testnet_genesis
+GENESIS_URL=https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
 ```
 
 ### Android Specific
