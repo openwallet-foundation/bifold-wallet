@@ -36,7 +36,7 @@ Troubleshooting guides can be found in the [docs/installation](./docs/INSTALLATI
 [Cocoa Pods](https://cocoapods.org/) (iOS specific) 
 
 #### Mediator 
-In order to use Aries Bifold, you must have a mediator to use with the app. Instructions for launching your own mediator locally can be found in [Aries Framework Javascript](https://github.com/hyperledger/aries-framework-javascript#starting-mediator-agents).
+In order to use Aries Bifold, you must have a mediator to use with the app. Instructions for launching your own mediator locally can be found in [docs/mediations](./docs/MEDIATION.md) or at [Aries Framework Javascript](https://github.com/hyperledger/aries-framework-javascript#starting-mediator-agents).
 
 #### Network
 Aries Bifold as of right now is tied to one ledger with the intention of making this more flexible/dynamic in the future. You must have a genesis file url for your chosen network, such as:

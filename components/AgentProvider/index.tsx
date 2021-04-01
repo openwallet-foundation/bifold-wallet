@@ -5,7 +5,7 @@ import { downloadGenesis, storeGenesis } from '../../genesis-utils'
 import { HttpOutboundTransporter, PollingInboundTransporter } from '../../transporters'
 
 import indy from 'rn-indy-sdk'
-import { Agent, ConnectionEventType, BasicMessageEventType } from 'aries-framework-javascript'
+import { Agent, ConnectionEventType, BasicMessageEventType, ConsoleLogger, LogLevel } from 'aries-framework-javascript'
 console.disableYellowBox = true; 
 
 const AgentContext = React.createContext({})
@@ -39,9 +39,11 @@ function AgentProvider(props) {
                 poolName: 'test-183',
                 ...agentConfig,
                 genesisPath,
+                logger: new ConsoleLogger(LogLevel.debug),
+                indy
             }
 
-            const newAgent = new Agent(agentConfig, inbound, outbound, indy)
+            const newAgent = new Agent(agentConfig, inbound, outbound)
             
             await newAgent.init()
         

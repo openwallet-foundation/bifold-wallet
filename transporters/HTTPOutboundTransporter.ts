@@ -27,7 +27,7 @@ class HttpOutboundTransporter implements OutboundTransporter {
           return wireMessage
         } else {
           console.warn('Mediation Error: ', response.status, data)
-          return null
+          return
         }
       } else {
         await fetch(endpoint, {
