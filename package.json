@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.0",
-    "aries-framework-javascript": "file:aries-framework-javascript.tgz",
+    "aries-framework-javascript": "file:aries-framework-javascript-v1.0.0.tgz",
     "axios": "^0.21.0",
     "patch-package": "^6.4.4",
     "react": "16.9.0",
@@ -27,7 +27,7 @@
     "react-native-qrcode-svg": "^6.0.6",
     "react-native-svg": "^12.1.0",
     "react-router-native": "^5.2.0",
-    "rn-indy-sdk": "^0.1.8",
+    "rn-indy-sdk": "0.1.8",
     "uuid": "^8.1.0"
   },
   "devDependencies": {
