@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { OutboundTransporter } from 'aries-framework-javascript'
+import {OutboundTransporter} from 'aries-framework-javascript'
 
 class HttpOutboundTransporter implements OutboundTransporter {
-  public async sendMessage(outboundPackage: any, receiveReply: boolean): Promise<void> {
-    const { payload, endpoint } = outboundPackage
+  public async sendMessage(
+    outboundPackage: any,
+    receiveReply: boolean,
+  ): Promise<void> {
+    const {payload, endpoint} = outboundPackage
 
     if (!endpoint) {
-      throw new Error(`Missing endpoint. I don't know how and where to send the message.`)
+      throw new Error(
+        `Missing endpoint. I don't know how and where to send the message.`,
+      )
     }
 
     try {
@@ -20,9 +25,9 @@ class HttpOutboundTransporter implements OutboundTransporter {
           body: JSON.stringify(payload),
         })
 
-        const data:any = await response.text()
+        const data: any = await response.text()
         //console.log('Response: ', response)
-        if(response.status == 200) {
+        if (response.status == 200) {
           const wireMessage = JSON.parse(data)
           return wireMessage
         } else {
@@ -46,4 +51,4 @@ class HttpOutboundTransporter implements OutboundTransporter {
   }
 }
 
-export { HttpOutboundTransporter }
+export {HttpOutboundTransporter}
