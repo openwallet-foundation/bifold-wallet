@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useEffect} from 'react'
 
 import {Alert, BackHandler} from 'react-native'
 
@@ -12,16 +12,6 @@ interface IBackButton {
 function BackButton(props: IBackButton) {
   const history = useHistory()
   const location = useLocation()
-
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)
-    return () => {
-      BackHandler.removeEventListener(
-        'hardwareBackPress',
-        handleBackButtonClick,
-      )
-    }
-  }, [location])
 
   const handleBackButtonClick = () => {
     if (props.backExit) {
@@ -45,6 +35,16 @@ function BackButton(props: IBackButton) {
     }
     return true
   }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)
+    return () => {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        handleBackButtonClick,
+      )
+    }
+  }, [location])
 
   return <></>
 }

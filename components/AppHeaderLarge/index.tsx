@@ -1,19 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {Image, TouchableOpacity, View} from 'react-native'
 
 import {useHistory} from 'react-router-native'
 
 import Images from '../../assets/images'
-import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
 interface IAppHeaderLarge {

@@ -1,19 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useContext} from 'react'
 
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {Text, TouchableOpacity, View} from 'react-native'
 
 import {useHistory, useLocation} from 'react-router-native'
 
 import AppHeaderLarge from '../AppHeaderLarge/index'
 import BackButton from '../BackButton/index'
-import LoadingOverlay from '../LoadingOverlay/index'
 
 import {ErrorsContext} from '../Errors/index'
 import {NotificationsContext} from '../Notifications/index'

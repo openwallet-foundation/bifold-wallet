@@ -1,14 +1,6 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {Image, Text, TouchableOpacity, View} from 'react-native'
 
 import {useHistory} from 'react-router-native'
 
@@ -16,7 +8,6 @@ import AppHeader from '../../../AppHeader/index'
 import BackButton from '../../../BackButton/index'
 import CurrentContact from '../../../CurrentContact/index'
 import CurrentCredential from '../../../CurrentCredential/index'
-import LoadingOverlay from '../../../LoadingOverlay/index'
 
 import {ErrorsContext} from '../../../Errors/index'
 import {NotificationsContext} from '../../../Notifications/index'

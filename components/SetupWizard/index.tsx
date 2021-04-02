@@ -1,18 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 
-import {
-  Alert,
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {KeyboardAvoidingView, View} from 'react-native'
 
 import {useHistory} from 'react-router-native'
 
@@ -20,11 +8,9 @@ import * as Keychain from 'react-native-keychain'
 
 import BackButton from '../BackButton/index'
 import LoadingOverlay from '../LoadingOverlay/index'
-import Message from '../Message/index'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
-import Images from '../../assets/images'
 
 import {NotificationsContext} from '../Notifications/index'
 

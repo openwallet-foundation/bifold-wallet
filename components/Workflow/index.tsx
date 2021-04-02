@@ -1,25 +1,15 @@
 import React, {useState, useEffect, useContext} from 'react'
 
-import {Alert, Image, Text, View, TouchableWithoutFeedback} from 'react-native'
+import {Image, View} from 'react-native'
 
-import {
-  Prompt,
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-  useLocation,
-  useRouteMatch,
-} from 'react-router-native'
+import {Route, useHistory, useRouteMatch} from 'react-router-native'
 
 import Images from '../../assets/images'
-import AppStyles from '../../assets/styles'
 
 import AgentContext from '../AgentProvider/'
 import {CredentialEventType} from 'aries-framework-javascript'
 
 import CredentialOffered from './Credential/Offered/index'
-import CredentialRequested from './Credential/Requested/index'
 import QRCodeScanner from './QRCodeScanner/index'
 import Message from '../Message/index'
 import {IContact, ICredential} from '../../types'

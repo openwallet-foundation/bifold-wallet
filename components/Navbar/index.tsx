@@ -1,21 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
-import {
-  Button,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {Image, Text, TouchableOpacity, View} from 'react-native'
 
 import {Link} from 'react-router-native'
-
-import AppHeaderLarge from '../AppHeaderLarge/index'
-import LoadingOverlay from '../LoadingOverlay/index'
 
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'

@@ -1,14 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {Image, Text, TouchableOpacity, View} from 'react-native'
 
 import {useHistory} from 'react-router-native'
 
@@ -22,7 +14,6 @@ import {CredentialEventType} from 'aries-framework-javascript'
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
 import Styles from './styles'
-import {ICredential} from '../../types'
 
 interface IListCredentials {}
 

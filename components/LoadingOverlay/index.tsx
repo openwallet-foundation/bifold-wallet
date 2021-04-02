@@ -1,8 +1,7 @@
-import React, {useContext, useRef} from 'react'
-import {Animated, Text, View} from 'react-native'
+import React, {useRef} from 'react'
+import {Animated, View} from 'react-native'
 
 import AppHeader from '../AppHeader/index'
-import {NotificationsContext} from '../Notifications/index'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'

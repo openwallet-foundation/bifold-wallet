@@ -1,20 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React from 'react'
 
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {Image, Text, TouchableOpacity, View} from 'react-native'
 
 import {useHistory} from 'react-router-native'
-
-import AppHeader from '../AppHeader/index'
-
-import {ErrorsContext} from '../Errors/index'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
