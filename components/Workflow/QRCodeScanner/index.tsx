@@ -25,7 +25,7 @@ import AppStyles from '../../../assets/styles'
 
 //  TODO - Add props interface
 function QRCodeScanner(props) {
-  let history = useHistory()
+  const history = useHistory()
 
   //Reference to the agent context
   const agentContext = useContext(AgentContext)

@@ -26,7 +26,7 @@ interface ICurrentCredential {
 }
 
 function CurrentCredential(props) {
-  let history = useHistory()
+  const history = useHistory()
 
   return (
     <View style={AppStyles.viewOverlay}>

@@ -31,7 +31,7 @@ interface ICredentialOffered {
 }
 
 function CredentialOffered(props: ICredentialOffered) {
-  let history = useHistory()
+  const history = useHistory()
 
   //Reference to the agent context
   const agentContext = useContext(AgentContext)

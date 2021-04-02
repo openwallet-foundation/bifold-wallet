@@ -27,7 +27,7 @@ import {IContact} from '../../types'
 interface IListContacts {}
 
 function ListContacts(props: IListContacts) {
-  let history = useHistory()
+  const history = useHistory()
 
   //Reference to the agent context
   const agentContext = useContext(AgentContext)
@@ -52,7 +52,7 @@ function ListContacts(props: IListContacts) {
   //Connection Event Callback
   const handleConnectionStateChange = (event) => {
     console.info('Connections State Change', event)
-    let allConnections = [...contacts]
+    const allConnections = [...contacts]
     for (let connection of allConnections) {
       if (connection.id == event.connectionRecord.id) {
         connection = event.connectionRecord

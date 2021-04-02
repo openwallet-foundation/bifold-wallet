@@ -24,7 +24,7 @@ import LoadingOverlay from '../LoadingOverlay/index'
 import AppStyles from '../../assets/styles'
 
 function PinEnter(props) {
-  let history = useHistory()
+  const history = useHistory()
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
 

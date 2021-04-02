@@ -27,7 +27,7 @@ interface ITerms {
 }
 
 function Terms(props: ITerms) {
-  let history = useHistory()
+  const history = useHistory()
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
 

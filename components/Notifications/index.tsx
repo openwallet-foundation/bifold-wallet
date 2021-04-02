@@ -17,7 +17,7 @@ interface INotification {
 }
 
 function Notification(props: INotification) {
-  let history = useHistory()
+  const history = useHistory()
 
   const notifications = useContext(NotificationsContext)
 

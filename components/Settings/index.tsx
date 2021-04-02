@@ -22,7 +22,7 @@ import Images from '../../assets/images'
 import Styles from './styles'
 
 function Settings() {
-  let history = useHistory()
+  const history = useHistory()
 
   return (
     <>

@@ -33,7 +33,7 @@ interface ISetupWizard {
 }
 
 function SetupWizard(props: ISetupWizard) {
-  let history = useHistory()
+  const history = useHistory()
 
   const notifications = useContext(NotificationsContext)
 
@@ -67,7 +67,7 @@ function SetupWizard(props: ISetupWizard) {
   useEffect(() => {
     const wizardUpdate = async () => {
       let setupComplete = 'false'
-      let currentScreen = setupScreens.toString()
+      const currentScreen = setupScreens.toString()
       if (setupScreens >= props.children.length) {
         props.setAuthenticated(true)
         setupComplete = 'true'
@@ -77,7 +77,9 @@ function SetupWizard(props: ISetupWizard) {
       await Keychain.setGenericPassword(currentScreen, setupComplete, {
         service: 'setupWizard',
       })
-      let checker = await Keychain.getGenericPassword({service: 'setupWizard'})
+      const checker = await Keychain.getGenericPassword({
+        service: 'setupWizard',
+      })
       console.log('Lower part, check?', checker)
 
       /*
@@ -103,7 +105,7 @@ function SetupWizard(props: ISetupWizard) {
           </KeyboardAvoidingView>
           <View style={Styles.dotContainer}>
             {props.children.map((child, index) => {
-              let dotStyle = [Styles.dot]
+              const dotStyle = [Styles.dot]
               if (index <= setupScreens) {
                 dotStyle.push(AppStyles.backgroundPrimary)
               }

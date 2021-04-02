@@ -30,7 +30,7 @@ interface IPinCreate {
 }
 
 function PinCreate(props: IPinCreate) {
-  let history = useHistory()
+  const history = useHistory()
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
 

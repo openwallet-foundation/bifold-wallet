@@ -30,8 +30,8 @@ interface IWorkflow {
 }
 
 function Workflow(props: IWorkflow) {
-  let history = useHistory()
-  let {url} = useRouteMatch()
+  const history = useHistory()
+  const {url} = useRouteMatch()
 
   const [workflow, setWorkflow] = useState('connect')
   const [workflowInProgress, setWorkflowInProgress] = useState(true)
@@ -63,13 +63,13 @@ function Workflow(props: IWorkflow) {
       const previewAttributes =
         event.credentialRecord.offerMessage.credentialPreview.attributes
 
-      let attributes = {}
+      const attributes = {}
       for (const index in previewAttributes) {
         attributes[previewAttributes[index].name] =
           previewAttributes[index].value
       }
 
-      let credentialToDisplay = {
+      const credentialToDisplay = {
         attributes,
         connectionId: event.credentialRecord.connectionId,
         id: event.credentialRecord.id,

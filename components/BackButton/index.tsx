@@ -10,8 +10,8 @@ interface IBackButton {
 }
 
 function BackButton(props: IBackButton) {
-  let history = useHistory()
-  let location = useLocation()
+  const history = useHistory()
+  const location = useLocation()
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)

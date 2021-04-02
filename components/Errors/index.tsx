@@ -14,7 +14,7 @@ interface IErrorDialog {
 }
 
 function ErrorDialog(props: IErrorDialog) {
-  let history = useHistory()
+  const history = useHistory()
 
   const errors = useContext(ErrorsContext)
 

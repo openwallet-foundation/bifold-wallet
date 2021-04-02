@@ -27,7 +27,7 @@ interface ICurrentContact {
 }
 
 function CurrentContact(props: ICurrentContact) {
-  let history = useHistory()
+  const history = useHistory()
 
   return (
     <View style={AppStyles.viewOverlay}>

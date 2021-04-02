@@ -27,7 +27,7 @@ import {ICredential} from '../../types'
 interface IListCredentials {}
 
 function ListCredentials(props: IListCredentials) {
-  let history = useHistory()
+  const history = useHistory()
 
   //Reference to the agent context
   const agentContext = useContext(AgentContext)
@@ -40,11 +40,11 @@ function ListCredentials(props: IListCredentials) {
     const credentials = await agentContext.agent.credentials.getAll()
     console.log(credentials)
 
-    let credentialsForDisplay = []
+    const credentialsForDisplay = []
 
     for (const credential of credentials) {
       if (credential.state === 'done') {
-        let credentialToDisplay = {
+        const credentialToDisplay = {
           ...(await agentContext.agent.credentials.getIndyCredential(
             credential.credentialId,
           )),

@@ -21,7 +21,7 @@ interface AppHeaderProps {
 }
 
 function AppHeader(props: AppHeaderProps) {
-  let history = useHistory()
+  const history = useHistory()
 
   return (
     <View style={Styles.header}>

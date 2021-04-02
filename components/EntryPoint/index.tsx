@@ -12,7 +12,7 @@ interface IEntryPoint {
 }
 
 function EntryPoint(props: IEntryPoint) {
-  let history = useHistory()
+  const history = useHistory()
   const errors = useContext(ErrorsContext)
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
@@ -46,7 +46,7 @@ function EntryPoint(props: IEntryPoint) {
       } else {
         async function entry() {
           try {
-            let passcodeCreated = await Keychain.getGenericPassword({
+            const passcodeCreated = await Keychain.getGenericPassword({
               service: 'setupWizard',
             })
 

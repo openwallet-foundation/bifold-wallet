@@ -21,7 +21,7 @@ interface IAppHeaderLarge {
 }
 
 function AppHeaderLarge(props: IAppHeaderLarge) {
-  let history = useHistory()
+  const history = useHistory()
 
   return (
     <View style={Styles.headerLarge}>

@@ -21,8 +21,8 @@ import {NotificationsContext} from '../Notifications/index'
 import AppStyles from '../../assets/styles'
 
 function Home() {
-  let history = useHistory()
-  let location = useLocation()
+  const history = useHistory()
+  const location = useLocation()
 
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)

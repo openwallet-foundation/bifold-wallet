@@ -32,7 +32,7 @@ interface ICredentialRequested {
 }
 
 function CredentialRequested(props: ICredentialRequested) {
-  let history = useHistory()
+  const history = useHistory()
 
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)

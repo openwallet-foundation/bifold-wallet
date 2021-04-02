@@ -22,14 +22,14 @@ import Styles from './styles'
 interface IMessage {
   bgColor: string
   title: string
-  textLight: String
+  textLight: string
   text: string
   path: string
   children: JSX.Element[]
 }
 
 function Message(props: IMessage) {
-  let history = useHistory()
+  const history = useHistory()
 
   return (
     <View style={Styles.msgView}>
