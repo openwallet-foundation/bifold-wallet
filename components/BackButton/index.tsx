@@ -24,27 +24,27 @@ function BackButton(props: IBackButton) {
   }, [location])
 
   const handleBackButtonClick = () => {
-    if(props.backExit) {
-        Alert.alert(
-            'Exit the App',
-            'Are you sure you want to exit?',
-            [
-              {
-                text: 'Cancel',
-                style: 'cancel',
-              },
-              {text: "I'm Sure", onPress: () => BackHandler.exitApp()},
-            ],
-            {cancelable: false},
-          )
-    } else if(props.backPath) {
-        console.log('The path is: ', props.backPath)
+    if (props.backExit) {
+      Alert.alert(
+        'Exit the App',
+        'Are you sure you want to exit?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {text: "I'm Sure", onPress: () => BackHandler.exitApp()},
+        ],
+        {cancelable: false},
+      )
+    } else if (props.backPath) {
+      console.log('The path is: ', props.backPath)
       history.push(props.backPath)
     } else {
       return true
     }
     return true
-  } 
+  }
 
   return <></>
 }

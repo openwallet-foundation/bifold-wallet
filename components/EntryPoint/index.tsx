@@ -5,11 +5,10 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import LoadingOverlay from '../LoadingOverlay/index'
 
-import { ErrorsContext } from '../Errors/index'
+import {ErrorsContext} from '../Errors/index'
 
 interface IEntryPoint {
   authenticated: boolean
-
 }
 
 function EntryPoint(props: IEntryPoint) {

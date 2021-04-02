@@ -20,7 +20,7 @@ interface IAppHeaderLarge {
   disabled?: boolean
 }
 
-function AppHeaderLarge(props: IAppHeaderLarge)  {
+function AppHeaderLarge(props: IAppHeaderLarge) {
   let history = useHistory()
 
   return (

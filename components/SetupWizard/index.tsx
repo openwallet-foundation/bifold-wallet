@@ -26,12 +26,10 @@ import AppStyles from '../../assets/styles'
 import Styles from './styles'
 import Images from '../../assets/images'
 
-import { NotificationsContext } from '../Notifications/index'
+import {NotificationsContext} from '../Notifications/index'
 
 interface ISetupWizard {
-
   children: JSX.Element[]
-
 }
 
 function SetupWizard(props: ISetupWizard) {

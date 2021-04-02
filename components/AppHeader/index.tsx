@@ -20,7 +20,7 @@ interface AppHeaderProps {
   headerText?: string
 }
 
-function AppHeader (props: AppHeaderProps) {
+function AppHeader(props: AppHeaderProps) {
   let history = useHistory()
 
   return (

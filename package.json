@@ -2,10 +2,10 @@
   "name": "aries-bifold",
   "version": "0.0.1",
   "scripts": {
-    "prettier": "prettier --ignore-path .gitignore '**/*.+(js|json|ts|md|yml|yaml)'",
+    "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
     "style-check": "npm run prettier -- --check",
     "style-format": "npm run prettier -- --write",
-    "style-watch": "onchange '**/*.+(js|json|ts|md|yml|yaml)' -- prettier --write {{changed}}",
+    "style-watch": "onchange '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)' -- prettier --write {{changed}}",
     "android": "npx react-native run-android",
     "ios": "npx react-native run-ios --device",
     "start": "npx react-native start --reset-cache",

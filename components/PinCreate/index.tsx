@@ -26,7 +26,7 @@ import AppStyles from '../../assets/styles'
 
 interface IPinCreate {
   setupScreens: number
-  setSetupScreens: (setupScreens: number) => (void)
+  setSetupScreens: (setupScreens: number) => void
 }
 
 function PinCreate(props: IPinCreate) {

@@ -23,7 +23,6 @@ import Styles from './styles'
 
 interface INavbar {
   authenticated: boolean
-
 }
 
 function Navbar(props: INavbar) {

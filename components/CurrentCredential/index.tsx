@@ -19,7 +19,7 @@ import {ErrorsContext} from '../Errors/index'
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
 import Styles from './styles'
-import { ICredential } from '../../types'
+import {ICredential} from '../../types'
 
 interface ICurrentCredential {
   credential: ICredential
@@ -50,7 +50,7 @@ function CurrentCredential(props) {
                   style={[
                     {fontSize: 20, top: 8},
                     AppStyles.textWhite,
-                    AppStyles.textBold
+                    AppStyles.textBold,
                   ]}>
                   Driver's License
                 </Text>
@@ -63,13 +63,10 @@ function CurrentCredential(props) {
                 Styles.tableSubItem,
               ]}>
               <View>
-                <Text
-                  style={[
-                    {fontSize: 18},
-                    AppStyles.textBlack,
-                  ]}>
+                <Text style={[{fontSize: 18}, AppStyles.textBlack]}>
                   <Text style={AppStyles.textBold}>Name: </Text>
-                  {props.credential.attributes.first_name} {props.credential.attributes.last_name}
+                  {props.credential.attributes.first_name}{' '}
+                  {props.credential.attributes.last_name}
                 </Text>
               </View>
             </View>
@@ -80,13 +77,9 @@ function CurrentCredential(props) {
                 Styles.tableSubItem,
               ]}>
               <View>
-                <Text
-                  style={[
-                    {fontSize: 18},
-                    AppStyles.textSecondary,
-                  ]}>
+                <Text style={[{fontSize: 18}, AppStyles.textSecondary]}>
                   <Text style={AppStyles.textBold}>Gender: </Text>
-                  {props.credential.attributes.gender} 
+                  {props.credential.attributes.gender}
                 </Text>
               </View>
             </View>
@@ -97,13 +90,9 @@ function CurrentCredential(props) {
                 Styles.tableSubItem,
               ]}>
               <View>
-                <Text
-                  style={[
-                    {fontSize: 18},
-                    AppStyles.textSecondary,
-                  ]}>
+                <Text style={[{fontSize: 18}, AppStyles.textSecondary]}>
                   <Text style={AppStyles.textBold}>Age: </Text>
-                  {props.credential.attributes.age} 
+                  {props.credential.attributes.age}
                 </Text>
               </View>
             </View>

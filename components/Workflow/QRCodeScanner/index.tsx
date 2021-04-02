@@ -17,7 +17,7 @@ import AppHeader from '../../AppHeader/index'
 import BackButton from '../../BackButton/index'
 import LoadingOverlay from '../../LoadingOverlay/index'
 
-import { decodeInvitationFromUrl } from 'aries-framework-javascript';
+import {decodeInvitationFromUrl} from 'aries-framework-javascript'
 import AgentContext from '../../AgentProvider/'
 
 import Styles from './styles'
@@ -27,34 +27,37 @@ import AppStyles from '../../../assets/styles'
 function QRCodeScanner(props) {
   let history = useHistory()
 
-   //Reference to the agent context
-   const agentContext = useContext(AgentContext)
+  //Reference to the agent context
+  const agentContext = useContext(AgentContext)
 
-   props.setWorkflowInProgress(false)
-   
-   //State to determine if we should show the camera any longer
-   const [cameraActive, setCameraActive] = useState(true)
- 
-   const barcodeRecognized = ({barcodes}) => {
-     barcodes.forEach(async (barcode) => {
-       console.log(`Scanned QR Code`)
-       console.log('BARCODE: ', barcode)
- 
-       //Turn off camera so that we don't scan again
-       setCameraActive(false)
- 
-       const decodedInvitation = await decodeInvitationFromUrl(barcode.data)
-   
-       console.log("New Invitation:", decodedInvitation)
-   
-       const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, { autoAcceptConnection: true })
-       
-       console.log("New Connection Record", connectionRecord)
- 
-       props.setWorkflow('connecting')
-     })
-   }
- 
+  props.setWorkflowInProgress(false)
+
+  //State to determine if we should show the camera any longer
+  const [cameraActive, setCameraActive] = useState(true)
+
+  const barcodeRecognized = ({barcodes}) => {
+    barcodes.forEach(async (barcode) => {
+      console.log(`Scanned QR Code`)
+      console.log('BARCODE: ', barcode)
+
+      //Turn off camera so that we don't scan again
+      setCameraActive(false)
+
+      const decodedInvitation = await decodeInvitationFromUrl(barcode.data)
+
+      console.log('New Invitation:', decodedInvitation)
+
+      const connectionRecord = await agentContext.agent.connections.receiveInvitation(
+        decodedInvitation,
+        {autoAcceptConnection: true},
+      )
+
+      console.log('New Connection Record', connectionRecord)
+
+      props.setWorkflow('connecting')
+    })
+  }
+
   if (cameraActive) {
     return (
       <>
@@ -75,13 +78,12 @@ function QRCodeScanner(props) {
                 buttonNegative: 'Cancel',
               }}
               googleVisionBarcodeType={
-                RNCamera.Constants.GoogleVisionBarcodeDetection.BarcodeType.QR_CODE
+                RNCamera.Constants.GoogleVisionBarcodeDetection.BarcodeType
+                  .QR_CODE
               }
               onGoogleVisionBarcodesDetected={({barcodes}) => {
                 barcodeRecognized({barcodes})
-              }}
-              >
-            </RNCamera>
+              }}></RNCamera>
           </View>
         </View>
       </>

@@ -19,7 +19,7 @@ import {ErrorsContext} from '../Errors/index'
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
 import Styles from './styles'
-import { IContact } from '../../types'
+import {IContact} from '../../types'
 
 interface ICurrentContact {
   setViewContact: (toggle: boolean) => void
@@ -47,59 +47,43 @@ function CurrentContact(props: ICurrentContact) {
                 AppStyles.backgroundSecondary,
               ]}>
               <View>
-                <Text
-                  style={[
-                    {fontSize: 18, top: 10},
-                    AppStyles.textWhite, 
-                  ]}>
-                  {props.contact.alias ? props.contact.alias : props.contact.invitation.label}
+                <Text style={[{fontSize: 18, top: 10}, AppStyles.textWhite]}>
+                  {props.contact.alias
+                    ? props.contact.alias
+                    : props.contact.invitation.label}
                 </Text>
               </View>
             </View>
-              {props.contact.createdAt ? 
-              (
-                <View
-              style={[
-                AppStyles.tableItem,
-                Styles.tableItem,
-                Styles.tableSubItem,
-              ]}>
+            {props.contact.createdAt ? (
+              <View
+                style={[
+                  AppStyles.tableItem,
+                  Styles.tableItem,
+                  Styles.tableSubItem,
+                ]}>
                 <View>
-                  <Text
-                    style={[
-                      {fontSize: 18},
-                      AppStyles.textSecondary,
-                    ]}>
-                    <Text style={AppStyles.textBold}>Created: </Text>{new Date(props.contact.createdAt).toDateString()}
+                  <Text style={[{fontSize: 18}, AppStyles.textSecondary]}>
+                    <Text style={AppStyles.textBold}>Created: </Text>
+                    {new Date(props.contact.createdAt).toDateString()}
                   </Text>
                 </View>
-                </View>
-              )
-              :
-              null
-              }
-              {props.contact.state ? 
-              (
-                <View
-              style={[
-                AppStyles.tableItem,
-                Styles.tableItem,
-                Styles.tableSubItem,
-              ]}>
+              </View>
+            ) : null}
+            {props.contact.state ? (
+              <View
+                style={[
+                  AppStyles.tableItem,
+                  Styles.tableItem,
+                  Styles.tableSubItem,
+                ]}>
                 <View>
-                  <Text
-                    style={[
-                      {fontSize: 18},
-                      AppStyles.textSecondary,
-                    ]}>
-                    <Text style={AppStyles.textBold}>Connection State: </Text>{props.contact.state}
+                  <Text style={[{fontSize: 18}, AppStyles.textSecondary]}>
+                    <Text style={AppStyles.textBold}>Connection State: </Text>
+                    {props.contact.state}
                   </Text>
                 </View>
-                </View>
-              )
-              :
-              null
-              }
+              </View>
+            ) : null}
           </>
         ) : null}
       </View>

@@ -30,7 +30,11 @@ function ErrorDialog(props: IErrorDialog) {
             {props.text}
           </Text>
           <TouchableOpacity
-            style={[AppStyles.button, AppStyles.backgroundSecondary, {marginTop: 30}]}
+            style={[
+              AppStyles.button,
+              AppStyles.backgroundSecondary,
+              {marginTop: 30},
+            ]}
             onPress={() => {
               errors.setVisible(false)
               history.push(props.path)
