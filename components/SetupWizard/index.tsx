@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
-import {KeyboardAvoidingView, View} from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
@@ -12,7 +12,7 @@ import LoadingOverlay from '../LoadingOverlay/index'
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
-import {NotificationsContext} from '../Notifications/index'
+import { NotificationsContext } from '../Notifications/index'
 
 interface ISetupWizard {
   children: JSX.Element[]
@@ -30,7 +30,7 @@ function SetupWizard(props: ISetupWizard) {
   useEffect(() => {
     //check number in keychain, setSetupScreens
     const storeWizard = async () => {
-      let checker = await Keychain.getGenericPassword({service: 'setupWizard'})
+      let checker = await Keychain.getGenericPassword({ service: 'setupWizard' })
       const currentScreen = '0'
       const setupComplete = 'false'
       if (!checker) {
@@ -44,7 +44,7 @@ function SetupWizard(props: ISetupWizard) {
       }
       console.log('we got this far')
       console.log('False here', checker)
-      checker = await Keychain.getGenericPassword({service: 'setupWizard'})
+      checker = await Keychain.getGenericPassword({ service: 'setupWizard' })
       console.log('True here', checker)
     }
     storeWizard()
@@ -59,7 +59,7 @@ function SetupWizard(props: ISetupWizard) {
         setupComplete = 'true'
         history.push('home')
       }
-      await Keychain.resetGenericPassword({service: 'setupWizard'})
+      await Keychain.resetGenericPassword({ service: 'setupWizard' })
       await Keychain.setGenericPassword(currentScreen, setupComplete, {
         service: 'setupWizard',
       })
@@ -83,7 +83,7 @@ function SetupWizard(props: ISetupWizard) {
         <LoadingOverlay />
       ) : (
         <View style={AppStyles.viewFull}>
-          <KeyboardAvoidingView behavior={'height'} style={{height: '92%'}}>
+          <KeyboardAvoidingView behavior={'height'} style={{ height: '92%' }}>
             {React.cloneElement(props.children[setupScreens], {
               setupScreens: setupScreens,
               setSetupScreens: setSetupScreens,

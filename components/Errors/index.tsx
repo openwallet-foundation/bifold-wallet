@@ -1,10 +1,10 @@
-import React, {useState, useContext} from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import React, { useState, useContext } from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 const ErrorsContext = React.createContext({})
 
@@ -22,23 +22,15 @@ function ErrorDialog(props: IErrorDialog) {
     <>
       <View style={Styles.errorView}>
         <View style={[AppStyles.messageBox, Styles.errorMessage]}>
-          <Text
-            style={[AppStyles.h2, AppStyles.textSecondary, AppStyles.textBold]}>
-            ERROR{'\n'}
-          </Text>
-          <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
-            {props.text}
-          </Text>
+          <Text style={[AppStyles.h2, AppStyles.textSecondary, AppStyles.textBold]}>ERROR{'\n'}</Text>
+          <Text style={[AppStyles.h3, AppStyles.textSecondary]}>{props.text}</Text>
           <TouchableOpacity
-            style={[
-              AppStyles.button,
-              AppStyles.backgroundSecondary,
-              {marginTop: 30},
-            ]}
+            style={[AppStyles.button, AppStyles.backgroundSecondary, { marginTop: 30 }]}
             onPress={() => {
               errors.setVisible(false)
               history.push(props.path)
-            }}>
+            }}
+          >
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Okay</Text>
           </TouchableOpacity>
         </View>
@@ -53,8 +45,7 @@ function Errors(props) {
   const [path, setPath] = useState('')
 
   return (
-    <ErrorsContext.Provider
-      value={{setVisible: setVisible, setText: setText, setPath: setPath}}>
+    <ErrorsContext.Provider value={{ setVisible: setVisible, setText: setText, setPath: setPath }}>
       <View>
         {props.children}
         {visible ? (
@@ -68,4 +59,4 @@ function Errors(props) {
 }
 
 export default Errors
-export {ErrorsContext}
+export { ErrorsContext }

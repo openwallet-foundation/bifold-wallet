@@ -1,16 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-import {
-  Alert,
-  Keyboard,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native'
+import { Alert, Keyboard, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
@@ -31,7 +23,7 @@ function PinEnter(props) {
   let textInput
 
   const checkPin = async (pin) => {
-    const checker = await Keychain.getGenericPassword({service: 'passcode'})
+    const checker = await Keychain.getGenericPassword({ service: 'passcode' })
     if (pin.length > 6) {
       Alert.alert('Pin must be 6 digits in length')
     } else if (JSON.stringify(pin) === checker.password) {
@@ -63,14 +55,9 @@ function PinEnter(props) {
       <View style={AppStyles.viewFull}>
         <AppHeaderLarge disabled={true} />
         <View style={AppStyles.tab}>
-          <Text
-            style={[AppStyles.h1, AppStyles.textSecondary, {marginBottom: 30}]}>
-            Enter Your Pin
-          </Text>
+          <Text style={[AppStyles.h1, AppStyles.textSecondary, { marginBottom: 30 }]}>Enter Your Pin</Text>
           <View>
-            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
-              Enter Pin:
-            </Text>
+            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>Enter Pin:</Text>
             <TextInput
               autoCorrect={false}
               style={[AppStyles.formLabel, focusedLabel]}
@@ -95,15 +82,12 @@ function PinEnter(props) {
             />
           </View>
           <TouchableOpacity
-            style={[
-              AppStyles.button,
-              AppStyles.backgroundPrimary,
-              {marginTop: 30},
-            ]}
+            style={[AppStyles.button, AppStyles.backgroundPrimary, { marginTop: 30 }]}
             onPress={() => {
               Keyboard.dismiss()
               checkPin(pin)
-            }}>
+            }}
+          >
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Submit</Text>
           </TouchableOpacity>
         </View>

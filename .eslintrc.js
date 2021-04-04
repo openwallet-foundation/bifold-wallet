@@ -11,10 +11,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     // Aries protocol defines attributes with snake case.
     '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-use-before-define': [
-      'error',
-      {functions: false, classes: false, variables: true},
-    ],
+    '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: true }],
     '@typescript-eslint/explicit-member-accessibility': 'error',
     'no-console': 'error',
     // Because of early development, we only warn on ts-ignore. In future we want to move to error

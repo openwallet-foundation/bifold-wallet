@@ -1,14 +1,14 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 
-import {Text, TouchableOpacity, View} from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
-import {useHistory, useLocation} from 'react-router-native'
+import { useHistory, useLocation } from 'react-router-native'
 
 import AppHeaderLarge from '../AppHeaderLarge/index'
 import BackButton from '../BackButton/index'
 
-import {ErrorsContext} from '../Errors/index'
-import {NotificationsContext} from '../Notifications/index'
+import { ErrorsContext } from '../Errors/index'
+import { NotificationsContext } from '../Notifications/index'
 
 import AppStyles from '../../assets/styles'
 
@@ -23,20 +23,17 @@ function Home() {
     <>
       <BackButton backExit={true} />
       <View style={AppStyles.viewFull}>
-        <View style={[AppStyles.tab, {top: 80}]}>
+        <View style={[AppStyles.tab, { top: 80 }]}>
           <AppHeaderLarge />
           <TouchableOpacity
-            style={[
-              AppStyles.button,
-              AppStyles.backgroundPrimary,
-              {marginTop: 10},
-            ]}
+            style={[AppStyles.button, AppStyles.backgroundPrimary, { marginTop: 10 }]}
             onPress={() => {
               /*errors.setVisible(true)
             errors.setText("Workflows not\nyet created")
             errors.setPath("/home")*/
               history.push('/workflow/connect')
-            }}>
+            }}
+          >
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Begin</Text>
           </TouchableOpacity>
         </View>

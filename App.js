@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
-import {View} from 'react-native'
-import {Redirect, Route, useHistory, useLocation} from 'react-router-native'
+import React, { useState } from 'react'
+import { View } from 'react-native'
+import { Redirect, Route, useHistory, useLocation } from 'react-router-native'
 
 //For UUIDv4 within React Native
 import 'react-native-get-random-values'
 
-import {AgentProvider} from './components/AgentProvider/'
+import { AgentProvider } from './components/AgentProvider/'
 import Errors from './components/Errors/index'
 import Notifications from './components/Notifications/index'
 
@@ -93,7 +93,7 @@ const App = (props) => {
       <AgentProvider>
         <Errors>
           <Notifications>
-            <View style={authenticated ? {height: '90.5%'} : {height: '100%'}}>
+            <View style={authenticated ? { height: '90.5%' } : { height: '100%' }}>
               <Route
                 exact
                 path="/"
@@ -101,60 +101,26 @@ const App = (props) => {
                   return <EntryPoint authenticated={authenticated} />
                 }}
               />
-              <Route
-                exact
-                path="/home"
-                render={() => (authenticated ? <Home /> : <Redirect to="/" />)}
-              />
-              <Route
-                exact
-                path="/settings"
-                render={() =>
-                  authenticated ? <Settings /> : <Redirect to="/" />
-                }
-              />
+              <Route exact path="/home" render={() => (authenticated ? <Home /> : <Redirect to="/" />)} />
+              <Route exact path="/settings" render={() => (authenticated ? <Settings /> : <Redirect to="/" />)} />
               <Route
                 exact
                 path="/contacts"
-                render={() =>
-                  authenticated ? (
-                    <ListContacts contacts={mockContacts} />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                }
+                render={() => (authenticated ? <ListContacts contacts={mockContacts} /> : <Redirect to="/" />)}
               />
               <Route
                 exact
                 path="/credentials"
-                render={() =>
-                  authenticated ? (
-                    <ListCredentials credentials={mockCredentials} />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                }
+                render={() => (authenticated ? <ListCredentials credentials={mockCredentials} /> : <Redirect to="/" />)}
               />
               <Route
                 path="/workflow"
                 render={() => (
-                  <Workflow
-                    authenticated={authenticated}
-                    contacts={mockContacts}
-                    credentials={mockCredentials}
-                  />
+                  <Workflow authenticated={authenticated} contacts={mockContacts} credentials={mockCredentials} />
                 )}
               />
-              <Route
-                exact
-                path="/pin/enter"
-                render={() => <PinEnter setAuthenticated={setAuthenticated} />}
-              />
-              <Route
-                exact
-                path="/pin/create"
-                render={() => <PinCreate setAuthenticated={setAuthenticated} />}
-              />
+              <Route exact path="/pin/enter" render={() => <PinEnter setAuthenticated={setAuthenticated} />} />
+              <Route exact path="/pin/create" render={() => <PinCreate setAuthenticated={setAuthenticated} />} />
               <Route
                 exact
                 path="/setup-wizard"
@@ -168,7 +134,7 @@ const App = (props) => {
               />
             </View>
             {authenticated ? (
-              <View style={{height: '10%'}}>
+              <View style={{ height: '10%' }}>
                 <Navbar authenticated={authenticated} />
               </View>
             ) : null}

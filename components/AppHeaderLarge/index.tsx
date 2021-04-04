@@ -1,8 +1,8 @@
 import React from 'react'
 
-import {Image, TouchableOpacity, View} from 'react-native'
+import { Image, TouchableOpacity, View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import Images from '../../assets/images'
 import Styles from './styles'
@@ -20,7 +20,8 @@ function AppHeaderLarge(props: IAppHeaderLarge) {
         onPress={() => {
           history.push('/home')
         }}
-        disabled={props.disabled ? true : false}>
+        disabled={props.disabled ? true : false}
+      >
         <Image source={Images.logoLarge} />
       </TouchableOpacity>
     </View>

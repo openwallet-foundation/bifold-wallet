@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
-import {Alert, BackHandler} from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 
-import {useHistory, useLocation} from 'react-router-native'
+import { useHistory, useLocation } from 'react-router-native'
 
 interface IBackButton {
   backPath?: string
@@ -23,9 +23,9 @@ function BackButton(props: IBackButton) {
             text: 'Cancel',
             style: 'cancel',
           },
-          {text: "I'm Sure", onPress: () => BackHandler.exitApp()},
+          { text: "I'm Sure", onPress: () => BackHandler.exitApp() },
         ],
-        {cancelable: false},
+        { cancelable: false }
       )
     } else if (props.backPath) {
       console.log('The path is: ', props.backPath)
@@ -39,10 +39,7 @@ function BackButton(props: IBackButton) {
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)
     return () => {
-      BackHandler.removeEventListener(
-        'hardwareBackPress',
-        handleBackButtonClick,
-      )
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick)
     }
   }, [location])
 

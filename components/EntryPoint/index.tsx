@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react'
-import {useHistory} from 'react-router-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { useHistory } from 'react-router-native'
 import * as Keychain from 'react-native-keychain'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import LoadingOverlay from '../LoadingOverlay/index'
 
-import {ErrorsContext} from '../Errors/index'
+import { ErrorsContext } from '../Errors/index'
 
 interface IEntryPoint {
   authenticated: boolean
@@ -27,8 +27,8 @@ function EntryPoint(props: IEntryPoint) {
             // Detecting a first time launch, resetting keychain
             console.log('First launch. Clearing keychain.')
             await AsyncStorage.setItem('firstLaunch', 'false')
-            await Keychain.resetGenericPassword({service: 'passcode'})
-            await Keychain.resetGenericPassword({service: 'setupWizard'})
+            await Keychain.resetGenericPassword({ service: 'passcode' })
+            await Keychain.resetGenericPassword({ service: 'setupWizard' })
             resolve(null)
           } else {
             resolve(null)

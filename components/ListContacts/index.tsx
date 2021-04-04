@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
-import {Image, Text, TouchableOpacity, View} from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import AppHeader from '../AppHeader/index'
 import BackButton from '../BackButton/index'
 import CurrentContact from '../CurrentContact/index'
 
 import AgentContext from '../AgentProvider/'
-import {ConnectionEventType} from 'aries-framework-javascript'
+import { ConnectionEventType } from 'aries-framework-javascript'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
@@ -56,13 +56,8 @@ function ListContacts(props: IListContacts) {
   //Register Event Listener
   useEffect(() => {
     if (!agentContext.loading) {
-      agentContext.agent.connections.events.removeAllListeners(
-        ConnectionEventType.StateChanged,
-      )
-      agentContext.agent.connections.events.on(
-        ConnectionEventType.StateChanged,
-        handleConnectionStateChange,
-      )
+      agentContext.agent.connections.events.removeAllListeners(ConnectionEventType.StateChanged)
+      agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
     }
   }, [agentContext.loading])
 
@@ -79,20 +74,15 @@ function ListContacts(props: IListContacts) {
         <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
           <TouchableOpacity
             style={Styles.backbutton}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-            onPress={() => history.push('/home')}>
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+            onPress={() => history.push('/home')}
+          >
             <Image source={Images.arrowDown} style={AppStyles.arrow} />
           </TouchableOpacity>
           {contacts.map((contact, i) => (
-            <View
-              key={i}
-              style={[
-                AppStyles.tableItem,
-                Styles.tableItem,
-                AppStyles.backgroundSecondary,
-              ]}>
+            <View key={i} style={[AppStyles.tableItem, Styles.tableItem, AppStyles.backgroundSecondary]}>
               <View>
-                <Text style={[{fontSize: 18, top: 8}, AppStyles.textWhite]}>
+                <Text style={[{ fontSize: 18, top: 8 }, AppStyles.textWhite]}>
                   {contact.alias ? contact.alias : contact.invitation.label}
                 </Text>
               </View>
@@ -100,19 +90,15 @@ function ListContacts(props: IListContacts) {
                 onPress={() => {
                   setViewInfo(contact)
                   setViewContact(true)
-                }}>
-                <Image
-                  source={Images.infoWhite}
-                  style={[AppStyles.info, {marginRight: 10, top: 10}]}
-                />
+                }}
+              >
+                <Image source={Images.infoWhite} style={[AppStyles.info, { marginRight: 10, top: 10 }]} />
               </TouchableOpacity>
             </View>
           ))}
         </View>
       </View>
-      {viewContact ? (
-        <CurrentContact contact={viewInfo} setViewContact={setViewContact} />
-      ) : null}
+      {viewContact ? <CurrentContact contact={viewInfo} setViewContact={setViewContact} /> : null}
     </>
   )
 }

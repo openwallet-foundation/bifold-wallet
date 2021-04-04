@@ -1,20 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Config from 'react-native-config'
 
-import {downloadGenesis, storeGenesis} from '../../genesis-utils'
-import {
-  HttpOutboundTransporter,
-  PollingInboundTransporter,
-} from '../../transporters'
+import { downloadGenesis, storeGenesis } from '../../genesis-utils'
+import { HttpOutboundTransporter, PollingInboundTransporter } from '../../transporters'
 
 import indy from 'rn-indy-sdk'
-import {
-  Agent,
-  ConnectionEventType,
-  BasicMessageEventType,
-  ConsoleLogger,
-  LogLevel,
-} from 'aries-framework-javascript'
+import { Agent, ConnectionEventType, BasicMessageEventType, ConsoleLogger, LogLevel } from 'aries-framework-javascript'
 console.disableYellowBox = true
 
 const AgentContext = React.createContext({})
@@ -41,8 +32,8 @@ function AgentProvider(props) {
 
       agentConfig = {
         label: 'Aries Bifold',
-        walletConfig: {id: 'wallet4'},
-        walletCredentials: {key: '123'},
+        walletConfig: { id: 'wallet4' },
+        walletCredentials: { key: '123' },
         autoAcceptConnections: true,
         poolName: 'test-183',
         ...agentConfig,
@@ -61,25 +52,16 @@ function AgentProvider(props) {
       console.info('Agent has been initialized')
 
       const handleBasicMessageReceive = (event) => {
-        console.log(
-          `New Basic Message with verkey ${event.verkey}:`,
-          event.message,
-        )
+        console.log(`New Basic Message with verkey ${event.verkey}:`, event.message)
       }
-      newAgent.basicMessages.events.on(
-        BasicMessageEventType.MessageReceived,
-        handleBasicMessageReceive,
-      )
+      newAgent.basicMessages.events.on(BasicMessageEventType.MessageReceived, handleBasicMessageReceive)
 
       const handleConnectionStateChange = (event) => {
         console.log(
-          `connection event for: ${event.connectionRecord.id}, previous state -> ${event.previousState} new state: ${event.connectionRecord.state}`,
+          `connection event for: ${event.connectionRecord.id}, previous state -> ${event.previousState} new state: ${event.connectionRecord.state}`
         )
       }
-      newAgent.connections.events.on(
-        ConnectionEventType.StateChanged,
-        handleConnectionStateChange,
-      )
+      newAgent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
 
       console.log('connections:', await newAgent.connections.getAll())
     }
@@ -92,11 +74,12 @@ function AgentProvider(props) {
       value={{
         agent,
         loading,
-      }}>
+      }}
+    >
       {props.children}
     </AgentContext.Provider>
   )
 }
 
 export default AgentContext
-export {AgentProvider}
+export { AgentProvider }

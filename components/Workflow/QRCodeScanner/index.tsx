@@ -1,16 +1,16 @@
-import React, {useState, useContext} from 'react'
+import React, { useState, useContext } from 'react'
 
-import {View} from 'react-native'
+import { View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
-import {RNCamera} from 'react-native-camera'
+import { RNCamera } from 'react-native-camera'
 
 import AppHeader from '../../AppHeader/index'
 import BackButton from '../../BackButton/index'
 import LoadingOverlay from '../../LoadingOverlay/index'
 
-import {decodeInvitationFromUrl} from 'aries-framework-javascript'
+import { decodeInvitationFromUrl } from 'aries-framework-javascript'
 import AgentContext from '../../AgentProvider/'
 
 import Styles from './styles'
@@ -28,7 +28,7 @@ function QRCodeScanner(props) {
   //State to determine if we should show the camera any longer
   const [cameraActive, setCameraActive] = useState(true)
 
-  const barcodeRecognized = ({barcodes}) => {
+  const barcodeRecognized = ({ barcodes }) => {
     barcodes.forEach(async (barcode) => {
       console.log(`Scanned QR Code`)
       console.log('BARCODE: ', barcode)
@@ -40,10 +40,9 @@ function QRCodeScanner(props) {
 
       console.log('New Invitation:', decodedInvitation)
 
-      const connectionRecord = await agentContext.agent.connections.receiveInvitation(
-        decodedInvitation,
-        {autoAcceptConnection: true},
-      )
+      const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
+        autoAcceptConnection: true,
+      })
 
       console.log('New Connection Record', connectionRecord)
 
@@ -70,13 +69,11 @@ function QRCodeScanner(props) {
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}
-              googleVisionBarcodeType={
-                RNCamera.Constants.GoogleVisionBarcodeDetection.BarcodeType
-                  .QR_CODE
-              }
-              onGoogleVisionBarcodesDetected={({barcodes}) => {
-                barcodeRecognized({barcodes})
-              }}></RNCamera>
+              googleVisionBarcodeType={RNCamera.Constants.GoogleVisionBarcodeDetection.BarcodeType.QR_CODE}
+              onGoogleVisionBarcodesDetected={({ barcodes }) => {
+                barcodeRecognized({ barcodes })
+              }}
+            ></RNCamera>
           </View>
         </View>
       </>
