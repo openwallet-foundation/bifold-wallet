@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     width: '101%',
     top: -8,
     marginLeft: '-0.5%',
-    justifyContent: 'center',
     height: '100%',
     padding: 20,
     paddingTop: 14,

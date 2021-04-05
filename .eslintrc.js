@@ -1,6 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
+    'eslint:recommended',
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
@@ -17,11 +18,20 @@ module.exports = {
     // Because of early development, we only warn on ts-ignore. In future we want to move to error
     '@typescript-eslint/ban-ts-comment': 'warn',
   },
+  globals: {
+    require: true,
+  },
   overrides: [
     {
       files: ['*.test.*'],
       rules: {
         'no-console': 'off',
+      },
+    },
+    {
+      files: ['.eslintrc.js', '*.config.js'],
+      env: {
+        node: true,
       },
     },
   ],

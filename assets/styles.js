@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Dimensions, StyleSheet } from 'react-native'
 
 let screenWidth = Dimensions.get('window').width
