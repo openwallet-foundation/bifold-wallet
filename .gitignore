@@ -66,6 +66,9 @@ typings/
 *.tgz
 !aries-framework-javascript.tgz
 
+# Development of Aries Framework Javascript in a React Native environment
+aries-framework-javascript/
+
 # Yarn Integrity file
 .yarn-integrity
 
