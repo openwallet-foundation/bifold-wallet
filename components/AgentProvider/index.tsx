@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Config from "react-native-config";
 
 import { downloadGenesis, storeGenesis } from '../../genesis-utils'
-import { HttpOutboundTransporter, PollingInboundTransporter } from '../../transporters'
+import { HttpOutboundTransporter, PollingInboundTransporter, WsInboundTransporter, WsOutboundTransporter } from '../../transporters'
 
 import indy from 'rn-indy-sdk'
 import { Agent, ConnectionEventType, BasicMessageEventType, ConsoleLogger, LogLevel } from 'aries-framework-javascript'
@@ -18,20 +18,22 @@ function AgentProvider(props) {
     useEffect(() => {
         const initAgent = async () => {
             let agentConfig = {
-                mediatorUrl: Config.MEDIATOR_URL,
+                //mediatorUrl: Config.MEDIATOR_URL,
                 genesisUrl: Config.GENESIS_URL,
             }
 
             console.info("Initializing Agent", agentConfig)
         
-            let genesisPath = agentConfig.genesisPath
+            let genesisPath = agentConfig.genesisUrl
             const genesis = await downloadGenesis(agentConfig.genesisUrl)
             genesisPath = await storeGenesis(genesis, 'genesis.txn')
         
-            const inbound = new PollingInboundTransporter()
-            const outbound = new HttpOutboundTransporter()
+            //const inbound = new PollingInboundTransporter()
+            //const outbound = new HttpOutboundTransporter()
+            //const inbound = new WsInboundTransporter()
+            //const outbound = new WsOutboundTransporter()
         
-            agentConfig = {
+            const config = {
                 label: 'Aries Bifold',
                 walletConfig: { id: 'wallet4' },
                 walletCredentials: { key: '123' },
@@ -43,7 +45,7 @@ function AgentProvider(props) {
                 indy
             }
 
-            const newAgent = new Agent(agentConfig, inbound, outbound)
+            const newAgent = new Agent(config)
             
             await newAgent.init()
         

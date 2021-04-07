@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 
 import {
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -20,6 +21,7 @@ import LoadingOverlay from '../../LoadingOverlay/index'
 import { decodeInvitationFromUrl } from 'aries-framework-javascript';
 import AgentContext from '../../AgentProvider/'
 
+import Images from '../../../assets/images'
 import Styles from './styles'
 import AppStyles from '../../../assets/styles'
 
@@ -35,6 +37,8 @@ function QRCodeScanner(props) {
    //State to determine if we should show the camera any longer
    const [cameraActive, setCameraActive] = useState(true)
  
+  const [connectionId, setConnectionId] = useState('')
+
    const barcodeRecognized = ({barcodes}) => {
      barcodes.forEach(async (barcode) => {
        console.log(`Scanned QR Code`)
@@ -50,9 +54,15 @@ function QRCodeScanner(props) {
        const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, { autoAcceptConnection: true })
        
        console.log("New Connection Record", connectionRecord)
- 
-       props.setWorkflow('connecting')
+      setConnectionId(connectionRecord.id)
+       //props.setWorkflow('connecting')
      })
+   }
+
+   const sendTrustPing = async () => {
+     console.log(`Sending Trust Ping to connection ${connectionId}`)
+
+     await agentContext.agent.connections.sendTrustPing(connectionId, true)
    }
  
   if (cameraActive) {
@@ -82,12 +92,21 @@ function QRCodeScanner(props) {
               }}
               >
             </RNCamera>
+            
           </View>
         </View>
       </>
     )
   } else {
-    return <LoadingOverlay />
+    return (
+      <TouchableOpacity
+        style={[Styles.button, AppStyles.backgroundPrimary]}
+        onPress={() => {
+          sendTrustPing()
+        }}>
+        <Image source={Images.send} style={Styles.buttonIcon} />
+      </TouchableOpacity>
+    )
   }
 }
 
