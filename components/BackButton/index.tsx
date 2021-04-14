@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useEffect } from 'react'
 
-import {Alert, BackHandler} from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 
-import {useHistory, useLocation} from 'react-router-native'
+import { useHistory, useLocation } from 'react-router-native'
 
 interface IBackButton {
   backPath?: string
@@ -10,41 +10,38 @@ interface IBackButton {
 }
 
 function BackButton(props: IBackButton) {
-  let history = useHistory()
-  let location = useLocation()
-
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)
-    return () => {
-      BackHandler.removeEventListener(
-        'hardwareBackPress',
-        handleBackButtonClick,
-      )
-    }
-  }, [location])
+  const history = useHistory()
+  const location = useLocation()
 
   const handleBackButtonClick = () => {
-    if(props.backExit) {
-        Alert.alert(
-            'Exit the App',
-            'Are you sure you want to exit?',
-            [
-              {
-                text: 'Cancel',
-                style: 'cancel',
-              },
-              {text: "I'm Sure", onPress: () => BackHandler.exitApp()},
-            ],
-            {cancelable: false},
-          )
-    } else if(props.backPath) {
-        console.log('The path is: ', props.backPath)
+    if (props.backExit) {
+      Alert.alert(
+        'Exit the App',
+        'Are you sure you want to exit?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          { text: "I'm Sure", onPress: () => BackHandler.exitApp() },
+        ],
+        { cancelable: false }
+      )
+    } else if (props.backPath) {
+      console.log('The path is: ', props.backPath)
       history.push(props.backPath)
     } else {
       return true
     }
     return true
-  } 
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick)
+    }
+  }, [location])
 
   return <></>
 }

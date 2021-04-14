@@ -1,13 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 
 import {
   Alert,
-  Image,
   Keyboard,
   KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -15,7 +11,7 @@ import {
   View,
 } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
@@ -26,11 +22,11 @@ import AppStyles from '../../assets/styles'
 
 interface IPinCreate {
   setupScreens: number
-  setSetupScreens: (setupScreens: number) => (void)
+  setSetupScreens: (setupScreens: number) => void
 }
 
 function PinCreate(props: IPinCreate) {
-  let history = useHistory()
+  const history = useHistory()
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
 
@@ -70,20 +66,12 @@ function PinCreate(props: IPinCreate) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView
-        behavior={'height'}
-        keyboardVerticalOffset={20}
-        style={AppStyles.viewFull}>
+      <KeyboardAvoidingView behavior={'height'} keyboardVerticalOffset={20} style={AppStyles.viewFull}>
         <AppHeaderLarge disabled={true} />
         <View style={AppStyles.tab}>
-          <Text
-            style={[AppStyles.h1, AppStyles.textSecondary, {marginBottom: 20}]}>
-            Create a 6-Digit Pin
-          </Text>
+          <Text style={[AppStyles.h1, AppStyles.textSecondary, { marginBottom: 20 }]}>Create a 6-Digit Pin</Text>
           <View>
-            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
-              Enter Pin:
-            </Text>
+            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>Enter Pin:</Text>
             <TextInput
               autoCorrect={false}
               style={[AppStyles.formLabel, focusedLabel]}
@@ -109,9 +97,7 @@ function PinCreate(props: IPinCreate) {
             />
           </View>
           <View>
-            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>
-              Re-Enter Pin:
-            </Text>
+            <Text style={[AppStyles.h3, AppStyles.textSecondary]}>Re-Enter Pin:</Text>
             <TextInput
               autoCorrect={false}
               style={[AppStyles.formLabel, focusedLabelTwo]}
@@ -136,15 +122,12 @@ function PinCreate(props: IPinCreate) {
             />
           </View>
           <TouchableOpacity
-            style={[
-              AppStyles.button,
-              AppStyles.backgroundPrimary,
-              {marginTop: 30},
-            ]}
+            style={[AppStyles.button, AppStyles.backgroundPrimary, { marginTop: 30 }]}
             onPress={() => {
               Keyboard.dismiss()
               confirmEntry(pin, pinTwo)
-            }}>
+            }}
+          >
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Create</Text>
           </TouchableOpacity>
         </View>

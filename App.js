@@ -1,30 +1,18 @@
-import React, {useState, useEffect} from 'react'
-import {Alert, BackHandler, Image, Text, View} from 'react-native'
-import {
-  Prompt,
-  Redirect,
-  Route,
-  Router,
-  Switch,
-  useHistory,
-  useLocation,
-} from 'react-router-native'
+import React, { useState } from 'react'
+import { View } from 'react-native'
+import { Redirect, Route, useHistory, useLocation } from 'react-router-native'
 
 //For UUIDv4 within React Native
 import 'react-native-get-random-values'
-import {v4 as uuidv4} from 'uuid'
 
-import {AgentProvider} from './components/AgentProvider/'
+import { AgentProvider } from './components/AgentProvider/'
 import Errors from './components/Errors/index'
 import Notifications from './components/Notifications/index'
 
-import CurrentContact from './components/CurrentContact/index'
-import CurrentCredential from './components/CurrentCredential/index'
 import EntryPoint from './components/EntryPoint/index'
 import Home from './components/Home/index'
 import ListContacts from './components/ListContacts/index'
 import ListCredentials from './components/ListCredentials/index'
-import Message from './components/Message/index'
 import Navbar from './components/Navbar/index'
 import PinCreate from './components/PinCreate/index'
 import PinEnter from './components/PinEnter/index'
@@ -32,10 +20,6 @@ import Settings from './components/Settings/index'
 import SetupWizard from './components/SetupWizard/index'
 import Terms from './components/Terms/index'
 import Workflow from './components/Workflow/index'
-
-import Images from './assets/images'
-
-import LoadingOverlay from './components/LoadingOverlay/index'
 
 const App = (props) => {
   let location = useLocation()
@@ -109,7 +93,7 @@ const App = (props) => {
       <AgentProvider>
         <Errors>
           <Notifications>
-            <View style={authenticated ? {height: '90.5%'} : {height: '100%'}}>
+            <View style={authenticated ? { height: '90.5%' } : { height: '100%' }}>
               <Route
                 exact
                 path="/"
@@ -117,60 +101,26 @@ const App = (props) => {
                   return <EntryPoint authenticated={authenticated} />
                 }}
               />
-              <Route
-                exact
-                path="/home"
-                render={() => (authenticated ? <Home /> : <Redirect to="/" />)}
-              />
-              <Route
-                exact
-                path="/settings"
-                render={() =>
-                  authenticated ? <Settings /> : <Redirect to="/" />
-                }
-              />
+              <Route exact path="/home" render={() => (authenticated ? <Home /> : <Redirect to="/" />)} />
+              <Route exact path="/settings" render={() => (authenticated ? <Settings /> : <Redirect to="/" />)} />
               <Route
                 exact
                 path="/contacts"
-                render={() =>
-                  authenticated ? (
-                    <ListContacts contacts={mockContacts} />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                }
+                render={() => (authenticated ? <ListContacts contacts={mockContacts} /> : <Redirect to="/" />)}
               />
               <Route
                 exact
                 path="/credentials"
-                render={() =>
-                  authenticated ? (
-                    <ListCredentials credentials={mockCredentials} />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                }
+                render={() => (authenticated ? <ListCredentials credentials={mockCredentials} /> : <Redirect to="/" />)}
               />
               <Route
                 path="/workflow"
                 render={() => (
-                  <Workflow
-                    authenticated={authenticated}
-                    contacts={mockContacts}
-                    credentials={mockCredentials}
-                  />
+                  <Workflow authenticated={authenticated} contacts={mockContacts} credentials={mockCredentials} />
                 )}
               />
-              <Route
-                exact
-                path="/pin/enter"
-                render={() => <PinEnter setAuthenticated={setAuthenticated} />}
-              />
-              <Route
-                exact
-                path="/pin/create"
-                render={() => <PinCreate setAuthenticated={setAuthenticated} />}
-              />
+              <Route exact path="/pin/enter" render={() => <PinEnter setAuthenticated={setAuthenticated} />} />
+              <Route exact path="/pin/create" render={() => <PinCreate setAuthenticated={setAuthenticated} />} />
               <Route
                 exact
                 path="/setup-wizard"
@@ -184,7 +134,7 @@ const App = (props) => {
               />
             </View>
             {authenticated ? (
-              <View style={{height: '10%'}}>
+              <View style={{ height: '10%' }}>
                 <Navbar authenticated={authenticated} />
               </View>
             ) : null}

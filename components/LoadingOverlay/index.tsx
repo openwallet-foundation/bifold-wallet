@@ -1,8 +1,7 @@
-import React, {useContext, useRef} from 'react'
-import {Animated, Text, View} from 'react-native'
+import React, { useRef } from 'react'
+import { Animated, View } from 'react-native'
 
 import AppHeader from '../AppHeader/index'
-import {NotificationsContext} from '../Notifications/index'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
@@ -28,7 +27,7 @@ function LoadingOverlay() {
       ]),
       {
         iterations: 500, // Number of repetitions
-      },
+      }
     ).start()
   }
 
@@ -45,27 +44,18 @@ function LoadingOverlay() {
 	notifications.setText("Notification!");*/
   return (
     <View style={Styles.loadingOverlay}>
-      <View style={{height: '10%'}} />
+      <View style={{ height: '10%' }} />
       <AppHeader />
       <View style={Styles.loadingBox}>
         <Animated.View
-          style={[
-            Styles.loadingRectangle,
-            AppStyles.backgroundPrimary,
-            {transform: [{scaleY: loadAnim1}]},
-          ]}></Animated.View>
+          style={[Styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim1 }] }]}
+        ></Animated.View>
         <Animated.View
-          style={[
-            Styles.loadingRectangle,
-            AppStyles.backgroundPrimary,
-            {transform: [{scaleY: loadAnim2}]},
-          ]}></Animated.View>
+          style={[Styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim2 }] }]}
+        ></Animated.View>
         <Animated.View
-          style={[
-            Styles.loadingRectangle,
-            AppStyles.backgroundPrimary,
-            {transform: [{scaleY: loadAnim3}]},
-          ]}></Animated.View>
+          style={[Styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim3 }] }]}
+        ></Animated.View>
       </View>
     </View>
   )

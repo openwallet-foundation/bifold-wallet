@@ -1,11 +1,11 @@
-import React, {useState, useContext} from 'react'
-import {Image, Text, TouchableOpacity, View} from 'react-native'
+import React, { useState, useContext } from 'react'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 const NotificationsContext = React.createContext({})
 
@@ -17,7 +17,7 @@ interface INotification {
 }
 
 function Notification(props: INotification) {
-  let history = useHistory()
+  const history = useHistory()
 
   const notifications = useContext(NotificationsContext)
 
@@ -28,14 +28,10 @@ function Notification(props: INotification) {
           onPress={() => {
             notifications.setVisible(false)
             history.push(props.path)
-          }}>
+          }}
+        >
           {props.title ? (
-            <Text
-              style={[
-                AppStyles.h2,
-                AppStyles.textSecondary,
-                AppStyles.textBold,
-              ]}>
+            <Text style={[AppStyles.h2, AppStyles.textSecondary, AppStyles.textBold]}>
               {props.title}
               {'\n'}
             </Text>
@@ -46,12 +42,7 @@ function Notification(props: INotification) {
               {'\n'}
             </Text>
           ) : null}
-          {props.image ? (
-            <Image
-              source={Images.arrow}
-              style={{alignSelf: 'center', width: 60, height: 68}}
-            />
-          ) : null}
+          {props.image ? <Image source={Images.arrow} style={{ alignSelf: 'center', width: 60, height: 68 }} /> : null}
         </TouchableOpacity>
       </View>
     </View>
@@ -77,14 +68,13 @@ function Notifications(props: INotifications) {
         setPath: setPath,
         setTitle: setTitle,
         setImage: setImage,
-      }}>
+      }}
+    >
       {props.children}
-      {visible ? (
-        <Notification text={text} path={path} title={title} image={image} />
-      ) : null}
+      {visible ? <Notification text={text} path={path} title={title} image={image} /> : null}
     </NotificationsContext.Provider>
   )
 }
 
 export default Notifications
-export {NotificationsContext}
+export { NotificationsContext }

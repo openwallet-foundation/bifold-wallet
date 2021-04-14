@@ -1,76 +1,54 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
-import AppHeaderLarge from '../AppHeaderLarge/index'
-import LoadingOverlay from '../LoadingOverlay/index'
-
-import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
 
 interface IMessage {
   bgColor: string
   title: string
-  textLight: String
+  textLight: string
   text: string
   path: string
   children: JSX.Element[]
 }
 
 function Message(props: IMessage) {
-  let history = useHistory()
+  const history = useHistory()
 
   return (
     <View style={Styles.msgView}>
       <View
-        style={[
-          Styles.innerView,
-          props.bgColor
-            ? {backgroundColor: props.bgColor}
-            : {backgroundColor: '#fff'},
-        ]}>
+        style={[Styles.innerView, props.bgColor ? { backgroundColor: props.bgColor } : { backgroundColor: '#fff' }]}
+      >
         {props.children}
         {props.title ? (
           <Text
             style={[
               AppStyles.h2,
               AppStyles.textBold,
-              {marginTop: 25},
+              { marginTop: 25 },
               props.textLight ? AppStyles.textWhite : AppStyles.textSecondary,
-            ]}>
+            ]}
+          >
             {props.title}
             {'\n'}
           </Text>
         ) : null}
         {props.text ? (
-          <Text
-            style={[
-              Styles.msgText,
-              props.textLight ? AppStyles.textWhite : AppStyles.textSecondary,
-            ]}>
+          <Text style={[Styles.msgText, props.textLight ? AppStyles.textWhite : AppStyles.textSecondary]}>
             {props.text}
             {'\n'}
           </Text>
         ) : null}
         {props.path ? (
           <TouchableOpacity
-            style={[
-              AppStyles.button,
-              AppStyles.backgroundPrimary,
-              {marginTop: 30},
-            ]}
-            onPress={() => history.push(props.path)}>
+            style={[AppStyles.button, AppStyles.backgroundPrimary, { marginTop: 30 }]}
+            onPress={() => history.push(props.path)}
+          >
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Continue</Text>
           </TouchableOpacity>
         ) : null}

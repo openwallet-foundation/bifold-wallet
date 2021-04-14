@@ -1,25 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
-import {Alert, Image, Text, View, TouchableWithoutFeedback} from 'react-native'
+import { Image, View } from 'react-native'
 
-import {
-  Prompt,
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-  useLocation,
-  useRouteMatch,
-} from 'react-router-native'
+import { Route, useHistory, useRouteMatch } from 'react-router-native'
 
 import Images from '../../assets/images'
-import AppStyles from '../../assets/styles'
 
 import AgentContext from '../AgentProvider/'
 import { CredentialEventType } from 'aries-framework-javascript'
 
 import CredentialOffered from './Credential/Offered/index'
-import CredentialRequested from './Credential/Requested/index'
 import QRCodeScanner from './QRCodeScanner/index'
 import Message from '../Message/index'
 import { IContact, ICredential } from '../../types'
@@ -27,12 +17,11 @@ import { IContact, ICredential } from '../../types'
 interface IWorkflow {
   contacts: IContact[]
   credentials: ICredential[]
-
 }
 
 function Workflow(props: IWorkflow) {
-  let history = useHistory()
-  let {url} = useRouteMatch()
+  const history = useHistory()
+  const { url } = useRouteMatch()
 
   const [workflow, setWorkflow] = useState('connect')
   const [workflowInProgress, setWorkflowInProgress] = useState(true)
@@ -48,37 +37,35 @@ function Workflow(props: IWorkflow) {
   const handleCredentialStateChange = async (event) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
 
-    if(event.credentialRecord.state === 'offer-received'){
+    if (event.credentialRecord.state === 'offer-received') {
       //TODO:
       //if(event.credentialRecord.connectionId === contactID){
 
-        const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
+      const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
 
-        setConnection(connectionRecord)
+      setConnection(connectionRecord)
 
-        const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
+      const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
 
-        let attributes = {}
-        for(const index in previewAttributes){
-          attributes[previewAttributes[index].name] = previewAttributes[index].value
-        }
+      const attributes = {}
+      for (const index in previewAttributes) {
+        attributes[previewAttributes[index].name] = previewAttributes[index].value
+      }
 
-        let credentialToDisplay = {
-          attributes,
-          connectionId: event.credentialRecord.connectionId,
-          id: event.credentialRecord.id
-        }
+      const credentialToDisplay = {
+        attributes,
+        connectionId: event.credentialRecord.connectionId,
+        id: event.credentialRecord.id,
+      }
 
-        console.log("credentialToDisplay", credentialToDisplay)
+      console.log('credentialToDisplay', credentialToDisplay)
 
-        setCredential(credentialToDisplay)
+      setCredential(credentialToDisplay)
 
-        setWorkflow('offered')
+      setWorkflow('offered')
       //}
-      
-    }
-    else if(event.credentialRecord.state === 'credential-received'){
-      console.log("attempting to send ack")
+    } else if (event.credentialRecord.state === 'credential-received') {
+      console.log('attempting to send ack')
 
       await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
       //TODO:
@@ -91,12 +78,11 @@ function Workflow(props: IWorkflow) {
 
   //Register Event Listener
   useEffect(() => {
-    if(!agentContext.loading){
+    if (!agentContext.loading) {
       agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)
       agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
     }
   }, [agentContext.loading])
-
 
   useEffect(() => {
     setWorkflowInProgress(true)
@@ -114,12 +100,7 @@ function Workflow(props: IWorkflow) {
     <View>
       <Route
         path={`${url}/connect`}
-        render={() => (
-          <QRCodeScanner
-            setWorkflow={setWorkflow}
-            setWorkflowInProgress={setWorkflowInProgress}
-          />
-        )}
+        render={() => <QRCodeScanner setWorkflow={setWorkflow} setWorkflowInProgress={setWorkflowInProgress} />}
       />
       <Route
         path={`${url}/connecting`}
@@ -140,13 +121,7 @@ function Workflow(props: IWorkflow) {
       />
       <Route
         path={`${url}/offered`}
-        render={() => (
-          <CredentialOffered
-            setWorkflow={setWorkflow}
-            contact={connection}
-            credential={credential}
-          />
-        )}
+        render={() => <CredentialOffered setWorkflow={setWorkflow} contact={connection} credential={credential} />}
       />
       <Route
         path={`${url}/pending`}
