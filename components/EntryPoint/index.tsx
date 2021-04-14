@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react'
-import {useHistory} from 'react-router-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { useHistory } from 'react-router-native'
 import * as Keychain from 'react-native-keychain'
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -9,11 +9,10 @@ import { ErrorsContext } from '../Errors/index'
 
 interface IEntryPoint {
   authenticated: boolean
-
 }
 
 function EntryPoint(props: IEntryPoint) {
-  let history = useHistory()
+  const history = useHistory()
   const errors = useContext(ErrorsContext)
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
@@ -28,8 +27,8 @@ function EntryPoint(props: IEntryPoint) {
             // Detecting a first time launch, resetting keychain
             console.log('First launch. Clearing keychain.')
             await AsyncStorage.setItem('firstLaunch', 'false')
-            await Keychain.resetGenericPassword({service: 'passcode'})
-            await Keychain.resetGenericPassword({service: 'setupWizard'})
+            await Keychain.resetGenericPassword({ service: 'passcode' })
+            await Keychain.resetGenericPassword({ service: 'setupWizard' })
             resolve(null)
           } else {
             resolve(null)
@@ -47,7 +46,7 @@ function EntryPoint(props: IEntryPoint) {
       } else {
         async function entry() {
           try {
-            let passcodeCreated = await Keychain.getGenericPassword({
+            const passcodeCreated = await Keychain.getGenericPassword({
               service: 'setupWizard',
             })
 

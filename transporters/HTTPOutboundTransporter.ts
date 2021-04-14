@@ -20,9 +20,9 @@ class HttpOutboundTransporter implements OutboundTransporter {
           body: JSON.stringify(payload),
         })
 
-        const data:any = await response.text()
+        const data: any = await response.text()
         //console.log('Response: ', response)
-        if(response.status == 200) {
+        if (response.status == 200) {
           const wireMessage = JSON.parse(data)
           return wireMessage
         } else {

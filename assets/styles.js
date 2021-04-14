@@ -1,6 +1,4 @@
-import React from 'react'
-
-import {Dimensions, StyleSheet} from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 let screenWidth = Dimensions.get('window').width
 
@@ -130,7 +128,7 @@ const Styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: {height: 2, width: 2},
+    shadowOffset: { height: 2, width: 2 },
     shadowOpacity: 0.7,
     shadowRadius: 4,
     elevation: 5,
@@ -166,7 +164,7 @@ const Styles = StyleSheet.create({
     width: 48,
   },
   rotate90: {
-    transform: [{rotate: '90deg'}],
+    transform: [{ rotate: '90deg' }],
   },
   backbutton: {
     marginBottom: 30,

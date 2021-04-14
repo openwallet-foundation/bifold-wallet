@@ -1,41 +1,25 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
-import {
-  Alert,
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
 import BackButton from '../BackButton/index'
 import LoadingOverlay from '../LoadingOverlay/index'
-import Message from '../Message/index'
 
 import AppStyles from '../../assets/styles'
 import Styles from './styles'
-import Images from '../../assets/images'
 
 import { NotificationsContext } from '../Notifications/index'
 
 interface ISetupWizard {
-
   children: JSX.Element[]
-
 }
 
 function SetupWizard(props: ISetupWizard) {
-  let history = useHistory()
+  const history = useHistory()
 
   const notifications = useContext(NotificationsContext)
 
@@ -46,7 +30,7 @@ function SetupWizard(props: ISetupWizard) {
   useEffect(() => {
     //check number in keychain, setSetupScreens
     const storeWizard = async () => {
-      let checker = await Keychain.getGenericPassword({service: 'setupWizard'})
+      let checker = await Keychain.getGenericPassword({ service: 'setupWizard' })
       const currentScreen = '0'
       const setupComplete = 'false'
       if (!checker) {
@@ -60,7 +44,7 @@ function SetupWizard(props: ISetupWizard) {
       }
       console.log('we got this far')
       console.log('False here', checker)
-      checker = await Keychain.getGenericPassword({service: 'setupWizard'})
+      checker = await Keychain.getGenericPassword({ service: 'setupWizard' })
       console.log('True here', checker)
     }
     storeWizard()
@@ -69,17 +53,19 @@ function SetupWizard(props: ISetupWizard) {
   useEffect(() => {
     const wizardUpdate = async () => {
       let setupComplete = 'false'
-      let currentScreen = setupScreens.toString()
+      const currentScreen = setupScreens.toString()
       if (setupScreens >= props.children.length) {
         props.setAuthenticated(true)
         setupComplete = 'true'
         history.push('home')
       }
-      await Keychain.resetGenericPassword({service: 'setupWizard'})
+      await Keychain.resetGenericPassword({ service: 'setupWizard' })
       await Keychain.setGenericPassword(currentScreen, setupComplete, {
         service: 'setupWizard',
       })
-      let checker = await Keychain.getGenericPassword({service: 'setupWizard'})
+      const checker = await Keychain.getGenericPassword({
+        service: 'setupWizard',
+      })
       console.log('Lower part, check?', checker)
 
       /*
@@ -97,7 +83,7 @@ function SetupWizard(props: ISetupWizard) {
         <LoadingOverlay />
       ) : (
         <View style={AppStyles.viewFull}>
-          <KeyboardAvoidingView behavior={'height'} style={{height: '92%'}}>
+          <KeyboardAvoidingView behavior={'height'} style={{ height: '92%' }}>
             {React.cloneElement(props.children[setupScreens], {
               setupScreens: setupScreens,
               setSetupScreens: setSetupScreens,
@@ -105,7 +91,7 @@ function SetupWizard(props: ISetupWizard) {
           </KeyboardAvoidingView>
           <View style={Styles.dotContainer}>
             {props.children.map((child, index) => {
-              let dotStyle = [Styles.dot]
+              const dotStyle = [Styles.dot]
               if (index <= setupScreens) {
                 dotStyle.push(AppStyles.backgroundPrimary)
               }

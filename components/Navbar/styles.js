@@ -1,13 +1,12 @@
 import React from 'react'
 
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   navView: {
     width: '101%',
     top: -8,
     marginLeft: '-0.5%',
-    justifyContent: 'center',
     height: '100%',
     padding: 20,
     paddingTop: 14,

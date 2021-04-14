@@ -30,12 +30,12 @@ alice-mediator_1  | }
 alice-mediator_1  |
 ```
 
-
 ## Troubleshooting
 
 Error: (node:46) UnhandledPromiseRejectionWarning: Error: No handler for message type "https://didcomm.org/connections/1.0/request" found
 
-Simply rebuild the docker file: 
+Simply rebuild the docker file:
+
 ```sh
 docker-compose -f docker/docker-compose-mediators.yml -f docker/docker-compose-mediators-ngrok.yml up --build
 ```

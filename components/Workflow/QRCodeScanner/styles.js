@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Dimensions, StyleSheet} from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 // setting camera dimensions based on width of screen
 let CameraWidth = 0.82 * Dimensions.get('window').width

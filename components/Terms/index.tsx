@@ -1,21 +1,13 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useContext } from 'react'
 
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
-import {useHistory} from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import AppHeaderLarge from '../AppHeaderLarge/index'
 import LoadingOverlay from '../LoadingOverlay/index'
 
-import {ErrorsContext} from '../Errors/index'
+import { ErrorsContext } from '../Errors/index'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
@@ -27,7 +19,7 @@ interface ITerms {
 }
 
 function Terms(props: ITerms) {
-  let history = useHistory()
+  const history = useHistory()
 
   const [loadingOverlayVisible, setLoadingOverlayVisible] = useState(false)
 
@@ -39,25 +31,22 @@ function Terms(props: ITerms) {
     <View style={AppStyles.viewFull}>
       <AppHeaderLarge disabled={true} />
       <View style={AppStyles.tab}>
-        <Text style={[AppStyles.h2, AppStyles.textSecondary, Styles.title]}>
-          {props.title}
-        </Text>
+        <Text style={[AppStyles.h2, AppStyles.textSecondary, Styles.title]}>{props.title}</Text>
         <ScrollView style={[Styles.message, AppStyles.backgroundWhite]}>
           <View style={Styles.messageFill}>
             <Text>{props.message}</Text>
           </View>
         </ScrollView>
         <TouchableOpacity
-          style={{width: '80%'}}
-          hitSlop={{top: 20, bottom: 0, left: 10, right: 10}}
+          style={{ width: '80%' }}
+          hitSlop={{ top: 20, bottom: 0, left: 10, right: 10 }}
           onPress={() => {
             setIsChecked((previousState) => !previousState)
-          }}>
+          }}
+        >
           <View style={[Styles.checkContainer, AppStyles.backgroundWhite]}>
             <View style={[Styles.checkbox, AppStyles.backgroundWhite]}>
-              {isChecked ? (
-                <Image source={Images.checkmark} style={Styles.checkmark} />
-              ) : null}
+              {isChecked ? <Image source={Images.checkmark} style={Styles.checkmark} /> : null}
             </View>
             <Text style={[Styles.checktext, AppStyles.textBlack]}>
               I have read and agree to{'\n'}
@@ -80,7 +69,8 @@ function Terms(props: ITerms) {
               setIsChecked((previousState) => !previousState)
               props.setSetupScreens(props.setupScreens + 1)
             }, 2000)
-          }}>
+          }}
+        >
           <Text style={[AppStyles.h2, AppStyles.textWhite]}>Submit</Text>
         </TouchableOpacity>
       </View>

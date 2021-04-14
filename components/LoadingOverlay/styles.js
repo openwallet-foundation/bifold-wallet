@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Dimensions, StyleSheet} from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 let ScreenHeight = Dimensions.get('window').height
 
