@@ -1,36 +1,46 @@
-import { Agent, InboundTransporter } from 'aries-framework-javascript'
-import axios from 'axios'
+import { Agent, InboundTransporter } from 'aries-framework'
+
+export async function get(url: string) {
+  console.log(`HTTP GET request: '${url}'`)
+  const response = await fetch(url)
+  console.log(`HTTP GET response status: ${response.status} - ${response.statusText}`)
+  return response.text()
+}
+
+export async function post(url: string, body: any) {
+  console.log(`HTTP POST request: '${url}'`)
+  const response = await fetch(url, { method: 'POST', body })
+  console.log(`HTTP POST response status: ${response.status} - ${response.statusText}`)
+  return response.text()
+}
 
 class PollingInboundTransporter implements InboundTransporter {
-  public async start(agent: Agent): Promise<void> {
+  public stop: boolean
+
+  public constructor() {
+    this.stop = false
+  }
+  public async start(agent: Agent) {
     await this.registerMediator(agent)
   }
 
-  public async registerMediator(agent: Agent): Promise<void> {
-    try {
-      const mediatorUrl = agent.getMediatorUrl()
-      const mediatorInvitationUrlResponse = await axios.get(`${mediatorUrl}/invitation`)
-      const response = await axios.get(`${mediatorUrl}/`)
-      const { verkey: mediatorVerkey } = response.data
-      await agent.routing.provision({
-        verkey: mediatorVerkey,
-        invitationUrl: mediatorInvitationUrlResponse.data,
-      })
-      this.pollDownloadMessages(agent)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn(error)
-    }
+  public async registerMediator(agent: Agent) {
+    const mediatorUrl = agent.getMediatorUrl() || ''
+    const mediatorInvitationUrl = await get(`${mediatorUrl}/invitation`)
+    const { verkey: mediatorVerkey } = JSON.parse(await get(`${mediatorUrl}/`))
+    await agent.routing.provision({
+      verkey: mediatorVerkey,
+      invitationUrl: mediatorInvitationUrl,
+    })
+    this.pollDownloadMessages(agent)
   }
 
-  private pollDownloadMessages(agent: Agent): void {
+  private pollDownloadMessages(agent: Agent) {
     setInterval(async () => {
-      const downloadedMessages = await agent.routing.downloadMessages()
-
-      for (const message of downloadedMessages) {
-        await agent.receiveMessage(message)
+      if (!this.stop) {
+        await agent.routing.downloadMessages()
       }
-    }, 5000)
+    }, 2000)
   }
 }
 

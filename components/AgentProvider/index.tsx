@@ -2,47 +2,50 @@ import React, { useState, useEffect } from 'react'
 import Config from 'react-native-config'
 
 import { downloadGenesis, storeGenesis } from '../../genesis-utils'
-import { HttpOutboundTransporter, PollingInboundTransporter } from '../../transporters'
+import { PollingInboundTransporter } from '../../transporters'
 
 import indy from 'rn-indy-sdk'
-import { Agent, ConnectionEventType, BasicMessageEventType, ConsoleLogger, LogLevel } from 'aries-framework-javascript'
+import {
+  Agent,
+  ConnectionEventType,
+  BasicMessageEventType,
+  ConsoleLogger,
+  LogLevel,
+  HttpOutboundTransporter,
+} from 'aries-framework'
 console.disableYellowBox = true
 
 const AgentContext = React.createContext({})
 
 function AgentProvider(props) {
-  const [agent, setAgent] = useState(undefined)
+  const [agent, setAgent] = useState<Agent>()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const initAgent = async () => {
-      let agentConfig = {
-        mediatorUrl: Config.MEDIATOR_URL,
-        genesisUrl: Config.GENESIS_URL,
-      }
+      console.info('Initializing Agent')
 
-      console.info('Initializing Agent', agentConfig)
+      const genesis = await downloadGenesis(Config.GENESIS_URL)
+      const genesisPath = await storeGenesis(genesis, 'genesis.txn')
 
-      let genesisPath = agentConfig.genesisPath
-      const genesis = await downloadGenesis(agentConfig.genesisUrl)
-      genesisPath = await storeGenesis(genesis, 'genesis.txn')
-
-      const inbound = new PollingInboundTransporter()
-      const outbound = new HttpOutboundTransporter()
-
-      agentConfig = {
+      const agentConfig = {
         label: 'Aries Bifold',
+        mediatorUrl: Config.MEDIATOR_URL,
         walletConfig: { id: 'wallet4' },
         walletCredentials: { key: '123' },
         autoAcceptConnections: true,
         poolName: 'test-183',
-        ...agentConfig,
         genesisPath,
         logger: new ConsoleLogger(LogLevel.debug),
         indy,
       }
 
-      const newAgent = new Agent(agentConfig, inbound, outbound)
+      let newAgent = new Agent(agentConfig)
+
+      let outbound = new HttpOutboundTransporter(newAgent)
+
+      newAgent.setInboundTransporter(new PollingInboundTransporter())
+      newAgent.setOutboundTransporter(outbound)
 
       await newAgent.init()
 

@@ -9,7 +9,7 @@ import BackButton from '../BackButton/index'
 import CurrentCredential from '../CurrentCredential/index'
 
 import AgentContext from '../AgentProvider/'
-import { CredentialEventType } from 'aries-framework-javascript'
+import { CredentialEventType } from 'aries-framework'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
