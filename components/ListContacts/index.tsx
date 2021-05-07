@@ -9,7 +9,7 @@ import BackButton from '../BackButton/index'
 import CurrentContact from '../CurrentContact/index'
 
 import AgentContext from '../AgentProvider/'
-import { ConnectionEventType } from 'aries-framework-javascript'
+import { ConnectionEventType } from 'aries-framework'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'

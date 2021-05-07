@@ -10,7 +10,7 @@ import AppHeader from '../../AppHeader/index'
 import BackButton from '../../BackButton/index'
 import LoadingOverlay from '../../LoadingOverlay/index'
 
-import { decodeInvitationFromUrl } from 'aries-framework-javascript'
+import { decodeInvitationFromUrl } from 'aries-framework'
 import AgentContext from '../../AgentProvider/'
 
 import Styles from './styles'

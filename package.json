@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.0",
-    "aries-framework-javascript": "file:aries-framework-javascript-v1.0.0.tgz",
+    "aries-framework": "0.0.9-unstable.0",
     "axios": "^0.21.0",
     "patch-package": "^6.4.4",
     "react": "16.9.0",
