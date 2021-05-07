@@ -7,7 +7,7 @@ import { Route, useHistory, useRouteMatch } from 'react-router-native'
 import Images from '../../assets/images'
 
 import AgentContext from '../AgentProvider/'
-import { CredentialEventType } from 'aries-framework-javascript'
+import { CredentialEventType } from 'aries-framework'
 
 import CredentialOffered from './Credential/Offered/index'
 import QRCodeScanner from './QRCodeScanner/index'
