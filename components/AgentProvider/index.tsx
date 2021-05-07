@@ -5,7 +5,14 @@ import { downloadGenesis, storeGenesis } from '../../genesis-utils'
 import { PollingInboundTransporter } from '../../transporters'
 
 import indy from 'rn-indy-sdk'
-import { Agent, ConnectionEventType, BasicMessageEventType, ConsoleLogger, LogLevel, HttpOutboundTransporter } from 'aries-framework'
+import {
+  Agent,
+  ConnectionEventType,
+  BasicMessageEventType,
+  ConsoleLogger,
+  LogLevel,
+  HttpOutboundTransporter,
+} from 'aries-framework'
 console.disableYellowBox = true
 
 const AgentContext = React.createContext({})
@@ -16,7 +23,6 @@ function AgentProvider(props) {
 
   useEffect(() => {
     const initAgent = async () => {
-
       console.info('Initializing Agent')
 
       const genesis = await downloadGenesis(Config.GENESIS_URL)

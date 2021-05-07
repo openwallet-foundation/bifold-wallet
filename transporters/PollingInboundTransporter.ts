@@ -36,11 +36,10 @@ class PollingInboundTransporter implements InboundTransporter {
   }
 
   private pollDownloadMessages(agent: Agent) {
-    setInterval(async()=>{
-      if(!this.stop){
+    setInterval(async () => {
+      if (!this.stop) {
         await agent.routing.downloadMessages()
- 
-      }    
+      }
     }, 2000)
   }
 }
