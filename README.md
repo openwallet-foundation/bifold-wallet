@@ -58,7 +58,7 @@ Aries Bifold as of right now is tied to one ledger with the intention of making 
 Clone the repo:
 
 ```sh
-git clone https://github.com/Asvoria/aries-mobile-agent-react-native
+git clone https://github.com/hyperledger/aries-mobile-agent-react-native
 cd aries-mobile-agent-react-native
 npm install
 ```
