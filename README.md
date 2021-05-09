@@ -89,20 +89,20 @@ npm run android
 #### Run Via Visual Studio
 
 To run the Android Emulator, install Android Studio and setup emulator version in AVD manager.  
-Instructions can be found [here](https://developer.android.com/studio/run/managing-avds).  
+Instructions can be found [here](https://developer.android.com/studio/run/managing-avds).
 
 ```sh
 git clone https://github.com/hyperledger/aries-mobile-agent-react-native
 cd aries-mobile-agent-react-native
 ```
 
-After clone, install using --force if version error appear:  
+After clone, install using --force if version error appear:
 
 ```sh
 npm install --force
 ```
 
-Export the environmental variables:  
+Export the environmental variables:
 
 ```sh
 export ANDROID_HOME=$HOME/Library/Android/sdk
