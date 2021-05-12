@@ -19,7 +19,7 @@
     "axios": "^0.21.0",
     "patch-package": "^6.4.4",
     "react": "17.0.1",
-    "react-native": "0.64.1",
+    "react-native": "^0.64.1",
     "react-native-camera": "^3.31.1",
     "react-native-config": "^1.4.2",
     "react-native-fs": "^2.16.6",
