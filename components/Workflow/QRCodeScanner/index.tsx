@@ -38,10 +38,9 @@ function QRCodeScanner(props) {
 
     console.log('New Invitation:', decodedInvitation)
 
-    const connectionRecord = await agentContext.agent.connections.receiveInvitation(
-      decodedInvitation,
-      {autoAcceptConnection: true},
-    )
+    const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
+      autoAcceptConnection: true,
+    })
 
     console.log('New Connection Record', connectionRecord)
 
