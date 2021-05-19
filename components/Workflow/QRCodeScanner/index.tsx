@@ -28,26 +28,23 @@ function QRCodeScanner(props) {
   //State to determine if we should show the camera any longer
   const [cameraActive, setCameraActive] = useState(true)
 
-  const barcodeRecognized = ({ barcodes }) => {
-    barcodes.forEach(async (barcode) => {
-      console.log(`Scanned QR Code`)
-      console.log('BARCODE: ', barcode)
+  const _handleBarCodeRead = async (event) => {
+    setCameraActive(false)
 
-      //Turn off camera so that we don't scan again
-      setCameraActive(false)
+    console.log('Scanned QR Code')
+    console.log('BARCODE: ', event)
 
-      const decodedInvitation = await decodeInvitationFromUrl(barcode.data)
+    const decodedInvitation = await decodeInvitationFromUrl(event.data)
 
-      console.log('New Invitation:', decodedInvitation)
+    console.log('New Invitation:', decodedInvitation)
 
-      const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
-        autoAcceptConnection: true,
-      })
-
-      console.log('New Connection Record', connectionRecord)
-
-      props.setWorkflow('connecting')
+    const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
+      autoAcceptConnection: true,
     })
+
+    console.log('New Connection Record', connectionRecord)
+
+    props.setWorkflow('connecting')
   }
 
   if (cameraActive) {
@@ -69,10 +66,8 @@ function QRCodeScanner(props) {
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}
-              googleVisionBarcodeType={RNCamera.Constants.GoogleVisionBarcodeDetection.BarcodeType.QR_CODE}
-              onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                barcodeRecognized({ barcodes })
-              }}
+              barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+              onBarCodeRead={_handleBarCodeRead}
             ></RNCamera>
           </View>
         </View>
