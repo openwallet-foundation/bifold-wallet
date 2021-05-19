@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Redirect, Route, useHistory, useLocation } from 'react-router-native'
 
@@ -24,10 +24,6 @@ import Workflow from './components/Workflow/index'
 const App = (props) => {
   let location = useLocation()
   let history = useHistory()
-
-  useEffect(()=>{
-    console.log("Hermes enabled:", !!global.HermesInternal)
-  }, [])
 
   const [currentLocation, setCurrentLocation] = useState('')
 
