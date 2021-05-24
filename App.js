@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { Redirect, Route, useHistory, useLocation } from 'react-router-native'
+// import { Redirect, Route, useHistory, useLocation } from 'react-router-native'
 
 //For UUIDv4 within React Native
 import 'react-native-get-random-values'
@@ -10,13 +10,13 @@ import Errors from './App/contexts/Errors/index'
 import Notifications from './App/contexts/Notifications/index'
 
 import EntryPoint from './App/screens/EntryPoint/index'
-import Home from './App/screens/Home/index'
-import ListContacts from './App/screens/ListContacts/index'
-import ListCredentials from './App/screens/ListCredentials/index'
+// import Home from './App/screens/Home/index'
+// import ListContacts from './App/screens/ListContacts/index'
+// import ListCredentials from './App/screens/ListCredentials/index'
 import Navbar from './App/components/Navbar/index'
 import PinCreate from './App/screens/PinCreate/index'
 import PinEnter from './App/screens/PinEnter/index'
-import Settings from './App/screens/Settings/index'
+// import Settings from './App/screens/Settings/index'
 import SetupWizard from './App/screens/SetupWizard/index'
 import Terms from './App/components/Terms/index'
 import Workflow from './App/screens/Workflow/index'
@@ -24,9 +24,9 @@ import Workflow from './App/screens/Workflow/index'
 import TabNavigator from './App/navigators/TabNavigator'
 
 const App = (props) => {
-  const [currentLocation, setCurrentLocation] = useState('')
+  // const [currentLocation, setCurrentLocation] = useState('')
 
-  const [authenticated, setAuthenticated] = useState(false)
+  // const [authenticated, setAuthenticated] = useState(false)
 
   // Mock data to pass to Terms component
   const mockTitle = 'Terms of Service'
@@ -86,6 +86,8 @@ const App = (props) => {
     /workflow
     /settings
   */
+
+  //blue #4081d3
 
   return (
     // <View>

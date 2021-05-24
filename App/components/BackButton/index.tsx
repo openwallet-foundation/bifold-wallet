@@ -10,8 +10,8 @@ interface IBackButton {
 }
 
 function BackButton(props: IBackButton) {
-  const history = useHistory()
-  const location = useLocation()
+  // const history = useHistory()
+  // const location = useLocation()
 
   const handleBackButtonClick = () => {
     if (props.backExit) {
@@ -29,19 +29,19 @@ function BackButton(props: IBackButton) {
       )
     } else if (props.backPath) {
       console.log('The path is: ', props.backPath)
-      history.push(props.backPath)
+      // history.push(props.backPath)
     } else {
       return true
     }
     return true
   }
 
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick)
-    }
-  }, [location])
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick)
+  //   return () => {
+  //     BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick)
+  //   }
+  // }, [location])
 
   return <></>
 }

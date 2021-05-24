@@ -13,14 +13,14 @@ import { NotificationsContext } from '../../contexts/Notifications/index'
 import AppStyles from '../../../assets/styles'
 
 function Home() {
-  const history = useHistory()
-  const location = useLocation()
+  // const history = useHistory()
+  // const location = useLocation()
 
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <BackButton backExit={true} />
       <View style={AppStyles.viewFull}>
         <View style={[AppStyles.tab, { top: 80 }]}>
@@ -31,14 +31,14 @@ function Home() {
               /*errors.setVisible(true)
             errors.setText("Workflows not\nyet created")
             errors.setPath("/home")*/
-              history.push('/workflow/connect')
+              // history.push('/workflow/connect')
             }}
           >
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Begin</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </>
+    </View>
   )
 }
 
