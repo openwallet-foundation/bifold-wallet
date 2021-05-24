@@ -5,26 +5,25 @@ import { Redirect, Route, useHistory, useLocation } from 'react-router-native'
 //For UUIDv4 within React Native
 import 'react-native-get-random-values'
 
-import { AgentProvider } from './components/AgentProvider/'
-import Errors from './components/Errors/index'
-import Notifications from './components/Notifications/index'
+import { AgentProvider } from './App/contexts/AgentProvider'
+import Errors from './App/contexts/Errors/index'
+import Notifications from './App/contexts/Notifications/index'
 
-import EntryPoint from './components/EntryPoint/index'
-import Home from './components/Home/index'
-import ListContacts from './components/ListContacts/index'
-import ListCredentials from './components/ListCredentials/index'
-import Navbar from './components/Navbar/index'
-import PinCreate from './components/PinCreate/index'
-import PinEnter from './components/PinEnter/index'
-import Settings from './components/Settings/index'
-import SetupWizard from './components/SetupWizard/index'
-import Terms from './components/Terms/index'
-import Workflow from './components/Workflow/index'
+import EntryPoint from './App/screens/EntryPoint/index'
+import Home from './App/screens/Home/index'
+import ListContacts from './App/screens/ListContacts/index'
+import ListCredentials from './App/screens/ListCredentials/index'
+import Navbar from './App/components/Navbar/index'
+import PinCreate from './App/screens/PinCreate/index'
+import PinEnter from './App/screens/PinEnter/index'
+import Settings from './App/screens/Settings/index'
+import SetupWizard from './App/screens/SetupWizard/index'
+import Terms from './App/components/Terms/index'
+import Workflow from './App/screens/Workflow/index'
+
+import TabNavigator from './App/navigators/TabNavigator'
 
 const App = (props) => {
-  let location = useLocation()
-  let history = useHistory()
-
   const [currentLocation, setCurrentLocation] = useState('')
 
   const [authenticated, setAuthenticated] = useState(false)
@@ -89,11 +88,12 @@ const App = (props) => {
   */
 
   return (
-    <View>
-      <AgentProvider>
-        <Errors>
-          <Notifications>
-            <View style={authenticated ? { height: '90.5%' } : { height: '100%' }}>
+    // <View>
+    <AgentProvider>
+      <Errors>
+        <Notifications>
+          <TabNavigator />
+          {/* <View style={authenticated ? { height: '90.5%' } : { height: '100%' }}>
               <Route
                 exact
                 path="/"
@@ -137,11 +137,11 @@ const App = (props) => {
               <View style={{ height: '10%' }}>
                 <Navbar authenticated={authenticated} />
               </View>
-            ) : null}
-          </Notifications>
-        </Errors>
-      </AgentProvider>
-    </View>
+            ) : null} */}
+        </Notifications>
+      </Errors>
+    </AgentProvider>
+    // </View>
   )
 }
 
