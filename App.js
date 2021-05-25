@@ -87,14 +87,16 @@ const App = (props) => {
     /settings
   */
 
-  //blue #4081d3
+  //green #35823f
 
   return (
     // <View>
     <AgentProvider>
       <Errors>
         <Notifications>
-          <TabNavigator />
+          <View style={{ height: '100%' }}>
+            <TabNavigator />
+          </View>
           {/* <View style={authenticated ? { height: '90.5%' } : { height: '100%' }}>
               <Route
                 exact
