@@ -4,14 +4,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import HomeStack from './HomeStack'
 import ContactStack from './ContactStack'
+import ScanStack from './ScanStack'
 import CredentialStack from './CredentialStack'
 import SettingStack from './SettingStack'
+
+import Workflow from '../screens/Workflow'
 
 const Tab = createBottomTabNavigator()
 
 function TabNavigator() {
   return (
-    <Tab.Navigator tabBarOptions={{ style: { backgroundColor: '#35823f' }, activeTintColor: 'white' }}>
+    <Tab.Navigator
+      tabBarOptions={{
+        style: { backgroundColor: '#35823f' },
+        activeTintColor: 'white',
+        inactiveTintColor: 'rgba(255,255,255,0.3)',
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={HomeStack}
@@ -21,6 +30,11 @@ function TabNavigator() {
         name="Contacts"
         component={ContactStack}
         options={{ tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} /> }}
+      />
+      <Tab.Screen
+        name="Scan"
+        component={ScanStack}
+        options={{ tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} /> }}
       />
       <Tab.Screen
         name="Credentials"

@@ -7,6 +7,8 @@ import { useHistory, useLocation } from 'react-router-native'
 import AppHeaderLarge from '../../components/AppHeaderLarge/index'
 import BackButton from '../../components/BackButton/index'
 
+import PAButton from '../../components/PAButton'
+
 import { ErrorsContext } from '../../contexts/Errors/index'
 import { NotificationsContext } from '../../contexts/Notifications/index'
 
@@ -25,17 +27,8 @@ function Home() {
       <View style={AppStyles.viewFull}>
         <View style={[AppStyles.tab, { top: 80 }]}>
           <AppHeaderLarge />
-          <TouchableOpacity
-            style={[AppStyles.button, AppStyles.backgroundPrimary, { marginTop: 10 }]}
-            onPress={() => {
-              /*errors.setVisible(true)
-            errors.setText("Workflows not\nyet created")
-            errors.setPath("/home")*/
-              // history.push('/workflow/connect')
-            }}
-          >
-            <Text style={[AppStyles.h2, AppStyles.textWhite]}>Begin</Text>
-          </TouchableOpacity>
+          <PAButton title="Scanner" onPress={() => {}} />
+          <PAButton title="Show QR Code" onPress={() => {}} />
         </View>
       </View>
     </View>

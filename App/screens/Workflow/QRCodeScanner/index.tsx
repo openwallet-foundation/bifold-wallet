@@ -49,15 +49,15 @@ function QRCodeScanner(props) {
 
   if (cameraActive) {
     return (
-      <>
+      <View>
         <BackButton backPath={'/home'} />
         <View style={AppStyles.viewFull}>
-          <View style={AppStyles.header}>
+          {/* <View style={AppStyles.header}>
             <AppHeader headerText={'SCAN CODE'} />
-          </View>
+          </View> */}
           <View style={AppStyles.tab}>
             <RNCamera
-              style={Styles.camera}
+              style={{ height: '100%', width: '100%' }}
               type={RNCamera.Constants.Type.back}
               captureAudio={false}
               androidCameraPermissionOptions={{
@@ -71,7 +71,7 @@ function QRCodeScanner(props) {
             ></RNCamera>
           </View>
         </View>
-      </>
+      </View>
     )
   } else {
     return <LoadingOverlay />

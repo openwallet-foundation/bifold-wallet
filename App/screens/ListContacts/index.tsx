@@ -2,6 +2,9 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import { Image, Text, TouchableOpacity, View, FlatList } from 'react-native'
 
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useNavigation } from '@react-navigation/native'
+
 import { useHistory } from 'react-router-native'
 
 import AppHeader from '../../components/AppHeader/index'
@@ -20,6 +23,7 @@ interface IListContacts {}
 function ListContacts(props: IListContacts) {
   const history = useHistory()
 
+  const navigation = useNavigation()
   //Reference to the agent context
   const agentContext = useContext(AgentContext)
 
@@ -66,26 +70,38 @@ function ListContacts(props: IListContacts) {
 
   function renderContact({ item }) {
     return (
-      <View key={item.contact_id} style={[AppStyles.tableItem, Styles.tableItem, AppStyles.backgroundSecondary]}>
-        <View>
-          <Text style={[{ fontSize: 18, top: 8 }, AppStyles.textWhite]}>
-            {item.alias ? item.alias : item.invitation.label}
-          </Text>
-        </View>
-        <TouchableOpacity
-          onPress={() => {
-            setViewInfo(item)
-            setViewContact(true)
-          }}
-        >
-          <Image source={Images.infoWhite} style={[AppStyles.info, { marginRight: 10, top: 10 }]} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        key={item.contact_id}
+        onPress={() => {
+          navigation.navigate('ContactDetails', { alias: item.alias })
+          // setViewInfo(item)
+          // setViewContact(true)
+        }}
+        style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
+      >
+        <Text style={{ fontSize: 20 }}>{item.alias ? item.alias : item.invitation.label}</Text>
+        <Icon name="chevron-right" size={30} style={{ bottom: 2 }} />
+      </TouchableOpacity>
     )
   }
 
+  const FAKE_CONTACTS = [
+    {
+      contact_id: 1,
+      alias: 'Jeremy Jackson',
+    },
+    {
+      contact_id: 2,
+      alias: 'John Walker',
+    },
+    {
+      contact_id: 3,
+      alias: 'Peter Piper',
+    },
+  ]
+
   return (
-    <FlatList renderItem={renderContact} />
+    <FlatList data={FAKE_CONTACTS} renderItem={renderContact} />
     // <BackButton backPath={'/home'} />
     // <View style={AppStyles.viewFull}>
     // <View style={AppStyles.header}>

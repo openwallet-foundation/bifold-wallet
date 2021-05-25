@@ -21,7 +21,7 @@ interface IWorkflow {
 
 function Workflow(props: IWorkflow) {
   const history = useHistory()
-  const { url } = useRouteMatch()
+  // const { url } = useRouteMatch()
 
   const [workflow, setWorkflow] = useState('connect')
   const [workflowInProgress, setWorkflowInProgress] = useState(true)
@@ -98,11 +98,12 @@ function Workflow(props: IWorkflow) {
 
   return (
     <View>
-      <Route
+      <QRCodeScanner setWorkflow={setWorkflow} setWorkflowInProgress={setWorkflowInProgress} />
+      {/* <Route
         path={`${url}/connect`}
         render={() => <QRCodeScanner setWorkflow={setWorkflow} setWorkflowInProgress={setWorkflowInProgress} />}
-      />
-      <Route
+      /> */}
+      {/* <Route
         path={`${url}/connecting`}
         render={() => {
           return (
@@ -118,12 +119,12 @@ function Workflow(props: IWorkflow) {
             </Message>
           )
         }}
-      />
-      <Route
+      /> */}
+      {/* <Route
         path={`${url}/offered`}
         render={() => <CredentialOffered setWorkflow={setWorkflow} contact={connection} credential={credential} />}
-      />
-      <Route
+      /> */}
+      {/* <Route
         path={`${url}/pending`}
         render={() => {
           return (
@@ -139,8 +140,8 @@ function Workflow(props: IWorkflow) {
             </Message>
           )
         }}
-      />
-      <Route
+      /> */}
+      {/* <Route
         path={`${url}/issued`}
         render={() => {
           return (
@@ -156,7 +157,7 @@ function Workflow(props: IWorkflow) {
             </Message>
           )
         }}
-      />
+      /> */}
 
       {/*<Prompt
         message={(location, action) => {

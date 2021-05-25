@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View, FLatlist } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useHistory } from 'react-router-native'
 
@@ -14,6 +16,7 @@ import { CredentialEventType } from 'aries-framework'
 import AppStyles from '../../../assets/styles'
 import Images from '../../../assets/images'
 import Styles from './styles'
+import { FlatList } from 'react-native-gesture-handler'
 
 interface IListCredentials {}
 
@@ -72,10 +75,41 @@ function ListCredentials(props: IListCredentials) {
 
   const [viewInfo, setViewInfo] = useState('')
   const [viewCredential, setViewCredential] = useState(false)
+  const navigation = useNavigation()
+
+  const renderCred = ({ item }) => {
+    return (
+      <TouchableOpacity
+        key={item.id}
+        onPress={() => {
+          navigation.navigate('CredentialDetails', { alias: item.alias })
+        }}
+        style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
+      >
+        <Text style={{ fontSize: 20 }}>{item.alias ? item.alias : item.invitation.label}</Text>
+        <Icon name="chevron-right" size={30} style={{ bottom: 2 }} />
+      </TouchableOpacity>
+    )
+  }
+
+  const FAKE_CREDS = [
+    {
+      id: 1,
+      alias: 'Intermountain Health',
+    },
+    {
+      id: 2,
+      alias: 'DR. JEFF DDS',
+    },
+    {
+      id: 3,
+      alias: 'Pocamo Pediatrics',
+    },
+  ]
 
   return (
-    <>
-      <BackButton backPath={'/home'} />
+    <FlatList data={FAKE_CREDS} renderItem={renderCred} />
+    /* <BackButton backPath={'/home'} />
       <View style={AppStyles.viewFull}>
         <View style={AppStyles.header}>
           <AppHeader headerText={'CREDENTIALS'} />
@@ -107,8 +141,7 @@ function ListCredentials(props: IListCredentials) {
           ))}
         </View>
       </View>
-      {viewCredential ? <CurrentCredential credential={viewInfo} setViewCredential={setViewCredential} /> : null}
-    </>
+      {viewCredential ? <CurrentCredential credential={viewInfo} setViewCredential={setViewCredential} /> : null} */
   )
 }
 
