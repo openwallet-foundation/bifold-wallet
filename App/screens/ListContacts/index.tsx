@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View, FlatList } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
@@ -64,42 +64,45 @@ function ListContacts(props: IListContacts) {
   const [viewInfo, setViewInfo] = useState('')
   const [viewContact, setViewContact] = useState(false)
 
-  return (
-    <>
-      <BackButton backPath={'/home'} />
-      <View style={AppStyles.viewFull}>
-        <View style={AppStyles.header}>
-          <AppHeader headerText={'CONTACTS'} />
+  function renderContact({ item }) {
+    return (
+      <View key={item.contact_id} style={[AppStyles.tableItem, Styles.tableItem, AppStyles.backgroundSecondary]}>
+        <View>
+          <Text style={[{ fontSize: 18, top: 8 }, AppStyles.textWhite]}>
+            {item.alias ? item.alias : item.invitation.label}
+          </Text>
         </View>
-        <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
-          <TouchableOpacity
-            style={Styles.backbutton}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-            onPress={() => history.push('/home')}
-          >
-            <Image source={Images.arrowDown} style={AppStyles.arrow} />
-          </TouchableOpacity>
-          {contacts.map((contact, i) => (
-            <View key={i} style={[AppStyles.tableItem, Styles.tableItem, AppStyles.backgroundSecondary]}>
-              <View>
-                <Text style={[{ fontSize: 18, top: 8 }, AppStyles.textWhite]}>
-                  {contact.alias ? contact.alias : contact.invitation.label}
-                </Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => {
-                  setViewInfo(contact)
-                  setViewContact(true)
-                }}
-              >
-                <Image source={Images.infoWhite} style={[AppStyles.info, { marginRight: 10, top: 10 }]} />
-              </TouchableOpacity>
-            </View>
-          ))}
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            setViewInfo(item)
+            setViewContact(true)
+          }}
+        >
+          <Image source={Images.infoWhite} style={[AppStyles.info, { marginRight: 10, top: 10 }]} />
+        </TouchableOpacity>
       </View>
-      {viewContact ? <CurrentContact contact={viewInfo} setViewContact={setViewContact} /> : null}
-    </>
+    )
+  }
+
+  return (
+    <FlatList renderItem={renderContact} />
+    // <BackButton backPath={'/home'} />
+    // <View style={AppStyles.viewFull}>
+    // <View style={AppStyles.header}>
+    //     <AppHeader headerText={'CONTACTS'} />
+    //   </View>
+    // <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
+    // <TouchableOpacity
+    //       style={Styles.backbutton}
+    //       hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    //       onPress={() => history.push('/home')}
+    //     >
+    //       <Image source={Images.arrowDown} style={AppStyles.arrow} />
+    //     </TouchableOpacity>
+
+    // </View>
+    // </View>
+    // {viewContact ? <CurrentContact contact={viewInfo} setViewContact={setViewContact} /> : null}
   )
 }
 
