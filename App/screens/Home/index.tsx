@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 
 import { Text, TouchableOpacity, View } from 'react-native'
 
+import { useNavigation } from '@react-navigation/native'
+
 import { useHistory, useLocation } from 'react-router-native'
 
 import AppHeaderLarge from '../../components/AppHeaderLarge/index'
@@ -17,6 +19,7 @@ import AppStyles from '../../../assets/styles'
 function Home() {
   // const history = useHistory()
   // const location = useLocation()
+  const navigation = useNavigation()
 
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)
@@ -27,7 +30,7 @@ function Home() {
       <View style={AppStyles.viewFull}>
         <View style={[AppStyles.tab, { top: 80 }]}>
           <AppHeaderLarge />
-          <PAButton title="Scanner" onPress={() => {}} />
+          <PAButton title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
           <PAButton title="Show QR Code" onPress={() => {}} />
         </View>
       </View>

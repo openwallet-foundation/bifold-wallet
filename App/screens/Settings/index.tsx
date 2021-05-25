@@ -17,7 +17,7 @@ function Settings() {
   const history = useHistory()
 
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       {/* <BackButton backPath={'/home'} /> */}
       {/* <View style={AppStyles.viewFull}> */}
       {/* <View style={AppStyles.header}>
@@ -39,7 +39,7 @@ function Settings() {
       </Text>
       {/* </View> */}
       {/* </View> */}
-    </>
+    </View>
   )
 }
 

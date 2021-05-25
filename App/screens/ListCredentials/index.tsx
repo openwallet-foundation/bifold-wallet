@@ -108,7 +108,7 @@ function ListCredentials(props: IListCredentials) {
   ]
 
   return (
-    <FlatList data={FAKE_CREDS} renderItem={renderCred} />
+    <FlatList data={FAKE_CREDS} renderItem={renderCred} style={{ backgroundColor: 'white' }} />
     /* <BackButton backPath={'/home'} />
       <View style={AppStyles.viewFull}>
         <View style={AppStyles.header}>

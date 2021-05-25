@@ -101,7 +101,7 @@ function ListContacts(props: IListContacts) {
   ]
 
   return (
-    <FlatList data={FAKE_CONTACTS} renderItem={renderContact} />
+    <FlatList data={FAKE_CONTACTS} renderItem={renderContact} style={{ backgroundColor: 'white' }} />
     // <BackButton backPath={'/home'} />
     // <View style={AppStyles.viewFull}>
     // <View style={AppStyles.header}>

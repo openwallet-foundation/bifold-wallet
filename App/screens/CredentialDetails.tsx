@@ -14,7 +14,7 @@ function CredentialDetails() {
   }, [])
 
   return (
-    <View>
+    <View style={{ backgroundColor: 'white', flex: 1 }}>
       <Text>...other info, idk</Text>
     </View>
   )
