@@ -1,13 +1,6 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { ConnectionInvitationMessage } from 'aries-framework'
-import { ConnectionRecord } from 'aries-framework'
-import {
-  createConnection,
-  fetchAllConnections,
-  receiveInvitation,
-  receiveInvitationFromUrl,
-  acceptInvitation
-} from './connectionsThunks'
+import { ConnectionRecord, ConnectionInvitationMessage } from 'aries-framework'
+import { ConnectionThunks } from './connectionsThunks'
 
 interface ConnectionsState {
   connections: {
@@ -16,6 +9,7 @@ interface ConnectionsState {
   }
   invitation: {
     message: null | ConnectionInvitationMessage,
+    connectionRecordId: null | string,
     isLoading: boolean
   }
   error: null | SerializedError
@@ -28,6 +22,7 @@ const initialState: ConnectionsState = {
   },
   invitation: {
     message: null,
+    connectionRecordId: null,
     isLoading: false
   },
   error: null
@@ -57,62 +52,62 @@ const connectionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // fetchAllConnections
-      .addCase(fetchAllConnections.pending, (state) => {
+      .addCase(ConnectionThunks.fetchAllConnections.pending, (state) => {
         state.connections.isLoading = true
       })
-      .addCase(fetchAllConnections.rejected, (state, action) => {
+      .addCase(ConnectionThunks.fetchAllConnections.rejected, (state, action) => {
         state.connections.isLoading = false
         state.error = action.error
       })
-      .addCase(fetchAllConnections.fulfilled, (state, action) => {
+      .addCase(ConnectionThunks.fetchAllConnections.fulfilled, (state, action) => {
         state.connections.isLoading = false
         state.connections.records = action.payload
       })
       // createConnection
-      .addCase(createConnection.pending, (state) => {
-        state.connections.isLoading = true
+      .addCase(ConnectionThunks.createConnection.pending, (state) => {
         state.invitation.isLoading = true
       })
-      .addCase(createConnection.rejected, (state, action) => {
+      .addCase(ConnectionThunks.createConnection.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.error = action.error
       })
-      .addCase(createConnection.fulfilled, (state, action) => {
+      .addCase(ConnectionThunks.createConnection.fulfilled, (state, action) => {
         state.invitation.isLoading = false
         state.invitation.message = action.payload.invitation
+        state.invitation.connectionRecordId = action.payload.connectionRecord.id
         state.connections.records.push(action.payload.connectionRecord)
       })
       // receiveInvitation
-      .addCase(receiveInvitation.pending, (state) => {
+      .addCase(ConnectionThunks.receiveInvitation.pending, (state) => {
         state.invitation.isLoading = true
       })
-      .addCase(receiveInvitation.rejected, (state, action) => {
+      .addCase(ConnectionThunks.receiveInvitation.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.error = action.error
       })
-      .addCase(receiveInvitation.fulfilled, (state, action) => {
+      .addCase(ConnectionThunks.receiveInvitation.fulfilled, (state, action) => {
         state.invitation.isLoading = false
       })
       // receiveInvitationFromUrl
-      .addCase(receiveInvitationFromUrl.pending, (state) => {
+      .addCase(ConnectionThunks.receiveInvitationFromUrl.pending, (state) => {
         state.invitation.isLoading = true
       })
-      .addCase(receiveInvitationFromUrl.rejected, (state, action) => {
+      .addCase(ConnectionThunks.receiveInvitationFromUrl.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.error = action.error
       })
-      .addCase(receiveInvitationFromUrl.fulfilled, (state) => {
+      .addCase(ConnectionThunks.receiveInvitationFromUrl.fulfilled, (state) => {
         state.invitation.isLoading = false
       })
       // acceptInvitation
-      .addCase(acceptInvitation.pending, (state) => {
+      .addCase(ConnectionThunks.acceptInvitation.pending, (state) => {
         state.invitation.isLoading = true
       })
-      .addCase(acceptInvitation.rejected, (state, action) => {
+      .addCase(ConnectionThunks.acceptInvitation.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.error = action.error
       })
-      .addCase(acceptInvitation.fulfilled, (state) => {
+      .addCase(ConnectionThunks.acceptInvitation.fulfilled, (state) => {
         state.invitation.isLoading = false
       })
 
@@ -120,3 +115,5 @@ const connectionsSlice = createSlice({
 })
 
 export { connectionsSlice }
+
+export type { ConnectionsState }

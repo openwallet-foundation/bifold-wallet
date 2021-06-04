@@ -2,13 +2,13 @@ import { AsyncThunkPayloadCreator, createAsyncThunk } from "@reduxjs/toolkit"
 import { Agent } from "aries-framework"
 
 
-export interface AgentThunkApiConfig {
+interface AgentThunkApiConfig {
   extra: {
     agent: Agent
   }
 }
 
-export function createAsyncAgentThunk<Returned, ThunkArg = void>(typePrefix: string, payloadCreator: AsyncThunkPayloadCreator<Returned, ThunkArg, AgentThunkApiConfig>) {
+function createAsyncAgentThunk<Returned, ThunkArg = void>(typePrefix: string, payloadCreator: AsyncThunkPayloadCreator<Returned, ThunkArg, AgentThunkApiConfig>) {
   return createAsyncThunk<Returned, ThunkArg, AgentThunkApiConfig>(
     typePrefix,
     async (thunkArg, thunkApi) => {
@@ -17,4 +17,13 @@ export function createAsyncAgentThunk<Returned, ThunkArg = void>(typePrefix: str
         return payloadCreator(thunkArg, thunkApi)
     },
   )
+}
+
+export {
+  createAsyncAgentThunk,
+}
+
+export type {
+  AgentThunkApiConfig
+
 }
