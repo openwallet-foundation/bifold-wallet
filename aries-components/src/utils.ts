@@ -25,5 +25,4 @@ export {
 
 export type {
   AgentThunkApiConfig
-
 }

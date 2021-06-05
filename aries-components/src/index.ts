@@ -1,6 +1,6 @@
 import { initializeStore } from './store'
 
-import {  createAsyncAgentThunk } from './utils'
+import {  createAsyncAgentThunk, AgentThunkApiConfig } from './utils'
 
 import {
     agentSlice,
@@ -15,6 +15,7 @@ export {
     initializeStore,
 
     createAsyncAgentThunk,
+    AgentThunkApiConfig,
 
     agentSlice,
     AgentThunks,
