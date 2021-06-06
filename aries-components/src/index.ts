@@ -1,6 +1,6 @@
 import { initializeStore } from './store'
 
-import {  createAsyncAgentThunk } from './utils'
+import {  createAsyncAgentThunk, AgentThunkApiConfig } from './utils'
 
 import {
     agentSlice,
@@ -8,18 +8,21 @@ import {
 
     connectionsSlice,
     ConnectionThunks,
-    startConnectionListener
+    startConnectionListener,
+    ConnectionSelectors
 } from './slices'
 
 export {
     initializeStore,
 
     createAsyncAgentThunk,
+    AgentThunkApiConfig,
 
     agentSlice,
     AgentThunks,
 
     connectionsSlice,
     ConnectionThunks,
+    ConnectionSelectors,
     startConnectionListener
 }
