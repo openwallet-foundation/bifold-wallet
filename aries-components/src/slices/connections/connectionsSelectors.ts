@@ -1,8 +1,13 @@
 import { useAppSelector } from '../../store'
+import { ConnectionsState } from './connectionsSlice'
+
+interface PartialConnectionState {
+    connections: ConnectionsState
+}
 
 namespace ConnectionSelectors {
 
-    export const allConnectionsSelector = () => useAppSelector(state => state.connections.connections.records)
+    export const allConnectionsSelector = (state: PartialConnectionState) => state.connections.connections.records
 
     export const connectionRecordByIdSelector = (connectionRecordId: string) => useAppSelector(state => state.connections.connections.records.find(x => x.id === connectionRecordId))
 
