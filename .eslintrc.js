@@ -29,6 +29,12 @@ module.exports = {
       },
     },
     {
+      files: ['aries-components/**/*.ts'],
+      rules: {
+        '@typescript-eslint/no-namespace': 'off',
+      },
+    },
+    {
       files: ['.eslintrc.js', '*.config.js'],
       env: {
         node: true,

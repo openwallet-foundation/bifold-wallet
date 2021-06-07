@@ -1,75 +1,78 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { ConnectionInvitationMessage } from 'aries-framework'
-import { createAsyncAgentThunk } from '../../utils'
+import { ConnectionsModule } from 'aries-framework/build/src/modules/connections/ConnectionsModule'
 
-
+import { createAsyncAgentThunk, ClassMethodParameters } from '../../utils'
 
 namespace ConnectionThunks {
-
-  export const fetchAllConnections = createAsyncAgentThunk(
-    'connections/fetchAll',
-    async (_, thunkApi) => {
-      return thunkApi.extra.agent.connections.getAll()
-    })
+  export const fetchAllConnections = createAsyncAgentThunk('connections/fetchAll', async (_, thunkApi) => {
+    return thunkApi.extra.agent.connections.getAll()
+  })
 
   export const createConnection = createAsyncAgentThunk(
     'connections/createConnection',
-    async (config: {
-      autoAcceptConnection?: boolean,
-      alias?: string
-    }, thunkApi) => {
-      return thunkApi.extra.agent.connections.createConnection(config)
-    })
+    async (options: ClassMethodParameters<typeof ConnectionsModule, 'createConnection'>[0], thunkApi) => {
+      return thunkApi.extra.agent.connections.createConnection(options)
+    }
+  )
 
   export const receiveInvitation = createAsyncAgentThunk(
     'connections/receiveInvitation',
-    async (options: {
-      invitation: ConnectionInvitationMessage,
-      config?: {
-        autoAcceptConnection?: boolean,
-        alias?: string
-      }
-    }, thunkApi) => {
-      await thunkApi.extra.agent.connections.receiveInvitation(options.invitation, options.config)
-    })
+    async (
+      {
+        invitation,
+        options,
+      }: {
+        invitation: ConnectionInvitationMessage
+        options?: ClassMethodParameters<typeof ConnectionsModule, 'receiveInvitation'>[1]
+      },
+      thunkApi
+    ) => {
+      await thunkApi.extra.agent.connections.receiveInvitation(invitation, options)
+    }
+  )
 
   export const receiveInvitationFromUrl = createAsyncAgentThunk(
     'connections/receiveInvitationFromUrl',
-    async (options: {
-      invitationUrl: string,
-      config?: {
-        autoAcceptConnection?: boolean,
-        alias?: string
-      }
-    }, thunkApi) => {
-      await thunkApi.extra.agent.connections.receiveInvitationFromUrl(options.invitationUrl, options.config)
-    })
+    async (
+      {
+        invitationUrl,
+        options,
+      }: {
+        invitationUrl: string
+        options?: ClassMethodParameters<typeof ConnectionsModule, 'receiveInvitationFromUrl'>[1]
+      },
+      thunkApi
+    ) => {
+      await thunkApi.extra.agent.connections.receiveInvitationFromUrl(invitationUrl, options)
+    }
+  )
 
   export const acceptInvitation = createAsyncAgentThunk(
     'connections/acceptInvitation',
-    async (options: {
-      connectionId: string
-    }, thunkApi) => {
+    async (
+      options: {
+        connectionId: string
+      },
+      thunkApi
+    ) => {
       await thunkApi.extra.agent.connections.acceptInvitation(options.connectionId)
-    })
+    }
+  )
 
   export const acceptRequest = createAsyncAgentThunk(
     'connections/acceptRequest',
-    async (options: {
-      connectionId: string
-    }, thunkApi) => {
-      await thunkApi.extra.agent.connections.acceptRequest(options.connectionId)
-    })
+    async (connectionId: ClassMethodParameters<typeof ConnectionsModule, 'acceptRequest'>[0], thunkApi) => {
+      await thunkApi.extra.agent.connections.acceptRequest(connectionId)
+    }
+  )
 
   export const acceptResponse = createAsyncAgentThunk(
     'connections/acceptResponse',
-    async (options: {
-      connectionId: string
-    }, thunkApi) => {
-      return thunkApi.extra.agent.connections.acceptResponse(options.connectionId)
-    })
-
+    async (connectionId: ClassMethodParameters<typeof ConnectionsModule, 'acceptRequest'>[0], thunkApi) => {
+      return thunkApi.extra.agent.connections.acceptResponse(connectionId)
+    }
+  )
 }
 
-export {
-  ConnectionThunks
-}
+export { ConnectionThunks }
