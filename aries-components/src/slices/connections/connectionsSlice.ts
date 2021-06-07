@@ -8,8 +8,8 @@ interface ConnectionsState {
     isLoading: boolean
   }
   invitation: {
-    message: null | ConnectionInvitationMessage,
-    connectionRecordId: null | string,
+    message: null | ConnectionInvitationMessage
+    connectionRecordId: null | string
     isLoading: boolean
   }
   error: null | SerializedError
@@ -18,14 +18,14 @@ interface ConnectionsState {
 const initialState: ConnectionsState = {
   connections: {
     records: [],
-    isLoading: false
+    isLoading: false,
   },
   invitation: {
     message: null,
     connectionRecordId: null,
-    isLoading: false
+    isLoading: false,
   },
-  error: null
+  error: null,
 }
 
 const connectionsSlice = createSlice({
@@ -46,8 +46,7 @@ const connectionsSlice = createSlice({
       // record does exist, update it
       state.connections.records[index] = action.payload
       return state
-    }
-
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,7 +84,7 @@ const connectionsSlice = createSlice({
         state.invitation.isLoading = false
         state.error = action.error
       })
-      .addCase(ConnectionThunks.receiveInvitation.fulfilled, (state, action) => {
+      .addCase(ConnectionThunks.receiveInvitation.fulfilled, (state) => {
         state.invitation.isLoading = false
       })
       // receiveInvitationFromUrl
@@ -110,7 +109,6 @@ const connectionsSlice = createSlice({
       .addCase(ConnectionThunks.acceptInvitation.fulfilled, (state) => {
         state.invitation.isLoading = false
       })
-
   },
 })
 
