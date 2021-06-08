@@ -74,7 +74,6 @@ const connectionsSlice = createSlice({
         state.invitation.isLoading = false
         state.invitation.message = action.payload.invitation
         state.invitation.connectionRecordId = action.payload.connectionRecord.id
-        state.connections.records.push(action.payload.connectionRecord)
       })
       // receiveInvitation
       .addCase(ConnectionThunks.receiveInvitation.pending, (state) => {
