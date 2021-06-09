@@ -1,11 +1,6 @@
 import { connectionsSlice } from './connectionsSlice'
-import { ConnectionThunks } from './connectionsThunks'
-import { ConnectionSelectors } from './connectionsSelectors'
+import { ConnectionThunks } from './ConnectionsThunks'
+import { ConnectionsSelectors } from './connectionsSelectors'
 import { startConnectionListener } from './connectionsListener'
 
-export {
-    connectionsSlice,
-    ConnectionThunks,
-    startConnectionListener,
-    ConnectionSelectors
-}
+export { connectionsSlice, ConnectionThunks, startConnectionListener, ConnectionsSelectors }

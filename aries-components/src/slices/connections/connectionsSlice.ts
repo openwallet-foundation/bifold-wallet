@@ -1,31 +1,35 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
 import { ConnectionRecord, ConnectionInvitationMessage } from 'aries-framework'
-import { ConnectionThunks } from './connectionsThunks'
+import { ConnectionThunks } from './ConnectionsThunks'
 
 interface ConnectionsState {
   connections: {
     records: ConnectionRecord[]
     isLoading: boolean
+    error: null | SerializedError
   }
   invitation: {
     message: null | ConnectionInvitationMessage
     connectionRecordId: null | string
     isLoading: boolean
+    error: null | SerializedError
   }
-  error: null | SerializedError
+  latestError: null | SerializedError
 }
 
 const initialState: ConnectionsState = {
   connections: {
     records: [],
     isLoading: false,
+    error: null,
   },
   invitation: {
     message: null,
     connectionRecordId: null,
     isLoading: false,
+    error: null,
   },
-  error: null,
+  latestError: null,
 }
 
 const connectionsSlice = createSlice({
@@ -51,14 +55,15 @@ const connectionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // fetchAllConnections
-      .addCase(ConnectionThunks.fetchAllConnections.pending, (state) => {
+      .addCase(ConnectionThunks.getAllConnections.pending, (state) => {
         state.connections.isLoading = true
       })
-      .addCase(ConnectionThunks.fetchAllConnections.rejected, (state, action) => {
+      .addCase(ConnectionThunks.getAllConnections.rejected, (state, action) => {
         state.connections.isLoading = false
-        state.error = action.error
+        state.connections.error = action.error
+        state.latestError = action.error
       })
-      .addCase(ConnectionThunks.fetchAllConnections.fulfilled, (state, action) => {
+      .addCase(ConnectionThunks.getAllConnections.fulfilled, (state, action) => {
         state.connections.isLoading = false
         state.connections.records = action.payload
       })
@@ -68,7 +73,8 @@ const connectionsSlice = createSlice({
       })
       .addCase(ConnectionThunks.createConnection.rejected, (state, action) => {
         state.invitation.isLoading = false
-        state.error = action.error
+        state.connections.error = action.error
+        state.latestError = action.error
       })
       .addCase(ConnectionThunks.createConnection.fulfilled, (state, action) => {
         state.invitation.isLoading = false
@@ -81,7 +87,8 @@ const connectionsSlice = createSlice({
       })
       .addCase(ConnectionThunks.receiveInvitation.rejected, (state, action) => {
         state.invitation.isLoading = false
-        state.error = action.error
+        state.invitation.error = action.error
+        state.latestError = action.error
       })
       .addCase(ConnectionThunks.receiveInvitation.fulfilled, (state) => {
         state.invitation.isLoading = false
@@ -92,7 +99,8 @@ const connectionsSlice = createSlice({
       })
       .addCase(ConnectionThunks.receiveInvitationFromUrl.rejected, (state, action) => {
         state.invitation.isLoading = false
-        state.error = action.error
+        state.invitation.error = action.error
+        state.latestError = action.error
       })
       .addCase(ConnectionThunks.receiveInvitationFromUrl.fulfilled, (state) => {
         state.invitation.isLoading = false
@@ -103,7 +111,8 @@ const connectionsSlice = createSlice({
       })
       .addCase(ConnectionThunks.acceptInvitation.rejected, (state, action) => {
         state.invitation.isLoading = false
-        state.error = action.error
+        state.invitation.error = action.error
+        state.latestError = action.error
       })
       .addCase(ConnectionThunks.acceptInvitation.fulfilled, (state) => {
         state.invitation.isLoading = false

@@ -3,6 +3,13 @@ import { ConnectionStateChangedEvent } from 'aries-framework'
 import { Agent, ConnectionEventTypes } from 'aries-framework'
 import { connectionsSlice } from './connectionsSlice'
 
+/**
+ * Starts an EventListener that listens for ConnectionRecord state changes
+ * and updates the store accordingly.
+ *
+ * This function **must** be called if you're working with ConnectionRecords.
+ * If you don't, the store won't be updated.
+ */
 const startConnectionListener = (agent: Agent, store: EnhancedStore) => {
   const listener = (event: ConnectionStateChangedEvent) => {
     const record = event.payload.connectionRecord
