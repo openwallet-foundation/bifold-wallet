@@ -10,9 +10,14 @@ interface PartialConnectionState {
  */
 namespace ConnectionsSelectors {
   /**
-   * Selector that retieves all ConnectionRecords currently in the state.
+   * Selector that retrieves the entire **connections** store object.
    */
-  export const allConnectionsSelector = (state: PartialConnectionState) => state.connections.connections.records
+  export const connectionsStateSelector = (state: PartialConnectionState) => state.connections.connections
+
+  /**
+   * Selector that retrieves the entire **invitation** store object.
+   */
+  export const invitationStateSelector = (state: PartialConnectionState) => state.connections.invitation
 
   /**
    * Selector that fetches a ConnectionRecord by id from the state.
@@ -31,11 +36,6 @@ namespace ConnectionsSelectors {
    */
   export const connectionRecordByTheirKeySelector = (theirKey: string) => (state: PartialConnectionState) =>
     state.connections.connections.records.find((x) => x.theirKey === theirKey)
-
-  /**
-   * Selector that fetches the current InvitationMessage object from the state.
-   */
-  export const invitationSelector = () => (state: PartialConnectionState) => state.connections.invitation.message
 
   /**
    * Selector that fetches the InvitationMessage based on a ConnectionRecord id.
