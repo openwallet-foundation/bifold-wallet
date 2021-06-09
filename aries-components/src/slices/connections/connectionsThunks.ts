@@ -71,13 +71,8 @@ namespace ConnectionThunks {
    */
   export const acceptInvitation = createAsyncAgentThunk(
     'connections/acceptInvitation',
-    async (
-      config: {
-        connectionId: string
-      },
-      thunkApi
-    ) => {
-      await thunkApi.extra.agent.connections.acceptInvitation(config.connectionId)
+    async (connectionId: string, thunkApi) => {
+      await thunkApi.extra.agent.connections.acceptInvitation(connectionId)
     }
   )
 
