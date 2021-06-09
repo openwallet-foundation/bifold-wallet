@@ -1,6 +1,6 @@
 {
   "name": "@aries-framework/redux-store",
-  "version": "0.0.1-unstable.0",
+  "version": "0.0.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -8,7 +8,9 @@
     "compile": "tsc",
     "prepack": "rm -rf build && yarn compile"
   },
-  "files": ["build"],
+  "files": [
+    "build"
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
