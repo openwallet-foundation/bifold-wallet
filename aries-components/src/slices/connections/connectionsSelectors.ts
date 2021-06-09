@@ -1,23 +1,45 @@
+import { ConnectionState } from 'aries-framework'
 import { ConnectionsState } from './connectionsSlice'
 
 interface PartialConnectionState {
   connections: ConnectionsState
 }
 
-namespace ConnectionSelectors {
+/**
+ * Namespace that holds all ConnectionRecord related selectors.
+ */
+namespace ConnectionsSelectors {
+  /**
+   * Selector that retieves all ConnectionRecords currently in the state.
+   */
   export const allConnectionsSelector = (state: PartialConnectionState) => state.connections.connections.records
 
+  /**
+   * Selector that fetches a ConnectionRecord by id from the state.
+   */
   export const connectionRecordByIdSelector = (connectionRecordId: string) => (state: PartialConnectionState) =>
     state.connections.connections.records.find((x) => x.id === connectionRecordId)
 
+  /**
+   * Selector that fetches a ConnectionRecord by its verification key from the state.
+   */
   export const connectionRecordByVerkeySelector = (verkey: string) => (state: PartialConnectionState) =>
     state.connections.connections.records.find((x) => x.verkey === verkey)
 
+  /**
+   * Selector that fetches a ConnectionRecord by their key from the state.
+   */
   export const connectionRecordByTheirKeySelector = (theirKey: string) => (state: PartialConnectionState) =>
     state.connections.connections.records.find((x) => x.theirKey === theirKey)
 
+  /**
+   * Selector that fetches the current InvitationMessage object from the state.
+   */
   export const invitationSelector = () => (state: PartialConnectionState) => state.connections.invitation.message
 
+  /**
+   * Selector that fetches the InvitationMessage based on a ConnectionRecord id.
+   */
   export const invitationByConnectionRecordIdSelector =
     (connectionRecordId: string) => (state: PartialConnectionState) => {
       const record = state.connections.connections.records.find((x) => x.id == connectionRecordId)
@@ -27,6 +49,52 @@ namespace ConnectionSelectors {
       }
       return record.invitation
     }
+
+  /**
+   * Selector the latest error regarding the **connection** slice.
+   */
+  export const latestConnectionsErrorSelector = (state: PartialConnectionState) => state.connections.latestError
+
+  /**
+   * Namespace that holds selectors that fetch ConnectionRecords from the store
+   * based on their current state.
+   */
+  export namespace ConnectionRecordStateSelectors {
+    /**
+     * Selector to retrieve all ConnectionRecords from the store that have the
+     * **init** state.
+     */
+    export const initSelector = (state: PartialConnectionState) =>
+      state.connections.connections.records.filter((x) => x.state === ConnectionState.Init)
+
+    /**
+     * Selector to retrieve all ConnectionRecords from the store that have the
+     * **invited** state.
+     */
+    export const invitedSelector = (state: PartialConnectionState) =>
+      state.connections.connections.records.filter((x) => x.state === ConnectionState.Invited)
+
+    /**
+     * Selector to retrieve all ConnectionRecords from the store that have the
+     * **requested** state.
+     */
+    export const requestedSelector = (state: PartialConnectionState) =>
+      state.connections.connections.records.filter((x) => x.state === ConnectionState.Requested)
+
+    /**
+     * Selector to retrieve all ConnectionRecords from the store that have the
+     * **responded** state.
+     */
+    export const respondedSelector = (state: PartialConnectionState) =>
+      state.connections.connections.records.filter((x) => x.state === ConnectionState.Responded)
+
+    /**
+     * Selector to retrieve all ConnectionRecords from the store that have the
+     * **complete** state.
+     */
+    export const completeSelector = (state: PartialConnectionState) =>
+      state.connections.connections.records.filter((x) => x.state === ConnectionState.Complete)
+  }
 }
 
-export { ConnectionSelectors }
+export { ConnectionsSelectors }
