@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { CredentialRecord, ProposeCredentialMessage } from 'aries-framework'
+import { CredentialOfferTemplate, CredentialRecord, ProposeCredentialMessageOptions } from 'aries-framework'
 import { CredentialsThunks } from './CredentialsThunks'
 
 interface CredentialsState {
@@ -9,10 +9,12 @@ interface CredentialsState {
     error: null | SerializedError
   }
   proposal: {
-    message: null | ProposeCredentialMessage
-    credentialRecordId: null | string
-    isLoading: boolean
-    error: null | SerializedError
+    messageOptions: null | Omit<ProposeCredentialMessageOptions, 'id'>
+    connectionId: null | string
+  }
+  credentialOffer: {
+    template: null | CredentialOfferTemplate
+    connectionId: null | string
   }
   latestError: null | SerializedError
 }
@@ -24,10 +26,12 @@ const initialState: CredentialsState = {
     error: null,
   },
   proposal: {
-    message: null,
-    credentialRecordId: null,
-    isLoading: false,
-    error: null,
+    messageOptions: null,
+    connectionId: null,
+  },
+  credentialOffer: {
+    template: null,
+    connectionId: null,
   },
   latestError: null,
 }
@@ -50,6 +54,17 @@ const credentialsSlice = createSlice({
       // record does exist, update it
       state.credentials.records[index] = action.payload
       return state
+    },
+    setProposeCredentialMessageOptions: (
+      state,
+      action: PayloadAction<{ connectionId: string; messageOptions: Omit<ProposeCredentialMessageOptions, 'id'> }>
+    ) => {
+      state.proposal.connectionId = action.payload.connectionId
+      state.proposal.messageOptions = action.payload.messageOptions
+    },
+    setCredentialOffer: (state, action: PayloadAction<{ connectionId: string; template: CredentialOfferTemplate }>) => {
+      state.credentialOffer.connectionId = action.payload.connectionId
+      state.credentialOffer.template = action.payload.template
     },
   },
   extraReducers: (builder) => {
