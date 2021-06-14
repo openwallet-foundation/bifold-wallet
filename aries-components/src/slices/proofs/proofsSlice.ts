@@ -8,7 +8,6 @@ interface ProofsState {
   proofs: {
     records: ProofRecord[]
     isLoading: boolean
-    error: null | SerializedError
   }
   proofRequest: {
     request: null | ProofRequest
@@ -19,14 +18,13 @@ interface ProofsState {
     preview: null | PresentationPreview
     connectionId: null | string
   }
-  latestError: null | SerializedError
+  error: null | SerializedError
 }
 
 const initialState: ProofsState = {
   proofs: {
     records: [],
     isLoading: false,
-    error: null,
   },
   proofRequest: {
     request: null,
@@ -37,7 +35,7 @@ const initialState: ProofsState = {
     preview: null,
     connectionId: null,
   },
-  latestError: null,
+  error: null,
 }
 
 const proofsSlice = createSlice({
@@ -88,8 +86,7 @@ const proofsSlice = createSlice({
       })
       .addCase(ProofsThunks.getAllProofs.rejected, (state, action) => {
         state.proofs.isLoading = false
-        state.proofs.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(ProofsThunks.getAllProofs.fulfilled, (state, action) => {
         state.proofs.isLoading = false
@@ -101,8 +98,7 @@ const proofsSlice = createSlice({
       })
       .addCase(ProofsThunks.proposeProof.rejected, (state, action) => {
         state.proofs.isLoading = false
-        state.proofs.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(ProofsThunks.proposeProof.fulfilled, (state) => {
         state.proofs.isLoading = false
@@ -113,8 +109,7 @@ const proofsSlice = createSlice({
       })
       .addCase(ProofsThunks.acceptProposal.rejected, (state, action) => {
         state.proofs.isLoading = false
-        state.proofs.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(ProofsThunks.acceptProposal.fulfilled, (state) => {
         state.proofs.isLoading = false
@@ -125,8 +120,7 @@ const proofsSlice = createSlice({
       })
       .addCase(ProofsThunks.requestProof.rejected, (state, action) => {
         state.proofs.isLoading = false
-        state.proofs.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(ProofsThunks.requestProof.fulfilled, (state) => {
         state.proofs.isLoading = false
@@ -137,8 +131,7 @@ const proofsSlice = createSlice({
       })
       .addCase(ProofsThunks.acceptRequest.rejected, (state, action) => {
         state.proofs.isLoading = false
-        state.proofs.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(ProofsThunks.acceptRequest.fulfilled, (state) => {
         state.proofs.isLoading = false
@@ -149,8 +142,7 @@ const proofsSlice = createSlice({
       })
       .addCase(ProofsThunks.acceptPresentation.rejected, (state, action) => {
         state.proofs.isLoading = false
-        state.proofs.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(ProofsThunks.acceptPresentation.fulfilled, (state) => {
         state.proofs.isLoading = false
@@ -161,8 +153,7 @@ const proofsSlice = createSlice({
       })
       .addCase(ProofsThunks.getRequestedCredentialsForProofRequest.rejected, (state, action) => {
         state.proofRequest.isLoading = false
-        state.proofs.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(ProofsThunks.getRequestedCredentialsForProofRequest.fulfilled, (state, action) => {
         state.proofRequest.isLoading = false

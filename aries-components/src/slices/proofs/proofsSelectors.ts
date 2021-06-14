@@ -1,4 +1,4 @@
-import { CredentialState, ProofState } from 'aries-framework'
+import { ProofState } from 'aries-framework'
 import { ProofsState } from './proofsSlice'
 
 interface PartialProofsState {
@@ -23,11 +23,6 @@ namespace ProofsSelectors {
    * Selector that retrieves the entire **presentationProposal** store object.
    */
   export const presentationProposalStateSelector = (state: PartialProofsState) => state.proofs.presentationProposal
-
-  /**
-   * Selector the latest error regarding the **credentials** slice.
-   */
-  export const latestCredentialErrorSelector = (state: PartialProofsState) => state.proofs.latestError
 
   /**
    * Namespace that holds selectors that fetch ProofRecords from the store

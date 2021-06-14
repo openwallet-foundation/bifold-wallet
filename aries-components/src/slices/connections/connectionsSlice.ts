@@ -14,7 +14,6 @@ interface ConnectionsState {
     isLoading: boolean
     error: null | SerializedError
   }
-  latestError: null | SerializedError
 }
 
 const initialState: ConnectionsState = {
@@ -29,7 +28,6 @@ const initialState: ConnectionsState = {
     isLoading: false,
     error: null,
   },
-  latestError: null,
 }
 
 const connectionsSlice = createSlice({
@@ -61,7 +59,6 @@ const connectionsSlice = createSlice({
       .addCase(ConnectionThunks.getAllConnections.rejected, (state, action) => {
         state.connections.isLoading = false
         state.connections.error = action.error
-        state.latestError = action.error
       })
       .addCase(ConnectionThunks.getAllConnections.fulfilled, (state, action) => {
         state.connections.isLoading = false
@@ -74,7 +71,6 @@ const connectionsSlice = createSlice({
       .addCase(ConnectionThunks.createConnection.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.connections.error = action.error
-        state.latestError = action.error
       })
       .addCase(ConnectionThunks.createConnection.fulfilled, (state, action) => {
         state.invitation.isLoading = false
@@ -88,7 +84,6 @@ const connectionsSlice = createSlice({
       .addCase(ConnectionThunks.receiveInvitation.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.invitation.error = action.error
-        state.latestError = action.error
       })
       .addCase(ConnectionThunks.receiveInvitation.fulfilled, (state) => {
         state.invitation.isLoading = false
@@ -100,7 +95,6 @@ const connectionsSlice = createSlice({
       .addCase(ConnectionThunks.receiveInvitationFromUrl.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.invitation.error = action.error
-        state.latestError = action.error
       })
       .addCase(ConnectionThunks.receiveInvitationFromUrl.fulfilled, (state) => {
         state.invitation.isLoading = false
@@ -112,7 +106,6 @@ const connectionsSlice = createSlice({
       .addCase(ConnectionThunks.acceptInvitation.rejected, (state, action) => {
         state.invitation.isLoading = false
         state.invitation.error = action.error
-        state.latestError = action.error
       })
       .addCase(ConnectionThunks.acceptInvitation.fulfilled, (state) => {
         state.invitation.isLoading = false

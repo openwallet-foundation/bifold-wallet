@@ -51,11 +51,6 @@ namespace ConnectionsSelectors {
     }
 
   /**
-   * Selector the latest error regarding the **connection** slice.
-   */
-  export const latestConnectionsErrorSelector = (state: PartialConnectionState) => state.connections.latestError
-
-  /**
    * Namespace that holds selectors that fetch ConnectionRecords from the store
    * based on their current state.
    */
