@@ -15,16 +15,6 @@ namespace ProofsSelectors {
   export const proofsStateSelector = (state: PartialProofsState) => state.proofs.proofs
 
   /**
-   * Selector that retrieves the entire **proofRequest** store object.
-   */
-  export const proofRequestStateSelector = (state: PartialProofsState) => state.proofs.proofRequest
-
-  /**
-   * Selector that retrieves the entire **presentationProposal** store object.
-   */
-  export const presentationProposalStateSelector = (state: PartialProofsState) => state.proofs.presentationProposal
-
-  /**
    * Namespace that holds selectors that fetch ProofRecords from the store
    * based on their current state.
    */

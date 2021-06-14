@@ -15,11 +15,6 @@ namespace CredentialsSelectors {
   export const credentialsStateSelector = (state: PartialCredentialState) => state.credentials.credentials
 
   /**
-   * Selector that retrieves the entire **proposal** store object.
-   */
-  export const proposalStateSelector = (state: PartialCredentialState) => state.credentials.proposal
-
-  /**
    * Namespace that holds selectors that fetch CredentialRecords from the store
    * based on their current state.
    */

@@ -9,15 +9,6 @@ interface ProofsState {
     records: ProofRecord[]
     isLoading: boolean
   }
-  proofRequest: {
-    request: null | ProofRequest
-    requestedCredentials: null | RequestedCredentials
-    isLoading: boolean
-  }
-  presentationProposal: {
-    preview: null | PresentationPreview
-    connectionId: null | string
-  }
   error: null | SerializedError
 }
 
@@ -25,15 +16,6 @@ const initialState: ProofsState = {
   proofs: {
     records: [],
     isLoading: false,
-  },
-  proofRequest: {
-    request: null,
-    requestedCredentials: null,
-    isLoading: false,
-  },
-  presentationProposal: {
-    preview: null,
-    connectionId: null,
   },
   error: null,
 }
@@ -57,26 +39,6 @@ const proofsSlice = createSlice({
       state.proofs.records[index] = action.payload
       return state
     },
-    setProofRequest: (
-      state,
-      action: PayloadAction<{
-        proofRequest: ProofRequest
-        requestedCredentials: RequestedCredentials
-      }>
-    ) => {
-      state.proofRequest.request = action.payload.proofRequest
-      state.proofRequest.requestedCredentials = action.payload.requestedCredentials
-    },
-    setPresentationProposal: (
-      state,
-      action: PayloadAction<{
-        connectionId: string
-        preview: PresentationPreview
-      }>
-    ) => {
-      state.presentationProposal.connectionId = action.payload.connectionId
-      state.presentationProposal.preview = action.payload.preview
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -93,71 +55,28 @@ const proofsSlice = createSlice({
         state.proofs.records = action.payload
       })
       // proposeProof
-      .addCase(ProofsThunks.proposeProof.pending, (state) => {
-        state.proofs.isLoading = true
-      })
       .addCase(ProofsThunks.proposeProof.rejected, (state, action) => {
-        state.proofs.isLoading = false
         state.error = action.error
-      })
-      .addCase(ProofsThunks.proposeProof.fulfilled, (state) => {
-        state.proofs.isLoading = false
       })
       // acceptProposal
-      .addCase(ProofsThunks.acceptProposal.pending, (state) => {
-        state.proofs.isLoading = true
-      })
       .addCase(ProofsThunks.acceptProposal.rejected, (state, action) => {
-        state.proofs.isLoading = false
         state.error = action.error
-      })
-      .addCase(ProofsThunks.acceptProposal.fulfilled, (state) => {
-        state.proofs.isLoading = false
       })
       // requestProof
-      .addCase(ProofsThunks.requestProof.pending, (state) => {
-        state.proofs.isLoading = true
-      })
       .addCase(ProofsThunks.requestProof.rejected, (state, action) => {
-        state.proofs.isLoading = false
         state.error = action.error
-      })
-      .addCase(ProofsThunks.requestProof.fulfilled, (state) => {
-        state.proofs.isLoading = false
       })
       // acceptRequest
-      .addCase(ProofsThunks.acceptRequest.pending, (state) => {
-        state.proofs.isLoading = true
-      })
       .addCase(ProofsThunks.acceptRequest.rejected, (state, action) => {
-        state.proofs.isLoading = false
         state.error = action.error
-      })
-      .addCase(ProofsThunks.acceptRequest.fulfilled, (state) => {
-        state.proofs.isLoading = false
       })
       // acceptPresentation
-      .addCase(ProofsThunks.acceptPresentation.pending, (state) => {
-        state.proofs.isLoading = true
-      })
       .addCase(ProofsThunks.acceptPresentation.rejected, (state, action) => {
-        state.proofs.isLoading = false
         state.error = action.error
-      })
-      .addCase(ProofsThunks.acceptPresentation.fulfilled, (state) => {
-        state.proofs.isLoading = false
       })
       // getRequestedCredentialsForProofRequest
-      .addCase(ProofsThunks.getRequestedCredentialsForProofRequest.pending, (state) => {
-        state.proofRequest.isLoading = true
-      })
       .addCase(ProofsThunks.getRequestedCredentialsForProofRequest.rejected, (state, action) => {
-        state.proofRequest.isLoading = false
         state.error = action.error
-      })
-      .addCase(ProofsThunks.getRequestedCredentialsForProofRequest.fulfilled, (state, action) => {
-        state.proofRequest.isLoading = false
-        state.proofRequest.requestedCredentials = action.payload
       })
   },
 })
