@@ -20,11 +20,6 @@ namespace CredentialsSelectors {
   export const proposalStateSelector = (state: PartialCredentialState) => state.credentials.proposal
 
   /**
-   * Selector the latest error regarding the **credentials** slice.
-   */
-  export const latestCredentialErrorSelector = (state: PartialCredentialState) => state.credentials.latestError
-
-  /**
    * Namespace that holds selectors that fetch CredentialRecords from the store
    * based on their current state.
    */

@@ -6,7 +6,6 @@ interface CredentialsState {
   credentials: {
     records: CredentialRecord[]
     isLoading: boolean
-    error: null | SerializedError
   }
   proposal: {
     messageOptions: null | Omit<ProposeCredentialMessageOptions, 'id'>
@@ -16,14 +15,13 @@ interface CredentialsState {
     template: null | CredentialOfferTemplate
     connectionId: null | string
   }
-  latestError: null | SerializedError
+  error: null | SerializedError
 }
 
 const initialState: CredentialsState = {
   credentials: {
     records: [],
     isLoading: false,
-    error: null,
   },
   proposal: {
     messageOptions: null,
@@ -33,7 +31,7 @@ const initialState: CredentialsState = {
     template: null,
     connectionId: null,
   },
-  latestError: null,
+  error: null,
 }
 
 const credentialsSlice = createSlice({
@@ -75,8 +73,7 @@ const credentialsSlice = createSlice({
       })
       .addCase(CredentialsThunks.getAllCredentials.rejected, (state, action) => {
         state.credentials.isLoading = false
-        state.credentials.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(CredentialsThunks.getAllCredentials.fulfilled, (state, action) => {
         state.credentials.isLoading = false
@@ -88,8 +85,7 @@ const credentialsSlice = createSlice({
       })
       .addCase(CredentialsThunks.proposeCredential.rejected, (state, action) => {
         state.credentials.isLoading = false
-        state.credentials.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(CredentialsThunks.proposeCredential.fulfilled, (state) => {
         state.credentials.isLoading = false
@@ -100,8 +96,7 @@ const credentialsSlice = createSlice({
       })
       .addCase(CredentialsThunks.acceptProposal.rejected, (state, action) => {
         state.credentials.isLoading = false
-        state.credentials.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(CredentialsThunks.acceptProposal.fulfilled, (state) => {
         state.credentials.isLoading = false
@@ -112,8 +107,7 @@ const credentialsSlice = createSlice({
       })
       .addCase(CredentialsThunks.offerCredential.rejected, (state, action) => {
         state.credentials.isLoading = false
-        state.credentials.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(CredentialsThunks.offerCredential.fulfilled, (state) => {
         state.credentials.isLoading = false
@@ -124,8 +118,7 @@ const credentialsSlice = createSlice({
       })
       .addCase(CredentialsThunks.acceptOffer.rejected, (state, action) => {
         state.credentials.isLoading = false
-        state.credentials.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(CredentialsThunks.acceptOffer.fulfilled, (state) => {
         state.credentials.isLoading = false
@@ -136,8 +129,7 @@ const credentialsSlice = createSlice({
       })
       .addCase(CredentialsThunks.acceptRequest.rejected, (state, action) => {
         state.credentials.isLoading = false
-        state.credentials.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(CredentialsThunks.acceptRequest.fulfilled, (state) => {
         state.credentials.isLoading = false
@@ -148,8 +140,7 @@ const credentialsSlice = createSlice({
       })
       .addCase(CredentialsThunks.acceptCredential.rejected, (state, action) => {
         state.credentials.isLoading = false
-        state.credentials.error = action.error
-        state.latestError = action.error
+        state.error = action.error
       })
       .addCase(CredentialsThunks.acceptCredential.fulfilled, (state) => {
         state.credentials.isLoading = false
