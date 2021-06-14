@@ -15,6 +15,12 @@ namespace ProofsSelectors {
   export const proofsStateSelector = (state: PartialProofsState) => state.proofs.proofs
 
   /**
+   * Selector that fetches a ProofRecord by id from the state.
+   */
+  export const connectionRecordByIdSelector = (proofRecordId: string) => (state: PartialProofsState) =>
+    state.proofs.proofs.records.find((x) => x.id === proofRecordId)
+
+  /**
    * Namespace that holds selectors that fetch ProofRecords from the store
    * based on their current state.
    */
