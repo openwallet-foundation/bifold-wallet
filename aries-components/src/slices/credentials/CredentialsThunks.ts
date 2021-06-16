@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { CredentialsModule } from 'aries-framework/build/src/modules/credentials/CredentialsModule'
-
+import { CredentialsModule } from 'aries-framework'
 import { createAsyncAgentThunk, ClassMethodParameters } from '../../utils'
 
 /**
