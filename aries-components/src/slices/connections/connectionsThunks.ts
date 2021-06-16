@@ -40,7 +40,7 @@ namespace ConnectionThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.connections.receiveInvitation(invitation, config)
+      return thunkApi.extra.agent.connections.receiveInvitation(invitation, config)
     }
   )
 
@@ -61,7 +61,7 @@ namespace ConnectionThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.connections.receiveInvitationFromUrl(invitationUrl, config)
+      return thunkApi.extra.agent.connections.receiveInvitationFromUrl(invitationUrl, config)
     }
   )
 
@@ -72,7 +72,7 @@ namespace ConnectionThunks {
   export const acceptInvitation = createAsyncAgentThunk(
     'connections/acceptInvitation',
     async (connectionId: string, thunkApi) => {
-      await thunkApi.extra.agent.connections.acceptInvitation(connectionId)
+      return thunkApi.extra.agent.connections.acceptInvitation(connectionId)
     }
   )
 
@@ -83,7 +83,7 @@ namespace ConnectionThunks {
   export const acceptRequest = createAsyncAgentThunk(
     'connections/acceptRequest',
     async (connectionId: ClassMethodParameters<typeof ConnectionsModule, 'acceptRequest'>[0], thunkApi) => {
-      await thunkApi.extra.agent.connections.acceptRequest(connectionId)
+      return thunkApi.extra.agent.connections.acceptRequest(connectionId)
     }
   )
 

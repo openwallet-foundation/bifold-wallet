@@ -33,7 +33,7 @@ namespace ProofsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.proofs.proposeProof(connectionId, presentationProposal, config)
+      return thunkApi.extra.agent.proofs.proposeProof(connectionId, presentationProposal, config)
     }
   )
   /**
@@ -52,7 +52,7 @@ namespace ProofsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.proofs.acceptProposal(proofRecordId, config)
+      return thunkApi.extra.agent.proofs.acceptProposal(proofRecordId, config)
     }
   )
   /**
@@ -73,7 +73,7 @@ namespace ProofsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.proofs.requestProof(connectionId, proofRequestOptions, config)
+      return thunkApi.extra.agent.proofs.requestProof(connectionId, proofRequestOptions, config)
     }
   )
 
@@ -95,7 +95,7 @@ namespace ProofsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.proofs.acceptRequest(proofRecordId, requestedCredentials, config)
+      return thunkApi.extra.agent.proofs.acceptRequest(proofRecordId, requestedCredentials, config)
     }
   )
 
@@ -106,7 +106,7 @@ namespace ProofsThunks {
   export const acceptPresentation = createAsyncAgentThunk(
     'proofs/acceptPresentation',
     async (proofRecordId: string, thunkApi) => {
-      await thunkApi.extra.agent.proofs.acceptPresentation(proofRecordId)
+      return thunkApi.extra.agent.proofs.acceptPresentation(proofRecordId)
     }
   )
 
