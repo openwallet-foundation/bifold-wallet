@@ -9,7 +9,7 @@ import {
     connectionsSlice,
     ConnectionThunks,
     startConnectionListener,
-    ConnectionSelectors
+    ConnectionsSelectors
 } from './slices'
 
 export {
@@ -23,6 +23,6 @@ export {
 
     connectionsSlice,
     ConnectionThunks,
-    ConnectionSelectors,
+    ConnectionsSelectors,
     startConnectionListener
 }

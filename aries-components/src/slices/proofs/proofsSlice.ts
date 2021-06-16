@@ -25,9 +25,7 @@ const proofsSlice = createSlice({
   initialState,
   reducers: {
     updateOrAdd: (state, action: PayloadAction<ProofRecord>) => {
-      const index = state.proofs.records.findIndex((record: ProofRecord) => {
-        record.id == action.payload.id
-      })
+      const index = state.proofs.records.findIndex((record: ProofRecord) => record.id == action.payload.id)
 
       if (index == -1) {
         // records doesn't exist, add it
