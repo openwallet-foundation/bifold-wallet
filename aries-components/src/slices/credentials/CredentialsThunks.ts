@@ -30,7 +30,7 @@ namespace CredentialsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.credentials.proposeCredential(connectionId, config)
+      return thunkApi.extra.agent.credentials.proposeCredential(connectionId, config)
     }
   )
 
@@ -50,7 +50,7 @@ namespace CredentialsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.credentials.acceptProposal(credentialId, config)
+      return thunkApi.extra.agent.credentials.acceptProposal(credentialId, config)
     }
   )
 
@@ -70,7 +70,7 @@ namespace CredentialsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.credentials.offerCredential(connectionId, config)
+      return thunkApi.extra.agent.credentials.offerCredential(connectionId, config)
     }
   )
 
@@ -90,7 +90,7 @@ namespace CredentialsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.credentials.acceptOffer(credentialId, config)
+      return thunkApi.extra.agent.credentials.acceptOffer(credentialId, config)
     }
   )
 
@@ -110,7 +110,7 @@ namespace CredentialsThunks {
       },
       thunkApi
     ) => {
-      await thunkApi.extra.agent.credentials.acceptRequest(credentialId, config)
+      return thunkApi.extra.agent.credentials.acceptRequest(credentialId, config)
     }
   )
 
@@ -121,7 +121,7 @@ namespace CredentialsThunks {
   export const acceptCredential = createAsyncAgentThunk(
     'credentials/acceptCredential',
     async (credentialId: string, thunkApi) => {
-      await thunkApi.extra.agent.credentials.acceptCredential(credentialId)
+      return thunkApi.extra.agent.credentials.acceptCredential(credentialId)
     }
   )
 }
