@@ -15,8 +15,8 @@ import { useHistory } from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
-import AppHeaderLarge from '../../components/AppHeaderLarge/index'
-import LoadingOverlay from '../../components/LoadingOverlay/index'
+import AppHeaderLarge from '../../components/AppHeaderLarge'
+import LoadingOverlay from '../../components/LoadingOverlay'
 
 import AppStyles from '../../../assets/styles'
 

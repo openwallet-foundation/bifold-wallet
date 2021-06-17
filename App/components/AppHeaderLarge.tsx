@@ -1,11 +1,10 @@
 import React from 'react'
 
-import { Image, TouchableOpacity, View } from 'react-native'
+import { Image, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
-import Images from '../../../assets/images'
-import Styles from './styles'
+import Images from '../../assets/images'
 
 interface IAppHeaderLarge {
   disabled?: boolean
@@ -29,3 +28,11 @@ function AppHeaderLarge(props: IAppHeaderLarge) {
 }
 
 export default AppHeaderLarge
+
+const Styles = StyleSheet.create({
+  headerLarge: {
+    height: '40%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})

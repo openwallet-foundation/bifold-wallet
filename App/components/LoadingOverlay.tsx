@@ -1,10 +1,11 @@
 import React, { useRef } from 'react'
-import { Animated, View } from 'react-native'
+import { Animated, View, StyleSheet, Dimensions } from 'react-native'
 
-import AppHeader from '../AppHeader/index'
+import AppHeader from './AppHeader'
 
-import AppStyles from '../../../assets/styles'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
+
+let ScreenHeight = Dimensions.get('window').height
 
 function LoadingOverlay() {
   const loadAnim1 = useRef(new Animated.Value(1)).current
@@ -62,3 +63,28 @@ function LoadingOverlay() {
 }
 
 export default LoadingOverlay
+
+const Styles = StyleSheet.create({
+  loadingRectangle: {
+    marginHorizontal: 7,
+    height: 40,
+    width: 10,
+  },
+  loadingBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '15%',
+  },
+  loadingOverlay: {
+    height: ScreenHeight,
+    width: '100%',
+    paddingTop: '48%',
+    position: 'absolute',
+    alignSelf: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    elevation: 99,
+  },
+})

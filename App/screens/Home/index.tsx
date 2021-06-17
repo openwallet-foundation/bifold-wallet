@@ -6,10 +6,10 @@ import { useNavigation } from '@react-navigation/native'
 
 import { useHistory, useLocation } from 'react-router-native'
 
-import AppHeaderLarge from '../../components/AppHeaderLarge/index'
-import BackButton from '../../components/BackButton/index'
+import AppHeaderLarge from '../../components/AppHeaderLarge'
+import BackButton from '../../components/BackButton'
 
-import PAButton from '../../components/PAButton'
+import { PAButton } from 'components'
 
 import { ErrorsContext } from '../../contexts/Errors/index'
 import { NotificationsContext } from '../../contexts/Notifications/index'
@@ -19,7 +19,7 @@ import AppStyles from '../../../assets/styles'
 function Home() {
   // const history = useHistory()
   // const location = useLocation()
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)

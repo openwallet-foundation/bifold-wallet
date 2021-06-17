@@ -7,9 +7,9 @@ import { useNavigation } from '@react-navigation/native'
 
 import { useHistory } from 'react-router-native'
 
-import AppHeader from '../../components/AppHeader/index'
-import BackButton from '../../components/BackButton/index'
-import CurrentContact from '../../components/CurrentContact/index'
+import AppHeader from '../../components/AppHeader/AppHeader'
+import BackButton from '../../components/BackButton'
+import CurrentContact from '../../components/CurrentContact'
 
 import AgentContext from '../../contexts/AgentProvider'
 import { ConnectionEventType } from 'aries-framework'

@@ -1,17 +1,17 @@
 import React, { useState, useContext } from 'react'
 
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
-import AppHeaderLarge from '../AppHeaderLarge/index'
-import LoadingOverlay from '../LoadingOverlay/index'
+import AppHeaderLarge from './AppHeaderLarge'
+import LoadingOverlay from './LoadingOverlay'
 
-import { ErrorsContext } from '../../contexts/Errors/index'
+import { ErrorsContext } from '../contexts/Errors/index'
 
-import AppStyles from '../../../assets/styles'
-import Images from '../../../assets/images'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
+import Images from '../../assets/images'
+import Styles from './Terms/styles'
 
 interface ITerms {
   title: string
@@ -80,3 +80,49 @@ function Terms(props: ITerms) {
 }
 
 export default Terms
+
+const styles = StyleSheet.create({
+  title: {
+    top: -28,
+  },
+  message: {
+    borderRadius: 10,
+    width: '80%',
+    maxHeight: '50%',
+    top: -20,
+  },
+  messageFill: {
+    padding: 20,
+  },
+  checkbox: {
+    width: 35,
+    height: 35,
+    backgroundColor: '#ddd',
+    borderColor: '#0A1C40',
+    borderWidth: 2,
+    borderRadius: 4,
+    marginRight: 12,
+  },
+  checkmark: {
+    width: '140%',
+    height: '140%',
+    bottom: '20%',
+  },
+  checktext: {
+    justifyContent: 'center',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  checkContainer: {
+    borderRadius: 10,
+    padding: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    height: 66,
+    alignItems: 'center',
+  },
+  nextButton: {
+    top: 15,
+  },
+})

@@ -6,9 +6,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useHistory } from 'react-router-native'
 
-import AppHeader from '../../components/AppHeader/index'
-import BackButton from '../../components/BackButton/index'
-import CurrentCredential from '../../components/CurrentCredential/index'
+import AppHeader from '../../components/AppHeader/AppHeader'
+import BackButton from '../../components/BackButton'
+import CurrentCredential from '../../components/CurrentCredential'
 
 import AgentContext from '../../contexts/AgentProvider'
 import { CredentialEventType } from 'aries-framework'

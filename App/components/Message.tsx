@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
-import AppStyles from '../../../assets/styles'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
+import Styles from './Message/styles'
 
 interface IMessage {
   bgColor: string
@@ -58,3 +58,28 @@ function Message(props: IMessage) {
 }
 
 export default Message
+
+const Styles = StyleSheet.create({
+  msgView: {
+    width: '100%',
+    height: '100%',
+    alignSelf: 'center',
+    backgroundColor: 'rgba(200, 200, 200, 0.78)',
+  },
+  innerView: {
+    width: '100%',
+    height: '83%',
+    top: '17%',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    padding: 50,
+    justifyContent: 'center',
+    paddingBottom: 150,
+  },
+  msgText: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+})
