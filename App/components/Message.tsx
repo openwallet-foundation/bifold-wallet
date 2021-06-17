@@ -5,7 +5,6 @@ import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { useHistory } from 'react-router-native'
 
 import AppStyles from '../../assets/styles'
-import Styles from './Message/styles'
 
 interface IMessage {
   bgColor: string
@@ -39,7 +38,7 @@ function Message(props: IMessage) {
           </Text>
         ) : null}
         {props.text ? (
-          <Text style={[Styles.msgText, props.textLight ? AppStyles.textWhite : AppStyles.textSecondary]}>
+          <Text style={[styles.msgText, props.textLight ? AppStyles.textWhite : AppStyles.textSecondary]}>
             {props.text}
             {'\n'}
           </Text>
@@ -59,7 +58,7 @@ function Message(props: IMessage) {
 
 export default Message
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   msgView: {
     width: '100%',
     height: '100%',

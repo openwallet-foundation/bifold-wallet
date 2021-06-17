@@ -15,17 +15,17 @@ function AppHeader(props: AppHeaderProps) {
   const history = useHistory()
 
   return (
-    <View style={Styles.header}>
+    <View style={styles.header}>
       <TouchableOpacity
         onPress={() => {
           history.push('/home')
         }}
       >
-        <View style={Styles.headerView}>
+        <View style={styles.headerView}>
           {props.headerText ? (
             <>
               <Image source={Images.logo} style={{ marginRight: 10 }} />
-              <Text style={[AppStyles.h1, AppStyles.textSecondary, Styles.textBorder, AppStyles.textUpper]}>
+              <Text style={[AppStyles.h1, AppStyles.textSecondary, styles.textBorder, AppStyles.textUpper]}>
                 {props.headerText}
               </Text>
             </>
@@ -40,7 +40,7 @@ function AppHeader(props: AppHeaderProps) {
 
 export default AppHeader
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   header: {
     height: '20%',
     justifyContent: 'center',

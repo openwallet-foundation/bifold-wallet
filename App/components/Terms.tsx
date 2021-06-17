@@ -11,7 +11,6 @@ import { ErrorsContext } from '../contexts/Errors/index'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
-import Styles from './Terms/styles'
 
 interface ITerms {
   title: string
@@ -31,9 +30,9 @@ function Terms(props: ITerms) {
     <View style={AppStyles.viewFull}>
       <AppHeaderLarge disabled={true} />
       <View style={AppStyles.tab}>
-        <Text style={[AppStyles.h2, AppStyles.textSecondary, Styles.title]}>{props.title}</Text>
-        <ScrollView style={[Styles.message, AppStyles.backgroundWhite]}>
-          <View style={Styles.messageFill}>
+        <Text style={[AppStyles.h2, AppStyles.textSecondary, styles.title]}>{props.title}</Text>
+        <ScrollView style={[styles.message, AppStyles.backgroundWhite]}>
+          <View style={styles.messageFill}>
             <Text>{props.message}</Text>
           </View>
         </ScrollView>
@@ -44,11 +43,11 @@ function Terms(props: ITerms) {
             setIsChecked((previousState) => !previousState)
           }}
         >
-          <View style={[Styles.checkContainer, AppStyles.backgroundWhite]}>
-            <View style={[Styles.checkbox, AppStyles.backgroundWhite]}>
-              {isChecked ? <Image source={Images.checkmark} style={Styles.checkmark} /> : null}
+          <View style={[styles.checkContainer, AppStyles.backgroundWhite]}>
+            <View style={[styles.checkbox, AppStyles.backgroundWhite]}>
+              {isChecked ? <Image source={Images.checkmark} style={styles.checkmark} /> : null}
             </View>
-            <Text style={[Styles.checktext, AppStyles.textBlack]}>
+            <Text style={[styles.checktext, AppStyles.textBlack]}>
               I have read and agree to{'\n'}
               {props.title}
             </Text>
@@ -57,7 +56,7 @@ function Terms(props: ITerms) {
         <TouchableOpacity
           style={[
             AppStyles.button,
-            Styles.nextButton,
+            styles.nextButton,
             isChecked ? AppStyles.backgroundPrimary : AppStyles.backgroundGray,
           ]}
           disabled={isChecked ? false : true}

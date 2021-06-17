@@ -44,18 +44,18 @@ function LoadingOverlay() {
 	notifications.setVisible(true);
 	notifications.setText("Notification!");*/
   return (
-    <View style={Styles.loadingOverlay}>
+    <View style={styles.loadingOverlay}>
       <View style={{ height: '10%' }} />
       <AppHeader />
-      <View style={Styles.loadingBox}>
+      <View style={styles.loadingBox}>
         <Animated.View
-          style={[Styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim1 }] }]}
+          style={[styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim1 }] }]}
         ></Animated.View>
         <Animated.View
-          style={[Styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim2 }] }]}
+          style={[styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim2 }] }]}
         ></Animated.View>
         <Animated.View
-          style={[Styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim3 }] }]}
+          style={[styles.loadingRectangle, AppStyles.backgroundPrimary, { transform: [{ scaleY: loadAnim3 }] }]}
         ></Animated.View>
       </View>
     </View>
@@ -64,7 +64,7 @@ function LoadingOverlay() {
 
 export default LoadingOverlay
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   loadingRectangle: {
     marginHorizontal: 7,
     height: 40,

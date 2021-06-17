@@ -6,8 +6,7 @@ import { useHistory } from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
-import BackButton from '../../components/BackButton/index'
-import LoadingOverlay from '../../components/LoadingOverlay/index'
+import { BackButton, LoadingOverlay } from 'components'
 
 import AppStyles from '../../../assets/styles'
 import Styles from './styles'

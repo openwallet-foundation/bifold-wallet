@@ -6,9 +6,7 @@ import { useHistory } from 'react-router-native'
 
 import { RNCamera } from 'react-native-camera'
 
-import AppHeader from '../../../components/AppHeader/index'
-import BackButton from '../../../components/BackButton/index'
-import LoadingOverlay from '../../../components/LoadingOverlay/index'
+import { AppHeader, BackButton, LoadingOverlay } from 'components'
 
 import { decodeInvitationFromUrl } from 'aries-framework'
 import AgentContext from '../../../contexts/AgentProvider'

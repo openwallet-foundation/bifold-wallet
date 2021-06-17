@@ -36,7 +36,7 @@ function CurrentContact(props: ICurrentContact) {
               </View>
             </View>
             {props.contact.createdAt ? (
-              <View style={[AppStyles.tableItem, Styles.tableItem, Styles.tableSubItem]}>
+              <View style={[AppStyles.tableItem, styles.tableItem, styles.tableSubItem]}>
                 <View>
                   <Text style={[{ fontSize: 18 }, AppStyles.textSecondary]}>
                     <Text style={AppStyles.textBold}>Created: </Text>
@@ -46,7 +46,7 @@ function CurrentContact(props: ICurrentContact) {
               </View>
             ) : null}
             {props.contact.state ? (
-              <View style={[AppStyles.tableItem, Styles.tableItem, Styles.tableSubItem]}>
+              <View style={[AppStyles.tableItem, styles.tableItem, styles.tableSubItem]}>
                 <View>
                   <Text style={[{ fontSize: 18 }, AppStyles.textSecondary]}>
                     <Text style={AppStyles.textBold}>Connection State: </Text>

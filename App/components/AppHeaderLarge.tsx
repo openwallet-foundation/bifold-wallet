@@ -14,7 +14,7 @@ function AppHeaderLarge(props: IAppHeaderLarge) {
   const history = useHistory()
 
   return (
-    <View style={Styles.headerLarge}>
+    <View style={styles.headerLarge}>
       <TouchableOpacity
         onPress={() => {
           history.push('/home')
@@ -29,7 +29,7 @@ function AppHeaderLarge(props: IAppHeaderLarge) {
 
 export default AppHeaderLarge
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   headerLarge: {
     height: '40%',
     justifyContent: 'center',

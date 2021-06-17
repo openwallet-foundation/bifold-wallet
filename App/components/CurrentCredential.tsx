@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-native'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
-import Styles from './CurrentCredential/styles'
 import { ICredential } from '../../types'
 
 interface ICurrentCredential {
@@ -35,7 +34,7 @@ function CurrentCredential(props) {
                 </Text>
               </View>
             </View>
-            <View style={[AppStyles.tableItem, Styles.tableItem, Styles.tableSubItem]}>
+            <View style={[AppStyles.tableItem, styles.tableItem, styles.tableSubItem]}>
               <View>
                 <Text style={[{ fontSize: 18 }, AppStyles.textBlack]}>
                   <Text style={AppStyles.textBold}>Name: </Text>
@@ -43,7 +42,7 @@ function CurrentCredential(props) {
                 </Text>
               </View>
             </View>
-            <View style={[AppStyles.tableItem, Styles.tableItem, Styles.tableSubItem]}>
+            <View style={[AppStyles.tableItem, styles.tableItem, styles.tableSubItem]}>
               <View>
                 <Text style={[{ fontSize: 18 }, AppStyles.textSecondary]}>
                   <Text style={AppStyles.textBold}>Gender: </Text>
@@ -51,7 +50,7 @@ function CurrentCredential(props) {
                 </Text>
               </View>
             </View>
-            <View style={[AppStyles.tableItem, Styles.tableItem, Styles.tableSubItem]}>
+            <View style={[AppStyles.tableItem, styles.tableItem, styles.tableSubItem]}>
               <View>
                 <Text style={[{ fontSize: 18 }, AppStyles.textSecondary]}>
                   <Text style={AppStyles.textBold}>Age: </Text>
