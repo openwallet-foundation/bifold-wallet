@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-import AppStyles from '../../../assets/styles'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
 
 import { useHistory } from 'react-router-native'
 
@@ -20,8 +19,8 @@ function ErrorDialog(props: IErrorDialog) {
 
   return (
     <>
-      <View style={Styles.errorView}>
-        <View style={[AppStyles.messageBox, Styles.errorMessage]}>
+      <View style={styles.errorView}>
+        <View style={[AppStyles.messageBox, styles.errorMessage]}>
           <Text style={[AppStyles.h2, AppStyles.textSecondary, AppStyles.textBold]}>ERROR{'\n'}</Text>
           <Text style={[AppStyles.h3, AppStyles.textSecondary]}>{props.text}</Text>
           <TouchableOpacity
@@ -60,3 +59,19 @@ function Errors(props) {
 
 export default Errors
 export { ErrorsContext }
+
+const styles = StyleSheet.create({
+  errorView: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(200, 200, 200, 0.78)',
+  },
+  errorMessage: {
+    bottom: 40,
+    width: '84%',
+    height: '44%',
+  },
+})

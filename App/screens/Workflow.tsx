@@ -4,15 +4,15 @@ import { Image, View } from 'react-native'
 
 import { Route, useHistory, useRouteMatch } from 'react-router-native'
 
-import Images from '../../../assets/images'
+import Images from '../../assets/images'
 
-import AgentContext from '../../contexts/AgentProvider'
+import AgentContext from '../contexts/AgentProvider'
 import { CredentialEventType } from 'aries-framework'
 
-import CredentialOffered from './Credential/Offered/index'
-import QRCodeScanner from './QRCodeScanner/index'
+import CredentialOffered from './Offered'
+import QRCodeScanner from './QRCodeScanner'
 import Message from '../../components/Message/index'
-import { IContact, ICredential } from '../../../types'
+import { IContact, ICredential } from '../../types'
 
 interface IWorkflow {
   contacts: IContact[]

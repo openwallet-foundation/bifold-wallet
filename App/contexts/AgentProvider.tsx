@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Config from 'react-native-config'
 
-import { downloadGenesis, storeGenesis } from '../../../genesis-utils'
-import { PollingInboundTransporter } from '../../../transporters'
+import { downloadGenesis, storeGenesis } from '../../genesis-utils'
+import { PollingInboundTransporter } from '../../transporters'
 
 import indy from 'rn-indy-sdk'
 import {

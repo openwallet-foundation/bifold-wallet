@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
@@ -9,40 +9,27 @@ import BackButton from '../../../../components/BackButton/index'
 import CurrentContact from '../../../../components/CurrentContact/index'
 import CurrentCredential from '../../../../components/CurrentCredential/index'
 
-import AgentContext from '../../../../contexts/AgentProvider'
+import { ErrorsContext } from '../contexts/Errors'
+import { NotificationsContext } from '../contexts/Notifications'
 
-import Images from '../../../../../assets/images'
-import Styles from '../styles'
-import AppStyles from '../../../../../assets/styles'
-import { IContact, ICredential } from '../../../../../types'
+import Images from '../../assets/images'
+import AppStyles from '../../assets/styles'
+import { IContact, ICredential } from '../../types'
 
-interface ICredentialOffered {
+interface ICredentialRequested {
   contact: IContact
   credential: ICredential
 }
 
-function CredentialOffered(props: ICredentialOffered) {
+function CredentialRequested(props: ICredentialRequested) {
   const history = useHistory()
 
-  //Reference to the agent context
-  const agentContext = useContext(AgentContext)
-
-  useEffect(() => {
-    console.log(props.credential)
-  }, [])
+  const errors = useContext(ErrorsContext)
+  const notifications = useContext(NotificationsContext)
 
   const [viewInfo, setViewInfo] = useState('')
   const [viewContact, setViewContact] = useState(false)
   const [viewCredential, setViewCredential] = useState(false)
-
-  const acceptOffer = async () => {
-    console.log('Attempting to accept offer')
-    await agentContext.agent.credentials.acceptOffer(props.credential.id)
-
-    //TODO:
-    //Push to pending issuance screen
-    history.push('/workflow/pending')
-  }
 
   return (
     <>
@@ -52,14 +39,14 @@ function CredentialOffered(props: ICredentialOffered) {
           <View style={AppStyles.header}>
             <AppHeader headerText={'CREDENTIALS'} />
           </View>
-          <View style={[AppStyles.tab, Styles.tabView]}>
+          <View style={[AppStyles.tab, styles.tabView]}>
             <Text style={[AppStyles.h3, AppStyles.textSecondary, AppStyles.textUpper, AppStyles.textBold]}>
-              Credential from:
+              Connected to:
             </Text>
             <View style={AppStyles.tableItem}>
               <View>
-                <Text style={[{ fontSize: 20, top: 8 }, AppStyles.textBlack, AppStyles.textBold]}>
-                  {props.contact.alias ? props.contact.alias : props.contact.invitation.label}
+                <Text style={[{ fontSize: 18 }, AppStyles.textSecondary, AppStyles.textUpper, AppStyles.textBold]}>
+                  {props.contact.label}
                 </Text>
                 <Text style={[{ fontSize: 14 }, AppStyles.textSecondary]}>{props.contact.sublabel}</Text>
               </View>
@@ -74,10 +61,10 @@ function CredentialOffered(props: ICredentialOffered) {
             </View>
             <View style={AppStyles.tableItem}>
               <View>
-                <Text style={[{ fontSize: 20, top: 8 }, AppStyles.textSecondary, AppStyles.textBold]}>
-                  {/*Temporary hardcoding*/}
-                  Driver's License
+                <Text style={[{ fontSize: 18 }, AppStyles.textSecondary, AppStyles.textUpper, AppStyles.textBold]}>
+                  {props.credential.label}
                 </Text>
+                <Text style={[{ fontSize: 14 }, AppStyles.textSecondary]}>{props.credential.sublabel}</Text>
               </View>
               <TouchableOpacity
                 onPress={() => {
@@ -88,7 +75,7 @@ function CredentialOffered(props: ICredentialOffered) {
                 <Image source={Images.infoGray} style={[AppStyles.info, { marginRight: 0, top: 10 }]} />
               </TouchableOpacity>
             </View>
-            <View style={Styles.buttonWrap}>
+            <View style={styles.buttonWrap}>
               <Text
                 style={[
                   { fontSize: 18 },
@@ -98,15 +85,15 @@ function CredentialOffered(props: ICredentialOffered) {
                   AppStyles.textBold,
                 ]}
               >
-                Claim Credentials
+                Send Credentials
               </Text>
               <TouchableOpacity
-                style={[Styles.button, AppStyles.backgroundPrimary]}
+                style={[styles.button, AppStyles.backgroundPrimary]}
                 onPress={() => {
-                  acceptOffer()
+                  history.push('/home')
                 }}
               >
-                <Image source={Images.receive} style={Styles.buttonIcon} />
+                <Image source={Images.send} style={styles.buttonIcon} />
               </TouchableOpacity>
             </View>
             <TouchableOpacity
@@ -115,7 +102,7 @@ function CredentialOffered(props: ICredentialOffered) {
                 history.push('/home')
               }}
             >
-              <Text style={[{ fontSize: 14 }, AppStyles.textGray, AppStyles.textCenter]}>Decline{'\n'}Offer</Text>
+              <Text style={[{ fontSize: 14 }, AppStyles.textGray, AppStyles.textCenter]}>Decline{'\n'}Request</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -126,4 +113,42 @@ function CredentialOffered(props: ICredentialOffered) {
   )
 }
 
-export default CredentialOffered
+export default CredentialRequested
+
+const styles = StyleSheet.create({
+  tabView: {
+    backgroundColor: '#ddd',
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    padding: '7%',
+  },
+  icon: {
+    fontSize: 26,
+    top: 10,
+  },
+  button: {
+    marginVertical: 7,
+    width: 125,
+    paddingVertical: 10,
+    borderRadius: 20,
+    alignItems: 'center',
+  },
+  buttonText: {
+    maxWidth: 120,
+    flexWrap: 'wrap',
+    textAlign: 'right',
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+  buttonWrap: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    left: -10,
+    top: 40,
+  },
+  buttonIcon: {
+    width: 30,
+    height: 43,
+  },
+})

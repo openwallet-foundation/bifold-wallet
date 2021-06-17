@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, Text, TouchableOpacity, View, FLatlist } from 'react-native'
+import { Image, Text, TouchableOpacity, View, FLatlist, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useHistory } from 'react-router-native'
 
-import AppHeader from '../../components/AppHeader/AppHeader'
-import BackButton from '../../components/BackButton'
-import CurrentCredential from '../../components/CurrentCredential'
+import { AppHeader, BackButton, CurrentCredential } from 'components'
 
-import AgentContext from '../../contexts/AgentProvider'
+import AgentContext from '../contexts/AgentProvider'
 import { CredentialEventType } from 'aries-framework'
 
-import AppStyles from '../../../assets/styles'
-import Images from '../../../assets/images'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
+import Images from '../../assets/images'
+
 import { FlatList } from 'react-native-gesture-handler'
 
 interface IListCredentials {}
@@ -146,3 +144,26 @@ function ListCredentials(props: IListCredentials) {
 }
 
 export default ListCredentials
+
+const styles = StyleSheet.create({
+  backbutton: {
+    marginBottom: 30,
+  },
+  tableItem: {
+    paddingLeft: 30,
+    display: 'flex',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#fff',
+  },
+  tableSubItem: {
+    height: 50,
+  },
+  credView: {
+    alignItems: 'center',
+    padding: 12,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    height: '100%',
+  },
+})

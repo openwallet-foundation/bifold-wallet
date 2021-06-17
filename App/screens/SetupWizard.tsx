@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { KeyboardAvoidingView, View } from 'react-native'
+import { KeyboardAvoidingView, View, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
@@ -8,10 +8,9 @@ import * as Keychain from 'react-native-keychain'
 
 import { BackButton, LoadingOverlay } from 'components'
 
-import AppStyles from '../../../assets/styles'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
 
-import { NotificationsContext } from '../../contexts/Notifications/index'
+import { NotificationsContext } from '../contexts/Notifications'
 
 interface ISetupWizard {
   children: JSX.Element[]
@@ -104,3 +103,31 @@ function SetupWizard(props: ISetupWizard) {
 }
 
 export default SetupWizard
+
+const styles = StyleSheet.create({
+  dot: {
+    borderRadius: 18,
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: '#343f40',
+    width: 18,
+    height: 18,
+    marginHorizontal: 8,
+  },
+  dotContainer: {
+    alignItems: 'center',
+    height: '8%',
+    width: '100%',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: '#eee',
+    elevation: 2,
+  },
+  image: {
+    alignSelf: 'center',
+    width: 60,
+    height: 68,
+  },
+})

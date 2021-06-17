@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
-import AppHeader from '../../components/AppHeader/index'
-import BackButton from '../../components/BackButton/index'
+import { AppHeader, BackButton } from 'components'
 
-import { ErrorsContext } from '../../contexts/Errors/index'
+import { ErrorsContext } from '../contexts/Errors'
 
-import AppStyles from '../../../assets/styles'
-import Images from '../../../assets/images'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
+import Images from '../../assets/images'
 
 function Settings() {
   const history = useHistory()
@@ -44,3 +42,12 @@ function Settings() {
 }
 
 export default Settings
+
+const styles = StyleSheet.create({
+  backbutton: {
+    marginBottom: 30,
+  },
+  settingView: {
+    alignItems: 'center',
+  },
+})

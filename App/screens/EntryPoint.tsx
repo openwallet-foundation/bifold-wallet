@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-native'
 import * as Keychain from 'react-native-keychain'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import LoadingOverlay from '../../components/LoadingOverlay'
+import LoadingOverlay from '../components/LoadingOverlay'
 
-import { ErrorsContext } from '../../contexts/Errors/index'
+import { ErrorsContext } from '../contexts/Errors'
 
 interface IEntryPoint {
   authenticated: boolean

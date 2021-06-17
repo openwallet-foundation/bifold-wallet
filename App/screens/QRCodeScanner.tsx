@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 
-import { View } from 'react-native'
+import { View, Dimensions, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
@@ -9,10 +9,11 @@ import { RNCamera } from 'react-native-camera'
 import { AppHeader, BackButton, LoadingOverlay } from 'components'
 
 import { decodeInvitationFromUrl } from 'aries-framework'
-import AgentContext from '../../../contexts/AgentProvider'
+import AgentContext from '../contexts/AgentProvider'
 
-import Styles from './styles'
-import AppStyles from '../../../../assets/styles'
+import AppStyles from '../../assets/styles'
+
+let CameraWidth = 0.82 * Dimensions.get('window').width
 
 //  TODO - Add props interface
 function QRCodeScanner(props) {
@@ -77,3 +78,21 @@ function QRCodeScanner(props) {
 }
 
 export default QRCodeScanner
+
+const styles = StyleSheet.create({
+  header: {
+    height: '28%',
+    justifyContent: 'center',
+  },
+  camera: {
+    width: CameraWidth,
+    height: CameraWidth,
+    borderWidth: 3,
+    borderStyle: 'solid',
+    borderColor: '#0A1C40',
+    borderRadius: 3,
+    alignItems: 'center',
+    overflow: 'hidden',
+    justifyContent: 'center',
+  },
+})

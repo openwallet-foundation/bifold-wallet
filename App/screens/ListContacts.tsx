@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, Text, TouchableOpacity, View, FlatList } from 'react-native'
+import { Image, Text, TouchableOpacity, View, FlatList, StyleSheet } from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
@@ -8,15 +8,14 @@ import { useNavigation } from '@react-navigation/native'
 import { useHistory } from 'react-router-native'
 
 import AppHeader from '../../components/AppHeader/AppHeader'
-import BackButton from '../../components/BackButton'
-import CurrentContact from '../../components/CurrentContact'
+import BackButton from '../components/BackButton'
+import CurrentContact from '../components/CurrentContact'
 
-import AgentContext from '../../contexts/AgentProvider'
+import AgentContext from '../contexts/AgentProvider'
 import { ConnectionEventType } from 'aries-framework'
 
-import AppStyles from '../../../assets/styles'
-import Images from '../../../assets/images'
-import Styles from './styles'
+import AppStyles from '../../assets/styles'
+import Images from '../../assets/images'
 
 interface IListContacts {}
 
@@ -123,3 +122,26 @@ function ListContacts(props: IListContacts) {
 }
 
 export default ListContacts
+
+const styles = StyleSheet.create({
+  backbutton: {
+    marginBottom: 30,
+  },
+  tableItem: {
+    paddingLeft: 30,
+    display: 'flex',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#fff',
+  },
+  tableSubItem: {
+    height: 50,
+  },
+  credView: {
+    alignItems: 'center',
+    padding: 12,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    height: '100%',
+  },
+})

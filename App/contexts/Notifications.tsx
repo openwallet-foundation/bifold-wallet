@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-import Images from '../../../assets/images'
-import AppStyles from '../../../assets/styles'
-import Styles from './styles'
+import Images from '../../assets/images'
+import AppStyles from '../../assets/styles'
 
 import { useHistory } from 'react-router-native'
 
@@ -22,8 +21,8 @@ function Notification(props: INotification) {
   const notifications = useContext(NotificationsContext)
 
   return (
-    <View style={Styles.msgView}>
-      <View style={Styles.innerView}>
+    <View style={styles.msgView}>
+      <View style={styles.innerView}>
         <TouchableOpacity
           onPress={() => {
             notifications.setVisible(false)
@@ -78,3 +77,23 @@ function Notifications(props: INotifications) {
 
 export default Notifications
 export { NotificationsContext }
+
+const styles = StyleSheet.create({
+  msgView: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    alignSelf: 'center',
+    backgroundColor: 'rgba(200, 200, 200, 0.78)',
+  },
+  innerView: {
+    width: '100%',
+    height: '83%',
+    top: '17%',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    padding: 50,
+  },
+})

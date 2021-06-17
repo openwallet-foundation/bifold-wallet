@@ -6,15 +6,15 @@ import { useNavigation } from '@react-navigation/native'
 
 import { useHistory, useLocation } from 'react-router-native'
 
-import AppHeaderLarge from '../../components/AppHeaderLarge'
-import BackButton from '../../components/BackButton'
+import AppHeaderLarge from '../components/AppHeaderLarge'
+import BackButton from '../components/BackButton'
 
 import { PAButton } from 'components'
 
-import { ErrorsContext } from '../../contexts/Errors/index'
-import { NotificationsContext } from '../../contexts/Notifications/index'
+import { ErrorsContext } from '../contexts/Errors'
+import { NotificationsContext } from '../contexts/Notifications'
 
-import AppStyles from '../../../assets/styles'
+import AppStyles from '../../assets/styles'
 
 function Home() {
   // const history = useHistory()

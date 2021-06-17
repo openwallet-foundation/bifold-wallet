@@ -15,10 +15,10 @@ import { useHistory } from 'react-router-native'
 
 import * as Keychain from 'react-native-keychain'
 
-import AppHeaderLarge from '../../components/AppHeaderLarge'
-import LoadingOverlay from '../../components/LoadingOverlay'
+import AppHeaderLarge from '../components/AppHeaderLarge'
+import LoadingOverlay from '../components/LoadingOverlay'
 
-import AppStyles from '../../../assets/styles'
+import AppStyles from '../../assets/styles'
 
 interface IPinCreate {
   setupScreens: number

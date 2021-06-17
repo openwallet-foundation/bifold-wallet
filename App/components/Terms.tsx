@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-native'
 import AppHeaderLarge from './AppHeaderLarge'
 import LoadingOverlay from './LoadingOverlay'
 
-import { ErrorsContext } from '../contexts/Errors/index'
+import { ErrorsContext } from '../contexts/Errors'
 
 import AppStyles from '../../assets/styles'
 import Images from '../../assets/images'
