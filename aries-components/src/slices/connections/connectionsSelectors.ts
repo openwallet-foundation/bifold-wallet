@@ -15,6 +15,11 @@ namespace ConnectionsSelectors {
   export const connectionsStateSelector = (state: PartialConnectionState) => state.connections.connections
 
   /**
+   * Selector that all ConnectionRecords from the state.
+   */
+  export const connectionRecordsSelector = (state: PartialConnectionState) => state.connections.connections.records
+
+  /**
    * Selector that retrieves the entire **invitation** store object.
    */
   export const invitationStateSelector = (state: PartialConnectionState) => state.connections.invitation
