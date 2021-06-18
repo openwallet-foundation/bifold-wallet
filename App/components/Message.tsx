@@ -19,9 +19,9 @@ function Message(props: IMessage) {
   const history = useHistory()
 
   return (
-    <View style={Styles.msgView}>
+    <View style={styles.msgView}>
       <View
-        style={[Styles.innerView, props.bgColor ? { backgroundColor: props.bgColor } : { backgroundColor: '#fff' }]}
+        style={[styles.innerView, props.bgColor ? { backgroundColor: props.bgColor } : { backgroundColor: '#fff' }]}
       >
         {props.children}
         {props.title ? (

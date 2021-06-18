@@ -26,7 +26,8 @@ export default TextInput
 
 const styles = StyleSheet.create({
   container: {
-    margin: 15,
+    width: '90%',
+    marginVertical: 10,
   },
   label: {
     color: '#35823f',
