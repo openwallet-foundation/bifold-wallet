@@ -18,6 +18,6 @@ export default AppHeaderLarge
 const styles = StyleSheet.create({
   headerLarge: {
     alignItems: 'center',
-    marginVertical: 40,
+    marginVertical: 20,
   },
 })

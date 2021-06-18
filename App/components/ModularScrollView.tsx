@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
     backgroundColor: 'rgba(0,0,0,0.1)',
-    height: 200,
+    height: 250,
     width: '90%',
     margin: 20,
     padding: 20,
@@ -30,5 +30,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
-  content: {},
+  content: {
+    marginTop: 10,
+    marginBottom: 50,
+  },
 })
