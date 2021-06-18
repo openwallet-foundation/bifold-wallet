@@ -5,7 +5,7 @@ interface Props {
   title: string
 }
 
-const PAButton: React.FC<Props> = ({ title, ...otherButtonProps }) => {
+const NAButton: React.FC<Props> = ({ title, ...otherButtonProps }) => {
   return (
     <TouchableOpacity style={styles.button} {...otherButtonProps}>
       <Text style={styles.text}>{title}</Text>
@@ -13,18 +13,19 @@ const PAButton: React.FC<Props> = ({ title, ...otherButtonProps }) => {
   )
 }
 
-export default PAButton
+export default NAButton
 
 const styles = StyleSheet.create({
   button: {
+    width: '90%',
     borderRadius: 5,
-    backgroundColor: '#35823f',
+    backgroundColor: 'white',
     alignItems: 'center',
     padding: 10,
     margin: 15,
   },
   text: {
     fontSize: 16,
-    color: 'white',
+    // color: 'white',
   },
 })

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-// import { Redirect, Route, useHistory, useLocation } from 'react-router-native'
 
 //For UUIDv4 within React Native
 import 'react-native-get-random-values'
@@ -9,24 +8,11 @@ import { AgentProvider } from './App/contexts/AgentProvider'
 import Errors from './App/contexts/Errors'
 import Notifications from './App/contexts/Notifications'
 
-import EntryPoint from './App/screens/EntryPoint'
-// import Home from './App/screens/Home/index'
-// import ListContacts from './App/screens/ListContacts/index'
-// import ListCredentials from './App/screens/ListCredentials/index'
-import Navbar from './App/components/Navbar'
-import PinCreate from './App/screens/PinCreate'
-import PinEnter from './App/screens/PinEnter'
-// import Settings from './App/screens/Settings/index'
-import SetupWizard from './App/screens/SetupWizard'
-import Terms from './App/components/Terms'
-import Workflow from './App/screens/Workflow'
-
 import TabNavigator from './App/navigators/TabNavigator'
+import AuthenticateStack from './App/navigators/AuthenticateStack'
 
-const App = (props) => {
-  // const [currentLocation, setCurrentLocation] = useState('')
-
-  // const [authenticated, setAuthenticated] = useState(false)
+const App = () => {
+  const [authenticated, setAuthenticated] = useState(false)
 
   // Mock data to pass to Terms component
   const mockTitle = 'Terms of Service'
@@ -76,76 +62,16 @@ const App = (props) => {
     },
   ]
 
-  /*
-    /
-    /home
-    /start
-    /pin-entry
-    /pin-create
-    /scan
-    /workflow
-    /settings
-  */
-
-  //green #35823f
-
   return (
-    // <View>
     <AgentProvider>
       <Errors>
         <Notifications>
           <View style={{ height: '100%' }}>
-            <TabNavigator />
+            {authenticated ? <TabNavigator /> : <AuthenticateStack setAuthenticated={setAuthenticated} />}
           </View>
-          {/* <View style={authenticated ? { height: '90.5%' } : { height: '100%' }}>
-              <Route
-                exact
-                path="/"
-                render={() => {
-                  return <EntryPoint authenticated={authenticated} />
-                }}
-              />
-              <Route exact path="/home" render={() => (authenticated ? <Home /> : <Redirect to="/" />)} />
-              <Route exact path="/settings" render={() => (authenticated ? <Settings /> : <Redirect to="/" />)} />
-              <Route
-                exact
-                path="/contacts"
-                render={() => (authenticated ? <ListContacts contacts={mockContacts} /> : <Redirect to="/" />)}
-              />
-              <Route
-                exact
-                path="/credentials"
-                render={() => (authenticated ? <ListCredentials credentials={mockCredentials} /> : <Redirect to="/" />)}
-              />
-              <Route
-                path="/workflow"
-                render={() => (
-                  <Workflow authenticated={authenticated} contacts={mockContacts} credentials={mockCredentials} />
-                )}
-              />
-              <Route exact path="/pin/enter" render={() => <PinEnter setAuthenticated={setAuthenticated} />} />
-              <Route exact path="/pin/create" render={() => <PinCreate setAuthenticated={setAuthenticated} />} />
-              <Route
-                exact
-                path="/setup-wizard"
-                render={() => (
-                  <SetupWizard setAuthenticated={setAuthenticated}>
-                    <Terms title={mockTitle} message={mockMessage} />
-                    <Terms title={mockEulaTitle} message={mockEulaMessage} />
-                    <PinCreate />
-                  </SetupWizard>
-                )}
-              />
-            </View>
-            {authenticated ? (
-              <View style={{ height: '10%' }}>
-                <Navbar authenticated={authenticated} />
-              </View>
-            ) : null} */}
         </Notifications>
       </Errors>
     </AgentProvider>
-    // </View>
   )
 }
 

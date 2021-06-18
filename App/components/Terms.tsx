@@ -5,7 +5,7 @@ import { Image, ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'rea
 import { useHistory } from 'react-router-native'
 
 import AppHeaderLarge from './AppHeaderLarge'
-import LoadingOverlay from './LoadingOverlay'
+import LoadingOverlay from './modals/LoadingOverlay'
 
 import { ErrorsContext } from '../contexts/Errors'
 

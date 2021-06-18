@@ -1,19 +1,12 @@
 import React, { useState, useContext } from 'react'
-
-import { View, Dimensions, StyleSheet } from 'react-native'
-
+import { StyleSheet, View } from 'react-native'
 import { useHistory } from 'react-router-native'
-
 import { RNCamera } from 'react-native-camera'
 
-import { AppHeader, BackButton, LoadingOverlay } from 'components'
+import { LoadingOverlay } from 'components'
 
 import { decodeInvitationFromUrl } from 'aries-framework'
 import AgentContext from '../contexts/AgentProvider'
-
-import AppStyles from '../../assets/styles'
-
-let CameraWidth = 0.82 * Dimensions.get('window').width
 
 //  TODO - Add props interface
 function QRCodeScanner(props) {
@@ -49,50 +42,46 @@ function QRCodeScanner(props) {
   if (cameraActive) {
     return (
       <View>
-        <BackButton backPath={'/home'} />
-        <View style={AppStyles.viewFull}>
-          {/* <View style={AppStyles.header}>
-            <AppHeader headerText={'SCAN CODE'} />
-          </View> */}
-          <View style={AppStyles.tab}>
-            <RNCamera
-              style={{ height: '100%', width: '100%' }}
-              type={RNCamera.Constants.Type.back}
-              captureAudio={false}
-              androidCameraPermissionOptions={{
-                title: 'Permission to use camera',
-                message: 'We need your permission to use your camera',
-                buttonPositive: 'Ok',
-                buttonNegative: 'Cancel',
-              }}
-              barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-              onBarCodeRead={_handleBarCodeRead}
-            ></RNCamera>
-          </View>
-        </View>
+        <RNCamera
+          style={styles.camera}
+          type={RNCamera.Constants.Type.back}
+          captureAudio={false}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+          barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+          onBarCodeRead={_handleBarCodeRead}
+        />
+        <View style={styles.viewFinder} />
       </View>
     )
   } else {
-    return <LoadingOverlay />
+    return <LoadingOverlay visible={true} />
   }
 }
 
 export default QRCodeScanner
 
 const styles = StyleSheet.create({
-  header: {
-    height: '28%',
-    justifyContent: 'center',
-  },
   camera: {
-    width: CameraWidth,
-    height: CameraWidth,
-    borderWidth: 3,
-    borderStyle: 'solid',
-    borderColor: '#0A1C40',
-    borderRadius: 3,
-    alignItems: 'center',
-    overflow: 'hidden',
-    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+  },
+  viewFinder: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginLeft: -125,
+    marginTop: -125,
+    width: 250,
+    height: 250,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: '#35823f',
+    borderStyle: 'dashed',
   },
 })

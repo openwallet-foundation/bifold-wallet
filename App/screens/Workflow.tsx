@@ -11,8 +11,9 @@ import { CredentialEventType } from 'aries-framework'
 
 import CredentialOffered from './Offered'
 import QRCodeScanner from './QRCodeScanner'
-import Message from '../../components/Message/index'
 import { IContact, ICredential } from '../../types'
+
+import { Message } from 'components'
 
 interface IWorkflow {
   contacts: IContact[]
@@ -21,7 +22,6 @@ interface IWorkflow {
 
 function Workflow(props: IWorkflow) {
   const history = useHistory()
-  // const { url } = useRouteMatch()
 
   const [workflow, setWorkflow] = useState('connect')
   const [workflowInProgress, setWorkflowInProgress] = useState(true)
@@ -29,6 +29,10 @@ function Workflow(props: IWorkflow) {
 
   const [connection, setConnection] = useState(undefined)
   const [credential, setCredential] = useState(undefined)
+
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
+  const [inProgressModalVisible, setInProgressModalVisible] = useState(false)
+  const [failureModalVisible, setFailureModalVisible] = useState(false)
 
   //Reference to the agent context
   const agentContext = useContext(AgentContext)
@@ -99,6 +103,14 @@ function Workflow(props: IWorkflow) {
   return (
     <View>
       <QRCodeScanner setWorkflow={setWorkflow} setWorkflowInProgress={setWorkflowInProgress} />
+      <Message
+        visible={successModalVisible}
+        message="Credential Issued"
+        icon="check-circle"
+        backgroundColor="#1dc249"
+      />
+      <Message visible={inProgressModalVisible} message="Pending Issuance" icon="alarm" backgroundColor="#f0e45d" />
+      <Message visible={failureModalVisible} message="Issuance Failed" icon="warning" backgroundColor="#de524e" />
       {/* <Route
         path={`${url}/connect`}
         render={() => <QRCodeScanner setWorkflow={setWorkflow} setWorkflowInProgress={setWorkflowInProgress} />}

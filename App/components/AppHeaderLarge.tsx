@@ -1,28 +1,14 @@
 import React from 'react'
-
-import { Image, TouchableOpacity, View, StyleSheet } from 'react-native'
-
-import { useHistory } from 'react-router-native'
+import { Image, View, StyleSheet } from 'react-native'
 
 import Images from '../../assets/images'
 
-interface IAppHeaderLarge {
-  disabled?: boolean
-}
+interface IAppHeaderLarge {}
 
-function AppHeaderLarge(props: IAppHeaderLarge) {
-  const history = useHistory()
-
+function AppHeaderLarge() {
   return (
     <View style={styles.headerLarge}>
-      <TouchableOpacity
-        onPress={() => {
-          history.push('/home')
-        }}
-        disabled={props.disabled ? true : false}
-      >
-        <Image source={Images.logoLarge} />
-      </TouchableOpacity>
+      <Image source={Images.logoLarge} />
     </View>
   )
 }
@@ -32,7 +18,7 @@ export default AppHeaderLarge
 const styles = StyleSheet.create({
   headerLarge: {
     height: '40%',
-    justifyContent: 'center',
     alignItems: 'center',
+    margin: 40,
   },
 })

@@ -9,7 +9,6 @@ function ContactDetails() {
   useEffect(() => {
     navigation.setOptions({
       title: route?.params?.alias,
-      headerBackTitleVisible: false,
     })
   }, [])
 

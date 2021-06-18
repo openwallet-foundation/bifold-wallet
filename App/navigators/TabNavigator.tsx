@@ -8,8 +8,6 @@ import ScanStack from './ScanStack'
 import CredentialStack from './CredentialStack'
 import SettingStack from './SettingStack'
 
-import Workflow from '../screens/Workflow'
-
 const Tab = createBottomTabNavigator()
 
 function TabNavigator() {
