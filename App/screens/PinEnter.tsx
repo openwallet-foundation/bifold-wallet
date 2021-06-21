@@ -7,14 +7,11 @@ import { TextInput, SafeAreaScrollView, PAButton } from 'components'
 function PinEnter({ route }) {
   const [pin, setPin] = useState('')
 
-  const checkPin = async (pin) => {
-    const checker = await Keychain.getGenericPassword({ service: 'passcode' })
-    if (pin.length > 6) {
-      Alert.alert('Pin must be 6 digits in length')
-    } else if (JSON.stringify(pin) === checker.password) {
+  const checkPin = async (pin: number) => {
+    const { password } = await Keychain.getGenericPassword({ service: 'passcode' })
+    if (JSON.stringify(pin) === password) {
       route.params.setAuthenticated(true)
     } else {
-      textInput.clear()
       Alert.alert('Incorrect Pin')
     }
   }

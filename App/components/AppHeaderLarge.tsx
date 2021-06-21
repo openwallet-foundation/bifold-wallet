@@ -3,9 +3,9 @@ import { Image, View, StyleSheet } from 'react-native'
 
 import Images from '../../assets/images'
 
-interface IAppHeaderLarge {}
+interface Props {}
 
-function AppHeaderLarge() {
+const AppHeaderLarge: React.FC<Props> = () => {
   return (
     <View style={styles.headerLarge}>
       <Image source={Images.logoLarge} />

@@ -1,25 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, Text, TouchableOpacity, View, FlatList, StyleSheet } from 'react-native'
+import { Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
 
 import { useHistory } from 'react-router-native'
 
-import AppHeader from '../../components/AppHeader/AppHeader'
-import BackButton from '../components/BackButton'
-import CurrentContact from '../components/CurrentContact'
-
 import AgentContext from '../contexts/AgentProvider'
 import { ConnectionEventType } from 'aries-framework'
 
-import AppStyles from '../../assets/styles'
-import Images from '../../assets/images'
+interface Props {}
 
-interface IListContacts {}
-
-function ListContacts(props: IListContacts) {
+const ListContacts: React.FC<Props> = () => {
   const history = useHistory()
 
   const navigation = useNavigation()
@@ -71,11 +64,7 @@ function ListContacts(props: IListContacts) {
     return (
       <TouchableOpacity
         key={item.contact_id}
-        onPress={() => {
-          navigation.navigate('ContactDetails', { alias: item.alias })
-          // setViewInfo(item)
-          // setViewContact(true)
-        }}
+        onPress={() => navigation.navigate('ContactDetails', { alias: item.alias })}
         style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
       >
         <Text style={{ fontSize: 20 }}>{item.alias ? item.alias : item.invitation.label}</Text>
@@ -99,26 +88,7 @@ function ListContacts(props: IListContacts) {
     },
   ]
 
-  return (
-    <FlatList data={FAKE_CONTACTS} renderItem={renderContact} style={{ backgroundColor: 'white' }} />
-    // <BackButton backPath={'/home'} />
-    // <View style={AppStyles.viewFull}>
-    // <View style={AppStyles.header}>
-    //     <AppHeader headerText={'CONTACTS'} />
-    //   </View>
-    // <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
-    // <TouchableOpacity
-    //       style={Styles.backbutton}
-    //       hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    //       onPress={() => history.push('/home')}
-    //     >
-    //       <Image source={Images.arrowDown} style={AppStyles.arrow} />
-    //     </TouchableOpacity>
-
-    // </View>
-    // </View>
-    // {viewContact ? <CurrentContact contact={viewInfo} setViewContact={setViewContact} /> : null}
-  )
+  return <FlatList data={FAKE_CONTACTS} renderItem={renderContact} style={{ backgroundColor: 'white' }} />
 }
 
 export default ListContacts
