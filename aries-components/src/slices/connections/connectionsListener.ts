@@ -10,7 +10,7 @@ import { connectionsSlice } from './connectionsSlice'
  * This function **must** be called if you're working with ConnectionRecords.
  * If you don't, the store won't be updated.
  */
-const startConnectionListener = (agent: Agent, store: EnhancedStore) => {
+const startConnectionsListener = (agent: Agent, store: EnhancedStore) => {
   const listener = (event: ConnectionStateChangedEvent) => {
     const record = event.payload.connectionRecord
     store.dispatch(connectionsSlice.actions.updateOrAdd(record))
@@ -23,4 +23,4 @@ const startConnectionListener = (agent: Agent, store: EnhancedStore) => {
   }
 }
 
-export { startConnectionListener }
+export { startConnectionsListener }

@@ -8,7 +8,7 @@ export {
   // Connections
   connectionsSlice,
   ConnectionThunks,
-  startConnectionListener,
+  startConnectionsListener,
   ConnectionsSelectors,
   // Credentials
   credentialsSlice,
