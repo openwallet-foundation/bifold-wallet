@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { RequestedCredentials, ProofsModule } from 'aries-framework'
+
+import { RequestedCredentials, ProofsModule, RetrievedCredentials } from 'aries-framework'
 import { createAsyncAgentThunk, ClassMethodParameters } from '../../utils'
 
 /**
@@ -109,7 +110,7 @@ namespace ProofsThunks {
   )
 
   /**
-   * Create a RequestedCredentials object. Given input proof request and presentation proposal,
+   * Create a {@link RetrievedCredentials} object. Given input proof request and presentation proposal,
    * use credentials in the wallet to build indy requested credentials object for input to proof creation.
    * If restrictions allow, self attested attributes will be used.
    */
@@ -124,8 +125,24 @@ namespace ProofsThunks {
         presentationProposal?: ClassMethodParameters<typeof ProofsModule, 'getRequestedCredentialsForProofRequest'>[1]
       },
       thunkApi
-    ): Promise<RequestedCredentials> => {
+    ): Promise<RetrievedCredentials> => {
       return thunkApi.extra.agent.proofs.getRequestedCredentialsForProofRequest(proofRequest, presentationProposal)
+    }
+  )
+
+  /**
+   * Create a RequestedCredentials object. Given input proof request and presentation proposal,
+   * use credentials in the wallet to build indy requested credentials object for input to proof creation.
+   * If restrictions allow, self attested attributes will be used.
+   */
+  export const autoSelectCredentialsForProofRequest = createAsyncAgentThunk(
+    'proofs/autoSelectCredentialsForProofRequest',
+    async (
+      retrievedCredentials: ClassMethodParameters<typeof ProofsModule, 'autoSelectCredentialsForProofRequest'>[0],
+
+      thunkApi
+    ): Promise<RequestedCredentials> => {
+      return thunkApi.extra.agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
     }
   )
 }

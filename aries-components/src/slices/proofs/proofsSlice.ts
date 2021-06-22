@@ -1,7 +1,6 @@
-// import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
-// import { CredentialRecord, ProposeCredentialMessage } from 'aries-framework'
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { PresentationPreview, ProofRecord, ProofRequest, RequestedCredentials } from 'aries-framework'
+import { ProofRecord } from 'aries-framework'
+
 import { ProofsThunks } from './ProofsThunks'
 
 interface ProofsState {
@@ -74,6 +73,10 @@ const proofsSlice = createSlice({
       })
       // getRequestedCredentialsForProofRequest
       .addCase(ProofsThunks.getRequestedCredentialsForProofRequest.rejected, (state, action) => {
+        state.error = action.error
+      })
+      // autoSelectCredentialsForProofRequest
+      .addCase(ProofsThunks.autoSelectCredentialsForProofRequest.rejected, (state, action) => {
         state.error = action.error
       })
   },
