@@ -5,12 +5,10 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 import { agentSlice } from './slices/agent'
 import { connectionsSlice } from './slices/connections/connectionsSlice'
 
-
 const rootReducer = combineReducers({
   agent: agentSlice.reducer,
-  connections: connectionsSlice.reducer
+  connections: connectionsSlice.reducer,
 })
-
 
 type RootState = ReturnType<typeof rootReducer>
 const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
@@ -22,10 +20,10 @@ const initializeStore = (agent: Agent) => {
       getDefaultMiddleware({
         thunk: {
           extraArgument: {
-            agent
-          }
-        }
-      })
+            agent,
+          },
+        },
+      }),
   })
 
   type AppDispatch = typeof store.dispatch
@@ -33,15 +31,10 @@ const initializeStore = (agent: Agent) => {
 
   return {
     store,
-    useAppDispatch
+    useAppDispatch,
   }
 }
 
-export {
-  initializeStore,
-  useAppSelector
-}
+export { initializeStore, useAppSelector }
 
-export type {
-  RootState
-}
+export type { RootState }

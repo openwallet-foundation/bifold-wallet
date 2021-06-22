@@ -10,7 +10,7 @@ export interface AgentState {
 const initialState: AgentState = {
   isInitializing: false,
   isInitialized: false,
-  error: null
+  error: null,
 }
 
 namespace AgentThunks {
@@ -21,7 +21,6 @@ namespace AgentThunks {
       return true
     }
   )
-
 }
 const agentSlice = createSlice({
   name: 'agent',
@@ -33,8 +32,8 @@ const agentSlice = createSlice({
         state.isInitializing = true
       })
       .addCase(AgentThunks.initializeAgent.rejected, (state, action) => {
-        state.isInitializing = false,
-        state.isInitialized = false,
+        state.isInitializing = false
+        state.isInitialized = false
         state.error = action.error
       })
       .addCase(AgentThunks.initializeAgent.fulfilled, (state) => {
