@@ -15,7 +15,7 @@ interface IErrorDialog {
 function ErrorDialog(props: IErrorDialog) {
   const history = useHistory()
 
-  const errors = useContext(ErrorsContext)
+  const errors = useContext<any>(ErrorsContext)
 
   return (
     <>
@@ -38,7 +38,11 @@ function ErrorDialog(props: IErrorDialog) {
   )
 }
 
-function Errors(props) {
+interface Props {
+  children: React.ReactNode
+}
+
+const Errors: React.FC<Props> = ({ children }) => {
   const [visible, setVisible] = useState(false)
   const [text, setText] = useState('')
   const [path, setPath] = useState('')
@@ -46,7 +50,7 @@ function Errors(props) {
   return (
     <ErrorsContext.Provider value={{ setVisible: setVisible, setText: setText, setPath: setPath }}>
       <View>
-        {props.children}
+        {children}
         {visible ? (
           <>
             <ErrorDialog text={text} path={path} />

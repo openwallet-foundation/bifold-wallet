@@ -11,7 +11,11 @@ import defaultStackOptions from './defaultStackOptions'
 
 const Stack = createStackNavigator()
 
-function AuthenticateStack({ setAuthenticated }) {
+interface Props {
+  setAuthenticated: () => void
+}
+
+const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
   const [firstLogin, setFirstLogin] = useState(true)
 
   const checkFirstLogin = async () => {

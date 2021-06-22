@@ -17,7 +17,7 @@ const ListContacts: React.FC<Props> = () => {
 
   const navigation = useNavigation()
   //Reference to the agent context
-  const agentContext = useContext(AgentContext)
+  const agentContext = useContext<any>(AgentContext)
 
   //Contacts List State
   const [contacts, setContacts] = useState([])
@@ -37,7 +37,7 @@ const ListContacts: React.FC<Props> = () => {
   }, [agentContext.loading])
 
   //Connection Event Callback
-  const handleConnectionStateChange = (event) => {
+  const handleConnectionStateChange = (event: any) => {
     console.info('Connections State Change', event)
     const allConnections = [...contacts]
     for (let connection of allConnections) {

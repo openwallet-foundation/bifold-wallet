@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
 interface Props {
-  children: any
+  children: React.ReactNode
 }
 
 const SafeAreaScrollView: React.FC<Props> = ({ children }) => {

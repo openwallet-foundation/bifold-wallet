@@ -18,7 +18,7 @@ interface INotification {
 function Notification(props: INotification) {
   const history = useHistory()
 
-  const notifications = useContext(NotificationsContext)
+  const notifications = useContext<any>(NotificationsContext)
 
   return (
     <View style={styles.msgView}>

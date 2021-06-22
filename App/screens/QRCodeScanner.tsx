@@ -10,7 +10,7 @@ import AgentContext from '../contexts/AgentProvider'
 interface Props {}
 
 const QRCodeScanner: React.FC<Props> = () => {
-  const agentContext = useContext(AgentContext)
+  const agentContext = useContext<any>(AgentContext)
 
   //State to determine if we should show the camera any longer
   const [cameraActive, setCameraActive] = useState(true)

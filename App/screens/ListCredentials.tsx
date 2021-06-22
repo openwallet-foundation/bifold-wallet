@@ -1,31 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, Text, TouchableOpacity, View, FLatlist, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
-import { useHistory } from 'react-router-native'
-
-import { AppHeader, BackButton, CurrentCredential } from 'components'
 
 import AgentContext from '../contexts/AgentProvider'
 import { CredentialEventType } from 'aries-framework'
 
-import AppStyles from '../../assets/styles'
-import Images from '../../assets/images'
+interface Props {
+  navigation: any
+}
 
-import { FlatList } from 'react-native-gesture-handler'
-
-interface IListCredentials {}
-
-function ListCredentials(props: IListCredentials) {
-  const history = useHistory()
-
+const ListCredentials: React.FC<Props> = ({ navigation }) => {
   //Reference to the agent context
-  const agentContext = useContext(AgentContext)
+  const agentContext = useContext<any>(AgentContext)
 
   //Credential List State
-  const [credentials, setCredentials] = useState([])
+  const [credentials, setCredentials] = useState<any>()
 
   //Function to get all credentials and set the state
   const getCredentials = async () => {
@@ -57,7 +47,7 @@ function ListCredentials(props: IListCredentials) {
   }, [agentContext.loading])
 
   //Credential Event Callback
-  const handleCredentialStateChange = async (event) => {
+  const handleCredentialStateChange = async (event: any) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
 
     getCredentials()
@@ -73,7 +63,6 @@ function ListCredentials(props: IListCredentials) {
 
   const [viewInfo, setViewInfo] = useState('')
   const [viewCredential, setViewCredential] = useState(false)
-  const navigation = useNavigation()
 
   const renderCred = ({ item }) => {
     return (

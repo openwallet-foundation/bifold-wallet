@@ -4,11 +4,6 @@ import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import { useHistory } from 'react-router-native'
 
-import AppHeader from '../../../../components/AppHeader/index'
-import BackButton from '../../../../components/BackButton/index'
-import CurrentContact from '../../../../components/CurrentContact/index'
-import CurrentCredential from '../../../../components/CurrentCredential/index'
-
 import { ErrorsContext } from '../contexts/Errors'
 import { NotificationsContext } from '../contexts/Notifications'
 

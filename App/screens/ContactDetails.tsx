@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
-import { useNavigation, useRoute } from '@react-navigation/native'
 
-function ContactDetails() {
-  const navigation = useNavigation()
-  const route = useRoute()
+interface Props {
+  navigation: any
+  route: any
+}
 
+const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
   useEffect(() => {
     navigation.setOptions({
       title: route?.params?.alias,

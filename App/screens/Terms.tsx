@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 
 import { SafeAreaScrollView, PAButton, AppHeaderLarge, ModularScrollView, CheckBoxRow } from 'components'
 
-interface Props {}
+interface Props {
+  navigation: any
+}
 
 const mockTitle = 'Terms of Service'
 const mockMessage =
