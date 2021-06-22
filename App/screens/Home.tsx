@@ -1,14 +1,15 @@
 import React, { useContext } from 'react'
-import { useNavigation } from '@react-navigation/native'
 
-import { PAButton, SafeAreaScrollView, AppHeaderLarge } from 'components'
+import { PAButton, SafeAreaScrollView, AppHeaderLarge, ModularScrollView } from 'components'
 
 import { ErrorsContext } from '../contexts/Errors'
 import { NotificationsContext } from '../contexts/Notifications'
 
-function Home() {
-  const navigation = useNavigation<any>()
+interface Props {
+  navigation: any
+}
 
+const Home: React.FC<Props> = ({ navigation }) => {
   const errors = useContext(ErrorsContext)
   const notifications = useContext(NotificationsContext)
 
@@ -16,7 +17,7 @@ function Home() {
     <SafeAreaScrollView>
       <AppHeaderLarge />
       <PAButton title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
-      <PAButton title="Show QR Code" onPress={() => {}} />
+      <ModularScrollView title="Notifications" content="Here you'll get updates on whatever" />
     </SafeAreaScrollView>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
+
+import { SafeAreaScrollView, Text } from 'components'
 
 interface Props {
   navigation: any
@@ -14,9 +15,9 @@ const CredentialDetails: React.FC<Props> = ({ navigation, route }) => {
   }, [])
 
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
+    <SafeAreaScrollView>
       <Text>...other info, idk</Text>
-    </View>
+    </SafeAreaScrollView>
   )
 }
 

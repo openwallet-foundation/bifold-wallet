@@ -1,6 +1,8 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import Text from './Text'
 
 import { mainColor } from '../globalStyles'
 
@@ -17,7 +19,7 @@ const CheckBoxRow: React.FC<Props> = ({ title, checked, onPress }) => {
         {checked ? (
           <Icon name={'check-box'} size={30} color={mainColor} />
         ) : (
-          <Icon name={'check-box-outline-blank'} size={30} />
+          <Icon name={'check-box-outline-blank'} size={30} color={mainColor} />
         )}
       </TouchableOpacity>
       <Text>{title}</Text>

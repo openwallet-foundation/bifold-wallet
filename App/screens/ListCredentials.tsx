@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
-
-import { Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { FlatList } from 'react-native'
+import { CredentialEventType } from 'aries-framework'
 
 import AgentContext from '../contexts/AgentProvider'
-import { CredentialEventType } from 'aries-framework'
+
+import { CredentialListItem, Text } from 'components'
+import { backgroundColor } from '../globalStyles'
 
 interface Props {
   navigation: any
@@ -61,98 +62,15 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
     }
   }, [agentContext.loading])
 
-  const [viewInfo, setViewInfo] = useState('')
-  const [viewCredential, setViewCredential] = useState(false)
-
-  const renderCred = ({ item }) => {
-    return (
-      <TouchableOpacity
-        key={item.id}
-        onPress={() => {
-          navigation.navigate('CredentialDetails', { alias: item.alias })
-        }}
-        style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
-      >
-        <Text style={{ fontSize: 20 }}>{item.alias ? item.alias : item.invitation.label}</Text>
-        <Icon name="chevron-right" size={30} style={{ bottom: 2 }} />
-      </TouchableOpacity>
-    )
-  }
-
-  const FAKE_CREDS = [
-    {
-      id: 1,
-      alias: 'Intermountain Health',
-    },
-    {
-      id: 2,
-      alias: 'DR. JEFF DDS',
-    },
-    {
-      id: 3,
-      alias: 'Pocamo Pediatrics',
-    },
-  ]
-
   return (
-    <FlatList data={FAKE_CREDS} renderItem={renderCred} style={{ backgroundColor: 'white' }} />
-    /* <BackButton backPath={'/home'} />
-      <View style={AppStyles.viewFull}>
-        <View style={AppStyles.header}>
-          <AppHeader headerText={'CREDENTIALS'} />
-        </View>
-        <View style={[Styles.credView, AppStyles.backgroundSecondary]}>
-          <TouchableOpacity
-            style={Styles.backbutton}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-            onPress={() => history.push('/home')}
-          >
-            <Image source={Images.arrowDown} style={AppStyles.arrow} />
-          </TouchableOpacity>
-          {credentials.map((credential, i) => (
-            <View key={i} style={[AppStyles.tableItem, Styles.tableItem, AppStyles.backgroundSecondary]}>
-              <View>
-                <Text style={[{ fontSize: 18, top: 8 }, AppStyles.textWhite, AppStyles.textBold]}>
-                  Driver's License
-                </Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => {
-                  setViewInfo(credential)
-                  setViewCredential(true)
-                }}
-              >
-                <Image source={Images.infoWhite} style={[AppStyles.info, { marginRight: 10, top: 10 }]} />
-              </TouchableOpacity>
-            </View>
-          ))}
-        </View>
-      </View>
-      {viewCredential ? <CurrentCredential credential={viewInfo} setViewCredential={setViewCredential} /> : null} */
+    <FlatList
+      data={credentials}
+      renderItem={({ item }) => <CredentialListItem credential={item} />}
+      style={{ backgroundColor }}
+      keyExtractor={(item: any) => item.credential_id}
+      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>No Credentials yet!</Text>}
+    />
   )
 }
 
 export default ListCredentials
-
-const styles = StyleSheet.create({
-  backbutton: {
-    marginBottom: 30,
-  },
-  tableItem: {
-    paddingLeft: 30,
-    display: 'flex',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#fff',
-  },
-  tableSubItem: {
-    height: 50,
-  },
-  credView: {
-    alignItems: 'center',
-    padding: 12,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-    height: '100%',
-  },
-})

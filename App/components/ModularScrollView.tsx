@@ -4,6 +4,8 @@ import { ScrollView, StyleSheet } from 'react-native'
 import Title from './Title'
 import Text from './Text'
 
+import { lightGray } from '../globalStyles'
+
 interface Props {
   title: string
   content: string
@@ -23,7 +25,7 @@ export default ModularScrollView
 const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: lightGray,
     height: 250,
     width: '90%',
     margin: 20,

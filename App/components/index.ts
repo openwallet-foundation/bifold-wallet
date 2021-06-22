@@ -2,6 +2,10 @@ import AppHeader from './AppHeader'
 import AppHeaderLarge from './AppHeaderLarge'
 
 import CheckBoxRow from './CheckBoxRow'
+
+import ContactListItem from './ContactListItem'
+import CredentialListItem from './CredentialListItem'
+
 import Label from './Label'
 
 import LoadingOverlay from './modals/LoadingOverlay'
@@ -21,6 +25,8 @@ export {
   AppHeader,
   AppHeaderLarge,
   CheckBoxRow,
+  ContactListItem,
+  CredentialListItem,
   Label,
   LoadingOverlay,
   Message,

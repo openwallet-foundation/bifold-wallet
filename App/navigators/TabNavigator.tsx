@@ -8,13 +8,15 @@ import ScanStack from './ScanStack'
 import CredentialStack from './CredentialStack'
 import SettingStack from './SettingStack'
 
+import { mainColor } from '../globalStyles'
+
 const Tab = createBottomTabNavigator()
 
 function TabNavigator() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        style: { backgroundColor: '#35823f' },
+        style: { backgroundColor: mainColor, elevation: 0, shadowOpacity: 0, borderTopWidth: 0 },
         activeTintColor: 'white',
         inactiveTintColor: 'rgba(255,255,255,0.3)',
       }}

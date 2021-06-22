@@ -5,7 +5,7 @@ import { textColor } from '../globalStyles'
 
 interface Props {
   children: React.ReactNode
-  style: any
+  style?: any
 }
 
 const Text: React.FC<Props> = ({ children, style }) => {

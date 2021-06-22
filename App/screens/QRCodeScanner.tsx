@@ -35,7 +35,7 @@ const QRCodeScanner: React.FC<Props> = () => {
 
   if (cameraActive) {
     return (
-      <View>
+      <View style={styles.camera}>
         <RNCamera
           style={styles.camera}
           type={RNCamera.Constants.Type.back}
@@ -61,6 +61,7 @@ export default QRCodeScanner
 
 const styles = StyleSheet.create({
   camera: {
+    backgroundColor: 'black',
     height: '100%',
     width: '100%',
   },

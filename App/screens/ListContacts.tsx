@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react'
-
-import { Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
-
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import { useNavigation } from '@react-navigation/native'
-
-import { useHistory } from 'react-router-native'
+import { ConnectionEventType } from 'aries-framework'
+import { FlatList } from 'react-native'
 
 import AgentContext from '../contexts/AgentProvider'
-import { ConnectionEventType } from 'aries-framework'
 
-interface Props {}
+import { ContactListItem, Text } from 'components'
+import { backgroundColor } from '../globalStyles'
 
-const ListContacts: React.FC<Props> = () => {
-  const history = useHistory()
+interface Props {
+  navigation: any
+}
 
-  const navigation = useNavigation()
+const ListContacts: React.FC<Props> = ({ navigation }) => {
   //Reference to the agent context
   const agentContext = useContext<any>(AgentContext)
 
@@ -57,61 +53,15 @@ const ListContacts: React.FC<Props> = () => {
     }
   }, [agentContext.loading])
 
-  const [viewInfo, setViewInfo] = useState('')
-  const [viewContact, setViewContact] = useState(false)
-
-  function renderContact({ item }) {
-    return (
-      <TouchableOpacity
-        key={item.contact_id}
-        onPress={() => navigation.navigate('ContactDetails', { alias: item.alias })}
-        style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
-      >
-        <Text style={{ fontSize: 20 }}>{item.alias ? item.alias : item.invitation.label}</Text>
-        <Icon name="chevron-right" size={30} style={{ bottom: 2 }} />
-      </TouchableOpacity>
-    )
-  }
-
-  const FAKE_CONTACTS = [
-    {
-      contact_id: 1,
-      alias: 'Jeremy Jackson',
-    },
-    {
-      contact_id: 2,
-      alias: 'John Walker',
-    },
-    {
-      contact_id: 3,
-      alias: 'Peter Piper',
-    },
-  ]
-
-  return <FlatList data={FAKE_CONTACTS} renderItem={renderContact} style={{ backgroundColor: 'white' }} />
+  return (
+    <FlatList
+      data={contacts}
+      renderItem={({ item }) => <ContactListItem contact={item} />}
+      keyExtractor={(item: any) => item.contact_id}
+      style={{ backgroundColor }}
+      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>No Contacts yet!</Text>}
+    />
+  )
 }
 
 export default ListContacts
-
-const styles = StyleSheet.create({
-  backbutton: {
-    marginBottom: 30,
-  },
-  tableItem: {
-    paddingLeft: 30,
-    display: 'flex',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#fff',
-  },
-  tableSubItem: {
-    height: 50,
-  },
-  credView: {
-    alignItems: 'center',
-    padding: 12,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-    height: '100%',
-  },
-})
