@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, TextInput as TI } from 'react-native'
 
 interface Props {
   label: string
+  maxLength?: number
 }
 
-const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
+const TextInput: React.FC<Props> = ({ label, maxLength, ...textInputProps }) => {
   const [focused, setFocused] = useState(false)
 
   return (
@@ -14,6 +15,7 @@ const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
       <TI
         style={[styles.textInput, focused && { borderColor: '#35823f', borderWidth: 2 }]}
         selectionColor="#35823f"
+        maxLength={maxLength}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         {...textInputProps}

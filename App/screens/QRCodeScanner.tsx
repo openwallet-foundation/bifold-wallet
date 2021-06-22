@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useHistory } from 'react-router-native'
 import { RNCamera } from 'react-native-camera'
 
 import { LoadingOverlay } from 'components'
@@ -8,19 +7,15 @@ import { LoadingOverlay } from 'components'
 import { decodeInvitationFromUrl } from 'aries-framework'
 import AgentContext from '../contexts/AgentProvider'
 
-//  TODO - Add props interface
-function QRCodeScanner(props) {
-  const history = useHistory()
+interface Props {}
 
-  //Reference to the agent context
+const QRCodeScanner: React.FC<Props> = () => {
   const agentContext = useContext(AgentContext)
-
-  props.setWorkflowInProgress(false)
 
   //State to determine if we should show the camera any longer
   const [cameraActive, setCameraActive] = useState(true)
 
-  const _handleBarCodeRead = async (event) => {
+  const _handleBarCodeRead = async (event: any) => {
     setCameraActive(false)
 
     console.log('Scanned QR Code')
@@ -29,14 +24,13 @@ function QRCodeScanner(props) {
     const decodedInvitation = await decodeInvitationFromUrl(event.data)
 
     console.log('New Invitation:', decodedInvitation)
+    console.log('AGENT_CONTEXT', agentContext)
 
     const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
       autoAcceptConnection: true,
     })
 
     console.log('New Connection Record', connectionRecord)
-
-    props.setWorkflow('connecting')
   }
 
   if (cameraActive) {

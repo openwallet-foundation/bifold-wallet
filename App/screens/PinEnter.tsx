@@ -20,11 +20,12 @@ function PinEnter({ route }) {
     <SafeAreaScrollView>
       <TextInput
         label="Enter Pin"
+        autoFocus
         maxLength={6}
         keyboardType="numeric"
         secureTextEntry={true}
         value={pin}
-        onChangeText={(pin) => {
+        onChangeText={(pin: string) => {
           setPin(pin.replace(/[^0-9]/g, ''))
           if (pin.length == 6) {
             Keyboard.dismiss()

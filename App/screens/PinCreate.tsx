@@ -6,6 +6,7 @@ import { PAButton, TextInput, SafeAreaScrollView } from 'components'
 
 interface IPinCreate {
   setupScreens: number
+  navigation: any
 }
 
 let textInput: any
@@ -15,7 +16,7 @@ function PinCreate(props: IPinCreate) {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
 
-  const passcodeCreate = async (x) => {
+  const passcodeCreate = async (x: any) => {
     const passcode = JSON.stringify(x)
     const description = 'user authentication pin'
     await Keychain.setGenericPassword(description, passcode, {
@@ -23,7 +24,7 @@ function PinCreate(props: IPinCreate) {
     })
   }
 
-  const confirmEntry = (x, y) => {
+  const confirmEntry = (x: any, y: any) => {
     if (x.length < 6 || y.length < 6) {
       Alert.alert('Pin must be 6 digits in length')
     } else if (x !== y) {
@@ -41,6 +42,7 @@ function PinCreate(props: IPinCreate) {
       <TextInput
         label="Enter Pin"
         maxLength={6}
+        autoFocus
         keyboardType="numeric"
         secureTextEntry={true}
         value={pin}
@@ -50,9 +52,9 @@ function PinCreate(props: IPinCreate) {
         label="Re-Enter Pin"
         maxLength={6}
         keyboardType="numeric"
-        secureTextEntry={true}
+        secureTextEntry
         value={pinTwo}
-        onChangeText={(text) => {
+        onChangeText={(text: string) => {
           setPinTwo(text)
           if (text.length === 6) {
             Keyboard.dismiss()

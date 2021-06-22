@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Image, View } from 'react-native'
-
-import { Route, useHistory, useRouteMatch } from 'react-router-native'
-
-import Images from '../../assets/images'
+import { View } from 'react-native'
 
 import AgentContext from '../contexts/AgentProvider'
 import { CredentialEventType } from 'aries-framework'
 
-import CredentialOffered from './Offered'
 import QRCodeScanner from './QRCodeScanner'
 import { IContact, ICredential } from '../../types'
 
@@ -21,37 +16,25 @@ interface IWorkflow {
 }
 
 function Workflow(props: IWorkflow) {
-  const history = useHistory()
-
-  const [workflow, setWorkflow] = useState('connect')
-  const [workflowInProgress, setWorkflowInProgress] = useState(true)
-  const [firstRender, setFirstRender] = useState(false)
+  const agentContext = useContext<any>(AgentContext)
 
   const [connection, setConnection] = useState(undefined)
-  const [credential, setCredential] = useState(undefined)
+  const [credential, setCredential] = useState<any>(undefined)
+  const [modalVisible, setModalVisible] = useState('')
 
-  const [successModalVisible, setSuccessModalVisible] = useState(false)
-  const [inProgressModalVisible, setInProgressModalVisible] = useState(false)
-  const [failureModalVisible, setFailureModalVisible] = useState(false)
-
-  //Reference to the agent context
-  const agentContext = useContext(AgentContext)
-
-  //Credential Event Callback
-  const handleCredentialStateChange = async (event) => {
+  const handleCredentialStateChange = async (event: any) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
 
     if (event.credentialRecord.state === 'offer-received') {
       //TODO:
       //if(event.credentialRecord.connectionId === contactID){
-
       const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
 
       setConnection(connectionRecord)
 
       const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
-
-      const attributes = {}
+      console.log('PREVIEW ATTRIBUTES', previewAttributes)
+      const attributes: any = {}
       for (const index in previewAttributes) {
         attributes[previewAttributes[index].name] = previewAttributes[index].value
       }
@@ -62,22 +45,17 @@ function Workflow(props: IWorkflow) {
         id: event.credentialRecord.id,
       }
 
-      console.log('credentialToDisplay', credentialToDisplay)
-
       setCredential(credentialToDisplay)
+      console.log('CRED_TO_DISPLAY', credentialToDisplay)
 
-      setWorkflow('offered')
+      setModalVisible('inProgress')
       //}
     } else if (event.credentialRecord.state === 'credential-received') {
-      console.log('attempting to send ack')
-
       await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
       //TODO:
       //Push to credential issued screen
-      setWorkflow('issued')
+      setModalVisible('success')
     }
-
-    //TODO: Update Credentials List
   }
 
   //Register Event Listener
@@ -88,113 +66,30 @@ function Workflow(props: IWorkflow) {
     }
   }, [agentContext.loading])
 
-  useEffect(() => {
-    setWorkflowInProgress(true)
-
-    //Don't re-push the first workflow screen for back-up functionality
-    //TODO: Refactor
-    if (firstRender) {
-      history.push(`${url}/${workflow}`)
-    } else {
-      setFirstRender(true)
-    }
-  }, [workflow])
+  console.log('CONNECTION', connection)
+  console.log('CREDENTIAL', credential)
 
   return (
     <View>
-      <QRCodeScanner setWorkflow={setWorkflow} setWorkflowInProgress={setWorkflowInProgress} />
+      <QRCodeScanner />
       <Message
-        visible={successModalVisible}
+        visible={modalVisible === 'success'}
         message="Credential Issued"
         icon="check-circle"
         backgroundColor="#1dc249"
       />
-      <Message visible={inProgressModalVisible} message="Pending Issuance" icon="alarm" backgroundColor="#f0e45d" />
-      <Message visible={failureModalVisible} message="Issuance Failed" icon="warning" backgroundColor="#de524e" />
-      {/* <Route
-        path={`${url}/connect`}
-        render={() => <QRCodeScanner setWorkflow={setWorkflow} setWorkflowInProgress={setWorkflowInProgress} />}
-      /> */}
-      {/* <Route
-        path={`${url}/connecting`}
-        render={() => {
-          return (
-            <Message title={'Connecting'} bgColor={'#1B2624'} textLight={true}>
-              <Image
-                source={Images.waiting}
-                style={{
-                  alignSelf: 'center',
-                  width: 102,
-                  height: 115,
-                }}
-              />
-            </Message>
-          )
-        }}
-      /> */}
-      {/* <Route
-        path={`${url}/offered`}
-        render={() => <CredentialOffered setWorkflow={setWorkflow} contact={connection} credential={credential} />}
-      /> */}
-      {/* <Route
-        path={`${url}/pending`}
-        render={() => {
-          return (
-            <Message title={'Pending Issuance'} bgColor={'#1B2624'} textLight={true}>
-              <Image
-                source={Images.waiting}
-                style={{
-                  alignSelf: 'center',
-                  width: 102,
-                  height: 115,
-                }}
-              />
-            </Message>
-          )
-        }}
-      /> */}
-      {/* <Route
-        path={`${url}/issued`}
-        render={() => {
-          return (
-            <Message title={'Credential Issued'} path={'/home'} bgColor={'#1B2624'} textLight={true}>
-              <Image
-                source={Images.whiteHexCheck}
-                style={{
-                  alignSelf: 'center',
-                  width: 102,
-                  height: 115,
-                }}
-              />
-            </Message>
-          )
-        }}
-      /> */}
-
-      {/*<Prompt
-        message={(location, action) => {
-          //Back button checking
-          console.log(action)
-          if (
-            location.pathname != '/workflow/connect' &&
-            location.pathname != '/workflow/connecting' &&
-            location.pathname != '/workflow/issued' 
-          ) {
-            return `Are you sure you want to exit and lose unsaved progress?`
-          }
-        }}
-      />*/}
-
-      {/*
-      render={() => (
-                  authenticated ? ( 
-                    <Workflow />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                )}
-      
-      */}
+      <Message
+        visible={modalVisible === 'inProgress'}
+        message="Pending Issuance"
+        icon="alarm"
+        backgroundColor="#4a4a4a"
+      />
+      <Message
+        visible={modalVisible === 'failure'}
+        message="Issuance Failed"
+        icon="warning"
+        backgroundColor="#de524e"
+      />
     </View>
   )
 }
