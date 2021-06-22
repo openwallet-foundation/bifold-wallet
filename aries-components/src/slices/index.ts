@@ -1,4 +1,4 @@
-import { agentSlice, AgentThunks } from './agent'
-import { connectionsSlice, ConnectionThunks, ConnectionsSelectors, startConnectionListener } from './connections'
-
-export { agentSlice, AgentThunks, connectionsSlice, ConnectionThunks, ConnectionsSelectors, startConnectionListener }
+export { agentSlice, AgentThunks } from './agent'
+export { connectionsSlice, ConnectionThunks, ConnectionsSelectors, startConnectionListener } from './connections'
+export { credentialsSlice, CredentialsThunks, CredentialsSelectors, startCredentialsListener } from './credentials'
+export { proofsSlice, ProofsThunks, ProofsSelectors, startProofsListener } from './proofs'

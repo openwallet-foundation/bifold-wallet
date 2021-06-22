@@ -1,28 +1,23 @@
-import { initializeStore } from './store'
+export { initializeStore } from './store'
 
-import {  createAsyncAgentThunk, AgentThunkApiConfig } from './utils'
-
-import {
-    agentSlice,
-    AgentThunks,
-
-    connectionsSlice,
-    ConnectionThunks,
-    startConnectionListener,
-    ConnectionsSelectors
-} from './slices'
+export { createAsyncAgentThunk, AgentThunkApiConfig } from './utils'
 
 export {
-    initializeStore,
-
-    createAsyncAgentThunk,
-    AgentThunkApiConfig,
-
-    agentSlice,
-    AgentThunks,
-
-    connectionsSlice,
-    ConnectionThunks,
-    ConnectionsSelectors,
-    startConnectionListener
-}
+  agentSlice,
+  AgentThunks,
+  // Connections
+  connectionsSlice,
+  ConnectionThunks,
+  startConnectionListener,
+  ConnectionsSelectors,
+  // Credentials
+  credentialsSlice,
+  CredentialsThunks,
+  startCredentialsListener,
+  CredentialsSelectors,
+  // Proofs
+  proofsSlice,
+  ProofsThunks,
+  startProofsListener,
+  ProofsSelectors,
+} from './slices'
