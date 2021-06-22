@@ -15,6 +15,11 @@ namespace ProofsSelectors {
   export const proofsStateSelector = (state: PartialProofsState) => state.proofs.proofs
 
   /**
+   * Selector that all ProofRecords from the state.
+   */
+  export const proofRecordsSelector = (state: PartialProofsState) => state.proofs.proofs.records
+
+  /**
    * Selector that fetches a ProofRecord by id from the state.
    */
   export const connectionRecordByIdSelector = (proofRecordId: string) => (state: PartialProofsState) =>

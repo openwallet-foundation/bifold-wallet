@@ -15,6 +15,11 @@ namespace CredentialsSelectors {
   export const credentialsStateSelector = (state: PartialCredentialState) => state.credentials.credentials
 
   /**
+   * Selector that all CredentialRecords from the state.
+   */
+  export const credentialRecordsSelector = (state: PartialCredentialState) => state.credentials.credentials.records
+
+  /**
    * Selector that fetches a CredentialRecord by id from the state.
    */
   export const connectionRecordByIdSelector = (credentialRecordId: string) => (state: PartialCredentialState) =>
