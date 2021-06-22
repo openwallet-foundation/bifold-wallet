@@ -4,7 +4,11 @@ import * as Keychain from 'react-native-keychain'
 
 import { TextInput, SafeAreaScrollView, PAButton } from 'components'
 
-function PinEnter({ route }) {
+interface Props {
+  route: any
+}
+
+const PinEnter: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
 
   const checkPin = async (pin: number) => {

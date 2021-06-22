@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { mainColor } from '../globalStyles'
+
 interface Props {
   title: string
   checked: boolean
@@ -13,7 +15,7 @@ const CheckBoxRow: React.FC<Props> = ({ title, checked, onPress }) => {
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
         {checked ? (
-          <Icon name={'check-box'} size={30} color={'#35823f'} />
+          <Icon name={'check-box'} size={30} color={mainColor} />
         ) : (
           <Icon name={'check-box-outline-blank'} size={30} />
         )}

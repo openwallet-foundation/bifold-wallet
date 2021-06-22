@@ -14,6 +14,8 @@ import NAButton from './NAButton'
 import SafeAreaScrollView from './SafeAreaScrollView'
 
 import TextInput from './TextInput'
+import Text from './Text'
+import Title from './Title'
 
 export {
   AppHeader,
@@ -27,4 +29,6 @@ export {
   NAButton,
   SafeAreaScrollView,
   TextInput,
+  Text,
+  Title,
 }

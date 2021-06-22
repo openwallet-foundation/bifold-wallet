@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import NAButton from '../NAButton'
 
+import { textColor } from '../../globalStyles'
+
 interface Props {
   icon: string
   message: string
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
   },
   message: {
     textAlign: 'center',
-    color: 'white',
+    color: textColor,
     fontSize: 25,
   },
 })

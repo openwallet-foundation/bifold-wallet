@@ -1,5 +1,7 @@
+import { textColor, mainColor } from '../globalStyles'
+
 export default {
-  headerStyle: { backgroundColor: '#35823f' },
-  headerTintColor: 'white',
+  headerStyle: { backgroundColor: mainColor, elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
+  headerTintColor: textColor,
   headerBackTitleVisible: false,
 }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput as TI } from 'react-native'
 
+import { mainColor } from '../globalStyles'
+
 interface Props {
   label: string
   maxLength?: number
@@ -13,8 +15,8 @@ const TextInput: React.FC<Props> = ({ label, maxLength, ...textInputProps }) => 
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <TI
-        style={[styles.textInput, focused && { borderColor: '#35823f', borderWidth: 2 }]}
-        selectionColor="#35823f"
+        style={[styles.textInput, focused && { borderColor: mainColor, borderWidth: 2 }]}
+        selectionColor={mainColor}
         maxLength={maxLength}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -32,14 +34,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   label: {
-    color: '#35823f',
+    color: mainColor,
     margin: 2,
   },
   textInput: {
     padding: 10,
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'gray',
     fontSize: 16,
+    backgroundColor: 'white',
   },
 })

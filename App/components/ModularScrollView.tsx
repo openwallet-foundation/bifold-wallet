@@ -1,5 +1,8 @@
 import React from 'react'
-import { ScrollView, Text, StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
+
+import Title from './Title'
+import Text from './Text'
 
 interface Props {
   title: string
@@ -9,7 +12,7 @@ interface Props {
 const ModularScrollView: React.FC<Props> = ({ title, content }) => {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <Title>{title}</Title>
       <Text style={styles.content}>{content}</Text>
     </ScrollView>
   )
@@ -25,10 +28,6 @@ const styles = StyleSheet.create({
     width: '90%',
     margin: 20,
     padding: 20,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
   },
   content: {
     marginTop: 10,

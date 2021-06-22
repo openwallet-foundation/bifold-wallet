@@ -1,6 +1,8 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
+import { backgroundColor } from '../globalStyles'
+
 interface Props {
   children: React.ReactNode
 }
@@ -18,7 +20,7 @@ export default SafeAreaScrollView
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor,
   },
   scrollView: {
     alignItems: 'center',
