@@ -15,9 +15,16 @@ namespace ConnectionsSelectors {
   export const connectionsStateSelector = (state: PartialConnectionState) => state.connections.connections
 
   /**
-   * Selector that all ConnectionRecords from the state.
+   * Selector that retrieves all ConnectionRecords from the store.
    */
   export const connectionRecordsSelector = (state: PartialConnectionState) => state.connections.connections.records
+
+  /**
+   * Selector that retrieves all ConnectionRecords from the store with specified {@link ConnectionState}.
+   */
+  export const connectionRecordsByStateSelector = (connectionState: ConnectionState) => (
+    state: PartialConnectionState
+  ) => state.connections.connections.records.filter((record) => record.state === connectionState)
 
   /**
    * Selector that retrieves the entire **invitation** store object.
@@ -45,55 +52,15 @@ namespace ConnectionsSelectors {
   /**
    * Selector that fetches the InvitationMessage based on a ConnectionRecord id.
    */
-  export const invitationByConnectionRecordIdSelector =
-    (connectionRecordId: string) => (state: PartialConnectionState) => {
-      const record = state.connections.connections.records.find((x) => x.id == connectionRecordId)
+  export const invitationByConnectionRecordIdSelector = (connectionRecordId: string) => (
+    state: PartialConnectionState
+  ) => {
+    const record = state.connections.connections.records.find((x) => x.id == connectionRecordId)
 
-      if (!record) {
-        return null
-      }
-      return record.invitation
+    if (!record) {
+      return null
     }
-
-  /**
-   * Namespace that holds selectors that fetch ConnectionRecords from the store
-   * based on their current state.
-   */
-  export namespace ConnectionRecordStateSelectors {
-    /**
-     * Selector to retrieve all ConnectionRecords from the store that have the
-     * **init** state.
-     */
-    export const initSelector = (state: PartialConnectionState) =>
-      state.connections.connections.records.filter((x) => x.state === ConnectionState.Init)
-
-    /**
-     * Selector to retrieve all ConnectionRecords from the store that have the
-     * **invited** state.
-     */
-    export const invitedSelector = (state: PartialConnectionState) =>
-      state.connections.connections.records.filter((x) => x.state === ConnectionState.Invited)
-
-    /**
-     * Selector to retrieve all ConnectionRecords from the store that have the
-     * **requested** state.
-     */
-    export const requestedSelector = (state: PartialConnectionState) =>
-      state.connections.connections.records.filter((x) => x.state === ConnectionState.Requested)
-
-    /**
-     * Selector to retrieve all ConnectionRecords from the store that have the
-     * **responded** state.
-     */
-    export const respondedSelector = (state: PartialConnectionState) =>
-      state.connections.connections.records.filter((x) => x.state === ConnectionState.Responded)
-
-    /**
-     * Selector to retrieve all ConnectionRecords from the store that have the
-     * **complete** state.
-     */
-    export const completeSelector = (state: PartialConnectionState) =>
-      state.connections.connections.records.filter((x) => x.state === ConnectionState.Complete)
+    return record.invitation
   }
 }
 
