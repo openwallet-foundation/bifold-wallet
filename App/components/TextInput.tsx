@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput as TI } from 'react-native'
 
-import { mainColor, textColor } from '../globalStyles'
+import { mainColor, textColor, shadow } from '../globalStyles'
 
 interface Props {
   label: string
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     fontSize: 16,
-    backgroundColor: 'black',
+    backgroundColor: shadow,
     color: textColor,
   },
 })
