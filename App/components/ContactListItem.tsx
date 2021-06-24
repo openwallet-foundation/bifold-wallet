@@ -15,7 +15,7 @@ const ContactListItem: React.FC<Props> = ({ contact }) => {
   return (
     <TouchableOpacity
       key={contact.contact_id}
-      onPress={() => navigation.navigate('ContactDetails', { alias: contact.alias })}
+      onPress={() => navigation.navigate('ContactDetails', { contact })}
       style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
     >
       <Text style={{ fontSize: 20 }}>{contact.alias ? contact.alias : contact.invitation.label}</Text>

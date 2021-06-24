@@ -1,25 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react'
-
 import { View } from 'react-native'
-
-import AgentContext from '../contexts/AgentProvider'
 import { CredentialEventType } from 'aries-framework'
 
+import AgentContext from '../contexts/AgentProvider'
 import QRCodeScanner from './QRCodeScanner'
-import { IContact, ICredential } from '../../types'
 
 import { Message } from 'components'
 
-interface IWorkflow {
-  contacts: IContact[]
-  credentials: ICredential[]
-}
-
-function Workflow(props: IWorkflow) {
+function Workflow() {
   const agentContext = useContext<any>(AgentContext)
 
-  const [connection, setConnection] = useState(undefined)
-  const [credential, setCredential] = useState<any>(undefined)
+  const [connection, setConnection] = useState()
+  const [credential, setCredential] = useState<any>()
   const [modalVisible, setModalVisible] = useState('')
 
   const handleCredentialStateChange = async (event: any) => {
@@ -52,13 +44,10 @@ function Workflow(props: IWorkflow) {
       //}
     } else if (event.credentialRecord.state === 'credential-received') {
       await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
-      //TODO:
-      //Push to credential issued screen
       setModalVisible('success')
     }
   }
 
-  //Register Event Listener
   useEffect(() => {
     if (!agentContext.loading) {
       agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)

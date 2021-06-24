@@ -68,7 +68,7 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
       renderItem={({ item }) => <CredentialListItem credential={item} />}
       style={{ backgroundColor }}
       keyExtractor={(item: any) => item.credential_id}
-      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>No Credentials yet!</Text>}
+      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>None yet!</Text>}
     />
   )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { SafeAreaScrollView, Text } from 'components'
+import { SafeAreaScrollView, Label, Text } from 'components'
 
 interface Props {
   navigation: any
@@ -8,15 +8,21 @@ interface Props {
 }
 
 const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
+  const { contact } = route?.params?.contact
+
+  const { alias, invitation, createdAt, state } = contact
+
   useEffect(() => {
     navigation.setOptions({
-      title: route?.params?.alias,
+      title: alias,
     })
   }, [])
 
   return (
     <SafeAreaScrollView>
-      <Text>...other info, idk</Text>
+      <Text>{invitation.label}</Text>
+      <Label title="Created" subtitle={createdAt} />
+      <Label title="Connection State" subtitle={state} />
     </SafeAreaScrollView>
   )
 }

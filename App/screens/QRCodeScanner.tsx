@@ -12,7 +12,6 @@ interface Props {}
 const QRCodeScanner: React.FC<Props> = () => {
   const agentContext = useContext<any>(AgentContext)
 
-  //State to determine if we should show the camera any longer
   const [cameraActive, setCameraActive] = useState(true)
 
   const _handleBarCodeRead = async (event: any) => {

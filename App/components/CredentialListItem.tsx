@@ -1,7 +1,9 @@
 import React from 'react'
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import { Text } from 'components'
 
 interface Props {
   credential: any
@@ -14,11 +16,11 @@ const CredentialListItem: React.FC<Props> = ({ credential }) => {
     <TouchableOpacity
       key={credential.id}
       onPress={() => {
-        navigation.navigate('CredentialDetails', { alias: credential.alias })
+        navigation.navigate('CredentialDetails', { credential })
       }}
-      style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
+      style={styles.container}
     >
-      <Text style={{ fontSize: 20 }}>{credential.alias ? credential.alias : credential.invitation.label}</Text>
+      <Text style={styles.text}>{credential.alias || credential.invitation.label}</Text>
       <Icon name="chevron-right" size={30} style={{ bottom: 2 }} />
     </TouchableOpacity>
   )
@@ -26,4 +28,13 @@ const CredentialListItem: React.FC<Props> = ({ credential }) => {
 
 export default CredentialListItem
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  text: {
+    fontSize: 20,
+  },
+})

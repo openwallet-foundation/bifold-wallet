@@ -12,27 +12,16 @@ interface Props {
 }
 
 const ListContacts: React.FC<Props> = ({ navigation }) => {
-  //Reference to the agent context
   const agentContext = useContext<any>(AgentContext)
 
-  //Contacts List State
   const [contacts, setContacts] = useState([])
 
-  //Function to get all connections and set the state
   const getConnections = async () => {
     const connections = await agentContext.agent.connections.getAll()
     console.log('CONNECTIONS: ', connections)
     setContacts(connections)
   }
 
-  //On Component Load Fetch all Connections
-  useEffect(() => {
-    if (!agentContext.loading) {
-      getConnections()
-    }
-  }, [agentContext.loading])
-
-  //Connection Event Callback
   const handleConnectionStateChange = (event: any) => {
     console.info('Connections State Change', event)
     const allConnections = [...contacts]
@@ -45,11 +34,11 @@ const ListContacts: React.FC<Props> = ({ navigation }) => {
     //TODO: Update Connections List
   }
 
-  //Register Event Listener
   useEffect(() => {
     if (!agentContext.loading) {
       agentContext.agent.connections.events.removeAllListeners(ConnectionEventType.StateChanged)
       agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
+      getConnections()
     }
   }, [agentContext.loading])
 
@@ -59,7 +48,7 @@ const ListContacts: React.FC<Props> = ({ navigation }) => {
       renderItem={({ item }) => <ContactListItem contact={item} />}
       keyExtractor={(item: any) => item.contact_id}
       style={{ backgroundColor }}
-      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>No Contacts yet!</Text>}
+      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>None yet!</Text>}
     />
   )
 }

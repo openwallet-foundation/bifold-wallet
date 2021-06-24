@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { SafeAreaScrollView, Text } from 'components'
+import { SafeAreaScrollView, Text, Label } from 'components'
 
 interface Props {
   navigation: any
@@ -8,6 +8,12 @@ interface Props {
 }
 
 const CredentialDetails: React.FC<Props> = ({ navigation, route }) => {
+  const { credential } = route?.params?.credential
+
+  const {
+    attributes: { first_name, last_name, gender, age },
+  } = credential
+
   useEffect(() => {
     navigation.setOptions({
       title: route?.params?.alias,
@@ -16,7 +22,10 @@ const CredentialDetails: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaScrollView>
-      <Text>...other info, idk</Text>
+      <Text>{first_name}</Text>
+      <Text>{last_name}</Text>
+      <Label title="Gender" subtitle={gender} />
+      <Label title="Age" subtitle={age} />
     </SafeAreaScrollView>
   )
 }
