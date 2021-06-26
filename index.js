@@ -1,7 +1,7 @@
 /**
  * @format
  */
-
+import '@azure/core-asynciterator-polyfill'
 import { AppRegistry } from 'react-native'
 import React from 'react'
 import { BackButton, NativeRouter } from 'react-router-native'
