@@ -15,7 +15,7 @@ const TextInput: React.FC<Props> = ({ label, maxLength, ...textInputProps }) => 
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <TI
-        style={[styles.textInput, focused && { borderColor: mainColor, borderWidth: 2 }]}
+        style={[styles.textInput, focused && { borderColor: mainColor, backgroundColor: 'black' }]}
         selectionColor={mainColor}
         maxLength={maxLength}
         onFocus={() => setFocused(true)}
@@ -43,5 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: shadow,
     color: textColor,
+    borderWidth: 2,
+    borderColor: 'transparent',
   },
 })

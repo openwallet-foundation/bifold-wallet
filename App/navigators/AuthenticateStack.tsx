@@ -4,7 +4,6 @@ import * as Keychain from 'react-native-keychain'
 
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import SetupWizard from '../screens/SetupWizard'
 import Terms from '../screens/Terms'
 
 import defaultStackOptions from './defaultStackOptions'
@@ -39,7 +38,6 @@ const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
         </>
       )}
       <Stack.Screen name="Enter Pin" component={PinEnter} initialParams={{ setAuthenticated }} />
-      <Stack.Screen name="SetupWizard" component={SetupWizard} />
     </Stack.Navigator>
   )
 }
