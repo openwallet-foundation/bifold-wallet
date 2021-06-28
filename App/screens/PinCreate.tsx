@@ -41,6 +41,7 @@ function PinCreate(props: IPinCreate) {
     <SafeAreaScrollView>
       <TextInput
         label="Enter Pin"
+        placeholder="6 Digit Pin"
         maxLength={6}
         autoFocus
         keyboardType="numeric"
@@ -50,6 +51,7 @@ function PinCreate(props: IPinCreate) {
       />
       <TextInput
         label="Re-Enter Pin"
+        placeholder="6 Digit Pin"
         maxLength={6}
         keyboardType="numeric"
         secureTextEntry

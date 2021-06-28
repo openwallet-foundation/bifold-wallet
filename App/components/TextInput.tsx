@@ -6,9 +6,10 @@ import { mainColor, textColor, shadow } from '../globalStyles'
 interface Props {
   label: string
   maxLength?: number
+  placeholder: string
 }
 
-const TextInput: React.FC<Props> = ({ label, maxLength, ...textInputProps }) => {
+const TextInput: React.FC<Props> = ({ label, maxLength, placeholder, ...textInputProps }) => {
   const [focused, setFocused] = useState(false)
 
   return (
@@ -18,6 +19,7 @@ const TextInput: React.FC<Props> = ({ label, maxLength, ...textInputProps }) => 
         style={[styles.textInput, focused && { borderColor: mainColor, backgroundColor: 'black' }]}
         selectionColor={mainColor}
         maxLength={maxLength}
+        placeholder={placeholder}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         {...textInputProps}

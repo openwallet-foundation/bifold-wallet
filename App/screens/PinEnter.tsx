@@ -24,6 +24,7 @@ const PinEnter: React.FC<Props> = ({ route }) => {
     <SafeAreaScrollView>
       <TextInput
         label="Enter Pin"
+        placeholder="6 Digit Pin"
         autoFocus
         maxLength={6}
         keyboardType="numeric"
