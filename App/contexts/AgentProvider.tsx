@@ -13,7 +13,6 @@ import {
   LogLevel,
   HttpOutboundTransporter,
 } from 'aries-framework'
-console.disableYellowBox = true
 
 const AgentContext = React.createContext({})
 
@@ -22,7 +21,7 @@ interface Props {
 }
 
 const AgentProvider: React.FC<Props> = ({ children }) => {
-  const [agent, setAgent] = useState<Agent>()
+  const [agent, setAgent] = useState<any>()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
