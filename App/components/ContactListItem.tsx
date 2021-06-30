@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native'
 
 import Text from './Text'
 
+import { textColor } from '../globalStyles'
+
 interface Props {
   contact: any
 }
@@ -19,7 +21,7 @@ const ContactListItem: React.FC<Props> = ({ contact }) => {
       style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
     >
       <Text style={{ fontSize: 20 }}>{contact.alias ? contact.alias : contact.invitation.label}</Text>
-      <Icon name="chevron-right" size={30} style={{ bottom: 2 }} />
+      <Icon name="chevron-right" size={30} style={{ bottom: 2 }} color={textColor} />
     </TouchableOpacity>
   )
 }

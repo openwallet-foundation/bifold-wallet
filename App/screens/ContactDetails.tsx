@@ -8,9 +8,7 @@ interface Props {
 }
 
 const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
-  const { contact } = route?.params?.contact
-
-  const { alias, invitation, createdAt, state } = contact
+  const { alias, invitation, createdAt, state } = route?.params?.contact
 
   useEffect(() => {
     navigation.setOptions({
@@ -20,8 +18,7 @@ const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaScrollView>
-      <Text>{invitation.label}</Text>
-      <Label title="Created" subtitle={createdAt} />
+      <Label title="Created" subtitle={JSON.stringify(createdAt)} />
       <Label title="Connection State" subtitle={state} />
     </SafeAreaScrollView>
   )

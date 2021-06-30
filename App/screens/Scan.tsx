@@ -3,16 +3,22 @@ import { View } from 'react-native'
 import { CredentialEventType } from 'aries-framework'
 
 import AgentContext from '../contexts/AgentProvider'
-import QRCodeScanner from './QRCodeScanner'
+import { decodeInvitationFromUrl } from 'aries-framework'
 
-import { Message } from 'components'
+import { Message, QRScanner } from 'components'
 
-function Workflow() {
+interface Props {
+  navigation: any
+}
+
+const Scan: React.FC<Props> = ({ navigation }) => {
   const agentContext = useContext<any>(AgentContext)
 
   const [connection, setConnection] = useState()
   const [credential, setCredential] = useState<any>()
-  const [modalVisible, setModalVisible] = useState('')
+
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
+  const [inProgressModalVisible, setInProgressModalVisible] = useState(false)
 
   const handleCredentialStateChange = async (event: any) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
@@ -40,12 +46,26 @@ function Workflow() {
       setCredential(credentialToDisplay)
       console.log('CRED_TO_DISPLAY', credentialToDisplay)
 
-      setModalVisible('inProgress')
       //}
     } else if (event.credentialRecord.state === 'credential-received') {
       await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
-      setModalVisible('success')
     }
+  }
+
+  const handleCodeScan = async (event: any) => {
+    console.log('Scanned QR Code')
+    console.log('BARCODE: ', event)
+
+    const decodedInvitation = await decodeInvitationFromUrl(event.data)
+
+    console.log('New Invitation:', decodedInvitation)
+    console.log('AGENT_CONTEXT', agentContext)
+
+    const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
+      autoAcceptConnection: true,
+    })
+
+    console.log('New Connection Record', connectionRecord)
   }
 
   useEffect(() => {
@@ -60,26 +80,15 @@ function Workflow() {
 
   return (
     <View>
-      <QRCodeScanner />
+      <QRScanner handleCodeScan={handleCodeScan} />
       <Message
-        visible={modalVisible === 'success'}
+        visible={successModalVisible}
         message="Credential Issued"
         icon="check-circle"
         backgroundColor="#1dc249"
       />
-      <Message
-        visible={modalVisible === 'inProgress'}
-        message="Pending Issuance"
-        icon="alarm"
-        backgroundColor="#4a4a4a"
-      />
-      <Message
-        visible={modalVisible === 'failure'}
-        message="Issuance Failed"
-        icon="warning"
-        backgroundColor="#de524e"
-      />
+      <Message visible={inProgressModalVisible} message="Pending Issuance" icon="alarm" backgroundColor="#4a4a4a" />
     </View>
   )
 }
-export default Workflow
+export default Scan

@@ -15,6 +15,8 @@ import ModularScrollView from './ModularScrollView'
 import PAButton from './PAButton'
 import NAButton from './NAButton'
 
+import QRScanner from './QRScanner'
+
 import SafeAreaScrollView from './SafeAreaScrollView'
 
 import TextInput from './TextInput'
@@ -33,6 +35,7 @@ export {
   ModularScrollView,
   PAButton,
   NAButton,
+  QRScanner,
   SafeAreaScrollView,
   TextInput,
   Text,

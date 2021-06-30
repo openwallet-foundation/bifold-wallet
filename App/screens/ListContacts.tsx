@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { ConnectionEventType } from 'aries-framework'
-import { FlatList } from 'react-native'
+import { FlatList, RefreshControl } from 'react-native'
 
 import AgentContext from '../contexts/AgentProvider'
 
 import { ContactListItem, Text } from 'components'
-import { backgroundColor } from '../globalStyles'
+import { backgroundColor, textColor } from '../globalStyles'
 
 interface Props {
   navigation: any
@@ -14,7 +14,8 @@ interface Props {
 const ListContacts: React.FC<Props> = ({ navigation }) => {
   const agentContext = useContext<any>(AgentContext)
 
-  const [contacts, setContacts] = useState([])
+  const [contacts, setContacts] = useState<any>()
+  const [refreshing, setRefreshing] = useState(false)
 
   const getConnections = async () => {
     const connections = await agentContext.agent.connections.getAll()
@@ -49,6 +50,7 @@ const ListContacts: React.FC<Props> = ({ navigation }) => {
       keyExtractor={(item: any) => item.contact_id}
       style={{ backgroundColor }}
       ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>None yet!</Text>}
+      refreshControl={<RefreshControl tintColor={textColor} onRefresh={getConnections} refreshing={refreshing} />}
     />
   )
 }

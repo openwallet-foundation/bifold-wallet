@@ -23,13 +23,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: '90%',
+    marginTop: 20,
   },
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-    marginHorizontal: 15,
-    marginVertical: 10,
     color: textColor,
+    marginRight: 10,
   },
   subtitle: {
     color: textColor,
