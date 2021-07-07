@@ -17,7 +17,7 @@ namespace AgentThunks {
   export const initializeAgent = createAsyncThunk<boolean, void, AgentThunkApiConfig>(
     'agent/initialize',
     async (_, thunkApi) => {
-      await thunkApi.extra.agent.init()
+      await thunkApi.extra.agent.initialize()
       return true
     }
   )
