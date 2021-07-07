@@ -22,9 +22,9 @@ namespace ConnectionsSelectors {
   /**
    * Selector that retrieves all ConnectionRecords from the store with specified {@link ConnectionState}.
    */
-  export const connectionRecordsByStateSelector = (connectionState: ConnectionState) => (
-    state: PartialConnectionState
-  ) => state.connections.connections.records.filter((record) => record.state === connectionState)
+  export const connectionRecordsByStateSelector =
+    (connectionState: ConnectionState) => (state: PartialConnectionState) =>
+      state.connections.connections.records.filter((record) => record.state === connectionState)
 
   /**
    * Selector that retrieves the entire **invitation** store object.
@@ -52,16 +52,15 @@ namespace ConnectionsSelectors {
   /**
    * Selector that fetches the InvitationMessage based on a ConnectionRecord id.
    */
-  export const invitationByConnectionRecordIdSelector = (connectionRecordId: string) => (
-    state: PartialConnectionState
-  ) => {
-    const record = state.connections.connections.records.find((x) => x.id == connectionRecordId)
+  export const invitationByConnectionRecordIdSelector =
+    (connectionRecordId: string) => (state: PartialConnectionState) => {
+      const record = state.connections.connections.records.find((x) => x.id == connectionRecordId)
 
-    if (!record) {
-      return null
+      if (!record) {
+        return null
+      }
+      return record.invitation
     }
-    return record.invitation
-  }
 }
 
 export { ConnectionsSelectors }

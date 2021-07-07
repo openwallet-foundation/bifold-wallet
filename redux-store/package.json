@@ -1,6 +1,6 @@
 {
   "name": "@aries-framework/redux-store",
-  "version": "0.0.0",
+  "version": "0.7.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {

@@ -22,9 +22,9 @@ namespace CredentialsSelectors {
   /**
    * Selector that retrieves all CredentialRecords from the store by specified credential state.
    */
-  export const credentialsRecordsByStateSelector = (credentialState: CredentialState) => (
-    state: PartialCredentialState
-  ) => state.credentials.credentials.records.filter((record) => record.state === credentialState)
+  export const credentialsRecordsByStateSelector =
+    (credentialState: CredentialState) => (state: PartialCredentialState) =>
+      state.credentials.credentials.records.filter((record) => record.state === credentialState)
 
   /**
    * Selector that fetches a CredentialRecord by id from the state.

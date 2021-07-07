@@ -35,7 +35,7 @@ const connectionsSlice = createSlice({
   initialState,
   reducers: {
     updateOrAdd: (state, action: PayloadAction<ConnectionRecord>) => {
-      const index = state.connections.records.findIndex(record => record.id == action.payload.id)
+      const index = state.connections.records.findIndex((record) => record.id == action.payload.id)
 
       if (index == -1) {
         // records doesn't exist, add it
