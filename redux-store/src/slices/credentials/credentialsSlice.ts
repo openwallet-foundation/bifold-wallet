@@ -23,7 +23,7 @@ const credentialsSlice = createSlice({
   initialState,
   reducers: {
     updateOrAdd: (state, action: PayloadAction<CredentialRecord>) => {
-      const index = state.credentials.records.findIndex(record => record.id == action.payload.id)
+      const index = state.credentials.records.findIndex((record) => record.id == action.payload.id)
 
       if (index == -1) {
         // records doesn't exist, add it
