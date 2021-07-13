@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { ConnectionInvitationMessage, ConnectionsModule } from 'aries-framework'
+import { ConnectionInvitationMessage, ConnectionRepository, ConnectionsModule } from 'aries-framework'
 import { createAsyncAgentThunk, ClassMethodParameters } from '../../utils'
 
 namespace ConnectionThunks {
@@ -93,6 +93,19 @@ namespace ConnectionThunks {
     'connections/acceptResponse',
     async (connectionId: ClassMethodParameters<typeof ConnectionsModule, 'acceptRequest'>[0], thunkApi) => {
       return thunkApi.extra.agent.connections.acceptResponse(connectionId)
+    }
+  )
+
+  /**
+   * Deletes a connectionRecord in the connectionRepository
+   */
+  export const deleteConnection = createAsyncAgentThunk(
+    'connections/deleteConnection',
+    async (connectionId: string, thunksApi) => {
+      const connectionRepository = thunksApi.extra.agent.injectionContainer.resolve(ConnectionRepository)
+      const connectionRecord = await connectionRepository.getById(connectionId)
+      await connectionRepository.delete(connectionRecord)
+      return connectionRecord
     }
   )
 }
