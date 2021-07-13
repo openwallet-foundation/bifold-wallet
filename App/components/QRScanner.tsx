@@ -3,6 +3,8 @@ import { View, StyleSheet } from 'react-native'
 
 import { RNCamera } from 'react-native-camera'
 
+import { mainColor } from '../globalStyles'
+
 interface Props {
   handleCodeScan: (event: any) => Promise<void>
 }
@@ -28,9 +30,10 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
             setActive(false)
             handleCodeScan(e)
           }}
-        />
+        >
+          <View style={styles.viewFinder} />
+        </RNCamera>
       )}
-      <View style={styles.viewFinder} />
     </View>
   )
 }
@@ -42,19 +45,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     height: '100%',
     width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   viewFinder: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginLeft: -125,
-    marginTop: -125,
-    width: 250,
-    height: 250,
+    height: 200,
+    width: 200,
+    padding: 100,
     backgroundColor: 'rgba(255,255,255,0.3)',
     borderRadius: 30,
     borderWidth: 2,
-    borderColor: '#35823f',
-    borderStyle: 'dashed',
+    borderColor: mainColor,
   },
 })

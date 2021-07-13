@@ -11,9 +11,10 @@ interface Props {
   message: string
   backgroundColor: string
   visible: boolean
+  continueButton?: true
 }
 
-const Message: React.FC<Props> = ({ icon, message, backgroundColor, visible }) => {
+const Message: React.FC<Props> = ({ icon, message, backgroundColor, visible, continueButton }) => {
   return (
     <Modal visible={visible} animationType="fade">
       <View style={[styles.container, { backgroundColor }]}>
@@ -21,7 +22,7 @@ const Message: React.FC<Props> = ({ icon, message, backgroundColor, visible }) =
           <Icon name={icon} color={'white'} size={160} />
           <Text style={styles.message}>{message}</Text>
         </View>
-        <NAButton title="Continue" />
+        {continueButton && <NAButton title="Continue" />}
       </View>
     </Modal>
   )

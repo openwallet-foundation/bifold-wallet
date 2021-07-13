@@ -7,6 +7,8 @@ import { decodeInvitationFromUrl } from 'aries-framework'
 
 import { Message, QRScanner } from 'components'
 
+import { shadow } from '../globalStyles'
+
 interface Props {
   navigation: any
 }
@@ -17,8 +19,9 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   const [connection, setConnection] = useState()
   const [credential, setCredential] = useState<any>()
 
-  const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [inProgressModalVisible, setInProgressModalVisible] = useState(false)
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
+  const [failureModalVisible, setFailureModalVisible] = useState(false)
 
   const handleCredentialStateChange = async (event: any) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
@@ -53,19 +56,25 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   }
 
   const handleCodeScan = async (event: any) => {
+    setInProgressModalVisible(true)
     console.log('Scanned QR Code')
     console.log('BARCODE: ', event)
+    try {
+      const decodedInvitation = await decodeInvitationFromUrl(event.data)
 
-    const decodedInvitation = await decodeInvitationFromUrl(event.data)
+      console.log('New Invitation:', decodedInvitation)
+      console.log('AGENT_CONTEXT', agentContext)
 
-    console.log('New Invitation:', decodedInvitation)
-    console.log('AGENT_CONTEXT', agentContext)
-
-    const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
-      autoAcceptConnection: true,
-    })
-
-    console.log('New Connection Record', connectionRecord)
+      const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
+        autoAcceptConnection: true,
+      })
+      console.log('New Connection Record', connectionRecord)
+      setInProgressModalVisible(false)
+    } catch {
+      setFailureModalVisible(true)
+    } finally {
+      setSuccessModalVisible(true)
+    }
   }
 
   useEffect(() => {
@@ -81,13 +90,21 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   return (
     <View>
       <QRScanner handleCodeScan={handleCodeScan} />
+      <Message visible={inProgressModalVisible} message="Pending Issuance" icon="alarm" backgroundColor="#4a4a4a" />
       <Message
         visible={successModalVisible}
         message="Credential Issued"
         icon="check-circle"
-        backgroundColor="#1dc249"
+        backgroundColor={shadow}
+        continueButton
       />
-      <Message visible={inProgressModalVisible} message="Pending Issuance" icon="alarm" backgroundColor="#4a4a4a" />
+      <Message
+        visible={failureModalVisible}
+        message="Issuance Failed. Please try again."
+        icon="cancel"
+        backgroundColor="#de3333"
+        continueButton
+      />
     </View>
   )
 }

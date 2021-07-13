@@ -8,14 +8,14 @@ import { shadow } from '../globalStyles'
 
 interface Props {
   title: string
-  content: string
+  content: string | React.ReactNode
 }
 
 const ModularScrollView: React.FC<Props> = ({ title, content }) => {
   return (
     <ScrollView style={styles.container}>
       <Title>{title}</Title>
-      <Text style={styles.content}>{content}</Text>
+      {typeof content === 'string' ? <Text style={styles.content}>{content}</Text> : content}
     </ScrollView>
   )
 }
@@ -24,7 +24,7 @@ export default ModularScrollView
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: shadow,
     height: 250,
     width: '90%',

@@ -1,31 +1,42 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import { useNavigation } from '@react-navigation/native'
+import { View, StyleSheet } from 'react-native'
 
 import Text from './Text'
 
-import { textColor } from '../globalStyles'
+import { shadow } from '../globalStyles'
 
 interface Props {
   contact: any
 }
 
 const ContactListItem: React.FC<Props> = ({ contact }) => {
-  const navigation = useNavigation()
+  const date = JSON.stringify(contact.createdAt)
 
   return (
-    <TouchableOpacity
-      key={contact.contact_id}
-      onPress={() => navigation.navigate('ContactDetails', { contact })}
-      style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between' }}
-    >
-      <Text style={{ fontSize: 20 }}>{contact.alias ? contact.alias : contact.invitation.label}</Text>
-      <Icon name="chevron-right" size={30} style={{ bottom: 2 }} color={textColor} />
-    </TouchableOpacity>
+    <View key={contact.contact_id} style={styles.container}>
+      <Text style={styles.alias}>{contact.alias ? contact.alias : contact.invitation.label}</Text>
+      <Text>{contact.did}</Text>
+      <Text style={styles.date}>{`${Number(date.slice(6, 8))}/${Number(date.slice(9, 11))}/${date.slice(1, 5)}`}</Text>
+    </View>
   )
 }
 
 export default ContactListItem
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    marginHorizontal: 15,
+    padding: 10,
+    borderRadius: 5,
+    justifyContent: 'space-between',
+    backgroundColor: shadow,
+  },
+  alias: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  date: {
+    textAlign: 'right',
+  },
+})
