@@ -1,10 +1,10 @@
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 
-import Title from './Title'
-import Text from './Text'
+import Title from '../texts/Title'
+import Text from '../texts/Text'
 
-import { shadow } from '../globalStyles'
+import { shadow } from '../../globalStyles'
 
 interface Props {
   title: string

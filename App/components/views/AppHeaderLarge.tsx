@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, View, StyleSheet } from 'react-native'
 
-import Images from '../../assets/images'
+import Images from '../../../assets/images'
 
 interface Props {}
 

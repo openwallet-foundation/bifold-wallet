@@ -2,9 +2,9 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Text from './Text'
+import Text from '../texts/Text'
 
-import { mainColor } from '../globalStyles'
+import { mainColor } from '../../globalStyles'
 
 interface Props {
   title: string

@@ -1,29 +1,29 @@
-import AppHeader from './AppHeader'
-import AppHeaderLarge from './AppHeaderLarge'
+import AppHeader from './views/AppHeader'
+import AppHeaderLarge from './views/AppHeaderLarge'
 
-import CheckBoxRow from './CheckBoxRow'
+import CheckBoxRow from './inputs/CheckBoxRow'
 
-import ContactListItem from './ContactListItem'
-import CredentialListItem from './CredentialListItem'
+import ContactListItem from './listItems/ContactListItem'
+import CredentialListItem from './listItems/CredentialListItem'
 
-import Label from './Label'
+import Label from './texts/Label'
 
 import LoadingOverlay from './modals/LoadingOverlay'
 import Message from './modals/Message'
-import ModularScrollView from './ModularScrollView'
+import ModularScrollView from './views/ModularScrollView'
 
-import PAButton from './PAButton'
-import NAButton from './NAButton'
+import PAButton from './buttons/PAButton'
+import NAButton from './buttons/NAButton'
 
-import NotificationListItem from './NotificationListItem'
+import NotificationListItem from './listItems/NotificationListItem'
 
-import QRScanner from './QRScanner'
+import QRScanner from './inputs/QRScanner'
 
-import SafeAreaScrollView from './SafeAreaScrollView'
+import SafeAreaScrollView from './views/SafeAreaScrollView'
 
-import TextInput from './TextInput'
-import Text from './Text'
-import Title from './Title'
+import TextInput from './inputs/TextInput'
+import Text from './texts/Text'
+import Title from './texts/Title'
 
 export {
   AppHeader,

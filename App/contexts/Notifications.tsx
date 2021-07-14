@@ -4,8 +4,6 @@ import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import Images from '../../assets/images'
 import AppStyles from '../../assets/styles'
 
-import { useHistory } from 'react-router-native'
-
 const NotificationsContext = React.createContext({})
 
 interface INotification {
@@ -16,8 +14,6 @@ interface INotification {
 }
 
 function Notification(props: INotification) {
-  const history = useHistory()
-
   const notifications = useContext<any>(NotificationsContext)
 
   return (
@@ -26,7 +22,6 @@ function Notification(props: INotification) {
         <TouchableOpacity
           onPress={() => {
             notifications.setVisible(false)
-            history.push(props.path)
           }}
         >
           {props.title ? (

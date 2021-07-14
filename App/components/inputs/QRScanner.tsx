@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import { RNCamera } from 'react-native-camera'
 
-import { mainColor } from '../globalStyles'
+import { mainColor } from '../../globalStyles'
 
 interface Props {
   handleCodeScan: (event: any) => Promise<void>
@@ -11,6 +11,12 @@ interface Props {
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
   const [active, setActive] = useState(true)
+
+  useEffect(() => {
+    if (!active) {
+      setTimeout(() => setActive(true), 1000)
+    }
+  }, [active])
 
   return (
     <View style={styles.camera}>

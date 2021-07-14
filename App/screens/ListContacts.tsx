@@ -47,7 +47,7 @@ const ListContacts: React.FC<Props> = ({ navigation }) => {
     <FlatList
       data={contacts}
       renderItem={({ item }) => <ContactListItem contact={item} />}
-      keyExtractor={(item: any) => item.contact_id}
+      keyExtractor={(item: any) => item.did}
       style={{ backgroundColor }}
       ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>None yet!</Text>}
       refreshControl={<RefreshControl tintColor={textColor} onRefresh={getConnections} refreshing={refreshing} />}

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Modal } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import NAButton from '../NAButton'
+import NAButton from '../buttons/NAButton'
 
 import { textColor } from '../../globalStyles'
 
@@ -12,9 +12,10 @@ interface Props {
   backgroundColor: string
   visible: boolean
   continueButton?: true
+  onPress?: () => void
 }
 
-const Message: React.FC<Props> = ({ icon, message, backgroundColor, visible, continueButton }) => {
+const Message: React.FC<Props> = ({ icon, message, backgroundColor, visible, continueButton, onPress }) => {
   return (
     <Modal visible={visible} animationType="fade">
       <View style={[styles.container, { backgroundColor }]}>
@@ -22,7 +23,7 @@ const Message: React.FC<Props> = ({ icon, message, backgroundColor, visible, con
           <Icon name={icon} color={'white'} size={160} />
           <Text style={styles.message}>{message}</Text>
         </View>
-        {continueButton && <NAButton title="Continue" />}
+        {continueButton && <NAButton title="Continue" onPress={onPress} />}
       </View>
     </Modal>
   )

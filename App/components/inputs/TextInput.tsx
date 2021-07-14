@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput as TI } from 'react-native'
 
-import { mainColor, textColor, shadow } from '../globalStyles'
+import { mainColor, textColor, shadow } from '../../globalStyles'
 
 interface Props {
   label: string

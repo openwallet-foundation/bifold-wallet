@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
-import { backgroundColor } from '../globalStyles'
+import { backgroundColor } from '../../globalStyles'
 
 interface Props {
   children: React.ReactNode

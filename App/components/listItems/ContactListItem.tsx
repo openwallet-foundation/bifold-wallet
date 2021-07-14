@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import Text from './Text'
+import Text from '../texts/Text'
+import Title from '../texts/Title'
 
-import { shadow } from '../globalStyles'
+import { shadow } from '../../globalStyles'
 
 interface Props {
   contact: any
@@ -14,7 +15,7 @@ const ContactListItem: React.FC<Props> = ({ contact }) => {
 
   return (
     <View key={contact.contact_id} style={styles.container}>
-      <Text style={styles.alias}>{contact.alias ? contact.alias : contact.invitation.label}</Text>
+      <Title>{contact.alias ? contact.alias : contact.invitation.label}</Title>
       <Text>{contact.did}</Text>
       <Text style={styles.date}>{`${Number(date.slice(6, 8))}/${Number(date.slice(9, 11))}/${date.slice(1, 5)}`}</Text>
     </View>
@@ -29,12 +30,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     padding: 10,
     borderRadius: 5,
-    justifyContent: 'space-between',
     backgroundColor: shadow,
-  },
-  alias: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   date: {
     textAlign: 'right',
