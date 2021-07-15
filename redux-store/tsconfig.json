@@ -2,13 +2,14 @@
   "compilerOptions": {
     "target": "ES2017",
     "module": "commonjs",
-    "lib": ["ESNext.BigInt"],
+    "lib": ["ESNext.BigInt", "ESNext"],
     "declaration": true,
     "sourceMap": true,
     "outDir": "./build",
     "strict": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
   "include": ["./src"]
 }
