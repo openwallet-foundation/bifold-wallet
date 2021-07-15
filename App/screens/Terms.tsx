@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SafeAreaScrollView, PAButton, AppHeaderLarge, ModularScrollView, CheckBoxRow } from 'components'
+import { SafeAreaScrollView, Button, AppHeaderLarge, ModularView, CheckBoxRow } from 'components'
 
 interface Props {
   navigation: any
@@ -16,9 +16,9 @@ const Terms: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaScrollView>
       <AppHeaderLarge />
-      <ModularScrollView title={mockTitle} content={mockMessage} />
+      <ModularView title={mockTitle} content={mockMessage} />
       <CheckBoxRow title="I Agree to the Terms of Service" checked={checked} onPress={() => setChecked(!checked)} />
-      <PAButton title="Submit" disabled={!checked} onPress={() => navigation.navigate('Create 6-Digit Pin')} />
+      <Button title="Submit" disabled={!checked} onPress={() => navigation.navigate('Create 6-Digit Pin')} />
     </SafeAreaScrollView>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Modal } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import NAButton from '../buttons/NAButton'
+import Button from '../buttons/Button'
 
 import { textColor } from '../../globalStyles'
 
@@ -23,7 +23,7 @@ const Message: React.FC<Props> = ({ icon, message, backgroundColor, visible, con
           <Icon name={icon} color={'white'} size={160} />
           <Text style={styles.message}>{message}</Text>
         </View>
-        {continueButton && <NAButton title="Continue" onPress={onPress} />}
+        {continueButton && <Button title="Continue" neutral onPress={onPress} />}
       </View>
     </Modal>
   )

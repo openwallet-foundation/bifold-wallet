@@ -14,7 +14,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
 
   useEffect(() => {
     if (!active) {
-      setTimeout(() => setActive(true), 1000)
+      setTimeout(() => setActive(true), 5000)
     }
   }, [active])
 

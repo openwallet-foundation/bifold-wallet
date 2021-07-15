@@ -10,10 +10,9 @@ import Label from './texts/Label'
 
 import LoadingOverlay from './modals/LoadingOverlay'
 import Message from './modals/Message'
-import ModularScrollView from './views/ModularScrollView'
+import ModularView from './views/ModularView'
 
-import PAButton from './buttons/PAButton'
-import NAButton from './buttons/NAButton'
+import Button from './buttons/Button'
 
 import NotificationListItem from './listItems/NotificationListItem'
 
@@ -34,9 +33,8 @@ export {
   Label,
   LoadingOverlay,
   Message,
-  ModularScrollView,
-  PAButton,
-  NAButton,
+  ModularView,
+  Button,
   NotificationListItem,
   QRScanner,
   SafeAreaScrollView,

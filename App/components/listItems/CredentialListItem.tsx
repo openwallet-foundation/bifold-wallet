@@ -11,7 +11,7 @@ interface Props {
 
 const CredentialListItem: React.FC<Props> = ({ credential }) => {
   return (
-    <View key={credential.id} style={styles.container}>
+    <View style={styles.container}>
       <Title>{credential.alias || credential.invitation.label}</Title>
     </View>
   )

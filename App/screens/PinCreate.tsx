@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
-import { PAButton, TextInput, SafeAreaScrollView } from 'components'
+import { Button, TextInput, SafeAreaScrollView } from 'components'
 
 interface IPinCreate {
   setupScreens: number
@@ -63,7 +63,7 @@ function PinCreate(props: IPinCreate) {
           }
         }}
       />
-      <PAButton
+      <Button
         title="Create"
         onPress={() => {
           Keyboard.dismiss()

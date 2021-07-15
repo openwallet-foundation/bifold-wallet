@@ -1,27 +1,25 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import { FlatList } from 'react-native'
 
-import { PAButton, SafeAreaScrollView, AppHeaderLarge, ModularScrollView, NotificationListItem } from 'components'
-
-import { ErrorsContext } from '../contexts/Errors'
-import { NotificationsContext } from '../contexts/Notifications'
+import { Button, SafeAreaScrollView, AppHeaderLarge, ModularView, NotificationListItem } from 'components'
 
 interface Props {
   navigation: any
 }
 
+const notifications = [
+  { title: 'Happy Traveler', subtitle: 'Credential Offer' },
+  { title: 'Indicio.tech', subtitle: 'Credential Offer' },
+  { title: 'DMV', subtitle: 'Credential Offer' },
+]
+
 const Home: React.FC<Props> = ({ navigation }) => {
-  const errors = useContext(ErrorsContext)
-  const notifications = useContext<any>(NotificationsContext)
-
-  console.log('NOTIFICATIONS', notifications)
-
   return (
     <SafeAreaScrollView>
       <AppHeaderLarge />
-      <PAButton title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
-      <ModularScrollView
+      <Button title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
+      <ModularView
         title="Notifications"
         content={
           notifications.length ? (

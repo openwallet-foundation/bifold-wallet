@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
-import { TextInput, SafeAreaScrollView, PAButton } from 'components'
+import { TextInput, SafeAreaScrollView, Button } from 'components'
 
 interface Props {
   route: any
@@ -37,9 +37,10 @@ const PinEnter: React.FC<Props> = ({ route }) => {
           }
         }}
       />
-      <PAButton
+      <Button
         title="Submit"
         onPress={() => {
+          console.log('AAAAAAAAAAAAAAAAAAAAA')
           Keyboard.dismiss()
           checkPin(pin)
         }}

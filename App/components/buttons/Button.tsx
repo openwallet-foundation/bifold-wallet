@@ -7,19 +7,25 @@ import { mainColor, shadow } from '../../globalStyles'
 
 interface Props {
   title: string
-  onPress: () => void
+  onPress?: () => void
   disabled?: boolean
+  neutral?: true
+  negative?: true
 }
 
-const PAButton: React.FC<Props> = ({ title, disabled, ...otherButtonProps }) => {
+const Button: React.FC<Props> = ({ title, onPress, disabled, neutral, negative }) => {
   return (
-    <TouchableOpacity style={[styles.button, disabled && styles.disabled]} disabled={disabled} {...otherButtonProps}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.button, disabled && styles.disabled, neutral && styles.neutral, negative && styles.negative]}
+      disabled={disabled}
+    >
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   )
 }
 
-export default PAButton
+export default Button
 
 const styles = StyleSheet.create({
   button: {
@@ -32,6 +38,12 @@ const styles = StyleSheet.create({
   },
   disabled: {
     backgroundColor: shadow,
+  },
+  neutral: {
+    backgroundColor: shadow,
+  },
+  negative: {
+    backgroundColor: '#de3333',
   },
   text: {
     fontSize: 16,

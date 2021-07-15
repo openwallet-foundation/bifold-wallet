@@ -11,6 +11,9 @@ interface Props {
   navigation: any
 }
 
+// temporary mock to be removed after notifications in place
+const mockCreds = [{ alias: 'Happy Traveler' }]
+
 const ListCredentials: React.FC<Props> = ({ navigation }) => {
   //Reference to the agent context
   const agentContext = useContext<any>(AgentContext)
@@ -64,7 +67,7 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
 
   return (
     <FlatList
-      data={credentials}
+      data={mockCreds}
       renderItem={({ item }) => <CredentialListItem credential={item} />}
       style={{ backgroundColor }}
       keyExtractor={(item: any) => item.credential_id}
