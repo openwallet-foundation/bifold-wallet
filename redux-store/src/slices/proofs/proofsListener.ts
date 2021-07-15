@@ -1,6 +1,5 @@
 import { EnhancedStore } from '@reduxjs/toolkit'
-import { ProofEventTypes, ProofStateChangedEvent } from 'aries-framework'
-import { Agent } from 'aries-framework'
+import { ProofEventTypes, ProofStateChangedEvent, Agent } from '@aries-framework/core'
 import { proofsSlice } from './proofsSlice'
 
 /**

@@ -1,6 +1,5 @@
 import { EnhancedStore } from '@reduxjs/toolkit'
-import { ConnectionStateChangedEvent } from 'aries-framework'
-import { Agent, ConnectionEventTypes } from 'aries-framework'
+import { Agent, ConnectionEventTypes, ConnectionStateChangedEvent } from '@aries-framework/core'
 import { connectionsSlice } from './connectionsSlice'
 
 /**

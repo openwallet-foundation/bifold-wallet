@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { ProofRecord } from 'aries-framework'
+import { ProofRecord } from '@aries-framework/core'
 
 import { ProofsThunks } from './ProofsThunks'
 

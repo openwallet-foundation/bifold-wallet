@@ -1,4 +1,4 @@
-import { ProofState } from 'aries-framework'
+import { ProofState } from '@aries-framework/core'
 import { ProofsState } from './proofsSlice'
 
 interface PartialProofsState {

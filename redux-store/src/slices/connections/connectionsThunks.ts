@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { ConnectionInvitationMessage, ConnectionRepository, ConnectionsModule } from 'aries-framework'
+import { ConnectionInvitationMessage, ConnectionRepository, ConnectionsModule } from '@aries-framework/core'
 import { createAsyncAgentThunk, ClassMethodParameters } from '../../utils'
 
 namespace ConnectionThunks {

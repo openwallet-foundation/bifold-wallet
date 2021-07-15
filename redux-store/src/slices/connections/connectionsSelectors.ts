@@ -1,4 +1,4 @@
-import { ConnectionState } from 'aries-framework'
+import { ConnectionState } from '@aries-framework/core'
 import { ConnectionsState } from './connectionsSlice'
 
 interface PartialConnectionState {

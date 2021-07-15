@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { CredentialRecord } from 'aries-framework'
+import { CredentialRecord } from '@aries-framework/core'
 import { CredentialsThunks } from './CredentialsThunks'
 
 interface CredentialsState {

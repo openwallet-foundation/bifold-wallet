@@ -1,4 +1,4 @@
-import { Agent } from 'aries-framework'
+import { Agent } from '@aries-framework/core'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 

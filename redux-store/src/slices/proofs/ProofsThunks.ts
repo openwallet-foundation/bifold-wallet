@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-import { RequestedCredentials, ProofsModule, RetrievedCredentials } from 'aries-framework'
+import { RequestedCredentials, ProofsModule, RetrievedCredentials } from '@aries-framework/core'
 import { createAsyncAgentThunk, ClassMethodParameters } from '../../utils'
 
 /**

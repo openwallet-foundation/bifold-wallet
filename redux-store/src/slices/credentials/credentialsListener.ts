@@ -1,6 +1,6 @@
 import { EnhancedStore } from '@reduxjs/toolkit'
-import { CredentialEventTypes, CredentialStateChangedEvent } from 'aries-framework'
-import { Agent } from 'aries-framework'
+import { CredentialEventTypes, CredentialStateChangedEvent } from '@aries-framework/core'
+import { Agent } from '@aries-framework/core'
 import { credentialsSlice } from './credentialsSlice'
 
 /**

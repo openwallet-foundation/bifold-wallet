@@ -1,4 +1,4 @@
-import { CredentialState } from 'aries-framework'
+import { CredentialState } from '@aries-framework/core'
 import { CredentialsState } from './credentialsSlice'
 
 interface PartialCredentialState {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { ConnectionRecord, ConnectionInvitationMessage } from 'aries-framework'
+import { ConnectionRecord, ConnectionInvitationMessage } from '@aries-framework/core'
 import { ConnectionThunks } from './ConnectionsThunks'
 
 interface ConnectionsState {
