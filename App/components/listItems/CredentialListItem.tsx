@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 
 import Title from '../texts/Title'
 
-import { shadow } from '../../globalStyles'
+import { shadow, borderRadius } from '../../globalStyles'
 
 interface Props {
   credential: any
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginHorizontal: 15,
     padding: 10,
-    borderRadius: 5,
+    borderRadius,
     backgroundColor: shadow,
   },
 })

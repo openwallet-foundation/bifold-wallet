@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native'
 import Title from '../texts/Title'
 import Text from '../texts/Text'
 
-import { shadow } from '../../globalStyles'
+import { shadow, borderRadius } from '../../globalStyles'
 
 interface Props {
   title: string
@@ -24,7 +24,7 @@ export default ModularView
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 5,
+    borderRadius,
     backgroundColor: shadow,
     width: '90%',
     margin: 20,

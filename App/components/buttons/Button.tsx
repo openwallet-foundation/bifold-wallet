@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native'
 
 import Text from '../texts/Text'
 
-import { mainColor, shadow } from '../../globalStyles'
+import { mainColor, shadow, borderRadius } from '../../globalStyles'
 
 interface Props {
   title: string
@@ -30,7 +30,7 @@ export default Button
 const styles = StyleSheet.create({
   button: {
     width: '90%',
-    borderRadius: 5,
+    borderRadius,
     backgroundColor: mainColor,
     alignItems: 'center',
     padding: 10,

@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react'
 import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import Images from '../../assets/images'
-import AppStyles from '../../assets/styles'
 
 const NotificationsContext = React.createContext({})
 

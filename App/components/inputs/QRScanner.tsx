@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewFinder: {
-    height: 200,
-    width: 200,
+    height: 250,
+    width: 250,
     padding: 100,
     backgroundColor: 'rgba(255,255,255,0.3)',
     borderRadius: 30,

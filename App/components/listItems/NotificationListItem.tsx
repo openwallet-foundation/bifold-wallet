@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Text from '../texts/Text'
 
-import { textColor, backgroundColor } from '../../globalStyles'
+import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
 
 interface Props {
   notification: any
@@ -37,8 +37,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 5,
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingLeft: 10,
+    borderRadius,
     backgroundColor,
   },
   title: {
