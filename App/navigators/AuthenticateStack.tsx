@@ -18,7 +18,7 @@ const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
   const [firstLogin, setFirstLogin] = useState(true)
 
   const checkFirstLogin = async () => {
-    await Keychain.resetGenericPassword({ service: 'passcode' })
+    // await Keychain.resetGenericPassword({ service: 'passcode' })
     const creds = await Keychain.getGenericPassword({ service: 'passcode' })
     if (creds) {
       setFirstLogin(false)
