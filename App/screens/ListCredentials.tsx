@@ -12,9 +12,6 @@ interface Props {
   navigation: any
 }
 
-// temporary mock to be removed after notifications in place
-const mockCreds = [{ alias: 'Happy Traveler' }]
-
 const ListCredentials: React.FC<Props> = ({ navigation }) => {
   const agentContext = useContext<any>(AgentContext)
 
@@ -23,7 +20,7 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
 
   const getCredentials = async () => {
     const credentials = await agentContext.agent.credentials.getAll()
-    console.log(credentials)
+    console.log('CREDSSSSSSS', credentials)
 
     const credentialsForDisplay = []
 
@@ -52,21 +49,24 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
   //Credential Event Callback
   const handleCredentialStateChange = async (event: any) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
-
     getCredentials()
   }
 
   //Register Event Listener
   useEffect(() => {
     if (!agentContext.loading) {
-      agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)
       agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
     }
-  }, [agentContext.loading])
+    return () =>
+      agentContext.agent.credentials.events.removeListener(
+        CredentialEventType.StateChanged,
+        handleCredentialStateChange
+      )
+  })
 
   return (
     <FlatList
-      data={mockCreds}
+      data={credentials}
       renderItem={({ item }) => <CredentialListItem credential={item} />}
       style={{ backgroundColor }}
       keyExtractor={(item: any) => item.credential_id}

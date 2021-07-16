@@ -1,9 +1,10 @@
+import '@azure/core-asynciterator-polyfill'
+
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
 //For UUIDv4 within React Native
 import 'react-native-get-random-values'
-import '@azure/core-asynciterator-polyfill'
 
 import { AgentProvider } from './App/contexts/AgentProvider'
 import Errors from './App/contexts/Errors'

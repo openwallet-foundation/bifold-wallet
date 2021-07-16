@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { View } from 'react-native'
 import { CredentialEventType, ConnectionEventType, ConnectionState, CredentialState } from 'aries-framework'
-import '@azure/core-asynciterator-polyfill'
 
 import AgentContext from '../contexts/AgentProvider'
 import { decodeInvitationFromUrl } from 'aries-framework'
