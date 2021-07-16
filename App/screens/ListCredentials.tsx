@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { FlatList, RefreshControl } from 'react-native'
-import { CredentialEventType } from 'aries-framework'
+import { CredentialEventType, CredentialState } from 'aries-framework'
 
 import AgentContext from '../contexts/AgentProvider'
 
@@ -25,7 +25,7 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
     const credentialsForDisplay = []
 
     for (const credential of credentials) {
-      if (credential.state === 'done') {
+      if (credential.state === CredentialState.Done) {
         const credentialToDisplay = {
           ...(await agentContext.agent.credentials.getIndyCredential(credential.credentialId)),
           connectionId: credential.connectionId,

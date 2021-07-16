@@ -36,7 +36,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
   const handleCredentialStateChange = async (event: any) => {
     switch (event.credentialRecord.state) {
       case CredentialState.OfferReceived:
-        setNotifications([...notifications, event.credentialRecord])
+        getNotifications()
       case CredentialState.Done:
         setNotifications(notifications.filter((c: any) => c.id !== event.credentialRecord.id))
     }
@@ -53,7 +53,11 @@ const Home: React.FC<Props> = ({ navigation }) => {
       agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
     }
 
-    return () => agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)
+    return () =>
+      agentContext.agent.credentials.events.removeListener(
+        CredentialEventType.StateChanged,
+        handleCredentialStateChange
+      )
   })
 
   return (
