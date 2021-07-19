@@ -37,7 +37,6 @@
     "react-native-screens": "^3.3.0",
     "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^8.1.0",
-    "react-router-native": "^5.2.0",
     "rn-indy-sdk": "0.1.9",
     "uuid": "^8.1.0"
   },
@@ -50,7 +49,6 @@
     "@types/react": "^16.14.4",
     "@types/react-native": "^0.63.50",
     "@types/react-native-vector-icons": "^6.4.6",
-    "@types/react-router-native": "^5.1.0",
     "@types/react-test-renderer": "^16.9.5",
     "@types/rn-indy-sdk": "npm:@types/indy-sdk@^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
