@@ -22,11 +22,19 @@ const Home: React.FC<Props> = ({ navigation }) => {
 
     for (const credential of credentials) {
       if (credential.state === CredentialState.OfferReceived) {
-        const credentialToDisplay = {
-          ...(await agentContext.agent.credentials.getIndyCredential(credential.credentialId)),
-          connectionId: credential.connectionId,
-          id: credential.id,
+        const previewAttributes = credential.offerMessage.credentialPreview.attributes
+        console.log('PREVIEW ATTRIBUTES', previewAttributes)
+        const attributes: any = {}
+        for (const index in previewAttributes) {
+          attributes[previewAttributes[index].name] = previewAttributes[index].value
         }
+
+        const credentialToDisplay = {
+          attributes,
+          connectionId: credential.credentialRecord.connectionId,
+          id: credential.credentialRecord.id,
+        }
+
         credentialsForDisplay.push(credentialToDisplay)
       }
     }
@@ -34,11 +42,34 @@ const Home: React.FC<Props> = ({ navigation }) => {
   }
 
   const handleCredentialStateChange = async (event: any) => {
+    console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
+
     switch (event.credentialRecord.state) {
       case CredentialState.OfferReceived:
-        getNotifications()
+        const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
+        console.log('PREVIEW ATTRIBUTES', previewAttributes)
+        const attributes: any = {}
+        for (const index in previewAttributes) {
+          attributes[previewAttributes[index].name] = previewAttributes[index].value
+        }
+
+        const credentialToDisplay = {
+          attributes,
+          connectionId: event.credentialRecord.connectionId,
+          id: event.credentialRecord.id,
+        }
+
+        setNotifications([...notifications, credentialToDisplay])
+        console.log('CRED_TO_DISPLAY', credentialToDisplay)
+        break
+      case CredentialState.CredentialReceived:
+        await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
+        break
       case CredentialState.Done:
         setNotifications(notifications.filter((c: any) => c.id !== event.credentialRecord.id))
+        break
+      default:
+        return
     }
   }
 

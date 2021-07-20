@@ -16,48 +16,13 @@ interface Props {
 const Scan: React.FC<Props> = ({ navigation }) => {
   const agentContext = useContext<any>(AgentContext)
 
-  const [connection, setConnection] = useState()
-  const [credential, setCredential] = useState<any>()
-
   const [modalVisible, setModalVisible] = useState<'inProgress' | 'success' | 'failure' | ''>('')
-
-  const handleCredentialStateChange = async (event: any) => {
-    console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
-
-    switch (event.credentialRecord.state) {
-      case CredentialState.OfferReceived:
-        const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
-
-        setConnection(connectionRecord)
-
-        const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
-        console.log('PREVIEW ATTRIBUTES', previewAttributes)
-        const attributes: any = {}
-        for (const index in previewAttributes) {
-          attributes[previewAttributes[index].name] = previewAttributes[index].value
-        }
-
-        const credentialToDisplay = {
-          attributes,
-          connectionId: event.credentialRecord.connectionId,
-          id: event.credentialRecord.id,
-        }
-
-        setCredential(credentialToDisplay)
-        console.log('CRED_TO_DISPLAY', credentialToDisplay)
-
-      case CredentialState.CredentialReceived:
-        await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
-
-      default:
-        return
-    }
-  }
 
   const handleConnectionStateChange = async (event: any) => {
     switch (event.connectionRecord.state) {
       case ConnectionState.Complete:
         setModalVisible('success')
+        break
     }
   }
 
@@ -80,9 +45,8 @@ const Scan: React.FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
-    agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
     return () => {
-      agentContext.agent.credentials.events.removeAllListeners(CredentialEventType.StateChanged)
+      agentContext.agent.credentials.events.removeListener(CredentialEventType.StateChanged)
     }
   }, [])
 
