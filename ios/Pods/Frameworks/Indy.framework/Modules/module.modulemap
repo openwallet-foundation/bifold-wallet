@@ -1,0 +1,11 @@
+framework module Indy {
+  umbrella header "Indy.h"
+
+  export *
+  module * { export * }
+}
+
+module Indy.Swift {
+    header "Indy-Swift.h"
+    requires objc
+}
