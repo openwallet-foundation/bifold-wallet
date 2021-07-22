@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import Title from '../texts/Title'
+import Text from '../texts/Text'
 
 import { shadow, borderRadius } from '../../globalStyles'
 
@@ -12,7 +13,8 @@ interface Props {
 const CredentialListItem: React.FC<Props> = ({ credential }) => {
   return (
     <View style={styles.container}>
-      <Title>{credential.alias || credential.invitation.label}</Title>
+      <Title>{credential.schemaId.split(':')[2]}</Title>
+      <Text>{credential.id}</Text>
     </View>
   )
 }

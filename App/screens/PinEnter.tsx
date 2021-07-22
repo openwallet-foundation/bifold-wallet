@@ -40,7 +40,6 @@ const PinEnter: React.FC<Props> = ({ route }) => {
       <Button
         title="Submit"
         onPress={() => {
-          console.log('AAAAAAAAAAAAAAAAAAAAA')
           Keyboard.dismiss()
           checkPin(pin)
         }}

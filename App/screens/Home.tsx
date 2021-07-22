@@ -17,28 +17,15 @@ const Home: React.FC<Props> = ({ navigation }) => {
 
   const getNotifications = async () => {
     const credentials = await agentContext.agent.credentials.getAll()
+    const credentialsToDisplay: any = []
 
-    const credentialsForDisplay = []
-
-    for (const credential of credentials) {
-      if (credential.state === CredentialState.OfferReceived) {
-        const previewAttributes = credential.offerMessage.credentialPreview.attributes
-        console.log('PREVIEW ATTRIBUTES', previewAttributes)
-        const attributes: any = {}
-        for (const index in previewAttributes) {
-          attributes[previewAttributes[index].name] = previewAttributes[index].value
-        }
-
-        const credentialToDisplay = {
-          attributes,
-          connectionId: credential.credentialRecord.connectionId,
-          id: credential.credentialRecord.id,
-        }
-
-        credentialsForDisplay.push(credentialToDisplay)
+    credentials.forEach((c: any) => {
+      if (c.state !== CredentialState.Done) {
+        credentialsToDisplay.push(c)
       }
-    }
-    setNotifications(credentialsForDisplay)
+    })
+
+    setNotifications(credentialsToDisplay)
   }
 
   const handleCredentialStateChange = async (event: any) => {
@@ -46,21 +33,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
 
     switch (event.credentialRecord.state) {
       case CredentialState.OfferReceived:
-        const previewAttributes = event.credentialRecord.offerMessage.credentialPreview.attributes
-        console.log('PREVIEW ATTRIBUTES', previewAttributes)
-        const attributes: any = {}
-        for (const index in previewAttributes) {
-          attributes[previewAttributes[index].name] = previewAttributes[index].value
-        }
-
-        const credentialToDisplay = {
-          attributes,
-          connectionId: event.credentialRecord.connectionId,
-          id: event.credentialRecord.id,
-        }
-
-        setNotifications([...notifications, credentialToDisplay])
-        console.log('CRED_TO_DISPLAY', credentialToDisplay)
+        setNotifications([...notifications, event.credentialRecord])
         break
       case CredentialState.CredentialReceived:
         await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
@@ -69,7 +42,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
         setNotifications(notifications.filter((c: any) => c.id !== event.credentialRecord.id))
         break
       default:
-        return
+        break
     }
   }
 
@@ -99,7 +72,11 @@ const Home: React.FC<Props> = ({ navigation }) => {
         title="Notifications"
         content={
           notifications.length ? (
-            <FlatList data={notifications} renderItem={({ item }) => <NotificationListItem notification={item} />} />
+            <FlatList
+              data={notifications}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <NotificationListItem notification={item} />}
+            />
           ) : (
             "Here you'll get notified about stuff"
           )

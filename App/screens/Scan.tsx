@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { View } from 'react-native'
-import { CredentialEventType, ConnectionEventType, ConnectionState, CredentialState } from 'aries-framework'
+import { ConnectionEventType, ConnectionState } from 'aries-framework'
 
 import AgentContext from '../contexts/AgentProvider'
 import { decodeInvitationFromUrl } from 'aries-framework'
@@ -23,6 +23,8 @@ const Scan: React.FC<Props> = ({ navigation }) => {
       case ConnectionState.Complete:
         setModalVisible('success')
         break
+      default: 
+        break
     }
   }
 
@@ -44,11 +46,14 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   }
 
   useEffect(() => {
-    agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
-    return () => {
-      agentContext.agent.credentials.events.removeListener(CredentialEventType.StateChanged)
+    if(!agentContext.loading) {
+      agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
     }
-  }, [])
+    
+    return () => {
+      agentContext.agent.credentials.events.removeListener(ConnectionEventType.StateChanged, handleConnectionStateChange)
+    }
+  })
 
   return (
     <View>

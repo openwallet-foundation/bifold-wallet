@@ -15,7 +15,7 @@ const ContactListItem: React.FC<Props> = ({ contact }) => {
 
   return (
     <View key={contact.contact_id} style={styles.container}>
-      <Title>{contact.alias ? contact.alias : contact.invitation.label}</Title>
+      <Title>{contact.alias || contact.invitation.label}</Title>
       <Text>{contact.did}</Text>
       <Text style={styles.date}>{`${Number(date.slice(6, 8))}/${Number(date.slice(9, 11))}/${date.slice(1, 5)}`}</Text>
     </View>

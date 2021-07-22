@@ -19,7 +19,6 @@ const ListContacts: React.FC<Props> = ({ navigation }) => {
 
   const getConnections = async () => {
     const connections = await agentContext.agent.connections.getAll()
-    console.log('CONNECTIONS: ', connections)
     setContacts(connections)
   }
 
@@ -32,7 +31,6 @@ const ListContacts: React.FC<Props> = ({ navigation }) => {
       }
     }
     setContacts(allConnections)
-    //TODO: Update Connections List
   }
 
   useEffect(() => {

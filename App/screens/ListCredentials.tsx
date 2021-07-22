@@ -20,39 +20,32 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
 
   const getCredentials = async () => {
     const credentials = await agentContext.agent.credentials.getAll()
-    console.log('CREDSSSSSSS', credentials)
 
     const credentialsForDisplay = []
 
     for (const credential of credentials) {
       if (credential.state === CredentialState.Done) {
         const credentialToDisplay = {
+          ...credential,
           ...(await agentContext.agent.credentials.getIndyCredential(credential.credentialId)),
-          connectionId: credential.connectionId,
-          id: credential.id,
         }
         credentialsForDisplay.push(credentialToDisplay)
       }
     }
-    console.log('credentialsForDisplay', credentialsForDisplay)
-    //TODO: Filter credentials for display
     setCredentials(credentialsForDisplay)
   }
 
-  //On Component Load Fetch all Connections
   useEffect(() => {
     if (!agentContext.loading) {
       getCredentials()
     }
   }, [agentContext.loading])
 
-  //Credential Event Callback
   const handleCredentialStateChange = async (event: any) => {
     console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
     getCredentials()
   }
 
-  //Register Event Listener
   useEffect(() => {
     if (!agentContext.loading) {
       agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
@@ -69,7 +62,7 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
       data={credentials}
       renderItem={({ item }) => <CredentialListItem credential={item} />}
       style={{ backgroundColor }}
-      keyExtractor={(item: any) => item.credential_id}
+      keyExtractor={(item: any) => item.credentialId}
       ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>None yet!</Text>}
       refreshControl={<RefreshControl tintColor={textColor} onRefresh={getCredentials} refreshing={refreshing} />}
     />
