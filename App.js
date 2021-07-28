@@ -1,5 +1,3 @@
-import '@azure/core-asynciterator-polyfill'
-
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
