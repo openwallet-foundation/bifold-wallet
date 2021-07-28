@@ -2,8 +2,6 @@ import React from 'react'
 
 import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-import { useHistory } from 'react-router-native'
-
 import Images from '../../../assets/images'
 import AppStyles from '../../../assets/styles'
 
@@ -12,15 +10,9 @@ interface AppHeaderProps {
 }
 
 function AppHeader(props: AppHeaderProps) {
-  const history = useHistory()
-
   return (
     <View style={styles.header}>
-      <TouchableOpacity
-        onPress={() => {
-          history.push('/home')
-        }}
-      >
+      <TouchableOpacity onPress={() => {}}>
         <View style={styles.headerView}>
           {props.headerText ? (
             <>

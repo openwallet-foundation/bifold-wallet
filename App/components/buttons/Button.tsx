@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native'
 
 import Text from '../texts/Text'
 
-import { mainColor, borderRadius, neutralGray } from '../../globalStyles'
+import { mainColor, borderRadius, shadow } from '../../globalStyles'
 
 interface Props {
   title: string
@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   disabled: {
-    backgroundColor: neutralGray,
+    backgroundColor: shadow,
   },
   neutral: {
-    backgroundColor: neutralGray,
+    backgroundColor: shadow,
   },
   negative: {
     backgroundColor: '#de3333',

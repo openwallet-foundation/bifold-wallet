@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import AppStyles from '../../assets/styles'
 
-import { useHistory } from 'react-router-native'
-
 const ErrorsContext = React.createContext({})
 
 interface IErrorDialog {
@@ -13,8 +11,6 @@ interface IErrorDialog {
 }
 
 function ErrorDialog(props: IErrorDialog) {
-  const history = useHistory()
-
   const errors = useContext<any>(ErrorsContext)
 
   return (
@@ -27,7 +23,6 @@ function ErrorDialog(props: IErrorDialog) {
             style={[AppStyles.button, AppStyles.backgroundSecondary, { marginTop: 30 }]}
             onPress={() => {
               errors.setVisible(false)
-              history.push(props.path)
             }}
           >
             <Text style={[AppStyles.h2, AppStyles.textWhite]}>Okay</Text>
