@@ -11,7 +11,7 @@ interface Props {
 const PinEnter: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
 
-  const checkPin = async (pin: number) => {
+  const checkPin = async (pin: string) => {
     const { password } = await Keychain.getGenericPassword({ service: 'passcode' })
     if (JSON.stringify(pin) === password) {
       route.params.setAuthenticated(true)

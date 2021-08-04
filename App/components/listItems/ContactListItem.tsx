@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import { DateTime } from 'luxon'
 
 import Text from '../texts/Text'
 import Title from '../texts/Title'
@@ -11,13 +12,11 @@ interface Props {
 }
 
 const ContactListItem: React.FC<Props> = ({ contact }) => {
-  const date = JSON.stringify(contact.createdAt)
-
   return (
     <View key={contact.contact_id} style={styles.container}>
       <Title>{contact.alias || contact.invitation.label}</Title>
       <Text>{contact.did}</Text>
-      <Text style={styles.date}>{`${Number(date.slice(6, 8))}/${Number(date.slice(9, 11))}/${date.slice(1, 5)}`}</Text>
+      <Text style={styles.date}>{DateTime.fromJSDate(contact.createdAt).toFormat('LLL d, yyyy')}</Text>
     </View>
   )
 }

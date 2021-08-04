@@ -4,7 +4,7 @@ import { CredentialEventType, CredentialState } from 'aries-framework'
 
 import AgentContext from '../contexts/AgentProvider'
 
-import { Button, SafeAreaScrollView, AppHeaderLarge, ModularView, NotificationListItem } from 'components'
+import { Button, SafeAreaScrollView, AppHeaderLarge, ModularView, NotificationListItem, Text } from 'components'
 
 interface Props {
   navigation: any
@@ -20,7 +20,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
     const credentialsToDisplay: any = []
 
     credentials.forEach((c: any) => {
-      if (c.state !== CredentialState.Done) {
+      if (c.state === CredentialState.OfferReceived) {
         credentialsToDisplay.push(c)
       }
     })
@@ -71,15 +71,12 @@ const Home: React.FC<Props> = ({ navigation }) => {
       <ModularView
         title="Notifications"
         content={
-          notifications.length ? (
-            <FlatList
-              data={notifications}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => <NotificationListItem notification={item} />}
-            />
-          ) : (
-            "Here you'll get notified about stuff"
-          )
+          <FlatList
+            data={notifications}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <NotificationListItem notification={item} />}
+            ListEmptyComponent={<Text>No New Updates</Text>}
+          />
         }
       />
     </SafeAreaScrollView>

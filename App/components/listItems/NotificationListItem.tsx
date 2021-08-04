@@ -15,21 +15,12 @@ interface Props {
 const NotificationListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  const decideTitle = () => {
-    switch(notification.type) {
-      case 'CredentialRecord':
-        return 'Credential Offer'
-      default:
-        return ''
-    }
-  }
-
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate('Credential Offer', { notification })}
     >
-      <Text style={styles.title}>{decideTitle()}</Text>
+      <Text style={styles.title}>{notification.type || 'Notification'}</Text>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>
   )

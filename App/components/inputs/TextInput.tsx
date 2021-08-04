@@ -5,8 +5,13 @@ import { mainColor, textColor, shadow, borderRadius } from '../../globalStyles'
 
 interface Props {
   label: string
-  maxLength?: number
   placeholder: string
+  maxLength?: number
+  keyboardType?: 'numeric'
+  autoFocus?: boolean
+  secureTextEntry?: boolean
+  value: string
+  onChangeText: any
 }
 
 const TextInput: React.FC<Props> = ({ label, maxLength, placeholder, ...textInputProps }) => {

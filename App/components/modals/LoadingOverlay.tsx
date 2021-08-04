@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Modal } from 'react-native'
 
-import { AppHeader } from 'components'
-
 interface Props {
   visible: boolean
 }
@@ -11,7 +9,6 @@ const LoadingOverlay: React.FC<Props> = ({ visible }) => {
   return (
     <Modal visible={visible} animationType="fade" transparent>
       <View style={styles.container}>
-        <AppHeader />
         <Text style={styles.text}>Loading...</Text>
       </View>
     </Modal>

@@ -7,6 +7,7 @@ import { Button, TextInput, SafeAreaScrollView } from 'components'
 interface IPinCreate {
   setupScreens: number
   navigation: any
+  route: any
 }
 
 let textInput: any
@@ -33,7 +34,7 @@ function PinCreate(props: IPinCreate) {
       Alert.alert('Pins entered do not match')
     } else {
       passcodeCreate(x)
-      props.navigation.navigate('Enter Pin')
+      props.route.params.setAuthenticated(true)
     }
   }
 

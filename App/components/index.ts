@@ -1,4 +1,3 @@
-import AppHeader from './views/AppHeader'
 import AppHeaderLarge from './views/AppHeaderLarge'
 
 import CheckBoxRow from './inputs/CheckBoxRow'
@@ -25,7 +24,6 @@ import Text from './texts/Text'
 import Title from './texts/Title'
 
 export {
-  AppHeader,
   AppHeaderLarge,
   CheckBoxRow,
   ContactListItem,

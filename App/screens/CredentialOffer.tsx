@@ -3,7 +3,7 @@ import { StyleSheet, FlatList } from 'react-native'
 
 import AgentContext from '../contexts/AgentProvider'
 
-import { SafeAreaScrollView, Button, Title, Text, ModularView, Label } from 'components'
+import { SafeAreaScrollView, Button, ModularView, Label } from 'components'
 
 interface Props {
   navigation: any
@@ -27,7 +27,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaScrollView>
       <ModularView
-        title="Requested Information"
+        title="Offered Information"
         content={
           <FlatList
             data={notification.credentialAttributes}
