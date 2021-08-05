@@ -19,9 +19,10 @@ const Home: React.FC<Props> = ({ navigation }) => {
     const credentials = await agentContext.agent.credentials.getAll()
     const credentialsToDisplay: any = []
 
-    credentials.forEach((c: any) => {
+    credentials.forEach(async (c: any) => {
       if (c.state === CredentialState.OfferReceived) {
-        credentialsToDisplay.push(c)
+        const connectionRecord = await agentContext.agent.connections.getById(c.connectionId)
+        credentialsToDisplay.push({ ...c, connectionRecord })
       }
     })
 
