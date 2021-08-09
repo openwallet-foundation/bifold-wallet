@@ -15,6 +15,8 @@ interface Props {
 const NotificationListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
+  console.log('NOTIFICATION', notification)
+
   return (
     <TouchableOpacity
       style={styles.container}

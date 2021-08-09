@@ -34,7 +34,8 @@ const Home: React.FC<Props> = ({ navigation }) => {
 
     switch (event.credentialRecord.state) {
       case CredentialState.OfferReceived:
-        setNotifications([...notifications, event.credentialRecord])
+        const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
+        setNotifications([...notifications, { ...event.credentialRecord, connectionRecord }])
         break
       case CredentialState.CredentialReceived:
         await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
