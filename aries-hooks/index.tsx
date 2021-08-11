@@ -30,8 +30,7 @@ interface Props {
 
 // Agent
 export const useAgent = () => {
-  const agentState = useContext(AgentContext)
-  return agentState
+  return useContext(AgentContext)
 }
 
 // Connection
@@ -42,7 +41,7 @@ export const useConnections = () => {
 
 export const useConnectionById = (id: string) => {
   const { connections } = useContext(ConnectionContext)
-  const connection = connections.filter((c: any) => c.id === id)
+  const connection = connections.find((c: any) => c.id === id)
   return connection
 }
 
@@ -78,7 +77,7 @@ export const useProofs = () => {
 
 export const useProofById = (id: string) => {
   const { proofs } = useContext(ProofContext)
-  const proof = proofs.filter((p: any) => p.id === id)
+  const proof = proofs.find((p: any) => p.id === id)
   return proof
 }
 

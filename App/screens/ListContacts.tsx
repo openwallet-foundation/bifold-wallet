@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ConnectionEventType } from 'aries-framework'
 import { FlatList, RefreshControl } from 'react-native'
 
-import { useConnections } from 'aries-hooks'
+import { useConnections } from '../../aries-hooks'
 
 import AgentContext from '../contexts/AgentProvider'
 
@@ -16,7 +16,7 @@ interface Props {
 const ListContacts: React.FC<Props> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false)
 
-  const connections = useConnections()
+  // const connections = useConnections()
 
   // const getConnections = async () => {
   //   const connections = await agentContext.agent.connections.getAll()
