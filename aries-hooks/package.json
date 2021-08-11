@@ -1,0 +1,15 @@
+{
+  "name": "aries-hooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aries-framework": "0.0.63-unstable.0",
+    "react": "17.0.1"
+  }
+}

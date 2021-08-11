@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ConnectionEventType } from 'aries-framework'
 import { FlatList, RefreshControl } from 'react-native'
 
+import { useConnections } from 'aries-hooks'
+
 import AgentContext from '../contexts/AgentProvider'
 
 import { ContactListItem, Text } from 'components'
@@ -12,38 +14,37 @@ interface Props {
 }
 
 const ListContacts: React.FC<Props> = ({ navigation }) => {
-  const agentContext = useContext<any>(AgentContext)
-
-  const [contacts, setContacts] = useState<any>()
   const [refreshing, setRefreshing] = useState(false)
 
-  const getConnections = async () => {
-    const connections = await agentContext.agent.connections.getAll()
-    setContacts(connections)
-  }
+  const connections = useConnections()
 
-  const handleConnectionStateChange = (event: any) => {
-    console.info('Connections State Change', event)
-    const allConnections = [...contacts]
-    for (let connection of allConnections) {
-      if (connection.id == event.connectionRecord.id) {
-        connection = event.connectionRecord
-      }
-    }
-    setContacts(allConnections)
-  }
+  // const getConnections = async () => {
+  //   const connections = await agentContext.agent.connections.getAll()
+  //   setContacts(connections)
+  // }
 
-  useEffect(() => {
-    if (!agentContext.loading) {
-      agentContext.agent.connections.events.removeAllListeners(ConnectionEventType.StateChanged)
-      agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
-      getConnections()
-    }
-  }, [agentContext.loading])
+  // const handleConnectionStateChange = (event: any) => {
+  //   console.info('Connections State Change', event)
+  //   const allConnections = [...contacts]
+  //   for (let connection of allConnections) {
+  //     if (connection.id == event.connectionRecord.id) {
+  //       connection = event.connectionRecord
+  //     }
+  //   }
+  //   setContacts(allConnections)
+  // }
+
+  // useEffect(() => {
+  //   if (!agentContext.loading) {
+  //     agentContext.agent.connections.events.removeAllListeners(ConnectionEventType.StateChanged)
+  //     agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
+  //     getConnections()
+  //   }
+  // }, [agentContext.loading])
 
   return (
     <FlatList
-      data={contacts}
+      data={connections}
       renderItem={({ item }) => <ContactListItem contact={item} />}
       keyExtractor={(item: any) => item.did}
       style={{ backgroundColor }}
