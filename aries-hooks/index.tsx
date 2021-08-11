@@ -35,8 +35,7 @@ export const useAgent = () => {
 
 // Connection
 export const useConnections = () => {
-  const connectionState = useContext(ConnectionContext)
-  return connectionState
+  return useContext(ConnectionContext)
 }
 
 export const useConnectionById = (id: string) => {
@@ -88,16 +87,14 @@ export const useProofByState = (state: ProofState) => {
 }
 
 const AgentProvider: React.FC<Props> = ({ agent, contexts, children }) => {
-  const [agentState, setAgentState] = useState<any>()
-  const [connectionState, setConnectionState] = useState<any>()
-  const [credentialState, setCredentialState] = useState<any>()
-  const [proofState, setProofState] = useState<any>()
+  const [agentState, setAgentState] = useState<any>({})
+  const [connectionState, setConnectionState] = useState<any>({ connections: [], loading: true })
+  const [credentialState, setCredentialState] = useState<any>({ credentials: [], loading: true })
+  const [proofState, setProofState] = useState<any>({ proofs: [], loading: true })
 
   useEffect(() => {
-    if (agent) {
-      setInitialState()
-    }
-  }, [agent])
+    setInitialState()
+  }, [])
 
   const setInitialState = async () => {
     let newAgent = new Agent(agent)
