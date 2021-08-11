@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ConnectionEventType } from 'aries-framework'
 import { FlatList, RefreshControl } from 'react-native'
 
-import { useConnections } from '../../aries-hooks'
+import { useConnections } from 'aries-hooks'
 
 import AgentContext from '../contexts/AgentProvider'
 
@@ -16,23 +16,22 @@ interface Props {
 const ListContacts: React.FC<Props> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false)
 
-  // const connections = useConnections()
-
-  // const getConnections = async () => {
-  //   const connections = await agentContext.agent.connections.getAll()
-  //   setContacts(connections)
-  // }
-
-  // const handleConnectionStateChange = (event: any) => {
-  //   console.info('Connections State Change', event)
-  //   const allConnections = [...contacts]
-  //   for (let connection of allConnections) {
-  //     if (connection.id == event.connectionRecord.id) {
-  //       connection = event.connectionRecord
-  //     }
-  //   }
-  //   setContacts(allConnections)
-  // }
+  const { connections } = useConnections()
+  console.log('CONNECTIONS', connections)
+  const getConnections = async () => {
+    //   const connections = await agentContext.agent.connections.getAll()
+    //   setContacts(connections)
+    // }
+    // const handleConnectionStateChange = (event: any) => {
+    //   console.info('Connections State Change', event)
+    //   const allConnections = [...contacts]
+    //   for (let connection of allConnections) {
+    //     if (connection.id == event.connectionRecord.id) {
+    //       connection = event.connectionRecord
+    //     }
+    //   }
+    //   setContacts(allConnections)
+  }
 
   // useEffect(() => {
   //   if (!agentContext.loading) {

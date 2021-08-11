@@ -4,7 +4,7 @@ import Config from 'react-native-config'
 import { ConsoleLogger } from 'aries-framework'
 import indy from 'rn-indy-sdk'
 
-import AgentProvider from './aries-hooks'
+import AgentProvider from 'aries-hooks'
 
 import { downloadGenesis, storeGenesis } from './genesis-utils'
 
