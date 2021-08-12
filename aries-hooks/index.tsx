@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 
-import { PollingInboundTransporter } from '../transporters'
+import { PollingInboundTransporter } from './transporters'
+import { downloadGenesis, storeGenesis } from './genesis-utils'
 
 import {
   Agent,
@@ -9,9 +10,9 @@ import {
   ConnectionState,
   CredentialState,
   ProofState,
-  ConnectionEventTypes,
-  CredentialEventTypes,
-  ProofEventTypes,
+  ConnectionEventType,
+  CredentialEventType,
+  ProofEventType,
   ConnectionStateChangedEvent,
   CredentialStateChangedEvent,
   ProofStateChangedEvent,
@@ -23,8 +24,9 @@ const CredentialContext = createContext<any>({})
 const ProofContext = createContext<any>({})
 
 interface Props {
-  agent: InitConfig
+  agentConfig: InitConfig
   contexts?: ['agent' | 'connections' | 'credentials' | 'proofs']
+  genesisUrl: string
   children: any
 }
 
@@ -45,15 +47,14 @@ export const useConnectionById = (id: string) => {
 }
 
 export const useConnectionByState = (state: ConnectionState) => {
-  const { connections } = useContext(ConnectionContext)
-  const connection = connections.filter((c: any) => c.state === state)
-  return connection
+  const connectionState = useContext(ConnectionContext)
+  const connections = connectionState.connections.filter((c: any) => c.state === state)
+  return connections
 }
 
 // Credential
 export const useCredentials = () => {
-  const credentialState = useContext(CredentialContext)
-  return credentialState
+  return useContext(CredentialContext)
 }
 
 export const useCredentialById = (id: string) => {
@@ -63,15 +64,14 @@ export const useCredentialById = (id: string) => {
 }
 
 export const useCredentialByState = (state: CredentialState) => {
-  const { credentials } = useContext(CredentialContext)
-  const credential = credentials.filter((c: any) => c.state === state)
-  return credential
+  const credentialState = useContext(CredentialContext)
+  const credentials = credentialState.credentials.filter((c: any) => c.state === state)
+  return credentials
 }
 
 // Proofs
 export const useProofs = () => {
-  const proofState = useContext(ProofContext)
-  return proofState
+  return useContext(ProofContext)
 }
 
 export const useProofById = (id: string) => {
@@ -81,12 +81,12 @@ export const useProofById = (id: string) => {
 }
 
 export const useProofByState = (state: ProofState) => {
-  const { proofs } = useContext(ProofContext)
-  const proof = proofs.filter((p: any) => p.state === state)
-  return proof
+  const proofState = useContext(ProofContext)
+  const proofs = proofState.proofs.filter((p: any) => p.state === state)
+  return proofs
 }
 
-const AgentProvider: React.FC<Props> = ({ agent, contexts, children }) => {
+const AgentProvider: React.FC<Props> = ({ agentConfig, contexts, children, genesisUrl }) => {
   const [agentState, setAgentState] = useState<any>({})
   const [connectionState, setConnectionState] = useState<any>({ connections: [], loading: true })
   const [credentialState, setCredentialState] = useState<any>({ credentials: [], loading: true })
@@ -96,109 +96,70 @@ const AgentProvider: React.FC<Props> = ({ agent, contexts, children }) => {
     setInitialState()
   }, [])
 
+  const injectConnectionRecord = async (agent: Agent, credentials: any) => {
+    const updatedCredentials = await credentials.map(async (c: any) => {
+      const connectionRecord = await agent.connections.getById(c.id)
+      return { ...c, connectionRecord }
+    })
+    return updatedCredentials
+  }
+
   const setInitialState = async () => {
-    let newAgent = new Agent(agent)
+    const genesis = await downloadGenesis(genesisUrl)
+    const genesisPath = await storeGenesis(genesis, 'genesis.txn')
 
-    let outbound = new HttpOutboundTransporter(newAgent)
+    let agent = new Agent({ ...agentConfig, genesisPath })
+    let outbound = new HttpOutboundTransporter(agent)
+    agent.setInboundTransporter(new PollingInboundTransporter())
+    agent.setOutboundTransporter(outbound)
 
-    newAgent.setInboundTransporter(new PollingInboundTransporter())
-    newAgent.setOutboundTransporter(outbound)
+    await agent.init()
+    const connections = await agent.connections.getAll()
+    const credentials = await agent.credentials.getAll()
+    const proofs = await agent.proofs.getAll()
 
-    await newAgent.initialize()
-    const connections = await newAgent.connections.getAll()
-    const credentials = await newAgent.credentials.getAll()
-    const proofs = await newAgent.proofs.getAll()
+    const credentialsWithConnectionRecords = await injectConnectionRecord(agent, credentials)
 
-    startConnectionsListener(newAgent)
-    startCredentialsListener(newAgent)
-    startProofsListener(newAgent)
+    startConnectionsListener(agent)
+    startCredentialsListener(agent)
+    startProofsListener(agent)
 
-    setAgentState({ agent: newAgent, loading: false })
+    setAgentState({ agent, loading: false })
     setConnectionState({ connections, loading: false })
-    setCredentialState({ credentials, loading: false })
+    setCredentialState({ credentials: credentialsWithConnectionRecords, loading: false })
     setProofState({ proofs, loading: false })
   }
 
   const startConnectionsListener = (agent: Agent) => {
     const listener = (event: ConnectionStateChangedEvent) => {
-      switch (event.payload.connectionRecord.state) {
-        case ConnectionState.Complete:
-          setConnectionState({
-            ...connectionState,
-            connections: [...connectionState.connections, event.payload.connectionRecord],
-          })
-          break
-        case ConnectionState.Invited:
-          break
-        case ConnectionState.Requested:
-          break
-        case ConnectionState.Responded:
-          break
-        default:
-          break
-      }
+      setConnectionState({
+        ...connectionState,
+        connections: [...connectionState.connections, event.connectionRecord],
+      })
     }
 
-    agent.events.on(ConnectionEventTypes.ConnectionStateChanged, listener)
+    agent.connections.events.on(ConnectionEventType.StateChanged, listener)
   }
 
   const startCredentialsListener = (agent: Agent) => {
-    const listener = (event: CredentialStateChangedEvent) => {
-      switch (event.payload.credentialRecord.state) {
-        case CredentialState.Done:
-          setCredentialState({
-            ...credentialState,
-            credentials: [...credentialState.credentials, event.payload.credentialRecord],
-          })
-          break
-        case CredentialState.CredentialIssued:
-          break
-        case CredentialState.CredentialReceived:
-          break
-        case CredentialState.OfferReceived:
-          break
-        case CredentialState.OfferSent:
-          break
-        case CredentialState.ProposalReceived:
-          break
-        case CredentialState.ProposalSent:
-          break
-        case CredentialState.RequestReceived:
-          break
-        case CredentialState.RequestSent:
-          break
-        default:
-          break
-      }
+    const listener = async (event: CredentialStateChangedEvent) => {
+      const credentialWithConnectionRecord = await injectConnectionRecord(agent, [event.credentialRecord])
+
+      setCredentialState({
+        ...credentialState,
+        credentials: [...credentialState.credentials, credentialWithConnectionRecord],
+      })
     }
 
-    agent.events.on(CredentialEventTypes.CredentialStateChanged, listener)
+    agent.credentials.events.on(CredentialEventType.StateChanged, listener)
   }
 
   const startProofsListener = (agent: Agent) => {
     const listener = (event: ProofStateChangedEvent) => {
-      switch (event.payload.proofRecord.state) {
-        case ProofState.Done:
-          setProofState({ ...proofState, proofs: [...proofState.proofs, event.payload.proofRecord] })
-          break
-        case ProofState.PresentationReceived:
-          break
-        case ProofState.PresentationSent:
-          break
-        case ProofState.ProposalReceived:
-          break
-        case ProofState.ProposalSent:
-          break
-        case ProofState.RequestReceived:
-          break
-        case ProofState.RequestSent:
-          break
-        default:
-          break
-      }
+      setProofState({ ...proofState, proofs: [...proofState.proofs, event.proofRecord] })
     }
 
-    agent.events.on(ProofEventTypes.ProofStateChanged, listener)
+    agent.proofs.events.on(ProofEventType.StateChanged, listener)
   }
 
   return (
