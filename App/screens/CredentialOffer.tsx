@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { StyleSheet, FlatList } from 'react-native'
-
-import AgentContext from '../contexts/AgentProvider'
+import { useAgent } from 'aries-hooks'
 
 import { SafeAreaScrollView, Button, ModularView, Label } from 'components'
 
@@ -11,12 +10,12 @@ interface Props {
 }
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
-  const agentContext = useContext<any>(AgentContext)
+  const { agent } = useAgent()
 
   const notification = route?.params?.notification
 
   const handleAcceptPress = async () => {
-    await agentContext.agent.credentials.acceptOffer(notification.id)
+    await agent.credentials.acceptOffer(notification.id)
     navigation.goBack()
   }
 

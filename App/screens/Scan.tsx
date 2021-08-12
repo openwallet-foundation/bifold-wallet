@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
-import { ConnectionEventType, ConnectionState } from 'aries-framework'
+import { useAgent } from 'aries-hooks'
 
-import AgentContext from '../contexts/AgentProvider'
 import { decodeInvitationFromUrl } from 'aries-framework'
 
 import { Message, QRScanner } from 'components'
@@ -14,46 +13,24 @@ interface Props {
 }
 
 const Scan: React.FC<Props> = ({ navigation }) => {
-  const agentContext = useContext<any>(AgentContext)
+  const { agent } = useAgent()
 
   const [modalVisible, setModalVisible] = useState<'inProgress' | 'success' | 'failure' | ''>('')
 
-  const handleConnectionStateChange = async (event: any) => {
-    switch (event.connectionRecord.state) {
-      case ConnectionState.Complete:
-        setModalVisible('success')
-        break
-      default: 
-        break
-    }
-  }
-
   const handleCodeScan = async (event: any) => {
     setModalVisible('inProgress')
+    try {
+      const decodedInvitation = await decodeInvitationFromUrl(event.data)
 
-    console.log('Scanned QR Code')
-    console.log('BARCODE: ', event)
-
-    const decodedInvitation = await decodeInvitationFromUrl(event.data)
-
-    console.log('New Invitation:', decodedInvitation)
-    console.log('AGENT_CONTEXT', agentContext)
-
-    const connectionRecord = await agentContext.agent.connections.receiveInvitation(decodedInvitation, {
-      autoAcceptConnection: true,
-    })
-    console.log('New Connection Record', connectionRecord)
+      await agent.connections.receiveInvitation(decodedInvitation, {
+        autoAcceptConnection: true,
+      })
+    } catch {
+      setModalVisible('failure')
+    } finally {
+      setModalVisible('success')
+    }
   }
-
-  useEffect(() => {
-    if(!agentContext.loading) {
-      agentContext.agent.connections.events.on(ConnectionEventType.StateChanged, handleConnectionStateChange)
-    }
-    
-    return () => {
-      agentContext.agent.credentials.events.removeListener(ConnectionEventType.StateChanged, handleConnectionStateChange)
-    }
-  })
 
   return (
     <View>
