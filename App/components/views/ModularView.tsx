@@ -8,13 +8,15 @@ import { shadow, borderRadius } from '../../globalStyles'
 
 interface Props {
   title: string
+  subtitle?: string
   content: string | React.ReactNode
 }
 
-const ModularView: React.FC<Props> = ({ title, content }) => {
+const ModularView: React.FC<Props> = ({ title, subtitle, content }) => {
   return (
     <View style={styles.container}>
       <Title>{title}</Title>
+      <Text>{subtitle}</Text>
       {typeof content === 'string' ? <Text style={styles.content}>{content}</Text> : content}
     </View>
   )

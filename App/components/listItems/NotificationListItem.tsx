@@ -15,14 +15,17 @@ interface Props {
 const NotificationListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  console.log('NOTIFICATION', notification)
+  const { type, connectionRecord } = notification
 
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate('Credential Offer', { notification })}
     >
-      <Text style={styles.title}>{notification.type || 'Notification'}</Text>
+      <View>
+        <Text style={styles.title}>{type || 'Notification'}</Text>
+        <Text>{connectionRecord.alias || connectionRecord.invitation.label}</Text>
+      </View>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>
   )
@@ -42,6 +45,6 @@ const styles = StyleSheet.create({
     backgroundColor,
   },
   title: {
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
   },
 })
