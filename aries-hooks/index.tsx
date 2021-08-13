@@ -16,6 +16,8 @@ import {
   ConnectionStateChangedEvent,
   CredentialStateChangedEvent,
   ProofStateChangedEvent,
+  ConnectionRecord,
+  ProofRecord,
 } from 'aries-framework'
 
 const AgentContext = createContext<any>({})
@@ -23,35 +25,23 @@ const ConnectionContext = createContext<any>({})
 const CredentialContext = createContext<any>({})
 const ProofContext = createContext<any>({})
 
-interface Props {
-  agentConfig: InitConfig
-  contexts?: ['agent' | 'connections' | 'credentials' | 'proofs']
-  genesisUrl: string
-  children: any
-}
-
-interface AgentState {
-  agent: Agent | null
-  loading: boolean
-}
-
 // Agent
 export const useAgent = (): { agent: Agent; loading: boolean } => {
   return useContext(AgentContext)
 }
 
 // Connection
-export const useConnections = () => {
+export const useConnections = (): { connections: ConnectionRecord[]; loading: boolean } => {
   return useContext(ConnectionContext)
 }
 
-export const useConnectionById = (id: string) => {
+export const useConnectionById = (id: string): ConnectionRecord => {
   const { connections } = useContext(ConnectionContext)
   const connection = connections.find((c: any) => c.id === id)
   return connection
 }
 
-export const useConnectionByState = (state: ConnectionState) => {
+export const useConnectionByState = (state: ConnectionState): ConnectionRecord[] => {
   const connectionState = useContext(ConnectionContext)
   const connections = connectionState.connections.filter((c: any) => c.state === state)
   return connections
@@ -75,20 +65,32 @@ export const useCredentialByState = (state: CredentialState) => {
 }
 
 // Proofs
-export const useProofs = () => {
+export const useProofs = (): { proofs: ProofRecord[]; loading: boolean } => {
   return useContext(ProofContext)
 }
 
-export const useProofById = (id: string) => {
+export const useProofById = (id: string): ProofRecord => {
   const { proofs } = useContext(ProofContext)
   const proof = proofs.find((p: any) => p.id === id)
   return proof
 }
 
-export const useProofByState = (state: ProofState) => {
+export const useProofByState = (state: ProofState): ProofRecord[] => {
   const proofState = useContext(ProofContext)
   const proofs = proofState.proofs.filter((p: any) => p.state === state)
   return proofs
+}
+
+interface Props {
+  agentConfig: InitConfig
+  contexts?: ['agent' | 'connections' | 'credentials' | 'proofs']
+  genesisUrl: string
+  children: any
+}
+
+interface AgentState {
+  agent: Agent | null
+  loading: boolean
 }
 
 const AgentProvider: React.FC<Props> = ({ agentConfig, contexts, children, genesisUrl }) => {
@@ -96,9 +98,18 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, contexts, children, genes
     agent: null,
     loading: true,
   })
-  const [connectionState, setConnectionState] = useState<any>({ connections: [], loading: true })
-  const [credentialState, setCredentialState] = useState<any>({ credentials: [], loading: true })
-  const [proofState, setProofState] = useState<any>({ proofs: [], loading: true })
+  const [connectionState, setConnectionState] = useState<{ connections: ConnectionRecord[] | []; loading: boolean }>({
+    connections: [],
+    loading: true,
+  })
+  const [credentialState, setCredentialState] = useState<any>({
+    credentials: [],
+    loading: true,
+  })
+  const [proofState, setProofState] = useState<{ proofs: ProofRecord[] | []; loading: boolean }>({
+    proofs: [],
+    loading: true,
+  })
 
   useEffect(() => {
     setInitialState()
