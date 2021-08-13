@@ -21,7 +21,6 @@ const Scan: React.FC<Props> = ({ navigation }) => {
     setModalVisible('inProgress')
     try {
       const decodedInvitation = await decodeInvitationFromUrl(event.data)
-
       await agent.connections.receiveInvitation(decodedInvitation, {
         autoAcceptConnection: true,
       })

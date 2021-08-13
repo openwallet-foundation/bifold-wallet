@@ -30,8 +30,13 @@ interface Props {
   children: any
 }
 
+interface AgentState {
+  agent: Agent | null
+  loading: boolean
+}
+
 // Agent
-export const useAgent = () => {
+export const useAgent = (): { agent: Agent; loading: boolean } => {
   return useContext(AgentContext)
 }
 
@@ -87,7 +92,10 @@ export const useProofByState = (state: ProofState) => {
 }
 
 const AgentProvider: React.FC<Props> = ({ agentConfig, contexts, children, genesisUrl }) => {
-  const [agentState, setAgentState] = useState<any>({})
+  const [agentState, setAgentState] = useState<AgentState>({
+    agent: null,
+    loading: true,
+  })
   const [connectionState, setConnectionState] = useState<any>({ connections: [], loading: true })
   const [credentialState, setCredentialState] = useState<any>({ credentials: [], loading: true })
   const [proofState, setProofState] = useState<any>({ proofs: [], loading: true })
@@ -108,8 +116,8 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, contexts, children, genes
     const genesis = await downloadGenesis(genesisUrl)
     const genesisPath = await storeGenesis(genesis, 'genesis.txn')
 
-    let agent = new Agent({ ...agentConfig, genesisPath })
-    let outbound = new HttpOutboundTransporter(agent)
+    const agent = new Agent({ ...agentConfig, genesisPath })
+    const outbound = new HttpOutboundTransporter(agent)
     agent.setInboundTransporter(new PollingInboundTransporter())
     agent.setOutboundTransporter(outbound)
 
