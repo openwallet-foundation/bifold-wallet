@@ -5,6 +5,8 @@ import AgentContext from '../contexts/AgentProvider'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
+import { parseSchema } from '../helpers'
+
 interface Props {
   navigation: any
   route: any
@@ -16,7 +18,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState<any>()
   const [pendingMessage, setPendingMessage] = useState('')
 
-  const { connectionRecord, credentialAttributes, credentialId, type } = route?.params?.notification
+  const { connectionRecord, credentialAttributes, credentialId, metadata } = route?.params?.notification
 
   const handleAcceptPress = async () => {
     setModalVisible('pending')
@@ -56,7 +58,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaScrollView>
       <ModularView
-        title={type}
+        title={parseSchema(metadata.schemaId)}
         subtitle={connectionRecord.alias || connectionRecord.invitation.label}
         content={
           <FlatList
