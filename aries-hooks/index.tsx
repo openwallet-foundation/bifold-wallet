@@ -37,13 +37,13 @@ export const useConnections = (): { connections: ConnectionRecord[]; loading: bo
 
 export const useConnectionById = (id: string): ConnectionRecord => {
   const { connections } = useContext(ConnectionContext)
-  const connection = connections.find((c: any) => c.id === id)
+  const connection = connections.find((c: ConnectionRecord) => c.id === id)
   return connection
 }
 
 export const useConnectionByState = (state: ConnectionState): ConnectionRecord[] => {
   const connectionState = useContext(ConnectionContext)
-  const connections = connectionState.connections.filter((c: any) => c.state === state)
+  const connections = connectionState.connections.filter((c: ConnectionRecord) => c.state === state)
   return connections
 }
 
@@ -71,13 +71,13 @@ export const useProofs = (): { proofs: ProofRecord[]; loading: boolean } => {
 
 export const useProofById = (id: string): ProofRecord => {
   const { proofs } = useContext(ProofContext)
-  const proof = proofs.find((p: any) => p.id === id)
+  const proof = proofs.find((p: ProofRecord) => p.id === id)
   return proof
 }
 
 export const useProofByState = (state: ProofState): ProofRecord[] => {
   const proofState = useContext(ProofContext)
-  const proofs = proofState.proofs.filter((p: any) => p.state === state)
+  const proofs = proofState.proofs.filter((p: ProofRecord) => p.state === state)
   return proofs
 }
 
@@ -88,13 +88,11 @@ interface Props {
   children: any
 }
 
-interface AgentState {
-  agent: Agent | null
-  loading: boolean
-}
-
 const AgentProvider: React.FC<Props> = ({ agentConfig, contexts, children, genesisUrl }) => {
-  const [agentState, setAgentState] = useState<AgentState>({
+  const [agentState, setAgentState] = useState<{
+    agent: Agent | null
+    loading: boolean
+  }>({
     agent: null,
     loading: true,
   })
