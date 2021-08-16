@@ -83,12 +83,11 @@ export const useProofByState = (state: ProofState): ProofRecord[] => {
 
 interface Props {
   agentConfig: InitConfig
-  contexts?: ['agent' | 'connections' | 'credentials' | 'proofs']
   genesisUrl: string
   children: any
 }
 
-const AgentProvider: React.FC<Props> = ({ agentConfig, contexts, children, genesisUrl }) => {
+const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) => {
   const [agentState, setAgentState] = useState<{
     agent: Agent | null
     loading: boolean
