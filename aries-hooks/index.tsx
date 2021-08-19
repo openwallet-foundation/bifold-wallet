@@ -114,7 +114,7 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
 
   const injectConnectionRecord = async (agent: Agent, credentials: any) => {
     const updatedCredentials = await credentials.map(async (c: any) => {
-      const connectionRecord = await agent.connections.getById(c.id)
+      const connectionRecord = await agent.connections.getById(c.connectionId)
       return { ...c, connectionRecord }
     })
     return updatedCredentials
