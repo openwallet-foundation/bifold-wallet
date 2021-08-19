@@ -112,7 +112,7 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     setInitialState()
   }, [])
 
-  const injectConnectionRecord = async (agent: Agent, credentials: any) => {
+  const injectConnectionRecord = async (agent: Agent, credentials: any): Promise<any[]> => {
     const updatedCredentials = await credentials.map(async (c: any) => {
       const connectionRecord = await agent.connections.getById(c.connectionId)
       return { ...c, connectionRecord }
@@ -163,7 +163,7 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
 
       setCredentialState({
         ...credentialState,
-        credentials: [...credentialState.credentials, credentialWithConnectionRecord],
+        credentials: [...credentialState.credentials, ...credentialWithConnectionRecord],
       })
     }
 
