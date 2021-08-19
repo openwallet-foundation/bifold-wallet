@@ -17,7 +17,8 @@ import ModularView from './views/ModularView'
 
 import Button from './buttons/Button'
 
-import NotificationListItem from './listItems/NotificationListItem'
+import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
+import NotificationProofListItem from './listItems/NotificationProofListItem'
 
 import QRScanner from './inputs/QRScanner'
 
@@ -40,7 +41,8 @@ export {
   Success,
   ModularView,
   Button,
-  NotificationListItem,
+  NotificationCredentialListItem,
+  NotificationProofListItem,
   QRScanner,
   SafeAreaScrollView,
   TextInput,

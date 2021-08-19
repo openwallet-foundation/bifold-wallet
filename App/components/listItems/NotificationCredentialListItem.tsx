@@ -1,6 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { useConnectionById } from 'aries-hooks'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -13,10 +14,12 @@ interface Props {
   notification: any
 }
 
-const NotificationListItem: React.FC<Props> = ({ notification }) => {
+const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  const { metadata, connectionRecord } = notification
+  const { metadata, connectionId } = notification
+
+  const connection = useConnectionById(connectionId)
 
   return (
     <TouchableOpacity
@@ -24,15 +27,15 @@ const NotificationListItem: React.FC<Props> = ({ notification }) => {
       onPress={() => navigation.navigate('Credential Offer', { notification })}
     >
       <View>
-        <Text style={styles.title}>{parseSchema(metadata.schemaId)}</Text>
-        <Text>{connectionRecord.alias || connectionRecord.invitation.label}</Text>
+        <Text style={styles.title}>{parseSchema(metadata?.schemaId)}</Text>
+        <Text>{connection.alias || connection.invitation?.label}</Text>
       </View>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>
   )
 }
 
-export default NotificationListItem
+export default NotificationCredentialListItem
 
 const styles = StyleSheet.create({
   container: {

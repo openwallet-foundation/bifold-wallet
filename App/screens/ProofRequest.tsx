@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { StyleSheet, FlatList, Alert } from 'react-native'
 import { useAgent, useConnectionById } from 'aries-hooks'
 
-import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
-
 import { parseSchema } from '../helpers'
+
+import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
 interface Props {
   navigation: any
@@ -16,7 +16,9 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
 
-  const { connectionId, credentialAttributes, credentialId, metadata } = route?.params?.notification
+  console.log('PROOF', route.params.notification)
+
+  const { id, connectionId, proposalMessage } = route.params.notification
 
   const connection = useConnectionById(connectionId)
 
@@ -24,11 +26,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     setModalVisible('pending')
 
     setTimeout(() => {
-      setPendingMessage('This is taking Longer than expected. Check back later for your new credential.')
-    }, 10000)
+      setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
+    }, 15000)
 
     try {
-      await agent.credentials.acceptOffer(credentialId)
+      await agent.proofs.acceptPresentation(id)
     } catch {
       setModalVisible('failure')
     } finally {
@@ -37,14 +39,14 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert('Are you sure?', 'This credential will be rejected.', [
+    Alert.alert('Are you sure?', 'This proof will be rejected.', [
       { text: 'Cancel', onPress: () => {}, style: 'cancel' },
       {
         text: 'Yes',
         onPress: async () => {
           setModalVisible('pending')
           try {
-            // await agent.credentials.rejectOffer(credentialId)
+            // await agent.proofs.rejectPresentation(id)
           } catch {
             setModalVisible('failure')
           } finally {
@@ -58,13 +60,19 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaScrollView>
       <ModularView
-        title={parseSchema(metadata.schemaId)}
+        title={'Verifier Name'}
         subtitle={connection.alias || connection.invitation?.label}
         content={
           <FlatList
-            data={credentialAttributes}
+            data={proposalMessage.presentationProposal.attributes}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <Label title={item.name} subtitle={item.value} />}
+            renderItem={({ item }) => (
+              <Label
+                title={item.name}
+                subtitle={item.value}
+                label={item.credentialDefinitionId.split(':')[4].split('_')[0]}
+              />
+            )}
           />
         }
       />

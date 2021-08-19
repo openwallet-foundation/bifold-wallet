@@ -9,5 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {},
-  "peerDependencies": {}
+  "peerDependencies": {
+    "aries-framework": "0.0.9-unstable.0"
+  }
 }

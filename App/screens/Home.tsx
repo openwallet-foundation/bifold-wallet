@@ -1,10 +1,18 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import { CredentialState } from 'aries-framework'
+import { CredentialState, ProofState } from 'aries-framework'
 
-import { useCredentialByState } from 'aries-hooks'
+import { useCredentialByState, useProofByState } from 'aries-hooks'
 
-import { Button, SafeAreaScrollView, AppHeaderLarge, ModularView, NotificationListItem, Text } from 'components'
+import {
+  Button,
+  SafeAreaScrollView,
+  AppHeaderLarge,
+  ModularView,
+  NotificationCredentialListItem,
+  NotificationProofListItem,
+  Text,
+} from 'components'
 
 interface Props {
   navigation: any
@@ -12,6 +20,8 @@ interface Props {
 
 const Home: React.FC<Props> = ({ navigation }) => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
+  const proofs = useProofByState(ProofState.ProposalReceived)
+  console.log('PROOFS', proofs)
 
   return (
     <SafeAreaScrollView>
@@ -21,9 +31,15 @@ const Home: React.FC<Props> = ({ navigation }) => {
         title="Notifications"
         content={
           <FlatList
-            data={credentials}
+            data={[...credentials, ...proofs]}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <NotificationListItem notification={item} />}
+            renderItem={({ item }) =>
+              item.type === 'CredentialRecord' ? (
+                <NotificationCredentialListItem notification={item} />
+              ) : (
+                <NotificationProofListItem notification={item} />
+              )
+            }
             ListEmptyComponent={<Text>No New Updates</Text>}
           />
         }
