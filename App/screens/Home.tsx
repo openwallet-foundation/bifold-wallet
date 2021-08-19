@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React from 'react'
 import { FlatList } from 'react-native'
-import { CredentialEventType, CredentialState } from 'aries-framework'
+import { CredentialState } from 'aries-framework'
 
-import AgentContext from '../contexts/AgentProvider'
+import { useCredentialByState } from 'aries-hooks'
 
 import { Button, SafeAreaScrollView, AppHeaderLarge, ModularView, NotificationListItem, Text } from 'components'
 
@@ -11,60 +11,7 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({ navigation }) => {
-  const agentContext = useContext<any>(AgentContext)
-
-  const [notifications, setNotifications] = useState<any>([])
-
-  const getNotifications = async () => {
-    const credentials = await agentContext.agent.credentials.getAll()
-    const credentialsToDisplay: any = []
-
-    credentials.forEach(async (c: any) => {
-      if (c.state === CredentialState.OfferReceived) {
-        const connectionRecord = await agentContext.agent.connections.getById(c.connectionId)
-        credentialsToDisplay.push({ ...c, connectionRecord })
-      }
-    })
-
-    setNotifications(credentialsToDisplay)
-  }
-
-  const handleCredentialStateChange = async (event: any) => {
-    console.info(`Credentials State Change, new state: "${event.credentialRecord.state}"`, event)
-
-    switch (event.credentialRecord.state) {
-      case CredentialState.OfferReceived:
-        const connectionRecord = await agentContext.agent.connections.getById(event.credentialRecord.connectionId)
-        setNotifications([...notifications, { ...event.credentialRecord, connectionRecord }])
-        break
-      case CredentialState.CredentialReceived:
-        await agentContext.agent.credentials.acceptCredential(event.credentialRecord.id)
-        break
-      case CredentialState.Done:
-        setNotifications(notifications.filter((c: any) => c.id !== event.credentialRecord.id))
-        break
-      default:
-        break
-    }
-  }
-
-  useEffect(() => {
-    if (!agentContext.loading) {
-      getNotifications()
-    }
-  }, [agentContext.loading])
-
-  useEffect(() => {
-    if (!agentContext.loading) {
-      agentContext.agent.credentials.events.on(CredentialEventType.StateChanged, handleCredentialStateChange)
-    }
-
-    return () =>
-      agentContext.agent.credentials.events.removeListener(
-        CredentialEventType.StateChanged,
-        handleCredentialStateChange
-      )
-  })
+  const credentials = useCredentialByState(CredentialState.OfferReceived)
 
   return (
     <SafeAreaScrollView>
@@ -74,7 +21,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
         title="Notifications"
         content={
           <FlatList
-            data={notifications}
+            data={credentials}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <NotificationListItem notification={item} />}
             ListEmptyComponent={<Text>No New Updates</Text>}

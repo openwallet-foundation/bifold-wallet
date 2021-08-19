@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, FlatList, Alert } from 'react-native'
-
-import AgentContext from '../contexts/AgentProvider'
+import { useAgent } from 'aries-hooks'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
@@ -13,9 +12,8 @@ interface Props {
 }
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
-  const agentContext = useContext<any>(AgentContext)
-
-  const [modalVisible, setModalVisible] = useState<any>()
+  const { agent } = useAgent()
+  const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
 
   const { connectionRecord, credentialAttributes, credentialId, metadata } = route?.params?.notification
@@ -28,7 +26,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }, 10000)
 
     try {
-      await agentContext.agent.credentials.acceptOffer(credentialId)
+      await agent.credentials.acceptOffer(credentialId)
     } catch {
       setModalVisible('failure')
     } finally {
@@ -44,7 +42,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         onPress: async () => {
           setModalVisible('pending')
           try {
-            await agentContext.agent.credentials.rejectOffer(credentialId)
+            // await agent.credentials.rejectOffer(credentialId)
           } catch {
             setModalVisible('failure')
           } finally {
