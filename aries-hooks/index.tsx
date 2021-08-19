@@ -18,6 +18,7 @@ import {
   ProofStateChangedEvent,
   ConnectionRecord,
   ProofRecord,
+  CredentialRecord,
 } from 'aries-framework'
 
 const AgentContext = createContext<any>({})
@@ -48,19 +49,19 @@ export const useConnectionByState = (state: ConnectionState): ConnectionRecord[]
 }
 
 // Credential
-export const useCredentials = () => {
+export const useCredentials = (): { credentials: CredentialRecord[]; loading: boolean } => {
   return useContext(CredentialContext)
 }
 
-export const useCredentialById = (id: string) => {
+export const useCredentialById = (id: string): CredentialRecord => {
   const { credentials } = useContext(CredentialContext)
-  const credential = credentials.find((c: any) => c.id === id)
+  const credential = credentials.find((c: CredentialRecord) => c.id === id)
   return credential
 }
 
-export const useCredentialByState = (state: CredentialState) => {
+export const useCredentialByState = (state: CredentialState): CredentialRecord[] => {
   const credentialState = useContext(CredentialContext)
-  const credentials = credentialState.credentials.filter((c: any) => c.state === state)
+  const credentials = credentialState.credentials.filter((c: CredentialRecord) => c.state === state)
   return credentials
 }
 
@@ -99,7 +100,7 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     connections: [],
     loading: true,
   })
-  const [credentialState, setCredentialState] = useState<any>({
+  const [credentialState, setCredentialState] = useState<{ credentials: CredentialRecord[] | []; loading: boolean }>({
     credentials: [],
     loading: true,
   })
@@ -111,14 +112,6 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
   useEffect(() => {
     setInitialState()
   }, [])
-
-  const injectConnectionRecord = async (agent: Agent, credentials: any): Promise<any[]> => {
-    const updatedCredentials = await credentials.map(async (c: any) => {
-      const connectionRecord = await agent.connections.getById(c.connectionId)
-      return { ...c, connectionRecord }
-    })
-    return updatedCredentials
-  }
 
   const setInitialState = async () => {
     const genesis = await downloadGenesis(genesisUrl)
@@ -134,15 +127,13 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     const credentials = await agent.credentials.getAll()
     const proofs = await agent.proofs.getAll()
 
-    const credentialsWithConnectionRecords = await injectConnectionRecord(agent, credentials)
-
     startConnectionsListener(agent)
     startCredentialsListener(agent)
     startProofsListener(agent)
 
     setAgentState({ agent, loading: false })
     setConnectionState({ connections, loading: false })
-    setCredentialState({ credentials: credentialsWithConnectionRecords, loading: false })
+    setCredentialState({ credentials, loading: false })
     setProofState({ proofs, loading: false })
   }
 
@@ -159,11 +150,9 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
 
   const startCredentialsListener = (agent: Agent) => {
     const listener = async (event: CredentialStateChangedEvent) => {
-      const credentialWithConnectionRecord = await injectConnectionRecord(agent, [event.credentialRecord])
-
       setCredentialState({
         ...credentialState,
-        credentials: [...credentialState.credentials, ...credentialWithConnectionRecord],
+        credentials: [...credentialState.credentials, event.credentialRecord],
       })
     }
 
