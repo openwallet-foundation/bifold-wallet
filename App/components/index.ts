@@ -7,8 +7,12 @@ import CredentialListItem from './listItems/CredentialListItem'
 
 import Label from './texts/Label'
 
+import Failure from './modals/Failure'
 import LoadingOverlay from './modals/LoadingOverlay'
 import Message from './modals/Message'
+import Pending from './modals/Pending'
+import Success from './modals/Success'
+
 import ModularView from './views/ModularView'
 
 import Button from './buttons/Button'
@@ -29,8 +33,11 @@ export {
   ContactListItem,
   CredentialListItem,
   Label,
+  Failure,
   LoadingOverlay,
   Message,
+  Pending,
+  Success,
   ModularView,
   Button,
   NotificationListItem,

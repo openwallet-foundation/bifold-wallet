@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Text from '../texts/Text'
 
 import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
+import { parseSchema } from '../../helpers'
 
 interface Props {
   notification: any
@@ -15,12 +16,17 @@ interface Props {
 const NotificationListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
+  const { metadata, connectionRecord } = notification
+
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate('Credential Offer', { notification })}
     >
-      <Text style={styles.title}>{notification.type || 'Notification'}</Text>
+      <View>
+        <Text style={styles.title}>{parseSchema(metadata.schemaId)}</Text>
+        <Text>{connectionRecord.alias || connectionRecord.invitation.label}</Text>
+      </View>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>
   )
@@ -40,6 +46,6 @@ const styles = StyleSheet.create({
     backgroundColor,
   },
   title: {
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
   },
 })
