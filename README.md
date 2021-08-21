@@ -19,7 +19,7 @@ Indicio has provided existing code, but we really want to make this into a commu
 
 ### Platform
 
-Aries Bifold currently is built on React Native 0.61.5. Newer versions of React Native experience issues with ZMQ (Fatal Signal 6 (SIGABRT)). We are making efforts to be able to move to React Native 0.63.4.
+Aries Bifold currently is built on React Native 0.64.1
 
 As of now Aries Bifold targets Android API 29.0.3, with plans to support API 30 soon.
 
@@ -30,6 +30,9 @@ iOS targets iOS 10.0+. Aries Bifold can only be run on physical devices as of ri
 Aries Mobile Agent React Native aims to utilize the [Aries Protocols Test Suite (APTS)](https://github.com/hyperledger/aries-protocol-test-suite) and potentially the [Aries Agent Test Harness (AATH)](https://github.com/hyperledger/aries-agent-test-harness) to test for Aries Agent compatibility and interoperability.
 
 ## Install
+
+
+You can also watch a recording of setting up and running the mobile wallet and receiving a credential using the ACA-Py demo. Watch the video [here](https://youtu.be/AomoHvw4lgc) (thanks [@xtrycatchx](https://github.com/xtrycatchx)).
 
 ### Prerequistes
 
