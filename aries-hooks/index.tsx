@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 
-import { PollingInboundTransporter } from './transporters'
 import { downloadGenesis, storeGenesis } from './genesis-utils'
 
 import {
@@ -10,16 +9,19 @@ import {
   ConnectionState,
   CredentialState,
   ProofState,
-  ConnectionEventType,
-  CredentialEventType,
-  ProofEventType,
+  ConnectionEventTypes,
+  CredentialEventTypes,
+  ProofEventTypes,
   ConnectionStateChangedEvent,
   CredentialStateChangedEvent,
   ProofStateChangedEvent,
   ConnectionRecord,
   ProofRecord,
   CredentialRecord,
-} from 'aries-framework'
+  WsOutboundTransporter,
+} from '@aries-framework/core'
+
+import { agentDependencies } from '@aries-framework/react-native'
 
 const AgentContext = createContext<any>({})
 const ConnectionContext = createContext<any>({})
@@ -117,12 +119,15 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     const genesis = await downloadGenesis(genesisUrl)
     const genesisPath = await storeGenesis(genesis, 'genesis.txn')
 
-    const agent = new Agent({ ...agentConfig, genesisPath })
-    const outbound = new HttpOutboundTransporter(agent)
-    agent.setInboundTransporter(new PollingInboundTransporter())
-    agent.setOutboundTransporter(outbound)
+    const agent = new Agent({ ...agentConfig, genesisPath }, agentDependencies)
 
-    await agent.init()
+    const wsTransport = new WsOutboundTransporter()
+    const httpTransport = new HttpOutboundTransporter()
+
+    agent.registerOutboundTransporter(wsTransport)
+    agent.registerOutboundTransporter(httpTransport)
+
+    await agent.initialize()
     const connections = await agent.connections.getAll()
     const credentials = await agent.credentials.getAll()
     const proofs = await agent.proofs.getAll()
@@ -141,30 +146,30 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     const listener = (event: ConnectionStateChangedEvent) => {
       setConnectionState({
         ...connectionState,
-        connections: [...connectionState.connections, event.connectionRecord],
+        connections: [...connectionState.connections, event.payload.connectionRecord],
       })
     }
 
-    agent.connections.events.on(ConnectionEventType.StateChanged, listener)
+    agent.events.on(ConnectionEventTypes.ConnectionStateChanged, listener)
   }
 
   const startCredentialsListener = (agent: Agent) => {
     const listener = async (event: CredentialStateChangedEvent) => {
       setCredentialState({
         ...credentialState,
-        credentials: [...credentialState.credentials, event.credentialRecord],
+        credentials: [...credentialState.credentials, event.payload.credentialRecord],
       })
     }
 
-    agent.credentials.events.on(CredentialEventType.StateChanged, listener)
+    agent.events.on(CredentialEventTypes.CredentialStateChanged, listener)
   }
 
   const startProofsListener = (agent: Agent) => {
     const listener = (event: ProofStateChangedEvent) => {
-      setProofState({ ...proofState, proofs: [...proofState.proofs, event.proofRecord] })
+      setProofState({ ...proofState, proofs: [...proofState.proofs, event.payload.proofRecord] })
     }
 
-    agent.proofs.events.on(ProofEventType.StateChanged, listener)
+    agent.events.on(ProofEventTypes.ProofStateChanged, listener)
   }
 
   return (

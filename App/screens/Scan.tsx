@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { useAgent } from 'aries-hooks'
 
-import { decodeInvitationFromUrl } from 'aries-framework'
-
 import { QRScanner, Pending, Success, Failure } from 'components'
 
 interface Props {
@@ -18,8 +16,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   const handleCodeScan = async (event: any) => {
     setModalVisible('pending')
     try {
-      const decodedInvitation = await decodeInvitationFromUrl(event.data)
-      await agent.connections.receiveInvitation(decodedInvitation, {
+      await agent.connections.receiveInvitationFromUrl(event.data, {
         autoAcceptConnection: true,
       })
     } catch {

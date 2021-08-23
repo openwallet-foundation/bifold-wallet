@@ -14,8 +14,8 @@ interface Props {
 const CredentialListItem: React.FC<Props> = ({ credential }) => {
   return (
     <View style={styles.container}>
-      <Title>{parseSchema(credential.schemaId)}</Title>
-      <Text>{credential.id}</Text>
+      <Title>{parseSchema(credential.metadata.schemaId)}</Title>
+      <Text>{credential.credentialId}</Text>
     </View>
   )
 }

@@ -17,7 +17,9 @@ interface Props {
 const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  const { connectionId, proposalMessage } = notification
+  console.log('NOTIF', notification)
+
+  const { connectionId } = notification
 
   const connection = useConnectionById(connectionId)
 

@@ -16,7 +16,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
 
-  const { connectionId, credentialAttributes, credentialId, metadata } = route?.params?.notification
+  const { connectionId, credentialAttributes, id, metadata } = route?.params?.notification
 
   const connection = useConnectionById(connectionId)
 
@@ -28,7 +28,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }, 10000)
 
     try {
-      await agent.credentials.acceptOffer(credentialId)
+      await agent.credentials.acceptOffer(id)
     } catch {
       setModalVisible('failure')
     } finally {
@@ -37,10 +37,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert('Are you sure?', 'This credential will be rejected.', [
+    Alert.alert('Reject this Credential?', 'This decision cannot be changed.', [
       { text: 'Cancel', onPress: () => {}, style: 'cancel' },
       {
-        text: 'Yes',
+        text: 'Confirm',
+        style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
           try {

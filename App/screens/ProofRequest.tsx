@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, FlatList, Alert } from 'react-native'
+import { RequestedCredentials } from '@aries-framework/core'
 import { useAgent, useConnectionById } from 'aries-hooks'
-
-import { parseSchema } from '../helpers'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
@@ -11,16 +10,44 @@ interface Props {
   route: any
 }
 
+const transformAttributes = (attributes: any) => {
+  const transformedAttributes = []
+
+  for (const attribute in attributes) {
+    transformedAttributes.push({
+      name: attribute,
+      value: attributes[attribute][0].credentialInfo.attributes[attribute],
+      credentialDefinitionId: attributes[attribute][0].credentialInfo.credentialDefinitionId
+        .split(':')[4]
+        .split('_')[0],
+    })
+  }
+
+  return transformedAttributes
+}
+
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
+  const [requestedCredentials, setRequestedCredentials] = useState<any>()
+  const [requestedCredentialsDisplay, setRequestedCredentialsDisplay] = useState<any>()
 
-  console.log('PROOF', route.params.notification)
-
-  const { id, connectionId, proposalMessage } = route.params.notification
-
+  const { id, connectionId, requestMessage } = route.params.notification
   const connection = useConnectionById(connectionId)
+
+  const getRequestedCredentials = async () => {
+    const requestedCreds = await agent.proofs.getRequestedCredentialsForProofRequest(
+      requestMessage.indyProofRequest,
+      undefined
+    )
+    setRequestedCredentials(requestedCreds)
+    setRequestedCredentialsDisplay(transformAttributes(requestedCreds.requestedAttributes))
+  }
+
+  useEffect(() => {
+    getRequestedCredentials()
+  }, [])
 
   const handleAcceptPress = async () => {
     setModalVisible('pending')
@@ -30,7 +57,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }, 15000)
 
     try {
-      await agent.proofs.acceptPresentation(id)
+      await agent.proofs.acceptRequest(id, requestedCredentials)
     } catch {
       setModalVisible('failure')
     } finally {
@@ -39,10 +66,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert('Are you sure?', 'This proof will be rejected.', [
+    Alert.alert('Reject this Proof?', 'This decision cannot be changed.', [
       { text: 'Cancel', onPress: () => {}, style: 'cancel' },
       {
-        text: 'Yes',
+        text: 'Confirm',
+        style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
           try {
@@ -60,18 +88,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaScrollView>
       <ModularView
-        title={'Verifier Name'}
-        subtitle={connection.alias || connection.invitation?.label}
+        title={requestMessage.indyProofRequest.name || connection.alias || connection.invitation?.label}
         content={
           <FlatList
-            data={proposalMessage.presentationProposal.attributes}
+            data={requestedCredentialsDisplay}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Label
-                title={item.name}
-                subtitle={item.value}
-                label={item.credentialDefinitionId.split(':')[4].split('_')[0]}
-              />
+              <Label title={item.name} subtitle={item.value} label={item.credentialDefinitionId} />
             )}
           />
         }
@@ -80,7 +103,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       <Button title="Reject" negative onPress={handleRejectPress} />
       <Pending
         visible={modalVisible === 'pending'}
-        banner="Accepting Credential"
+        banner="Accepting Proof"
         message={pendingMessage}
         onPress={
           pendingMessage
@@ -93,7 +116,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       />
       <Success
         visible={modalVisible === 'success'}
-        banner="Successfully Accepted Credential"
+        banner="Successfully Accepted Proof"
         onPress={() => {
           setModalVisible('')
           navigation.goBack()
@@ -105,5 +128,3 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
 }
 
 export default CredentialOffer
-
-const styles = StyleSheet.create({})

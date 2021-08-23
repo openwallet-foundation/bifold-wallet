@@ -1,6 +1,6 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import { CredentialState, ProofState } from 'aries-framework'
+import { CredentialState, ProofState } from '@aries-framework/core'
 
 import { useCredentialByState, useProofByState } from 'aries-hooks'
 
@@ -20,7 +20,7 @@ interface Props {
 
 const Home: React.FC<Props> = ({ navigation }) => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
-  const proofs = useProofByState(ProofState.ProposalReceived)
+  const proofs = useProofByState(ProofState.RequestReceived)
   console.log('PROOFS', proofs)
 
   return (

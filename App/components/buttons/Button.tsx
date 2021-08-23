@@ -20,7 +20,7 @@ const Button: React.FC<Props> = ({ title, onPress, disabled, neutral, negative }
       style={[styles.button, disabled && styles.disabled, neutral && styles.neutral, negative && styles.negative]}
       disabled={disabled}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, neutral && { color: shadow }]}>{title}</Text>
     </TouchableOpacity>
   )
 }

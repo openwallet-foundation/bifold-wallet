@@ -2,25 +2,25 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import Config from 'react-native-config'
 
-import { ConsoleLogger, LogLevel } from 'aries-framework'
-import indy from 'rn-indy-sdk'
+import { ConsoleLogger, LogLevel, MediatorPickupStrategy } from '@aries-framework/core'
+import indy from 'indy-sdk-react-native'
 
 import AgentProvider from 'aries-hooks'
-
-//For UUIDv4 within React Native
-import 'react-native-get-random-values'
 
 import TabNavigator from './App/navigators/TabNavigator'
 import AuthenticateStack from './App/navigators/AuthenticateStack'
 
+global.Buffer = global.Buffer || require('buffer').Buffer
+
 const agentConfig = {
   label: 'Aries Bifold',
-  mediatorUrl: Config.MEDIATOR_URL,
-  walletConfig: { id: 'wallet4' },
-  walletCredentials: { key: '123' },
+  mediatorConnectionsInvite: Config.MEDIATOR_URL,
+  autoAcceptMediationRequests: true,
+  mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
+  walletConfig: { id: 'wallet4', key: '123' },
   autoAcceptConnections: true,
   poolName: 'test-183',
-  logger: new ConsoleLogger(LogLevel.debug),
+  logger: new ConsoleLogger(LogLevel.trace),
   indy,
 }
 

@@ -7,7 +7,7 @@ import Text from '../texts/Text'
 import { shadow, borderRadius } from '../../globalStyles'
 
 interface Props {
-  title: string
+  title?: string
   subtitle?: string
   content: string | React.ReactNode
 }
