@@ -24,7 +24,7 @@ const Message: React.FC<Props> = ({ icon, banner, message, backgroundColor, visi
         <View style={{ alignItems: 'center' }}>
           <Icon name={icon} color={'white'} size={160} />
           <Title>{banner}</Title>
-          <Text>{message}</Text>
+          <Text style={{ textAlign: 'center', margin: 15 }}>{message}</Text>
         </View>
         {onPress && <Button title="Close" neutral onPress={onPress} />}
       </View>

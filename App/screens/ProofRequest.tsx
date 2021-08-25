@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, FlatList, Alert } from 'react-native'
-import { RequestedCredentials } from '@aries-framework/core'
+import { FlatList, Alert } from 'react-native'
 import { useAgent, useConnectionById } from 'aries-hooks'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
+
+import { parseSchema } from '../helpers'
 
 interface Props {
   navigation: any
@@ -17,9 +18,7 @@ const transformAttributes = (attributes: any) => {
     transformedAttributes.push({
       name: attribute,
       value: attributes[attribute][0].credentialInfo.attributes[attribute],
-      credentialDefinitionId: attributes[attribute][0].credentialInfo.credentialDefinitionId
-        .split(':')[4]
-        .split('_')[0],
+      credentialDefinitionId: parseSchema(attributes[attribute][0].credentialInfo.schemaId),
     })
   }
 
@@ -30,23 +29,24 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
-  const [requestedCredentials, setRequestedCredentials] = useState<any>()
-  const [requestedCredentialsDisplay, setRequestedCredentialsDisplay] = useState<any>()
+  const [retrievedCredentials, setRetrievedCredentials] = useState<any>()
+  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<any>()
 
   const { id, connectionId, requestMessage } = route.params.notification
   const connection = useConnectionById(connectionId)
 
-  const getRequestedCredentials = async () => {
-    const requestedCreds = await agent.proofs.getRequestedCredentialsForProofRequest(
+  const getRetrievedCredentials = async () => {
+    const retrievedCreds = await agent.proofs.getRequestedCredentialsForProofRequest(
       requestMessage.indyProofRequest,
       undefined
     )
-    setRequestedCredentials(requestedCreds)
-    setRequestedCredentialsDisplay(transformAttributes(requestedCreds.requestedAttributes))
+
+    setRetrievedCredentials(retrievedCreds)
+    setRetrievedCredentialsDisplay(transformAttributes(retrievedCreds.requestedAttributes))
   }
 
   useEffect(() => {
-    getRequestedCredentials()
+    getRetrievedCredentials()
   }, [])
 
   const handleAcceptPress = async () => {
@@ -56,8 +56,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
     }, 15000)
 
+    const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
+
     try {
-      await agent.proofs.acceptRequest(id, requestedCredentials)
+      await agent.proofs.acceptRequest(id, automaticRequestedCreds)
     } catch {
       setModalVisible('failure')
     } finally {
@@ -91,7 +93,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         title={requestMessage.indyProofRequest.name || connection.alias || connection.invitation?.label}
         content={
           <FlatList
-            data={requestedCredentialsDisplay}
+            data={retrievedCredentialsDisplay}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Label title={item.name} subtitle={item.value} label={item.credentialDefinitionId} />

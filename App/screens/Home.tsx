@@ -21,7 +21,6 @@ interface Props {
 const Home: React.FC<Props> = ({ navigation }) => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
-  console.log('PROOFS', proofs)
 
   return (
     <SafeAreaScrollView>

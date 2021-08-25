@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Text from '../texts/Text'
 
 import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
-import { parseSchema } from '../../helpers'
 
 interface Props {
   notification: any
@@ -17,16 +16,14 @@ interface Props {
 const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  console.log('NOTIF', notification)
-
-  const { connectionId } = notification
+  const { connectionId, requestMessage } = notification
 
   const connection = useConnectionById(connectionId)
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Proof Request', { notification })}>
       <View>
-        <Text style={styles.title}>Proof Request</Text>
+        <Text style={styles.title}>{requestMessage.indyProofRequest.name}</Text>
         <Text>{connection.alias || connection.invitation?.label}</Text>
       </View>
       <Icon name="chevron-right" color={textColor} size={30} />

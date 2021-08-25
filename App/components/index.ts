@@ -8,7 +8,6 @@ import CredentialListItem from './listItems/CredentialListItem'
 import Label from './texts/Label'
 
 import Failure from './modals/Failure'
-import LoadingOverlay from './modals/LoadingOverlay'
 import Message from './modals/Message'
 import Pending from './modals/Pending'
 import Success from './modals/Success'
@@ -35,7 +34,6 @@ export {
   CredentialListItem,
   Label,
   Failure,
-  LoadingOverlay,
   Message,
   Pending,
   Success,
