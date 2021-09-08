@@ -7,13 +7,17 @@ import CredentialListItem from './listItems/CredentialListItem'
 
 import Label from './texts/Label'
 
-import LoadingOverlay from './modals/LoadingOverlay'
+import Failure from './modals/Failure'
 import Message from './modals/Message'
+import Pending from './modals/Pending'
+import Success from './modals/Success'
+
 import ModularView from './views/ModularView'
 
 import Button from './buttons/Button'
 
-import NotificationListItem from './listItems/NotificationListItem'
+import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
+import NotificationProofListItem from './listItems/NotificationProofListItem'
 
 import QRScanner from './inputs/QRScanner'
 
@@ -29,11 +33,14 @@ export {
   ContactListItem,
   CredentialListItem,
   Label,
-  LoadingOverlay,
+  Failure,
   Message,
+  Pending,
+  Success,
   ModularView,
   Button,
-  NotificationListItem,
+  NotificationCredentialListItem,
+  NotificationProofListItem,
   QRScanner,
   SafeAreaScrollView,
   TextInput,

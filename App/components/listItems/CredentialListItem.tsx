@@ -5,6 +5,7 @@ import Title from '../texts/Title'
 import Text from '../texts/Text'
 
 import { shadow, borderRadius } from '../../globalStyles'
+import { parseSchema } from '../../helpers'
 
 interface Props {
   credential: any
@@ -13,8 +14,8 @@ interface Props {
 const CredentialListItem: React.FC<Props> = ({ credential }) => {
   return (
     <View style={styles.container}>
-      <Title>{credential.schemaId.split(':')[2]}</Title>
-      <Text>{credential.id}</Text>
+      <Title>{parseSchema(credential.metadata.schemaId)}</Title>
+      <Text>{credential.credentialId}</Text>
     </View>
   )
 }

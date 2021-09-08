@@ -12,7 +12,7 @@ import defaultStackOptions from './defaultStackOptions'
 const Stack = createStackNavigator()
 
 interface Props {
-  setAuthenticated: () => void
+  setAuthenticated: any
 }
 
 const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
