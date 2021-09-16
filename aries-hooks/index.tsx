@@ -22,6 +22,7 @@ import {
 } from '@aries-framework/core'
 
 import { agentDependencies } from '@aries-framework/react-native'
+import { PollingInboundTransporter } from './PollingInboundTransporter'
 
 const AgentContext = createContext<any>({})
 const ConnectionContext = createContext<any>({})
@@ -180,9 +181,11 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, mediatorUrl, genesisUrl, 
 
     const wsTransport = new WsOutboundTransporter()
     const httpTransport = new HttpOutboundTransporter()
+    const pollingInboundTransporter = new PollingInboundTransporter()
 
     agent.registerOutboundTransporter(wsTransport)
     agent.registerOutboundTransporter(httpTransport)
+    agent.setInboundTransporter(pollingInboundTransporter)
 
     await agent.initialize()
     const connections = await agent.connections.getAll()
