@@ -15,7 +15,7 @@ const ListContacts: React.FC<Props> = ({ navigation }) => {
 
   return (
     <FlatList
-      data={connections}
+      data={connections.sort((a, b) => b.createdAt.getDate() - a.createdAt.getDate())}
       renderItem={({ item }) => <ContactListItem contact={item} />}
       keyExtractor={(item: any) => item.did}
       style={{ backgroundColor }}

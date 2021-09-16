@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
 
 import { downloadString, storeGenesis } from './utils'
 
@@ -111,35 +111,65 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, mediatorUrl, genesisUrl, 
     loading: true,
   })
 
-  const startConnectionsListener = (agent: Agent) => {
-    const listener = (event: ConnectionStateChangedEvent) => {
+  const connectionStateChangedListener = useCallback(
+    (event: ConnectionStateChangedEvent) => {
+      const connections = connectionState.connections.filter(
+        (connection) => connection.did !== event.payload.connectionRecord.did
+      )
       setConnectionState({
         ...connectionState,
-        connections: [...connectionState.connections, event.payload.connectionRecord],
+        connections: [...connections, event.payload.connectionRecord],
       })
+    },
+    [connectionState, setConnectionState]
+  )
+
+  useEffect(() => {
+    if (!agentState.agent) {
+      return
     }
+    agentState.agent.events.on(ConnectionEventTypes.ConnectionStateChanged, connectionStateChangedListener)
+    return () => {
+      agentState.agent?.events.off(ConnectionEventTypes.ConnectionStateChanged, connectionStateChangedListener)
+    }
+  }, [agentState.agent, connectionStateChangedListener])
 
-    agent.events.on(ConnectionEventTypes.ConnectionStateChanged, listener)
-  }
-
-  const startCredentialsListener = (agent: Agent) => {
-    const listener = async (event: CredentialStateChangedEvent) => {
+  const credentialStateChangedListener = useCallback(
+    (event: CredentialStateChangedEvent) => {
       setCredentialState({
         ...credentialState,
         credentials: [...credentialState.credentials, event.payload.credentialRecord],
       })
+    },
+    [credentialState, setCredentialState]
+  )
+
+  useEffect(() => {
+    if (!agentState.agent) {
+      return
     }
+    agentState.agent.events.on(CredentialEventTypes.CredentialStateChanged, credentialStateChangedListener)
+    return () => {
+      agentState.agent?.events.off(CredentialEventTypes.CredentialStateChanged, credentialStateChangedListener)
+    }
+  }, [agentState.agent, connectionStateChangedListener])
 
-    agent.events.on(CredentialEventTypes.CredentialStateChanged, listener)
-  }
-
-  const startProofsListener = (agent: Agent) => {
-    const listener = (event: ProofStateChangedEvent) => {
+  const proofStateChangedListener = useCallback(
+    (event: ProofStateChangedEvent) => {
       setProofState({ ...proofState, proofs: [...proofState.proofs, event.payload.proofRecord] })
-    }
+    },
+    [proofState, setProofState]
+  )
 
-    agent.events.on(ProofEventTypes.ProofStateChanged, listener)
-  }
+  useEffect(() => {
+    if (!agentState.agent) {
+      return
+    }
+    agentState.agent.events.on(ProofEventTypes.ProofStateChanged, proofStateChangedListener)
+    return () => {
+      agentState.agent?.events.off(ProofEventTypes.ProofStateChanged, proofStateChangedListener)
+    }
+  }, [agentState.agent, connectionStateChangedListener])
 
   const setInitialState = async () => {
     const mediatorConnectionsInvite = await downloadString(`${mediatorUrl}/invitation`)
@@ -158,10 +188,6 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, mediatorUrl, genesisUrl, 
     const connections = await agent.connections.getAll()
     const credentials = await agent.credentials.getAll()
     const proofs = await agent.proofs.getAll()
-
-    startConnectionsListener(agent)
-    startCredentialsListener(agent)
-    startProofsListener(agent)
 
     setAgentState({ agent, loading: false })
     setConnectionState({ connections, loading: false })
