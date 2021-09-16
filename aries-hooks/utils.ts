@@ -9,10 +9,10 @@ async function storeGenesis(genesis: string, fileName: string): Promise<string> 
   return genesisPath
 }
 
-async function downloadGenesis(genesisUrl: string): Promise<string> {
-  const response = await axios.get(genesisUrl)
+async function downloadString(url: string): Promise<string> {
+  const response = await axios.get(url)
 
   return response.data
 }
 
-export { downloadGenesis, storeGenesis }
+export { downloadString, storeGenesis }

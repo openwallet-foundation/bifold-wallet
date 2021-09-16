@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 
-import { downloadGenesis, storeGenesis } from './genesis-utils'
+import { downloadString, storeGenesis } from './utils'
 
 import {
   Agent,
@@ -86,11 +86,11 @@ export const useProofByState = (state: ProofState): ProofRecord[] => {
 
 interface Props {
   agentConfig: InitConfig
+  mediatorUrl: string
   genesisUrl: string
-  children: any
 }
 
-const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) => {
+const AgentProvider: React.FC<Props> = ({ agentConfig, mediatorUrl, genesisUrl, children }) => {
   const [agentState, setAgentState] = useState<{
     agent: Agent | null
     loading: boolean
@@ -110,37 +110,6 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     proofs: [],
     loading: true,
   })
-
-  useEffect(() => {
-    setInitialState()
-  }, [])
-
-  const setInitialState = async () => {
-    const genesis = await downloadGenesis(genesisUrl)
-    const genesisPath = await storeGenesis(genesis, 'genesis.txn')
-
-    const agent = new Agent({ ...agentConfig, genesisPath }, agentDependencies)
-
-    const wsTransport = new WsOutboundTransporter()
-    const httpTransport = new HttpOutboundTransporter()
-
-    agent.registerOutboundTransporter(wsTransport)
-    agent.registerOutboundTransporter(httpTransport)
-
-    await agent.initialize()
-    const connections = await agent.connections.getAll()
-    const credentials = await agent.credentials.getAll()
-    const proofs = await agent.proofs.getAll()
-
-    startConnectionsListener(agent)
-    startCredentialsListener(agent)
-    startProofsListener(agent)
-
-    setAgentState({ agent, loading: false })
-    setConnectionState({ connections, loading: false })
-    setCredentialState({ credentials, loading: false })
-    setProofState({ proofs, loading: false })
-  }
 
   const startConnectionsListener = (agent: Agent) => {
     const listener = (event: ConnectionStateChangedEvent) => {
@@ -171,6 +140,41 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
 
     agent.events.on(ProofEventTypes.ProofStateChanged, listener)
   }
+
+  const setInitialState = async () => {
+    const mediatorConnectionsInvite = await downloadString(`${mediatorUrl}/invitation`)
+    const genesis = await downloadString(genesisUrl)
+    const genesisPath = await storeGenesis(genesis, 'genesis.txn')
+
+    const agent = new Agent({ ...agentConfig, mediatorConnectionsInvite, genesisPath }, agentDependencies)
+
+    const wsTransport = new WsOutboundTransporter()
+    const httpTransport = new HttpOutboundTransporter()
+
+    agent.registerOutboundTransporter(wsTransport)
+    agent.registerOutboundTransporter(httpTransport)
+
+    await agent.initialize()
+    const connections = await agent.connections.getAll()
+    const credentials = await agent.credentials.getAll()
+    const proofs = await agent.proofs.getAll()
+
+    startConnectionsListener(agent)
+    startCredentialsListener(agent)
+    startProofsListener(agent)
+
+    setAgentState({ agent, loading: false })
+    setConnectionState({ connections, loading: false })
+    setCredentialState({ credentials, loading: false })
+    setProofState({ proofs, loading: false })
+  }
+
+  useEffect(() => {
+    setInitialState().then(() => {
+      // eslint-disable-next-line no-console
+      console.debug('Agent initialized')
+    })
+  }, [])
 
   return (
     <AgentContext.Provider value={agentState}>
