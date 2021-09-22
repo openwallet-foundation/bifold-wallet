@@ -5,7 +5,7 @@ import { downloadGenesis, storeGenesis } from './genesis-utils'
 import {
   Agent,
   InitConfig,
-  HttpOutboundTransporter,
+  HttpOutboundTransport,
   ConnectionState,
   CredentialState,
   ProofState,
@@ -18,7 +18,7 @@ import {
   ConnectionRecord,
   ProofRecord,
   CredentialRecord,
-  WsOutboundTransporter,
+  WsOutboundTransport,
 } from '@aries-framework/core'
 
 import { agentDependencies } from '@aries-framework/react-native'
@@ -116,30 +116,34 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
   }, [])
 
   const setInitialState = async () => {
-    const genesis = await downloadGenesis(genesisUrl)
-    const genesisPath = await storeGenesis(genesis, 'genesis.txn')
+    try {
+      const genesis = await downloadGenesis(genesisUrl)
+      const genesisPath = await storeGenesis(genesis, 'genesis.txn')
 
-    const agent = new Agent({ ...agentConfig, genesisPath }, agentDependencies)
+      const agent = new Agent({ ...agentConfig, genesisPath }, agentDependencies)
 
-    const wsTransport = new WsOutboundTransporter()
-    const httpTransport = new HttpOutboundTransporter()
+      const wsTransport = new WsOutboundTransport()
+      const httpTransport = new HttpOutboundTransport()
 
-    agent.registerOutboundTransporter(wsTransport)
-    agent.registerOutboundTransporter(httpTransport)
+      agent.registerOutboundTransport(wsTransport)
+      agent.registerOutboundTransport(httpTransport)
 
-    await agent.initialize()
-    const connections = await agent.connections.getAll()
-    const credentials = await agent.credentials.getAll()
-    const proofs = await agent.proofs.getAll()
+      await agent.initialize()
+      const connections = await agent.connections.getAll()
+      const credentials = await agent.credentials.getAll()
+      const proofs = await agent.proofs.getAll()
 
-    startConnectionsListener(agent)
-    startCredentialsListener(agent)
-    startProofsListener(agent)
+      startConnectionsListener(agent)
+      startCredentialsListener(agent)
+      startProofsListener(agent)
 
-    setAgentState({ agent, loading: false })
-    setConnectionState({ connections, loading: false })
-    setCredentialState({ credentials, loading: false })
-    setProofState({ proofs, loading: false })
+      setAgentState({ agent, loading: false })
+      setConnectionState({ connections, loading: false })
+      setCredentialState({ credentials, loading: false })
+      setProofState({ proofs, loading: false })
+    } catch (e) {
+      console.error('ARIES HOOKS ERROR IN SET_INITIAL_STATE:', e)
+    }
   }
 
   const startConnectionsListener = (agent: Agent) => {
