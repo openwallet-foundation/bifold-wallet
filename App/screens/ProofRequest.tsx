@@ -50,20 +50,19 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [])
 
   const handleAcceptPress = async () => {
-    setModalVisible('pending')
-
-    setTimeout(() => {
-      setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
-    }, 15000)
-
-    const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
-
     try {
+      setModalVisible('pending')
+
+      setTimeout(() => {
+        setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
+      }, 15000)
+
+      const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
+
       await agent.proofs.acceptRequest(id, automaticRequestedCreds)
+      setModalVisible('success')
     } catch {
       setModalVisible('failure')
-    } finally {
-      setModalVisible('success')
     }
   }
 
