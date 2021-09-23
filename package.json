@@ -24,7 +24,7 @@
     "aries-hooks": "file:aries-hooks",
     "axios": "^0.21.0",
     "buffer": "^6.0.3",
-    "indy-sdk-react-native": "^0.1.13",
+    "indy-sdk-react-native": "^0.1.14",
     "luxon": "^2.0.1",
     "patch-package": "^6.4.4",
     "react": "17.0.1",
