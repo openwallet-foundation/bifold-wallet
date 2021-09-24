@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, SafeAreaView } from 'react-native'
 import { CredentialState, ProofState } from '@aries-framework/core'
 
 import { useCredentialByState, useProofByState } from 'aries-hooks'
@@ -23,7 +23,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
   const proofs = useProofByState(ProofState.RequestReceived)
 
   return (
-    <SafeAreaScrollView>
+    <SafeAreaView>
       <AppHeaderLarge />
       <Button title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
       <ModularView
@@ -43,7 +43,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
           />
         }
       />
-    </SafeAreaScrollView>
+    </SafeAreaView>
   )
 }
 

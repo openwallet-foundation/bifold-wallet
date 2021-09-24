@@ -5,7 +5,7 @@ import { downloadGenesis, storeGenesis } from './genesis-utils'
 import {
   Agent,
   InitConfig,
-  HttpOutboundTransporter,
+  HttpOutboundTransport,
   ConnectionState,
   CredentialState,
   ProofState,
@@ -18,7 +18,7 @@ import {
   ConnectionRecord,
   ProofRecord,
   CredentialRecord,
-  WsOutboundTransporter,
+  WsOutboundTransport,
 } from '@aries-framework/core'
 
 import { agentDependencies } from '@aries-framework/react-native'
@@ -121,11 +121,11 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
 
     const agent = new Agent({ ...agentConfig, genesisPath }, agentDependencies)
 
-    const wsTransport = new WsOutboundTransporter()
-    const httpTransport = new HttpOutboundTransporter()
+    const wsTransport = new WsOutboundTransport()
+    const httpTransport = new HttpOutboundTransport()
 
-    agent.registerOutboundTransporter(wsTransport)
-    agent.registerOutboundTransporter(httpTransport)
+    agent.registerOutboundTransport(wsTransport)
+    agent.registerOutboundTransport(httpTransport)
 
     await agent.initialize()
     const connections = await agent.connections.getAll()

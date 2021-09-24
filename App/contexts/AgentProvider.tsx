@@ -1,3 +1,5 @@
+//This file should be deleted since AgentProvider in aries-hooks folder used instead
+/*
 import React, { useState, useEffect } from 'react'
 import Config from 'react-native-config'
 
@@ -89,3 +91,4 @@ const AgentProvider: React.FC<Props> = ({ children }) => {
 
 export default AgentContext
 export { AgentProvider }
+*/
