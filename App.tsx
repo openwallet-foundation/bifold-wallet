@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, LogBox } from 'react-native'
 import Config from 'react-native-config'
 
 import { ConsoleLogger, LogLevel, MediatorPickupStrategy } from '@aries-framework/core'

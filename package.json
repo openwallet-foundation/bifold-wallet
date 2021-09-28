@@ -36,7 +36,7 @@
     "react-native-get-random-values": "^1.7.0",
     "react-native-keychain": "^6.2.0",
     "react-native-qrcode-svg": "^6.0.6",
-    "react-native-reanimated": "^2.1.0",
+    "react-native-reanimated": "2.3.0-alpha.3",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.3.0",
     "react-native-svg": "^12.1.0",
