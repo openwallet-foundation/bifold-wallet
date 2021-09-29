@@ -28,7 +28,7 @@ const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
     >
       <View>
         <Text style={styles.title}>{parseSchema(metadata?.schemaId)}</Text>
-        <Text>{connection.alias || connection.invitation?.label}</Text>
+        <Text>{connection?.alias || connection.invitation?.label}</Text>
       </View>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>
