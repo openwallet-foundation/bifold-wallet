@@ -21,14 +21,17 @@ const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
   const checkFirstLogin = async () => {
     try {
       const firstLaunch = await AsyncStorage.getItem('firstLaunch')
+      const pin = await Keychain.getGenericPassword({ service: 'passcode' })
       if (firstLaunch == null) {
         await AsyncStorage.setItem('firstLaunch', 'false')
         await Keychain.resetGenericPassword({ service: 'passcode' })
       } else {
-        setFirstLogin(false)
+        if (pin) {
+          setFirstLogin(false)
+        }
       }
     } catch (e) {
-      //error
+      //TODO: error
     }
   }
 

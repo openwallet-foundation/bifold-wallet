@@ -4,16 +4,14 @@ Aries Mobile Agent React Native is an open source Aries mobile agent app. This i
 
 ## Code
 
-This project utilizes [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript) and [rn-indy-sdk](https://github.com/AbsaOSS/rn-indy-sdk).
-
-This project is intended to be contributed to Hyperledger after the initial conversations regarding the project within the community
+This project utilizes [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript) and [indy-sdk-react-native](https://github.com/hyperledger/indy-sdk-react-native).
 
 ## Community
 
-Indicio has organized [working group calls](https://wiki.hyperledger.org/display/ARIES/Aries+Bifold+User+Group+Meetings) for community discussions on the project on every other Wednesdays.
-Everyone is more than welcome to attend and contribute at the working group call.
-
-Indicio has provided existing code, but we really want to make this into a community effort.
+The Bifold User Group call takes place every other week on Tuesdays, 16:00 UTC via [Zoom](https://zoom.us/j/92215586249?pwd=Vm5ZTGV4T0cwVEl4blh3MjBzYjVYZz09).
+This meeting is for contributors to discuss issues and plan work items.
+Meeting agendas and recordings can be found [here](https://wiki.hyperledger.org/display/ARIES/Framework+JS+Meetings).
+Everybody is welcome to attend and contribute!
 
 ## Project State
 
@@ -27,121 +25,75 @@ iOS targets iOS 10.0+. Aries Bifold can only be run on physical devices as of ri
 
 ### Testing
 
-Aries Mobile Agent React Native aims to utilize the [Aries Protocols Test Suite (APTS)](https://github.com/hyperledger/aries-protocol-test-suite) and potentially the [Aries Agent Test Harness (AATH)](https://github.com/hyperledger/aries-agent-test-harness) to test for Aries Agent compatibility and interoperability.
+Aries Bifold utilizes the [Aries Agent Test Harness (AATH)](https://github.com/hyperledger/aries-agent-test-harness) to test for Aries Agent compatibility and interoperability.
+
+Aries Bifold also utilizes the [Aries Toolbox](https://github.com/hyperledger/aries-toolbox) & [aries-acapy-plugin-toolbox](https://github.com/hyperledger/aries-acapy-plugin-toolbox) for issuer and verifier roles.
 
 ## Install
 
+You can watch a recording of setting up and running the mobile wallet and receiving a credential using the ACA-Py demo. Watch the video [here](https://youtu.be/AomoHvw4lgc) (thanks [@xtrycatchx](https://github.com/xtrycatchx)).
 
-You can also watch a recording of setting up and running the mobile wallet and receiving a credential using the ACA-Py demo. Watch the video [here](https://youtu.be/AomoHvw4lgc) (thanks [@xtrycatchx](https://github.com/xtrycatchx)).
+1. React Native Setup:
+    * React Native installation instructions are documented [here](https://reactnative.dev/docs/environment-setup).
+    * (iOS) Install [Cocoa Pods](https://cocoapods.org/)
+2. Clone the Bifold repo and install its dependencies:
+    ```sh
+    git clone https://github.com/hyperledger/aries-mobile-agent-react-native
+    cd aries-mobile-agent-react-native
+    npm install
+    ```
+3. (iOS) iOS specific configuration:
+    * Install iOS Pods:
+        ```sh
+        cd ios
+        pod install
+        ```
+    * In the /ios directory, open the project workspace file in Xcode.
+    Once the project is open, navigate to the project's Signing & Capabilities tab and apply your personal Apple Developer Account or your organization's team to target AriesBifold and target AriesBifoldTests.
+    * Adjust the bundle identifier if needed.
+3. Configure Bifold:
+    In the root directory add an `.env` file containing:
+    ```
+    MEDIATOR_URL=http://mediator3.test.indiciotech.io:3000?c_i=eyJAdHlwZSI6ICJkaWQ6c292OkJ6Q2JzTlloTXJqSGlxWkRUVUFTSGc7c3BlYy9jb25uZWN0aW9ucy8xLjAvaW52aXRhdGlvbiIsICJAaWQiOiAiYjE5YTM2ZjctZjhiZi00Mjg2LTg4ZjktODM4ZTIyZDI0ZjQxIiwgInJlY2lwaWVudEtleXMiOiBbIkU5VlhKY1pzaGlYcXFMRXd6R3RtUEpCUnBtMjl4dmJMYVpuWktTU0ZOdkE2Il0sICJzZXJ2aWNlRW5kcG9pbnQiOiAiaHR0cDovL21lZGlhdG9yMy50ZXN0LmluZGljaW90ZWNoLmlvOjMwMDAiLCAibGFiZWwiOiAiSW5kaWNpbyBQdWJsaWMgTWVkaWF0b3IifQ==
+    GENESIS_URL=https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
+    ```
+    Note - To run your own mediator or use a different network, go [here for advanced configuration](#Advanced-Configuration).
+4. Run Bifold:
+    * Launch the metro bundler: 
+        ```sh
+        npm run start
+        ```
+    * Open a second terminal and run:
+        * (Android)
+            ```sh
+            npm run android
+            ```
+        * (iOS)
+            ```sh
+            npm run ios
+            ```
+    * (iOS) Via Xcode:
+        Choose your physical iOS device as the destination. Click the "Play" button to Build and Run.
 
-### Prerequistes
-
-#### React Native
-
-Installation instructions are documented [here](https://reactnative.dev/docs/environment-setup).
-
-Troubleshooting guides can be found in the [docs/installation](./docs/INSTALLATION.md) directory.
-
-[Cocoa Pods](https://cocoapods.org/) (iOS specific)
+### Advanced Configuration
 
 #### Mediator
 
-In order to use Aries Bifold, you must have a mediator to use with the app. Instructions for launching your own mediator locally can be found in [docs/mediations](./docs/MEDIATION.md) or at [Aries Framework Javascript](https://github.com/hyperledger/aries-framework-javascript#starting-mediator-agents).
+In order to use Aries Bifold, you must have a mediator to use with the app. Bifold is configured to use 'Implicit' mediation and requires a mediator that supports the [coordinate-mediation protocol](https://github.com/hyperledger/aries-rfcs/tree/main/features/0211-route-coordination).
+Bifold by default utilizes the [Indicio Public Mediator](https://indicio-tech.github.io/mediator/), which utilizes ACA-Py. For running your own ACA-Py mediator more details can be found [here](https://github.com/hyperledger/aries-cloudagent-python/blob/main/Mediation.md).
 
 #### Network
 
-Aries Bifold as of right now is tied to one ledger with the intention of making this more flexible/dynamic in the future. You must have a genesis file url for your chosen network, such as:
+Aries Bifold as of right now is tied to one ledger with the intention of adding multi-ledger support in the future. You must provide a genesis url for your chosen network, such as:
 
 - Indicio TestNet: https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
 - Sovrin StagingNet: https://raw.githubusercontent.com/sovrin-foundation/sovrin/master/sovrin/pool_transactions_sandbox_genesis
-- Local network: _TODO: Insert instructions to run local network_
-
-### Running the App
-
-Clone the repo:
-
-```sh
-git clone https://github.com/Indicio-tech/aries-mobile-agent-react-native
-cd aries-mobile-agent-react-native
-npm install
-```
-
-In the root directory add a .env file for the following environment variables, such as the following:
-
-```
-MEDIATOR_URL=https://dd652a260851.ngrok.io
-GENESIS_URL=https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
-```
-
-### Android Specific
-
-#### Run Via Command Line
-
-Run the App on a connected device or emulator:
-
-```sh
-npm run start
-```
-
-In another terminal, run:
-
-```sh
-npm run android
-```
-
-#### Run Via Visual Studio
-
-_TODO_
-
-#### APKs
-
-Sample generated APKs can be found in each github release.
-
-### iOS Specific
-
-Install iOS Pods:
-
-```sh
-cd ios
-pod install
-```
-
-In the /ios directory, open the project workspace file in Xcode.
-Once the project is open, navigate to the project's Signing & Capabilities tab and apply your personal Apple Developer Account or your organization's team to target AriesBifold and target AriesBifoldTests.
-
-Adjust the bundle identifier if needed.
-
-Plug in iOS Device
-
-```sh
-npm run start
-```
-
-#### Run Via Command Line
-
-```sh
-npm run ios
-```
-
-#### Run Via Xcode
-
-Choose your physical iOS device as the destination.
-
-Click the "Play" button to Build and Run.
-
-#### TestFlight
-
-TODO: Additional community conversation is needed on this topic.
 
 ## Troubleshooting
 
 #### Hot Reloading
 
 Hot reloading may not work correctly with instantiated Agent objects. Reloading (`r`) or reopening the app may work. Any changes made to native modules require you to re-run the compile step.
-
-#### Mediator Issues
-
-There are known mediator issues which is undergoing work to address.
 
 ### Dependency Issues, Native Module Linking Issues, or Usage Issues
 
