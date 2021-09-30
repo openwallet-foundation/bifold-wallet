@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { FlatList, Alert } from 'react-native'
-import { useAgent, useConnectionById } from 'aries-hooks'
+import { useAgent, useConnectionById, useProofById } from 'aries-hooks'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
 import { parseSchema } from '../helpers'
+import { ProofState } from '@aries-framework/core'
 
 interface Props {
   navigation: any
@@ -34,6 +35,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
 
   const { id, connectionId, requestMessage } = route.params.notification
   const connection = useConnectionById(connectionId)
+  const proof = useProofById(id)
+
+  useEffect(() => {
+    if(proof?.state === ProofState.Done){
+      setModalVisible('success')
+    }
+  }, [proof])
 
   const getRetrievedCredentials = async () => {
     const retrievedCreds = await agent.proofs.getRequestedCredentialsForProofRequest(
@@ -62,8 +70,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       await agent.proofs.acceptRequest(id, automaticRequestedCreds)
     } catch {
       setModalVisible('failure')
-    } finally {
-      setModalVisible('success')
     }
   }
 
@@ -90,7 +96,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaScrollView>
       <ModularView
-        title={requestMessage.indyProofRequest.name || connection.alias || connection.invitation?.label}
+        title={requestMessage.indyProofRequest.name || connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
             data={retrievedCredentialsDisplay}

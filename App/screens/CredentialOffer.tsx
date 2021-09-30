@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, FlatList, Alert } from 'react-native'
-import { useAgent, useConnectionById } from 'aries-hooks'
+import { useAgent, useConnectionById, useCredentialById } from 'aries-hooks'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
 import { parseSchema } from '../helpers'
+import { CredentialState } from '@aries-framework/core'
 
 interface Props {
   navigation: any
@@ -19,6 +20,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { connectionId, credentialAttributes, id, metadata } = route?.params?.notification
 
   const connection = useConnectionById(connectionId)
+  const credential = useCredentialById(id)
+
+  useEffect(() => {
+    if(credential?.state === CredentialState.Done){
+      setModalVisible('success')
+    }
+  }, [credential])
 
   const handleAcceptPress = async () => {
     setModalVisible('pending')
@@ -31,8 +39,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       await agent.credentials.acceptOffer(id)
     } catch {
       setModalVisible('failure')
-    } finally {
-      setModalVisible('success')
     }
   }
 
@@ -45,11 +51,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         onPress: async () => {
           setModalVisible('pending')
           try {
-            // await agent.credentials.rejectOffer(credentialId)
+            await agent.credentials.declineOffer(id)
+            setModalVisible('success')
           } catch {
             setModalVisible('failure')
-          } finally {
-            setModalVisible('success')
           }
         },
       },
@@ -60,7 +65,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     <SafeAreaScrollView>
       <ModularView
         title={parseSchema(metadata.schemaId)}
-        subtitle={connection.alias || connection.invitation?.label}
+        subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
             data={credentialAttributes}
