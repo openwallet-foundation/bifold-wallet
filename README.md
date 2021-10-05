@@ -31,7 +31,6 @@ Aries Mobile Agent React Native aims to utilize the [Aries Protocols Test Suite 
 
 ## Install
 
-
 You can also watch a recording of setting up and running the mobile wallet and receiving a credential using the ACA-Py demo. Watch the video [here](https://youtu.be/AomoHvw4lgc) (thanks [@xtrycatchx](https://github.com/xtrycatchx)).
 
 ### Prerequistes
