@@ -12,8 +12,8 @@ const PinEnter: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
 
   const checkPin = async (pin: string) => {
-    const { password } = await Keychain.getGenericPassword({ service: 'passcode' })
-    if (JSON.stringify(pin) === password) {
+    const keychainEntry = await Keychain.getGenericPassword({ service: 'passcode' })
+    if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
       route.params.setAuthenticated(true)
     } else {
       Alert.alert('Incorrect Pin')

@@ -14,8 +14,8 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@aries-framework/core": "0.1.0-alpha.253",
-    "@aries-framework/react-native": "0.1.0-alpha.253",
+    "@aries-framework/core": "0.1.0-alpha.273",
+    "@aries-framework/react-native": "0.1.0-alpha.273",
     "@react-native-community/async-storage": "^1.12.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^5.11.11",
@@ -24,7 +24,7 @@
     "aries-hooks": "file:aries-hooks",
     "axios": "^0.21.0",
     "buffer": "^6.0.3",
-    "indy-sdk-react-native": "^0.1.13",
+    "indy-sdk-react-native": "^0.1.14",
     "luxon": "^2.0.1",
     "patch-package": "^6.4.4",
     "react": "17.0.1",
