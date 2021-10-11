@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { useAgent } from 'aries-hooks'
+import { useAgent, useConnectionById } from 'aries-hooks'
 
 import { QRScanner, Pending, Success, Failure } from 'components'
+import { ConnectionState } from '@aries-framework/core'
 
 interface Props {
   navigation: any
@@ -13,16 +14,25 @@ const Scan: React.FC<Props> = ({ navigation }) => {
 
   const [modalVisible, setModalVisible] = useState<'pending' | 'success' | 'failure' | ''>('')
 
+  const [connectionId, setConnectionId] = useState('')
+  const connection = useConnectionById(connectionId)
+
+  useEffect(() => {
+    if(connection?.state === ConnectionState.Complete){
+      setModalVisible('success')
+    }
+  }, [connection])
+
   const handleCodeScan = async (event: any) => {
     setModalVisible('pending')
     try {
-      await agent.connections.receiveInvitationFromUrl(event.data, {
+      const connectionRecord = await agent.connections.receiveInvitationFromUrl(event.data, {
         autoAcceptConnection: true,
       })
+
+      setConnectionId(connectionRecord.id)
     } catch {
       setModalVisible('failure')
-    } finally {
-      setModalVisible('success')
     }
   }
 

@@ -24,7 +24,7 @@ const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Proof Request', { notification })}>
       <View>
         <Text style={styles.title}>{requestMessage.indyProofRequest.name}</Text>
-        <Text>{connection.alias || connection.invitation?.label}</Text>
+        <Text>{connection?.alias || connection?.invitation?.label}</Text>
       </View>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>
