@@ -42,7 +42,7 @@ You can watch a recording of setting up and running the mobile wallet and receiv
     cd aries-mobile-agent-react-native
     npm install
     ```
-3. (iOS) iOS specific configuration:
+3. (iOS) iOS specific install:
     * Install iOS Pods:
         ```sh
         cd ios
@@ -51,29 +51,34 @@ You can watch a recording of setting up and running the mobile wallet and receiv
     * In the /ios directory, open the project workspace file in Xcode.
     Once the project is open, navigate to the project's Signing & Capabilities tab and apply your personal Apple Developer Account or your organization's team to target AriesBifold and target AriesBifoldTests.
     * Adjust the bundle identifier if needed.
-3. Configure Bifold:
-    In the root directory add an `.env` file containing:
+
+## Configure
+In the root directory add an `.env` file containing:
+```
+MEDIATOR_URL=http://mediator3.test.indiciotech.io:3000?c_i=eyJAdHlwZSI6ICJkaWQ6c292OkJ6Q2JzTlloTXJqSGlxWkRUVUFTSGc7c3BlYy9jb25uZWN0aW9ucy8xLjAvaW52aXRhdGlvbiIsICJAaWQiOiAiYjE5YTM2ZjctZjhiZi00Mjg2LTg4ZjktODM4ZTIyZDI0ZjQxIiwgInJlY2lwaWVudEtleXMiOiBbIkU5VlhKY1pzaGlYcXFMRXd6R3RtUEpCUnBtMjl4dmJMYVpuWktTU0ZOdkE2Il0sICJzZXJ2aWNlRW5kcG9pbnQiOiAiaHR0cDovL21lZGlhdG9yMy50ZXN0LmluZGljaW90ZWNoLmlvOjMwMDAiLCAibGFiZWwiOiAiSW5kaWNpbyBQdWJsaWMgTWVkaWF0b3IifQ==
+GENESIS_URL=https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
+```
+Note - To run your own mediator or use a different network, go [here for advanced configuration](#Advanced-Configuration).
+
+## Run
+
+* Launch the metro bundler: 
+    ```sh
+    npm run start
     ```
-    MEDIATOR_URL=http://mediator3.test.indiciotech.io:3000?c_i=eyJAdHlwZSI6ICJkaWQ6c292OkJ6Q2JzTlloTXJqSGlxWkRUVUFTSGc7c3BlYy9jb25uZWN0aW9ucy8xLjAvaW52aXRhdGlvbiIsICJAaWQiOiAiYjE5YTM2ZjctZjhiZi00Mjg2LTg4ZjktODM4ZTIyZDI0ZjQxIiwgInJlY2lwaWVudEtleXMiOiBbIkU5VlhKY1pzaGlYcXFMRXd6R3RtUEpCUnBtMjl4dmJMYVpuWktTU0ZOdkE2Il0sICJzZXJ2aWNlRW5kcG9pbnQiOiAiaHR0cDovL21lZGlhdG9yMy50ZXN0LmluZGljaW90ZWNoLmlvOjMwMDAiLCAibGFiZWwiOiAiSW5kaWNpbyBQdWJsaWMgTWVkaWF0b3IifQ==
-    GENESIS_URL=https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
-    ```
-    Note - To run your own mediator or use a different network, go [here for advanced configuration](#Advanced-Configuration).
-4. Run Bifold:
-    * Launch the metro bundler: 
+* Open a second terminal and run:
+    * (Android)
         ```sh
-        npm run start
+        npm run android
         ```
-    * Open a second terminal and run:
-        * (Android)
-            ```sh
-            npm run android
-            ```
-        * (iOS)
-            ```sh
-            npm run ios
-            ```
+    * (iOS)
+        ```sh
+        npm run ios
+        ```
     * (iOS) Via Xcode:
         Choose your physical iOS device as the destination. Click the "Play" button to Build and Run.
+
+**NOTE: Bifold does not work on iOS simulators** -- use a physical device instead.
 
 ### Advanced Configuration
 
