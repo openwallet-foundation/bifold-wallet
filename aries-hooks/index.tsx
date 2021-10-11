@@ -23,6 +23,8 @@ import {
 
 import { agentDependencies } from '@aries-framework/react-native'
 
+const TAG = 'Aries-Hooks:'
+
 const AgentContext = createContext<any>({})
 const ConnectionContext = createContext<any>({})
 const CredentialContext = createContext<any>({})
@@ -38,9 +40,12 @@ export const useConnections = (): { connections: ConnectionRecord[]; loading: bo
   return useContext(ConnectionContext)
 }
 
-export const useConnectionById = (id: string): ConnectionRecord => {
+export const useConnectionById = (id: string): ConnectionRecord | undefined => {
   const { connections } = useContext(ConnectionContext)
   const connection = connections.find((c: ConnectionRecord) => c.id === id)
+  if(!connection){
+    console.warn(TAG, `Could not find Connection By ID ${id}`)
+  }
   return connection
 }
 
@@ -55,9 +60,12 @@ export const useCredentials = (): { credentials: CredentialRecord[]; loading: bo
   return useContext(CredentialContext)
 }
 
-export const useCredentialById = (id: string): CredentialRecord => {
+export const useCredentialById = (id: string): CredentialRecord | undefined => {
   const { credentials } = useContext(CredentialContext)
   const credential = credentials.find((c: CredentialRecord) => c.id === id)
+  if(!credential){
+    console.warn(TAG, `Could not find Credential By ID ${id}`)
+  }
   return credential
 }
 
@@ -72,9 +80,12 @@ export const useProofs = (): { proofs: ProofRecord[]; loading: boolean } => {
   return useContext(ProofContext)
 }
 
-export const useProofById = (id: string): ProofRecord => {
+export const useProofById = (id: string): ProofRecord | undefined => {
   const { proofs } = useContext(ProofContext)
   const proof = proofs.find((p: ProofRecord) => p.id === id)
+  if(!proof){
+    console.warn(TAG, `Could not find Proof By ID ${id}`)
+  }
   return proof
 }
 
@@ -133,48 +144,97 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
       const credentials = await agent.credentials.getAll()
       const proofs = await agent.proofs.getAll()
 
-      startConnectionsListener(agent)
-      startCredentialsListener(agent)
-      startProofsListener(agent)
-
       setAgentState({ agent, loading: false })
       setConnectionState({ connections, loading: false })
       setCredentialState({ credentials, loading: false })
       setProofState({ proofs, loading: false })
     } catch (e) {
-      console.error('ARIES HOOKS ERROR IN SET_INITIAL_STATE:', e)
+      console.error(TAG, 'ERROR IN SET_INITIAL_STATE:', e)
     }
   }
 
-  const startConnectionsListener = (agent: Agent) => {
-    const listener = (event: ConnectionStateChangedEvent) => {
-      setConnectionState({
-        ...connectionState,
-        connections: [...connectionState.connections, event.payload.connectionRecord],
-      })
+  useEffect(() => {
+    if(!connectionState.loading){
+      const listener = (event: ConnectionStateChangedEvent) => {
+        console.debug(TAG, "Connection Event", event)
+        
+        let newConnectionsState = connectionState.connections
+        const index = newConnectionsState.findIndex(connection => connection.id === event.payload.connectionRecord.id);
+        if (index > -1){
+          newConnectionsState[index] = event.payload.connectionRecord;
+        } 
+        else {
+          newConnectionsState = [...newConnectionsState, event.payload.connectionRecord]
+        }
+        
+        setConnectionState({
+          loading: connectionState.loading,
+          connections: newConnectionsState,
+        })
+      }
+      agentState.agent?.events.on(ConnectionEventTypes.ConnectionStateChanged, listener)
+
+      return () => {
+        agentState.agent?.events.off(ConnectionEventTypes.ConnectionStateChanged, listener)
+      }
     }
+  }, [connectionState])
 
-    agent.events.on(ConnectionEventTypes.ConnectionStateChanged, listener)
-  }
+  useEffect(() => {
+    if(!credentialState.loading){
+      const listener = async (event: CredentialStateChangedEvent) => {
+        console.debug(TAG, "Credential Event", event)
 
-  const startCredentialsListener = (agent: Agent) => {
-    const listener = async (event: CredentialStateChangedEvent) => {
-      setCredentialState({
-        ...credentialState,
-        credentials: [...credentialState.credentials, event.payload.credentialRecord],
-      })
+        let newCredentialsState = credentialState.credentials
+        const index = newCredentialsState.findIndex(credential => credential.id === event.payload.credentialRecord.id);
+        if (index > -1){
+          newCredentialsState[index] = event.payload.credentialRecord;
+        } 
+        else {
+          newCredentialsState = [...newCredentialsState, event.payload.credentialRecord]
+        }
+
+        setCredentialState({
+          loading: credentialState.loading,
+          credentials: newCredentialsState,
+        })
+      }
+  
+      agentState.agent?.events.on(CredentialEventTypes.CredentialStateChanged, listener)
+
+      return () => {
+        agentState.agent?.events.off(CredentialEventTypes.CredentialStateChanged, listener)
+      }
     }
+  }, [credentialState])
 
-    agent.events.on(CredentialEventTypes.CredentialStateChanged, listener)
-  }
+  useEffect(() => {
+    if(!proofState.loading){
+      const listener = (event: ProofStateChangedEvent) => {
+        console.debug(TAG, "Proof Event", event)
+        
+        let newProofsState = proofState.proofs
+        const index = newProofsState.findIndex(proof => proof.id === event.payload.proofRecord.id);
+        if (index > -1){
+          newProofsState[index] = event.payload.proofRecord;
+        } 
+        else {
+          newProofsState = [...newProofsState, event.payload.proofRecord]
+        }
 
-  const startProofsListener = (agent: Agent) => {
-    const listener = (event: ProofStateChangedEvent) => {
-      setProofState({ ...proofState, proofs: [...proofState.proofs, event.payload.proofRecord] })
+        setProofState({ 
+          loading: proofState.loading, 
+          proofs: newProofsState,
+        })
+      }
+  
+      agentState.agent?.events.on(ProofEventTypes.ProofStateChanged, listener)
+
+      return () => {
+        agentState.agent?.events.off(ProofEventTypes.ProofStateChanged, listener)
+      }
     }
-
-    agent.events.on(ProofEventTypes.ProofStateChanged, listener)
-  }
+  }, [proofState])
 
   return (
     <AgentContext.Provider value={agentState}>
