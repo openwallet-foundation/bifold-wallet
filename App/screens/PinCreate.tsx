@@ -1,23 +1,21 @@
 import React, { useState } from 'react'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
+import { RouteProp } from '@react-navigation/native'
+
+import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
 
 import { Button, TextInput, SafeAreaScrollView } from 'components'
 
-interface IPinCreate {
-  setupScreens: number
-  navigation: any
-  route: any
+interface Props {
+  route: RouteProp<AuthenticateStackParams, 'Create 6-Digit Pin'>
 }
 
-let textInput: any
-let secondTextInput: any
-
-function PinCreate(props: IPinCreate) {
+const PinCreate: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
 
-  const passcodeCreate = async (x: any) => {
+  const passcodeCreate = async (x: string) => {
     const passcode = JSON.stringify(x)
     const description = 'user authentication pin'
     await Keychain.setGenericPassword(description, passcode, {
@@ -25,16 +23,14 @@ function PinCreate(props: IPinCreate) {
     })
   }
 
-  const confirmEntry = (x: any, y: any) => {
+  const confirmEntry = (x: string, y: string) => {
     if (x.length < 6 || y.length < 6) {
       Alert.alert('Pin must be 6 digits in length')
     } else if (x !== y) {
-      textInput.clear()
-      secondTextInput.clear()
       Alert.alert('Pins entered do not match')
     } else {
       passcodeCreate(x)
-      props.route.params.setAuthenticated(true)
+      route?.params?.setAuthenticated(true)
     }
   }
 

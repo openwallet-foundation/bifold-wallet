@@ -1,23 +1,19 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-
 import { useConnections } from 'aries-hooks'
+import type { ConnectionRecord } from '@aries-framework/core'
 
 import { ContactListItem, Text } from 'components'
 import { backgroundColor } from '../globalStyles'
 
-interface Props {
-  navigation: any
-}
-
-const ListContacts: React.FC<Props> = ({ navigation }) => {
+const ListContacts: React.FC = () => {
   const { connections } = useConnections()
 
   return (
     <FlatList
       data={connections}
       renderItem={({ item }) => <ContactListItem contact={item} />}
-      keyExtractor={(item: any) => item.did}
+      keyExtractor={(item: ConnectionRecord) => item.did}
       style={{ backgroundColor }}
       ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>None yet!</Text>}
     />

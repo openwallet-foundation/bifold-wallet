@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput as TI } from 'react-native'
+import { View, Text, StyleSheet, TextInput as TI, TextInputProps } from 'react-native'
 
 import { mainColor, textColor, shadow, borderRadius } from '../../globalStyles'
 
-interface Props {
+interface Props extends TextInputProps {
   label: string
-  placeholder: string
-  maxLength?: number
-  keyboardType?: 'numeric'
-  autoFocus?: boolean
-  secureTextEntry?: boolean
-  value: string
-  onChangeText: any
 }
 
-const TextInput: React.FC<Props> = ({ label, maxLength, placeholder, ...textInputProps }) => {
+const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
   const [focused, setFocused] = useState(false)
 
   return (
@@ -23,8 +16,6 @@ const TextInput: React.FC<Props> = ({ label, maxLength, placeholder, ...textInpu
       <TI
         style={[styles.textInput, focused && { borderColor: mainColor, backgroundColor: 'black' }]}
         selectionColor={mainColor}
-        maxLength={maxLength}
-        placeholder={placeholder}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         {...textInputProps}

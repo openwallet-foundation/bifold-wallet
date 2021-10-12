@@ -1,6 +1,6 @@
 {
-  "name": "aries-hooks",
-  "version": "1.0.0",
+  "name": "@aries-framework/aries-hooks",
+  "version": "1.0.1",
   "description": "",
   "main": "index.tsx",
   "scripts": {
