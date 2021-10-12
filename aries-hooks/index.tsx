@@ -214,7 +214,6 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
           credentials: newCredentialsState,
         })
       }
-
       agentState.agent?.events.on(CredentialEventTypes.CredentialStateChanged, listener)
 
       return () => {
