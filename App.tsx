@@ -13,7 +13,7 @@ import {
 } from '@aries-framework/core'
 import { agentDependencies } from '@aries-framework/react-native'
 
-import AgentProvider from 'aries-hooks'
+import AgentProvider from '@aries-framework/react-hooks'
 
 import TabNavigator from './App/navigators/TabNavigator'
 import AuthenticateStack from './App/navigators/AuthenticateStack'

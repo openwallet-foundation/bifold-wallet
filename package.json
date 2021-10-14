@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@aries-framework/core": "0.1.0-alpha.273",
+    "@aries-framework/react-hooks": "^0.1.2",
     "@aries-framework/react-native": "0.1.0-alpha.273",
     "@formatjs/intl-datetimeformat": "^4.2.3",
     "@formatjs/intl-displaynames": "^5.2.3",
@@ -29,7 +30,6 @@
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
-    "aries-hooks": "file:aries-hooks",
     "axios": "^0.21.0",
     "indy-sdk-react-native": "^0.1.14",
     "luxon": "^2.0.1",

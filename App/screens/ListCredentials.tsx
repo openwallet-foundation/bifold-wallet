@@ -1,6 +1,6 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import { useCredentials } from 'aries-hooks'
+import { useCredentials } from '@aries-framework/react-hooks'
 
 import { CredentialListItem, Text } from 'components'
 
