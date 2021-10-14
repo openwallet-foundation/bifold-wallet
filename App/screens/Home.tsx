@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList } from 'react-native'
 import { CredentialState, ProofState } from '@aries-framework/core'
 
-import { useCredentialByState, useProofByState } from 'aries-hooks'
+import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 
 import {
   Button,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList } from 'react-native'
 
-import { useConnections } from 'aries-hooks'
+import { useConnections } from '@aries-framework/react-hooks'
 
 import { ContactListItem, Text } from 'components'
 import { backgroundColor } from '../globalStyles'

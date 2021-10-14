@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, FlatList, Alert } from 'react-native'
-import { useAgent, useConnectionById, useCredentialById } from 'aries-hooks'
+import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
@@ -23,7 +23,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const credential = useCredentialById(id)
 
   useEffect(() => {
-    if(credential?.state === CredentialState.Done){
+    if (credential?.state === CredentialState.Done) {
       setModalVisible('success')
     }
   }, [credential])

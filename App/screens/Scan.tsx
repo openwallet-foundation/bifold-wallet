@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { useAgent, useConnectionById } from 'aries-hooks'
+import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 
 import { QRScanner, Pending, Success, Failure } from 'components'
 import { ConnectionState } from '@aries-framework/core'
@@ -18,7 +18,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   const connection = useConnectionById(connectionId)
 
   useEffect(() => {
-    if(connection?.state === ConnectionState.Complete){
+    if (connection?.state === ConnectionState.Complete) {
       setModalVisible('success')
     }
   }, [connection])
