@@ -9,6 +9,10 @@ import AgentProvider from 'aries-hooks'
 
 import TabNavigator from './App/navigators/TabNavigator'
 import AuthenticateStack from './App/navigators/AuthenticateStack'
+import { Provider } from 'react-redux'
+import { applyMiddleware, createStore } from 'redux'
+import reducers from './App/appRedux/reducers'
+import ReduxThunk from 'redux-thunk'
 
 const agentConfig = {
   label: 'Aries Bifold',
@@ -26,11 +30,13 @@ const App = () => {
   const [authenticated, setAuthenticated] = useState(false)
 
   return (
-    <AgentProvider agentConfig={agentConfig} genesisUrl={Config.GENESIS_URL}>
-      <View style={{ height: '100%' }}>
-        {authenticated ? <TabNavigator /> : <AuthenticateStack setAuthenticated={setAuthenticated} />}
-      </View>
-    </AgentProvider>
+    <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+      <AgentProvider agentConfig={agentConfig} genesisUrl={Config.GENESIS_URL}>
+        <View style={{ height: '100%' }}>
+          {authenticated ? <TabNavigator /> : <AuthenticateStack setAuthenticated={setAuthenticated} />}
+        </View>
+      </AgentProvider>
+    </Provider>
   )
 }
 

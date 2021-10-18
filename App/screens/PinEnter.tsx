@@ -1,20 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
 import { TextInput, SafeAreaScrollView, Button } from 'components'
+import { connect } from 'react-redux'
+import { signInUserAction } from '../appRedux/actions'
 
 interface Props {
   route: any
 }
 
-const PinEnter: React.FC<Props> = ({ route }) => {
+const PinEnter: React.FC<Props> = (props) => {
   const [pin, setPin] = useState('')
+  const { loggedIn, forPin, errorMessage, operationStamp, signInUserAction, route } = props
+
+  useEffect(() => {
+    if (loggedIn) {
+      route.params.setAuthenticated(true)
+    } else if (errorMessage) {
+      Alert.alert(errorMessage)
+    }
+  }, [loggedIn, errorMessage, operationStamp])
 
   const checkPin = async (pin: string) => {
     const keychainEntry = await Keychain.getGenericPassword({ service: 'passcode' })
     if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
-      route.params.setAuthenticated(true)
+      // route.params.setAuthenticated(true)
     } else {
       Alert.alert('Incorrect Pin')
     }
@@ -41,11 +52,20 @@ const PinEnter: React.FC<Props> = ({ route }) => {
         title="Submit"
         onPress={() => {
           Keyboard.dismiss()
-          checkPin(pin)
+          // checkPin(pin)
+          signInUserAction(pin)
         }}
       />
     </SafeAreaScrollView>
   )
 }
 
-export default PinEnter
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.auth.loggedIn,
+    forPin: state.auth.pin,
+    errorMessage: state.auth.error,
+    operationStamp: state.auth.operation,
+  }
+}
+export default connect(mapStateToProps, { signInUserAction })(PinEnter)

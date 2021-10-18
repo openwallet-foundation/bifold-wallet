@@ -8,6 +8,8 @@ import PinEnter from '../screens/PinEnter'
 import Terms from '../screens/Terms'
 
 import defaultStackOptions from './defaultStackOptions'
+import { connect } from 'react-redux'
+import { Alert } from 'react-native'
 
 const Stack = createStackNavigator()
 
@@ -15,8 +17,9 @@ interface Props {
   setAuthenticated: any
 }
 
-const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
+const AuthenticateStack: React.FC<Props> = (props) => {
   const [firstLogin, setFirstLogin] = useState(true)
+  const { setAuthenticated } = props
 
   const checkFirstLogin = async () => {
     try {
