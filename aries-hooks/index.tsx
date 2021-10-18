@@ -43,7 +43,7 @@ export const useConnections = (): { connections: ConnectionRecord[]; loading: bo
 export const useConnectionById = (id: string): ConnectionRecord | undefined => {
   const { connections } = useContext(ConnectionContext)
   const connection = connections.find((c: ConnectionRecord) => c.id === id)
-  if(!connection){
+  if (!connection) {
     console.warn(TAG, `Could not find Connection By ID ${id}`)
   }
   return connection
@@ -63,7 +63,7 @@ export const useCredentials = (): { credentials: CredentialRecord[]; loading: bo
 export const useCredentialById = (id: string): CredentialRecord | undefined => {
   const { credentials } = useContext(CredentialContext)
   const credential = credentials.find((c: CredentialRecord) => c.id === id)
-  if(!credential){
+  if (!credential) {
     console.warn(TAG, `Could not find Credential By ID ${id}`)
   }
   return credential
@@ -83,7 +83,7 @@ export const useProofs = (): { proofs: ProofRecord[]; loading: boolean } => {
 export const useProofById = (id: string): ProofRecord | undefined => {
   const { proofs } = useContext(ProofContext)
   const proof = proofs.find((p: ProofRecord) => p.id === id)
-  if(!proof){
+  if (!proof) {
     console.warn(TAG, `Could not find Proof By ID ${id}`)
   }
   return proof
@@ -154,19 +154,18 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
   }
 
   useEffect(() => {
-    if(!connectionState.loading){
+    if (!connectionState.loading) {
       const listener = (event: ConnectionStateChangedEvent) => {
-        console.debug(TAG, "Connection Event", event)
-        
+        console.debug(TAG, 'Connection Event', event)
+
         let newConnectionsState = connectionState.connections
-        const index = newConnectionsState.findIndex(connection => connection.id === event.payload.connectionRecord.id);
-        if (index > -1){
-          newConnectionsState[index] = event.payload.connectionRecord;
-        } 
-        else {
+        const index = newConnectionsState.findIndex((connection) => connection.id === event.payload.connectionRecord.id)
+        if (index > -1) {
+          newConnectionsState[index] = event.payload.connectionRecord
+        } else {
           newConnectionsState = [...newConnectionsState, event.payload.connectionRecord]
         }
-        
+
         setConnectionState({
           loading: connectionState.loading,
           connections: newConnectionsState,
@@ -181,16 +180,15 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
   }, [connectionState])
 
   useEffect(() => {
-    if(!credentialState.loading){
+    if (!credentialState.loading) {
       const listener = async (event: CredentialStateChangedEvent) => {
-        console.debug(TAG, "Credential Event", event)
+        console.debug(TAG, 'Credential Event', event)
 
         let newCredentialsState = credentialState.credentials
-        const index = newCredentialsState.findIndex(credential => credential.id === event.payload.credentialRecord.id);
-        if (index > -1){
-          newCredentialsState[index] = event.payload.credentialRecord;
-        } 
-        else {
+        const index = newCredentialsState.findIndex((credential) => credential.id === event.payload.credentialRecord.id)
+        if (index > -1) {
+          newCredentialsState[index] = event.payload.credentialRecord
+        } else {
           newCredentialsState = [...newCredentialsState, event.payload.credentialRecord]
         }
 
@@ -199,7 +197,7 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
           credentials: newCredentialsState,
         })
       }
-  
+
       agentState.agent?.events.on(CredentialEventTypes.CredentialStateChanged, listener)
 
       return () => {
@@ -209,25 +207,24 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
   }, [credentialState])
 
   useEffect(() => {
-    if(!proofState.loading){
+    if (!proofState.loading) {
       const listener = (event: ProofStateChangedEvent) => {
-        console.debug(TAG, "Proof Event", event)
-        
+        console.debug(TAG, 'Proof Event', event)
+
         let newProofsState = proofState.proofs
-        const index = newProofsState.findIndex(proof => proof.id === event.payload.proofRecord.id);
-        if (index > -1){
-          newProofsState[index] = event.payload.proofRecord;
-        } 
-        else {
+        const index = newProofsState.findIndex((proof) => proof.id === event.payload.proofRecord.id)
+        if (index > -1) {
+          newProofsState[index] = event.payload.proofRecord
+        } else {
           newProofsState = [...newProofsState, event.payload.proofRecord]
         }
 
-        setProofState({ 
-          loading: proofState.loading, 
+        setProofState({
+          loading: proofState.loading,
           proofs: newProofsState,
         })
       }
-  
+
       agentState.agent?.events.on(ProofEventTypes.ProofStateChanged, listener)
 
       return () => {

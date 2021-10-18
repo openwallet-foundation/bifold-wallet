@@ -23,7 +23,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const credential = useCredentialById(id)
 
   useEffect(() => {
-    if(credential?.state === CredentialState.Done){
+    if (credential?.state === CredentialState.Done) {
       setModalVisible('success')
     }
   }, [credential])
