@@ -1,0 +1,155 @@
+name: Native Build & Test
+
+env:
+  cacheId: '3' # increment to expire the cache
+
+on:
+  push:
+    paths:
+      - 'ios/**'
+      - 'android/**'
+      - '**/package-lock.json'
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+          registry-url: "https://registry.npmjs.org"
+      
+      - name: Configure ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+
+        # GitHub recommends not caching node_modules but rather
+        # .npm because it can break across Node versions and
+        #  won't work with npm ci.
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ env.cacheId }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.cacheId }}-
+
+      - name: Cache pod dependencies
+        id: pod-cache
+        uses: actions/cache@v1
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ env.cacheId }}-${{ hashFiles('**/Podfile.lock ') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-${{ env.cacheId }}-
+
+      # Watch for changes to the `App` and `iOS` paths, use
+      # git for cache keys.
+      - name: Generate cache key
+        run: |
+          echo $(git rev-parse HEAD:App) > ./dd-cache-key.txt
+          echo $(git rev-parse HEAD:ios) >> ./dd-cache-key.txt
+
+      - name: Cache derived data
+        uses: actions/cache@v1
+        with:
+          path: ios/xbuild/Build
+          key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
+
+      - name: Install react native dependencies
+        run: |
+          npm ci && \
+          git status
+
+      - name: Install iOS dependencies
+        # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
+        working-directory: ./ios
+        run: |
+          gem install cocoapods && \
+          pod install && \
+          git status && \
+          git diff Podfile.lock
+
+      - name: Run debug build
+        # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
+        working-directory: ./ios
+        run: |
+          xcodebuild \
+          -workspace AriesBifold.xcworkspace \
+          -scheme AriesBifold \
+          -configuration Debug \
+          -derivedDataPath xbuild \
+          build \
+          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO
+  
+      # This is a 1G file that adds little to speeding up
+      # the build but does impact cache size.
+      - name: Cleanup large artifacts
+        working-directory: ./ios
+        run: |
+          rm -rf build/Build/Products/Debug-iphoneos/AriesBifold.app
+
+  build-android:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compile-sdk: [30]
+        build-tools: [30.0.2]
+        sdk-tools:   [4333796]
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: setup ubuntu
+        run: |
+          sudo apt-get --quiet update --yes
+          sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+      
+      - name: setup JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      
+      - name: download Android SDK
+        working-directory: ./android
+        run: |
+          wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${{ matrix.sdk-tools }}.zip
+          unzip -d android-sdk-linux android-sdk.zip
+          sudo mkdir -p /root/.android
+          sudo touch /root/.android/repositories.cfg
+          echo y | android-sdk-linux/tools/bin/sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
+          echo y | android-sdk-linux/tools/bin/sdkmanager "platform-tools" >/dev/null
+          echo y | android-sdk-linux/tools/bin/sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
+          export ANDROID_HOME=$PWD/android-sdk-linux
+          export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
+          chmod +x ./gradlew
+          set +o pipefail
+          yes | android-sdk-linux/tools/bin/sdkmanager --licenses
+          set -o pipefail
+
+        # GitHub recommends not caching node_modules but rather
+        # .npm because it can break across Node versions and
+        #  won't work with npm ci.
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ env.cacheId }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.cacheId }}-
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Android Debug Build
+        working-directory: ./android
+        run: ./gradlew assembleDebug
