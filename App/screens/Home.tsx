@@ -5,7 +5,6 @@ import { CredentialState, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 
 import {
-  Button,
   SafeAreaScrollView,
   AppHeaderLarge,
   ModularView,
@@ -14,18 +13,13 @@ import {
   Text,
 } from 'components'
 
-interface Props {
-  navigation: any
-}
-
-const Home: React.FC<Props> = ({ navigation }) => {
+const Home: React.FC = () => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
 
   return (
     <SafeAreaScrollView>
       <AppHeaderLarge />
-      <Button title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
       <ModularView
         title="Notifications"
         content={
