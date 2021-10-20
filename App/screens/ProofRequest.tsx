@@ -44,13 +44,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [proof])
 
   const getRetrievedCredentials = async () => {
-    const retrievedCreds = await agent.proofs.getRequestedCredentialsForProofRequest(
+    const retrievedCreds = await agent?.proofs.getRequestedCredentialsForProofRequest(
       requestMessage.indyProofRequest,
       undefined
     )
 
     setRetrievedCredentials(retrievedCreds)
-    setRetrievedCredentialsDisplay(transformAttributes(retrievedCreds.requestedAttributes))
+    setRetrievedCredentialsDisplay(transformAttributes(retrievedCreds?.requestedAttributes))
   }
 
   useEffect(() => {
@@ -64,10 +64,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
     }, 15000)
 
-    const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
+    const automaticRequestedCreds = agent?.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
 
     try {
-      await agent.proofs.acceptRequest(id, automaticRequestedCreds)
+      await agent?.proofs.acceptRequest(id, automaticRequestedCreds)
     } catch {
       setModalVisible('failure')
     }

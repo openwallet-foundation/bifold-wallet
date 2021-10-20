@@ -26,7 +26,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   const handleCodeScan = async (event: any) => {
     setModalVisible('pending')
     try {
-      const connectionRecord = await agent.connections.receiveInvitationFromUrl(event.data, {
+      const connectionRecord = await agent?.connections.receiveInvitationFromUrl(event.data, {
         autoAcceptConnection: true,
       })
 

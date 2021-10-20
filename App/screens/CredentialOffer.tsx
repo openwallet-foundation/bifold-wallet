@@ -36,7 +36,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }, 10000)
 
     try {
-      await agent.credentials.acceptOffer(id)
+      await agent?.credentials.acceptOffer(id)
     } catch {
       setModalVisible('failure')
     }
@@ -51,7 +51,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         onPress: async () => {
           setModalVisible('pending')
           try {
-            await agent.credentials.declineOffer(id)
+            await agent?.credentials.declineOffer(id)
             setModalVisible('success')
           } catch {
             setModalVisible('failure')
