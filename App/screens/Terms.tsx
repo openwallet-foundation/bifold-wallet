@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import type { StackNavigationProp } from '@react-navigation/stack'
+import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
 
 import { SafeAreaScrollView, Button, AppHeaderLarge, ModularView, CheckBoxRow } from 'components'
 
 interface Props {
-  navigation: any
+  navigation: StackNavigationProp<AuthenticateStackParams, 'Terms & Conditions'>
 }
 
 const mockTitle = 'Terms of Service'

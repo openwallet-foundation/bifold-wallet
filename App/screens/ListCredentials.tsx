@@ -1,16 +1,13 @@
 import React from 'react'
 import { FlatList } from 'react-native'
 import { useCredentials } from '@aries-framework/react-hooks'
+import type { CredentialRecord } from '@aries-framework/core'
 
 import { CredentialListItem, Text } from 'components'
 
 import { backgroundColor } from '../globalStyles'
 
-interface Props {
-  navigation: any
-}
-
-const ListCredentials: React.FC<Props> = ({ navigation }) => {
+const ListCredentials: React.FC = () => {
   const { credentials } = useCredentials()
 
   return (
@@ -18,7 +15,7 @@ const ListCredentials: React.FC<Props> = ({ navigation }) => {
       data={credentials}
       renderItem={({ item }) => <CredentialListItem credential={item} />}
       style={{ backgroundColor }}
-      keyExtractor={(item: any) => item.credentialId}
+      keyExtractor={(item: CredentialRecord) => String(item.credentialId)}
       ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>None yet!</Text>}
     />
   )

@@ -7,7 +7,13 @@ import ProofRequest from '../screens/ProofRequest'
 
 import defaultStackOptions from './defaultStackOptions'
 
-const Stack = createStackNavigator()
+export type HomeStackParams = {
+  Home: undefined
+  'Credential Offer': { credentialId: string }
+  'Proof Request': undefined
+}
+
+const Stack = createStackNavigator<HomeStackParams>()
 
 function HomeStack() {
   return (

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Text as T, StyleSheet } from 'react-native'
+import { Text as T, StyleSheet, TextStyle } from 'react-native'
 
 import { textColor } from '../../globalStyles'
 
 interface Props {
   children: React.ReactNode
-  style?: any
+  style?: TextStyle
 }
 
 const Text: React.FC<Props> = ({ children, style }) => {

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
+import type { RouteProp } from '@react-navigation/native'
+import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
 
 import { TextInput, SafeAreaScrollView, Button } from 'components'
 
 interface Props {
-  route: any
+  route: RouteProp<AuthenticateStackParams, 'Enter Pin'>
 }
 
 const PinEnter: React.FC<Props> = ({ route }) => {
