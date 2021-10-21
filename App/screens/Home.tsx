@@ -1,8 +1,10 @@
 import React from 'react'
 import { FlatList } from 'react-native'
 import { CredentialState, ProofState } from '@aries-framework/core'
-
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { useCredentialByState, useProofByState } from 'aries-hooks'
+
+import type { TabNavigatorParams } from 'navigators/TabNavigator'
 
 import {
   Button,
@@ -15,7 +17,7 @@ import {
 } from 'components'
 
 interface Props {
-  navigation: any
+  navigation: BottomTabNavigationProp<TabNavigatorParams, 'Home'>
 }
 
 const Home: React.FC<Props> = ({ navigation }) => {

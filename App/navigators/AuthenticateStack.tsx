@@ -9,10 +9,16 @@ import Terms from '../screens/Terms'
 
 import defaultStackOptions from './defaultStackOptions'
 
-const Stack = createStackNavigator()
+export type AuthenticateStackParams = {
+  'Terms & Conditions': undefined
+  'Create 6-Digit Pin': { setAuthenticated: (auth: boolean) => void } | undefined
+  'Enter Pin': { setAuthenticated: (auth: boolean) => void }
+}
+
+const Stack = createStackNavigator<AuthenticateStackParams>()
 
 interface Props {
-  setAuthenticated: any
+  setAuthenticated: (auth: boolean) => void
 }
 
 const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {

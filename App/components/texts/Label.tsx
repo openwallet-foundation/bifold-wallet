@@ -5,7 +5,7 @@ import Text from './Text'
 
 interface Props {
   title: string
-  subtitle: string
+  subtitle?: string
   label?: string
 }
 

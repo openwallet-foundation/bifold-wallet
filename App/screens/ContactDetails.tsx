@@ -1,25 +1,29 @@
 import React, { useEffect } from 'react'
+import { RouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import type { ContactStackParams } from 'navigators/ContactStack'
+import { useConnectionById } from 'aries-hooks'
 
-import { SafeAreaScrollView, Label, Text } from 'components'
+import { SafeAreaScrollView, Label } from 'components'
 
 interface Props {
-  navigation: any
-  route: any
+  navigation: StackNavigationProp<ContactStackParams, 'Contact Details'>
+  route: RouteProp<ContactStackParams, 'Contact Details'>
 }
 
 const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
-  const { alias, invitation, createdAt, state } = route?.params?.contact
+  const connection = useConnectionById(route?.params?.connectionId)
 
   useEffect(() => {
     navigation.setOptions({
-      title: alias,
+      title: connection?.alias,
     })
   }, [])
 
   return (
     <SafeAreaScrollView>
-      <Label title="Created" subtitle={JSON.stringify(createdAt)} />
-      <Label title="Connection State" subtitle={state} />
+      <Label title="Created" subtitle={JSON.stringify(connection?.createdAt)} />
+      <Label title="Connection State" subtitle={connection?.state} />
     </SafeAreaScrollView>
   )
 }

@@ -4,7 +4,11 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Settings from '../screens/Settings'
 import defaultStackOptions from './defaultStackOptions'
 
-const Stack = createStackNavigator()
+type SettingsStackParams = {
+  Settings: undefined
+}
+
+const Stack = createStackNavigator<SettingsStackParams>()
 
 function SettingStack() {
   return (
