@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import type { CredentialRecord } from '@aries-framework/core'
 
 import Title from '../texts/Title'
 import Text from '../texts/Text'
@@ -8,7 +9,7 @@ import { shadow, borderRadius } from '../../globalStyles'
 import { parseSchema } from '../../helpers'
 
 interface Props {
-  credential: any
+  credential: CredentialRecord
 }
 
 const CredentialListItem: React.FC<Props> = ({ credential }) => {

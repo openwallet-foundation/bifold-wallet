@@ -19,6 +19,9 @@ import {
   ProofRecord,
   CredentialRecord,
   WsOutboundTransport,
+  BasicMessageRecord,
+  BasicMessageReceivedEvent,
+  BasicMessageEventTypes,
 } from '@aries-framework/core'
 
 import { agentDependencies } from '@aries-framework/react-native'
@@ -29,6 +32,7 @@ const AgentContext = createContext<any>({})
 const ConnectionContext = createContext<any>({})
 const CredentialContext = createContext<any>({})
 const ProofContext = createContext<any>({})
+const BasicMessageContext = createContext<any>({})
 
 // Agent
 export const useAgent = (): { agent: Agent; loading: boolean } => {
@@ -43,7 +47,7 @@ export const useConnections = (): { connections: ConnectionRecord[]; loading: bo
 export const useConnectionById = (id: string): ConnectionRecord | undefined => {
   const { connections } = useContext(ConnectionContext)
   const connection = connections.find((c: ConnectionRecord) => c.id === id)
-  if(!connection){
+  if (!connection) {
     console.warn(TAG, `Could not find Connection By ID ${id}`)
   }
   return connection
@@ -63,7 +67,7 @@ export const useCredentials = (): { credentials: CredentialRecord[]; loading: bo
 export const useCredentialById = (id: string): CredentialRecord | undefined => {
   const { credentials } = useContext(CredentialContext)
   const credential = credentials.find((c: CredentialRecord) => c.id === id)
-  if(!credential){
+  if (!credential) {
     console.warn(TAG, `Could not find Credential By ID ${id}`)
   }
   return credential
@@ -83,7 +87,7 @@ export const useProofs = (): { proofs: ProofRecord[]; loading: boolean } => {
 export const useProofById = (id: string): ProofRecord | undefined => {
   const { proofs } = useContext(ProofContext)
   const proof = proofs.find((p: ProofRecord) => p.id === id)
-  if(!proof){
+  if (!proof) {
     console.warn(TAG, `Could not find Proof By ID ${id}`)
   }
   return proof
@@ -95,10 +99,17 @@ export const useProofByState = (state: ProofState): ProofRecord[] => {
   return proofs
 }
 
+//BasicMessages
+export const useBasicMessagesByConnectionId = (connectionId: string): BasicMessageRecord[] => {
+  const { basicMessages } = useContext(BasicMessageContext)
+  const connectionMessages = basicMessages.filter((m: BasicMessageRecord) => m.connectionId === connectionId)
+  return connectionMessages
+}
+
 interface Props {
   agentConfig: InitConfig
   genesisUrl: string
-  children: any
+  children: React.ReactChildren
 }
 
 const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) => {
@@ -121,6 +132,10 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     proofs: [],
     loading: true,
   })
+  const [basicMessageState, setBasicMessageState] = useState<{
+    basicMessages: BasicMessageRecord[] | []
+    loading: boolean
+  }>({ basicMessages: [], loading: true })
 
   useEffect(() => {
     setInitialState()
@@ -143,30 +158,31 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
       const connections = await agent.connections.getAll()
       const credentials = await agent.credentials.getAll()
       const proofs = await agent.proofs.getAll()
+      const basicMessages = await agent.basicMessages.findAllByQuery({})
 
       setAgentState({ agent, loading: false })
       setConnectionState({ connections, loading: false })
       setCredentialState({ credentials, loading: false })
       setProofState({ proofs, loading: false })
+      setBasicMessageState({ basicMessages, loading: false })
     } catch (e) {
       console.error(TAG, 'ERROR IN SET_INITIAL_STATE:', e)
     }
   }
 
   useEffect(() => {
-    if(!connectionState.loading){
+    if (!connectionState.loading) {
       const listener = (event: ConnectionStateChangedEvent) => {
-        console.debug(TAG, "Connection Event", event)
-        
+        console.debug(TAG, 'Connection Event', event)
+
         let newConnectionsState = connectionState.connections
-        const index = newConnectionsState.findIndex(connection => connection.id === event.payload.connectionRecord.id);
-        if (index > -1){
-          newConnectionsState[index] = event.payload.connectionRecord;
-        } 
-        else {
+        const index = newConnectionsState.findIndex((connection) => connection.id === event.payload.connectionRecord.id)
+        if (index > -1) {
+          newConnectionsState[index] = event.payload.connectionRecord
+        } else {
           newConnectionsState = [...newConnectionsState, event.payload.connectionRecord]
         }
-        
+
         setConnectionState({
           loading: connectionState.loading,
           connections: newConnectionsState,
@@ -181,16 +197,15 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
   }, [connectionState])
 
   useEffect(() => {
-    if(!credentialState.loading){
+    if (!credentialState.loading) {
       const listener = async (event: CredentialStateChangedEvent) => {
-        console.debug(TAG, "Credential Event", event)
+        console.debug(TAG, 'Credential Event', event)
 
         let newCredentialsState = credentialState.credentials
-        const index = newCredentialsState.findIndex(credential => credential.id === event.payload.credentialRecord.id);
-        if (index > -1){
-          newCredentialsState[index] = event.payload.credentialRecord;
-        } 
-        else {
+        const index = newCredentialsState.findIndex((credential) => credential.id === event.payload.credentialRecord.id)
+        if (index > -1) {
+          newCredentialsState[index] = event.payload.credentialRecord
+        } else {
           newCredentialsState = [...newCredentialsState, event.payload.credentialRecord]
         }
 
@@ -199,7 +214,6 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
           credentials: newCredentialsState,
         })
       }
-  
       agentState.agent?.events.on(CredentialEventTypes.CredentialStateChanged, listener)
 
       return () => {
@@ -209,25 +223,24 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
   }, [credentialState])
 
   useEffect(() => {
-    if(!proofState.loading){
+    if (!proofState.loading) {
       const listener = (event: ProofStateChangedEvent) => {
-        console.debug(TAG, "Proof Event", event)
-        
+        console.debug(TAG, 'Proof Event', event)
+
         let newProofsState = proofState.proofs
-        const index = newProofsState.findIndex(proof => proof.id === event.payload.proofRecord.id);
-        if (index > -1){
-          newProofsState[index] = event.payload.proofRecord;
-        } 
-        else {
+        const index = newProofsState.findIndex((proof) => proof.id === event.payload.proofRecord.id)
+        if (index > -1) {
+          newProofsState[index] = event.payload.proofRecord
+        } else {
           newProofsState = [...newProofsState, event.payload.proofRecord]
         }
 
-        setProofState({ 
-          loading: proofState.loading, 
+        setProofState({
+          loading: proofState.loading,
           proofs: newProofsState,
         })
       }
-  
+
       agentState.agent?.events.on(ProofEventTypes.ProofStateChanged, listener)
 
       return () => {
@@ -236,11 +249,42 @@ const AgentProvider: React.FC<Props> = ({ agentConfig, genesisUrl, children }) =
     }
   }, [proofState])
 
+  useEffect(() => {
+    if (!basicMessageState.loading) {
+      const listener = (event: BasicMessageReceivedEvent) => {
+        console.debug(TAG, 'Basic Message Event', event)
+
+        let newBasicMessageState = basicMessageState.basicMessages
+        const index = newBasicMessageState.findIndex(
+          (basicMessage) => basicMessage.id === event.payload.basicMessageRecord.id
+        )
+        if (index > -1) {
+          newBasicMessageState[index] = event.payload.basicMessageRecord
+        } else {
+          newBasicMessageState = [...newBasicMessageState, event.payload.basicMessageRecord]
+        }
+
+        setBasicMessageState({
+          loading: basicMessageState.loading,
+          basicMessages: newBasicMessageState,
+        })
+      }
+
+      agentState.agent?.events.on(BasicMessageEventTypes.BasicMessageReceived, listener)
+
+      return () => {
+        agentState.agent?.events.off(BasicMessageEventTypes.BasicMessageReceived, listener)
+      }
+    }
+  }, [basicMessageState])
+
   return (
     <AgentContext.Provider value={agentState}>
       <ConnectionContext.Provider value={connectionState}>
         <CredentialContext.Provider value={credentialState}>
-          <ProofContext.Provider value={proofState}>{children}</ProofContext.Provider>
+          <ProofContext.Provider value={proofState}>
+            <BasicMessageContext.Provider value={basicMessageState}>{children}</BasicMessageContext.Provider>
+          </ProofContext.Provider>
         </CredentialContext.Provider>
       </ConnectionContext.Provider>
     </AgentContext.Provider>

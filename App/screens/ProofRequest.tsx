@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { FlatList, Alert } from 'react-native'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import type { RouteProp } from '@react-navigation/native'
+import type { StackNavigationProp } from '@react-navigation/stack'
+import type { HomeStackParams } from 'navigators/HomeStack'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
@@ -8,8 +11,8 @@ import { parseSchema } from '../helpers'
 import { ProofState } from '@aries-framework/core'
 
 interface Props {
-  navigation: any
-  route: any
+  navigation: StackNavigationProp<HomeStackParams, 'Proof Request'>
+  route: RouteProp<HomeStackParams, 'Proof Request'>
 }
 
 const transformAttributes = (attributes: any) => {
@@ -30,12 +33,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
-  const [retrievedCredentials, setRetrievedCredentials] = useState<any>()
-  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<any>()
+  const [retrievedCredentials, setRetrievedCredentials] = useState()
+  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState()
 
-  const { id, connectionId, requestMessage } = route.params.notification
-  const connection = useConnectionById(connectionId)
-  const proof = useProofById(id)
+  const proof = useProofById(route?.params?.proofId)
+  const connection = useConnectionById(proof?.connectionId)
 
   useEffect(() => {
     if (proof?.state === ProofState.Done) {
@@ -44,8 +46,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [proof])
 
   const getRetrievedCredentials = async () => {
+<<<<<<< HEAD
     const retrievedCreds = await agent?.proofs.getRequestedCredentialsForProofRequest(
       requestMessage.indyProofRequest,
+=======
+    const retrievedCreds = await agent.proofs.getRequestedCredentialsForProofRequest(
+      proof?.requestMessage?.indyProofRequest,
+>>>>>>> main
       undefined
     )
 
@@ -67,7 +74,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     const automaticRequestedCreds = agent?.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
 
     try {
+<<<<<<< HEAD
       await agent?.proofs.acceptRequest(id, automaticRequestedCreds)
+=======
+      await agent.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
+>>>>>>> main
     } catch {
       setModalVisible('failure')
     }
@@ -96,7 +107,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaScrollView>
       <ModularView
-        title={requestMessage.indyProofRequest.name || connection?.alias || connection?.invitation?.label}
+        title={proof?.requestMessage?.indyProofRequest?.name || connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
             data={retrievedCredentialsDisplay}

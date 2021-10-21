@@ -10,7 +10,15 @@ import SettingStack from './SettingStack'
 
 import { mainColor } from '../globalStyles'
 
-const Tab = createBottomTabNavigator()
+export type TabNavigatorParams = {
+  Home: undefined
+  Contacts: undefined
+  Scan: undefined
+  Credentials: undefined
+  Settings: undefined
+}
+
+const Tab = createBottomTabNavigator<TabNavigatorParams>()
 
 function TabNavigator() {
   return (

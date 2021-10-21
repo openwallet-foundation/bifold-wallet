@@ -2,6 +2,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import type { CredentialRecord } from '@aries-framework/core'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -11,7 +12,7 @@ import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
 import { parseSchema } from '../../helpers'
 
 interface Props {
-  notification: any
+  notification: CredentialRecord
 }
 
 const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
@@ -28,7 +29,7 @@ const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
     >
       <View>
         <Text style={styles.title}>{parseSchema(metadata?.schemaId)}</Text>
-        <Text>{connection?.alias || connection.invitation?.label}</Text>
+        <Text>{connection?.alias || connection?.invitation?.label}</Text>
       </View>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>

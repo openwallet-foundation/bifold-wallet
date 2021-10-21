@@ -2,6 +2,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import { ProofRecord } from '@aries-framework/core'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -10,7 +11,7 @@ import Text from '../texts/Text'
 import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
 
 interface Props {
-  notification: any
+  notification: ProofRecord
 }
 
 const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
@@ -23,7 +24,7 @@ const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Proof Request', { notification })}>
       <View>
-        <Text style={styles.title}>{requestMessage.indyProofRequest.name}</Text>
+        <Text style={styles.title}>{requestMessage?.indyProofRequest?.name}</Text>
         <Text>{connection?.alias || connection?.invitation?.label}</Text>
       </View>
       <Icon name="chevron-right" color={textColor} size={30} />

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, FlatList, Alert } from 'react-native'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import type { StackNavigationProp } from '@react-navigation/stack'
+import type { RouteProp } from '@react-navigation/native'
+import type { HomeStackParams } from 'navigators/HomeStack'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
@@ -8,8 +11,8 @@ import { parseSchema } from '../helpers'
 import { CredentialState } from '@aries-framework/core'
 
 interface Props {
-  navigation: any
-  route: any
+  navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
+  route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
@@ -17,10 +20,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
 
-  const { connectionId, credentialAttributes, id, metadata } = route?.params?.notification
+  const credentialId = route?.params?.credentialId
 
-  const connection = useConnectionById(connectionId)
-  const credential = useCredentialById(id)
+  const credential = useCredentialById(credentialId)
+  const connection = useConnectionById(credential?.connectionId)
 
   useEffect(() => {
     if (credential?.state === CredentialState.Done) {
@@ -36,7 +39,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }, 10000)
 
     try {
-      await agent?.credentials.acceptOffer(id)
+      await agent?.credentials.acceptOffer(credentialId)
     } catch {
       setModalVisible('failure')
     }
@@ -51,7 +54,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         onPress: async () => {
           setModalVisible('pending')
           try {
-            await agent?.credentials.declineOffer(id)
+            await agent?.credentials.declineOffer(credentialId)
             setModalVisible('success')
           } catch {
             setModalVisible('failure')
@@ -64,12 +67,12 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaScrollView>
       <ModularView
-        title={parseSchema(metadata.schemaId)}
+        title={parseSchema(credential?.metadata.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
-            data={credentialAttributes}
-            keyExtractor={(item) => item.id}
+            data={credential?.credentialAttributes}
+            keyExtractor={(item) => item.name}
             renderItem={({ item }) => <Label title={item.name} subtitle={item.value} />}
           />
         }

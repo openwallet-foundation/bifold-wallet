@@ -3,13 +3,11 @@ import { View } from 'react-native'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 
 import { QRScanner, Pending, Success, Failure } from 'components'
+import type { BarCodeReadEvent } from 'react-native-camera'
+
 import { ConnectionState } from '@aries-framework/core'
 
-interface Props {
-  navigation: any
-}
-
-const Scan: React.FC<Props> = ({ navigation }) => {
+const Scan: React.FC = () => {
   const { agent } = useAgent()
 
   const [modalVisible, setModalVisible] = useState<'pending' | 'success' | 'failure' | ''>('')
@@ -23,7 +21,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
     }
   }, [connection])
 
-  const handleCodeScan = async (event: any) => {
+  const handleCodeScan = async (event: BarCodeReadEvent) => {
     setModalVisible('pending')
     try {
       const connectionRecord = await agent?.connections.receiveInvitationFromUrl(event.data, {
