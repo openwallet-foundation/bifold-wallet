@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { RNCamera } from 'react-native-camera'
+import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
 
 interface Props {
-  handleCodeScan: (event: any) => Promise<void>
+  handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
 }
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {

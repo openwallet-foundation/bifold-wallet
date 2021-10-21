@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { DateTime } from 'luxon'
+import type { ConnectionRecord } from '@aries-framework/core'
 
 import Text from '../texts/Text'
 import Title from '../texts/Title'
@@ -8,13 +9,13 @@ import Title from '../texts/Title'
 import { shadow, borderRadius } from '../../globalStyles'
 
 interface Props {
-  contact: any
+  contact: ConnectionRecord
 }
 
 const ContactListItem: React.FC<Props> = ({ contact }) => {
   return (
-    <View key={contact.contact_id} style={styles.container}>
-      <Title>{contact.alias || contact.invitation.label}</Title>
+    <View key={contact.id} style={styles.container}>
+      <Title>{contact?.alias || contact?.invitation?.label}</Title>
       <Text>{contact.did}</Text>
       <Text style={styles.date}>{DateTime.fromJSDate(contact.createdAt).toFormat('LLL d, yyyy')}</Text>
     </View>
