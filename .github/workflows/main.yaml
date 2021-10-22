@@ -4,7 +4,14 @@ env:
   cacheId: '3' # increment to expire the cache
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'ios/**'
+      - 'android/**'
+      - '**/package-lock.json'
   push:
+    branches: [main]
     paths:
       - 'ios/**'
       - 'android/**'
