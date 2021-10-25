@@ -46,13 +46,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [proof])
 
   const getRetrievedCredentials = async () => {
-<<<<<<< HEAD
-    const retrievedCreds = await agent?.proofs.getRequestedCredentialsForProofRequest(
-      requestMessage.indyProofRequest,
-=======
     const retrievedCreds = await agent.proofs.getRequestedCredentialsForProofRequest(
       proof?.requestMessage?.indyProofRequest,
->>>>>>> main
       undefined
     )
 
@@ -74,11 +69,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     const automaticRequestedCreds = agent?.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
 
     try {
-<<<<<<< HEAD
-      await agent?.proofs.acceptRequest(id, automaticRequestedCreds)
-=======
-      await agent.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
->>>>>>> main
+      await agent?.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
     } catch {
       setModalVisible('failure')
     }
