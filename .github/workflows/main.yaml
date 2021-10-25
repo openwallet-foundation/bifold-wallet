@@ -12,10 +12,6 @@ on:
       - '**/package-lock.json'
   push:
     branches: [main]
-    paths:
-      - 'ios/**'
-      - 'android/**'
-      - '**/package-lock.json'
 
 jobs:
   build-ios:
