@@ -1,6 +1,6 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import { useConnections } from 'aries-hooks'
+import { useConnections } from '@aries-framework/react-hooks'
 import type { ConnectionRecord } from '@aries-framework/core'
 
 import { ContactListItem, Text } from 'components'

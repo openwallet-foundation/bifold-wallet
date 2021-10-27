@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
-import { useConnectionById } from 'aries-hooks'
+import { useConnectionById } from '@aries-framework/react-hooks'
 import type { CredentialRecord } from '@aries-framework/core'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -18,14 +18,14 @@ interface Props {
 const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  const { metadata, connectionId } = notification
+  const { metadata, connectionId, id } = notification
 
   const connection = useConnectionById(connectionId)
 
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('Credential Offer', { notification })}
+      onPress={() => navigation.navigate('Credential Offer', { credentialId: id })}
     >
       <View>
         <Text style={styles.title}>{parseSchema(metadata?.schemaId)}</Text>

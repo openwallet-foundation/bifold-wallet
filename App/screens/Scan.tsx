@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { useAgent, useConnectionById } from 'aries-hooks'
+import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
+
 import { QRScanner, Pending, Success, Failure } from 'components'
 import type { BarCodeReadEvent } from 'react-native-camera'
 
@@ -23,7 +24,7 @@ const Scan: React.FC = () => {
   const handleCodeScan = async (event: BarCodeReadEvent) => {
     setModalVisible('pending')
     try {
-      const connectionRecord = await agent.connections.receiveInvitationFromUrl(event.data, {
+      const connectionRecord = await agent?.connections.receiveInvitationFromUrl(event.data, {
         autoAcceptConnection: true,
       })
 
