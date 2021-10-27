@@ -77,7 +77,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
 
   const handleRejectPress = async () => {
     Alert.alert('Reject this Proof?', 'This decision cannot be changed.', [
-      { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+      { text: 'Cancel', style: 'cancel' },
       {
         text: 'Confirm',
         style: 'destructive',
