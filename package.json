@@ -10,7 +10,7 @@
     "ios": "npx react-native run-ios --device",
     "start": "npx react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx --color .",
     "postinstall": "patch-package"
   },
   "dependencies": {
