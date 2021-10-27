@@ -7,12 +7,6 @@ interface Props {
   children: React.ReactNode
 }
 
-const Title: React.FC<Props> = ({ children }) => {
-  return <Text style={styles.title}>{children}</Text>
-}
-
-export default Title
-
 const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
@@ -20,3 +14,9 @@ const styles = StyleSheet.create({
     color: textColor,
   },
 })
+
+const Title: React.FC<Props> = ({ children }) => {
+  return <Text style={styles.title}>{children}</Text>
+}
+
+export default Title

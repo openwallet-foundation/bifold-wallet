@@ -12,6 +12,15 @@ interface Props {
   onPress: () => void
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    margin: 10,
+  },
+})
+
 const CheckBoxRow: React.FC<Props> = ({ title, checked, onPress }) => {
   return (
     <View style={styles.container}>
@@ -28,12 +37,3 @@ const CheckBoxRow: React.FC<Props> = ({ title, checked, onPress }) => {
 }
 
 export default CheckBoxRow
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    margin: 10,
-  },
-})
