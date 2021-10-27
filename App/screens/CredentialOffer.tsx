@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, FlatList, Alert } from 'react-native'
-import { useAgent, useConnectionById, useCredentialById } from 'aries-hooks'
+import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { RouteProp } from '@react-navigation/native'
 import type { HomeStackParams } from 'navigators/HomeStack'
@@ -39,7 +39,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }, 10000)
 
     try {
-      await agent.credentials.acceptOffer(credentialId)
+      await agent?.credentials.acceptOffer(credentialId)
     } catch {
       setModalVisible('failure')
     }
@@ -54,7 +54,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         onPress: async () => {
           setModalVisible('pending')
           try {
-            await agent.credentials.declineOffer(credentialId)
+            await agent?.credentials.declineOffer(credentialId)
             setModalVisible('success')
           } catch {
             setModalVisible('failure')

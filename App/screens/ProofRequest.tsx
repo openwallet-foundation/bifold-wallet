@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FlatList, Alert } from 'react-native'
-import { useAgent, useConnectionById, useProofById } from 'aries-hooks'
+import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { HomeStackParams } from 'navigators/HomeStack'
@@ -52,7 +52,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     )
 
     setRetrievedCredentials(retrievedCreds)
-    setRetrievedCredentialsDisplay(transformAttributes(retrievedCreds.requestedAttributes))
+    setRetrievedCredentialsDisplay(transformAttributes(retrievedCreds?.requestedAttributes))
   }
 
   useEffect(() => {
@@ -66,10 +66,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
     }, 15000)
 
-    const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
+    const automaticRequestedCreds = agent?.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
 
     try {
-      await agent.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
+      await agent?.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
     } catch {
       setModalVisible('failure')
     }

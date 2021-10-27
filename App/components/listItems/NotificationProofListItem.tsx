@@ -1,8 +1,8 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
-import { useConnectionById } from 'aries-hooks'
-import type { ProofRecord } from '@aries-framework/core'
+import { useConnectionById } from '@aries-framework/react-hooks'
+import { ProofRecord } from '@aries-framework/core'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 

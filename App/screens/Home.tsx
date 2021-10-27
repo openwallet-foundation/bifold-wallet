@@ -1,13 +1,9 @@
 import React from 'react'
 import { FlatList } from 'react-native'
 import { CredentialState, ProofState } from '@aries-framework/core'
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
-import { useCredentialByState, useProofByState } from 'aries-hooks'
-
-import type { TabNavigatorParams } from 'navigators/TabNavigator'
+import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 
 import {
-  Button,
   SafeAreaScrollView,
   AppHeaderLarge,
   ModularView,
@@ -16,18 +12,13 @@ import {
   Text,
 } from 'components'
 
-interface Props {
-  navigation: BottomTabNavigationProp<TabNavigatorParams, 'Home'>
-}
-
-const Home: React.FC<Props> = ({ navigation }) => {
+const Home: React.FC = () => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
 
   return (
     <SafeAreaScrollView>
       <AppHeaderLarge />
-      <Button title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
       <ModularView
         title="Notifications"
         content={
