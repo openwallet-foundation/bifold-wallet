@@ -3,6 +3,12 @@ import { Text as T, StyleSheet, TextStyle } from 'react-native'
 
 import { textColor } from '../../globalStyles'
 
+const styles = StyleSheet.create({
+  text: {
+    color: textColor,
+  },
+})
+
 interface Props {
   children: React.ReactNode
   style?: TextStyle
@@ -13,9 +19,3 @@ const Text: React.FC<Props> = ({ children, style }) => {
 }
 
 export default Text
-
-const styles = StyleSheet.create({
-  text: {
-    color: textColor,
-  },
-})

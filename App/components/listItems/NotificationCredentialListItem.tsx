@@ -15,6 +15,22 @@ interface Props {
   notification: CredentialRecord
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 5,
+    paddingVertical: 10,
+    paddingLeft: 10,
+    borderRadius,
+    backgroundColor,
+  },
+  title: {
+    fontWeight: 'bold',
+  },
+})
+
 const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
@@ -37,19 +53,3 @@ const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
 }
 
 export default NotificationCredentialListItem
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 5,
-    paddingVertical: 10,
-    paddingLeft: 10,
-    borderRadius,
-    backgroundColor,
-  },
-  title: {
-    fontWeight: 'bold',
-  },
-})

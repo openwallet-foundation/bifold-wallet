@@ -5,6 +5,13 @@ import Images from '../../../assets/images'
 
 interface Props {}
 
+const styles = StyleSheet.create({
+  headerLarge: {
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+})
+
 const AppHeaderLarge: React.FC<Props> = () => {
   return (
     <View style={styles.headerLarge}>
@@ -14,10 +21,3 @@ const AppHeaderLarge: React.FC<Props> = () => {
 }
 
 export default AppHeaderLarge
-
-const styles = StyleSheet.create({
-  headerLarge: {
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-})

@@ -9,6 +9,25 @@ interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
 }
 
+const styles = StyleSheet.create({
+  camera: {
+    backgroundColor: 'black',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewFinder: {
+    height: 250,
+    width: 250,
+    padding: 100,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: mainColor,
+  },
+})
+
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
   const [active, setActive] = useState(true)
 
@@ -45,22 +64,3 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
 }
 
 export default QRScanner
-
-const styles = StyleSheet.create({
-  camera: {
-    backgroundColor: 'black',
-    height: '100%',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewFinder: {
-    height: 250,
-    width: 250,
-    padding: 100,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderRadius: 30,
-    borderWidth: 2,
-    borderColor: mainColor,
-  },
-})

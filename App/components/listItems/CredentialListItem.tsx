@@ -12,6 +12,16 @@ interface Props {
   credential: CredentialRecord
 }
 
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    marginHorizontal: 15,
+    padding: 10,
+    borderRadius,
+    backgroundColor: shadow,
+  },
+})
+
 const CredentialListItem: React.FC<Props> = ({ credential }) => {
   return (
     <View style={styles.container}>
@@ -22,13 +32,3 @@ const CredentialListItem: React.FC<Props> = ({ credential }) => {
 }
 
 export default CredentialListItem
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 15,
-    marginHorizontal: 15,
-    padding: 10,
-    borderRadius,
-    backgroundColor: shadow,
-  },
-})

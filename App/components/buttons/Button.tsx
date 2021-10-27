@@ -13,20 +13,6 @@ interface Props {
   negative?: true
 }
 
-const Button: React.FC<Props> = ({ title, onPress, disabled, neutral, negative }) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.button, disabled && styles.disabled, neutral && styles.neutral, negative && styles.negative]}
-      disabled={disabled}
-    >
-      <Text style={[styles.text, neutral && { color: shadow }]}>{title}</Text>
-    </TouchableOpacity>
-  )
-}
-
-export default Button
-
 const styles = StyleSheet.create({
   button: {
     width: '90%',
@@ -49,3 +35,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 })
+
+const Button: React.FC<Props> = ({ title, onPress, disabled, neutral, negative }) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.button, disabled && styles.disabled, neutral && styles.neutral, negative && styles.negative]}
+      disabled={disabled}
+    >
+      <Text style={[styles.text, neutral && { color: shadow }]}>{title}</Text>
+    </TouchableOpacity>
+  )
+}
+
+export default Button
