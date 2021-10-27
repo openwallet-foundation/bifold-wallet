@@ -18,14 +18,14 @@ interface Props {
 const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  const { metadata, connectionId } = notification
+  const { metadata, connectionId, id } = notification
 
   const connection = useConnectionById(connectionId)
 
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('Credential Offer', { notification })}
+      onPress={() => navigation.navigate('Credential Offer', { credentialId: id })}
     >
       <View>
         <Text style={styles.title}>{parseSchema(metadata?.schemaId)}</Text>
