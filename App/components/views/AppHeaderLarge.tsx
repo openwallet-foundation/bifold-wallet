@@ -3,8 +3,6 @@ import { Image, View, StyleSheet } from 'react-native'
 
 import Images from '../../../assets/images'
 
-interface Props {}
-
 const styles = StyleSheet.create({
   headerLarge: {
     alignItems: 'center',
