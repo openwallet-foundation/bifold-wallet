@@ -61,7 +61,7 @@ jobs:
       - name: Cache derived data
         uses: actions/cache@v1
         with:
-          path: ios/xbuild
+          path: ios/xbuild/Build
           key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
           restore-keys: |
             ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
