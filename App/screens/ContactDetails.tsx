@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import type { ContactStackParams } from 'navigators/ContactStack'
-import { useConnectionById } from 'aries-hooks'
+import { useConnectionById } from '@aries-framework/react-hooks'
 
 import { SafeAreaScrollView, Label } from 'components'
 
