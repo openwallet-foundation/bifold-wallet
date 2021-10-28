@@ -9,20 +9,6 @@ interface Props {
   label?: string
 }
 
-const Label: React.FC<Props> = ({ title, subtitle, label }) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{title}:</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
-      </View>
-      <Text style={styles.label}>{label}</Text>
-    </View>
-  )
-}
-
-export default Label
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -47,3 +33,17 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
 })
+
+const Label: React.FC<Props> = ({ title, subtitle, label }) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{title}:</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </View>
+      <Text style={styles.label}>{label}</Text>
+    </View>
+  )
+}
+
+export default Label

@@ -7,16 +7,6 @@ interface Props {
   children: React.ReactNode
 }
 
-const SafeAreaScrollView: React.FC<Props> = ({ children }) => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>{children}</ScrollView>
-    </SafeAreaView>
-  )
-}
-
-export default SafeAreaScrollView
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -26,3 +16,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
+
+const SafeAreaScrollView: React.FC<Props> = ({ children }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollView}>{children}</ScrollView>
+    </SafeAreaView>
+  )
+}
+
+export default SafeAreaScrollView

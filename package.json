@@ -2,7 +2,6 @@
   "name": "aries-bifold",
   "version": "0.0.1",
   "scripts": {
-    "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
     "style-check": "npm run prettier -- --check",
     "style-format": "npm run prettier -- --write",
     "style-watch": "onchange '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)' -- prettier --write {{changed}}",
@@ -10,8 +9,10 @@
     "ios": "npx react-native run-ios --device",
     "start": "npx react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint --ignore-path .gitignore .",
-    "postinstall": "patch-package"
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx --color .",
+    "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
+    "postinstall": "patch-package",
+    "pre-commit-lint": "npx lint-staged"
   },
   "dependencies": {
     "@aries-framework/core": "0.1.0-alpha.276",
@@ -55,13 +56,13 @@
     "@babel/runtime": "^7.12.5",
     "@commitlint/cli": "^11.0.0",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@types/indy-sdk-react-native": "npm:@types/indy-sdk@^1.15.2",
     "@types/jest": "^26.0.20",
     "@types/luxon": "^1.27.1",
     "@types/react": "^16.14.4",
     "@types/react-native": "^0.63.50",
     "@types/react-native-vector-icons": "^6.4.6",
     "@types/react-test-renderer": "^16.9.5",
-    "@types/indy-sdk-react-native": "npm:@types/indy-sdk@^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "babel-jest": "^26.6.3",
@@ -69,17 +70,13 @@
     "commitlint": "^11.0.0",
     "eslint": "^7.14.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "husky": "^4.3.0",
+    "husky": "^7.0.0",
     "jest": "^26.6.3",
+    "lint-staged": "^11.2.6",
     "metro-react-native-babel-preset": "^0.66.2",
     "prettier": "^2.1.2",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.2.2"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "jest": {
     "preset": "react-native",

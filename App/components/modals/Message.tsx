@@ -17,6 +17,14 @@ interface Props {
   onPress?: () => void
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+})
+
 const Message: React.FC<Props> = ({ icon, banner, message, backgroundColor, visible, onPress }) => {
   return (
     <Modal visible={visible} animationType="fade">
@@ -33,11 +41,3 @@ const Message: React.FC<Props> = ({ icon, banner, message, backgroundColor, visi
 }
 
 export default Message
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-})

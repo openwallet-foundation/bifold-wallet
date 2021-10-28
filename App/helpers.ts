@@ -1,6 +1,6 @@
 export function parseSchema(schemaId?: string): string {
   if (schemaId) {
-    const schemaIdRegex = /(.*?):([0-9]):([a-zA-Z .\-_0-9]+):([a-z0-9._\-]+)$/
+    const schemaIdRegex = /(.*?):([0-9]):([a-zA-Z .\-_0-9]+):([a-z0-9._-]+)$/
     const schemaIdParts = schemaId.match(schemaIdRegex)
 
     if (schemaIdParts!.length === 5) {
