@@ -7,25 +7,6 @@ interface Props extends TextInputProps {
   label: string
 }
 
-const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
-  const [focused, setFocused] = useState(false)
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      <TI
-        style={[styles.textInput, focused && { borderColor: mainColor, backgroundColor: 'black' }]}
-        selectionColor={mainColor}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        {...textInputProps}
-      />
-    </View>
-  )
-}
-
-export default TextInput
-
 const styles = StyleSheet.create({
   container: {
     width: '90%',
@@ -45,3 +26,22 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
 })
+
+const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
+  const [focused, setFocused] = useState(false)
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
+      <TI
+        style={[styles.textInput, focused && { borderColor: mainColor, backgroundColor: 'black' }]}
+        selectionColor={mainColor}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        {...textInputProps}
+      />
+    </View>
+  )
+}
+
+export default TextInput

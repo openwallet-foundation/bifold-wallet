@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import Config from 'react-native-config'
 
-import { 
-  Agent, 
-  AutoAcceptCredential, 
-  ConsoleLogger, 
+import {
+  Agent,
+  AutoAcceptCredential,
+  ConsoleLogger,
   HttpOutboundTransport,
-  LogLevel, 
+  LogLevel,
   MediatorPickupStrategy,
-  WsOutboundTransport
+  WsOutboundTransport,
 } from '@aries-framework/core'
 import { agentDependencies } from '@aries-framework/react-native'
 
@@ -24,17 +24,20 @@ const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
 
   const initAgent = async () => {
-    const newAgent = new Agent({
-      genesisTransactions: IndicioTestNet, 
-      label: 'Aries Bifold',
-      mediatorConnectionsInvite: Config.MEDIATOR_URL,
-      mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-      walletConfig: { id: 'wallet4', key: '123' },
-      autoAcceptConnections: true,
-      autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-      poolName: 'test-183',
-      logger: new ConsoleLogger(LogLevel.trace),
-    }, agentDependencies)
+    const newAgent = new Agent(
+      {
+        genesisTransactions: IndicioTestNet,
+        label: 'Aries Bifold',
+        mediatorConnectionsInvite: Config.MEDIATOR_URL,
+        mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
+        walletConfig: { id: 'wallet4', key: '123' },
+        autoAcceptConnections: true,
+        autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
+        poolName: 'test-183',
+        logger: new ConsoleLogger(LogLevel.trace),
+      },
+      agentDependencies
+    )
 
     const wsTransport = new WsOutboundTransport()
     const httpTransport = new HttpOutboundTransport()
@@ -49,7 +52,6 @@ const App = () => {
   useEffect(() => {
     initAgent()
   }, [])
-  
 
   return (
     <AgentProvider agent={agent}>
