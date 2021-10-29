@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, FlatList, Alert } from 'react-native'
+import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { RouteProp } from '@react-navigation/native'
 import type { HomeStackParams } from 'navigators/HomeStack'
 
-import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
+import { Button, ModularView, Label, Success, Pending, Failure } from 'components'
+import { backgroundColor } from '../globalStyles'
 
 import { parseSchema } from '../helpers'
 import { CredentialState } from '@aries-framework/core'
@@ -14,6 +15,16 @@ interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor,
+    height: '100%',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+})
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
@@ -65,7 +76,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaScrollView>
+    <View style={styles.container}>
       <ModularView
         title={parseSchema(credential?.metadata.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
@@ -101,10 +112,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         }}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
-    </SafeAreaScrollView>
+    </View>
   )
 }
 
 export default CredentialOffer
-
-const styles = StyleSheet.create({})
