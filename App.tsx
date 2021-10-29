@@ -17,7 +17,8 @@ import AgentProvider from '@aries-framework/react-hooks'
 
 import TabNavigator from './App/navigators/TabNavigator'
 import AuthenticateStack from './App/navigators/AuthenticateStack'
-import IndicioTestNet from './configs/GensisFiles/IndicioTestNet'
+
+import indyLedgers from './configs/ledgers/indy'
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false)
@@ -26,15 +27,14 @@ const App = () => {
   const initAgent = async () => {
     const newAgent = new Agent(
       {
-        genesisTransactions: IndicioTestNet,
         label: 'Aries Bifold',
         mediatorConnectionsInvite: Config.MEDIATOR_URL,
         mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
         walletConfig: { id: 'wallet4', key: '123' },
         autoAcceptConnections: true,
         autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-        poolName: 'test-183',
         logger: new ConsoleLogger(LogLevel.trace),
+        indyLedgers,
       },
       agentDependencies
     )
