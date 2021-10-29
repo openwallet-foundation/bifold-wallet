@@ -61,7 +61,7 @@ MEDIATOR_URL=http://mediator3.test.indiciotech.io:3000?c_i=eyJAdHlwZSI6ICJkaWQ6c
 GENESIS_URL=https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
 ```
 
-Note - To run your own mediator or use a different network, go [here for advanced configuration](#Advanced-Configuration).
+Note - To run your own mediator or use a different network, go [here for advanced configuration](#advanced-configuration).
 
 ## Run
 
