@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
-import type { StackNavigationProp } from '@react-navigation/stack'
-import type { RouteProp } from '@react-navigation/native'
-import type { CredentialStackParams } from 'navigators/CredentialStack'
 import { useCredentialById } from '@aries-framework/react-hooks'
-
-import { SafeAreaScrollView, Text, Label } from 'components'
+import type { RouteProp } from '@react-navigation/native'
+import type { StackNavigationProp } from '@react-navigation/stack'
+import { SafeAreaScrollView } from 'components'
+import type { CredentialStackParams } from 'navigators/CredentialStack'
+import React, { useEffect } from 'react'
 
 interface Props {
   navigation: StackNavigationProp<CredentialStackParams, 'Credential Details'>

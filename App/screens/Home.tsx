@@ -1,23 +1,29 @@
-import React from 'react'
-import { FlatList } from 'react-native'
 import { CredentialState, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
-
 import {
-  SafeAreaScrollView,
   AppHeaderLarge,
   ModularView,
   NotificationCredentialListItem,
   NotificationProofListItem,
   Text,
 } from 'components'
+import React from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+import { backgroundColor } from '../globalStyles'
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor,
+    height: '100%',
+  },
+})
 
 const Home: React.FC = () => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
 
   return (
-    <SafeAreaScrollView>
+    <View style={styles.container}>
       <AppHeaderLarge />
       <ModularView
         title="Notifications"
@@ -36,7 +42,7 @@ const Home: React.FC = () => {
           />
         }
       />
-    </SafeAreaScrollView>
+    </View>
   )
 }
 
