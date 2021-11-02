@@ -6,8 +6,14 @@ import { QRScanner, Pending, Success, Failure } from 'components'
 import type { BarCodeReadEvent } from 'react-native-camera'
 
 import { ConnectionState } from '@aries-framework/core'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { ScanStackParams } from 'navigators/ScanStack'
 
-const Scan: React.FC = () => {
+interface Props {
+  navigation: StackNavigationProp<ScanStackParams, 'Scan'>
+}
+
+const Scan: React.FC<Props> = ({ navigation }) => {
   const { agent } = useAgent()
 
   const [modalVisible, setModalVisible] = useState<'pending' | 'success' | 'failure' | ''>('')
@@ -27,19 +33,23 @@ const Scan: React.FC = () => {
       const connectionRecord = await agent?.connections.receiveInvitationFromUrl(event.data, {
         autoAcceptConnection: true,
       })
-
       setConnectionId(connectionRecord.id)
     } catch {
       setModalVisible('failure')
     }
   }
 
+  const exitCodeScan = () => {
+    setModalVisible('')
+    navigation.goBack()
+  }
+
   return (
     <View>
       <QRScanner handleCodeScan={handleCodeScan} />
       <Pending visible={modalVisible === 'pending'} />
-      <Success visible={modalVisible === 'success'} onPress={() => setModalVisible('')} />
-      <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
+      <Success visible={modalVisible === 'success'} onPress={exitCodeScan} />
+      <Failure visible={modalVisible === 'failure'} onPress={exitCodeScan} />
     </View>
   )
 }
