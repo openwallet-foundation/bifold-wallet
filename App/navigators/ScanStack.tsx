@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import defaultStackOptions from './defaultStackOptions'
 import Scan from '../screens/Scan'
 
-type ScanStackParams = {
+export type ScanStackParams = {
   Scan: undefined
 }
 
