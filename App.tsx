@@ -5,7 +5,7 @@ import {
   HttpOutboundTransport,
   LogLevel,
   MediatorPickupStrategy,
-  WsOutboundTransport,
+  WsOutboundTransport
 } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
@@ -18,6 +18,10 @@ import AuthenticateStack from './App/navigators/AuthenticateStack'
 import TabNavigator from './App/navigators/TabNavigator'
 import AppTheme from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
+<<<<<<< HEAD
+=======
+import './App/i18n'
+>>>>>>> 3e7e22c (Use i18next for localization)
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false)
