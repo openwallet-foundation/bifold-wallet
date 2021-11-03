@@ -7,7 +7,8 @@ import {
   NotificationProofListItem,
   Text,
 } from 'components'
-import React from 'react'
+import { LocalizationContext } from 'LocalizationProvider'
+import React, { useContext } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { backgroundColor } from '../globalStyles'
 
@@ -21,12 +22,13 @@ const styles = StyleSheet.create({
 const Home: React.FC = () => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
+  const { translations } = useContext(LocalizationContext)
 
   return (
     <View style={styles.container}>
       <AppHeaderLarge />
       <ModularView
-        title="Notifications"
+        title={translations.ScreenNames.Notifications}
         content={
           <FlatList
             data={[...credentials, ...proofs]}
@@ -38,7 +40,7 @@ const Home: React.FC = () => {
                 <NotificationProofListItem notification={item} />
               )
             }
-            ListEmptyComponent={<Text>No New Updates</Text>}
+            ListEmptyComponent={<Text>{translations.NoUpdates}</Text>}
           />
         }
       />
