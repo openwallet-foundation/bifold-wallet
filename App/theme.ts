@@ -1,12 +1,12 @@
 import { Theme } from '@emotion/react'
 
-export interface AppTheme extends Theme {
-  colors: Record<string, string>
-}
+// export interface AppTheme {
+//   colors: Record<string, string>
+// }
 
 // yellow = #ffff00
 
-const myTheme: AppTheme = {
+const myTheme: Theme = {
   colors: {
     mainColor: '#35823f',
     textColor: '#fff',
