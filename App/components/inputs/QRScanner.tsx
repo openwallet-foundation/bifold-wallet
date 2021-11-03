@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { mainColor } from '../../globalStyles'
 
@@ -21,15 +23,34 @@ const styles = StyleSheet.create({
     height: 250,
     width: 250,
     padding: 100,
+    marginBottom: 100 - 48,
     backgroundColor: 'rgba(255,255,255,0.3)',
-    borderRadius: 30,
+    borderRadius: 24,
     borderWidth: 2,
     borderColor: mainColor,
+  },
+  torchButton: {
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: 'white',
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  torchButtonOn: {
+    backgroundColor: 'white',
+  },
+  torchButtonIcon: {
+    marginLeft: 2,
+    marginTop: 2,
   },
 })
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
   const [active, setActive] = useState(true)
+  const [torch, setTorch] = useState(false)
 
   useEffect(() => {
     if (!active) {
@@ -43,6 +64,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
         <RNCamera
           style={styles.camera}
           type={RNCamera.Constants.Type.back}
+          flashMode={torch ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
           captureAudio={false}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
@@ -56,7 +78,19 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
             handleCodeScan(e)
           }}
         >
-          <View style={styles.viewFinder} />
+          <View>
+            <View style={styles.viewFinder} />
+            <TouchableWithoutFeedback
+              style={[styles.torchButton, torch && styles.torchButtonOn]}
+              onPress={() => setTorch(!torch)}
+            >
+              {torch ? (
+                <Icon name="flash-on" color="black" size={24} style={[styles.torchButtonIcon]} />
+              ) : (
+                <Icon name="flash-off" color="white" size={24} style={styles.torchButtonIcon} />
+              )}
+            </TouchableWithoutFeedback>
+          </View>
         </RNCamera>
       )}
     </View>
