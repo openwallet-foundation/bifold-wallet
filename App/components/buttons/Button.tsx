@@ -1,9 +1,7 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet } from 'react-native'
-
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import { borderRadius, mainColor, shadow, textColor } from '../../globalStyles'
 import Text from '../texts/Text'
-
-import { mainColor, borderRadius, shadow, textColor } from '../../globalStyles'
 
 interface Props {
   title: string
@@ -15,7 +13,7 @@ interface Props {
 
 const styles = StyleSheet.create({
   button: {
-    width: '90%',
+    flex: 1,
     borderRadius,
     backgroundColor: mainColor,
     alignItems: 'center',
