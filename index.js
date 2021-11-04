@@ -20,10 +20,10 @@ import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
 
-import { AppRegistry } from 'react-native'
-import React, { useEffect } from 'react'
-import { LogBox } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
+import React, { useEffect } from 'react'
+import { AppRegistry, LogBox } from 'react-native'
+
 import App from './App'
 import { name as appName } from './app.json'
 
