@@ -22,12 +22,13 @@ const styles = StyleSheet.create({
 const Home: React.FC = () => {
   const credentials = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <View style={styles.container}>
       <AppHeaderLarge />
       <ModularView
+        // @ts-ignore
         title={t('Notifications')}
         content={
           <FlatList
