@@ -3,10 +3,8 @@ import { View, StyleSheet, Modal } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button from '../buttons/Button'
-import Title from '../texts/Title'
 import Text from '../texts/Text'
-
-import { textColor } from '../../globalStyles'
+import Title from '../texts/Title'
 
 interface Props {
   icon: string

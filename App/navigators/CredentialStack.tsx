@@ -1,9 +1,10 @@
-import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
 
-import ListCredentials from '../screens/ListCredentials'
-import defaultStackOptions from './defaultStackOptions'
 import CredentialDetails from '../screens/CredentialDetails'
+import ListCredentials from '../screens/ListCredentials'
+
+import defaultStackOptions from './defaultStackOptions'
 
 export type CredentialStackParams = {
   Credentials: undefined

@@ -13,7 +13,7 @@ import { ThemeProvider } from '@emotion/react'
 import { default as React, useEffect, useState } from 'react'
 import { View } from 'react-native'
 import Config from 'react-native-config'
-import './App/i18n'
+
 import AuthenticateStack from './App/navigators/AuthenticateStack'
 import TabNavigator from './App/navigators/TabNavigator'
 import AppTheme from './App/theme'

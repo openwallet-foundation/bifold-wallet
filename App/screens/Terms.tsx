@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
+
+import React, { useState } from 'react'
 
 import { SafeAreaScrollView, Button, AppHeaderLarge, ModularView, CheckBoxRow } from 'components'
 
