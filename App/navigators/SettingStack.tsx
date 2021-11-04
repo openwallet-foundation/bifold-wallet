@@ -1,7 +1,8 @@
-import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
 
 import Settings from '../screens/Settings'
+
 import defaultStackOptions from './defaultStackOptions'
 
 type SettingsStackParams = {

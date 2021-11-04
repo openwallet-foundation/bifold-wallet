@@ -1,9 +1,10 @@
-import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
 
-import ListContacts from '../screens/ListContacts'
-import defaultStackOptions from './defaultStackOptions'
 import ContactDetails from '../screens/ContactDetails'
+import ListContacts from '../screens/ListContacts'
+
+import defaultStackOptions from './defaultStackOptions'
 
 export type ContactStackParams = {
   Contacts: undefined

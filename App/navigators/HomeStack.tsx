@@ -1,8 +1,8 @@
-import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
 
-import Home from '../screens/Home'
 import CredentialOffer from '../screens/CredentialOffer'
+import Home from '../screens/Home'
 import ProofRequest from '../screens/ProofRequest'
 
 import defaultStackOptions from './defaultStackOptions'

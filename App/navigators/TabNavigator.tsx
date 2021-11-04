@@ -1,14 +1,14 @@
-import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import HomeStack from './HomeStack'
-import ContactStack from './ContactStack'
-import ScanStack from './ScanStack'
-import CredentialStack from './CredentialStack'
-import SettingStack from './SettingStack'
-
 import { mainColor } from '../globalStyles'
+
+import ContactStack from './ContactStack'
+import CredentialStack from './CredentialStack'
+import HomeStack from './HomeStack'
+import ScanStack from './ScanStack'
+import SettingStack from './SettingStack'
 
 export type TabNavigatorParams = {
   Home: undefined

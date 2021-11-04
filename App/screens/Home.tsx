@@ -1,5 +1,10 @@
 import { CredentialState, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
+import React from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+
+import { backgroundColor } from '../globalStyles'
+
 import {
   AppHeaderLarge,
   ModularView,
@@ -7,10 +12,6 @@ import {
   NotificationProofListItem,
   Text,
 } from 'components'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View } from 'react-native'
-import { backgroundColor } from '../globalStyles'
 
 const styles = StyleSheet.create({
   container: {

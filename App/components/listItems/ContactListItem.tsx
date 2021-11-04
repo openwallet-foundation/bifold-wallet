@@ -1,12 +1,12 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { DateTime } from 'luxon'
 import type { ConnectionRecord } from '@aries-framework/core'
 
-import Text from '../texts/Text'
-import Title from '../texts/Title'
+import { DateTime } from 'luxon'
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
 
 import { shadow, borderRadius } from '../../globalStyles'
+import Text from '../texts/Text'
+import Title from '../texts/Title'
 
 interface Props {
   contact: ConnectionRecord
