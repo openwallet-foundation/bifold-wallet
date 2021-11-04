@@ -4,6 +4,8 @@ import * as RNLocalize from 'react-native-localize'
 import { defaultLanguage } from '../constants'
 import en from './en'
 
+export type Translation = typeof en
+
 const resources = {
   en: {
     translation: en,
