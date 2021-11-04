@@ -1,7 +1,3 @@
-import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
-import Config from 'react-native-config'
-
 import {
   Agent,
   AutoAcceptCredential,
@@ -11,13 +7,15 @@ import {
   MediatorPickupStrategy,
   WsOutboundTransport,
 } from '@aries-framework/core'
-import { agentDependencies } from '@aries-framework/react-native'
-
 import AgentProvider from '@aries-framework/react-hooks'
-
-import TabNavigator from './App/navigators/TabNavigator'
+import { agentDependencies } from '@aries-framework/react-native'
+import { ThemeProvider } from '@emotion/react'
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
+import Config from 'react-native-config'
 import AuthenticateStack from './App/navigators/AuthenticateStack'
-
+import TabNavigator from './App/navigators/TabNavigator'
+import AppTheme from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
 
 const App = () => {
@@ -55,9 +53,11 @@ const App = () => {
 
   return (
     <AgentProvider agent={agent}>
-      <View style={{ height: '100%' }}>
-        {authenticated ? <TabNavigator /> : <AuthenticateStack setAuthenticated={setAuthenticated} />}
-      </View>
+      <ThemeProvider theme={AppTheme}>
+        <View style={{ height: '100%' }}>
+          {authenticated ? <TabNavigator /> : <AuthenticateStack setAuthenticated={setAuthenticated} />}
+        </View>
+      </ThemeProvider>
     </AgentProvider>
   )
 }

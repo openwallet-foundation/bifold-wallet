@@ -1,15 +1,20 @@
+import styled from '@emotion/native'
+import { Button, SafeAreaScrollView, TextInput } from 'components'
 import React, { useState } from 'react'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
-import { RouteProp } from '@react-navigation/native'
 
-import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
-
-import { Button, TextInput, SafeAreaScrollView } from 'components'
-
-interface Props {
-  route: RouteProp<AuthenticateStackParams, 'Create 6-Digit Pin'>
+interface Props extends TextInputProps {
+  label: string
 }
+
+const Row = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: stretch;
+  margin: 5px 25px 10px 25px;
+`
 
 const PinCreate: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
@@ -36,37 +41,43 @@ const PinCreate: React.FC<Props> = ({ route }) => {
 
   return (
     <SafeAreaScrollView>
-      <TextInput
-        label="Enter Pin"
-        placeholder="6 Digit Pin"
-        maxLength={6}
-        autoFocus
-        keyboardType="numeric"
-        secureTextEntry={true}
-        value={pin}
-        onChangeText={setPin}
-      />
-      <TextInput
-        label="Re-Enter Pin"
-        placeholder="6 Digit Pin"
-        maxLength={6}
-        keyboardType="numeric"
-        secureTextEntry
-        value={pinTwo}
-        onChangeText={(text: string) => {
-          setPinTwo(text)
-          if (text.length === 6) {
+      <Row>
+        <TextInput
+          label="Enter Pin"
+          placeholder="6 Digit Pin"
+          maxLength={6}
+          autoFocus
+          keyboardType="numeric"
+          secureTextEntry={true}
+          value={pin}
+          onChangeText={setPin}
+        />
+      </Row>
+      <Row>
+        <TextInput
+          label="Re-Enter Pin"
+          placeholder="6 Digit Pin"
+          maxLength={6}
+          keyboardType="numeric"
+          secureTextEntry
+          value={pinTwo}
+          onChangeText={(text: string) => {
+            setPinTwo(text)
+            if (text.length === 6) {
+              Keyboard.dismiss()
+            }
+          }}
+        />
+      </Row>
+      <Row>
+        <Button
+          title="Create"
+          onPress={() => {
             Keyboard.dismiss()
-          }
-        }}
-      />
-      <Button
-        title="Create"
-        onPress={() => {
-          Keyboard.dismiss()
-          confirmEntry(pin, pinTwo)
-        }}
-      />
+            confirmEntry(pin, pinTwo)
+          }}
+        />
+      </Row>
     </SafeAreaScrollView>
   )
 }
