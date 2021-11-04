@@ -1,0 +1,4 @@
+{
+  "eslint.enable": true,
+  "editor.codeActionsOnSave": ["source.organizeImports", "source.addMissingImports"]
+}
