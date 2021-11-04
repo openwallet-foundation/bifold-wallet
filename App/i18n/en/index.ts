@@ -1,4 +1,4 @@
-const translation: Record<string, string> = {
+const translation = {
   'No New Updates': 'No New Updates',
   Notifications: 'Notifications',
 }
