@@ -1,10 +1,9 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import Title from '../texts/Title'
-import Text from '../texts/Text'
-
 import { shadow, borderRadius } from '../../globalStyles'
+import Text from '../texts/Text'
+import Title from '../texts/Title'
 
 interface Props {
   title?: string

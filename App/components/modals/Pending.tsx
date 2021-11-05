@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Message from './Message'
-
 import { backgroundColor } from '../../globalStyles'
+
+import Message from './Message'
 
 interface Props {
   visible: boolean

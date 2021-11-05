@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
-import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
-
-import { QRScanner, Pending, Success, Failure } from 'components'
 import type { BarCodeReadEvent } from 'react-native-camera'
 
 import { ConnectionState } from '@aries-framework/core'
+import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
+
+import { QRScanner, Pending, Success, Failure } from 'components'
+// eslint-disable-next-line import/no-cycle
 import { ScanStackParams } from 'navigators/ScanStack'
 
 interface Props {

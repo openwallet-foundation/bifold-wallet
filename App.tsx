@@ -10,9 +10,10 @@ import {
 import AgentProvider from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import { ThemeProvider } from '@emotion/react'
-import React, { useEffect, useState } from 'react'
+import { default as React, useEffect, useState } from 'react'
 import { View } from 'react-native'
 import Config from 'react-native-config'
+
 import AuthenticateStack from './App/navigators/AuthenticateStack'
 import TabNavigator from './App/navigators/TabNavigator'
 import AppTheme from './App/theme'
@@ -21,6 +22,7 @@ import indyLedgers from './configs/ledgers/indy'
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false)
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
+  // const { translations } = useContext(LocalizationContext)
 
   const initAgent = async () => {
     const newAgent = new Agent(

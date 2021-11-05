@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { FlatList, Alert } from 'react-native'
-import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { HomeStackParams } from 'navigators/HomeStack'
 
-import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
+import { ProofState } from '@aries-framework/core'
+import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import React, { useState, useEffect } from 'react'
+import { FlatList, Alert } from 'react-native'
 
 import { parseSchema } from '../helpers'
-import { ProofState } from '@aries-framework/core'
+
+import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
 interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Proof Request'>

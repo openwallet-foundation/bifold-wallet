@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, FlatList, Alert, View } from 'react-native'
-import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
-import type { StackNavigationProp } from '@react-navigation/stack'
 import type { RouteProp } from '@react-navigation/native'
+import type { StackNavigationProp } from '@react-navigation/stack'
 import type { HomeStackParams } from 'navigators/HomeStack'
 
-import { Button, ModularView, Label, Success, Pending, Failure } from 'components'
-import { backgroundColor } from '../globalStyles'
-
-import { parseSchema } from '../helpers'
 import { CredentialState } from '@aries-framework/core'
+import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, FlatList, Alert, View } from 'react-native'
+
+import { backgroundColor } from '../globalStyles'
+import { parseSchema } from '../helpers'
+
+import { Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
 interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>

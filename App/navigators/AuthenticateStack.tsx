@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import * as Keychain from 'react-native-keychain'
 import AsyncStorage from '@react-native-community/async-storage'
+import { createStackNavigator } from '@react-navigation/stack'
+import React, { useEffect, useState } from 'react'
+// eslint-disable-next-line import/namespace
+import * as Keychain from 'react-native-keychain'
 
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
