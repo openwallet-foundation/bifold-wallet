@@ -71,8 +71,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       }
       setRetrievedCredentials(retrievedCreds)
       setRetrievedCredentialsDisplay(transformAttributes(retrievedCreds?.requestedAttributes))
-    } catch (e) {
-      console.error(e)
+    } catch {
       setModalVisible('failure')
     }
   }
@@ -95,8 +94,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         throw new Error('Requested creds not found')
       }
       await agent?.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
-    } catch (e) {
-      console.error(e)
+    } catch {
       setModalVisible('failure')
     }
   }
@@ -111,8 +109,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           setModalVisible('pending')
           try {
             // await agent.proofs.rejectPresentation(id)
-          } catch (e) {
-            console.error(e)
+          } catch {
             setModalVisible('failure')
           }
         },

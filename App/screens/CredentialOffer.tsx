@@ -50,8 +50,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }, 10000)
     try {
       await agent?.credentials.acceptOffer(credentialId)
-    } catch (e) {
-      console.error(e)
+    } catch {
       setModalVisible('failure')
     }
   }
@@ -67,8 +66,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           try {
             await agent?.credentials.declineOffer(credentialId)
             setModalVisible('success')
-          } catch (e) {
-            console.error(e)
+          } catch {
             setModalVisible('failure')
           }
         },
