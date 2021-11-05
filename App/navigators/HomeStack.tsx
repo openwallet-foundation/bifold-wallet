@@ -10,7 +10,7 @@ import defaultStackOptions from './defaultStackOptions'
 export type HomeStackParams = {
   Home: undefined
   'Credential Offer': { credentialId: string }
-  'Proof Request': undefined
+  'Proof Request': { proofId: string }
 }
 
 const Stack = createStackNavigator<HomeStackParams>()
