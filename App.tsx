@@ -18,6 +18,7 @@ import AuthenticateStack from './App/navigators/AuthenticateStack'
 import TabNavigator from './App/navigators/TabNavigator'
 import AppTheme from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
+import './App/i18n'
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false)
