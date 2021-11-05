@@ -1,12 +1,12 @@
-import styled, { css, StyledOptions } from '@emotion/native'
-import CredentialOfferSteps from 'components/misc/CredentialOfferSteps'
-import QRScannerTorch from 'components/misc/QRScannerTorch'
-import React, { useEffect, useRef, useState } from 'react'
+import styled, { css } from '@emotion/native'
+import React, { useState } from 'react'
 import { useWindowDimensions, Vibration, View } from 'react-native'
-
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
+
+import CredentialOfferSteps from 'components/misc/CredentialOfferSteps'
+import QRScannerTorch from 'components/misc/QRScannerTorch'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
