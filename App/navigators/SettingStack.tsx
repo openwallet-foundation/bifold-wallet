@@ -14,7 +14,7 @@ const Stack = createStackNavigator<SettingsStackParams>()
 function SettingStack() {
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }
