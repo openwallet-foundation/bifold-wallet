@@ -2,7 +2,7 @@ import styled, { css, StyledOptions } from '@emotion/native'
 import CredentialOfferSteps from 'components/misc/CredentialOfferSteps'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
 import React, { useEffect, useRef, useState } from 'react'
-import { useWindowDimensions, View } from 'react-native'
+import { useWindowDimensions, Vibration, View } from 'react-native'
 
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
@@ -75,6 +75,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           }}
           barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
           onBarCodeRead={(e) => {
+            Vibration.vibrate()
             setCameraActive(false)
             handleCodeScan(e)
           }}
