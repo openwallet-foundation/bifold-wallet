@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text, Dimensions } from 'react-native'
+import styled, { css, StyledOptions } from '@emotion/native'
+import CredentialOfferSteps from 'components/misc/CredentialOfferSteps'
+import QRScannerTorch from 'components/misc/QRScannerTorch'
+import React, { useEffect, useRef, useState } from 'react'
+import { useWindowDimensions, View } from 'react-native'
 
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { mainColor } from '../../globalStyles'
 
@@ -11,75 +12,60 @@ interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
 }
 
-const { width } = Dimensions.get('window')
+const container = css`
+  background-color: #000000;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
 
-const styles = StyleSheet.create({
-  camera: {
-    backgroundColor: 'black',
-    height: '100%',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewFinder: {
-    height: width - 0.25 * width,
-    width: width - 0.25 * width,
-    marginVertical: 24,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderRadius: 24,
-    borderWidth: 2,
-    borderColor: mainColor,
-    alignSelf: 'center',
-  },
-  torchButton: {
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: 'white',
-    width: 48,
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  torchButtonOn: {
-    backgroundColor: 'white',
-  },
-  torchButtonIcon: {
-    marginLeft: 2,
-    marginTop: 2,
-  },
-  event: {
-    left: 30 + 1,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: 'white',
-  },
-  activeEvent: {
-    color: 'black',
-    backgroundColor: 'white',
-    overflow: 'hidden',
-  },
-})
+const Container = styled.View`
+  ${container}
+`
+
+const ViewFinderContainer = styled.View`
+  flex: 3;
+  justify-content: center;
+  align-items: center;
+`
+
+const ViewFinder = styled.View`
+  width: 250px;
+  height: 250px;
+  border-radius: 24px;
+  border: 2px solid ${mainColor};
+  background-color: #ffffff30;
+`
+
+const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, children }) => {
+  return (
+    <View
+      style={css`
+        width: 100%;
+        height: 100%;
+        flex-direction: ${portrait ? 'column' : 'row'};
+      `}
+    >
+      {children}
+    </View>
+  )
+}
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
-  const [active, setActive] = useState(true)
-  const [torch, setTorch] = useState(false)
+  const [cameraActive, setCameraActive] = useState(true)
+  const [torchActive, setTorchActive] = useState(false)
 
-  useEffect(() => {
-    if (!active) {
-      setTimeout(() => setActive(true), 5000)
-    }
-  }, [active])
+  const { width, height } = useWindowDimensions()
+  const portraitMode = height > width
 
   return (
-    <View style={styles.camera}>
-      {active && (
+    <Container>
+      {cameraActive && (
         <RNCamera
-          style={styles.camera}
+          style={container}
           type={RNCamera.Constants.Type.back}
-          flashMode={torch ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
+          flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
           captureAudio={false}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
@@ -89,76 +75,20 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           }}
           barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
           onBarCodeRead={(e) => {
-            setActive(false)
+            setCameraActive(false)
             handleCodeScan(e)
           }}
         >
-          <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', maxWidth: '100%' }}>
-              <View style={[styles.event, styles.activeEvent]}></View>
-              <View
-                style={{
-                  borderLeftWidth: 2,
-                  borderLeftColor: 'white',
-                  marginLeft: 20,
-                  paddingLeft: 20,
-                  marginTop: 20,
-                  zIndex: -1,
-                }}
-              >
-                <Text style={{ color: 'white', paddingLeft: 10, paddingRight: 30, marginTop: -20, paddingBottom: 20 }}>
-                  Scan the QR code issued by an organization to add a credential
-                </Text>
-              </View>
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', maxWidth: '100%' }}>
-              <View style={styles.event}></View>
-              <View
-                style={{
-                  borderLeftWidth: 2,
-                  borderLeftColor: 'white',
-                  marginLeft: 20,
-                  paddingLeft: 20,
-                  marginTop: 20,
-                  zIndex: -1,
-                }}
-              >
-                <Text style={{ color: 'white', paddingLeft: 10, paddingRight: 30, marginTop: -20, paddingBottom: 20 }}>
-                  Accept the offered credential
-                </Text>
-              </View>
-            </View>
-
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', maxWidth: '100%' }}>
-              <View style={styles.event}></View>
-              <View
-                style={{
-                  marginLeft: 20,
-                  paddingLeft: 20,
-                  marginTop: 20,
-                  zIndex: -1,
-                }}
-              >
-                <Text style={{ color: 'white', paddingLeft: 10, paddingRight: 30, marginTop: -20 }}>
-                  Done! Your new credential is added to your wallet
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.viewFinder} />
-          <TouchableWithoutFeedback
-            style={[styles.torchButton, torch && styles.torchButtonOn]}
-            onPress={() => setTorch(!torch)}
-          >
-            {torch ? (
-              <Icon name="flash-on" color="black" size={24} style={[styles.torchButtonIcon]} />
-            ) : (
-              <Icon name="flash-off" color="white" size={24} style={styles.torchButtonIcon} />
-            )}
-          </TouchableWithoutFeedback>
+          <CameraViewContainer portrait={portraitMode}>
+            <CredentialOfferSteps activeStep={1} />
+            <ViewFinderContainer>
+              <ViewFinder />
+            </ViewFinderContainer>
+            <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
+          </CameraViewContainer>
         </RNCamera>
       )}
-    </View>
+    </Container>
   )
 }
 
