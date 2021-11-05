@@ -1,31 +1,21 @@
-import AppHeaderLarge from './views/AppHeaderLarge'
-
+import Button from './buttons/Button'
 import CheckBoxRow from './inputs/CheckBoxRow'
-
+import QRScanner from './inputs/QRScanner'
+import TextInput from './inputs/TextInput'
 import ContactListItem from './listItems/ContactListItem'
 import CredentialListItem from './listItems/CredentialListItem'
-
-import Label from './texts/Label'
-
+import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
+import NotificationProofListItem from './listItems/NotificationProofListItem'
 import Failure from './modals/Failure'
 import Message from './modals/Message'
 import Pending from './modals/Pending'
 import Success from './modals/Success'
-
-import ModularView from './views/ModularView'
-
-import Button from './buttons/Button'
-
-import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
-import NotificationProofListItem from './listItems/NotificationProofListItem'
-
-import QRScanner from './inputs/QRScanner'
-
-import SafeAreaScrollView from './views/SafeAreaScrollView'
-
-import TextInput from './inputs/TextInput'
+import Label from './texts/Label'
 import Text from './texts/Text'
 import Title from './texts/Title'
+import AppHeaderLarge from './views/AppHeaderLarge'
+import ModularView from './views/ModularView'
+import SafeAreaScrollView from './views/SafeAreaScrollView'
 
 export {
   AppHeaderLarge,

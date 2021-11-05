@@ -1,9 +1,11 @@
-import { useCredentialById } from '@aries-framework/react-hooks'
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
-import { SafeAreaScrollView } from 'components'
 import type { CredentialStackParams } from 'navigators/CredentialStack'
+
+import { useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect } from 'react'
+
+import { SafeAreaScrollView } from 'components'
 
 interface Props {
   navigation: StackNavigationProp<CredentialStackParams, 'Credential Details'>

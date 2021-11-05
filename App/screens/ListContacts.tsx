@@ -1,10 +1,12 @@
-import React from 'react'
-import { FlatList } from 'react-native'
-import { useConnections } from '@aries-framework/react-hooks'
 import type { ConnectionRecord } from '@aries-framework/core'
 
-import { ContactListItem, Text } from 'components'
+import { useConnections } from '@aries-framework/react-hooks'
+import React from 'react'
+import { FlatList } from 'react-native'
+
 import { backgroundColor } from '../globalStyles'
+
+import { ContactListItem, Text } from 'components'
 
 const ListContacts: React.FC = () => {
   const { connections } = useConnections()

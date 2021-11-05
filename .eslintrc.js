@@ -1,11 +1,32 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
+  },
   extends: [
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
-  plugins: ['@typescript-eslint'],
+  settings: {
+    // 'import/ignore': ['react-native'],
+    // 'import/extensions': ['.js', '.ts', 'tsx', 'jsx'],
+    // 'import/parsers': {
+    //   '@typescript-eslint/parser': ['.ts', '.tsx'],
+    // },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {},
+    },
+  },
+  plugins: ['@typescript-eslint', 'import'],
   rules: {
     // Type is enforced by callers. Not entirely, but it's good enough.
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -14,9 +35,26 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: true }],
     '@typescript-eslint/explicit-member-accessibility': 'error',
-    'no-console': 'error',
     // Because of early development, we only warn on ts-ignore. In future we want to move to error
     '@typescript-eslint/ban-ts-comment': 'warn',
+    'no-console': 'error',
+    'import/no-cycle': 'error',
+    'import/order': [
+      'error',
+      {
+        groups: ['type', ['builtin', 'external'], 'parent', 'sibling', 'index'],
+        alphabetize: {
+          order: 'asc',
+        },
+        'newlines-between': 'always',
+      },
+    ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: false,
+      },
+    ],
   },
   globals: {
     require: true,
