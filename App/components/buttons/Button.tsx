@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+
 import { borderRadius, mainColor, shadow, textColor } from '../../globalStyles'
 import Text from '../texts/Text'
 

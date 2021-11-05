@@ -1,8 +1,10 @@
-import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
+
+// eslint-disable-next-line import/no-cycle
+import Scan from '../screens/Scan'
 
 import defaultStackOptions from './defaultStackOptions'
-import Scan from '../screens/Scan'
 
 export type ScanStackParams = {
   Scan: undefined

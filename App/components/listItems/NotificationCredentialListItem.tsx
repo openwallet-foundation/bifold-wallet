@@ -1,15 +1,14 @@
-import React from 'react'
-import { TouchableOpacity, StyleSheet, View } from 'react-native'
-import { useNavigation } from '@react-navigation/core'
-import { useConnectionById } from '@aries-framework/react-hooks'
 import type { CredentialRecord } from '@aries-framework/core'
 
+import { useConnectionById } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
+import React from 'react'
+import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
-import Text from '../texts/Text'
 
 import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
 import { parseSchema } from '../../helpers'
+import Text from '../texts/Text'
 
 interface Props {
   notification: CredentialRecord
