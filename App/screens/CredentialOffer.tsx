@@ -45,11 +45,9 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
 
   const handleAcceptPress = async () => {
     setModalVisible('pending')
-
     setTimeout(() => {
       setPendingMessage('This is taking Longer than expected. Check back later for your new credential.')
     }, 10000)
-
     try {
       await agent?.credentials.acceptOffer(credentialId)
     } catch {
@@ -76,6 +74,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     ])
   }
 
+  const exitCredentialOffer = () => {
+    setModalVisible('')
+    navigation.goBack()
+  }
+
   return (
     <View style={styles.container}>
       <ModularView
@@ -95,22 +98,12 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         visible={modalVisible === 'pending'}
         banner="Accepting Credential"
         message={pendingMessage}
-        onPress={
-          pendingMessage
-            ? () => {
-                setModalVisible('')
-                navigation.goBack()
-              }
-            : undefined
-        }
+        onPress={pendingMessage ? exitCredentialOffer : undefined}
       />
       <Success
         visible={modalVisible === 'success'}
         banner="Successfully Accepted Credential"
-        onPress={() => {
-          setModalVisible('')
-          navigation.goBack()
-        }}
+        onPress={exitCredentialOffer}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
     </View>
