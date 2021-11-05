@@ -16,8 +16,8 @@ const Stack = createStackNavigator<ContactStackParams>()
 function ContactStack() {
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen name="Contacts" component={ListContacts} />
-      <Stack.Screen name="Contact Details" component={ContactDetails} />
+      <Stack.Screen name="Contacts" component={ListContacts} options={{ headerShown: false }} />
+      <Stack.Screen name="Contact Details" component={ContactDetails} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }

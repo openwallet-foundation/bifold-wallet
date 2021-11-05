@@ -18,9 +18,9 @@ const Stack = createStackNavigator<HomeStackParams>()
 function HomeStack() {
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Credential Offer" component={CredentialOffer} />
-      <Stack.Screen name="Proof Request" component={ProofRequest} />
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+      <Stack.Screen name="Credential Offer" component={CredentialOffer} options={{ headerShown: false }} />
+      <Stack.Screen name="Proof Request" component={ProofRequest} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }
