@@ -1,5 +1,6 @@
 import styled from '@emotion/native'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
@@ -20,10 +21,11 @@ const Row = styled.View`
 const PinCreate: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
+  const { t } = useTranslation()
 
   const passcodeCreate = async (x: string) => {
     const passcode = JSON.stringify(x)
-    const description = 'user authentication pin'
+    const description = t('user authentication pin')
     await Keychain.setGenericPassword(description, passcode, {
       service: 'passcode',
     })
@@ -31,9 +33,9 @@ const PinCreate: React.FC<Props> = ({ route }) => {
 
   const confirmEntry = (x: string, y: string) => {
     if (x.length < 6 || y.length < 6) {
-      Alert.alert('Pin must be 6 digits in length')
+      Alert.alert(t('Pin must be 6 digits in length'))
     } else if (x !== y) {
-      Alert.alert('Pins entered do not match')
+      Alert.alert(t('Pins entered do not match'))
     } else {
       passcodeCreate(x)
       route?.params?.setAuthenticated(true)
@@ -44,8 +46,8 @@ const PinCreate: React.FC<Props> = ({ route }) => {
     <SafeAreaScrollView>
       <Row>
         <TextInput
-          label="Enter Pin"
-          placeholder="6 Digit Pin"
+          label={t('Enter Pin')}
+          placeholder={t('6 Digit Pin')}
           maxLength={6}
           autoFocus
           keyboardType="numeric"
@@ -56,8 +58,8 @@ const PinCreate: React.FC<Props> = ({ route }) => {
       </Row>
       <Row>
         <TextInput
-          label="Re-Enter Pin"
-          placeholder="6 Digit Pin"
+          label={t('Re-Enter Pin')}
+          placeholder={t('6 Digit Pin')}
           maxLength={6}
           keyboardType="numeric"
           secureTextEntry
@@ -72,7 +74,7 @@ const PinCreate: React.FC<Props> = ({ route }) => {
       </Row>
       <Row>
         <Button
-          title="Create"
+          title={t('Create')}
           onPress={() => {
             Keyboard.dismiss()
             confirmEntry(pin, pinTwo)

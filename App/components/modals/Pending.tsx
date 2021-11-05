@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { backgroundColor } from '../../globalStyles'
 
@@ -12,10 +13,12 @@ interface Props {
 }
 
 const Pending: React.FC<Props> = ({ visible, banner, message, onPress }) => {
+  const { t } = useTranslation()
+
   return (
     <Message
       visible={visible}
-      banner={banner || 'Pending'}
+      banner={banner || t('Pending')}
       message={message || ''}
       icon="alarm"
       backgroundColor={backgroundColor}
