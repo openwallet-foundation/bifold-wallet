@@ -3,6 +3,7 @@ import React from 'react'
 import Message from './Message'
 
 import { mainColor } from '../../globalStyles'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   visible: boolean
@@ -12,10 +13,12 @@ interface Props {
 }
 
 const Success: React.FC<Props> = ({ visible, banner, message, onPress }) => {
+  const { t } = useTranslation()
+  
   return (
     <Message
       visible={visible}
-      banner={banner || 'Success'}
+      banner={banner || t('Modals.success')}
       message={message}
       icon="check-circle"
       backgroundColor={mainColor}

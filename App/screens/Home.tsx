@@ -1,6 +1,7 @@
 import React from 'react'
 import { FlatList } from 'react-native'
 import { CredentialState, ProofState } from '@aries-framework/core'
+import { useTranslation } from 'react-i18next'
 
 import { useCredentialByState, useProofByState } from 'aries-hooks'
 
@@ -19,15 +20,17 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({ navigation }) => {
+  const { t } = useTranslation()
+  
   const credentials = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
 
   return (
     <SafeAreaScrollView>
       <AppHeaderLarge />
-      <Button title="Scanner" onPress={() => navigation.jumpTo('Scan')} />
+      <Button title={t('Home.scanner')} onPress={() => navigation.jumpTo('Scan')} />
       <ModularView
-        title="Notifications"
+        title={t('Home.notifications')}
         content={
           <FlatList
             data={[...credentials, ...proofs]}
@@ -39,7 +42,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
                 <NotificationProofListItem notification={item} />
               )
             }
-            ListEmptyComponent={<Text>No New Updates</Text>}
+            ListEmptyComponent={<Text>{t('Home.noNewUpdates')}</Text>}
           />
         }
       />

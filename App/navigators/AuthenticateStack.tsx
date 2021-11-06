@@ -8,6 +8,7 @@ import PinEnter from '../screens/PinEnter'
 import Terms from '../screens/Terms'
 
 import defaultStackOptions from './defaultStackOptions'
+import { useTranslation } from 'react-i18next'
 
 const Stack = createStackNavigator()
 
@@ -16,6 +17,8 @@ interface Props {
 }
 
 const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
+  const { t } = useTranslation()
+
   const [firstLogin, setFirstLogin] = useState(true)
 
   const checkFirstLogin = async () => {
@@ -43,11 +46,11 @@ const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
     <Stack.Navigator screenOptions={defaultStackOptions}>
       {firstLogin && (
         <>
-          <Stack.Screen name="Terms & Conditions" component={Terms} />
-          <Stack.Screen name="Create 6-Digit Pin" component={PinCreate} initialParams={{ setAuthenticated }} />
+          <Stack.Screen options={{ title: t('AuthenticateStack.termsConditions') }} name="Terms & Conditions"  component={Terms} />
+          <Stack.Screen options={{ title: t('AuthenticateStack.create6DigitPin') }} name="Create 6-Digit Pin" component={PinCreate} initialParams={{ setAuthenticated }} />
         </>
       )}
-      <Stack.Screen name="Enter Pin" component={PinEnter} initialParams={{ setAuthenticated }} />
+      <Stack.Screen options={{title: t('AuthenticateStack.enterPin')}} name="Enter Pin" component={PinEnter} initialParams={{ setAuthenticated }} />
     </Stack.Navigator>
   )
 }

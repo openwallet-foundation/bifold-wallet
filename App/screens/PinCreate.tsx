@@ -3,6 +3,7 @@ import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
 import { Button, TextInput, SafeAreaScrollView } from 'components'
+import { useTranslation } from 'react-i18next'
 
 interface IPinCreate {
   setupScreens: number
@@ -14,6 +15,8 @@ let textInput: any
 let secondTextInput: any
 
 function PinCreate(props: IPinCreate) {
+  const { t } = useTranslation()
+  
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
 
@@ -27,11 +30,11 @@ function PinCreate(props: IPinCreate) {
 
   const confirmEntry = (x: any, y: any) => {
     if (x.length < 6 || y.length < 6) {
-      Alert.alert('Pin must be 6 digits in length')
+      Alert.alert(t('PinCreate.pinMustBe6DigitsInLength'))
     } else if (x !== y) {
       textInput.clear()
       secondTextInput.clear()
-      Alert.alert('Pins entered do not match')
+      Alert.alert(t('PinCreate.pinsEnteredDoNotMatch'))
     } else {
       passcodeCreate(x)
       props.route.params.setAuthenticated(true)
@@ -41,8 +44,8 @@ function PinCreate(props: IPinCreate) {
   return (
     <SafeAreaScrollView>
       <TextInput
-        label="Enter Pin"
-        placeholder="6 Digit Pin"
+        label={t('PinCreate.enterPin')}
+        placeholder={t('PinCreate.6DigitPin')}
         maxLength={6}
         autoFocus
         keyboardType="numeric"
@@ -51,8 +54,8 @@ function PinCreate(props: IPinCreate) {
         onChangeText={setPin}
       />
       <TextInput
-        label="Re-Enter Pin"
-        placeholder="6 Digit Pin"
+        label={t('PinCreate.reEnterPin')}
+        placeholder={t('PinCreate.6DigitPin')}
         maxLength={6}
         keyboardType="numeric"
         secureTextEntry
@@ -65,7 +68,7 @@ function PinCreate(props: IPinCreate) {
         }}
       />
       <Button
-        title="Create"
+        title={t('PinCreate.create')}
         onPress={() => {
           Keyboard.dismiss()
           confirmEntry(pin, pinTwo)

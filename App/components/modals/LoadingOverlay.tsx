@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, Text, StyleSheet, Modal } from 'react-native'
 
 interface Props {
@@ -6,10 +7,12 @@ interface Props {
 }
 
 const LoadingOverlay: React.FC<Props> = ({ visible }) => {
+  const { t } = useTranslation()
+  
   return (
     <Modal visible={visible} animationType="fade" transparent>
       <View style={styles.container}>
-        <Text style={styles.text}>Loading...</Text>
+        <Text style={styles.text}>{t('Modals.loading')}</Text>
       </View>
     </Modal>
   )

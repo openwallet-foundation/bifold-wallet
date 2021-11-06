@@ -1,6 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { useTranslation } from 'react-i18next'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const NotificationListItem: React.FC<Props> = ({ notification }) => {
+  const { t } = useTranslation()
+  
   const navigation = useNavigation()
 
   return (
@@ -20,7 +23,7 @@ const NotificationListItem: React.FC<Props> = ({ notification }) => {
       style={styles.container}
       onPress={() => navigation.navigate('Credential Offer', { notification })}
     >
-      <Text style={styles.title}>{notification.type || 'Notification'}</Text>
+      <Text style={styles.title}>{notification.type || t('NotificationListItem.notification')}</Text>
       <Icon name="chevron-right" color={textColor} size={30} />
     </TouchableOpacity>
   )

@@ -1,0 +1,127 @@
+{
+    "translation": {
+        "Language": {
+            "english": "Anglaise",
+            "french": "Français",
+            "hindi": "Hindi"
+        },
+        "AuthenticateStack": { 
+            "termsConditions":"Termes et conditions",
+            "create6DigitPin":"Créer une épingle à 6 chiffres",
+            "enterPin":"Entrez le code PIN"
+        },
+        "Terms": { 
+            "termsOfService":"Conditions d'utilisation",
+            "termsOfServiceText":"Lorem Ipsum est simplement un texte factice de l'industrie de l'impression et de la composition. Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur inconnu a pris une galère de caractères et l'a brouillé pour en faire un livre spécimen de caractères. Il a survécu non seulement à cinq siècles, mais aussi au saut dans la composition électronique, restant essentiellement inchangé. Il a été popularisé dans les années 1960 avec la sortie de feuilles Letraset contenant des passages de Lorem Ipsum, et plus récemment avec des logiciels de PAO comme Aldus PageMaker comprenant des versions de Lorem Ipsum.",
+            "iAgreeToTheTermsOfService":"J'accepte les conditions d'utilisation",
+            "submit":"Soumettre"
+        },
+        "PinCreate": { 
+            "pinMustBe6DigitsInLength":"La broche doit comporter 6 chiffres",
+            "pinsEnteredDoNotMatch":"Les épingles saisies ne correspondent pas",
+            "enterPin":"Entrez le code PIN",
+            "6DigitPin":"Broche à 6 chiffres",
+            "reEnterPin":"Rentrer le code PIN",
+            "create":"Créer"
+        },
+        "PinEnter":{ 
+            "incorrectPin":"Broche incorrecte",
+            "enterPin":"Entrez le code PIN",
+            "6DigitPin":"Broche à 6 chiffres",
+            "submit":"Soumettre"
+        },
+        "ContactStack" : { 
+            "contacts":"Contacts",
+            "contactDetails":"Détails du contact"
+        },
+        "ListContacts": { 
+            "noneYet":"Aucun pour l'instant"
+        },
+        "ContactDetails ": { 
+            "created":"Créé",
+            "connectionState":"État de la connexion"
+        },
+        "CredentialStack": { 
+            "credentials":"Crédits",
+            "credentialDetails":"Détails des informations d'identification"
+        },
+        "ListCredentials": { 
+            "noneYet":"Aucun pour l'instant"
+        },
+        "CredentialDetails": { 
+            "gender":"Genre",
+            "age":"Âge"
+        },
+        "HomeStack": { 
+            "home":"Accueil",
+            "credentialOffer":"Offre d'identification",
+            "proofRequest":"Demande de preuve"
+        },
+        "Home":{ 
+            "scanner":"Scanner",
+            "notifications":"Notifications",
+            "noNewUpdates":"Pas de nouvelles mises à jour"
+        },
+        "CredentialOffer": {
+            "longerThanExpected": "Cela prend plus de temps que prévu. Revenez plus tard pour vos nouvelles informations d'identification.",
+            "rejectThisCredential?":"Refuser cet identifiant ?",
+            "thisDecisionCannotBeChanged.":"Cette décision ne peut être modifiée.",
+            "cancel":"Annuler",
+            "confirm":"Confirmer",
+            "accept":"J'accepte",
+            "reject":"Rejeter",
+            "acceptingCredential":"Acceptation des informations d'identification",
+            "successfullyAcceptedCredential":"Informations d'identification acceptées avec succès"
+        },
+        "ProofRequest": {
+            "longerThanExpected": "Cela prend plus de temps que prévu. Nous continuerons le traitement en arrière-plan.",
+            "rejectThisProof?":"Rejeter cette preuve ?",
+            "thisDecisionCannotBeChanged.":"Cette décision ne peut être modifiée.",
+            "cancel":"Annuler",
+            "confirm":"Confirmer",
+            "accept":"J'accepte",
+            "reject":"Rejeter",
+            "acceptingProof":"Accepter la preuve",
+            "successfullyAcceptedProof":"Preuve acceptée avec succès"
+        },
+        "ScanStack": { 
+            "scan":"Analyse"
+        },
+        "Scan": {},    
+        "SettingStack": { 
+            "settings":"Paramètres",
+            "language":"Langue"        
+        },
+        "Settings":{ 
+            "version":"Version",
+            "AMA-RNVersion":"AMA-RN Version",
+            "versionValue":"0.0.1",
+            "AMA-RNVersionValue":"0.1.0",
+            "appPreferences":"Préférences de l'application",
+            "aboutApp":"À propos de l'application",
+            "language":"Langue"
+        },
+        "TabNavigator": { 
+            "home":"Accueil",
+            "contacts":"Contacts",
+            "scan":"Analyse",
+            "credentials":"Crédits",
+            "settings":"Paramètres"
+        },
+        "QRScanner": {  
+            "permissionToUseCamera":"Autorisation d'utiliser la caméra",
+            "weNeedYourPermissionToUseYourCamera":"Nous avons besoin de votre permission pour utiliser votre appareil photo",
+            "ok":"D'accord",
+            "cancel":"Annuler" 
+        }, 
+        "NotificationListItem": { 
+            "notification":"Notification"
+        },
+        "Modals": { 
+            "loading":"Chargement...",
+            "failure":"Échec",
+            "pending":"En attente",
+            "success":"Succès"
+        }
+    }
+}

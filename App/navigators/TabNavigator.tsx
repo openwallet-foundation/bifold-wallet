@@ -9,10 +9,12 @@ import CredentialStack from './CredentialStack'
 import SettingStack from './SettingStack'
 
 import { mainColor } from '../globalStyles'
+import { useTranslation } from 'react-i18next'
 
 const Tab = createBottomTabNavigator()
 
 function TabNavigator() {
+  const { t } = useTranslation()
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -24,27 +26,27 @@ function TabNavigator() {
       <Tab.Screen
         name="Home"
         component={HomeStack}
-        options={{ tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} /> }}
+        options={{ title:t('TabNavigator.home') ,tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} /> }}
       />
       <Tab.Screen
         name="Contacts"
         component={ContactStack}
-        options={{ tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} /> }}
+        options={{ title:t('TabNavigator.contacts') ,tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} /> }}
       />
       <Tab.Screen
         name="Scan"
         component={ScanStack}
-        options={{ tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} /> }}
+        options={{ title:t('TabNavigator.scan') ,tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} /> }}
       />
       <Tab.Screen
         name="Credentials"
         component={CredentialStack}
-        options={{ tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} /> }}
+        options={{ title:t('TabNavigator.credentials') ,tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} /> }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingStack}
-        options={{ tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} /> }}
+        options={{ title:t('TabNavigator.settings') ,tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} /> }}
       />
     </Tab.Navigator>
   )

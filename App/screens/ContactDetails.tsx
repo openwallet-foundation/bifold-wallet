@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { SafeAreaScrollView, Label, Text } from 'components'
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
+  const { t } = useTranslation()
+  
   const { alias, invitation, createdAt, state } = route?.params?.contact
 
   useEffect(() => {
@@ -18,8 +21,8 @@ const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaScrollView>
-      <Label title="Created" subtitle={JSON.stringify(createdAt)} />
-      <Label title="Connection State" subtitle={state} />
+      <Label title={t('ContactDetails.created')} subtitle={JSON.stringify(createdAt)} />
+      <Label title={t('ContactDetails.connectionState')} subtitle={state} />
     </SafeAreaScrollView>
   )
 }

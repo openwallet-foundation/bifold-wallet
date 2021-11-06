@@ -1,0 +1,127 @@
+{
+    "translation": {
+        "Language": {
+            "english": "अंग्रेज़ी",
+            "french": "फ्रेंच",
+            "hindi": "हिंदी"
+        },
+        "AuthenticateStack": {
+            "termsConditions": "नियम एवं शर्तें",
+            "create6DigitPin": "6-अंकों का पिन बनाएं",
+            "enterPin": "पिन दर्ज करें"
+        },
+        "Terms": {
+            "termsOfService": "सेवा की शर्तें",
+            "termsOfServiceText": "लोरेम इप्सम प्रिंटिंग और टाइपसेटिंग उद्योग का केवल डमी टेक्स्ट है। लोरेम इप्सम 1500 के दशक के बाद से उद्योग का मानक डमी टेक्स्ट रहा है, जब एक अज्ञात प्रिंटर ने एक प्रकार की गैली ली और इसे एक प्रकार की नमूना पुस्तक बनाने के लिए हाथापाई की। यह न केवल पांच शताब्दियों तक जीवित रहा है, बल्कि इलेक्ट्रॉनिक टाइपसेटिंग में भी छलांग लगाई है, जो अनिवार्य रूप से अपरिवर्तित है। इसे 1960 के दशक में लोरम इप्सम पैसेज वाले लेट्रासेट शीट्स के रिलीज के साथ लोकप्रिय किया गया था, और हाल ही में एल्डस पेजमेकर जैसे डेस्कटॉप प्रकाशन सॉफ्टवेयर के साथ लोरेम इप्सम के संस्करण भी शामिल थे।",
+            "iAgreeToTheTermsOfService": "मैं सेवा की शर्तों से सहमत हूं",
+            "submit": "सबमिट"
+        },
+        "PinCreate": {
+            "pinMustBe6DigitsInLength": "पिन लंबाई में 6 अंकों का होना चाहिए",
+            "pinsEnteredDoNotMatch": "एंटर किया गया पिन मैच नहीं हो रहा है",
+            "enterPin": "पिन दर्ज करें",
+            "6DigitPin": "6 अंकों का पिन",
+            "reEnterPin": "फिरसे पिन दर्ज करें",
+            "create": "बनाएं"
+        },
+        "PinEnter": {
+            "incorrectPin": "गलत पिन",
+            "enterPin": "पिन दर्ज करें",
+            "6DigitPin": "6 अंकों का पिन",
+            "submit": "सबमिट"
+        },
+        "ContactStack": {
+            "contacts": "संपर्क",
+            "contactDetails": "संपर्क विवरण"
+        },
+        "ListContacts": {
+            "noneYet": "कुछ भी नहीं"
+        },
+        "ContactDetails ": {
+            "created": "बनाया",
+            "connectionState": "कनेक्शन स्टेट"
+        },
+        "CredentialStack": {
+            "credentials": "प्रमामपत्र",
+            "credentialDetails": "प्रमामपत्र विवरण"
+        },
+        "ListCredentials": {
+            "noneYet": "कुछ भी नहीं"
+        },
+        "CredentialDetails": {
+            "gender": "सेक्स",
+            "age": "उम्र"
+        },
+        "HomeStack": {
+            "home": "होम",
+            "credentialOffer": "प्रमामपत्र प्रस्ताव",
+            "proofRequest": "प्रमाण अनुरोध"
+        },
+        "Home": {
+            "scanner": "स्कैनर",
+            "notifications": "नोटिफिकेशन्स",
+            "noNewUpdates": "कोई नया अपडेट नहीं"
+        },
+        "CredentialOffer": {
+            "longerThanExpected": "इसमें अपेक्षा से अधिक समय लग रहा है। अपने नए प्रमामपत्र के लिए बाद में वापस देखें।",
+            "rejectThisCredential?": "इस प्रमामपत्र को अस्वीकार करें?",
+            "thisDecisionCannotBeChanged.": "इस निर्णय को बदला नहीं जा सकता।",
+            "cancel": "रद्द करना",
+            "confirm": "पुष्टि करना",
+            "accept": "स्वीकार करना",
+            "reject": "अस्वीकार",
+            "acceptingCredential": "प्रमाणपत्र स्वीकार कर रहये है",
+            "successfullyAcceptedCredential": "प्रमाणपत्र स्वीकार कर लिया है"
+        },
+        "ProofRequest": {
+            "longerThanExpected": "इसमें अपेक्षा से अधिक समय लग रहा है। हम बैकग्राउंड में प्रोसेसिंग जारी रखेंगे।",
+            "rejectThisProof?": "इस सबूत को अस्वीकार करें?",
+            "thisDecisionCannotBeChanged.": "इस निर्णय को बदला नहीं जा सकता।",
+            "cancel": "रद्द करना",
+            "confirm": "पुष्टि करना",
+            "accept": "स्वीकार करना",
+            "reject": "अस्वीकार",
+            "acceptingProof": "प्रमाण स्वीकार कर रहये है",
+            "successfullyAcceptedProof": "प्रमाण स्वीकार कर लिया है"
+        },
+        "ScanStack": {
+            "scan": "स्कैन"
+        },
+        "Scan": {},
+        "SettingStack": {
+            "settings": "सेटिंग्स",
+            "language":"भाषा"
+        },
+        "Settings": {
+            "version": "वर्शन",
+            "AMA-RNVersion": "AMA-RN वर्शन",
+            "versionValue": "0.0.१",
+            "AMA-RNVersionValue": "0.१.0",
+            "appPreferences":"ऐप प्राथमिकताएं",
+            "aboutApp":"ऐप के बारे में",
+            "language":"भाषा"
+        },
+        "TabNavigator": {
+            "home": "होम",
+            "contacts": "कॉन्टेक्ट्स",
+            "scan": "स्कैन",
+            "credentials": "प्रमाणपत्र",
+            "settings": "सेटिंग्स"
+        },
+        "QRScanner": {
+            "permissionToUseCamera": "कैमरे का उपयोग करने की अनुमति",
+            "weNeedYourPermissionToUseYourCamera": "हमें आपके कैमरे का उपयोग करने के लिए आपकी अनुमति चाहिए",
+            "ok": "ठीक है",
+            "cancel": "रद्द करना"
+        },
+        "NotificationListItem": {
+            "notification": "नोटिफिकेशन"
+        },
+        "Modals": {
+            "loading": "लोड हो रहा है",
+            "failure": "असफलता",
+            "pending": "लंबित",
+            "success": "सफलता"
+        }
+    }
+}

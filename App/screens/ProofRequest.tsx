@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { FlatList, Alert } from 'react-native'
 import { useAgent, useConnectionById, useProofById } from 'aries-hooks'
+import { useTranslation } from 'react-i18next'
 
 import { SafeAreaScrollView, Button, ModularView, Label, Success, Pending, Failure } from 'components'
 
 import { parseSchema } from '../helpers'
 import { ProofState } from '@aries-framework/core'
-
 interface Props {
   navigation: any
   route: any
@@ -26,7 +26,9 @@ const transformAttributes = (attributes: any) => {
   return transformedAttributes
 }
 
-const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
+const ProofRequest: React.FC<Props> = ({ navigation, route }) => {
+  const { t } = useTranslation()
+  
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
@@ -61,7 +63,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     setModalVisible('pending')
 
     setTimeout(() => {
-      setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
+      setPendingMessage(t('ProofRequest.longerThanExpected'))
     }, 15000)
 
     const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
@@ -74,10 +76,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert('Reject this Proof?', 'This decision cannot be changed.', [
-      { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+    Alert.alert(t('ProofRequest.rejectThisProof'), t('ProofRequest.thisDecisionCannotBeChanged'), [
+      { text: t('ProofRequest.cancel'), onPress: () => {}, style: 'cancel' },
       {
-        text: 'Confirm',
+        text: t('ProofRequest.confirm'),
         style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
@@ -107,11 +109,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title="Accept" onPress={handleAcceptPress} />
-      <Button title="Reject" negative onPress={handleRejectPress} />
+      <Button title={t('ProofRequest.accept')} onPress={handleAcceptPress} />
+      <Button title={t('ProofRequest.Reject')} negative onPress={handleRejectPress} />
       <Pending
         visible={modalVisible === 'pending'}
-        banner="Accepting Proof"
+        banner={t('ProofRequest.acceptingProof')}
         message={pendingMessage}
         onPress={
           pendingMessage
@@ -124,7 +126,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       />
       <Success
         visible={modalVisible === 'success'}
-        banner="Successfully Accepted Proof"
+        banner={t('ProofRequest.successfullyAcceptedProof')}
         onPress={() => {
           setModalVisible('')
           navigation.goBack()
@@ -135,4 +137,4 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   )
 }
 
-export default CredentialOffer
+export default ProofRequest

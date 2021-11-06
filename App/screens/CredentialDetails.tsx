@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { SafeAreaScrollView, Text, Label } from 'components'
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const CredentialDetails: React.FC<Props> = ({ navigation, route }) => {
+  const { t } = useTranslation()
+  
   const { credential } = route?.params?.credential
 
   const {
@@ -24,8 +27,8 @@ const CredentialDetails: React.FC<Props> = ({ navigation, route }) => {
     <SafeAreaScrollView>
       <Text>{first_name}</Text>
       <Text>{last_name}</Text>
-      <Label title="Gender" subtitle={gender} />
-      <Label title="Age" subtitle={age} />
+      <Label title={t('CredentialDetails.gender')} subtitle={gender} />
+      <Label title={t('CredentialDetails.age')} subtitle={age} />
     </SafeAreaScrollView>
   )
 }

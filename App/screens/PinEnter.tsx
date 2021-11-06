@@ -3,12 +3,15 @@ import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
 import { TextInput, SafeAreaScrollView, Button } from 'components'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   route: any
 }
 
 const PinEnter: React.FC<Props> = ({ route }) => {
+  const { t } = useTranslation()
+  
   const [pin, setPin] = useState('')
 
   const checkPin = async (pin: string) => {
@@ -16,15 +19,15 @@ const PinEnter: React.FC<Props> = ({ route }) => {
     if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
       route.params.setAuthenticated(true)
     } else {
-      Alert.alert('Incorrect Pin')
+      Alert.alert(t('PinEnter.incorrectPin'))
     }
   }
 
   return (
     <SafeAreaScrollView>
       <TextInput
-        label="Enter Pin"
-        placeholder="6 Digit Pin"
+        label={t('PinEnter.enterPin')}
+        placeholder={t('PinEnter.6DigitPin')}
         autoFocus
         maxLength={6}
         keyboardType="numeric"
@@ -38,7 +41,7 @@ const PinEnter: React.FC<Props> = ({ route }) => {
         }}
       />
       <Button
-        title="Submit"
+        title={t('PinEnter.submit')}
         onPress={() => {
           Keyboard.dismiss()
           checkPin(pin)
