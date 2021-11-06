@@ -11,7 +11,7 @@ interface Props {
 
 const PinEnter: React.FC<Props> = ({ route }) => {
   const { t } = useTranslation()
-  
+
   const [pin, setPin] = useState('')
 
   const checkPin = async (pin: string) => {

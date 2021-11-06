@@ -1,127 +1,127 @@
 {
-    "translation": {
-        "Language": {
-            "english": "English",
-            "french": "French",
-            "hindi": "Hindi"
-        },
-        "AuthenticateStack": { 
-            "termsConditions":"Terms & Conditions",
-            "create6DigitPin":"Create 6-Digit Pin",
-            "enterPin":"Enter Pin"
-        },
-        "Terms": { 
-            "termsOfService":"Terms of Service",
-            "termsOfServiceText":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            "iAgreeToTheTermsOfService":"I Agree to the Terms of Service",
-            "submit":"Submit"
-        },
-        "PinCreate": { 
-            "pinMustBe6DigitsInLength":"Pin must be 6 digits in length",
-            "pinsEnteredDoNotMatch":"Pins entered do not match",
-            "enterPin":"Enter Pin",
-            "6DigitPin":"6 Digit Pin",
-            "reEnterPin":"Re-Enter Pin",
-            "create":"Create"
-        },
-        "PinEnter":{ 
-            "incorrectPin":"Incorrect Pin",
-            "enterPin":"Enter Pin",
-            "6DigitPin":"6 Digit Pin",
-            "submit":"Submit"
-        },
-        "ContactStack" : { 
-            "contacts":"Contacts",
-            "contactDetails":"Contact Details"
-        },
-        "ListContacts": { 
-            "noneYet":"None yet"
-        },
-        "ContactDetails ": { 
-            "created":"Created",
-            "connectionState":"Connection State"
-        },
-        "CredentialStack": { 
-            "credentials":"Credentials",
-            "credentialDetails":"Credential Details"
-        },
-        "ListCredentials": { 
-            "noneYet":"None yet"
-        },
-        "CredentialDetails": { 
-            "gender":"Gender",
-            "age":"Age"
-        },
-        "HomeStack": { 
-            "home":"Home",
-            "credentialOffer":"Credential Offer",
-            "proofRequest":"Proof Request"
-        },
-        "Home":{ 
-            "scanner":"Scanner",
-            "notifications":"Notifications",
-            "noNewUpdates":"No New Updates"
-        },
-        "CredentialOffer": {
-            "longerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
-            "rejectThisCredential?":"Reject this Credential?",
-            "thisDecisionCannotBeChanged.":"This decision cannot be changed.",
-            "cancel":"Cancel",
-            "confirm":"Confirm",
-            "accept":"Accept",
-            "reject":"Reject",
-            "acceptingCredential":"Accepting Credential",
-            "successfullyAcceptedCredential":"Successfully Accepted Credential"
-        },
-        "ProofRequest": {
-            "longerThanExpected": "This is taking Longer than expected. We'll continue processing in the background.",
-            "rejectThisProof?":"Reject this Proof?",
-            "thisDecisionCannotBeChanged.":"This decision cannot be changed.",
-            "cancel":"Cancel",
-            "confirm":"Confirm",
-            "accept":"Accept",
-            "reject":"Reject",
-            "acceptingProof":"Accepting Proof",
-            "successfullyAcceptedProof":"Successfully Accepted Proof"
-        },
-        "ScanStack": { 
-            "scan":"Scan"
-        },
-        "Scan": {},    
-        "SettingStack": { 
-            "settings":"Settings",
-            "language":"Language"        
-        },
-        "Settings":{ 
-            "version":"Version",
-            "AMA-RNVersion":"AMA-RN Version",
-            "versionValue":"0.0.1",
-            "AMA-RNVersionValue":"0.1.0",
-            "appPreferences":"App Preferences",
-            "aboutApp":"About App",
-            "language":"Language"
-        },
-        "TabNavigator": { 
-            "home":"Home",
-            "contacts":"Contacts",
-            "scan":"Scan",
-            "credentials":"Credentials",
-            "settings":"Settings"
-        },
-        "QRScanner": {  
-            "permissionToUseCamera":"Permission to use camera",
-            "weNeedYourPermissionToUseYourCamera":"We need your permission to use your camera",
-            "ok":"Ok",
-            "cancel":"Cancel" 
-        }, 
-        "NotificationListItem": { 
-            "notification":"Notification"
-        },
-        "Modals": { 
-            "loading":"Loading...",
-            "failure":"Failure",
-            "pending":"Pending",
-            "success":"Success"
-        }
+  "translation": {
+    "Language": {
+      "english": "English",
+      "french": "French",
+      "hindi": "Hindi"
+    },
+    "AuthenticateStack": {
+      "termsConditions": "Terms & Conditions",
+      "create6DigitPin": "Create 6-Digit Pin",
+      "enterPin": "Enter Pin"
+    },
+    "Terms": {
+      "termsOfService": "Terms of Service",
+      "termsOfServiceText": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "iAgreeToTheTermsOfService": "I Agree to the Terms of Service",
+      "submit": "Submit"
+    },
+    "PinCreate": {
+      "pinMustBe6DigitsInLength": "Pin must be 6 digits in length",
+      "pinsEnteredDoNotMatch": "Pins entered do not match",
+      "enterPin": "Enter Pin",
+      "6DigitPin": "6 Digit Pin",
+      "reEnterPin": "Re-Enter Pin",
+      "create": "Create"
+    },
+    "PinEnter": {
+      "incorrectPin": "Incorrect Pin",
+      "enterPin": "Enter Pin",
+      "6DigitPin": "6 Digit Pin",
+      "submit": "Submit"
+    },
+    "ContactStack": {
+      "contacts": "Contacts",
+      "contactDetails": "Contact Details"
+    },
+    "ListContacts": {
+      "noneYet": "None yet"
+    },
+    "ContactDetails ": {
+      "created": "Created",
+      "connectionState": "Connection State"
+    },
+    "CredentialStack": {
+      "credentials": "Credentials",
+      "credentialDetails": "Credential Details"
+    },
+    "ListCredentials": {
+      "noneYet": "None yet"
+    },
+    "CredentialDetails": {
+      "gender": "Gender",
+      "age": "Age"
+    },
+    "HomeStack": {
+      "home": "Home",
+      "credentialOffer": "Credential Offer",
+      "proofRequest": "Proof Request"
+    },
+    "Home": {
+      "scanner": "Scanner",
+      "notifications": "Notifications",
+      "noNewUpdates": "No New Updates"
+    },
+    "CredentialOffer": {
+      "longerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
+      "rejectThisCredential?": "Reject this Credential?",
+      "thisDecisionCannotBeChanged.": "This decision cannot be changed.",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "accept": "Accept",
+      "reject": "Reject",
+      "acceptingCredential": "Accepting Credential",
+      "successfullyAcceptedCredential": "Successfully Accepted Credential"
+    },
+    "ProofRequest": {
+      "longerThanExpected": "This is taking Longer than expected. We'll continue processing in the background.",
+      "rejectThisProof?": "Reject this Proof?",
+      "thisDecisionCannotBeChanged.": "This decision cannot be changed.",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "accept": "Accept",
+      "reject": "Reject",
+      "acceptingProof": "Accepting Proof",
+      "successfullyAcceptedProof": "Successfully Accepted Proof"
+    },
+    "ScanStack": {
+      "scan": "Scan"
+    },
+    "Scan": {},
+    "SettingStack": {
+      "settings": "Settings",
+      "language": "Language"
+    },
+    "Settings": {
+      "version": "Version",
+      "AMA-RNVersion": "AMA-RN Version",
+      "versionValue": "0.0.1",
+      "AMA-RNVersionValue": "0.1.0",
+      "appPreferences": "App Preferences",
+      "aboutApp": "About App",
+      "language": "Language"
+    },
+    "TabNavigator": {
+      "home": "Home",
+      "contacts": "Contacts",
+      "scan": "Scan",
+      "credentials": "Credentials",
+      "settings": "Settings"
+    },
+    "QRScanner": {
+      "permissionToUseCamera": "Permission to use camera",
+      "weNeedYourPermissionToUseYourCamera": "We need your permission to use your camera",
+      "ok": "Ok",
+      "cancel": "Cancel"
+    },
+    "NotificationListItem": {
+      "notification": "Notification"
+    },
+    "Modals": {
+      "loading": "Loading...",
+      "failure": "Failure",
+      "pending": "Pending",
+      "success": "Success"
     }
+  }
 }

@@ -12,12 +12,16 @@ const Stack = createStackNavigator()
 
 function HomeStack() {
   const { t } = useTranslation()
-  
+
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen options={{title: t('HomeStack.home')}} name="Home" component={Home} />
-      <Stack.Screen options={{title: t('HomeStack.credentialOffer')}} name="Credential Offer" component={CredentialOffer} />
-      <Stack.Screen options={{title: t('HomeStack.proofRequest')}} name="Proof Request" component={ProofRequest} />
+      <Stack.Screen options={{ title: t('HomeStack.home') }} name="Home" component={Home} />
+      <Stack.Screen
+        options={{ title: t('HomeStack.credentialOffer') }}
+        name="Credential Offer"
+        component={CredentialOffer}
+      />
+      <Stack.Screen options={{ title: t('HomeStack.proofRequest') }} name="Proof Request" component={ProofRequest} />
     </Stack.Navigator>
   )
 }

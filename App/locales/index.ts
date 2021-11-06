@@ -4,18 +4,17 @@ import * as RNLocalize from 'react-native-localize'
 import AsyncStorage from '@react-native-community/async-storage'
 
 const translationGetters = {
-  en: require('./en-US.json'), 
-  fr: require('./fr-FR.json'), 
-  hi: require('./hi-HI.json'), 
+  en: require('./en-US.json'),
+  fr: require('./fr-FR.json'),
+  hi: require('./hi-HI.json'),
 }
 
 const currentLanguage = i18n.language
 
-
 export enum Locales {
   en = 'en',
   fr = 'fr',
-  hi = 'hi'
+  hi = 'hi',
 }
 
 export interface ISetI18nConfig {
@@ -24,14 +23,14 @@ export interface ISetI18nConfig {
 }
 
 //** Store language into the AsyncStorage  */
-const storeLanguage = async (id: string) =>{
+const storeLanguage = async (id: string) => {
   await AsyncStorage.setItem('language', id)
 }
 
 //** Fetch user preference language from the AsyncStorage and set if require  */
 const initStoredLanguage = async () => {
   const langId = await AsyncStorage.getItem('language')
-  if(langId !== null){
+  if (langId !== null) {
     if (langId !== currentLanguage) {
       await i18n.changeLanguage(langId)
     }
@@ -50,6 +49,5 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 })
-
 
 export { RNLocalize, i18n, storeLanguage, initStoredLanguage }

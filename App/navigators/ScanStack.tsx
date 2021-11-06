@@ -12,7 +12,7 @@ function ScanStack() {
 
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen options={{title: t('ScanStack.scan')}} name="Scan" component={Scan} />
+      <Stack.Screen options={{ title: t('ScanStack.scan') }} name="Scan" component={Scan} />
     </Stack.Navigator>
   )
 }

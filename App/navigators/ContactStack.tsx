@@ -13,8 +13,12 @@ function ContactStack() {
 
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen options={{title: t('ContactStack.contacts')}} name="Contacts" component={ListContacts} />
-      <Stack.Screen options={{title: t('ContactStack.contactDetails')}} name="ContactDetails" component={ContactDetails} />
+      <Stack.Screen options={{ title: t('ContactStack.contacts') }} name="Contacts" component={ListContacts} />
+      <Stack.Screen
+        options={{ title: t('ContactStack.contactDetails') }}
+        name="ContactDetails"
+        component={ContactDetails}
+      />
     </Stack.Navigator>
   )
 }

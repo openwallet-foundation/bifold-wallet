@@ -28,7 +28,7 @@ const transformAttributes = (attributes: any) => {
 
 const ProofRequest: React.FC<Props> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  
+
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
@@ -40,7 +40,7 @@ const ProofRequest: React.FC<Props> = ({ navigation, route }) => {
   const proof = useProofById(id)
 
   useEffect(() => {
-    if(proof?.state === ProofState.Done){
+    if (proof?.state === ProofState.Done) {
       setModalVisible('success')
     }
   }, [proof])

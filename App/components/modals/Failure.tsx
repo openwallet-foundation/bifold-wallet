@@ -11,7 +11,7 @@ interface Props {
 
 const Failure: React.FC<Props> = ({ visible, message, onPress }) => {
   const { t } = useTranslation()
-  
+
   return (
     <Message
       visible={visible}

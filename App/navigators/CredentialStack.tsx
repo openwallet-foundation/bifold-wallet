@@ -13,8 +13,16 @@ function CredentialStack() {
 
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen options={{title: t('CredentialStack.credentials')}} name="Credentials" component={ListCredentials} />
-      <Stack.Screen options={{title: t('CredentialStack.credentialDetails')}} name="CredentialDetails" component={CredentialDetails} />
+      <Stack.Screen
+        options={{ title: t('CredentialStack.credentials') }}
+        name="Credentials"
+        component={ListCredentials}
+      />
+      <Stack.Screen
+        options={{ title: t('CredentialStack.credentialDetails') }}
+        name="CredentialDetails"
+        component={CredentialDetails}
+      />
     </Stack.Navigator>
   )
 }

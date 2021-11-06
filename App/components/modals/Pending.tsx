@@ -14,7 +14,7 @@ interface Props {
 
 const Pending: React.FC<Props> = ({ visible, banner, message, onPress }) => {
   const { t } = useTranslation()
-  
+
   return (
     <Message
       visible={visible}

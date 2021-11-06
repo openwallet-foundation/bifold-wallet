@@ -9,8 +9,8 @@ const Language = () => {
 
   const languages = [
     { id: Locales.en, value: t('Language.english') },
-    { id: Locales.fr, value: t('Language.french')},
-    { id: Locales.hi, value: t('Language.hindi')},
+    { id: Locales.fr, value: t('Language.french') },
+    { id: Locales.hi, value: t('Language.hindi') },
   ]
 
   /**
@@ -19,7 +19,7 @@ const Language = () => {
   const storedLanguage = languages.find((l) => l.id === i18n.language)
 
   /**
-   * Once user select the particular language from the list, 
+   * Once user select the particular language from the list,
    * store user preference into the AsyncStorage
    *
    * @param {BlockSelection} language
@@ -30,13 +30,9 @@ const Language = () => {
   }
 
   return (
-      <SafeAreaScrollView>
-        <SingleSelectBlock
-          initialSelect={storedLanguage}
-          selection={languages}
-          onSelect={handleLanguageChange}
-        />
-      </SafeAreaScrollView>
+    <SafeAreaScrollView>
+      <SingleSelectBlock initialSelect={storedLanguage} selection={languages} onSelect={handleLanguageChange} />
+    </SafeAreaScrollView>
   )
 }
 

@@ -10,7 +10,7 @@ interface Props {
 
 const CredentialDetails: React.FC<Props> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  
+
   const { credential } = route?.params?.credential
 
   const {

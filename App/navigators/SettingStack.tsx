@@ -10,11 +10,11 @@ const Stack = createStackNavigator()
 
 function SettingStack() {
   const { t } = useTranslation()
-  
+
   return (
     <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen options={{title: t('SettingStack.settings')}} name="Settings" component={Settings} />
-      <Stack.Screen options={{title: t('SettingStack.language')}} name="Language" component={Language} />
+      <Stack.Screen options={{ title: t('SettingStack.settings') }} name="Settings" component={Settings} />
+      <Stack.Screen options={{ title: t('SettingStack.language') }} name="Language" component={Language} />
     </Stack.Navigator>
   )
 }

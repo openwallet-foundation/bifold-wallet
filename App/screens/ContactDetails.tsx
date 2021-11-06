@@ -10,7 +10,7 @@ interface Props {
 
 const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  
+
   const { alias, invitation, createdAt, state } = route?.params?.contact
 
   useEffect(() => {

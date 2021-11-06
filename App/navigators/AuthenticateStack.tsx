@@ -46,11 +46,25 @@ const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
     <Stack.Navigator screenOptions={defaultStackOptions}>
       {firstLogin && (
         <>
-          <Stack.Screen options={{ title: t('AuthenticateStack.termsConditions') }} name="Terms & Conditions"  component={Terms} />
-          <Stack.Screen options={{ title: t('AuthenticateStack.create6DigitPin') }} name="Create 6-Digit Pin" component={PinCreate} initialParams={{ setAuthenticated }} />
+          <Stack.Screen
+            options={{ title: t('AuthenticateStack.termsConditions') }}
+            name="Terms & Conditions"
+            component={Terms}
+          />
+          <Stack.Screen
+            options={{ title: t('AuthenticateStack.create6DigitPin') }}
+            name="Create 6-Digit Pin"
+            component={PinCreate}
+            initialParams={{ setAuthenticated }}
+          />
         </>
       )}
-      <Stack.Screen options={{title: t('AuthenticateStack.enterPin')}} name="Enter Pin" component={PinEnter} initialParams={{ setAuthenticated }} />
+      <Stack.Screen
+        options={{ title: t('AuthenticateStack.enterPin') }}
+        name="Enter Pin"
+        component={PinEnter}
+        initialParams={{ setAuthenticated }}
+      />
     </Stack.Navigator>
   )
 }

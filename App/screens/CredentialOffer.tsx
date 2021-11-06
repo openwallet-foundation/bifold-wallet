@@ -15,7 +15,7 @@ interface Props {
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  
+
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
@@ -26,7 +26,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const credential = useCredentialById(id)
 
   useEffect(() => {
-    if(credential?.state === CredentialState.Done){
+    if (credential?.state === CredentialState.Done) {
       setModalVisible('success')
     }
   }, [credential])

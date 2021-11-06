@@ -12,7 +12,7 @@ interface Props {
 
 const ListContacts: React.FC<Props> = ({ navigation }) => {
   const { t } = useTranslation()
-  
+
   const { connections } = useConnections()
 
   return (

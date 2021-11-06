@@ -16,7 +16,7 @@ let secondTextInput: any
 
 function PinCreate(props: IPinCreate) {
   const { t } = useTranslation()
-  
+
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
 

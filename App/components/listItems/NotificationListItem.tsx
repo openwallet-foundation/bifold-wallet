@@ -15,7 +15,7 @@ interface Props {
 
 const NotificationListItem: React.FC<Props> = ({ notification }) => {
   const { t } = useTranslation()
-  
+
   const navigation = useNavigation()
 
   return (

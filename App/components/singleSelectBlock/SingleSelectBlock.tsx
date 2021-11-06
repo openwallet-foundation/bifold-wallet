@@ -15,12 +15,7 @@ interface Props {
   initialSelect?: BlockSelection
 }
 
-const SingleSelectBlock: React.FC<Props> = ({
-  selection,
-  onSelect,
-  initialSelect,
-}) => {
-  
+const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect }) => {
   const [selected, setSelected] = useState(initialSelect ?? selection[0])
 
   const handleSelect = (selected: BlockSelection) => {
@@ -31,31 +26,27 @@ const SingleSelectBlock: React.FC<Props> = ({
   return (
     <>
       {selection.map((item) => (
-        <TouchableOpacity key={item.id} style={styles.row}  onPress={() => handleSelect(item)}>
+        <TouchableOpacity key={item.id} style={styles.row} onPress={() => handleSelect(item)}>
           <Text>{item.value}</Text>
-          {item.id === selected.id ? 
-            <Icon name={'check'} size={25} color={mainColor} />
-            : null
-           }
+          {item.id === selected.id ? <Icon name={'check'} size={25} color={mainColor} /> : null}
         </TouchableOpacity>
-          
       ))}
     </>
   )
 }
 
 const styles = StyleSheet.create({
-  row:{ 
-    paddingVertical:12,
-    width:'90%',
-    borderRadius:8, 
-    backgroundColor:shadow,
-    marginTop:8,
-    flexDirection:'row',
-    paddingHorizontal:12,
-    alignItems:'center', 
-    justifyContent:'space-between'
-  }
+  row: {
+    paddingVertical: 12,
+    width: '90%',
+    borderRadius: 8,
+    backgroundColor: shadow,
+    marginTop: 8,
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 })
 
 export default SingleSelectBlock

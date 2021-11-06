@@ -8,7 +8,7 @@ interface Props {
 
 const LoadingOverlay: React.FC<Props> = ({ visible }) => {
   const { t } = useTranslation()
-  
+
   return (
     <Modal visible={visible} animationType="fade" transparent>
       <View style={styles.container}>

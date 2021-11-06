@@ -18,7 +18,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   const connection = useConnectionById(connectionId)
 
   useEffect(() => {
-    if(connection?.state === ConnectionState.Complete){
+    if (connection?.state === ConnectionState.Complete) {
       setModalVisible('success')
     }
   }, [connection])
