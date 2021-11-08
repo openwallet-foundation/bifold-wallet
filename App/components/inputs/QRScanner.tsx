@@ -1,9 +1,6 @@
 import styled, { css } from '@emotion/native'
 import React, { useState } from 'react'
 import { useWindowDimensions, Vibration, View } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { View, StyleSheet } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
@@ -55,13 +52,8 @@ const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, childr
 }
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
-<<<<<<< HEAD
   const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
-=======
-  const [active, setActive] = useState(true)
-  const { t } = useTranslation()
->>>>>>> c5ba334 (Work on i18n string extraction)
 
   const { width, height } = useWindowDimensions()
   const portraitMode = height > width
@@ -75,10 +67,10 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
           captureAudio={false}
           androidCameraPermissionOptions={{
-            title: t('Permission to use camera'),
-            message: t('We need your permission to use your camera'),
-            buttonPositive: t('Ok'),
-            buttonNegative: t('Cancel'),
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
           }}
           barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
           onBarCodeRead={(e) => {
