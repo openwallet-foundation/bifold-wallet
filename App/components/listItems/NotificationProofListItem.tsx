@@ -1,6 +1,6 @@
 import { ProofRecord } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
 const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
   const navigation = useNavigation()
 
-  const { connectionId, requestMessage } = notification
+  const { connectionId, requestMessage, id } = notification
 
   const connection = useConnectionById(connectionId)
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Proof Request', { notification })}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Proof Request', { proofId: id })}>
       <View>
         <Text style={styles.title}>{requestMessage?.indyProofRequest?.name}</Text>
         <Text>{connection?.alias || connection?.invitation?.label}</Text>
