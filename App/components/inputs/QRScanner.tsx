@@ -81,7 +81,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           }}
         >
           <CameraViewContainer portrait={portraitMode}>
-            {/* <CredentialOfferSteps activeStep={1} /> */}
             <ViewFinderContainer>
               <ViewFinder />
             </ViewFinderContainer>
