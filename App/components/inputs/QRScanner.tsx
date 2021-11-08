@@ -5,7 +5,6 @@ import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
 
-import CredentialOfferSteps from 'components/misc/CredentialOfferSteps'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
 
 interface Props {
@@ -81,7 +80,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           }}
         >
           <CameraViewContainer portrait={portraitMode}>
-            <CredentialOfferSteps activeStep={1} />
             <ViewFinderContainer>
               <ViewFinder />
             </ViewFinderContainer>
