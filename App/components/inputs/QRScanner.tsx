@@ -5,7 +5,6 @@ import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
 
-import CredentialOfferSteps from 'components/misc/CredentialOfferSteps'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
 
 interface Props {
