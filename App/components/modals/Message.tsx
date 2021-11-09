@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Modal } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -24,6 +25,8 @@ const styles = StyleSheet.create({
 })
 
 const Message: React.FC<Props> = ({ icon, banner, message, backgroundColor, visible, onPress }) => {
+  const { t } = useTranslation()
+
   return (
     <Modal visible={visible} animationType="fade">
       <View style={[styles.container, { backgroundColor }]}>
@@ -32,7 +35,7 @@ const Message: React.FC<Props> = ({ icon, banner, message, backgroundColor, visi
           <Title>{banner}</Title>
           <Text style={{ textAlign: 'center', margin: 15 }}>{message}</Text>
         </View>
-        {onPress && <Button title="Close" neutral onPress={onPress} />}
+        {onPress && <Button title={t('Close')} neutral onPress={onPress} />}
       </View>
     </Modal>
   )

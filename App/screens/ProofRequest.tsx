@@ -5,6 +5,7 @@ import type { HomeStackParams } from 'navigators/HomeStack'
 import { ProofState, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, Alert, View, StyleSheet } from 'react-native'
 
 import { backgroundColor } from '../globalStyles'
@@ -45,11 +46,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const [pendingMessage, setPendingMessage] = useState('')
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>(null)
   const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<any>(null)
-
   const proofId = route?.params?.proofId
-
   const proof = useProofById(proofId)
   const connection = useConnectionById(proof?.connectionId)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (proof?.state === ProofState.Done) {
@@ -60,7 +60,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const getRetrievedCredentials = async () => {
     try {
       if (!proof?.requestMessage?.indyProofRequest) {
-        throw new Error('Indy proof request not found ')
+        throw new Error('Indy proof request not found')
       }
       const retrievedCreds = await agent?.proofs?.getRequestedCredentialsForProofRequest(
         proof?.requestMessage?.indyProofRequest,
@@ -83,7 +83,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const handleAcceptPress = async () => {
     setModalVisible('pending')
     setTimeout(() => {
-      setPendingMessage("This is taking Longer than expected. We'll continue processing in the background.")
+      setPendingMessage(t('Offer delay'))
     }, 15000)
     try {
       if (!proof) {
@@ -100,10 +100,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert('Reject this Proof?', 'This decision cannot be changed.', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('Reject this Proof?'), t('This decision cannot be changed.'), [
+      { text: t('Cancel'), style: 'cancel' },
       {
-        text: 'Confirm',
+        text: t('Confirm'),
         style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
@@ -136,17 +136,17 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title="Accept" onPress={handleAcceptPress} />
-      <Button title="Reject" negative onPress={handleRejectPress} />
+      <Button title={t('Accept')} onPress={handleAcceptPress} />
+      <Button title={t('Reject')} negative onPress={handleRejectPress} />
       <Pending
         visible={modalVisible === 'pending'}
-        banner="Accepting Proof"
+        banner={t('Accepting Proof')}
         message={pendingMessage}
         onPress={pendingMessage ? () => exitProofRequest() : undefined}
       />
       <Success
         visible={modalVisible === 'success'}
-        banner="Successfully Accepted Proof"
+        banner={t('Successfully Accepted Proof')}
         onPress={() => exitProofRequest()}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
