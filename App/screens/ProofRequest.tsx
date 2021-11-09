@@ -6,7 +6,7 @@ import { ProofState, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Alert, View } from 'react-native'
+import { FlatList, Alert, View, StyleSheet } from 'react-native'
 
 import { backgroundColor } from '../globalStyles'
 import { parseSchema } from '../helpers'
@@ -44,9 +44,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
-  const [retrievedCredentials, setRetrievedCredentials] = useState()
-  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState()
-  const proof = useProofById(route?.params?.proofId)
+  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>(null)
+  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<any>(null)
+  const proofId = route?.params?.proofId
+  const proof = useProofById(proofId)
   const connection = useConnectionById(proof?.connectionId)
   const { t } = useTranslation()
 
@@ -59,7 +60,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const getRetrievedCredentials = async () => {
     try {
       if (!proof?.requestMessage?.indyProofRequest) {
-        throw new Error('Indy proof request not found ')
+        throw new Error('Indy proof request not found')
       }
       const retrievedCreds = await agent?.proofs?.getRequestedCredentialsForProofRequest(
         proof?.requestMessage?.indyProofRequest,
@@ -146,10 +147,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       <Success
         visible={modalVisible === 'success'}
         banner={t('Successfully Accepted Proof')}
-        onPress={() => {
-          setModalVisible('')
-          navigation.goBack()
-        }}
+        onPress={() => exitProofRequest()}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
     </View>
