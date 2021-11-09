@@ -2,6 +2,7 @@ import type { RouteProp } from '@react-navigation/native'
 import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
 
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
@@ -13,21 +14,22 @@ interface Props {
 
 const PinEnter: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
+  const { t } = useTranslation()
 
   const checkPin = async (pin: string) => {
     const keychainEntry = await Keychain.getGenericPassword({ service: 'passcode' })
     if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
       route.params.setAuthenticated(true)
     } else {
-      Alert.alert('Incorrect Pin')
+      Alert.alert(t('Incorrect Pin'))
     }
   }
 
   return (
     <SafeAreaScrollView>
       <TextInput
-        label="Enter Pin"
-        placeholder="6 Digit Pin"
+        label={t('Enter Pin')}
+        placeholder={t('6 Digit Pin')}
         autoFocus
         maxLength={6}
         keyboardType="numeric"
@@ -41,7 +43,7 @@ const PinEnter: React.FC<Props> = ({ route }) => {
         }}
       />
       <Button
-        title="Submit"
+        title={t('Submit')}
         onPress={() => {
           Keyboard.dismiss()
           checkPin(pin)
