@@ -7,11 +7,9 @@ import { useTheme } from '@emotion/react'
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, TouchableOpacity, View } from 'react-native'
+import { FlatList } from 'react-native'
 
-import { backgroundColor } from '../globalStyles'
-
-import { CredentialListItem, Text } from 'components'
+import { CredentialListItem } from 'components'
 
 const ItemContainer = styled.TouchableOpacity``
 
