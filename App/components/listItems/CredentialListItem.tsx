@@ -2,12 +2,8 @@ import type { CredentialRecord } from '@aries-framework/core'
 
 import styled from '@emotion/native'
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
 
-import { shadow, borderRadius } from '../../globalStyles'
 import { parseSchema } from '../../helpers'
-import { schemaDescriptionFromID } from '../../utils/schema'
-import Text from '../texts/Text'
 import Title from '../texts/Title'
 
 interface Props {
