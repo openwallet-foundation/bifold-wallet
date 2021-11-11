@@ -12,7 +12,7 @@ interface ICredentialDetailsProps {
 }
 
 const CredentialDetails: React.FC<ICredentialDetailsProps> = ({ route }) => {
-  const { credential } = route.params
+  const credential = route.params
 
   return (
     <SafeAreaScrollView>

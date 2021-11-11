@@ -1,5 +1,6 @@
 import type { CredentialRecord } from '@aries-framework/core'
 import type { StackNavigationProp } from '@react-navigation/stack'
+import type { CredentialStackParams } from 'navigators/CredentialStack'
 
 import { useCredentials } from '@aries-framework/react-hooks'
 import styled, { css } from '@emotion/native'
@@ -21,11 +22,11 @@ const MessageText = styled.View`
 const ListCredentials: React.FC = () => {
   const { credentials } = useCredentials()
   const { t } = useTranslation()
-  const navigation = useNavigation<StackNavigationProp<any, any>>()
+  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
   const theme = useTheme()
 
   const onItemSelected = (credential: CredentialRecord) => {
-    navigation.navigate('Credential Details', { credential })
+    navigation.navigate('Credential Details', credential)
   }
 
   const emptyListComponent = () => <MessageText>{t('None yet!')}</MessageText>
