@@ -47,24 +47,17 @@ const AuthenticateStack: React.FC<Props> = ({ setAuthenticated }) => {
   }, [])
 
   return (
-    <Stack.Navigator screenOptions={defaultStackOptions}>
-      {firstLogin && (
-        <>
-          <Stack.Screen name="Terms & Conditions" component={Terms} options={{ headerShown: false }} />
-          <Stack.Screen
-            name="Create 6-Digit Pin"
-            component={PinCreate}
-            initialParams={{ setAuthenticated }}
-            options={{ headerShown: false }}
-          />
-        </>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, presentation: 'transparentModal', headerShown: false }}>
+      {firstLogin ? (
+        <Stack.Group>
+          <Stack.Screen name="Terms & Conditions" component={Terms} />
+          <Stack.Screen name="Create 6-Digit Pin" component={PinCreate} initialParams={{ setAuthenticated }} />
+        </Stack.Group>
+      ) : (
+        <Stack.Group>
+          <Stack.Screen name="Enter Pin" component={PinEnter} initialParams={{ setAuthenticated }} />
+        </Stack.Group>
       )}
-      <Stack.Screen
-        name="Enter Pin"
-        component={PinEnter}
-        initialParams={{ setAuthenticated }}
-        options={{ headerShown: false }}
-      />
     </Stack.Navigator>
   )
 }
