@@ -6,6 +6,7 @@ import Text from '../texts/Text'
 
 interface Props {
   title: string
+  accessibilityLabel?: string
   onPress?: () => void
   disabled?: boolean
   neutral?: true
@@ -35,10 +36,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const Button: React.FC<Props> = ({ title, onPress, disabled, neutral, negative }) => {
+const Button: React.FC<Props> = ({ title, accessibilityLabel, onPress, disabled, neutral, negative }) => {
+  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+
   return (
     <TouchableOpacity
       onPress={onPress}
+      accessible={accessible}
+      accessibilityLabel={accessibilityLabel}
       style={[styles.button, disabled && styles.disabled, neutral && styles.neutral, negative && styles.negative]}
       disabled={disabled}
     >

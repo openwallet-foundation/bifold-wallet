@@ -31,26 +31,36 @@ function TabNavigator() {
     >
       <Tab.Screen
         name="Home"
+        accessible={true}
+        accessibilityLabel="Home"
         component={HomeStack}
         options={{ tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} /> }}
       />
       <Tab.Screen
         name="Contacts"
+        accessible={true}
+        accessibilityLabel="Contacts"
         component={ContactStack}
         options={{ tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} /> }}
       />
       <Tab.Screen
         name="Scan"
+        accessible={true}
+        accessibilityLabel="Scan"
         component={ScanStack}
         options={{ tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} /> }}
       />
       <Tab.Screen
         name="Credentials"
+        accessible={true}
+        accessibilityLabel="Credentials"
         component={CredentialStack}
         options={{ tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} /> }}
       />
       <Tab.Screen
         name="Settings"
+        accessible={true}
+        accessibilityLabel="Settings"
         component={SettingStack}
         options={{ tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} /> }}
       />
