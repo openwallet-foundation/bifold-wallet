@@ -34,6 +34,9 @@ const Scan: React.FC<Props> = ({ navigation }) => {
       const connectionRecord = await agent?.connections.receiveInvitationFromUrl(event.data, {
         autoAcceptConnection: true,
       })
+      if (!connectionRecord?.id) {
+        throw new Error('Connection record ID not found')
+      }
       setConnectionId(connectionRecord.id)
     } catch {
       setModalVisible('failure')

@@ -14,8 +14,8 @@ const Stack = createStackNavigator<ScanStackParams>()
 
 function ScanStack() {
   return (
-    <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen name="Scan" component={Scan} options={{ headerShown: false }} />
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+      <Stack.Screen name="Scan" component={Scan} />
     </Stack.Navigator>
   )
 }
