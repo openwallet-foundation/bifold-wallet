@@ -13,8 +13,8 @@ const Stack = createStackNavigator<SettingsStackParams>()
 
 function SettingStack() {
   return (
-    <Stack.Navigator screenOptions={defaultStackOptions}>
-      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+      <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   )
 }
