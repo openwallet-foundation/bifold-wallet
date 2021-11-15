@@ -29,6 +29,8 @@ const PinEnter: React.FC<Props> = ({ route }) => {
     <SafeAreaScrollView>
       <TextInput
         label={t('Enter Pin')}
+        accessible={true}
+        accessibilityLabel={t('Enter Pin')}
         placeholder={t('6 Digit Pin')}
         autoFocus
         maxLength={6}
@@ -44,6 +46,7 @@ const PinEnter: React.FC<Props> = ({ route }) => {
       />
       <Button
         title={t('Submit')}
+        accessibilityLabel={t('Submit')}
         onPress={() => {
           Keyboard.dismiss()
           checkPin(pin)

@@ -48,6 +48,8 @@ const PinCreate: React.FC<Props> = ({ route }) => {
         <TextInput
           label={t('Enter Pin')}
           placeholder={t('6 Digit Pin')}
+          accessible={true}
+          accessibilityLabel={t('Enter Pin')}
           maxLength={6}
           autoFocus
           keyboardType="numeric"
@@ -59,6 +61,8 @@ const PinCreate: React.FC<Props> = ({ route }) => {
       <Row>
         <TextInput
           label={t('Re-Enter Pin')}
+          accessible={true}
+          accessibilityLabel={t('Re-Enter Pin')}
           placeholder={t('6 Digit Pin')}
           maxLength={6}
           keyboardType="numeric"
@@ -75,6 +79,7 @@ const PinCreate: React.FC<Props> = ({ route }) => {
       <Row>
         <Button
           title={t('Create')}
+          accessibilityLabel={t('Create')}
           onPress={() => {
             Keyboard.dismiss()
             confirmEntry(pin, pinTwo)
