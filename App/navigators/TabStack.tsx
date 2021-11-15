@@ -31,6 +31,8 @@ function TabStack() {
     >
       <Tab.Screen
         name="HomeTab"
+        accessible={true}
+        accessibilityLabel="Home"
         component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} />,
@@ -40,6 +42,8 @@ function TabStack() {
       />
       <Tab.Screen
         name="ContactsTab"
+        accessible={true}
+        accessibilityLabel="Contacts"
         component={ContactStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} />,
@@ -49,6 +53,8 @@ function TabStack() {
       />
       <Tab.Screen
         name="ScanTab"
+        accessible={true}
+        accessibilityLabel="Scan"
         options={{
           tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} />,
           headerTitle: 'Scan',
@@ -66,6 +72,8 @@ function TabStack() {
       </Tab.Screen>
       <Tab.Screen
         name="CredentialsTab"
+        accessible={true}
+        accessibilityLabel="Credentials"
         component={CredentialStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} />,
@@ -75,6 +83,8 @@ function TabStack() {
       />
       <Tab.Screen
         name="SettingsTab"
+        accessible={true}
+        accessibilityLabel="Settings"
         component={SettingStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} />,

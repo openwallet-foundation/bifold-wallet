@@ -7,6 +7,7 @@ import Text from '../texts/Text'
 
 interface Props {
   title: string
+  accessibilityLabel?: string
   checked: boolean
   onPress: () => void
 }
@@ -20,10 +21,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const CheckBoxRow: React.FC<Props> = ({ title, checked, onPress }) => {
+const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, checked, onPress }) => {
+  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity accessible={accessible} accessibilityLabel={accessibilityLabel} onPress={onPress}>
         {checked ? (
           <Icon name={'check-box'} size={30} color={mainColor} />
         ) : (
