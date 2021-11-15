@@ -7,6 +7,8 @@ import React, { useEffect } from 'react'
 
 import { SafeAreaScrollView, Label } from 'components'
 
+import { useTranslation } from 'react-i18next'
+
 interface Props {
   navigation: StackNavigationProp<ContactStackParams, 'Contact Details'>
   route: RouteProp<ContactStackParams, 'Contact Details'>
@@ -14,6 +16,8 @@ interface Props {
 
 const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
   const connection = useConnectionById(route?.params?.connectionId)
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     navigation.setOptions({
@@ -23,8 +27,8 @@ const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaScrollView>
-      <Label title="Created" subtitle={JSON.stringify(connection?.createdAt)} />
-      <Label title="Connection State" subtitle={connection?.state} />
+      <Label title={t('ContactDetails.Created')} subtitle={JSON.stringify(connection?.createdAt)} />
+      <Label title={t('ContactDetails.Connection State')} subtitle={connection?.state} />
     </SafeAreaScrollView>
   )
 }

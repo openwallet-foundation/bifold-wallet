@@ -11,6 +11,7 @@ import { backgroundColor } from '../globalStyles'
 import { parseSchema } from '../helpers'
 
 import { Button, ModularView, Label, Success, Pending, Failure } from 'components'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
@@ -31,6 +32,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
+  
+  const { t } = useTranslation()
 
   const credentialId = route?.params?.credentialId
 
@@ -46,7 +49,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const handleAcceptPress = async () => {
     setModalVisible('pending')
     setTimeout(() => {
-      setPendingMessage('This is taking Longer than expected. Check back later for your new credential.')
+      setPendingMessage(t('CredentialOffer.This is taking Longer than expected'))
     }, 10000)
     try {
       await agent?.credentials.acceptOffer(credentialId)
@@ -56,10 +59,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert('Reject this Credential?', 'This decision cannot be changed.', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('CredentialOffer.Reject this Credential?'), t('Common.This decision cannot be changed.'), [
+      { text: t('Common.Cancel'), style: 'cancel' },
       {
-        text: 'Confirm',
+        text: t('Common.Confirm'),
         style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
@@ -92,17 +95,17 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title="Accept" onPress={handleAcceptPress} />
-      <Button title="Reject" negative onPress={handleRejectPress} />
+      <Button title={t('Common.Accept')} onPress={handleAcceptPress} />
+      <Button title={t('Common.Reject')} negative onPress={handleRejectPress} />
       <Pending
         visible={modalVisible === 'pending'}
-        banner="Accepting Credential"
+        banner={t('CredentialOffer.Accepting Credential')}
         message={pendingMessage}
         onPress={pendingMessage ? exitCredentialOffer : undefined}
       />
       <Success
         visible={modalVisible === 'success'}
-        banner="Successfully Accepted Credential"
+        banner={t('CredentialOffer.Successfully Accepted Credential')}
         onPress={exitCredentialOffer}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />

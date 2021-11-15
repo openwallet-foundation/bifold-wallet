@@ -29,7 +29,7 @@ const ListCredentials: React.FC = () => {
     navigation.navigate('Credential Details', credential)
   }
 
-  const emptyListComponent = () => <MessageText>{t('None yet!')}</MessageText>
+  const emptyListComponent = () => <MessageText>{t('Common.None yet!')}</MessageText>
 
   const keyForItem = (item: CredentialRecord) => String(item.credentialId)
 

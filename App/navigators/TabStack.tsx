@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -21,6 +22,8 @@ export type TabStackParams = {
 const Tab = createBottomTabNavigator<TabStackParams>()
 
 function TabStack() {
+  const { t } = useTranslation()
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,8 +37,8 @@ function TabStack() {
         component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} />,
-          headerTitle: 'Home',
-          tabBarLabel: 'Home',
+          headerTitle: t('TabStack.Home'),
+          tabBarLabel: t('TabStack.Home'),
         }}
       />
       <Tab.Screen
@@ -43,16 +46,16 @@ function TabStack() {
         component={ContactStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} />,
-          headerTitle: 'Contacts',
-          tabBarLabel: 'Contacts',
+          headerTitle: t('TabStack.Contacts'),
+          tabBarLabel: t('TabStack.Contacts'),
         }}
       />
       <Tab.Screen
         name="ScanTab"
         options={{
           tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} />,
-          headerTitle: 'Scan',
-          tabBarLabel: 'Scan',
+          headerTitle: t('TabStack.Scan'),
+          tabBarLabel: t('TabStack.Scan'),
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
@@ -69,8 +72,8 @@ function TabStack() {
         component={CredentialStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} />,
-          headerTitle: 'Credentials',
-          tabBarLabel: 'Credentials',
+          headerTitle: t('TabStack.Credentials'),
+          tabBarLabel: t('TabStack.Credentials'),
         }}
       />
       <Tab.Screen
@@ -78,8 +81,8 @@ function TabStack() {
         component={SettingStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} />,
-          headerTitle: 'Settings',
-          tabBarLabel: 'Settings',
+          headerTitle: t('TabStack.Settings'),
+          tabBarLabel: t('TabStack.Settings'),
         }}
       />
     </Tab.Navigator>

@@ -40,7 +40,7 @@ const transformAttributes = (attributes: any) => {
   return transformedAttributes
 }
 
-const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
+const ProofRequest: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const [modalVisible, setModalVisible] = useState('')
   const [pendingMessage, setPendingMessage] = useState('')
@@ -83,7 +83,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const handleAcceptPress = async () => {
     setModalVisible('pending')
     setTimeout(() => {
-      setPendingMessage(t('Offer delay'))
+      setPendingMessage(t('ProofRequest.Offer delay'))
     }, 15000)
     try {
       if (!proof) {
@@ -100,10 +100,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert(t('Reject this Proof?'), t('This decision cannot be changed.'), [
-      { text: t('Cancel'), style: 'cancel' },
+    Alert.alert(t('ProofRequest.Reject this Proof?'), t('Common.This decision cannot be changed.'), [
+      { text: t('Common.Cancel'), style: 'cancel' },
       {
-        text: t('Confirm'),
+        text: t('Common.Confirm'),
         style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
@@ -136,17 +136,17 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Accept')} onPress={handleAcceptPress} />
-      <Button title={t('Reject')} negative onPress={handleRejectPress} />
+      <Button title={t('Common.Accept')} onPress={handleAcceptPress} />
+      <Button title={t('Common.Reject')} negative onPress={handleRejectPress} />
       <Pending
         visible={modalVisible === 'pending'}
-        banner={t('Accepting Proof')}
+        banner={t('ProofRequest.Accepting Proof')}
         message={pendingMessage}
         onPress={pendingMessage ? () => exitProofRequest() : undefined}
       />
       <Success
         visible={modalVisible === 'success'}
-        banner={t('Successfully Accepted Proof')}
+        banner={t('ProofRequest.Successfully Accepted Proof')}
         onPress={() => exitProofRequest()}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
@@ -154,4 +154,4 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   )
 }
 
-export default CredentialOffer
+export default ProofRequest

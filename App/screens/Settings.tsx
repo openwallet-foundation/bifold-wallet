@@ -8,8 +8,8 @@ const Settings: React.FC = () => {
 
   return (
     <SafeAreaScrollView>
-      <Label title={t('Version')} subtitle={t('Version String')} />
-      <Label title={t('AMA-RN Version')} subtitle={t('AMA-RN Version String')} />
+      <Label title={t('Settings.Version')} subtitle={t('Settings.Version String')} />
+      <Label title={t('Settings.AMA-RN Version')} subtitle={t('Settings.AMA-RN Version String')} />
     </SafeAreaScrollView>
   )
 }

@@ -21,15 +21,15 @@ const PinEnter: React.FC<Props> = ({ route }) => {
     if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
       route.params.setAuthenticated(true)
     } else {
-      Alert.alert(t('Incorrect Pin'))
+      Alert.alert(t('PinEnter.Incorrect Pin'))
     }
   }
 
   return (
     <SafeAreaScrollView>
       <TextInput
-        label={t('Enter Pin')}
-        placeholder={t('6 Digit Pin')}
+        label={t('Common.Enter Pin')}
+        placeholder={t('Common.6 Digit Pin')}
         autoFocus
         maxLength={6}
         keyboardType="numeric"
@@ -43,7 +43,7 @@ const PinEnter: React.FC<Props> = ({ route }) => {
         }}
       />
       <Button
-        title={t('Submit')}
+        title={t('Common.Submit')}
         onPress={() => {
           Keyboard.dismiss()
           checkPin(pin)
