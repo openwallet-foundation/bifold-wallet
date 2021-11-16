@@ -8,7 +8,7 @@ import { useTheme } from '@emotion/react'
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList } from 'react-native'
+import { FlatList, Text } from 'react-native'
 
 import { CredentialListItem } from 'components'
 
@@ -29,7 +29,6 @@ const ListCredentials: React.FC = () => {
     navigation.navigate('Credential Details', credential)
   }
 
-  const emptyListComponent = () => <MessageText>{t('Common.None yet!')}</MessageText>
 
   const keyForItem = (item: CredentialRecord) => String(item.credentialId)
 
@@ -40,7 +39,7 @@ const ListCredentials: React.FC = () => {
         background-color: ${theme.colors.backgroundColor};
       `}
       keyExtractor={keyForItem}
-      ListEmptyComponent={emptyListComponent}
+      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>{t('Common.None yet!')}</Text>}
       renderItem={({ item, index }) => (
         <ItemContainer key={item.id} onPress={() => onItemSelected(item)} activeOpacity={0.8}>
           <CredentialListItem credential={item} />

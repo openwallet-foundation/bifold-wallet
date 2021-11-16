@@ -18,10 +18,13 @@ import AppTheme from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
 
 import './App/i18n'
+import { initStoredLanguage } from './App/i18n'
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
   // const { translations } = useContext(LocalizationContext)
+
+  initStoredLanguage()
 
   const initAgent = async () => {
     const newAgent = new Agent(
