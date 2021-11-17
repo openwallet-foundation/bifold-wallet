@@ -9,12 +9,10 @@ import {
 } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
-import { ThemeProvider } from '@emotion/react'
 import { default as React, useEffect, useState } from 'react'
 import Config from 'react-native-config'
 
 import RootStack from './App/navigators/RootStack'
-import AppTheme from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
 
 import './App/i18n'
@@ -54,9 +52,7 @@ const App = () => {
 
   return (
     <AgentProvider agent={agent}>
-      <ThemeProvider theme={AppTheme}>
-        <RootStack />
-      </ThemeProvider>
+      <RootStack />
     </AgentProvider>
   )
 }
