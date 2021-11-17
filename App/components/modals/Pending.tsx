@@ -18,7 +18,7 @@ const Pending: React.FC<Props> = ({ visible, banner, message, onPress }) => {
   return (
     <Message
       visible={visible}
-      banner={banner || t('Modals.Pending')}
+      banner={banner || t('Modals.pending')}
       message={message || ''}
       icon="alarm"
       backgroundColor={backgroundColor}

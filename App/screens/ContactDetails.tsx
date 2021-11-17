@@ -27,8 +27,8 @@ const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaScrollView>
-      <Label title={t('ContactDetails.Created')} subtitle={JSON.stringify(connection?.createdAt)} />
-      <Label title={t('ContactDetails.Connection State')} subtitle={connection?.state} />
+      <Label title={t('ContactDetails.created')} subtitle={JSON.stringify(connection?.createdAt)} />
+      <Label title={t('ContactDetails.connection_state')} subtitle={connection?.state} />
     </SafeAreaScrollView>
   )
 }

@@ -14,25 +14,25 @@ const Settings: React.FC = () => {
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>
-        <Text style={styles.groupHeader}>{t('Settings.App Preferences')}</Text>
+        <Text style={styles.groupHeader}>{t('Settings.app_preferences')}</Text>
 
         <View style={styles.rowGroup}>
           <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Language')}>
-            <Text>{t('Settings.Language')}</Text>
+            <Text>{t('Settings.language')}</Text>
             <Icon name={'chevron-right'} size={25} color={mainColor} />
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.groupHeader}>{t('Settings.About App')}</Text>
+        <Text style={styles.groupHeader}>{t('Settings.about_app')}</Text>
         <View style={styles.rowGroup}>
           <View style={styles.row}>
-            <Text>{t('Settings.Version')}</Text>
-            <Text>{t('Settings.Version String')}</Text>
+            <Text>{t('Settings.version')}</Text>
+            <Text>{t('Settings.version_string')}</Text>
           </View>
 
           <View style={styles.row}>
-            <Text>{t('Settings.AMA-RN Version')}</Text>
-            <Text>{t('Settings.AMA-RN Version String')}</Text>
+            <Text>{t('Settings.AMA-RN_version')}</Text>
+            <Text>{t('Settings.AMA-RN_version_string')}</Text>
           </View>
         </View>
       </View>

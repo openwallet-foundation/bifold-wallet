@@ -25,7 +25,7 @@ const PinCreate: React.FC<Props> = ({ route }) => {
 
   const passcodeCreate = async (x: string) => {
     const passcode = JSON.stringify(x)
-    const description = t('PinCreate.User authentication pin')
+    const description = t('PinCreate.user_authentication_pin')
     await Keychain.setGenericPassword(description, passcode, {
       service: 'passcode',
     })
@@ -33,9 +33,9 @@ const PinCreate: React.FC<Props> = ({ route }) => {
 
   const confirmEntry = (x: string, y: string) => {
     if (x.length < 6 || y.length < 6) {
-      Alert.alert(t('PinCreate.Pin must be 6 digits in length'))
+      Alert.alert(t('PinCreate.pin_must_be_6_digits_in_length'))
     } else if (x !== y) {
-      Alert.alert(t('PinCreate.Pins entered do not match'))
+      Alert.alert(t('PinCreate.pins_entered_do_not_match'))
     } else {
       passcodeCreate(x)
       route?.params?.setAuthenticated(true)
@@ -46,8 +46,8 @@ const PinCreate: React.FC<Props> = ({ route }) => {
     <SafeAreaScrollView>
       <Row>
         <TextInput
-          label={t('Common.Enter Pin')}
-          placeholder={t('Common.6 Digit Pin')}
+          label={t('Global.enter_pin')}
+          placeholder={t('Global.6_digit_pin')}
           maxLength={6}
           autoFocus
           keyboardType="numeric"
@@ -58,8 +58,8 @@ const PinCreate: React.FC<Props> = ({ route }) => {
       </Row>
       <Row>
         <TextInput
-          label={t('PinCreate.Re-Enter Pin')}
-          placeholder={t('Common.6 Digit Pin')}
+          label={t('PinCreate.re-enter_Pin')}
+          placeholder={t('Global.6_digit_pin')}
           maxLength={6}
           keyboardType="numeric"
           secureTextEntry
@@ -74,7 +74,7 @@ const PinCreate: React.FC<Props> = ({ route }) => {
       </Row>
       <Row>
         <Button
-          title={t('PinCreate.Create')}
+          title={t('PinCreate.create')}
           onPress={() => {
             Keyboard.dismiss()
             confirmEntry(pin, pinTwo)

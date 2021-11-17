@@ -18,7 +18,7 @@ const Success: React.FC<Props> = ({ visible, banner, message, onPress }) => {
   return (
     <Message
       visible={visible}
-      banner={banner || t('Modals.Success')}
+      banner={banner || t('Modals.success')}
       message={message}
       icon="check-circle"
       backgroundColor={mainColor}

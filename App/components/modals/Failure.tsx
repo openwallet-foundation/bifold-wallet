@@ -15,7 +15,7 @@ const Failure: React.FC<Props> = ({ visible, message, onPress }) => {
   return (
     <Message
       visible={visible}
-      banner={t('Modals.Failure')}
+      banner={t('Modals.failure')}
       message={message}
       icon="cancel"
       backgroundColor="#de3333"

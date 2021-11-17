@@ -17,8 +17,8 @@ import RootStack from './App/navigators/RootStack'
 import AppTheme from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
 
-import './App/i18n'
-import { initStoredLanguage } from './App/i18n'
+import './App/localization'
+import { initStoredLanguage } from './App/localization'
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)

@@ -19,8 +19,8 @@ const CredentialDetails: React.FC<ICredentialDetailsProps> = ({ route }) => {
 
   return (
     <SafeAreaScrollView>
-      <Text>{t('CredentialDetails.Id:')} {credential.connectionId}</Text>
-      <Text>{t('CredentialDetails.Created At:')} {credential.createdAt.toISOString()}</Text>
+      <Text>{t('CredentialDetails.id')} {credential.connectionId}</Text>
+      <Text>{t('CredentialDetails.created_at')} {credential.createdAt.toISOString()}</Text>
     </SafeAreaScrollView>
   )
 }

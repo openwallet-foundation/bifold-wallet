@@ -35,7 +35,7 @@ const Message: React.FC<Props> = ({ icon, banner, message, backgroundColor, visi
           <Title>{banner}</Title>
           <Text style={{ textAlign: 'center', margin: 15 }}>{message}</Text>
         </View>
-        {onPress && <Button title={t('Modals.Close')} neutral onPress={onPress} />}
+        {onPress && <Button title={t('Modals.close')} neutral onPress={onPress} />}
       </View>
     </Modal>
   )

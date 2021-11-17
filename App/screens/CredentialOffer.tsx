@@ -49,7 +49,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const handleAcceptPress = async () => {
     setModalVisible('pending')
     setTimeout(() => {
-      setPendingMessage(t('CredentialOffer.This is taking Longer than expected'))
+      setPendingMessage(t('CredentialOffer.this_is_taking_longer_than_expected'))
     }, 10000)
     try {
       await agent?.credentials.acceptOffer(credentialId)
@@ -59,10 +59,10 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert(t('CredentialOffer.Reject this Credential?'), t('Common.This decision cannot be changed.'), [
-      { text: t('Common.Cancel'), style: 'cancel' },
+    Alert.alert(t('CredentialOffer.reject_this_credential?'), t('Global.this_decision_cannot_be_changed.'), [
+      { text: t('Global.cancel'), style: 'cancel' },
       {
-        text: t('Common.Confirm'),
+        text: t('Global.confirm'),
         style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
@@ -95,17 +95,17 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Common.Accept')} onPress={handleAcceptPress} />
-      <Button title={t('Common.Reject')} negative onPress={handleRejectPress} />
+      <Button title={t('Global.accept')} onPress={handleAcceptPress} />
+      <Button title={t('Global.reject')} negative onPress={handleRejectPress} />
       <Pending
         visible={modalVisible === 'pending'}
-        banner={t('CredentialOffer.Accepting Credential')}
+        banner={t('CredentialOffer.accepting_credential')}
         message={pendingMessage}
         onPress={pendingMessage ? exitCredentialOffer : undefined}
       />
       <Success
         visible={modalVisible === 'success'}
-        banner={t('CredentialOffer.Successfully Accepted Credential')}
+        banner={t('CredentialOffer.successfully_accepted_credential')}
         onPress={exitCredentialOffer}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />

@@ -37,8 +37,8 @@ function TabStack() {
         component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} />,
-          headerTitle: t('TabStack.Home'),
-          tabBarLabel: t('TabStack.Home'),
+          headerTitle: t('TabStack.home'),
+          tabBarLabel: t('TabStack.home'),
         }}
       />
       <Tab.Screen
@@ -46,16 +46,16 @@ function TabStack() {
         component={ContactStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} />,
-          headerTitle: t('TabStack.Contacts'),
-          tabBarLabel: t('TabStack.Contacts'),
+          headerTitle: t('TabStack.contacts'),
+          tabBarLabel: t('TabStack.contacts'),
         }}
       />
       <Tab.Screen
         name="ScanTab"
         options={{
           tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} />,
-          headerTitle: t('TabStack.Scan'),
-          tabBarLabel: t('TabStack.Scan'),
+          headerTitle: t('TabStack.scan'),
+          tabBarLabel: t('TabStack.scan'),
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
@@ -72,8 +72,8 @@ function TabStack() {
         component={CredentialStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} />,
-          headerTitle: t('TabStack.Credentials'),
-          tabBarLabel: t('TabStack.Credentials'),
+          headerTitle: t('TabStack.credentials'),
+          tabBarLabel: t('TabStack.credentials'),
         }}
       />
       <Tab.Screen
@@ -81,8 +81,8 @@ function TabStack() {
         component={SettingStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} />,
-          headerTitle: t('TabStack.Settings'),
-          tabBarLabel: t('TabStack.Settings'),
+          headerTitle: t('TabStack.settings'),
+          tabBarLabel: t('TabStack.settings'),
         }}
       />
     </Tab.Navigator>

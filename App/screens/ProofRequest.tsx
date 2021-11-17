@@ -83,7 +83,7 @@ const ProofRequest: React.FC<Props> = ({ navigation, route }) => {
   const handleAcceptPress = async () => {
     setModalVisible('pending')
     setTimeout(() => {
-      setPendingMessage(t('ProofRequest.Offer delay'))
+      setPendingMessage(t('ProofRequest.offer_delay'))
     }, 15000)
     try {
       if (!proof) {
@@ -100,10 +100,10 @@ const ProofRequest: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    Alert.alert(t('ProofRequest.Reject this Proof?'), t('Common.This decision cannot be changed.'), [
-      { text: t('Common.Cancel'), style: 'cancel' },
+    Alert.alert(t('ProofRequest.reject_this_proof?'), t('Global.this_decision_cannot_be_changed.'), [
+      { text: t('Global.cancel'), style: 'cancel' },
       {
-        text: t('Common.Confirm'),
+        text: t('Global.confirm'),
         style: 'destructive',
         onPress: async () => {
           setModalVisible('pending')
@@ -136,17 +136,17 @@ const ProofRequest: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Common.Accept')} onPress={handleAcceptPress} />
-      <Button title={t('Common.Reject')} negative onPress={handleRejectPress} />
+      <Button title={t('Global.accept')} onPress={handleAcceptPress} />
+      <Button title={t('Global.reject')} negative onPress={handleRejectPress} />
       <Pending
         visible={modalVisible === 'pending'}
-        banner={t('ProofRequest.Accepting Proof')}
+        banner={t('ProofRequest.accepting_proof')}
         message={pendingMessage}
         onPress={pendingMessage ? () => exitProofRequest() : undefined}
       />
       <Success
         visible={modalVisible === 'success'}
-        banner={t('ProofRequest.Successfully Accepted Proof')}
+        banner={t('ProofRequest.successfully_accepted_proof')}
         onPress={() => exitProofRequest()}
       />
       <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />

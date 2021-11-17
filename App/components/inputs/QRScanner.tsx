@@ -69,10 +69,10 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
           captureAudio={false}
           androidCameraPermissionOptions={{
-            title: t('QRScanner.Permission to use camera'),
-            message: t('QRScanner.We need your permission to use your camera'),
-            buttonPositive: t('QRScanner.Ok'),
-            buttonNegative: t('Common.Cancel'),
+            title: t('QRScanner.permission_to_use_camera'),
+            message: t('QRScanner.we_need_your_permission_to_use_your_camera'),
+            buttonPositive: t('QRScanner.ok'),
+            buttonNegative: t('Global.cancel'),
           }}
           barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
           onBarCodeRead={(e) => {

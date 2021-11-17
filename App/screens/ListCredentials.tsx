@@ -29,6 +29,7 @@ const ListCredentials: React.FC = () => {
     navigation.navigate('Credential Details', credential)
   }
 
+  const emptyListComponent = () => <MessageText><Text>{t('Global.none_yet!')}</Text></MessageText>
 
   const keyForItem = (item: CredentialRecord) => String(item.credentialId)
 
@@ -39,7 +40,7 @@ const ListCredentials: React.FC = () => {
         background-color: ${theme.colors.backgroundColor};
       `}
       keyExtractor={keyForItem}
-      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>{t('Common.None yet!')}</Text>}
+      ListEmptyComponent={emptyListComponent}
       renderItem={({ item, index }) => (
         <ItemContainer key={item.id} onPress={() => onItemSelected(item)} activeOpacity={0.8}>
           <CredentialListItem credential={item} />
