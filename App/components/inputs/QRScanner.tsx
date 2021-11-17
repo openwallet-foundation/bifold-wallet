@@ -1,6 +1,5 @@
-import styled, { css } from '@emotion/native'
 import React, { useState } from 'react'
-import { useWindowDimensions, Vibration, View } from 'react-native'
+import { useWindowDimensions, Vibration, View, StyleSheet } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
@@ -11,44 +10,26 @@ interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
 }
 
-const container = css`
-  background-color: #000000;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`
-
-const Container = styled.View`
-  ${container}
-`
-
-const ViewFinderContainer = styled.View`
-  flex: 3;
-  justify-content: center;
-  align-items: center;
-`
-
-const ViewFinder = styled.View`
-  width: 250px;
-  height: 250px;
-  border-radius: 24px;
-  border: 2px solid ${mainColor};
-  background-color: #ffffff30;
-`
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'black',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewFinder: {
+    width: 250,
+    height: 250,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: mainColor,
+    backgroundColor: '#ffffff30',
+  },
+})
 
 const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, children }) => {
-  return (
-    <View
-      style={css`
-        width: 100%;
-        height: 100%;
-        flex-direction: ${portrait ? 'column' : 'row'};
-      `}
-    >
-      {children}
-    </View>
-  )
+  return <View style={{ width: '100%', height: '100%', flexDirection: portrait ? 'column' : 'row' }}>{children}</View>
 }
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
@@ -59,10 +40,10 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
   const portraitMode = height > width
 
   return (
-    <Container>
+    <View>
       {cameraActive && (
         <RNCamera
-          style={container}
+          style={styles.container}
           type={RNCamera.Constants.Type.back}
           flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
           captureAudio={false}
@@ -80,14 +61,12 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           }}
         >
           <CameraViewContainer portrait={portraitMode}>
-            <ViewFinderContainer>
-              <ViewFinder />
-            </ViewFinderContainer>
+            <View style={styles.viewFinder} />
             <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
           </CameraViewContainer>
         </RNCamera>
       )}
-    </Container>
+    </View>
   )
 }
 

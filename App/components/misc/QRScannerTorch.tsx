@@ -1,6 +1,5 @@
-import styled, { css } from '@emotion/native'
 import React from 'react'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 interface Props {
@@ -8,39 +7,42 @@ interface Props {
   onPress?: () => void
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: 48,
+    height: 48,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'white',
+  },
+  icon: {
+    marginLeft: 2,
+    marginTop: 2,
+  },
+})
+
 const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
-  const Container = styled.View`
-    flex: 1;
-    width: 48px;
-    height: 48px;
-    align-self: center;
-    justify-content: center;
-    align-items: center;
-  `
-  const style = css`
-    border-radius: 24px;
-    border: 1px solid #ffffff;
-    width: 48px;
-    height: 48px;
-    justify-content: center;
-    align-items: center;
-  `
   return (
-    <Container>
-      <TouchableWithoutFeedback style={[style, { backgroundColor: active ? 'white' : undefined }]} onPress={onPress}>
-        {children}
-      </TouchableWithoutFeedback>
-    </Container>
+    <TouchableWithoutFeedback
+      style={[styles.container, { backgroundColor: active ? 'white' : undefined }]}
+      onPress={onPress}
+    >
+      {children}
+    </TouchableWithoutFeedback>
   )
 }
 
 const TorchIcon: React.FC<Props> = ({ active }) => {
-  const style = css`
-    margin-left: 2px;
-    margin-top: 2px;
-  `
   return (
-    <Icon name={active ? 'flash-on' : 'flash-off'} color={active ? '#000000' : '#ffffff'} size={24} style={style} />
+    <Icon
+      name={active ? 'flash-on' : 'flash-off'}
+      color={active ? '#000000' : '#ffffff'}
+      size={24}
+      style={styles.icon}
+    />
   )
 }
 
