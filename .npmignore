@@ -1,0 +1,5 @@
+ios/**
+!ios/Pods/**
+android/**
+.github/**
+*.tgz

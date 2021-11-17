@@ -2,3 +2,4 @@ node_modules
 __tests__
 ios
 android
+post-install-setup.js
