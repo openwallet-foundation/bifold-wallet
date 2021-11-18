@@ -1,9 +1,10 @@
+import type { RouteProp } from '@react-navigation/core'
+import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
+
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
-import { RouteProp } from '@react-navigation/core'
-import { AuthenticateStackParams } from 'navigators/AuthenticateStack'
 
 import { Button, SafeAreaScrollView, TextInput } from 'components'
 

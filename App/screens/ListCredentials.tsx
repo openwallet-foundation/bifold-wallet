@@ -1,12 +1,13 @@
 import type { CredentialRecord } from '@aries-framework/core'
+
 import { useCredentials } from '@aries-framework/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 
-import { CredentialListItem, Text } from 'components'
-
 import { backgroundColor } from '../globalStyles'
+
+import { CredentialListItem, Text } from 'components'
 
 const ListCredentials: React.FC = () => {
   const { credentials } = useCredentials()

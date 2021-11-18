@@ -2,7 +2,6 @@
  * @format
  */
 import 'react-native-gesture-handler'
-
 // remove these when updated to react-native 0.65.0
 import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'
@@ -24,9 +23,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { AppRegistry } from 'react-native'
 
-import { mainColor, backgroundColor } from './App/globalStyles'
-
 import App from './App'
+import { mainColor, backgroundColor } from './App/globalStyles'
 import { name as appName } from './app.json'
 
 const navigationTheme = {

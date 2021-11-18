@@ -1,17 +1,17 @@
-import React from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { DateTime } from 'luxon'
-import { useNavigation } from '@react-navigation/core'
 import type { CredentialRecord } from '@aries-framework/core'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { CredentialStackParams } from 'navigators/CredentialStack'
 
-import Title from '../texts/Title'
-import Text from '../texts/Text'
+import { useNavigation } from '@react-navigation/core'
+import { DateTime } from 'luxon'
+import React from 'react'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { shadow, textColor } from '../../globalStyles'
 import { parseSchema } from '../../helpers'
+import Text from '../texts/Text'
+import Title from '../texts/Title'
 
 interface Props {
   credential: CredentialRecord
