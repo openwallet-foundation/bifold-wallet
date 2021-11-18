@@ -16,18 +16,21 @@ const JNI_LIBS_DIR = path.resolve(CWD, './android/app/src/main/jniLibs')
  * specified location.
  */
  async function download(url, filePath) {
-    fs.unlinkSync(filePath)
-    return new Promise(async (resolve, reject) => {
-        const file = fs.createWriteStream(filePath);
-        const response = await Axios({
-            url: url.toString(),
-            method: 'GET',
-            responseType: 'stream'
+    //fs.unlinkSync(filePath)
+    if (!fs.existsSync(filePath)) {
+        console.info(`Downloading ${url}`);
+        return new Promise(async (resolve, reject) => {
+            const file = fs.createWriteStream(filePath);
+            const response = await Axios({
+                url: url.toString(),
+                method: 'GET',
+                responseType: 'stream'
+            })
+            response.data.pipe(file)
+            file.on('finish', () => resolve(filePath))
+            file.on('error',  (err) => reject(err))
         })
-        response.data.pipe(file)
-        file.on('finish', () => resolve(filePath))
-        file.on('error',  (err) => reject(err))
-    })
+    }
  }
 
 /**
@@ -38,11 +41,13 @@ const JNI_LIBS_DIR = path.resolve(CWD, './android/app/src/main/jniLibs')
  * @returns 
  */
 async function extractFile(filePath, file, outputFileOrDir) {
-    const StreamZip = require('node-stream-zip');
-    const zip = new StreamZip.async({ file: filePath });
-    const count = await zip.extract(file, outputFileOrDir);
-    console.info(`Extracted ${count || file} entries from ${path.basename(filePath)}`);
-    await zip.close();
+    if (file == null || (file && !fs.existsSync(path.resolve(outputFileOrDir)))) {
+        const StreamZip = require('node-stream-zip');
+        const zip = new StreamZip.async({ file: filePath });
+        const count = await zip.extract(file, outputFileOrDir);
+        console.info(`Extracted ${count || file} entries from ${path.basename(filePath)}`);
+        await zip.close();
+    }
     return Promise.resolve(filePath)
 }
 
