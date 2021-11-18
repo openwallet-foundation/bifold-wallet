@@ -12,9 +12,9 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
     height: '100%',
     width: '100%',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -26,10 +26,25 @@ const styles = StyleSheet.create({
     borderColor: mainColor,
     backgroundColor: '#ffffff30',
   },
+  viewFinderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 })
 
 const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, children }) => {
-  return <View style={{ width: '100%', height: '100%', flexDirection: portrait ? 'column' : 'row' }}>{children}</View>
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: portrait ? 'column' : 'row',
+        alignItems: 'center',
+      }}
+    >
+      {children}
+    </View>
+  )
 }
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
@@ -40,7 +55,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
   const portraitMode = height > width
 
   return (
-    <View>
+    <View style={styles.container}>
       {cameraActive && (
         <RNCamera
           style={styles.container}
@@ -61,7 +76,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           }}
         >
           <CameraViewContainer portrait={portraitMode}>
-            <View style={styles.viewFinder} />
+            <View style={styles.viewFinderContainer}>
+              <View style={styles.viewFinder} />
+            </View>
             <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
           </CameraViewContainer>
         </RNCamera>

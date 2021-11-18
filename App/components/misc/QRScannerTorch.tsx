@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 interface Props {
@@ -9,14 +9,14 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: 48,
     height: 48,
-    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'white',
+    borderRadius: 24,
+    marginBottom: 50,
   },
   icon: {
     marginLeft: 2,
@@ -26,12 +26,9 @@ const styles = StyleSheet.create({
 
 const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
   return (
-    <TouchableWithoutFeedback
-      style={[styles.container, { backgroundColor: active ? 'white' : undefined }]}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={[styles.container, { backgroundColor: active ? 'white' : undefined }]} onPress={onPress}>
       {children}
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   )
 }
 
