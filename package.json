@@ -18,8 +18,6 @@
     "@aries-framework/core": "^0.1.0-alpha.289",
     "@aries-framework/react-hooks": "^0.1.2",
     "@aries-framework/react-native": "^0.1.0-alpha.289",
-    "@emotion/native": "^11.0.0",
-    "@emotion/react": "^11.5.0",
     "@formatjs/intl-datetimeformat": "^4.2.3",
     "@formatjs/intl-displaynames": "^5.2.3",
     "@formatjs/intl-getcanonicallocales": "^1.7.3",
