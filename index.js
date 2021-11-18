@@ -2,7 +2,6 @@
  * @format
  */
 import 'react-native-gesture-handler'
-
 // remove these when updated to react-native 0.65.0
 import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'
@@ -20,31 +19,27 @@ import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
 
-import { NavigationContainer, Theme as NavigationTheme } from '@react-navigation/native'
-import React, { useEffect } from 'react'
-import { AppRegistry, LogBox } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import React from 'react'
+import { AppRegistry } from 'react-native'
 
 import App from './App'
-import myTheme from './App/theme'
+import { mainColor, backgroundColor } from './App/globalStyles'
 import { name as appName } from './app.json'
 
 const navigationTheme = {
   dark: false,
   colors: {
-    primary: myTheme.colors.mainColor,
-    background: myTheme.colors.backgroundColor,
-    card: myTheme.colors.mainColor,
-    text: myTheme.colors.white,
-    border: myTheme.colors.white,
-    notification: myTheme.colors.white,
+    primary: mainColor,
+    background: backgroundColor,
+    card: mainColor,
+    text: 'white',
+    border: 'white',
+    notification: 'white',
   },
 }
 
 const Base = () => {
-  useEffect(() => {
-    LogBox.ignoreLogs(['VirtualizedLists', 'Mediator Invitation', 'Non-serializable values'])
-  }, [])
-
   return (
     <NavigationContainer theme={navigationTheme}>
       <App />
