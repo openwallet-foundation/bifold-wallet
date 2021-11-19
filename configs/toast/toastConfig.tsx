@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shadow, green, red } from '../../App/globalStyles'
+
 import BaseToast from './BaseToast'
 
 export const toastConfig = {
