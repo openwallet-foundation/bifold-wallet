@@ -6,10 +6,6 @@ import ContactListItem from './listItems/ContactListItem'
 import CredentialListItem from './listItems/CredentialListItem'
 import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
 import NotificationProofListItem from './listItems/NotificationProofListItem'
-import Failure from './modals/Failure'
-import Message from './modals/Message'
-import Pending from './modals/Pending'
-import Success from './modals/Success'
 import Label from './texts/Label'
 import Text from './texts/Text'
 import Title from './texts/Title'
@@ -23,10 +19,6 @@ export {
   ContactListItem,
   CredentialListItem,
   Label,
-  Failure,
-  Message,
-  Pending,
-  Success,
   ModularView,
   Button,
   NotificationCredentialListItem,
