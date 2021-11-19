@@ -1,4 +1,6 @@
-import styled from '@emotion/native'
+import type { RouteProp } from '@react-navigation/core'
+import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
+
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard } from 'react-native'
@@ -6,17 +8,9 @@ import * as Keychain from 'react-native-keychain'
 
 import { Button, SafeAreaScrollView, TextInput } from 'components'
 
-interface Props extends TextInputProps {
-  label: string
+interface Props {
+  route: RouteProp<AuthenticateStackParams>
 }
-
-const Row = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-self: stretch;
-  margin: 5px 25px 10px 25px;
-`
 
 const PinCreate: React.FC<Props> = ({ route }) => {
   const [pin, setPin] = useState('')
@@ -44,43 +38,42 @@ const PinCreate: React.FC<Props> = ({ route }) => {
 
   return (
     <SafeAreaScrollView>
-      <Row>
-        <TextInput
-          label={t('Global.enter_pin')}
-          placeholder={t('Global.6_digit_pin')}
-          maxLength={6}
-          autoFocus
-          keyboardType="numeric"
-          secureTextEntry={true}
-          value={pin}
-          onChangeText={setPin}
-        />
-      </Row>
-      <Row>
-        <TextInput
-          label={t('PinCreate.re-enter_Pin')}
-          placeholder={t('Global.6_digit_pin')}
-          maxLength={6}
-          keyboardType="numeric"
-          secureTextEntry
-          value={pinTwo}
-          onChangeText={(text: string) => {
-            setPinTwo(text)
-            if (text.length === 6) {
-              Keyboard.dismiss()
-            }
-          }}
-        />
-      </Row>
-      <Row>
-        <Button
-          title={t('PinCreate.create')}
-          onPress={() => {
+      <TextInput
+        label={t('Global.enter_pin')}
+        placeholder={t('Global.6_digit_pin')}
+        accessible={true}
+        accessibilityLabel={t('Global.enter_pin')}
+        maxLength={6}
+        autoFocus
+        keyboardType="numeric"
+        secureTextEntry={true}
+        value={pin}
+        onChangeText={setPin}
+      />
+      <TextInput
+        label={t('PinCreate.re-enter_Pin')}
+        placeholder={t('Global.6_digit_pin')}
+        accessible={true}
+        accessibilityLabel={t('PinCreate.re-enter_Pin')}        
+        maxLength={6}
+        keyboardType="numeric"
+        secureTextEntry
+        value={pinTwo}
+        onChangeText={(text: string) => {
+          setPinTwo(text)
+          if (text.length === 6) {
             Keyboard.dismiss()
-            confirmEntry(pin, pinTwo)
-          }}
-        />
-      </Row>
+          }
+        }}
+      />
+      <Button
+        title={t('PinCreate.create')}
+        accessibilityLabel={t('PinCreate.create')}
+        onPress={() => {
+          Keyboard.dismiss()
+          confirmEntry(pin, pinTwo)
+        }}
+      />
     </SafeAreaScrollView>
   )
 }

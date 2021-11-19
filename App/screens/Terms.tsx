@@ -18,8 +18,18 @@ const Terms: React.FC<Props> = ({ navigation }) => {
     <SafeAreaScrollView>
       <AppHeaderLarge />
       <ModularView title={t('Terms.terms_of_service')} content={t('Terms.terms_of_service_text')} />
-      <CheckBoxRow title={t('Terms.i_agree')} checked={checked} onPress={() => setChecked(!checked)} />
-      <Button title={t('Global.submit')} disabled={!checked} onPress={() => navigation.navigate('Create 6-Digit Pin')} />
+      <CheckBoxRow
+        title={t('Terms.i_agree')}
+        accessibilityLabel={t('Terms.i_agree')}
+        checked={checked}
+        onPress={() => setChecked(!checked)}
+      />
+      <Button
+        title={t('Global.submit')}
+        accessibilityLabel={t('Global.submit')}
+        disabled={!checked}
+        onPress={() => navigation.navigate('Create 6-Digit Pin')}
+      />
     </SafeAreaScrollView>
   )
 }
