@@ -5,6 +5,7 @@ import { textColor } from '../../globalStyles'
 
 interface Props {
   children: React.ReactNode
+  style?: any
 }
 
 const styles = StyleSheet.create({
@@ -15,8 +16,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const Title: React.FC<Props> = ({ children }) => {
-  return <Text style={styles.title}>{children}</Text>
+const Title: React.FC<Props> = ({ children, style }) => {
+  return <Text style={[styles.title, style]}>{children}</Text>
 }
 
 export default Title

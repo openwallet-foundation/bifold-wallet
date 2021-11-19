@@ -9,7 +9,7 @@ import defaultStackOptions from './defaultStackOptions'
 
 export type CredentialStackParams = {
   Credentials: undefined
-  'Credential Details': CredentialRecord
+  'Credential Details': { credentialId: string }
 }
 
 const Stack = createStackNavigator<CredentialStackParams>()

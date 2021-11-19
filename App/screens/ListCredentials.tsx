@@ -1,51 +1,29 @@
 import type { CredentialRecord } from '@aries-framework/core'
-import type { StackNavigationProp } from '@react-navigation/stack'
-import type { CredentialStackParams } from 'navigators/CredentialStack'
 
 import { useCredentials } from '@aries-framework/react-hooks'
-import styled, { css } from '@emotion/native'
-import { useTheme } from '@emotion/react'
-import { useNavigation } from '@react-navigation/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 
-import { CredentialListItem } from 'components'
+import { backgroundColor } from '../globalStyles'
 
-const ItemContainer = styled.TouchableOpacity``
-
-const MessageText = styled.View`
-  text-align: 'center';
-  margin: 100px;
-`
+import { CredentialListItem, Text } from 'components'
 
 const ListCredentials: React.FC = () => {
   const { credentials } = useCredentials()
   const { t } = useTranslation()
-  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
-  const theme = useTheme()
 
-  const onItemSelected = (credential: CredentialRecord) => {
-    navigation.navigate('Credential Details', credential)
-  }
-
-  const emptyListComponent = () => <MessageText>{t('None yet!')}</MessageText>
+  const emptyListComponent = () => <Text style={{ textAlign: 'center', marginTop: 100 }}>{t('None yet!')}</Text>
 
   const keyForItem = (item: CredentialRecord) => String(item.credentialId)
 
   return (
     <FlatList
       data={credentials}
-      style={css`
-        background-color: ${theme.colors.backgroundColor};
-      `}
+      style={{ backgroundColor }}
       keyExtractor={keyForItem}
       ListEmptyComponent={emptyListComponent}
-      renderItem={({ item, index }) => (
-        <ItemContainer key={item.id} onPress={() => onItemSelected(item)} activeOpacity={0.8}>
-          <CredentialListItem credential={item} />
-        </ItemContainer>
-      )}
+      renderItem={({ item }) => <CredentialListItem credential={item} />}
     />
   )
 }
