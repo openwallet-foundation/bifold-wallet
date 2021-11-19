@@ -7,11 +7,12 @@ import { useAgent, useConnectionById, useProofById } from '@aries-framework/reac
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Alert, View, StyleSheet } from 'react-native'
+import Toast from 'react-native-toast-message'
 
 import { backgroundColor } from '../globalStyles'
 import { parseSchema } from '../helpers'
 
-import { Button, ModularView, Label, Success, Pending, Failure } from 'components'
+import { Button, ModularView, Label } from 'components'
 
 interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Proof Request'>
@@ -42,8 +43,7 @@ const transformAttributes = (attributes: any) => {
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
-  const [modalVisible, setModalVisible] = useState('')
-  const [pendingMessage, setPendingMessage] = useState('')
+  const [buttonsVisible, setButtonsVisible] = useState(true)
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>(null)
   const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<any>(null)
   const proofId = route?.params?.proofId
@@ -53,13 +53,21 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (proof?.state === ProofState.Done) {
-      setModalVisible('success')
+      Toast.show({
+        type: 'success',
+        text1: t('Successfully Accepted Proof'),
+      })
+      navigation.goBack()
     }
   }, [proof])
 
   const getRetrievedCredentials = async () => {
     try {
       if (!proof?.requestMessage?.indyProofRequest) {
+        Toast.show({
+          type: 'error',
+          text1: t('Proof not Found'),
+        })
         throw new Error('Indy proof request not found')
       }
       const retrievedCreds = await agent?.proofs?.getRequestedCredentialsForProofRequest(
@@ -67,12 +75,19 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         undefined
       )
       if (!retrievedCreds) {
+        Toast.show({
+          type: 'error',
+          text1: t('Requested creds not found'),
+        })
         throw new Error('Retrieved creds not found')
       }
       setRetrievedCredentials(retrievedCreds)
       setRetrievedCredentialsDisplay(transformAttributes(retrievedCreds?.requestedAttributes))
     } catch {
-      setModalVisible('failure')
+      Toast.show({
+        type: 'error',
+        text1: t('Failure'),
+      })
     }
   }
 
@@ -81,21 +96,34 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [])
 
   const handleAcceptPress = async () => {
-    setModalVisible('pending')
-    setTimeout(() => {
-      setPendingMessage(t('Offer delay'))
-    }, 15000)
+    setButtonsVisible(false)
+    Toast.show({
+      type: 'info',
+      text1: t('Accepting Proof'),
+    })
     try {
       if (!proof) {
+        Toast.show({
+          type: 'error',
+          text1: t('Proof not Found'),
+        })
         throw new Error('Proof not found')
       }
       const automaticRequestedCreds = agent?.proofs?.autoSelectCredentialsForProofRequest(retrievedCredentials)
       if (!automaticRequestedCreds) {
+        Toast.show({
+          type: 'error',
+          text1: t('Requested creds not found'),
+        })
         throw new Error('Requested creds not found')
       }
       await agent?.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
     } catch {
-      setModalVisible('failure')
+      Toast.show({
+        type: 'error',
+        text1: t('Failure'),
+      })
+      setButtonsVisible(true)
     }
   }
 
@@ -106,20 +134,21 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         text: t('Confirm'),
         style: 'destructive',
         onPress: async () => {
-          setModalVisible('pending')
+          Toast.show({
+            type: 'info',
+            text1: t('Rejecting Proof'),
+          })
           try {
             // await agent.proofs.rejectPresentation(id)
+            navigation.goBack()
           } catch {
-            setModalVisible('failure')
+            Toast.show({
+              type: 'error',
+            })
           }
         },
       },
     ])
-  }
-
-  const exitProofRequest = () => {
-    setModalVisible('')
-    navigation.goBack()
   }
 
   return (
@@ -136,20 +165,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Accept')} onPress={handleAcceptPress} />
-      <Button title={t('Reject')} negative onPress={handleRejectPress} />
-      <Pending
-        visible={modalVisible === 'pending'}
-        banner={t('Accepting Proof')}
-        message={pendingMessage}
-        onPress={pendingMessage ? () => exitProofRequest() : undefined}
-      />
-      <Success
-        visible={modalVisible === 'success'}
-        banner={t('Successfully Accepted Proof')}
-        onPress={() => exitProofRequest()}
-      />
-      <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
+      <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
+      <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
     </View>
   )
 }

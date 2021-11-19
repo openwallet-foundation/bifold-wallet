@@ -11,9 +11,11 @@ import AgentProvider from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import { default as React, useEffect, useState } from 'react'
 import Config from 'react-native-config'
+import Toast from 'react-native-toast-message'
 
 import RootStack from './App/navigators/RootStack'
 import indyLedgers from './configs/ledgers/indy'
+import toastConfig from './configs/toast/toastConfig'
 
 import './App/i18n'
 
@@ -53,6 +55,7 @@ const App = () => {
   return (
     <AgentProvider agent={agent}>
       <RootStack />
+      <Toast topOffset={15} config={toastConfig} />
     </AgentProvider>
   )
 }
