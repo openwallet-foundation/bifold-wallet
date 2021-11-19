@@ -60,33 +60,33 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
 
   return (
     <Container>
-      {cameraActive && (
-        <RNCamera
-          style={container}
-          type={RNCamera.Constants.Type.back}
-          flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
-          captureAudio={false}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          onBarCodeRead={(e) => {
+      <RNCamera
+        style={container}
+        type={RNCamera.Constants.Type.back}
+        flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
+        captureAudio={false}
+        androidCameraPermissionOptions={{
+          title: 'Permission to use camera',
+          message: 'We need your permission to use your camera',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}
+        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+        onBarCodeRead={(e) => {
+          if (cameraActive) {
             Vibration.vibrate()
             setCameraActive(false)
             handleCodeScan(e)
-          }}
-        >
-          <CameraViewContainer portrait={portraitMode}>
-            <ViewFinderContainer>
-              <ViewFinder />
-            </ViewFinderContainer>
-            <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
-          </CameraViewContainer>
-        </RNCamera>
-      )}
+          }
+        }}
+      >
+        <CameraViewContainer portrait={portraitMode}>
+          <ViewFinderContainer>
+            <ViewFinder />
+          </ViewFinderContainer>
+          <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
+        </CameraViewContainer>
+      </RNCamera>
     </Container>
   )
 }
