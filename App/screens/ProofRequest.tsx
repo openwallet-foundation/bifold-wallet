@@ -165,9 +165,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-          <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
-          <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
-      )}
+      <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
+      <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
     </View>
   )
 }
