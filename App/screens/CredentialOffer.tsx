@@ -12,7 +12,7 @@ import Toast from 'react-native-toast-message'
 import { backgroundColor } from '../globalStyles'
 import { parseSchema } from '../helpers'
 
-import { Button, ModularView, Label, Success, Pending, Failure } from 'components'
+import { Button, ModularView, Label } from 'components'
 
 interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
