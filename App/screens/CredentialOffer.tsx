@@ -5,12 +5,14 @@ import type { HomeStackParams } from 'navigators/HomeStack'
 import { CredentialState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 
 import { backgroundColor } from '../globalStyles'
 import { parseSchema } from '../helpers'
 
-import { Button, ModularView, Label, Success, Pending, Failure } from 'components'
+import { Button, ModularView, Label } from 'components'
 
 interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
@@ -29,54 +31,68 @@ const styles = StyleSheet.create({
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
-  const [modalVisible, setModalVisible] = useState('')
-  const [pendingMessage, setPendingMessage] = useState('')
+  const [buttonsVisible, setButtonsVisible] = useState(true)
 
   const credentialId = route?.params?.credentialId
 
   const credential = useCredentialById(credentialId)
   const connection = useConnectionById(credential?.connectionId)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (credential?.state === CredentialState.Done) {
-      setModalVisible('success')
+      Toast.show({
+        type: 'success',
+        text1: t('Successfully Accepted Credential'),
+      })
+      navigation.goBack()
     }
   }, [credential])
 
   const handleAcceptPress = async () => {
-    setModalVisible('pending')
-    setTimeout(() => {
-      setPendingMessage('This is taking Longer than expected. Check back later for your new credential.')
-    }, 10000)
+    setButtonsVisible(false)
+    Toast.show({
+      type: 'info',
+      text1: t('Accepting Proof'),
+    })
     try {
       await agent?.credentials.acceptOffer(credentialId)
     } catch {
-      setModalVisible('failure')
+      Toast.show({
+        type: 'error',
+        text1: t('Failure'),
+      })
+      setButtonsVisible(true)
     }
   }
 
   const handleRejectPress = async () => {
-    Alert.alert('Reject this Credential?', 'This decision cannot be changed.', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('Reject this Credential?'), t('This decision cannot be changed.'), [
+      { text: t('Cancel'), style: 'cancel' },
       {
-        text: 'Confirm',
+        text: t('Confirm'),
         style: 'destructive',
         onPress: async () => {
-          setModalVisible('pending')
+          Toast.show({
+            type: 'info',
+            text1: t('Rejecting Proof'),
+          })
           try {
             await agent?.credentials.declineOffer(credentialId)
-            setModalVisible('success')
+            Toast.show({
+              type: 'success',
+              text1: t('Successfully Rejected Credential'),
+            })
+            navigation.goBack()
           } catch {
-            setModalVisible('failure')
+            Toast.show({
+              type: 'error',
+              text1: t('Failure'),
+            })
           }
         },
       },
     ])
-  }
-
-  const exitCredentialOffer = () => {
-    setModalVisible('')
-    navigation.goBack()
   }
 
   return (
@@ -92,20 +108,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title="Accept" onPress={handleAcceptPress} />
-      <Button title="Reject" negative onPress={handleRejectPress} />
-      <Pending
-        visible={modalVisible === 'pending'}
-        banner="Accepting Credential"
-        message={pendingMessage}
-        onPress={pendingMessage ? exitCredentialOffer : undefined}
-      />
-      <Success
-        visible={modalVisible === 'success'}
-        banner="Successfully Accepted Credential"
-        onPress={exitCredentialOffer}
-      />
-      <Failure visible={modalVisible === 'failure'} onPress={() => setModalVisible('')} />
+      <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
+      <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
     </View>
   )
 }
