@@ -14,6 +14,7 @@ import { default as React, useEffect, useState } from 'react'
 import Config from 'react-native-config'
 import Toast from 'react-native-toast-message'
 import toastConfig from './configs/toast/toastConfig'
+import { useWindowDimensions } from 'react-native'
 
 import RootStack from './App/navigators/RootStack'
 import AppTheme from './App/theme'
