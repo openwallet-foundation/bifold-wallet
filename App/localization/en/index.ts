@@ -1,3 +1,4 @@
+// prettier-ignore
 const translation = {
   "Global": {
     "EnterPin": "Enter Pin",

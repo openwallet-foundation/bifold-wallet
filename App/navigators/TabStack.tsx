@@ -23,7 +23,7 @@ const Tab = createBottomTabNavigator<TabStackParams>()
 
 function TabStack() {
   const { t } = useTranslation()
-  
+
   return (
     <Tab.Navigator
       screenOptions={{

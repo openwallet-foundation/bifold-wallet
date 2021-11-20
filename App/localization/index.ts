@@ -56,4 +56,4 @@ i18n.use(initReactI18next).init({
   resources,
 })
 
-export {i18n, initStoredLanguage, storeLanguage, currentLanguage}
+export { i18n, initStoredLanguage, storeLanguage, currentLanguage }

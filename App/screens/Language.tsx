@@ -1,17 +1,18 @@
-import { SafeAreaScrollView } from 'components'
-import SingleSelectBlock, { BlockSelection } from 'components/singleSelectBlock/SingleSelectBlock'
-import { Locales, storeLanguage } from '../localization'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigation } from '@react-navigation/core'
+
+import { Locales, storeLanguage } from '../localization'
+
+import { SafeAreaScrollView } from 'components'
+import SingleSelectBlock, { BlockSelection } from 'components/singleSelectBlock/SingleSelectBlock'
 
 const Language = () => {
   const { t, i18n } = useTranslation()
 
-  // List of available languages into the localization directory 
+  // List of available languages into the localization directory
   const languages = [
-    { id: Locales.en, value: t('Language.English')},
-    { id: Locales.fr, value: t('Language.French')},
+    { id: Locales.en, value: t('Language.English') },
+    { id: Locales.fr, value: t('Language.French') },
   ]
 
   /**
