@@ -13,7 +13,7 @@ const ListCredentials: React.FC = () => {
   const { credentials } = useCredentials()
   const { t } = useTranslation()
 
-  const emptyListComponent = () => <Text style={{ textAlign: 'center', marginTop: 100 }}>{t('None yet!')}</Text>
+  const emptyListComponent = () => <Text style={{ textAlign: 'center', marginTop: 100 }}>{t('Global.NoneYet!')}</Text>
 
   const keyForItem = (item: CredentialRecord) => String(item.credentialId)
 

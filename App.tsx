@@ -17,11 +17,14 @@ import RootStack from './App/navigators/RootStack'
 import indyLedgers from './configs/ledgers/indy'
 import toastConfig from './configs/toast/toastConfig'
 
-import './App/i18n'
+import './App/localization'
+import { initStoredLanguage } from './App/localization'
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
   // const { translations } = useContext(LocalizationContext)
+
+  initStoredLanguage()
 
   const initAgent = async () => {
     const newAgent = new Agent(
