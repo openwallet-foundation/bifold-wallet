@@ -55,7 +55,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (proof?.state === ProofState.Done) {
       Toast.show({
         type: 'success',
-        text1: t('Successfully Accepted Proof'),
+        text1: t('ProofRequest.SuccessfullyAcceptedProof'),
       })
       navigation.goBack()
     }
@@ -66,7 +66,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       if (!proof?.requestMessage?.indyProofRequest) {
         Toast.show({
           type: 'error',
-          text1: t('Proof not Found'),
+          text1: t('ProofRequest.ProofNotFound'),
         })
         throw new Error('Indy proof request not found')
       }
@@ -77,7 +77,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       if (!retrievedCreds) {
         Toast.show({
           type: 'error',
-          text1: t('Requested creds not found'),
+          text1: t('ProofRequest.RequestedCredsNotFound'),
         })
         throw new Error('Retrieved creds not found')
       }
@@ -86,7 +86,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     } catch {
       Toast.show({
         type: 'error',
-        text1: t('Failure'),
+        text1: t('Global.Failure'),
       })
     }
   }
@@ -99,13 +99,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     setButtonsVisible(false)
     Toast.show({
       type: 'info',
-      text1: t('Accepting Proof'),
+      text1: t('ProofRequest.AcceptingProof'),
     })
     try {
       if (!proof) {
         Toast.show({
           type: 'error',
-          text1: t('Proof not Found'),
+          text1: t('ProofRequest.ProofNotFound'),
         })
         throw new Error('Proof not found')
       }
@@ -113,7 +113,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       if (!automaticRequestedCreds) {
         Toast.show({
           type: 'error',
-          text1: t('Requested creds not found'),
+          text1: t('ProofRequest.RequestedCredsNotFound'),
         })
         throw new Error('Requested creds not found')
       }
@@ -121,22 +121,22 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     } catch {
       Toast.show({
         type: 'error',
-        text1: t('Failure'),
+        text1: t('Global.Failure'),
       })
       setButtonsVisible(true)
     }
   }
 
   const handleRejectPress = async () => {
-    Alert.alert(t('Reject this Proof?'), t('This decision cannot be changed.'), [
-      { text: t('Cancel'), style: 'cancel' },
+    Alert.alert(t('ProofRequest.RejectThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
+      { text: t('Global.Cancel'), style: 'cancel' },
       {
-        text: t('Confirm'),
+        text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
           Toast.show({
             type: 'info',
-            text1: t('Rejecting Proof'),
+            text1: t('ProofRequest.RejectingProof'),
           })
           try {
             // await agent.proofs.rejectPresentation(id)
@@ -165,8 +165,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
-      <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
     </View>
   )
 }

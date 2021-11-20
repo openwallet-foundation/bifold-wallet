@@ -19,7 +19,7 @@ const ListContacts: React.FC = () => {
       renderItem={({ item }) => <ContactListItem contact={item} />}
       keyExtractor={(item: ConnectionRecord) => item.did}
       style={{ backgroundColor }}
-      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>{t('None yet!')}</Text>}
+      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>{t('Global.NoneYet!')}</Text>}
     />
   )
 }

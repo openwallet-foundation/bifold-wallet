@@ -27,7 +27,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
     if (connection?.state === ConnectionState.Complete) {
       Toast.show({
         type: 'success',
-        text1: t('Successfully Accepted Connection'),
+        text1: t('Scan.SuccessfullyAcceptedConnection'),
       })
       navigation.navigate('HomeTab')
     }
@@ -36,7 +36,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
   const handleCodeScan = async (event: BarCodeReadEvent) => {
     Toast.show({
       type: 'info',
-      text1: t('Accepting Connection'),
+      text1: t('Scan.AcceptingConnection'),
     })
     try {
       const connectionRecord = await agent?.connections.receiveInvitationFromUrl(event.data, {
@@ -45,7 +45,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
       if (!connectionRecord?.id) {
         Toast.show({
           type: 'error',
-          text1: t('Connection record ID not found'),
+          text1: t('Scan.ConnectionRecordIdNotFound'),
         })
         throw new Error('Connection record ID not found')
       }
@@ -53,7 +53,7 @@ const Scan: React.FC<Props> = ({ navigation }) => {
     } catch {
       Toast.show({
         type: 'error',
-        text1: t('Failure'),
+        text1: t('Global.Failure'),
       })
       navigation.navigate('HomeTab')
     }
