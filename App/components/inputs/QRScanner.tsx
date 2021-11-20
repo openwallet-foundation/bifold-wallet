@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useWindowDimensions, Vibration, View, StyleSheet } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
 
 import QRScannerTorch from 'components/misc/QRScannerTorch'
-import { useTranslation } from 'react-i18next'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
@@ -65,9 +65,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
         captureAudio={false}
         androidCameraPermissionOptions={{
           title: t('QRScanner.PermissionToUseCamera'),
-            message: t('QRScanner.WeNeedYourPermissionToUseYourCamera'),
-            buttonPositive: t('QRScanner.Ok'),
-            buttonNegative: t('Global.Cancel'),
+          message: t('QRScanner.WeNeedYourPermissionToUseYourCamera'),
+          buttonPositive: t('QRScanner.Ok'),
+          buttonNegative: t('Global.Cancel'),
         }}
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
         onBarCodeRead={(e) => {

@@ -1,14 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
-import Settings from '../screens/Settings'
 import Language from '../screens/Language'
+import Settings from '../screens/Settings'
 
 import defaultStackOptions from './defaultStackOptions'
 
 type SettingsStackParams = {
   Settings: undefined
-  Language: undefined,
+  Language: undefined
 }
 
 const Stack = createStackNavigator<SettingsStackParams>()

@@ -1,10 +1,34 @@
+import { useNavigation } from '@react-navigation/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { SafeAreaScrollView, Text } from 'components'
-import { useNavigation } from '@react-navigation/core'
-import { mainColor, shadow } from '../globalStyles'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import { mainColor, shadow } from '../globalStyles'
+
+import { SafeAreaScrollView, Text } from 'components'
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    padding: 20,
+  },
+  groupHeader: {
+    fontSize: 20,
+    marginVertical: 15,
+  },
+  rowGroup: {
+    borderRadius: 8,
+    backgroundColor: shadow,
+  },
+  row: {
+    paddingVertical: 12,
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+})
 
 const Settings: React.FC = () => {
   const { t } = useTranslation()
@@ -38,27 +62,5 @@ const Settings: React.FC = () => {
     </SafeAreaScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    padding: 20,
-  },
-  groupHeader: {
-    fontSize: 20,
-    marginVertical: 15,
-  },
-  rowGroup: {
-    borderRadius: 8,
-    backgroundColor: shadow,
-  },
-  row: {
-    paddingVertical: 12,
-    flexDirection: 'row',
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-})
 
 export default Settings
