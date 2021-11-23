@@ -2,7 +2,8 @@ import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { HomeStackParams } from 'navigators/HomeStack'
 
-import { CredentialState } from '@aries-framework/core'
+import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
+import { Metadata } from '@aries-framework/core/build/storage/Metadata'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -31,42 +32,79 @@ const styles = StyleSheet.create({
 
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
+  const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
 
-  const credentialId = route?.params?.credentialId
+  const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
+    try {
+      if (!credentialId) {
+        throw new Error(t('Credential not found'))
+      }
+      return useCredentialById(credentialId)
+    } catch (e: unknown) {
+      // console.error(e)
+      Toast.show({
+        type: 'error',
+        text1: (e as Error)?.message || t('Failure'),
+      })
+      navigation.goBack()
+    }
+  }
 
-  const credential = useCredentialById(credentialId)
-  const connection = useConnectionById(credential?.connectionId)
-  const { t } = useTranslation()
+  const getConnectionRecordFromCredential = (connectionId?: string): ConnectionRecord | void => {
+    if (connectionId) {
+      return useConnectionById(connectionId)
+    }
+  }
+
+  const credential = getCredentialRecord(route?.params?.credentialId)
+  const connection = getConnectionRecordFromCredential(credential?.connectionId)
 
   useEffect(() => {
     if (credential?.state === CredentialState.Done) {
       Toast.show({
         type: 'success',
-        text1: t('Successfully Accepted Credential'),
+        text1: t('Credential Accepted'),
+      })
+      navigation.goBack()
+    }
+  }, [credential])
+
+  useEffect(() => {
+    if (credential?.state === CredentialState.Declined) {
+      Toast.show({
+        type: 'info',
+        text1: t('Credential Rejected'),
       })
       navigation.goBack()
     }
   }, [credential])
 
   const handleAcceptPress = async () => {
+    if (!credential) {
+      return
+    }
     setButtonsVisible(false)
     Toast.show({
       type: 'info',
-      text1: t('Accepting Proof'),
+      text1: t('Accepting Credential'),
     })
     try {
-      await agent?.credentials.acceptOffer(credentialId)
-    } catch {
+      await agent?.credentials.acceptOffer(credential?.id)
+    } catch (e: unknown) {
+      // console.error(e)
       Toast.show({
         type: 'error',
-        text1: t('Failure'),
+        text1: (e as Error)?.message || t('Failure'),
       })
       setButtonsVisible(true)
     }
   }
 
   const handleRejectPress = async () => {
+    if (!credential) {
+      return
+    }
     Alert.alert(t('Reject this Credential?'), t('This decision cannot be changed.'), [
       { text: t('Cancel'), style: 'cancel' },
       {
@@ -75,19 +113,15 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         onPress: async () => {
           Toast.show({
             type: 'info',
-            text1: t('Rejecting Proof'),
+            text1: t('Rejecting Credential'),
           })
           try {
-            await agent?.credentials.declineOffer(credentialId)
-            Toast.show({
-              type: 'success',
-              text1: t('Successfully Rejected Credential'),
-            })
-            navigation.goBack()
-          } catch {
+            await agent?.credentials.declineOffer(credential?.id)
+          } catch (e: unknown) {
+            // console.error(e)
             Toast.show({
               type: 'error',
-              text1: t('Failure'),
+              text1: (e as Error)?.message || t('Failure'),
             })
           }
         },
@@ -98,7 +132,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ModularView
-        title={parseSchema(credential?.metadata.schemaId)}
+        title={parseSchema((credential?.metadata as Metadata & { schemaId: string })?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
