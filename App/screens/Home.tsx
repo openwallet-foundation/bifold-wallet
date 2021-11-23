@@ -31,7 +31,7 @@ const Home: React.FC = () => {
       <AppHeaderLarge />
       <ModularView
         // @ts-ignore
-        title={t('Notifications')}
+        title={t('Home.Notifications')}
         content={
           <FlatList
             data={[...credentials, ...proofs]}
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
                 <NotificationProofListItem notification={item} />
               )
             }
-            ListEmptyComponent={<Text>{t('No New Updates')}</Text>}
+            ListEmptyComponent={<Text>{t('Home.NoNewUpdates')}</Text>}
           />
         }
       />

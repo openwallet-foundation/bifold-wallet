@@ -17,16 +17,16 @@ const Terms: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaScrollView>
       <AppHeaderLarge />
-      <ModularView title={t('Terms of Service')} content={t('Terms of Service Text')} />
+      <ModularView title={t('Terms.TermsOfService')} content={t('Terms.TermsOfServiceText')} />
       <CheckBoxRow
-        title={t('I Agree')}
-        accessibilityLabel={t('I Agree')}
+        title={t('Terms.IAgree')}
+        accessibilityLabel={t('Terms.IAgree')}
         checked={checked}
         onPress={() => setChecked(!checked)}
       />
       <Button
-        title={t('Submit')}
-        accessibilityLabel={t('Submit')}
+        title={t('Global.Submit')}
+        accessibilityLabel={t('Global.Submit')}
         disabled={!checked}
         onPress={() => navigation.navigate('Create 6-Digit Pin')}
       />
