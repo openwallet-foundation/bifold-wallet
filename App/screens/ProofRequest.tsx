@@ -63,14 +63,14 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const getProofRecord = (proofId?: string): ProofRecord | void => {
     try {
       if (!proofId) {
-        throw new Error(t('Proof not found'))
+        throw new Error(t('ProofRequest.ProofNotFound'))
       }
       return useProofById(proofId)
     } catch (e: unknown) {
       // console.error(e)
       Toast.show({
         type: 'error',
-        text1: (e as Error)?.message || t('Failure'),
+        text1: (e as Error)?.message || t('Global.Failure'),
       })
       navigation.goBack()
     }
@@ -86,7 +86,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     try {
       const creds = await agent?.proofs?.getRequestedCredentialsForProofRequest(proof?.id)
       if (!creds) {
-        throw new Error(t('Requested credentials could not be found'))
+        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
       setRetrievedCredentials(creds)
       setRetrievedCredentialsDisplay(transformAttributes(creds?.requestedAttributes))
@@ -94,7 +94,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       // console.error(e)
       Toast.show({
         type: 'error',
-        text1: (e as Error)?.message || t('Failure'),
+        text1: (e as Error)?.message || t('Global.Failure'),
       })
     }
   }
@@ -118,7 +118,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (proof?.state === ProofState.Done) {
       Toast.show({
         type: 'success',
-        text1: t('Proof Accepted'),
+        text1: t('ProofRequest.ProofAccepted'),
       })
       navigation.goBack()
     }
@@ -128,7 +128,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (proof?.state === ProofState.Declined) {
       Toast.show({
         type: 'info',
-        text1: t('Proof Rejected'),
+        text1: t('ProofRequest.ProofRejected'),
       })
       navigation.goBack()
     }
@@ -141,19 +141,19 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     setButtonsVisible(false)
     Toast.show({
       type: 'info',
-      text1: t('Accepting Proof'),
+      text1: t('ProofRequest.AcceptingProof'),
     })
     try {
       const automaticRequestedCreds = agent?.proofs?.autoSelectCredentialsForProofRequest(retrievedCredentials)
       if (!automaticRequestedCreds) {
-        throw new Error(t('Requested credentials could not be found'))
+        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
       await agent?.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
     } catch (e: unknown) {
       // console.error(e)
       Toast.show({
         type: 'error',
-        text1: (e as Error)?.message || t('Failure'),
+        text1: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
     }
@@ -163,15 +163,15 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (!proof) {
       return
     }
-    Alert.alert(t('Reject this Proof?'), t('This decision cannot be changed.'), [
-      { text: t('Cancel'), style: 'cancel' },
+    Alert.alert(t('ProofRequest.RejectThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
+      { text: t('Global.Cancel'), style: 'cancel' },
       {
-        text: t('Confirm'),
+        text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
           Toast.show({
             type: 'info',
-            text1: t('Rejecting Proof'),
+            text1: t('ProofRequest.RejectingProof'),
           })
           try {
             await agent?.proofs?.declineRequest(proof?.id)
@@ -179,7 +179,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
             // console.error(e)
             Toast.show({
               type: 'error',
-              text1: t('Failure'),
+              text1: t('Global.Failure'),
             })
           }
         },
@@ -201,8 +201,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
-      <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
     </View>
   )
 }

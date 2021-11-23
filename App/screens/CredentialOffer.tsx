@@ -38,14 +38,14 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
     try {
       if (!credentialId) {
-        throw new Error(t('Credential not found'))
+        throw new Error(t('CredentialOffer.CredentialNotFound'))
       }
       return useCredentialById(credentialId)
     } catch (e: unknown) {
       // console.error(e)
       Toast.show({
         type: 'error',
-        text1: (e as Error)?.message || t('Failure'),
+        text1: (e as Error)?.message || t('Global.Failure'),
       })
       navigation.goBack()
     }
@@ -64,7 +64,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (credential?.state === CredentialState.Done) {
       Toast.show({
         type: 'success',
-        text1: t('Credential Accepted'),
+        text1: t('CredentialOffer.CredentialAccepted'),
       })
       navigation.goBack()
     }
@@ -74,7 +74,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (credential?.state === CredentialState.Declined) {
       Toast.show({
         type: 'info',
-        text1: t('Credential Rejected'),
+        text1: t('CredentialOffer.CredentialRejected'),
       })
       navigation.goBack()
     }
@@ -87,7 +87,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     setButtonsVisible(false)
     Toast.show({
       type: 'info',
-      text1: t('Accepting Credential'),
+      text1: t('CredentialOffer.AcceptingCredential'),
     })
     try {
       await agent?.credentials.acceptOffer(credential?.id)
@@ -95,7 +95,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       // console.error(e)
       Toast.show({
         type: 'error',
-        text1: (e as Error)?.message || t('Failure'),
+        text1: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
     }
@@ -105,15 +105,15 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (!credential) {
       return
     }
-    Alert.alert(t('Reject this Credential?'), t('This decision cannot be changed.'), [
-      { text: t('Cancel'), style: 'cancel' },
+    Alert.alert(t('CredentialOffer.RejectThisCredential?'), t('Global.ThisDecisionCannotBeChanged.'), [
+      { text: t('Global.Cancel'), style: 'cancel' },
       {
-        text: t('Confirm'),
+        text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
           Toast.show({
             type: 'info',
-            text1: t('Rejecting Credential'),
+            text1: t('CredentialOffer.RejectingCredential'),
           })
           try {
             await agent?.credentials.declineOffer(credential?.id)
@@ -121,7 +121,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
             // console.error(e)
             Toast.show({
               type: 'error',
-              text1: (e as Error)?.message || t('Failure'),
+              text1: (e as Error)?.message || t('Global.Failure'),
             })
           }
         },
@@ -142,8 +142,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
-      <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
     </View>
   )
 }

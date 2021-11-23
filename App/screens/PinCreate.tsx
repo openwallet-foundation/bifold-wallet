@@ -19,7 +19,7 @@ const PinCreate: React.FC<Props> = ({ route }) => {
 
   const passcodeCreate = async (x: string) => {
     const passcode = JSON.stringify(x)
-    const description = t('user authentication pin')
+    const description = t('PinCreate.UserAuthenticationPin')
     await Keychain.setGenericPassword(description, passcode, {
       service: 'passcode',
     })
@@ -27,9 +27,9 @@ const PinCreate: React.FC<Props> = ({ route }) => {
 
   const confirmEntry = (x: string, y: string) => {
     if (x.length < 6 || y.length < 6) {
-      Alert.alert(t('Pin must be 6 digits in length'))
+      Alert.alert(t('PinCreate.PinMustBe6DigitsInLength'))
     } else if (x !== y) {
-      Alert.alert(t('Pins entered do not match'))
+      Alert.alert(t('PinCreate.PinsEnteredDoNotMatch'))
     } else {
       passcodeCreate(x)
       route?.params?.setAuthenticated(true)
@@ -39,10 +39,10 @@ const PinCreate: React.FC<Props> = ({ route }) => {
   return (
     <SafeAreaScrollView>
       <TextInput
-        label={t('Enter Pin')}
-        placeholder={t('6 Digit Pin')}
+        label={t('Global.EnterPin')}
+        placeholder={t('Global.6DigitPin')}
         accessible={true}
-        accessibilityLabel={t('Enter Pin')}
+        accessibilityLabel={t('Global.EnterPin')}
         maxLength={6}
         autoFocus
         keyboardType="numeric"
@@ -51,10 +51,10 @@ const PinCreate: React.FC<Props> = ({ route }) => {
         onChangeText={setPin}
       />
       <TextInput
-        label={t('Re-Enter Pin')}
+        label={t('PinCreate.ReenterPin')}
         accessible={true}
-        accessibilityLabel={t('Re-Enter Pin')}
-        placeholder={t('6 Digit Pin')}
+        accessibilityLabel={t('PinCreate.ReenterPin')}
+        placeholder={t('Global.6DigitPin')}
         maxLength={6}
         keyboardType="numeric"
         secureTextEntry
@@ -67,8 +67,8 @@ const PinCreate: React.FC<Props> = ({ route }) => {
         }}
       />
       <Button
-        title={t('Create')}
-        accessibilityLabel={t('Create')}
+        title={t('PinCreate.Create')}
+        accessibilityLabel={t('PinCreate.Create')}
         onPress={() => {
           Keyboard.dismiss()
           confirmEntry(pin, pinTwo)
