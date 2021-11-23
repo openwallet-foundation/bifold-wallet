@@ -15,7 +15,7 @@ interface Props {
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
+    width: '90%',
     borderRadius,
     backgroundColor: mainColor,
     alignItems: 'center',
