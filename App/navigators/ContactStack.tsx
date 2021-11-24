@@ -3,7 +3,7 @@ import React from 'react'
 
 import ContactDetails from '../screens/ContactDetails'
 // import ListContacts from '../screens/ListContacts'
-import Learning from '../screens/Learning'
+import Onboarding from '../screens/Onboarding'
 
 import defaultStackOptions from './defaultStackOptions'
 
@@ -17,7 +17,7 @@ const Stack = createStackNavigator<ContactStackParams>()
 function ContactStack() {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-      <Stack.Screen name="Contacts" component={Learning} />
+      <Stack.Screen name="Contacts" component={Onboarding} />
       <Stack.Screen name="Contact Details" component={ContactDetails} />
     </Stack.Navigator>
   )
