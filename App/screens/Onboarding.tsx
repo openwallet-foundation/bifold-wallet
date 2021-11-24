@@ -4,7 +4,9 @@ import { Animated, BackHandler, Dimensions, FlatList, StyleSheet, Text, Touchabl
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { SvgProps } from 'react-native-svg'
 
+// @ts-ignore
 import WelcomeOne from '../assets/img/welcome-1.svg'
+// @ts-ignore
 import WelcomeTwo from '../assets/img/welcome-2.svg'
 import { Pagination } from '../components/shared/Pagination'
 import { Colors } from '../globalStyles'
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Learning: React.FC<any> = ({ navigation }) => {
+const Onboarding: React.FC<any> = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const flatList: Ref<FlatList> = useRef(null)
   const scrollX = useRef(new Animated.Value(0)).current
@@ -147,4 +149,4 @@ const Learning: React.FC<any> = ({ navigation }) => {
   )
 }
 
-export default Learning
+export default Onboarding
