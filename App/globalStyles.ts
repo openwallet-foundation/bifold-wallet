@@ -1,3 +1,5 @@
+import { StyleSheet } from 'react-native'
+
 export const mainColor = '#35823f'
 export const textColor = '#fff'
 export const backgroundColor = '#000'
@@ -27,3 +29,16 @@ export const Colors: ColorTheme = {
   red: '#de3333',
   transparent: '#FFFFFF00',
 }
+
+export const ButtonStyles = StyleSheet.create({
+  primary: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: Colors.mainColor,
+  },
+  primaryText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.textColor,
+  },
+})
