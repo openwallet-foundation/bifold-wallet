@@ -70,6 +70,10 @@ const Onboarding: React.FC<IOnboardingProps> = ({ title, pages, onOnboardingDism
   const myStyle = style ? style : defaultStyle
 
   const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
+    if (!viewableItems[0]) {
+      return
+    }
+
     setActiveIndex(viewableItems[0].index)
   })
 
