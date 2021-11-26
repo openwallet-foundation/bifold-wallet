@@ -6,6 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+
+# Jest
+.jest/
+
 # Merge artifacts
 *.orig
 
