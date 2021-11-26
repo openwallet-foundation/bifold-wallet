@@ -18,7 +18,7 @@ exports[`Onboarding Renders correctly 1`] = `
       }
     }
   >
-    cake
+    My Wallet
   </Text>
   <RCTScrollView
     data={Array []}
