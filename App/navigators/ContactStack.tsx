@@ -12,9 +12,6 @@ import Onboarding from '../screens/Onboarding'
 
 import defaultStackOptions from './defaultStackOptions'
 
-// @ts-ignore
-// @ts-ignore
-
 export type ContactStackParams = {
   Contacts: undefined
   'Contact Details': { connectionId: string }
