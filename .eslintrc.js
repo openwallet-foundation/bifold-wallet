@@ -64,6 +64,7 @@ module.exports = {
       files: ['*.test.*'],
       rules: {
         'no-console': 'off',
+        'import/no-extraneous-dependencies': 'off',
       },
     },
     {
