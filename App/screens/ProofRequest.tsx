@@ -67,7 +67,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       }
       return useProofById(proofId)
     } catch (e: unknown) {
-      // console.error(e)
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
@@ -91,7 +90,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       setRetrievedCredentials(creds)
       setRetrievedCredentialsDisplay(transformAttributes(creds?.requestedAttributes))
     } catch (e: unknown) {
-      // console.error(e)
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
@@ -108,8 +106,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         throw new Error('Proof not found')
       }
       getRetrievedCredentials(proof)
-    } catch (e) {
-      // console.error(e)
+    } catch (e: unknown) {
       navigation.goBack()
     }
   }, [])
@@ -150,7 +147,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       }
       await agent?.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
     } catch (e: unknown) {
-      // console.error(e)
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
@@ -176,7 +172,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           try {
             await agent?.proofs?.declineRequest(proof?.id)
           } catch (e: unknown) {
-            // console.error(e)
             Toast.show({
               type: 'error',
               text1: t('Global.Failure'),

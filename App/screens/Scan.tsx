@@ -68,7 +68,6 @@ const Scan: React.FC<Props> = ({ navigation }) => {
       })
       navigation.navigate('HomeTab')
     } catch (e: unknown) {
-      // console.error(e)
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
