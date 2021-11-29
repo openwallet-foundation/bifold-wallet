@@ -5,36 +5,28 @@ import { ScalingDot } from 'react-native-animated-pagination-dots'
 import LargeArrow from '../../assets/img/large-arrow.svg'
 import { Colors } from '../../globalStyles'
 
+interface IPaginationStyleSheet {
+  pagerContainer: Record<string, any>
+  pagerDot: Record<string, any>
+  pagerPosition: Record<string, any>
+}
+
 interface IPaginationProps {
   data: any
   scrollX: Animated.Value
   next: () => void
   previous: () => void
+  style: IPaginationStyleSheet
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: 16,
-  },
-  dot: {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: Colors.mainColor,
-  },
-  relativePosition: {
-    position: 'relative',
-    top: 0,
-  },
-})
+const arrowHeight = 24
+const arrowWidth = 48
 
-export const Pagination: React.FC<IPaginationProps> = ({ data, scrollX, next, previous }) => {
+export const Pagination: React.FC<IPaginationProps> = ({ data, scrollX, style, next, previous }) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={previous}>
-        <LargeArrow height={24} width={48} fill={Colors.mainColor} />
+    <View style={style.pagerContainer}>
+      <TouchableOpacity testID={'previousButton'} accessible={true} accessibilityLabel={'Previous'} onPress={previous}>
+        <LargeArrow height={arrowHeight} width={arrowWidth} fill={Colors.mainColor} />
       </TouchableOpacity>
       <ScalingDot
         data={data}
@@ -43,11 +35,16 @@ export const Pagination: React.FC<IPaginationProps> = ({ data, scrollX, next, pr
         inActiveDotOpacity={1}
         activeDotColor={Colors.mainColor}
         activeDotScale={1}
-        dotStyle={styles.dot}
-        containerStyle={styles.relativePosition}
+        dotStyle={style.pagerDot}
+        containerStyle={style.pagerPosition}
       />
-      <TouchableOpacity onPress={next}>
-        <LargeArrow height={24} width={48} fill={Colors.mainColor} style={{ transform: [{ rotate: '180deg' }] }} />
+      <TouchableOpacity testID={'nextButton'} accessible={true} accessibilityLabel={'Next'} onPress={next}>
+        <LargeArrow
+          height={arrowHeight}
+          width={arrowWidth}
+          fill={Colors.mainColor}
+          style={{ transform: [{ rotate: '180deg' }] }}
+        />
       </TouchableOpacity>
     </View>
   )

@@ -17,11 +17,55 @@ exports[`Onboarding Renders correctly 1`] = `
         "fontWeight": "bold",
       }
     }
+    testID="titleText"
   >
     My Wallet
   </Text>
   <RCTScrollView
-    data={Array []}
+    data={
+      Array [
+        Object {
+          "image": [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "fill": "#fff",
+                  "height": 180,
+                  "width": 180,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+          "text": "Lorem 1 ipsum dolor sit amet, consectetur adipiscing elit.",
+        },
+        Object {
+          "image": [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "fill": "#fff",
+                  "height": 180,
+                  "width": 180,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+          "text": "Lorem 2 ipsum dolor sit amet, consectetur adipiscing elit.",
+        },
+      ]
+    }
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={true}
@@ -63,7 +107,86 @@ exports[`Onboarding Renders correctly 1`] = `
       ]
     }
   >
-    <View />
+    <View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "width": 750,
+              },
+              Object {
+                "alignItems": "center",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#fff",
+                "fontSize": 32,
+                "fontWeight": "normal",
+                "margin": 16,
+                "textAlign": "center",
+              }
+            }
+            testID="bodyText"
+          >
+            Lorem 1 ipsum dolor sit amet, consectetur adipiscing elit.
+          </Text>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "width": 750,
+              },
+              Object {
+                "alignItems": "center",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#fff",
+                "fontSize": 32,
+                "fontWeight": "normal",
+                "margin": 16,
+                "textAlign": "center",
+              }
+            }
+            testID="bodyText"
+          >
+            Lorem 2 ipsum dolor sit amet, consectetur adipiscing elit.
+          </Text>
+        </View>
+      </View>
+    </View>
   </RCTScrollView>
   <View
     style={
@@ -76,6 +199,7 @@ exports[`Onboarding Renders correctly 1`] = `
     }
   >
     <View
+      accessibilityLabel="Previous"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -92,6 +216,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
+      testID="previousButton"
     >
       <
         fill="#35823f"
@@ -114,8 +239,54 @@ exports[`Onboarding Renders correctly 1`] = `
           },
         ]
       }
-    />
+    >
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "backgroundColor": "rgba(53, 130, 63, 1)",
+            "borderColor": "#35823f",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "height": 10,
+            "marginHorizontal": 5,
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+            "width": 10,
+          }
+        }
+      />
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "backgroundColor": "rgba(255, 255, 255, 0)",
+            "borderColor": "#35823f",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "height": 10,
+            "marginHorizontal": 5,
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+            "width": 10,
+          }
+        }
+      />
+    </View>
     <View
+      accessibilityLabel="Next"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -132,6 +303,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
+      testID="nextButton"
     >
       <
         fill="#35823f"
@@ -175,6 +347,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "padding": 16,
         }
       }
+      testID="dismissButton"
     >
       <Text
         style={
@@ -183,9 +356,7 @@ exports[`Onboarding Renders correctly 1`] = `
             "fontSize": 18,
           }
         }
-      >
-        Get Started!
-      </Text>
+      />
     </View>
   </View>
 </RNCSafeAreaView>

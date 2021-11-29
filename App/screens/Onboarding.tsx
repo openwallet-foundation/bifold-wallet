@@ -16,6 +16,9 @@ interface IOnboardingStyleSheet {
   bodyText: Record<string, any>
   primaryButton: Record<string, any>
   primaryButtonText: Record<string, any>
+  pagerContainer: Record<string, any>
+  pagerDot: Record<string, any>
+  pagerPosition: Record<string, any>
 }
 
 interface IOnboardingCarouselData {
@@ -25,11 +28,17 @@ interface IOnboardingCarouselData {
 
 interface IOnboardingProps {
   title: string
+  dismissButtonText: string
   pages: Array<IOnboardingCarouselData>
   onOnboardingDismissed: () => Promise<void>
   style?: IOnboardingStyleSheet
 }
 
+const imageDisplayOptions = {
+  fill: Colors.textColor,
+  height: 180,
+  width: 180,
+}
 const defaultStyle: IOnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
@@ -61,9 +70,24 @@ const defaultStyle: IOnboardingStyleSheet = StyleSheet.create({
     fontSize: 18,
     color: Colors.textColor,
   },
+  pagerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 16,
+  },
+  pagerDot: {
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: Colors.mainColor,
+  },
+  pagerPosition: {
+    position: 'relative',
+    top: 0,
+  },
 })
 
-const Onboarding: React.FC<IOnboardingProps> = ({ title, pages, onOnboardingDismissed, style }) => {
+const Onboarding: React.FC<IOnboardingProps> = ({ title, dismissButtonText, pages, onOnboardingDismissed, style }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const flatList: Ref<FlatList> = useRef(null)
   const scrollX = useRef(new Animated.Value(0)).current
@@ -106,12 +130,10 @@ const Onboarding: React.FC<IOnboardingProps> = ({ title, pages, onOnboardingDism
   const renderItem = useCallback(
     ({ item, index }: { item: { image: React.FC<SvgProps>; text: string }; index: number }) => (
       <View key={index} style={[{ width }, { alignItems: 'center' }]}>
-        {item.image({
-          fill: Colors.textColor,
-          height: 180,
-          width: 180,
-        })}
-        <Text style={myStyle.bodyText}>{item.text}</Text>
+        {item.image(imageDisplayOptions)}
+        <Text testID="bodyText" style={myStyle.bodyText}>
+          {item.text}
+        </Text>
       </View>
     ),
     []
@@ -130,7 +152,9 @@ const Onboarding: React.FC<IOnboardingProps> = ({ title, pages, onOnboardingDism
 
   return (
     <SafeAreaView style={myStyle.container}>
-      <Text style={myStyle.headerText}>{title}</Text>
+      <Text testID={'titleText'} style={myStyle.headerText}>
+        {title}
+      </Text>
       <FlatList
         ref={flatList}
         horizontal
@@ -144,14 +168,17 @@ const Onboarding: React.FC<IOnboardingProps> = ({ title, pages, onOnboardingDism
         onScroll={onScroll}
         scrollEventThrottle={16}
       />
-      <Pagination data={pages} scrollX={scrollX} next={next} previous={previous} />
+      <Pagination data={pages} scrollX={scrollX} style={myStyle} next={next} previous={previous} />
       <View style={myStyle.controlsContainer}>
         <TouchableHighlight
+          testID={'dismissButton'}
+          accessible={true}
+          accessibilityLabel={dismissButtonText}
           style={myStyle.primaryButton}
           underlayColor={Colors.activeMain}
           onPress={onOnboardingDismissed}
         >
-          <Text style={myStyle.primaryButtonText}>Get Started!</Text>
+          <Text style={myStyle.primaryButtonText}>{dismissButtonText}</Text>
         </TouchableHighlight>
       </View>
     </SafeAreaView>
