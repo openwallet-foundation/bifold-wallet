@@ -42,7 +42,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       }
       return useCredentialById(credentialId)
     } catch (e: unknown) {
-      // console.error(e)
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
@@ -92,7 +91,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     try {
       await agent?.credentials.acceptOffer(credential?.id)
     } catch (e: unknown) {
-      // console.error(e)
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
@@ -118,7 +116,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           try {
             await agent?.credentials.declineOffer(credential?.id)
           } catch (e: unknown) {
-            // console.error(e)
             Toast.show({
               type: 'error',
               text1: (e as Error)?.message || t('Global.Failure'),
