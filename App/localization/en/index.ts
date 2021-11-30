@@ -36,6 +36,9 @@ const translation = {
     "Created": "Created",
     "ConnectionState": "Connection State"
   },
+  "Credentials": {
+    "CredentialsNotFound": "Credentials not found",
+  },
   "CredentialDetails": {
     "Id": "Id:",
     "CreatedAt": "Created At:"
@@ -68,7 +71,6 @@ const translation = {
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
     "ProofNotFound":"Proof not Found",
-    "RequestedCredsNotFound":"Requested creds not found",
     "RejectingProof":"Rejecting Proof",
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",

@@ -48,6 +48,15 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials | null>(null)
   const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<CredentialDisplay[] | null>(null)
 
+  if (!agent?.proofs) {
+    Toast.show({
+      type: 'error',
+      text1: t('Global.Failure'),
+    })
+    navigation.goBack()
+    return null
+  }
+
   const transformAttributes = (attributes: Record<string, RequestedAttribute[]>): CredentialDisplay[] => {
     const transformedAttributes = []
     for (const attribute in attributes) {
@@ -83,12 +92,12 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
 
   const getRetrievedCredentials = async (proof: ProofRecord) => {
     try {
-      const creds = await agent?.proofs?.getRequestedCredentialsForProofRequest(proof?.id)
+      const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
       if (!creds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
       setRetrievedCredentials(creds)
-      setRetrievedCredentialsDisplay(transformAttributes(creds?.requestedAttributes))
+      setRetrievedCredentialsDisplay(transformAttributes(creds.requestedAttributes))
     } catch (e: unknown) {
       Toast.show({
         type: 'error',
@@ -98,21 +107,35 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const proof = getProofRecord(route?.params?.proofId)
-  const connection = getConnectionRecordFromProof(proof?.connectionId)
+
+  if (!proof) {
+    Toast.show({
+      type: 'error',
+      text1: t('ProofRequest.ProofNotFound'),
+    })
+    navigation.goBack()
+    return null
+  }
 
   useEffect(() => {
     try {
-      if (!proof?.requestMessage?.indyProofRequest) {
-        throw new Error('Proof not found')
-      }
       getRetrievedCredentials(proof)
     } catch (e: unknown) {
       navigation.goBack()
     }
   }, [])
 
+  if (!retrievedCredentials) {
+    Toast.show({
+      type: 'error',
+      text1: t('Credentials.CredentialsNotFound'),
+    })
+    navigation.goBack()
+    return null
+  }
+
   useEffect(() => {
-    if (proof?.state === ProofState.Done) {
+    if (proof.state === ProofState.Done) {
       Toast.show({
         type: 'success',
         text1: t('ProofRequest.ProofAccepted'),
@@ -122,7 +145,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [proof])
 
   useEffect(() => {
-    if (proof?.state === ProofState.Declined) {
+    if (proof.state === ProofState.Declined) {
       Toast.show({
         type: 'info',
         text1: t('ProofRequest.ProofRejected'),
@@ -132,20 +155,17 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [proof])
 
   const handleAcceptPress = async () => {
-    if (!(proof && retrievedCredentials)) {
-      return
-    }
     setButtonsVisible(false)
     Toast.show({
       type: 'info',
       text1: t('ProofRequest.AcceptingProof'),
     })
     try {
-      const automaticRequestedCreds = agent?.proofs?.autoSelectCredentialsForProofRequest(retrievedCredentials)
+      const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
-      await agent?.proofs.acceptRequest(proof?.id, automaticRequestedCreds)
+      await agent.proofs.acceptRequest(proof.id, automaticRequestedCreds)
     } catch (e: unknown) {
       Toast.show({
         type: 'error',
@@ -156,9 +176,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    if (!proof) {
-      return
-    }
     Alert.alert(t('ProofRequest.RejectThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
       { text: t('Global.Cancel'), style: 'cancel' },
       {
@@ -170,7 +187,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
             text1: t('ProofRequest.RejectingProof'),
           })
           try {
-            await agent?.proofs?.declineRequest(proof?.id)
+            await agent.proofs.declineRequest(proof.id)
           } catch (e: unknown) {
             Toast.show({
               type: 'error',
@@ -182,10 +199,12 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     ])
   }
 
+  const connection = getConnectionRecordFromProof(proof.connectionId)
+
   return (
     <View style={styles.container}>
       <ModularView
-        title={proof?.requestMessage?.indyProofRequest?.name || connection?.alias || connection?.invitation?.label}
+        title={proof.requestMessage?.indyProofRequest?.name || connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
             data={retrievedCredentialsDisplay}
