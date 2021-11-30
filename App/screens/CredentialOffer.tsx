@@ -43,7 +43,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     if (credential?.state === CredentialState.Done) {
       Toast.show({
         type: 'success',
-        text1: t('Successfully Accepted Credential'),
+        text1: t('CredentialOffer.SuccessfullyAcceptedCredential'),
       })
       navigation.goBack()
     }
@@ -53,41 +53,41 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     setButtonsVisible(false)
     Toast.show({
       type: 'info',
-      text1: t('Accepting Proof'),
+      text1: t('CredentialOffer.AcceptingCredential'),
     })
     try {
       await agent?.credentials.acceptOffer(credentialId)
     } catch {
       Toast.show({
         type: 'error',
-        text1: t('Failure'),
+        text1: t('Global.Failure'),
       })
       setButtonsVisible(true)
     }
   }
 
   const handleRejectPress = async () => {
-    Alert.alert(t('Reject this Credential?'), t('This decision cannot be changed.'), [
-      { text: t('Cancel'), style: 'cancel' },
+    Alert.alert(t('CredentialOffer.RejectThisCredential?'), t('Global.ThisDecisionCannotBeChanged.'), [
+      { text: t('Global.Cancel'), style: 'cancel' },
       {
-        text: t('Confirm'),
+        text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
           Toast.show({
             type: 'info',
-            text1: t('Rejecting Proof'),
+            text1: t('CredentialOffer.RejectingCredential'),
           })
           try {
             await agent?.credentials.declineOffer(credentialId)
             Toast.show({
               type: 'success',
-              text1: t('Successfully Rejected Credential'),
+              text1: t('CredentialOffer.SuccessfullyRejectedCredential'),
             })
             navigation.goBack()
           } catch {
             Toast.show({
               type: 'error',
-              text1: t('Failure'),
+              text1: t('Global.Failure'),
             })
           }
         },
@@ -108,8 +108,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
           />
         }
       />
-      <Button title={t('Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
-      <Button title={t('Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
+      <Button title={t('Global.Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
     </View>
   )
 }
