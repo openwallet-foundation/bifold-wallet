@@ -1,6 +1,6 @@
-import styled, { css } from '@emotion/native'
 import React, { useState } from 'react'
-import { useWindowDimensions, Vibration, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { useWindowDimensions, Vibration, View, StyleSheet } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
@@ -11,40 +11,37 @@ interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
 }
 
-const container = css`
-  background-color: #000000;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`
-
-const Container = styled.View`
-  ${container}
-`
-
-const ViewFinderContainer = styled.View`
-  flex: 3;
-  justify-content: center;
-  align-items: center;
-`
-
-const ViewFinder = styled.View`
-  width: 250px;
-  height: 250px;
-  border-radius: 24px;
-  border: 2px solid ${mainColor};
-  background-color: #ffffff30;
-`
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewFinder: {
+    width: 250,
+    height: 250,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: mainColor,
+    backgroundColor: '#ffffff30',
+  },
+  viewFinderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
 
 const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, children }) => {
   return (
     <View
-      style={css`
-        width: 100%;
-        height: 100%;
-        flex-direction: ${portrait ? 'column' : 'row'};
-      `}
+      style={{
+        flex: 1,
+        flexDirection: portrait ? 'column' : 'row',
+        alignItems: 'center',
+      }}
     >
       {children}
     </View>
@@ -57,37 +54,38 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
 
   const { width, height } = useWindowDimensions()
   const portraitMode = height > width
+  const { t } = useTranslation()
 
   return (
-    <Container>
-      {cameraActive && (
-        <RNCamera
-          style={container}
-          type={RNCamera.Constants.Type.back}
-          flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
-          captureAudio={false}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          onBarCodeRead={(e) => {
+    <View style={styles.container}>
+      <RNCamera
+        style={styles.container}
+        type={RNCamera.Constants.Type.back}
+        flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
+        captureAudio={false}
+        androidCameraPermissionOptions={{
+          title: t('QRScanner.PermissionToUseCamera'),
+          message: t('QRScanner.WeNeedYourPermissionToUseYourCamera'),
+          buttonPositive: t('QRScanner.Ok'),
+          buttonNegative: t('Global.Cancel'),
+        }}
+        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+        onBarCodeRead={(e) => {
+          if (cameraActive) {
             Vibration.vibrate()
             setCameraActive(false)
             handleCodeScan(e)
-          }}
-        >
-          <CameraViewContainer portrait={portraitMode}>
-            <ViewFinderContainer>
-              <ViewFinder />
-            </ViewFinderContainer>
-            <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
-          </CameraViewContainer>
-        </RNCamera>
-      )}
-    </Container>
+          }
+        }}
+      >
+        <CameraViewContainer portrait={portraitMode}>
+          <View style={styles.viewFinderContainer}>
+            <View style={styles.viewFinder} />
+          </View>
+          <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
+        </CameraViewContainer>
+      </RNCamera>
+    </View>
   )
 }
 

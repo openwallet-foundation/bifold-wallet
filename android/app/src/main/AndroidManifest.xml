@@ -2,6 +2,8 @@
   package="com.ariesbifold">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission-sdk-23 android:name="android.permission.VIBRATE"/>
 
     <application
       android:name=".MainApplication"
@@ -9,7 +11,7 @@
       android:icon="@mipmap/basic_swish"
       android:allowBackup="false"
       android:theme="@style/AppTheme"
-      android:requestLegacyExternalStorage="true">
+      android:usesCleartextTraffic="true">
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
