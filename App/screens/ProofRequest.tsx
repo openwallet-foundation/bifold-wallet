@@ -45,13 +45,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
 
-  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials | null>(null)
-  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<CredentialDisplay[] | null>(null)
+  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
+  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<CredentialDisplay[]>()
 
   if (!agent?.proofs) {
     Toast.show({
       type: 'error',
-      text1: t('Global.Failure'),
+      text1: t('Global.SomethingWentWrong'),
     })
     navigation.goBack()
     return null
@@ -125,15 +125,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     }
   }, [])
 
-  if (!retrievedCredentials) {
-    Toast.show({
-      type: 'error',
-      text1: t('Credentials.CredentialsNotFound'),
-    })
-    navigation.goBack()
-    return null
-  }
-
   useEffect(() => {
     if (proof.state === ProofState.Done) {
       Toast.show({
@@ -161,7 +152,8 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       text1: t('ProofRequest.AcceptingProof'),
     })
     try {
-      const automaticRequestedCreds = agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
+      const automaticRequestedCreds =
+        retrievedCredentials && agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
