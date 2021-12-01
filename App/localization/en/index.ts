@@ -11,6 +11,7 @@ const translation = {
     "Reject": "Reject",
     "ThisDecisionCannotBeChanged.": "This decision cannot be changed.",
     "Failure": "Failure",
+    "SomethingWentWrong": "Something went wrong",
   },
   "Language": {
     "English": "English",
