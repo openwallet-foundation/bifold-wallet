@@ -30,10 +30,21 @@ const styles = StyleSheet.create({
   },
 })
 
+const INDY_CREDENTIAL_KEY = '_internal/indyCredential'
+
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
+
+  if (!agent?.credentials) {
+    Toast.show({
+      type: 'error',
+      text1: t('Global.SomethingWentWrong'),
+    })
+    navigation.goBack()
+    return null
+  }
 
   const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
     try {
@@ -57,10 +68,18 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const credential = getCredentialRecord(route?.params?.credentialId)
-  const connection = getConnectionRecordFromCredential(credential?.connectionId)
+
+  if (!credential) {
+    Toast.show({
+      type: 'error',
+      text1: t('CredentialOffer.CredentialNotFound'),
+    })
+    navigation.goBack()
+    return null
+  }
 
   useEffect(() => {
-    if (credential?.state === CredentialState.Done) {
+    if (credential.state === CredentialState.Done) {
       Toast.show({
         type: 'success',
         text1: t('CredentialOffer.CredentialAccepted'),
@@ -70,7 +89,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [credential])
 
   useEffect(() => {
-    if (credential?.state === CredentialState.Declined) {
+    if (credential.state === CredentialState.Declined) {
       Toast.show({
         type: 'info',
         text1: t('CredentialOffer.CredentialRejected'),
@@ -80,16 +99,13 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }, [credential])
 
   const handleAcceptPress = async () => {
-    if (!credential) {
-      return
-    }
     setButtonsVisible(false)
     Toast.show({
       type: 'info',
       text1: t('CredentialOffer.AcceptingCredential'),
     })
     try {
-      await agent?.credentials.acceptOffer(credential?.id)
+      await agent.credentials.acceptOffer(credential.id)
     } catch (e: unknown) {
       Toast.show({
         type: 'error',
@@ -100,9 +116,6 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   }
 
   const handleRejectPress = async () => {
-    if (!credential) {
-      return
-    }
     Alert.alert(t('CredentialOffer.RejectThisCredential?'), t('Global.ThisDecisionCannotBeChanged.'), [
       { text: t('Global.Cancel'), style: 'cancel' },
       {
@@ -114,7 +127,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
             text1: t('CredentialOffer.RejectingCredential'),
           })
           try {
-            await agent?.credentials.declineOffer(credential?.id)
+            await agent.credentials.declineOffer(credential.id)
           } catch (e: unknown) {
             Toast.show({
               type: 'error',
@@ -126,14 +139,16 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     ])
   }
 
+  const connection = getConnectionRecordFromCredential(credential.connectionId)
+
   return (
     <View style={styles.container}>
       <ModularView
-        title={parseSchema((credential?.metadata as Metadata & { schemaId: string })?.schemaId)}
+        title={parseSchema(credential.metadata.get<Record<string, string>>(INDY_CREDENTIAL_KEY)?.['schema_id'])}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
-            data={credential?.credentialAttributes}
+            data={credential.credentialAttributes}
             keyExtractor={(item) => item.name}
             renderItem={({ item }) => <Label title={item.name} subtitle={item.value} />}
           />
