@@ -3,7 +3,6 @@ import type { StackNavigationProp } from '@react-navigation/stack'
 import type { HomeStackParams } from 'navigators/HomeStack'
 
 import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
-import { Metadata } from '@aries-framework/core/build/storage/Metadata'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
