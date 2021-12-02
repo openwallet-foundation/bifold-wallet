@@ -143,7 +143,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ModularView
-        title={parseSchema(credential.metadata.get<Record<string, string>>(INDY_CREDENTIAL_KEY)?.['schema_id'])}
+        title={parseSchema(credential.metadata.get<IndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
