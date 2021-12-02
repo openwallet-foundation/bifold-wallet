@@ -3,6 +3,7 @@ import type { StackNavigationProp } from '@react-navigation/stack'
 import type { HomeStackParams } from 'navigators/HomeStack'
 
 import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
+import { IndyCredentialMetadata } from '@aries-framework/core/build/types'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,6 +18,11 @@ import { Button, ModularView, Label } from 'components'
 interface Props {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
   route: RouteProp<HomeStackParams, 'Credential Offer'>
+}
+
+// FIXME: Remove once fixed in AFJ
+interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
+  [key: string]: string | undefined
 }
 
 const styles = StyleSheet.create({
@@ -143,7 +149,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ModularView
-        title={parseSchema(credential.metadata.get<IndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
+        title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
