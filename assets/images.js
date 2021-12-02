@@ -1,5 +1,5 @@
 const images = {
-  logoLarge: require('./img/logo-large.png'),
+  logoLarge: require('./img/coupons.png'),
 }
 
 export default images

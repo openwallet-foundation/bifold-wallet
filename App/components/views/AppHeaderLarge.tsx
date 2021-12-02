@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 const AppHeaderLarge: React.FC<Props> = () => {
   return (
     <View style={styles.headerLarge}>
-      <Image source={Images.logoLarge} />
+      <Image source={Images.logoLarge} style={{height: 130, width: 130}}/>
     </View>
   )
 }

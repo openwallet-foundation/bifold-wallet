@@ -41,7 +41,7 @@ const translation = {
     "CreatedAt": "Created At:"
   },
   "Home": {
-    "Notifications": "Notifications",
+    "Notifications": "Recent Coupons",
     "NoNewUpdates": "No New Updates"
   },
   "Scan":{
@@ -77,10 +77,10 @@ const translation = {
   },
   "TabStack": {
     "Home": "Home",
-    "Contacts": "Contacts",
+    "Contacts": "Stores",
     "Scan": "Scan",
-    "Credentials": "Credentials",
-    "Settings": "Settings"
+    "Credentials": "Coupons",
+    "Settings": "Personal"
   },
   "QRScanner": {
     "PermissionToUseCamera": "Permission to use camera",

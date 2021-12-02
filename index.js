@@ -34,7 +34,7 @@ const navigationTheme = {
     background: backgroundColor,
     card: mainColor,
     text: 'white',
-    border: 'white',
+    border: '#000000',
     notification: 'white',
   },
 }

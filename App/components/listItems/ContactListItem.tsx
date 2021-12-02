@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: shadow,
   },
   date: {
-    textAlign: 'right',
+    textAlign: 'left',
   },
 })
 
@@ -29,8 +29,8 @@ const ContactListItem: React.FC<Props> = ({ contact }) => {
   return (
     <View key={contact.id} style={styles.container}>
       <Title>{contact?.alias || contact?.invitation?.label}</Title>
-      <Text>{contact.did}</Text>
-      <Text style={styles.date}>{DateTime.fromJSDate(contact.createdAt).toFormat('LLL d, yyyy')}</Text>
+      <Text>First visit: {DateTime.fromJSDate(contact.createdAt).toFormat('LLL d, yyyy')}</Text>
+      <Text style={styles.date}>DID: {contact.did}</Text>
     </View>
   )
 }

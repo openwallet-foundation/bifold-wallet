@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/core'
+import { SafeAreaScrollView, Text } from 'components'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { BorderlessButton } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { mainColor, shadow } from '../globalStyles'
-
-import { SafeAreaScrollView, Text } from 'components'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +28,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  name: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  fakeProfile: {
+    marginTop: 20,
+    height: 120,
+    width: 120,
+    borderRadius: 60,
+    backgroundColor: 'gray',
+  },
 })
 
 const Settings: React.FC = () => {
@@ -36,6 +47,10 @@ const Settings: React.FC = () => {
 
   return (
     <SafeAreaScrollView>
+      <View style={{ marginTop: 20, display: 'flex', alignItems: 'center' }}>
+        <Text style={styles.name}>John Doe</Text>
+        <View style={styles.fakeProfile} />
+      </View>
       <View style={styles.container}>
         <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
 

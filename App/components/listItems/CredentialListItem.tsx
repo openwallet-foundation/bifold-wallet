@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
 
 const CredentialListItem: React.FC<Props> = ({ credential }) => {
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
+  console.log(credential.metadata.schemaId)
   return (
     <TouchableOpacity
       style={styles.container}
@@ -44,8 +45,8 @@ const CredentialListItem: React.FC<Props> = ({ credential }) => {
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={{ color: textColor }}>
-          {credential?.credentialAttributes?.find((n) => n.name === 'given_name')?.value}{' '}
-          {credential?.credentialAttributes?.find((n) => n.name === 'surname')?.value}
+          {credential?.credentialAttributes?.find((n: { name: string }) => n.name === 'given_name')?.value}{' '}
+          {credential?.credentialAttributes?.find((n: { name: string }) => n.name === 'surname')?.value}
         </Text>
 
         <Icon name="chevron-right" color={textColor} size={30} />
