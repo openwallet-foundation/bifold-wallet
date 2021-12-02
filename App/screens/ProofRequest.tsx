@@ -200,7 +200,7 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
         content={
           <FlatList
             data={retrievedCredentialsDisplay}
-            keyExtractor={(_, index) => index.toString()}
+            keyExtractor={(item) => item.name}
             renderItem={({ item }) => (
               <Label title={item.name} subtitle={item.value} label={item.credentialDefinitionId} />
             )}
