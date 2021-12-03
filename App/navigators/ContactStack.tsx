@@ -1,14 +1,20 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { Linking, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
-import WelcomeOne from '../assets/img/welcome-1.svg'
-import WelcomeTwo from '../assets/img/welcome-2.svg'
-import { Colors, ButtonStyles } from '../globalStyles'
+import { Colors, Buttons } from '../Theme'
+import CredentialList from '../assets/img/credential-list.svg'
+import Credential from '../assets/img/credential.svg'
+import ExternalLink from '../assets/img/external-link.svg'
+import Info from '../assets/img/info.svg'
+import MobilePhone from '../assets/img/mobile-phone.svg'
+import ScanShare from '../assets/img/scan-share.svg'
+import SecureCredential from '../assets/img/secure-credentials.svg'
+import SecureImage from '../assets/img/secure-image.svg'
 import ContactDetails from '../screens/ContactDetails'
 // import ListContacts from '../screens/ListContacts'
-import Onboarding from '../screens/Onboarding'
+import Onboarding, { IOnboardingStyleSheet } from '../screens/Onboarding'
 
 import defaultStackOptions from './defaultStackOptions'
 
@@ -20,44 +26,172 @@ export type ContactStackParams = {
 const Stack = createStackNavigator<ContactStackParams>()
 
 // TEMPORARILY HERE - START
-const title = 'Ontario Wallet'
-const pages: { image: React.FC<SvgProps>; text: string }[] = [
-  {
-    image: WelcomeOne,
-    text: 'Lorem 1 ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-  {
-    image: WelcomeTwo,
-    text: 'Lorem 2 ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-]
 
-const styles = StyleSheet.create({
+const imageDisplayOptions = {
+  fill: Colors.textColor,
+  height: 180,
+  width: 180,
+}
+
+const xOptions = {
+  fill: Colors.textColor,
+  height: 30,
+  width: 30,
+}
+
+const yOptions = {
+  fill: Colors.textColor,
+  height: 12,
+  width: 12,
+}
+
+const carousel: IOnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: Colors.backgroundColor,
   },
-  controlsContainer: {
+  carouselContainer: {
+    flexDirection: 'column',
+    backgroundColor: Colors.backgroundColor,
+  },
+  pagerContainer: {
+    flexShrink: 2,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 32,
   },
-  headerText: {
+  pagerDot: {
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: Colors.mainColor,
+  },
+  pagerPosition: {
+    position: 'relative',
+    top: 0,
+  },
+  pagerNavigationButton: {
+    fontSize: 18,
     fontWeight: 'bold',
+    color: Colors.mainColor,
+  },
+})
+
+const defaultStyle = StyleSheet.create({
+  headerText: {
     fontSize: 32,
+    fontWeight: 'bold',
     color: Colors.textColor,
   },
   bodyText: {
+    flexShrink: 1,
+    fontSize: 18,
     fontWeight: 'normal',
-    fontSize: 32,
-    textAlign: 'center',
-    margin: 16,
     color: Colors.textColor,
   },
-  primaryButton: ButtonStyles.primary,
-  primaryButtonText: ButtonStyles.primaryText,
+  point: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
+    marginTop: 10,
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  icon: {
+    marginRight: 10,
+  },
 })
 
+const xxDOne = async () => {
+  //console.log('Done')
+}
+
+const Intro = (
+  <>
+    <Text style={[defaultStyle.headerText, { marginLeft: 20, marginRight: 20 }]}>Welcome</Text>
+    <Text style={[defaultStyle.bodyText, { marginLeft: 20, marginTop: 25, marginRight: 20 }]}>
+      BC Wallet is a digital wallet that lets you store information about yourself and use it to share in-person and
+      online easily and securely.
+    </Text>
+
+    <View style={[defaultStyle.point, { marginTop: 30 }]}>
+      <Credential {...xOptions} style={defaultStyle.icon} />
+      <Text style={[defaultStyle.bodyText]}>Add digital cards and documents to your BC Wallet.</Text>
+    </View>
+
+    <View style={[defaultStyle.point]}>
+      <SecureCredential {...xOptions} style={defaultStyle.icon} />
+      <Text style={[defaultStyle.bodyText]}>Need to show ID? Share only what you need to.</Text>
+    </View>
+
+    <View style={[defaultStyle.point]}>
+      <MobilePhone {...xOptions} style={defaultStyle.icon} />
+      <Text style={[defaultStyle.bodyText]}>Retain full control over your personal information.</Text>
+    </View>
+
+    <View style={[defaultStyle.point]}>
+      <Info {...xOptions} style={defaultStyle.icon} />
+      <TouchableOpacity onPress={() => Linking.openURL('https://example.com/')}>
+        <Text style={[defaultStyle.bodyText, { color: 'blue', textDecorationLine: 'underline' }]}>
+          Learn how the BC Wallet works.
+        </Text>
+      </TouchableOpacity>
+      <ExternalLink {...yOptions} style={[defaultStyle.icon, { marginLeft: 7 }]} />
+    </View>
+  </>
+)
+
+const Final = (
+  <>
+    <View style={{ alignItems: 'center' }}>
+      <SecureImage {...imageDisplayOptions} />
+    </View>
+    <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
+      <Text style={[defaultStyle.headerText, { fontSize: 18 }]}>Take control of your information</Text>
+      <Text style={[defaultStyle.bodyText, { marginTop: 20 }]}>
+        You have full control of what you share and when. Your information is never seen by anyone without your
+        permission, not even by the B.C. Government.
+      </Text>
+    </View>
+    <View style={{ marginTop: 'auto', marginBottom: 20 }}>
+      <TouchableHighlight
+        testID={'dismissButton'}
+        accessible={true}
+        accessibilityLabel={'xxx'}
+        style={[Buttons.primary, { marginLeft: 20, marginRight: 20 }]}
+        underlayColor={Colors.activeMain}
+        onPress={xxDOne}
+      >
+        <Text style={Buttons.primaryText}>Get Started!</Text>
+      </TouchableHighlight>
+    </View>
+  </>
+)
+const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string }> = [
+  {
+    image: CredentialList,
+    title: 'Store and secure credentials',
+    body: 'Your credentials are your digital cards and documents such as a drivers license. They are stored exclusively and securely on this device using advance blockchain technology. You can manage what credentials are stored.',
+  },
+  {
+    image: ScanShare,
+    title: 'Share only what is necessary',
+    body: "Share only what is needed to access a service or a product, online or in-person. For example, you won't need to show your full drivers license when asked to prove if you're of legal age. You can choose to only share proof that you are and all else stays private.",
+  },
+]
+
+const createPageWith = (image: React.FC<SvgProps>, title: string, body: string) => {
+  return (
+    <>
+      <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
+      <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
+        <Text style={[defaultStyle.headerText, { fontSize: 18 }]}>{title}</Text>
+        <Text style={[defaultStyle.bodyText, { marginTop: 20 }]}>{body}</Text>
+      </View>
+    </>
+  )
+}
+
+const pages: Array<Element> = [Intro, ...guides.map((g) => createPageWith(g.image, g.title, g.body)), Final]
 const markTutorialFin = async () => {
   // Here is where we make a permanent record the user has
   // completed the on-boarding process. We can use this record
@@ -68,6 +202,12 @@ const markTutorialFin = async () => {
   // navigation.navigate('Home')
 }
 
+// const imageDisplayOptions = {
+//   fill: Colors.textColor,
+//   height: 180,
+//   width: 180,
+// }
+
 // TEMPORARILY HERE - END
 
 const ContactStack = () => {
@@ -75,7 +215,7 @@ const ContactStack = () => {
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       <Stack.Screen name="Contacts">
         {(props) => (
-          <Onboarding {...props} title={title} pages={pages} onOnboardingDismissed={markTutorialFin} style={styles} />
+          <Onboarding {...props} nextButtonText={'Next'} previousButtonText={'Back'} pages={pages} style={carousel} />
         )}
       </Stack.Screen>
       <Stack.Screen name="Contact Details" component={ContactDetails} />
