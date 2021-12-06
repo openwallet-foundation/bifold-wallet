@@ -1,12 +1,8 @@
 import type { CredentialRecord } from '@aries-framework/core'
-import type { StackNavigationProp } from '@react-navigation/stack'
-import type { CredentialStackParams } from 'navigators/CredentialStack'
 
-import { useNavigation } from '@react-navigation/core'
 import { DateTime } from 'luxon'
 import React from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { View, StyleSheet } from 'react-native'
 
 import { shadow, textColor } from '../../globalStyles'
 import { parseSchema } from '../../helpers'
@@ -19,7 +15,7 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
+    height: 100,
     marginTop: 15,
     marginHorizontal: 15,
     padding: 10,
@@ -30,28 +26,20 @@ const styles = StyleSheet.create({
 })
 
 const CredentialListItem: React.FC<Props> = ({ credential }) => {
-  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
-  console.log(credential.metadata.schemaId)
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() => navigation.navigate('Credential Details', { credentialId: credential.id })}
-    >
+    <View style={styles.container}>
       <View>
         <Title style={{ color: textColor }}>{parseSchema(credential.metadata.schemaId)}</Title>
         <Text style={{ color: textColor }}>
-          Issued on {DateTime.fromJSDate(credential.createdAt).toFormat('LLL d, yyyy')}
+          {'Coupons issued: '}
+          {credential?.credentialAttributes?.find((n: { name: string }) => n.name === 'stampcount')?.value}
         </Text>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={{ color: textColor }}>
-          {credential?.credentialAttributes?.find((n: { name: string }) => n.name === 'given_name')?.value}{' '}
-          {credential?.credentialAttributes?.find((n: { name: string }) => n.name === 'surname')?.value}
+          {'Issued on: '}
+          {credential?.credentialAttributes?.find((n: { name: string }) => n.name === 'date')?.value}
         </Text>
-
-        <Icon name="chevron-right" color={textColor} size={30} />
       </View>
-    </TouchableOpacity>
+    </View>
   )
 }
 

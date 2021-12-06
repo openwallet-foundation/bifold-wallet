@@ -41,7 +41,7 @@ const translation = {
     "CreatedAt": "Created At:"
   },
   "Home": {
-    "Notifications": "Recent Coupons",
+    "Notifications": "Received Coupons",
     "NoNewUpdates": "No New Updates"
   },
   "Scan":{
@@ -79,7 +79,7 @@ const translation = {
     "Home": "Home",
     "Contacts": "Stores",
     "Scan": "Scan",
-    "Credentials": "Coupons",
+    "Credentials": "History",
     "Settings": "Personal"
   },
   "QRScanner": {

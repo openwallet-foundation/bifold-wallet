@@ -1,0 +1,81 @@
+import { useNavigation } from '@react-navigation/core'
+import { SafeAreaScrollView, Text } from 'components'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { BorderlessButton } from 'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import { mainColor, shadow } from '../globalStyles'
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    padding: 20,
+  },
+  groupHeader: {
+    fontSize: 20,
+    marginVertical: 15,
+  },
+  rowGroup: {
+    borderRadius: 8,
+    backgroundColor: shadow,
+  },
+  row: {
+    paddingVertical: 12,
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  name: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  fakeProfile: {
+    marginTop: 20,
+    height: 120,
+    width: 120,
+    borderRadius: 60,
+    backgroundColor: 'gray',
+  },
+})
+
+const Settings: React.FC = () => {
+  const { t } = useTranslation()
+  const navigation = useNavigation()
+
+  return (
+    <SafeAreaScrollView>
+      <View style={{ marginTop: 20, display: 'flex', alignItems: 'center' }}>
+        <Text style={styles.name}>John Doe</Text>
+        <View style={styles.fakeProfile} />
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
+
+        <View style={styles.rowGroup}>
+          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Language')}>
+            <Text>{t('Settings.Language')}</Text>
+            <Icon name={'chevron-right'} size={25} color={mainColor} />
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.groupHeader}>{t('Settings.AboutApp')}</Text>
+        <View style={styles.rowGroup}>
+          <View style={styles.row}>
+            <Text>{t('Settings.Version')}</Text>
+            <Text>{t('Settings.VersionString')}</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text>{t('Settings.AMA-RNVersion')}</Text>
+            <Text>{t('Settings.AMA-RNVersionString')}</Text>
+          </View>
+        </View>
+      </View>
+    </SafeAreaScrollView>
+  )
+}
+
+export default Settings

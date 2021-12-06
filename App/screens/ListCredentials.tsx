@@ -17,21 +17,209 @@ const ListCredentials: React.FC = () => {
 
   const keyForItem = (item: CredentialRecord) => String(item.credentialId)
 
+  const date = new Date()
+
   const mockCredentials = [
     {
       id: 'id1234',
       metadata: {
-        schemaId: 'Americano',
+        schemaId: 'Faber cafe',
       },
-      createdAt: Date.now(),
+      createdAt: date,
       credentialAttributes: [
         {
-          name: 'given_name',
-          value: 'John',
+          name: 'date',
+          value: '2021-11-28',
         },
         {
-          name: 'surname',
-          value: 'Doe',
+          name: 'issuer',
+          value: 'Faber cafe',
+        },
+        {
+          name: 'stampcount',
+          value: '1',
+        },
+        {
+          name: 'rewardspend',
+          value: '0',
+        },
+        {
+          name: 'timestamp',
+          value: '1638510607',
+        },
+      ],
+    },
+    {
+      id: 'id1234',
+      metadata: {
+        schemaId: 'Burger King',
+      },
+      createdAt: date,
+      credentialAttributes: [
+        {
+          name: 'date',
+          value: '2021-11-28',
+        },
+        {
+          name: 'issuer',
+          value: 'Faber cafe',
+        },
+        {
+          name: 'stampcount',
+          value: '1',
+        },
+        {
+          name: 'rewardspend',
+          value: '0',
+        },
+        {
+          name: 'timestamp',
+          value: '1638510607',
+        },
+      ],
+    },
+    {
+      id: 'id1234',
+      metadata: {
+        schemaId: 'Burger King',
+      },
+      createdAt: date,
+      credentialAttributes: [
+        {
+          name: 'date',
+          value: '2021-11-24',
+        },
+        {
+          name: 'issuer',
+          value: 'Faber cafe',
+        },
+        {
+          name: 'stampcount',
+          value: '1',
+        },
+        {
+          name: 'rewardspend',
+          value: '0',
+        },
+        {
+          name: 'timestamp',
+          value: '1638510607',
+        },
+      ],
+    },
+    {
+      id: 'id1234',
+      metadata: {
+        schemaId: 'Lotteria',
+      },
+      createdAt: date,
+      credentialAttributes: [
+        {
+          name: 'date',
+          value: '2021-11-20',
+        },
+        {
+          name: 'issuer',
+          value: 'Faber cafe',
+        },
+        {
+          name: 'stampcount',
+          value: '1',
+        },
+        {
+          name: 'rewardspend',
+          value: '0',
+        },
+        {
+          name: 'timestamp',
+          value: '1638510607',
+        },
+      ],
+    },
+    {
+      id: 'id1234',
+      metadata: {
+        schemaId: 'Lotteria',
+      },
+      createdAt: date,
+      credentialAttributes: [
+        {
+          name: 'date',
+          value: '2021-11-10',
+        },
+        {
+          name: 'issuer',
+          value: 'Faber cafe',
+        },
+        {
+          name: 'stampcount',
+          value: '1',
+        },
+        {
+          name: 'rewardspend',
+          value: '0',
+        },
+        {
+          name: 'timestamp',
+          value: '1638510607',
+        },
+      ],
+    },
+    {
+      id: 'id1234',
+      metadata: {
+        schemaId: 'Faber Cafe',
+      },
+      createdAt: date,
+      credentialAttributes: [
+        {
+          name: 'date',
+          value: '2021-11-08',
+        },
+        {
+          name: 'issuer',
+          value: 'Faber cafe',
+        },
+        {
+          name: 'stampcount',
+          value: '1',
+        },
+        {
+          name: 'rewardspend',
+          value: '0',
+        },
+        {
+          name: 'timestamp',
+          value: '1638510607',
+        },
+      ],
+    },
+    {
+      id: 'id1234',
+      metadata: {
+        schemaId: 'Lotteria',
+      },
+      createdAt: date,
+      credentialAttributes: [
+        {
+          name: 'date',
+          value: '2021-11-08',
+        },
+        {
+          name: 'issuer',
+          value: 'Faber cafe',
+        },
+        {
+          name: 'stampcount',
+          value: '1',
+        },
+        {
+          name: 'rewardspend',
+          value: '0',
+        },
+        {
+          name: 'timestamp',
+          value: '1638510607',
         },
       ],
     },

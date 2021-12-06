@@ -1,8 +1,12 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { DateTime } from 'luxon'
+import { ContactStackParams } from 'navigators/ContactStack'
+import { CredentialStackParams } from 'navigators/CredentialStack'
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { shadow, borderRadius } from '../../globalStyles'
 import Text from '../texts/Text'
@@ -26,12 +30,16 @@ const styles = StyleSheet.create({
 })
 
 const ContactListItem: React.FC<Props> = ({ contact }) => {
+  const navigation = useNavigation<StackNavigationProp<ContactStackParams>>()
+
   return (
-    <View key={contact.id} style={styles.container}>
-      <Title>{contact?.alias || contact?.invitation?.label}</Title>
-      <Text>First visit: {DateTime.fromJSDate(contact.createdAt).toFormat('LLL d, yyyy')}</Text>
-      <Text style={styles.date}>DID: {contact.did}</Text>
-    </View>
+    <TouchableOpacity onPress={() => navigation.navigate('Contact Details')}>
+      <View key={contact.id} style={styles.container}>
+        <Title>{contact?.alias || contact?.invitation?.label}</Title>
+        <Text>First visit: {DateTime.fromJSDate(contact.createdAt).toFormat('LLL d, yyyy')}</Text>
+        <Text style={styles.date}>DID: {contact.did}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 
