@@ -1,6 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React, { useState } from 'react'
 
+import Splash from '../screens/Splash'
+
 import AuthenticateStack from './AuthenticateStack'
 import ScanStack from './ScanStack'
 import TabStack from './TabStack'
