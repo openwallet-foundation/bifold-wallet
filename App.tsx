@@ -11,15 +11,18 @@ import AgentProvider from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import { default as React, useEffect, useState } from 'react'
 import Config from 'react-native-config'
+import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
+import Splash from './App/screens/Splash'
 import indyLedgers from './configs/ledgers/indy'
 import toastConfig from './configs/toast/toastConfig'
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
+  const [loading, setLoading] = useState(true)
   // const { translations } = useContext(LocalizationContext)
 
   initStoredLanguage()
@@ -50,8 +53,21 @@ const App = () => {
   }
 
   useEffect(() => {
+    // Hide the native splash / loading screen so that our
+    // RN version can be displayed.
+    SplashScreen.hide()
     initAgent()
-  }, [])
+
+    setTimeout(() => {
+      // The app loads quite fast, this delay is to allow for a more
+      // graceful transition.
+      setLoading(false)
+    }, 2000)
+  }, [loading])
+
+  if (loading) {
+    return <Splash />
+  }
 
   return (
     <AgentProvider agent={agent}>
