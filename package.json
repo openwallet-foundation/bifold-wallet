@@ -15,9 +15,9 @@
     "pre-commit-lint": "npx lint-staged"
   },
   "dependencies": {
-    "@aries-framework/core": "^0.1.0-alpha.289",
+    "@aries-framework/core": "^0.1.0-alpha.322",
     "@aries-framework/react-hooks": "^0.1.2",
-    "@aries-framework/react-native": "^0.1.0-alpha.289",
+    "@aries-framework/react-native": "^0.1.0-alpha.322",
     "@formatjs/intl-datetimeformat": "^4.2.3",
     "@formatjs/intl-displaynames": "^5.2.3",
     "@formatjs/intl-getcanonicallocales": "^1.7.3",
@@ -37,6 +37,7 @@
     "indy-sdk-react-native": "^0.1.14",
     "luxon": "^2.0.1",
     "patch-package": "^6.4.4",
+    "query-string": "^7.0.1",
     "react": "17.0.2",
     "react-i18next": "^11.13.0",
     "react-native": "0.66.1",
