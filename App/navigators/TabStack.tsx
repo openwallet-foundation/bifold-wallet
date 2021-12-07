@@ -34,34 +34,31 @@ function TabStack() {
     >
       <Tab.Screen
         name="HomeTab"
-        accessible={true}
-        accessibilityLabel={t('TabStack.Home')}
         component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} />,
           headerTitle: t('TabStack.Home'),
           tabBarLabel: t('TabStack.Home'),
+          tabBarAccessibilityLabel: t('TabStack.Home'),
         }}
       />
       <Tab.Screen
         name="ContactsTab"
-        accessible={true}
-        accessibilityLabel={t('TabStack.Contacts')}
         component={ContactStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} />,
           headerTitle: t('TabStack.Contacts'),
           tabBarLabel: t('TabStack.Contacts'),
+          tabBarAccessibilityLabel: t('TabStack.Contacts'),
         }}
       />
       <Tab.Screen
         name="ScanTab"
-        accessible={true}
-        accessibilityLabel={t('TabStack.Scan')}
         options={{
           tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} />,
           headerTitle: t('TabStack.Scan'),
           tabBarLabel: t('TabStack.Scan'),
+          tabBarAccessibilityLabel: t('TabStack.Scan'),
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
@@ -75,24 +72,22 @@ function TabStack() {
       </Tab.Screen>
       <Tab.Screen
         name="CredentialsTab"
-        accessible={true}
-        accessibilityLabel={t('TabStack.Credentials')}
         component={CredentialStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} />,
           headerTitle: t('TabStack.Credentials'),
           tabBarLabel: t('TabStack.Credentials'),
+          tabBarAccessibilityLabel: t('TabStack.Credentials'),
         }}
       />
       <Tab.Screen
         name="SettingsTab"
-        accessible={true}
-        accessibilityLabel={t('TabStack.Settings')}
         component={SettingStack}
         options={{
           tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} />,
           headerTitle: t('TabStack.Settings'),
           tabBarLabel: t('TabStack.Settings'),
+          tabBarAccessibilityLabel: t('TabStack.Settings'),
         }}
       />
     </Tab.Navigator>
