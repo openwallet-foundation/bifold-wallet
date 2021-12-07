@@ -11,6 +11,7 @@ const translation = {
     "Reject": "Reject",
     "ThisDecisionCannotBeChanged.": "This decision cannot be changed.",
     "Failure": "Failure",
+    "SomethingWentWrong": "Something went wrong",
   },
   "Language": {
     "English": "English",
@@ -36,6 +37,9 @@ const translation = {
     "Created": "Created",
     "ConnectionState": "Connection State"
   },
+  "Credentials": {
+    "CredentialsNotFound": "Credentials not found",
+  },
   "CredentialDetails": {
     "Id": "Id:",
     "CreatedAt": "Created At:"
@@ -47,7 +51,9 @@ const translation = {
   "Scan":{
     "SuccessfullyAcceptedConnection":"Successfully Accepted Connection",
     "AcceptingConnection":"Accepting Connection",
-    "ConnectionRecordIdNotFound":"Connection record ID not found"
+    "ConnectionRecordIdNotFound":"Connection record ID not found",
+    "ConnectionAccepted": "Connection Accepted",
+    "ConnectionNotFound": "Connection not found"
   },
   "CredentialOffer": {
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
@@ -55,7 +61,10 @@ const translation = {
     "AcceptingCredential": "Accepting Credential",
     "SuccessfullyAcceptedCredential": "Successfully Accepted Credential",
     "RejectingCredential":"Rejecting Credential",
-    "SuccessfullyRejectedCredential":"Successfully Rejected Credential"
+    "SuccessfullyRejectedCredential":"Successfully Rejected Credential",
+    "CredentialNotFound": "Credential not found",
+    "CredentialAccepted": "Credential Accepted",
+    "CredentialRejected": "Credential Rejected",
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -63,8 +72,10 @@ const translation = {
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
     "ProofNotFound":"Proof not Found",
-    "RequestedCredsNotFound":"Requested creds not found",
-    "RejectingProof":"Rejecting Proof"
+    "RejectingProof":"Rejecting Proof",
+    "ProofAccepted": "Proof Accepted",
+    "ProofRejected": "Proof Rejected",
+    "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found"
   },  
   "Settings": {
     "Version": "Version",
