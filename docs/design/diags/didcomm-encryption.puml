@@ -1,0 +1,23 @@
+actor Participant as citizen
+participant "Wallet App"    as edgeagent
+participant "Mediator"     as mediator
+participant "ODS \nACA-Py"        as acapy
+
+
+note over edgeagent, acapy
+  over WebSocket with TLS1.2+ \nCONSIDER: useing AES not chacha for TLS
+end note
+
+==ODS to Citizen==
+acapy -> mediator: Anoncrypt(payload) 
+mediator -> edgeagent: Authcrypt(payload)
+
+==Citizen to ODS==
+edgeagent -> acapy: Authcrypt(payload)
+note over edgeagent, acapy
+  Send direct via Authcrypt as no middle-agents
+end note
+
+
+
+@enduml
