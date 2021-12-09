@@ -14,6 +14,7 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
+import Store from './App/Store'
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
 import Splash from './App/screens/Splash'
@@ -57,23 +58,15 @@ const App = () => {
     // RN version can be displayed.
     SplashScreen.hide()
     initAgent()
-
-    setTimeout(() => {
-      // The app loads quite fast, this delay is to allow for a more
-      // graceful transition.
-      setLoading(false)
-    }, 2000)
-  }, [loading])
-
-  if (loading) {
-    return <Splash />
-  }
+  }, [])
 
   return (
-    <AgentProvider agent={agent}>
-      <RootStack />
-      <Toast topOffset={15} config={toastConfig} />
-    </AgentProvider>
+    <Store>
+      <AgentProvider agent={agent}>
+        <RootStack />
+        <Toast topOffset={15} config={toastConfig} />
+      </AgentProvider>
+    </Store>
   )
 }
 

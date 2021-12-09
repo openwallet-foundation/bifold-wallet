@@ -1,28 +1,38 @@
-import type { RouteProp } from '@react-navigation/core'
-import type { AuthenticateStackParams } from 'navigators/AuthenticateStack'
-
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
+import { DispatchAction } from '../Reducer'
+import { Context } from '../Store'
+
 import { Button, SafeAreaScrollView, TextInput } from 'components'
 
-interface Props {
-  route: RouteProp<AuthenticateStackParams>
+interface IPinCreateProps {
+  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const PinCreate: React.FC<Props> = ({ route }) => {
+const PinCreate: React.FC<IPinCreateProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
+  const [, dispatch] = useContext(Context)
   const { t } = useTranslation()
 
-  const passcodeCreate = async (x: string) => {
-    const passcode = JSON.stringify(x)
+  const passcodeCreate = async (pin: string) => {
+    const passcode = JSON.stringify(pin)
     const description = t('PinCreate.UserAuthenticationPin')
-    await Keychain.setGenericPassword(description, passcode, {
-      service: 'passcode',
-    })
+    try {
+      await Keychain.setGenericPassword(description, passcode, {
+        service: 'passcode',
+      })
+
+      dispatch({
+        type: DispatchAction.SetDidCreatePIN,
+        payload: [{ DidCreatePIN: true }],
+      })
+    } catch (e) {
+      // TODO:(jl)
+    }
   }
 
   const confirmEntry = (x: string, y: string) => {
@@ -32,7 +42,7 @@ const PinCreate: React.FC<Props> = ({ route }) => {
       Alert.alert(t('PinCreate.PinsEnteredDoNotMatch'))
     } else {
       passcodeCreate(x)
-      route?.params?.setAuthenticated(true)
+      setAuthenticated(true)
     }
   }
 
