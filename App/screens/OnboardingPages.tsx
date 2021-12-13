@@ -155,6 +155,7 @@ const Final = (
     </View>
   </>
 )
+
 const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string }> = [
   {
     image: CredentialList,

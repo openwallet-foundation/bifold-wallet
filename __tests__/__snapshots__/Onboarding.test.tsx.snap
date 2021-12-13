@@ -5,65 +5,28 @@ exports[`Onboarding Renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
+      "backgroundColor": "#F2F2F2",
       "flex": 1,
     }
   }
 >
-  <Text
-    style={
-      Object {
-        "color": "#fff",
-        "fontSize": 32,
-        "fontWeight": "bold",
-      }
-    }
-    testID="titleText"
-  >
-    My Wallet
-  </Text>
   <RCTScrollView
     data={
       Array [
-        Object {
-          "image": [MockFunction] {
-            "calls": Array [
-              Array [
-                Object {
-                  "fill": "#fff",
-                  "height": 180,
-                  "width": 180,
-                },
-              ],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": undefined,
-              },
-            ],
-          },
-          "text": "Lorem 1 ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-        Object {
-          "image": [MockFunction] {
-            "calls": Array [
-              Array [
-                Object {
-                  "fill": "#fff",
-                  "height": 180,
-                  "width": 180,
-                },
-              ],
-            ],
-            "results": Array [
-              Object {
-                "type": "return",
-                "value": undefined,
-              },
-            ],
-          },
-          "text": "Lorem 2 ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
+        <React.Fragment>
+          <Text
+            testID="bodyText"
+          >
+            Hello
+          </Text>
+        </React.Fragment>,
+        <React.Fragment>
+          <Text
+            testID="bodyText"
+          >
+            World
+          </Text>
+        </React.Fragment>,
       ]
     }
     getItem={[Function]}
@@ -126,24 +89,16 @@ exports[`Onboarding Renders correctly 1`] = `
                 "width": 750,
               },
               Object {
-                "alignItems": "center",
+                "backgroundColor": "#F2F2F2",
+                "flexDirection": "column",
               },
             ]
           }
         >
           <Text
-            style={
-              Object {
-                "color": "#fff",
-                "fontSize": 32,
-                "fontWeight": "normal",
-                "margin": 16,
-                "textAlign": "center",
-              }
-            }
             testID="bodyText"
           >
-            Lorem 1 ipsum dolor sit amet, consectetur adipiscing elit.
+            Hello
           </Text>
         </View>
       </View>
@@ -165,24 +120,16 @@ exports[`Onboarding Renders correctly 1`] = `
                 "width": 750,
               },
               Object {
-                "alignItems": "center",
+                "backgroundColor": "#F2F2F2",
+                "flexDirection": "column",
               },
             ]
           }
         >
           <Text
-            style={
-              Object {
-                "color": "#fff",
-                "fontSize": 32,
-                "fontWeight": "normal",
-                "margin": 16,
-                "textAlign": "center",
-              }
-            }
             testID="bodyText"
           >
-            Lorem 2 ipsum dolor sit amet, consectetur adipiscing elit.
+            World
           </Text>
         </View>
       </View>
@@ -192,14 +139,18 @@ exports[`Onboarding Renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "flex": 1,
         "flexDirection": "row",
-        "paddingBottom": 16,
+        "flexShrink": 2,
       }
     }
   >
     <View
       accessibilityLabel="Previous"
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -218,10 +169,20 @@ exports[`Onboarding Renders correctly 1`] = `
       }
       testID="previousButton"
     >
-      <
-        fill="#35823f"
-        height={24}
-        width={48}
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#003366",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": "transparent",
+              "paddingRight": 20,
+            },
+          ]
+        }
       />
     </View>
     <View
@@ -245,8 +206,8 @@ exports[`Onboarding Renders correctly 1`] = `
         nativeID="animatedComponent"
         style={
           Object {
-            "backgroundColor": "rgba(53, 130, 63, 1)",
-            "borderColor": "#35823f",
+            "backgroundColor": "rgba(0, 51, 102, 1)",
+            "borderColor": "#003366",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -268,7 +229,7 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Object {
             "backgroundColor": "rgba(255, 255, 255, 0)",
-            "borderColor": "#35823f",
+            "borderColor": "#003366",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -305,56 +266,19 @@ exports[`Onboarding Renders correctly 1`] = `
       }
       testID="nextButton"
     >
-      <
-        fill="#35823f"
-        height={24}
-        style={
-          Object {
-            "transform": Array [
-              Object {
-                "rotate": "180deg",
-              },
-            ],
-          }
-        }
-        width={48}
-      />
-    </View>
-  </View>
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "marginBottom": 32,
-        "marginTop": 16,
-      }
-    }
-  >
-    <View
-      accessible={true}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#35823f",
-          "borderRadius": 4,
-          "padding": 16,
-        }
-      }
-      testID="dismissButton"
-    >
       <Text
         style={
-          Object {
-            "color": "#fff",
-            "fontSize": 18,
-          }
+          Array [
+            Object {
+              "color": "#003366",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": null,
+              "paddingLeft": 20,
+            },
+          ]
         }
       />
     </View>
