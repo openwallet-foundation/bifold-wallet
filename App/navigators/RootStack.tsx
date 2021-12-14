@@ -49,6 +49,7 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
         options={() => ({
           headerShown: true,
           gestureEnabled: false,
+          headerLeft: () => false,
           headerRight: () => {
             return (
               <TouchableOpacity onPress={onSkipTouched} style={{ marginRight: 14 }}>
