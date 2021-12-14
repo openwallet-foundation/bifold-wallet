@@ -56,7 +56,10 @@ export const Pagination: React.FC<IPaginationProps> = ({
         onPress={previous}
       >
         <Text
-          style={[style.pagerNavigationButton, { paddingRight: 20, color: shouldHideBack() ? 'transparent' : null }]}
+          style={[
+            style.pagerNavigationButton,
+            { paddingRight: 20, color: shouldHideBack() ? 'transparent' : style.pagerNavigationButton.color },
+          ]}
         >
           {previousButtonText}
         </Text>
@@ -80,7 +83,10 @@ export const Pagination: React.FC<IPaginationProps> = ({
         onPress={next}
       >
         <Text
-          style={[style.pagerNavigationButton, { paddingLeft: 20, color: shouldHideNext() ? 'transparent' : null }]}
+          style={[
+            style.pagerNavigationButton,
+            { paddingLeft: 20, color: shouldHideNext() ? 'transparent' : style.pagerNavigationButton.color },
+          ]}
         >
           {nextButtonText}
         </Text>
