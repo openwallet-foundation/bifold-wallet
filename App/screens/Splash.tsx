@@ -47,12 +47,9 @@ const Splash: React.FC = () => {
 
   useMemo(() => {
     async function init() {
-      // console.log('1')
-
       try {
         // await AsyncStorage.removeItem(LocalStorageKeys.Onboarding)
         const data = await AsyncStorage.getItem(LocalStorageKeys.Onboarding)
-        // console.log('2')
 
         if (data) {
           const dataAsJSON = JSON.parse(data) as Onboarding

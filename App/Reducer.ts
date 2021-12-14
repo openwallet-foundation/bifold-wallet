@@ -33,7 +33,6 @@ const Reducer = (state: State, action: ReducerAction): State => {
         },
       }
 
-      // console.log('Saving State = ', JSON.stringify(myState.onboarding))
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(myState.onboarding))
 
       return myState
@@ -47,7 +46,6 @@ const Reducer = (state: State, action: ReducerAction): State => {
         },
       }
 
-      // console.log('Saving State = ', JSON.stringify(myState.onboarding))
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(myState.onboarding))
 
       return myState
@@ -61,7 +59,6 @@ const Reducer = (state: State, action: ReducerAction): State => {
         },
       }
 
-      // console.log('Saving State = ', JSON.stringify(myState.onboarding))
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(myState.onboarding))
 
       return myState
