@@ -13,10 +13,10 @@ interface ColorTheme {
 }
 
 export const Colors: ColorTheme = {
-  mainColor: '#003366',
+  mainColor: '#35823f',
   activeMain: '#003366B3',
-  textColor: '#313132',
-  backgroundColor: '#F2F2F2',
+  textColor: '#fff',
+  backgroundColor: '#000',
   shadow: '#1c1c1e',
   white: '#ffffff',
   green: '#2d6e35',
