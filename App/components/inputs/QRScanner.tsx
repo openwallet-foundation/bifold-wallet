@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowDimensions, Vibration, View, StyleSheet } from 'react-native'
@@ -5,6 +6,7 @@ import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
 import { mainColor } from '../../globalStyles'
 
+import QRScannerClose from 'components/misc/QRScannerClose'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
 
 interface Props {
@@ -49,6 +51,7 @@ const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, childr
 }
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
+  const navigation = useNavigation()
   const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
 
@@ -79,6 +82,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
         }}
       >
         <CameraViewContainer portrait={portraitMode}>
+          <QRScannerClose onPress={() => navigation.goBack()}></QRScannerClose>
           <View style={styles.viewFinderContainer}>
             <View style={styles.viewFinder} />
           </View>
