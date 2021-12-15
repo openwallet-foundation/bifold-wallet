@@ -14,17 +14,14 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
-import Store from './App/Store'
+import StoreProvider from './App/Store'
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
-import Splash from './App/screens/Splash'
 import indyLedgers from './configs/ledgers/indy'
 import toastConfig from './configs/toast/toastConfig'
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
-  const [loading, setLoading] = useState(true)
-  // const { translations } = useContext(LocalizationContext)
 
   initStoredLanguage()
 
@@ -61,12 +58,12 @@ const App = () => {
   }, [])
 
   return (
-    <Store>
+    <StoreProvider>
       <AgentProvider agent={agent}>
         <RootStack />
         <Toast topOffset={15} config={toastConfig} />
       </AgentProvider>
-    </Store>
+    </StoreProvider>
   )
 }
 
