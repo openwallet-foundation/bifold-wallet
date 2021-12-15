@@ -2,7 +2,8 @@ import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { HomeStackParams } from 'navigators/HomeStack'
 
-import { CredentialState } from '@aries-framework/core'
+import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
+import { IndyCredentialMetadata } from '@aries-framework/core/build/types'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +20,11 @@ interface Props {
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
 
+// FIXME: Remove once fixed in AFJ
+interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
+  [key: string]: string | undefined
+}
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor,
@@ -29,21 +35,69 @@ const styles = StyleSheet.create({
   },
 })
 
+const INDY_CREDENTIAL_KEY = '_internal/indyCredential'
+
 const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
   const { agent } = useAgent()
+  const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
 
-  const credentialId = route?.params?.credentialId
+  if (!agent?.credentials) {
+    Toast.show({
+      type: 'error',
+      text1: t('Global.SomethingWentWrong'),
+    })
+    navigation.goBack()
+    return null
+  }
 
-  const credential = useCredentialById(credentialId)
-  const connection = useConnectionById(credential?.connectionId)
-  const { t } = useTranslation()
+  const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
+    try {
+      if (!credentialId) {
+        throw new Error(t('CredentialOffer.CredentialNotFound'))
+      }
+      return useCredentialById(credentialId)
+    } catch (e: unknown) {
+      Toast.show({
+        type: 'error',
+        text1: (e as Error)?.message || t('Global.Failure'),
+      })
+      navigation.goBack()
+    }
+  }
+
+  const getConnectionRecordFromCredential = (connectionId?: string): ConnectionRecord | void => {
+    if (connectionId) {
+      return useConnectionById(connectionId)
+    }
+  }
+
+  const credential = getCredentialRecord(route?.params?.credentialId)
+
+  if (!credential) {
+    Toast.show({
+      type: 'error',
+      text1: t('CredentialOffer.CredentialNotFound'),
+    })
+    navigation.goBack()
+    return null
+  }
 
   useEffect(() => {
-    if (credential?.state === CredentialState.Done) {
+    if (credential.state === CredentialState.Done) {
       Toast.show({
         type: 'success',
-        text1: t('CredentialOffer.SuccessfullyAcceptedCredential'),
+        text1: t('CredentialOffer.CredentialAccepted'),
+      })
+      navigation.goBack()
+    }
+  }, [credential])
+
+  useEffect(() => {
+    if (credential.state === CredentialState.Declined) {
+      Toast.show({
+        type: 'info',
+        text1: t('CredentialOffer.CredentialRejected'),
       })
       navigation.goBack()
     }
@@ -56,11 +110,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
       text1: t('CredentialOffer.AcceptingCredential'),
     })
     try {
-      await agent?.credentials.acceptOffer(credentialId)
-    } catch {
+      await agent.credentials.acceptOffer(credential.id)
+    } catch (e: unknown) {
       Toast.show({
         type: 'error',
-        text1: t('Global.Failure'),
+        text1: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
     }
@@ -78,16 +132,11 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
             text1: t('CredentialOffer.RejectingCredential'),
           })
           try {
-            await agent?.credentials.declineOffer(credentialId)
-            Toast.show({
-              type: 'success',
-              text1: t('CredentialOffer.SuccessfullyRejectedCredential'),
-            })
-            navigation.goBack()
-          } catch {
+            await agent.credentials.declineOffer(credential.id)
+          } catch (e: unknown) {
             Toast.show({
               type: 'error',
-              text1: t('Global.Failure'),
+              text1: (e as Error)?.message || t('Global.Failure'),
             })
           }
         },
@@ -95,14 +144,16 @@ const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
     ])
   }
 
+  const connection = getConnectionRecordFromCredential(credential.connectionId)
+
   return (
     <View style={styles.container}>
       <ModularView
-        title={parseSchema(credential?.metadata.schemaId)}
+        title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
-            data={credential?.credentialAttributes}
+            data={credential.credentialAttributes}
             keyExtractor={(item) => item.name}
             renderItem={({ item }) => <Label title={item.name} subtitle={item.value} />}
           />

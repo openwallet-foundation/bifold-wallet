@@ -3,6 +3,7 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 import { ConnectionState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { parseUrl } from 'query-string'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
@@ -18,16 +19,21 @@ interface Props {
 
 const Scan: React.FC<Props> = ({ navigation }) => {
   const { agent } = useAgent()
+  const { t } = useTranslation()
 
   const [connectionId, setConnectionId] = useState('')
   const connection = useConnectionById(connectionId)
-  const { t } = useTranslation()
+
+  const isRedirecton = (url: string): boolean => {
+    const queryParams = parseUrl(url).query
+    return !(queryParams['c_i'] || queryParams['d_m'])
+  }
 
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
       Toast.show({
         type: 'success',
-        text1: t('Scan.SuccessfullyAcceptedConnection'),
+        text1: t('Scan.ConnectionAccepted'),
       })
       navigation.navigate('HomeTab')
     }
@@ -39,23 +45,34 @@ const Scan: React.FC<Props> = ({ navigation }) => {
       text1: t('Scan.AcceptingConnection'),
     })
     try {
-      const connectionRecord = await agent?.connections.receiveInvitationFromUrl(event.data, {
-        autoAcceptConnection: true,
-      })
-      if (!connectionRecord?.id) {
-        Toast.show({
-          type: 'error',
-          text1: t('Scan.ConnectionRecordIdNotFound'),
+      const url = event.data
+      if (isRedirecton(url)) {
+        const res = await fetch(event.data, {
+          method: 'GET',
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         })
-        throw new Error('Connection record ID not found')
+        const message = await res.json()
+        await agent?.receiveMessage(message)
+      } else {
+        const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
+          autoAcceptConnection: true,
+        })
+        if (!connectionRecord?.id) {
+          throw new Error(t('Scan.ConnectionNotFound'))
+        }
+        setConnectionId(connectionRecord.id)
       }
-      setConnectionId(connectionRecord.id)
-    } catch {
       Toast.show({
-        type: 'error',
-        text1: t('Global.Failure'),
+        type: 'success',
+        text1: t('Scan.ConnectionAccepted'),
       })
       navigation.navigate('HomeTab')
+    } catch (e: unknown) {
+      Toast.show({
+        type: 'error',
+        text1: (e as Error)?.message || t('Global.Failure'),
+      })
+      navigation.goBack()
     }
   }
 
