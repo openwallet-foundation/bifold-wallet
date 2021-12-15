@@ -19,10 +19,10 @@ export const Context = createContext<[State, Dispatch<ReducerAction>]>([
   },
 ])
 
-const Store: React.FC = ({ children }) => {
+const StoreProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   return <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
 }
 
-export default Store
+export default StoreProvider
