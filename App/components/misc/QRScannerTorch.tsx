@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
 const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
   return (
-    <TouchableOpacity style={[styles.container, { backgroundColor: active ? 'white' : undefined }]} onPress={onPress}>
+    <TouchableOpacity style={[styles.container, { backgroundColor: active ? '#ffffff' : undefined }]} onPress={onPress}>
       {children}
     </TouchableOpacity>
   )
