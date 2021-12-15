@@ -24,14 +24,19 @@ const Stack = createStackNavigator()
 type GenericFn = () => void
 type StateFn = React.Dispatch<React.SetStateAction<boolean>>
 
-const mainStack = (authenticated: boolean, setAuthenticated: StateFn) => {
+const authStack = (setAuthenticated: StateFn) => {
   return (
     <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-      {!authenticated && (
-        <Stack.Screen name={Screens.EnterPin}>
-          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} />}
-        </Stack.Screen>
-      )}
+      <Stack.Screen name={Screens.EnterPin}>
+        {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  )
+}
+
+const mainStack = () => {
+  return (
+    <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       <Stack.Screen name="Tabs">{() => <TabStack />}</Stack.Screen>
       <Stack.Screen name="Connect" options={{ presentation: 'modal' }}>
         {() => <ScanStack />}
@@ -88,9 +93,11 @@ const RootStack: React.FC = () => {
     nav.navigate(Screens.Terms)
   }
 
-  return state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN
-    ? mainStack(authenticated, setAuthenticated)
-    : onboardingStack(onSkipTouched, setAuthenticated)
+  if (state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN) {
+    return authenticated ? mainStack() : authStack(setAuthenticated)
+  }
+
+  return onboardingStack(onSkipTouched, setAuthenticated)
 }
 
 export default RootStack
