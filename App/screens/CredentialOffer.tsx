@@ -15,7 +15,7 @@ import { parseSchema } from '../helpers'
 
 import { Button, ModularView, Label } from 'components'
 
-interface Props {
+interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
 const INDY_CREDENTIAL_KEY = '_internal/indyCredential'
 
-const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
+const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)

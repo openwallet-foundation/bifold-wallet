@@ -13,11 +13,11 @@ import { QRScanner } from 'components'
 // eslint-disable-next-line import/no-cycle
 import { TabStackParams } from 'navigators/TabStack'
 
-interface Props {
+interface ScanProps {
   navigation: BottomTabNavigationProp<TabStackParams, 'ScanTab'>
 }
 
-const Scan: React.FC<Props> = ({ navigation }) => {
+const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
 

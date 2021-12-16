@@ -5,11 +5,11 @@ import * as Keychain from 'react-native-keychain'
 
 import { TextInput, SafeAreaScrollView, Button } from 'components'
 
-interface IPinEnterProps {
+interface PinEnterProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const PinEnter: React.FC<IPinEnterProps> = ({ setAuthenticated }) => {
+const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
   const { t } = useTranslation()
 

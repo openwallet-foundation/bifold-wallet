@@ -7,12 +7,12 @@ import React, { useEffect } from 'react'
 
 import { SafeAreaScrollView, Label } from 'components'
 
-interface Props {
+interface ContactDetailsProps {
   navigation: StackNavigationProp<ContactStackParams, 'Contact Details'>
   route: RouteProp<ContactStackParams, 'Contact Details'>
 }
 
-const ContactDetails: React.FC<Props> = ({ navigation, route }) => {
+const ContactDetails: React.FC<ContactDetailsProps> = ({ navigation, route }) => {
   const connection = useConnectionById(route?.params?.connectionId)
 
   useEffect(() => {
