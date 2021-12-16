@@ -10,7 +10,7 @@ interface Props {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
   },
   scrollView: {
     alignItems: 'center',

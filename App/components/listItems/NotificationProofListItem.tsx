@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 10,
     borderRadius,
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
   },
   title: {
     fontWeight: 'bold',
@@ -44,7 +44,7 @@ const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
         <Text style={styles.title}>{requestMessage?.indyProofRequest?.name}</Text>
         <Text>{connection?.alias || connection?.invitation?.label}</Text>
       </View>
-      <Icon name="chevron-right" color={Colors.textColor} size={30} />
+      <Icon name="chevron-right" color={Colors.text} size={30} />
     </TouchableOpacity>
   )
 }

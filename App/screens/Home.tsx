@@ -16,7 +16,7 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
     height: '100%',
   },
 })

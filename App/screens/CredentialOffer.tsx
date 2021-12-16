@@ -27,7 +27,7 @@ interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
     height: '100%',
     flex: 1,
     flexDirection: 'column',

@@ -11,11 +11,11 @@ export const carousel: IOnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
   },
   carouselContainer: {
     flexDirection: 'column',
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
   },
   pagerContainer: {
     flexShrink: 2,
@@ -25,7 +25,7 @@ export const carousel: IOnboardingStyleSheet = StyleSheet.create({
   pagerDot: {
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.mainColor,
+    borderColor: Colors.primary,
   },
   pagerPosition: {
     position: 'relative',
@@ -34,7 +34,7 @@ export const carousel: IOnboardingStyleSheet = StyleSheet.create({
   pagerNavigationButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.mainColor,
+    color: Colors.primary,
   },
 })
 

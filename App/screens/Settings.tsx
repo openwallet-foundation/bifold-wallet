@@ -42,7 +42,7 @@ const Settings: React.FC = () => {
         <View style={styles.rowGroup}>
           <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Language')}>
             <Text>{t('Settings.Language')}</Text>
-            <Icon name={'chevron-right'} size={25} color={Colors.mainColor} />
+            <Icon name={'chevron-right'} size={25} color={Colors.primary} />
           </TouchableOpacity>
         </View>
 

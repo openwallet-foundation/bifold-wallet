@@ -28,9 +28,9 @@ const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, checked, onPr
     <View style={styles.container}>
       <TouchableOpacity accessible={accessible} accessibilityLabel={accessibilityLabel} onPress={onPress}>
         {checked ? (
-          <Icon name={'check-box'} size={30} color={Colors.mainColor} />
+          <Icon name={'check-box'} size={30} color={Colors.primary} />
         ) : (
-          <Icon name={'check-box-outline-blank'} size={30} color={Colors.mainColor} />
+          <Icon name={'check-box-outline-blank'} size={30} color={Colors.primary} />
         )}
       </TouchableOpacity>
       <Text>{title}</Text>

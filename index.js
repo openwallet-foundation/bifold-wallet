@@ -30,9 +30,9 @@ import { name as appName } from './app.json'
 const navigationTheme = {
   dark: false,
   colors: {
-    primary: Colors.mainColor,
-    background: Colors.backgroundColor,
-    card: Colors.mainColor,
+    primary: Colors.primary,
+    background: Colors.background,
+    card: Colors.primary,
     text: 'white',
     border: 'white',
     notification: 'white',
