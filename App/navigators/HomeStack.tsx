@@ -15,7 +15,7 @@ export type HomeStackParams = {
 
 const Stack = createStackNavigator<HomeStackParams>()
 
-function HomeStack() {
+const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />

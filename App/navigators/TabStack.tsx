@@ -19,10 +19,9 @@ export type TabStackParams = {
   SettingsTab: undefined
 }
 
-const Tab = createBottomTabNavigator<TabStackParams>()
-
-function TabStack() {
+const TabStack: React.FC = () => {
   const { t } = useTranslation()
+  const Tab = createBottomTabNavigator<TabStackParams>()
 
   return (
     <Tab.Navigator
