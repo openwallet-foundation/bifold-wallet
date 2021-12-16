@@ -8,7 +8,7 @@ import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import SecureImage from '../assets/img/secure-image.svg'
 
-import { IOnboardingStyleSheet } from './Onboarding'
+import { OnboardingStyleSheet } from './Onboarding'
 
 const imageDisplayOptions = {
   fill: Colors.textColor,
@@ -16,7 +16,7 @@ const imageDisplayOptions = {
   width: 180,
 }
 
-export const carousel: IOnboardingStyleSheet = StyleSheet.create({
+export const carousel: OnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
