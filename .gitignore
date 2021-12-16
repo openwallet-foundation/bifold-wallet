@@ -6,6 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+
+# Jest
+.jest/
+
 # Merge artifacts
 *.orig
 
@@ -46,6 +50,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+patch/
 
 # TypeScript v1 declaration files
 typings/

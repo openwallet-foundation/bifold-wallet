@@ -1,4 +1,3 @@
-import { CredentialRecord } from '@aries-framework/core'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
