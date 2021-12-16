@@ -8,7 +8,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
+import { Colors, borderRadius } from '../../Theme'
 import Text from '../texts/Text'
 
 interface Props {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 10,
     borderRadius,
-    backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
   title: {
     fontWeight: 'bold',
@@ -44,7 +44,7 @@ const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
         <Text style={styles.title}>{requestMessage?.indyProofRequest?.name}</Text>
         <Text>{connection?.alias || connection?.invitation?.label}</Text>
       </View>
-      <Icon name="chevron-right" color={textColor} size={30} />
+      <Icon name="chevron-right" color={Colors.textColor} size={30} />
     </TouchableOpacity>
   )
 }

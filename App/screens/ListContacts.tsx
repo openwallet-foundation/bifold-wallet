@@ -5,7 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 
-import { backgroundColor } from '../globalStyles'
+import { Colors } from '../Theme'
 
 import { ContactListItem, Text } from 'components'
 
@@ -18,7 +18,7 @@ const ListContacts: React.FC = () => {
       data={connections}
       renderItem={({ item }) => <ContactListItem contact={item} />}
       keyExtractor={(item: ConnectionRecord) => item.did}
-      style={{ backgroundColor }}
+      style={{ backgroundColor: Colors.backgroundColor }}
       ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>{t('Global.NoneYet!')}</Text>}
     />
   )
