@@ -44,34 +44,42 @@ const Scan: React.FC<Props> = ({ navigation }) => {
       type: 'info',
       text1: t('Scan.AcceptingConnection'),
     })
+
     try {
       const url = event.data
+
       if (isRedirecton(url)) {
         const res = await fetch(event.data, {
           method: 'GET',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         })
+
         const message = await res.json()
         await agent?.receiveMessage(message)
       } else {
         const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
           autoAcceptConnection: true,
         })
+
         if (!connectionRecord?.id) {
           throw new Error(t('Scan.ConnectionNotFound'))
         }
+
         setConnectionId(connectionRecord.id)
       }
+
       Toast.show({
         type: 'success',
         text1: t('Scan.ConnectionAccepted'),
       })
+
       navigation.navigate('HomeTab')
     } catch (e: unknown) {
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
       })
+
       navigation.goBack()
     }
   }
@@ -82,4 +90,5 @@ const Scan: React.FC<Props> = ({ navigation }) => {
     </View>
   )
 }
+
 export default Scan
