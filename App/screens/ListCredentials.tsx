@@ -5,7 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 
-import { backgroundColor } from '../globalStyles'
+import { Colors } from '../Theme'
 
 import { CredentialListItem, Text } from 'components'
 
@@ -20,7 +20,7 @@ const ListCredentials: React.FC = () => {
   return (
     <FlatList
       data={credentials}
-      style={{ backgroundColor }}
+      style={{ backgroundColor: Colors.backgroundColor }}
       keyExtractor={keyForItem}
       ListEmptyComponent={emptyListComponent}
       renderItem={({ item }) => <CredentialListItem credential={item} />}

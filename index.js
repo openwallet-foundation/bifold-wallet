@@ -24,15 +24,15 @@ import React from 'react'
 import { AppRegistry } from 'react-native'
 
 import App from './App'
-import { mainColor, backgroundColor } from './App/globalStyles'
+import { Colors } from './App/Theme'
 import { name as appName } from './app.json'
 
 const navigationTheme = {
   dark: false,
   colors: {
-    primary: mainColor,
-    background: backgroundColor,
-    card: mainColor,
+    primary: Colors.mainColor,
+    background: Colors.backgroundColor,
+    card: Colors.mainColor,
     text: 'white',
     border: 'white',
     notification: 'white',

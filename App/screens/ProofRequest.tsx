@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, Alert, View, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import { backgroundColor } from '../globalStyles'
+import { Colors } from '../Theme'
 import { parseSchema } from '../helpers'
 
 import { Button, ModularView, Label } from 'components'
@@ -33,7 +33,7 @@ interface CredentialDisplay {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor,
+    backgroundColor: Colors.backgroundColor,
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',

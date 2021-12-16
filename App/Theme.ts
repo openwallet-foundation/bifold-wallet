@@ -37,3 +37,5 @@ export const Buttons = StyleSheet.create({
     textAlign: 'center',
   },
 })
+
+export const borderRadius = 5

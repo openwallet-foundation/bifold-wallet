@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useWindowDimensions, Vibration, View, StyleSheet } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 
-import { mainColor } from '../../globalStyles'
+import { Colors } from '../../Theme'
 
 import QRScannerClose from 'components/misc/QRScannerClose'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     height: 250,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: mainColor,
+    borderColor: Colors.mainColor,
     backgroundColor: '#ffffff30',
   },
   viewFinderContainer: {
