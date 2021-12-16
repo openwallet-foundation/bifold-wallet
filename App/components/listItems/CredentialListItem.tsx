@@ -37,18 +37,18 @@ const CredentialListItem: React.FC<Props> = ({ credential }) => {
       onPress={() => navigation.navigate('Credential Details', { credentialId: credential.id })}
     >
       <View>
-        <Title style={{ color: Colors.textColor }}>{parseSchema(credential.metadata.schemaId)}</Title>
-        <Text style={{ color: Colors.textColor }}>
+        <Title style={{ color: Colors.text }}>{parseSchema(credential.metadata.schemaId)}</Title>
+        <Text style={{ color: Colors.text }}>
           Issued on {DateTime.fromJSDate(credential.createdAt).toFormat('LLL d, yyyy')}
         </Text>
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={{ color: Colors.textColor }}>
+        <Text style={{ color: Colors.text }}>
           {credential?.credentialAttributes?.find((n) => n.name === 'given_name')?.value}{' '}
           {credential?.credentialAttributes?.find((n) => n.name === 'surname')?.value}
         </Text>
 
-        <Icon name="chevron-right" color={Colors.textColor} size={30} />
+        <Icon name="chevron-right" color={Colors.text} size={30} />
       </View>
     </TouchableOpacity>
   )

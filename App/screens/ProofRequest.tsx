@@ -33,7 +33,7 @@ interface CredentialDisplay {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',

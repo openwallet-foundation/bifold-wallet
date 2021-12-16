@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   button: {
     width: '90%',
     borderRadius,
-    backgroundColor: Colors.mainColor,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     padding: 10,
     marginVertical: 10,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.shadow,
   },
   neutral: {
-    backgroundColor: Colors.textColor,
+    backgroundColor: Colors.text,
   },
   negative: {
     backgroundColor: '#de3333',

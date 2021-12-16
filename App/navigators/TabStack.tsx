@@ -26,7 +26,7 @@ const TabStack: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: Colors.mainColor, elevation: 0, shadowOpacity: 0, borderTopWidth: 0 },
+        tabBarStyle: { backgroundColor: Colors.primary, elevation: 0, shadowOpacity: 0, borderTopWidth: 0 },
         tabBarActiveTintColor: Colors.white,
         tabBarInactiveTintColor: 'rgba(255,255,255,0.3)',
       }}

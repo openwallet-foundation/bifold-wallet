@@ -20,7 +20,7 @@ const ListCredentials: React.FC = () => {
   return (
     <FlatList
       data={credentials}
-      style={{ backgroundColor: Colors.backgroundColor }}
+      style={{ backgroundColor: Colors.background }}
       keyExtractor={keyForItem}
       ListEmptyComponent={emptyListComponent}
       renderItem={({ item }) => <CredentialListItem credential={item} />}

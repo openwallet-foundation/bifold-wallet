@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   label: {
-    color: Colors.mainColor,
+    color: Colors.primary,
     margin: 2,
   },
   textInput: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius,
     fontSize: 16,
     backgroundColor: Colors.shadow,
-    color: Colors.textColor,
+    color: Colors.text,
     borderWidth: 2,
     borderColor: 'transparent',
   },
@@ -34,8 +34,8 @@ const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <TI
-        style={[styles.textInput, focused && { borderColor: Colors.mainColor }]}
-        selectionColor={Colors.mainColor}
+        style={[styles.textInput, focused && { borderColor: Colors.primary }]}
+        selectionColor={Colors.primary}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         {...textInputProps}

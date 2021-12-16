@@ -5,7 +5,7 @@ import { Colors } from '../../Theme'
 
 const styles = StyleSheet.create({
   text: {
-    color: Colors.textColor,
+    color: Colors.text,
   },
 })
 

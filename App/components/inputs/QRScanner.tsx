@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     height: 250,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: Colors.mainColor,
+    borderColor: Colors.primary,
     backgroundColor: '#ffffff30',
   },
   viewFinderContainer: {
