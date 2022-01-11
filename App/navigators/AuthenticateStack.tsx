@@ -5,9 +5,7 @@ import PinEnter from '../screens/PinEnter'
 
 import defaultStackOptions from './defaultStackOptions'
 
-export type AuthenticateStackParams = {
-  'Enter Pin': { setAuthenticated: (auth: boolean) => void }
-}
+import { AuthenticateStackParams } from 'types/navigators'
 
 interface AuthenticateStackProps {
   setAuthenticated: (auth: boolean) => void
