@@ -1,5 +1,4 @@
 import type { StackNavigationProp } from '@react-navigation/stack'
-import type { HomeStackParams } from 'navigators/HomeStack'
 
 import { ProofRecord } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
@@ -10,6 +9,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Colors, borderRadius } from '../../Theme'
 import Text from '../texts/Text'
+
+import { HomeStackParams } from 'types/navigators'
 
 interface Props {
   notification: ProofRecord
