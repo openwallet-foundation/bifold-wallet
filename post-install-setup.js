@@ -16,7 +16,6 @@ const JNI_LIBS_DIR = path.resolve(CWD, './android/app/src/main/jniLibs')
  * specified location.
  */
  async function download(url, filePath) {
-    //fs.unlinkSync(filePath)
     if (!fs.existsSync(filePath)) {
         console.info(`Downloading ${url}`);
         return new Promise(async (resolve, reject) => {
