@@ -94,7 +94,7 @@ async function downloadAndExtractJnaLib(arch){
         await downloadAndExtractIndyLib(arch)
         await downloadAndExtractJnaLib(arch)
     }
-    /* When bifold is used as a depency, copy ios framework embeded from within the package */
+    /* When bifold is used as a dependency, copy ios framework embedded from within the package */
     /* todo: figure out how to consume ios framework as a binary dependency as well (a la android)*/
     if (process.env.npm_package_json && process.env.npm_package_json.indexOf('node_modules') > 0) {
         const fse = require('fs-extra')
