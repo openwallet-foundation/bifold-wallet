@@ -6,6 +6,7 @@ import ContactListItem from './listItems/ContactListItem'
 import CredentialListItem from './listItems/CredentialListItem'
 import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
 import NotificationProofListItem from './listItems/NotificationProofListItem'
+import { InfoTextBox, HighlightTextBox } from './texts/TextBox'
 import Label from './texts/Label'
 import Text from './texts/Text'
 import Title from './texts/Title'
@@ -28,4 +29,6 @@ export {
   TextInput,
   Text,
   Title,
+  InfoTextBox,
+  HighlightTextBox,
 }
