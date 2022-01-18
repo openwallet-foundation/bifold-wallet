@@ -7,7 +7,7 @@ import { Pagination } from '../components/shared/Pagination'
 
 const { width } = Dimensions.get('window')
 
-export interface IOnboardingStyleSheet {
+export interface OnboardingStyleSheet {
   container: Record<string, any>
   carouselContainer: Record<string, any>
   pagerContainer: Record<string, any>
@@ -16,14 +16,14 @@ export interface IOnboardingStyleSheet {
   pagerNavigationButton: Record<string, any>
 }
 
-interface IOnboardingProps {
+interface OnboardingProps {
   pages: Array<Element>
   nextButtonText: string
   previousButtonText: string
-  style: IOnboardingStyleSheet
+  style: OnboardingStyleSheet
 }
 
-const Onboarding: React.FC<IOnboardingProps> = ({ pages, nextButtonText, previousButtonText, style }) => {
+const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previousButtonText, style }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const flatList: Ref<FlatList> = useRef(null)
   const scrollX = useRef(new Animated.Value(0)).current
