@@ -1,11 +1,11 @@
 import React from 'react'
 import { Text as T, StyleSheet, TextStyle } from 'react-native'
 
-import { textColor } from '../../globalStyles'
+import { Colors } from '../../Theme'
 
 const styles = StyleSheet.create({
   text: {
-    color: textColor,
+    color: Colors.text,
   },
 })
 

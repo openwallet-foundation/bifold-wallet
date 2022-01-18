@@ -4,7 +4,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'
 
-import { backgroundColor } from '../globalStyles'
+import { Colors } from '../Theme'
 
 import {
   AppHeaderLarge,
@@ -16,7 +16,7 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor,
+    backgroundColor: Colors.background,
     height: '100%',
   },
 })

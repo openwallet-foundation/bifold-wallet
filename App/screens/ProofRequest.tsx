@@ -15,12 +15,12 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, Alert, View, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import { backgroundColor } from '../globalStyles'
+import { Colors } from '../Theme'
 import { parseSchema } from '../helpers'
 
 import { Button, ModularView, Label } from 'components'
 
-interface Props {
+interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams, 'Proof Request'>
   route: RouteProp<HomeStackParams, 'Proof Request'>
 }
@@ -33,14 +33,14 @@ interface CredentialDisplay {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor,
+    backgroundColor: Colors.background,
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },
 })
 
-const CredentialOffer: React.FC<Props> = ({ navigation, route }) => {
+const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)

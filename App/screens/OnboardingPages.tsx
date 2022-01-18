@@ -8,23 +8,23 @@ import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import SecureImage from '../assets/img/secure-image.svg'
 
-import { IOnboardingStyleSheet } from './Onboarding'
+import { OnboardingStyleSheet } from './Onboarding'
 
 const imageDisplayOptions = {
-  fill: Colors.textColor,
+  fill: Colors.text,
   height: 180,
   width: 180,
 }
 
-export const carousel: IOnboardingStyleSheet = StyleSheet.create({
+export const carousel: OnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
   },
   carouselContainer: {
     flexDirection: 'column',
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
   },
   pagerContainer: {
     flexShrink: 2,
@@ -34,7 +34,7 @@ export const carousel: IOnboardingStyleSheet = StyleSheet.create({
   pagerDot: {
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.mainColor,
+    borderColor: Colors.primary,
   },
   pagerPosition: {
     position: 'relative',
@@ -43,7 +43,7 @@ export const carousel: IOnboardingStyleSheet = StyleSheet.create({
   pagerNavigationButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.mainColor,
+    color: Colors.primary,
   },
 })
 
@@ -51,13 +51,13 @@ const defaultStyle = StyleSheet.create({
   headerText: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   bodyText: {
     flexShrink: 1,
     fontSize: 18,
     fontWeight: 'normal',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   point: {
     flexDirection: 'row',
@@ -97,7 +97,7 @@ const CustomPageElement = (
         accessible={true}
         accessibilityLabel={'Get Started'}
         style={[Buttons.primary, { marginLeft: 20, marginRight: 20 }]}
-        underlayColor={Colors.activeMain}
+        underlayColor={Colors.primaryActive}
         onPress={getStartedTouched}
       >
         <Text style={Buttons.primaryText}>Get Started!</Text>

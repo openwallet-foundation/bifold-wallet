@@ -8,7 +8,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { shadow, textColor } from '../../globalStyles'
+import { Colors } from '../../Theme'
 import { parseSchema } from '../../helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginHorizontal: 15,
     padding: 10,
-    backgroundColor: shadow,
+    backgroundColor: Colors.shadow,
     borderRadius: 15,
     justifyContent: 'space-between',
   },
@@ -37,18 +37,18 @@ const CredentialListItem: React.FC<Props> = ({ credential }) => {
       onPress={() => navigation.navigate('Credential Details', { credentialId: credential.id })}
     >
       <View>
-        <Title style={{ color: textColor }}>{parseSchema(credential.metadata.schemaId)}</Title>
-        <Text style={{ color: textColor }}>
+        <Title style={{ color: Colors.text }}>{parseSchema(credential.metadata.schemaId)}</Title>
+        <Text style={{ color: Colors.text }}>
           Issued on {DateTime.fromJSDate(credential.createdAt).toFormat('LLL d, yyyy')}
         </Text>
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={{ color: textColor }}>
+        <Text style={{ color: Colors.text }}>
           {credential?.credentialAttributes?.find((n) => n.name === 'given_name')?.value}{' '}
           {credential?.credentialAttributes?.find((n) => n.name === 'surname')?.value}
         </Text>
 
-        <Icon name="chevron-right" color={textColor} size={30} />
+        <Icon name="chevron-right" color={Colors.text} size={30} />
       </View>
     </TouchableOpacity>
   )

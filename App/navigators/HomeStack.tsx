@@ -13,9 +13,9 @@ export type HomeStackParams = {
   'Proof Request': { proofId: string }
 }
 
-const Stack = createStackNavigator<HomeStackParams>()
+const HomeStack: React.FC = () => {
+  const Stack = createStackNavigator<HomeStackParams>()
 
-function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />

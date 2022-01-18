@@ -6,12 +6,13 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SafeAreaScrollView, Text } from 'components'
-interface ICredentialDetailsProps {
+
+interface CredentialDetailsProps {
   navigation: StackNavigationProp<CredentialStackParams, 'Credential Details'>
   route: RouteProp<CredentialStackParams, 'Credential Details'>
 }
 
-const CredentialDetails: React.FC<ICredentialDetailsProps> = ({ route }) => {
+const CredentialDetails: React.FC<CredentialDetailsProps> = ({ route }) => {
   const credential = route.params
   const { t } = useTranslation()
 

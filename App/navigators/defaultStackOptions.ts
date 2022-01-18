@@ -1,7 +1,7 @@
-import { textColor, mainColor } from '../globalStyles'
+import { Colors } from '../Theme'
 
 export default {
-  headerStyle: { backgroundColor: mainColor, elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
-  headerTintColor: textColor,
+  headerStyle: { backgroundColor: Colors.primary, elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
+  headerTintColor: Colors.text,
   headerBackTitleVisible: false,
 }

@@ -6,8 +6,8 @@ import { Image, SafeAreaView, StyleSheet } from 'react-native'
 import Images from '../../assets/images'
 import { DispatchAction } from '../Reducer'
 import { Context } from '../Store'
+import { Colors } from '../Theme'
 import { LocalStorageKeys, Screens } from '../constants'
-import { backgroundColor } from '../globalStyles'
 
 import { Onboarding } from 'types/state'
 
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: backgroundColor,
+    backgroundColor: Colors.background,
   },
 })
 

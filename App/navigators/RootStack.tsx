@@ -19,12 +19,12 @@ import ScanStack from './ScanStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
 
-const Stack = createStackNavigator()
-
 type GenericFn = () => void
 type StateFn = React.Dispatch<React.SetStateAction<boolean>>
 
 const authStack = (setAuthenticated: StateFn) => {
+  const Stack = createStackNavigator()
+
   return (
     <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       <Stack.Screen name={Screens.EnterPin}>
@@ -35,6 +35,8 @@ const authStack = (setAuthenticated: StateFn) => {
 }
 
 const mainStack = () => {
+  const Stack = createStackNavigator()
+
   return (
     <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       <Stack.Screen name="Tabs">{() => <TabStack />}</Stack.Screen>
@@ -46,6 +48,8 @@ const mainStack = () => {
 }
 
 const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) => {
+  const Stack = createStackNavigator()
+
   return (
     <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       <Stack.Screen name={Screens.Splash} component={Splash} />

@@ -8,11 +8,11 @@ import { Context } from '../Store'
 
 import { Button, SafeAreaScrollView, TextInput } from 'components'
 
-interface IPinCreateProps {
+interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const PinCreate: React.FC<IPinCreateProps> = ({ setAuthenticated }) => {
+const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
   const [, dispatch] = useContext(Context)
