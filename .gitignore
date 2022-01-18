@@ -167,6 +167,7 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
-# CocoaPods
+# iOS Artifacts
+ios/xbuild
 ios/Pods/*
 !ios/Pods/Frameworks
