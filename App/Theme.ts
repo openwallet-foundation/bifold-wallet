@@ -1,6 +1,18 @@
 import { StyleSheet } from 'react-native'
 
-interface ColorTheme {
+type BaseColor = Record<string, string>
+
+export const BaseColors: BaseColor = {
+  black: '#000000',
+  darkGrey: '#1C1C1E',
+  green: '#2D6E35',
+  red: '#DE3333',
+  white: '#FFFFFF',
+  yellow: 'yellow',
+  transparent: 'rgba(0, 0, 0, 0)',
+}
+
+interface ColorTheme extends BaseColor {
   primary: string
   primaryActive: string
   text: string
@@ -9,21 +21,19 @@ interface ColorTheme {
   toastSuccess: string
   toastError: string
   toastInfo: string
-  white: string
-  transparent: string
 }
 
 export const Colors: ColorTheme = {
   primary: '#35823f',
   primaryActive: '#003366B3',
-  text: '#fff',
-  background: '#000',
-  shadow: '#1c1c1e',
-  white: '#ffffff',
-  toastSuccess: '#2d6e35',
-  toastError: '#de3333',
-  toastInfo: 'yellow',
-  transparent: '#FFFFFF00',
+  text: BaseColors.white,
+  background: BaseColors.black,
+  shadow: BaseColors.darkGrey,
+  toastSuccess: BaseColors.green,
+  toastError: BaseColors.red,
+  toastInfo: BaseColors.black,
+  transparent: BaseColors.transparent,
+  ...BaseColors,
 }
 
 export const Buttons = StyleSheet.create({

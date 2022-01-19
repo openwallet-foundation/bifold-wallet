@@ -53,7 +53,8 @@ const translation = {
     "AcceptingConnection":"Accepting Connection",
     "ConnectionRecordIdNotFound":"Connection record ID not found",
     "ConnectionAccepted": "Connection Accepted",
-    "ConnectionNotFound": "Connection not found"
+    "ConnectionNotFound": "Connection not found",
+    "InvalidQrCode": "Invalid QR code. Please try again."
   },
   "CredentialOffer": {
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
