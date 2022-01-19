@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 interface ColorTheme {
-  mainColor: string
+  primary: string
   activeMain: string
   textColor: string
-  backgroundColor: string
+  background: string
   shadow: string
   green: string
   red: string
@@ -32,10 +32,10 @@ interface TextTheme {
 }
 
 export const Colors: ColorTheme = {
-  mainColor: '#003366', // 0, 51, 102
+  primary: '#003366', // 0, 51, 102
   activeMain: '#003366B3',
   textColor: '#313132',
-  backgroundColor: '#F2F2F2',
+  background: '#F2F2F2',
   shadow: '#1c1c1e',
   white: '#ffffff',
   green: '#2d6e35',
@@ -90,7 +90,7 @@ export const Buttons = StyleSheet.create({
   primary: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: Colors.mainColor,
+    backgroundColor: Colors.primary,
   },
   primaryDisabled: {
     padding: 16,
@@ -113,7 +113,7 @@ export const Buttons = StyleSheet.create({
     padding: 16,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: Colors.mainColor,
+    borderColor: Colors.primary,
     backgroundColor: Colors.white,
   },
   secondaryDisabled: {
@@ -126,7 +126,7 @@ export const Buttons = StyleSheet.create({
   secondaryText: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.mainColor,
+    color: Colors.primary,
     textAlign: 'center',
   },
   secondaryTextDisabled: {

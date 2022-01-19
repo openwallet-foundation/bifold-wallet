@@ -15,7 +15,7 @@ import { ButtonType } from 'components/buttons/Button'
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.background,
     margin: 20,
   },
   bodyText: {
