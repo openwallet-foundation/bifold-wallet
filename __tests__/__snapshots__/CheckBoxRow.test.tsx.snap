@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckBoxRow Component Renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "margin": 10,
+    }
+  }
+>
+  <View
+    accessibilityLabel="Hey"
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Icon
+      name="check-box"
+      size={36}
+    />
+  </View>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#313132",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginLeft": 10,
+        },
+      ]
+    }
+  >
+    Hello Fried
+  </Text>
+</View>
+`;

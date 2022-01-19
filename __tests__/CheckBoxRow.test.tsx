@@ -1,7 +1,9 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 
-import { CheckBoxRow } from '../App/components'
+import CheckBoxRow from '../App/components/inputs/CheckBoxRow'
+
+jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon')
 
 describe('CheckBoxRow Component', () => {
   it('Renders correctly', () => {
