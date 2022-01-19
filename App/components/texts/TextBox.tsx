@@ -14,10 +14,10 @@ const offset = 10
 const style = StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.backgroundLightBlue,
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: Colors.borderLightBlue,
+    borderColor: Colors.borderLight,
     padding: 10,
   },
   headerText: {
