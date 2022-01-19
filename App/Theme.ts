@@ -10,8 +10,8 @@ interface ColorTheme {
   red: string
   white: string
   transparent: string
-  borderLightBlue: string
-  backgroundLightBlue: string
+  borderLight: string
+  backgroundLight: string
   accent: string
 }
 
@@ -41,8 +41,8 @@ export const Colors: ColorTheme = {
   green: '#2d6e35',
   red: '#de3333',
   transparent: '#FFFFFF00',
-  borderLightBlue: '#B9CEDE',
-  backgroundLightBlue: '#D9EAF7',
+  borderLight: '#B9CEDE',
+  backgroundLight: '#D9EAF7',
   accent: '#FCBA19',
 }
 
