@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState, useContext } from 'react'
-import { Button, SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 
 import { useTranslation } from 'react-i18next'
 
@@ -9,8 +9,9 @@ import { Context } from '../Store'
 import { Screens } from '../constants'
 import { Colors, TextTheme } from '../Theme'
 
-import { InfoTextBox, HighlightTextBox, CheckBoxRow } from 'components'
+import { Button, InfoTextBox, HighlightTextBox, CheckBoxRow } from 'components'
 import { ScrollView } from 'react-native-gesture-handler'
+import { ButtonType } from 'components/buttons/Button'
 
 const style = StyleSheet.create({
   container: {
@@ -24,7 +25,6 @@ const style = StyleSheet.create({
   },
   controls: {
     marginTop: 15,
-    backgroundColor: 'green',
   },
 })
 
@@ -41,6 +41,18 @@ const Terms: React.FC = () => {
     })
 
     nav.navigate(Screens.CreatePin)
+  }
+
+  const onBackPressed = () => {
+    //TODO:(jl) goBack() does not unwind the navigation stack but rather goes
+    //back to the splash screen. Needs fixing before the following code will
+    //work as expected.
+
+    // if (nav.canGoBack()) {
+    //   nav.goBack()
+    // }
+
+    nav.navigate(Screens.Onboarding)
   }
 
   return (
@@ -68,17 +80,28 @@ const Terms: React.FC = () => {
         </Text>
         <View style={[style.controls]}>
           <CheckBoxRow
-            title={'I have read, understand and accept the terms and conditions.'}
+            title={t('Terms.Attestation')}
             accessibilityLabel={t('Terms.IAgree')}
             checked={checked}
             onPress={() => setChecked(!checked)}
           />
-          <Button
-            title={t('Global.Submit')}
-            accessibilityLabel={t('Global.Submit')}
-            disabled={!checked}
-            onPress={onSubmitPressed}
-          />
+          <View style={[{ paddingTop: 10 }]}>
+            <Button
+              title={t('Global.Continue')}
+              accessibilityLabel={t('Global.Continue')}
+              disabled={!checked}
+              onPress={onSubmitPressed}
+              buttonType={ButtonType.Primary}
+            />
+          </View>
+          <View style={[{ paddingTop: 10 }]}>
+            <Button
+              title={t('Global.Back')}
+              accessibilityLabel={t('Global.Back')}
+              onPress={onBackPressed}
+              buttonType={ButtonType.Secondary}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

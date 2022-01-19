@@ -1,53 +1,73 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Colors, Buttons, ActiveOpacity } from '../../Theme'
 
-import { borderRadius, Colors } from '../../Theme'
-import Text from '../texts/Text'
+export enum ButtonType {
+  Primary,
+  Secondary,
+}
 
-interface Props {
+interface ButtonProps {
   title: string
   accessibilityLabel?: string
   onPress?: () => void
   disabled?: boolean
   neutral?: true
   negative?: true
+  buttonType?: ButtonType
 }
 
+//TODO:(jl) I think these styles should go into the button and
+//be used as an ENUM to select the look of the button.
 const styles = StyleSheet.create({
-  button: {
-    width: '90%',
-    borderRadius,
-    backgroundColor: Colors.primary,
-    alignItems: 'center',
-    padding: 10,
-    marginVertical: 10,
-  },
   disabled: {
     backgroundColor: Colors.shadow,
   },
   neutral: {
-    backgroundColor: Colors.text,
+    backgroundColor: Colors.textColor,
   },
   negative: {
-    backgroundColor: '#de3333',
-  },
-  text: {
-    fontSize: 16,
+    backgroundColor: 'red',
   },
 })
 
-const Button: React.FC<Props> = ({ title, accessibilityLabel, onPress, disabled, neutral, negative }) => {
+const Button: React.FC<ButtonProps> = ({
+  title,
+  accessibilityLabel,
+  onPress,
+  disabled = false,
+  neutral = false,
+  negative = false,
+  buttonType,
+}) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+  // Keep this until entire app using ENUM to style.
+  const myButtonType = buttonType ? buttonType : ButtonType.Primary
 
   return (
     <TouchableOpacity
       onPress={onPress}
       accessible={accessible}
       accessibilityLabel={accessibilityLabel}
-      style={[styles.button, disabled && styles.disabled, neutral && styles.neutral, negative && styles.negative]}
+      style={[
+        myButtonType === ButtonType.Primary ? Buttons.primary : Buttons.secondary,
+        disabled && (myButtonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
+        neutral && styles.neutral,
+        negative && styles.negative,
+      ]}
       disabled={disabled}
+      activeOpacity={ActiveOpacity}
     >
-      <Text style={[styles.text, neutral && { color: Colors.shadow }]}>{title}</Text>
+      <Text
+        style={[
+          myButtonType === ButtonType.Primary ? Buttons.primaryText : Buttons.secondaryText,
+          disabled &&
+            (myButtonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
+          neutral && { color: Colors.shadow },
+        ]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   )
 }

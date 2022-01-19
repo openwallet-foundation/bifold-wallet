@@ -14,7 +14,6 @@ interface Props {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
     flexDirection: 'row',
     alignItems: 'center',
     margin: 10,
@@ -23,9 +22,7 @@ const style = StyleSheet.create({
     flexShrink: 1,
     ...TextTheme.normal,
     color: Colors.textColor,
-    backgroundColor: 'orange',
     marginLeft: 10,
-    // marginRight: 40,
   },
 })
 
