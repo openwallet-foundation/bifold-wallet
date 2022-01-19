@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../../Theme'
+import { Colors, TextTheme } from '../../Theme'
 
 interface Props {
   title: string
@@ -33,9 +33,9 @@ const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, checked, onPr
     <View style={style.container}>
       <TouchableOpacity accessible={accessible} accessibilityLabel={accessibilityLabel} onPress={onPress}>
         {checked ? (
-          <Icon name={'check-box'} size={30} color={Colors.primary} />
+          <Icon name={'check-box'} size={36} color={Colors.mainColor} />
         ) : (
-          <Icon name={'check-box-outline-blank'} size={30} color={Colors.primary} />
+          <Icon name={'check-box-outline-blank'} size={36} color={Colors.mainColor} />
         )}
       </TouchableOpacity>
       <Text style={[style.text]}>{title}</Text>
