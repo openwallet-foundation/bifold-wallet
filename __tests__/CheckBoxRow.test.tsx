@@ -9,6 +9,7 @@ describe('CheckBoxRow Component', () => {
   it('Renders correctly', () => {
     const tree = renderer
       // @ts-ignore
+      // eslint-disable-next-line
       .create(<CheckBoxRow title={'Hello Fried'} accessibilityLabel={'Hey'} checked={true} onPress={() => {}} />)
       .toJSON()
 
