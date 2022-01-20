@@ -1,16 +1,15 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState, useContext } from 'react'
-import { SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
-
 import { useTranslation } from 'react-i18next'
+import { SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 
 import { DispatchAction } from '../Reducer'
 import { Context } from '../Store'
-import { Screens } from '../constants'
 import { Colors, TextTheme } from '../Theme'
+import { Screens } from '../constants'
 
 import { Button, InfoTextBox, HighlightTextBox, CheckBoxRow } from 'components'
-import { ScrollView } from 'react-native-gesture-handler'
 import { ButtonType } from 'components/buttons/Button'
 
 const style = StyleSheet.create({
