@@ -1,16 +1,20 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useWindowDimensions, Vibration, View, StyleSheet } from 'react-native'
+import { useWindowDimensions, Vibration, View, StyleSheet, Text } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Colors } from '../../Theme'
 
 import QRScannerClose from 'components/misc/QRScannerClose'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
+import { QrCodeScanError } from 'types/erorr'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
+  error?: QrCodeScanError | null
+  enableCameraOnError?: boolean
 }
 
 const styles = StyleSheet.create({
@@ -34,6 +38,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  errorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    color: Colors.text,
+    padding: 4,
+  },
+  text: {
+    color: Colors.text,
+  },
 })
 
 const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, children }) => {
@@ -50,14 +65,14 @@ const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, childr
   )
 }
 
-const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
+const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError }) => {
   const navigation = useNavigation()
   const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
-
   const { width, height } = useWindowDimensions()
   const portraitMode = height > width
   const { t } = useTranslation()
+  const invalidQrCodes = new Set<string>()
 
   return (
     <View style={styles.container}>
@@ -73,16 +88,31 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan }) => {
           buttonNegative: t('Global.Cancel'),
         }}
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-        onBarCodeRead={(e) => {
+        onBarCodeRead={(event: BarCodeReadEvent) => {
+          if (invalidQrCodes.has(event.data)) {
+            return
+          }
+          if (error?.data === event?.data) {
+            invalidQrCodes.add(error.data)
+            if (enableCameraOnError) {
+              return setCameraActive(true)
+            }
+          }
           if (cameraActive) {
             Vibration.vibrate()
-            setCameraActive(false)
-            handleCodeScan(e)
+            handleCodeScan(event)
+            return setCameraActive(false)
           }
         }}
       >
         <CameraViewContainer portrait={portraitMode}>
           <QRScannerClose onPress={() => navigation.goBack()}></QRScannerClose>
+          {error && (
+            <View style={styles.errorContainer}>
+              <Icon style={styles.icon} name="cancel" size={30}></Icon>
+              <Text style={styles.text}>{error.message}</Text>
+            </View>
+          )}
           <View style={styles.viewFinderContainer}>
             <View style={styles.viewFinder} />
           </View>
