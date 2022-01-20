@@ -1,26 +1,28 @@
 import { StyleSheet } from 'react-native'
 
 interface ColorTheme {
-  mainColor: string
-  activeMain: string
-  textColor: string
-  backgroundColor: string
+  primary: string
+  primaryActive: string
+  text: string
+  background: string
   shadow: string
-  green: string
-  red: string
+  toastSuccess: string
+  toastError: string
+  toastInfo: string
   white: string
   transparent: string
 }
 
 export const Colors: ColorTheme = {
-  mainColor: '#35823f',
-  activeMain: '#003366B3',
-  textColor: '#fff',
-  backgroundColor: '#000',
+  primary: '#35823f',
+  primaryActive: '#003366B3',
+  text: '#fff',
+  background: '#000',
   shadow: '#1c1c1e',
   white: '#ffffff',
-  green: '#2d6e35',
-  red: '#de3333',
+  toastSuccess: '#2d6e35',
+  toastError: '#de3333',
+  toastInfo: 'yellow',
   transparent: '#FFFFFF00',
 }
 
@@ -28,7 +30,7 @@ export const Buttons = StyleSheet.create({
   primary: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: Colors.mainColor,
+    backgroundColor: Colors.primary,
   },
   primaryText: {
     fontSize: 18,
@@ -37,3 +39,5 @@ export const Buttons = StyleSheet.create({
     textAlign: 'center',
   },
 })
+
+export const borderRadius = 5

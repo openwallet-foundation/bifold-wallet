@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { mainColor, shadow } from '../globalStyles'
+import { Colors } from '../Theme'
 
 import { SafeAreaScrollView, Text } from 'components'
 
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   rowGroup: {
     borderRadius: 8,
-    backgroundColor: shadow,
+    backgroundColor: Colors.shadow,
   },
   row: {
     paddingVertical: 12,
@@ -42,7 +42,7 @@ const Settings: React.FC = () => {
         <View style={styles.rowGroup}>
           <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Language')}>
             <Text>{t('Settings.Language')}</Text>
-            <Icon name={'chevron-right'} size={25} color={mainColor} />
+            <Icon name={'chevron-right'} size={25} color={Colors.primary} />
           </TouchableOpacity>
         </View>
 

@@ -6,7 +6,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { textColor, backgroundColor, borderRadius } from '../../globalStyles'
+import { Colors, borderRadius } from '../../Theme'
 import { parseSchema } from '../../helpers'
 import Text from '../texts/Text'
 
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 10,
     borderRadius,
-    backgroundColor,
+    backgroundColor: Colors.background,
   },
   title: {
     fontWeight: 'bold',
@@ -46,7 +46,7 @@ const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
         <Text style={styles.title}>{parseSchema(metadata?.schemaId)}</Text>
         <Text>{connection?.alias || connection?.invitation?.label}</Text>
       </View>
-      <Icon name="chevron-right" color={textColor} size={30} />
+      <Icon name="chevron-right" color={Colors.text} size={30} />
     </TouchableOpacity>
   )
 }
