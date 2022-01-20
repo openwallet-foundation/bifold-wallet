@@ -1,6 +1,6 @@
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Colors, TextTheme } from '../../Theme'
 
