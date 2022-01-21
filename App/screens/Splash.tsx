@@ -4,10 +4,10 @@ import React, { useContext, useMemo } from 'react'
 import { Image, SafeAreaView, StyleSheet } from 'react-native'
 
 import Images from '../../assets/images'
-import { DispatchAction } from '../Reducer'
-import { Context } from '../Store'
 import { Colors } from '../Theme'
 import { LocalStorageKeys, Screens } from '../constants'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
 
 import { Onboarding } from 'types/state'
 
