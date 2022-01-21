@@ -14,6 +14,8 @@ import { Colors } from '../Theme'
 import { parseSchema } from '../helpers'
 
 import { Button, ModularView, Label } from 'components'
+// eslint-disable-next-line import/no-cycle
+import NotificationModal from 'components/modals/NotificationModal'
 
 interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
@@ -41,6 +43,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
+  const [acceptedModalVisible, setAcceptedModalVisible] = useState(false)
+  const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
   if (!agent?.credentials) {
     Toast.show({
@@ -84,22 +88,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   useEffect(() => {
-    if (credential.state === CredentialState.Done) {
-      Toast.show({
-        type: 'success',
-        text1: t('CredentialOffer.CredentialAccepted'),
-      })
-      navigation.goBack()
+    if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
+      setAcceptedModalVisible(true)
     }
   }, [credential])
 
   useEffect(() => {
     if (credential.state === CredentialState.Declined) {
-      Toast.show({
-        type: 'info',
-        text1: t('CredentialOffer.CredentialRejected'),
-      })
-      navigation.goBack()
+      setDeclinedModalVisible(true)
     }
   }, [credential])
 
@@ -111,6 +107,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     })
     try {
       await agent.credentials.acceptOffer(credential.id)
+      Toast.hide()
     } catch (e: unknown) {
       Toast.show({
         type: 'error',
@@ -127,12 +124,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
+          setButtonsVisible(false)
           Toast.show({
             type: 'info',
             text1: t('CredentialOffer.RejectingCredential'),
           })
           try {
             await agent.credentials.declineOffer(credential.id)
+            Toast.hide()
           } catch (e: unknown) {
             Toast.show({
               type: 'error',
@@ -148,6 +147,22 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   return (
     <View style={styles.container}>
+      <NotificationModal
+        title={t('CredentialOffer.CredentialAddedToYourWallet')}
+        visible={acceptedModalVisible}
+        onDone={() => {
+          setAcceptedModalVisible(false)
+          navigation.navigate('Home')
+        }}
+      ></NotificationModal>
+      <NotificationModal
+        title={t('CredentialOffer.CredentialDeclined')}
+        visible={declinedModalVisible}
+        onDone={() => {
+          setDeclinedModalVisible(false)
+          navigation.navigate('Home')
+        }}
+      ></NotificationModal>
       <ModularView
         title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}

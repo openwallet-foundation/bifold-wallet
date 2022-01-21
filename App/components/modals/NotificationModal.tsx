@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from '../../Theme'
 
 import { Button, Title } from 'components'
+// eslint-disable-next-line import/no-cycle
 import { HomeStackParams } from 'navigators/HomeStack'
 
 const styles = StyleSheet.create({
@@ -47,14 +48,21 @@ const styles = StyleSheet.create({
 
 interface Props {
   title: string
+  visible?: boolean
   onDone?: () => void
   onHome?: () => void
 }
 
-const NotificationModal: React.FC<Props> = ({ title, children, onDone, onHome }) => {
+const NotificationModal: React.FC<Props> = ({ title, visible, onDone, onHome, children }) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
-  const [modalVisible, setModalVisible] = useState(true)
+  const [modalVisible, setModalVisible] = useState<boolean>(true)
+
+  useEffect(() => {
+    if (visible !== undefined) {
+      setModalVisible(visible)
+    }
+  }, [visible])
 
   const close = () => {
     setModalVisible(false)
