@@ -1,6 +1,5 @@
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
-import type { HomeStackParams } from 'navigators/HomeStack'
 
 import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
 import { IndyCredentialMetadata } from '@aries-framework/core/build/types'
@@ -14,8 +13,8 @@ import { Colors } from '../Theme'
 import { parseSchema } from '../helpers'
 
 import { Button, ModularView, Label } from 'components'
-// eslint-disable-next-line import/no-cycle
 import NotificationModal from 'components/modals/NotificationModal'
+import { HomeStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>

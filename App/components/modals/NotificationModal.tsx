@@ -8,8 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from '../../Theme'
 
 import { Button, Title } from 'components'
-// eslint-disable-next-line import/no-cycle
-import { HomeStackParams } from 'navigators/HomeStack'
+import { HomeStackParams } from 'types/navigators'
 
 const styles = StyleSheet.create({
   container: {

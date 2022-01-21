@@ -1,5 +1,6 @@
 import { CredentialState, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'
@@ -13,6 +14,11 @@ import {
   NotificationProofListItem,
   Text,
 } from 'components'
+import { HomeStackParams } from 'types/navigators'
+
+interface Props {
+  navigation: StackNavigationProp<HomeStackParams, 'Home'>
+}
 
 const styles = StyleSheet.create({
   container: {
