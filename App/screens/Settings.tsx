@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -7,6 +7,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from '../Theme'
 
 import { SafeAreaScrollView, Text } from 'components'
+import { SettingsStackParams } from 'types/navigators'
+
+type NewType = StackNavigationProp<SettingsStackParams, 'Settings'>
+
+interface Props {
+  navigation: NewType
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -30,9 +37,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const Settings: React.FC = () => {
+const Settings: React.FC<Props> = ({ navigation }) => {
   const { t } = useTranslation()
-  const navigation = useNavigation()
 
   return (
     <SafeAreaScrollView>

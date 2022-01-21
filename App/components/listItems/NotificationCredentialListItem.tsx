@@ -2,6 +2,7 @@ import type { CredentialRecord } from '@aries-framework/core'
 
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -9,6 +10,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Colors, borderRadius } from '../../Theme'
 import { parseSchema } from '../../helpers'
 import Text from '../texts/Text'
+
+import { HomeStackParams } from 'types/navigators'
 
 interface Props {
   notification: CredentialRecord
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
 })
 
 const NotificationCredentialListItem: React.FC<Props> = ({ notification }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
 
   const { metadata, connectionId, id } = notification
 
