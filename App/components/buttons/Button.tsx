@@ -44,7 +44,7 @@ const Button: React.FC<Props> = ({ title, accessibilityLabel, onPress, disabled,
       onPress={onPress}
       accessible={accessible}
       accessibilityLabel={accessibilityLabel}
-      style={[styles.button, disabled && styles.disabled, neutral && styles.neutral, negative && styles.negative]}
+      style={[styles.button, neutral && styles.neutral, negative && styles.negative, disabled && styles.disabled]}
       disabled={disabled}
     >
       <Text style={[styles.text, neutral && { color: Colors.shadow }]}>{title}</Text>
