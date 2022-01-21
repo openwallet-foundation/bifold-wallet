@@ -13,6 +13,8 @@ export const BaseColors: BaseColor = {
   red: '#DE3333',
   white: '#FFFFFF',
   yellow: '#FCBA19',
+  mediumBlue: '#2E8540',
+  lightBlue: '#87B37A',
   transparent: 'rgba(0, 0, 0, 0)',
 }
 
@@ -57,8 +59,8 @@ export const Colors: ColorTheme = {
   toastError: BaseColors.red,
   toastInfo: BaseColors.black,
   accent: BaseColors.yellow,
-  borderLight: '#2E8540',
-  backgroundLight: '#87B37A',
+  borderLight: BaseColors.mediumBlue,
+  backgroundLight: BaseColors.lightBlue,
   transparent: BaseColors.transparent,
   ...BaseColors,
 }
