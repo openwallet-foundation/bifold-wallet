@@ -14,11 +14,11 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
+import toastConfig from './App/components/toast/toastConfig'
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
 import StoreProvider from './App/store/Store'
 import indyLedgers from './configs/ledgers/indy'
-import toastConfig from './configs/toast/toastConfig'
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
