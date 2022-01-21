@@ -10,7 +10,7 @@ import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import { Colors } from '../Theme'
-import { parseSchema } from '../helpers'
+import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
 import { HomeStackParams } from 'types/navigators'
