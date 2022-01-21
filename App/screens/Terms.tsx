@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core'
-import { Button, InfoTextBox, HighlightTextBox, CheckBoxRow } from 'components'
 import React, { useState, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
@@ -10,6 +9,8 @@ import { Context } from '../Store'
 import { Colors, TextTheme } from '../Theme'
 import { ButtonType } from '../components/buttons/Button'
 import { Screens } from '../constants'
+
+import { Button, InfoTextBox, HighlightTextBox, CheckBoxRow } from 'components'
 
 const style = StyleSheet.create({
   container: {
