@@ -14,7 +14,7 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
-import toastConfig from './App/components/toast/toastConfig'
+import toastConfig from './App/components/toast/ToastConfig'
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
 import StoreProvider from './App/store/Store'
