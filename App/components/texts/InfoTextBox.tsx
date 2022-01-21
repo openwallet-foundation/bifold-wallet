@@ -12,7 +12,7 @@ const iconSize = 30
 const offset = 10
 
 const style = StyleSheet.create({
-  infoContainer: {
+  container: {
     flexDirection: 'row',
     backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
@@ -27,20 +27,11 @@ const style = StyleSheet.create({
   icon: {
     marginRight: offset,
   },
-  highlightContainer: {
-    flexDirection: 'row',
-    backgroundColor: Colors.background,
-  },
-  accentColorBox: {
-    marginRight: offset,
-    backgroundColor: Colors.accent,
-    width: 8,
-  },
 })
 
-export const InfoTextBox: React.FC<TextBoxProps> = ({ children }) => {
+const InfoTextBox: React.FC<TextBoxProps> = ({ children }) => {
   return (
-    <View style={[style.infoContainer]}>
+    <View style={[style.container]}>
       <View style={[style.icon]}>
         <Icon name={'info'} size={iconSize} color={Colors.textColor} />
       </View>
@@ -58,11 +49,4 @@ export const InfoTextBox: React.FC<TextBoxProps> = ({ children }) => {
   )
 }
 
-export const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
-  return (
-    <View style={[style.highlightContainer]}>
-      <View style={[style.accentColorBox]} />
-      <Text style={[style.headerText, { paddingTop: offset, paddingBottom: offset }]}>{children}</Text>
-    </View>
-  )
-}
+export default InfoTextBox
