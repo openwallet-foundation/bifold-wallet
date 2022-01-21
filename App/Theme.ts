@@ -1,18 +1,34 @@
 import { StyleSheet } from 'react-native'
 
-interface ColorTheme {
+type BaseColor = Record<string, string>
+
+export const ActiveOpacity = 0.7
+
+export const borderRadius = 4
+
+export const BaseColors: BaseColor = {
+  black: '#000000',
+  darkGrey: '#1C1C1E',
+  green: '#2D6E35',
+  red: '#DE3333',
+  white: '#FFFFFF',
+  yellow: '#FCBA19',
+  transparent: 'rgba(0, 0, 0, 0)',
+}
+
+interface ColorTheme extends BaseColor {
   primary: string
-  activeMain: string
-  textColor: string
+  primaryActive: string
+  text: string
   background: string
   shadow: string
-  green: string
-  red: string
-  white: string
+  toastSuccess: string
+  toastError: string
+  toastInfo: string
   transparent: string
+  accent: string
   borderLight: string
   backgroundLight: string
-  accent: string
 }
 
 interface FontAttributes {
@@ -32,59 +48,58 @@ interface TextTheme {
 }
 
 export const Colors: ColorTheme = {
-  primary: '#003366', // 0, 51, 102
-  activeMain: '#003366B3',
-  textColor: '#313132',
-  background: '#F2F2F2',
-  shadow: '#1c1c1e',
-  white: '#ffffff',
-  green: '#2d6e35',
-  red: '#de3333',
-  transparent: '#FFFFFF00',
-  borderLight: '#B9CEDE',
-  backgroundLight: '#D9EAF7',
-  accent: '#FCBA19',
+  primary: '#35823f',
+  primaryActive: '#003366B3',
+  text: BaseColors.white,
+  background: BaseColors.black,
+  shadow: BaseColors.darkGrey,
+  toastSuccess: BaseColors.green,
+  toastError: BaseColors.red,
+  toastInfo: BaseColors.black,
+  accent: BaseColors.yellow,
+  borderLight: '#2E8540',
+  backgroundLight: '#87B37A',
+  transparent: BaseColors.transparent,
+  ...BaseColors,
 }
 
 export const TextTheme: TextTheme = {
   headingOne: {
     fontSize: 38,
     fontWeight: 'bold',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   headingTwo: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   headingThree: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   headingFour: {
     fontSize: 21,
     fontWeight: 'bold',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   normal: {
     fontSize: 18,
     fontWeight: 'normal',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   label: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: Colors.textColor,
+    color: Colors.text,
   },
   caption: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: Colors.textColor,
+    color: Colors.text,
   },
 }
-
-export const ActiveOpacity = 0.7
 
 export const Buttons = StyleSheet.create({
   primary: {
@@ -95,7 +110,7 @@ export const Buttons = StyleSheet.create({
   primaryDisabled: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: 'rgba(0, 51, 102, 0.3)',
+    backgroundColor: 'rgba(66, 128, 62, 0.3)',
   },
   primaryText: {
     ...TextTheme.normal,

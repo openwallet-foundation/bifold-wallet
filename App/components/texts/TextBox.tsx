@@ -29,7 +29,7 @@ const style = StyleSheet.create({
   },
   highlightContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.background,
   },
   accentColorBox: {
     marginRight: offset,

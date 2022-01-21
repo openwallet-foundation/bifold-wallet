@@ -21,7 +21,6 @@ const style = StyleSheet.create({
   text: {
     flexShrink: 1,
     ...TextTheme.normal,
-    color: Colors.textColor,
     marginLeft: 10,
   },
 })
@@ -33,9 +32,9 @@ const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, checked, onPr
     <View style={style.container}>
       <TouchableOpacity accessible={accessible} accessibilityLabel={accessibilityLabel} onPress={onPress}>
         {checked ? (
-          <Icon name={'check-box'} size={36} color={Colors.mainColor} />
+          <Icon name={'check-box'} size={36} color={Colors.primary} />
         ) : (
-          <Icon name={'check-box-outline-blank'} size={36} color={Colors.mainColor} />
+          <Icon name={'check-box-outline-blank'} size={36} color={Colors.primary} />
         )}
       </TouchableOpacity>
       <Text style={[style.text]}>{title}</Text>
