@@ -5,8 +5,8 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": "#D9EAF7",
-        "borderColor": "#B9CEDE",
+        "backgroundColor": "#87B37A",
+        "borderColor": "#2E8540",
         "borderRadius": 5,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -25,7 +25,6 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
     }
   >
     <Icon
-      color="#313132"
       name="info"
       size={30}
     />
@@ -34,7 +33,7 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#313132",
+          "color": "#FFFFFF",
           "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "normal",

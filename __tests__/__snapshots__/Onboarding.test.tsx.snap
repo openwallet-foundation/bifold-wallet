@@ -5,7 +5,7 @@ exports[`Onboarding Renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F2F2F2",
+      "backgroundColor": "#000000",
       "flex": 1,
     }
   }
@@ -89,7 +89,7 @@ exports[`Onboarding Renders correctly 1`] = `
                 "width": 750,
               },
               Object {
-                "backgroundColor": "#F2F2F2",
+                "backgroundColor": "#000000",
                 "flexDirection": "column",
               },
             ]
@@ -120,7 +120,7 @@ exports[`Onboarding Renders correctly 1`] = `
                 "width": 750,
               },
               Object {
-                "backgroundColor": "#F2F2F2",
+                "backgroundColor": "#000000",
                 "flexDirection": "column",
               },
             ]
@@ -173,7 +173,7 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#003366",
+              "color": "#35823f",
               "fontSize": 18,
               "fontWeight": "bold",
             },
@@ -206,8 +206,8 @@ exports[`Onboarding Renders correctly 1`] = `
         nativeID="animatedComponent"
         style={
           Object {
-            "backgroundColor": "rgba(0, 51, 102, 1)",
-            "borderColor": "#003366",
+            "backgroundColor": "rgba(53, 130, 63, 1)",
+            "borderColor": "#35823f",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -228,8 +228,8 @@ exports[`Onboarding Renders correctly 1`] = `
         nativeID="animatedComponent"
         style={
           Object {
-            "backgroundColor": "rgba(255, 255, 255, 0)",
-            "borderColor": "#003366",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "#35823f",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -270,12 +270,12 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#003366",
+              "color": "#35823f",
               "fontSize": 18,
               "fontWeight": "bold",
             },
             Object {
-              "color": "#003366",
+              "color": "#35823f",
               "paddingLeft": 20,
             },
           ]
