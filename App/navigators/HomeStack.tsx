@@ -7,11 +7,7 @@ import ProofRequest from '../screens/ProofRequest'
 
 import defaultStackOptions from './defaultStackOptions'
 
-export type HomeStackParams = {
-  Home: undefined
-  'Credential Offer': { credentialId: string }
-  'Proof Request': { proofId: string }
-}
+import { HomeStackParams } from 'types/navigators'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()
