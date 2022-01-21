@@ -36,7 +36,6 @@ const Home: React.FC = () => {
     <View style={styles.container}>
       <AppHeaderLarge />
       <ModularView
-        // @ts-ignore
         title={t('Home.Notifications')}
         content={
           <FlatList

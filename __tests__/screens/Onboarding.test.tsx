@@ -2,12 +2,12 @@ import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import renderer from 'react-test-renderer'
 
-import { Colors } from '../App/Theme'
-import Onboarding, { IOnboardingStyleSheet } from '../App/screens/Onboarding'
+import { Colors } from '../../App/Theme'
+import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
 
 const markTutorialFin = jest.fn()
 
-export const carousel: IOnboardingStyleSheet = StyleSheet.create({
+export const carousel: OnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
