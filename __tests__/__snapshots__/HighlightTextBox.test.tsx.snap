@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoTextBox Component Renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#000000",
+        "flexDirection": "row",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#FCBA19",
+          "marginRight": 10,
+          "width": 8,
+        },
+      ]
+    }
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+        },
+        Object {
+          "paddingBottom": 10,
+          "paddingTop": 10,
+        },
+      ]
+    }
+  />
+</View>
+`;
