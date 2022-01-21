@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { LocalStorageKeys } from './constants'
-import { State } from './types/state'
+import { LocalStorageKeys } from '../constants'
+import { State } from '../types/state'
 
 export enum DispatchAction {
   SetTutorialCompletionStatus = 'SET_DID_COMPLETE_TUTORIAL',

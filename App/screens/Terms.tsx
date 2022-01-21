@@ -2,9 +2,9 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useState, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { DispatchAction } from '../Reducer'
-import { Context } from '../Store'
 import { Screens } from '../constants'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
 
 import { SafeAreaScrollView, Button, AppHeaderLarge, ModularView, CheckBoxRow } from 'components'
 
