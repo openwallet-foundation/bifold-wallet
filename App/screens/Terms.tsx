@@ -20,7 +20,6 @@ const style = StyleSheet.create({
   bodyText: {
     ...TextTheme.normal,
     flexShrink: 1,
-    color: 'black',
   },
   controls: {
     marginTop: 15,
