@@ -12,7 +12,7 @@ import Toast from 'react-native-toast-message'
 import { QrCodeScanError } from '../types/erorr'
 
 import { QRScanner } from 'components'
-import { TabStackParams } from 'navigators/TabStack'
+import { TabStackParams } from 'types/navigators'
 
 interface ScanProps {
   navigation: BottomTabNavigationProp<TabStackParams, 'ScanTab'>

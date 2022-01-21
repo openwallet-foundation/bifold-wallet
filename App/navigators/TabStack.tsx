@@ -11,13 +11,7 @@ import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 import SettingStack from './SettingStack'
 
-export type TabStackParams = {
-  HomeTab: undefined
-  ContactsTab: undefined
-  ScanTab: undefined
-  CredentialsTab: undefined
-  SettingsTab: undefined
-}
+import { TabStackParams } from 'types/navigators'
 
 const TabStack: React.FC = () => {
   const { t } = useTranslation()

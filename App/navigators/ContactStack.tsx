@@ -6,10 +6,7 @@ import ListContacts from '../screens/ListContacts'
 
 import defaultStackOptions from './defaultStackOptions'
 
-export type ContactStackParams = {
-  Contacts: undefined
-  'Contact Details': { connectionId: string }
-}
+import { ContactStackParams } from 'types/navigators'
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
