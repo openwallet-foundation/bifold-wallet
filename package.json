@@ -65,6 +65,8 @@
     "@babel/runtime": "^7.12.5",
     "@commitlint/cli": "^11.0.0",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/jest-native": "^4.0.4",
+    "@testing-library/react-native": "^9.0.0",
     "@types/indy-sdk-react-native": "npm:@types/indy-sdk@^1.15.2",
     "@types/jest": "^27.0.3",
     "@types/luxon": "^1.27.1",
