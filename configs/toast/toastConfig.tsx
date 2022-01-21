@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Colors } from '../../App/Theme'
+import { Colors } from '../../App/theme'
 
 import BaseToast from './BaseToast'
 

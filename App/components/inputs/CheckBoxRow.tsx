@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../../Theme'
+import { Colors } from '../../theme'
 import Text from '../texts/Text'
 
 interface Props {

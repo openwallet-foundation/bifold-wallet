@@ -2,7 +2,7 @@ import React from 'react'
 import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
-import { Colors } from '../../Theme'
+import { Colors } from '../../theme'
 
 interface IPaginationStyleSheet {
   pagerContainer: Record<string, any>

@@ -7,7 +7,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, borderRadius } from '../../Theme'
+import { Colors, borderRadius } from '../../theme'
 import Text from '../texts/Text'
 
 import { HomeStackParams } from 'types/navigators'
