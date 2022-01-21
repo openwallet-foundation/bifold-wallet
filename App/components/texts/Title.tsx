@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, StyleSheet } from 'react-native'
 
-import { Colors } from '../../Theme'
+import { Colors } from '../../theme'
 
 interface Props {
   children: React.ReactNode

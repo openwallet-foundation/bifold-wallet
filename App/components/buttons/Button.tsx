@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { borderRadius, Colors } from '../../Theme'
+import { borderRadius, Colors } from '../../theme'
 import Text from '../texts/Text'
 
 interface Props {
