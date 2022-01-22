@@ -3,10 +3,10 @@ import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 import Toast from 'react-native-toast-message'
 
-import { Colors, Buttons } from '../Theme'
 import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import SecureImage from '../assets/img/secure-image.svg'
+import { Colors, Buttons } from '../theme'
 
 import { OnboardingStyleSheet } from './Onboarding'
 

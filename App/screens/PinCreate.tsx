@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
-import { DispatchAction } from '../Reducer'
-import { Context } from '../Store'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
 
 import { Button, SafeAreaScrollView, TextInput } from 'components'
 

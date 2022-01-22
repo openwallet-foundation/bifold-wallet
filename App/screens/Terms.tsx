@@ -4,13 +4,15 @@ import { useTranslation } from 'react-i18next'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
-import { DispatchAction } from '../Reducer'
-import { Context } from '../Store'
-import { Colors, TextTheme } from '../Theme'
 import { ButtonType } from '../components/buttons/Button'
 import { Screens } from '../constants'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
+import { Colors, TextTheme } from '../theme'
 
-import { Button, InfoTextBox, HighlightTextBox, CheckBoxRow } from 'components'
+import { Button, CheckBoxRow } from 'components'
+import HighlightTextBox from 'components/texts/HighlightTextBox'
+import InfoTextBox from 'components/texts/InfoTextBox'
 
 const style = StyleSheet.create({
   container: {

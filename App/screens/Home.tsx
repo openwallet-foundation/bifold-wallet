@@ -5,7 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'
 
-import { Colors } from '../Theme'
+import { Colors } from '../theme'
 
 import {
   AppHeaderLarge,

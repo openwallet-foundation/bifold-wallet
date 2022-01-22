@@ -1,7 +1,8 @@
 import React, { createContext, Dispatch, useReducer } from 'react'
 
-import reducer, { ReducerAction } from './Reducer'
-import { State } from './types/state'
+import { State } from '../types/state'
+
+import reducer, { ReducerAction } from './reducer'
 
 const initialState: State = {
   onboarding: {
