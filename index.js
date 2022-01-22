@@ -24,7 +24,7 @@ import React from 'react'
 import { AppRegistry } from 'react-native'
 
 import App from './App'
-import { Colors } from './App/Theme'
+import { Colors } from './App/theme'
 import { name as appName } from './app.json'
 
 const navigationTheme = {

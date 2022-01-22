@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-import { Colors, Buttons, ActiveOpacity } from '../../Theme'
+import { Colors, Buttons, ActiveOpacity } from '../../theme'
 
 export enum ButtonType {
   Primary,

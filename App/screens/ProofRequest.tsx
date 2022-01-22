@@ -14,8 +14,8 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, Alert, View, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import { Colors } from '../Theme'
-import { parseSchema } from '../helpers'
+import { Colors } from '../theme'
+import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
 import { HomeStackParams } from 'types/navigators'
