@@ -3,9 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React, { useContext, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
-import { DispatchAction } from '../Reducer'
-import { Context } from '../Store'
-import { Colors } from '../Theme'
 import Arrow from '../assets/img/large-arrow.svg'
 import { Screens } from '../constants'
 import Onboarding from '../screens/Onboarding'
@@ -14,6 +11,9 @@ import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
 import Splash from '../screens/Splash'
 import Terms from '../screens/Terms'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
+import { Colors } from '../theme'
 
 import ScanStack from './ScanStack'
 import TabStack from './TabStack'
@@ -56,6 +56,8 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
       <Stack.Screen
         name={Screens.Onboarding}
         options={() => ({
+          title: 'Onboarding',
+          headerTintColor: Colors.white,
           headerShown: true,
           gestureEnabled: false,
           headerLeft: () => false,
@@ -63,7 +65,7 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
             return (
               <TouchableOpacity onPress={onSkipTouched} style={{ marginRight: 14 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={{ color: 'white', fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
+                  <Text style={{ color: Colors.white, fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
                   <Arrow height={15} width={15} fill={Colors.white} style={{ transform: [{ rotate: '180deg' }] }} />
                 </View>
               </TouchableOpacity>
@@ -75,7 +77,17 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
           <Onboarding {...props} nextButtonText={'Next'} previousButtonText={'Back'} pages={pages} style={carousel} />
         )}
       </Stack.Screen>
-      <Stack.Screen name={Screens.Terms} component={Terms} />
+      <Stack.Screen
+        name={Screens.Terms}
+        options={() => ({
+          title: 'Terms & Conditions',
+          headerTintColor: Colors.white,
+          headerShown: true,
+          headerLeft: () => false,
+          rightLeft: () => false,
+        })}
+        component={Terms}
+      />
       <Stack.Screen name={Screens.CreatePin}>
         {(props) => <PinCreate {...props} setAuthenticated={setAuthenticated} />}
       </Stack.Screen>

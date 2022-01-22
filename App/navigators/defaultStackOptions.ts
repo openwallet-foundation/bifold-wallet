@@ -1,4 +1,4 @@
-import { Colors } from '../Theme'
+import { Colors } from '../theme'
 
 export default {
   headerStyle: { backgroundColor: Colors.primary, elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
