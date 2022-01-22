@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../../Theme'
+import { Colors } from '../../theme'
 
 import { Button, Title } from 'components'
 import { HomeStackParams } from 'types/navigators'
