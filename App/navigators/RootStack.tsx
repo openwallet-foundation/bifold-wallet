@@ -75,7 +75,17 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
           <Onboarding {...props} nextButtonText={'Next'} previousButtonText={'Back'} pages={pages} style={carousel} />
         )}
       </Stack.Screen>
-      <Stack.Screen name={Screens.Terms} component={Terms} />
+      <Stack.Screen
+        name={Screens.Terms}
+        options={() => ({
+          title: 'Terms & Conditions',
+          headerTintColor: Colors.white,
+          headerShown: true,
+          headerLeft: () => false,
+          rightLeft: () => false,
+        })}
+        component={Terms}
+      />
       <Stack.Screen name={Screens.CreatePin}>
         {(props) => <PinCreate {...props} setAuthenticated={setAuthenticated} />}
       </Stack.Screen>
