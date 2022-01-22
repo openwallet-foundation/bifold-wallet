@@ -56,6 +56,8 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
       <Stack.Screen
         name={Screens.Onboarding}
         options={() => ({
+          title: 'Onboarding',
+          headerTintColor: Colors.white,
           headerShown: true,
           gestureEnabled: false,
           headerLeft: () => false,
@@ -63,7 +65,7 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
             return (
               <TouchableOpacity onPress={onSkipTouched} style={{ marginRight: 14 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={{ color: 'white', fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
+                  <Text style={{ color: Colors.white, fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
                   <Arrow height={15} width={15} fill={Colors.white} style={{ transform: [{ rotate: '180deg' }] }} />
                 </View>
               </TouchableOpacity>
