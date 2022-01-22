@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.shadow,
   },
   neutral: {
-    backgroundColor: Colors.textColor,
+    backgroundColor: Colors.text,
   },
   negative: {
     backgroundColor: 'red',
