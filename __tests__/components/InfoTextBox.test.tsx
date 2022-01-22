@@ -1,16 +1,15 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 
-import CheckBoxRow from '../App/components/inputs/CheckBoxRow'
+import InfoTextBox from '../../App/components/texts/InfoTextBox'
 
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon')
 
-describe('CheckBoxRow Component', () => {
+describe('InfoTextBox Component', () => {
   it('Renders correctly', () => {
     const tree = renderer
       // @ts-ignore
-      // eslint-disable-next-line
-      .create(<CheckBoxRow title={'Hello Fried'} accessibilityLabel={'Hey'} checked={true} onPress={() => {}} />)
+      .create(<InfoTextBox text="Hello World" />)
       .toJSON()
 
     expect(tree).toMatchSnapshot()
