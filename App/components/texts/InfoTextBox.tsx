@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, TextTheme } from '../../Theme'
+import { Colors, TextTheme } from '../../theme'
 
 export interface TextBoxProps {
   children: string

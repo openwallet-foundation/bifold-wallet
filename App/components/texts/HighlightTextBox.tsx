@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { Colors, TextTheme } from '../../Theme'
+import { Colors, TextTheme } from '../../theme'
 
 export interface TextBoxProps {
   children: string
