@@ -5,7 +5,7 @@ import { useWindowDimensions, Vibration, View, StyleSheet, Text } from 'react-na
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../../Theme'
+import { Colors } from '../../theme'
 
 import QRScannerClose from 'components/misc/QRScannerClose'
 import QRScannerTorch from 'components/misc/QRScannerTorch'

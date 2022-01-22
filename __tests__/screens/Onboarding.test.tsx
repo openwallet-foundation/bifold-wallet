@@ -2,8 +2,8 @@ import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import renderer from 'react-test-renderer'
 
-import { Colors } from '../../App/Theme'
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
+import { Colors } from '../../App/theme'
 
 const markTutorialFin = jest.fn()
 

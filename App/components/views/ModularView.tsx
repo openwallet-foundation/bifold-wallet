@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { Colors, borderRadius } from '../../Theme'
+import { Colors, borderRadius } from '../../theme'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../Theme'
+import { Colors } from '../theme'
 
 import { SafeAreaScrollView, Text } from 'components'
 import { SettingsStackParams } from 'types/navigators'

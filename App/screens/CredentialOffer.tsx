@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import { Colors } from '../Theme'
-import { parseSchema } from '../helpers'
+import { Colors } from '../theme'
+import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
 import NotificationModal from 'components/modals/NotificationModal'
