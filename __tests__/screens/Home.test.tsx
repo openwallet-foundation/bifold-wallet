@@ -17,16 +17,16 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: mockT }),
 }))
 
-const mockNavigate = jest.fn();
+const mockNavigate = jest.fn()
 jest.mock('@react-navigation/core', () => {
-  const module = jest.requireActual('@react-navigation/core');
+  const module = jest.requireActual('@react-navigation/core')
   return {
     ...module,
     useNavigation: () => ({
       navigate: mockNavigate,
     }),
-  };
-});
+  }
+})
 
 describe('displays a home screen', () => {
   afterEach(() => {
@@ -106,7 +106,7 @@ describe('displays a home screen', () => {
 
       fireEvent(notificationCredentialListItemInstance, 'press')
 
-      expect(mockNavigate).toHaveBeenCalledWith('Credential Offer', { credentialId: testCredentialRecords[0].id})
+      expect(mockNavigate).toHaveBeenCalledWith('Credential Offer', { credentialId: testCredentialRecords[0].id })
     })
   })
 })
