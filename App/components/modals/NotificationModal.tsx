@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 })
 
-interface Props {
+interface NotificationModalProps {
   title: string
   doneTitle?: string
   onDone?: () => void
@@ -43,7 +43,14 @@ interface Props {
   visible?: boolean
 }
 
-const NotificationModal: React.FC<Props> = ({ title, doneTitle, onDone, onHome, visible, children }) => {
+const NotificationModal: React.FC<NotificationModalProps> = ({
+  title,
+  doneTitle,
+  onDone,
+  onHome,
+  visible,
+  children,
+}) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
