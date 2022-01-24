@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
+import { Colors } from '../theme'
 
 import { Button, TextInput } from 'components'
 import { ButtonType } from 'components/buttons/Button'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Colors } from '../theme'
 
 interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>

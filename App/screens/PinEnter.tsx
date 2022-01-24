@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, SafeAreaView, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
-import { TextInput, Button } from 'components'
 import { Colors } from '../theme'
+
+import { TextInput, Button } from 'components'
 
 interface PinEnterProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
