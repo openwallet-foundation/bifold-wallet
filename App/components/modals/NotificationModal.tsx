@@ -15,20 +15,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
-  imageContainer: {
+  childContainer: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  textContainer: {
-    flexDirection: 'row',
-  },
-  text: {
-    color: Colors.text,
-  },
-  link: {
-    color: Colors.text,
-    textDecorationLine: 'underline',
   },
   buttonContainer: {
     justifyContent: 'flex-end',
@@ -47,12 +37,13 @@ const styles = StyleSheet.create({
 
 interface Props {
   title: string
-  visible?: boolean
+  doneTitle?: string
   onDone?: () => void
   onHome?: () => void
+  visible?: boolean
 }
 
-const NotificationModal: React.FC<Props> = ({ title, visible, onDone, onHome, children }) => {
+const NotificationModal: React.FC<Props> = ({ title, doneTitle, onDone, onHome, visible, children }) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
@@ -80,19 +71,12 @@ const NotificationModal: React.FC<Props> = ({ title, visible, onDone, onHome, ch
             <Icon name="home" size={24} color={Colors.text}></Icon>
           </TouchableOpacity>
         </View>
-        <View style={styles.imageContainer}>
+        <View style={styles.childContainer}>
           <Title>{title}</Title>
           {children}
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>Your</Text>
-            <Text> </Text>
-            <Text style={styles.link}>activity log</Text>
-            <Text> </Text>
-            <Text style={styles.text}>has been updated</Text>
-          </View>
         </View>
         <View style={styles.buttonContainer}>
-          <Button title={t('Global.Done')} onPress={onDone || close}></Button>
+          <Button title={doneTitle || t('Global.Done')} onPress={onDone || close}></Button>
         </View>
       </View>
     </Modal>

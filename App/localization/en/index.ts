@@ -71,7 +71,8 @@ const translation = {
     "CredentialAccepted": "Credential Accepted",
     "CredentialRejected": "Credential Rejected",
     "CredentialAddedToYourWallet": "Credential added to your wallet",
-    "CredentialDeclined": "Credential declined"
+    "CredentialDeclined": "Credential declined",
+    "CredentialOnTheWay": "Your credential is on the way"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
