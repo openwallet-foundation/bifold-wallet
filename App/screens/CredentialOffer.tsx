@@ -13,10 +13,12 @@ import { Colors } from '../theme'
 import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
-import { HomeStackParams } from 'types/navigators'
+import ActivityLogLink from 'components/misc/ActivityLogLink'
+import NotificationModal from 'components/modals/NotificationModal'
+import { CredentialStackParams, HomeStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
+  navigation: StackNavigationProp<HomeStackParams, 'Home'> & StackNavigationProp<CredentialStackParams, 'Credentials'>
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
 
@@ -41,6 +43,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
+  const [pendingModalVisible, setPendingModalVisible] = useState(false)
+  const [acceptedModalVisible, setAcceptedModalVisible] = useState(false)
+  const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
   if (!agent?.credentials) {
     Toast.show({
@@ -84,31 +89,21 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   useEffect(() => {
-    if (credential.state === CredentialState.Done) {
-      Toast.show({
-        type: 'success',
-        text1: t('CredentialOffer.CredentialAccepted'),
-      })
-      navigation.goBack()
+    if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
+      pendingModalVisible && setPendingModalVisible(false)
+      setAcceptedModalVisible(true)
     }
   }, [credential])
 
   useEffect(() => {
     if (credential.state === CredentialState.Declined) {
-      Toast.show({
-        type: 'info',
-        text1: t('CredentialOffer.CredentialRejected'),
-      })
-      navigation.goBack()
+      setDeclinedModalVisible(true)
     }
   }, [credential])
 
   const handleAcceptPress = async () => {
     setButtonsVisible(false)
-    Toast.show({
-      type: 'info',
-      text1: t('CredentialOffer.AcceptingCredential'),
-    })
+    setPendingModalVisible(true)
     try {
       await agent.credentials.acceptOffer(credential.id)
     } catch (e: unknown) {
@@ -117,6 +112,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         text1: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
+      setPendingModalVisible(false)
     }
   }
 
@@ -127,12 +123,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
+          setButtonsVisible(false)
           Toast.show({
             type: 'info',
             text1: t('CredentialOffer.RejectingCredential'),
           })
           try {
             await agent.credentials.declineOffer(credential.id)
+            Toast.hide()
           } catch (e: unknown) {
             Toast.show({
               type: 'error',
@@ -148,6 +146,34 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   return (
     <View style={styles.container}>
+      <NotificationModal
+        title={t('CredentialOffer.CredentialOnTheWay')}
+        doneTitle={t('Global.Cancel')}
+        visible={pendingModalVisible}
+        onDone={() => {
+          setPendingModalVisible(false)
+        }}
+      ></NotificationModal>
+      <NotificationModal
+        title={t('CredentialOffer.CredentialAddedToYourWallet')}
+        visible={acceptedModalVisible}
+        onDone={() => {
+          setAcceptedModalVisible(false)
+          navigation.navigate('Credentials')
+        }}
+      >
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
+      <NotificationModal
+        title={t('CredentialOffer.CredentialDeclined')}
+        visible={declinedModalVisible}
+        onDone={() => {
+          setDeclinedModalVisible(false)
+          navigation.navigate('Home')
+        }}
+      >
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
       <ModularView
         title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}

@@ -14,6 +14,7 @@ const translation = {
     "ThisDecisionCannotBeChanged.": "This decision cannot be changed.",
     "Failure": "Failure",
     "SomethingWentWrong": "Something went wrong",
+    "Done": "Done"
   },
   "Language": {
     "English": "English",
@@ -69,6 +70,9 @@ const translation = {
     "CredentialNotFound": "Credential not found",
     "CredentialAccepted": "Credential Accepted",
     "CredentialRejected": "Credential Rejected",
+    "CredentialAddedToYourWallet": "Credential added to your wallet",
+    "CredentialDeclined": "Credential declined",
+    "CredentialOnTheWay": "Your credential is on the way"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
