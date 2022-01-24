@@ -1,6 +1,5 @@
 import type { CredentialRecord } from '@aries-framework/core'
 import type { StackNavigationProp } from '@react-navigation/stack'
-import type { CredentialStackParams } from 'navigators/CredentialStack'
 
 import { useNavigation } from '@react-navigation/core'
 import { DateTime } from 'luxon'
@@ -12,6 +11,8 @@ import { Colors } from '../../theme'
 import { parseSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
+
+import { CredentialStackParams } from 'types/navigators'
 
 interface Props {
   credential: CredentialRecord

@@ -1,11 +1,11 @@
 import type { StackNavigationProp } from '@react-navigation/stack'
-import type { CredentialStackParams } from 'navigators/CredentialStack'
 
 import { RouteProp } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SafeAreaScrollView, Text } from 'components'
+import { CredentialStackParams } from 'types/navigators'
 
 interface CredentialDetailsProps {
   navigation: StackNavigationProp<CredentialStackParams, 'Credential Details'>
