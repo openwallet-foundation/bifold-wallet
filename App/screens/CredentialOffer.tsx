@@ -13,11 +13,12 @@ import { Colors } from '../theme'
 import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
+import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
-import { HomeStackParams } from 'types/navigators'
+import { CredentialStackParams, HomeStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Credential Offer'>
+  navigation: StackNavigationProp<HomeStackParams, 'Home'> & StackNavigationProp<CredentialStackParams, 'Credentials'>
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
 
@@ -42,6 +43,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
+  const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [acceptedModalVisible, setAcceptedModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
@@ -88,6 +90,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   useEffect(() => {
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
+      pendingModalVisible && setPendingModalVisible(false)
       setAcceptedModalVisible(true)
     }
   }, [credential])
@@ -100,19 +103,16 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const handleAcceptPress = async () => {
     setButtonsVisible(false)
-    Toast.show({
-      type: 'info',
-      text1: t('CredentialOffer.AcceptingCredential'),
-    })
+    setPendingModalVisible(true)
     try {
       await agent.credentials.acceptOffer(credential.id)
-      Toast.hide()
     } catch (e: unknown) {
       Toast.show({
         type: 'error',
         text1: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
+      setPendingModalVisible(false)
     }
   }
 
@@ -147,13 +147,23 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   return (
     <View style={styles.container}>
       <NotificationModal
+        title={t('CredentialOffer.CredentialOnTheWay')}
+        doneTitle={t('Global.Cancel')}
+        visible={pendingModalVisible}
+        onDone={() => {
+          setPendingModalVisible(false)
+        }}
+      ></NotificationModal>
+      <NotificationModal
         title={t('CredentialOffer.CredentialAddedToYourWallet')}
         visible={acceptedModalVisible}
         onDone={() => {
           setAcceptedModalVisible(false)
-          navigation.navigate('Home')
+          navigation.navigate('Credentials')
         }}
-      ></NotificationModal>
+      >
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
       <NotificationModal
         title={t('CredentialOffer.CredentialDeclined')}
         visible={declinedModalVisible}
@@ -161,7 +171,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           setDeclinedModalVisible(false)
           navigation.navigate('Home')
         }}
-      ></NotificationModal>
+      >
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
       <ModularView
         title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
