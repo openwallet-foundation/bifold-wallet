@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const AppHeaderLarge: React.FC<Props> = () => {
+const AppHeaderLarge: React.FC = () => {
   return (
     <View style={styles.headerLarge}>
       <Image source={Images.logoLarge} />
