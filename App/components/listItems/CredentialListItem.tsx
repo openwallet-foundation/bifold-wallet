@@ -7,30 +7,30 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../../theme'
+import { Colors, CredentialTheme } from '../../theme'
 import { parseSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
 import { CredentialStackParams } from 'types/navigators'
 
-interface Props {
+interface CredentialListItemProps {
   credential: CredentialRecord
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
+    minHeight: 125,
     marginTop: 15,
     marginHorizontal: 15,
     padding: 10,
-    backgroundColor: Colors.shadow,
+    backgroundColor: CredentialTheme.background,
     borderRadius: 15,
     justifyContent: 'space-between',
   },
 })
 
-const CredentialListItem: React.FC<Props> = ({ credential }) => {
+const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) => {
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
   return (
     <TouchableOpacity
