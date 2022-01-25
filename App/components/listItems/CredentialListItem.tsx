@@ -7,6 +7,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { IndexedIndyCredentialMetadata, INDY_CREDENTIAL_KEY } from '../../constants'
 import { Colors, CredentialTheme } from '../../theme'
 import { parseSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
@@ -38,17 +39,14 @@ const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) =
       onPress={() => navigation.navigate('Credential Details', { credentialId: credential.id })}
     >
       <View>
-        <Title style={{ color: Colors.text }}>{parseSchema(credential.metadata.schemaId)}</Title>
+        <Title style={{ color: Colors.text }}>
+          {parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
+        </Title>
         <Text style={{ color: Colors.text }}>
-          Issued on {DateTime.fromJSDate(credential.createdAt).toFormat('LLL d, yyyy')}
+          Issued on {DateTime.fromJSDate(credential.createdAt).toFormat('LLL d, yyyy (hh:mm a)')}
         </Text>
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={{ color: Colors.text }}>
-          {credential?.credentialAttributes?.find((n) => n.name === 'given_name')?.value}{' '}
-          {credential?.credentialAttributes?.find((n) => n.name === 'surname')?.value}
-        </Text>
-
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
         <Icon name="chevron-right" color={Colors.text} size={30} />
       </View>
     </TouchableOpacity>
