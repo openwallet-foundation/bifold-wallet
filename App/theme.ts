@@ -12,6 +12,9 @@ export const BaseColors: BaseColor = {
   darkBlue: '#003366',
   darkBlueLightTransparent: `rgba(0, 51, 102, ${heavyOpacity})`,
   darkBlueHeavyTransparent: `rgba(0, 51, 102, ${lightOpacity})`,
+  darkGreen: '#35823F',
+  darkGreenLightTransparent: `rgba(53, 130, 63, ${heavyOpacity})`,
+  darkGreenHeavyTransparent: `rgba(53, 130, 63, ${lightOpacity})`,
   darkGrey: '#1C1C1E',
   lightBlue: '#D9EAF7',
   lightGrey: '#313132',
@@ -64,19 +67,19 @@ interface CredentialTheme {
 
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
-  background: BaseColors.offWhite,
+  background: BaseColors.black,
   backgroundLight: BaseColors.lightBlue,
   borderLight: BaseColors.mediumBlue,
-  primary: BaseColors.darkBlue,
-  primaryActive: BaseColors.darkBlueTransparent,
+  primary: BaseColors.darkGreen,
+  primaryActive: BaseColors.darkGreenHeavyTransparent,
   shadow: BaseColors.darkGrey,
-  text: BaseColors.lightGrey,
+  text: BaseColors.white,
   ...BaseColors,
   ...StatusColors,
 }
 
 export const CredentialTheme: CredentialTheme = {
-  background: Colors.white,
+  background: Colors.shadow,
 }
 
 export const TextTheme: TextTheme = {
