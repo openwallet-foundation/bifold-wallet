@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius,
     fontSize: 16,
-    backgroundColor: Colors.backgroundLight,
+    backgroundColor: Colors.background,
     color: Colors.text,
     borderWidth: 2,
-    borderColor: 'transparent',
+    borderColor: Colors.transparent,
   },
 })
 

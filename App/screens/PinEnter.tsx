@@ -38,6 +38,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
         accessible={true}
         accessibilityLabel={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
+        placeholderTextColor={Colors.lightGrey}
         autoFocus
         maxLength={6}
         keyboardType="numeric"
