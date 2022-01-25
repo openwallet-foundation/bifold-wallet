@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Keyboard } from 'react-native'
+import { Alert, Keyboard, SafeAreaView, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 
-import { TextInput, SafeAreaScrollView, Button } from 'components'
+import { Colors } from '../theme'
+
+import { TextInput, Button } from 'components'
 
 interface PinEnterProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+const style = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.background,
+    margin: 20,
+  },
+})
 
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
@@ -23,12 +32,13 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   }
 
   return (
-    <SafeAreaScrollView>
+    <SafeAreaView style={[style.container]}>
       <TextInput
         label={t('Global.EnterPin')}
         accessible={true}
         accessibilityLabel={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
+        placeholderTextColor={Colors.lightGrey}
         autoFocus
         maxLength={6}
         keyboardType="numeric"
@@ -49,7 +59,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           checkPin(pin)
         }}
       />
-    </SafeAreaScrollView>
+    </SafeAreaView>
   )
 }
 
