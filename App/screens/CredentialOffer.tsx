@@ -2,13 +2,13 @@ import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
 import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
-import { IndyCredentialMetadata } from '@aries-framework/core/build/types'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
+import { IndexedIndyCredentialMetadata, indyCredentialKey } from '../constants'
 import { Colors } from '../theme'
 import { parseSchema } from '../utils/helpers'
 
@@ -22,11 +22,6 @@ interface CredentialOfferProps {
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
 
-// FIXME: Remove once fixed in AFJ
-interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
-  [key: string]: string | undefined
-}
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.background,
@@ -36,8 +31,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
-
-const INDY_CREDENTIAL_KEY = '_internal/indyCredential'
 
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
@@ -175,7 +168,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <ModularView
-        title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
+        title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(indyCredentialKey)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList
