@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-import { Colors, Buttons, ActiveOpacity } from '../../theme'
+import { Colors, Buttons, heavyOpacity } from '../../theme'
 
 export enum ButtonType {
   Primary,
@@ -57,7 +57,7 @@ const Button: React.FC<ButtonProps> = ({
         negative && styles.negative,
       ]}
       disabled={disabled}
-      activeOpacity={ActiveOpacity}
+      activeOpacity={heavyOpacity}
     >
       <Text
         style={[

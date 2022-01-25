@@ -31,7 +31,7 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
     }
   >
     <Icon
-      color="#35823f"
+      color="#35823F"
       name="check-box"
       size={36}
     />
