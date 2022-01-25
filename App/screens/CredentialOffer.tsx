@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import { IndexedIndyCredentialMetadata, INDY_CREDENTIAL_KEY } from '../constants'
+import { IndexedIndyCredentialMetadata, indyCredentialKey } from '../constants'
 import { Colors } from '../theme'
 import { parseSchema } from '../utils/helpers'
 
@@ -168,7 +168,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <ModularView
-        title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
+        title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(indyCredentialKey)?.schemaId)}
         subtitle={connection?.alias || connection?.invitation?.label}
         content={
           <FlatList

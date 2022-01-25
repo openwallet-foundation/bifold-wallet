@@ -33,7 +33,16 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
   }
 
-  const credential = getCredentialRecord(route?.params?.credentialId)
+  if (!route.params.credentialId) {
+    Toast.show({
+      type: 'error',
+      text1: t('CredentialOffer.CredentialNotFound'),
+    })
+    navigation.goBack()
+    return null
+  }
+
+  const credential = getCredentialRecord(route.params.credentialId)
 
   if (!credential) {
     Toast.show({

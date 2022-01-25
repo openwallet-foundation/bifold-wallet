@@ -7,7 +7,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { IndexedIndyCredentialMetadata, INDY_CREDENTIAL_KEY } from '../../constants'
+import { credentialDateTimeFormatString, IndexedIndyCredentialMetadata, indyCredentialKey } from '../../constants'
 import { Colors, CredentialTheme } from '../../theme'
 import { parseSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
@@ -40,10 +40,10 @@ const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) =
     >
       <View>
         <Title style={{ color: Colors.text }}>
-          {parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(INDY_CREDENTIAL_KEY)?.schemaId)}
+          {parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(indyCredentialKey)?.schemaId)}
         </Title>
         <Text style={{ color: Colors.text }}>
-          Issued on {DateTime.fromJSDate(credential.createdAt).toFormat('LLL d, yyyy (hh:mm a)')}
+          Issued on {DateTime.fromJSDate(credential.createdAt).toFormat(credentialDateTimeFormatString)}
         </Text>
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
