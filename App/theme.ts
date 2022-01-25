@@ -16,6 +16,7 @@ export const BaseColors: BaseColor = {
   darkGreenLightTransparent: `rgba(53, 130, 63, ${heavyOpacity})`,
   darkGreenHeavyTransparent: `rgba(53, 130, 63, ${lightOpacity})`,
   darkGrey: '#1C1C1E',
+  darkGreyAlt: '#313132',
   green: '#2D6E35',
   lightBlue: '#D9EAF7',
   lightGrey: '#D3D3D3',
