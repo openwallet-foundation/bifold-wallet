@@ -173,7 +173,7 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#35823f",
+              "color": "#35823F",
               "fontSize": 18,
               "fontWeight": "bold",
             },
@@ -207,7 +207,7 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Object {
             "backgroundColor": "rgba(53, 130, 63, 1)",
-            "borderColor": "#35823f",
+            "borderColor": "#35823F",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -229,7 +229,7 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Object {
             "backgroundColor": "rgba(0, 0, 0, 0)",
-            "borderColor": "#35823f",
+            "borderColor": "#35823F",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -270,12 +270,12 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#35823f",
+              "color": "#35823F",
               "fontSize": 18,
               "fontWeight": "bold",
             },
             Object {
-              "color": "#35823f",
+              "color": "#35823F",
               "paddingLeft": 20,
             },
           ]
