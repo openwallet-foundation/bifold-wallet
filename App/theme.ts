@@ -2,35 +2,44 @@ import { StyleSheet } from 'react-native'
 
 type BaseColor = Record<string, string>
 
-export const ActiveOpacity = 0.7
-
 export const borderRadius = 4
+export const heavyOpacity = 0.7
+export const lightOpacity = 0.35
+export const zeroOpacity = 0.0
 
 export const BaseColors: BaseColor = {
   black: '#000000',
+  darkBlue: '#003366',
+  darkBlueLightTransparent: `rgba(0, 51, 102, ${heavyOpacity})`,
+  darkBlueHeavyTransparent: `rgba(0, 51, 102, ${lightOpacity})`,
   darkGrey: '#1C1C1E',
+  lightBlue: '#D9EAF7',
+  lightGrey: '#313132',
+  mediumBlue: '#B9CEDE',
+  offWhite: '#F2F2F2',
   green: '#2D6E35',
   red: '#DE3333',
-  white: '#FFFFFF',
+  transparent: `rgba(0, 0, 0, ${zeroOpacity})`,
   yellow: '#FCBA19',
-  mediumBlue: '#2E8540',
-  lightBlue: '#87B37A',
-  transparent: 'rgba(0, 0, 0, 0)',
+  white: '#FFFFFF',
+}
+
+export const StatusColors: BaseColor = {
+  error: BaseColors.red,
+  info: BaseColors.black,
+  success: BaseColors.green,
+  warning: BaseColors.black,
 }
 
 interface ColorTheme extends BaseColor {
+  accent: string
+  background: string
+  backgroundLight: string
+  borderLight: string
   primary: string
   primaryActive: string
-  text: string
-  background: string
   shadow: string
-  toastSuccess: string
-  toastError: string
-  toastInfo: string
-  transparent: string
-  accent: string
-  borderLight: string
-  backgroundLight: string
+  text: string
 }
 
 interface FontAttributes {
@@ -49,20 +58,25 @@ interface TextTheme {
   caption: FontAttributes
 }
 
+interface CredentialTheme {
+  background: string
+}
+
 export const Colors: ColorTheme = {
-  primary: '#35823f',
-  primaryActive: '#003366B3',
-  text: BaseColors.white,
-  background: BaseColors.black,
-  shadow: BaseColors.darkGrey,
-  toastSuccess: BaseColors.green,
-  toastError: BaseColors.red,
-  toastInfo: BaseColors.black,
   accent: BaseColors.yellow,
-  borderLight: BaseColors.mediumBlue,
+  background: BaseColors.offWhite,
   backgroundLight: BaseColors.lightBlue,
-  transparent: BaseColors.transparent,
+  borderLight: BaseColors.mediumBlue,
+  primary: BaseColors.darkBlue,
+  primaryActive: BaseColors.darkBlueTransparent,
+  shadow: BaseColors.darkGrey,
+  text: BaseColors.lightGrey,
   ...BaseColors,
+  ...StatusColors,
+}
+
+export const CredentialTheme: CredentialTheme = {
+  background: Colors.white,
 }
 
 export const TextTheme: TextTheme = {
@@ -112,7 +126,7 @@ export const Buttons = StyleSheet.create({
   primaryDisabled: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: 'rgba(66, 128, 62, 0.3)',
+    backgroundColor: Colors.darkBlueHeavyTransparent,
   },
   primaryText: {
     ...TextTheme.normal,
@@ -137,7 +151,7 @@ export const Buttons = StyleSheet.create({
     padding: 16,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: 'rgba(0, 51, 102, 0.7)',
+    borderColor: Colors.darkBlueLightTransparent,
     backgroundColor: Colors.white,
   },
   secondaryText: {
@@ -149,7 +163,7 @@ export const Buttons = StyleSheet.create({
   secondaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: 'rgba(0, 51, 102, 0.7)',
+    color: Colors.darkBlueLightTransparent,
     textAlign: 'center',
   },
 })
