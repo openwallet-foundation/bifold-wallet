@@ -61,6 +61,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       <TextInput
         label={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
+        placeholderTextColor={Colors.lightGrey}
         accessible={true}
         accessibilityLabel={t('Global.EnterPin')}
         maxLength={6}
@@ -75,6 +76,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         accessible={true}
         accessibilityLabel={t('PinCreate.ReenterPin')}
         placeholder={t('Global.6DigitPin')}
+        placeholderTextColor={Colors.lightGrey}
         maxLength={6}
         keyboardType="numeric"
         secureTextEntry
