@@ -1,16 +1,26 @@
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Keyboard } from 'react-native'
+import { Alert, Keyboard, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
+import { Colors } from '../theme'
 
-import { Button, SafeAreaScrollView, TextInput } from 'components'
+import { Button, TextInput } from 'components'
+import { ButtonType } from 'components/buttons/Button'
 
 interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+const style = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.background,
+    margin: 20,
+  },
+})
 
 const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
@@ -47,10 +57,11 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   }
 
   return (
-    <SafeAreaScrollView>
+    <SafeAreaView style={[style.container]}>
       <TextInput
         label={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
+        placeholderTextColor={Colors.lightGrey}
         accessible={true}
         accessibilityLabel={t('Global.EnterPin')}
         maxLength={6}
@@ -65,6 +76,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         accessible={true}
         accessibilityLabel={t('PinCreate.ReenterPin')}
         placeholder={t('Global.6DigitPin')}
+        placeholderTextColor={Colors.lightGrey}
         maxLength={6}
         keyboardType="numeric"
         secureTextEntry
@@ -79,12 +91,13 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       <Button
         title={t('PinCreate.Create')}
         accessibilityLabel={t('PinCreate.Create')}
+        buttonType={ButtonType.Primary}
         onPress={() => {
           Keyboard.dismiss()
           confirmEntry(pin, pinTwo)
         }}
       />
-    </SafeAreaScrollView>
+    </SafeAreaView>
   )
 }
 
