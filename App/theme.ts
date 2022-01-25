@@ -9,6 +9,8 @@ export const borderRadius = 4
 export const BaseColors: BaseColor = {
   black: '#000000',
   darkGrey: '#1C1C1E',
+  lightGrey: '#D3D3D3',
+  lightGreyAlt: '#F2F2F2',
   green: '#2D6E35',
   red: '#DE3333',
   white: '#FFFFFF',
