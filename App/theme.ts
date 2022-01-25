@@ -129,7 +129,7 @@ export const Buttons = StyleSheet.create({
   primaryDisabled: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: Colors.darkBlueHeavyTransparent,
+    backgroundColor: Colors.darkGreenHeavyTransparent,
   },
   primaryText: {
     ...TextTheme.normal,
@@ -154,7 +154,7 @@ export const Buttons = StyleSheet.create({
     padding: 16,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: Colors.darkBlueLightTransparent,
+    borderColor: Colors.darkGreenLightTransparent,
     backgroundColor: Colors.white,
   },
   secondaryText: {
@@ -166,7 +166,7 @@ export const Buttons = StyleSheet.create({
   secondaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.darkBlueLightTransparent,
+    color: Colors.darkGreenLightTransparent,
     textAlign: 'center',
   },
 })
