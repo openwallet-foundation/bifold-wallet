@@ -19,4 +19,6 @@ export interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
   [key: string]: string | undefined
 }
 
-export const INDY_CREDENTIAL_KEY = '_internal/indyCredential'
+export const indyCredentialKey = '_internal/indyCredential'
+
+export const credentialDateTimeFormatString = 'LLL d, yyyy (hh:mm a)'
