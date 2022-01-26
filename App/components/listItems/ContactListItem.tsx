@@ -4,7 +4,8 @@ import { DateTime } from 'luxon'
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { Colors, borderRadius } from '../../theme'
+import { dateFormatString } from '../../constants'
+import { borderRadius, ContactTheme } from '../../theme'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     padding: 10,
     borderRadius,
-    backgroundColor: Colors.shadow,
+    backgroundColor: ContactTheme.background,
   },
   date: {
     textAlign: 'right',
@@ -30,7 +31,7 @@ const ContactListItem: React.FC<Props> = ({ contact }) => {
     <View key={contact.id} style={styles.container}>
       <Title>{contact?.alias || contact?.invitation?.label}</Title>
       <Text>{contact.did}</Text>
-      <Text style={styles.date}>{DateTime.fromJSDate(contact.createdAt).toFormat('LLL d, yyyy')}</Text>
+      <Text style={styles.date}>{DateTime.fromJSDate(contact.createdAt).toFormat(dateFormatString)}</Text>
     </View>
   )
 }
