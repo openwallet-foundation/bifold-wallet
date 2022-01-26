@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
-    backgroundColor: 'black',
+    backgroundColor: Colors.black,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     height: 250,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: Colors.primary,
-    backgroundColor: '#ffffff30',
+    borderColor: Colors.white,
+    backgroundColor: Colors.transparent,
   },
   viewFinderContainer: {
     flex: 1,
@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    color: Colors.text,
+    color: Colors.white,
     padding: 4,
   },
   text: {
-    color: Colors.text,
+    color: Colors.white,
   },
 })
 
