@@ -71,6 +71,14 @@ interface ContactTheme {
   background: string
 }
 
+interface SettingsTheme {
+  background: string
+}
+
+interface SingleSelectBlockTheme {
+  background: string
+}
+
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
   background: BaseColors.black,
@@ -89,6 +97,14 @@ export const CredentialTheme: CredentialTheme = {
 }
 
 export const ContactTheme: ContactTheme = {
+  background: Colors.shadow,
+}
+
+export const SettingsTheme: SettingsTheme = {
+  background: Colors.shadow,
+}
+
+export const SingleSelectBlockTheme: SingleSelectBlockTheme = {
   background: Colors.shadow,
 }
 
