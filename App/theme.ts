@@ -67,6 +67,10 @@ interface CredentialTheme {
   background: string
 }
 
+interface ContactTheme {
+  background: string
+}
+
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
   background: BaseColors.black,
@@ -81,6 +85,10 @@ export const Colors: ColorTheme = {
 }
 
 export const CredentialTheme: CredentialTheme = {
+  background: Colors.shadow,
+}
+
+export const ContactTheme: ContactTheme = {
   background: Colors.shadow,
 }
 
