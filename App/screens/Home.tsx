@@ -6,13 +6,7 @@ import { FlatList, StyleSheet, View } from 'react-native'
 
 import { Colors } from '../theme'
 
-import {
-  AppHeaderLarge,
-  ModularView,
-  NotificationCredentialListItem,
-  NotificationProofListItem,
-  Text,
-} from 'components'
+import { ModularView, NotificationCredentialListItem, NotificationProofListItem, Text } from 'components'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,7 +22,6 @@ const Home: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <AppHeaderLarge />
       <ModularView
         title={t('Home.Notifications')}
         content={
