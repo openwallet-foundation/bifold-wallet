@@ -13,12 +13,10 @@ import InfoTextBox from './texts/InfoTextBox'
 import Label from './texts/Label'
 import Text from './texts/Text'
 import Title from './texts/Title'
-import AppHeaderLarge from './views/AppHeaderLarge'
 import ModularView from './views/ModularView'
 import SafeAreaScrollView from './views/SafeAreaScrollView'
 
 export {
-  AppHeaderLarge,
   CheckBoxRow,
   ContactListItem,
   CredentialListItem,

@@ -7,7 +7,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, borderRadius } from '../../theme'
+import { Colors, borderRadius, TextTheme } from '../../theme'
 import Text from '../texts/Text'
 
 import { HomeStackParams } from 'types/navigators'
@@ -27,9 +27,6 @@ const styles = StyleSheet.create({
     borderRadius,
     backgroundColor: Colors.background,
   },
-  title: {
-    fontWeight: 'bold',
-  },
 })
 
 const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
@@ -42,8 +39,8 @@ const NotificationProofListItem: React.FC<Props> = ({ notification }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Proof Request', { proofId: id })}>
       <View>
-        <Text style={styles.title}>{requestMessage?.indyProofRequest?.name}</Text>
-        <Text>{connection?.alias || connection?.invitation?.label}</Text>
+        <Text style={TextTheme.headingFour}>{requestMessage?.indyProofRequest?.name}</Text>
+        <Text style={TextTheme.normal}>{connection?.alias || connection?.invitation?.label}</Text>
       </View>
       <Icon name="chevron-right" color={Colors.text} size={30} />
     </TouchableOpacity>

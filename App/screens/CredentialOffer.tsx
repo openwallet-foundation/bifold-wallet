@@ -9,10 +9,11 @@ import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import { IndexedIndyCredentialMetadata, indyCredentialKey } from '../constants'
-import { Colors } from '../theme'
+import { CredentialOfferTheme } from '../theme'
 import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
+import { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
 import { CredentialStackParams, HomeStackParams } from 'types/navigators'
@@ -24,11 +25,9 @@ interface CredentialOfferProps {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
-    height: '100%',
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
+    backgroundColor: CredentialOfferTheme.background,
   },
 })
 
@@ -152,7 +151,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         visible={acceptedModalVisible}
         onDone={() => {
           setAcceptedModalVisible(false)
-          navigation.navigate('Credentials')
+          navigation.navigate('CredentialsTab')
         }}
       >
         <ActivityLogLink></ActivityLogLink>
@@ -178,8 +177,22 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           />
         }
       />
-      <Button title={t('Global.Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
-      <Button title={t('Global.Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
+      <View style={[{ marginHorizontal: 20 }]}>
+        <View style={[{ paddingBottom: 10 }]}>
+          <Button
+            title={t('Global.Accept')}
+            buttonType={ButtonType.Primary}
+            onPress={handleAcceptPress}
+            disabled={!buttonsVisible}
+          />
+        </View>
+        <Button
+          title={t('Global.Decline')}
+          buttonType={ButtonType.Secondary}
+          onPress={handleRejectPress}
+          disabled={!buttonsVisible}
+        />
+      </View>
     </View>
   )
 }
