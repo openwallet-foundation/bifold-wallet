@@ -82,8 +82,8 @@ interface SingleSelectBlockTheme {
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
   background: BaseColors.black,
-  backgroundLight: BaseColors.lightBlue,
-  borderLight: BaseColors.mediumBlue,
+  backgroundLight: BaseColors.lightGreen,
+  borderLight: BaseColors.mediumGreen,
   primary: BaseColors.darkGreen,
   primaryActive: BaseColors.darkGreenHeavyTransparent,
   shadow: BaseColors.darkGrey,
