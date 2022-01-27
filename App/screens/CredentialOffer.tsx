@@ -9,7 +9,7 @@ import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import { IndexedIndyCredentialMetadata, indyCredentialKey } from '../constants'
-import { Colors } from '../theme'
+import { CredentialOfferTheme } from '../theme'
 import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.background,
+    backgroundColor: CredentialOfferTheme.background,
   },
 })
 
