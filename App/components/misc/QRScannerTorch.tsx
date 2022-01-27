@@ -1,7 +1,8 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+
+import { Colors } from '../../theme'
 
 interface Props {
   active: boolean

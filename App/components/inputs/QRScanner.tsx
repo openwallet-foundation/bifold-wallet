@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useWindowDimensions, Vibration, View, StyleSheet, Text } from 'react-native'
+import { useWindowDimensions, Vibration, View, StyleSheet } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -9,6 +9,7 @@ import { Colors } from '../../theme'
 
 import QRScannerClose from 'components/misc/QRScannerClose'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
+import Text from 'components/texts/Text'
 import { QrCodeScanError } from 'types/erorr'
 
 interface Props {
@@ -45,9 +46,6 @@ const styles = StyleSheet.create({
   icon: {
     color: Colors.white,
     padding: 4,
-  },
-  text: {
-    color: Colors.white,
   },
 })
 
@@ -110,7 +108,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           {error && (
             <View style={styles.errorContainer}>
               <Icon style={styles.icon} name="cancel" size={30}></Icon>
-              <Text style={styles.text}>{error.message}</Text>
+              <Text>{error.message}</Text>
             </View>
           )}
           <View style={styles.viewFinderContainer}>

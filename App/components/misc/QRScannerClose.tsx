@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+
+import { Colors } from '../../theme'
 
 interface Props {
   onPress?: () => void
