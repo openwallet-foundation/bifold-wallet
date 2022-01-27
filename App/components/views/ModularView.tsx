@@ -1,9 +1,8 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { Colors, borderRadius } from '../../theme'
+import { Colors, borderRadius, TextTheme, ModularViewTheme } from '../../theme'
 import Text from '../texts/Text'
-import Title from '../texts/Title'
 
 interface Props {
   title?: string
@@ -14,8 +13,7 @@ interface Props {
 const styles = StyleSheet.create({
   container: {
     borderRadius,
-    backgroundColor: Colors.shadow,
-    width: '90%',
+    backgroundColor: ModularViewTheme.background,
     margin: 20,
     padding: 20,
   },
@@ -27,8 +25,8 @@ const styles = StyleSheet.create({
 const ModularView: React.FC<Props> = ({ title, subtitle, content }) => {
   return (
     <View style={styles.container}>
-      <Title>{title}</Title>
-      <Text>{subtitle}</Text>
+      <Text style={TextTheme.headingFour}>{title}</Text>
+      <Text style={TextTheme.normal}>{subtitle}</Text>
       {typeof content === 'string' ? <Text style={styles.content}>{content}</Text> : content}
     </View>
   )

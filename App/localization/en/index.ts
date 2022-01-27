@@ -9,6 +9,7 @@ const translation = {
     "Confirm": "Confirm",
     "Accept": "Accept",
     "Reject": "Reject",
+    "Decline": "Decline",
     "Back": "Back",
     "Continue": "Continue",
     "ThisDecisionCannotBeChanged.": "This decision cannot be changed.",
