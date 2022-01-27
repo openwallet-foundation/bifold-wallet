@@ -2,7 +2,7 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 
 import { Agent, ConnectionState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { parseUrl } from 'query-string'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,10 +11,10 @@ import Toast from 'react-native-toast-message'
 import { QrCodeScanError } from '../types/erorr'
 
 import { QRScanner } from 'components'
-import { TabStackParams } from 'types/navigators'
+import { HomeStackParams } from 'types/navigators'
 
 interface ScanProps {
-  navigation: BottomTabNavigationProp<TabStackParams, 'ScanTab'>
+  navigation: StackNavigationProp<HomeStackParams, 'Home'>
 }
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
@@ -73,7 +73,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         type: 'success',
         text1: t('Scan.ConnectionAccepted'),
       })
-      navigation.navigate('HomeTab')
+      navigation.navigate('Home')
     }
   }, [connection])
 
@@ -91,7 +91,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       // TODO: Change to a full screen modal
       displaySuccessMessage()
 
-      navigation.navigate('HomeTab')
+      navigation.navigate('Home')
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
       setQrCodeScanError(error)
