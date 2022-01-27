@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../../theme'
+import { Colors, TextTheme } from '../../theme'
 
 import { Button, Title } from 'components'
 import { HomeStackParams } from 'types/navigators'
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonContainer: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    marginBottom: 35,
+    marginHorizontal: 20,
   },
   iconContainer: {
     width: '100%',
@@ -79,7 +79,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           </TouchableOpacity>
         </View>
         <View style={styles.childContainer}>
-          <Title>{title}</Title>
+          <Title style={TextTheme.headingFour}>{title}</Title>
           {children}
         </View>
         <View style={styles.buttonContainer}>

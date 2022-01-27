@@ -144,7 +144,7 @@ describe('displays a credential offer screen', () => {
 
       fireEvent(notificationModalDoneButtonInstance, 'press')
 
-      expect(mockNavigate).toBeCalledWith('Credentials')
+      expect(mockNavigate).toBeCalledWith('CredentialsTab')
     })
   })
 })

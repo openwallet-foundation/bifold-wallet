@@ -67,7 +67,19 @@ interface CredentialTheme {
   background: string
 }
 
+interface CredentialOfferTheme {
+  background: string
+}
+
 interface ContactTheme {
+  background: string
+}
+
+interface ModularViewTheme {
+  background: string
+}
+
+interface ProofRequestTheme {
   background: string
 }
 
@@ -96,7 +108,19 @@ export const CredentialTheme: CredentialTheme = {
   background: Colors.shadow,
 }
 
+export const CredentialOfferTheme: CredentialOfferTheme = {
+  background: Colors.shadow,
+}
+
 export const ContactTheme: ContactTheme = {
+  background: Colors.shadow,
+}
+
+export const ModularViewTheme: ModularViewTheme = {
+  background: Colors.shadow,
+}
+
+export const ProofRequestTheme: ProofRequestTheme = {
   background: Colors.shadow,
 }
 
