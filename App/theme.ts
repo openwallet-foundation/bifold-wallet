@@ -109,7 +109,7 @@ export const CredentialTheme: CredentialTheme = {
 }
 
 export const CredentialOfferTheme: CredentialOfferTheme = {
-  background: Colors.shadow,
+  background: Colors.black,
 }
 
 export const ContactTheme: ContactTheme = {
@@ -121,7 +121,7 @@ export const ModularViewTheme: ModularViewTheme = {
 }
 
 export const ProofRequestTheme: ProofRequestTheme = {
-  background: Colors.shadow,
+  background: Colors.black,
 }
 
 export const SettingsTheme: SettingsTheme = {

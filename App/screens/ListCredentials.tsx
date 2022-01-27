@@ -19,7 +19,7 @@ const ListCredentials: React.FC = () => {
 
   return (
     <FlatList
-      data={credentials}
+      data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
       style={{ backgroundColor: Colors.background }}
       keyExtractor={keyForItem}
       ListEmptyComponent={emptyListComponent}
