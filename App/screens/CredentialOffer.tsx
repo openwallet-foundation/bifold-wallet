@@ -3,6 +3,7 @@ import type { StackNavigationProp } from '@react-navigation/stack'
 
 import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
@@ -16,10 +17,12 @@ import { Button, ModularView, Label } from 'components'
 import { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
-import { CredentialStackParams, HomeStackParams } from 'types/navigators'
+import { HomeStackParams, TabStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Home'> & StackNavigationProp<CredentialStackParams, 'Credentials'>
+  navigation: StackNavigationProp<HomeStackParams, 'Home'> &
+    BottomTabNavigationProp<TabStackParams, 'HomeTab'> &
+    BottomTabNavigationProp<TabStackParams, 'CredentialsTab'>
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
 
@@ -151,6 +154,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         visible={acceptedModalVisible}
         onDone={() => {
           setAcceptedModalVisible(false)
+          navigation.pop()
           navigation.navigate('CredentialsTab')
         }}
       >
@@ -161,7 +165,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         visible={declinedModalVisible}
         onDone={() => {
           setDeclinedModalVisible(false)
-          navigation.navigate('Home')
+          navigation.pop()
+          navigation.navigate('HomeTab')
         }}
       >
         <ActivityLogLink></ActivityLogLink>
