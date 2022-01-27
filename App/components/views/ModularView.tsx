@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   container: {
     borderRadius,
     backgroundColor: Colors.backgroundLight,
-    width: '90%',
     margin: 20,
     padding: 20,
   },
