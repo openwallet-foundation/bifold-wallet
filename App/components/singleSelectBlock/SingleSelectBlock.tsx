@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../../theme'
+import { borderRadius, Colors, SingleSelectBlockTheme } from '../../theme'
 
 import { Text } from 'components'
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    padding: 20,
+  },
   row: {
-    paddingVertical: 12,
-    width: '90%',
-    borderRadius: 8,
-    backgroundColor: Colors.shadow,
-    marginTop: 8,
+    borderRadius: borderRadius * 2,
+    backgroundColor: SingleSelectBlockTheme.background,
     flexDirection: 'row',
-    paddingHorizontal: 12,
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 12,
+    marginBottom: 8,
   },
 })
 export interface BlockSelection {
@@ -39,14 +41,14 @@ const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect
   }
 
   return (
-    <>
+    <View style={styles.container}>
       {selection.map((item) => (
         <TouchableOpacity key={item.id} style={styles.row} onPress={() => handleSelect(item)}>
           <Text>{item.value}</Text>
-          {item.id === selected.id ? <Icon name={'check'} size={25} color={Colors.primary} /> : null}
+          {item.id === selected.id ? <Icon name={'check'} size={25} color={Colors.text} /> : null}
         </TouchableOpacity>
       ))}
-    </>
+    </View>
   )
 }
 
