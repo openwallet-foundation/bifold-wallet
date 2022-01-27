@@ -1,3 +1,5 @@
+// DEPRECATED: This creates dependency cycles
+
 import Button from './buttons/Button'
 import CheckBoxRow from './inputs/CheckBoxRow'
 import QRScanner from './inputs/QRScanner'

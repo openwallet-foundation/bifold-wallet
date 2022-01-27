@@ -6,7 +6,6 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { parseUrl } from 'query-string'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import { QrCodeScanError } from '../types/erorr'
@@ -99,11 +98,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
     }
   }
 
-  return (
-    <View>
-      <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
-    </View>
-  )
+  return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
 }
 
 export default Scan

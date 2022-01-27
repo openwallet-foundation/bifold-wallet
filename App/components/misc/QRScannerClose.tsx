@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { Colors } from '../../theme'
+
 interface Props {
   onPress?: () => void
 }
@@ -21,7 +23,7 @@ const CloseButton: React.FC<Props> = ({ onPress }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>
-        <Icon name="close" size={24} color="#ffffff"></Icon>
+        <Icon name="close" size={24} color={Colors.white}></Icon>
       </TouchableOpacity>
     </View>
   )
