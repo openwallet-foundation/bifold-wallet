@@ -14,6 +14,7 @@ jest.mock('react-i18next', () => ({
 
 const mockNavigate = jest.fn()
 const mockGoBack = jest.fn()
+const mockPop = jest.fn()
 jest.mock('@react-navigation/core', () => {
   const module = jest.requireActual('@react-navigation/core')
   return {
@@ -21,6 +22,7 @@ jest.mock('@react-navigation/core', () => {
     useNavigation: () => ({
       navigate: mockNavigate,
       goBack: mockGoBack,
+      pop: mockPop,
     }),
   }
 })
@@ -67,7 +69,7 @@ describe('displays a credential offer screen', () => {
     test('a loading screen is displayed when the user accepts the credential offer', async () => {
       const { findByText, UNSAFE_getByProps } = render(
         <CredentialOffer
-          navigation={{ navigate: mockNavigate, goBack: mockGoBack } as any}
+          navigation={{ navigate: mockNavigate, goBack: mockGoBack, pop: mockPop } as any}
           route={{ params: { credentialId: mockTestCredentialRecords[0].id } } as any}
         />
       )
@@ -95,7 +97,7 @@ describe('displays a credential offer screen', () => {
 
       const { findByText, UNSAFE_getByProps } = render(
         <CredentialOffer
-          navigation={{ navigate: mockNavigate, goBack: mockGoBack } as any}
+          navigation={{ navigate: mockNavigate, goBack: mockGoBack, pop: mockPop } as any}
           route={{ params: { credentialId: mockTestCredentialRecords[0].id } } as any}
         />
       )
@@ -125,7 +127,7 @@ describe('displays a credential offer screen', () => {
 
       const { findByText, UNSAFE_getByProps } = render(
         <CredentialOffer
-          navigation={{ navigate: mockNavigate, goBack: mockGoBack } as any}
+          navigation={{ navigate: mockNavigate, goBack: mockGoBack, pop: mockPop } as any}
           route={{ params: { credentialId: mockTestCredentialRecords[0].id } } as any}
         />
       )

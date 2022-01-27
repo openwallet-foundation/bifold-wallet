@@ -7,7 +7,7 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, borderRadius, TextTheme } from '../../theme'
+import { Colors, borderRadius, TextTheme, CredentialOfferTheme } from '../../theme'
 import { parseSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 10,
     borderRadius,
-    backgroundColor: Colors.background,
+    backgroundColor: CredentialOfferTheme.background,
   },
 })
 

@@ -18,6 +18,7 @@ import { ProofRequestTheme } from '../theme'
 import { parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
+import { ButtonType } from 'components/buttons/Button'
 import { HomeStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
@@ -33,10 +34,9 @@ interface CredentialDisplay {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: ProofRequestTheme.background,
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
+    backgroundColor: ProofRequestTheme.background,
   },
 })
 
@@ -207,8 +207,22 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           />
         }
       />
-      <Button title={t('Global.Accept')} onPress={handleAcceptPress} disabled={!buttonsVisible} />
-      <Button title={t('Global.Reject')} negative onPress={handleRejectPress} disabled={!buttonsVisible} />
+      <View style={[{ marginHorizontal: 20 }]}>
+        <View style={[{ paddingBottom: 10 }]}>
+          <Button
+            title={t('Global.Accept')}
+            buttonType={ButtonType.Primary}
+            onPress={handleAcceptPress}
+            disabled={!buttonsVisible}
+          />
+        </View>
+        <Button
+          title={t('Global.Decline')}
+          buttonType={ButtonType.Secondary}
+          onPress={handleRejectPress}
+          disabled={!buttonsVisible}
+        />
+      </View>
     </View>
   )
 }
