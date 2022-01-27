@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors } from '../theme'
+import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
 
 import { SafeAreaScrollView, Text } from 'components'
 import { SettingsStackParams } from 'types/navigators'
@@ -21,19 +21,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   groupHeader: {
-    fontSize: 20,
-    marginVertical: 15,
+    ...TextTheme.normal,
+    marginBottom: 8,
   },
   rowGroup: {
-    borderRadius: 8,
-    backgroundColor: Colors.shadow,
+    borderRadius: borderRadius * 2,
+    backgroundColor: SettingsTheme.background,
+    marginBottom: 16,
   },
   row: {
-    paddingVertical: 12,
     flexDirection: 'row',
-    paddingHorizontal: 12,
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 12,
   },
 })
 
@@ -44,11 +44,10 @@ const Settings: React.FC<Props> = ({ navigation }) => {
     <SafeAreaScrollView>
       <View style={styles.container}>
         <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
-
         <View style={styles.rowGroup}>
           <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Language')}>
             <Text>{t('Settings.Language')}</Text>
-            <Icon name={'chevron-right'} size={25} color={Colors.primary} />
+            <Icon name={'chevron-right'} size={25} color={Colors.text} />
           </TouchableOpacity>
         </View>
 
