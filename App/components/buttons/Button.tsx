@@ -10,16 +10,14 @@ export enum ButtonType {
 
 interface ButtonProps {
   title: string
+  buttonType: ButtonType
   accessibilityLabel?: string
   onPress?: () => void
   disabled?: boolean
-  buttonType?: ButtonType
 }
 
-const Button: React.FC<ButtonProps> = ({ title, accessibilityLabel, onPress, disabled = false, buttonType }) => {
+const Button: React.FC<ButtonProps> = ({ title, buttonType, accessibilityLabel, onPress, disabled = false }) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
-  // Keep this until entire app using ENUM to style.
-  const myButtonType = buttonType ? buttonType : ButtonType.Primary
 
   return (
     <TouchableOpacity
@@ -27,17 +25,16 @@ const Button: React.FC<ButtonProps> = ({ title, accessibilityLabel, onPress, dis
       accessible={accessible}
       accessibilityLabel={accessibilityLabel}
       style={[
-        myButtonType === ButtonType.Primary ? Buttons.primary : Buttons.secondary,
-        disabled && (myButtonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
+        buttonType === ButtonType.Primary ? Buttons.primary : Buttons.secondary,
+        disabled && (buttonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
       ]}
       disabled={disabled}
       activeOpacity={heavyOpacity}
     >
       <Text
         style={[
-          myButtonType === ButtonType.Primary ? Buttons.primaryText : Buttons.secondaryText,
-          disabled &&
-            (myButtonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
+          buttonType === ButtonType.Primary ? Buttons.primaryText : Buttons.secondaryText,
+          disabled && (buttonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
         ]}
       >
         {title}
