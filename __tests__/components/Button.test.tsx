@@ -3,8 +3,6 @@ import renderer from 'react-test-renderer'
 
 import Button, { ButtonType } from '../../App/components/buttons/Button'
 
-// jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon')
-
 describe('Button Component', () => {
   it('Primary renders correctly', () => {
     const tree = renderer
