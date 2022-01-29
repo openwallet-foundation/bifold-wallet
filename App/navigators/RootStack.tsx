@@ -19,8 +19,7 @@ import ScanStack from './ScanStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
 
-type GenericFn = () => void
-type StateFn = React.Dispatch<React.SetStateAction<boolean>>
+import { GenericFn, StateFn } from 'types/fn'
 
 const authStack = (setAuthenticated: StateFn) => {
   const Stack = createStackNavigator()
@@ -63,6 +62,7 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
           headerLeft: () => false,
           headerRight: () => {
             return (
+              // TODO:(jl) Create new type of button component
               <TouchableOpacity onPress={onSkipTouched} style={{ marginRight: 14 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={{ color: Colors.white, fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
@@ -74,7 +74,13 @@ const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) =>
         })}
       >
         {(props) => (
-          <Onboarding {...props} nextButtonText={'Next'} previousButtonText={'Back'} pages={pages} style={carousel} />
+          <Onboarding
+            {...props}
+            nextButtonText={'Next'}
+            previousButtonText={'Back'}
+            pages={pages(onSkipTouched)}
+            style={carousel}
+          />
         )}
       </Stack.Screen>
       <Stack.Screen

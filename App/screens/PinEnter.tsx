@@ -6,6 +6,7 @@ import * as Keychain from 'react-native-keychain'
 import { Colors } from '../theme'
 
 import { TextInput, Button } from 'components'
+import { ButtonType } from 'components/buttons/Button'
 
 interface PinEnterProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
@@ -53,6 +54,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
       />
       <Button
         title={t('Global.Submit')}
+        buttonType={ButtonType.Primary}
         accessibilityLabel={t('Global.Submit')}
         onPress={() => {
           Keyboard.dismiss()
