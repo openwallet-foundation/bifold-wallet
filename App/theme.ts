@@ -91,6 +91,12 @@ interface SingleSelectBlockTheme {
   background: string
 }
 
+interface TextBoxTheme {
+  background: string
+  border: string
+  text: string
+}
+
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
   background: BaseColors.black,
@@ -130,6 +136,12 @@ export const SettingsTheme: SettingsTheme = {
 
 export const SingleSelectBlockTheme: SingleSelectBlockTheme = {
   background: Colors.shadow,
+}
+
+export const TextBoxTheme: TextBoxTheme = {
+  background: Colors.darkGreenLightTransparent,
+  border: Colors.borderLight,
+  text: Colors.text,
 }
 
 export const TextTheme: TextTheme = {
