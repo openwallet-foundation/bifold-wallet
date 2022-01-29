@@ -1,7 +1,7 @@
 name: Native Build & Test
 
 env:
-  cacheId: '4' # increment to expire the cache
+  cacheId: '5' # increment to expire the cache
 
 on:
   pull_request:

@@ -5,7 +5,7 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "rgba(53, 130, 63, 0.7)",
         "borderColor": undefined,
         "borderRadius": 5,
         "borderWidth": 1,
@@ -25,6 +25,7 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
     }
   >
     <Icon
+      color="#FFFFFF"
       name="info"
       size={30}
     />
@@ -43,6 +44,8 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
         },
       ]
     }
-  />
+  >
+    Hello World
+  </Text>
 </View>
 `;
