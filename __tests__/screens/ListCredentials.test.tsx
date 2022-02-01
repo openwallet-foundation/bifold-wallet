@@ -79,7 +79,7 @@ describe('displays a credentials list screen', () => {
     test('pressing on a credential in the list takes the holder to a credential detail screen', async () => {
       const { findAllByText } = render(<ListCredentials />)
 
-      const credentialItemInstances = await findAllByText('Unverified Person V0.1.0', { exact: false })
+      const credentialItemInstances = await findAllByText('Unverified Person', { exact: false })
 
       expect(credentialItemInstances.length).toBe(1)
 
