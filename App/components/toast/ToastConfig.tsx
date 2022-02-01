@@ -1,13 +1,19 @@
 import React from 'react'
 
-import { Colors } from '../../theme'
+import { StatusColors } from '../../theme'
 
 import BaseToast from './BaseToast'
 
 export const toastConfig = {
-  success: (props: any) => <BaseToast backgroundColor={Colors.success} icon="check-circle" title={props.text1} />,
-  error: (props: any) => <BaseToast backgroundColor={Colors.error} icon="cancel" title={props.text1} />,
-  info: (props: any) => <BaseToast backgroundColor={Colors.info} icon="alarm" title={props.text1} />,
+  success: (props: any) => (
+    <BaseToast backgroundColor="#DFF0D8" icon="check-circle" title={props.text1} body={props.text2} />
+  ),
+  error: (props: any) => (
+    <BaseToast backgroundColor={StatusColors.error} icon="cancel" title={props.text1} body={props.text2} />
+  ),
+  info: (props: any) => (
+    <BaseToast backgroundColor={StatusColors.info} icon="alarm" title={props.text1} body={props.text2} />
+  ),
 }
 
 export default toastConfig
