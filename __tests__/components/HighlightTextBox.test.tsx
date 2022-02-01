@@ -1,5 +1,5 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { create } from 'react-test-renderer'
 
 import HighlightTextBox from '../../App/components/texts/HighlightTextBox'
 
@@ -7,10 +7,7 @@ jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon')
 
 describe('InfoTextBox Component', () => {
   it('Renders correctly', () => {
-    const tree = renderer
-      // @ts-ignore
-      .create(<HighlightTextBox text="Hello World" />)
-      .toJSON()
+    const tree = create(<HighlightTextBox>Hello World</HighlightTextBox>).toJSON()
 
     expect(tree).toMatchSnapshot()
   })
