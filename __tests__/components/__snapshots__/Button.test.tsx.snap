@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component Primary renders correctly 1`] = `
+<View
+  accessibilityLabel="primary"
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#35823F",
+      "borderRadius": 4,
+      "opacity": 1,
+      "padding": 16,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        },
+        false,
+      ]
+    }
+  >
+    Hello Primary
+  </Text>
+</View>
+`;
+
+exports[`Button Component Secondary renders correctly 1`] = `
+<View
+  accessibilityLabel="secondary"
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "borderColor": "#35823F",
+      "borderRadius": 4,
+      "borderWidth": 2,
+      "opacity": 1,
+      "padding": 16,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#35823F",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        },
+        false,
+      ]
+    }
+  >
+    Hello Secondary
+  </Text>
+</View>
+`;

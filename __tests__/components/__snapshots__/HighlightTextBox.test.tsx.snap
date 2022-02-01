@@ -37,6 +37,8 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
         },
       ]
     }
-  />
+  >
+    Hello World
+  </Text>
 </View>
 `;
