@@ -8,13 +8,16 @@ import Button from 'components/buttons/Button'
 import NotificationModal from 'components/modals/NotificationModal'
 
 const mockT = jest.fn((key: string) => key)
+const mockNavigate = jest.fn()
+const mockGoBack = jest.fn()
+const mockPop = jest.fn()
+
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: mockT }),
 }))
 
-const mockNavigate = jest.fn()
-const mockGoBack = jest.fn()
-const mockPop = jest.fn()
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+
 jest.mock('@react-navigation/core', () => {
   const module = jest.requireActual('@react-navigation/core')
   return {
