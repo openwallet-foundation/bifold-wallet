@@ -1,19 +1,15 @@
 import React from 'react'
+import { ToastShowParams } from 'react-native-toast-message'
 
-import { StatusColors } from '../../theme'
-
-import BaseToast from './BaseToast'
+import BaseToast, { ToastType } from './BaseToast'
 
 export const toastConfig = {
-  success: (props: any) => (
-    <BaseToast backgroundColor="#DFF0D8" icon="check-circle" title={props.text1} body={props.text2} />
+  success: (props: ToastShowParams) => (
+    <BaseToast title={props.text1!} body={props.text2!} toastType={ToastType.Success} />
   ),
-  error: (props: any) => (
-    <BaseToast backgroundColor={StatusColors.error} icon="cancel" title={props.text1} body={props.text2} />
-  ),
-  info: (props: any) => (
-    <BaseToast backgroundColor={StatusColors.info} icon="alarm" title={props.text1} body={props.text2} />
-  ),
+  warn: (props: ToastShowParams) => <BaseToast title={props.text1!} body={props.text2!} toastType={ToastType.Warn} />,
+  error: (props: ToastShowParams) => <BaseToast title={props.text1!} body={props.text2!} toastType={ToastType.Error} />,
+  info: (props: ToastShowParams) => <BaseToast title={props.text1!} body={props.text2!} toastType={ToastType.Info} />,
 }
 
 export default toastConfig

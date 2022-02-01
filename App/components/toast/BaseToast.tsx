@@ -2,13 +2,19 @@ import React from 'react'
 import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, TextTheme, borderRadius } from '../../theme'
+import { Colors, TextTheme, borderRadius, borderWidth, StatusColors } from '../../theme'
 
-interface ToastProps {
+interface BaseToastProps {
   title: string
   body: string
-  backgroundColor: string
-  icon: string
+  toastType: string
+}
+
+export enum ToastType {
+  Success = 'success',
+  Info = 'info',
+  Warn = 'warn',
+  Error = 'error',
 }
 
 const styles = StyleSheet.create({
@@ -17,6 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexDirection: 'row',
     marginTop: 25,
+    borderWidth,
     borderRadius,
   },
   icon: {
@@ -29,21 +36,54 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
-    color: '#2D4821',
+    color: Colors.text,
     fontWeight: 'bold',
   },
   body: {
     marginTop: 10,
-    color: '#2D4821',
+    color: Colors.text,
   },
 })
 
-const BaseToast: React.FC<ToastProps> = ({ title, body, backgroundColor, icon }) => {
+const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
   const { width } = useWindowDimensions()
+  const iconSize = 24
+  let iconName = ''
+  let backgroundColor = ''
+  let borderColor = ''
+
+  switch (toastType) {
+    case ToastType.Success:
+      iconName = 'check-circle'
+      backgroundColor = StatusColors.success
+      borderColor = StatusColors.successBorder
+      break
+
+    case ToastType.Info:
+      iconName = 'info'
+      backgroundColor = StatusColors.info
+      borderColor = StatusColors.infoBorder
+      break
+
+    case ToastType.Warn:
+      iconName = 'report-problem'
+      backgroundColor = StatusColors.warning
+      borderColor = StatusColors.warningBorder
+      break
+
+    case ToastType.Error:
+      iconName = 'error'
+      backgroundColor = StatusColors.error
+      borderColor = StatusColors.errorBorder
+      break
+
+    default:
+      throw new Error('ToastType was not set correctly.')
+  }
 
   return (
-    <View style={[styles.container, { backgroundColor: backgroundColor, width: width - width * 0.1 }]}>
-      <Icon style={[styles.icon]} name={icon} color={Colors.text} size={24} />
+    <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
+      <Icon style={[styles.icon]} name={iconName} color={Colors.text} size={iconSize} />
       <View style={[styles.text]}>
         <Text style={[TextTheme.normal, styles.title]}>{title}</Text>
         <Text style={[TextTheme.normal, styles.body]}>{body}</Text>
