@@ -49,7 +49,12 @@ const translation = {
     "Id": "Id:",
     "CreatedAt": "Created At:",
     "Version": "Version",
-    "Issued": "Issued"
+    "Issued": "Issued",
+    "PrivacyPolicy": "Privacy policy",
+    "TermsAndConditions": "Terms and conditions",
+    "RemoveFromWallet": "Remove from wallet",
+    "Hide": "Hide",
+    "Show": "Show"
   },
   "Home": {
     "Notifications": "Notifications",

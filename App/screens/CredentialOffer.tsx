@@ -173,8 +173,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         content={
           <FlatList
             data={credential.credentialAttributes}
-            keyExtractor={(item) => item.name}
-            renderItem={({ item }) => <Label title={item.name} subtitle={item.value} />}
+            keyExtractor={(attribute) => attribute.name}
+            renderItem={({ item: attribute }) => <Label title={attribute.name} subtitle={attribute.value} />}
           />
         }
       />
