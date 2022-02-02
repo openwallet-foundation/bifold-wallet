@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, TextTheme, borderRadius, borderWidth, StatusColors } from '../../theme'
+import { TextTheme, borderRadius, borderWidth, ColorPallet } from '../../theme'
 
 interface BaseToastProps {
   title: string
@@ -26,22 +26,20 @@ const styles = StyleSheet.create({
     borderWidth,
     borderRadius,
   },
-  icon: {
-    marginTop: 15,
-    marginHorizontal: 15,
-  },
-  text: {
+  textContainer: {
     flexShrink: 1,
     marginVertical: 15,
     marginRight: 10,
   },
+  icon: {
+    marginTop: 15,
+    marginHorizontal: 15,
+  },
   title: {
-    color: Colors.text,
     fontWeight: 'bold',
   },
   body: {
     marginTop: 10,
-    color: Colors.text,
   },
 })
 
@@ -51,30 +49,40 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
   let iconName = ''
   let backgroundColor = ''
   let borderColor = ''
+  let iconColor = ''
+  let textColor = ''
 
   switch (toastType) {
     case ToastType.Success:
       iconName = 'check-circle'
-      backgroundColor = StatusColors.success
-      borderColor = StatusColors.successBorder
+      backgroundColor = ColorPallet.notification.success
+      borderColor = ColorPallet.notification.successBorder
+      iconColor = ColorPallet.notification.successIcon
+      textColor = ColorPallet.notification.successText
       break
 
     case ToastType.Info:
       iconName = 'info'
-      backgroundColor = StatusColors.info
-      borderColor = StatusColors.infoBorder
+      backgroundColor = ColorPallet.notification.info
+      borderColor = ColorPallet.notification.infoBorder
+      iconColor = ColorPallet.notification.infoIcon
+      textColor = ColorPallet.notification.infoText
       break
 
     case ToastType.Warn:
       iconName = 'report-problem'
-      backgroundColor = StatusColors.warning
-      borderColor = StatusColors.warningBorder
+      backgroundColor = ColorPallet.notification.warn
+      borderColor = ColorPallet.notification.warnBorder
+      iconColor = ColorPallet.notification.warnIcon
+      textColor = ColorPallet.notification.warnText
       break
 
     case ToastType.Error:
       iconName = 'error'
-      backgroundColor = StatusColors.error
-      borderColor = StatusColors.errorBorder
+      backgroundColor = ColorPallet.notification.error
+      borderColor = ColorPallet.notification.errorBorder
+      iconColor = ColorPallet.notification.errorIcon
+      textColor = ColorPallet.notification.errorText
       break
 
     default:
@@ -83,10 +91,10 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
 
   return (
     <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
-      <Icon style={[styles.icon]} name={iconName} color={Colors.text} size={iconSize} />
-      <View style={[styles.text]}>
-        <Text style={[TextTheme.normal, styles.title]}>{title}</Text>
-        <Text style={[TextTheme.normal, styles.body]}>{body}</Text>
+      <Icon style={[styles.icon]} name={iconName} color={iconColor} size={iconSize} />
+      <View style={[styles.textContainer]}>
+        <Text style={[TextTheme.normal, styles.title, { color: textColor }]}>{title}</Text>
+        <Text style={[TextTheme.normal, styles.body, { color: textColor }]}>{body}</Text>
       </View>
     </View>
   )
