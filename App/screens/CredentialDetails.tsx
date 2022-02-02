@@ -13,6 +13,7 @@ import Toast from 'react-native-toast-message'
 import { Colors, CredentialTheme, TextTheme } from '../theme'
 
 import { CredentialListItem } from 'components'
+import { ToastType } from 'components/toast/BaseToast'
 import { CredentialStackParams } from 'types/navigators'
 
 interface CredentialDetailsProps {
@@ -87,21 +88,26 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       if (!credentialId) {
         throw new Error(t('CredentialOffer.CredentialNotFound'))
       }
+
       return useCredentialById(credentialId)
     } catch (e: unknown) {
       Toast.show({
-        type: 'error',
-        text1: (e as Error)?.message || t('Global.Failure'),
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (e as Error)?.message || t('CredentialOffer.CredentialNotFound'),
       })
+
       navigation.goBack()
     }
   }
 
   if (!route.params.credentialId) {
     Toast.show({
-      type: 'error',
-      text1: t('CredentialOffer.CredentialNotFound'),
+      type: ToastType.Error,
+      text1: t('Global.Failure'),
+      text2: t('CredentialOffer.CredentialNotFound'),
     })
+
     navigation.goBack()
     return null
   }
@@ -110,9 +116,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   if (!credential) {
     Toast.show({
-      type: 'error',
-      text1: t('CredentialOffer.CredentialNotFound'),
+      type: ToastType.Error,
+      text1: t('Global.Failure'),
+      text2: t('CredentialOffer.CredentialNotFound'),
     })
+
     navigation.goBack()
     return null
   }
