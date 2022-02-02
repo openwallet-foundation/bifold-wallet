@@ -1,21 +1,15 @@
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
-import {
-  ConnectionRecord,
-  ProofRecord,
-  ProofState,
-  RequestedAttribute,
-  RetrievedCredentials,
-} from '@aries-framework/core'
-import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
+import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Alert, View, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import { ProofRequestTheme } from '../theme'
-import { parseSchema } from '../utils/helpers'
+import { connectionRecordFromId, parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
 import { ButtonType } from 'components/buttons/Button'
@@ -62,10 +56,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const transformAttributes = (attributes: Record<string, RequestedAttribute[]>): CredentialDisplay[] => {
     const transformedAttributes = []
     for (const attribute in attributes) {
+      const { name: schemaName, version: schemaVersion } = parseSchema(attributes[attribute][0].credentialInfo.schemaId)
       transformedAttributes.push({
         name: attribute,
         value: attributes[attribute][0].credentialInfo.attributes[attribute],
-        credentialDefinitionId: parseSchema(attributes[attribute][0].credentialInfo.schemaId),
+        credentialDefinitionId: `${schemaName + (schemaVersion ? ` V${schemaVersion}` : '')}`,
       })
     }
     return transformedAttributes
@@ -84,12 +79,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         text2: (e as Error)?.message || t('Global.Failure'),
       })
       navigation.goBack()
-    }
-  }
-
-  const getConnectionRecordFromProof = (connectionId?: string): ConnectionRecord | void => {
-    if (connectionId) {
-      return useConnectionById(connectionId)
     }
   }
 
@@ -202,7 +191,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     ])
   }
 
-  const connection = getConnectionRecordFromProof(proof.connectionId)
+  const connection = connectionRecordFromId(proof.connectionId)
 
   return (
     <View style={styles.container}>
