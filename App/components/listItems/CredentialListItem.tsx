@@ -4,12 +4,12 @@ import type { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/core'
 import { DateTime } from 'luxon'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { credentialDateTimeFormatString, IndexedIndyCredentialMetadata, indyCredentialKey } from '../../constants'
-import { Colors, CredentialTheme } from '../../theme'
-import { parseSchema } from '../../utils/helpers'
+import { credentialDateTimeFormatString } from '../../constants'
+import { CredentialTheme, TextTheme } from '../../theme'
+import { hashCode, hashToRGBA, parsedSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -27,27 +27,57 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: CredentialTheme.background,
     borderRadius: 15,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  avatar: {
+    width: TextTheme.headingTwo.fontSize * 2,
+    height: TextTheme.headingTwo.fontSize * 2,
+    margin: 12,
+    borderWidth: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: TextTheme.headingTwo.fontSize,
+    borderColor: TextTheme.headingTwo.color,
+  },
+  details: { flexShrink: 1 },
 })
 
 const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) => {
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
+  const { t } = useTranslation()
+
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate('Credential Details', { credentialId: credential.id })}
     >
-      <View>
-        <Title style={{ color: Colors.text }}>
-          {parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(indyCredentialKey)?.schemaId)}
-        </Title>
-        <Text style={{ color: Colors.text }}>
-          Issued on {DateTime.fromJSDate(credential.createdAt).toFormat(credentialDateTimeFormatString)}
-        </Text>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-        <Icon name="chevron-right" color={Colors.text} size={30} />
+      <View style={styles.row}>
+        <View
+          style={[
+            styles.avatar,
+            {
+              borderColor: hashToRGBA(hashCode(parsedSchema(credential).name)),
+            },
+          ]}
+        >
+          <Title style={{ ...TextTheme.headingTwo, fontWeight: 'normal' }}>
+            {parsedSchema(credential).name.charAt(0)}
+          </Title>
+        </View>
+        <View style={styles.details}>
+          <Title>{parsedSchema(credential).name}</Title>
+          <Text>
+            {t('CredentialDetails.Version')}: {parsedSchema(credential).version}
+          </Text>
+          <Text>
+            {t('CredentialDetails.Issued')}:{' '}
+            {DateTime.fromJSDate(credential.createdAt).toFormat(credentialDateTimeFormatString)}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   )

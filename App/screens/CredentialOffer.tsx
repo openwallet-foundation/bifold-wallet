@@ -1,17 +1,16 @@
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
-import { ConnectionRecord, CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialRecord, CredentialState } from '@aries-framework/core'
+import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import { IndexedIndyCredentialMetadata, indyCredentialKey } from '../constants'
 import { CredentialOfferTheme } from '../theme'
-import { parseSchema } from '../utils/helpers'
+import { parsedSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
 import { ButtonType } from 'components/buttons/Button'
@@ -69,12 +68,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       })
 
       navigation.goBack()
-    }
-  }
-
-  const getConnectionRecordFromCredential = (connectionId?: string): ConnectionRecord | void => {
-    if (connectionId) {
-      return useConnectionById(connectionId)
     }
   }
 
@@ -151,7 +144,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     ])
   }
 
-  const connection = getConnectionRecordFromCredential(credential.connectionId)
+  // TODO: Reincorporate according to UI wireframes
+  // const connection = connectionRecordFromId(credential.connectionId)
+
+  const { name: schemaName, version: schemaVersion } = parsedSchema(credential)
 
   return (
     <View style={styles.container}>
@@ -186,8 +182,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <ModularView
-        title={parseSchema(credential.metadata.get<IndexedIndyCredentialMetadata>(indyCredentialKey)?.schemaId)}
-        subtitle={connection?.alias || connection?.invitation?.label}
+        title={schemaName}
+        subtitle={schemaVersion ? `${t('CredentialDetails.Version')}: ${schemaVersion}` : ''}
         content={
           <FlatList
             data={credential.credentialAttributes}
