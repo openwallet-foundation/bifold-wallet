@@ -15,7 +15,7 @@ const translation = {
     "ThisDecisionCannotBeChanged.": "This decision cannot be changed.",
     "Failure": "Failure",
     "SomethingWentWrong": "Something went wrong",
-    "Done": "Done"
+    "Done": "Done",
   },
   "Language": {
     "English": "English",
@@ -47,7 +47,9 @@ const translation = {
   },
   "CredentialDetails": {
     "Id": "Id:",
-    "CreatedAt": "Created At:"
+    "CreatedAt": "Created At:",
+    "Version": "Version",
+    "Issued": "Issued"
   },
   "Home": {
     "Notifications": "Notifications",
@@ -73,7 +75,8 @@ const translation = {
     "CredentialRejected": "Credential Rejected",
     "CredentialAddedToYourWallet": "Credential added to your wallet",
     "CredentialDeclined": "Credential declined",
-    "CredentialOnTheWay": "Your credential is on the way"
+    "CredentialOnTheWay": "Your credential is on the way",
+    "CredentialOffer": "Credential offer"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -84,7 +87,8 @@ const translation = {
     "RejectingProof":"Rejecting Proof",
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
-    "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found"
+    "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
+    "ProofRequest": "Proof request"
   },  
   "Settings": {
     "Version": "Version",
