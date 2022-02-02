@@ -11,6 +11,7 @@ import Toast from 'react-native-toast-message'
 import { QrCodeScanError } from '../types/erorr'
 
 import { QRScanner } from 'components'
+import { ToastType } from 'components/toast/BaseToast'
 import { HomeStackParams } from 'types/navigators'
 
 interface ScanProps {
@@ -27,15 +28,17 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
   const displayPendingMessage = (): void => {
     Toast.show({
-      type: 'info',
-      text1: t('Scan.AcceptingConnection'),
+      type: ToastType.Info,
+      text1: t('Global.Info'),
+      text2: t('Scan.AcceptingConnection'),
     })
   }
 
   const displaySuccessMessage = (): void => {
     Toast.show({
-      type: 'success',
-      text1: t('Scan.ConnectionAccepted'),
+      type: ToastType.Success,
+      text1: t('Global.Success'),
+      text2: t('Scan.ConnectionAccepted'),
     })
   }
 
@@ -70,8 +73,9 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
       Toast.show({
-        type: 'success',
-        text1: t('Scan.ConnectionAccepted'),
+        type: ToastType.Success,
+        text1: t('Global.Success'),
+        text2: t('Scan.ConnectionAccepted'),
       })
       navigation.navigate('Home')
     }

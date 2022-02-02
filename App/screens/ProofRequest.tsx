@@ -13,6 +13,7 @@ import { connectionRecordFromId, parseSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
 import { ButtonType } from 'components/buttons/Button'
+import { ToastType } from 'components/toast/BaseToast'
 import { HomeStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
@@ -44,8 +45,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   if (!agent?.proofs) {
     Toast.show({
-      type: 'error',
-      text1: t('Global.SomethingWentWrong'),
+      type: ToastType.Error,
+      text1: t('Global.Failure'),
+      text2: t('Global.SomethingWentWrong'),
     })
     navigation.goBack()
     return null
@@ -72,8 +74,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       return useProofById(proofId)
     } catch (e: unknown) {
       Toast.show({
-        type: 'error',
-        text1: (e as Error)?.message || t('Global.Failure'),
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (e as Error)?.message || t('Global.Failure'),
       })
       navigation.goBack()
     }
@@ -89,8 +92,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       setRetrievedCredentialsDisplay(transformAttributes(creds.requestedAttributes))
     } catch (e: unknown) {
       Toast.show({
-        type: 'error',
-        text1: (e as Error)?.message || t('Global.Failure'),
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (e as Error)?.message || t('Global.Failure'),
       })
     }
   }
@@ -99,8 +103,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   if (!proof) {
     Toast.show({
-      type: 'error',
-      text1: t('ProofRequest.ProofNotFound'),
+      type: ToastType.Error,
+      text1: t('Global.Failure'),
+      text2: t('ProofRequest.ProofNotFound'),
     })
     navigation.goBack()
     return null
@@ -117,8 +122,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   useEffect(() => {
     if (proof.state === ProofState.Done) {
       Toast.show({
-        type: 'success',
-        text1: t('ProofRequest.ProofAccepted'),
+        type: ToastType.Success,
+        text1: t('Global.Success'),
+        text2: t('ProofRequest.ProofAccepted'),
       })
       navigation.goBack()
     }
@@ -127,8 +133,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   useEffect(() => {
     if (proof.state === ProofState.Declined) {
       Toast.show({
-        type: 'info',
-        text1: t('ProofRequest.ProofRejected'),
+        type: ToastType.Info,
+        text1: t('Global.Info'),
+        text2: t('ProofRequest.ProofRejected'),
       })
       navigation.goBack()
     }
@@ -137,8 +144,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const handleAcceptPress = async () => {
     setButtonsVisible(false)
     Toast.show({
-      type: 'info',
-      text1: t('ProofRequest.AcceptingProof'),
+      type: ToastType.Info,
+      text1: t('Global.Info'),
+      text2: t('ProofRequest.AcceptingProof'),
     })
     try {
       const automaticRequestedCreds =
@@ -149,8 +157,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       await agent.proofs.acceptRequest(proof.id, automaticRequestedCreds)
     } catch (e: unknown) {
       Toast.show({
-        type: 'error',
-        text1: (e as Error)?.message || t('Global.Failure'),
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
     }
@@ -164,15 +173,17 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         style: 'destructive',
         onPress: async () => {
           Toast.show({
-            type: 'info',
-            text1: t('ProofRequest.RejectingProof'),
+            type: ToastType.Info,
+            text1: t('Global.Info'),
+            text2: t('ProofRequest.RejectingProof'),
           })
           try {
             await agent.proofs.declineRequest(proof.id)
           } catch (e: unknown) {
             Toast.show({
-              type: 'error',
+              type: ToastType.Error,
               text1: t('Global.Failure'),
+              text2: (e as Error)?.message || t('Global.Failure'),
             })
           }
         },

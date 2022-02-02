@@ -16,6 +16,7 @@ import { Button, ModularView, Label } from 'components'
 import { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
+import { ToastType } from 'components/toast/BaseToast'
 import { HomeStackParams, TabStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
@@ -43,11 +44,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   if (!agent?.credentials) {
     Toast.show({
-      type: 'error',
-      text1: t('Global.SomethingWentWrong'),
+      type: ToastType.Error,
+      text1: t('Global.Failure'),
+      text2: t('Global.SomethingWentWrong'),
     })
+
     navigation.goBack()
-    return null
+
+    return
   }
 
   const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
@@ -58,9 +62,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       return useCredentialById(credentialId)
     } catch (e: unknown) {
       Toast.show({
-        type: 'error',
-        text1: (e as Error)?.message || t('Global.Failure'),
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: t('Global.SomethingWentWrong'),
       })
+
       navigation.goBack()
     }
   }
@@ -69,11 +75,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   if (!credential) {
     Toast.show({
-      type: 'error',
-      text1: t('CredentialOffer.CredentialNotFound'),
+      type: ToastType.Error,
+      text1: t('Global.Failure'),
+      text2: t('CredentialOffer.CredentialNotFound'),
     })
+
     navigation.goBack()
-    return null
+
+    return
   }
 
   useEffect(() => {
@@ -96,9 +105,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       await agent.credentials.acceptOffer(credential.id)
     } catch (e: unknown) {
       Toast.show({
-        type: 'error',
-        text1: (e as Error)?.message || t('Global.Failure'),
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (e as Error)?.message || t('Global.Failure'),
       })
+
       setButtonsVisible(true)
       setPendingModalVisible(false)
     }
@@ -113,16 +124,19 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onPress: async () => {
           setButtonsVisible(false)
           Toast.show({
-            type: 'info',
-            text1: t('CredentialOffer.RejectingCredential'),
+            type: ToastType.Info,
+            text1: t('Global.Info'),
+            text2: t('CredentialOffer.RejectingCredential'),
           })
+
           try {
             await agent.credentials.declineOffer(credential.id)
             Toast.hide()
           } catch (e: unknown) {
             Toast.show({
-              type: 'error',
-              text1: (e as Error)?.message || t('Global.Failure'),
+              type: ToastType.Error,
+              text1: t('Global.Failure'),
+              text2: (e as Error)?.message || t('Global.Failure'),
             })
           }
         },
