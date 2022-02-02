@@ -2,10 +2,121 @@ import { StyleSheet } from 'react-native'
 
 type BaseColor = Record<string, string>
 
+interface FontAttributes {
+  fontSize: number
+  fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
+  color: string
+}
+
+interface TextTheme {
+  headingOne: FontAttributes
+  headingTwo: FontAttributes
+  headingThree: FontAttributes
+  headingFour: FontAttributes
+  normal: FontAttributes
+  label: FontAttributes
+  caption: FontAttributes
+}
+
+interface BrandColors {
+  primary: string
+  highlight: string
+  primaryBackground: string
+  secondaryBackground: string
+}
+
+interface SemanticColors {
+  error: string
+  success: string
+  focus: string
+}
+
+interface NotificationColors {
+  success: string
+  successBorder: string
+  successIcon: string
+  successText: string
+  info: string
+  infoBorder: string
+  infoIcon: string
+  infoText: string
+  warn: string
+  warnBorder: string
+  warnIcon: string
+  warnText: string
+  error: string
+  errorBorder: string
+  errorIcon: string
+  errorText: string
+}
+
+interface GrayscaleColors {
+  darkGrey: string
+  mediumGrey: string
+  lightGrey: string
+  veryLightGrey: string
+  white: string
+}
+
+interface ColorPallet {
+  brand: BrandColors
+  semantic: SemanticColors
+  notification: NotificationColors
+  grayscale: GrayscaleColors
+}
+
 export const borderRadius = 4
 export const heavyOpacity = 0.7
 export const lightOpacity = 0.35
 export const zeroOpacity = 0.0
+export const borderWidth = 2
+
+const BrandColors: BrandColors = {
+  primary: '#003366',
+  highlight: '#FCBA19',
+  primaryBackground: '#F2F2F2',
+  secondaryBackground: '#FFFFFF',
+}
+
+const SemanticColors: SemanticColors = {
+  error: '#D8292F',
+  success: '#2E8540',
+  focus: '#3399ff',
+}
+
+const NotificationColors: NotificationColors = {
+  success: '#DFF0D8',
+  successBorder: '#D6E9C6',
+  successIcon: '#2E8540',
+  successText: '#2E8540',
+  info: '#D9EAF7',
+  infoBorder: '#B9CEDE',
+  infoIcon: '#0099FF',
+  infoText: '#0099FF',
+  warn: '#F9F1C6',
+  warnBorder: '#FAEBCC',
+  warnIcon: '#6C4A00',
+  warnText: '#6C4A00',
+  error: '#F2DEDE',
+  errorBorder: '#EBCCD1',
+  errorIcon: '#D8292F',
+  errorText: '#D8292F',
+}
+
+const GrayscaleColors: GrayscaleColors = {
+  darkGrey: '#313132',
+  mediumGrey: '#606060',
+  lightGrey: '#d3d3d3',
+  veryLightGrey: '#f2f2f2',
+  white: '#FFFFFF',
+}
+
+export const ColorPallet: ColorPallet = {
+  brand: BrandColors,
+  semantic: SemanticColors,
+  notification: NotificationColors,
+  grayscale: GrayscaleColors,
+}
 
 export const BaseColors: BaseColor = {
   black: '#000000',
@@ -29,13 +140,6 @@ export const BaseColors: BaseColor = {
   white: '#FFFFFF',
 }
 
-export const StatusColors: BaseColor = {
-  error: BaseColors.red,
-  info: BaseColors.black,
-  success: BaseColors.green,
-  warning: BaseColors.black,
-}
-
 interface ColorTheme extends BaseColor {
   accent: string
   background: string
@@ -45,22 +149,6 @@ interface ColorTheme extends BaseColor {
   primaryActive: string
   shadow: string
   text: string
-}
-
-interface FontAttributes {
-  fontSize: number
-  fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
-  color: string
-}
-
-interface TextTheme {
-  headingOne: FontAttributes
-  headingTwo: FontAttributes
-  headingThree: FontAttributes
-  headingFour: FontAttributes
-  normal: FontAttributes
-  label: FontAttributes
-  caption: FontAttributes
 }
 
 interface CredentialTheme {
@@ -99,47 +187,47 @@ interface TextBoxTheme {
 
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
-  background: BaseColors.black,
-  backgroundLight: BaseColors.lightGreen,
-  borderLight: BaseColors.mediumGreen,
-  primary: BaseColors.darkGreen,
-  primaryActive: BaseColors.darkGreenHeavyTransparent,
+  background: BaseColors.offWhite,
+  backgroundLight: BaseColors.lightBlue,
+  borderLight: BaseColors.mediumBlue,
+  primary: BaseColors.darkBlue,
+  primaryActive: BaseColors.darkBlueHeavyTransparent,
   shadow: BaseColors.darkGrey,
-  text: BaseColors.white,
+  text: BaseColors.darkGreyAlt,
   ...BaseColors,
-  ...StatusColors,
+  ...NotificationColors,
 }
 
 export const CredentialTheme: CredentialTheme = {
-  background: Colors.shadow,
+  background: Colors.white,
 }
 
 export const CredentialOfferTheme: CredentialOfferTheme = {
-  background: Colors.black,
+  background: Colors.white,
 }
 
 export const ContactTheme: ContactTheme = {
-  background: Colors.shadow,
+  background: Colors.white,
 }
 
 export const ModularViewTheme: ModularViewTheme = {
-  background: Colors.shadow,
+  background: Colors.backgroundLight,
 }
 
 export const ProofRequestTheme: ProofRequestTheme = {
-  background: Colors.black,
+  background: Colors.white,
 }
 
 export const SettingsTheme: SettingsTheme = {
-  background: Colors.shadow,
+  background: Colors.white,
 }
 
 export const SingleSelectBlockTheme: SingleSelectBlockTheme = {
-  background: Colors.shadow,
+  background: Colors.white,
 }
 
 export const TextBoxTheme: TextBoxTheme = {
-  background: Colors.darkGreenLightTransparent,
+  background: Colors.lightBlue,
   border: Colors.borderLight,
   text: Colors.text,
 }
@@ -190,8 +278,8 @@ export const Buttons = StyleSheet.create({
   },
   primaryDisabled: {
     padding: 16,
-    borderRadius: 4,
-    backgroundColor: Colors.darkGreenHeavyTransparent,
+    borderRadius,
+    backgroundColor: Colors.darkBlueHeavyTransparent,
   },
   primaryText: {
     ...TextTheme.normal,
@@ -207,16 +295,16 @@ export const Buttons = StyleSheet.create({
   },
   secondary: {
     padding: 16,
-    borderRadius: 4,
-    borderWidth: 2,
+    borderRadius,
+    borderWidth,
     borderColor: Colors.primary,
     backgroundColor: Colors.white,
   },
   secondaryDisabled: {
     padding: 16,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: Colors.darkGreenLightTransparent,
+    borderRadius,
+    borderWidth,
+    borderColor: Colors.darkBlueLightTransparent,
     backgroundColor: Colors.white,
   },
   secondaryText: {
@@ -228,7 +316,7 @@ export const Buttons = StyleSheet.create({
   secondaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.darkGreenLightTransparent,
+    color: Colors.darkBlueLightTransparent,
     textAlign: 'center',
   },
 })
