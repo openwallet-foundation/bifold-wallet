@@ -51,6 +51,7 @@ interface NotificationColors {
 }
 
 interface GrayscaleColors {
+  black: string
   darkGrey: string
   mediumGrey: string
   lightGrey: string
@@ -72,10 +73,10 @@ export const zeroOpacity = 0.0
 export const borderWidth = 2
 
 const BrandColors: BrandColors = {
-  primary: '#003366',
+  primary: '#42803E',
   highlight: '#FCBA19',
-  primaryBackground: '#F2F2F2',
-  secondaryBackground: '#FFFFFF',
+  primaryBackground: '#000000',
+  secondaryBackground: '#313132',
 }
 
 const SemanticColors: SemanticColors = {
@@ -85,25 +86,26 @@ const SemanticColors: SemanticColors = {
 }
 
 const NotificationColors: NotificationColors = {
-  success: '#DFF0D8',
-  successBorder: '#D6E9C6',
+  success: '#313132',
+  successBorder: '#2E8540',
   successIcon: '#2E8540',
-  successText: '#2E8540',
-  info: '#D9EAF7',
-  infoBorder: '#B9CEDE',
+  successText: '#FFFFFF',
+  info: '#313132',
+  infoBorder: '#0099FF',
   infoIcon: '#0099FF',
-  infoText: '#0099FF',
-  warn: '#F9F1C6',
-  warnBorder: '#FAEBCC',
-  warnIcon: '#6C4A00',
-  warnText: '#6C4A00',
-  error: '#F2DEDE',
-  errorBorder: '#EBCCD1',
+  infoText: '#FFFFFF',
+  warn: '#313132',
+  warnBorder: '#fcba19',
+  warnIcon: '#fcba19',
+  warnText: '#FFFFFF',
+  error: '#313132',
+  errorBorder: '#D8292F',
   errorIcon: '#D8292F',
-  errorText: '#D8292F',
+  errorText: '#FFFFFF',
 }
 
 const GrayscaleColors: GrayscaleColors = {
+  black: '#000000',
   darkGrey: '#313132',
   mediumGrey: '#606060',
   lightGrey: '#d3d3d3',
@@ -140,6 +142,13 @@ export const BaseColors: BaseColor = {
   white: '#FFFFFF',
 }
 
+export const StatusColors: BaseColor = {
+  error: BaseColors.red,
+  info: BaseColors.black,
+  success: BaseColors.green,
+  warning: BaseColors.black,
+}
+
 interface ColorTheme extends BaseColor {
   accent: string
   background: string
@@ -149,6 +158,22 @@ interface ColorTheme extends BaseColor {
   primaryActive: string
   shadow: string
   text: string
+}
+
+interface FontAttributes {
+  fontSize: number
+  fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
+  color: string
+}
+
+interface TextTheme {
+  headingOne: FontAttributes
+  headingTwo: FontAttributes
+  headingThree: FontAttributes
+  headingFour: FontAttributes
+  normal: FontAttributes
+  label: FontAttributes
+  caption: FontAttributes
 }
 
 interface CredentialTheme {
@@ -187,47 +212,47 @@ interface TextBoxTheme {
 
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
-  background: BaseColors.offWhite,
-  backgroundLight: BaseColors.lightBlue,
-  borderLight: BaseColors.mediumBlue,
-  primary: BaseColors.darkBlue,
-  primaryActive: BaseColors.darkBlueHeavyTransparent,
+  background: BaseColors.black,
+  backgroundLight: BaseColors.lightGreen,
+  borderLight: BaseColors.mediumGreen,
+  primary: BaseColors.darkGreen,
+  primaryActive: BaseColors.darkGreenHeavyTransparent,
   shadow: BaseColors.darkGrey,
-  text: BaseColors.darkGreyAlt,
+  text: BaseColors.white,
   ...BaseColors,
-  ...NotificationColors,
+  ...StatusColors,
 }
 
 export const CredentialTheme: CredentialTheme = {
-  background: Colors.white,
+  background: Colors.shadow,
 }
 
 export const CredentialOfferTheme: CredentialOfferTheme = {
-  background: Colors.white,
+  background: Colors.black,
 }
 
 export const ContactTheme: ContactTheme = {
-  background: Colors.white,
+  background: Colors.shadow,
 }
 
 export const ModularViewTheme: ModularViewTheme = {
-  background: Colors.backgroundLight,
+  background: Colors.shadow,
 }
 
 export const ProofRequestTheme: ProofRequestTheme = {
-  background: Colors.white,
+  background: Colors.black,
 }
 
 export const SettingsTheme: SettingsTheme = {
-  background: Colors.white,
+  background: Colors.shadow,
 }
 
 export const SingleSelectBlockTheme: SingleSelectBlockTheme = {
-  background: Colors.white,
+  background: Colors.shadow,
 }
 
 export const TextBoxTheme: TextBoxTheme = {
-  background: Colors.lightBlue,
+  background: Colors.darkGreenLightTransparent,
   border: Colors.borderLight,
   text: Colors.text,
 }
@@ -278,8 +303,8 @@ export const Buttons = StyleSheet.create({
   },
   primaryDisabled: {
     padding: 16,
-    borderRadius,
-    backgroundColor: Colors.darkBlueHeavyTransparent,
+    borderRadius: 4,
+    backgroundColor: Colors.darkGreenHeavyTransparent,
   },
   primaryText: {
     ...TextTheme.normal,
@@ -295,16 +320,16 @@ export const Buttons = StyleSheet.create({
   },
   secondary: {
     padding: 16,
-    borderRadius,
-    borderWidth,
+    borderRadius: 4,
+    borderWidth: 2,
     borderColor: Colors.primary,
     backgroundColor: Colors.white,
   },
   secondaryDisabled: {
     padding: 16,
-    borderRadius,
-    borderWidth,
-    borderColor: Colors.darkBlueLightTransparent,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: Colors.darkGreenLightTransparent,
     backgroundColor: Colors.white,
   },
   secondaryText: {
@@ -316,7 +341,7 @@ export const Buttons = StyleSheet.create({
   secondaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.darkBlueLightTransparent,
+    color: Colors.darkGreenLightTransparent,
     textAlign: 'center',
   },
 })
