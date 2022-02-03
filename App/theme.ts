@@ -23,6 +23,7 @@ interface BrandColors {
   highlight: string
   primaryBackground: string
   secondaryBackground: string
+  link: string
 }
 
 interface SemanticColors {
@@ -77,6 +78,7 @@ const BrandColors: BrandColors = {
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
+  link: '#ffffff',
 }
 
 const SemanticColors: SemanticColors = {
@@ -120,6 +122,9 @@ export const ColorPallet: ColorPallet = {
   grayscale: GrayscaleColors,
 }
 
+/**
+ * DEPRECATED: The remainder of this file should be refactored
+ */
 export const BaseColors: BaseColor = {
   black: '#000000',
   darkBlue: '#003366',
@@ -176,10 +181,6 @@ interface TextTheme {
   caption: FontAttributes
 }
 
-interface CredentialTheme {
-  background: string
-}
-
 interface CredentialOfferTheme {
   background: string
 }
@@ -221,10 +222,6 @@ export const Colors: ColorTheme = {
   text: BaseColors.white,
   ...BaseColors,
   ...StatusColors,
-}
-
-export const CredentialTheme: CredentialTheme = {
-  background: Colors.shadow,
 }
 
 export const CredentialOfferTheme: CredentialOfferTheme = {
