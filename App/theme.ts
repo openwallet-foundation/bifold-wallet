@@ -173,10 +173,6 @@ interface ContactTheme {
   background: string
 }
 
-interface ModularViewTheme {
-  background: string
-}
-
 interface ProofRequestTheme {
   background: string
 }
@@ -213,10 +209,6 @@ export const CredentialOfferTheme: CredentialOfferTheme = {
 }
 
 export const ContactTheme: ContactTheme = {
-  background: Colors.shadow,
-}
-
-export const ModularViewTheme: ModularViewTheme = {
   background: Colors.shadow,
 }
 
