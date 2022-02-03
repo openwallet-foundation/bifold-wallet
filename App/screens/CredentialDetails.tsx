@@ -6,8 +6,7 @@ import { RouteProp } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import { ColorPallet, TextTheme } from '../theme'
@@ -140,7 +139,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <CredentialListItem credential={credential}></CredentialListItem>
           <View style={styles.headerTextContainer}>
             <TouchableOpacity style={styles.linkContainer} activeOpacity={1} onPress={() => resetShown()}>
-              <Text style={[styles.headerText, styles.link]}>Hide all</Text>
+              <Text style={[styles.headerText, styles.link]}>{t('CredentialDetails.HideAll')}</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -56,7 +56,8 @@ const translation = {
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
     "Hide": "Hide",
-    "Show": "Show"
+    "Show": "Show",
+    "HideAll": "Hide all"
   },
   "Home": {
     "Notifications": "Notifications",
