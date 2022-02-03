@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { credentialDateTimeFormatString } from '../../constants'
-import { CredentialTheme, TextTheme } from '../../theme'
+import { ColorPallet, TextTheme } from '../../theme'
 import { hashCode, hashToRGBA, parsedSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginHorizontal: 15,
     padding: 10,
-    backgroundColor: CredentialTheme.background,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
     borderRadius: 15,
     justifyContent: 'center',
   },
