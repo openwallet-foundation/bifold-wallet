@@ -10,7 +10,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Toast from 'react-native-toast-message'
 
-import { Colors, CredentialTheme, TextTheme } from '../theme'
+import { ColorPallet, TextTheme } from '../theme'
 
 import { CredentialListItem } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
@@ -23,7 +23,7 @@ interface CredentialDetailsProps {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   headerTextContainer: {
     flexDirection: 'row',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     ...TextTheme.normal,
   },
   footerContainer: {
-    backgroundColor: CredentialTheme.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
     height: '100%',
     paddingVertical: 16,
     paddingHorizontal: 25,
@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
   listItem: {
     paddingHorizontal: 25,
     paddingTop: 16,
-    backgroundColor: CredentialTheme.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   listItemBorder: {
-    borderBottomColor: Colors.background,
+    borderBottomColor: ColorPallet.brand.secondaryBackground,
     borderBottomWidth: 2,
     paddingTop: 12,
   },
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   link: {
     ...TextTheme.normal,
-    color: Colors.link,
+    color: ColorPallet.brand.link,
   },
   textContainer: {
     minHeight: TextTheme.normal.fontSize,
@@ -154,7 +154,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.TermsAndConditions')}</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1}>
-            <Text style={[styles.footerText, styles.link, { color: Colors.error }]}>
+            <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
               {t('CredentialDetails.RemoveFromWallet')}
             </Text>
           </TouchableOpacity>
