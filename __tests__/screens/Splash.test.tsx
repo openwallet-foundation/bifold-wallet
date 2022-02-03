@@ -1,7 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 
-import Splash from '../../../App/screens/Splash'
+import Splash from '../../App/screens/Splash'
 
 jest.mock('@react-navigation/native', () => {
   return {

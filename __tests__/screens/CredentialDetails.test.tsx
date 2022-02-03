@@ -64,6 +64,8 @@ jest.mock('@aries-framework/react-hooks', () => {
   }
 })
 
+jest.useRealTimers()
+
 /**
  * Given a credential has been accepted
  * And it is displayed in the list of credentials
@@ -198,5 +200,5 @@ describe('displays a credential details screen', () => {
 
     expect(showButtons.length).toBe(3)
     expect(hiddenValues.length).toBe(3)
-  })
+  }, 10000)
 })
