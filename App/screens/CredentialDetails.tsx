@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     ...TextTheme.normal,
   },
   footerContainer: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
     height: '100%',
-    paddingVertical: 16,
     paddingHorizontal: 25,
+    paddingVertical: 16,
   },
   footerText: {
     ...TextTheme.normal,
@@ -46,11 +46,11 @@ const styles = StyleSheet.create({
   listItem: {
     paddingHorizontal: 25,
     paddingTop: 16,
-    backgroundColor: ColorPallet.brand.primaryBackground,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
   },
   listItemBorder: {
-    borderBottomColor: ColorPallet.brand.secondaryBackground,
-    borderBottomWidth: 2,
+    borderBottomColor: TextTheme.normal.color,
+    borderBottomWidth: 1,
     paddingTop: 12,
   },
   linkContainer: {

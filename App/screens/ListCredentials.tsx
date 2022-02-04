@@ -15,13 +15,11 @@ const ListCredentials: React.FC = () => {
 
   const emptyListComponent = () => <Text style={{ textAlign: 'center', marginTop: 100 }}>{t('Global.NoneYet!')}</Text>
 
-  const keyForItem = (item: CredentialRecord) => String(item.credentialId)
-
   return (
     <FlatList
-      data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
       style={{ backgroundColor: Colors.background }}
-      keyExtractor={keyForItem}
+      data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
+      keyExtractor={(item) => item.id}
       ListEmptyComponent={emptyListComponent}
       renderItem={({ item }) => <CredentialListItem credential={item} />}
     />
