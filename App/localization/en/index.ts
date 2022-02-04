@@ -61,7 +61,7 @@ const translation = {
   },
   "Home": {
     "Notifications": "Notifications",
-    "NoNewUpdates": "No New Updates"
+    "NoNewUpdates": "You have no new notifications"
   },
   "Scan":{
     "SuccessfullyAcceptedConnection":"Successfully Accepted Connection",
