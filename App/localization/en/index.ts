@@ -9,6 +9,7 @@ const translation = {
     "Confirm": "Confirm",
     "Accept": "Accept",
     "Reject": "Reject",
+    "Share": "Share",
     "Decline": "Decline",
     "Back": "Back",
     "Continue": "Continue",
