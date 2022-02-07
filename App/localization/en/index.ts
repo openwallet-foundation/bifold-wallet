@@ -97,7 +97,10 @@ const translation = {
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
-    "ProofRequest": "Proof request"
+    "ProofRequest": "Proof request",
+    "NotAvailableInYourWallet": "Not available in your wallet",
+    "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
+    "IsRequestingYouToShare": "is requesting you to share",
   },  
   "Settings": {
     "Version": "Version",
