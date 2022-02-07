@@ -7,6 +7,7 @@ import TextInput from './inputs/TextInput'
 import ContactListItem from './listItems/ContactListItem'
 import CredentialListItem from './listItems/CredentialListItem'
 import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
+import NotificationListItem from './listItems/NotificationListItem'
 import NotificationProofListItem from './listItems/NotificationProofListItem'
 import HighlightTextBox from './texts/HighlightTextBox'
 import InfoTextBox from './texts/InfoTextBox'
@@ -23,6 +24,7 @@ export {
   Label,
   ModularView,
   Button,
+  NotificationListItem,
   NotificationCredentialListItem,
   NotificationProofListItem,
   QRScanner,

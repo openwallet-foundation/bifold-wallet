@@ -84,7 +84,7 @@ const translation = {
     "CredentialAddedToYourWallet": "Credential added to your wallet",
     "CredentialDeclined": "Credential declined",
     "CredentialOnTheWay": "Your credential is on the way",
-    "CredentialOffer": "Credential offer"
+    "CredentialOffer": "New Credential Offer"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -96,7 +96,7 @@ const translation = {
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
-    "ProofRequest": "Proof request"
+    "ProofRequest": "New Proof Request"
   },  
   "Settings": {
     "Version": "Version",
