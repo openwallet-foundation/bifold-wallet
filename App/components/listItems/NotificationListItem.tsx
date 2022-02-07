@@ -8,10 +8,9 @@ import { TouchableOpacity, StyleSheet, View, Text, Dimensions } from 'react-nati
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Colors, TextTheme, TextBoxTheme } from '../../theme'
+import { GenericFn } from '../../types/fn'
+import { HomeStackParams } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
-
-import { GenericFn } from 'types/fn'
-import { HomeStackParams } from 'types/navigators'
 
 const { width } = Dimensions.get('window')
 const iconSize = 30
