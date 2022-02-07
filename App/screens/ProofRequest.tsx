@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Alert, View, StyleSheet, Text } from 'react-native'
 import Toast from 'react-native-toast-message'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { ColorPallet, TextTheme } from '../theme'
 
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   headerTextContainer: {
-    flexDirection: 'row',
     paddingHorizontal: 25,
     paddingVertical: 16,
   },
@@ -72,6 +72,10 @@ const styles = StyleSheet.create({
   text: {
     ...TextTheme.normal,
   },
+  rowTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   label: {
     ...TextTheme.label,
   },
@@ -99,6 +103,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     navigation.goBack()
     return null
   }
+
+  const anyUnavailableCredentialAttributes = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
+    attributes.some(([, values]) => !values?.length)
 
   const firstMatchingCredentialAttributeValue = (attributeName: string, attributes: RequestedAttribute[]): string => {
     if (!attributes.length) {
@@ -241,12 +248,26 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       ListHeaderComponent={() => (
         <View style={styles.headerContainer}>
           <View style={styles.headerLogoContainer}>
-            <Text style={styles.headerText}>{'<Placeholder logo here>'}</Text>
+            <Text style={styles.headerText}>{'<Placeholder logo>'}</Text>
           </View>
           <View style={styles.headerTextContainer}>
-            <Text style={styles.headerText}>
-              {'<PLaceholder issuer here>'} is requesting you to share the following:
-            </Text>
+            {anyUnavailableCredentialAttributes(retrievedCredentialAttributes) ? (
+              <View style={[styles.rowTextContainer]}>
+                <Icon
+                  style={{ marginLeft: -2, marginRight: 10 }}
+                  name="highlight-off"
+                  color={TextTheme.headingOne.color}
+                  size={TextTheme.headingOne.fontSize}
+                ></Icon>
+                <Text style={[styles.headerText, { flexShrink: 1 }]}>
+                  {'<Placeholder issuer>'} {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                </Text>
+              </View>
+            ) : (
+              <Text style={[styles.headerText, { flexShrink: 1 }]}>
+                {'<Placeholder issuer>'} {t('ProofRequest.IsRequestingYouToShare')}:
+              </Text>
+            )}
           </View>
         </View>
       )}
@@ -274,10 +295,24 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       keyExtractor={([name]) => name}
       renderItem={({ item: [name, values] }) => (
         <View style={styles.listItem}>
-          <Text style={styles.label}>{`${name}:`}</Text>
+          <Text style={styles.label}>{`${startCase(name)}:`}</Text>
           <View style={styles.attributeValueContainer}>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>{firstMatchingCredentialAttributeValue(name, values)}</Text>
+              {values.length ? (
+                <Text style={styles.text}>{firstMatchingCredentialAttributeValue(name, values)}</Text>
+              ) : (
+                <View style={styles.rowTextContainer}>
+                  <Icon
+                    style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                    name="close"
+                    color={ColorPallet.semantic.error}
+                    size={TextTheme.normal.fontSize}
+                  ></Icon>
+                  <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+                    {t('ProofRequest.NotAvailableInYourWallet')}
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
           <View style={styles.listItemBorder}></View>
