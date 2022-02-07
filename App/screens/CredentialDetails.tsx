@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
   footerContainer: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
     height: '100%',
-    paddingVertical: 16,
     paddingHorizontal: 25,
+    paddingVertical: 16,
   },
   footerText: {
     ...TextTheme.normal,

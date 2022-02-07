@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, borderRadius, TextTheme, ProofRequestTheme } from '../../theme'
+import { Colors, borderRadius, TextTheme, ColorPallet } from '../../theme'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 10,
     borderRadius,
-    backgroundColor: ProofRequestTheme.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
 })
 
