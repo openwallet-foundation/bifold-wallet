@@ -1,0 +1,355 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays a home screen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "paddingHorizontal": 25,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 26,
+          "fontWeight": "bold",
+        },
+        Object {
+          "marginBottom": 20,
+          "marginTop": 25,
+        },
+      ]
+    }
+  >
+    Notifications
+  </Text>
+  <RCTScrollView
+    ListEmptyComponent={
+      <View>
+        <InfoTextBox>
+          You have no new notifications
+        </InfoTextBox>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+                "marginHorizontal": 60,
+                "marginTop": 35,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 38,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            Welcome
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "marginTop": 25,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            You have no credentials in your wallet.
+          </Text>
+        </View>
+      </View>
+    }
+    data={Array []}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={true}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEnabled={false}
+    scrollEventThrottle={50}
+    showsHorizontalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "rgba(53, 130, 63, 0.7)",
+                "borderColor": undefined,
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "padding": 10,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "marginRight": 10,
+                },
+              ]
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 30,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            You have no new notifications
+          </Text>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+                "marginHorizontal": 60,
+                "marginTop": 35,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 38,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            Welcome
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "marginTop": 25,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            You have no credentials in your wallet.
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 25,
+        },
+      ]
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "#42803E",
+          "borderRadius": 4,
+          "borderWidth": 2,
+          "flexDirection": "row",
+          "minHeight": 48,
+          "opacity": 1,
+          "paddingLeft": 20,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 32,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "marginHorizontal": 15,
+            },
+          ]
+        }
+      >
+        Find a Credential
+      </Text>
+      <
+        fill="#FFFFFF"
+        height={18}
+        width={18}
+      />
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "#42803E",
+          "borderRadius": 4,
+          "borderWidth": 2,
+          "flexDirection": "row",
+          "marginTop": 15,
+          "minHeight": 48,
+          "opacity": 1,
+          "paddingLeft": 20,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 32,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "marginHorizontal": 15,
+            },
+          ]
+        }
+      >
+        Learn about Credentials
+      </Text>
+      <
+        fill="#FFFFFF"
+        height={18}
+        width={18}
+      />
+    </View>
+  </View>
+</View>
+`;
