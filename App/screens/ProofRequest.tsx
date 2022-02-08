@@ -1,7 +1,13 @@
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
-import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
+import {
+  ConnectionRecord,
+  ProofRecord,
+  ProofState,
+  RequestedAttribute,
+  RetrievedCredentials,
+} from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import startCase from 'lodash.startcase'
 import React, { useState, useEffect } from 'react'
@@ -11,9 +17,10 @@ import Toast from 'react-native-toast-message'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { ColorPallet, TextTheme } from '../theme'
+import { connectionRecordFromId } from '../utils/helpers'
 
-import { Button } from 'components'
-import { ButtonType } from 'components/buttons/Button'
+import Button, { ButtonType } from 'components/buttons/Button'
+import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
 import { HomeStackParams } from 'types/navigators'
 
@@ -83,6 +90,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 10,
+  },
+  avatar: {
+    width: TextTheme.headingTwo.fontSize * 2,
+    height: TextTheme.headingTwo.fontSize * 2,
+    borderWidth: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: TextTheme.headingTwo.fontSize,
+    borderColor: TextTheme.headingTwo.color,
   },
 })
 
@@ -243,13 +259,26 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     ])
   }
 
+  const connection = connectionRecordFromId(proof.connectionId)
+
+  const getConnectionName = (connection: ConnectionRecord | void): string | void => {
+    if (!connection) {
+      return
+    }
+    return connection?.alias || connection?.invitation?.label
+  }
+
   return (
     <FlatList
       ListHeaderComponent={() => (
         <View style={styles.headerContainer}>
-          <View style={styles.headerLogoContainer}>
-            <Text style={styles.headerText}>{'<Placeholder logo>'}</Text>
-          </View>
+          {/* <View style={styles.headerLogoContainer}>
+            <View style={styles.avatar}>
+              <Title style={{ ...TextTheme.headingTwo, fontWeight: 'normal' }}>
+                {(getConnectionName(connection) || 'C').charAt(0)}
+              </Title>
+            </View>
+          </View> */}
           <View style={styles.headerTextContainer}>
             {anyUnavailableCredentialAttributes(retrievedCredentialAttributes) ? (
               <View style={[styles.rowTextContainer]}>
@@ -260,12 +289,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
                   size={TextTheme.headingOne.fontSize}
                 ></Icon>
                 <Text style={[styles.headerText, { flexShrink: 1 }]}>
-                  {'<Placeholder issuer>'} {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                  <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                  {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
               <Text style={[styles.headerText, { flexShrink: 1 }]}>
-                {'<Placeholder issuer>'} {t('ProofRequest.IsRequestingYouToShare')}:
+                <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
             )}
           </View>
