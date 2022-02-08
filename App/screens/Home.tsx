@@ -49,14 +49,19 @@ const Home: React.FC = () => {
   const emptyListComponent = () => <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
 
   const displayMessage = (credentialCount: number) => {
-    if (typeof credentialCount === 'undefined') {
+    if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
       throw new Error('Credential count cannot be undefined')
     }
 
-    const pluralOrNot = credentialCount === 1 ? '' : 's'
-    const credentialMsg = `You have ${
-      credentialCount === 0 ? 'no' : credentialCount
-    } credential${pluralOrNot} in your wallet.`
+    let credentialMsg
+
+    if (credentialCount === 1) {
+      credentialMsg = t('Home.OneCredential')
+    } else if (credentialCount > 1) {
+      credentialMsg = t('Home.ManyCredentials').replace('$_', `${credentialCount}`)
+    } else {
+      credentialMsg = t('Home.NoCredentials')
+    }
 
     return (
       <View style={[styles.messageContainer]}>
