@@ -101,6 +101,7 @@ const translation = {
     "NotAvailableInYourWallet": "Not available in your wallet",
     "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
     "IsRequestingYouToShare": "is requesting you to share",
+    "AContact": "A contact"
   },  
   "Settings": {
     "Version": "Version",
