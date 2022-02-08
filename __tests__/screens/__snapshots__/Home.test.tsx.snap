@@ -139,7 +139,7 @@ exports[`displays a home screen renders correctly 1`] = `
         ]
       }
     >
-      Welcome
+      Home.Welcome
     </Text>
     <Text
       style={
