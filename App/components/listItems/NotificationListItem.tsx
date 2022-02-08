@@ -58,10 +58,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const NotificationCredentialListItem: React.FC<NotificationCredentialListItemProps> = ({
-  notificationType,
-  notification,
-}) => {
+const NotificationListItem: React.FC<NotificationCredentialListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { t } = useTranslation()
   let onPress: GenericFn
@@ -105,4 +102,4 @@ const NotificationCredentialListItem: React.FC<NotificationCredentialListItemPro
   )
 }
 
-export default NotificationCredentialListItem
+export default NotificationListItem
