@@ -23,7 +23,7 @@ describe('displays a home screen', () => {
     const root = tree.root
     const results = root.findByType(InfoTextBox)
 
-    expect(results.props.children).toBe('You have no new notifications')
+    expect(results.props.children).toBe('Home.NoNewUpdates')
   })
 })
 
