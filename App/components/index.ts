@@ -6,9 +6,7 @@ import QRScanner from './inputs/QRScanner'
 import TextInput from './inputs/TextInput'
 import ContactListItem from './listItems/ContactListItem'
 import CredentialListItem from './listItems/CredentialListItem'
-import NotificationCredentialListItem from './listItems/NotificationCredentialListItem'
 import NotificationListItem from './listItems/NotificationListItem'
-import NotificationProofListItem from './listItems/NotificationProofListItem'
 import HighlightTextBox from './texts/HighlightTextBox'
 import InfoTextBox from './texts/InfoTextBox'
 import Label from './texts/Label'
@@ -25,8 +23,6 @@ export {
   ModularView,
   Button,
   NotificationListItem,
-  NotificationCredentialListItem,
-  NotificationProofListItem,
   QRScanner,
   SafeAreaScrollView,
   TextInput,

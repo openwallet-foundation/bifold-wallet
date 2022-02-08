@@ -13,6 +13,7 @@ const offset = 10
 
 const style = StyleSheet.create({
   container: {
+    // flexGrow: 3,
     flexDirection: 'row',
     backgroundColor: TextBoxTheme.background,
     borderRadius: 5,

@@ -60,6 +60,7 @@ const translation = {
     "HideAll": "Hide all"
   },
   "Home": {
+    "Welcome": "Welcome",
     "Notifications": "Notifications",
     "NoNewUpdates": "You have no new notifications"
   },

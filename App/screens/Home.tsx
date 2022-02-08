@@ -2,27 +2,18 @@ import { CredentialState, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useCredentials, useProofByState } from '@aries-framework/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View, Text, Linking, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { FlatList, StyleSheet, View, Text } from 'react-native'
 
-import ExternalLink from '../assets/img/external-link.svg'
-import { borderRadius, borderWidth, ColorPallet, Colors, TextTheme } from '../theme'
+import { NotificationType } from '../components/listItems/NotificationListItem'
+import { borderRadius, borderWidth, ColorPallet, TextTheme } from '../theme'
 
 import { InfoTextBox, NotificationListItem } from 'components'
-import { NotificationType } from 'components/listItems/NotificationListItem'
-
-const iconDisplayOptions = {
-  fill: Colors.text,
-  height: 18,
-  width: 18,
-}
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
   },
   messageContainer: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 35,
@@ -48,42 +39,36 @@ const styles = StyleSheet.create({
   },
 })
 
-const emptyListComponent = (credentialCount: number) => {
-  const pluralOrNot = credentialCount === 1 ? '' : 's'
-  const credentialMsg = `You have ${
-    credentialCount === 0 ? 'no' : credentialCount
-  } credential${pluralOrNot} in your wallet.`
-
-  return (
-    <View>
-      <InfoTextBox>You have no new notifications</InfoTextBox>
-      <View style={[styles.messageContainer]}>
-        {credentialCount === 0 ? <Text style={[TextTheme.headingOne]}>Welcome</Text> : null}
-        <Text style={[TextTheme.normal, { marginTop: 25, textAlign: 'center' }]}>{credentialMsg}</Text>
-      </View>
-    </View>
-  )
-}
-
 const Home: React.FC = () => {
   const { credentials } = useCredentials()
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
-  // const data = [
-  //   { id: 1, c: 'red', type: 'CredentialRecord' },
-  //   { id: 2, c: 'green', type: 'CredentialRecord' },
-  // ]
   const data = [...offers, ...proofs]
   const { t } = useTranslation()
 
-  // State
-  // 1. No notifications, empty wallet.
-  // 2. Notifications, empty wallet.
-  // 3. No notifications, 1 or more credentials.
+  const emptyListComponent = () => <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
+
+  const displayMessage = (credentialCount: number) => {
+    if (typeof credentialCount === 'undefined') {
+      throw new Error('Credential count cannot be undefined')
+    }
+
+    const pluralOrNot = credentialCount === 1 ? '' : 's'
+    const credentialMsg = `You have ${
+      credentialCount === 0 ? 'no' : credentialCount
+    } credential${pluralOrNot} in your wallet.`
+
+    return (
+      <View style={[styles.messageContainer]}>
+        {credentialCount === 0 ? <Text style={[TextTheme.headingOne]}>{t('Home.Welcome')}</Text> : null}
+        <Text style={[TextTheme.normal, { marginTop: 25, textAlign: 'center' }]}>{credentialMsg}</Text>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={[TextTheme.headingThree, styles.header]}>Notifications</Text>
+      <Text style={[TextTheme.headingThree, styles.header]}>{t('Home.Notifications')}</Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -94,12 +79,13 @@ const Home: React.FC = () => {
           item.type === 'CredentialRecord' ? (
             <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
           ) : (
-            <NotificationListItem notification={item} />
+            <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
           )
         }
-        ListEmptyComponent={emptyListComponent(credentials.length)}
+        ListEmptyComponent={emptyListComponent()}
       />
-      <View style={[{ marginTop: 25 }]}>
+      {displayMessage(credentials.length)}
+      {/* <View style={[{ marginTop: 35 }]}>
         <TouchableOpacity style={[styles.link]} onPress={() => Linking.openURL('https://example.com/')}>
           <Icon name={'credit-card'} size={32} color={ColorPallet.brand.primary} />
           <Text style={[styles.linkText]}>Find a Credential</Text>
@@ -113,7 +99,7 @@ const Home: React.FC = () => {
           <Text style={[styles.linkText]}>Learn about Credentials</Text>
           <ExternalLink {...iconDisplayOptions} />
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   )
 }

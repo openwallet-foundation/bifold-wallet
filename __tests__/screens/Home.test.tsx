@@ -9,7 +9,6 @@ import { create } from 'react-test-renderer'
 import Home from '../../App/screens/Home'
 
 import { InfoTextBox, NotificationListItem } from 'components'
-import NotificationCredentialListItem from 'components/listItems/NotificationListItem'
 
 describe('displays a home screen', () => {
   it('renders correctly', () => {
@@ -68,7 +67,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
   it('touch notification triggers navigation correctly', async () => {
     const tree = create(<Home />)
     const root = tree.root
-    const touchable = root.findByType(NotificationCredentialListItem).findByType(TouchableOpacity)
+    const touchable = root.findByType(NotificationListItem).findByType(TouchableOpacity)
     const navigation = useNavigation()
 
     touchable.props.onPress()
