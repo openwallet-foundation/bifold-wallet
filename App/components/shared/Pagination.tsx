@@ -46,8 +46,8 @@ export const Pagination: React.FC<IPaginationProps> = ({
     }
   }
 
-  // The `TouchableOpacity` prop `disabled` is commented out below because it
-  // causes the `accessibilityLabel` to be permanently disappears when toggled.
+  // FIXME: Issue #204. Better to `disable` the `TouchableOpacity`
+  // controls rather than changing the color to transparent.
 
   return (
     <View style={style.pagerContainer}>
@@ -56,7 +56,6 @@ export const Pagination: React.FC<IPaginationProps> = ({
         accessible={true}
         accessibilityLabel={t('Global.Back')}
         accessibilityElementsHidden={false}
-        // disabled={shouldHideBack()}
         onPress={previous}
       >
         <Text
@@ -78,13 +77,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         dotStyle={style.pagerDot}
         containerStyle={style.pagerPosition}
       />
-      <TouchableOpacity
-        testID={'nextButton'}
-        accessible={true}
-        accessibilityLabel={t('Global.Next')}
-        // disabled={shouldHideNext()}
-        onPress={next}
-      >
+      <TouchableOpacity testID={'nextButton'} accessible={true} accessibilityLabel={t('Global.Next')} onPress={next}>
         <Text
           style={[
             style.pagerNavigationButton,
