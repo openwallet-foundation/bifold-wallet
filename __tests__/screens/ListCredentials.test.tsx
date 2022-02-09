@@ -12,11 +12,6 @@ interface CredentialContextInterface {
   credentials: CredentialRecord[]
 }
 
-const mockT = jest.fn((key: string) => key)
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: mockT }),
-}))
-
 const mockNavigate = jest.fn()
 jest.mock('@react-navigation/core', () => {
   const module = jest.requireActual('@react-navigation/core')
