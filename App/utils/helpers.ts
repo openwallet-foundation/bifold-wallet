@@ -1,5 +1,6 @@
-import { ConnectionRecord, CredentialRecord } from '@aries-framework/core'
-import { useConnectionById } from '@aries-framework/react-hooks'
+import { ConnectionRecord, CredentialRecord, ProofRecord, RequestedAttribute } from '@aries-framework/core'
+import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
+import startCase from 'lodash.startcase'
 
 import { indyCredentialKey, IndexedIndyCredentialMetadata } from '../constants'
 
@@ -40,8 +41,38 @@ export function hashToRGBA(i: number) {
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
 }
 
+export function credentialRecordFromId(credentialId?: string): CredentialRecord | void {
+  if (credentialId) {
+    return useCredentialById(credentialId)
+  }
+}
+
 export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
   if (connectionId) {
     return useConnectionById(connectionId)
   }
+}
+
+export function proofRecordFromId(proofId?: string): ProofRecord | void {
+  if (proofId) {
+    return useProofById(proofId)
+  }
+}
+
+export function getConnectionName(connection: ConnectionRecord | void): string | void {
+  if (!connection) {
+    return
+  }
+  return connection?.alias || connection?.invitation?.label
+}
+
+export function firstMatchingCredentialAttributeValue(attributeName: string, attributes: RequestedAttribute[]): string {
+  if (!attributes.length) {
+    return ''
+  }
+  const firstMatchingCredential = attributes[0].credentialInfo
+  const match = Object.entries(firstMatchingCredential.attributes).find(
+    ([n]) => startCase(n) === startCase(attributeName)
+  )
+  return match?.length ? match[1] : ''
 }

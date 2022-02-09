@@ -4,6 +4,7 @@ import React from 'react'
 import CredentialOffer from '../screens/CredentialOffer'
 import Home from '../screens/Home'
 import ProofRequest from '../screens/ProofRequest'
+import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
 
 import defaultStackOptions from './defaultStackOptions'
 
@@ -17,6 +18,7 @@ const HomeStack: React.FC = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Credential Offer" component={CredentialOffer} />
       <Stack.Screen name="Proof Request" component={ProofRequest} />
+      <Stack.Screen name="Proof Request Attribute Details" component={ProofRequestAttributeDetails} />
     </Stack.Navigator>
   )
 }

@@ -1,3 +1,5 @@
+import { RequestedAttribute } from '@aries-framework/core'
+
 export type TabStackParams = {
   HomeTab: undefined
   ContactsTab: undefined
@@ -24,6 +26,11 @@ export type HomeStackParams = {
   Home: undefined
   'Credential Offer': { credentialId: string }
   'Proof Request': { proofId: string }
+  'Proof Request Attribute Details': {
+    proofId: string
+    attributeName: string
+    attributeCredentials: RequestedAttribute[]
+  }
   'Manage Your Wallet': undefined
 }
 

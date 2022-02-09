@@ -1,30 +1,29 @@
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
-import {
-  ConnectionRecord,
-  ProofRecord,
-  ProofState,
-  RequestedAttribute,
-  RetrievedCredentials,
-} from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import startCase from 'lodash.startcase'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Alert, View, StyleSheet, Text } from 'react-native'
+import { FlatList, Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Toast from 'react-native-toast-message'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { ColorPallet, TextTheme } from '../theme'
-import { connectionRecordFromId } from '../utils/helpers'
+import {
+  connectionRecordFromId,
+  firstMatchingCredentialAttributeValue,
+  getConnectionName,
+  proofRecordFromId,
+} from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
 import { HomeStackParams } from 'types/navigators'
 
-interface CredentialOfferProps {
+interface ProofRequestProps {
   navigation: StackNavigationProp<HomeStackParams, 'Proof Request'>
   route: RouteProp<HomeStackParams, 'Proof Request'>
 }
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     ...TextTheme.normal,
+    flexShrink: 1,
   },
   footerContainer: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -102,13 +102,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
+const CredentialOffer: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
 
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
-  const [retrievedCredentialAttributes, setRetrievedCredentialAttributes] = useState<[string, RequestedAttribute[]][]>()
+  const [retrievedCredentialAttributes, setRetrievedCredentialAttributes] = useState<[string, RequestedAttribute[]][]>(
+    []
+  )
 
   if (!agent?.proofs) {
     Toast.show({
@@ -123,23 +125,13 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const anyUnavailableCredentialAttributes = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
     attributes.some(([, values]) => !values?.length)
 
-  const firstMatchingCredentialAttributeValue = (attributeName: string, attributes: RequestedAttribute[]): string => {
-    if (!attributes.length) {
-      return ''
-    }
-    const firstMatchingCredential = attributes[0].credentialInfo
-    const match = Object.entries(firstMatchingCredential.attributes).find(
-      ([n]) => startCase(n) === startCase(attributeName)
-    )
-    return match?.length ? match[1] : ''
-  }
-
   const getProofRecord = (proofId?: string): ProofRecord | void => {
     try {
-      if (!proofId) {
+      const proof = proofRecordFromId(proofId)
+      if (!proof) {
         throw new Error(t('ProofRequest.ProofNotFound'))
       }
-      return useProofById(proofId)
+      return proof
     } catch (e: unknown) {
       Toast.show({
         type: ToastType.Error,
@@ -167,7 +159,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
   }
 
-  const proof = getProofRecord(route?.params?.proofId)
+  const { proofId } = route?.params
+  const proof = getProofRecord(proofId)
 
   if (!proof) {
     Toast.show({
@@ -261,13 +254,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const connection = connectionRecordFromId(proof.connectionId)
 
-  const getConnectionName = (connection: ConnectionRecord | void): string | void => {
-    if (!connection) {
-      return
-    }
-    return connection?.alias || connection?.invitation?.label
-  }
-
   return (
     <FlatList
       ListHeaderComponent={() => (
@@ -288,13 +274,13 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
                   color={TextTheme.headingOne.color}
                   size={TextTheme.headingOne.fontSize}
                 ></Icon>
-                <Text style={[styles.headerText, { flexShrink: 1 }]}>
+                <Text style={styles.headerText}>
                   <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
-              <Text style={[styles.headerText, { flexShrink: 1 }]}>
+              <Text style={styles.headerText}>
                 <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
                 {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
@@ -330,7 +316,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           <View style={styles.attributeValueContainer}>
             <View style={styles.textContainer}>
               {values.length ? (
-                <Text style={styles.text}>{firstMatchingCredentialAttributeValue(name, values)}</Text>
+                <View>
+                  <Text style={styles.text}>{firstMatchingCredentialAttributeValue(name, values)}</Text>
+                </View>
               ) : (
                 <View style={styles.rowTextContainer}>
                   <Icon
@@ -345,6 +333,21 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
                 </View>
               )}
             </View>
+            {values.length ? (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() =>
+                  navigation.navigate('Proof Request Attribute Details', {
+                    proofId,
+                    attributeName: name,
+                    attributeCredentials: values,
+                  })
+                }
+                style={styles.linkContainer}
+              >
+                <Text style={styles.link}>{t('ProofRequest.Details')}</Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
           <View style={styles.listItemBorder}></View>
         </View>
