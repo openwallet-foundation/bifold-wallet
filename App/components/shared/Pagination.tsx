@@ -23,9 +23,6 @@ interface IPaginationProps {
   style: IPaginationStyleSheet
 }
 
-// const arrowHeight = 24
-// const arrowWidth = 48
-
 export const Pagination: React.FC<IPaginationProps> = ({
   pages,
   activeIndex,
@@ -49,13 +46,17 @@ export const Pagination: React.FC<IPaginationProps> = ({
     }
   }
 
+  // The `TouchableOpacity` prop `disabled` is commented out below because it
+  // causes the `accessibilityLabel` to be permanently disappears when toggled.
+
   return (
     <View style={style.pagerContainer}>
       <TouchableOpacity
         testID={'backButton'}
         accessible={true}
         accessibilityLabel={t('Global.Back')}
-        disabled={shouldHideBack()}
+        accessibilityElementsHidden={false}
+        // disabled={shouldHideBack()}
         onPress={previous}
       >
         <Text
@@ -66,7 +67,6 @@ export const Pagination: React.FC<IPaginationProps> = ({
         >
           {previousButtonText}
         </Text>
-        {/* <LargeArrow height={arrowHeight} width={arrowWidth} fill={Colors.mainColor} /> */}
       </TouchableOpacity>
       <ScalingDot
         data={pages}
@@ -82,7 +82,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         testID={'nextButton'}
         accessible={true}
         accessibilityLabel={t('Global.Next')}
-        disabled={shouldHideNext()}
+        // disabled={shouldHideNext()}
         onPress={next}
       >
         <Text
@@ -93,12 +93,6 @@ export const Pagination: React.FC<IPaginationProps> = ({
         >
           {nextButtonText}
         </Text>
-        {/* <LargeArrow
-          height={arrowHeight}
-          width={arrowWidth}
-          fill={Colors.mainColor}
-          style={{ transform: [{ rotate: '180deg' }] }}
-        /> */}
       </TouchableOpacity>
     </View>
   )
