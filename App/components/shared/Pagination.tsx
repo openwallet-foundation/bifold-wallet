@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
@@ -35,6 +36,8 @@ export const Pagination: React.FC<IPaginationProps> = ({
   previous,
   previousButtonText,
 }) => {
+  const { t } = useTranslation()
+
   const shouldHideBack = () => {
     if (activeIndex === 0) {
       return true
@@ -49,9 +52,9 @@ export const Pagination: React.FC<IPaginationProps> = ({
   return (
     <View style={style.pagerContainer}>
       <TouchableOpacity
-        testID={'previousButton'}
+        testID={'backButton'}
         accessible={true}
-        accessibilityLabel={'Previous'}
+        accessibilityLabel={t('Global.Back')}
         disabled={shouldHideBack()}
         onPress={previous}
       >
@@ -78,7 +81,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
       <TouchableOpacity
         testID={'nextButton'}
         accessible={true}
-        accessibilityLabel={'Next'}
+        accessibilityLabel={t('Global.Next')}
         disabled={shouldHideNext()}
         onPress={next}
       >
