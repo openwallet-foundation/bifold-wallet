@@ -1,112 +1,78 @@
 import { CredentialRecord, CredentialState, ProofRecord } from '@aries-framework/core'
-import * as hooks from '@aries-framework/react-hooks'
-import { cleanup, fireEvent, render } from '@testing-library/react-native'
+import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
+import { fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { FlatList, Text } from 'react-native'
-import TestRenderer from 'react-test-renderer'
+import { FlatList, TouchableOpacity } from 'react-native'
+import { create } from 'react-test-renderer'
 
-import ModularView from '../../App/components/views/ModularView'
 import Home from '../../App/screens/Home'
 
-import { NotificationCredentialListItem } from 'components'
-
-jest.mock('@aries-framework/react-hooks')
-
-const mockT = jest.fn((key: string) => key)
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: mockT }),
-}))
-
-const mockNavigate = jest.fn()
-jest.mock('@react-navigation/core', () => {
-  const module = jest.requireActual('@react-navigation/core')
-  return {
-    ...module,
-    useNavigation: () => ({
-      navigate: mockNavigate,
-    }),
-  }
-})
+import { InfoTextBox, NotificationListItem } from 'components'
 
 describe('displays a home screen', () => {
-  afterEach(() => {
-    cleanup()
+  it('renders correctly', () => {
+    const tree = create(<Home />).toJSON()
+
+    expect(tree).toMatchSnapshot()
   })
 
-  describe('with a notifications module', () => {
-    beforeEach(() => {
-      jest.spyOn(hooks, 'useCredentialByState').mockReturnValue([] as CredentialRecord[])
-      jest.spyOn(hooks, 'useProofByState').mockReturnValue([] as ProofRecord[])
-    })
+  // TODO:(jl) Good enough to be captured by the snapshot?
+  it('defaults to no notifications', () => {
+    const tree = create(<Home />)
+    const root = tree.root
+    const results = root.findByType(InfoTextBox)
 
-    it('is not null', () => {
-      const testRenderer = TestRenderer.create(<Home />)
-      const rootInstance = testRenderer.root
-      const modularViewInstance = rootInstance.findByType(ModularView)
+    expect(results.props.children).toBe('Home.NoNewUpdates')
+  })
+})
 
-      expect(modularViewInstance).not.toBeNull()
-    })
+describe('with a notifications module, when an issuer sends a credential offer', () => {
+  const testCredentialRecords: CredentialRecord[] = [
+    new CredentialRecord({
+      threadId: '1',
+      state: CredentialState.OfferReceived,
+    }),
+  ]
+  const testProofRecords: ProofRecord[] = []
 
-    it('has a title', () => {
-      const testRenderer = TestRenderer.create(<Home />)
-      const rootInstance = testRenderer.root
-      const modularViewInstance = rootInstance.findByType(ModularView)
-
-      expect(modularViewInstance.props.title).toBe('Home.Notifications')
-    })
-
-    it('has no credential offer notifications(s) by default', () => {
-      const testRenderer = TestRenderer.create(<Home />)
-      const rootInstance = testRenderer.root
-      const modularViewInstance = rootInstance.findByType(ModularView)
-      const flatListInstance = modularViewInstance.findByType(FlatList)
-
-      expect(flatListInstance.findByType(Text).props.children).toBe('Home.NoNewUpdates')
-    })
+  beforeEach(() => {
+    jest.clearAllMocks()
+    // @ts-ignore
+    useCredentialByState.mockReturnValue(testCredentialRecords)
+    // @ts-ignore
+    useProofByState.mockReturnValue(testProofRecords)
   })
 
-  describe('with a notifications module, when an issuer sends a credential offer', () => {
-    const testCredentialRecords: CredentialRecord[] = [
-      new CredentialRecord({
-        threadId: '1',
-        state: CredentialState.OfferReceived,
-      }),
-    ]
-    const testProofRecords: ProofRecord[] = []
+  /**
+   * Scenario: Holder receives a credential offer
+   * Given the holder has a connection with an issuer
+   * When the issuer sends a credential offer
+   * Then the credential offer will arrive in the form of a notification in the home screen
+   */
+  it('notifications are displayed', () => {
+    const tree = create(<Home />)
+    const root = tree.root
+    const flatListInstance = root.findByType(FlatList)
 
-    beforeEach(() => {
-      jest.spyOn(hooks, 'useCredentialByState').mockReturnValue(testCredentialRecords)
-      jest.spyOn(hooks, 'useProofByState').mockReturnValue(testProofRecords)
-    })
+    expect(flatListInstance.findAllByType(NotificationListItem)).toHaveLength(1)
+  })
 
-    /**
-     * Scenario: Holder receives a credential offer
-     * Given the holder has a connection with an issuer
-     * When the issuer sends a credential offer
-     * Then the credential offer will arrive in the form of a notification in the home screen
-     */
-    it(`has ${testCredentialRecords.length} credential offer notifications(s)`, () => {
-      const testRenderer = TestRenderer.create(<Home />)
-      const rootInstance = testRenderer.root
-      const modularViewInstance = rootInstance.findByType(ModularView)
-      const flatListInstance = modularViewInstance.findByType(FlatList)
+  /**
+   * Scenario: Holder selects a credential offer
+   * Given the holder has received a credential offer from a connected issuer
+   * When the holder selects on the credential offer
+   * When the holder is taken to the credential offer screen/flow
+   */
+  it('touch notification triggers navigation correctly', async () => {
+    const tree = create(<Home />)
+    const root = tree.root
+    const touchable = root.findByType(NotificationListItem).findByType(TouchableOpacity)
+    const navigation = useNavigation()
 
-      expect(flatListInstance.findAllByType(NotificationCredentialListItem)).toHaveLength(1)
-    })
+    touchable.props.onPress()
 
-    /**
-     * Scenario: Holder selects a credential offer
-     * Given the holder has received a credential offer from a connected issuer
-     * When the holder selects on the credential offer
-     * When the holder is taken to the credential offer screen/flow
-     */
-    test('pressing the notification takes the holder to the credential offer screen/flow', async () => {
-      const { findByText } = render(<Home />)
-      const notificationCredentialListItemInstance = await findByText('Credential')
-
-      fireEvent(notificationCredentialListItemInstance, 'press')
-
-      expect(mockNavigate).toHaveBeenCalledWith('Credential Offer', { credentialId: testCredentialRecords[0].id })
-    })
+    expect(navigation.navigate).toHaveBeenCalledTimes(1)
+    expect(navigation.navigate).toHaveBeenCalledWith('Credential Offer', { credentialId: testCredentialRecords[0].id })
   })
 })
