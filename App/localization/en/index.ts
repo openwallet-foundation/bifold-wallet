@@ -61,8 +61,12 @@ const translation = {
     "HideAll": "Hide all"
   },
   "Home": {
+    "Welcome": "Welcome",
     "Notifications": "Notifications",
-    "NoNewUpdates": "No New Updates"
+    "NoNewUpdates": "You have no new notifications",
+    "NoCredentials": "You have no credentials in your wallet",
+    "ManyCredentials": "You have $_ credentials in your wallet",
+    "OneCredential": "You have 1 credential in your wallet"
   },
   "Scan":{
     "SuccessfullyAcceptedConnection":"Successfully Accepted Connection",
@@ -85,7 +89,7 @@ const translation = {
     "CredentialAddedToYourWallet": "Credential added to your wallet",
     "CredentialDeclined": "Credential declined",
     "CredentialOnTheWay": "Your credential is on the way",
-    "CredentialOffer": "Credential offer"
+    "CredentialOffer": "New Credential Offer"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -97,7 +101,7 @@ const translation = {
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
-    "ProofRequest": "Proof request",
+    "ProofRequest": "New Proof Request",
     "NotAvailableInYourWallet": "Not available in your wallet",
     "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
     "IsRequestingYouToShare": "is requesting you to share",
