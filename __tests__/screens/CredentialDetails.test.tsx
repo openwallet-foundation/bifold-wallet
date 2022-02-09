@@ -92,7 +92,7 @@ describe('displays a credential details screen', () => {
       })
     })
 
-    test('a credential name, credential version and issue date is displayed', async () => {
+    it.skip('a credential name, credential version and issue date is displayed', async () => {
       const { findByText } = render(
         <CredentialDetails
           navigation={{ goBack: mockGoBack } as any}
@@ -113,7 +113,7 @@ describe('displays a credential details screen', () => {
     })
   })
 
-  test('a list of credential details is displayed, attribute names are human readable', async () => {
+  it.skip('a list of credential details is displayed, attribute names are human readable', async () => {
     const { findByText } = render(
       <CredentialDetails
         navigation={{ goBack: mockGoBack } as any}
@@ -130,7 +130,7 @@ describe('displays a credential details screen', () => {
     expect(postalCode).not.toBe(null)
   })
 
-  test('a list of credential details is displayed, attribute values are hidden by default', async () => {
+  it.skip('a list of credential details is displayed, attribute values are hidden by default', async () => {
     const { findAllByText } = render(
       <CredentialDetails
         navigation={{ goBack: mockGoBack } as any}
@@ -143,7 +143,7 @@ describe('displays a credential details screen', () => {
     expect(hiddenValues.length).toBe(3)
   })
 
-  test('pressing the `Show` button un-hides an attribute value', async () => {
+  it.skip('pressing the `Show` button un-hides an attribute value', async () => {
     const { queryByText, findAllByText } = render(
       <CredentialDetails
         navigation={{ goBack: mockGoBack } as any}
@@ -170,7 +170,7 @@ describe('displays a credential details screen', () => {
     expect(familyName).not.toBe(null)
   })
 
-  test('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
+  it.skip('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
     const { queryAllByText, findAllByText, findByText } = render(
       <CredentialDetails
         navigation={{ goBack: mockGoBack } as any}
