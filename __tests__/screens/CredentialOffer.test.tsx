@@ -7,14 +7,9 @@ import CredentialOffer from '../../App/screens/CredentialOffer'
 import Button from 'components/buttons/Button'
 import NotificationModal from 'components/modals/NotificationModal'
 
-const mockT = jest.fn((key: string) => key)
 const mockNavigate = jest.fn()
 const mockGoBack = jest.fn()
 const mockPop = jest.fn()
-
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: mockT }),
-}))
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 
