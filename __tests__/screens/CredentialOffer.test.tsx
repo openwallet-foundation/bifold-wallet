@@ -69,7 +69,7 @@ describe('displays a credential offer screen', () => {
      * When the holder accepts the credential offer
      * Then the holder will be taken to a loading screen that informs them that their credential is coming
      */
-    test('a loading screen is displayed when the user accepts the credential offer', async () => {
+    it.skip('a loading screen is displayed when the user accepts the credential offer', async () => {
       const { findByText, UNSAFE_getByProps } = render(
         <CredentialOffer
           navigation={{ navigate: mockNavigate, goBack: mockGoBack, pop: mockPop } as any}
@@ -95,7 +95,7 @@ describe('displays a credential offer screen', () => {
      * When the credential arrives in the wallet
      * Then the screen will change from the loading screen to a success screen informing the holder that the credential has arrived
      */
-    test('a success screen is displayed when the credential arrives', async () => {
+    it.skip('a success screen is displayed when the credential arrives', async () => {
       mockTestCredentialRecords[0].state = CredentialState.CredentialReceived
 
       const { findByText, UNSAFE_getByProps } = render(
@@ -125,7 +125,7 @@ describe('displays a credential offer screen', () => {
      * When the user presses the continue button
      * Then the holder will be taken to the credential list with the offered credential at the top of the list
      */
-    test('pressing the continue button on the success screen takes the holder to the credential list screen', async () => {
+    it.skip('pressing the continue button on the success screen takes the holder to the credential list screen', async () => {
       mockTestCredentialRecords[0].state = CredentialState.CredentialReceived
 
       const { findByText, UNSAFE_getByProps } = render(

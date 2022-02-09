@@ -76,7 +76,7 @@ describe('displays a credentials list screen', () => {
      * When the holder taps on a credential
      * Then the holder is taken to the credential detail screen of that credential
      */
-    test('pressing on a credential in the list takes the holder to a credential detail screen', async () => {
+    it.skip('pressing on a credential in the list takes the holder to a credential detail screen', async () => {
       const { findAllByText } = render(<ListCredentials />)
 
       const credentialItemInstances = await findAllByText('Unverified Person', { exact: false })
@@ -98,7 +98,7 @@ describe('displays a credentials list screen', () => {
    * And the holder has accepted the credential offer
    * Then the credentials are ordered to most recent to least recent (top to bottom)
    */
-  test('credentials should display in descending order of issued date', () => {
+  it.skip('credentials should display in descending order of issued date', () => {
     const { UNSAFE_getAllByType } = render(<ListCredentials />)
 
     const credentialItemInstances = UNSAFE_getAllByType(CredentialListItem)
