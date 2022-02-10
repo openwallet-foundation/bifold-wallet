@@ -1,17 +1,34 @@
 import { CredentialState, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useCredentials, useProofByState } from '@aries-framework/react-hooks'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View, Text } from 'react-native'
+import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
 import { NotificationType } from '../components/listItems/NotificationListItem'
-import { borderRadius, borderWidth, ColorPallet, TextTheme } from '../theme'
+import { ColorPallet, TextTheme } from '../theme'
 
 import { InfoTextBox, NotificationListItem } from 'components'
+import { HomeStackParams } from 'types/navigators'
+
+const { width } = Dimensions.get('window')
+
+const offset = 25
+const offsetPadding = 5
+
+interface HomeProps {
+  navigation: StackNavigationProp<HomeStackParams>
+}
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 25,
+    paddingHorizontal: offset,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: offset,
   },
   messageContainer: {
     alignItems: 'center',
@@ -20,33 +37,33 @@ const styles = StyleSheet.create({
     marginHorizontal: 60,
   },
   header: {
-    marginTop: 25,
+    marginTop: offset,
     marginBottom: 20,
   },
-  link: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: ColorPallet.brand.primary,
-    borderWidth: borderWidth,
-    borderRadius: borderRadius,
-    paddingLeft: 20,
-    minHeight: 48,
+  linkContainer: {
+    minHeight: TextTheme.normal.fontSize,
+    marginTop: 10,
   },
-  linkText: {
+  link: {
     ...TextTheme.normal,
-    fontWeight: 'bold',
-    marginHorizontal: 15,
+    color: ColorPallet.brand.link,
   },
 })
 
-const Home: React.FC = () => {
+const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { credentials } = useCredentials()
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
-  const data = [...offers, ...proofs]
+  const notifications = [...offers, ...proofs].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
   const { t } = useTranslation()
 
-  const emptyListComponent = () => <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
+  const emptyListComponent = () => (
+    <View style={styles.container}>
+      <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
+    </View>
+  )
 
   const displayMessage = (credentialCount: number) => {
     if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
@@ -66,45 +83,60 @@ const Home: React.FC = () => {
     return (
       <View style={[styles.messageContainer]}>
         {credentialCount === 0 ? <Text style={[TextTheme.headingOne]}>{t('Home.Welcome')}</Text> : null}
-        <Text style={[TextTheme.normal, { marginTop: 25, textAlign: 'center' }]}>{credentialMsg}</Text>
+        <Text style={[TextTheme.normal, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
       </View>
     )
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={[TextTheme.headingThree, styles.header]}>{t('Home.Notifications')}</Text>
+    <View>
+      <View style={styles.rowContainer}>
+        <Text style={[TextTheme.headingThree, styles.header]}>
+          {t('Home.Notifications')}
+          {notifications.length ? ` (${notifications.length})` : ''}
+        </Text>
+        {notifications.length ? (
+          <TouchableOpacity
+            style={styles.linkContainer}
+            activeOpacity={1}
+            onPress={() => navigation.navigate('Notifications')}
+          >
+            <Text style={styles.link}>{t('Home.SeeAll')}</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={data.length > 0 ? true : false}
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) =>
-          item.type === 'CredentialRecord' ? (
-            <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
-          ) : (
-            <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-          )
-        }
+        scrollEnabled={notifications.length > 0 ? true : false}
+        snapToOffsets={[
+          0,
+          ...Array(notifications.length)
+            .fill(0)
+            .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
+            .slice(1),
+        ]}
+        decelerationRate="fast"
         ListEmptyComponent={emptyListComponent()}
+        data={notifications}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item, index }) => (
+          <View
+            style={{
+              width: width - 2 * offset,
+              marginLeft: !index ? offset : offsetPadding,
+              marginRight: index === notifications.length - 1 ? offset : offsetPadding,
+            }}
+          >
+            {item.type === 'CredentialRecord' ? (
+              <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+            ) : (
+              <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+            )}
+          </View>
+        )}
       />
-      {displayMessage(credentials.length)}
-      {/* <View style={[{ marginTop: 35 }]}>
-        <TouchableOpacity style={[styles.link]} onPress={() => Linking.openURL('https://example.com/')}>
-          <Icon name={'credit-card'} size={32} color={ColorPallet.brand.primary} />
-          <Text style={[styles.linkText]}>Find a Credential</Text>
-          <ExternalLink {...iconDisplayOptions} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.link, { marginTop: 15 }]}
-          onPress={() => Linking.openURL('https://example.com/')}
-        >
-          <Icon name={'info'} size={32} color={ColorPallet.brand.primary} />
-          <Text style={[styles.linkText]}>Learn about Credentials</Text>
-          <ExternalLink {...iconDisplayOptions} />
-        </TouchableOpacity>
-      </View> */}
+      <View style={styles.container}>{displayMessage(credentials.length)}</View>
     </View>
   )
 }

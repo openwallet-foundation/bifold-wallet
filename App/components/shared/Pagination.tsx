@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
@@ -22,9 +23,6 @@ interface IPaginationProps {
   style: IPaginationStyleSheet
 }
 
-// const arrowHeight = 24
-// const arrowWidth = 48
-
 export const Pagination: React.FC<IPaginationProps> = ({
   pages,
   activeIndex,
@@ -35,6 +33,8 @@ export const Pagination: React.FC<IPaginationProps> = ({
   previous,
   previousButtonText,
 }) => {
+  const { t } = useTranslation()
+
   const shouldHideBack = () => {
     if (activeIndex === 0) {
       return true
@@ -46,13 +46,16 @@ export const Pagination: React.FC<IPaginationProps> = ({
     }
   }
 
+  // FIXME: Issue #204. Better to `disable` the `TouchableOpacity`
+  // controls rather than changing the color to transparent.
+
   return (
     <View style={style.pagerContainer}>
       <TouchableOpacity
-        testID={'previousButton'}
+        testID={'backButton'}
         accessible={true}
-        accessibilityLabel={'Previous'}
-        disabled={shouldHideBack()}
+        accessibilityLabel={t('Global.Back')}
+        accessibilityElementsHidden={false}
         onPress={previous}
       >
         <Text
@@ -63,7 +66,6 @@ export const Pagination: React.FC<IPaginationProps> = ({
         >
           {previousButtonText}
         </Text>
-        {/* <LargeArrow height={arrowHeight} width={arrowWidth} fill={Colors.mainColor} /> */}
       </TouchableOpacity>
       <ScalingDot
         data={pages}
@@ -75,13 +77,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         dotStyle={style.pagerDot}
         containerStyle={style.pagerPosition}
       />
-      <TouchableOpacity
-        testID={'nextButton'}
-        accessible={true}
-        accessibilityLabel={'Next'}
-        disabled={shouldHideNext()}
-        onPress={next}
-      >
+      <TouchableOpacity testID={'nextButton'} accessible={true} accessibilityLabel={t('Global.Next')} onPress={next}>
         <Text
           style={[
             style.pagerNavigationButton,
@@ -90,12 +86,6 @@ export const Pagination: React.FC<IPaginationProps> = ({
         >
           {nextButtonText}
         </Text>
-        {/* <LargeArrow
-          height={arrowHeight}
-          width={arrowWidth}
-          fill={Colors.mainColor}
-          style={{ transform: [{ rotate: '180deg' }] }}
-        /> */}
       </TouchableOpacity>
     </View>
   )

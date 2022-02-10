@@ -12,6 +12,7 @@ const translation = {
     "Share": "Share",
     "Decline": "Decline",
     "Back": "Back",
+    "Next": "Next",
     "Continue": "Continue",
     "Info": "Information",
     "ThisDecisionCannotBeChanged.": "This decision cannot be changed.",
@@ -19,6 +20,8 @@ const translation = {
     "Success": "Success",
     "SomethingWentWrong": "Something went wrong",
     "Done": "Done",
+    "Skip": "Skip",
+    "View": "View"
   },
   "Language": {
     "English": "English",
@@ -66,7 +69,8 @@ const translation = {
     "NoNewUpdates": "You have no new notifications",
     "NoCredentials": "You have no credentials in your wallet",
     "ManyCredentials": "You have $_ credentials in your wallet",
-    "OneCredential": "You have 1 credential in your wallet"
+    "OneCredential": "You have 1 credential in your wallet",
+    "SeeAll": "See all"
   },
   "Scan":{
     "SuccessfullyAcceptedConnection":"Successfully Accepted Connection",
