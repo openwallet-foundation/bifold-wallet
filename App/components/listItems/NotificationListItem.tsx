@@ -1,4 +1,4 @@
-import type { CredentialRecord } from '@aries-framework/core'
+import type { CredentialRecord, ProofRecord } from '@aries-framework/core'
 
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -26,7 +26,7 @@ export enum NotificationType {
 
 interface NotificationCredentialListItemProps {
   notificationType: NotificationType
-  notification: CredentialRecord
+  notification: CredentialRecord | ProofRecord
 }
 
 const styles = StyleSheet.create({
@@ -80,14 +80,14 @@ const NotificationListItem: React.FC<NotificationCredentialListItemProps> = ({ n
   switch (notificationType) {
     case NotificationType.CredentialOffer:
       // eslint-disable-next-line no-case-declarations
-      const { name, version } = parsedSchema(notification)
+      const { name, version } = parsedSchema(notification as CredentialRecord)
       onPress = () => navigation.navigate('Credential Offer', { credentialId: notification.id })
       title = t('CredentialOffer.CredentialOffer')
       body = `${name} v${version}`
       break
     case NotificationType.ProofRequest:
       title = t('ProofRequest.ProofRequest')
-      body = notification.requestMessage?.indyProofRequest?.name
+      body = (notification as ProofRecord).requestMessage?.indyProofRequest?.name || ''
       onPress = () => navigation.navigate('Proof Request', { proofId: notification.id })
       break
     default:

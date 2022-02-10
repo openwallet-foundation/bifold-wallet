@@ -2,12 +2,14 @@ import { CredentialState, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useCredentials, useProofByState } from '@aries-framework/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View, Text } from 'react-native'
+import { FlatList, StyleSheet, View, Text, Dimensions } from 'react-native'
 
 import { NotificationType } from '../components/listItems/NotificationListItem'
 import { borderRadius, borderWidth, ColorPallet, TextTheme } from '../theme'
 
 import { InfoTextBox, NotificationListItem } from 'components'
+
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +48,11 @@ const Home: React.FC = () => {
   const data = [...offers, ...proofs]
   const { t } = useTranslation()
 
-  const emptyListComponent = () => <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
+  const emptyListComponent = () => (
+    <View style={styles.container}>
+      <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
+    </View>
+  )
 
   const displayMessage = (credentialCount: number) => {
     if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
@@ -72,28 +78,41 @@ const Home: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={[TextTheme.headingThree, styles.header]}>
-        {t('Home.Notifications')}
-        {data.length ? ` (${data.length})` : ''}
-      </Text>
+    <View>
+      <View style={styles.container}>
+        <Text style={[TextTheme.headingThree, styles.header]}>
+          {t('Home.Notifications')}
+          {data.length ? ` (${data.length})` : ''}
+        </Text>
+      </View>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         scrollEnabled={data.length > 0 ? true : false}
         data={data}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) =>
-          item.type === 'CredentialRecord' ? (
-            <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
-          ) : (
-            <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-          )
-        }
+        renderItem={({ item, index }) => (
+          <View style={{ paddingLeft: !index ? 25 : 5, paddingRight: index === data.length - 1 ? 25 : 5 }}>
+            {item.type === 'CredentialRecord' ? (
+              <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+            ) : (
+              <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+            )}
+          </View>
+        )}
         ListEmptyComponent={emptyListComponent()}
+        snapToOffsets={[
+          0,
+          ...Array(data.length)
+            .fill(0)
+            .map((n: number, i: number) => i * (width - 40))
+            .slice(1),
+        ]}
+        decelerationRate="fast"
       />
-      {displayMessage(credentials.length)}
-      {/* <View style={[{ marginTop: 35 }]}>
+      <View style={styles.container}>
+        {displayMessage(credentials.length)}
+        {/* <View style={[{ marginTop: 35 }]}>
         <TouchableOpacity style={[styles.link]} onPress={() => Linking.openURL('https://example.com/')}>
           <Icon name={'credit-card'} size={32} color={ColorPallet.brand.primary} />
           <Text style={[styles.linkText]}>Find a Credential</Text>
@@ -108,6 +127,7 @@ const Home: React.FC = () => {
           <ExternalLink {...iconDisplayOptions} />
         </TouchableOpacity>
       </View> */}
+      </View>
     </View>
   )
 }
