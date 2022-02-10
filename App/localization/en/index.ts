@@ -11,6 +11,7 @@ const translation = {
     "Reject": "Reject",
     "Decline": "Decline",
     "Back": "Back",
+    "Next": "Next",
     "Continue": "Continue",
     "Info": "Information",
     "ThisDecisionCannotBeChanged.": "This decision cannot be changed.",
@@ -18,6 +19,7 @@ const translation = {
     "Success": "Success",
     "SomethingWentWrong": "Something went wrong",
     "Done": "Done",
+    "Skip": "Skip",
   },
   "Language": {
     "English": "English",
