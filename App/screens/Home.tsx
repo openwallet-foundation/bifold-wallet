@@ -73,7 +73,10 @@ const Home: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[TextTheme.headingThree, styles.header]}>{t('Home.Notifications')}</Text>
+      <Text style={[TextTheme.headingThree, styles.header]}>
+        {t('Home.Notifications')}
+        {data.length ? ` (${data.length})` : ''}
+      </Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
