@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
-import renderer from 'react-test-renderer'
+import { create } from 'react-test-renderer'
 
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
 import { Colors } from '../../App/theme'
@@ -47,18 +47,9 @@ const pages = [
   </>,
 ]
 
-jest.mock('@react-navigation/native', () => {
-  return {
-    useFocusEffect: jest.fn(),
-  }
-})
-
 describe('Onboarding', () => {
   it('Renders correctly', () => {
-    const tree = renderer
-      // @ts-ignore
-      .create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />)
-      .toJSON()
+    const tree = create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />).toJSON()
 
     expect(tree).toMatchSnapshot()
   })
@@ -72,8 +63,7 @@ describe('Onboarding', () => {
   // })
 
   it('Pages exist', () => {
-    // @ts-ignore
-    const tree = renderer.create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />)
+    const tree = create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />)
     const foundPages = tree.root!.findAllByType(Text).filter((e: any) => e.props.testID === 'bodyText')
 
     expect(foundPages.length).toBe(2)
