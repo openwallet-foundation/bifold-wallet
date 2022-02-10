@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { TextBoxTheme, TextTheme } from '../../theme'
+import { ColorPallet, TextBoxTheme, TextTheme } from '../../theme'
 
 export interface TextBoxProps {
   children: string
@@ -11,40 +11,35 @@ export interface TextBoxProps {
 const iconSize = 30
 const offset = 10
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: TextBoxTheme.background,
+    backgroundColor: ColorPallet.notification.info,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: TextBoxTheme.border,
+    borderColor: ColorPallet.notification.infoBorder,
     padding: 10,
   },
   headerText: {
     ...TextTheme.normal,
+    color: ColorPallet.notification.infoText,
+    fontWeight: 'bold',
     flexShrink: 1,
+    alignSelf: 'center',
   },
   icon: {
     marginRight: offset,
+    alignSelf: 'center',
   },
 })
 
 const InfoTextBox: React.FC<TextBoxProps> = ({ children }) => {
   return (
-    <View style={[style.container]}>
-      <View style={[style.icon]}>
-        <Icon name={'info'} size={iconSize} color={TextBoxTheme.text} />
+    <View style={styles.container}>
+      <View style={styles.icon}>
+        <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
       </View>
-      <Text
-        style={[
-          style.headerText,
-          {
-            fontWeight: 'bold',
-          },
-        ]}
-      >
-        {children}
-      </Text>
+      <Text style={styles.headerText}>{children}</Text>
     </View>
   )
 }

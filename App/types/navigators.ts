@@ -24,6 +24,7 @@ export type CredentialStackParams = {
 
 export type HomeStackParams = {
   Home: undefined
+  Notifications: undefined
   'Credential Offer': { credentialId: string }
   'Proof Request': { proofId: string }
   'Proof Request Attribute Details': {
@@ -31,7 +32,6 @@ export type HomeStackParams = {
     attributeName: string
     attributeCredentials: RequestedAttribute[]
   }
-  'Manage Your Wallet': undefined
 }
 
 export type ScanStackParams = {
