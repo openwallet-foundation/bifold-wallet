@@ -45,7 +45,7 @@ const Home: React.FC = () => {
   const { credentials } = useCredentials()
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
-  const data = [...offers, ...proofs]
+  const data = [...offers, ...proofs].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
   const { t } = useTranslation()
 
   const emptyListComponent = () => (
