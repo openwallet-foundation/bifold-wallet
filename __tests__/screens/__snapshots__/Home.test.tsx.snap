@@ -1,37 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`displays a home screen renders correctly 1`] = `
-<View
-  style={
-    Object {
-      "paddingHorizontal": 25,
-    }
-  }
->
-  <Text
+<View>
+  <View
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 26,
-          "fontWeight": "bold",
-        },
-        Object {
-          "marginBottom": 20,
-          "marginTop": 25,
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingHorizontal": 25,
+      }
     }
   >
-    Home.Notifications
-  </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 26,
+            "fontWeight": "bold",
+          },
+          Object {
+            "marginBottom": 20,
+            "marginTop": 25,
+          },
+        ]
+      }
+    >
+      Home.Notifications
+      
+    </Text>
+  </View>
   <RCTScrollView
     ListEmptyComponent={
-      <InfoTextBox>
-        Home.NoNewUpdates
-      </InfoTextBox>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 25,
+          }
+        }
+      >
+        <InfoTextBox>
+          Home.NoNewUpdates
+        </InfoTextBox>
+      </View>
     }
     data={Array []}
+    decelerationRate="fast"
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={true}
@@ -48,116 +63,131 @@ exports[`displays a home screen renders correctly 1`] = `
     scrollEnabled={false}
     scrollEventThrottle={50}
     showsHorizontalScrollIndicator={false}
+    snapToOffsets={
+      Array [
+        0,
+      ]
+    }
     stickyHeaderIndices={Array []}
     viewabilityConfigCallbackPairs={Array []}
   >
     <View>
       <View
+        onLayout={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "rgba(53, 130, 63, 0.7)",
-              "borderColor": undefined,
-              "borderRadius": 5,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "padding": 10,
-            },
-          ]
+          Object {
+            "paddingHorizontal": 25,
+          }
         }
       >
         <View
           style={
-            Array [
-              Object {
-                "marginRight": 10,
-              },
-            ]
+            Object {
+              "backgroundColor": "#313132",
+              "borderColor": "#0099FF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "padding": 10,
+            }
           }
         >
-          <Text
-            allowFontScaling={false}
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 30,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
+              Object {
+                "alignSelf": "center",
+                "marginRight": 10,
+              }
             }
           >
-            
-          </Text>
-        </View>
-        <Text
-          style={
-            Array [
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#0099FF",
+                    "fontSize": 30,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
               Object {
+                "alignSelf": "center",
                 "color": "#FFFFFF",
                 "flexShrink": 1,
                 "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              Object {
                 "fontWeight": "bold",
-              },
-            ]
-          }
-        >
-          Home.NoNewUpdates
-        </Text>
+              }
+            }
+          >
+            Home.NoNewUpdates
+          </Text>
+        </View>
       </View>
     </View>
   </RCTScrollView>
   <View
     style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "justifyContent": "center",
-          "marginHorizontal": 60,
-          "marginTop": 35,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 25,
+      }
     }
   >
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 38,
-            "fontWeight": "bold",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "marginHorizontal": 60,
+            "marginTop": 35,
           },
         ]
       }
     >
-      Home.Welcome
-    </Text>
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          },
-          Object {
-            "marginTop": 25,
-            "textAlign": "center",
-          },
-        ]
-      }
-    >
-      Home.NoCredentials
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 38,
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Home.Welcome
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 25,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Home.NoCredentials
+      </Text>
+    </View>
   </View>
 </View>
 `;
