@@ -20,6 +20,7 @@ const translation = {
     "SomethingWentWrong": "Something went wrong",
     "Done": "Done",
     "Skip": "Skip",
+    "View": "View"
   },
   "Language": {
     "English": "English",

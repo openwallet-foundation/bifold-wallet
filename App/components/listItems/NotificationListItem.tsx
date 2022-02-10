@@ -4,13 +4,15 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TouchableOpacity, StyleSheet, View, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, TextTheme, TextBoxTheme } from '../../theme'
+import { TextTheme, ColorPallet } from '../../theme'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
+
+import Button, { ButtonType } from 'components/buttons/Button'
 
 const { width } = Dimensions.get('window')
 const iconSize = 30
@@ -29,32 +31,42 @@ interface NotificationCredentialListItemProps {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    backgroundColor: TextBoxTheme.background,
+    backgroundColor: ColorPallet.notification.info,
+    borderColor: ColorPallet.notification.infoBorder,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: TextBoxTheme.border,
-    padding: 10,
+    // Width adjustment to ensure one notification fits on a "page" at a time.
+    width: width - 2 * marginOffset,
   },
-  textColum: {
+  headerContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: offset,
+    paddingTop: offset,
+  },
+  bodyContainer: {
     flexGrow: 1,
     flexDirection: 'column',
-  },
-  disclosureIconColum: {
-    justifyContent: 'center',
+    marginLeft: offset + iconSize - 5,
+    paddingHorizontal: offset + 5,
+    paddingBottom: offset + 5,
   },
   headerText: {
     ...TextTheme.normal,
     flexShrink: 1,
     fontWeight: 'bold',
+    alignSelf: 'center',
+    color: ColorPallet.notification.infoText,
   },
   bodyText: {
     ...TextTheme.normal,
     flexShrink: 1,
-    marginTop: 15,
+    marginVertical: 15,
+    paddingBottom: offset,
+    color: ColorPallet.notification.infoText,
   },
   icon: {
     marginRight: offset,
+    alignSelf: 'center',
   },
 })
 
@@ -83,22 +95,18 @@ const NotificationListItem: React.FC<NotificationCredentialListItemProps> = ({ n
   }
 
   return (
-    // Width adjustment to ensure one notification fits on a "page"
-    // at a time.
-    <TouchableOpacity style={[{ width: width - 2 * marginOffset }]} onPress={onPress}>
-      <View style={[styles.container]}>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
         <View style={[styles.icon]}>
-          <Icon name={'info'} size={iconSize} color={TextBoxTheme.text} />
+          <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
         </View>
-        <View style={[styles.textColum]}>
-          <Text style={[styles.headerText]}>{title}</Text>
-          <Text style={[styles.bodyText]}>{body}</Text>
-        </View>
-        <View style={[styles.disclosureIconColum]}>
-          <Icon name="chevron-right" color={Colors.text} size={iconSize} />
-        </View>
+        <Text style={styles.headerText}>{title}</Text>
       </View>
-    </TouchableOpacity>
+      <View style={styles.bodyContainer}>
+        <Text style={styles.bodyText}>{body}</Text>
+        <Button buttonType={ButtonType.Primary} title={t('Global.View')} onPress={onPress} />
+      </View>
+    </View>
   )
 }
 
