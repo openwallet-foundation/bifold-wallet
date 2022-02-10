@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TextTheme, ColorPallet } from '../../theme'
@@ -14,10 +14,7 @@ import { parsedSchema } from '../../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 
-const { width } = Dimensions.get('window')
 const iconSize = 30
-const offset = 10
-const marginOffset = 25
 
 export enum NotificationType {
   CredentialOffer = 'Offer',
@@ -35,20 +32,19 @@ const styles = StyleSheet.create({
     borderColor: ColorPallet.notification.infoBorder,
     borderRadius: 5,
     borderWidth: 1,
-    // Width adjustment to ensure one notification fits on a "page" at a time.
-    width: width - 2 * marginOffset,
+    padding: 10,
   },
   headerContainer: {
     flexDirection: 'row',
-    paddingHorizontal: offset,
-    paddingTop: offset,
+    paddingHorizontal: 5,
+    paddingTop: 5,
   },
   bodyContainer: {
     flexGrow: 1,
     flexDirection: 'column',
-    marginLeft: offset + iconSize - 5,
-    paddingHorizontal: offset + 5,
-    paddingBottom: offset + 5,
+    marginLeft: 10 + iconSize,
+    paddingHorizontal: 5,
+    paddingBottom: 5,
   },
   headerText: {
     ...TextTheme.normal,
@@ -61,11 +57,11 @@ const styles = StyleSheet.create({
     ...TextTheme.normal,
     flexShrink: 1,
     marginVertical: 15,
-    paddingBottom: offset,
+    paddingBottom: 10,
     color: ColorPallet.notification.infoText,
   },
   icon: {
-    marginRight: offset,
+    marginRight: 10,
     alignSelf: 'center',
   },
 })
