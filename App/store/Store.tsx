@@ -10,6 +10,10 @@ const initialState: State = {
     DidCompleteTutorial: false,
     DidCreatePIN: false,
   },
+  notifications: {
+    ConnectionPending: false,
+    ConnectionEstablished: false,
+  },
   error: null,
 }
 
