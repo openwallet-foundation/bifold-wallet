@@ -136,7 +136,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     <FlatList
       ListHeaderComponent={() => (
         <View style={styles.headerContainer}>
-          <CredentialListItem credential={credential}></CredentialListItem>
+          <View
+            style={{
+              marginHorizontal: 15,
+              marginTop: 15,
+            }}
+          >
+            <CredentialListItem credential={credential}></CredentialListItem>
+          </View>
           <View style={styles.headerTextContainer}>
             <TouchableOpacity style={styles.linkContainer} activeOpacity={1} onPress={() => resetShown()}>
               <Text style={[styles.headerText, styles.link]}>{t('CredentialDetails.HideAll')}</Text>
@@ -184,7 +191,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View style={styles.listItemBorder}></View>
         </View>
       )}
-    ></FlatList>
+    />
   )
 }
 

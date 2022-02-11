@@ -3,7 +3,7 @@ import type { CredentialRecord } from '@aries-framework/core'
 import { useCredentials } from '@aries-framework/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList } from 'react-native'
+import { FlatList, View } from 'react-native'
 
 import { Colors } from '../theme'
 
@@ -21,7 +21,16 @@ const ListCredentials: React.FC = () => {
       data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
       keyExtractor={(item: CredentialRecord) => item.credentialId || item.id}
       ListEmptyComponent={emptyListComponent}
-      renderItem={({ item }) => <CredentialListItem credential={item} />}
+      renderItem={({ item }) => (
+        <View
+          style={{
+            marginHorizontal: 15,
+            marginTop: 15,
+          }}
+        >
+          <CredentialListItem credential={item} />
+        </View>
+      )}
     />
   )
 }
