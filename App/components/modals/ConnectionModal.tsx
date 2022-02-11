@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import MakeConnection from '../../assets/img/make-connection.svg'
 import { Context } from '../../store/Store'
 import { ColorPallet, Colors, TextTheme } from '../../theme'
+import Button, { ButtonType } from '../buttons/Button'
 
 const { height } = Dimensions.get('window')
-const iconSize = 36
-
+const connectionTimerDelay = 3000 // in ms
 const imageDisplayOptions = {
   fill: Colors.text,
   height: 250,
@@ -24,36 +23,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     backgroundColor: ColorPallet.brand.primaryBackground,
   },
-  iconContainer: {
-    alignItems: 'flex-end',
-    minHeight: iconSize,
+  image: {
+    marginTop: 40,
   },
   messageContainer: {
     alignItems: 'center',
     marginTop: 54,
   },
-  image: {
-    marginTop: 40,
-  },
   messageText: {
     fontWeight: 'normal',
     textAlign: 'center',
   },
+  delayMessageContainer: {
+    marginTop: 30,
+  },
   delayMessageText: {
     textAlign: 'center',
-    marginTop: 30,
+    marginBottom: 30,
   },
 })
 
 const ConnectionModal: React.FC = () => {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
-  const [shouldUpdateMessage, setShouldUpdateMessage] = useState<boolean>(false)
+  const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [state] = useContext(Context)
   let timer: NodeJS.Timeout
 
   const onDismissModalTouched = () => {
-    setShouldUpdateMessage(false)
+    setShouldShowDelayMessage(false)
     setModalVisible(false)
   }
 
@@ -62,8 +60,8 @@ const ConnectionModal: React.FC = () => {
       setModalVisible(true)
 
       timer = setTimeout(() => {
-        setShouldUpdateMessage(true)
-      }, 3000)
+        setShouldShowDelayMessage(true)
+      }, connectionTimerDelay)
 
       return
     }
@@ -75,19 +73,19 @@ const ConnectionModal: React.FC = () => {
   return (
     <Modal visible={modalVisible} transparent={true}>
       <SafeAreaView style={[styles.container]}>
-        <TouchableOpacity
-          accessibilityLabel={'Home'}
-          accessible={true}
-          style={[styles.iconContainer]}
-          onPress={onDismissModalTouched}
-        >
-          {shouldUpdateMessage && <Icon name={'home'} size={iconSize} color={Colors.text} />}
-        </TouchableOpacity>
         <View style={[styles.messageContainer]}>
           <Text style={[TextTheme.headingThree, styles.messageText]}>{t('Connection.JustAMoment')}</Text>
           <MakeConnection style={[styles.image]} {...imageDisplayOptions} />
-          {shouldUpdateMessage && (
-            <Text style={[TextTheme.normal, styles.delayMessageText]}>{t('Connection.TakingTooLong')}</Text>
+          {shouldShowDelayMessage && (
+            <View style={[styles.delayMessageContainer]}>
+              <Text style={[TextTheme.normal, styles.delayMessageText]}>{t('Connection.TakingTooLong')}</Text>
+              <Button
+                title={t('Connection.BackToHome')}
+                accessibilityLabel={t('Global.Home')}
+                onPress={onDismissModalTouched}
+                buttonType={ButtonType.Secondary}
+              />
+            </View>
           )}
         </View>
       </SafeAreaView>
