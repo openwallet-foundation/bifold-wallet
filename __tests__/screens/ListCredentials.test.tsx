@@ -1,4 +1,6 @@
 import { CredentialRecord, CredentialState } from '@aries-framework/core'
+import { useCredentials } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
@@ -12,57 +14,43 @@ interface CredentialContextInterface {
   credentials: CredentialRecord[]
 }
 
-const mockNavigate = jest.fn()
-jest.mock('@react-navigation/core', () => {
-  const module = jest.requireActual('@react-navigation/core')
-  return {
-    ...module,
-    useNavigation: () => ({
-      navigate: mockNavigate,
-    }),
-  }
-})
-
-const mockOpenVPCredentialRecord = new CredentialRecord({
-  threadId: '1',
-  state: CredentialState.Done,
-  createdAt: new Date('2020-01-01T00:00:00'),
-})
-mockOpenVPCredentialRecord.metadata.set(indyCredentialKey, {
-  schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
-})
-const mockCredential1 = new CredentialRecord({
-  threadId: '2',
-  state: CredentialState.Done,
-  createdAt: new Date('2020-01-01T00:01:00'),
-})
-const mockCredential2 = new CredentialRecord({
-  threadId: '3',
-  state: CredentialState.Done,
-  createdAt: new Date('2020-01-02T00:00:00'),
-})
-const mockTestCredentialRecords: CredentialContextInterface = {
-  loading: false,
-  credentials: [mockOpenVPCredentialRecord, mockCredential1, mockCredential2],
-}
-jest.mock('@aries-framework/react-hooks', () => {
-  const module = jest.requireActual('@aries-framework/react-hooks')
-  return {
-    ...module,
-    useCredentials: () => mockTestCredentialRecords,
-  }
-})
-
 describe('displays a credentials list screen', () => {
+  const testOpenVPCredentialRecord = new CredentialRecord({
+    threadId: '1',
+    state: CredentialState.Done,
+    createdAt: new Date('2020-01-01T00:00:00'),
+  })
+  testOpenVPCredentialRecord.metadata.set(indyCredentialKey, {
+    schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
+  })
+  const testCredential1 = new CredentialRecord({
+    threadId: '2',
+    state: CredentialState.Done,
+    createdAt: new Date('2020-01-01T00:01:00'),
+  })
+  const testCredential2 = new CredentialRecord({
+    threadId: '3',
+    state: CredentialState.Done,
+    createdAt: new Date('2020-01-02T00:00:00'),
+  })
+  const testCredentialRecords: CredentialContextInterface = {
+    loading: false,
+    credentials: [testOpenVPCredentialRecord, testCredential1, testCredential2],
+  }
+
   afterEach(() => {
     cleanup()
   })
 
   describe('with a list of credentials', () => {
     beforeEach(() => {
-      mockTestCredentialRecords.credentials.forEach((credential: CredentialRecord) => {
+      jest.clearAllMocks()
+
+      testCredentialRecords.credentials.forEach((credential: CredentialRecord) => {
         credential.credentialId = credential.id
       })
+      // @ts-ignore
+      useCredentials.mockReturnValue(testCredentialRecords)
     })
 
     /**
@@ -71,7 +59,8 @@ describe('displays a credentials list screen', () => {
      * When the holder taps on a credential
      * Then the holder is taken to the credential detail screen of that credential
      */
-    it.skip('pressing on a credential in the list takes the holder to a credential detail screen', async () => {
+    test('pressing on a credential in the list takes the holder to a credential detail screen', async () => {
+      const navigation = useNavigation()
       const { findAllByText } = render(<ListCredentials />)
 
       const credentialItemInstances = await findAllByText('Unverified Person', { exact: false })
@@ -82,7 +71,7 @@ describe('displays a credentials list screen', () => {
 
       fireEvent(credentialItemInstance, 'press')
 
-      expect(mockNavigate).toBeCalledWith('Credential Details', { credentialId: mockOpenVPCredentialRecord.id })
+      expect(navigation.navigate).toBeCalledWith('Credential Details', { credentialId: testOpenVPCredentialRecord.id })
     })
   })
 
@@ -93,7 +82,7 @@ describe('displays a credentials list screen', () => {
    * And the holder has accepted the credential offer
    * Then the credentials are ordered to most recent to least recent (top to bottom)
    */
-  it.skip('credentials should display in descending order of issued date', () => {
+  test('credentials should display in descending order of issued date', () => {
     const { UNSAFE_getAllByType } = render(<ListCredentials />)
 
     const credentialItemInstances = UNSAFE_getAllByType(CredentialListItem)
