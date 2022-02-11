@@ -14,6 +14,7 @@ interface CredentialContextInterface {
 }
 
 jest.useRealTimers()
+jest.setTimeout(10000)
 
 /**
  * Given a credential has been accepted
