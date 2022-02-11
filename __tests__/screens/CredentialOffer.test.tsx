@@ -1,4 +1,6 @@
 import { CredentialRecord, CredentialState } from '@aries-framework/core'
+import { useCredentialById } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
@@ -7,54 +9,27 @@ import CredentialOffer from '../../App/screens/CredentialOffer'
 import Button from 'components/buttons/Button'
 import NotificationModal from 'components/modals/NotificationModal'
 
-const mockNavigate = jest.fn()
-const mockGoBack = jest.fn()
-const mockPop = jest.fn()
-
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 
-jest.mock('@react-navigation/core', () => {
-  const module = jest.requireActual('@react-navigation/core')
-  return {
-    ...module,
-    useNavigation: () => ({
-      navigate: mockNavigate,
-      goBack: mockGoBack,
-      pop: mockPop,
-    }),
-  }
-})
-
-const mockAgent = {
-  acceptOffer: jest.fn(),
-  declineOffer: jest.fn(),
-}
-const mockTestCredentialRecords: CredentialRecord[] = [
-  new CredentialRecord({
-    threadId: '1',
-    state: CredentialState.OfferReceived,
-  }),
-]
-jest.mock('@aries-framework/react-hooks', () => {
-  const module = jest.requireActual('@aries-framework/react-hooks')
-  return {
-    ...module,
-    useAgent: () => ({
-      agent: {
-        credentials: mockAgent,
-      },
-    }),
-    useCredentialById: () => mockTestCredentialRecords[0],
-  }
-})
-
 describe('displays a credential offer screen', () => {
-  beforeEach(() => {
-    mockTestCredentialRecords[0].state = CredentialState.OfferReceived
-  })
+  const testCredentialRecords: CredentialRecord[] = [
+    new CredentialRecord({
+      threadId: '1',
+      state: CredentialState.OfferReceived,
+    }),
+  ]
 
   afterEach(() => {
     cleanup()
+  })
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+
+    testCredentialRecords[0].state = CredentialState.OfferReceived
+
+    // @ts-ignore
+    useCredentialById.mockReturnValue(testCredentialRecords[0])
   })
 
   describe('with a credential offer', () => {
@@ -64,11 +39,11 @@ describe('displays a credential offer screen', () => {
      * When the holder accepts the credential offer
      * Then the holder will be taken to a loading screen that informs them that their credential is coming
      */
-    it.skip('a loading screen is displayed when the user accepts the credential offer', async () => {
+    test('a loading screen is displayed when the user accepts the credential offer', async () => {
       const { findByText, UNSAFE_getByProps } = render(
         <CredentialOffer
-          navigation={{ navigate: mockNavigate, goBack: mockGoBack, pop: mockPop } as any}
-          route={{ params: { credentialId: mockTestCredentialRecords[0].id } } as any}
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords[0].id } } as any}
         />
       )
 
@@ -90,13 +65,13 @@ describe('displays a credential offer screen', () => {
      * When the credential arrives in the wallet
      * Then the screen will change from the loading screen to a success screen informing the holder that the credential has arrived
      */
-    it.skip('a success screen is displayed when the credential arrives', async () => {
-      mockTestCredentialRecords[0].state = CredentialState.CredentialReceived
+    test('a success screen is displayed when the credential arrives', async () => {
+      testCredentialRecords[0].state = CredentialState.CredentialReceived
 
       const { findByText, UNSAFE_getByProps } = render(
         <CredentialOffer
-          navigation={{ navigate: mockNavigate, goBack: mockGoBack, pop: mockPop } as any}
-          route={{ params: { credentialId: mockTestCredentialRecords[0].id } } as any}
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords[0].id } } as any}
         />
       )
 
@@ -120,13 +95,14 @@ describe('displays a credential offer screen', () => {
      * When the user presses the continue button
      * Then the holder will be taken to the credential list with the offered credential at the top of the list
      */
-    it.skip('pressing the continue button on the success screen takes the holder to the credential list screen', async () => {
-      mockTestCredentialRecords[0].state = CredentialState.CredentialReceived
+    test('pressing the continue button on the success screen takes the holder to the credential list screen', async () => {
+      const navigation = useNavigation()
+      testCredentialRecords[0].state = CredentialState.CredentialReceived
 
       const { findByText, UNSAFE_getByProps } = render(
         <CredentialOffer
-          navigation={{ navigate: mockNavigate, goBack: mockGoBack, pop: mockPop } as any}
-          route={{ params: { credentialId: mockTestCredentialRecords[0].id } } as any}
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords[0].id } } as any}
         />
       )
 
@@ -144,7 +120,7 @@ describe('displays a credential offer screen', () => {
 
       fireEvent(notificationModalDoneButtonInstance, 'press')
 
-      expect(mockNavigate).toBeCalledWith('CredentialsTab')
+      expect(navigation.navigate).toBeCalledWith('CredentialsTab')
     })
   })
 })
