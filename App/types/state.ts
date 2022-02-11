@@ -6,7 +6,6 @@ export interface Onboarding {
 
 export interface Notifications {
   ConnectionPending: boolean
-  ConnectionEstablished: boolean
 }
 
 export interface State {
