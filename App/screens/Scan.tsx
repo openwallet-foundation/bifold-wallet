@@ -2,12 +2,15 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 
 import { Agent, ConnectionState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { parseUrl } from 'query-string'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message'
 
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
 import { QrCodeScanError } from '../types/erorr'
 
 import { QRScanner } from 'components'
@@ -21,25 +24,49 @@ interface ScanProps {
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [_, dispatch] = useContext(Context)
+  const nav = useNavigation()
 
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
   const [connectionId, setConnectionId] = useState('')
   const connection = useConnectionById(connectionId)
 
+  //
+
+  // const onSkipTouched = () => {
+  //   dispatch({
+  //     type: DispatchAction.SetTutorialCompletionStatus,
+  //     payload: [{ DidCompleteTutorial: true }],
+  //   })
+
+  //   nav.navigate(Screens.Terms)
+  // }
+  //
+
   const displayPendingMessage = (): void => {
-    Toast.show({
-      type: ToastType.Info,
-      text1: t('Global.Info'),
-      text2: t('Scan.AcceptingConnection'),
+    dispatch({
+      type: DispatchAction.ConnectionPending,
+      payload: { blarb: true },
     })
+
+    // Toast.show({
+    //   type: ToastType.Info,
+    //   text1: t('Global.Info'),
+    //   text2: t('Scan.AcceptingConnection'),
+    // })
   }
 
   const displaySuccessMessage = (): void => {
-    Toast.show({
-      type: ToastType.Success,
-      text1: t('Global.Success'),
-      text2: t('Scan.ConnectionAccepted'),
+    dispatch({
+      type: DispatchAction.ConnectionEstablished,
+      payload: { blarb: true },
     })
+
+    // Toast.show({
+    //   type: ToastType.Success,
+    //   text1: t('Global.Success'),
+    //   text2: t('Scan.ConnectionAccepted'),
+    // })
   }
 
   const isRedirecton = (url: string): boolean => {
