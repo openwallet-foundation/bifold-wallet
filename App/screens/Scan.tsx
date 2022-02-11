@@ -11,6 +11,7 @@ import Toast from 'react-native-toast-message'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { QrCodeScanError } from '../types/erorr'
+import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
@@ -31,31 +32,31 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const displayPendingMessage = (): void => {
     dispatch({
       type: DispatchAction.ConnectionPending,
-      payload: { blarb: true },
+      payload: [{ message: null }],
     })
   }
 
   const displaySuccessMessage = (): void => {
     dispatch({
       type: DispatchAction.ConnectionEstablished,
-      payload: { blarb: true },
+      payload: [{ message: null }],
     })
-  }
-
-  const isRedirecton = (url: string): boolean => {
-    const queryParams = parseUrl(url).query
-    return !(queryParams['c_i'] || queryParams['d_m'])
   }
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    })
-    const message = await res.json()
-    // TODO: Change to a full screen modal
     displayPendingMessage()
-    await agent?.receiveMessage(message)
+
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      })
+      const message = await res.json()
+
+      await agent?.receiveMessage(message)
+    } catch (err) {
+      throw new Error('Unable to handle redirection')
+    }
   }
 
   const handleInvitation = async (url: string): Promise<void> => {
@@ -86,7 +87,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
     try {
       const url = event.data
-      if (isRedirecton(url)) {
+      if (isRedirection(url)) {
         await handleRedirection(url, agent)
       } else {
         await handleInvitation(url)
