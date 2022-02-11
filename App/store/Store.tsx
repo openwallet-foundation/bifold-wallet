@@ -12,7 +12,6 @@ const initialState: State = {
   },
   notifications: {
     ConnectionPending: false,
-    ConnectionEstablished: false,
   },
   error: null,
 }

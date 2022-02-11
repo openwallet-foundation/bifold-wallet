@@ -32,14 +32,14 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const displayPendingMessage = (): void => {
     dispatch({
       type: DispatchAction.ConnectionPending,
-      payload: [{ message: null }],
+      payload: [{ ConnectionPending: true }],
     })
   }
 
   const displaySuccessMessage = (): void => {
     dispatch({
-      type: DispatchAction.ConnectionEstablished,
-      payload: [{ message: null }],
+      type: DispatchAction.ConnectionPending,
+      payload: [{ ConnectionPending: false }],
     })
   }
 
