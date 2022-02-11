@@ -22,12 +22,10 @@ interface CredentialListItemProps {
 const styles = StyleSheet.create({
   container: {
     minHeight: 125,
-    marginTop: 15,
-    marginHorizontal: 15,
-    padding: 10,
     backgroundColor: ColorPallet.brand.secondaryBackground,
-    borderRadius: 15,
     justifyContent: 'center',
+    borderRadius: 15,
+    padding: 10,
   },
   row: {
     flexDirection: 'row',

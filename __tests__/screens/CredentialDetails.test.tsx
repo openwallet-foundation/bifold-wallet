@@ -1,4 +1,6 @@
 import { CredentialRecord, CredentialState } from '@aries-framework/core'
+import { useCredentialById } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import { DateTime } from 'luxon'
 import React from 'react'
@@ -10,54 +12,6 @@ interface CredentialContextInterface {
   loading: boolean
   credentials: CredentialRecord[]
 }
-
-const mockGoBack = jest.fn()
-jest.mock('@react-navigation/core', () => {
-  const module = jest.requireActual('@react-navigation/core')
-  return {
-    ...module,
-    useNavigation: () => ({
-      goBack: mockGoBack,
-    }),
-  }
-})
-
-const mockOpenVPCredentialRecord = new CredentialRecord({
-  threadId: '1',
-  state: CredentialState.Done,
-  createdAt: new Date('2020-01-01T00:00:00'),
-  credentialAttributes: [
-    {
-      name: 'family_name',
-      value: 'Last',
-      toJSON: jest.fn(),
-    },
-    {
-      name: 'given-name',
-      value: 'First',
-      toJSON: jest.fn(),
-    },
-    {
-      name: 'postalCode',
-      value: 'V1V1V1',
-      toJSON: jest.fn(),
-    },
-  ],
-})
-mockOpenVPCredentialRecord.metadata.set(indyCredentialKey, {
-  schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
-})
-const mockTestCredentialRecords: CredentialContextInterface = {
-  loading: false,
-  credentials: [mockOpenVPCredentialRecord],
-}
-jest.mock('@aries-framework/react-hooks', () => {
-  const module = jest.requireActual('@aries-framework/react-hooks')
-  return {
-    ...module,
-    useCredentialById: () => mockTestCredentialRecords.credentials[0],
-  }
-})
 
 jest.useRealTimers()
 
@@ -76,29 +30,64 @@ jest.useRealTimers()
  *  Attribute names are just capitalized name
  */
 describe('displays a credential details screen', () => {
+  const testOpenVPCredentialRecord = new CredentialRecord({
+    threadId: '1',
+    state: CredentialState.Done,
+    createdAt: new Date('2020-01-01T00:00:00'),
+    credentialAttributes: [
+      {
+        name: 'family_name',
+        value: 'Last',
+        toJSON: jest.fn(),
+      },
+      {
+        name: 'given-name',
+        value: 'First',
+        toJSON: jest.fn(),
+      },
+      {
+        name: 'postalCode',
+        value: 'V1V1V1',
+        toJSON: jest.fn(),
+      },
+    ],
+  })
+  testOpenVPCredentialRecord.metadata.set(indyCredentialKey, {
+    schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
+  })
+
+  const testCredentialRecords: CredentialContextInterface = {
+    loading: false,
+    credentials: [testOpenVPCredentialRecord],
+  }
+
   afterEach(() => {
     cleanup()
   })
 
   describe('with a credential list item', () => {
     beforeEach(() => {
-      mockTestCredentialRecords.credentials.forEach((credential: CredentialRecord) => {
+      jest.clearAllMocks()
+
+      testCredentialRecords.credentials.forEach((credential: CredentialRecord) => {
         credential.credentialId = credential.id
       })
+      // @ts-ignore
+      useCredentialById.mockReturnValue(testCredentialRecords.credentials[0])
     })
 
-    it.skip('a credential name, credential version and issue date is displayed', async () => {
+    test('a credential name, credential version and issue date is displayed', async () => {
       const { findByText } = render(
         <CredentialDetails
-          navigation={{ goBack: mockGoBack } as any}
-          route={{ params: { credentialId: mockTestCredentialRecords.credentials[0].id } } as any}
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
         ></CredentialDetails>
       )
 
       const credentialName = await findByText('Unverified Person', { exact: false })
       const credentialVersion = await findByText('Version: 0.1.0', { exact: false })
       const credentialIssuedAt = await findByText(
-        `Issued: ${DateTime.fromJSDate(mockOpenVPCredentialRecord.createdAt).toFormat(credentialDateTimeFormatString)}`,
+        `Issued: ${DateTime.fromJSDate(testOpenVPCredentialRecord.createdAt).toFormat(credentialDateTimeFormatString)}`,
         { exact: false }
       )
 
@@ -108,11 +97,11 @@ describe('displays a credential details screen', () => {
     })
   })
 
-  it.skip('a list of credential details is displayed, attribute names are human readable', async () => {
+  test('a list of credential details is displayed, attribute names are human readable', async () => {
     const { findByText } = render(
       <CredentialDetails
-        navigation={{ goBack: mockGoBack } as any}
-        route={{ params: { credentialId: mockTestCredentialRecords.credentials[0].id } } as any}
+        navigation={useNavigation()}
+        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
       ></CredentialDetails>
     )
 
@@ -125,11 +114,11 @@ describe('displays a credential details screen', () => {
     expect(postalCode).not.toBe(null)
   })
 
-  it.skip('a list of credential details is displayed, attribute values are hidden by default', async () => {
+  test('a list of credential details is displayed, attribute values are hidden by default', async () => {
     const { findAllByText } = render(
       <CredentialDetails
-        navigation={{ goBack: mockGoBack } as any}
-        route={{ params: { credentialId: mockTestCredentialRecords.credentials[0].id } } as any}
+        navigation={useNavigation()}
+        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
       ></CredentialDetails>
     )
 
@@ -138,11 +127,11 @@ describe('displays a credential details screen', () => {
     expect(hiddenValues.length).toBe(3)
   })
 
-  it.skip('pressing the `Show` button un-hides an attribute value', async () => {
+  test('pressing the `Show` button un-hides an attribute value', async () => {
     const { queryByText, findAllByText } = render(
       <CredentialDetails
-        navigation={{ goBack: mockGoBack } as any}
-        route={{ params: { credentialId: mockTestCredentialRecords.credentials[0].id } } as any}
+        navigation={useNavigation()}
+        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
       ></CredentialDetails>
     )
 
@@ -165,11 +154,11 @@ describe('displays a credential details screen', () => {
     expect(familyName).not.toBe(null)
   })
 
-  it.skip('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
+  test('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
     const { queryAllByText, findAllByText, findByText } = render(
       <CredentialDetails
-        navigation={{ goBack: mockGoBack } as any}
-        route={{ params: { credentialId: mockTestCredentialRecords.credentials[0].id } } as any}
+        navigation={useNavigation()}
+        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
       ></CredentialDetails>
     )
 
