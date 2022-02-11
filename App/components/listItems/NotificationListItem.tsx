@@ -1,21 +1,20 @@
-import type { CredentialRecord } from '@aries-framework/core'
+import type { CredentialRecord, ProofRecord } from '@aries-framework/core'
 
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TouchableOpacity, StyleSheet, View, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, TextTheme, TextBoxTheme } from '../../theme'
+import { TextTheme, ColorPallet } from '../../theme'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
 
-const { width } = Dimensions.get('window')
+import Button, { ButtonType } from 'components/buttons/Button'
+
 const iconSize = 30
-const offset = 10
-const marginOffset = 25
 
 export enum NotificationType {
   CredentialOffer = 'Offer',
@@ -24,37 +23,46 @@ export enum NotificationType {
 
 interface NotificationCredentialListItemProps {
   notificationType: NotificationType
-  notification: CredentialRecord
+  notification: CredentialRecord | ProofRecord
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    backgroundColor: TextBoxTheme.background,
+    backgroundColor: ColorPallet.notification.info,
+    borderColor: ColorPallet.notification.infoBorder,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: TextBoxTheme.border,
     padding: 10,
   },
-  textColum: {
+  headerContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 5,
+    paddingTop: 5,
+  },
+  bodyContainer: {
     flexGrow: 1,
     flexDirection: 'column',
-  },
-  disclosureIconColum: {
-    justifyContent: 'center',
+    marginLeft: 10 + iconSize,
+    paddingHorizontal: 5,
+    paddingBottom: 5,
   },
   headerText: {
     ...TextTheme.normal,
     flexShrink: 1,
     fontWeight: 'bold',
+    alignSelf: 'center',
+    color: ColorPallet.notification.infoText,
   },
   bodyText: {
     ...TextTheme.normal,
     flexShrink: 1,
-    marginTop: 15,
+    marginVertical: 15,
+    paddingBottom: 10,
+    color: ColorPallet.notification.infoText,
   },
   icon: {
-    marginRight: offset,
+    marginRight: 10,
+    alignSelf: 'center',
   },
 })
 
@@ -68,14 +76,14 @@ const NotificationListItem: React.FC<NotificationCredentialListItemProps> = ({ n
   switch (notificationType) {
     case NotificationType.CredentialOffer:
       // eslint-disable-next-line no-case-declarations
-      const { name, version } = parsedSchema(notification)
+      const { name, version } = parsedSchema(notification as CredentialRecord)
       onPress = () => navigation.navigate('Credential Offer', { credentialId: notification.id })
       title = t('CredentialOffer.CredentialOffer')
       body = `${name} v${version}`
       break
     case NotificationType.ProofRequest:
       title = t('ProofRequest.ProofRequest')
-      body = notification.requestMessage?.indyProofRequest?.name
+      body = (notification as ProofRecord).requestMessage?.indyProofRequest?.name || ''
       onPress = () => navigation.navigate('Proof Request', { proofId: notification.id })
       break
     default:
@@ -83,22 +91,18 @@ const NotificationListItem: React.FC<NotificationCredentialListItemProps> = ({ n
   }
 
   return (
-    // Width adjustment to ensure one notification fits on a "page"
-    // at a time.
-    <TouchableOpacity style={[{ width: width - 2 * marginOffset }]} onPress={onPress}>
-      <View style={[styles.container]}>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
         <View style={[styles.icon]}>
-          <Icon name={'info'} size={iconSize} color={TextBoxTheme.text} />
+          <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
         </View>
-        <View style={[styles.textColum]}>
-          <Text style={[styles.headerText]}>{title}</Text>
-          <Text style={[styles.bodyText]}>{body}</Text>
-        </View>
-        <View style={[styles.disclosureIconColum]}>
-          <Icon name="chevron-right" color={Colors.text} size={iconSize} />
-        </View>
+        <Text style={styles.headerText}>{title}</Text>
       </View>
-    </TouchableOpacity>
+      <View style={styles.bodyContainer}>
+        <Text style={styles.bodyText}>{body}</Text>
+        <Button buttonType={ButtonType.Primary} title={t('Global.View')} onPress={onPress} />
+      </View>
+    </View>
   )
 }
 
