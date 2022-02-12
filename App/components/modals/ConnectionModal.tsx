@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 
 const ConnectionModal: React.FC = () => {
   const { t } = useTranslation()
-  const [modalVisible, setModalVisible] = useState<boolean>(true)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [state] = useContext(Context)
   let timer: NodeJS.Timeout
@@ -56,18 +56,17 @@ const ConnectionModal: React.FC = () => {
   }
 
   useEffect(() => {
-    if (state.notifications.ConnectionPending) {
-      setModalVisible(true)
+    setModalVisible(state.notifications.ConnectionPending)
 
+    if (state.notifications.ConnectionPending) {
       timer = setTimeout(() => {
         setShouldShowDelayMessage(true)
       }, connectionTimerDelay)
-
-      return
     }
 
-    clearTimeout(timer)
-    setModalVisible(false)
+    return () => {
+      timer && clearTimeout(timer)
+    }
   }, [state])
 
   return (

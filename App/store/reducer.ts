@@ -34,18 +34,6 @@ const Reducer = (state: State, action: ReducerAction): State => {
 
       return myState
     }
-    case DispatchAction.ConnectionEstablished: {
-      const payload = action.payload.pop()
-      const myState = {
-        ...state,
-        notifications: {
-          ...state.notifications,
-          ...payload,
-        },
-      }
-
-      return myState
-    }
     case DispatchAction.SetOnboardingState:
       return {
         ...state,
