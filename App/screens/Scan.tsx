@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message'
 
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { QrCodeScanError } from '../types/erorr'
+import { QrCodeScanError } from '../types/error'
 import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
