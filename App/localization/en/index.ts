@@ -21,11 +21,17 @@ const translation = {
     "Done": "Done",
     "Skip": "Skip",
     "View": "View",
-    "Home": "Home"
+    "Home": "Home",
+    "ErrorCode": "Error Code",
+    "Okay": "Okay"
   },
   "Language": {
     "English": "English",
     "French": "French",    
+  },
+  "Error": {
+    "Unknown": "Unknown Error",
+    "Problem": "A problem has occurred",
   },
   "Terms": {
     "TermsOfService": "Terms of Service",

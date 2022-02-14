@@ -9,8 +9,8 @@ import Toast from 'react-native-toast-message'
 
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { BifoldError, QrCodeScanError } from '../types/erorr'
-import { errorWithCode, isRedirection } from '../utils/helpers'
+import { QrCodeScanError } from '../types/erorr'
+import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
@@ -23,20 +23,15 @@ interface ScanProps {
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [_, dispatch] = useContext(Context)
+  const [, dispatch] = useContext(Context)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
   const [connectionId, setConnectionId] = useState('')
   const connection = useConnectionById(connectionId)
 
   const displayPendingMessage = (): void => {
-    // dispatch({
-    //   type: DispatchAction.ConnectionPending,
-    //   payload: [{ ConnectionPending: true }],
-    // })
-    const error = new BifoldError('Problem-o', 'What you did failed', 1024)
     dispatch({
-      type: DispatchAction.SetError,
-      payload: [{ error }],
+      type: DispatchAction.ConnectionPending,
+      payload: [{ ConnectionPending: true }],
     })
   }
 
