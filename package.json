@@ -44,6 +44,7 @@
     "react-i18next": "^11.13.0",
     "react-native": "0.66.1",
     "react-native-animated-pagination-dots": "^0.1.72",
+    "react-native-argon2": "^2.0.1",
     "react-native-camera": "^3.31.1",
     "react-native-config": "^1.4.2",
     "react-native-encrypted-storage": "^4.0.2",
@@ -59,6 +60,7 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.1.1",
     "react-native-toast-message": "^2.0.1",
+    "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
     "uuid": "^8.1.0"
   },
