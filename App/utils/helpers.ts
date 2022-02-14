@@ -1,5 +1,6 @@
 import { ConnectionRecord, CredentialRecord } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import { parseUrl } from 'query-string'
 
 import { indyCredentialKey, IndexedIndyCredentialMetadata } from '../constants'
 
@@ -44,4 +45,9 @@ export function connectionRecordFromId(connectionId?: string): ConnectionRecord 
   if (connectionId) {
     return useConnectionById(connectionId)
   }
+}
+
+export const isRedirection = (url: string): boolean => {
+  const queryParams = parseUrl(url).query
+  return !(queryParams['c_i'] || queryParams['d_m'])
 }
