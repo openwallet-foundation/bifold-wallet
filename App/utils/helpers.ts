@@ -1,6 +1,7 @@
 import { ConnectionRecord, CredentialRecord, ProofRecord, RequestedAttribute } from '@aries-framework/core'
 import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
 import startCase from 'lodash.startcase'
+import { parseUrl } from 'query-string'
 
 import { indyCredentialKey, IndexedIndyCredentialMetadata } from '../constants'
 
@@ -75,4 +76,9 @@ export function firstMatchingCredentialAttributeValue(attributeName: string, att
     ([n]) => startCase(n) === startCase(attributeName)
   )
   return match?.length ? match[1] : ''
+}
+
+export const isRedirection = (url: string): boolean => {
+  const queryParams = parseUrl(url).query
+  return !(queryParams['c_i'] || queryParams['d_m'])
 }
