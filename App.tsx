@@ -15,6 +15,7 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
+import ConnectionModal from './App/components/modals/ConnectionModal'
 import toastConfig from './App/components/toast/ToastConfig'
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
@@ -63,6 +64,7 @@ const App = () => {
     <StoreProvider>
       <AgentProvider agent={agent}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={Colors.primary} translucent={false} />
+        <ConnectionModal />
         <RootStack />
         <Toast topOffset={15} config={toastConfig} />
       </AgentProvider>
