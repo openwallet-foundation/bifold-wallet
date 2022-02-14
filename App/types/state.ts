@@ -1,4 +1,4 @@
-import { BifoldError } from './erorr'
+import { BifoldError } from './error'
 
 export interface Onboarding {
   DidCompleteTutorial: boolean
