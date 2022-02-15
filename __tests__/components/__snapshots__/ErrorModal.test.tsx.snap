@@ -131,7 +131,9 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
             }
           }
           accessible={false}
+          collapsable={false}
           focusable={true}
+          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -174,7 +176,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
 <Modal
   hardwareAccelerated={false}
   transparent={true}
-  visible={true}
+  visible={false}
 >
   <RNCSafeAreaView
     style={
@@ -301,7 +303,9 @@ exports[`ErrorModal Component Renders correctly 1`] = `
             }
           }
           accessible={false}
+          collapsable={false}
           focusable={true}
+          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
