@@ -23,6 +23,8 @@ import StoreProvider from './App/store/Store'
 import { Colors } from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
 
+import ErrorModal from 'components/modals/ErrorModal'
+
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
 
@@ -65,6 +67,7 @@ const App = () => {
       <AgentProvider agent={agent}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={Colors.primary} translucent={false} />
         <ConnectionModal />
+        <ErrorModal />
         <RootStack />
         <Toast topOffset={15} config={toastConfig} />
       </AgentProvider>
