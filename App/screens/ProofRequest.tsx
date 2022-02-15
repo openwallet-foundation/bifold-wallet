@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const CredentialOffer: React.FC<ProofRequestProps> = ({ navigation, route }) => {
+const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
@@ -142,23 +142,6 @@ const CredentialOffer: React.FC<ProofRequestProps> = ({ navigation, route }) => 
     }
   }
 
-  const getRetrievedCredentials = async (proof: ProofRecord) => {
-    try {
-      const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
-      if (!creds) {
-        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
-      }
-      setRetrievedCredentials(creds)
-      setRetrievedCredentialAttributes(Object.entries(creds?.requestedAttributes || {}))
-    } catch (e: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (e as Error)?.message || t('Global.Failure'),
-      })
-    }
-  }
-
   const { proofId } = route?.params
   const proof = getProofRecord(proofId)
 
@@ -173,11 +156,23 @@ const CredentialOffer: React.FC<ProofRequestProps> = ({ navigation, route }) => 
   }
 
   useEffect(() => {
-    try {
-      getRetrievedCredentials(proof)
-    } catch (e: unknown) {
-      navigation.goBack()
+    const updateRetrievedCredentials = async (proof: ProofRecord) => {
+      const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
+      if (!creds) {
+        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+      }
+      setRetrievedCredentials(creds)
+      setRetrievedCredentialAttributes(Object.entries(creds?.requestedAttributes || {}))
     }
+
+    updateRetrievedCredentials(proof).catch((e: unknown) => {
+      Toast.show({
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (e as Error)?.message || t('Global.Failure'),
+      })
+      navigation.goBack()
+    })
   }, [])
 
   useEffect(() => {
@@ -356,4 +351,4 @@ const CredentialOffer: React.FC<ProofRequestProps> = ({ navigation, route }) => 
   )
 }
 
-export default CredentialOffer
+export default ProofRequest
