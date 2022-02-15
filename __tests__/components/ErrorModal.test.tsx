@@ -29,7 +29,7 @@ describe('ErrorModal Component', () => {
     const tree = render(<ErrorModal />)
 
     expect(tree).toMatchSnapshot()
-    expect(tree.queryByText('Connection.BackToHome')).toBeNull()
+    expect(tree.queryByText('Global.Okay')).not.toBeNull()
   })
 
   test('Dismiss on demand', async () => {
@@ -38,7 +38,6 @@ describe('ErrorModal Component', () => {
     const dismissBtn = await tree.findByText('Global.Okay')
     fireEvent(dismissBtn, 'press')
 
-    console.log(tree)
     expect(tree).toMatchSnapshot()
   })
 })
