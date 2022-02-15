@@ -1,3 +1,5 @@
+import { BifoldError } from './error'
+
 export interface Onboarding {
   DidCompleteTutorial: boolean
   DidAgreeToTerms: boolean
@@ -11,5 +13,5 @@ export interface Notifications {
 export interface State {
   onboarding: Onboarding
   notifications: Notifications
-  error: Error | null
+  error: BifoldError | null
 }

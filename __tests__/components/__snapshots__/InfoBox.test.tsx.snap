@@ -1,0 +1,609 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorModal Component Renders correctly as Error 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#313132",
+      "borderColor": "#D8292F",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "marginHorizontal": 25,
+      "minWidth": 700,
+      "padding": 10,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingHorizontal": 5,
+        "paddingTop": 5,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "marginRight": 10,
+          },
+        ]
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#0099FF",
+              "fontSize": 30,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Hello Title
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "marginLeft": 40,
+        "paddingBottom": 5,
+        "paddingHorizontal": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      The quick brown fox jumped over the lazy dog.
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      Global.ErrorCode 1024
+    </Text>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#35823F",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+            false,
+          ]
+        }
+      >
+        Global.Okay
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ErrorModal Component Renders correctly as Info 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#313132",
+      "borderColor": "#0099FF",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "marginHorizontal": 25,
+      "minWidth": 700,
+      "padding": 10,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingHorizontal": 5,
+        "paddingTop": 5,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "marginRight": 10,
+          },
+        ]
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#0099FF",
+              "fontSize": 30,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Hello Title
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "marginLeft": 40,
+        "paddingBottom": 5,
+        "paddingHorizontal": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      The quick brown fox jumped over the lazy dog.
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      Global.ErrorCode 1024
+    </Text>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#35823F",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+            false,
+          ]
+        }
+      >
+        Global.Okay
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ErrorModal Component Renders correctly as Success 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#313132",
+      "borderColor": "#2E8540",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "marginHorizontal": 25,
+      "minWidth": 700,
+      "padding": 10,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingHorizontal": 5,
+        "paddingTop": 5,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "marginRight": 10,
+          },
+        ]
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#2E8540",
+              "fontSize": 30,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Hello Title
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "marginLeft": 40,
+        "paddingBottom": 5,
+        "paddingHorizontal": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      The quick brown fox jumped over the lazy dog.
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      Global.ErrorCode 1024
+    </Text>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#35823F",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+            false,
+          ]
+        }
+      >
+        Global.Okay
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ErrorModal Component Renders correctly as Warning 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#313132",
+      "borderColor": "#fcba19",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "marginHorizontal": 25,
+      "minWidth": 700,
+      "padding": 10,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingHorizontal": 5,
+        "paddingTop": 5,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "marginRight": 10,
+          },
+        ]
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#fcba19",
+              "fontSize": 30,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Hello Title
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "marginLeft": 40,
+        "paddingBottom": 5,
+        "paddingHorizontal": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      The quick brown fox jumped over the lazy dog.
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "flexShrink": 1,
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginVertical": 15,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      Global.ErrorCode 1024
+    </Text>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#35823F",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+            false,
+          ]
+        }
+      >
+        Global.Okay
+      </Text>
+    </View>
+  </View>
+</View>
+`;
