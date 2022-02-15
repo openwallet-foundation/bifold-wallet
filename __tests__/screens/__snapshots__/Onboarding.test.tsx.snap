@@ -150,7 +150,6 @@ exports[`Onboarding Renders correctly 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -199,7 +198,6 @@ exports[`Onboarding Renders correctly 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "backgroundColor": "rgba(53, 130, 63, 1)",
@@ -221,7 +219,6 @@ exports[`Onboarding Renders correctly 1`] = `
       />
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "backgroundColor": "rgba(0, 0, 0, 0)",
@@ -247,7 +244,6 @@ exports[`Onboarding Renders correctly 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}

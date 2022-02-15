@@ -22,6 +22,7 @@ exports[`BaseToast Component Error renders correctly 1`] = `
 >
   <Text
     allowFontScaling={false}
+    selectable={false}
     style={
       Array [
         Object {
@@ -120,6 +121,7 @@ exports[`BaseToast Component Info renders correctly 1`] = `
 >
   <Text
     allowFontScaling={false}
+    selectable={false}
     style={
       Array [
         Object {
@@ -218,6 +220,7 @@ exports[`BaseToast Component Success renders correctly 1`] = `
 >
   <Text
     allowFontScaling={false}
+    selectable={false}
     style={
       Array [
         Object {
@@ -316,6 +319,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
 >
   <Text
     allowFontScaling={false}
+    selectable={false}
     style={
       Array [
         Object {

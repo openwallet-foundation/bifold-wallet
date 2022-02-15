@@ -16,7 +16,6 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -32,6 +31,7 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
