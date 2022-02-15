@@ -41,7 +41,7 @@ const ErrorModal: React.FC = () => {
     <Modal visible={modalVisible} transparent={true}>
       <SafeAreaView style={[styles.container]}>
         <InfoBox
-          notificationType={InfoBoxType.Info}
+          notificationType={InfoBoxType.Error}
           title={state.error ? state.error.title : t('Error.Unknown')}
           message={state.error ? state.error.message : t('Error.Problem')}
           code={state.error ? state.error.code : genericErrorCode}
