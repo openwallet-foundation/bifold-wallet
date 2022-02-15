@@ -10,7 +10,7 @@ import { Colors } from '../../theme'
 import QRScannerClose from 'components/misc/QRScannerClose'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
 import Text from 'components/texts/Text'
-import { QrCodeScanError } from 'types/erorr'
+import { QrCodeScanError } from 'types/error'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>

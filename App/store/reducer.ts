@@ -1,10 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Toast from 'react-native-toast-message'
 
 import { LocalStorageKeys } from '../constants'
 import { State } from '../types/state'
-
-import { ToastType } from 'components/toast/BaseToast'
 
 export enum DispatchAction {
   ConnectionPending = 'CONNECTION_PENDING',
@@ -79,11 +76,13 @@ const Reducer = (state: State, action: ReducerAction): State => {
 
       return myState
     }
-    case DispatchAction.SetError:
+    case DispatchAction.SetError: {
+      const error = action.payload.pop().error
       return {
         ...state,
-        error: { ...action.payload.pop() },
+        error,
       }
+    }
     default:
       return state
   }
