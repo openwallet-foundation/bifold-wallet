@@ -21,7 +21,7 @@ export enum NotificationType {
   ProofRequest = 'Proof',
 }
 
-interface NotificationCredentialListItemProps {
+interface NotificationListItemProps {
   notificationType: NotificationType
   notification: CredentialRecord | ProofRecord
 }
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const NotificationListItem: React.FC<NotificationCredentialListItemProps> = ({ notificationType, notification }) => {
+const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { t } = useTranslation()
   let onPress: GenericFn
