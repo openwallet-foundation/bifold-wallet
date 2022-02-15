@@ -34,7 +34,7 @@ const ErrorModal: React.FC = () => {
       return
     }
 
-    setModalVisible(true)
+    setModalVisible(false)
   }, [state])
 
   return (
