@@ -50,8 +50,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     })
 
     navigation.goBack()
-
-    return
+    return null
   }
 
   const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
@@ -79,10 +78,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       text1: t('Global.Failure'),
       text2: t('CredentialOffer.CredentialNotFound'),
     })
-
     navigation.goBack()
-
-    return
+    return null
   }
 
   useEffect(() => {

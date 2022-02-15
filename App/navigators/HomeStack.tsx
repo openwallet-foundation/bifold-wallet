@@ -5,6 +5,7 @@ import CredentialOffer from '../screens/CredentialOffer'
 import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'
 import ProofRequest from '../screens/ProofRequest'
+import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
 
 import defaultStackOptions from './defaultStackOptions'
 
@@ -19,6 +20,7 @@ const HomeStack: React.FC = () => {
       <Stack.Screen name="Notifications" component={ListNotifications} />
       <Stack.Screen name="Credential Offer" component={CredentialOffer} />
       <Stack.Screen name="Proof Request" component={ProofRequest} />
+      <Stack.Screen name="Proof Request Attribute Details" component={ProofRequestAttributeDetails} />
     </Stack.Navigator>
   )
 }
