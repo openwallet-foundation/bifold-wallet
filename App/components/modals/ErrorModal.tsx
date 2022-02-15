@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Context } from '../../store/Store'
 import { ColorPallet } from '../../theme'
 
-import BifoldErrorX from './BifoldErrorX'
+import InfoTextBoxII, { InfoTextBoxIIType } from './InfoTextBoxII'
 
 const { height } = Dimensions.get('window')
 const genericErrorCode = 1024
@@ -41,11 +41,12 @@ const ErrorModal: React.FC = () => {
   return (
     <Modal visible={modalVisible} transparent={true}>
       <SafeAreaView style={[styles.container]}>
-        <BifoldErrorX
+        <InfoTextBoxII
+          notificationType={InfoTextBoxIIType.Info}
           title={state.error ? state.error.title : t('Error.Unknown')}
           message={state.error ? state.error.message : t('Error.Problem')}
           code={state.error ? state.error.code : genericErrorCode}
-          onPress={onDismissModalTouched}
+          onCallToActionPressed={onDismissModalTouched}
         />
       </SafeAreaView>
     </Modal>
