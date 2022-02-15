@@ -11,7 +11,7 @@ import Button, { ButtonType } from 'components/buttons/Button'
 const iconSize = 30
 const { width } = Dimensions.get('window')
 
-export enum InfoTextBoxIIType {
+export enum InfoBoxType {
   Info,
   Success,
   Warn,
@@ -19,7 +19,7 @@ export enum InfoTextBoxIIType {
 }
 
 interface BifoldErrorProps {
-  notificationType: InfoTextBoxIIType
+  notificationType: InfoBoxType
   title: string
   message: string
   code?: number
@@ -68,19 +68,13 @@ const styles = StyleSheet.create({
   },
 })
 
-const InfoTextBoxII: React.FC<BifoldErrorProps> = ({
-  notificationType,
-  title,
-  message,
-  code,
-  onCallToActionPressed,
-}) => {
+const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message, code, onCallToActionPressed }) => {
   const { t } = useTranslation()
   let iconName = 'info'
   let iconColor = ColorPallet.notification.infoIcon
 
   switch (notificationType) {
-    case InfoTextBoxIIType.Info:
+    case InfoBoxType.Info:
       iconName = 'info'
       iconColor = ColorPallet.notification.infoIcon
       styles.container = {
@@ -98,7 +92,7 @@ const InfoTextBoxII: React.FC<BifoldErrorProps> = ({
       }
       break
 
-    case InfoTextBoxIIType.Success:
+    case InfoBoxType.Success:
       iconName = 'check-circle'
       iconColor = ColorPallet.notification.successIcon
       styles.container = {
@@ -116,7 +110,7 @@ const InfoTextBoxII: React.FC<BifoldErrorProps> = ({
       }
       break
 
-    case InfoTextBoxIIType.Warn:
+    case InfoBoxType.Warn:
       iconName = 'warning'
       iconColor = ColorPallet.notification.warnIcon
       styles.container = {
@@ -134,7 +128,7 @@ const InfoTextBoxII: React.FC<BifoldErrorProps> = ({
       }
       break
 
-    case InfoTextBoxIIType.Error:
+    case InfoBoxType.Error:
       iconName = 'info'
       iconColor = ColorPallet.notification.infoIcon
       styles.container = {
@@ -175,4 +169,4 @@ const InfoTextBoxII: React.FC<BifoldErrorProps> = ({
   )
 }
 
-export default InfoTextBoxII
+export default InfoBox
