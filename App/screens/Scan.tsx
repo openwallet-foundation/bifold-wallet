@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message'
 
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { QrCodeScanError } from '../types/erorr'
+import { QrCodeScanError } from '../types/error'
 import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
@@ -23,7 +23,7 @@ interface ScanProps {
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [_, dispatch] = useContext(Context)
+  const [, dispatch] = useContext(Context)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
   const [connectionId, setConnectionId] = useState('')
   const connection = useConnectionById(connectionId)
