@@ -35,7 +35,6 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
     >
       <Text
         allowFontScaling={false}
-        selectable={false}
         style={
           Array [
             Object {
@@ -116,6 +115,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       accessible={false}
       collapsable={false}
       focusable={true}
+      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -187,7 +187,6 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
     >
       <Text
         allowFontScaling={false}
-        selectable={false}
         style={
           Array [
             Object {
@@ -268,6 +267,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       accessible={false}
       collapsable={false}
       focusable={true}
+      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -339,7 +339,6 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
     >
       <Text
         allowFontScaling={false}
-        selectable={false}
         style={
           Array [
             Object {
@@ -420,6 +419,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       accessible={false}
       collapsable={false}
       focusable={true}
+      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -491,7 +491,6 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
     >
       <Text
         allowFontScaling={false}
-        selectable={false}
         style={
           Array [
             Object {
@@ -572,6 +571,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       accessible={false}
       collapsable={false}
       focusable={true}
+      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}

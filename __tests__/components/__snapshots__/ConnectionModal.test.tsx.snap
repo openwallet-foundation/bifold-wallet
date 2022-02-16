@@ -5,7 +5,61 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
   hardwareAccelerated={false}
   transparent={true}
   visible={false}
-/>
+>
+  <RNCSafeAreaView
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+          "flexDirection": "column",
+          "minHeight": 1334,
+          "paddingHorizontal": 25,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "marginTop": 54,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
+              "fontWeight": "normal",
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Connection.JustAMoment
+      </Text>
+      <
+        fill="#FFFFFF"
+        height={250}
+        style={
+          Array [
+            Object {
+              "marginTop": 40,
+            },
+          ]
+        }
+        width={250}
+      />
+    </View>
+  </RNCSafeAreaView>
+</Modal>
 `;
 
 exports[`ConnectionModal Component Renders correctly 1`] = `
@@ -163,6 +217,7 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
+          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
