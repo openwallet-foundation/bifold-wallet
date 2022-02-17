@@ -51,7 +51,10 @@ const styles = StyleSheet.create({
 })
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const { credentials } = useCredentials()
+  const credentials = [
+    ...useCredentialByState(CredentialState.CredentialReceived),
+    ...useCredentialByState(CredentialState.Done),
+  ]
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
   const notifications = [...offers, ...proofs].sort(
