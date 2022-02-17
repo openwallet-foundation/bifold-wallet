@@ -9,6 +9,9 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
+import CredentialAdded from '../assets/img/credential-added.svg'
+import CredentialDeclined from '../assets/img/credential-declined.svg'
+import CredentialPending from '../assets/img/credential-pending.svg'
 import { CredentialOfferTheme } from '../theme'
 import { parsedSchema } from '../utils/helpers'
 
@@ -39,7 +42,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  const [acceptedModalVisible, setAcceptedModalVisible] = useState(false)
+  const [addedModalVisible, setAddedModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
   if (!agent?.credentials) {
@@ -85,7 +88,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   useEffect(() => {
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       pendingModalVisible && setPendingModalVisible(false)
-      setAcceptedModalVisible(true)
+      setAddedModalVisible(true)
     }
   }, [credential])
 
@@ -155,16 +158,19 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onDone={() => {
           setPendingModalVisible(false)
         }}
-      ></NotificationModal>
+      >
+        <CredentialPending style={{ marginVertical: 20 }}></CredentialPending>
+      </NotificationModal>
       <NotificationModal
         title={t('CredentialOffer.CredentialAddedToYourWallet')}
-        visible={acceptedModalVisible}
+        visible={addedModalVisible}
         onDone={() => {
-          setAcceptedModalVisible(false)
+          setAddedModalVisible(false)
           navigation.pop()
           navigation.navigate('CredentialsTab')
         }}
       >
+        <CredentialAdded style={{ marginVertical: 20 }}></CredentialAdded>
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <NotificationModal
@@ -176,6 +182,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           navigation.navigate('HomeTab')
         }}
       >
+        <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <ModularView

@@ -2,12 +2,13 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Colors, TextTheme } from '../../theme'
 
-import { Button, Title } from 'components'
+import Button, { ButtonType } from 'components/buttons/Button'
 import { HomeStackParams } from 'types/navigators'
 
 const styles = StyleSheet.create({
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 25,
   },
   buttonContainer: {
     marginBottom: 35,
@@ -72,20 +74,24 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
   return (
     <Modal visible={modalVisible} transparent={true}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton} onPress={onHome || closeHome}>
             <Icon name="home" size={24} color={Colors.text}></Icon>
           </TouchableOpacity>
         </View>
         <View style={styles.childContainer}>
-          <Title style={TextTheme.headingFour}>{title}</Title>
+          <Text style={[TextTheme.headingThree, { fontWeight: 'normal', textAlign: 'center' }]}>{title}</Text>
           {children}
         </View>
         <View style={styles.buttonContainer}>
-          <Button title={doneTitle || t('Global.Done')} onPress={onDone || close}></Button>
+          <Button
+            buttonType={ButtonType.Primary}
+            title={doneTitle || t('Global.Done')}
+            onPress={onDone || close}
+          ></Button>
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   )
 }
