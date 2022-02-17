@@ -296,14 +296,12 @@ export const Buttons = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 2,
     borderColor: Colors.primary,
-    backgroundColor: Colors.white,
   },
   secondaryDisabled: {
     padding: 16,
     borderRadius: 4,
     borderWidth: 2,
     borderColor: Colors.darkGreenLightTransparent,
-    backgroundColor: Colors.white,
   },
   secondaryText: {
     ...TextTheme.normal,
