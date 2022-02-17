@@ -52,7 +52,6 @@ export const Pagination: React.FC<IPaginationProps> = ({
   return (
     <View style={style.pagerContainer}>
       <TouchableOpacity
-        testID={'backButton'}
         accessible={true}
         accessibilityLabel={t('Global.Back')}
         accessibilityElementsHidden={false}
@@ -77,7 +76,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         dotStyle={style.pagerDot}
         containerStyle={style.pagerPosition}
       />
-      <TouchableOpacity testID={'nextButton'} accessible={true} accessibilityLabel={t('Global.Next')} onPress={next}>
+      <TouchableOpacity testID={'nextButtonX'} accessible={true} accessibilityLabel={t('Global.Next')} onPress={next}>
         <Text
           style={[
             style.pagerNavigationButton,
