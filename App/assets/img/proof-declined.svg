@@ -1,0 +1,20 @@
+<svg id="Group_2359" data-name="Group 2359" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="250" height="250" viewBox="0 0 250 250">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1644" data-name="Rectangle 1644" width="250" height="250" fill="none"/>
+    </clipPath>
+  </defs>
+  <path id="Path_631" data-name="Path 631" d="M88.616,84.015l11.522-11.522,11.575,11.576" transform="translate(25.046 19.237)" fill="none" stroke="#036" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+  <line id="Line_97" data-name="Line 97" y2="41" transform="translate(125 93.5)" fill="none" stroke="#036" stroke-linejoin="round" stroke-width="4" stroke-dasharray="8 4"/>
+  <g id="Group_2358" data-name="Group 2358">
+    <g id="Group_2357" data-name="Group 2357" clip-path="url(#clip-path)">
+      <path id="Path_632" data-name="Path 632" d="M107.8,2.594a38.989,38.989,0,1,0,38.989,38.99A38.99,38.99,0,0,0,107.8,2.594" transform="translate(17.202 0.649)" fill="#f2dede"/>
+      <circle id="Ellipse_67" data-name="Ellipse 67" cx="38.989" cy="38.989" r="38.989" transform="translate(86.011 3.243)" fill="none" stroke="#a12622" stroke-miterlimit="10" stroke-width="4"/>
+      <path id="Path_633" data-name="Path 633" d="M113.95,53.639,103.361,43.05,93.075,53.335a4.175,4.175,0,0,1-5.9-5.9L97.458,37.145l-9.983-9.981a4.175,4.175,0,0,1,5.9-5.9l9.982,9.981,10.285-10.285a4.175,4.175,0,0,1,5.9,5.9L109.265,37.145l10.589,10.59a4.175,4.175,0,0,1-5.9,5.9" transform="translate(21.487 4.934)" fill="#a12622"/>
+      <path id="Path_634" data-name="Path 634" d="M188.528,220.033H44.924A11.832,11.832,0,0,1,33.092,208.2V119.788a11.832,11.832,0,0,1,11.833-11.832h143.6a11.832,11.832,0,0,1,11.833,11.832V208.2a11.832,11.832,0,0,1-11.833,11.833" transform="translate(8.273 26.989)" fill="#f9f1c6"/>
+      <rect id="Rectangle_1642" data-name="Rectangle 1642" width="167.269" height="112.077" rx="9.466" transform="translate(41.366 134.945)" fill="none" stroke="#fcba19" stroke-linejoin="round" stroke-width="4"/>
+      <line id="Line_98" data-name="Line 98" x2="80.496" transform="translate(61.019 200.763)" fill="none" stroke="#fcba19" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <rect id="Rectangle_1643" data-name="Rectangle 1643" width="167.27" height="18.411" transform="translate(41.365 164.228)" fill="#fcba19"/>
+    </g>
+  </g>
+</svg>

@@ -3,6 +3,7 @@ import type { StackNavigationProp } from '@react-navigation/stack'
 
 import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import startCase from 'lodash.startcase'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +11,9 @@ import { FlatList, Alert, View, StyleSheet, Text, TouchableOpacity } from 'react
 import Toast from 'react-native-toast-message'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import ProofDeclined from '../assets/img/proof-declined.svg'
+import ProofPending from '../assets/img/proof-pending.svg'
+import ProofSuccess from '../assets/img/proof-success.svg'
 import { ColorPallet, TextTheme } from '../theme'
 import {
   connectionRecordFromId,
@@ -19,12 +23,14 @@ import {
 } from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
+import ActivityLogLink from 'components/misc/ActivityLogLink'
+import NotificationModal from 'components/modals/NotificationModal'
 import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams } from 'types/navigators'
+import { HomeStackParams, TabStackParams } from 'types/navigators'
 
 interface ProofRequestProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Proof Request'>
+  navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
   route: RouteProp<HomeStackParams, 'Proof Request'>
 }
 
@@ -106,6 +112,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
+  const [pendingModalVisible, setPendingModalVisible] = useState(false)
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
+  const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
   const [retrievedCredentialAttributes, setRetrievedCredentialAttributes] = useState<[string, RequestedAttribute[]][]>(
@@ -177,28 +186,20 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (proof.state === ProofState.Done) {
-      Toast.show({
-        type: ToastType.Success,
-        text1: t('Global.Success'),
-        text2: t('ProofRequest.ProofAccepted'),
-      })
-      navigation.goBack()
+      pendingModalVisible && setPendingModalVisible(false)
+      setSuccessModalVisible(true)
     }
   }, [proof])
 
   useEffect(() => {
     if (proof.state === ProofState.Declined) {
-      Toast.show({
-        type: ToastType.Info,
-        text1: t('Global.Info'),
-        text2: t('ProofRequest.ProofRejected'),
-      })
-      navigation.goBack()
+      setDeclinedModalVisible(true)
     }
   }, [proof])
 
   const handleAcceptPress = async () => {
     setButtonsVisible(false)
+    setPendingModalVisible(true)
     Toast.show({
       type: ToastType.Info,
       text1: t('Global.Info'),
@@ -218,6 +219,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         text2: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
+      setPendingModalVisible(false)
     }
   }
 
@@ -235,6 +237,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           })
           try {
             await agent.proofs.declineRequest(proof.id)
+            Toast.hide()
           } catch (e: unknown) {
             Toast.show({
               type: ToastType.Error,
@@ -250,104 +253,133 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const connection = connectionRecordFromId(proof.connectionId)
 
   return (
-    <FlatList
-      ListHeaderComponent={() => (
-        <View style={styles.headerContainer}>
-          {/* <View style={styles.headerLogoContainer}>
-            <View style={styles.avatar}>
-              <Title style={{ ...TextTheme.headingTwo, fontWeight: 'normal' }}>
-                {(getConnectionName(connection) || 'C').charAt(0)}
-              </Title>
-            </View>
-          </View> */}
-          <View style={styles.headerTextContainer}>
-            {anyUnavailableCredentialAttributes(retrievedCredentialAttributes) ? (
-              <View style={[styles.rowTextContainer]}>
-                <Icon
-                  style={{ marginLeft: -2, marginRight: 10 }}
-                  name="highlight-off"
-                  color={TextTheme.headingOne.color}
-                  size={TextTheme.headingOne.fontSize}
-                ></Icon>
-                <Text style={styles.headerText}>
-                  <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
-                  {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
-                </Text>
-              </View>
-            ) : (
-              <Text style={styles.headerText}>
-                <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
-                {t('ProofRequest.IsRequestingYouToShare')}:
-              </Text>
-            )}
-          </View>
-        </View>
-      )}
-      ListFooterComponent={() => (
-        <View style={styles.footerContainer}>
-          <View style={styles.footerButton}>
-            <Button
-              title={t('Global.Share')}
-              buttonType={ButtonType.Primary}
-              onPress={handleAcceptPress}
-              disabled={!buttonsVisible}
-            />
-          </View>
-          <View style={styles.footerButton}>
-            <Button
-              title={t('Global.Decline')}
-              buttonType={ButtonType.Secondary}
-              onPress={handleRejectPress}
-              disabled={!buttonsVisible}
-            />
-          </View>
-        </View>
-      )}
-      data={retrievedCredentialAttributes}
-      keyExtractor={([name]) => name}
-      renderItem={({ item: [name, values] }) => (
-        <View style={styles.listItem}>
-          <Text style={styles.label}>{`${startCase(name)}:`}</Text>
-          <View style={styles.attributeValueContainer}>
-            <View style={styles.textContainer}>
-              {values.length ? (
-                <View>
-                  <Text style={styles.text}>{firstMatchingCredentialAttributeValue(name, values)}</Text>
-                </View>
-              ) : (
-                <View style={styles.rowTextContainer}>
+    <View>
+      <NotificationModal
+        title={t('ProofRequest.SendingTheInformationSecurely')}
+        doneTitle={t('Global.Cancel')}
+        visible={pendingModalVisible}
+        onDone={() => {
+          setPendingModalVisible(false)
+        }}
+      >
+        <ProofPending style={{ marginVertical: 20 }}></ProofPending>
+      </NotificationModal>
+      <NotificationModal
+        title={t('ProofRequest.InformationSentSuccessfully')}
+        visible={successModalVisible}
+        onDone={() => {
+          setSuccessModalVisible(false)
+          navigation.pop()
+          navigation.navigate('HomeTab')
+        }}
+      >
+        <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
+      <NotificationModal
+        title={t('ProofRequest.ProofRejected')}
+        visible={declinedModalVisible}
+        onDone={() => {
+          setDeclinedModalVisible(false)
+          navigation.pop()
+          navigation.navigate('HomeTab')
+        }}
+      >
+        <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
+      <FlatList
+        ListHeaderComponent={() => (
+          <View style={styles.headerContainer}>
+            <View style={styles.headerTextContainer}>
+              {anyUnavailableCredentialAttributes(retrievedCredentialAttributes) ? (
+                <View style={[styles.rowTextContainer]}>
                   <Icon
-                    style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                    name="close"
-                    color={ColorPallet.semantic.error}
-                    size={TextTheme.normal.fontSize}
+                    style={{ marginLeft: -2, marginRight: 10 }}
+                    name="highlight-off"
+                    color={TextTheme.headingOne.color}
+                    size={TextTheme.headingOne.fontSize}
                   ></Icon>
-                  <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
-                    {t('ProofRequest.NotAvailableInYourWallet')}
+                  <Text style={styles.headerText}>
+                    <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                    {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                   </Text>
                 </View>
+              ) : (
+                <Text style={styles.headerText}>
+                  <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                  {t('ProofRequest.IsRequestingYouToShare')}:
+                </Text>
               )}
             </View>
-            {values.length ? (
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() =>
-                  navigation.navigate('Proof Request Attribute Details', {
-                    proofId,
-                    attributeName: name,
-                    attributeCredentials: values,
-                  })
-                }
-                style={styles.linkContainer}
-              >
-                <Text style={styles.link}>{t('ProofRequest.Details')}</Text>
-              </TouchableOpacity>
-            ) : null}
           </View>
-          <View style={styles.listItemBorder}></View>
-        </View>
-      )}
-    />
+        )}
+        ListFooterComponent={() => (
+          <View style={styles.footerContainer}>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Share')}
+                buttonType={ButtonType.Primary}
+                onPress={handleAcceptPress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Decline')}
+                buttonType={ButtonType.Secondary}
+                onPress={handleRejectPress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+          </View>
+        )}
+        data={retrievedCredentialAttributes}
+        keyExtractor={([name]) => name}
+        renderItem={({ item: [name, values] }) => (
+          <View style={styles.listItem}>
+            <Text style={styles.label}>{`${startCase(name)}:`}</Text>
+            <View style={styles.attributeValueContainer}>
+              <View style={styles.textContainer}>
+                {values.length ? (
+                  <View>
+                    <Text style={styles.text}>{firstMatchingCredentialAttributeValue(name, values)}</Text>
+                  </View>
+                ) : (
+                  <View style={styles.rowTextContainer}>
+                    <Icon
+                      style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                      name="close"
+                      color={ColorPallet.semantic.error}
+                      size={TextTheme.normal.fontSize}
+                    ></Icon>
+                    <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+                      {t('ProofRequest.NotAvailableInYourWallet')}
+                    </Text>
+                  </View>
+                )}
+              </View>
+              {values.length ? (
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() =>
+                    navigation.navigate('Proof Request Attribute Details', {
+                      proofId,
+                      attributeName: name,
+                      attributeCredentials: values,
+                    })
+                  }
+                  style={styles.linkContainer}
+                >
+                  <Text style={styles.link}>{t('ProofRequest.Details')}</Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
+            <View style={styles.listItemBorder}></View>
+          </View>
+        )}
+      />
+    </View>
   )
 }
 

@@ -124,7 +124,10 @@ const translation = {
     "IsRequestingYouToShare": "is requesting you to share",
     "WhichYouCanProvideFrom": "which you can provide from",
     "AContact": "A contact",
-    "Details": "Details"
+    "Details": "Details",
+    "SendingTheInformationSecurely": "Sending the information securely",
+    "InformationSentSuccessfully": "Information sent successfully",
+    "ProofRequestDeclined": "Proof request declined"
   },
   "Settings": {
     "Version": "Version",
