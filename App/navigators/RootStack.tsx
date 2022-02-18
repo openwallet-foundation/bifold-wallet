@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 import Arrow from '../assets/img/large-arrow.svg'
-import { Screens } from '../constants'
 import Onboarding from '../screens/Onboarding'
 import { pages, carousel } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
@@ -21,11 +20,12 @@ import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
 
 import { GenericFn, StateFn } from 'types/fn'
+import { AuthenticateStackParams, Screens } from 'types/navigators'
 
 const RootStack: React.FC = () => {
   const [authenticated, setAuthenticated] = useState(false)
   const [state, dispatch] = useContext(Context)
-  const nav = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { t } = useTranslation()
 
   const authStack = (setAuthenticated: StateFn) => {
@@ -118,7 +118,7 @@ const RootStack: React.FC = () => {
       payload: [{ DidCompleteTutorial: true }],
     })
 
-    nav.navigate(Screens.Terms)
+    navigation.navigate(Screens.Terms)
   }
 
   if (state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN) {

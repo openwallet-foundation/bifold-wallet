@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
 
 import { SafeAreaScrollView, Text } from 'components'
-import { SettingsStackParams } from 'types/navigators'
+import { Screens, SettingsStackParams } from 'types/navigators'
 
 interface Props {
   navigation: StackNavigationProp<SettingsStackParams>
@@ -43,7 +43,7 @@ const Settings: React.FC<Props> = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
         <View style={styles.rowGroup}>
-          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Language')}>
+          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Screens.Language)}>
             <Text>{t('Settings.Language')}</Text>
             <Icon name={'chevron-right'} size={25} color={Colors.text} />
           </TouchableOpacity>

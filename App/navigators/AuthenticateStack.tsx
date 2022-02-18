@@ -5,7 +5,7 @@ import PinEnter from '../screens/PinEnter'
 
 import defaultStackOptions from './defaultStackOptions'
 
-import { AuthenticateStackParams } from 'types/navigators'
+import { AuthenticateStackParams, Screens } from 'types/navigators'
 
 interface AuthenticateStackProps {
   setAuthenticated: (auth: boolean) => void
@@ -16,7 +16,7 @@ const AuthenticateStack: React.FC<AuthenticateStackProps> = ({ setAuthenticated 
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, presentation: 'transparentModal', headerShown: false }}>
-      <Stack.Screen name="Enter Pin" component={PinEnter} initialParams={{ setAuthenticated }} />
+      <Stack.Screen name={Screens.EnterPin} component={PinEnter} initialParams={{ setAuthenticated }} />
     </Stack.Navigator>
   )
 }

@@ -14,7 +14,7 @@ import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams } from 'types/navigators'
+import { HomeStackParams, Screens } from 'types/navigators'
 
 interface ScanProps {
   navigation: StackNavigationProp<HomeStackParams>
@@ -77,7 +77,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         text1: t('Global.Success'),
         text2: t('Scan.ConnectionAccepted'),
       })
-      navigation.navigate('Home')
+      navigation.navigate(Screens.Home)
     }
   }, [connection])
 
@@ -92,10 +92,9 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         await handleInvitation(url)
       }
 
-      // TODO: Change to a full screen modal
       displaySuccessMessage()
 
-      navigation.navigate('Home')
+      navigation.navigate(Screens.Home)
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
       setQrCodeScanError(error)

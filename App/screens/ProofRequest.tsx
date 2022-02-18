@@ -27,11 +27,11 @@ import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
 import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams, TabStackParams } from 'types/navigators'
+import { HomeStackParams, Screens, TabStackParams } from 'types/navigators'
 
 interface ProofRequestProps {
   navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
-  route: RouteProp<HomeStackParams, 'Proof Request'>
+  route: RouteProp<HomeStackParams, Screens.ProofRequest>
 }
 
 const styles = StyleSheet.create({
@@ -363,7 +363,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <TouchableOpacity
                   activeOpacity={1}
                   onPress={() =>
-                    navigation.navigate('Proof Request Attribute Details', {
+                    navigation.navigate(Screens.ProofRequestAttributeDetails, {
                       proofId,
                       attributeName: name,
                       attributeCredentials: values,

@@ -6,10 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Colors } from '../theme'
 
-import ContactStack from './ContactStack'
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
-import SettingStack from './SettingStack'
 
 import { TabStackParams } from 'types/navigators'
 
@@ -35,7 +33,7 @@ const TabStack: React.FC = () => {
           tabBarAccessibilityLabel: t('TabStack.Home'),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="ContactsTab"
         component={ContactStack}
         options={{
@@ -44,7 +42,7 @@ const TabStack: React.FC = () => {
           tabBarLabel: t('TabStack.Contacts'),
           tabBarAccessibilityLabel: t('TabStack.Contacts'),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="ScanTab"
         options={{
@@ -73,7 +71,7 @@ const TabStack: React.FC = () => {
           tabBarAccessibilityLabel: t('TabStack.Credentials'),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="SettingsTab"
         component={SettingStack}
         options={{
@@ -82,7 +80,7 @@ const TabStack: React.FC = () => {
           tabBarLabel: t('TabStack.Settings'),
           tabBarAccessibilityLabel: t('TabStack.Settings'),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }

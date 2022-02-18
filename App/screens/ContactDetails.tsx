@@ -4,11 +4,11 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 
 import { SafeAreaScrollView, Label } from 'components'
-import { ContactStackParams } from 'types/navigators'
+import { ContactStackParams, Screens } from 'types/navigators'
 
 interface ContactDetailsProps {
   navigation: StackNavigationProp<ContactStackParams>
-  route: RouteProp<ContactStackParams, 'Contact Details'>
+  route: RouteProp<ContactStackParams, Screens.ContactDetails>
 }
 
 const ContactDetails: React.FC<ContactDetailsProps> = ({ navigation, route }) => {
