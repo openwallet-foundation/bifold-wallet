@@ -16,7 +16,7 @@ import { ToastType } from 'components/toast/BaseToast'
 import { CredentialStackParams } from 'types/navigators'
 
 interface CredentialDetailsProps {
-  navigation: StackNavigationProp<CredentialStackParams, 'Credential Details'>
+  navigation: StackNavigationProp<CredentialStackParams>
   route: RouteProp<CredentialStackParams, 'Credential Details'>
 }
 
