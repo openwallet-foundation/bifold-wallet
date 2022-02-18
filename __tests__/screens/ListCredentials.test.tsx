@@ -1,5 +1,5 @@
 import { CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentials } from '@aries-framework/react-hooks'
+import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
@@ -50,7 +50,9 @@ describe('displays a credentials list screen', () => {
         credential.credentialId = credential.id
       })
       // @ts-ignore
-      useCredentials.mockReturnValue(testCredentialRecords)
+      useCredentialByState.mockImplementation((state) =>
+        testCredentialRecords.credentials.filter((c) => c.state === state)
+      )
     })
 
     /**
