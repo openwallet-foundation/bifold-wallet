@@ -22,7 +22,7 @@ import {
 } from '../utils/helpers'
 
 interface ProofRequestAttributeDetailsProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Proof Request Attribute Details'>
+  navigation: StackNavigationProp<HomeStackParams>
   route: RouteProp<HomeStackParams, 'Proof Request Attribute Details'>
 }
 

@@ -17,7 +17,7 @@ import { ToastType } from 'components/toast/BaseToast'
 import { HomeStackParams } from 'types/navigators'
 
 interface ScanProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Home'>
+  navigation: StackNavigationProp<HomeStackParams>
 }
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {

@@ -7,7 +7,7 @@ import { SafeAreaScrollView, Label } from 'components'
 import { ContactStackParams } from 'types/navigators'
 
 interface ContactDetailsProps {
-  navigation: StackNavigationProp<ContactStackParams, 'Contact Details'>
+  navigation: StackNavigationProp<ContactStackParams>
   route: RouteProp<ContactStackParams, 'Contact Details'>
 }
 

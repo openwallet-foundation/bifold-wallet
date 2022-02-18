@@ -9,10 +9,8 @@ import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
 import { SafeAreaScrollView, Text } from 'components'
 import { SettingsStackParams } from 'types/navigators'
 
-type NewType = StackNavigationProp<SettingsStackParams, 'Settings'>
-
 interface Props {
-  navigation: NewType
+  navigation: StackNavigationProp<SettingsStackParams>
 }
 
 const styles = StyleSheet.create({
