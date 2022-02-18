@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import CredentialAdded from '../assets/img/credential-added.svg'
 import CredentialDeclined from '../assets/img/credential-declined.svg'
 import CredentialPending from '../assets/img/credential-pending.svg'
+import CredentialSuccess from '../assets/img/credential-success.svg'
 import { CredentialOfferTheme } from '../theme'
 import { parsedSchema } from '../utils/helpers'
 
@@ -23,9 +23,7 @@ import { ToastType } from 'components/toast/BaseToast'
 import { HomeStackParams, TabStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Home'> &
-    BottomTabNavigationProp<TabStackParams, 'HomeTab'> &
-    BottomTabNavigationProp<TabStackParams, 'CredentialsTab'>
+  navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
   route: RouteProp<HomeStackParams, 'Credential Offer'>
 }
 
@@ -42,7 +40,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  const [addedModalVisible, setAddedModalVisible] = useState(false)
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
   if (!agent?.credentials) {
@@ -88,7 +86,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   useEffect(() => {
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       pendingModalVisible && setPendingModalVisible(false)
-      setAddedModalVisible(true)
+      setSuccessModalVisible(true)
     }
   }, [credential])
 
@@ -109,7 +107,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         text1: t('Global.Failure'),
         text2: (e as Error)?.message || t('Global.Failure'),
       })
-
       setButtonsVisible(true)
       setPendingModalVisible(false)
     }
@@ -128,7 +125,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             text1: t('Global.Info'),
             text2: t('CredentialOffer.RejectingCredential'),
           })
-
           try {
             await agent.credentials.declineOffer(credential.id)
             Toast.hide()
@@ -163,14 +159,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       </NotificationModal>
       <NotificationModal
         title={t('CredentialOffer.CredentialAddedToYourWallet')}
-        visible={addedModalVisible}
+        visible={successModalVisible}
         onDone={() => {
-          setAddedModalVisible(false)
+          setSuccessModalVisible(false)
           navigation.pop()
           navigation.navigate('CredentialsTab')
         }}
       >
-        <CredentialAdded style={{ marginVertical: 20 }}></CredentialAdded>
+        <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <NotificationModal
