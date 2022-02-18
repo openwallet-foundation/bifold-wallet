@@ -9,18 +9,18 @@ import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetail
 
 import defaultStackOptions from './defaultStackOptions'
 
-import { HomeStackParams } from 'types/navigators'
+import { HomeStackParams, Screens } from 'types/navigators'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Notifications" component={ListNotifications} />
-      <Stack.Screen name="Credential Offer" component={CredentialOffer} />
-      <Stack.Screen name="Proof Request" component={ProofRequest} />
-      <Stack.Screen name="Proof Request Attribute Details" component={ProofRequestAttributeDetails} />
+      <Stack.Screen name={Screens.Home} component={Home} />
+      <Stack.Screen name={Screens.Notifications} component={ListNotifications} />
+      <Stack.Screen name={Screens.CredentialOffer} component={CredentialOffer} />
+      <Stack.Screen name={Screens.ProofRequest} component={ProofRequest} />
+      <Stack.Screen name={Screens.ProofRequestAttributeDetails} component={ProofRequestAttributeDetails} />
     </Stack.Navigator>
   )
 }

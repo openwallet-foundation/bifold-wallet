@@ -6,15 +6,15 @@ import ListCredentials from '../screens/ListCredentials'
 
 import defaultStackOptions from './defaultStackOptions'
 
-import { CredentialStackParams } from 'types/navigators'
+import { CredentialStackParams, Screens } from 'types/navigators'
 
 const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-      <Stack.Screen name="Credentials" component={ListCredentials} />
-      <Stack.Screen name="Credential Details" component={CredentialDetails} />
+      <Stack.Screen name={Screens.Credentials} component={ListCredentials} />
+      <Stack.Screen name={Screens.CredentialDetails} component={CredentialDetails} />
     </Stack.Navigator>
   )
 }

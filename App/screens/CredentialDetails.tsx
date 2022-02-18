@@ -13,11 +13,11 @@ import { ColorPallet, TextTheme } from '../theme'
 
 import { CredentialListItem } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
-import { CredentialStackParams } from 'types/navigators'
+import { CredentialStackParams, Screens } from 'types/navigators'
 
 interface CredentialDetailsProps {
   navigation: StackNavigationProp<CredentialStackParams>
-  route: RouteProp<CredentialStackParams, 'Credential Details'>
+  route: RouteProp<CredentialStackParams, Screens.CredentialDetails>
 }
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import { ProofRecord, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
+import { ProofRecord, RequestedAttribute } from '@aries-framework/core'
 import { useAgent, useCredentials } from '@aries-framework/react-hooks'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -12,7 +12,7 @@ import Title from '../components/texts/Title'
 import { ToastType } from '../components/toast/BaseToast'
 import { credentialDateTimeFormatString } from '../constants'
 import { ColorPallet, TextTheme } from '../theme'
-import { HomeStackParams } from '../types/navigators'
+import { HomeStackParams, Screens } from '../types/navigators'
 import {
   connectionRecordFromId,
   firstMatchingCredentialAttributeValue,
@@ -23,7 +23,7 @@ import {
 
 interface ProofRequestAttributeDetailsProps {
   navigation: StackNavigationProp<HomeStackParams>
-  route: RouteProp<HomeStackParams, 'Proof Request Attribute Details'>
+  route: RouteProp<HomeStackParams, Screens.ProofRequestAttributeDetails>
 }
 
 const styles = StyleSheet.create({

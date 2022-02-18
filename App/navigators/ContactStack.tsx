@@ -6,15 +6,15 @@ import ListContacts from '../screens/ListContacts'
 
 import defaultStackOptions from './defaultStackOptions'
 
-import { ContactStackParams } from 'types/navigators'
+import { ContactStackParams, Screens } from 'types/navigators'
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-      <Stack.Screen name="Contacts" component={ListContacts} />
-      <Stack.Screen name="Contact Details" component={ContactDetails} />
+      <Stack.Screen name={Screens.Contacts} component={ListContacts} />
+      <Stack.Screen name={Screens.ContactDetails} component={ContactDetails} />
     </Stack.Navigator>
   )
 }

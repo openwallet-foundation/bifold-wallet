@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 import { ButtonType } from '../components/buttons/Button'
-import { Screens } from '../constants'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors, TextTheme } from '../theme'
@@ -13,6 +13,7 @@ import { Colors, TextTheme } from '../theme'
 import { Button, CheckBoxRow } from 'components'
 import HighlightTextBox from 'components/texts/HighlightTextBox'
 import InfoTextBox from 'components/texts/InfoTextBox'
+import { AuthenticateStackParams, Screens } from 'types/navigators'
 
 const style = StyleSheet.create({
   container: {
@@ -32,7 +33,7 @@ const Terms: React.FC = () => {
   const [, dispatch] = useContext(Context)
   const [checked, setChecked] = useState(false)
   const { t } = useTranslation()
-  const nav = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
 
   const onSubmitPressed = () => {
     dispatch({
@@ -40,7 +41,7 @@ const Terms: React.FC = () => {
       payload: [{ DidAgreeToTerms: checked }],
     })
 
-    nav.navigate(Screens.CreatePin)
+    navigation.navigate(Screens.CreatePin)
   }
 
   const onBackPressed = () => {
@@ -52,7 +53,7 @@ const Terms: React.FC = () => {
     //   nav.goBack()
     // }
 
-    nav.navigate(Screens.Onboarding)
+    navigation.navigate(Screens.Onboarding)
   }
 
   return (

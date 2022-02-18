@@ -1,5 +1,5 @@
 import { CredentialState, ProofState } from '@aries-framework/core'
-import { useCredentialByState, useCredentials, useProofByState } from '@aries-framework/react-hooks'
+import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +9,7 @@ import { NotificationType } from '../components/listItems/NotificationListItem'
 import { ColorPallet, TextTheme } from '../theme'
 
 import { InfoTextBox, NotificationListItem } from 'components'
-import { HomeStackParams } from 'types/navigators'
+import { HomeStackParams, Screens } from 'types/navigators'
 
 const { width } = Dimensions.get('window')
 
@@ -102,7 +102,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           <TouchableOpacity
             style={styles.linkContainer}
             activeOpacity={1}
-            onPress={() => navigation.navigate('Notifications')}
+            onPress={() => navigation.navigate(Screens.Notifications)}
           >
             <Text style={styles.link}>{t('Home.SeeAll')}</Text>
           </TouchableOpacity>

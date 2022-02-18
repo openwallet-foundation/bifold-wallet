@@ -20,11 +20,11 @@ import { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams, TabStackParams } from 'types/navigators'
+import { HomeStackParams, Screens, TabStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
-  route: RouteProp<HomeStackParams, 'Credential Offer'>
+  route: RouteProp<HomeStackParams, Screens.CredentialOffer>
 }
 
 const styles = StyleSheet.create({
