@@ -3,8 +3,9 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 
+import { ContactStackParams, Screens } from '../types/navigators'
+
 import { SafeAreaScrollView, Label } from 'components'
-import { ContactStackParams, Screens } from 'types/navigators'
 
 interface ContactDetailsProps {
   navigation: StackNavigationProp<ContactStackParams>

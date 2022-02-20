@@ -3,10 +3,9 @@ import React from 'react'
 
 import Language from '../screens/Language'
 import Settings from '../screens/Settings'
+import { Screens, SettingsStackParams } from '../types/navigators'
 
 import defaultStackOptions from './defaultStackOptions'
-
-import { Screens, SettingsStackParams } from 'types/navigators'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingsStackParams>()

@@ -3,10 +3,9 @@ import React from 'react'
 
 import ContactDetails from '../screens/ContactDetails'
 import ListContacts from '../screens/ListContacts'
+import { ContactStackParams, Screens } from '../types/navigators'
 
 import defaultStackOptions from './defaultStackOptions'
-
-import { ContactStackParams, Screens } from 'types/navigators'
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()

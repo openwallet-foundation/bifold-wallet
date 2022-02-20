@@ -6,10 +6,9 @@ import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'
 import ProofRequest from '../screens/ProofRequest'
 import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
+import { HomeStackParams, Screens } from '../types/navigators'
 
 import defaultStackOptions from './defaultStackOptions'
-
-import { HomeStackParams, Screens } from 'types/navigators'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()

@@ -14,13 +14,13 @@ import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors } from '../theme'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import ScanStack from './ScanStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
 
 import { GenericFn, StateFn } from 'types/fn'
-import { AuthenticateStackParams, Screens } from 'types/navigators'
 
 const RootStack: React.FC = () => {
   const [authenticated, setAuthenticated] = useState(false)
@@ -45,8 +45,8 @@ const RootStack: React.FC = () => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name="Tabs">{() => <TabStack />}</Stack.Screen>
-        <Stack.Screen name="Connect" options={{ presentation: 'modal' }}>
+        <Stack.Screen name={Screens.Tabs}>{() => <TabStack />}</Stack.Screen>
+        <Stack.Screen name={Screens.Connect} options={{ presentation: 'modal' }}>
           {() => <ScanStack />}
         </Stack.Screen>
       </Stack.Navigator>

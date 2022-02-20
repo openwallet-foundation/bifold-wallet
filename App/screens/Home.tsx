@@ -7,9 +7,9 @@ import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from '
 
 import { NotificationType } from '../components/listItems/NotificationListItem'
 import { ColorPallet, TextTheme } from '../theme'
+import { HomeStackParams, Screens } from '../types/navigators'
 
 import { InfoTextBox, NotificationListItem } from 'components'
-import { HomeStackParams, Screens } from 'types/navigators'
 
 const { width } = Dimensions.get('window')
 

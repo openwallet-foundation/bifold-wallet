@@ -9,11 +9,10 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { credentialDateTimeFormatString } from '../../constants'
 import { ColorPallet, TextTheme } from '../../theme'
+import { CredentialStackParams } from '../../types/navigators'
 import { hashCode, hashToRGBA, parsedSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
-
-import { CredentialStackParams } from 'types/navigators'
 
 interface CredentialListItemProps {
   credential: CredentialRecord
