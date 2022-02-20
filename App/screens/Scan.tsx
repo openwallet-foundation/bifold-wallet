@@ -10,11 +10,11 @@ import Toast from 'react-native-toast-message'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { QrCodeScanError } from '../types/error'
+import { HomeStackParams, Screens } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams, Screens } from 'types/navigators'
 
 interface ScanProps {
   navigation: StackNavigationProp<HomeStackParams>

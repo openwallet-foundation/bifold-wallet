@@ -2,10 +2,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
 import PinEnter from '../screens/PinEnter'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import defaultStackOptions from './defaultStackOptions'
-
-import { AuthenticateStackParams, Screens } from 'types/navigators'
 
 interface AuthenticateStackProps {
   setAuthenticated: (auth: boolean) => void

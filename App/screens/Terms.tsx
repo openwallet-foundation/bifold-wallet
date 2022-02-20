@@ -9,11 +9,11 @@ import { ButtonType } from '../components/buttons/Button'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors, TextTheme } from '../theme'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import { Button, CheckBoxRow } from 'components'
 import HighlightTextBox from 'components/texts/HighlightTextBox'
 import InfoTextBox from 'components/texts/InfoTextBox'
-import { AuthenticateStackParams, Screens } from 'types/navigators'
 
 const style = StyleSheet.create({
   container: {

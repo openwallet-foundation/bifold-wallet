@@ -15,6 +15,7 @@ import ProofDeclined from '../assets/img/proof-declined.svg'
 import ProofPending from '../assets/img/proof-pending.svg'
 import ProofSuccess from '../assets/img/proof-success.svg'
 import { ColorPallet, TextTheme } from '../theme'
+import { HomeStackParams, Screens, TabStackParams } from '../types/navigators'
 import {
   connectionRecordFromId,
   firstMatchingCredentialAttributeValue,
@@ -27,7 +28,6 @@ import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
 import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams, Screens, TabStackParams } from 'types/navigators'
 
 interface ProofRequestProps {
   navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>

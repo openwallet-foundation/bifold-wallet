@@ -9,8 +9,8 @@ import { LocalStorageKeys } from '../constants'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors } from '../theme'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 
-import { AuthenticateStackParams, Screens } from 'types/navigators'
 import { Onboarding } from 'types/state'
 
 const styles = StyleSheet.create({

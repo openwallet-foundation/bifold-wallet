@@ -5,9 +5,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
+import { Screens, SettingsStackParams } from '../types/navigators'
 
 import { SafeAreaScrollView, Text } from 'components'
-import { Screens, SettingsStackParams } from 'types/navigators'
 
 interface Props {
   navigation: StackNavigationProp<SettingsStackParams>

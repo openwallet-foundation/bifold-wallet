@@ -13,6 +13,7 @@ import CredentialDeclined from '../assets/img/credential-declined.svg'
 import CredentialPending from '../assets/img/credential-pending.svg'
 import CredentialSuccess from '../assets/img/credential-success.svg'
 import { CredentialOfferTheme } from '../theme'
+import { HomeStackParams, Screens, TabStackParams } from '../types/navigators'
 import { parsedSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
@@ -20,7 +21,6 @@ import { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams, Screens, TabStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
