@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, TouchableOpacity, View } from 'react-native'
 
-import Arrow from '../assets/img/large-arrow.svg'
+import Arrow from '../assets/icons/large-arrow.svg'
 import Onboarding from '../screens/Onboarding'
 import { pages, carousel } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'

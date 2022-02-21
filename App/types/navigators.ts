@@ -1,6 +1,8 @@
 import { RequestedAttribute } from '@aries-framework/core'
 
 export enum Screens {
+  Tabs = 'Tabs',
+  Connect = 'Connect',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
   CreatePin = 'Create 6-Digit Pin',
