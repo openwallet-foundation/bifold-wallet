@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Colors, TextTheme } from '../../theme'
-import { HomeStackParams } from '../../types/navigators'
+import { HomeStackParams, Screens } from '../../types/navigators'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 
@@ -69,7 +69,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
   const closeHome = () => {
     close()
-    navigation.navigate('Home')
+    navigation.navigate(Screens.Home)
   }
 
   return (

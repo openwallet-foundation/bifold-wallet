@@ -9,7 +9,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { credentialDateTimeFormatString } from '../../constants'
 import { ColorPallet, TextTheme } from '../../theme'
-import { CredentialStackParams } from '../../types/navigators'
+import { CredentialStackParams, Screens } from '../../types/navigators'
 import { hashCode, hashToRGBA, parsedSchema } from '../../utils/helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
@@ -50,7 +50,7 @@ const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) =
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('Credential Details', { credentialId: credential.id })}
+      onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
     >
       <View style={styles.row}>
         <View

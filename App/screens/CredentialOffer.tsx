@@ -13,7 +13,7 @@ import CredentialDeclined from '../assets/img/credential-declined.svg'
 import CredentialPending from '../assets/img/credential-pending.svg'
 import CredentialSuccess from '../assets/img/credential-success.svg'
 import { CredentialOfferTheme } from '../theme'
-import { HomeStackParams, Screens, TabStackParams } from '../types/navigators'
+import { HomeStackParams, Screens, Stacks, TabStackParams } from '../types/navigators'
 import { parsedSchema } from '../utils/helpers'
 
 import { Button, ModularView, Label } from 'components'
@@ -163,7 +163,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onDone={() => {
           setSuccessModalVisible(false)
           navigation.pop()
-          navigation.navigate('CredentialsTab')
+          navigation.navigate(Stacks.CredentialStack)
         }}
       >
         <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
@@ -175,7 +175,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate('HomeTab')
+          navigation.navigate(Stacks.HomeStack)
         }}
       >
         <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
