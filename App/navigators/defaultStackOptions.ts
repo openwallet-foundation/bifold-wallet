@@ -1,7 +1,11 @@
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 
 export default {
-  headerStyle: { backgroundColor: Colors.primary, elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
-  headerTintColor: Colors.text,
-  headerBackTitleVisible: false,
+  headerStyle: {
+    elevation: 0,
+    shadowOpacity: 0.1,
+  },
+  headerTintColor: ColorPallet.grayscale.white,
+  headerShown: true,
+  headerBackTitleVisible: true,
 }

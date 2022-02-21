@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import CredentialOffer from '../screens/CredentialOffer'
 import Home from '../screens/Home'
@@ -11,10 +12,11 @@ import { HomeStackParams, Screens } from '../types/navigators'
 import defaultStackOptions from './defaultStackOptions'
 
 const HomeStack: React.FC = () => {
+  const { t } = useTranslation()
   const Stack = createStackNavigator<HomeStackParams>()
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerBackTitle: t('Global.Back') }}>
       <Stack.Screen name={Screens.Home} component={Home} />
       <Stack.Screen name={Screens.Notifications} component={ListNotifications} />
       <Stack.Screen name={Screens.CredentialOffer} component={CredentialOffer} />
