@@ -3,7 +3,7 @@ import React, { Ref, useCallback, useRef, useState } from 'react'
 import { Animated, BackHandler, Dimensions, FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Pagination } from '../components/shared/Pagination'
+import { Pagination } from '../components/misc/Pagination'
 
 const { width } = Dimensions.get('window')
 
