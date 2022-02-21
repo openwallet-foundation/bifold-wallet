@@ -15,7 +15,7 @@ import ProofDeclined from '../assets/img/proof-declined.svg'
 import ProofPending from '../assets/img/proof-pending.svg'
 import ProofSuccess from '../assets/img/proof-success.svg'
 import { ColorPallet, TextTheme } from '../theme'
-import { HomeStackParams, Screens, TabStackParams } from '../types/navigators'
+import { HomeStackParams, Screens, Stacks, TabStackParams } from '../types/navigators'
 import {
   connectionRecordFromId,
   firstMatchingCredentialAttributeValue,
@@ -270,7 +270,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setSuccessModalVisible(false)
           navigation.pop()
-          navigation.navigate('HomeTab')
+          navigation.navigate(Stacks.HomeStack)
         }}
       >
         <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
@@ -282,7 +282,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate('HomeTab')
+          navigation.navigate(Stacks.HomeStack)
         }}
       >
         <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>

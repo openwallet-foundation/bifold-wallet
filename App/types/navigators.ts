@@ -22,10 +22,17 @@ export enum Screens {
   Language = 'Language',
 }
 
+export enum Stacks {
+  HomeStack = 'Home Stack',
+  ScanStack = 'Scan Stack',
+  CredentialStack = 'Credentials Stack',
+  SettingStack = 'Settings Stack',
+}
+
 export type TabStackParams = {
-  HomeTab: undefined
-  ScanTab: undefined
-  CredentialsTab: undefined
+  [Stacks.HomeStack]: undefined
+  [Stacks.ScanStack]: undefined
+  [Stacks.CredentialStack]: undefined
 }
 
 export type AuthenticateStackParams = {
@@ -44,6 +51,7 @@ export type ContactStackParams = {
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
+  [Stacks.SettingStack]: undefined
 }
 
 export type HomeStackParams = {
@@ -56,6 +64,7 @@ export type HomeStackParams = {
     attributeName: string
     attributeCredentials: RequestedAttribute[]
   }
+  [Stacks.SettingStack]: undefined
 }
 
 export type ScanStackParams = {
