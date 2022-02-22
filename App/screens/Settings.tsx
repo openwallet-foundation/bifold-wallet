@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
-import { Screens, SettingsStackParams } from '../types/navigators'
+import { Screens, SettingsStackParams, Stacks } from '../types/navigators'
 
 import { SafeAreaScrollView, Text } from 'components'
 
@@ -60,6 +60,11 @@ const Settings: React.FC<Props> = ({ navigation }) => {
             <Text>{t('Settings.AMA-RNVersion')}</Text>
             <Text>{t('Settings.AMA-RNVersionString')}</Text>
           </View>
+
+          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Stacks.ContactStack)}>
+            <Text>{t('TabStack.Contacts')}</Text>
+            <Icon name={'chevron-right'} size={25} color={Colors.text} />
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaScrollView>

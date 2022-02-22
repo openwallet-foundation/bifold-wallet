@@ -11,7 +11,7 @@ const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen name={Screens.Contacts} component={ListContacts} />
       <Stack.Screen name={Screens.ContactDetails} component={ContactDetails} />
     </Stack.Navigator>

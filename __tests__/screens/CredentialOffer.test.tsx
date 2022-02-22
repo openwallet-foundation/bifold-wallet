@@ -120,7 +120,7 @@ describe('displays a credential offer screen', () => {
 
       fireEvent(notificationModalDoneButtonInstance, 'press')
 
-      expect(navigation.navigate).toBeCalledWith('CredentialsTab')
+      expect(navigation.navigate).toBeCalledWith('Credentials Stack')
     })
   })
 })
