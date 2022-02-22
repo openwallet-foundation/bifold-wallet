@@ -5,7 +5,7 @@ import { SafeAreaView, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { ColorPallet, TextTheme } from '../theme'
-import { Screens, TabStackParams } from '../types/navigators'
+import { Screens, Stacks, TabStackParams } from '../types/navigators'
 
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
@@ -31,7 +31,7 @@ const TabStack: React.FC = () => {
         }}
       >
         <Tab.Screen
-          name="HomeTab"
+          name={Stacks.HomeStack}
           component={HomeStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
@@ -40,7 +40,6 @@ const TabStack: React.FC = () => {
             // TODO: Add notification helpers for displaying badges
             // tabBarBadge: 0,
             // tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
-            // headerTitle: t('TabStack.Home'),
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
@@ -57,7 +56,7 @@ const TabStack: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="ScanTab"
+          name={Stacks.ScanStack}
           options={{
             tabBarIcon: () => (
               <View
@@ -74,7 +73,6 @@ const TabStack: React.FC = () => {
                 <Icon name="qrcode-scan" color={ColorPallet.grayscale.white} size={32} />
               </View>
             ),
-            // headerTitle: t('TabStack.Scan'),
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
@@ -99,13 +97,12 @@ const TabStack: React.FC = () => {
           {() => <View />}
         </Tab.Screen>
         <Tab.Screen
-          name="CredentialsTab"
+          name={Stacks.CredentialStack}
           component={CredentialStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
               <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
             ),
-            // headerTitle: t('TabStack.Credentials'),
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{

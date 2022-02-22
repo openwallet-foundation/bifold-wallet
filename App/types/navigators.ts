@@ -27,12 +27,14 @@ export enum Stacks {
   ScanStack = 'Scan Stack',
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
+  ContactStack = 'Contacts Stack',
 }
 
 export type TabStackParams = {
   [Stacks.HomeStack]: undefined
   [Stacks.ScanStack]: undefined
   [Stacks.CredentialStack]: undefined
+  [Stacks.ContactStack]: undefined
 }
 
 export type AuthenticateStackParams = {
@@ -74,4 +76,5 @@ export type ScanStackParams = {
 export type SettingsStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
+  [Stacks.ContactStack]: undefined
 }
