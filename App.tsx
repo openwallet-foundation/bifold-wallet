@@ -41,6 +41,7 @@ const App = () => {
         autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
         logger: new ConsoleLogger(LogLevel.trace),
         indyLedgers,
+        connectToIndyLedgersOnStartup: false,
       },
       agentDependencies
     )
