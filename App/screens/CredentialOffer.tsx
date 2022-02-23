@@ -90,13 +90,13 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   useEffect(() => {
     if (credential.state === CredentialState.Declined) {
       setDeclinedModalVisible(true)
-      return
     }
+  }, [credential])
 
+  useEffect(() => {
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       pendingModalVisible && setPendingModalVisible(false)
       setSuccessModalVisible(true)
-      return
     }
   }, [credential])
 
