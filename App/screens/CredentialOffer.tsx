@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 })
 
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
-  if (!route || !route.params) {
+  if (!route?.params) {
     throw new Error('CredentialOffer route prams were not set properly')
   }
 
