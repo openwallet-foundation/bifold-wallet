@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { SafeAreaView, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { useNotifications } from '../hooks/notifcations'
 import { ColorPallet, TextTheme } from '../theme'
 import { Screens, Stacks, TabStackParams } from '../types/navigators'
 
@@ -11,6 +12,7 @@ import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
+  const { total } = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
 
@@ -38,8 +40,8 @@ const TabStack: React.FC = () => {
               <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
             ),
             // TODO: Add notification helpers for displaying badges
-            // tabBarBadge: 0,
-            // tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
+            tabBarBadge: total || undefined,
+            tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
@@ -70,7 +72,12 @@ const TabStack: React.FC = () => {
                   alignItems: 'center',
                 }}
               >
-                <Icon name="qrcode-scan" color={ColorPallet.grayscale.white} size={32} />
+                <Icon
+                  name="qrcode-scan"
+                  color={ColorPallet.grayscale.white}
+                  size={32}
+                  style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
+                />
               </View>
             ),
             tabBarLabel: ({ focused }) => (

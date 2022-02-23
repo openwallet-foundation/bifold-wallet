@@ -1,17 +1,14 @@
-import { CredentialState, ProofState } from '@aries-framework/core'
-import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 import React from 'react'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 
+import { useNotifications } from '../hooks/notifcations'
+
 import NotificationListItem, { NotificationType } from 'components/listItems/NotificationListItem'
 
 const ListNotifications: React.FC = () => {
-  const offers = useCredentialByState(CredentialState.OfferReceived)
-  const proofs = useProofByState(ProofState.RequestReceived)
-  const notifications = [...offers, ...proofs].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  )
+  const { notifications } = useNotifications()
+
   return (
     <FlatList
       data={notifications}

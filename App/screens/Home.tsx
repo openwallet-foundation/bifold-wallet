@@ -1,11 +1,12 @@
-import { CredentialState, ProofState } from '@aries-framework/core'
-import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
+import { CredentialState } from '@aries-framework/core'
+import { useCredentialByState } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
 import { NotificationType } from '../components/listItems/NotificationListItem'
+import { useNotifications } from '../hooks/notifcations'
 import { ColorPallet, TextTheme } from '../theme'
 import { HomeStackParams, Screens } from '../types/navigators'
 
@@ -55,11 +56,8 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-  const offers = useCredentialByState(CredentialState.OfferReceived)
-  const proofs = useProofByState(ProofState.RequestReceived)
-  const notifications = [...offers, ...proofs].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  )
+
+  const { notifications } = useNotifications()
   const { t } = useTranslation()
 
   const emptyListComponent = () => (
