@@ -20,5 +20,14 @@ const useAgent = () => ({
 })
 const useCredentialById = jest.fn()
 const useProofById = jest.fn()
+const useConnectionById = jest.fn()
 
-export { useAgent, useCredentials, useCredentialById, useCredentialByState, useProofById, useProofByState }
+export {
+  useAgent,
+  useConnectionById,
+  useCredentials,
+  useCredentialById,
+  useCredentialByState,
+  useProofById,
+  useProofByState,
+}

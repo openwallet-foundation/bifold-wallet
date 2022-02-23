@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { credentialDateTimeFormatString } from '../../constants'
-import { ColorPallet, TextTheme } from '../../theme'
+import { ColorPallet } from '../../theme'
 import { CredentialStackParams, Screens } from '../../types/navigators'
-import { hashCode, hashToRGBA, parsedSchema } from '../../utils/helpers'
+import { parsedSchema } from '../../utils/helpers'
+import AvatarView from '../misc/AvatarView'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -30,16 +31,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  avatar: {
-    width: TextTheme.headingTwo.fontSize * 2,
-    height: TextTheme.headingTwo.fontSize * 2,
-    margin: 12,
-    borderWidth: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: TextTheme.headingTwo.fontSize,
-    borderColor: TextTheme.headingTwo.color,
-  },
   details: { flexShrink: 1 },
 })
 
@@ -53,18 +44,7 @@ const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) =
       onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
     >
       <View style={styles.row}>
-        <View
-          style={[
-            styles.avatar,
-            {
-              borderColor: hashToRGBA(hashCode(parsedSchema(credential).name)),
-            },
-          ]}
-        >
-          <Title style={{ ...TextTheme.headingTwo, fontWeight: 'normal' }}>
-            {parsedSchema(credential).name.charAt(0)}
-          </Title>
-        </View>
+        <AvatarView name={parsedSchema(credential).name} />
         <View style={styles.details}>
           <Title>{parsedSchema(credential).name}</Title>
           <Text>
