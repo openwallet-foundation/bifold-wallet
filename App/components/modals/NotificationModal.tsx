@@ -43,6 +43,7 @@ interface NotificationModalProps {
   onDone?: () => void
   onHome?: () => void
   visible?: boolean
+  testID?: string
 }
 
 const NotificationModal: React.FC<NotificationModalProps> = ({
@@ -52,6 +53,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   onHome,
   visible,
   children,
+  testID,
 }) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
@@ -73,7 +75,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   }
 
   return (
-    <Modal visible={modalVisible} transparent={true}>
+    <Modal testID={testID} visible={modalVisible} transparent={true}>
       <SafeAreaView style={styles.container}>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton} onPress={onHome || closeHome}>
