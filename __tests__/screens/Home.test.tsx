@@ -1,6 +1,7 @@
 import { CredentialRecord, CredentialState, ProofRecord, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
+import { fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { FlatList } from 'react-native'
 import { create } from 'react-test-renderer'
@@ -17,7 +18,13 @@ describe('displays a home screen', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  // TODO:(jl) Good enough to be captured by the snapshot?
+  /**
+   * Scenario: Home Screen without any pending notification
+   * Given wallet has successfully loaded
+   * When the holder selects the "Home" button in the main navigation bar
+   * Then the Home Screen is displayed
+   * TODO:(jl) Good enough to be captured by the snapshot?
+   */
   it('defaults to no notifications', () => {
     const tree = create(<Home navigation={useNavigation()} />)
     const root = tree.root
@@ -47,6 +54,30 @@ describe('with a notifications module, when an issuer sends a credential offer',
     useCredentialByState.mockReturnValue(testCredentialRecords)
     // @ts-ignore
     useProofByState.mockReturnValue(testProofRecords)
+  })
+
+  /**
+   * Scenario: Home Screen with pending notifications
+   * Given Wallet has successfully loaded
+   * When the Home Screen successfully loads
+   * Then the number of pending notifications is displayed in the "Home" button in the main navigation bar
+   */
+  it('notification label is displayed with number of notifications', async () => {
+    const { findByText } = render(<Home navigation={useNavigation()} />)
+    const notificationLabel = await findByText('Home.Notifications (2)')
+    expect(notificationLabel).toBeTruthy()
+  })
+
+  it('Pressing the "See All" button navigates correctly', async () => {
+    const navigation = useNavigation()
+    const { findByText } = render(<Home navigation={useNavigation()} />)
+    const seeAllButton = await findByText('Home.SeeAll')
+
+    expect(seeAllButton).toBeTruthy()
+
+    fireEvent(seeAllButton, 'press')
+
+    expect(navigation.navigate).toBeCalledWith('Notifications')
   })
 
   /**
