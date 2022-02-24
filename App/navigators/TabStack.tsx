@@ -39,7 +39,6 @@ const TabStack: React.FC = () => {
             tabBarIcon: ({ color, focused }) => (
               <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
             ),
-            // TODO: Add notification helpers for displaying badges
             tabBarBadge: total || undefined,
             tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
             tabBarLabel: ({ focused }) => (
