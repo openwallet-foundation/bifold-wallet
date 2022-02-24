@@ -133,65 +133,62 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [])
 
   return (
-    <FlatList
-      ListHeaderComponent={() => (
-        <View style={styles.headerContainer}>
-          <View
-            style={{
-              marginHorizontal: 15,
-              marginTop: 15,
-            }}
-          >
-            <CredentialListItem credential={credential}></CredentialListItem>
-          </View>
-          <View style={styles.headerTextContainer}>
-            <TouchableOpacity style={styles.linkContainer} activeOpacity={1} onPress={() => resetShown()}>
-              <Text style={[styles.headerText, styles.link]}>{t('CredentialDetails.HideAll')}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
-      ListFooterComponent={() => (
-        <View style={styles.footerContainer}>
-          <TouchableOpacity activeOpacity={1}>
-            <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.PrivacyPolicy')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1}>
-            <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.TermsAndConditions')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1}>
-            <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
-              {t('CredentialDetails.RemoveFromWallet')}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      data={credential.credentialAttributes}
-      renderItem={({ item: attribute, index }) => (
-        <View style={styles.listItem}>
-          <Text style={styles.label}>{startCase(attribute.name)}</Text>
-          <View style={styles.credentialValueContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>{shown[index] ? attribute.value : Array(10).fill('\u2022').join('')}</Text>
+    <>
+      <FlatList
+        ListHeaderComponent={() => (
+          <View style={styles.headerContainer}>
+            <View style={{ marginHorizontal: 15, marginTop: 16 }}>
+              <CredentialListItem credential={credential}></CredentialListItem>
             </View>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => {
-                const newShowState = [...shown]
-                newShowState[index] = !shown[index]
-                setShown(newShowState)
-              }}
-              style={styles.linkContainer}
-            >
-              <Text style={styles.link}>
-                {shown[index] ? t('CredentialDetails.Hide') : t('CredentialDetails.Show')}
+            <View style={styles.headerTextContainer}>
+              <TouchableOpacity style={styles.linkContainer} activeOpacity={1} onPress={() => resetShown()}>
+                <Text style={[styles.headerText, styles.link]}>{t('CredentialDetails.HideAll')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+        ListFooterComponent={() => (
+          <View style={styles.footerContainer}>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.PrivacyPolicy')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.TermsAndConditions')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
+                {t('CredentialDetails.RemoveFromWallet')}
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.listItemBorder}></View>
-        </View>
-      )}
-    />
+        )}
+        data={credential.credentialAttributes}
+        renderItem={({ item: attribute, index }) => (
+          <View style={styles.listItem}>
+            <Text style={styles.label}>{startCase(attribute.name)}</Text>
+            <View style={styles.credentialValueContainer}>
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>{shown[index] ? attribute.value : Array(10).fill('\u2022').join('')}</Text>
+              </View>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                  const newShowState = [...shown]
+                  newShowState[index] = !shown[index]
+                  setShown(newShowState)
+                }}
+                style={styles.linkContainer}
+              >
+                <Text style={styles.link}>
+                  {shown[index] ? t('CredentialDetails.Hide') : t('CredentialDetails.Show')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.listItemBorder}></View>
+          </View>
+        )}
+      />
+    </>
   )
 }
 
