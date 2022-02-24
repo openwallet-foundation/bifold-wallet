@@ -188,10 +188,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
               <AvatarView name={invitation.label} />
               <View style={[{ flexDirection: 'column', justifyContent: 'center' }]}>
                 <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{schemaName}</Text>
-                <Text style={[TextTheme.normal, { marginTop: 10 }]}>{`Issued: ${credential.createdAt.toLocaleDateString(
-                  'en-CA',
-                  dateFormatOptions
-                )}`}</Text>
+                <Text style={[TextTheme.normal, { marginTop: 10 }]}>{`${t(
+                  'CredentialDetails.Issued'
+                )}: ${credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}`}</Text>
               </View>
             </View>
           </View>
