@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import MakeConnection from '../../assets/img/make-connection.svg'
+import ConnectionPending from '../../assets/img/connection-pending.svg'
 import { Context } from '../../store/Store'
 import { ColorPallet, Colors, TextTheme } from '../../theme'
 import Button, { ButtonType } from '../buttons/Button'
@@ -74,7 +74,7 @@ const ConnectionModal: React.FC = () => {
       <SafeAreaView style={[styles.container]}>
         <View style={[styles.messageContainer]}>
           <Text style={[TextTheme.headingThree, styles.messageText]}>{t('Connection.JustAMoment')}</Text>
-          <MakeConnection style={[styles.image]} {...imageDisplayOptions} />
+          <ConnectionPending style={[styles.image]} {...imageDisplayOptions} />
           {shouldShowDelayMessage && (
             <View style={[styles.delayMessageContainer]}>
               <Text style={[TextTheme.normal, styles.delayMessageText]}>{t('Connection.TakingTooLong')}</Text>

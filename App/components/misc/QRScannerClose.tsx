@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   button: {
-    padding: 20,
+    padding: 16,
   },
 })
 

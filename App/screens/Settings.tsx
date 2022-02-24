@@ -5,14 +5,12 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
+import { Screens, SettingsStackParams, Stacks } from '../types/navigators'
 
 import { SafeAreaScrollView, Text } from 'components'
-import { SettingsStackParams } from 'types/navigators'
-
-type NewType = StackNavigationProp<SettingsStackParams, 'Settings'>
 
 interface Props {
-  navigation: NewType
+  navigation: StackNavigationProp<SettingsStackParams>
 }
 
 const styles = StyleSheet.create({
@@ -45,7 +43,7 @@ const Settings: React.FC<Props> = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
         <View style={styles.rowGroup}>
-          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Language')}>
+          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Screens.Language)}>
             <Text>{t('Settings.Language')}</Text>
             <Icon name={'chevron-right'} size={25} color={Colors.text} />
           </TouchableOpacity>
@@ -62,6 +60,11 @@ const Settings: React.FC<Props> = ({ navigation }) => {
             <Text>{t('Settings.AMA-RNVersion')}</Text>
             <Text>{t('Settings.AMA-RNVersionString')}</Text>
           </View>
+
+          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Stacks.ContactStack)}>
+            <Text>{t('TabStack.Contacts')}</Text>
+            <Icon name={'chevron-right'} size={25} color={Colors.text} />
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaScrollView>
