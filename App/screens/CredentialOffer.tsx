@@ -20,6 +20,7 @@ import { BifoldError } from '../types/error'
 import { Screens, Stacks, HomeStackParams, TabStackParams } from '../types/navigators'
 import { parsedSchema } from '../utils/helpers'
 
+import { CredentialListItem, Title } from 'components'
 import Button, { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
 import AvatarView from 'components/misc/AvatarView'
@@ -31,27 +32,50 @@ interface CredentialOfferProps {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
+  headerContainer: {
     backgroundColor: ColorPallet.brand.primaryBackground,
+  },
+  headerTextContainer: {
+    paddingHorizontal: 25,
+    paddingVertical: 16,
+  },
+  headerText: {
+    ...TextTheme.normal,
+    flexShrink: 1,
+  },
+  footerContainer: {
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+    height: '100%',
+    paddingHorizontal: 25,
+    paddingVertical: 16,
+  },
+  footerButton: {
+    paddingTop: 10,
   },
   listItem: {
     paddingHorizontal: 25,
     paddingTop: 16,
     backgroundColor: ColorPallet.brand.secondaryBackground,
   },
+  listItemBorder: {
+    borderBottomColor: ColorPallet.brand.primaryBackground,
+    borderBottomWidth: 2,
+    paddingTop: 12,
+  },
   label: {
     ...TextTheme.label,
   },
   textContainer: {
-    justifyContent: 'space-between',
     minHeight: TextTheme.normal.fontSize,
-    paddingVertical: 15,
-    height: 90,
+    paddingVertical: 4,
   },
   text: {
     ...TextTheme.normal,
+  },
+  credentialValueContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 10,
   },
 })
 
@@ -155,58 +179,32 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   return (
-    <View style={styles.container}>
+    <>
       <FlatList
-        data={credential.credentialAttributes}
-        keyExtractor={(attribute) => attribute.name}
-        renderItem={({ item, index }) => {
-          return (
-            <View style={[styles.listItem, index === 0 ? { borderTopLeftRadius: 20, borderTopRightRadius: 20 } : null]}>
-              <View style={[styles.textContainer]}>
-                <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{startCase(item.name)}</Text>
-                <Text style={styles.text}>{item.value}</Text>
-              </View>
-              <View style={[{ borderBottomWidth: 1, borderBottomColor: ColorPallet.grayscale.lightGrey }]} />
-            </View>
-          )
-        }}
         ListHeaderComponent={() => (
-          <View style={[{ marginBottom: 20, marginHorizontal: 25 }]}>
-            <View style={[{ marginVertical: 20 }]}>
-              <Text style={[TextTheme.headingThree, { textAlign: 'center' }]}>{invitation.label}</Text>
-              <Text style={[TextTheme.normal, { textAlign: 'center' }]}>is offering you a credential</Text>
+          <View style={styles.headerContainer}>
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.headerText}>
+                <Title>{invitation.label}</Title> {t('CredentialOffer.IsOfferingYouACredential')}
+              </Text>
             </View>
-            <View
-              style={[
-                {
-                  flexDirection: 'row',
-                  backgroundColor: ColorPallet.brand.secondaryBackground,
-                  borderRadius: 10,
-                },
-              ]}
-            >
-              <AvatarView name={invitation.label} />
-              <View style={[{ flexDirection: 'column', justifyContent: 'center' }]}>
-                <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{schemaName}</Text>
-                <Text style={[TextTheme.normal, { marginTop: 10 }]}>{`Issued: ${credential.createdAt.toLocaleDateString(
-                  'en-CA',
-                  dateFormatOptions
-                )}`}</Text>
-              </View>
+            {/* TODO; Convert the CredentialListItem to Credential Component */}
+            <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
+              <CredentialListItem credential={credential}></CredentialListItem>
             </View>
           </View>
         )}
         ListFooterComponent={() => (
-          <View style={[{ backgroundColor: ColorPallet.brand.secondaryBackground, paddingTop: 25 }]}>
-            <View style={[{ marginBottom: 20, marginHorizontal: 25 }]}>
-              <View style={[{ paddingBottom: 10 }]}>
-                <Button
-                  title={t('Global.Accept')}
-                  buttonType={ButtonType.Primary}
-                  onPress={handleAcceptPress}
-                  disabled={!buttonsVisible}
-                />
-              </View>
+          <View style={styles.footerContainer}>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Accept')}
+                buttonType={ButtonType.Primary}
+                onPress={handleAcceptPress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+            <View style={styles.footerButton}>
               <Button
                 title={t('Global.Decline')}
                 buttonType={ButtonType.Secondary}
@@ -216,6 +214,21 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             </View>
           </View>
         )}
+        data={credential.credentialAttributes}
+        keyExtractor={(attribute) => attribute.name}
+        renderItem={({ item: attribute }) => {
+          return (
+            <View style={styles.listItem}>
+              <Text style={styles.label}>{startCase(attribute.name)}</Text>
+              <View style={styles.credentialValueContainer}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.text}>{attribute.value}</Text>
+                </View>
+              </View>
+              <View style={styles.listItemBorder}></View>
+            </View>
+          )
+        }}
       />
       <NotificationModal
         testID={t('CredentialOffer.CredentialOnTheWay')}
@@ -254,7 +267,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
-    </View>
+    </>
   )
 }
 

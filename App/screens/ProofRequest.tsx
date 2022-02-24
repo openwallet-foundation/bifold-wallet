@@ -38,11 +38,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: ColorPallet.brand.primaryBackground,
   },
-  headerLogoContainer: {
-    alignItems: 'center',
-    paddingHorizontal: 25,
-    paddingVertical: 16,
-  },
   headerTextContainer: {
     paddingHorizontal: 25,
     paddingVertical: 16,
@@ -253,41 +248,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const connection = connectionRecordFromId(proof.connectionId)
 
   return (
-    <View>
-      <NotificationModal
-        title={t('ProofRequest.SendingTheInformationSecurely')}
-        doneTitle={t('Global.Cancel')}
-        visible={pendingModalVisible}
-        onDone={() => {
-          setPendingModalVisible(false)
-        }}
-      >
-        <ProofPending style={{ marginVertical: 20 }}></ProofPending>
-      </NotificationModal>
-      <NotificationModal
-        title={t('ProofRequest.InformationSentSuccessfully')}
-        visible={successModalVisible}
-        onDone={() => {
-          setSuccessModalVisible(false)
-          navigation.pop()
-          navigation.navigate(Stacks.HomeStack)
-        }}
-      >
-        <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
-        <ActivityLogLink></ActivityLogLink>
-      </NotificationModal>
-      <NotificationModal
-        title={t('ProofRequest.ProofRejected')}
-        visible={declinedModalVisible}
-        onDone={() => {
-          setDeclinedModalVisible(false)
-          navigation.pop()
-          navigation.navigate(Stacks.HomeStack)
-        }}
-      >
-        <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
-        <ActivityLogLink></ActivityLogLink>
-      </NotificationModal>
+    <>
       <FlatList
         ListHeaderComponent={() => (
           <View style={styles.headerContainer}>
@@ -379,7 +340,41 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           </View>
         )}
       />
-    </View>
+      <NotificationModal
+        title={t('ProofRequest.SendingTheInformationSecurely')}
+        doneTitle={t('Global.Cancel')}
+        visible={pendingModalVisible}
+        onDone={() => {
+          setPendingModalVisible(false)
+        }}
+      >
+        <ProofPending style={{ marginVertical: 20 }}></ProofPending>
+      </NotificationModal>
+      <NotificationModal
+        title={t('ProofRequest.InformationSentSuccessfully')}
+        visible={successModalVisible}
+        onDone={() => {
+          setSuccessModalVisible(false)
+          navigation.pop()
+          navigation.navigate(Stacks.HomeStack)
+        }}
+      >
+        <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
+      <NotificationModal
+        title={t('ProofRequest.ProofRejected')}
+        visible={declinedModalVisible}
+        onDone={() => {
+          setDeclinedModalVisible(false)
+          navigation.pop()
+          navigation.navigate(Stacks.HomeStack)
+        }}
+      >
+        <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
+    </>
   )
 }
 
