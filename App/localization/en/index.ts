@@ -131,9 +131,7 @@ const translation = {
   },
   "Settings": {
     "Version": "Version",
-    "AMA-RNVersion": "AMA-RN Version",
-    "VersionString": "0.0.1",
-    "AMA-RNVersionString": "0.1.0",
+    "VersionString": "0.0.0-0",
     "AppPreferences": "App Preferences",
     "AboutApp": "About App",
     "Language": "Language",
