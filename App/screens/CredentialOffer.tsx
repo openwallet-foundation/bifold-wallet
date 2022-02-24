@@ -1,10 +1,11 @@
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
-import { ConnectionRecord, CredentialState } from '@aries-framework/core'
+import { CredentialState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import startCase from 'lodash.startcase'
+import { DateTimeFormatOptions } from 'luxon'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, FlatList, Alert, View, Text } from 'react-native'
@@ -16,18 +17,17 @@ import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { ColorPallet, TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
+import { Screens, Stacks, HomeStackParams, TabStackParams } from '../types/navigators'
 import { parsedSchema } from '../utils/helpers'
 
-import { Button } from 'components'
-import { ButtonType } from 'components/buttons/Button'
+import Button, { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
 import AvatarView from 'components/misc/AvatarView'
 import NotificationModal from 'components/modals/NotificationModal'
-import { HomeStackParams, TabStackParams } from 'types/navigators'
 
 interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
-  route: RouteProp<HomeStackParams, 'Credential Offer'>
+  route: RouteProp<HomeStackParams, Screens.CredentialOffer>
 }
 
 const styles = StyleSheet.create({
@@ -68,7 +68,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
-  const dateFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' }
+  const dateFormatOptions: DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }
   const credential = useCredentialById(credentialId)
 
   if (!credential) {
@@ -184,10 +188,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
               <AvatarView name={invitation.label} />
               <View style={[{ flexDirection: 'column', justifyContent: 'center' }]}>
                 <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{schemaName}</Text>
-                <Text style={[TextTheme.normal, { marginTop: 10 }]}>{`Issued: ${credential.createdAt.toLocaleDateString(
-                  'en-CA',
-                  dateFormatOptions
-                )}`}</Text>
+                <Text style={[TextTheme.normal, { marginTop: 10 }]}>{`${t(
+                  'CredentialDetails.Issued'
+                )}: ${credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}`}</Text>
               </View>
             </View>
           </View>
@@ -231,7 +234,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onDone={() => {
           setSuccessModalVisible(false)
           navigation.pop()
-          navigation.navigate('CredentialsTab')
+          navigation.navigate(Stacks.CredentialStack)
         }}
       >
         <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
@@ -244,7 +247,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate('HomeTab')
+          navigation.navigate(Stacks.HomeStack)
         }}
       >
         <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>

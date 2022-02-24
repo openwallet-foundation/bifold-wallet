@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TextTheme, ColorPallet } from '../../theme'
 import { GenericFn } from '../../types/fn'
-import { HomeStackParams } from '../../types/navigators'
+import { HomeStackParams, Screens } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
@@ -77,14 +77,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     case NotificationType.CredentialOffer:
       // eslint-disable-next-line no-case-declarations
       const { name, version } = parsedSchema(notification as CredentialRecord)
-      onPress = () => navigation.navigate('Credential Offer', { credentialId: notification.id })
+      onPress = () => navigation.navigate(Screens.CredentialOffer, { credentialId: notification.id })
       title = t('CredentialOffer.CredentialOffer')
       body = `${name} v${version}`
       break
     case NotificationType.ProofRequest:
       title = t('ProofRequest.ProofRequest')
       body = (notification as ProofRecord).requestMessage?.indyProofRequest?.name || ''
-      onPress = () => navigation.navigate('Proof Request', { proofId: notification.id })
+      onPress = () => navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
       break
     default:
       throw new Error('NotificationType was not set correctly.')

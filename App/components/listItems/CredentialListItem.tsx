@@ -9,12 +9,11 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { credentialDateTimeFormatString } from '../../constants'
 import { ColorPallet } from '../../theme'
+import { CredentialStackParams, Screens } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
 import AvatarView from '../misc/AvatarView'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
-
-import { CredentialStackParams } from 'types/navigators'
 
 interface CredentialListItemProps {
   credential: CredentialRecord
@@ -42,7 +41,7 @@ const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) =
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('Credential Details', { credentialId: credential.id })}
+      onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
     >
       <View style={styles.row}>
         <AvatarView name={parsedSchema(credential).name} />

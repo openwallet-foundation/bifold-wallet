@@ -10,14 +10,14 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import Toast from 'react-native-toast-message'
 
 import { ColorPallet, TextTheme } from '../theme'
+import { CredentialStackParams, Screens } from '../types/navigators'
 
 import { CredentialListItem } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
-import { CredentialStackParams } from 'types/navigators'
 
 interface CredentialDetailsProps {
-  navigation: StackNavigationProp<CredentialStackParams, 'Credential Details'>
-  route: RouteProp<CredentialStackParams, 'Credential Details'>
+  navigation: StackNavigationProp<CredentialStackParams>
+  route: RouteProp<CredentialStackParams, Screens.CredentialDetails>
 }
 
 const styles = StyleSheet.create({

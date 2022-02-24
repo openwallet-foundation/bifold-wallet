@@ -15,6 +15,7 @@ import ProofDeclined from '../assets/img/proof-declined.svg'
 import ProofPending from '../assets/img/proof-pending.svg'
 import ProofSuccess from '../assets/img/proof-success.svg'
 import { ColorPallet, TextTheme } from '../theme'
+import { HomeStackParams, Screens, Stacks, TabStackParams } from '../types/navigators'
 import {
   connectionRecordFromId,
   firstMatchingCredentialAttributeValue,
@@ -27,11 +28,10 @@ import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
 import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams, TabStackParams } from 'types/navigators'
 
 interface ProofRequestProps {
   navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
-  route: RouteProp<HomeStackParams, 'Proof Request'>
+  route: RouteProp<HomeStackParams, Screens.ProofRequest>
 }
 
 const styles = StyleSheet.create({
@@ -270,7 +270,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setSuccessModalVisible(false)
           navigation.pop()
-          navigation.navigate('HomeTab')
+          navigation.navigate(Stacks.HomeStack)
         }}
       >
         <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
@@ -282,7 +282,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate('HomeTab')
+          navigation.navigate(Stacks.HomeStack)
         }}
       >
         <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
@@ -363,7 +363,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <TouchableOpacity
                   activeOpacity={1}
                   onPress={() =>
-                    navigation.navigate('Proof Request Attribute Details', {
+                    navigation.navigate(Screens.ProofRequestAttributeDetails, {
                       proofId,
                       attributeName: name,
                       attributeCredentials: values,

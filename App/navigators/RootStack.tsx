@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, TouchableOpacity, View } from 'react-native'
 
-import Arrow from '../assets/img/large-arrow.svg'
-import { Screens } from '../constants'
+import Arrow from '../assets/icons/large-arrow.svg'
 import Onboarding from '../screens/Onboarding'
 import { pages, carousel } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
@@ -15,6 +14,7 @@ import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors } from '../theme'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import ScanStack from './ScanStack'
 import TabStack from './TabStack'
@@ -25,7 +25,7 @@ import { GenericFn, StateFn } from 'types/fn'
 const RootStack: React.FC = () => {
   const [authenticated, setAuthenticated] = useState(false)
   const [state, dispatch] = useContext(Context)
-  const nav = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { t } = useTranslation()
 
   const authStack = (setAuthenticated: StateFn) => {
@@ -45,8 +45,8 @@ const RootStack: React.FC = () => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name="Tabs">{() => <TabStack />}</Stack.Screen>
-        <Stack.Screen name="Connect" options={{ presentation: 'modal' }}>
+        <Stack.Screen name={Screens.Tabs}>{() => <TabStack />}</Stack.Screen>
+        <Stack.Screen name={Screens.Connect} options={{ presentation: 'modal' }}>
           {() => <ScanStack />}
         </Stack.Screen>
       </Stack.Navigator>
@@ -118,7 +118,7 @@ const RootStack: React.FC = () => {
       payload: [{ DidCompleteTutorial: true }],
     })
 
-    nav.navigate(Screens.Terms)
+    navigation.navigate(Screens.Terms)
   }
 
   if (state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN) {

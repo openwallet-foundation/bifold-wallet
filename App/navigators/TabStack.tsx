@@ -1,89 +1,131 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { SafeAreaView, Text, View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { Colors } from '../theme'
+import { useNotifications } from '../hooks/notifcations'
+import { ColorPallet, TextTheme } from '../theme'
+import { Screens, Stacks, TabStackParams } from '../types/navigators'
 
-import ContactStack from './ContactStack'
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
-import SettingStack from './SettingStack'
-
-import { TabStackParams } from 'types/navigators'
 
 const TabStack: React.FC = () => {
+  const { total } = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: { backgroundColor: Colors.primary, elevation: 0, shadowOpacity: 0, borderTopWidth: 0 },
-        tabBarActiveTintColor: Colors.white,
-        tabBarInactiveTintColor: 'rgba(255,255,255,0.3)',
-      }}
-    >
-      <Tab.Screen
-        name="HomeTab"
-        component={HomeStack}
-        options={{
-          tabBarIcon: ({ color }) => <Icon name="home" color={color} size={30} />,
-          headerTitle: t('TabStack.Home'),
-          tabBarLabel: t('TabStack.Home'),
-          tabBarAccessibilityLabel: t('TabStack.Home'),
-        }}
-      />
-      <Tab.Screen
-        name="ContactsTab"
-        component={ContactStack}
-        options={{
-          tabBarIcon: ({ color }) => <Icon name="supervisor-account" color={color} size={33} />,
-          headerTitle: t('TabStack.Contacts'),
-          tabBarLabel: t('TabStack.Contacts'),
-          tabBarAccessibilityLabel: t('TabStack.Contacts'),
-        }}
-      />
-      <Tab.Screen
-        name="ScanTab"
-        options={{
-          tabBarIcon: ({ color }) => <Icon name="add-box" color={color} size={30} />,
-          headerTitle: t('TabStack.Scan'),
-          tabBarLabel: t('TabStack.Scan'),
-          tabBarAccessibilityLabel: t('TabStack.Scan'),
-        }}
-        listeners={({ navigation }) => ({
-          tabPress: (e) => {
-            e.preventDefault()
-            navigation.navigate('Connect')
+    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: ColorPallet.brand.secondaryBackground,
+            elevation: 0,
+            shadowOpacity: 0.1,
+            borderTopWidth: 0,
+            height: 60,
           },
-        })}
+          tabBarActiveTintColor: ColorPallet.brand.primary,
+          tabBarInactiveTintColor: ColorPallet.notification.infoText,
+          header: () => null,
+        }}
       >
-        {/* Just a placeholder, the the tab will navigate to a different stack */}
-        {() => <View />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="CredentialsTab"
-        component={CredentialStack}
-        options={{
-          tabBarIcon: ({ color }) => <Icon name="book" color={color} size={28} />,
-          headerTitle: t('TabStack.Credentials'),
-          tabBarLabel: t('TabStack.Credentials'),
-          tabBarAccessibilityLabel: t('TabStack.Credentials'),
-        }}
-      />
-      <Tab.Screen
-        name="SettingsTab"
-        component={SettingStack}
-        options={{
-          tabBarIcon: ({ color }) => <Icon name="settings" color={color} size={29} />,
-          headerTitle: t('TabStack.Settings'),
-          tabBarLabel: t('TabStack.Settings'),
-          tabBarAccessibilityLabel: t('TabStack.Settings'),
-        }}
-      />
-    </Tab.Navigator>
+        <Tab.Screen
+          name={Stacks.HomeStack}
+          component={HomeStack}
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
+            ),
+            tabBarBadge: total || undefined,
+            tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  ...TextTheme.label,
+                  fontWeight: 'normal',
+                  paddingBottom: 5,
+                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                }}
+              >
+                {t('TabStack.Home')}
+              </Text>
+            ),
+            tabBarAccessibilityLabel: t('TabStack.Home'),
+          }}
+        />
+        <Tab.Screen
+          name={Stacks.ScanStack}
+          options={{
+            tabBarIcon: () => (
+              <View
+                style={{
+                  height: 60,
+                  width: 60,
+                  backgroundColor: ColorPallet.brand.primary,
+                  top: -20,
+                  borderRadius: 60,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Icon
+                  name="qrcode-scan"
+                  color={ColorPallet.grayscale.white}
+                  size={32}
+                  style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
+                />
+              </View>
+            ),
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  ...TextTheme.label,
+                  fontWeight: 'normal',
+                  paddingBottom: 5,
+                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                }}
+              >
+                {t('TabStack.Scan')}
+              </Text>
+            ),
+            tabBarAccessibilityLabel: t('TabStack.Scan'),
+          }}
+          listeners={({ navigation }) => ({
+            tabPress: (e) => {
+              e.preventDefault()
+              navigation.navigate(Screens.Connect)
+            },
+          })}
+        >
+          {() => <View />}
+        </Tab.Screen>
+        <Tab.Screen
+          name={Stacks.CredentialStack}
+          component={CredentialStack}
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+            ),
+            tabBarLabel: ({ focused }) => (
+              <Text
+                style={{
+                  ...TextTheme.label,
+                  fontWeight: 'normal',
+                  paddingBottom: 5,
+                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                }}
+              >
+                {t('TabStack.Credentials')}
+              </Text>
+            ),
+            tabBarAccessibilityLabel: t('TabStack.Credentials'),
+          }}
+        />
+      </Tab.Navigator>
+    </SafeAreaView>
   )
 }
 
