@@ -1,7 +1,12 @@
-import { CredentialState, ProofState } from '@aries-framework/core'
+import { CredentialRecord, CredentialState, ProofRecord, ProofState } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 
-export function useNotifications() {
+interface Notifications {
+  total: number
+  notifications: Array<CredentialRecord | ProofRecord>
+}
+
+export function useNotifications(): Notifications {
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
 
