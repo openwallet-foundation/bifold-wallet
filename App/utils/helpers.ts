@@ -72,6 +72,9 @@ export function firstMatchingCredentialAttributeValue(attributeName: string, att
     return ''
   }
   const firstMatchingCredential = attributes[0].credentialInfo
+  if (!firstMatchingCredential) {
+    return ''
+  }
   const match = Object.entries(firstMatchingCredential.attributes).find(
     ([n]) => startCase(n) === startCase(attributeName)
   )
