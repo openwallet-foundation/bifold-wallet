@@ -66,9 +66,6 @@ const translation = {
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
-    "Hide": "Hide",
-    "Show": "Show",
-    "HideAll": "Hide all"
   },
   "Home": {
     "Welcome": "Welcome",
@@ -148,6 +145,11 @@ const translation = {
     "PermissionToUseCamera": "Permission to use camera",
     "WeNeedYourPermissionToUseYourCamera": "We need your permission to use your camera",
     "Ok": "Ok",
+  },
+  "Record": {
+    "Hide": "Hide",
+    "Show": "Show",
+    "HideAll": "Hide all"
   }
 }
 export default translation

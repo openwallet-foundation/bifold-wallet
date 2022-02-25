@@ -69,9 +69,7 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
             </View>
             {hideAttributeValue ? (
               <TouchableOpacity activeOpacity={1} onPress={onToggleViewPressed} style={styles.link}>
-                <Text style={TextTheme.normal}>
-                  {shown ? t('CredentialDetails.Hide') : t('CredentialDetails.Show')}
-                </Text>
+                <Text style={TextTheme.normal}>{shown ? t('Record.Hide') : t('Record.Show')}</Text>
               </TouchableOpacity>
             ) : null}
           </>

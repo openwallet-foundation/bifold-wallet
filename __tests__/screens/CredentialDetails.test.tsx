@@ -137,7 +137,7 @@ describe('displays a credential details screen', () => {
       ></CredentialDetails>
     )
 
-    let showButtons = await findAllByText('CredentialDetails.Show')
+    let showButtons = await findAllByText('Record.Show')
     let hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
     let familyName = await queryByText('Last', { exact: false })
 
@@ -147,7 +147,7 @@ describe('displays a credential details screen', () => {
 
     fireEvent(showButtons[0], 'press')
 
-    showButtons = await findAllByText('CredentialDetails.Show')
+    showButtons = await findAllByText('Record.Show')
     hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
     familyName = await queryByText('Last', { exact: false })
 
@@ -164,24 +164,24 @@ describe('displays a credential details screen', () => {
       ></CredentialDetails>
     )
 
-    let showButtons = await findAllByText('CredentialDetails.Show')
+    let showButtons = await findAllByText('Record.Show')
     let hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
 
     showButtons.forEach((button) => fireEvent(button, 'press'))
 
-    showButtons = await queryAllByText('CredentialDetails.Show')
+    showButtons = await queryAllByText('Record.Show')
     hiddenValues = await queryAllByText(Array(10).fill('\u2022').join(''))
 
     expect(showButtons.length).toBe(0)
     expect(hiddenValues.length).toBe(0)
 
-    const hideAllButton = await findByText('CredentialDetails.HideAll')
+    const hideAllButton = await findByText('Record.HideAll')
 
     expect(hideAllButton).not.toBe(null)
 
     fireEvent(hideAllButton, 'press')
 
-    showButtons = await findAllByText('CredentialDetails.Show')
+    showButtons = await findAllByText('Record.Show')
     hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
 
     expect(showButtons.length).toBe(3)
