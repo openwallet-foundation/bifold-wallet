@@ -1,7 +1,7 @@
 import { CredentialRecord } from '@aries-framework/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 
 import { ColorPallet, TextTheme } from '../../theme'
 import { parsedSchema } from '../../utils/helpers'
@@ -12,6 +12,7 @@ import Title from 'components/texts/Title'
 
 interface CredentialCardProps {
   credential: CredentialRecord
+  style?: ViewStyle
 }
 
 const styles = StyleSheet.create({
@@ -29,11 +30,11 @@ const styles = StyleSheet.create({
   details: { flexShrink: 1 },
 })
 
-const CredentialCard: React.FC<CredentialCardProps> = ({ credential }) => {
+const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {} }) => {
   const { t } = useTranslation()
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.row}>
         <AvatarView name={parsedSchema(credential).name} />
         <View style={styles.details}>
