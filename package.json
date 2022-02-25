@@ -47,6 +47,7 @@
     "react-native-animated-pagination-dots": "^0.1.72",
     "react-native-camera": "^3.31.1",
     "react-native-config": "^1.4.2",
+    "react-native-device-info": "^8.4.9",
     "react-native-encrypted-storage": "^4.0.2",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.10.3",
