@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useNotifications } from '../hooks/notifcations'

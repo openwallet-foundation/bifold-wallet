@@ -2,10 +2,9 @@ import { CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
-import { DateTime } from 'luxon'
 import React from 'react'
 
-import { credentialDateTimeFormatString, indyCredentialKey } from '../../App/constants'
+import { credentialDateTimeFormatString, dateFormatOptions, indyCredentialKey } from '../../App/constants'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 
 interface CredentialContextInterface {
@@ -87,7 +86,10 @@ describe('displays a credential details screen', () => {
       const credentialName = await findByText('Unverified Person', { exact: false })
       const credentialVersion = await findByText('Version: 0.1.0', { exact: false })
       const credentialIssuedAt = await findByText(
-        `Issued: ${DateTime.fromJSDate(testOpenVPCredentialRecord.createdAt).toFormat(credentialDateTimeFormatString)}`,
+        `CredentialDetails.Issued: ${testOpenVPCredentialRecord.createdAt.toLocaleDateString(
+          'en-CA',
+          dateFormatOptions
+        )}`,
         { exact: false }
       )
 
@@ -135,7 +137,7 @@ describe('displays a credential details screen', () => {
       ></CredentialDetails>
     )
 
-    let showButtons = await findAllByText('CredentialDetails.Show')
+    let showButtons = await findAllByText('Record.Show')
     let hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
     let familyName = await queryByText('Last', { exact: false })
 
@@ -145,7 +147,7 @@ describe('displays a credential details screen', () => {
 
     fireEvent(showButtons[0], 'press')
 
-    showButtons = await findAllByText('CredentialDetails.Show')
+    showButtons = await findAllByText('Record.Show')
     hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
     familyName = await queryByText('Last', { exact: false })
 
@@ -162,24 +164,24 @@ describe('displays a credential details screen', () => {
       ></CredentialDetails>
     )
 
-    let showButtons = await findAllByText('CredentialDetails.Show')
+    let showButtons = await findAllByText('Record.Show')
     let hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
 
     showButtons.forEach((button) => fireEvent(button, 'press'))
 
-    showButtons = await queryAllByText('CredentialDetails.Show')
+    showButtons = await queryAllByText('Record.Show')
     hiddenValues = await queryAllByText(Array(10).fill('\u2022').join(''))
 
     expect(showButtons.length).toBe(0)
     expect(hiddenValues.length).toBe(0)
 
-    const hideAllButton = await findByText('CredentialDetails.HideAll')
+    const hideAllButton = await findByText('Record.HideAll')
 
     expect(hideAllButton).not.toBe(null)
 
     fireEvent(hideAllButton, 'press')
 
-    showButtons = await findAllByText('CredentialDetails.Show')
+    showButtons = await findAllByText('Record.Show')
     hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
 
     expect(showButtons.length).toBe(3)
