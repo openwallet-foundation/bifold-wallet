@@ -13,7 +13,7 @@ export interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
 
 export const indyCredentialKey = '_internal/indyCredential'
 
-export const dateFormatOptions = {
+export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric' } = {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
