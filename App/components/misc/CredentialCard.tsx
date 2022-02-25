@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 
+import { dateFormatOptions } from '../../constants'
 import { ColorPallet, TextTheme } from '../../theme'
 import { parsedSchema } from '../../utils/helpers'
 
@@ -43,8 +44,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {} 
             {t('CredentialDetails.Version')}: {parsedSchema(credential).version}
           </Text>
           <Text style={{ ...TextTheme.caption }}>
-            {t('CredentialDetails.Issued')}:{' '}
-            {/* {DateTime.fromJSDate(credential.createdAt).toFormat(credentialDateTimeFormatString)} */}
+            {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
           </Text>
         </View>
       </View>
