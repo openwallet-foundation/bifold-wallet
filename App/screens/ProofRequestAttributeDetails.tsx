@@ -2,7 +2,6 @@ import { ProofRecord, RequestedAttribute } from '@aries-framework/core'
 import { useAgent, useCredentials } from '@aries-framework/react-hooks'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { DateTime } from 'luxon'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
@@ -10,7 +9,7 @@ import Toast from 'react-native-toast-message'
 
 import Title from '../components/texts/Title'
 import { ToastType } from '../components/toast/BaseToast'
-import { credentialDateTimeFormatString } from '../constants'
+import { dateFormatOptions } from '../constants'
 import { ColorPallet, TextTheme } from '../theme'
 import { HomeStackParams, Screens } from '../types/navigators'
 import {
@@ -147,8 +146,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
         <View style={styles.listItem}>
           <Text style={TextTheme.normal}>{parsedSchema(credential).name}</Text>
           <Text style={TextTheme.normal}>
-            {t('CredentialDetails.Issued')}{' '}
-            {DateTime.fromJSDate(credential.createdAt).toFormat(credentialDateTimeFormatString)}
+            {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
           </Text>
           <Title style={{ paddingVertical: 16 }}>
             {firstMatchingCredentialAttributeValue(attributeName, attributeCredentials)}

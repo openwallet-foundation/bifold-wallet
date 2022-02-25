@@ -2,7 +2,6 @@ import type { CredentialRecord } from '@aries-framework/core'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
 import { useNavigation } from '@react-navigation/core'
-import { DateTime } from 'luxon'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity } from 'react-native'

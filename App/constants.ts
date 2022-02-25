@@ -13,7 +13,8 @@ export interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
 
 export const indyCredentialKey = '_internal/indyCredential'
 
-export const dateFormatString = 'LLL d, yyyy'
-export const dateTimeFormatString = 'LLL d, yyyy (hh:mm a)'
-// DEPRECATED
-export const credentialDateTimeFormatString = 'LLL d, yyyy (hh:mm a)'
+export const dateFormatOptions = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+}

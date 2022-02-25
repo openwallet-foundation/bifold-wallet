@@ -56,12 +56,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
-  // TODO: Replace luxon package
-  // const dateFormatOptions: DateTimeFormatOptions = {
-  //   year: 'numeric',
-  //   month: 'short',
-  //   day: 'numeric',
-  // }
+
   const credential = useCredentialById(credentialId)
 
   if (!credential) {
