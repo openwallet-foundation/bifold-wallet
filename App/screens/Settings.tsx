@@ -2,6 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
@@ -53,12 +54,7 @@ const Settings: React.FC<Props> = ({ navigation }) => {
         <View style={styles.rowGroup}>
           <View style={styles.row}>
             <Text>{t('Settings.Version')}</Text>
-            <Text>{t('Settings.VersionString')}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text>{t('Settings.AMA-RNVersion')}</Text>
-            <Text>{t('Settings.AMA-RNVersionString')}</Text>
+            <Text>{`${getVersion()}-${getBuildNumber()}`}</Text>
           </View>
 
           <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Stacks.ContactStack)}>
