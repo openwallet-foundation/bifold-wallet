@@ -2,10 +2,9 @@ import { CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
-import { DateTime } from 'luxon'
 import React from 'react'
 
-import { credentialDateTimeFormatString, indyCredentialKey } from '../../App/constants'
+import { credentialDateTimeFormatString, dateFormatOptions, indyCredentialKey } from '../../App/constants'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 
 interface CredentialContextInterface {
@@ -87,7 +86,10 @@ describe('displays a credential details screen', () => {
       const credentialName = await findByText('Unverified Person', { exact: false })
       const credentialVersion = await findByText('Version: 0.1.0', { exact: false })
       const credentialIssuedAt = await findByText(
-        `Issued: ${DateTime.fromJSDate(testOpenVPCredentialRecord.createdAt).toFormat(credentialDateTimeFormatString)}`,
+        `CredentialDetails.Issued: ${testOpenVPCredentialRecord.createdAt.toLocaleDateString(
+          'en-CA',
+          dateFormatOptions
+        )}`,
         { exact: false }
       )
 
