@@ -18,13 +18,12 @@ import { DispatchAction } from '../store/reducer'
 import { ColorPallet, TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks, HomeStackParams, TabStackParams } from '../types/navigators'
-import { parsedSchema } from '../utils/helpers'
 
-import { CredentialListItem, Title } from 'components'
 import Button, { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
-import AvatarView from 'components/misc/AvatarView'
+import CredentialCard from 'components/misc/CredentialCard'
 import NotificationModal from 'components/modals/NotificationModal'
+import Title from 'components/texts/Title'
 
 interface CredentialOfferProps {
   navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
@@ -107,7 +106,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     throw new Error('Unable to fetch agent from AFJ')
   }
 
-  const { name: schemaName } = parsedSchema(credential)
   // @ts-ignore next-line
   const { invitation } = useConnectionById(credential.connectionId)
 
@@ -188,9 +186,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
                 <Title>{invitation.label}</Title> {t('CredentialOffer.IsOfferingYouACredential')}
               </Text>
             </View>
-            {/* TODO; Convert the CredentialListItem to Credential Component */}
             <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
-              <CredentialListItem credential={credential}></CredentialListItem>
+              <CredentialCard credential={credential} />
             </View>
           </View>
         )}

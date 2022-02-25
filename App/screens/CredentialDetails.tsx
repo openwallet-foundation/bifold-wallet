@@ -12,7 +12,7 @@ import Toast from 'react-native-toast-message'
 import { ColorPallet, TextTheme } from '../theme'
 import { CredentialStackParams, Screens } from '../types/navigators'
 
-import { CredentialListItem } from 'components'
+import CredentialCard from 'components/misc/CredentialCard'
 import { ToastType } from 'components/toast/BaseToast'
 
 interface CredentialDetailsProps {
@@ -138,7 +138,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         ListHeaderComponent={() => (
           <View style={styles.headerContainer}>
             <View style={{ marginHorizontal: 15, marginTop: 16 }}>
-              <CredentialListItem credential={credential}></CredentialListItem>
+              <CredentialCard credential={credential} />
             </View>
             <View style={styles.headerTextContainer}>
               <TouchableOpacity style={styles.linkContainer} activeOpacity={1} onPress={() => resetShown()}>
