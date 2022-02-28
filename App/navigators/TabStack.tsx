@@ -27,6 +27,7 @@ const TabStack: React.FC = () => {
             shadowOpacity: 0.1,
             borderTopWidth: 0,
             height: 60,
+            paddingBottom: 0,
           },
           tabBarActiveTintColor: ColorPallet.brand.primary,
           tabBarInactiveTintColor: ColorPallet.notification.infoText,
