@@ -66,9 +66,6 @@ const translation = {
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
-    "Hide": "Hide",
-    "Show": "Show",
-    "HideAll": "Hide all"
   },
   "Home": {
     "Welcome": "Welcome",
@@ -105,7 +102,8 @@ const translation = {
     "CredentialAddedToYourWallet": "Credential added to your wallet",
     "CredentialDeclined": "Credential declined",
     "CredentialOnTheWay": "Your credential is on the way",
-    "CredentialOffer": "New Credential Offer"
+    "CredentialOffer": "New Credential Offer",
+    "IsOfferingYouACredential": "is offering you a credential"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -147,6 +145,11 @@ const translation = {
     "PermissionToUseCamera": "Permission to use camera",
     "WeNeedYourPermissionToUseYourCamera": "We need your permission to use your camera",
     "Ok": "Ok",
+  },
+  "Record": {
+    "Hide": "Hide",
+    "Show": "Show",
+    "HideAll": "Hide all"
   }
 }
 export default translation
