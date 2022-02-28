@@ -235,7 +235,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           </View>
         )}
         footer={() => (
-          <>
+          <View style={{ marginBottom: 30 }}>
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Share')}
@@ -252,7 +252,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 disabled={!buttonsVisible}
               />
             </View>
-          </>
+          </View>
         )}
         attributes={retrievedCredentialAttributes.map(([name, values]) => ({
           name,
