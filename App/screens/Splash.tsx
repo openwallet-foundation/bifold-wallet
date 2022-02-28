@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useMemo } from 'react'
 import { Image, SafeAreaView, StyleSheet } from 'react-native'
 
-import Images from '../../assets/images'
+// import Images from '../../assets/images'
 import { LocalStorageKeys } from '../constants'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
@@ -80,7 +80,7 @@ const Splash: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={Images.logoLarge} />
+      <Image source={require('../assets/img/logo-large.png')} />
     </SafeAreaView>
   )
 }
