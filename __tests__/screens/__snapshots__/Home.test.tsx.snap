@@ -41,7 +41,17 @@ exports[`displays a home screen renders correctly 1`] = `
         }
       >
         <InfoTextBox>
-          Home.NoNewUpdates
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              }
+            }
+          >
+            Home.NoNewUpdates
+          </Text>
         </InfoTextBox>
       </View>
     }
@@ -132,7 +142,17 @@ exports[`displays a home screen renders correctly 1`] = `
               }
             }
           >
-            Home.NoNewUpdates
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                }
+              }
+            >
+              Home.NoNewUpdates
+            </Text>
           </Text>
         </View>
       </View>

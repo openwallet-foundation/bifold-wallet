@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { ColorPallet, TextTheme } from '../../theme'
 
 export interface TextBoxProps {
-  children: string
+  children: React.ReactElement | string
 }
 
 const iconSize = 30

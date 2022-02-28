@@ -62,7 +62,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
   const emptyListComponent = () => (
     <View style={styles.container}>
-      <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
+      <InfoTextBox>
+        <Text style={TextTheme.normal}>{t('Home.NoNewUpdates')}</Text>
+      </InfoTextBox>
     </View>
   )
 
