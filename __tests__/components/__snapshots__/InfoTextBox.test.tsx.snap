@@ -8,7 +8,6 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
       "borderColor": "#0099FF",
       "borderRadius": 5,
       "borderWidth": 1,
-      "flexDirection": "row",
       "padding": 10,
     }
   }
@@ -16,29 +15,37 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
   <View
     style={
       Object {
-        "alignSelf": "center",
-        "marginRight": 10,
+        "alignItems": "center",
+        "flexDirection": "row",
       }
     }
   >
-    <Icon
-      color="#0099FF"
-      name="info"
-      size={30}
-    />
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "marginRight": 10,
+        }
+      }
+    >
+      <Icon
+        color="#0099FF"
+        name="info"
+        size={30}
+      />
+    </View>
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Hello World
+    </Text>
   </View>
-  <Text
-    style={
-      Object {
-        "alignSelf": "center",
-        "color": "#FFFFFF",
-        "flexShrink": 1,
-        "fontSize": 18,
-        "fontWeight": "bold",
-      }
-    }
-  >
-    Hello World
-  </Text>
 </View>
 `;
