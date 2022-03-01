@@ -28,7 +28,7 @@ const ListCredentials: React.FC = () => {
           style={{
             marginHorizontal: 15,
             marginTop: 15,
-            marginBottom: index === credentials.length - 1 ? 15 : 0,
+            marginBottom: index === credentials.length - 1 ? 45 : 0,
           }}
         >
           <CredentialListItem credential={item} />
