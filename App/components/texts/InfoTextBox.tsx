@@ -13,21 +13,23 @@ const offset = 10
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     backgroundColor: ColorPallet.notification.info,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: ColorPallet.notification.infoBorder,
     padding: 10,
   },
-  headerText: {
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textContainer: {
     ...TextTheme.normal,
     color: ColorPallet.notification.infoText,
     fontWeight: 'bold',
-    flexShrink: 1,
     alignSelf: 'center',
   },
-  icon: {
+  iconContainer: {
     marginRight: offset,
     alignSelf: 'center',
   },
@@ -36,10 +38,12 @@ const styles = StyleSheet.create({
 const InfoTextBox: React.FC<TextBoxProps> = ({ children }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.icon}>
-        <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
+      <View style={styles.row}>
+        <View style={styles.iconContainer}>
+          <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
+        </View>
+        {typeof children === 'string' ? <Text style={styles.textContainer}>{children}</Text> : <>{children}</>}
       </View>
-      <Text style={styles.headerText}>{children}</Text>
     </View>
   )
 }
