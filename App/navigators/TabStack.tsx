@@ -22,11 +22,13 @@ const TabStack: React.FC = () => {
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
+            height: 60,
             backgroundColor: ColorPallet.brand.secondaryBackground,
-            elevation: 0,
+            shadowOffset: { width: 0, height: -3 },
+            shadowRadius: 6,
+            shadowColor: ColorPallet.grayscale.black,
             shadowOpacity: 0.1,
             borderTopWidth: 0,
-            height: 60,
             paddingBottom: 0,
           },
           tabBarActiveTintColor: ColorPallet.brand.primary,

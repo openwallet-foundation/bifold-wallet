@@ -25,12 +25,11 @@ describe('displays a home screen', () => {
    * Then the Home Screen is displayed
    * TODO:(jl) Good enough to be captured by the snapshot?
    */
-  it('defaults to no notifications', () => {
-    const tree = create(<Home navigation={useNavigation()} />)
-    const root = tree.root
-    const results = root.findByType(InfoTextBox)
+  it('defaults to no notifications', async () => {
+    const { findByText } = render(<Home navigation={useNavigation()} />)
+    const notificationLabel = await findByText('Home.NoNewUpdates')
 
-    expect(results.props.children).toBe('Home.NoNewUpdates')
+    expect(notificationLabel).toBeTruthy()
   })
 })
 
@@ -65,6 +64,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
   it('notification label is displayed with number of notifications', async () => {
     const { findByText } = render(<Home navigation={useNavigation()} />)
     const notificationLabel = await findByText('Home.Notifications (2)')
+
     expect(notificationLabel).toBeTruthy()
   })
 
