@@ -108,9 +108,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       <View style={styles.rowContainer}>
         <Text style={[TextTheme.headingThree, styles.header]}>
           {t('Home.Notifications')}
-          {notifications.length ? ` (${notifications.length})` : ''}
+          {notifications?.length ? ` (${notifications.length})` : ''}
         </Text>
-        {notifications.length ? (
+        {notifications?.length > 1 ? (
           <TouchableOpacity
             style={styles.linkContainer}
             activeOpacity={1}
@@ -123,10 +123,10 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={notifications.length > 0 ? true : false}
+        scrollEnabled={notifications?.length > 0 ? true : false}
         snapToOffsets={[
           0,
-          ...Array(notifications.length)
+          ...Array(notifications?.length)
             .fill(0)
             .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
             .slice(1),
@@ -140,7 +140,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             style={{
               width: width - 2 * offset,
               marginLeft: !index ? offset : offsetPadding,
-              marginRight: index === notifications.length - 1 ? offset : offsetPadding,
+              marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
             }}
           >
             {item.type === 'CredentialRecord' ? (
