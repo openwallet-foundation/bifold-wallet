@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Keyboard, SafeAreaView, StyleSheet } from 'react-native'
+import { Alert, Keyboard, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Colors } from '../theme'
 

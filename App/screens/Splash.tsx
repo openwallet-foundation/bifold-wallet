@@ -2,23 +2,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useMemo } from 'react'
-import { Image, SafeAreaView, StyleSheet } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-import Images from '../../assets/images'
 import { LocalStorageKeys } from '../constants'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-
-import { Onboarding } from 'types/state'
+import { Onboarding } from '../types/state'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
 })
 
@@ -80,7 +79,7 @@ const Splash: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={Images.logoLarge} />
+      <Image source={require('../assets/img/logo-large.png')} />
     </SafeAreaView>
   )
 }

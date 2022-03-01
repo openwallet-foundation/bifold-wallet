@@ -151,7 +151,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           </>
         )}
         footer={() => (
-          <>
+          <View style={{ marginBottom: 30 }}>
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Accept')}
@@ -168,7 +168,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
                 disabled={!buttonsVisible}
               />
             </View>
-          </>
+          </View>
         )}
         attributes={credential.credentialAttributes}
       />
