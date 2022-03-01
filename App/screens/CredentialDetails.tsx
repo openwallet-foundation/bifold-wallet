@@ -5,7 +5,7 @@ import { useCredentialById } from '@aries-framework/react-hooks'
 import { RouteProp } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import { ColorPallet, TextTheme } from '../theme'
@@ -87,7 +87,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     <Record
       header={() => <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginTop: 16 }} />}
       footer={() => (
-        <>
+        <View style={{ marginBottom: 30 }}>
           <TouchableOpacity activeOpacity={1}>
             <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.PrivacyPolicy')}</Text>
           </TouchableOpacity>
@@ -99,7 +99,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               {t('CredentialDetails.RemoveFromWallet')}
             </Text>
           </TouchableOpacity>
-        </>
+        </View>
       )}
       attributes={credential.credentialAttributes}
       hideAttributeValues={true}
