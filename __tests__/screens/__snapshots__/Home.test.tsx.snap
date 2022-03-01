@@ -36,12 +36,25 @@ exports[`displays a home screen renders correctly 1`] = `
       <View
         style={
           Object {
-            "paddingHorizontal": 25,
+            "marginHorizontal": 25,
+            "width": 700,
           }
         }
       >
         <InfoTextBox>
-          Home.NoNewUpdates
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+              ]
+            }
+          >
+            Home.NoNewUpdates
+          </Text>
         </InfoTextBox>
       </View>
     }
@@ -76,7 +89,8 @@ exports[`displays a home screen renders correctly 1`] = `
         onLayout={[Function]}
         style={
           Object {
-            "paddingHorizontal": 25,
+            "marginHorizontal": 25,
+            "width": 700,
           }
         }
       >
@@ -87,7 +101,6 @@ exports[`displays a home screen renders correctly 1`] = `
               "borderColor": "#0099FF",
               "borderRadius": 5,
               "borderWidth": 1,
-              "flexDirection": "row",
               "padding": 10,
             }
           }
@@ -95,45 +108,54 @@ exports[`displays a home screen renders correctly 1`] = `
           <View
             style={
               Object {
-                "alignSelf": "center",
-                "marginRight": 10,
+                "alignItems": "center",
+                "flexDirection": "row",
               }
             }
           >
+            <View
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "marginRight": 10,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#0099FF",
+                      "fontSize": 30,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
             <Text
-              allowFontScaling={false}
               style={
                 Array [
                   Object {
-                    "color": "#0099FF",
-                    "fontSize": 30,
-                  },
-                  undefined,
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
                     "fontWeight": "normal",
                   },
-                  Object {},
                 ]
               }
             >
-              
+              Home.NoNewUpdates
             </Text>
           </View>
-          <Text
-            style={
-              Object {
-                "alignSelf": "center",
-                "color": "#FFFFFF",
-                "flexShrink": 1,
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
-            }
-          >
-            Home.NoNewUpdates
-          </Text>
         </View>
       </View>
     </View>
@@ -164,6 +186,10 @@ exports[`displays a home screen renders correctly 1`] = `
               "color": "#FFFFFF",
               "fontSize": 38,
               "fontWeight": "bold",
+            },
+            Object {
+              "marginBottom": 35,
+              "marginTop": 25,
             },
           ]
         }
