@@ -33,7 +33,7 @@ export const carousel: OnboardingStyleSheet = StyleSheet.create({
     flexShrink: 2,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 60,
+    marginBottom: 35,
   },
   pagerDot: {
     borderWidth: 1,

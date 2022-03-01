@@ -134,7 +134,7 @@ describe('displays a proof request screen', () => {
       // @ts-ignore
       agent?.proofs.getRequestedCredentialsForProofRequest.mockResolvedValue(testRetrievedCredentials)
 
-      const { getByText, getAllByText, queryByText } = render(
+      const { getByText, getAllByText, queryByText, debug } = render(
         <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequests[0].id } } as any} />
       )
 
@@ -143,9 +143,9 @@ describe('displays a proof request screen', () => {
       const contact = getByText('ProofRequest.AContact', { exact: false })
       const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
-      const emailLabel = getByText('Email:', { exact: false })
+      const emailLabel = getByText(/Email/, { exact: false })
       const emailValue = getByText(testEmail)
-      const timeLabel = getByText('Time:', { exact: false })
+      const timeLabel = getByText(/Time/, { exact: false })
       const timeValue = getByText(testTime)
       const detailsLinks = getAllByText('ProofRequest.Details', { exact: false })
       const shareButton = getByText('Global.Share', { exact: false })
@@ -185,9 +185,9 @@ describe('displays a proof request screen', () => {
       const contact = getByText('ProofRequest.AContact', { exact: false })
       const missingInfo = getByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
-      const emailLabel = getByText('Email:', { exact: false })
+      const emailLabel = getByText(/Email/, { exact: false })
       const emailValue = getByText(testEmail)
-      const timeLabel = getByText('Time:', { exact: false })
+      const timeLabel = getByText(/Time/, { exact: false })
       const timeValue = queryByText(testTime, { exact: false })
       const detailsLinks = getAllByText('ProofRequest.Details', { exact: false })
       const shareButton = getByText('Global.Share', { exact: false })
