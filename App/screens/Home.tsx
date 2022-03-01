@@ -61,9 +61,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { t } = useTranslation()
 
   const emptyListComponent = () => (
-    <View style={styles.container}>
+    <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
       <InfoTextBox>
-        <Text style={TextTheme.normal}>{t('Home.NoNewUpdates')}</Text>
+        <Text style={[TextTheme.normal]}>{t('Home.NoNewUpdates')}</Text>
       </InfoTextBox>
     </View>
   )
@@ -85,7 +85,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
     return (
       <View style={[styles.messageContainer]}>
-        {credentialCount === 0 ? <Text style={[TextTheme.headingOne]}>{t('Home.Welcome')}</Text> : null}
+        {credentialCount === 0 ? (
+          <Text style={[TextTheme.headingOne, { marginTop: offset, marginBottom: 35 }]}>{t('Home.Welcome')}</Text>
+        ) : null}
         <Text style={[TextTheme.normal, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
       </View>
     )
