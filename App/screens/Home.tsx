@@ -76,9 +76,19 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     let credentialMsg
 
     if (credentialCount === 1) {
-      credentialMsg = t('Home.OneCredential')
+      credentialMsg = (
+        <Text>
+          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credential')}{' '}
+          {t('Home.InYourWallet')}
+        </Text>
+      )
     } else if (credentialCount > 1) {
-      credentialMsg = t('Home.ManyCredentials').replace('$_', `${credentialCount}`)
+      credentialMsg = (
+        <Text>
+          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credentials')}{' '}
+          {t('Home.InYourWallet')}
+        </Text>
+      )
     } else {
       credentialMsg = t('Home.NoCredentials')
     }
