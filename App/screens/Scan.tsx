@@ -72,11 +72,11 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
-      Toast.show({
-        type: ToastType.Success,
-        text1: t('Global.Success'),
-        text2: t('Scan.ConnectionAccepted'),
+      dispatch({
+        type: DispatchAction.ConnectionPending,
+        payload: [{ ConnectionPending: false }],
       })
+
       navigation.navigate(Screens.Home)
     }
   }, [connection])
