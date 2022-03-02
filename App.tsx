@@ -16,6 +16,7 @@ import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import ConnectionModal from './App/components/modals/ConnectionModal'
+import ErrorModal from './App/components/modals/ErrorModal'
 import toastConfig from './App/components/toast/ToastConfig'
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
@@ -23,15 +24,11 @@ import StoreProvider from './App/store/Store'
 import { ColorPallet } from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
 
-import ErrorModal from 'components/modals/ErrorModal'
-
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
 
-  initStoredLanguage()
-
   const initAgent = async () => {
-    const newAgent = new Agent(
+    const agent = new Agent(
       {
         label: 'Aries Bifold',
         mediatorConnectionsInvite: Config.MEDIATOR_URL,
@@ -49,18 +46,27 @@ const App = () => {
     const wsTransport = new WsOutboundTransport()
     const httpTransport = new HttpOutboundTransport()
 
-    newAgent.registerOutboundTransport(wsTransport)
-    newAgent.registerOutboundTransport(httpTransport)
+    agent.registerOutboundTransport(wsTransport)
+    agent.registerOutboundTransport(httpTransport)
 
-    await newAgent.initialize()
-    setAgent(newAgent)
+    await agent.initialize()
+
+    setAgent(agent)
   }
+
+  initStoredLanguage().catch((err: any): void => {
+    // TODO:(jl) What happens if initialization fails.
+  })
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our
     // RN version can be displayed.
     SplashScreen.hide()
-    initAgent()
+
+    // TODO:(jl) Do we care about the actual cause? #232
+    initAgent().catch((err: any): void => {
+      // TODO:(jl) What happens if initialization fails? #232
+    })
   }, [])
 
   return (
