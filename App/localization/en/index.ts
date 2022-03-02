@@ -72,9 +72,11 @@ const translation = {
     "Notifications": "Notifications",
     "NoNewUpdates": "You have no new notifications.",
     "NoCredentials": "You have no credentials in your wallet.",
-    "ManyCredentials": "You have $_ credentials in your wallet.",
-    "OneCredential": "You have 1 credential in your wallet.",
-    "SeeAll": "See all"
+    "SeeAll": "See all",
+    "YouHave": "You have",
+    "Credential": "credential",
+    "Credentials": "credentials",
+    "InYourWallet": "in your wallet" 
   },
   "Scan":{
     "SuccessfullyAcceptedConnection":"Successfully Accepted Connection",
