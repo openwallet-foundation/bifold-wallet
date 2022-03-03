@@ -41,18 +41,16 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   }
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
-    displayPendingMessage()
-
     try {
       const res = await fetch(url, {
         method: 'GET',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       })
       const message = await res.json()
-
+      displayPendingMessage()
       await agent?.receiveMessage(message)
     } catch (err) {
-      throw new Error('Unable to handle redirection')
+      throw new Error(t('Scan.UnableToHandleRedirection'))
     }
   }
 

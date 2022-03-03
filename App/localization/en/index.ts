@@ -84,7 +84,8 @@ const translation = {
     "ConnectionRecordIdNotFound":"Connection record ID not found",
     "ConnectionAccepted": "Connection Accepted",
     "ConnectionNotFound": "Connection not found",
-    "InvalidQrCode": "Invalid QR code. Please try again."
+    "InvalidQrCode": "Invalid QR code. Please try again.",
+    "UnableToHandleRedirection": "Unable to handle redirection"
   },
   "Connection": {
     "JustAMoment": "Just a moment while we make a secure connection...",
