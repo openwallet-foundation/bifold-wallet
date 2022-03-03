@@ -67,7 +67,6 @@ exports[`Button Component Secondary renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "backgroundColor": "#FFFFFF",
       "borderColor": "#35823F",
       "borderRadius": 4,
       "borderWidth": 2,

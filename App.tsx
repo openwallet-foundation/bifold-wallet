@@ -15,12 +15,15 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
+import ConnectionModal from './App/components/modals/ConnectionModal'
 import toastConfig from './App/components/toast/ToastConfig'
 import { initStoredLanguage } from './App/localization'
 import RootStack from './App/navigators/RootStack'
 import StoreProvider from './App/store/Store'
-import { Colors } from './App/theme'
+import { ColorPallet } from './App/theme'
 import indyLedgers from './configs/ledgers/indy'
+
+import ErrorModal from 'components/modals/ErrorModal'
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
@@ -38,6 +41,7 @@ const App = () => {
         autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
         logger: new ConsoleLogger(LogLevel.trace),
         indyLedgers,
+        connectToIndyLedgersOnStartup: false,
       },
       agentDependencies
     )
@@ -62,7 +66,14 @@ const App = () => {
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
-        <StatusBar barStyle="light-content" hidden={false} backgroundColor={Colors.primary} translucent={false} />
+        <StatusBar
+          barStyle="light-content"
+          hidden={false}
+          backgroundColor={ColorPallet.brand.primary}
+          translucent={false}
+        />
+        <ConnectionModal />
+        <ErrorModal />
         <RootStack />
         <Toast topOffset={15} config={toastConfig} />
       </AgentProvider>

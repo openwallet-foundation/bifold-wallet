@@ -1,10 +1,9 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
-import { DateTime } from 'luxon'
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { dateFormatString } from '../../constants'
+import { dateFormatOptions } from '../../constants'
 import { borderRadius, ContactTheme } from '../../theme'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
@@ -31,7 +30,7 @@ const ContactListItem: React.FC<Props> = ({ contact }) => {
     <View key={contact.id} style={styles.container}>
       <Title>{contact?.alias || contact?.invitation?.label}</Title>
       <Text>{contact.did}</Text>
-      <Text style={styles.date}>{DateTime.fromJSDate(contact.createdAt).toFormat(dateFormatString)}</Text>
+      <Text style={styles.date}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
     </View>
   )
 }

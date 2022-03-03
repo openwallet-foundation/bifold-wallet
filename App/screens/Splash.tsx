@@ -1,22 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useMemo } from 'react'
-import { Image, SafeAreaView, StyleSheet } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-import Images from '../../assets/images'
-import { LocalStorageKeys, Screens } from '../constants'
+import { LocalStorageKeys } from '../constants'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { Colors } from '../theme'
-
-import { Onboarding } from 'types/state'
+import { ColorPallet } from '../theme'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { Onboarding } from '../types/state'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
 })
 
@@ -43,7 +44,7 @@ const resumeOnboardingAt = (state: Onboarding): string => {
 
 const Splash: React.FC = () => {
   const [, dispatch] = useContext(Context)
-  const nav = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
 
   useMemo(() => {
     async function init() {
@@ -56,21 +57,19 @@ const Splash: React.FC = () => {
           dispatch({ type: DispatchAction.SetOnboardingState, payload: [dataAsJSON] })
 
           if (onboardingComplete(dataAsJSON)) {
-            nav.navigate(Screens.EnterPin)
+            navigation.navigate(Screens.EnterPin)
             return
           }
 
-          // If onboarding was interrupted we need to pickup from where
-          // we left off.
+          // If onboarding was interrupted we need to pickup from where we left off.
           const destination = resumeOnboardingAt(dataAsJSON)
-          nav.navigate(destination)
+          navigation.navigate({ key: destination })
 
           return
         }
 
-        // We have no onboarding state, starting from step
-        // zero.
-        nav.navigate('Onboarding')
+        // We have no onboarding state, starting from step zero.
+        navigation.navigate(Screens.Onboarding)
       } catch (error) {
         // TODO:(jl)
       }
@@ -80,7 +79,7 @@ const Splash: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={Images.logoLarge} />
+      <Image source={require('../assets/img/logo-large.png')} />
     </SafeAreaView>
   )
 }

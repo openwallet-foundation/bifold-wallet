@@ -1,15 +1,16 @@
-import { CredentialState, ProofState } from '@aries-framework/core'
-import { useCredentialByState, useCredentials, useProofByState } from '@aries-framework/react-hooks'
+import { CredentialState } from '@aries-framework/core'
+import { useCredentialByState } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
 import { NotificationType } from '../components/listItems/NotificationListItem'
+import { useNotifications } from '../hooks/notifcations'
 import { ColorPallet, TextTheme } from '../theme'
+import { HomeStackParams, Screens } from '../types/navigators'
 
 import { InfoTextBox, NotificationListItem } from 'components'
-import { HomeStackParams } from 'types/navigators'
 
 const { width } = Dimensions.get('window')
 
@@ -51,17 +52,19 @@ const styles = StyleSheet.create({
 })
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const { credentials } = useCredentials()
-  const offers = useCredentialByState(CredentialState.OfferReceived)
-  const proofs = useProofByState(ProofState.RequestReceived)
-  const notifications = [...offers, ...proofs].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  )
+  const credentials = [
+    ...useCredentialByState(CredentialState.CredentialReceived),
+    ...useCredentialByState(CredentialState.Done),
+  ]
+
+  const { notifications } = useNotifications()
   const { t } = useTranslation()
 
   const emptyListComponent = () => (
-    <View style={styles.container}>
-      <InfoTextBox>{t('Home.NoNewUpdates')}</InfoTextBox>
+    <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
+      <InfoTextBox>
+        <Text style={[TextTheme.normal]}>{t('Home.NoNewUpdates')}</Text>
+      </InfoTextBox>
     </View>
   )
 
@@ -73,16 +76,28 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     let credentialMsg
 
     if (credentialCount === 1) {
-      credentialMsg = t('Home.OneCredential')
+      credentialMsg = (
+        <Text>
+          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credential')}{' '}
+          {t('Home.InYourWallet')}
+        </Text>
+      )
     } else if (credentialCount > 1) {
-      credentialMsg = t('Home.ManyCredentials').replace('$_', `${credentialCount}`)
+      credentialMsg = (
+        <Text>
+          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credentials')}{' '}
+          {t('Home.InYourWallet')}
+        </Text>
+      )
     } else {
       credentialMsg = t('Home.NoCredentials')
     }
 
     return (
       <View style={[styles.messageContainer]}>
-        {credentialCount === 0 ? <Text style={[TextTheme.headingOne]}>{t('Home.Welcome')}</Text> : null}
+        {credentialCount === 0 ? (
+          <Text style={[TextTheme.headingOne, { marginTop: offset, marginBottom: 35 }]}>{t('Home.Welcome')}</Text>
+        ) : null}
         <Text style={[TextTheme.normal, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
       </View>
     )
@@ -93,13 +108,13 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       <View style={styles.rowContainer}>
         <Text style={[TextTheme.headingThree, styles.header]}>
           {t('Home.Notifications')}
-          {notifications.length ? ` (${notifications.length})` : ''}
+          {notifications?.length ? ` (${notifications.length})` : ''}
         </Text>
-        {notifications.length ? (
+        {notifications?.length > 1 ? (
           <TouchableOpacity
             style={styles.linkContainer}
             activeOpacity={1}
-            onPress={() => navigation.navigate('Notifications')}
+            onPress={() => navigation.navigate(Screens.Notifications)}
           >
             <Text style={styles.link}>{t('Home.SeeAll')}</Text>
           </TouchableOpacity>
@@ -108,10 +123,10 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={notifications.length > 0 ? true : false}
+        scrollEnabled={notifications?.length > 0 ? true : false}
         snapToOffsets={[
           0,
-          ...Array(notifications.length)
+          ...Array(notifications?.length)
             .fill(0)
             .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
             .slice(1),
@@ -125,7 +140,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             style={{
               width: width - 2 * offset,
               marginLeft: !index ? offset : offsetPadding,
-              marginRight: index === notifications.length - 1 ? offset : offsetPadding,
+              marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
             }}
           >
             {item.type === 'CredentialRecord' ? (

@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectionModal Component Dismiss on demand 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={false}
+>
+  <RNCSafeAreaView
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+          "flexDirection": "column",
+          "minHeight": 1334,
+          "paddingHorizontal": 25,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "marginTop": 54,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
+              "fontWeight": "normal",
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Connection.JustAMoment
+      </Text>
+      <
+        fill="#FFFFFF"
+        height={250}
+        style={
+          Array [
+            Object {
+              "marginTop": 40,
+            },
+          ]
+        }
+        width={250}
+      />
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;
+
+exports[`ConnectionModal Component Renders correctly 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <RNCSafeAreaView
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+          "flexDirection": "column",
+          "minHeight": 1334,
+          "paddingHorizontal": 25,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "marginTop": 54,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
+              "fontWeight": "normal",
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Connection.JustAMoment
+      </Text>
+      <
+        fill="#FFFFFF"
+        height={250}
+        style={
+          Array [
+            Object {
+              "marginTop": 40,
+            },
+          ]
+        }
+        width={250}
+      />
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;
+
+exports[`ConnectionModal Component Updates after delay 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <RNCSafeAreaView
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+          "flexDirection": "column",
+          "minHeight": 1334,
+          "paddingHorizontal": 25,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "marginTop": 54,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
+              "fontWeight": "normal",
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Connection.JustAMoment
+      </Text>
+      <
+        fill="#FFFFFF"
+        height={250}
+        style={
+          Array [
+            Object {
+              "marginTop": 40,
+            },
+          ]
+        }
+        width={250}
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "marginTop": 30,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginBottom": 30,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Connection.TakingTooLong
+        </Text>
+        <View
+          accessibilityLabel="Global.Home"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "borderColor": "#35823F",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#35823F",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            Connection.BackToHome
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;

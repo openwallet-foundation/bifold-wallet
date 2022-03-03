@@ -1,0 +1,345 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorModal Component Dismiss on demand 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={false}
+>
+  <RNCSafeAreaView
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#42803E",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "minHeight": 1334,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "borderColor": "#D8292F",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "marginHorizontal": 25,
+          "minWidth": 700,
+          "padding": 10,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "paddingHorizontal": 5,
+            "paddingTop": 5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignSelf": "center",
+                "marginRight": 10,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#0099FF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+        <Text
+          style={
+            Object {
+              "alignSelf": "center",
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Error.Unknown
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "column",
+            "marginLeft": 40,
+            "paddingBottom": 5,
+            "paddingHorizontal": 5,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "marginVertical": 15,
+              "paddingBottom": 10,
+            }
+          }
+        >
+          Error.Problem
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "marginVertical": 15,
+              "paddingBottom": 10,
+            }
+          }
+        >
+          Global.ErrorCode 1024
+        </Text>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={false}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#35823F",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            Global.Okay
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;
+
+exports[`ErrorModal Component Renders correctly 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={false}
+>
+  <RNCSafeAreaView
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#42803E",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "minHeight": 1334,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "borderColor": "#D8292F",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "marginHorizontal": 25,
+          "minWidth": 700,
+          "padding": 10,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "paddingHorizontal": 5,
+            "paddingTop": 5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignSelf": "center",
+                "marginRight": 10,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#0099FF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+        <Text
+          style={
+            Object {
+              "alignSelf": "center",
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Error.Unknown
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "column",
+            "marginLeft": 40,
+            "paddingBottom": 5,
+            "paddingHorizontal": 5,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "marginVertical": 15,
+              "paddingBottom": 10,
+            }
+          }
+        >
+          Error.Problem
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "marginVertical": 15,
+              "paddingBottom": 10,
+            }
+          }
+        >
+          Global.ErrorCode 1024
+        </Text>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={false}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#35823F",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            Global.Okay
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;
