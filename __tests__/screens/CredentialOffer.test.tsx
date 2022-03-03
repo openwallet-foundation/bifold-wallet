@@ -1,126 +1,129 @@
-import { CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialRecord, ConnectionRecord, CredentialState } from '@aries-framework/core'
+import { useAgent, useCredentialById, useConnectionById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { cleanup, fireEvent, render } from '@testing-library/react-native'
+import { fireEvent, render, waitFor } from '@testing-library/react-native'
+import fs from 'fs'
+import path from 'path'
 import React from 'react'
+import { Alert } from 'react-native'
 
 import CredentialOffer from '../../App/screens/CredentialOffer'
 
-import Button from 'components/buttons/Button'
-import NotificationModal from 'components/modals/NotificationModal'
-
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 
+const props = { params: { credentialId: '123' } }
+
+const connectionPath = path.join(__dirname, '../fixtures/faber-connection.json')
+const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
+
+const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
+const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
+
+const connectionRecord = new ConnectionRecord(connection)
+const credentialRecord = new CredentialRecord(credential)
+// TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
+credentialRecord.createdAt = new Date(credentialRecord.createdAt)
+
+// @ts-ignore
+useConnectionById.mockReturnValue(connectionRecord)
+
 describe('displays a credential offer screen', () => {
-  const testCredentialRecords: CredentialRecord[] = [
-    new CredentialRecord({
-      threadId: '1',
-      state: CredentialState.OfferReceived,
-    }),
-  ]
-
-  afterEach(() => {
-    cleanup()
-  })
-
-  beforeEach(() => {
-    jest.clearAllMocks()
-
-    testCredentialRecords[0].state = CredentialState.OfferReceived
-
+  test('renders correctly', () => {
     // @ts-ignore
-    useCredentialById.mockReturnValue(testCredentialRecords[0])
+    useCredentialById.mockReturnValue(credentialRecord)
+    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+
+    expect(tree).toMatchSnapshot()
   })
 
-  describe('with a credential offer', () => {
-    /**
-     * Scenario: Holder accepts a credential offer
-     * Given the holder selects a credential offer
-     * When the holder accepts the credential offer
-     * Then the holder will be taken to a loading screen that informs them that their credential is coming
-     */
-    test('a loading screen is displayed when the user accepts the credential offer', async () => {
-      const { findByText, UNSAFE_getByProps } = render(
-        <CredentialOffer
-          navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords[0].id } } as any}
-        />
-      )
+  test('shows declined conformation alert', async () => {
+    // @ts-ignore
+    useCredentialById.mockReturnValue(credentialRecord)
 
-      const acceptButtonInstance = await findByText('Global.Accept')
+    const spyAlert = jest.spyOn(Alert, 'alert')
+    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+    const declineBtn = await tree.findByText('Global.Decline')
 
-      fireEvent(acceptButtonInstance, 'press')
+    fireEvent(declineBtn, 'press')
 
-      const notificationModalInstance = await UNSAFE_getByProps({
-        title: 'CredentialOffer.CredentialOnTheWay',
-      })
+    expect(spyAlert).toHaveBeenCalledTimes(1)
 
-      expect(notificationModalInstance).not.toBe(null)
-      expect(notificationModalInstance.type).toBe(NotificationModal)
-      expect(notificationModalInstance.props.visible).toBeTruthy()
+    await waitFor(async () => {
+      // @ts-ignore
+      await spyAlert.mock.calls[0][2][1].onPress()
     })
 
-    /**
-     * Given the holder accepts a credential offer from an issuer they are connected with
-     * When the credential arrives in the wallet
-     * Then the screen will change from the loading screen to a success screen informing the holder that the credential has arrived
-     */
-    test('a success screen is displayed when the credential arrives', async () => {
-      testCredentialRecords[0].state = CredentialState.CredentialReceived
+    expect(tree).toMatchSnapshot()
+  })
 
-      const { findByText, UNSAFE_getByProps } = render(
-        <CredentialOffer
-          navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords[0].id } } as any}
-        />
-      )
+  test('shows credential delivery modal', async () => {
+    // @ts-ignore
+    useCredentialById.mockReturnValue(credentialRecord)
+    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
 
-      const acceptButtonInstance = await findByText('Global.Accept')
+    const acceptBtn = await tree.findByText('Global.Accept')
+    fireEvent(acceptBtn, 'press')
 
-      fireEvent(acceptButtonInstance, 'press')
+    const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
+    const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
+    const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
 
-      const notificationModalInstance = await UNSAFE_getByProps({
-        title: 'CredentialOffer.CredentialAddedToYourWallet',
-      })
+    expect(onTheWayModal.props.visible).toBeTruthy()
+    expect(declinedModal.props.visible).toBeFalsy()
+    expect(addedModal.props.visible).toBeFalsy()
+  })
 
-      expect(notificationModalInstance).not.toBe(null)
-      expect(notificationModalInstance.type).toBe(NotificationModal)
-      expect(notificationModalInstance.props.visible).toBeTruthy()
-    })
+  test('handle declined credential', async () => {
+    const myCredential = new CredentialRecord(credential)
+    myCredential.createdAt = new Date(credentialRecord.createdAt)
+    myCredential.state = CredentialState.Declined
+    // @ts-ignore
+    useCredentialById.mockReturnValue(myCredential)
 
-    /**
-     * Given the holder accepts a credential offer from an issuer they are connected with
-     * And the credential arrives in the wallet
-     * And a success screen is displayed informing the holder that the credential has arrived
-     * When the user presses the continue button
-     * Then the holder will be taken to the credential list with the offered credential at the top of the list
-     */
-    test('pressing the continue button on the success screen takes the holder to the credential list screen', async () => {
-      const navigation = useNavigation()
-      testCredentialRecords[0].state = CredentialState.CredentialReceived
+    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
 
-      const { findByText, UNSAFE_getByProps } = render(
-        <CredentialOffer
-          navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords[0].id } } as any}
-        />
-      )
+    const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
+    const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
+    const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
 
-      const acceptButtonInstance = await findByText('Global.Accept')
+    expect(onTheWayModal.props.visible).toBeFalsy()
+    expect(declinedModal.props.visible).toBeTruthy()
+    expect(addedModal.props.visible).toBeFalsy()
+  })
 
-      fireEvent(acceptButtonInstance, 'press')
+  test('handle received credential', async () => {
+    const myCredential = new CredentialRecord(credential)
+    myCredential.createdAt = new Date(credentialRecord.createdAt)
+    myCredential.state = CredentialState.CredentialReceived
+    // @ts-ignore
+    useCredentialById.mockReturnValue(myCredential)
 
-      const notificationModalInstance = await UNSAFE_getByProps({
-        title: 'CredentialOffer.CredentialAddedToYourWallet',
-      })
-      const notificationModalDoneButtonInstance = notificationModalInstance.findByProps({ title: 'Global.Done' })
+    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
 
-      expect(notificationModalDoneButtonInstance).not.toBe(null)
-      expect(notificationModalDoneButtonInstance.type).toBe(Button)
+    const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
+    const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
+    const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
 
-      fireEvent(notificationModalDoneButtonInstance, 'press')
+    expect(onTheWayModal.props.visible).toBeFalsy()
+    expect(declinedModal.props.visible).toBeFalsy()
+    expect(addedModal.props.visible).toBeTruthy()
+  })
 
-      expect(navigation.navigate).toBeCalledWith('CredentialsTab')
-    })
+  test('handle done credential', async () => {
+    const myCredential = new CredentialRecord(credential)
+    myCredential.createdAt = new Date(credentialRecord.createdAt)
+    myCredential.state = CredentialState.Done
+    // @ts-ignore
+    useCredentialById.mockReturnValue(myCredential)
+
+    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+
+    const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
+    const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
+    const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
+
+    expect(onTheWayModal.props.visible).toBeFalsy()
+    expect(declinedModal.props.visible).toBeFalsy()
+    expect(addedModal.props.visible).toBeTruthy()
   })
 })

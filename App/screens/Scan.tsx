@@ -3,59 +3,59 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 import { Agent, ConnectionState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { parseUrl } from 'query-string'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message'
 
-import { QrCodeScanError } from '../types/erorr'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
+import { QrCodeScanError } from '../types/error'
+import { HomeStackParams, Screens } from '../types/navigators'
+import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams } from 'types/navigators'
 
 interface ScanProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Home'>
+  navigation: StackNavigationProp<HomeStackParams>
 }
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
-
+  const [, dispatch] = useContext(Context)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
   const [connectionId, setConnectionId] = useState('')
   const connection = useConnectionById(connectionId)
 
   const displayPendingMessage = (): void => {
-    Toast.show({
-      type: ToastType.Info,
-      text1: t('Global.Info'),
-      text2: t('Scan.AcceptingConnection'),
+    dispatch({
+      type: DispatchAction.ConnectionPending,
+      payload: [{ ConnectionPending: true }],
     })
   }
 
   const displaySuccessMessage = (): void => {
-    Toast.show({
-      type: ToastType.Success,
-      text1: t('Global.Success'),
-      text2: t('Scan.ConnectionAccepted'),
+    dispatch({
+      type: DispatchAction.ConnectionPending,
+      payload: [{ ConnectionPending: false }],
     })
-  }
-
-  const isRedirecton = (url: string): boolean => {
-    const queryParams = parseUrl(url).query
-    return !(queryParams['c_i'] || queryParams['d_m'])
   }
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    })
-    const message = await res.json()
-    // TODO: Change to a full screen modal
     displayPendingMessage()
-    await agent?.receiveMessage(message)
+
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      })
+      const message = await res.json()
+
+      await agent?.receiveMessage(message)
+    } catch (err) {
+      throw new Error('Unable to handle redirection')
+    }
   }
 
   const handleInvitation = async (url: string): Promise<void> => {
@@ -72,12 +72,12 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
-      Toast.show({
-        type: ToastType.Success,
-        text1: t('Global.Success'),
-        text2: t('Scan.ConnectionAccepted'),
+      dispatch({
+        type: DispatchAction.ConnectionPending,
+        payload: [{ ConnectionPending: false }],
       })
-      navigation.navigate('Home')
+
+      navigation.navigate(Screens.Home)
     }
   }, [connection])
 
@@ -86,16 +86,15 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
     try {
       const url = event.data
-      if (isRedirecton(url)) {
+      if (isRedirection(url)) {
         await handleRedirection(url, agent)
       } else {
         await handleInvitation(url)
       }
 
-      // TODO: Change to a full screen modal
       displaySuccessMessage()
 
-      navigation.navigate('Home')
+      navigation.navigate(Screens.Home)
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
       setQrCodeScanError(error)

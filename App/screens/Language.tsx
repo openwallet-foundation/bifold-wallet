@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Locales, storeLanguage } from '../localization'
 
 import { SafeAreaScrollView } from 'components'
-import SingleSelectBlock, { BlockSelection } from 'components/singleSelectBlock/SingleSelectBlock'
+import SingleSelectBlock, { BlockSelection } from 'components/inputs/SingleSelectBlock'
 
 const Language = () => {
   const { t, i18n } = useTranslation()

@@ -1,96 +1,78 @@
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
-import { CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialState } from '@aries-framework/core'
+import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, FlatList, Alert, View } from 'react-native'
-import Toast from 'react-native-toast-message'
+import { StyleSheet, Alert, View, Text } from 'react-native'
 
-import { CredentialOfferTheme } from '../theme'
-import { parsedSchema } from '../utils/helpers'
+import CredentialDeclined from '../assets/img/credential-declined.svg'
+import CredentialPending from '../assets/img/credential-pending.svg'
+import CredentialSuccess from '../assets/img/credential-success.svg'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
+import { TextTheme } from '../theme'
+import { BifoldError } from '../types/error'
+import { Screens, Stacks, HomeStackParams, TabStackParams } from '../types/navigators'
 
-import { Button, ModularView, Label } from 'components'
-import { ButtonType } from 'components/buttons/Button'
+import Button, { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
+import CredentialCard from 'components/misc/CredentialCard'
 import NotificationModal from 'components/modals/NotificationModal'
-import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams, TabStackParams } from 'types/navigators'
+import Record from 'components/record/Record'
+import Title from 'components/texts/Title'
 
 interface CredentialOfferProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Home'> &
-    BottomTabNavigationProp<TabStackParams, 'HomeTab'> &
-    BottomTabNavigationProp<TabStackParams, 'CredentialsTab'>
-  route: RouteProp<HomeStackParams, 'Credential Offer'>
+  navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
+  route: RouteProp<HomeStackParams, Screens.CredentialOffer>
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: CredentialOfferTheme.background,
+  headerTextContainer: {
+    paddingHorizontal: 25,
+    paddingVertical: 16,
+  },
+  headerText: {
+    ...TextTheme.normal,
+    flexShrink: 1,
+  },
+  footerButton: {
+    paddingTop: 10,
   },
 })
 
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
+  if (!route?.params) {
+    throw new Error('CredentialOffer route prams were not set properly')
+  }
+
+  const { credentialId } = route.params
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [, dispatch] = useContext(Context)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  const [acceptedModalVisible, setAcceptedModalVisible] = useState(false)
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
-  if (!agent?.credentials) {
-    Toast.show({
-      type: ToastType.Error,
-      text1: t('Global.Failure'),
-      text2: t('Global.SomethingWentWrong'),
-    })
-
-    navigation.goBack()
-
-    return
-  }
-
-  const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
-    try {
-      if (!credentialId) {
-        throw new Error(t('CredentialOffer.CredentialNotFound'))
-      }
-      return useCredentialById(credentialId)
-    } catch (e: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: t('Global.SomethingWentWrong'),
-      })
-
-      navigation.goBack()
-    }
-  }
-
-  const credential = getCredentialRecord(route?.params?.credentialId)
+  const credential = useCredentialById(credentialId)
 
   if (!credential) {
-    Toast.show({
-      type: ToastType.Error,
-      text1: t('Global.Failure'),
-      text2: t('CredentialOffer.CredentialNotFound'),
-    })
-
-    navigation.goBack()
-
-    return
+    throw new Error('Unable to fetch credential from AFJ')
   }
 
-  useEffect(() => {
-    if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
-      pendingModalVisible && setPendingModalVisible(false)
-      setAcceptedModalVisible(true)
-    }
-  }, [credential])
+  if (!agent) {
+    throw new Error('Unable to fetch agent from AFJ')
+  }
+
+  // @ts-ignore next-line
+  const { invitation } = useConnectionById(credential.connectionId)
+
+  if (!invitation) {
+    throw new Error('Unable to invitation from AFJ')
+  }
 
   useEffect(() => {
     if (credential.state === CredentialState.Declined) {
@@ -98,24 +80,37 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
   }, [credential])
 
+  useEffect(() => {
+    if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
+      pendingModalVisible && setPendingModalVisible(false)
+      setSuccessModalVisible(true)
+    }
+  }, [credential])
+
   const handleAcceptPress = async () => {
     setButtonsVisible(false)
     setPendingModalVisible(true)
+
     try {
       await agent.credentials.acceptOffer(credential.id)
     } catch (e: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (e as Error)?.message || t('Global.Failure'),
-      })
-
       setButtonsVisible(true)
       setPendingModalVisible(false)
+
+      const error = new BifoldError(
+        'Unable to accept offer',
+        'There was a problem while accepting the credential offer.',
+        1024
+      )
+
+      dispatch({
+        type: DispatchAction.SetError,
+        payload: [{ error }],
+      })
     }
   }
 
-  const handleRejectPress = async () => {
+  const handleDeclinePress = async () => {
     Alert.alert(t('CredentialOffer.RejectThisCredential?'), t('Global.ThisDecisionCannotBeChanged.'), [
       { text: t('Global.Cancel'), style: 'cancel' },
       {
@@ -123,20 +118,18 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         style: 'destructive',
         onPress: async () => {
           setButtonsVisible(false)
-          Toast.show({
-            type: ToastType.Info,
-            text1: t('Global.Info'),
-            text2: t('CredentialOffer.RejectingCredential'),
-          })
 
           try {
             await agent.credentials.declineOffer(credential.id)
-            Toast.hide()
           } catch (e: unknown) {
-            Toast.show({
-              type: ToastType.Error,
-              text1: t('Global.Failure'),
-              text2: (e as Error)?.message || t('Global.Failure'),
+            const error = new BifoldError(
+              'Unable to reject offer',
+              'There was a problem while rejecting the credential offer.',
+              1024
+            )
+            dispatch({
+              type: DispatchAction.SetError,
+              payload: [{ error }],
             })
           }
         },
@@ -144,71 +137,79 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     ])
   }
 
-  // TODO: Reincorporate according to UI wireframes
-  // const connection = connectionRecordFromId(credential.connectionId)
-
-  const { name: schemaName, version: schemaVersion } = parsedSchema(credential)
-
   return (
-    <View style={styles.container}>
+    <>
+      <Record
+        header={() => (
+          <>
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.headerText}>
+                <Title>{invitation.label}</Title> {t('CredentialOffer.IsOfferingYouACredential')}
+              </Text>
+            </View>
+            <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+          </>
+        )}
+        footer={() => (
+          <View style={{ marginBottom: 30 }}>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Accept')}
+                buttonType={ButtonType.Primary}
+                onPress={handleAcceptPress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Decline')}
+                buttonType={ButtonType.Secondary}
+                onPress={handleDeclinePress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+          </View>
+        )}
+        attributes={credential.credentialAttributes}
+      />
       <NotificationModal
+        testID={t('CredentialOffer.CredentialOnTheWay')}
         title={t('CredentialOffer.CredentialOnTheWay')}
         doneTitle={t('Global.Cancel')}
         visible={pendingModalVisible}
         onDone={() => {
           setPendingModalVisible(false)
         }}
-      ></NotificationModal>
+      >
+        <CredentialPending style={{ marginVertical: 20 }}></CredentialPending>
+      </NotificationModal>
       <NotificationModal
+        testID={t('CredentialOffer.CredentialAddedToYourWallet')}
         title={t('CredentialOffer.CredentialAddedToYourWallet')}
-        visible={acceptedModalVisible}
+        visible={successModalVisible}
         onDone={() => {
-          setAcceptedModalVisible(false)
+          setSuccessModalVisible(false)
           navigation.pop()
-          navigation.navigate('CredentialsTab')
+          navigation.navigate(Stacks.CredentialStack)
         }}
       >
+        <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <NotificationModal
+        testID={t('CredentialOffer.CredentialDeclined')}
         title={t('CredentialOffer.CredentialDeclined')}
         visible={declinedModalVisible}
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate('HomeTab')
+          navigation.navigate(Stacks.HomeStack)
         }}
       >
+        <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
         <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
-      <ModularView
-        title={schemaName}
-        subtitle={schemaVersion ? `${t('CredentialDetails.Version')}: ${schemaVersion}` : ''}
-        content={
-          <FlatList
-            data={credential.credentialAttributes}
-            keyExtractor={(attribute) => attribute.name}
-            renderItem={({ item: attribute }) => <Label title={attribute.name} subtitle={attribute.value} />}
-          />
-        }
-      />
-      <View style={[{ marginHorizontal: 20 }]}>
-        <View style={[{ paddingBottom: 10 }]}>
-          <Button
-            title={t('Global.Accept')}
-            buttonType={ButtonType.Primary}
-            onPress={handleAcceptPress}
-            disabled={!buttonsVisible}
-          />
-        </View>
-        <Button
-          title={t('Global.Decline')}
-          buttonType={ButtonType.Secondary}
-          onPress={handleRejectPress}
-          disabled={!buttonsVisible}
-        />
-      </View>
-    </View>
+    </>
   )
 }
 

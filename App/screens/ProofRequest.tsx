@@ -2,46 +2,80 @@ import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 
 import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useAgent } from '@aries-framework/react-hooks'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Alert, View, StyleSheet } from 'react-native'
+import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Toast from 'react-native-toast-message'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ProofRequestTheme } from '../theme'
-import { connectionRecordFromId, parseSchema } from '../utils/helpers'
+import ProofDeclined from '../assets/img/proof-declined.svg'
+import ProofPending from '../assets/img/proof-pending.svg'
+import ProofSuccess from '../assets/img/proof-success.svg'
+import { ColorPallet, TextTheme } from '../theme'
+import { HomeStackParams, Screens, Stacks, TabStackParams } from '../types/navigators'
+import {
+  connectionRecordFromId,
+  firstMatchingCredentialAttributeValue,
+  getConnectionName,
+  proofRecordFromId,
+} from '../utils/helpers'
 
-import { Button, ModularView, Label } from 'components'
-import { ButtonType } from 'components/buttons/Button'
+import Button, { ButtonType } from 'components/buttons/Button'
+import ActivityLogLink from 'components/misc/ActivityLogLink'
+import NotificationModal from 'components/modals/NotificationModal'
+import Record from 'components/record/Record'
+import RecordAttribute from 'components/record/RecordAttribute'
+import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
-import { HomeStackParams } from 'types/navigators'
+import { Attribute } from 'types/record'
 
-interface CredentialOfferProps {
-  navigation: StackNavigationProp<HomeStackParams, 'Proof Request'>
-  route: RouteProp<HomeStackParams, 'Proof Request'>
+interface ProofRequestProps {
+  navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
+  route: RouteProp<HomeStackParams, Screens.ProofRequest>
 }
 
-interface CredentialDisplay {
-  name: string
-  value: string
-  credentialDefinitionId: string
+interface ProofRequestAttribute extends Attribute {
+  values?: RequestedAttribute[]
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: ProofRequestTheme.background,
+  headerTextContainer: {
+    paddingHorizontal: 25,
+    paddingVertical: 16,
+  },
+  headerText: {
+    ...TextTheme.normal,
+    flexShrink: 1,
+  },
+  footerButton: {
+    paddingTop: 10,
+  },
+  link: {
+    ...TextTheme.normal,
+    minHeight: TextTheme.normal.fontSize,
+    color: ColorPallet.brand.link,
+    paddingVertical: 2,
+  },
+  valueContainer: {
+    minHeight: TextTheme.normal.fontSize,
+    paddingVertical: 4,
   },
 })
 
-const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
+const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [buttonsVisible, setButtonsVisible] = useState(true)
+  const [pendingModalVisible, setPendingModalVisible] = useState(false)
+  const [successModalVisible, setSuccessModalVisible] = useState(false)
+  const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
-  const [retrievedCredentialsDisplay, setRetrievedCredentialsDisplay] = useState<CredentialDisplay[]>()
+  const [retrievedCredentialAttributes, setRetrievedCredentialAttributes] = useState<[string, RequestedAttribute[]][]>(
+    []
+  )
 
   if (!agent?.proofs) {
     Toast.show({
@@ -53,25 +87,16 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     return null
   }
 
-  const transformAttributes = (attributes: Record<string, RequestedAttribute[]>): CredentialDisplay[] => {
-    const transformedAttributes = []
-    for (const attribute in attributes) {
-      const { name: schemaName, version: schemaVersion } = parseSchema(attributes[attribute][0].credentialInfo.schemaId)
-      transformedAttributes.push({
-        name: attribute,
-        value: attributes[attribute][0].credentialInfo.attributes[attribute],
-        credentialDefinitionId: `${schemaName + (schemaVersion ? ` V${schemaVersion}` : '')}`,
-      })
-    }
-    return transformedAttributes
-  }
+  const anyUnavailableCredentialAttributes = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
+    attributes.some(([, values]) => !values?.length)
 
   const getProofRecord = (proofId?: string): ProofRecord | void => {
     try {
-      if (!proofId) {
+      const proof = proofRecordFromId(proofId)
+      if (!proof) {
         throw new Error(t('ProofRequest.ProofNotFound'))
       }
-      return useProofById(proofId)
+      return proof
     } catch (e: unknown) {
       Toast.show({
         type: ToastType.Error,
@@ -82,24 +107,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
   }
 
-  const getRetrievedCredentials = async (proof: ProofRecord) => {
-    try {
-      const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
-      if (!creds) {
-        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
-      }
-      setRetrievedCredentials(creds)
-      setRetrievedCredentialsDisplay(transformAttributes(creds.requestedAttributes))
-    } catch (e: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (e as Error)?.message || t('Global.Failure'),
-      })
-    }
-  }
-
-  const proof = getProofRecord(route?.params?.proofId)
+  const { proofId } = route?.params
+  const proof = getProofRecord(proofId)
 
   if (!proof) {
     Toast.show({
@@ -112,37 +121,41 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   useEffect(() => {
-    try {
-      getRetrievedCredentials(proof)
-    } catch (e: unknown) {
-      navigation.goBack()
+    const updateRetrievedCredentials = async (proof: ProofRecord) => {
+      const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
+      if (!creds) {
+        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+      }
+      setRetrievedCredentials(creds)
+      setRetrievedCredentialAttributes(Object.entries(creds?.requestedAttributes || {}))
     }
+
+    updateRetrievedCredentials(proof).catch((e: unknown) => {
+      Toast.show({
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (e as Error)?.message || t('Global.Failure'),
+      })
+      navigation.goBack()
+    })
   }, [])
 
   useEffect(() => {
     if (proof.state === ProofState.Done) {
-      Toast.show({
-        type: ToastType.Success,
-        text1: t('Global.Success'),
-        text2: t('ProofRequest.ProofAccepted'),
-      })
-      navigation.goBack()
+      pendingModalVisible && setPendingModalVisible(false)
+      setSuccessModalVisible(true)
     }
   }, [proof])
 
   useEffect(() => {
     if (proof.state === ProofState.Declined) {
-      Toast.show({
-        type: ToastType.Info,
-        text1: t('Global.Info'),
-        text2: t('ProofRequest.ProofRejected'),
-      })
-      navigation.goBack()
+      setDeclinedModalVisible(true)
     }
   }, [proof])
 
   const handleAcceptPress = async () => {
     setButtonsVisible(false)
+    setPendingModalVisible(true)
     Toast.show({
       type: ToastType.Info,
       text1: t('Global.Info'),
@@ -162,6 +175,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         text2: (e as Error)?.message || t('Global.Failure'),
       })
       setButtonsVisible(true)
+      setPendingModalVisible(false)
     }
   }
 
@@ -179,6 +193,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           })
           try {
             await agent.proofs.declineRequest(proof.id)
+            Toast.hide()
           } catch (e: unknown) {
             Toast.show({
               type: ToastType.Error,
@@ -194,37 +209,132 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const connection = connectionRecordFromId(proof.connectionId)
 
   return (
-    <View style={styles.container}>
-      <ModularView
-        title={proof.requestMessage?.indyProofRequest?.name || connection?.alias || connection?.invitation?.label}
-        content={
-          <FlatList
-            data={retrievedCredentialsDisplay}
-            keyExtractor={(credential) => credential.name}
-            renderItem={({ item: credential }) => (
-              <Label title={credential.name} subtitle={credential.value} label={credential.credentialDefinitionId} />
+    <>
+      <Record
+        header={() => (
+          <View style={styles.headerTextContainer}>
+            {anyUnavailableCredentialAttributes(retrievedCredentialAttributes) ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon
+                  style={{ marginLeft: -2, marginRight: 10 }}
+                  name="highlight-off"
+                  color={TextTheme.headingOne.color}
+                  size={TextTheme.headingOne.fontSize}
+                ></Icon>
+                <Text style={styles.headerText}>
+                  <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                  {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                </Text>
+              </View>
+            ) : (
+              <Text style={styles.headerText}>
+                <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                {t('ProofRequest.IsRequestingYouToShare')}:
+              </Text>
+            )}
+          </View>
+        )}
+        footer={() => (
+          <View style={{ marginBottom: 30 }}>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Share')}
+                buttonType={ButtonType.Primary}
+                onPress={handleAcceptPress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Decline')}
+                buttonType={ButtonType.Secondary}
+                onPress={handleRejectPress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+          </View>
+        )}
+        attributes={retrievedCredentialAttributes.map(([name, values]) => ({
+          name,
+          value: firstMatchingCredentialAttributeValue(name, values),
+          values,
+        }))}
+        attribute={(attribute) => (
+          <RecordAttribute
+            attribute={attribute}
+            attributeValue={(attribute: ProofRequestAttribute) => (
+              <>
+                {attribute?.values?.length ? (
+                  <Text style={TextTheme.normal}>{attribute.value}</Text>
+                ) : (
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon
+                      style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                      name="close"
+                      color={ColorPallet.semantic.error}
+                      size={TextTheme.normal.fontSize}
+                    ></Icon>
+                    <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+                      {t('ProofRequest.NotAvailableInYourWallet')}
+                    </Text>
+                  </View>
+                )}
+                {attribute?.values?.length ? (
+                  <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() =>
+                      navigation.navigate(Screens.ProofRequestAttributeDetails, {
+                        proofId,
+                        attributeName: attribute.name,
+                        attributeCredentials: attribute.values || [],
+                      })
+                    }
+                    style={styles.link}
+                  >
+                    <Text style={TextTheme.normal}>{t('ProofRequest.Details')}</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </>
             )}
           />
-        }
+        )}
       />
-      <View style={[{ marginHorizontal: 20 }]}>
-        <View style={[{ paddingBottom: 10 }]}>
-          <Button
-            title={t('Global.Accept')}
-            buttonType={ButtonType.Primary}
-            onPress={handleAcceptPress}
-            disabled={!buttonsVisible}
-          />
-        </View>
-        <Button
-          title={t('Global.Decline')}
-          buttonType={ButtonType.Secondary}
-          onPress={handleRejectPress}
-          disabled={!buttonsVisible}
-        />
-      </View>
-    </View>
+      <NotificationModal
+        title={t('ProofRequest.SendingTheInformationSecurely')}
+        doneTitle={t('Global.Cancel')}
+        visible={pendingModalVisible}
+        onDone={() => {
+          setPendingModalVisible(false)
+        }}
+      >
+        <ProofPending style={{ marginVertical: 20 }}></ProofPending>
+      </NotificationModal>
+      <NotificationModal
+        title={t('ProofRequest.InformationSentSuccessfully')}
+        visible={successModalVisible}
+        onDone={() => {
+          setSuccessModalVisible(false)
+          navigation.pop()
+          navigation.navigate(Stacks.HomeStack)
+        }}
+      >
+        <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
+      <NotificationModal
+        title={t('ProofRequest.ProofRejected')}
+        visible={declinedModalVisible}
+        onDone={() => {
+          setDeclinedModalVisible(false)
+          navigation.pop()
+          navigation.navigate(Stacks.HomeStack)
+        }}
+      >
+        <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
+        <ActivityLogLink></ActivityLogLink>
+      </NotificationModal>
+    </>
   )
 }
 
-export default CredentialOffer
+export default ProofRequest

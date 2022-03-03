@@ -163,7 +163,6 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
-      testID="backButton"
     >
       <Text
         style={
@@ -260,7 +259,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
-      testID="nextButton"
+      testID="nextButtonX"
     >
       <Text
         style={

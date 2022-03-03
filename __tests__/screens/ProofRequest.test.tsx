@@ -1,0 +1,214 @@
+import {
+  CredentialRecord,
+  CredentialState,
+  IndyCredentialInfo,
+  ProofRecord,
+  ProofState,
+  RequestedAttribute,
+  RequestPresentationMessage,
+} from '@aries-framework/core'
+import { Attachment } from '@aries-framework/core/build/decorators/attachment/Attachment'
+import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
+import { act, cleanup, render } from '@testing-library/react-native'
+import React from 'react'
+
+import ProofRequest from '../../App/screens/ProofRequest'
+
+describe('displays a proof request screen', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  /**
+   * Scenario: View Presentation Request
+   * Given the holder has received a presentation request notification
+   * AND the holder selects a "presentation request notification" from the home screen
+   * AND they are brought to the presentation request screen
+   * THEN they see a presentation request
+   * AND they can see the verifier's name
+   * AND a list of claims being requested with their respectively matched VC claim value
+   * AND the most recent credential is initially suggested for each attribute
+   * AND a link to the details of the credential
+   * AND there is a "Decline" Button
+   * AND there is a "Share" Button
+   */
+  describe('with a proof request', () => {
+    const testEmail = 'test@email.com'
+    const testTime = '2022-02-11 20:00:18.180718'
+
+    const testCredentials = [
+      new CredentialRecord({
+        threadId: '1',
+        state: CredentialState.Done,
+        credentialAttributes: [
+          {
+            name: 'email',
+            value: testEmail,
+            toJSON: jest.fn(),
+          },
+          {
+            name: 'time',
+            value: testTime,
+            toJSON: jest.fn(),
+          },
+        ],
+      }),
+    ]
+
+    const testProofRequests = [
+      new ProofRecord({
+        threadId: '2',
+        state: ProofState.RequestReceived,
+        requestMessage: new RequestPresentationMessage({
+          requestPresentationAttachments: [
+            new Attachment({
+              data: {
+                json: {
+                  name: 'email',
+                  'mime-type': 'text/plain',
+                  value: testEmail,
+                },
+              },
+            }),
+            new Attachment({
+              data: {
+                json: {
+                  name: 'time',
+                  'mime-type': 'text/plain',
+                  value: testTime,
+                },
+              },
+            }),
+          ],
+        }),
+      }),
+    ]
+
+    const attributeBase = {
+      referent: '',
+      schemaId: '',
+      credentialDefinitionId: '',
+      toJSON: jest.fn(),
+    }
+
+    const testRetrievedCredentials = {
+      requestedAttributes: {
+        email: [
+          new RequestedAttribute({
+            credentialId: testCredentials[0].id,
+            revealed: true,
+            credentialInfo: new IndyCredentialInfo({
+              ...attributeBase,
+              attributes: { email: testEmail },
+            }),
+          }),
+        ],
+        time: [
+          new RequestedAttribute({
+            credentialId: testCredentials[0].id,
+            revealed: true,
+            credentialInfo: new IndyCredentialInfo({
+              ...attributeBase,
+              attributes: { time: testTime },
+            }),
+          }),
+        ],
+      },
+    }
+
+    beforeEach(() => {
+      jest.clearAllMocks()
+
+      // @ts-ignore
+      useProofById.mockReturnValue(testProofRequests[0])
+    })
+
+    test('displays a proof request with all claims available', async () => {
+      const { agent } = useAgent()
+
+      // @ts-ignore
+      agent?.proofs.getRequestedCredentialsForProofRequest.mockResolvedValue(testRetrievedCredentials)
+
+      const { getByText, getAllByText, queryByText, debug } = render(
+        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequests[0].id } } as any} />
+      )
+
+      await act(() => Promise.resolve())
+
+      const contact = getByText('ProofRequest.AContact', { exact: false })
+      const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
+      const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
+      const emailLabel = getByText(/Email/, { exact: false })
+      const emailValue = getByText(testEmail)
+      const timeLabel = getByText(/Time/, { exact: false })
+      const timeValue = getByText(testTime)
+      const detailsLinks = getAllByText('ProofRequest.Details', { exact: false })
+      const shareButton = getByText('Global.Share', { exact: false })
+      const declineButton = getByText('Global.Decline', { exact: false })
+
+      expect(contact).not.toBeNull()
+      expect(contact).toBeTruthy()
+      expect(missingInfo).toBeNull()
+      expect(emailLabel).not.toBeNull()
+      expect(emailLabel).toBeTruthy()
+      expect(emailValue).not.toBeNull()
+      expect(emailValue).toBeTruthy()
+      expect(timeLabel).not.toBeNull()
+      expect(timeLabel).toBeTruthy()
+      expect(timeValue).not.toBeNull()
+      expect(timeValue).toBeTruthy()
+      expect(missingClaim).toBeNull()
+      expect(detailsLinks.length).toBe(2)
+      expect(shareButton).not.toBeNull()
+      expect(declineButton).not.toBeNull()
+    })
+
+    test('displays a proof request with one or more claims not available', async () => {
+      const { agent } = useAgent()
+
+      // @ts-ignore
+      agent?.proofs.getRequestedCredentialsForProofRequest.mockResolvedValue({
+        requestedAttributes: { ...testRetrievedCredentials.requestedAttributes, time: [] },
+      })
+
+      const { getByText, getAllByText, queryByText } = render(
+        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequests[0].id } } as any} />
+      )
+
+      await act(() => Promise.resolve())
+
+      const contact = getByText('ProofRequest.AContact', { exact: false })
+      const missingInfo = getByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
+      const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
+      const emailLabel = getByText(/Email/, { exact: false })
+      const emailValue = getByText(testEmail)
+      const timeLabel = getByText(/Time/, { exact: false })
+      const timeValue = queryByText(testTime, { exact: false })
+      const detailsLinks = getAllByText('ProofRequest.Details', { exact: false })
+      const shareButton = getByText('Global.Share', { exact: false })
+      const declineButton = getByText('Global.Decline', { exact: false })
+
+      expect(contact).not.toBeNull()
+      expect(contact).toBeTruthy()
+      expect(missingInfo).not.toBeNull()
+      expect(missingInfo).toBeTruthy()
+      expect(emailLabel).not.toBeNull()
+      expect(emailLabel).toBeTruthy()
+      expect(emailValue).not.toBeNull()
+      expect(emailValue).toBeTruthy()
+      expect(timeLabel).not.toBeNull()
+      expect(timeLabel).toBeTruthy()
+      expect(timeValue).toBeNull()
+      expect(missingClaim).not.toBeNull()
+      expect(missingClaim).toBeTruthy()
+      expect(detailsLinks.length).toBe(1)
+      expect(shareButton).not.toBeNull()
+      expect(declineButton).not.toBeNull()
+    })
+  })
+})

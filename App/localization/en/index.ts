@@ -9,6 +9,7 @@ const translation = {
     "Confirm": "Confirm",
     "Accept": "Accept",
     "Reject": "Reject",
+    "Share": "Share",
     "Decline": "Decline",
     "Back": "Back",
     "Next": "Next",
@@ -20,11 +21,18 @@ const translation = {
     "SomethingWentWrong": "Something went wrong",
     "Done": "Done",
     "Skip": "Skip",
-    "View": "View"
+    "View": "View",
+    "Home": "Home",
+    "ErrorCode": "Error Code",
+    "Okay": "Okay"
   },
   "Language": {
     "English": "English",
     "French": "French",    
+  },
+  "Error": {
+    "Unknown": "Unknown Error",
+    "Problem": "A problem has occurred",
   },
   "Terms": {
     "TermsOfService": "Terms of Service",
@@ -58,18 +66,17 @@ const translation = {
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
-    "Hide": "Hide",
-    "Show": "Show",
-    "HideAll": "Hide all"
   },
   "Home": {
     "Welcome": "Welcome",
     "Notifications": "Notifications",
-    "NoNewUpdates": "You have no new notifications",
-    "NoCredentials": "You have no credentials in your wallet",
-    "ManyCredentials": "You have $_ credentials in your wallet",
-    "OneCredential": "You have 1 credential in your wallet",
-    "SeeAll": "See all"
+    "NoNewUpdates": "You have no new notifications.",
+    "NoCredentials": "You have no credentials in your wallet.",
+    "SeeAll": "See all",
+    "YouHave": "You have",
+    "Credential": "credential",
+    "Credentials": "credentials",
+    "InYourWallet": "in your wallet" 
   },
   "Scan":{
     "SuccessfullyAcceptedConnection":"Successfully Accepted Connection",
@@ -78,6 +85,11 @@ const translation = {
     "ConnectionAccepted": "Connection Accepted",
     "ConnectionNotFound": "Connection not found",
     "InvalidQrCode": "Invalid QR code. Please try again."
+  },
+  "Connection": {
+    "JustAMoment": "Just a moment while we make a secure connection...",
+    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
+    "BackToHome": "Go back to home"
   },
   "CredentialOffer": {
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
@@ -92,7 +104,8 @@ const translation = {
     "CredentialAddedToYourWallet": "Credential added to your wallet",
     "CredentialDeclined": "Credential declined",
     "CredentialOnTheWay": "Your credential is on the way",
-    "CredentialOffer": "New Credential Offer"
+    "CredentialOffer": "New Credential Offer",
+    "IsOfferingYouACredential": "is offering you a credential"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -104,13 +117,21 @@ const translation = {
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
-    "ProofRequest": "New Proof Request"
-  },  
+    "ProofRequest": "New Proof Request",
+    "NotAvailableInYourWallet": "Not available in your wallet",
+    "IsRequestng": "is requesting",
+    "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
+    "IsRequestingYouToShare": "is requesting you to share",
+    "WhichYouCanProvideFrom": "which you can provide from",
+    "AContact": "A contact",
+    "Details": "Details",
+    "SendingTheInformationSecurely": "Sending the information securely",
+    "InformationSentSuccessfully": "Information sent successfully",
+    "ProofRequestDeclined": "Proof request declined"
+  },
   "Settings": {
     "Version": "Version",
-    "AMA-RNVersion": "AMA-RN Version",
-    "VersionString": "0.0.1",
-    "AMA-RNVersionString": "0.1.0",
+    "VersionString": "0.0.0-0",
     "AppPreferences": "App Preferences",
     "AboutApp": "About App",
     "Language": "Language",
@@ -126,6 +147,11 @@ const translation = {
     "PermissionToUseCamera": "Permission to use camera",
     "WeNeedYourPermissionToUseYourCamera": "We need your permission to use your camera",
     "Ok": "Ok",
+  },
+  "Record": {
+    "Hide": "Hide",
+    "Show": "Show",
+    "HideAll": "Hide all"
   }
 }
 export default translation

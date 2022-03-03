@@ -1,0 +1,87 @@
+{
+  "_tags": {
+    "invitationKey": "EX7KbxyDhAUT8fup3TEV1uU7PGvo5G3jtjrcfEnxgsPm",
+    "role": "invitee",
+    "state": "complete",
+    "threadId": "cca56c54-ecfb-4a20-b173-e7428369bfd0",
+    "verkey": "5jdq2euzkwfUjnDRG58Tg8SxNJtpNAnFJSzDTaMEkt9B",
+    "mediatorId": "9aa8e73c-ef8d-47ca-bd70-bc168bd7143c",
+    "theirKey": "nLjwmJSURrbw6UQpXmZjixbyk9gbkaf2kZUngwdFX7q",
+    "theirDid": "2SBuq9fpLT8qUiQKr2RgBe",
+    "did": "9gtPKWtaUKxJir5YG2VPxX"
+  },
+  "metadata": {},
+  "id": "d7e7f641-e0cc-46bc-908a-f351e2486b03",
+  "createdAt": "2022-02-22T19:55:33.130Z",
+  "did": "9gtPKWtaUKxJir5YG2VPxX",
+  "didDoc": {
+    "@context": "https://w3id.org/did/v1",
+    "publicKey": [
+      {
+        "id": "9gtPKWtaUKxJir5YG2VPxX#1",
+        "controller": "9gtPKWtaUKxJir5YG2VPxX",
+        "type": "Ed25519VerificationKey2018",
+        "publicKeyBase58": "5jdq2euzkwfUjnDRG58Tg8SxNJtpNAnFJSzDTaMEkt9B"
+      }
+    ],
+    "service": [
+      {
+        "id": "9gtPKWtaUKxJir5YG2VPxX#IndyAgentService",
+        "serviceEndpoint": "http://mediator3.test.indiciotech.io:3000",
+        "type": "IndyAgent",
+        "priority": 0,
+        "recipientKeys": ["5jdq2euzkwfUjnDRG58Tg8SxNJtpNAnFJSzDTaMEkt9B"],
+        "routingKeys": ["DGYY31KpABLT4ydNHw11rRneEL8a41X4s6xqre2cAEbn"]
+      }
+    ],
+    "authentication": [
+      {
+        "publicKey": "9gtPKWtaUKxJir5YG2VPxX#1",
+        "type": "Ed25519SignatureAuthentication2018"
+      }
+    ],
+    "id": "9gtPKWtaUKxJir5YG2VPxX"
+  },
+  "verkey": "5jdq2euzkwfUjnDRG58Tg8SxNJtpNAnFJSzDTaMEkt9B",
+  "theirLabel": "faber.agent",
+  "state": "complete",
+  "role": "invitee",
+  "invitation": {
+    "@type": "https://didcomm.org/connections/1.0/invitation",
+    "@id": "3437a8f2-0645-4d33-8aea-d1274b873ac9",
+    "label": "faber.agent",
+    "serviceEndpoint": "http://b134-2604-3d08-2679-5400-c40f-e3b4-3beb-f0dc.ngrok.io",
+    "recipientKeys": ["EX7KbxyDhAUT8fup3TEV1uU7PGvo5G3jtjrcfEnxgsPm"]
+  },
+  "multiUseInvitation": false,
+  "mediatorId": "9aa8e73c-ef8d-47ca-bd70-bc168bd7143c",
+  "theirDid": "2SBuq9fpLT8qUiQKr2RgBe",
+  "theirDidDoc": {
+    "@context": "https://w3id.org/did/v1",
+    "publicKey": [
+      {
+        "id": "did:sov:2SBuq9fpLT8qUiQKr2RgBe#1",
+        "controller": "did:sov:2SBuq9fpLT8qUiQKr2RgBe",
+        "type": "Ed25519VerificationKey2018",
+        "publicKeyBase58": "nLjwmJSURrbw6UQpXmZjixbyk9gbkaf2kZUngwdFX7q"
+      }
+    ],
+    "service": [
+      {
+        "id": "did:sov:2SBuq9fpLT8qUiQKr2RgBe;indy",
+        "serviceEndpoint": "http://b134-2604-3d08-2679-5400-c40f-e3b4-3beb-f0dc.ngrok.io",
+        "type": "IndyAgent",
+        "priority": 0,
+        "recipientKeys": ["nLjwmJSURrbw6UQpXmZjixbyk9gbkaf2kZUngwdFX7q"]
+      }
+    ],
+    "authentication": [
+      {
+        "publicKey": "did:sov:2SBuq9fpLT8qUiQKr2RgBe#1",
+        "type": "Ed25519SignatureAuthentication2018"
+      }
+    ],
+    "id": "did:sov:2SBuq9fpLT8qUiQKr2RgBe"
+  },
+  "threadId": "cca56c54-ecfb-4a20-b173-e7428369bfd0"
+}
