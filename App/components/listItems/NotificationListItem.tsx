@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { t } = useTranslation()
+
   let onPress: GenericFn
   let title = ''
   let body = ''

@@ -103,12 +103,16 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       >
         <CameraViewContainer portrait={portraitMode}>
           <QRScannerClose onPress={() => navigation.goBack()}></QRScannerClose>
-          {error && (
-            <View style={styles.errorContainer}>
-              <Icon style={styles.icon} name="cancel" size={30}></Icon>
-              <Text style={{ color: ColorPallet.grayscale.white }}>{error.message}</Text>
-            </View>
-          )}
+          <View style={styles.errorContainer}>
+            {error ? (
+              <>
+                <Icon style={styles.icon} name="cancel" size={30}></Icon>
+                <Text>{error.message}</Text>
+              </>
+            ) : (
+              <Text style={{ height: 30, margin: 4 }}> </Text>
+            )}
+          </View>
           <View style={styles.viewFinderContainer}>
             <View style={styles.viewFinder} />
           </View>

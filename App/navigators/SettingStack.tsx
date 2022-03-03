@@ -1,21 +1,21 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Language from '../screens/Language'
 import Settings from '../screens/Settings'
-import { Screens, SettingsStackParams, Stacks } from '../types/navigators'
+import { Screens, SettingStackParams } from '../types/navigators'
 
-import ContactStack from './ContactStack'
 import defaultStackOptions from './defaultStackOptions'
 
 const SettingStack: React.FC = () => {
-  const Stack = createStackNavigator<SettingsStackParams>()
+  const Stack = createStackNavigator<SettingStackParams>()
+  const { t } = useTranslation()
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
-      <Stack.Screen name={Screens.Settings} component={Settings} />
+      <Stack.Screen name={Screens.Settings} component={Settings} options={{ headerBackTitle: t('Global.Back') }} />
       <Stack.Screen name={Screens.Language} component={Language} />
-      <Stack.Screen name={Stacks.ContactStack} component={ContactStack} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }

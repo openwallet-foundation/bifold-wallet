@@ -1,4 +1,5 @@
 import { RequestedAttribute } from '@aries-framework/core'
+import { NavigatorScreenParams } from '@react-navigation/core'
 
 export enum Screens {
   Tabs = 'Tabs',
@@ -31,10 +32,9 @@ export enum Stacks {
 }
 
 export type TabStackParams = {
-  [Stacks.HomeStack]: undefined
-  [Stacks.ScanStack]: undefined
-  [Stacks.CredentialStack]: undefined
-  [Stacks.ContactStack]: undefined
+  [Stacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
+  [Stacks.ScanStack]: NavigatorScreenParams<ScanStackParams>
+  [Stacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
 }
 
 export type AuthenticateStackParams = {
@@ -53,7 +53,6 @@ export type ContactStackParams = {
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
-  [Stacks.SettingStack]: undefined
 }
 
 export type HomeStackParams = {
@@ -66,15 +65,13 @@ export type HomeStackParams = {
     attributeName: string
     attributeCredentials: RequestedAttribute[]
   }
-  [Stacks.SettingStack]: undefined
 }
 
 export type ScanStackParams = {
   [Screens.Scan]: undefined
 }
 
-export type SettingsStackParams = {
+export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
-  [Stacks.ContactStack]: undefined
 }
