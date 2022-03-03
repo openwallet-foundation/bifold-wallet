@@ -1,7 +1,6 @@
 import { ProofRecord, RequestedAttribute } from '@aries-framework/core'
 import { useAgent, useCredentials } from '@aries-framework/react-hooks'
-import { RouteProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
@@ -20,10 +19,7 @@ import {
   proofRecordFromId,
 } from '../utils/helpers'
 
-interface ProofRequestAttributeDetailsProps {
-  navigation: StackNavigationProp<HomeStackParams>
-  route: RouteProp<HomeStackParams, Screens.ProofRequestAttributeDetails>
-}
+type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
 
 const styles = StyleSheet.create({
   headerTextContainer: {

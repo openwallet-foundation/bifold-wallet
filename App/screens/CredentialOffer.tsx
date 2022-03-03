@@ -1,9 +1,6 @@
-import type { RouteProp } from '@react-navigation/native'
-import type { StackNavigationProp } from '@react-navigation/stack'
-
 import { CredentialState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Alert, View, Text } from 'react-native'
@@ -15,7 +12,7 @@ import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
-import { Screens, Stacks, HomeStackParams, TabStackParams } from '../types/navigators'
+import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
@@ -24,10 +21,7 @@ import NotificationModal from 'components/modals/NotificationModal'
 import Record from 'components/record/Record'
 import Title from 'components/texts/Title'
 
-interface CredentialOfferProps {
-  navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
-  route: RouteProp<HomeStackParams, Screens.CredentialOffer>
-}
+type CredentialOfferProps = StackScreenProps<HomeStackParams, Screens.CredentialOffer>
 
 const styles = StyleSheet.create({
   headerTextContainer: {
@@ -189,8 +183,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         visible={successModalVisible}
         onDone={() => {
           setSuccessModalVisible(false)
-          navigation.pop()
-          navigation.navigate(Stacks.CredentialStack)
+          navigation.getParent()?.navigate(Stacks.CredentialStack, { screen: Screens.Credentials })
         }}
       >
         <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
@@ -202,8 +195,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         visible={declinedModalVisible}
         onDone={() => {
           setDeclinedModalVisible(false)
-          navigation.pop()
-          navigation.navigate(Stacks.HomeStack)
+          navigation.navigate(Screens.Home)
         }}
       >
         <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
