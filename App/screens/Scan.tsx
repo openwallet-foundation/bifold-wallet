@@ -2,7 +2,7 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 
 import { Agent, ConnectionState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message'
@@ -10,15 +10,13 @@ import Toast from 'react-native-toast-message'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { QrCodeScanError } from '../types/error'
-import { HomeStackParams, Screens } from '../types/navigators'
+import { ScanStackParams, Screens, Stacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
 import { ToastType } from 'components/toast/BaseToast'
 
-interface ScanProps {
-  navigation: StackNavigationProp<HomeStackParams>
-}
+type ScanProps = StackScreenProps<ScanStackParams>
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
@@ -59,7 +57,6 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   }
 
   const handleInvitation = async (url: string): Promise<void> => {
-    // TODO: Change to a full screen modal
     displayPendingMessage()
     const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
       autoAcceptConnection: true,
@@ -77,7 +74,8 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         text1: t('Global.Success'),
         text2: t('Scan.ConnectionAccepted'),
       })
-      navigation.navigate(Screens.Home)
+
+      navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Home })
     }
   }, [connection])
 
@@ -94,7 +92,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
       displaySuccessMessage()
 
-      navigation.navigate(Screens.Home)
+      navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Home })
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
       setQrCodeScanError(error)

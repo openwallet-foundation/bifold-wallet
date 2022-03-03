@@ -138,9 +138,11 @@ const translation = {
   },
   "TabStack": {
     "Home": "Home",
-    "Contacts": "Contacts",
     "Scan": "Scan",
     "Credentials": "Credentials",
+  },
+  "RootStack": {
+    "Contacts": "Contacts",
     "Settings": "Settings"
   },
   "QRScanner": {

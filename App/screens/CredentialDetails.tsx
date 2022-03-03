@@ -1,8 +1,7 @@
-import type { StackNavigationProp } from '@react-navigation/stack'
+import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialRecord } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
-import { RouteProp } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -15,10 +14,7 @@ import CredentialCard from 'components/misc/CredentialCard'
 import Record from 'components/record/Record'
 import { ToastType } from 'components/toast/BaseToast'
 
-interface CredentialDetailsProps {
-  navigation: StackNavigationProp<CredentialStackParams>
-  route: RouteProp<CredentialStackParams, Screens.CredentialDetails>
-}
+type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
 const styles = StyleSheet.create({
   headerText: {

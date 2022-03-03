@@ -1,9 +1,7 @@
-import type { RouteProp } from '@react-navigation/native'
-import type { StackNavigationProp } from '@react-navigation/stack'
+import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
@@ -14,7 +12,7 @@ import ProofDeclined from '../assets/img/proof-declined.svg'
 import ProofPending from '../assets/img/proof-pending.svg'
 import ProofSuccess from '../assets/img/proof-success.svg'
 import { ColorPallet, TextTheme } from '../theme'
-import { HomeStackParams, Screens, Stacks, TabStackParams } from '../types/navigators'
+import { HomeStackParams, Screens } from '../types/navigators'
 import {
   connectionRecordFromId,
   firstMatchingCredentialAttributeValue,
@@ -31,10 +29,7 @@ import Title from 'components/texts/Title'
 import { ToastType } from 'components/toast/BaseToast'
 import { Attribute } from 'types/record'
 
-interface ProofRequestProps {
-  navigation: StackNavigationProp<HomeStackParams> & BottomTabNavigationProp<TabStackParams>
-  route: RouteProp<HomeStackParams, Screens.ProofRequest>
-}
+type ProofRequestProps = StackScreenProps<HomeStackParams, Screens.ProofRequest>
 
 interface ProofRequestAttribute extends Attribute {
   values?: RequestedAttribute[]
@@ -315,7 +310,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setSuccessModalVisible(false)
           navigation.pop()
-          navigation.navigate(Stacks.HomeStack)
+          navigation.navigate(Screens.Home)
         }}
       >
         <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
@@ -327,7 +322,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate(Stacks.HomeStack)
+          navigation.navigate(Screens.Home)
         }}
       >
         <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
