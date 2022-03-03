@@ -5,7 +5,6 @@ import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Toast from 'react-native-toast-message'
 
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
@@ -14,7 +13,6 @@ import { ScanStackParams, Screens, Stacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
-import { ToastType } from 'components/toast/BaseToast'
 
 type ScanProps = StackScreenProps<ScanStackParams>
 
@@ -67,10 +65,9 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
-      Toast.show({
-        type: ToastType.Success,
-        text1: t('Global.Success'),
-        text2: t('Scan.ConnectionAccepted'),
+      dispatch({
+        type: DispatchAction.ConnectionPending,
+        payload: [{ ConnectionPending: false }],
       })
 
       navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Home })

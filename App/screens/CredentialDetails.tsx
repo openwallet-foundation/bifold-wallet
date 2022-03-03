@@ -85,12 +85,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       footer={() => (
         <View style={{ marginBottom: 30 }}>
           <TouchableOpacity activeOpacity={1}>
-            <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.PrivacyPolicy')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1}>
-            <Text style={[styles.footerText, styles.link]}>{t('CredentialDetails.TermsAndConditions')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1}>
             <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
               {t('CredentialDetails.RemoveFromWallet')}
             </Text>
