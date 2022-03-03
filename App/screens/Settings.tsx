@@ -1,4 +1,4 @@
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -6,13 +6,11 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
-import { Screens, SettingsStackParams, Stacks } from '../types/navigators'
+import { Screens, SettingStackParams } from '../types/navigators'
 
 import { SafeAreaScrollView, Text } from 'components'
 
-interface Props {
-  navigation: StackNavigationProp<SettingsStackParams>
-}
+type SettingsProps = StackScreenProps<SettingStackParams>
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Settings: React.FC<Props> = ({ navigation }) => {
+const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t } = useTranslation()
 
   return (
@@ -57,8 +55,8 @@ const Settings: React.FC<Props> = ({ navigation }) => {
             <Text>{`${getVersion()}-${getBuildNumber()}`}</Text>
           </View>
 
-          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Stacks.ContactStack)}>
-            <Text>{t('TabStack.Contacts')}</Text>
+          <TouchableOpacity style={styles.row} onPress={() => navigation.getParent()?.navigate(Screens.Contacts)}>
+            <Text>{t('RootStack.Contacts')}</Text>
             <Icon name={'chevron-right'} size={25} color={Colors.text} />
           </TouchableOpacity>
         </View>

@@ -3,9 +3,8 @@ import React from 'react'
 
 import CredentialDetails from '../screens/CredentialDetails'
 import ListCredentials from '../screens/ListCredentials'
-import { CredentialStackParams, Screens, Stacks } from '../types/navigators'
+import { CredentialStackParams, Screens } from '../types/navigators'
 
-import SettingStack from './SettingStack'
 import defaultStackOptions from './defaultStackOptions'
 
 import SettingsCog from 'components/misc/SettingsCog'
@@ -23,7 +22,6 @@ const CredentialStack: React.FC = () => {
         })}
       />
       <Stack.Screen name={Screens.CredentialDetails} component={CredentialDetails} />
-      <Stack.Screen name={Stacks.SettingStack} component={SettingStack} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }

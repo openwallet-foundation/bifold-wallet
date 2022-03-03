@@ -1,6 +1,6 @@
 import { CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
@@ -17,9 +17,7 @@ const { width } = Dimensions.get('window')
 const offset = 25
 const offsetPadding = 5
 
-interface HomeProps {
-  navigation: StackNavigationProp<HomeStackParams>
-}
+type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const styles = StyleSheet.create({
   container: {
