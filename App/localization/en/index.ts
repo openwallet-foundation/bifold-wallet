@@ -53,7 +53,8 @@ const translation = {
   }, 
   "ContactDetails": {
     "Created": "Created",
-    "ConnectionState": "Connection State"
+    "ConnectionState": "Connection State",
+    "AContact": "A contact",
   },
   "Credentials": {
     "CredentialsNotFound": "Credentials not found",
@@ -124,7 +125,6 @@ const translation = {
     "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
     "IsRequestingYouToShare": "is requesting you to share",
     "WhichYouCanProvideFrom": "which you can provide from",
-    "AContact": "A contact",
     "Details": "Details",
     "SendingTheInformationSecurely": "Sending the information securely",
     "InformationSentSuccessfully": "Information sent successfully",

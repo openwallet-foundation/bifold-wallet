@@ -129,8 +129,8 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       ListHeaderComponent={() => (
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText}>
-            <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title> {t('ProofRequest.IsRequestng')}
-            :
+            <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+            {t('ProofRequest.IsRequestng')}:
           </Text>
           <Title style={{ paddingVertical: 16 }}>{attributeName}</Title>
           <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
