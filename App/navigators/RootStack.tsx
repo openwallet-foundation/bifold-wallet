@@ -14,6 +14,7 @@ import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors } from '../theme'
+import { GenericFn, StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
 import ConnectStack from './ConnectStack'
@@ -21,8 +22,6 @@ import ContactStack from './ContactStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
-
-import { GenericFn, StateFn } from 'types/fn'
 
 const RootStack: React.FC = () => {
   const [authenticated, setAuthenticated] = useState(false)
@@ -64,7 +63,7 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
-            title: 'Onboarding',
+            title: t('Screens.Onboarding'),
             headerTintColor: Colors.white,
             headerShown: true,
             gestureEnabled: false,
@@ -99,7 +98,7 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Screens.Terms}
           options={() => ({
-            title: 'Terms & Conditions',
+            title: t('Screens.Terms'),
             headerTintColor: Colors.white,
             headerShown: true,
             headerLeft: () => false,
