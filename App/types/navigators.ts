@@ -2,39 +2,51 @@ import { RequestedAttribute } from '@aries-framework/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 
 export enum Screens {
-  Tabs = 'Tabs',
-  Connect = 'Connect',
+  Splash = 'Splash',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
   CreatePin = 'Create 6-Digit Pin',
-  Splash = 'Splash',
   EnterPin = 'Enter Pin',
-  Contacts = 'Contacts',
-  ContactDetails = 'Contact Details',
+  Home = 'Home',
+  Scan = 'Scan',
   Credentials = 'Credentials',
   CredentialDetails = 'Credential Details',
-  Home = 'Home',
   Notifications = 'Notifications',
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
   ProofRequestAttributeDetails = 'Proof Request Attribute Details',
-  Scan = 'Scan',
   Settings = 'Settings',
   Language = 'Language',
+  Contacts = 'Contacts',
+  ContactDetails = 'Contact Details',
 }
 
 export enum Stacks {
+  TabStack = 'Tab Stack',
   HomeStack = 'Home Stack',
-  ScanStack = 'Scan Stack',
+  ConnectStack = 'Connect Stack',
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
   ContactStack = 'Contacts Stack',
 }
 
+export enum TabStacks {
+  HomeStack = 'Tab Home Stack',
+  ConnectStack = 'Tab Connect Stack',
+  CredentialStack = 'Tab Credential Stack',
+}
+
+export type RootStackParams = {
+  [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
+  [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
+  [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+}
+
 export type TabStackParams = {
-  [Stacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
-  [Stacks.ScanStack]: NavigatorScreenParams<ScanStackParams>
-  [Stacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
+  [TabStacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
+  [TabStacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [TabStacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
 }
 
 export type AuthenticateStackParams = {
@@ -67,7 +79,7 @@ export type HomeStackParams = {
   }
 }
 
-export type ScanStackParams = {
+export type ConnectStackParams = {
   [Screens.Scan]: undefined
 }
 

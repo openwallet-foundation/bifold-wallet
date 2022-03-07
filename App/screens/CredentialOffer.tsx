@@ -12,7 +12,7 @@ import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
-import { HomeStackParams, Screens, Stacks } from '../types/navigators'
+import { HomeStackParams, Screens, TabStacks } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
@@ -177,7 +177,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onDone={() => {
           setSuccessModalVisible(false)
           navigation.pop()
-          navigation.getParent()?.navigate(Stacks.CredentialStack, { screen: Screens.Credentials })
+          navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
         }}
       >
         <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>

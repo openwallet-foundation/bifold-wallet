@@ -14,10 +14,10 @@ import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors } from '../theme'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
+import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
-import ScanStack from './ScanStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
@@ -47,10 +47,10 @@ const RootStack: React.FC = () => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Tabs} component={TabStack} />
-        <Stack.Screen name={Screens.Connect} component={ScanStack} options={{ presentation: 'modal' }} />
-        <Stack.Screen name={Screens.Settings} component={SettingStack} />
-        <Stack.Screen name={Screens.Contacts} component={ContactStack} />
+        <Stack.Screen name={Stacks.TabStack} component={TabStack} />
+        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
+        <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
+        <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
       </Stack.Navigator>
     )
   }
