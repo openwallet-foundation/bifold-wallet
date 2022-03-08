@@ -1,9 +1,15 @@
-import { useFocusEffect } from '@react-navigation/native'
-import React, { Ref, useCallback, useRef, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { Ref, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Animated, BackHandler, Dimensions, FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import HeaderRight from '../components/buttons/HeaderRight'
 import { Pagination } from '../components/misc/Pagination'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 const { width } = Dimensions.get('window')
 
@@ -27,6 +33,9 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
   const [activeIndex, setActiveIndex] = useState(0)
   const flatList: Ref<FlatList> = useRef(null)
   const scrollX = useRef(new Animated.Value(0)).current
+  const { t } = useTranslation()
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const [, dispatch] = useContext(Context)
 
   const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
     if (!viewableItems[0]) {
@@ -71,13 +80,37 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
     []
   )
 
+  const onSkipTouched = () => {
+    dispatch({
+      type: DispatchAction.SetTutorialCompletionStatus,
+      payload: [{ DidCompleteTutorial: true }],
+    })
+
+    navigation.navigate(Screens.Terms)
+  }
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRight title={t('Global.Skip')} onPress={onSkipTouched} />,
+    })
+
+    if (activeIndex + 1 === pages.length) {
+      navigation.setOptions({
+        headerRight: () => false,
+      })
+    }
+  }, [activeIndex])
+
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
         BackHandler.exitApp()
+
         return true
       }
+
       BackHandler.addEventListener('hardwareBackPress', onBackPress)
+
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
     }, [])
   )
