@@ -178,7 +178,9 @@ exports[`Onboarding Renders correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        Back
+      </Text>
     </View>
     <View
       style={
@@ -275,7 +277,9 @@ exports[`Onboarding Renders correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        Next
+      </Text>
     </View>
   </View>
 </RNCSafeAreaView>
