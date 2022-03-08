@@ -2,12 +2,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
 import Scan from '../screens/Scan'
-import { ScanStackParams, Screens } from '../types/navigators'
+import { ConnectStackParams, Screens } from '../types/navigators'
 
 import defaultStackOptions from './defaultStackOptions'
 
-const ScanStack: React.FC = () => {
-  const Stack = createStackNavigator<ScanStackParams>()
+const ConnectStack: React.FC = () => {
+  const Stack = createStackNavigator<ConnectStackParams>()
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerShown: false }}>
@@ -16,4 +16,4 @@ const ScanStack: React.FC = () => {
   )
 }
 
-export default ScanStack
+export default ConnectStack

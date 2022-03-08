@@ -6,7 +6,7 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
-import { Screens, SettingStackParams } from '../types/navigators'
+import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 
 import { SafeAreaScrollView, Text } from 'components'
 
@@ -55,7 +55,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             <Text>{`${getVersion()}-${getBuildNumber()}`}</Text>
           </View>
 
-          <TouchableOpacity style={styles.row} onPress={() => navigation.getParent()?.navigate(Screens.Contacts)}>
+          <TouchableOpacity
+            style={styles.row}
+            onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
+          >
             <Text>{t('RootStack.Contacts')}</Text>
             <Icon name={'chevron-right'} size={25} color={Colors.text} />
           </TouchableOpacity>

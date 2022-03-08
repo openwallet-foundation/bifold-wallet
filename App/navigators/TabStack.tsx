@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useNotifications } from '../hooks/notifcations'
 import { ColorPallet, TextTheme } from '../theme'
-import { Screens, Stacks, TabStackParams } from '../types/navigators'
+import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
@@ -37,7 +37,7 @@ const TabStack: React.FC = () => {
         }}
       >
         <Tab.Screen
-          name={Stacks.HomeStack}
+          name={TabStacks.HomeStack}
           component={HomeStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
@@ -61,7 +61,7 @@ const TabStack: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name={Stacks.ScanStack}
+          name={TabStacks.ConnectStack}
           options={{
             tabBarIcon: () => (
               <View
@@ -100,14 +100,14 @@ const TabStack: React.FC = () => {
           listeners={({ navigation }) => ({
             tabPress: (e) => {
               e.preventDefault()
-              navigation.navigate(Screens.Connect)
+              navigation.navigate(Stacks.ConnectStack, { screen: Screens.Scan })
             },
           })}
         >
           {() => <View />}
         </Tab.Screen>
         <Tab.Screen
-          name={Stacks.CredentialStack}
+          name={TabStacks.CredentialStack}
           component={CredentialStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
