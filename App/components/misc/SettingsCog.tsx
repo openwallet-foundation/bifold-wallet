@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { ColorPallet } from '../../theme'
-import { Screens, SettingStackParams } from '../../types/navigators'
+import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 
 const styles = StyleSheet.create({
   button: {
@@ -14,10 +14,13 @@ const styles = StyleSheet.create({
 })
 
 const SettingsCog: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<SettingStackParams>>()
+  const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
 
   return (
-    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(Screens.Settings)}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => navigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })}
+    >
       <Icon name="cog" size={24} color={ColorPallet.grayscale.white}></Icon>
     </TouchableOpacity>
   )

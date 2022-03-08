@@ -1,5 +1,5 @@
 import { CredentialState } from '@aries-framework/core'
-import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +12,8 @@ import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
-import { HomeStackParams, Screens, Stacks } from '../types/navigators'
+import { HomeStackParams, Screens, TabStacks } from '../types/navigators'
+import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
@@ -53,19 +54,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const credential = useCredentialById(credentialId)
 
-  if (!credential) {
-    throw new Error('Unable to fetch credential from AFJ')
-  }
-
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
   }
 
-  // @ts-ignore next-line
-  const { invitation } = useConnectionById(credential.connectionId)
-
-  if (!invitation) {
-    throw new Error('Unable to invitation from AFJ')
+  if (!credential) {
+    throw new Error('Unable to fetch credential from AFJ')
   }
 
   useEffect(() => {
@@ -82,21 +76,18 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }, [credential])
 
   const handleAcceptPress = async () => {
-    setButtonsVisible(false)
-    setPendingModalVisible(true)
-
     try {
+      setButtonsVisible(false)
+      setPendingModalVisible(true)
       await agent.credentials.acceptOffer(credential.id)
     } catch (e: unknown) {
       setButtonsVisible(true)
       setPendingModalVisible(false)
-
       const error = new BifoldError(
         'Unable to accept offer',
         'There was a problem while accepting the credential offer.',
         1024
       )
-
       dispatch({
         type: DispatchAction.SetError,
         payload: [{ error }],
@@ -111,9 +102,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
-          setButtonsVisible(false)
-
           try {
+            setButtonsVisible(false)
             await agent.credentials.declineOffer(credential.id)
           } catch (e: unknown) {
             const error = new BifoldError(
@@ -131,6 +121,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     ])
   }
 
+  const connection = connectionRecordFromId(credential.connectionId)
+
   return (
     <>
       <Record
@@ -138,7 +130,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           <>
             <View style={styles.headerTextContainer}>
               <Text style={styles.headerText}>
-                <Title>{invitation.label}</Title> {t('CredentialOffer.IsOfferingYouACredential')}
+                <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                {t('CredentialOffer.IsOfferingYouACredential')}
               </Text>
             </View>
             <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
@@ -183,7 +176,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         visible={successModalVisible}
         onDone={() => {
           setSuccessModalVisible(false)
-          navigation.getParent()?.navigate(Stacks.CredentialStack, { screen: Screens.Credentials })
+          navigation.pop()
+          navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
         }}
       >
         <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
@@ -195,6 +189,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         visible={declinedModalVisible}
         onDone={() => {
           setDeclinedModalVisible(false)
+          navigation.pop()
           navigation.navigate(Screens.Home)
         }}
       >

@@ -9,12 +9,12 @@ import { useTranslation } from 'react-i18next'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { QrCodeScanError } from '../types/error'
-import { ScanStackParams, Screens, Stacks } from '../types/navigators'
+import { ConnectStackParams, Screens, TabStacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
 
 import { QRScanner } from 'components'
 
-type ScanProps = StackScreenProps<ScanStackParams>
+type ScanProps = StackScreenProps<ConnectStackParams>
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
@@ -70,7 +70,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         payload: [{ ConnectionPending: false }],
       })
 
-      navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Home })
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     }
   }, [connection])
 
@@ -87,7 +87,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
       displaySuccessMessage()
 
-      navigation.getParent()?.navigate(Stacks.HomeStack, { screen: Screens.Home })
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
       setQrCodeScanError(error)

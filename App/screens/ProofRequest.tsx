@@ -1,24 +1,22 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
-import React, { useState, useEffect } from 'react'
+import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import React, { useState, useEffect, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import Toast from 'react-native-toast-message'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import ProofDeclined from '../assets/img/proof-declined.svg'
 import ProofPending from '../assets/img/proof-pending.svg'
 import ProofSuccess from '../assets/img/proof-success.svg'
+import { Context } from '../store/Store'
+import { DispatchAction } from '../store/reducer'
 import { ColorPallet, TextTheme } from '../theme'
+import { BifoldError } from '../types/error'
 import { HomeStackParams, Screens } from '../types/navigators'
-import {
-  connectionRecordFromId,
-  firstMatchingCredentialAttributeValue,
-  getConnectionName,
-  proofRecordFromId,
-} from '../utils/helpers'
+import { Attribute } from '../types/record'
+import { connectionRecordFromId, firstMatchingCredentialAttributeValue, getConnectionName } from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 import ActivityLogLink from 'components/misc/ActivityLogLink'
@@ -26,8 +24,6 @@ import NotificationModal from 'components/modals/NotificationModal'
 import Record from 'components/record/Record'
 import RecordAttribute from 'components/record/RecordAttribute'
 import Title from 'components/texts/Title'
-import { ToastType } from 'components/toast/BaseToast'
-import { Attribute } from 'types/record'
 
 type ProofRequestProps = StackScreenProps<HomeStackParams, Screens.ProofRequest>
 
@@ -60,8 +56,14 @@ const styles = StyleSheet.create({
 })
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
+  if (!route?.params) {
+    throw new Error('ProofRequest route prams were not set properly')
+  }
+
+  const { proofId } = route?.params
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [, dispatch] = useContext(Context)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
@@ -72,47 +74,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     []
   )
 
-  if (!agent?.proofs) {
-    Toast.show({
-      type: ToastType.Error,
-      text1: t('Global.Failure'),
-      text2: t('Global.SomethingWentWrong'),
-    })
-    navigation.goBack()
-    return null
+  const proof = useProofById(proofId)
+
+  if (!agent) {
+    throw new Error('Unable to fetch agent from AFJ')
   }
-
-  const anyUnavailableCredentialAttributes = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
-    attributes.some(([, values]) => !values?.length)
-
-  const getProofRecord = (proofId?: string): ProofRecord | void => {
-    try {
-      const proof = proofRecordFromId(proofId)
-      if (!proof) {
-        throw new Error(t('ProofRequest.ProofNotFound'))
-      }
-      return proof
-    } catch (e: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (e as Error)?.message || t('Global.Failure'),
-      })
-      navigation.goBack()
-    }
-  }
-
-  const { proofId } = route?.params
-  const proof = getProofRecord(proofId)
 
   if (!proof) {
-    Toast.show({
-      type: ToastType.Error,
-      text1: t('Global.Failure'),
-      text2: t('ProofRequest.ProofNotFound'),
-    })
-    navigation.goBack()
-    return null
+    throw new Error('Unable to fetch proof from AFJ')
   }
 
   useEffect(() => {
@@ -125,13 +94,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       setRetrievedCredentialAttributes(Object.entries(creds?.requestedAttributes || {}))
     }
 
-    updateRetrievedCredentials(proof).catch((e: unknown) => {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (e as Error)?.message || t('Global.Failure'),
+    updateRetrievedCredentials(proof).catch(() => {
+      const error = new BifoldError(
+        'Unable to update retrieved credentials',
+        'There was a problem while updating retrieved credentials.',
+        1026
+      )
+      dispatch({
+        type: DispatchAction.SetError,
+        payload: [{ error }],
       })
-      navigation.goBack()
     })
   }, [])
 
@@ -148,15 +120,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [proof])
 
+  const anyUnavailableCredentialAttributes = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
+    attributes.some(([, values]) => !values?.length)
+
   const handleAcceptPress = async () => {
-    setButtonsVisible(false)
-    setPendingModalVisible(true)
-    Toast.show({
-      type: ToastType.Info,
-      text1: t('Global.Info'),
-      text2: t('ProofRequest.AcceptingProof'),
-    })
     try {
+      setButtonsVisible(false)
+      setPendingModalVisible(true)
       const automaticRequestedCreds =
         retrievedCredentials && agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
       if (!automaticRequestedCreds) {
@@ -164,36 +134,39 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       }
       await agent.proofs.acceptRequest(proof.id, automaticRequestedCreds)
     } catch (e: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (e as Error)?.message || t('Global.Failure'),
-      })
       setButtonsVisible(true)
       setPendingModalVisible(false)
+      const error = new BifoldError(
+        'Unable to accept proof request',
+        'There was a problem while accepting the proof request.',
+        1025
+      )
+      dispatch({
+        type: DispatchAction.SetError,
+        payload: [{ error }],
+      })
     }
   }
 
-  const handleRejectPress = async () => {
+  const handleDeclinePress = async () => {
     Alert.alert(t('ProofRequest.RejectThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
       { text: t('Global.Cancel'), style: 'cancel' },
       {
         text: t('Global.Confirm'),
         style: 'destructive',
         onPress: async () => {
-          Toast.show({
-            type: ToastType.Info,
-            text1: t('Global.Info'),
-            text2: t('ProofRequest.RejectingProof'),
-          })
           try {
+            setButtonsVisible(false)
             await agent.proofs.declineRequest(proof.id)
-            Toast.hide()
           } catch (e: unknown) {
-            Toast.show({
-              type: ToastType.Error,
-              text1: t('Global.Failure'),
-              text2: (e as Error)?.message || t('Global.Failure'),
+            const error = new BifoldError(
+              'Unable to reject proof request',
+              'There was a problem while rejecting the proof request.',
+              1025
+            )
+            dispatch({
+              type: DispatchAction.SetError,
+              payload: [{ error }],
             })
           }
         },
@@ -217,13 +190,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   size={TextTheme.headingOne.fontSize}
                 ></Icon>
                 <Text style={styles.headerText}>
-                  <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                  <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
               <Text style={styles.headerText}>
-                <Title>{getConnectionName(connection) || t('ProofRequest.AContact')}</Title>{' '}
+                <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                 {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
             )}
@@ -243,7 +216,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
               <Button
                 title={t('Global.Decline')}
                 buttonType={ButtonType.Secondary}
-                onPress={handleRejectPress}
+                onPress={handleDeclinePress}
                 disabled={!buttonsVisible}
               />
             </View>
