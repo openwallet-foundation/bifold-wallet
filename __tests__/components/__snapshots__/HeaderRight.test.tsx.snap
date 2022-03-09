@@ -36,28 +36,33 @@ exports[`Header Right Button Component Renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#FFFFFF",
-          "fontWeight": "bold",
-          "marginRight": 4,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginRight": 4,
+          },
+        ]
       }
     >
       Hello Header
     </Text>
     <
       fill="#FFFFFF"
-      height={15}
+      height={14}
       style={
-        Object {
-          "transform": Array [
-            Object {
-              "rotate": "180deg",
-            },
-          ],
-        }
+        Array [
+          Object {
+            "transform": Array [
+              Object {
+                "rotate": "180deg",
+              },
+            ],
+          },
+        ]
       }
-      width={15}
+      width={14}
     />
   </View>
 </View>
