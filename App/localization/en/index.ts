@@ -155,6 +155,10 @@ const translation = {
     "Hide": "Hide",
     "Show": "Show",
     "HideAll": "Hide all"
+  },
+  "Screens": {
+    "Onboarding": "Onboarding",
+    "Terms": "Terms & Conditions"
   }
 }
 export default translation

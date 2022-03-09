@@ -1,11 +1,9 @@
+import { render } from '@testing-library/react-native'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
-import { create } from 'react-test-renderer'
 
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
 import { Colors } from '../../App/theme'
-
-const markTutorialFin = jest.fn()
 
 export const carousel: OnboardingStyleSheet = StyleSheet.create({
   container: {
@@ -49,7 +47,7 @@ const pages = [
 
 describe('Onboarding', () => {
   it('Renders correctly', () => {
-    const tree = create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />).toJSON()
+    const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -62,9 +60,11 @@ describe('Onboarding', () => {
   //   expect(markTutorialFin).toBeCalledTimes(1)
   // })
 
-  it('Pages exist', () => {
-    const tree = create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />)
-    const foundPages = tree.root!.findAllByType(Text).filter((e: any) => e.props.testID === 'bodyText')
+  it('Pages exist', async () => {
+    const { findAllByTestId } = render(
+      <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
+    )
+    const foundPages = await findAllByTestId('bodyText')
 
     expect(foundPages.length).toBe(2)
   })
