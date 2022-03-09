@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import Arrow from '../../assets/icons/large-arrow.svg'
-import { ColorPallet, Colors, TextTheme } from '../../theme'
+import { TextTheme } from '../../theme'
 
 interface HeaderButtonProps {
   title: string
