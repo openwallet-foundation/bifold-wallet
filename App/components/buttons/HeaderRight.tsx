@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import Arrow from '../../assets/icons/large-arrow.svg'
-import { TextTheme } from '../../theme'
+import { ColorPallet, TextTheme } from '../../theme'
 
 interface HeaderButtonProps {
   title: string
@@ -21,6 +21,7 @@ const style = StyleSheet.create({
   },
   title: {
     ...TextTheme.label,
+    color: ColorPallet.grayscale.white,
     marginRight: 4,
   },
   icon: {
@@ -41,7 +42,7 @@ const HeaderRight: React.FC<HeaderButtonProps> = ({ title, accessibilityLabel, o
         <Arrow
           height={TextTheme.label.fontSize}
           width={TextTheme.label.fontSize}
-          fill={TextTheme.label.color}
+          fill={ColorPallet.grayscale.white}
           style={[style.icon]}
         />
       </View>
