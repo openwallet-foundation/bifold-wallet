@@ -30,37 +30,10 @@ const App = () => {
 
   initStoredLanguage()
 
-  const initAgent = async () => {
-    const newAgent = new Agent(
-      {
-        label: 'Aries Bifold',
-        mediatorConnectionsInvite: Config.MEDIATOR_URL,
-        mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-        walletConfig: { id: 'wallet4', key: '123' },
-        autoAcceptConnections: true,
-        autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-        logger: new ConsoleLogger(LogLevel.trace),
-        indyLedgers,
-        connectToIndyLedgersOnStartup: false,
-      },
-      agentDependencies
-    )
-
-    const wsTransport = new WsOutboundTransport()
-    const httpTransport = new HttpOutboundTransport()
-
-    newAgent.registerOutboundTransport(wsTransport)
-    newAgent.registerOutboundTransport(httpTransport)
-
-    await newAgent.initialize()
-    setAgent(newAgent)
-  }
-
   useEffect(() => {
     // Hide the native splash / loading screen so that our
     // RN version can be displayed.
     SplashScreen.hide()
-    initAgent()
   }, [])
 
   return (
@@ -74,7 +47,7 @@ const App = () => {
         />
         <ConnectionModal />
         <ErrorModal />
-        <RootStack />
+        <RootStack setAgent={setAgent} />
         <Toast topOffset={15} config={toastConfig} />
       </AgentProvider>
     </StoreProvider>
