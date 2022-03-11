@@ -5,13 +5,12 @@ import { SvgProps } from 'react-native-svg'
 import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import SecureImage from '../assets/img/secure-image.svg'
+import Button, { ButtonType } from '../components/buttons/Button'
 import { Colors } from '../theme'
+import { GenericFn } from '../types/fn'
+import { testIdWithKey } from '../utils/testable'
 
 import { OnboardingStyleSheet } from './Onboarding'
-
-import { Button } from 'components'
-import { ButtonType } from 'components/buttons/Button'
-import { GenericFn } from 'types/fn'
 
 const imageDisplayOptions = {
   fill: Colors.text,
@@ -91,8 +90,9 @@ const customPages = (onTutorialCompleted: GenericFn) => {
       </View>
       <View style={{ marginTop: 'auto', marginBottom: 20, paddingHorizontal: 20 }}>
         <Button
-          title={'Get Started!'}
+          title={'Get Started'}
           accessibilityLabel={'Get Started'}
+          testID={testIdWithKey('GetStarted')}
           onPress={onTutorialCompleted}
           buttonType={ButtonType.Primary}
         />
