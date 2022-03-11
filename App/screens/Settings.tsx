@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { borderRadius, ColorPallet, Colors, TextTheme } from '../theme'
+import { borderRadius, ColorPallet, TextTheme } from '../theme'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 
 import { SafeAreaScrollView, Text } from 'components'
@@ -44,7 +44,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         <View style={styles.rowGroup}>
           <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Screens.Language)}>
             <Text>{t('Settings.Language')}</Text>
-            <Icon name={'chevron-right'} size={25} color={Colors.text} />
+            <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
           </TouchableOpacity>
         </View>
 
@@ -60,7 +60,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
           >
             <Text>{t('RootStack.Contacts')}</Text>
-            <Icon name={'chevron-right'} size={25} color={Colors.text} />
+            <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
           </TouchableOpacity>
         </View>
       </View>
