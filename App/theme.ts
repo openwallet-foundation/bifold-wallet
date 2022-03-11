@@ -166,17 +166,8 @@ interface ColorTheme extends BaseColor {
   text: string
 }
 
-// DEPRECATED:
-interface CredentialOfferTheme {
-  background: string
-}
-
+// DEPRECATED
 interface ContactTheme {
-  background: string
-}
-
-// DEPRECATED:
-interface ProofRequestTheme {
   background: string
 }
 
@@ -188,13 +179,6 @@ interface SettingsTheme {
 // DEPRECATED:
 interface SingleSelectBlockTheme {
   background: string
-}
-
-// DEPRECATED:
-interface TextBoxTheme {
-  background: string
-  border: string
-  text: string
 }
 
 // DEPRECATED:
@@ -211,18 +195,9 @@ export const Colors: ColorTheme = {
   ...StatusColors,
 }
 
-// DEPRECATED:
-export const CredentialOfferTheme: CredentialOfferTheme = {
-  background: Colors.black,
-}
-
+// DEPRECATED
 export const ContactTheme: ContactTheme = {
   background: Colors.shadow,
-}
-
-// DEPRECATED:
-export const ProofRequestTheme: ProofRequestTheme = {
-  background: Colors.black,
 }
 
 // DEPRECATED:
@@ -233,13 +208,6 @@ export const SettingsTheme: SettingsTheme = {
 // DEPRECATED:
 export const SingleSelectBlockTheme: SingleSelectBlockTheme = {
   background: Colors.shadow,
-}
-
-// DEPRECATED:
-export const TextBoxTheme: TextBoxTheme = {
-  background: Colors.darkGreenLightTransparent,
-  border: Colors.borderLight,
-  text: Colors.text,
 }
 
 export const TextTheme: TextTheme = {
