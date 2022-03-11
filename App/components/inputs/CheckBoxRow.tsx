@@ -7,6 +7,7 @@ import { Colors, TextTheme } from '../../theme'
 interface Props {
   title: string
   accessibilityLabel?: string
+  testID?: string
   checked: boolean
   onPress: () => void
 }
@@ -25,12 +26,12 @@ const style = StyleSheet.create({
   },
 })
 
-const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, checked, onPress }) => {
+const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, checked, onPress }) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
 
   return (
     <View style={style.container}>
-      <TouchableOpacity accessible={accessible} accessibilityLabel={accessibilityLabel} onPress={onPress}>
+      <TouchableOpacity accessibilityLabel={accessibilityLabel} testID={testID} onPress={onPress}>
         {checked ? (
           <Icon name={'check-box'} size={36} color={Colors.primary} />
         ) : (

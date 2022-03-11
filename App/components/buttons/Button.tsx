@@ -12,18 +12,27 @@ interface ButtonProps {
   title: string
   buttonType: ButtonType
   accessibilityLabel?: string
+  testID?: string
   onPress?: () => void
   disabled?: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({ title, buttonType, accessibilityLabel, onPress, disabled = false }) => {
+const Button: React.FC<ButtonProps> = ({
+  title,
+  buttonType,
+  accessibilityLabel,
+  testID,
+  onPress,
+  disabled = false,
+}) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      accessible={accessible}
       accessibilityLabel={accessibilityLabel}
+      accessible={accessible}
+      testID={testID}
       style={[
         buttonType === ButtonType.Primary ? Buttons.primary : Buttons.secondary,
         disabled && (buttonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
