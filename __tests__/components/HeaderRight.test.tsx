@@ -8,6 +8,7 @@ describe('Header Right Button Component', () => {
     const tree = render(
       <HeaderRight
         title={'Hello Header'}
+        testID={'TestID.Button'}
         accessibilityLabel={'Hello'}
         onPress={() => {
           return

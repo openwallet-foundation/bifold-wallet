@@ -4,12 +4,12 @@ import { Alert, Keyboard, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import Button, { ButtonType } from '../components/buttons/Button'
+import TextInput from '../components/inputs/TextInput'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { Colors } from '../theme'
-
-import { Button, TextInput } from 'components'
-import { ButtonType } from 'components/buttons/Button'
+import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
@@ -59,11 +59,11 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   return (
     <SafeAreaView style={[style.container]}>
       <TextInput
+        accessibilityLabel={t('Global.EnterPin')}
+        testID={testIdWithKey('EnterPin')}
         label={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
         placeholderTextColor={Colors.lightGrey}
-        accessible={true}
-        accessibilityLabel={t('Global.EnterPin')}
         maxLength={6}
         autoFocus
         keyboardType="numeric"
@@ -72,9 +72,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         onChangeText={setPin}
       />
       <TextInput
-        label={t('PinCreate.ReenterPin')}
-        accessible={true}
         accessibilityLabel={t('PinCreate.ReenterPin')}
+        testID={testIdWithKey('ReenterPin')}
+        label={t('PinCreate.ReenterPin')}
         placeholder={t('Global.6DigitPin')}
         placeholderTextColor={Colors.lightGrey}
         maxLength={6}
@@ -91,6 +91,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       <Button
         title={t('PinCreate.Create')}
         accessibilityLabel={t('PinCreate.Create')}
+        testID={testIdWithKey('Create')}
         buttonType={ButtonType.Primary}
         onPress={() => {
           Keyboard.dismiss()

@@ -6,6 +6,7 @@ import { ColorPallet, TextTheme } from '../../theme'
 
 interface HeaderButtonProps {
   title: string
+  testID?: string
   accessibilityLabel?: string
   onPress?: () => void
   disabled?: boolean
@@ -29,10 +30,14 @@ const style = StyleSheet.create({
   },
 })
 
-const HeaderRight: React.FC<HeaderButtonProps> = ({ title, accessibilityLabel, onPress, disabled = false }) => {
+const HeaderRight: React.FC<HeaderButtonProps> = ({ title, testID, accessibilityLabel, onPress, disabled = false }) => {
+  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+
   return (
     <TouchableOpacity
       accessibilityLabel={accessibilityLabel}
+      accessible={accessible}
+      testID={testID}
       onPress={onPress}
       style={[style.touchableArea]}
       disabled={disabled}

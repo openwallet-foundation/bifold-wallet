@@ -11,6 +11,7 @@ import { Pagination } from '../components/misc/Pagination'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 const { width } = Dimensions.get('window')
 
@@ -92,7 +93,9 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <HeaderRight title={t('Global.Skip')} onPress={onSkipTouched} />,
+      headerRight: () => (
+        <HeaderRight title={t('Global.Skip')} testID={testIdWithKey('Skip')} onPress={onSkipTouched} />
+      ),
     })
 
     if (activeIndex + 1 === pages.length) {

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testable Produces the correct testID 1`] = `"com.ariesbifold:id/blarb"`;
