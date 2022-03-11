@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 
+// DEPRECATED:
 type BaseColor = Record<string, string>
 
 interface FontAttributes {
@@ -122,9 +123,7 @@ export const ColorPallet: ColorPallet = {
   grayscale: GrayscaleColors,
 }
 
-/**
- * DEPRECATED: The remainder of this file should be refactored
- */
+// DEPRECATED:
 export const BaseColors: BaseColor = {
   black: '#000000',
   darkBlue: '#003366',
@@ -147,6 +146,7 @@ export const BaseColors: BaseColor = {
   white: '#FFFFFF',
 }
 
+// DEPRECATED:
 export const StatusColors: BaseColor = {
   error: BaseColors.red,
   info: BaseColors.black,
@@ -154,6 +154,7 @@ export const StatusColors: BaseColor = {
   warning: BaseColors.black,
 }
 
+// DEPRECATED:
 interface ColorTheme extends BaseColor {
   accent: string
   background: string
@@ -165,6 +166,7 @@ interface ColorTheme extends BaseColor {
   text: string
 }
 
+// DEPRECATED:
 interface CredentialOfferTheme {
   background: string
 }
@@ -173,24 +175,29 @@ interface ContactTheme {
   background: string
 }
 
+// DEPRECATED:
 interface ProofRequestTheme {
   background: string
 }
 
+// DEPRECATED:
 interface SettingsTheme {
   background: string
 }
 
+// DEPRECATED:
 interface SingleSelectBlockTheme {
   background: string
 }
 
+// DEPRECATED:
 interface TextBoxTheme {
   background: string
   border: string
   text: string
 }
 
+// DEPRECATED:
 export const Colors: ColorTheme = {
   accent: BaseColors.yellow,
   background: BaseColors.black,
@@ -204,6 +211,7 @@ export const Colors: ColorTheme = {
   ...StatusColors,
 }
 
+// DEPRECATED:
 export const CredentialOfferTheme: CredentialOfferTheme = {
   background: Colors.black,
 }
@@ -212,18 +220,22 @@ export const ContactTheme: ContactTheme = {
   background: Colors.shadow,
 }
 
+// DEPRECATED:
 export const ProofRequestTheme: ProofRequestTheme = {
   background: Colors.black,
 }
 
+// DEPRECATED:
 export const SettingsTheme: SettingsTheme = {
   background: Colors.shadow,
 }
 
+// DEPRECATED:
 export const SingleSelectBlockTheme: SingleSelectBlockTheme = {
   background: Colors.shadow,
 }
 
+// DEPRECATED:
 export const TextBoxTheme: TextBoxTheme = {
   background: Colors.darkGreenLightTransparent,
   border: Colors.borderLight,
