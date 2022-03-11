@@ -147,14 +147,6 @@ export const BaseColors: BaseColor = {
 }
 
 // DEPRECATED:
-export const StatusColors: BaseColor = {
-  error: BaseColors.red,
-  info: BaseColors.black,
-  success: BaseColors.green,
-  warning: BaseColors.black,
-}
-
-// DEPRECATED:
 interface ColorTheme extends BaseColor {
   accent: string
   background: string
@@ -164,21 +156,6 @@ interface ColorTheme extends BaseColor {
   primaryActive: string
   shadow: string
   text: string
-}
-
-// DEPRECATED
-interface ContactTheme {
-  background: string
-}
-
-// DEPRECATED:
-interface SettingsTheme {
-  background: string
-}
-
-// DEPRECATED:
-interface SingleSelectBlockTheme {
-  background: string
 }
 
 // DEPRECATED:
@@ -192,22 +169,6 @@ export const Colors: ColorTheme = {
   shadow: BaseColors.darkGrey,
   text: BaseColors.white,
   ...BaseColors,
-  ...StatusColors,
-}
-
-// DEPRECATED
-export const ContactTheme: ContactTheme = {
-  background: Colors.shadow,
-}
-
-// DEPRECATED:
-export const SettingsTheme: SettingsTheme = {
-  background: Colors.shadow,
-}
-
-// DEPRECATED:
-export const SingleSelectBlockTheme: SingleSelectBlockTheme = {
-  background: Colors.shadow,
 }
 
 export const TextTheme: TextTheme = {
