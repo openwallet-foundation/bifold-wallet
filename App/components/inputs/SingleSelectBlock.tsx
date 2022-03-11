@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { borderRadius, ColorPallet, Colors } from '../../theme'
+import { borderRadius, ColorPallet } from '../../theme'
 
 import { Text } from 'components'
 
@@ -45,7 +45,7 @@ const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect
       {selection.map((item) => (
         <TouchableOpacity key={item.id} style={styles.row} onPress={() => handleSelect(item)}>
           <Text>{item.value}</Text>
-          {item.id === selected.id ? <Icon name={'check'} size={25} color={Colors.text} /> : null}
+          {item.id === selected.id ? <Icon name={'check'} size={25} color={ColorPallet.notification.infoText} /> : null}
         </TouchableOpacity>
       ))}
     </View>

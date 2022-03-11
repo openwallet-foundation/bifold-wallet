@@ -1,8 +1,5 @@
 import { StyleSheet } from 'react-native'
 
-// DEPRECATED:
-type BaseColor = Record<string, string>
-
 interface FontAttributes {
   fontSize: number
   fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
@@ -21,6 +18,9 @@ interface TextTheme {
 
 interface BrandColors {
   primary: string
+  primaryDisabled: string
+  secondary: string
+  secondaryDisabled: string
   highlight: string
   primaryBackground: string
   secondaryBackground: string
@@ -76,6 +76,9 @@ export const borderWidth = 2
 
 const BrandColors: BrandColors = {
   primary: '#42803E',
+  primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
+  secondary: '#FFFFFFFF',
+  secondaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
@@ -123,89 +126,41 @@ export const ColorPallet: ColorPallet = {
   grayscale: GrayscaleColors,
 }
 
-// DEPRECATED:
-export const BaseColors: BaseColor = {
-  black: '#000000',
-  darkBlue: '#003366',
-  darkBlueLightTransparent: `rgba(0, 51, 102, ${heavyOpacity})`,
-  darkBlueHeavyTransparent: `rgba(0, 51, 102, ${lightOpacity})`,
-  darkGreen: '#35823F',
-  darkGreenLightTransparent: `rgba(53, 130, 63, ${heavyOpacity})`,
-  darkGreenHeavyTransparent: `rgba(53, 130, 63, ${lightOpacity})`,
-  darkGrey: '#1C1C1E',
-  darkGreyAlt: '#313132',
-  green: '#2D6E35',
-  lightBlue: '#D9EAF7',
-  lightGrey: '#D3D3D3',
-  lightGreyAlt: '#F2F2F2',
-  mediumBlue: '#B9CEDE',
-  offWhite: '#F2F2F2',
-  red: '#DE3333',
-  transparent: `rgba(0, 0, 0, ${zeroOpacity})`,
-  yellow: '#FCBA19',
-  white: '#FFFFFF',
-}
-
-// DEPRECATED:
-interface ColorTheme extends BaseColor {
-  accent: string
-  background: string
-  backgroundLight: string
-  borderLight: string
-  primary: string
-  primaryActive: string
-  shadow: string
-  text: string
-}
-
-// DEPRECATED:
-export const Colors: ColorTheme = {
-  accent: BaseColors.yellow,
-  background: BaseColors.black,
-  backgroundLight: BaseColors.lightGreen,
-  borderLight: BaseColors.mediumGreen,
-  primary: BaseColors.darkGreen,
-  primaryActive: BaseColors.darkGreenHeavyTransparent,
-  shadow: BaseColors.darkGrey,
-  text: BaseColors.white,
-  ...BaseColors,
-}
-
 export const TextTheme: TextTheme = {
   headingOne: {
     fontSize: 38,
     fontWeight: 'bold',
-    color: Colors.text,
+    color: ColorPallet.grayscale.white,
   },
   headingTwo: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: Colors.text,
+    color: ColorPallet.grayscale.white,
   },
   headingThree: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: Colors.text,
+    color: ColorPallet.grayscale.white,
   },
   headingFour: {
     fontSize: 21,
     fontWeight: 'bold',
-    color: Colors.text,
+    color: ColorPallet.grayscale.white,
   },
   normal: {
     fontSize: 18,
     fontWeight: 'normal',
-    color: Colors.text,
+    color: ColorPallet.grayscale.white,
   },
   label: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: Colors.text,
+    color: ColorPallet.grayscale.white,
   },
   caption: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: Colors.text,
+    color: ColorPallet.grayscale.white,
   },
 }
 
@@ -213,47 +168,45 @@ export const Buttons = StyleSheet.create({
   primary: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: Colors.primary,
+    backgroundColor: ColorPallet.brand.primary,
   },
   primaryDisabled: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: Colors.darkGreenHeavyTransparent,
+    backgroundColor: ColorPallet.brand.primaryDisabled,
   },
   primaryText: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.white,
     textAlign: 'center',
   },
   primaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.white,
     textAlign: 'center',
   },
   secondary: {
     padding: 16,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: Colors.primary,
+    borderColor: ColorPallet.brand.primary,
   },
   secondaryDisabled: {
     padding: 16,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: Colors.darkGreenLightTransparent,
+    borderColor: ColorPallet.brand.secondaryDisabled,
   },
   secondaryText: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.primary,
+    color: ColorPallet.brand.primary,
     textAlign: 'center',
   },
   secondaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: Colors.darkGreenLightTransparent,
+    color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
 })

@@ -1,17 +1,17 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-import { Colors } from '../../theme'
+import { ColorPallet } from '../../theme'
 
 const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
   },
   text: {
-    color: Colors.text,
+    color: ColorPallet.notification.infoText,
   },
   link: {
-    color: Colors.text,
+    color: ColorPallet.notification.infoText,
     textDecorationLine: 'underline',
   },
 })

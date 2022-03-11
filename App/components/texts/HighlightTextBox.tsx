@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { Colors, TextTheme } from '../../theme'
+import { ColorPallet, TextTheme } from '../../theme'
 
 export interface TextBoxProps {
   children: string
@@ -15,11 +15,11 @@ const style = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   accentBox: {
     marginRight: offset,
-    backgroundColor: Colors.accent,
+    backgroundColor: ColorPallet.brand.highlight,
     width: 8,
   },
   headerText: {
