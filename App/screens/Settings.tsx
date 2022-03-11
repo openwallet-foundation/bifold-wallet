@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { borderRadius, Colors, SettingsTheme, TextTheme } from '../theme'
+import { borderRadius, ColorPallet, Colors, TextTheme } from '../theme'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 
 import { SafeAreaScrollView, Text } from 'components'
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   rowGroup: {
     borderRadius: borderRadius * 2,
-    backgroundColor: SettingsTheme.background,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
     marginBottom: 16,
   },
   row: {

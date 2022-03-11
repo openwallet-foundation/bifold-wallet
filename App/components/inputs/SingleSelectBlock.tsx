@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { borderRadius, Colors, SingleSelectBlockTheme } from '../../theme'
+import { borderRadius, ColorPallet, Colors } from '../../theme'
 
 import { Text } from 'components'
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   row: {
     borderRadius: borderRadius * 2,
-    backgroundColor: SingleSelectBlockTheme.background,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
