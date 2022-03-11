@@ -4,7 +4,7 @@ export const defaultLanguage = 'en'
 
 // Used to property prefix TestIDs so they can be looked up
 // by on-device automated testing systems like SauceLabs.
-export const testIdPrefix = 'com.example:id/'
+export const testIdPrefix = 'com.ariesbifold:id/'
 
 export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',

@@ -162,7 +162,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
-      testID="com.example:id/Back"
+      testID="com.ariesbifold:id/Back"
     >
       <Text
         style={
@@ -261,7 +261,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
-      testID="com.example:id/Next"
+      testID="com.ariesbifold:id/Next"
     >
       <Text
         style={
