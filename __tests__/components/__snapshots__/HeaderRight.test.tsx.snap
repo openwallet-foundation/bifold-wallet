@@ -25,6 +25,7 @@ exports[`Header Right Button Component Renders correctly 1`] = `
       "opacity": 1,
     }
   }
+  testID="TestID.Button"
 >
   <View
     style={

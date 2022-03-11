@@ -145,7 +145,6 @@ exports[`Onboarding Renders correctly 1`] = `
     }
   >
     <View
-      accessibilityElementsHidden={false}
       accessibilityLabel="Global.Back"
       accessible={true}
       collapsable={false}
@@ -163,6 +162,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
+      testID="com.example:id/Back"
     >
       <Text
         style={
@@ -261,7 +261,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
-      testID="nextButtonX"
+      testID="com.example:id/Next"
     >
       <Text
         style={

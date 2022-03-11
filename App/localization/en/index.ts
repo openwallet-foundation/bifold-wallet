@@ -161,4 +161,5 @@ const translation = {
     "Terms": "Terms & Conditions"
   }
 }
+
 export default translation
