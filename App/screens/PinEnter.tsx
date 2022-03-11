@@ -4,7 +4,7 @@ import { Alert, Keyboard, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 
 import { TextInput, Button } from 'components'
 import { ButtonType } from 'components/buttons/Button'
@@ -15,7 +15,7 @@ interface PinEnterProps {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
     margin: 20,
   },
 })
@@ -40,7 +40,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
         accessible={true}
         accessibilityLabel={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
-        placeholderTextColor={Colors.lightGrey}
+        placeholderTextColor={ColorPallet.grayscale.lightGrey}
         autoFocus
         maxLength={6}
         keyboardType="numeric"
