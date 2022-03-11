@@ -13,7 +13,7 @@ import Splash from '../screens/Splash'
 import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
 import ConnectStack from './ConnectStack'
@@ -65,7 +65,7 @@ const RootStack: React.FC = () => {
           name={Screens.Onboarding}
           options={() => ({
             title: 'Onboarding',
-            headerTintColor: Colors.white,
+            headerTintColor: ColorPallet.grayscale.white,
             headerShown: true,
             gestureEnabled: false,
             headerLeft: () => false,
@@ -78,8 +78,13 @@ const RootStack: React.FC = () => {
                   style={{ marginRight: 14 }}
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ color: Colors.white, fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
-                    <Arrow height={15} width={15} fill={Colors.white} style={{ transform: [{ rotate: '180deg' }] }} />
+                    <Text style={{ color: ColorPallet.grayscale.white, fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
+                    <Arrow
+                      height={15}
+                      width={15}
+                      fill={ColorPallet.grayscale.white}
+                      style={{ transform: [{ rotate: '180deg' }] }}
+                    />
                   </View>
                 </TouchableOpacity>
               )
@@ -100,7 +105,7 @@ const RootStack: React.FC = () => {
           name={Screens.Terms}
           options={() => ({
             title: 'Terms & Conditions',
-            headerTintColor: Colors.white,
+            headerTintColor: ColorPallet.grayscale.white,
             headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
