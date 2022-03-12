@@ -178,11 +178,13 @@ export const Buttons = StyleSheet.create({
   primaryText: {
     ...TextTheme.normal,
     fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
     textAlign: 'center',
   },
   primaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
     textAlign: 'center',
   },
   secondary: {
