@@ -227,7 +227,7 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "borderColor": "#35823F",
+              "borderColor": "#42803E",
               "borderRadius": 4,
               "borderWidth": 2,
               "opacity": 1,
@@ -239,7 +239,7 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#35823F",
+                  "color": "#42803E",
                   "fontSize": 18,
                   "fontWeight": "bold",
                   "textAlign": "center",

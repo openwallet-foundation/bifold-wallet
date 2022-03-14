@@ -4,7 +4,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 
 import { CredentialListItem, Text } from 'components'
 
@@ -19,7 +19,7 @@ const ListCredentials: React.FC = () => {
 
   return (
     <FlatList
-      style={{ backgroundColor: Colors.background }}
+      style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
       data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
       keyExtractor={(item: CredentialRecord) => item.credentialId || item.id}
       ListEmptyComponent={emptyListComponent}

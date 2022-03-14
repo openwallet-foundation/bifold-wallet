@@ -308,7 +308,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
       },
       Object {
         "backgroundColor": "#313132",
-        "borderColor": "#fcba19",
+        "borderColor": "#FCBA19",
         "width": 675,
       },
     ]
@@ -319,7 +319,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#fcba19",
+          "color": "#FCBA19",
           "fontSize": 24,
         },
         Array [

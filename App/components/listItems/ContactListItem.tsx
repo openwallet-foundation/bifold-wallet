@@ -4,7 +4,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import { dateFormatOptions } from '../../constants'
-import { borderRadius, ContactTheme } from '../../theme'
+import { borderRadius, ColorPallet } from '../../theme'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     padding: 10,
     borderRadius,
-    backgroundColor: ContactTheme.background,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
   },
   date: {
     textAlign: 'right',

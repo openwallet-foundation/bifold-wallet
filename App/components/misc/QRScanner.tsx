@@ -107,10 +107,10 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
             {error ? (
               <>
                 <Icon style={styles.icon} name="cancel" size={30}></Icon>
-                <Text style={[TextTheme.caption]}>{error.message}</Text>
+                <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white }]}>{error.message}</Text>
               </>
             ) : (
-              <Text style={[TextTheme.caption, { height: 30, margin: 4 }]}> </Text>
+              <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white, height: 30, margin: 4 }]}> </Text>
             )}
           </View>
           <View style={styles.viewFinderContainer}>

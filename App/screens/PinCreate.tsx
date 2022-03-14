@@ -8,7 +8,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
@@ -17,7 +17,7 @@ interface PinCreateProps {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
     margin: 20,
   },
 })
@@ -63,7 +63,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         testID={testIdWithKey('EnterPin')}
         label={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
-        placeholderTextColor={Colors.lightGrey}
+        placeholderTextColor={ColorPallet.grayscale.lightGrey}
         maxLength={6}
         autoFocus
         keyboardType="numeric"
@@ -76,7 +76,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         testID={testIdWithKey('ReenterPin')}
         label={t('PinCreate.ReenterPin')}
         placeholder={t('Global.6DigitPin')}
-        placeholderTextColor={Colors.lightGrey}
+        placeholderTextColor={ColorPallet.grayscale.lightGrey}
         maxLength={6}
         keyboardType="numeric"
         secureTextEntry

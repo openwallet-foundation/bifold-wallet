@@ -11,13 +11,13 @@ import HighlightTextBox from '../components/texts/HighlightTextBox'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { Colors, TextTheme } from '../theme'
+import { ColorPallet, TextTheme } from '../theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
     margin: 20,
   },
   bodyText: {
