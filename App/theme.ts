@@ -88,7 +88,7 @@ const BrandColors: BrandColors = {
 const SemanticColors: SemanticColors = {
   error: '#D8292F',
   success: '#2E8540',
-  focus: '#3399ff',
+  focus: '#3399FF',
 }
 
 const NotificationColors: NotificationColors = {
@@ -101,8 +101,8 @@ const NotificationColors: NotificationColors = {
   infoIcon: '#0099FF',
   infoText: '#FFFFFF',
   warn: '#313132',
-  warnBorder: '#fcba19',
-  warnIcon: '#fcba19',
+  warnBorder: '#FCBA19',
+  warnIcon: '#FCBA19',
   warnText: '#FFFFFF',
   error: '#313132',
   errorBorder: '#D8292F',
@@ -114,8 +114,8 @@ const GrayscaleColors: GrayscaleColors = {
   black: '#000000',
   darkGrey: '#313132',
   mediumGrey: '#606060',
-  lightGrey: '#d3d3d3',
-  veryLightGrey: '#f2f2f2',
+  lightGrey: '#D3D3D3',
+  veryLightGrey: '#F2F2F2',
   white: '#FFFFFF',
 }
 
