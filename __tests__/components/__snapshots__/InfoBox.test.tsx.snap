@@ -125,7 +125,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#35823F",
+          "backgroundColor": "#42803E",
           "borderRadius": 4,
           "opacity": 1,
           "padding": 16,
@@ -277,7 +277,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#35823F",
+          "backgroundColor": "#42803E",
           "borderRadius": 4,
           "opacity": 1,
           "padding": 16,
@@ -429,7 +429,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#35823F",
+          "backgroundColor": "#42803E",
           "borderRadius": 4,
           "opacity": 1,
           "padding": 16,
@@ -461,7 +461,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
   style={
     Object {
       "backgroundColor": "#313132",
-      "borderColor": "#fcba19",
+      "borderColor": "#FCBA19",
       "borderRadius": 5,
       "borderWidth": 1,
       "marginHorizontal": 25,
@@ -494,7 +494,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
         style={
           Array [
             Object {
-              "color": "#fcba19",
+              "color": "#FCBA19",
               "fontSize": 30,
             },
             undefined,
@@ -581,7 +581,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#35823F",
+          "backgroundColor": "#42803E",
           "borderRadius": 4,
           "opacity": 1,
           "padding": 16,
