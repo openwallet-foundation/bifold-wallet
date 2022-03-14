@@ -145,7 +145,6 @@ exports[`Onboarding Renders correctly 1`] = `
     }
   >
     <View
-      accessibilityElementsHidden={false}
       accessibilityLabel="Global.Back"
       accessible={true}
       collapsable={false}
@@ -163,6 +162,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
+      testID="com.ariesbifold:id/Back"
     >
       <Text
         style={
@@ -178,7 +178,9 @@ exports[`Onboarding Renders correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        Back
+      </Text>
     </View>
     <View
       style={
@@ -259,7 +261,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
-      testID="nextButtonX"
+      testID="com.ariesbifold:id/Next"
     >
       <Text
         style={
@@ -275,7 +277,9 @@ exports[`Onboarding Renders correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        Next
+      </Text>
     </View>
   </View>
 </RNCSafeAreaView>

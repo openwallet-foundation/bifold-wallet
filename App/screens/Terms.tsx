@@ -5,15 +5,15 @@ import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { ButtonType } from '../components/buttons/Button'
+import Button, { ButtonType } from '../components/buttons/Button'
+import CheckBoxRow from '../components/inputs/CheckBoxRow'
+import HighlightTextBox from '../components/texts/HighlightTextBox'
+import InfoTextBox from '../components/texts/InfoTextBox'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { ColorPallet, TextTheme } from '../theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-
-import { Button, CheckBoxRow } from 'components'
-import HighlightTextBox from 'components/texts/HighlightTextBox'
-import InfoTextBox from 'components/texts/InfoTextBox'
+import { testIdWithKey } from '../utils/testable'
 
 const style = StyleSheet.create({
   container: {
@@ -83,6 +83,7 @@ const Terms: React.FC = () => {
           <CheckBoxRow
             title={t('Terms.Attestation')}
             accessibilityLabel={t('Terms.IAgree')}
+            testID={testIdWithKey('IAgree')}
             checked={checked}
             onPress={() => setChecked(!checked)}
           />
@@ -90,6 +91,7 @@ const Terms: React.FC = () => {
             <Button
               title={t('Global.Continue')}
               accessibilityLabel={t('Global.Continue')}
+              testID={testIdWithKey('Continue')}
               disabled={!checked}
               onPress={onSubmitPressed}
               buttonType={ButtonType.Primary}
@@ -99,6 +101,7 @@ const Terms: React.FC = () => {
             <Button
               title={t('Global.Back')}
               accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('Back')}
               onPress={onBackPressed}
               buttonType={ButtonType.Secondary}
             />
