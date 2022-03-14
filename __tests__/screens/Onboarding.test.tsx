@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native'
 import { create } from 'react-test-renderer'
 
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
-import { Colors } from '../../App/theme'
+import { ColorPallet } from '../../App/theme'
 
 const markTutorialFin = jest.fn()
 
@@ -11,11 +11,11 @@ export const carousel: OnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   carouselContainer: {
     flexDirection: 'column',
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   pagerContainer: {
     flexShrink: 2,
@@ -25,7 +25,7 @@ export const carousel: OnboardingStyleSheet = StyleSheet.create({
   pagerDot: {
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.primary,
+    borderColor: ColorPallet.brand.primary,
   },
   pagerPosition: {
     position: 'relative',
@@ -34,7 +34,7 @@ export const carousel: OnboardingStyleSheet = StyleSheet.create({
   pagerNavigationButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.primary,
+    color: ColorPallet.brand.primary,
   },
 })
 
