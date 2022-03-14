@@ -25,7 +25,7 @@ const onboardingComplete = (state: Onboarding): boolean => {
   return state.DidCompleteTutorial && state.DidAgreeToTerms && state.DidCreatePIN
 }
 
-const resumeOnboardingAt = (state: Onboarding): string => {
+const resumeOnboardingAt = (state: Onboarding): Screens => {
   if (state.DidCompleteTutorial && state.DidAgreeToTerms && !state.DidCreatePIN) {
     return Screens.CreatePin
   }
@@ -63,7 +63,8 @@ const Splash: React.FC = () => {
 
           // If onboarding was interrupted we need to pickup from where we left off.
           const destination = resumeOnboardingAt(dataAsJSON)
-          navigation.navigate({ key: destination })
+          // @ts-ignore
+          navigation.navigate({ name: destination })
 
           return
         }
