@@ -1,4 +1,4 @@
-import { CredentialRecord, CredentialState } from '@aries-framework/core'
+import { CredentialMetadataKeys, CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
@@ -6,7 +6,6 @@ import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
 
 import { CredentialListItem } from '../../App/components'
-import { indyCredentialKey } from '../../App/constants'
 import ListCredentials from '../../App/screens/ListCredentials'
 
 interface CredentialContextInterface {
@@ -20,7 +19,7 @@ describe('displays a credentials list screen', () => {
     state: CredentialState.Done,
     createdAt: new Date('2020-01-01T00:00:00'),
   })
-  testOpenVPCredentialRecord.metadata.set(indyCredentialKey, {
+  testOpenVPCredentialRecord.metadata.set(CredentialMetadataKeys.IndyCredential, {
     schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
   })
   const testCredential1 = new CredentialRecord({

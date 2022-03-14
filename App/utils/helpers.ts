@@ -1,9 +1,13 @@
-import { ConnectionRecord, CredentialRecord, ProofRecord, RequestedAttribute } from '@aries-framework/core'
+import {
+  ConnectionRecord,
+  CredentialMetadataKeys,
+  CredentialRecord,
+  ProofRecord,
+  RequestedAttribute,
+} from '@aries-framework/core'
 import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
 import startCase from 'lodash.startcase'
 import { parseUrl } from 'query-string'
-
-import { indyCredentialKey, IndexedIndyCredentialMetadata } from '../constants'
 
 export function parseSchema(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'
@@ -23,7 +27,7 @@ export function parseSchema(schemaId?: string): { name: string; version: string 
 }
 
 export function credentialSchema(credential: CredentialRecord): string | undefined {
-  return credential.metadata.get<IndexedIndyCredentialMetadata>(indyCredentialKey)?.schemaId
+  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
 }
 
 export function parsedSchema(credential: CredentialRecord): { name: string; version: string } {
