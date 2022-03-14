@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { ColorPallet, TextTheme } from '../../theme'
+import { Attribute } from '../../types/record'
+import { testIdWithKey } from '../../utils/testable'
 
 import RecordAttribute from './RecordAttribute'
 import RecordFooter from './RecordFooter'
 import RecordHeader from './RecordHeader'
-
-import { Attribute } from 'types/record'
 
 interface RecordProps {
   header: () => React.ReactElement | null
@@ -57,7 +57,14 @@ const Record: React.FC<RecordProps> = ({
           {header()}
           {hideAttributeValues ? (
             <View style={styles.linkContainer}>
-              <TouchableOpacity style={styles.link} activeOpacity={1} onPress={() => resetShown()}>
+              <TouchableOpacity
+                style={styles.link}
+                activeOpacity={1}
+                onPress={() => resetShown()}
+                testID={testIdWithKey('HideAll')}
+                accessible={true}
+                accessibilityLabel={t('Record.HideAll')}
+              >
                 <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>{t('Record.HideAll')}</Text>
               </TouchableOpacity>
             </View>
