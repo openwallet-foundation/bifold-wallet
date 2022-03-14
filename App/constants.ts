@@ -8,6 +8,7 @@ export const testIdPrefix = 'com.ariesbifold:id/'
 
 export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',
+  TutorialStatus = 'TutorialStatus',
 }
 
 // FIXME: Remove once fixed in AFJ
