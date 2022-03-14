@@ -35,7 +35,7 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#35823F",
+            "color": "#42803E",
             "fontSize": 36,
           },
           undefined,

@@ -6,7 +6,7 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, TextTheme } from '../../theme'
+import { ColorPallet, TextTheme } from '../../theme'
 import { HomeStackParams, Screens } from '../../types/navigators'
 
 import Button, { ButtonType } from 'components/buttons/Button'
@@ -14,7 +14,7 @@ import Button, { ButtonType } from 'components/buttons/Button'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   childContainer: {
     flexGrow: 1,
@@ -79,7 +79,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       <SafeAreaView style={styles.container}>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton} onPress={onHome || closeHome}>
-            <Icon name="home" size={24} color={Colors.text}></Icon>
+            <Icon name="home" size={24} color={ColorPallet.notification.infoText}></Icon>
           </TouchableOpacity>
         </View>
         <View style={styles.childContainer}>

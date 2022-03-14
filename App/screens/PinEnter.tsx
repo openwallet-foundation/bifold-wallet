@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
@@ -15,7 +15,7 @@ interface PinEnterProps {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
     margin: 20,
   },
 })
@@ -40,7 +40,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
         testID={testIdWithKey('EnterPin')}
         label={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
-        placeholderTextColor={Colors.lightGrey}
+        placeholderTextColor={ColorPallet.grayscale.lightGrey}
         autoFocus
         maxLength={6}
         keyboardType="numeric"

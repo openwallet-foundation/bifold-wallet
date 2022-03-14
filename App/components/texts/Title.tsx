@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, StyleSheet } from 'react-native'
 
-import { Colors } from '../../theme'
+import { ColorPallet } from '../../theme'
 
 interface Props {
   children: React.ReactNode
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: Colors.text,
+    color: ColorPallet.notification.infoText,
   },
 })
 

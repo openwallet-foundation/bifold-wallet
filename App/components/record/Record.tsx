@@ -58,7 +58,7 @@ const Record: React.FC<RecordProps> = ({
           {hideAttributeValues ? (
             <View style={styles.linkContainer}>
               <TouchableOpacity style={styles.link} activeOpacity={1} onPress={() => resetShown()}>
-                <Text style={TextTheme.normal}>{t('Record.HideAll')}</Text>
+                <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>{t('Record.HideAll')}</Text>
               </TouchableOpacity>
             </View>
           ) : null}

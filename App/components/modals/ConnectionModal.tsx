@@ -5,13 +5,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ConnectionPending from '../../assets/img/connection-pending.svg'
 import { Context } from '../../store/Store'
-import { ColorPallet, Colors, TextTheme } from '../../theme'
+import { ColorPallet, TextTheme } from '../../theme'
 import Button, { ButtonType } from '../buttons/Button'
 
 const { height } = Dimensions.get('window')
 const connectionTimerDelay = 3000 // in ms
 const imageDisplayOptions = {
-  fill: Colors.text,
+  fill: ColorPallet.notification.infoText,
   height: 250,
   width: 250,
 }

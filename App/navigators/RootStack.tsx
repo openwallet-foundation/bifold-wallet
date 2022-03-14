@@ -11,7 +11,7 @@ import Splash from '../screens/Splash'
 import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { Colors } from '../theme'
+import { ColorPallet } from '../theme'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
@@ -71,7 +71,7 @@ const RootStack: React.FC = () => {
           name={Screens.Onboarding}
           options={() => ({
             title: t('Screens.Onboarding'),
-            headerTintColor: Colors.white,
+            headerTintColor: ColorPallet.grayscale.white,
             headerShown: true,
             gestureEnabled: false,
             headerLeft: () => false,
@@ -91,7 +91,7 @@ const RootStack: React.FC = () => {
           name={Screens.Terms}
           options={() => ({
             title: t('Screens.Terms'),
-            headerTintColor: Colors.white,
+            headerTintColor: ColorPallet.grayscale.white,
             headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,

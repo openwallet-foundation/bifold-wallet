@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
-import { Colors } from '../../theme'
+import { ColorPallet } from '../../theme'
 import { testIdWithKey } from '../../utils/testable'
 
 interface IPaginationStyleSheet {
@@ -65,9 +65,9 @@ export const Pagination: React.FC<IPaginationProps> = ({
       <ScalingDot
         data={pages}
         scrollX={scrollX}
-        inActiveDotColor={Colors.transparent}
+        inActiveDotColor={ColorPallet.brand.secondary}
         inActiveDotOpacity={1}
-        activeDotColor={Colors.primary}
+        activeDotColor={ColorPallet.brand.primary}
         activeDotScale={1}
         dotStyle={style.pagerDot}
         containerStyle={style.pagerPosition}
