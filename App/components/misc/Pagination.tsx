@@ -4,6 +4,7 @@ import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
 import { ColorPallet } from '../../theme'
+import { testIdWithKey } from '../../utils/testable'
 
 interface IPaginationStyleSheet {
   pagerContainer: Record<string, any>
@@ -51,12 +52,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
 
   return (
     <View style={style.pagerContainer}>
-      <TouchableOpacity
-        accessible={true}
-        accessibilityLabel={t('Global.Back')}
-        accessibilityElementsHidden={false}
-        onPress={previous}
-      >
+      <TouchableOpacity accessibilityLabel={t('Global.Back')} testID={testIdWithKey('Back')} onPress={previous}>
         <Text
           style={[
             style.pagerNavigationButton,
@@ -76,7 +72,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         dotStyle={style.pagerDot}
         containerStyle={style.pagerPosition}
       />
-      <TouchableOpacity testID={'nextButtonX'} accessible={true} accessibilityLabel={t('Global.Next')} onPress={next}>
+      <TouchableOpacity accessibilityLabel={t('Global.Next')} testID={testIdWithKey('Next')} onPress={next}>
         <Text
           style={[
             style.pagerNavigationButton,

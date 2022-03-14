@@ -4,10 +4,10 @@ import { Alert, Keyboard, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import Button, { ButtonType } from '../components/buttons/Button'
+import TextInput from '../components/inputs/TextInput'
 import { ColorPallet } from '../theme'
-
-import { TextInput, Button } from 'components'
-import { ButtonType } from 'components/buttons/Button'
+import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
@@ -36,9 +36,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   return (
     <SafeAreaView style={[style.container]}>
       <TextInput
-        label={t('Global.EnterPin')}
-        accessible={true}
         accessibilityLabel={t('Global.EnterPin')}
+        testID={testIdWithKey('EnterPin')}
+        label={t('Global.EnterPin')}
         placeholder={t('Global.6DigitPin')}
         placeholderTextColor={ColorPallet.grayscale.lightGrey}
         autoFocus
@@ -56,6 +56,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
       <Button
         title={t('Global.Submit')}
         buttonType={ButtonType.Primary}
+        testID={testIdWithKey('Submit')}
         accessibilityLabel={t('Global.Submit')}
         onPress={() => {
           Keyboard.dismiss()

@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Right Button Component Renders correctly 1`] = `
+<View
+  accessibilityLabel="Hello"
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "marginRight": 14,
+      "opacity": 1,
+    }
+  }
+  testID="TestID.Button"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginRight": 4,
+          },
+        ]
+      }
+    >
+      Hello Header
+    </Text>
+    <
+      fill="#FFFFFF"
+      height={14}
+      style={
+        Array [
+          Object {
+            "transform": Array [
+              Object {
+                "rotate": "180deg",
+              },
+            ],
+          },
+        ]
+      }
+      width={14}
+    />
+  </View>
+</View>
+`;
