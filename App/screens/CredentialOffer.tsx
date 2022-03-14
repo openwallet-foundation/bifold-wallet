@@ -16,7 +16,6 @@ import { HomeStackParams, Screens, TabStacks } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
-import ActivityLogLink from 'components/misc/ActivityLogLink'
 import CredentialCard from 'components/misc/CredentialCard'
 import NotificationModal from 'components/modals/NotificationModal'
 import Record from 'components/record/Record'
@@ -181,7 +180,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         }}
       >
         <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
-        <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <NotificationModal
         testID={t('CredentialOffer.CredentialDeclined')}
@@ -194,7 +192,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         }}
       >
         <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
-        <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
     </>
   )
