@@ -31,6 +31,7 @@ import { useThemeContext } from '../utils/themeContext'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
+import DeliveryStack from './DeliveryStack'
 import NotificationStack from './NotificationStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
@@ -149,6 +150,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
+        <Stack.Screen name={Stacks.ConnectionStack} component={DeliveryStack} />
       </Stack.Navigator>
     )
   }

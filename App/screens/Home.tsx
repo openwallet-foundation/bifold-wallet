@@ -7,12 +7,11 @@ import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from '
 
 import { InfoTextBox, NotificationListItem } from '../components'
 import { NotificationType } from '../components/listItems/NotificationListItem'
-import { useNotifications } from '../hooks/notifcations'
+import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { useThemeContext } from '../utils/themeContext'
 
 const { width } = Dimensions.get('window')
-
 const offset = 25
 const offsetPadding = 5
 
@@ -23,7 +22,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-
   const { notifications } = useNotifications()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useThemeContext()
