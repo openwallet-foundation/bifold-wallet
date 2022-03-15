@@ -28,6 +28,7 @@ export enum Stacks {
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
   ContactStack = 'Contacts Stack',
+  NotificationStack = 'Notifications Stack',
 }
 
 export enum TabStacks {
@@ -41,6 +42,7 @@ export type RootStackParams = {
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+  [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
 }
 
 export type TabStackParams = {
@@ -70,13 +72,6 @@ export type CredentialStackParams = {
 export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
-  [Screens.CredentialOffer]: { credentialId: string }
-  [Screens.ProofRequest]: { proofId: string }
-  [Screens.ProofRequestAttributeDetails]: {
-    proofId: string
-    attributeName: string
-    attributeCredentials: RequestedAttribute[]
-  }
 }
 
 export type ConnectStackParams = {
@@ -86,4 +81,14 @@ export type ConnectStackParams = {
 export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
+}
+
+export type NotificationStackParams = {
+  [Screens.CredentialOffer]: { credentialId: string }
+  [Screens.ProofRequest]: { proofId: string }
+  [Screens.ProofRequestAttributeDetails]: {
+    proofId: string
+    attributeName: string
+    attributeCredentials: RequestedAttribute[]
+  }
 }

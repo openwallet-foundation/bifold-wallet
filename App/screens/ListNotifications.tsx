@@ -1,12 +1,24 @@
 import React from 'react'
-import { FlatList, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { FlatList, Text, View } from 'react-native'
 
 import { useNotifications } from '../hooks/notifcations'
+import { TextTheme } from '../theme'
 
 import NotificationListItem, { NotificationType } from 'components/listItems/NotificationListItem'
+import InfoTextBox from 'components/texts/InfoTextBox'
 
 const ListNotifications: React.FC = () => {
   const { notifications } = useNotifications()
+  const { t } = useTranslation()
+
+  const emptyListComponent = () => (
+    <View style={{ margin: 15 }}>
+      <InfoTextBox>
+        <Text style={TextTheme.normal}>{t('Home.NoNewUpdates')}</Text>
+      </InfoTextBox>
+    </View>
+  )
 
   return (
     <FlatList
@@ -26,6 +38,7 @@ const ListNotifications: React.FC = () => {
           )}
         </View>
       )}
+      ListEmptyComponent={emptyListComponent()}
     />
   )
 }

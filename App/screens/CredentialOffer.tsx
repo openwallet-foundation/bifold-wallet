@@ -12,7 +12,7 @@ import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
-import { HomeStackParams, Screens, TabStacks } from '../types/navigators'
+import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
@@ -21,7 +21,7 @@ import NotificationModal from 'components/modals/NotificationModal'
 import Record from 'components/record/Record'
 import Title from 'components/texts/Title'
 
-type CredentialOfferProps = StackScreenProps<HomeStackParams, Screens.CredentialOffer>
+type CredentialOfferProps = StackScreenProps<NotificationStackParams, Screens.CredentialOffer>
 
 const styles = StyleSheet.create({
   headerTextContainer: {
@@ -185,7 +185,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate(Screens.Home)
+          navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
         }}
       >
         <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
