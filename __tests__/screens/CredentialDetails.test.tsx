@@ -1,10 +1,10 @@
-import { CredentialRecord, CredentialState } from '@aries-framework/core'
+import { CredentialMetadataKeys, CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import { credentialDateTimeFormatString, dateFormatOptions, indyCredentialKey } from '../../App/constants'
+import { dateFormatOptions } from '../../App/constants'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 
 interface CredentialContextInterface {
@@ -51,7 +51,7 @@ describe('displays a credential details screen', () => {
       },
     ],
   })
-  testOpenVPCredentialRecord.metadata.set(indyCredentialKey, {
+  testOpenVPCredentialRecord.metadata.set(CredentialMetadataKeys.IndyCredential, {
     schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
   })
 
