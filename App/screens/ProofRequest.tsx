@@ -19,7 +19,6 @@ import { Attribute } from '../types/record'
 import { connectionRecordFromId, firstMatchingCredentialAttributeValue, getConnectionName } from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
-import ActivityLogLink from 'components/misc/ActivityLogLink'
 import NotificationModal from 'components/modals/NotificationModal'
 import Record from 'components/record/Record'
 import RecordAttribute from 'components/record/RecordAttribute'
@@ -269,11 +268,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       />
       <NotificationModal
         title={t('ProofRequest.SendingTheInformationSecurely')}
-        doneTitle={t('Global.Cancel')}
         visible={pendingModalVisible}
-        onDone={() => {
-          setPendingModalVisible(false)
-        }}
+        doneHidden={true}
       >
         <ProofPending style={{ marginVertical: 20 }}></ProofPending>
       </NotificationModal>
@@ -287,7 +283,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }}
       >
         <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
-        <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
       <NotificationModal
         title={t('ProofRequest.ProofRejected')}
@@ -299,7 +294,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }}
       >
         <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
-        <ActivityLogLink></ActivityLogLink>
       </NotificationModal>
     </>
   )
