@@ -161,11 +161,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       <NotificationModal
         testID={t('CredentialOffer.CredentialOnTheWay')}
         title={t('CredentialOffer.CredentialOnTheWay')}
-        doneTitle={t('Global.Cancel')}
         visible={pendingModalVisible}
-        onDone={() => {
-          setPendingModalVisible(false)
-        }}
+        doneHidden={true}
       >
         <CredentialPending style={{ marginVertical: 20 }}></CredentialPending>
       </NotificationModal>

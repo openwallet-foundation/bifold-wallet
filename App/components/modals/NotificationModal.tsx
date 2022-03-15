@@ -43,6 +43,8 @@ interface NotificationModalProps {
   onDone?: () => void
   onHome?: () => void
   visible?: boolean
+  doneHidden?: boolean
+  homeHidden?: boolean
   testID?: string
 }
 
@@ -52,8 +54,10 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   onDone,
   onHome,
   visible,
-  children,
+  doneHidden = false,
+  homeHidden = false,
   testID,
+  children,
 }) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
@@ -77,22 +81,26 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   return (
     <Modal testID={testID} visible={modalVisible} transparent={true}>
       <SafeAreaView style={styles.container}>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity style={styles.iconButton} onPress={onHome || closeHome}>
-            <Icon name="home" size={24} color={ColorPallet.notification.infoText}></Icon>
-          </TouchableOpacity>
-        </View>
+        {homeHidden ? null : (
+          <View style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconButton} onPress={onHome || closeHome}>
+              <Icon name="home" size={24} color={ColorPallet.notification.infoText}></Icon>
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={styles.childContainer}>
           <Text style={[TextTheme.headingThree, { fontWeight: 'normal', textAlign: 'center' }]}>{title}</Text>
           {children}
         </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonType={ButtonType.Primary}
-            title={doneTitle || t('Global.Done')}
-            onPress={onDone || close}
-          ></Button>
-        </View>
+        {doneHidden ? null : (
+          <View style={styles.buttonContainer}>
+            <Button
+              buttonType={ButtonType.Primary}
+              title={doneTitle || t('Global.Done')}
+              onPress={onDone || close}
+            ></Button>
+          </View>
+        )}
       </SafeAreaView>
     </Modal>
   )
