@@ -8,7 +8,7 @@ import { create } from 'react-test-renderer'
 
 import Home from '../../App/screens/Home'
 
-import { Button, InfoTextBox, NotificationListItem } from 'components'
+import { Button, NotificationListItem } from 'components'
 import { NotificationType } from 'components/listItems/NotificationListItem'
 
 describe('displays a home screen', () => {
@@ -115,7 +115,10 @@ describe('with a notifications module, when an issuer sends a credential offer',
     button?.props.onPress()
 
     expect(navigation.navigate).toHaveBeenCalledTimes(1)
-    expect(navigation.navigate).toHaveBeenCalledWith('Credential Offer', { credentialId: testCredentialRecords[0].id })
+    expect(navigation.navigate).toHaveBeenCalledWith('Notifications Stack', {
+      screen: 'Credential Offer',
+      params: { credentialId: testCredentialRecords[0].id },
+    })
   })
 
   /**
@@ -139,6 +142,9 @@ describe('with a notifications module, when an issuer sends a credential offer',
     button?.props.onPress()
 
     expect(navigation.navigate).toHaveBeenCalledTimes(1)
-    expect(navigation.navigate).toHaveBeenCalledWith('Proof Request', { proofId: testProofRecords[0].id })
+    expect(navigation.navigate).toHaveBeenCalledWith('Notifications Stack', {
+      screen: 'Proof Request',
+      params: { proofId: testProofRecords[0].id },
+    })
   })
 })
