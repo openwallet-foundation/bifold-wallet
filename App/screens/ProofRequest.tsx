@@ -268,11 +268,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       />
       <NotificationModal
         title={t('ProofRequest.SendingTheInformationSecurely')}
-        doneTitle={t('Global.Cancel')}
         visible={pendingModalVisible}
-        onDone={() => {
-          setPendingModalVisible(false)
-        }}
+        doneHidden={true}
       >
         <ProofPending style={{ marginVertical: 20 }}></ProofPending>
       </NotificationModal>
