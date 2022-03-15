@@ -4,7 +4,6 @@ import { LocalStorageKeys } from '../constants'
 import { State } from '../types/state'
 
 export enum DispatchAction {
-  ConnectionPending = 'CONNECTION_PENDING',
   SetTutorialCompletionStatus = 'SET_DID_COMPLETE_TUTORIAL',
   SetDidAgreeToTerms = 'SET_DID_AGREE_TO_TERMS',
   SetDidCreatePIN = 'SET_DID_CREATE_PIN',
@@ -19,18 +18,6 @@ export interface ReducerAction {
 
 const Reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {
-    case DispatchAction.ConnectionPending: {
-      const payload = action.payload.pop()
-      const myState = {
-        ...state,
-        notifications: {
-          ...state.notifications,
-          ...payload,
-        },
-      }
-
-      return myState
-    }
     case DispatchAction.SetOnboardingState:
       return {
         ...state,

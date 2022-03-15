@@ -19,6 +19,9 @@ export enum Screens {
   Language = 'Language',
   Contacts = 'Contacts',
   ContactDetails = 'Contact Details',
+  Connection = 'Connection',
+  OnTheWay = 'On The Way',
+  Declined = 'Declined',
 }
 
 export enum Stacks {
@@ -29,6 +32,7 @@ export enum Stacks {
   SettingStack = 'Settings Stack',
   ContactStack = 'Contacts Stack',
   NotificationStack = 'Notifications Stack',
+  ConnectionStack = 'Connection Stack',
 }
 
 export enum TabStacks {
@@ -92,4 +96,11 @@ export type NotificationStackParams = {
     attributeName: string
     attributeCredentials: RequestedAttribute[]
   }
+}
+
+export type DeliveryStackParams = {
+  [Screens.Connection]: { connectionId: string }
+  [Screens.CredentialOffer]: { credentialId: string }
+  [Screens.OnTheWay]: { credentialId: string }
+  [Screens.Declined]: { credentialId: string }
 }
