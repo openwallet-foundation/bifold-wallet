@@ -14,7 +14,7 @@ import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { ColorPallet, TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
-import { HomeStackParams, Screens } from '../types/navigators'
+import { NotificationStackParams, Screens, Stacks } from '../types/navigators'
 import { Attribute } from '../types/record'
 import {
   connectionRecordFromId,
@@ -29,7 +29,7 @@ import Record from 'components/record/Record'
 import RecordAttribute from 'components/record/RecordAttribute'
 import Title from 'components/texts/Title'
 
-type ProofRequestProps = StackScreenProps<HomeStackParams, Screens.ProofRequest>
+type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 
 interface ProofRequestAttribute extends Attribute {
   values?: RequestedAttribute[]
@@ -297,7 +297,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setSuccessModalVisible(false)
           navigation.pop()
-          navigation.navigate(Screens.Home)
+          navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
         }}
       >
         <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
@@ -308,7 +308,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDone={() => {
           setDeclinedModalVisible(false)
           navigation.pop()
-          navigation.navigate(Screens.Home)
+          navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
         }}
       >
         <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>

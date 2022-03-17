@@ -1,8 +1,13 @@
+const navigate = jest.fn()
+
 const navigation = {
-  navigate: jest.fn(),
+  navigate,
   goBack: jest.fn(),
   pop: jest.fn(),
   setOptions: jest.fn(),
+  getParent: jest.fn(() => ({
+    navigate,
+  })),
 }
 
 const useNavigation = () => {
