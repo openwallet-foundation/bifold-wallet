@@ -73,10 +73,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
-  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
-  const [retrievedCredentialAttributes, setRetrievedCredentialAttributes] = useState<[string, RequestedAttribute[]][]>(
-    []
-  )
+  const [credentials, setCredentials] = useState<RetrievedCredentials>()
+  const [attributeCredentials, setAttributeCredentials] = useState<[string, RequestedAttribute[]][]>([])
 
   const proof = useProofById(proofId)
 
@@ -94,8 +92,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       if (!creds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
-      setRetrievedCredentials(creds)
-      setRetrievedCredentialAttributes(Object.entries(creds?.requestedAttributes || {}))
+      setCredentials(creds)
+      setAttributeCredentials(Object.entries(creds?.requestedAttributes || {}))
     }
 
     updateRetrievedCredentials(proof).catch(() => {
@@ -124,15 +122,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [proof])
 
-  const anyUnavailableCredentialAttributes = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
+  const anyUnavailable = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
     attributes.some(([, values]) => !values?.length)
+
+  const anyRevoked = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
+    attributes.some(([, values]) => values?.every((value) => value.revoked))
 
   const handleAcceptPress = async () => {
     try {
       setButtonsVisible(false)
       setPendingModalVisible(true)
-      const automaticRequestedCreds =
-        retrievedCredentials && agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
+      const automaticRequestedCreds = credentials && agent.proofs.autoSelectCredentialsForProofRequest(credentials)
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
@@ -185,7 +185,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
-            {anyUnavailableCredentialAttributes(retrievedCredentialAttributes) ? (
+            {anyUnavailable(attributeCredentials) ? (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon
                   style={{ marginLeft: -2, marginRight: 10 }}
@@ -208,25 +208,31 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )}
         footer={() => (
           <View style={{ marginBottom: 30 }}>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Share')}
-                buttonType={ButtonType.Primary}
-                onPress={handleAcceptPress}
-                disabled={!buttonsVisible}
-              />
-            </View>
+            {!(anyUnavailable(attributeCredentials) || anyRevoked(attributeCredentials)) ? (
+              <View style={styles.footerButton}>
+                <Button
+                  title={t('Global.Share')}
+                  buttonType={ButtonType.Primary}
+                  onPress={handleAcceptPress}
+                  disabled={!buttonsVisible}
+                />
+              </View>
+            ) : null}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Decline')}
-                buttonType={ButtonType.Secondary}
+                buttonType={
+                  anyUnavailable(attributeCredentials) || anyRevoked(attributeCredentials)
+                    ? ButtonType.Primary
+                    : ButtonType.Secondary
+                }
                 onPress={handleDeclinePress}
                 disabled={!buttonsVisible}
               />
             </View>
           </View>
         )}
-        attributes={retrievedCredentialAttributes.map(([name, values]) => ({
+        attributes={attributeCredentials.map(([name, values]) => ({
           name,
           value: firstAttributeCredential(values),
           values,
