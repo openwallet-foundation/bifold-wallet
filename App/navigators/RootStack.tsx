@@ -17,6 +17,7 @@ import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
+import NotificationStack from './NotificationStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
@@ -57,6 +58,7 @@ const RootStack: React.FC = () => {
         <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
         <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
+        <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
       </Stack.Navigator>
     )
   }
