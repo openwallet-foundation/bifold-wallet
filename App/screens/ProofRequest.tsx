@@ -16,7 +16,12 @@ import { ColorPallet, TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { Attribute } from '../types/record'
-import { connectionRecordFromId, firstMatchingCredentialAttributeValue, getConnectionName } from '../utils/helpers'
+import {
+  connectionRecordFromId,
+  firstAttributeCredential,
+  getConnectionName,
+  valueFromAttributeCredential,
+} from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 import NotificationModal from 'components/modals/NotificationModal'
@@ -223,48 +228,55 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )}
         attributes={retrievedCredentialAttributes.map(([name, values]) => ({
           name,
-          value: firstMatchingCredentialAttributeValue(name, values),
+          value: firstAttributeCredential(values),
           values,
         }))}
-        attribute={(attribute) => (
-          <RecordAttribute
-            attribute={attribute}
-            attributeValue={(attribute: ProofRequestAttribute) => (
-              <>
-                {attribute?.values?.length ? (
-                  <Text style={TextTheme.normal}>{attribute.value}</Text>
-                ) : (
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon
-                      style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                      name="close"
-                      color={ColorPallet.semantic.error}
-                      size={TextTheme.normal.fontSize}
-                    ></Icon>
-                    <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
-                      {t('ProofRequest.NotAvailableInYourWallet')}
+        attribute={(attribute) => {
+          return (
+            <RecordAttribute
+              attribute={attribute}
+              attributeValue={(attribute: ProofRequestAttribute) => (
+                <>
+                  {!attribute?.values?.length || (attribute?.value as RequestedAttribute)?.revoked ? (
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Icon
+                        style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                        name="close"
+                        color={ColorPallet.semantic.error}
+                        size={TextTheme.normal.fontSize}
+                      ></Icon>
+
+                      <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+                        {(attribute?.value as RequestedAttribute)?.revoked
+                          ? t('CredentialDetails.Revoked')
+                          : t('ProofRequest.NotAvailableInYourWallet')}
+                      </Text>
+                    </View>
+                  ) : (
+                    <Text style={TextTheme.normal}>
+                      {valueFromAttributeCredential(attribute.name, attribute.value as RequestedAttribute)}
                     </Text>
-                  </View>
-                )}
-                {attribute?.values?.length ? (
-                  <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() =>
-                      navigation.navigate(Screens.ProofRequestAttributeDetails, {
-                        proofId,
-                        attributeName: attribute.name,
-                        attributeCredentials: attribute.values || [],
-                      })
-                    }
-                    style={styles.link}
-                  >
-                    <Text style={TextTheme.normal}>{t('ProofRequest.Details')}</Text>
-                  </TouchableOpacity>
-                ) : null}
-              </>
-            )}
-          />
-        )}
+                  )}
+                  {attribute?.values?.length ? (
+                    <TouchableOpacity
+                      activeOpacity={1}
+                      onPress={() =>
+                        navigation.navigate(Screens.ProofRequestAttributeDetails, {
+                          proofId,
+                          attributeName: attribute.name,
+                          attributeCredentials: attribute.values || [],
+                        })
+                      }
+                      style={styles.link}
+                    >
+                      <Text style={TextTheme.normal}>{t('ProofRequest.Details')}</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </>
+              )}
+            />
+          )
+        }}
       />
       <NotificationModal
         title={t('ProofRequest.SendingTheInformationSecurely')}
