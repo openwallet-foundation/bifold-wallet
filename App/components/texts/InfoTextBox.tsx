@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     color: ColorPallet.notification.infoText,
     fontWeight: 'bold',
     alignSelf: 'center',
+    flexShrink: 1,
   },
   iconContainer: {
     marginRight: offset,
