@@ -2,9 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, TouchableOpacity, View } from 'react-native'
 
-import Arrow from '../assets/icons/large-arrow.svg'
 import Onboarding from '../screens/Onboarding'
 import { pages, carousel } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
@@ -13,20 +11,31 @@ import Splash from '../screens/Splash'
 import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { Colors } from '../theme'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { ColorPallet } from '../theme'
+import { StateFn } from '../types/fn'
+import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
-import ScanStack from './ScanStack'
+import ConnectStack from './ConnectStack'
+import ContactStack from './ContactStack'
+import NotificationStack from './NotificationStack'
+import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
-
-import { GenericFn, StateFn } from 'types/fn'
 
 const RootStack: React.FC = () => {
   const [authenticated, setAuthenticated] = useState(false)
   const [state, dispatch] = useContext(Context)
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { t } = useTranslation()
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+
+  const onTutorialCompleted = () => {
+    dispatch({
+      type: DispatchAction.SetTutorialCompletionStatus,
+      payload: [{ DidCompleteTutorial: true }],
+    })
+
+    navigation.navigate(Screens.Terms)
+  }
 
   const authStack = (setAuthenticated: StateFn) => {
     const Stack = createStackNavigator()
@@ -45,15 +54,16 @@ const RootStack: React.FC = () => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Tabs}>{() => <TabStack />}</Stack.Screen>
-        <Stack.Screen name={Screens.Connect} options={{ presentation: 'modal' }}>
-          {() => <ScanStack />}
-        </Stack.Screen>
+        <Stack.Screen name={Stacks.TabStack} component={TabStack} />
+        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
+        <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
+        <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
+        <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
       </Stack.Navigator>
     )
   }
 
-  const onboardingStack = (onSkipTouched: GenericFn, setAuthenticated: StateFn) => {
+  const onboardingStack = (setAuthenticated: StateFn) => {
     const Stack = createStackNavigator()
 
     return (
@@ -62,26 +72,11 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
-            title: 'Onboarding',
-            headerTintColor: Colors.white,
+            title: t('Screens.Onboarding'),
+            headerTintColor: ColorPallet.grayscale.white,
             headerShown: true,
             gestureEnabled: false,
             headerLeft: () => false,
-            headerRight: () => {
-              return (
-                // TODO:(jl) Create new type of button component
-                <TouchableOpacity
-                  accessibilityLabel={t('Global.Skip')}
-                  onPress={onSkipTouched}
-                  style={{ marginRight: 14 }}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ color: Colors.white, fontWeight: 'bold', marginRight: 4 }}>Skip</Text>
-                    <Arrow height={15} width={15} fill={Colors.white} style={{ transform: [{ rotate: '180deg' }] }} />
-                  </View>
-                </TouchableOpacity>
-              )
-            },
           })}
         >
           {(props) => (
@@ -89,7 +84,7 @@ const RootStack: React.FC = () => {
               {...props}
               nextButtonText={'Next'}
               previousButtonText={'Back'}
-              pages={pages(onSkipTouched)}
+              pages={pages(onTutorialCompleted)}
               style={carousel}
             />
           )}
@@ -97,8 +92,8 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Screens.Terms}
           options={() => ({
-            title: 'Terms & Conditions',
-            headerTintColor: Colors.white,
+            title: t('Screens.Terms'),
+            headerTintColor: ColorPallet.grayscale.white,
             headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
@@ -112,20 +107,11 @@ const RootStack: React.FC = () => {
     )
   }
 
-  const onSkipTouched = () => {
-    dispatch({
-      type: DispatchAction.SetTutorialCompletionStatus,
-      payload: [{ DidCompleteTutorial: true }],
-    })
-
-    navigation.navigate(Screens.Terms)
-  }
-
   if (state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN) {
     return authenticated ? mainStack() : authStack(setAuthenticated)
   }
 
-  return onboardingStack(onSkipTouched, setAuthenticated)
+  return onboardingStack(setAuthenticated)
 }
 
 export default RootStack

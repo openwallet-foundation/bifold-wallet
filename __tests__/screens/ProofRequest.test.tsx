@@ -140,7 +140,7 @@ describe('displays a proof request screen', () => {
 
       await act(() => Promise.resolve())
 
-      const contact = getByText('ProofRequest.AContact', { exact: false })
+      const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })
@@ -182,7 +182,7 @@ describe('displays a proof request screen', () => {
 
       await act(() => Promise.resolve())
 
-      const contact = getByText('ProofRequest.AContact', { exact: false })
+      const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = getByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })

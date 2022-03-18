@@ -1,21 +1,19 @@
+import { render } from '@testing-library/react-native'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
-import { create } from 'react-test-renderer'
 
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
-import { Colors } from '../../App/theme'
-
-const markTutorialFin = jest.fn()
+import { ColorPallet } from '../../App/theme'
 
 export const carousel: OnboardingStyleSheet = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   carouselContainer: {
     flexDirection: 'column',
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   pagerContainer: {
     flexShrink: 2,
@@ -25,7 +23,7 @@ export const carousel: OnboardingStyleSheet = StyleSheet.create({
   pagerDot: {
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.primary,
+    borderColor: ColorPallet.brand.primary,
   },
   pagerPosition: {
     position: 'relative',
@@ -34,7 +32,7 @@ export const carousel: OnboardingStyleSheet = StyleSheet.create({
   pagerNavigationButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.primary,
+    color: ColorPallet.brand.primary,
   },
 })
 
@@ -49,7 +47,7 @@ const pages = [
 
 describe('Onboarding', () => {
   it('Renders correctly', () => {
-    const tree = create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />).toJSON()
+    const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -62,9 +60,11 @@ describe('Onboarding', () => {
   //   expect(markTutorialFin).toBeCalledTimes(1)
   // })
 
-  it('Pages exist', () => {
-    const tree = create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />)
-    const foundPages = tree.root!.findAllByType(Text).filter((e: any) => e.props.testID === 'bodyText')
+  it('Pages exist', async () => {
+    const { findAllByTestId } = render(
+      <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
+    )
+    const foundPages = await findAllByTestId('bodyText')
 
     expect(foundPages.length).toBe(2)
   })

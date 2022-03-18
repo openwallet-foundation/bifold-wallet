@@ -28,7 +28,7 @@ const translation = {
   },
   "Language": {
     "English": "English",
-    "French": "French",    
+    "French": "French",
   },
   "Error": {
     "Unknown": "Unknown Error",
@@ -43,17 +43,18 @@ const translation = {
   "PinCreate": {
     "UserAuthenticationPin": "User authentication pin",
     "PinMustBe6DigitsInLength": "Pin must be 6 digits in length",
-    "PinsEnteredDoNotMatch": "Pins entered do not match",    
+    "PinsEnteredDoNotMatch": "Pins entered do not match",
     "6DigitPin": "6 Digit Pin",
     "ReenterPin": "Re-Enter Pin",
     "Create": "Create"
   },
   "PinEnter": {
-    "IncorrectPin": "Incorrect Pin",    
-  }, 
+    "IncorrectPin": "Incorrect Pin",
+  },
   "ContactDetails": {
     "Created": "Created",
-    "ConnectionState": "Connection State"
+    "ConnectionState": "Connection State",
+    "AContact": "A contact",
   },
   "Credentials": {
     "CredentialsNotFound": "Credentials not found",
@@ -76,15 +77,16 @@ const translation = {
     "YouHave": "You have",
     "Credential": "credential",
     "Credentials": "credentials",
-    "InYourWallet": "in your wallet" 
+    "InYourWallet": "in your wallet"
   },
-  "Scan":{
-    "SuccessfullyAcceptedConnection":"Successfully Accepted Connection",
-    "AcceptingConnection":"Accepting Connection",
-    "ConnectionRecordIdNotFound":"Connection record ID not found",
+  "Scan": {
+    "SuccessfullyAcceptedConnection": "Successfully Accepted Connection",
+    "AcceptingConnection": "Accepting Connection",
+    "ConnectionRecordIdNotFound": "Connection record ID not found",
     "ConnectionAccepted": "Connection Accepted",
     "ConnectionNotFound": "Connection not found",
-    "InvalidQrCode": "Invalid QR code. Please try again."
+    "InvalidQrCode": "Invalid QR code. Please try again.",
+    "UnableToHandleRedirection": "Unable to handle redirection"
   },
   "Connection": {
     "JustAMoment": "Just a moment while we make a secure connection...",
@@ -96,8 +98,8 @@ const translation = {
     "RejectThisCredential?": "Reject this Credential?",
     "AcceptingCredential": "Accepting Credential",
     "SuccessfullyAcceptedCredential": "Successfully Accepted Credential",
-    "RejectingCredential":"Rejecting Credential",
-    "SuccessfullyRejectedCredential":"Successfully Rejected Credential",
+    "RejectingCredential": "Rejecting Credential",
+    "SuccessfullyRejectedCredential": "Successfully Rejected Credential",
     "CredentialNotFound": "Credential not found",
     "CredentialAccepted": "Credential Accepted",
     "CredentialRejected": "Credential Rejected",
@@ -112,8 +114,8 @@ const translation = {
     "RejectThisProof?": "Reject this Proof?",
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
-    "ProofNotFound":"Proof not Found",
-    "RejectingProof":"Rejecting Proof",
+    "ProofNotFound": "Proof not Found",
+    "RejectingProof": "Rejecting Proof",
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
@@ -123,7 +125,6 @@ const translation = {
     "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
     "IsRequestingYouToShare": "is requesting you to share",
     "WhichYouCanProvideFrom": "which you can provide from",
-    "AContact": "A contact",
     "Details": "Details",
     "SendingTheInformationSecurely": "Sending the information securely",
     "InformationSentSuccessfully": "Information sent successfully",
@@ -138,9 +139,11 @@ const translation = {
   },
   "TabStack": {
     "Home": "Home",
-    "Contacts": "Contacts",
     "Scan": "Scan",
     "Credentials": "Credentials",
+  },
+  "RootStack": {
+    "Contacts": "Contacts",
     "Settings": "Settings"
   },
   "QRScanner": {
@@ -151,7 +154,28 @@ const translation = {
   "Record": {
     "Hide": "Hide",
     "Show": "Show",
-    "HideAll": "Hide all"
+    "HideAll": "Hide all",
+    "Hidden": "Hidden"
+  },
+  "Screens": {
+    "Splash": 'Splash',
+    "Onboarding": "Onboarding",
+    "Terms": "Terms & Conditions",
+    "CreatePin": 'Create 6-Digit Pin',
+    "EnterPin": 'Enter Pin',
+    "Home": 'Home',
+    "Scan": 'Scan',
+    "Credentials": 'Credentials',
+    "CredentialDetails": 'Credential Details',
+    "Notifications": 'Notifications',
+    "CredentialOffer": 'Credential Offer',
+    "ProofRequest": 'Proof Request',
+    "ProofRequestAttributeDetails": 'Proof Request Attribute Details',
+    "Settings": 'Settings',
+    "Language": 'Language',
+    "Contacts": 'Contacts',
+    "ContactDetails": 'Contact Details',
   }
 }
+
 export default translation

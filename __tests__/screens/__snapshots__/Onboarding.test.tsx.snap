@@ -145,7 +145,6 @@ exports[`Onboarding Renders correctly 1`] = `
     }
   >
     <View
-      accessibilityElementsHidden={false}
       accessibilityLabel="Global.Back"
       accessible={true}
       collapsable={false}
@@ -163,12 +162,13 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
+      testID="com.ariesbifold:id/Back"
     >
       <Text
         style={
           Array [
             Object {
-              "color": "#35823F",
+              "color": "#42803E",
               "fontSize": 18,
               "fontWeight": "bold",
             },
@@ -178,7 +178,9 @@ exports[`Onboarding Renders correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        Back
+      </Text>
     </View>
     <View
       style={
@@ -201,8 +203,8 @@ exports[`Onboarding Renders correctly 1`] = `
         nativeID="animatedComponent"
         style={
           Object {
-            "backgroundColor": "rgba(53, 130, 63, 1)",
-            "borderColor": "#35823F",
+            "backgroundColor": "rgba(66, 128, 62, 1)",
+            "borderColor": "#42803E",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -223,8 +225,8 @@ exports[`Onboarding Renders correctly 1`] = `
         nativeID="animatedComponent"
         style={
           Object {
-            "backgroundColor": "rgba(0, 0, 0, 0)",
-            "borderColor": "#35823F",
+            "backgroundColor": "rgba(255, 255, 255, 1)",
+            "borderColor": "#42803E",
             "borderRadius": 5,
             "borderStyle": "solid",
             "borderWidth": 1,
@@ -259,23 +261,25 @@ exports[`Onboarding Renders correctly 1`] = `
           "opacity": 1,
         }
       }
-      testID="nextButtonX"
+      testID="com.ariesbifold:id/Next"
     >
       <Text
         style={
           Array [
             Object {
-              "color": "#35823F",
+              "color": "#42803E",
               "fontSize": 18,
               "fontWeight": "bold",
             },
             Object {
-              "color": "#35823F",
+              "color": "#42803E",
               "paddingLeft": 20,
             },
           ]
         }
-      />
+      >
+        Next
+      </Text>
     </View>
   </View>
 </RNCSafeAreaView>

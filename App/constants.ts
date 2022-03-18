@@ -1,17 +1,13 @@
-import { IndyCredentialMetadata } from '@aries-framework/core/build/types'
-
 export const defaultLanguage = 'en'
+
+// Used to property prefix TestIDs so they can be looked up
+// by on-device automated testing systems like SauceLabs.
+export const testIdPrefix = 'com.ariesbifold:id/'
 
 export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',
+  TutorialStatus = 'TutorialStatus',
 }
-
-// FIXME: Remove once fixed in AFJ
-export interface IndexedIndyCredentialMetadata extends IndyCredentialMetadata {
-  [key: string]: string | undefined
-}
-
-export const indyCredentialKey = '_internal/indyCredential'
 
 //Keys for items saved in keychain/async storage
 export const KEYCHAIN_SERVICE_KEY = 'walletkey'

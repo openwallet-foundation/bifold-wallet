@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Colors } from '../../theme'
+import { ColorPallet } from '../../theme'
 
 interface Props {
   children: React.ReactNode
@@ -11,7 +11,7 @@ interface Props {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   scrollView: {
     alignItems: 'center',

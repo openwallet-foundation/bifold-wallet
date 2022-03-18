@@ -1,40 +1,54 @@
 import { RequestedAttribute } from '@aries-framework/core'
+import { NavigatorScreenParams } from '@react-navigation/core'
 
 export enum Screens {
-  Tabs = 'Tabs',
-  Connect = 'Connect',
+  Splash = 'Splash',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
   CreatePin = 'Create 6-Digit Pin',
-  Splash = 'Splash',
   EnterPin = 'Enter Pin',
-  Contacts = 'Contacts',
-  ContactDetails = 'Contact Details',
+  Home = 'Home',
+  Scan = 'Scan',
   Credentials = 'Credentials',
   CredentialDetails = 'Credential Details',
-  Home = 'Home',
   Notifications = 'Notifications',
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
   ProofRequestAttributeDetails = 'Proof Request Attribute Details',
-  Scan = 'Scan',
   Settings = 'Settings',
   Language = 'Language',
+  Contacts = 'Contacts',
+  ContactDetails = 'Contact Details',
 }
 
 export enum Stacks {
+  TabStack = 'Tab Stack',
   HomeStack = 'Home Stack',
-  ScanStack = 'Scan Stack',
+  ConnectStack = 'Connect Stack',
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
   ContactStack = 'Contacts Stack',
+  NotificationStack = 'Notifications Stack',
+}
+
+export enum TabStacks {
+  HomeStack = 'Tab Home Stack',
+  ConnectStack = 'Tab Connect Stack',
+  CredentialStack = 'Tab Credential Stack',
+}
+
+export type RootStackParams = {
+  [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
+  [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
+  [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+  [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
 }
 
 export type TabStackParams = {
-  [Stacks.HomeStack]: undefined
-  [Stacks.ScanStack]: undefined
-  [Stacks.CredentialStack]: undefined
-  [Stacks.ContactStack]: undefined
+  [TabStacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
+  [TabStacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [TabStacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
 }
 
 export type AuthenticateStackParams = {
@@ -53,12 +67,23 @@ export type ContactStackParams = {
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
-  [Stacks.SettingStack]: undefined
 }
 
 export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
+}
+
+export type ConnectStackParams = {
+  [Screens.Scan]: undefined
+}
+
+export type SettingStackParams = {
+  [Screens.Settings]: undefined
+  [Screens.Language]: undefined
+}
+
+export type NotificationStackParams = {
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
   [Screens.ProofRequestAttributeDetails]: {
@@ -66,15 +91,4 @@ export type HomeStackParams = {
     attributeName: string
     attributeCredentials: RequestedAttribute[]
   }
-  [Stacks.SettingStack]: undefined
-}
-
-export type ScanStackParams = {
-  [Screens.Scan]: undefined
-}
-
-export type SettingsStackParams = {
-  [Screens.Settings]: undefined
-  [Screens.Language]: undefined
-  [Stacks.ContactStack]: undefined
 }

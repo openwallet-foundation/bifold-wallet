@@ -2,11 +2,12 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Colors, TextTheme } from '../../theme'
+import { ColorPallet, TextTheme } from '../../theme'
 
 interface Props {
   title: string
   accessibilityLabel?: string
+  testID?: string
   checked: boolean
   onPress: () => void
 }
@@ -25,16 +26,16 @@ const style = StyleSheet.create({
   },
 })
 
-const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, checked, onPress }) => {
+const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, checked, onPress }) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
 
   return (
     <View style={style.container}>
-      <TouchableOpacity accessible={accessible} accessibilityLabel={accessibilityLabel} onPress={onPress}>
+      <TouchableOpacity accessibilityLabel={accessibilityLabel} testID={testID} onPress={onPress}>
         {checked ? (
-          <Icon name={'check-box'} size={36} color={Colors.primary} />
+          <Icon name={'check-box'} size={36} color={ColorPallet.brand.primary} />
         ) : (
-          <Icon name={'check-box-outline-blank'} size={36} color={Colors.primary} />
+          <Icon name={'check-box-outline-blank'} size={36} color={ColorPallet.brand.primary} />
         )}
       </TouchableOpacity>
       <Text style={[style.text]}>{title}</Text>

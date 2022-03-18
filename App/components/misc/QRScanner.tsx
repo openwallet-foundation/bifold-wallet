@@ -5,7 +5,7 @@ import { useWindowDimensions, Vibration, View, StyleSheet, Text } from 'react-na
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ColorPallet } from '../../theme'
+import { ColorPallet, TextTheme } from '../../theme'
 
 import QRScannerClose from 'components/misc/QRScannerClose'
 import QRScannerTorch from 'components/misc/QRScannerTorch'
@@ -103,12 +103,16 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       >
         <CameraViewContainer portrait={portraitMode}>
           <QRScannerClose onPress={() => navigation.goBack()}></QRScannerClose>
-          {error && (
-            <View style={styles.errorContainer}>
-              <Icon style={styles.icon} name="cancel" size={30}></Icon>
-              <Text style={{ color: ColorPallet.grayscale.white }}>{error.message}</Text>
-            </View>
-          )}
+          <View style={styles.errorContainer}>
+            {error ? (
+              <>
+                <Icon style={styles.icon} name="cancel" size={30}></Icon>
+                <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white }]}>{error.message}</Text>
+              </>
+            ) : (
+              <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white, height: 30, margin: 4 }]}> </Text>
+            )}
+          </View>
           <View style={styles.viewFinderContainer}>
             <View style={styles.viewFinder} />
           </View>
