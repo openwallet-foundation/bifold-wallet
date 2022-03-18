@@ -190,7 +190,7 @@ describe('displays a proof request screen', () => {
       const timeLabel = getByText(/Time/, { exact: false })
       const timeValue = queryByText(testTime, { exact: false })
       const detailsLinks = getAllByText('ProofRequest.Details', { exact: false })
-      const shareButton = getByText('Global.Share', { exact: false })
+      const shareButton = queryByText('Global.Share', { exact: false })
       const declineButton = getByText('Global.Decline', { exact: false })
 
       expect(contact).not.toBeNull()
@@ -207,7 +207,7 @@ describe('displays a proof request screen', () => {
       expect(missingClaim).not.toBeNull()
       expect(missingClaim).toBeTruthy()
       expect(detailsLinks.length).toBe(1)
-      expect(shareButton).not.toBeNull()
+      expect(shareButton).toBeNull()
       expect(declineButton).not.toBeNull()
     })
   })
