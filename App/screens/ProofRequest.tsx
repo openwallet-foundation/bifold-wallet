@@ -16,7 +16,12 @@ import { ColorPallet, TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks } from '../types/navigators'
 import { Attribute } from '../types/record'
-import { connectionRecordFromId, firstMatchingCredentialAttributeValue, getConnectionName } from '../utils/helpers'
+import {
+  connectionRecordFromId,
+  firstAttributeCredential,
+  getConnectionName,
+  valueFromAttributeCredential,
+} from '../utils/helpers'
 
 import Button, { ButtonType } from 'components/buttons/Button'
 import NotificationModal from 'components/modals/NotificationModal'
@@ -68,10 +73,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
 
-  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
-  const [retrievedCredentialAttributes, setRetrievedCredentialAttributes] = useState<[string, RequestedAttribute[]][]>(
-    []
-  )
+  const [credentials, setCredentials] = useState<RetrievedCredentials>()
+  const [attributeCredentials, setAttributeCredentials] = useState<[string, RequestedAttribute[]][]>([])
 
   const proof = useProofById(proofId)
 
@@ -89,8 +92,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       if (!creds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
-      setRetrievedCredentials(creds)
-      setRetrievedCredentialAttributes(Object.entries(creds?.requestedAttributes || {}))
+      setCredentials(creds)
+      setAttributeCredentials(Object.entries(creds?.requestedAttributes || {}))
     }
 
     updateRetrievedCredentials(proof).catch(() => {
@@ -119,15 +122,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [proof])
 
-  const anyUnavailableCredentialAttributes = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
+  const anyUnavailable = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
     attributes.some(([, values]) => !values?.length)
+
+  const anyRevoked = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
+    attributes.some(([, values]) => values?.every((value) => value.revoked))
 
   const handleAcceptPress = async () => {
     try {
       setButtonsVisible(false)
       setPendingModalVisible(true)
-      const automaticRequestedCreds =
-        retrievedCredentials && agent.proofs.autoSelectCredentialsForProofRequest(retrievedCredentials)
+      const automaticRequestedCreds = credentials && agent.proofs.autoSelectCredentialsForProofRequest(credentials)
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
@@ -180,7 +185,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
-            {anyUnavailableCredentialAttributes(retrievedCredentialAttributes) ? (
+            {anyUnavailable(attributeCredentials) ? (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon
                   style={{ marginLeft: -2, marginRight: 10 }}
@@ -203,68 +208,81 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )}
         footer={() => (
           <View style={{ marginBottom: 30 }}>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Share')}
-                buttonType={ButtonType.Primary}
-                onPress={handleAcceptPress}
-                disabled={!buttonsVisible}
-              />
-            </View>
+            {!(anyUnavailable(attributeCredentials) || anyRevoked(attributeCredentials)) ? (
+              <View style={styles.footerButton}>
+                <Button
+                  title={t('Global.Share')}
+                  buttonType={ButtonType.Primary}
+                  onPress={handleAcceptPress}
+                  disabled={!buttonsVisible}
+                />
+              </View>
+            ) : null}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Decline')}
-                buttonType={ButtonType.Secondary}
+                buttonType={
+                  anyUnavailable(attributeCredentials) || anyRevoked(attributeCredentials)
+                    ? ButtonType.Primary
+                    : ButtonType.Secondary
+                }
                 onPress={handleDeclinePress}
                 disabled={!buttonsVisible}
               />
             </View>
           </View>
         )}
-        attributes={retrievedCredentialAttributes.map(([name, values]) => ({
+        attributes={attributeCredentials.map(([name, values]) => ({
           name,
-          value: firstMatchingCredentialAttributeValue(name, values),
+          value: firstAttributeCredential(values),
           values,
         }))}
-        attribute={(attribute) => (
-          <RecordAttribute
-            attribute={attribute}
-            attributeValue={(attribute: ProofRequestAttribute) => (
-              <>
-                {attribute?.values?.length ? (
-                  <Text style={TextTheme.normal}>{attribute.value}</Text>
-                ) : (
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon
-                      style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                      name="close"
-                      color={ColorPallet.semantic.error}
-                      size={TextTheme.normal.fontSize}
-                    ></Icon>
-                    <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
-                      {t('ProofRequest.NotAvailableInYourWallet')}
+        attribute={(attribute) => {
+          return (
+            <RecordAttribute
+              attribute={attribute}
+              attributeValue={(attribute: ProofRequestAttribute) => (
+                <>
+                  {!attribute?.values?.length || (attribute?.value as RequestedAttribute)?.revoked ? (
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Icon
+                        style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                        name="close"
+                        color={ColorPallet.semantic.error}
+                        size={TextTheme.normal.fontSize}
+                      ></Icon>
+
+                      <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+                        {(attribute?.value as RequestedAttribute)?.revoked
+                          ? t('CredentialDetails.Revoked')
+                          : t('ProofRequest.NotAvailableInYourWallet')}
+                      </Text>
+                    </View>
+                  ) : (
+                    <Text style={TextTheme.normal}>
+                      {valueFromAttributeCredential(attribute.name, attribute.value as RequestedAttribute)}
                     </Text>
-                  </View>
-                )}
-                {attribute?.values?.length ? (
-                  <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() =>
-                      navigation.navigate(Screens.ProofRequestAttributeDetails, {
-                        proofId,
-                        attributeName: attribute.name,
-                        attributeCredentials: attribute.values || [],
-                      })
-                    }
-                    style={styles.link}
-                  >
-                    <Text style={TextTheme.normal}>{t('ProofRequest.Details')}</Text>
-                  </TouchableOpacity>
-                ) : null}
-              </>
-            )}
-          />
-        )}
+                  )}
+                  {attribute?.values?.length ? (
+                    <TouchableOpacity
+                      activeOpacity={1}
+                      onPress={() =>
+                        navigation.navigate(Screens.ProofRequestAttributeDetails, {
+                          proofId,
+                          attributeName: attribute.name,
+                          attributeCredentials: attribute.values || [],
+                        })
+                      }
+                      style={styles.link}
+                    >
+                      <Text style={TextTheme.normal}>{t('ProofRequest.Details')}</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </>
+              )}
+            />
+          )
+        }}
       />
       <NotificationModal
         title={t('ProofRequest.SendingTheInformationSecurely')}

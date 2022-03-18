@@ -6,7 +6,6 @@ import {
   RequestedAttribute,
 } from '@aries-framework/core'
 import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
-import startCase from 'lodash.startcase'
 import { parseUrl } from 'query-string'
 
 export function parseSchema(schemaId?: string): { name: string; version: string } {
@@ -71,18 +70,31 @@ export function getConnectionName(connection: ConnectionRecord | void): string |
   return connection?.alias || connection?.invitation?.label
 }
 
-export function firstMatchingCredentialAttributeValue(attributeName: string, attributes: RequestedAttribute[]): string {
+export function firstAttributeCredential(attributes: RequestedAttribute[], revoked = true): RequestedAttribute | null {
   if (!attributes.length) {
+    return null
+  }
+
+  let first = null
+  const firstNonRevoked = attributes.filter((attribute) => !attribute.revoked)[0]
+  if (firstNonRevoked) {
+    first = firstNonRevoked
+  } else if (attributes.length && revoked) {
+    first = attributes[0]
+  }
+
+  if (!first?.credentialInfo) {
+    return null
+  }
+
+  return first
+}
+
+export const valueFromAttributeCredential = (name: string, credential: RequestedAttribute) => {
+  if (!credential) {
     return ''
   }
-  const firstMatchingCredential = attributes[0].credentialInfo
-  if (!firstMatchingCredential) {
-    return ''
-  }
-  const match = Object.entries(firstMatchingCredential.attributes).find(
-    ([n]) => startCase(n) === startCase(attributeName)
-  )
-  return match?.length ? match[1] : ''
+  return credential.credentialInfo?.attributes[name]
 }
 
 export const isRedirection = (url: string): boolean => {
