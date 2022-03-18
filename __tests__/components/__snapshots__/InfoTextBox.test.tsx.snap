@@ -39,6 +39,7 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
         Object {
           "alignSelf": "center",
           "color": "#FFFFFF",
+          "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "bold",
         }
