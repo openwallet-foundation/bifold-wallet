@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   bodyContainer: {
-    // flexGrow: 1,
     flexDirection: 'column',
     marginLeft: 10 + iconSize,
     paddingHorizontal: 5,
@@ -58,8 +57,7 @@ const styles = StyleSheet.create({
   bodyText: {
     ...TextTheme.normal,
     flexShrink: 1,
-    marginVertical: 15,
-    paddingBottom: 10,
+    marginVertical: 16,
     color: ColorPallet.notification.infoText,
   },
   icon: {
@@ -129,8 +127,8 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
       break
 
     case InfoBoxType.Error:
-      iconName = 'info'
-      iconColor = ColorPallet.notification.infoIcon
+      iconName = 'error'
+      iconColor = ColorPallet.notification.errorIcon
       styles.container = {
         ...styles.container,
         backgroundColor: ColorPallet.notification.error,
@@ -160,7 +158,11 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
       </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.bodyText}>{message}</Text>
-        {code && <Text style={styles.bodyText}>{`${t('Global.ErrorCode')} ${code}`}</Text>}
+        {code && (
+          <Text style={[styles.bodyText, { marginTop: 0, marginBottom: 24 }]}>{`${t(
+            'Global.ErrorCode'
+          )} ${code}`}</Text>
+        )}
         {onCallToActionPressed && (
           <Button buttonType={ButtonType.Primary} title={t('Global.Okay')} onPress={onCallToActionPressed} />
         )}
