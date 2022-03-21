@@ -47,7 +47,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       const message = await res.json()
       displayPendingMessage()
       await agent?.receiveMessage(message)
-    } catch (err) {
+    } catch (e: unknown) {
       throw new Error(t('Scan.UnableToHandleRedirection'))
     }
   }
@@ -89,8 +89,13 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } catch (e: unknown) {
-      const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
-      setQrCodeScanError(error)
+      if ((e as Error).message === 'Connection not found') {
+        navigation.pop()
+        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      } else {
+        const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
+        setQrCodeScanError(error)
+      }
     }
   }
 
