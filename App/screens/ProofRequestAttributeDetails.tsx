@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Toast from 'react-native-toast-message'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Title from '../components/texts/Title'
 import { ToastType } from '../components/toast/BaseToast'
@@ -13,10 +14,11 @@ import { ColorPallet, TextTheme } from '../theme'
 import { HomeStackParams, Screens } from '../types/navigators'
 import {
   connectionRecordFromId,
-  firstMatchingCredentialAttributeValue,
+  firstAttributeCredential,
   getConnectionName,
   parsedSchema,
   proofRecordFromId,
+  valueFromAttributeCredential,
 } from '../utils/helpers'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
@@ -124,6 +126,8 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
     credentialIds.includes(credential.credentialId || credential.id)
   )
 
+  const attributeCredential = firstAttributeCredential(attributeCredentials) as RequestedAttribute
+
   return (
     <FlatList
       ListHeaderComponent={() => (
@@ -141,11 +145,25 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       renderItem={({ item: credential }) => (
         <View style={styles.listItem}>
           <Text style={TextTheme.normal}>{parsedSchema(credential).name}</Text>
-          <Text style={TextTheme.normal}>
-            {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
-          </Text>
+          {attributeCredential.revoked ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon
+                style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                name="close"
+                color={ColorPallet.semantic.error}
+                size={TextTheme.normal.fontSize}
+              ></Icon>
+              <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+                {t('CredentialDetails.Revoked')}
+              </Text>
+            </View>
+          ) : (
+            <Text style={TextTheme.normal}>
+              {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
+            </Text>
+          )}
           <Title style={{ paddingVertical: 16 }}>
-            {firstMatchingCredentialAttributeValue(attributeName, attributeCredentials)}
+            {valueFromAttributeCredential(attributeName, attributeCredential)}
           </Title>
         </View>
       )}

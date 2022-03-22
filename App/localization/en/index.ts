@@ -67,6 +67,7 @@ const translation = {
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
+    "Revoked": "Revoked"
   },
   "Home": {
     "Welcome": "Welcome",
