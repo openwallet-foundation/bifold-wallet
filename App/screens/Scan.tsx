@@ -89,13 +89,8 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } catch (e: unknown) {
-      if ((e as Error).message === 'Connection not found') {
-        navigation.pop()
-        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-      } else {
-        const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
-        setQrCodeScanError(error)
-      }
+      const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
+      setQrCodeScanError(error)
     }
   }
 

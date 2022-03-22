@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Modal, StyleSheet, Text, View } from 'react-native'
@@ -6,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import ConnectionPending from '../../assets/img/connection-pending.svg'
 import { Context } from '../../store/Store'
 import { ColorPallet, TextTheme } from '../../theme'
+import { RootStackParams, Screens, Stacks, TabStacks } from '../../types/navigators'
 import Button, { ButtonType } from '../buttons/Button'
 
 const { height } = Dimensions.get('window')
@@ -45,6 +48,7 @@ const styles = StyleSheet.create({
 
 const ConnectionModal: React.FC = () => {
   const { t } = useTranslation()
+  const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [state] = useContext(Context)
@@ -53,6 +57,28 @@ const ConnectionModal: React.FC = () => {
   const onDismissModalTouched = () => {
     setShouldShowDelayMessage(false)
     setModalVisible(false)
+    navigation.reset({
+      index: navigation.getState().index,
+      routes: [
+        {
+          name: Stacks.TabStack,
+          state: {
+            routes: [
+              {
+                name: TabStacks.HomeStack,
+                state: {
+                  routes: [
+                    {
+                      name: Screens.Home,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    })
   }
 
   useEffect(() => {
