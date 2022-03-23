@@ -103,10 +103,10 @@ const ConnectionModal: React.FC = () => {
           <ConnectionPending style={[styles.image]} {...imageDisplayOptions} />
           {shouldShowDelayMessage && (
             <View style={[styles.delayMessageContainer]}>
-              <Text style={[TextTheme.normal, styles.delayMessageText]}>{t('Connection.TakingTooLong')}</Text>
+              <Text style={[TextTheme.normal, styles.delayMessageText]}>{t('Loading.TakingTooLong')}</Text>
               <Button
-                title={t('Connection.BackToHome')}
-                accessibilityLabel={t('Global.Home')}
+                title={t('Loading.BackToHome')}
+                accessibilityLabel={t('Loading.BackToHome')}
                 onPress={onDismissModalTouched}
                 buttonType={ButtonType.Secondary}
               />
