@@ -1,7 +1,7 @@
 import { CredentialRecord, ConnectionRecord, CredentialState } from '@aries-framework/core'
 import { useAgent, useCredentialById, useConnectionById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { fireEvent, render, waitFor } from '@testing-library/react-native'
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
@@ -65,12 +65,13 @@ describe('displays a credential offer screen', () => {
     fireEvent(acceptBtn, 'press')
 
     const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
-    const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
-    const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
+    const declinedModal = tree.queryByTestId('CredentialOffer.CredentialDeclined')
+    const addedModal = tree.queryByTestId('CredentialOffer.CredentialAddedToYourWallet')
 
+    expect(onTheWayModal).not.toBeNull()
     expect(onTheWayModal.props.visible).toBeTruthy()
-    expect(declinedModal.props.visible).toBeFalsy()
-    expect(addedModal.props.visible).toBeFalsy()
+    expect(declinedModal).toBeNull()
+    expect(addedModal).toBeNull()
   })
 
   test('handle declined credential', async () => {
@@ -82,13 +83,14 @@ describe('displays a credential offer screen', () => {
 
     const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
 
-    const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
+    const onTheWayModal = tree.queryByTestId('CredentialOffer.CredentialOnTheWay')
     const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
-    const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
+    const addedModal = tree.queryByTestId('CredentialOffer.CredentialAddedToYourWallet')
 
-    expect(onTheWayModal.props.visible).toBeFalsy()
+    expect(onTheWayModal).toBeNull()
+    expect(declinedModal).not.toBeNull()
     expect(declinedModal.props.visible).toBeTruthy()
-    expect(addedModal.props.visible).toBeFalsy()
+    expect(addedModal).toBeNull()
   })
 
   test('handle received credential', async () => {
@@ -100,12 +102,13 @@ describe('displays a credential offer screen', () => {
 
     const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
 
-    const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
-    const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
+    const onTheWayModal = tree.queryByTestId('CredentialOffer.CredentialOnTheWay')
+    const declinedModal = tree.queryByTestId('CredentialOffer.CredentialDeclined')
     const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
 
-    expect(onTheWayModal.props.visible).toBeFalsy()
-    expect(declinedModal.props.visible).toBeFalsy()
+    expect(onTheWayModal).toBeNull()
+    expect(declinedModal).toBeNull()
+    expect(addedModal).not.toBeNull()
     expect(addedModal.props.visible).toBeTruthy()
   })
 
@@ -118,12 +121,13 @@ describe('displays a credential offer screen', () => {
 
     const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
 
-    const onTheWayModal = tree.getByTestId('CredentialOffer.CredentialOnTheWay')
-    const declinedModal = tree.getByTestId('CredentialOffer.CredentialDeclined')
+    const onTheWayModal = tree.queryByTestId('CredentialOffer.CredentialOnTheWay')
+    const declinedModal = tree.queryByTestId('CredentialOffer.CredentialDeclined')
     const addedModal = tree.getByTestId('CredentialOffer.CredentialAddedToYourWallet')
 
-    expect(onTheWayModal.props.visible).toBeFalsy()
-    expect(declinedModal.props.visible).toBeFalsy()
+    expect(onTheWayModal).toBeNull()
+    expect(declinedModal).toBeNull()
+    expect(addedModal).not.toBeNull()
     expect(addedModal.props.visible).toBeTruthy()
   })
 })
