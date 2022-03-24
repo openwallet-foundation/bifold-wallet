@@ -158,38 +158,44 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         )}
         attributes={credential.credentialAttributes}
       />
-      <NotificationModal
-        testID={t('CredentialOffer.CredentialOnTheWay')}
-        title={t('CredentialOffer.CredentialOnTheWay')}
-        visible={pendingModalVisible}
-        doneHidden={true}
-      >
-        <CredentialPending style={{ marginVertical: 20 }}></CredentialPending>
-      </NotificationModal>
-      <NotificationModal
-        testID={t('CredentialOffer.CredentialAddedToYourWallet')}
-        title={t('CredentialOffer.CredentialAddedToYourWallet')}
-        visible={successModalVisible}
-        onDone={() => {
-          setSuccessModalVisible(false)
-          navigation.pop()
-          navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
-        }}
-      >
-        <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
-      </NotificationModal>
-      <NotificationModal
-        testID={t('CredentialOffer.CredentialDeclined')}
-        title={t('CredentialOffer.CredentialDeclined')}
-        visible={declinedModalVisible}
-        onDone={() => {
-          setDeclinedModalVisible(false)
-          navigation.pop()
-          navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
-        }}
-      >
-        <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
-      </NotificationModal>
+      {pendingModalVisible ? (
+        <NotificationModal
+          testID={t('CredentialOffer.CredentialOnTheWay')}
+          title={t('CredentialOffer.CredentialOnTheWay')}
+          visible={pendingModalVisible}
+          doneHidden={true}
+        >
+          <CredentialPending style={{ marginVertical: 20 }}></CredentialPending>
+        </NotificationModal>
+      ) : null}
+      {successModalVisible ? (
+        <NotificationModal
+          testID={t('CredentialOffer.CredentialAddedToYourWallet')}
+          title={t('CredentialOffer.CredentialAddedToYourWallet')}
+          visible={successModalVisible}
+          onDone={() => {
+            setSuccessModalVisible(false)
+            navigation.pop()
+            navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
+          }}
+        >
+          <CredentialSuccess style={{ marginVertical: 20 }}></CredentialSuccess>
+        </NotificationModal>
+      ) : null}
+      {declinedModalVisible ? (
+        <NotificationModal
+          testID={t('CredentialOffer.CredentialDeclined')}
+          title={t('CredentialOffer.CredentialDeclined')}
+          visible={declinedModalVisible}
+          onDone={() => {
+            setDeclinedModalVisible(false)
+            navigation.pop()
+            navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
+          }}
+        >
+          <CredentialDeclined style={{ marginVertical: 20 }}></CredentialDeclined>
+        </NotificationModal>
+      ) : null}
     </>
   )
 }

@@ -284,35 +284,41 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           )
         }}
       />
-      <NotificationModal
-        title={t('ProofRequest.SendingTheInformationSecurely')}
-        visible={pendingModalVisible}
-        doneHidden={true}
-      >
-        <ProofPending style={{ marginVertical: 20 }}></ProofPending>
-      </NotificationModal>
-      <NotificationModal
-        title={t('ProofRequest.InformationSentSuccessfully')}
-        visible={successModalVisible}
-        onDone={() => {
-          setSuccessModalVisible(false)
-          navigation.pop()
-          navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
-        }}
-      >
-        <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
-      </NotificationModal>
-      <NotificationModal
-        title={t('ProofRequest.ProofRejected')}
-        visible={declinedModalVisible}
-        onDone={() => {
-          setDeclinedModalVisible(false)
-          navigation.pop()
-          navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
-        }}
-      >
-        <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
-      </NotificationModal>
+      {pendingModalVisible ? (
+        <NotificationModal
+          title={t('ProofRequest.SendingTheInformationSecurely')}
+          visible={pendingModalVisible}
+          doneHidden={true}
+        >
+          <ProofPending style={{ marginVertical: 20 }}></ProofPending>
+        </NotificationModal>
+      ) : null}
+      {successModalVisible ? (
+        <NotificationModal
+          title={t('ProofRequest.InformationSentSuccessfully')}
+          visible={successModalVisible}
+          onDone={() => {
+            setSuccessModalVisible(false)
+            navigation.pop()
+            navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
+          }}
+        >
+          <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
+        </NotificationModal>
+      ) : null}
+      {declinedModalVisible ? (
+        <NotificationModal
+          title={t('ProofRequest.ProofRejected')}
+          visible={declinedModalVisible}
+          onDone={() => {
+            setDeclinedModalVisible(false)
+            navigation.pop()
+            navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
+          }}
+        >
+          <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
+        </NotificationModal>
+      ) : null}
     </>
   )
 }
