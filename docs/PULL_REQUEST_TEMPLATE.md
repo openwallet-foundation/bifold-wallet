@@ -13,7 +13,7 @@ Tick all boxes below to demonstrate that you have completed the respective task.
 - [ ] All commits contain a DCO `Signed-off-by` line (we use the [DCO GitHub app](https://github.com/apps/dco) to enforce this);
 - [ ] Updated LICENSE-3RD-PARTY.md for any added dependencies or vendored components;
 - [ ] Updated documentation as needed for changed code and new or modified features;
-- [ ] Added [tests](../__tests__/) so that overall code coverage is not reduced.
+- [ ] Added sufficient [tests](../__tests__/) so that overall code coverage is not reduced.
 
 If you have _any_ questions to _any_ of the points above, just **submit and ask**! This checklist is here to _help_ you, not to deter you from contributing!
 
