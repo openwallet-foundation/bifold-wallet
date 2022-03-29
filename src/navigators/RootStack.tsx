@@ -1,19 +1,19 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Onboarding from '../screens/Onboarding'
-import { pages, carousel } from '../screens/OnboardingPages'
+import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import Splash from '../screens/Splash'
-import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { ColorPallet } from '../theme'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
+import { useConfigurationContext } from '../utils/configurationContext'
+import { useThemeContext } from '../utils/themeContext'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -27,7 +27,9 @@ const RootStack: React.FC = () => {
   const [state, dispatch] = useContext(Context)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-
+  const theme = useThemeContext()
+  const ColorPallet = theme.ColorPallet
+  const configuration = useConfigurationContext()
   const onTutorialCompleted = () => {
     dispatch({
       type: DispatchAction.SetTutorialCompletionStatus,
@@ -65,10 +67,10 @@ const RootStack: React.FC = () => {
 
   const onboardingStack = (setAuthenticated: StateFn) => {
     const Stack = createStackNavigator()
-
+    const carousel = createCarouselStyle(theme)
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash} component={Splash} />
+        <Stack.Screen name={Screens.Splash} component={configuration.splash} />
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
@@ -84,7 +86,7 @@ const RootStack: React.FC = () => {
               {...props}
               nextButtonText={'Next'}
               previousButtonText={'Back'}
-              pages={pages(onTutorialCompleted)}
+              pages={configuration.onboarding.pages(onTutorialCompleted, theme)}
               style={carousel}
             />
           )}
@@ -98,7 +100,7 @@ const RootStack: React.FC = () => {
             headerLeft: () => false,
             rightLeft: () => false,
           })}
-          component={Terms}
+          component={configuration.terms}
         />
         <Stack.Screen name={Screens.CreatePin}>
           {(props) => <PinCreate {...props} setAuthenticated={setAuthenticated} />}
@@ -115,4 +117,3 @@ const RootStack: React.FC = () => {
 }
 
 export default RootStack
-

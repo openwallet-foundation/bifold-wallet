@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { ColorPallet } from '../../theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
+import { useThemeContext } from '../../utils/themeContext'
 
 const styles = StyleSheet.create({
   button: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 const SettingsCog: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { t } = useTranslation()
-
+  const { ColorPallet } = useThemeContext()
   return (
     <TouchableOpacity
       testID={testIdWithKey('Settings')}

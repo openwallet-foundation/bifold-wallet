@@ -8,26 +8,25 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { ColorPallet } from '../theme'
 import { testIdWithKey } from '../utils/testable'
+import { useThemeContext } from '../utils/themeContext'
 
 interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
-
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
-    margin: 20,
-  },
-})
 
 const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
   const [, dispatch] = useContext(Context)
   const { t } = useTranslation()
-
+  const { ColorPallet } = useThemeContext()
+  const style = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      margin: 20,
+    },
+  })
   const passcodeCreate = async (pin: string) => {
     const passcode = JSON.stringify(pin)
     const description = t('PinCreate.UserAuthenticationPin')

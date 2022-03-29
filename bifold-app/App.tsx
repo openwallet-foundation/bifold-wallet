@@ -16,10 +16,18 @@ import {
   toastConfig,
   initStoredLanguage,
   RootStack,
-  ColorPallet,
   indyLedgers,
   ErrorModal,
   StoreProvider,
+  ThemeProvider,
+  defaultTheme as theme,
+  ConfigurationContext,
+  ConfigurationProvider,
+  initLanguages,
+  defaultTranslationResources,
+  defaultOnboardingPages as onboardingPages,
+  defaultSplashScreen as splashSreen,
+  defaultTerms as termsSreen,
 } from 'aries-bifold'
 import { default as React, useEffect, useState } from 'react'
 import { StatusBar } from 'react-native'
@@ -27,11 +35,11 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
+const translationResources = defaultTranslationResources
+initLanguages(translationResources)
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
-
   initStoredLanguage()
-
   const initAgent = async () => {
     const newAgent = new Agent(
       {
@@ -64,20 +72,30 @@ const App = () => {
     SplashScreen.hide()
     initAgent()
   }, [])
-
+  const defaultConfiguration: ConfigurationContext = {
+    onboarding: {
+      pages: onboardingPages,
+    },
+    splash: splashSreen,
+    terms: termsSreen,
+  }
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
-        <StatusBar
-          barStyle="light-content"
-          hidden={false}
-          backgroundColor={ColorPallet.brand.primary}
-          translucent={false}
-        />
-        <ConnectionModal />
-        <ErrorModal />
-        <RootStack />
-        <Toast topOffset={15} config={toastConfig} />
+        <ThemeProvider value={theme}>
+          <ConfigurationProvider value={defaultConfiguration}>
+            <StatusBar
+              barStyle="light-content"
+              hidden={false}
+              backgroundColor={theme.ColorPallet.brand.primary}
+              translucent={false}
+            />
+            <ConnectionModal />
+            <ErrorModal />
+            <RootStack />
+            <Toast topOffset={15} config={toastConfig} />
+          </ConfigurationProvider>
+        </ThemeProvider>
       </AgentProvider>
     </StoreProvider>
   )

@@ -7,9 +7,8 @@ import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from '
 
 import { NotificationType } from '../components/listItems/NotificationListItem'
 import { useNotifications } from '../hooks/notifcations'
-import { ColorPallet, TextTheme } from '../theme'
 import { HomeStackParams, Screens } from '../types/navigators'
-
+import { useThemeContext } from '../utils/themeContext'
 import { InfoTextBox, NotificationListItem } from '../components'
 
 const { width } = Dimensions.get('window')
@@ -19,36 +18,6 @@ const offsetPadding = 5
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: offset,
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: offset,
-  },
-  messageContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 35,
-    marginHorizontal: 60,
-  },
-  header: {
-    marginTop: offset,
-    marginBottom: 20,
-  },
-  linkContainer: {
-    minHeight: TextTheme.normal.fontSize,
-    marginTop: 10,
-  },
-  link: {
-    ...TextTheme.normal,
-    color: ColorPallet.brand.link,
-  },
-})
-
 const Home: React.FC<HomeProps> = ({ navigation }) => {
   const credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
@@ -57,7 +26,36 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      paddingHorizontal: offset,
+    },
+    rowContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: offset,
+    },
+    messageContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 35,
+      marginHorizontal: 60,
+    },
+    header: {
+      marginTop: offset,
+      marginBottom: 20,
+    },
+    linkContainer: {
+      minHeight: TextTheme.normal.fontSize,
+      marginTop: 10,
+    },
+    link: {
+      ...TextTheme.normal,
+      color: ColorPallet.brand.link,
+    },
+  })
   const emptyListComponent = () => (
     <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
       <InfoTextBox>

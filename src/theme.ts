@@ -164,7 +164,6 @@ export const TextTheme: TextTheme = {
     color: ColorPallet.grayscale.white,
   },
 }
-
 export const Buttons = StyleSheet.create({
   primary: {
     padding: 16,
@@ -213,3 +212,19 @@ export const Buttons = StyleSheet.create({
     textAlign: 'center',
   },
 })
+
+export interface Theme {
+  ColorPallet: ColorPallet
+  TextTheme: TextTheme
+  Buttons: any
+  heavyOpacity: any
+  borderRadius: any
+}
+
+export const defaultTheme: Theme = {
+  ColorPallet,
+  TextTheme,
+  Buttons,
+  heavyOpacity,
+  borderRadius,
+}
