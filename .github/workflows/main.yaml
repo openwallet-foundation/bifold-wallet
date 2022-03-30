@@ -121,7 +121,7 @@ jobs:
           java-version: 1.8
 
       - name: download Android SDK
-        working-directory: ./android
+        working-directory: ./bifold-app/android
         run: |
           wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${{ matrix.sdk-tools }}.zip
           unzip -d android-sdk-linux android-sdk.zip
@@ -141,6 +141,7 @@ jobs:
         # .npm because it can break across Node versions and
         #  won't work with npm ci.
       - name: Cache node modules
+        working-directory: ./bifold-app/android
         uses: actions/cache@v1
         id: npm-cache
         with:
@@ -150,9 +151,10 @@ jobs:
             ${{ runner.os }}-node-${{ env.cacheId }}-
 
       - name: Install dependencies
+        working-directory: ./bifold-app/android
         run: |
           npm ci
 
       - name: Android Debug Build
-        working-directory: ./android
+        working-directory: ./bifold-app/android
         run: ./gradlew assembleDebug
