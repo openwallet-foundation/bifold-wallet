@@ -2,39 +2,13 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 
-import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
-import { ColorPallet } from '../../App/theme'
+import * as themeContext from '../../src/utils/themeContext'; // note we're importing with a * to import all the exports
+import { defaultTheme } from '../../src/theme'
+import Onboarding, { OnboardingStyleSheet } from '../../src/screens/Onboarding'
+import { createCarouselStyle } from '../../src/screens/OnboardingPages'
+import { ColorPallet } from '../../src/theme'
 
-export const carousel: OnboardingStyleSheet = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  carouselContainer: {
-    flexDirection: 'column',
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  pagerContainer: {
-    flexShrink: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  pagerDot: {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: ColorPallet.brand.primary,
-  },
-  pagerPosition: {
-    position: 'relative',
-    top: 0,
-  },
-  pagerNavigationButton: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.primary,
-  },
-})
+export const carousel: OnboardingStyleSheet = createCarouselStyle(defaultTheme)
 
 const pages = [
   <>
@@ -47,6 +21,8 @@ const pages = [
 
 describe('Onboarding', () => {
   it('Renders correctly', () => {
+    jest.spyOn(themeContext, 'useThemeContext')
+			.mockImplementation(() => defaultTheme);
     const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)
 
     expect(tree).toMatchSnapshot()
@@ -61,6 +37,8 @@ describe('Onboarding', () => {
   // })
 
   it('Pages exist', async () => {
+    jest.spyOn(themeContext, 'useThemeContext')
+			.mockImplementation(() => defaultTheme);
     const { findAllByTestId } = render(
       <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
     )

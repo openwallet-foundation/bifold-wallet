@@ -1,4 +1,4 @@
-import { isRedirection } from '../App/utils/helpers'
+import { isRedirection } from '../src/utils/helpers'
 
 describe('Helpers', () => {
   it('URL with c_i is not a redirect', () => {

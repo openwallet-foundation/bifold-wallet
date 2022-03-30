@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
-import InfoBox, { InfoBoxType } from '../../App/components/misc/InfoBox'
+import InfoBox, { InfoBoxType } from '../../src/components/misc/InfoBox'
 
 const callToAction = jest.fn()
 

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import Splash from '../../App/screens/Splash'
+import Splash from '../../src/screens/Splash'
 
 describe('Splash Screen', () => {
   it('Renders correctly', () => {

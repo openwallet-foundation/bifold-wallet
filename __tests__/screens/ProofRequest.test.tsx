@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, render } from '@testing-library/react-native'
 import React from 'react'
 
-import ProofRequest from '../../App/screens/ProofRequest'
+import ProofRequest from '../../src/screens/ProofRequest'
 
 describe('displays a proof request screen', () => {
   afterEach(() => {

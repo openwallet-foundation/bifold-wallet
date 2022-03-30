@@ -1,7 +1,7 @@
 import React from 'react'
 import { create } from 'react-test-renderer'
 
-import HighlightTextBox from '../../App/components/texts/HighlightTextBox'
+import HighlightTextBox from '../../src/components/texts/HighlightTextBox'
 
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon')
 

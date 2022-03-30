@@ -5,8 +5,8 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
 
-import { CredentialListItem } from '../../App/components'
-import ListCredentials from '../../App/screens/ListCredentials'
+import { CredentialListItem } from '../../src/components'
+import ListCredentials from '../../src/screens/ListCredentials'
 
 interface CredentialContextInterface {
   loading: boolean

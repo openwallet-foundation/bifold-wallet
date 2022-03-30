@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import { dateFormatOptions } from '../../App/constants'
-import CredentialDetails from '../../App/screens/CredentialDetails'
+import { dateFormatOptions } from '../../src/constants'
+import CredentialDetails from '../../src/screens/CredentialDetails'
 
 interface CredentialContextInterface {
   loading: boolean

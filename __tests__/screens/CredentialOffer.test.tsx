@@ -7,7 +7,7 @@ import path from 'path'
 import React from 'react'
 import { Alert } from 'react-native'
 
-import CredentialOffer from '../../App/screens/CredentialOffer'
+import CredentialOffer from '../../src/screens/CredentialOffer'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 
