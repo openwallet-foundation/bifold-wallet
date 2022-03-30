@@ -40,23 +40,27 @@ const styles = StyleSheet.create({
 interface NotificationModalProps {
   title: string
   doneTitle?: string
+  doneType?: ButtonType
+  doneAccessibilityLabel?: string
   onDone?: () => void
   onHome?: () => void
-  visible?: boolean
-  doneHidden?: boolean
-  homeHidden?: boolean
+  doneVisible?: boolean
+  homeVisible?: boolean
   testID?: string
+  visible?: boolean
 }
 
 const NotificationModal: React.FC<NotificationModalProps> = ({
   title,
   doneTitle,
+  doneType = ButtonType.Primary,
+  doneAccessibilityLabel,
   onDone,
   onHome,
-  visible,
-  doneHidden = false,
-  homeHidden = false,
+  doneVisible = true,
+  homeVisible = true,
   testID,
+  visible,
   children,
 }) => {
   const { t } = useTranslation()
@@ -81,26 +85,32 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   return (
     <Modal testID={testID} visible={modalVisible} transparent={true}>
       <SafeAreaView style={styles.container}>
-        {homeHidden ? null : (
+        {homeVisible ? (
           <View style={styles.iconContainer}>
-            <TouchableOpacity style={styles.iconButton} onPress={onHome || closeHome}>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={onHome || closeHome}
+              accessible={true}
+              accessibilityLabel={t('Global.Home')}
+            >
               <Icon name="home" size={24} color={ColorPallet.notification.infoText}></Icon>
             </TouchableOpacity>
           </View>
-        )}
+        ) : null}
         <View style={styles.childContainer}>
           <Text style={[TextTheme.headingThree, { fontWeight: 'normal', textAlign: 'center' }]}>{title}</Text>
           {children}
         </View>
-        {doneHidden ? null : (
+        {doneVisible ? (
           <View style={styles.buttonContainer}>
             <Button
-              buttonType={ButtonType.Primary}
+              buttonType={doneType}
               title={doneTitle || t('Global.Done')}
               onPress={onDone || close}
+              accessibilityLabel={doneAccessibilityLabel || t('Global.Done')}
             ></Button>
           </View>
-        )}
+        ) : null}
       </SafeAreaView>
     </Modal>
   )

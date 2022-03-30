@@ -47,7 +47,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       const message = await res.json()
       displayPendingMessage()
       await agent?.receiveMessage(message)
-    } catch (err) {
+    } catch (e: unknown) {
       throw new Error(t('Scan.UnableToHandleRedirection'))
     }
   }
