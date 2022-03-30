@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
-import { ColorPallet } from '../../theme'
 import { testIdWithKey } from '../../utils/testable'
 
 interface IPaginationStyleSheet {
@@ -87,4 +86,3 @@ export const Pagination: React.FC<IPaginationProps> = ({
     </View>
   )
 }
-

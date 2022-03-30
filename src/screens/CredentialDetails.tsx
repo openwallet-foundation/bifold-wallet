@@ -7,42 +7,41 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
-import { ColorPallet, TextTheme } from '../theme'
-import { CredentialStackParams, Screens } from '../types/navigators'
-
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
 import { ToastType } from '../components/toast/BaseToast'
+import { CredentialStackParams, Screens } from '../types/navigators'
+import { useThemeContext } from '../utils/themeContext'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
-const styles = StyleSheet.create({
-  headerText: {
-    ...TextTheme.normal,
-  },
-  footerText: {
-    ...TextTheme.normal,
-    paddingTop: 16,
-  },
-  linkContainer: {
-    minHeight: TextTheme.normal.fontSize,
-    paddingVertical: 2,
-  },
-  link: {
-    ...TextTheme.normal,
-    color: ColorPallet.brand.link,
-  },
-})
-
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
-
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    headerText: {
+      ...TextTheme.normal,
+    },
+    footerText: {
+      ...TextTheme.normal,
+      paddingTop: 16,
+    },
+    linkContainer: {
+      minHeight: TextTheme.normal.fontSize,
+      paddingVertical: 2,
+    },
+    link: {
+      ...TextTheme.normal,
+      color: ColorPallet.brand.link,
+    },
+  })
   const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
     try {
       if (!credentialId) {
         throw new Error(t('CredentialOffer.CredentialNotFound'))
       }
 
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       return useCredentialById(credentialId)
     } catch (e: unknown) {
       Toast.show({
@@ -98,4 +97,3 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 }
 
 export default CredentialDetails
-

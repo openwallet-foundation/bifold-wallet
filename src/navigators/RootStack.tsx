@@ -20,7 +20,7 @@ import ContactStack from './ContactStack'
 import NotificationStack from './NotificationStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
-import defaultStackOptions from './defaultStackOptions'
+import { createDefaultStackOptions } from './defaultStackOptions'
 
 const RootStack: React.FC = () => {
   const [authenticated, setAuthenticated] = useState(false)
@@ -28,6 +28,7 @@ const RootStack: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useThemeContext()
+  const defaultStackOptions = createDefaultStackOptions(theme)
   const ColorPallet = theme.ColorPallet
   const configuration = useConfigurationContext()
   const onTutorialCompleted = () => {

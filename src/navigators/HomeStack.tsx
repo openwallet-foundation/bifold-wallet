@@ -1,17 +1,18 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import { useThemeContext } from '..'
+import SettingsCog from '../components/misc/SettingsCog'
 import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'
 import { HomeStackParams, Screens } from '../types/navigators'
 
-import defaultStackOptions from './defaultStackOptions'
-
-import SettingsCog from '../components/misc/SettingsCog'
+import { createDefaultStackOptions } from './defaultStackOptions'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()
-
+  const theme = useThemeContext()
+  const defaultStackOptions = createDefaultStackOptions(theme)
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
@@ -27,4 +28,3 @@ const HomeStack: React.FC = () => {
 }
 
 export default HomeStack
-

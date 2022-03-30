@@ -219,6 +219,7 @@ export interface Theme {
   Buttons: any
   heavyOpacity: any
   borderRadius: any
+  borderWidth: typeof borderWidth
 }
 
 export const defaultTheme: Theme = {
@@ -227,4 +228,5 @@ export const defaultTheme: Theme = {
   Buttons,
   heavyOpacity,
   borderRadius,
+  borderWidth,
 }
