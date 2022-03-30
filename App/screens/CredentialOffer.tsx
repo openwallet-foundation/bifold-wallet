@@ -163,7 +163,15 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           testID={t('CredentialOffer.CredentialOnTheWay')}
           title={t('CredentialOffer.CredentialOnTheWay')}
           visible={pendingModalVisible}
-          doneHidden={true}
+          homeVisible={false}
+          doneTitle={t('Loading.BackToHome')}
+          doneType={ButtonType.Secondary}
+          doneAccessibilityLabel={t('Loading.BackToHome')}
+          onDone={() => {
+            setPendingModalVisible(false)
+            navigation.pop()
+            navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+          }}
         >
           <CredentialPending style={{ marginVertical: 20 }}></CredentialPending>
         </NotificationModal>
@@ -173,6 +181,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           testID={t('CredentialOffer.CredentialAddedToYourWallet')}
           title={t('CredentialOffer.CredentialAddedToYourWallet')}
           visible={successModalVisible}
+          homeVisible={false}
           onDone={() => {
             setSuccessModalVisible(false)
             navigation.pop()
@@ -187,6 +196,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           testID={t('CredentialOffer.CredentialDeclined')}
           title={t('CredentialOffer.CredentialDeclined')}
           visible={declinedModalVisible}
+          homeVisible={false}
           onDone={() => {
             setDeclinedModalVisible(false)
             navigation.pop()
