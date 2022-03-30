@@ -1,4 +1,6 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
+NODE_VERSION_CHECKER_SCRIPT="console.log(process.versions.node); process.exit(parseInt(process.versions.node.split('.')[0]) === 16 && parseInt(process.versions.node.split('.')[1]) >= 14 ? 0 : 1)"
+if [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
+    node -p -e $NODE_VERSION_CHECKER_SCRIPT || { echo "Unsupported Node Version"; exit 1; }
+fi
 npm run test
