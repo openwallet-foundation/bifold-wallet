@@ -5,38 +5,36 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { borderRadius, ColorPallet, TextTheme } from '../theme'
+import { SafeAreaScrollView, Text } from '../components'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
-
-import { SafeAreaScrollView, Text } from 'components'
+import { useThemeContext } from '../utils/themeContext'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    padding: 20,
-  },
-  groupHeader: {
-    ...TextTheme.normal,
-    marginBottom: 8,
-  },
-  rowGroup: {
-    borderRadius: borderRadius * 2,
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-    marginBottom: 16,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 12,
-  },
-})
-
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t } = useTranslation()
-
+  const { borderRadius, ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      width: '100%',
+      padding: 20,
+    },
+    groupHeader: {
+      ...TextTheme.normal,
+      marginBottom: 8,
+    },
+    rowGroup: {
+      borderRadius: borderRadius * 2,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+      marginBottom: 16,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: 12,
+    },
+  })
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>

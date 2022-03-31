@@ -8,34 +8,19 @@ import { StyleSheet, Alert, View, Text } from 'react-native'
 import CredentialDeclined from '../assets/img/credential-declined.svg'
 import CredentialPending from '../assets/img/credential-pending.svg'
 import CredentialSuccess from '../assets/img/credential-success.svg'
+import Button, { ButtonType } from '../components/buttons/Button'
+import CredentialCard from '../components/misc/CredentialCard'
+import NotificationModal from '../components/modals/NotificationModal'
+import Record from '../components/record/Record'
+import Title from '../components/texts/Title'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
-
-import Button, { ButtonType } from 'components/buttons/Button'
-import CredentialCard from 'components/misc/CredentialCard'
-import NotificationModal from 'components/modals/NotificationModal'
-import Record from 'components/record/Record'
-import Title from 'components/texts/Title'
+import { useThemeContext } from '../utils/themeContext'
 
 type CredentialOfferProps = StackScreenProps<NotificationStackParams, Screens.CredentialOffer>
-
-const styles = StyleSheet.create({
-  headerTextContainer: {
-    paddingHorizontal: 25,
-    paddingVertical: 16,
-  },
-  headerText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-  },
-  footerButton: {
-    paddingTop: 10,
-  },
-})
 
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -50,7 +35,20 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
-
+  const { TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    headerTextContainer: {
+      paddingHorizontal: 25,
+      paddingVertical: 16,
+    },
+    headerText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+    },
+    footerButton: {
+      paddingTop: 10,
+    },
+  })
   const credential = useCredentialById(credentialId)
 
   if (!agent) {

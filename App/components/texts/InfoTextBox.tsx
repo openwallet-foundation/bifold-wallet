@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ColorPallet, TextTheme } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 
 export interface TextBoxProps {
   children: React.ReactElement | string
@@ -11,32 +11,32 @@ export interface TextBoxProps {
 const iconSize = 30
 const offset = 10
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: ColorPallet.notification.info,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: ColorPallet.notification.infoBorder,
-    padding: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  textContainer: {
-    ...TextTheme.normal,
-    color: ColorPallet.notification.infoText,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    flexShrink: 1,
-  },
-  iconContainer: {
-    marginRight: offset,
-    alignSelf: 'center',
-  },
-})
-
 const InfoTextBox: React.FC<TextBoxProps> = ({ children }) => {
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.notification.info,
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: ColorPallet.notification.infoBorder,
+      padding: 10,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    textContainer: {
+      ...TextTheme.normal,
+      color: ColorPallet.notification.infoText,
+      fontWeight: 'bold',
+      alignSelf: 'center',
+      flexShrink: 1,
+    },
+    iconContainer: {
+      marginRight: offset,
+      alignSelf: 'center',
+    },
+  })
   return (
     <View style={styles.container}>
       <View style={styles.row}>

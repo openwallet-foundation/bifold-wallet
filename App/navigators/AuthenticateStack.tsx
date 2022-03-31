@@ -3,8 +3,9 @@ import React from 'react'
 
 import PinEnter from '../screens/PinEnter'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { useThemeContext } from '../utils/themeContext'
 
-import defaultStackOptions from './defaultStackOptions'
+import { createDefaultStackOptions } from './defaultStackOptions'
 
 interface AuthenticateStackProps {
   setAuthenticated: (auth: boolean) => void
@@ -12,6 +13,8 @@ interface AuthenticateStackProps {
 
 const AuthenticateStack: React.FC<AuthenticateStackProps> = ({ setAuthenticated }) => {
   const Stack = createStackNavigator<AuthenticateStackParams>()
+  const theme = useThemeContext()
+  const defaultStackOptions = createDefaultStackOptions(theme)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, presentation: 'transparentModal', headerShown: false }}>

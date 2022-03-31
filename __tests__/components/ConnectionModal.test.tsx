@@ -2,6 +2,8 @@ import { render, waitFor, fireEvent } from '@testing-library/react-native'
 import React, { useContext } from 'react'
 
 import ConnectionModal from '../../App/components/modals/ConnectionModal'
+import { defaultTheme } from '../../App/theme'
+import * as themeContext from '../../App/utils/themeContext' // note we're importing with a * to import all the exports
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -29,6 +31,7 @@ useContext.mockImplementation(() => [state, setState])
 
 describe('ConnectionModal Component', () => {
   test('Renders correctly', async () => {
+    jest.spyOn(themeContext, 'useThemeContext').mockImplementation(() => defaultTheme)
     const tree = render(<ConnectionModal />)
 
     expect(tree).toMatchSnapshot()
@@ -36,6 +39,7 @@ describe('ConnectionModal Component', () => {
   })
 
   test('Updates after delay', async () => {
+    jest.spyOn(themeContext, 'useThemeContext').mockImplementation(() => defaultTheme)
     const tree = render(<ConnectionModal />)
 
     await waitFor(() => {
@@ -46,6 +50,7 @@ describe('ConnectionModal Component', () => {
   })
 
   test('Dismiss on demand', async () => {
+    jest.spyOn(themeContext, 'useThemeContext').mockImplementation(() => defaultTheme)
     const tree = render(<ConnectionModal />)
 
     await waitFor(() => {

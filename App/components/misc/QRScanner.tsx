@@ -5,47 +5,16 @@ import { useWindowDimensions, Vibration, View, StyleSheet, Text } from 'react-na
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ColorPallet, TextTheme } from '../../theme'
-
-import QRScannerClose from 'components/misc/QRScannerClose'
-import QRScannerTorch from 'components/misc/QRScannerTorch'
-import { QrCodeScanError } from 'types/error'
+import { QrCodeScanError } from '../../types/error'
+import { useThemeContext } from '../../utils/themeContext'
+import QRScannerClose from '../misc/QRScannerClose'
+import QRScannerTorch from '../misc/QRScannerTorch'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: ColorPallet.grayscale.black,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewFinder: {
-    width: 250,
-    height: 250,
-    borderRadius: 24,
-    borderWidth: 2,
-    borderColor: ColorPallet.grayscale.white,
-  },
-  viewFinderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  errorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    color: ColorPallet.grayscale.white,
-    padding: 4,
-  },
-})
 
 const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, children }) => {
   return (
@@ -69,7 +38,36 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const portraitMode = height > width
   const { t } = useTranslation()
   const invalidQrCodes = new Set<string>()
-
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      height: '100%',
+      width: '100%',
+      backgroundColor: ColorPallet.grayscale.black,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    viewFinder: {
+      width: 250,
+      height: 250,
+      borderRadius: 24,
+      borderWidth: 2,
+      borderColor: ColorPallet.grayscale.white,
+    },
+    viewFinderContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    errorContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    icon: {
+      color: ColorPallet.grayscale.white,
+      padding: 4,
+    },
+  })
   return (
     <View style={styles.container}>
       <RNCamera

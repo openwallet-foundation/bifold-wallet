@@ -18,23 +18,23 @@ import Toast from 'react-native-toast-message'
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
 import Onboarding from '../screens/Onboarding'
-import { pages, carousel } from '../screens/OnboardingPages'
+import { pages, createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
 import Splash from '../screens/Splash'
 import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { ColorPallet } from '../theme'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
+import { useThemeContext } from '../utils/themeContext'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
 import NotificationStack from './NotificationStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
-import defaultStackOptions from './defaultStackOptions'
+import { createDefaultStackOptions } from './defaultStackOptions'
 
 interface RootStackProps {
   setAgent: (agent: Agent) => void
@@ -50,6 +50,9 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [agentInitDone, setAgentInitDone] = useState(false)
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
 
+  const theme = useThemeContext()
+  const defaultStackOptions = createDefaultStackOptions(theme)
+  const ColorPallet = theme.ColorPallet
   const onTutorialCompleted = () => {
     dispatch({
       type: DispatchAction.SetTutorialCompletionStatus,
@@ -152,7 +155,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
   const onboardingStack = (setAuthenticated: StateFn) => {
     const Stack = createStackNavigator()
-
+    const carousel = createCarouselStyle(theme)
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={Splash} />
@@ -171,7 +174,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
               {...props}
               nextButtonText={'Next'}
               previousButtonText={'Back'}
-              pages={pages(onTutorialCompleted)}
+              pages={pages(onTutorialCompleted, theme)}
               style={carousel}
             />
           )}

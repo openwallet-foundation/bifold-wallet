@@ -6,76 +6,88 @@ import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import SecureImage from '../assets/img/secure-image.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
-import { ColorPallet } from '../theme'
+import { Theme } from '../theme'
 import { GenericFn } from '../types/fn'
 import { testIdWithKey } from '../utils/testable'
 
 import { OnboardingStyleSheet } from './Onboarding'
 
-const imageDisplayOptions = {
-  fill: ColorPallet.notification.infoText,
-  height: 180,
-  width: 180,
+export const createCarouselStyle = (theme: Theme): OnboardingStyleSheet => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+    },
+    carouselContainer: {
+      flexDirection: 'column',
+      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+    },
+    pagerContainer: {
+      flexShrink: 2,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 35,
+    },
+    pagerDot: {
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: theme.ColorPallet.brand.primary,
+    },
+    pagerDotActive: {
+      color: theme.ColorPallet.brand.primary,
+    },
+    pagerDotInactive: {
+      color: theme.ColorPallet.brand.secondary,
+    },
+    pagerPosition: {
+      position: 'relative',
+      top: 0,
+    },
+    pagerNavigationButton: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.primary,
+    },
+  })
 }
-
-export const carousel: OnboardingStyleSheet = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  carouselContainer: {
-    flexDirection: 'column',
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  pagerContainer: {
-    flexShrink: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 35,
-  },
-  pagerDot: {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: ColorPallet.brand.primary,
-  },
-  pagerPosition: {
-    position: 'relative',
-    top: 0,
-  },
-  pagerNavigationButton: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.primary,
-  },
-})
-
-const defaultStyle = StyleSheet.create({
-  headerText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: ColorPallet.notification.infoText,
-  },
-  bodyText: {
-    flexShrink: 1,
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: ColorPallet.notification.infoText,
-  },
-  point: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 20,
-    marginTop: 10,
-    marginRight: 20,
-    marginBottom: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-})
-
-const customPages = (onTutorialCompleted: GenericFn) => {
+export const createStyle = (theme: Theme) => {
+  return StyleSheet.create({
+    headerText: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.notification.infoText,
+    },
+    bodyText: {
+      flexShrink: 1,
+      fontSize: 18,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.notification.infoText,
+    },
+    point: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginLeft: 20,
+      marginTop: 10,
+      marginRight: 20,
+      marginBottom: 10,
+    },
+    icon: {
+      marginRight: 10,
+    },
+  })
+}
+export function createImageDisplayOptions(theme: Theme) {
+  return {
+    fill: theme.ColorPallet.notification.infoText,
+    height: 180,
+    width: 180,
+  }
+}
+const customPages = (onTutorialCompleted: GenericFn, theme: Theme) => {
+  //const theme = useThemeContext()
+  const defaultStyle = createStyle(theme)
+  const imageDisplayOptions = createImageDisplayOptions(theme)
   return (
     <>
       <View style={{ alignItems: 'center' }}>
@@ -114,7 +126,10 @@ const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string }> 
   },
 ]
 
-const createPageWith = (image: React.FC<SvgProps>, title: string, body: string) => {
+const createPageWith = (image: React.FC<SvgProps>, title: string, body: string, theme: Theme) => {
+  //const theme = useThemeContext()
+  const defaultStyle = createStyle(theme)
+  const imageDisplayOptions = createImageDisplayOptions(theme)
   return (
     <>
       <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
@@ -126,6 +141,9 @@ const createPageWith = (image: React.FC<SvgProps>, title: string, body: string) 
   )
 }
 
-export const pages = (onTutorialCompleted: GenericFn): Array<Element> => {
-  return [...guides.map((g) => createPageWith(g.image, g.title, g.body)), customPages(onTutorialCompleted)]
+export const pages = (onTutorialCompleted: GenericFn, theme: Theme): Array<Element> => {
+  return [
+    ...guides.map((g) => createPageWith(g.image, g.title, g.body, theme)),
+    customPages(onTutorialCompleted, theme),
+  ]
 }

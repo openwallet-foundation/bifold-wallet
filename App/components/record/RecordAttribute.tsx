@@ -3,9 +3,9 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import { ColorPallet, TextTheme } from '../../theme'
 import { Attribute } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
+import { useThemeContext } from '../../utils/themeContext'
 
 interface RecordAttributeProps {
   attribute: Attribute
@@ -16,36 +16,6 @@ interface RecordAttributeProps {
   attributeValue?: (attribute: Attribute) => React.ReactElement | null
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 25,
-    paddingTop: 16,
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-  },
-  border: {
-    borderBottomColor: ColorPallet.brand.primaryBackground,
-    borderBottomWidth: 2,
-    paddingTop: 12,
-  },
-  link: {
-    minHeight: TextTheme.normal.fontSize,
-    paddingVertical: 2,
-    color: ColorPallet.brand.link,
-  },
-  text: {
-    ...TextTheme.normal,
-  },
-  valueContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 10,
-  },
-  valueText: {
-    minHeight: TextTheme.normal.fontSize,
-    paddingVertical: 4,
-  },
-})
-
 const RecordAttribute: React.FC<RecordAttributeProps> = ({
   attribute,
   hideAttributeValue = false,
@@ -55,6 +25,36 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
   attributeValue = null,
 }) => {
   const { t } = useTranslation()
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      paddingHorizontal: 25,
+      paddingTop: 16,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+    },
+    border: {
+      borderBottomColor: ColorPallet.brand.primaryBackground,
+      borderBottomWidth: 2,
+      paddingTop: 12,
+    },
+    link: {
+      minHeight: TextTheme.normal.fontSize,
+      paddingVertical: 2,
+      color: ColorPallet.brand.link,
+    },
+    text: {
+      ...TextTheme.normal,
+    },
+    valueContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingTop: 10,
+    },
+    valueText: {
+      minHeight: TextTheme.normal.fontSize,
+      paddingVertical: 4,
+    },
+  })
 
   return (
     <View style={styles.container}>

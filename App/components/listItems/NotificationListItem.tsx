@@ -7,12 +7,11 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { TextTheme, ColorPallet } from '../../theme'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, NotificationStackParams, Screens, Stacks } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
-
-import Button, { ButtonType } from 'components/buttons/Button'
+import { useThemeContext } from '../../utils/themeContext'
+import Button, { ButtonType } from '../buttons/Button'
 
 const iconSize = 30
 
@@ -26,50 +25,49 @@ interface NotificationListItemProps {
   notification: CredentialRecord | ProofRecord
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: ColorPallet.notification.info,
-    borderColor: ColorPallet.notification.infoBorder,
-    borderRadius: 5,
-    borderWidth: 1,
-    padding: 10,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 5,
-    paddingTop: 5,
-  },
-  bodyContainer: {
-    flexGrow: 1,
-    flexDirection: 'column',
-    marginLeft: 10 + iconSize,
-    paddingHorizontal: 5,
-    paddingBottom: 5,
-  },
-  headerText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    color: ColorPallet.notification.infoText,
-  },
-  bodyText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-    marginVertical: 15,
-    paddingBottom: 10,
-    color: ColorPallet.notification.infoText,
-  },
-  icon: {
-    marginRight: 10,
-    alignSelf: 'center',
-  },
-})
-
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { t } = useTranslation()
-
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.notification.info,
+      borderColor: ColorPallet.notification.infoBorder,
+      borderRadius: 5,
+      borderWidth: 1,
+      padding: 10,
+    },
+    headerContainer: {
+      flexDirection: 'row',
+      paddingHorizontal: 5,
+      paddingTop: 5,
+    },
+    bodyContainer: {
+      flexGrow: 1,
+      flexDirection: 'column',
+      marginLeft: 10 + iconSize,
+      paddingHorizontal: 5,
+      paddingBottom: 5,
+    },
+    headerText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+      fontWeight: 'bold',
+      alignSelf: 'center',
+      color: ColorPallet.notification.infoText,
+    },
+    bodyText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+      marginVertical: 15,
+      paddingBottom: 10,
+      color: ColorPallet.notification.infoText,
+    },
+    icon: {
+      marginRight: 10,
+      alignSelf: 'center',
+    },
+  })
   let onPress: GenericFn
   let title = ''
   let body = ''

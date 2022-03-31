@@ -2,9 +2,8 @@ import { useConnectionById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 
+import { SafeAreaScrollView, Label } from '../components'
 import { ContactStackParams, Screens } from '../types/navigators'
-
-import { SafeAreaScrollView, Label } from 'components'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
