@@ -205,10 +205,10 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
             ]
           }
         >
-          Connection.TakingTooLong
+          Loading.TakingTooLong
         </Text>
         <View
-          accessibilityLabel="Global.Home"
+          accessibilityLabel="Loading.BackToHome"
           accessibilityState={
             Object {
               "disabled": false,
@@ -248,7 +248,7 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
               ]
             }
           >
-            Connection.BackToHome
+            Loading.BackToHome
           </Text>
         </View>
       </View>
