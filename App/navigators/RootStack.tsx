@@ -36,11 +36,11 @@ import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import defaultStackOptions from './defaultStackOptions'
 
-interface Props {
+interface RootStackProps {
   setAgent: (agent: Agent) => void
 }
 
-const RootStack: React.FC<Props> = (props: Props) => {
+const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const { setAgent } = props
   const [state, dispatch] = useContext(Context)
   const { t } = useTranslation()
