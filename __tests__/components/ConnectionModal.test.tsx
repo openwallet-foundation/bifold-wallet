@@ -32,7 +32,7 @@ describe('ConnectionModal Component', () => {
     const tree = render(<ConnectionModal />)
 
     expect(tree).toMatchSnapshot()
-    expect(tree.queryByText('Connection.BackToHome')).toBeNull()
+    expect(tree.queryByText('Loading.BackToHome')).toBeNull()
   })
 
   test('Updates after delay', async () => {
@@ -52,7 +52,7 @@ describe('ConnectionModal Component', () => {
       jest.runAllTimers()
     })
 
-    const backHomeBtn = await tree.findByText('Connection.BackToHome')
+    const backHomeBtn = await tree.findByText('Loading.BackToHome')
     fireEvent(backHomeBtn, 'press')
 
     expect(tree).toMatchSnapshot()

@@ -38,7 +38,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
         style={
           Array [
             Object {
-              "color": "#0099FF",
+              "color": "#D8292F",
               "fontSize": 30,
             },
             undefined,
@@ -51,7 +51,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           ]
         }
       >
-        
+        
       </Text>
     </View>
     <Text
@@ -85,8 +85,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
+          "marginVertical": 16,
         }
       }
     >
@@ -94,14 +93,19 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
     </Text>
     <Text
       style={
-        Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "fontSize": 18,
+            "fontWeight": "normal",
+            "marginVertical": 16,
+          },
+          Object {
+            "marginBottom": 24,
+            "marginTop": 0,
+          },
+        ]
       }
     >
       Global.ErrorCode 1024
@@ -237,8 +241,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
           "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
+          "marginVertical": 16,
         }
       }
     >
@@ -246,14 +249,19 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
     </Text>
     <Text
       style={
-        Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "fontSize": 18,
+            "fontWeight": "normal",
+            "marginVertical": 16,
+          },
+          Object {
+            "marginBottom": 24,
+            "marginTop": 0,
+          },
+        ]
       }
     >
       Global.ErrorCode 1024
@@ -389,8 +397,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
           "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
+          "marginVertical": 16,
         }
       }
     >
@@ -398,14 +405,19 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
     </Text>
     <Text
       style={
-        Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "fontSize": 18,
+            "fontWeight": "normal",
+            "marginVertical": 16,
+          },
+          Object {
+            "marginBottom": 24,
+            "marginTop": 0,
+          },
+        ]
       }
     >
       Global.ErrorCode 1024
@@ -541,8 +553,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
           "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
+          "marginVertical": 16,
         }
       }
     >
@@ -550,14 +561,19 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
     </Text>
     <Text
       style={
-        Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 15,
-          "paddingBottom": 10,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "fontSize": 18,
+            "fontWeight": "normal",
+            "marginVertical": 16,
+          },
+          Object {
+            "marginBottom": 24,
+            "marginTop": 0,
+          },
+        ]
       }
     >
       Global.ErrorCode 1024

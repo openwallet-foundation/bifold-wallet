@@ -14,7 +14,7 @@ import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { ColorPallet, TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, Stacks } from '../types/navigators'
+import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
 import {
   connectionRecordFromId,
@@ -286,9 +286,18 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       />
       {pendingModalVisible ? (
         <NotificationModal
+          testID={t('ProofRequest.SendingTheInformationSecurely')}
           title={t('ProofRequest.SendingTheInformationSecurely')}
           visible={pendingModalVisible}
-          doneHidden={true}
+          homeVisible={false}
+          doneTitle={t('Loading.BackToHome')}
+          doneType={ButtonType.Secondary}
+          doneAccessibilityLabel={t('Loading.BackToHome')}
+          onDone={() => {
+            setPendingModalVisible(false)
+            navigation.pop()
+            navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+          }}
         >
           <ProofPending style={{ marginVertical: 20 }}></ProofPending>
         </NotificationModal>
@@ -297,6 +306,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         <NotificationModal
           title={t('ProofRequest.InformationSentSuccessfully')}
           visible={successModalVisible}
+          homeVisible={false}
           onDone={() => {
             setSuccessModalVisible(false)
             navigation.pop()
@@ -310,6 +320,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         <NotificationModal
           title={t('ProofRequest.ProofRejected')}
           visible={declinedModalVisible}
+          homeVisible={false}
           onDone={() => {
             setDeclinedModalVisible(false)
             navigation.pop()
