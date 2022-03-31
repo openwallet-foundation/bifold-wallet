@@ -2,24 +2,24 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ColorPallet } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 
 interface Props {
   onPress?: () => void
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    padding: 16,
-  },
-})
-
 const CloseButton: React.FC<Props> = ({ onPress }) => {
+  const { ColorPallet } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+    },
+    button: {
+      padding: 16,
+    },
+  })
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>

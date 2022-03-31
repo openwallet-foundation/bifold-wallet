@@ -1,22 +1,22 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-import { ColorPallet } from '../../theme'
-
-const styles = StyleSheet.create({
-  textContainer: {
-    flexDirection: 'row',
-  },
-  text: {
-    color: ColorPallet.notification.infoText,
-  },
-  link: {
-    color: ColorPallet.notification.infoText,
-    textDecorationLine: 'underline',
-  },
-})
+import { useThemeContext } from '../../utils/themeContext'
 
 const ActivityLogLink: React.FC = () => {
+  const { ColorPallet } = useThemeContext()
+  const styles = StyleSheet.create({
+    textContainer: {
+      flexDirection: 'row',
+    },
+    text: {
+      color: ColorPallet.notification.infoText,
+    },
+    link: {
+      color: ColorPallet.notification.infoText,
+      textDecorationLine: 'underline',
+    },
+  })
   return (
     <View style={styles.textContainer}>
       <Text style={styles.text}>Your</Text>

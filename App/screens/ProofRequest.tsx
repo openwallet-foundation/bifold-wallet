@@ -10,9 +10,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import ProofDeclined from '../assets/img/proof-declined.svg'
 import ProofPending from '../assets/img/proof-pending.svg'
 import ProofSuccess from '../assets/img/proof-success.svg'
+import Button, { ButtonType } from '../components/buttons/Button'
+import NotificationModal from '../components/modals/NotificationModal'
+import Record from '../components/record/Record'
+import RecordAttribute from '../components/record/RecordAttribute'
+import Title from '../components/texts/Title'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { ColorPallet, TextTheme } from '../theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
@@ -22,42 +26,13 @@ import {
   getConnectionName,
   valueFromAttributeCredential,
 } from '../utils/helpers'
-
-import Button, { ButtonType } from 'components/buttons/Button'
-import NotificationModal from 'components/modals/NotificationModal'
-import Record from 'components/record/Record'
-import RecordAttribute from 'components/record/RecordAttribute'
-import Title from 'components/texts/Title'
+import { useThemeContext } from '../utils/themeContext'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 
 interface ProofRequestAttribute extends Attribute {
   values?: RequestedAttribute[]
 }
-
-const styles = StyleSheet.create({
-  headerTextContainer: {
-    paddingHorizontal: 25,
-    paddingVertical: 16,
-  },
-  headerText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-  },
-  footerButton: {
-    paddingTop: 10,
-  },
-  link: {
-    ...TextTheme.normal,
-    minHeight: TextTheme.normal.fontSize,
-    color: ColorPallet.brand.link,
-    paddingVertical: 2,
-  },
-  valueContainer: {
-    minHeight: TextTheme.normal.fontSize,
-    paddingVertical: 4,
-  },
-})
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -77,7 +52,30 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [attributeCredentials, setAttributeCredentials] = useState<[string, RequestedAttribute[]][]>([])
 
   const proof = useProofById(proofId)
-
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    headerTextContainer: {
+      paddingHorizontal: 25,
+      paddingVertical: 16,
+    },
+    headerText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+    },
+    footerButton: {
+      paddingTop: 10,
+    },
+    link: {
+      ...TextTheme.normal,
+      minHeight: TextTheme.normal.fontSize,
+      color: ColorPallet.brand.link,
+      paddingVertical: 2,
+    },
+    valueContainer: {
+      minHeight: TextTheme.normal.fontSize,
+      paddingVertical: 4,
+    },
+  })
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
   }
@@ -88,15 +86,21 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     const updateRetrievedCredentials = async (proof: ProofRecord) => {
-      const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
-      if (!creds) {
-        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+      try {
+        const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
+        if (!creds) {
+          throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+        }
+        setCredentials(creds)
+        setAttributeCredentials(Object.entries(creds?.requestedAttributes || {}))
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(`ERROR1:`, error)
+        throw error
       }
-      setCredentials(creds)
-      setAttributeCredentials(Object.entries(creds?.requestedAttributes || {}))
     }
 
-    updateRetrievedCredentials(proof).catch(() => {
+    updateRetrievedCredentials(proof).catch((err) => {
       const error = new BifoldError(
         'Unable to update retrieved credentials',
         'There was a problem while updating retrieved credentials.',

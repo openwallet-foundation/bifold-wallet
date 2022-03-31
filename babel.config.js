@@ -5,9 +5,6 @@ const plugins = [
     {
       root: ['.'],
       extensions: ['.tsx', 'ts'],
-      alias: {
-        components: './App/components',
-      },
     },
   ],
 ]

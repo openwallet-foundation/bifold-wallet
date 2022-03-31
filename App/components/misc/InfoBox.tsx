@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { TextTheme, ColorPallet } from '../../theme'
 import { GenericFn } from '../../types/fn'
-
-import Button, { ButtonType } from 'components/buttons/Button'
+import { useThemeContext } from '../../utils/themeContext'
+import Button, { ButtonType } from '../buttons/Button'
 
 const iconSize = 30
 const { width } = Dimensions.get('window')
@@ -26,48 +25,48 @@ interface BifoldErrorProps {
   onCallToActionPressed?: GenericFn
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: ColorPallet.notification.info,
-    borderColor: ColorPallet.notification.infoBorder,
-    borderRadius: 5,
-    borderWidth: 1,
-    padding: 10,
-    marginHorizontal: 25,
-    minWidth: width - 2 * 25,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 5,
-    paddingTop: 5,
-  },
-  bodyContainer: {
-    flexDirection: 'column',
-    marginLeft: 10 + iconSize,
-    paddingHorizontal: 5,
-    paddingBottom: 5,
-  },
-  headerText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    color: ColorPallet.notification.infoText,
-  },
-  bodyText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-    marginVertical: 16,
-    color: ColorPallet.notification.infoText,
-  },
-  icon: {
-    marginRight: 10,
-    alignSelf: 'center',
-  },
-})
-
 const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message, code, onCallToActionPressed }) => {
   const { t } = useTranslation()
+  const { TextTheme, ColorPallet } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.notification.info,
+      borderColor: ColorPallet.notification.infoBorder,
+      borderRadius: 5,
+      borderWidth: 1,
+      padding: 10,
+      marginHorizontal: 25,
+      minWidth: width - 2 * 25,
+    },
+    headerContainer: {
+      flexDirection: 'row',
+      paddingHorizontal: 5,
+      paddingTop: 5,
+    },
+    bodyContainer: {
+      flexDirection: 'column',
+      marginLeft: 10 + iconSize,
+      paddingHorizontal: 5,
+      paddingBottom: 5,
+    },
+    headerText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+      fontWeight: 'bold',
+      alignSelf: 'center',
+      color: ColorPallet.notification.infoText,
+    },
+    bodyText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+      marginVertical: 16,
+      color: ColorPallet.notification.infoText,
+    },
+    icon: {
+      marginRight: 10,
+      alignSelf: 'center',
+    },
+  })
   let iconName = 'info'
   let iconColor = ColorPallet.notification.infoIcon
 

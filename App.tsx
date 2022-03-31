@@ -16,14 +16,16 @@ import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import ConnectionModal from './App/components/modals/ConnectionModal'
+import ErrorModal from './App/components/modals/ErrorModal'
 import toastConfig from './App/components/toast/ToastConfig'
-import { initStoredLanguage } from './App/localization'
+import { initLanguages, initStoredLanguage, defaultTranslationResources } from './App/localization'
 import RootStack from './App/navigators/RootStack'
 import StoreProvider from './App/store/Store'
-import { ColorPallet } from './App/theme'
+import { defaultTheme as theme } from './App/theme'
+import { ThemeProvider } from './App/utils/themeContext'
 import indyLedgers from './configs/ledgers/indy'
 
-import ErrorModal from 'components/modals/ErrorModal'
+initLanguages(defaultTranslationResources)
 
 const App = () => {
   const [agent, setAgent] = useState<Agent | undefined>(undefined)
@@ -39,16 +41,18 @@ const App = () => {
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
-        <StatusBar
-          barStyle="light-content"
-          hidden={false}
-          backgroundColor={ColorPallet.brand.primary}
-          translucent={false}
-        />
-        <ConnectionModal />
-        <ErrorModal />
-        <RootStack setAgent={setAgent} />
-        <Toast topOffset={15} config={toastConfig} />
+        <ThemeProvider value={theme}>
+          <StatusBar
+            barStyle="light-content"
+            hidden={false}
+            backgroundColor={theme.ColorPallet.brand.primary}
+            translucent={false}
+          />
+          <ConnectionModal />
+          <ErrorModal />
+          <RootStack setAgent={setAgent} />
+          <Toast topOffset={15} config={toastConfig} />
+        </ThemeProvider>
       </AgentProvider>
     </StoreProvider>
   )

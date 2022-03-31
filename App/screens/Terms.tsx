@@ -11,30 +11,16 @@ import HighlightTextBox from '../components/texts/HighlightTextBox'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { ColorPallet, TextTheme } from '../theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
-    margin: 20,
-  },
-  bodyText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-  },
-  controls: {
-    marginTop: 15,
-  },
-})
+import { useThemeContext } from '../utils/themeContext'
 
 const Terms: React.FC = () => {
   const [, dispatch] = useContext(Context)
   const [checked, setChecked] = useState(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-
+  const { ColorPallet, TextTheme } = useThemeContext()
   const onSubmitPressed = () => {
     dispatch({
       type: DispatchAction.SetDidAgreeToTerms,
@@ -43,7 +29,19 @@ const Terms: React.FC = () => {
 
     navigation.navigate(Screens.CreatePin)
   }
-
+  const style = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      margin: 20,
+    },
+    bodyText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+    },
+    controls: {
+      marginTop: 15,
+    },
+  })
   const onBackPressed = () => {
     //TODO:(jl) goBack() does not unwind the navigation stack but rather goes
     //back to the splash screen. Needs fixing before the following code will
