@@ -73,7 +73,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     //Flag to protect the init process from being duplicated
     setInitAgentInProcess(true)
 
-    //Remove before production
     try {
       const newAgent = new Agent(
         {
