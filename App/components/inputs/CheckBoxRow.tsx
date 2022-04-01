@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useThemeContext } from '../../utils/themeContext'
 
-export interface Props {
+interface Props {
   title: string
   accessibilityLabel?: string
   testID?: string
