@@ -1,0 +1,7 @@
+# Snyk does not do DCO and just makes work for ppl so
+# we tell it to go away.
+version: v1.14.0
+
+exclude:
+   code:
+     - “**/*”
