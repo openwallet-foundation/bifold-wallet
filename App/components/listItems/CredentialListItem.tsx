@@ -6,8 +6,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native'
 
 import { CredentialStackParams, Screens } from '../../types/navigators'
-
-import CredentialCard from 'components/misc/CredentialCard'
+import CredentialCard from '../misc/CredentialCard'
 
 interface CredentialListItemProps {
   credential: CredentialRecord

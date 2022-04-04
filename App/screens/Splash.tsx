@@ -8,18 +8,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { LocalStorageKeys } from '../constants'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { ColorPallet } from '../theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { Onboarding } from '../types/state'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-})
+import { useThemeContext } from '../utils/themeContext'
 
 const onboardingComplete = (state: Onboarding): boolean => {
   return state.DidCompleteTutorial && state.DidAgreeToTerms && state.DidCreatePIN
@@ -45,7 +36,15 @@ const resumeOnboardingAt = (state: Onboarding): Screens => {
 const Splash: React.FC = () => {
   const [, dispatch] = useContext(Context)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-
+  const { ColorPallet } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+  })
   useMemo(() => {
     async function init() {
       try {

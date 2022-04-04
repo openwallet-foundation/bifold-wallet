@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { TextTheme, borderRadius, borderWidth, ColorPallet } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 
 interface BaseToastProps {
   title: string
@@ -17,33 +17,8 @@ export enum ToastType {
   Error = 'error',
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    marginTop: 25,
-    borderWidth,
-    borderRadius,
-  },
-  textContainer: {
-    flexShrink: 1,
-    marginVertical: 15,
-    marginRight: 10,
-  },
-  icon: {
-    marginTop: 15,
-    marginHorizontal: 15,
-  },
-  title: {
-    fontWeight: 'bold',
-  },
-  body: {
-    marginTop: 10,
-  },
-})
-
 const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
+  const { TextTheme, borderRadius, borderWidth, ColorPallet } = useThemeContext()
   const { width } = useWindowDimensions()
   const iconSize = 24
   let iconName = ''
@@ -51,7 +26,31 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
   let borderColor = ''
   let iconColor = ''
   let textColor = ''
-
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+      marginTop: 25,
+      borderWidth,
+      borderRadius,
+    },
+    textContainer: {
+      flexShrink: 1,
+      marginVertical: 15,
+      marginRight: 10,
+    },
+    icon: {
+      marginTop: 15,
+      marginHorizontal: 15,
+    },
+    title: {
+      fontWeight: 'bold',
+    },
+    body: {
+      marginTop: 10,
+    },
+  })
   switch (toastType) {
     case ToastType.Success:
       iconName = 'check-circle'
