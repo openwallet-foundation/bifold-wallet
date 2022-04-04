@@ -15,7 +15,7 @@ const initialState: State = {
     DidCreatePIN: false,
   },
   notifications: {
-    ConnectionPending: false,
+    ConnectionEstablished: undefined,
   },
   error: null,
 }

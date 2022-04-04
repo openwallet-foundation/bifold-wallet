@@ -5,7 +5,8 @@ import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { useNotifications } from '../hooks/notifcations'
+import { useNotifications } from '../hooks/notifications'
+import { ColorPallet, TextTheme } from '../theme'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 import { useThemeContext } from '../utils/themeContext'
 

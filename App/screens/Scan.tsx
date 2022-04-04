@@ -1,16 +1,16 @@
 import type { BarCodeReadEvent } from 'react-native-camera'
 
-import { Agent, ConnectionState } from '@aries-framework/core'
-import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
+import { Agent } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { QRScanner } from '../components'
+import QRScanner from '../components/misc/QRScanner'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
-import { QrCodeScanError } from '../types/error'
-import { ConnectStackParams, Screens, TabStacks } from '../types/navigators'
+import { BifoldError, QrCodeScanError } from '../types/error'
+import { ConnectStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
 
 type ScanProps = StackScreenProps<ConnectStackParams>
@@ -20,22 +20,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { t } = useTranslation()
   const [, dispatch] = useContext(Context)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
-  const [connectionId, setConnectionId] = useState('')
-  const connection = useConnectionById(connectionId)
-
-  const displayPendingMessage = (): void => {
-    dispatch({
-      type: DispatchAction.ConnectionPending,
-      payload: [{ ConnectionPending: true }],
-    })
-  }
-
-  const displaySuccessMessage = (): void => {
-    dispatch({
-      type: DispatchAction.ConnectionPending,
-      payload: [{ ConnectionPending: false }],
-    })
-  }
+  const [connectionId, setConnectionId] = useState<string>()
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
     try {
@@ -44,34 +29,54 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       })
       const message = await res.json()
-      displayPendingMessage()
+
       await agent?.receiveMessage(message)
-    } catch (e: unknown) {
-      throw new Error(t('Scan.UnableToHandleRedirection'))
+    } catch (err: unknown) {
+      const error = new BifoldError(
+        'Unable to accept connection',
+        'There was a problem while accepting the connection redirection',
+        1024
+      )
+
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+
+      dispatch({
+        type: DispatchAction.SetError,
+        payload: [{ error }],
+      })
     }
   }
 
   const handleInvitation = async (url: string): Promise<void> => {
-    displayPendingMessage()
-    const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
-      autoAcceptConnection: true,
-    })
-    if (!connectionRecord?.id) {
-      throw new Error(t('Scan.ConnectionNotFound'))
-    }
-    setConnectionId(connectionRecord.id)
-  }
-
-  useEffect(() => {
-    if (connection?.state === ConnectionState.Complete) {
-      dispatch({
-        type: DispatchAction.ConnectionPending,
-        payload: [{ ConnectionPending: false }],
+    try {
+      const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
+        autoAcceptConnection: true,
       })
 
+      if (!connectionRecord?.id) {
+        throw new BifoldError(
+          'Unable to accept connection',
+          'There was a problem while accepting the connection.',
+          1024
+        )
+      }
+
+      setConnectionId(connectionRecord.id)
+    } catch (err) {
+      const error = new BifoldError(
+        'Unable to accept connection',
+        'There was a problem while accepting the connection.',
+        1024
+      )
+
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+
+      dispatch({
+        type: DispatchAction.SetError,
+        payload: [{ error }],
+      })
     }
-  }, [connection])
+  }
 
   const handleCodeScan = async (event: BarCodeReadEvent) => {
     setQrCodeScanError(null)
@@ -83,15 +88,17 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       } else {
         await handleInvitation(url)
       }
-
-      displaySuccessMessage()
-
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
       setQrCodeScanError(error)
     }
   }
+
+  useEffect(() => {
+    if (connectionId) {
+      navigation.getParent()?.navigate(Stacks.ConnectionStack, { screen: Screens.Connection, params: { connectionId } })
+    }
+  }, [connectionId])
 
   return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
 }
