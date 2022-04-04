@@ -10,7 +10,11 @@ import fr from './fr'
 
 export type Translation = typeof en
 
-const resources = {
+type TranslationResources = {
+  [key: string]: any
+}
+
+export const defaultTranslationResources: TranslationResources = {
   en: {
     translation: en,
   },
@@ -31,6 +35,23 @@ const storeLanguage = async (id: string) => {
   await AsyncStorage.setItem('language', id)
 }
 
+const initLanguages = (resources: TranslationResources) => {
+  const availableLanguages = Object.keys(resources)
+  const bestLanguageMatch = RNLocalize.findBestAvailableLanguage(availableLanguages)
+  let translationToUse = defaultLanguage
+
+  if (bestLanguageMatch && availableLanguages.includes(bestLanguageMatch.languageTag)) {
+    translationToUse = bestLanguageMatch.languageTag
+  }
+
+  i18n.use(initReactI18next).init({
+    debug: true,
+    lng: translationToUse,
+    fallbackLng: defaultLanguage,
+    resources,
+  })
+}
+
 //** Fetch user preference language from the AsyncStorage and set if require  */
 const initStoredLanguage = async () => {
   const langId = await AsyncStorage.getItem('language')
@@ -41,19 +62,4 @@ const initStoredLanguage = async () => {
   }
 }
 
-const availableLanguages = Object.keys(resources)
-const bestLanguageMatch = RNLocalize.findBestAvailableLanguage(availableLanguages)
-let translationToUse = defaultLanguage
-
-if (bestLanguageMatch && availableLanguages.includes(bestLanguageMatch.languageTag)) {
-  translationToUse = bestLanguageMatch.languageTag
-}
-
-i18n.use(initReactI18next).init({
-  debug: true,
-  lng: translationToUse,
-  fallbackLng: defaultLanguage,
-  resources,
-})
-
-export { i18n, initStoredLanguage, storeLanguage, currentLanguage }
+export { i18n, initStoredLanguage, initLanguages, storeLanguage, currentLanguage }

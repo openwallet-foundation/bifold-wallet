@@ -6,13 +6,12 @@ import { StackScreenProps } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { QRScanner } from '../components'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, TabStacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
-
-import { QRScanner } from 'components'
 
 type ScanProps = StackScreenProps<ConnectStackParams>
 

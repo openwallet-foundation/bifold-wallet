@@ -6,13 +6,15 @@ import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
 import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
 import { NotificationStackParams, Screens } from '../types/navigators'
+import { useThemeContext } from '../utils/themeContext'
 
-import defaultStackOptions from './defaultStackOptions'
+import { createDefaultStackOptions } from './defaultStackOptions'
 
 const NotificationStack: React.FC = () => {
   const Stack = createStackNavigator<NotificationStackParams>()
   const { t } = useTranslation()
-
+  const theme = useThemeContext()
+  const defaultStackOptions = createDefaultStackOptions(theme)
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen

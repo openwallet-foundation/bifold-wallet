@@ -7,44 +7,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ConnectionPending from '../../assets/img/connection-pending.svg'
 import { Context } from '../../store/Store'
-import { ColorPallet, TextTheme } from '../../theme'
 import { RootStackParams, Screens, Stacks, TabStacks } from '../../types/navigators'
+import { useThemeContext } from '../../utils/themeContext'
 import Button, { ButtonType } from '../buttons/Button'
 
 const { height } = Dimensions.get('window')
 const connectionTimerDelay = 3000 // in ms
-const imageDisplayOptions = {
-  fill: ColorPallet.notification.infoText,
-  height: 250,
-  width: 250,
-}
-
-const styles = StyleSheet.create({
-  container: {
-    minHeight: height,
-    flexDirection: 'column',
-    paddingHorizontal: 25,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  image: {
-    marginTop: 40,
-  },
-  messageContainer: {
-    alignItems: 'center',
-    marginTop: 54,
-  },
-  messageText: {
-    fontWeight: 'normal',
-    textAlign: 'center',
-  },
-  delayMessageContainer: {
-    marginTop: 30,
-  },
-  delayMessageText: {
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-})
 
 const ConnectionModal: React.FC = () => {
   const { t } = useTranslation()
@@ -52,6 +20,39 @@ const ConnectionModal: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [state] = useContext(Context)
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const imageDisplayOptions = {
+    fill: ColorPallet.notification.infoText,
+    height: 250,
+    width: 250,
+  }
+
+  const styles = StyleSheet.create({
+    container: {
+      minHeight: height,
+      flexDirection: 'column',
+      paddingHorizontal: 25,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    image: {
+      marginTop: 40,
+    },
+    messageContainer: {
+      alignItems: 'center',
+      marginTop: 54,
+    },
+    messageText: {
+      fontWeight: 'normal',
+      textAlign: 'center',
+    },
+    delayMessageContainer: {
+      marginTop: 30,
+    },
+    delayMessageText: {
+      textAlign: 'center',
+      marginBottom: 30,
+    },
+  })
   let timer: NodeJS.Timeout
 
   const onDismissModalTouched = () => {

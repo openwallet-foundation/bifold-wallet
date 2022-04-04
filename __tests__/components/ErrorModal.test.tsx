@@ -2,6 +2,8 @@ import { render, waitFor, fireEvent } from '@testing-library/react-native'
 import React, { useContext } from 'react'
 
 import ErrorModal from '../../App/components/modals/ErrorModal'
+import { defaultTheme } from '../../App/theme'
+import * as themeContext from '../../App/utils/themeContext' // note we're importing with a * to import all the exports
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -26,6 +28,7 @@ useContext.mockImplementation(() => [state, setState])
 
 describe('ErrorModal Component', () => {
   test('Renders correctly', async () => {
+    jest.spyOn(themeContext, 'useThemeContext').mockImplementation(() => defaultTheme)
     const tree = render(<ErrorModal />)
 
     expect(tree).toMatchSnapshot()
@@ -33,6 +36,7 @@ describe('ErrorModal Component', () => {
   })
 
   test('Dismiss on demand', async () => {
+    jest.spyOn(themeContext, 'useThemeContext').mockImplementation(() => defaultTheme)
     const tree = render(<ErrorModal />)
 
     const dismissBtn = await tree.findByText('Global.Okay')

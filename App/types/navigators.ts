@@ -72,6 +72,7 @@ export type CredentialStackParams = {
 export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
+  [Screens.ProofRequestAttributeDetails]: { proofId: string; attributeName: string }
 }
 
 export type ConnectStackParams = {
