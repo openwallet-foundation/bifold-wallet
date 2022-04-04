@@ -4,7 +4,7 @@ import { FlatList, Text, View } from 'react-native'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import InfoTextBox from '../components/texts/InfoTextBox'
-import { useNotifications } from '../hooks/notifcations'
+import { useNotifications } from '../hooks/notifications'
 import { useThemeContext } from '../utils/themeContext'
 
 const ListNotifications: React.FC = () => {

@@ -15,7 +15,6 @@ import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
-import ConnectionModal from './App/components/modals/ConnectionModal'
 import ErrorModal from './App/components/modals/ErrorModal'
 import toastConfig from './App/components/toast/ToastConfig'
 import { initLanguages, initStoredLanguage, defaultTranslationResources } from './App/localization'
@@ -48,7 +47,6 @@ const App = () => {
             backgroundColor={theme.ColorPallet.brand.primary}
             translucent={false}
           />
-          <ConnectionModal />
           <ErrorModal />
           <RootStack setAgent={setAgent} />
           <Toast topOffset={15} config={toastConfig} />
