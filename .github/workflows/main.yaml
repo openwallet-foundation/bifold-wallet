@@ -7,8 +7,8 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'ios/**'
-      - 'android/**'
+      - 'app/ios/**'
+      - 'app/android/**'
       - '**/package-lock.json'
   push:
     branches: [main]
@@ -46,7 +46,7 @@ jobs:
         id: pod-cache
         uses: actions/cache@v1
         with:
-          path: ios/Pods
+          path: app/ios/Pods
           key: ${{ runner.os }}-pods-${{ env.cacheId }}-${{ hashFiles('**/Podfile.lock ') }}
           restore-keys: |
             ${{ runner.os }}-pods-${{ env.cacheId }}-
@@ -55,13 +55,13 @@ jobs:
       # git for cache keys.
       - name: Generate cache key
         run: |
-          echo $(git rev-parse HEAD:App) > ./dd-cache-key.txt
-          echo $(git rev-parse HEAD:ios) >> ./dd-cache-key.txt
+          echo $(git rev-parse HEAD:core/App) > ./dd-cache-key.txt
+          echo $(git rev-parse HEAD:app/ios) >> ./dd-cache-key.txt
 
       - name: Cache derived data
         uses: actions/cache@v1
         with:
-          path: ios/xbuild/Build
+          path: app/ios/xbuild/Build
           key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
           restore-keys: |
             ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
@@ -69,11 +69,12 @@ jobs:
       - name: Install react native dependencies
         run: |
           npm version && npm ci && \
-          git status
+          git status && \
+          cd ./app && npm ci
 
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
-        working-directory: ./ios
+        working-directory: ./app/ios
         run: |
           gem install cocoapods && \
           pod install && \
@@ -82,7 +83,7 @@ jobs:
 
       - name: Run debug build
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
-        working-directory: ./ios
+        working-directory: ./app/ios
         run: |
           xcodebuild \
           -workspace AriesBifold.xcworkspace \
@@ -96,7 +97,7 @@ jobs:
       # This is a 1G file that adds little to speeding up
       # the build but does impact cache size.
       - name: Cleanup large artifacts
-        working-directory: ./ios
+        working-directory: ./app/ios
         run: |
           rm -rf build/Build/Products/Debug-iphoneos/AriesBifold.app
 
@@ -127,7 +128,7 @@ jobs:
           java-version: 1.8
 
       - name: download Android SDK
-        working-directory: ./android
+        working-directory: ./app/android
         run: |
           wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${{ matrix.sdk-tools }}.zip
           unzip -d android-sdk-linux android-sdk.zip
@@ -157,8 +158,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm version && npm ci
+          npm version && npm ci &&
+          cd ./app && npm ci
 
       - name: Android Debug Build
-        working-directory: ./android
-        run: ./gradlew assembleDebug
+        working-directory: ./app/android
+        run: ./gradlew bundleRelease

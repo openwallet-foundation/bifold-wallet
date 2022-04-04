@@ -72,7 +72,7 @@ const Record: React.FC<RecordProps> = ({
       }
       ListFooterComponent={<RecordFooter>{footer()}</RecordFooter>}
       data={attributes}
-      keyExtractor={({ name }) => name}
+      keyExtractor={({ name }, index) => name || index.toString()}
       renderItem={({ item: attr, index }) =>
         attribute ? (
           attribute(attr)

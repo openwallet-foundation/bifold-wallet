@@ -38,7 +38,7 @@ import TabStack from './TabStack'
 import { createDefaultStackOptions } from './defaultStackOptions'
 
 interface RootStackProps {
-  setAgent: (agent: Agent) => void
+  setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
 }
 
 const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
