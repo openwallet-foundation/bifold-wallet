@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /**
  * @format
  */
@@ -20,11 +21,11 @@ import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
 
 import { NavigationContainer } from '@react-navigation/native'
+import { ColorPallet } from 'aries-bifold'
 import React from 'react'
 import { AppRegistry } from 'react-native'
 
 import App from './App'
-import { ColorPallet } from './App/theme'
 import { name as appName } from './app.json'
 
 const navigationTheme = {

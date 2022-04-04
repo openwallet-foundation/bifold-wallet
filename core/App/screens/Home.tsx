@@ -7,11 +7,10 @@ import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from '
 
 import { NotificationListItem } from '../components'
 import { NotificationType } from '../components/listItems/NotificationListItem'
+import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { useThemeContext } from '../utils/themeContext'
-
-import NoNewUpdates from 'App/components/misc/NoNewUpdates'
 
 const { width } = Dimensions.get('window')
 const offset = 25

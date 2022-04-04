@@ -4,7 +4,7 @@ import { State } from '../types/state'
 
 import reducer, { ReducerAction } from './reducer'
 
-interface StoreProviderProps {
+export interface StoreProviderProps {
   children: any
 }
 
