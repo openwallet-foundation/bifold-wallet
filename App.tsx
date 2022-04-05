@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import ErrorModal from './App/components/modals/ErrorModal'
-import toastConfig from './App/components/toast/ToastConfig'
+import ToastConfig from './App/components/toast/ToastConfig'
 import { initLanguages, initStoredLanguage, defaultTranslationResources } from './App/localization'
 import RootStack from './App/navigators/RootStack'
 import StoreProvider from './App/store/Store'
@@ -38,7 +38,7 @@ const App = () => {
           />
           <ErrorModal />
           <RootStack setAgent={setAgent} />
-          <Toast topOffset={15} config={toastConfig} />
+          <Toast topOffset={15} config={ToastConfig} />
         </ThemeProvider>
       </AgentProvider>
     </StoreProvider>

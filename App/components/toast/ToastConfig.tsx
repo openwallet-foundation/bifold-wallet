@@ -3,7 +3,7 @@ import { ToastShowParams } from 'react-native-toast-message'
 
 import BaseToast, { ToastType } from './BaseToast'
 
-export const toastConfig = {
+export const Config = {
   success: (props: ToastShowParams) => (
     <BaseToast title={props?.text1} body={props?.text2} toastType={ToastType.Success} />
   ),
@@ -12,4 +12,4 @@ export const toastConfig = {
   info: (props: ToastShowParams) => <BaseToast title={props?.text1} body={props?.text2} toastType={ToastType.Info} />,
 }
 
-export default toastConfig
+export default Config
