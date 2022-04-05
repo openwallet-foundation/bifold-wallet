@@ -100,7 +100,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       }
     }
 
-    updateRetrievedCredentials(proof).catch((err) => {
+    updateRetrievedCredentials(proof).catch(() => {
       const error = new BifoldError(
         'Unable to update retrieved credentials',
         'There was a problem while updating retrieved credentials.',
