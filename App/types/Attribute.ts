@@ -1,5 +1,5 @@
-import { AttributeTranslation } from 'types/AttributeTranslation'
-import { Translations } from 'types/Translations'
+import { AttributeTranslation } from '../types/AttributeTranslation'
+import { Translations } from '../types/Translations'
 
 export type Attribute = {
   characterEncoding?: string
