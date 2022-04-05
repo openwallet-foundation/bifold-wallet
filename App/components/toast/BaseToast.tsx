@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useThemeContext } from '../../utils/themeContext'
 
 interface BaseToastProps {
-  title: string
-  body: string
+  title?: string
+  body?: string
   toastType: string
 }
 
