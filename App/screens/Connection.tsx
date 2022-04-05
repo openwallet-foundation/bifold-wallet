@@ -8,7 +8,7 @@ import ConnectionPending from '../assets/img/connection-pending.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useNotifications } from '../hooks/notifications'
 import { ColorPallet, TextTheme } from '../theme'
-import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
+import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const { height } = Dimensions.get('window')
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 })
 
-type ConnectionModalProps = StackScreenProps<DeliveryStackParams, Screens.ConnectionModal>
+type ConnectionModalProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const ConnectionModal: React.FC<ConnectionModalProps> = ({ navigation, route }) => {
   const { connectionId } = route.params
