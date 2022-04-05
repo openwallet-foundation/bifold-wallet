@@ -14,8 +14,7 @@
     "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
     "postinstall": "patch-package",
     "pre-commit-lint": "npx lint-staged",
-    "prepare": "husky install",
-    "typecheck": "tsc --noEmit"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@aries-framework/core": "^0.2.0-alpha.20",
@@ -35,10 +34,14 @@
     "@react-navigation/core": "^6.1.0",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
+    "@types/js-yaml": "^4.0.5",
     "axios": "^0.21.0",
     "i18next": "^21.4.0",
     "indy-sdk-react-native": "^0.1.20",
+    "js-yaml": "^4.1.0",
     "lodash.startcase": "^4.4.0",
+    "oca.js-form-core": "file:../oca.js-form-core",
+    "oca.js-form-html": "^0.0.7",
     "patch-package": "^6.4.4",
     "query-string": "^7.0.1",
     "react": "17.0.2",
@@ -64,6 +67,7 @@
     "react-native-toast-message": "^2.0.1",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-webview": "^11.17.2",
     "uuid": "^8.1.0"
   },
   "devDependencies": {
