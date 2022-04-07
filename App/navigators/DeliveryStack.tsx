@@ -4,6 +4,7 @@ import React from 'react'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
+import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 import { useThemeContext } from '../utils/themeContext'
 
@@ -21,6 +22,7 @@ const DeliveryStack: React.FC = () => {
     >
       <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
       <Stack.Screen name={Screens.ProofRequest} component={ProofRequest} />
+      <Stack.Screen name={Screens.ProofRequestAttributeDetails} component={ProofRequestAttributeDetails} />
       <Stack.Screen name={Screens.CredentialOffer} component={CredentialOffer} />
     </Stack.Navigator>
   )
