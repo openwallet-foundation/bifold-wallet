@@ -4,9 +4,8 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
-import { ColorPallet } from '../theme'
-
-import { CredentialListItem, Text } from 'components'
+import { CredentialListItem, Text } from '../components'
+import { useThemeContext } from '../utils/themeContext'
 
 const ListCredentials: React.FC = () => {
   const credentials = [
@@ -14,7 +13,7 @@ const ListCredentials: React.FC = () => {
     ...useCredentialByState(CredentialState.Done),
   ]
   const { t } = useTranslation()
-
+  const { ColorPallet } = useThemeContext()
   const emptyListComponent = () => <Text style={{ textAlign: 'center', marginTop: 100 }}>{t('Global.NoneYet!')}</Text>
 
   return (

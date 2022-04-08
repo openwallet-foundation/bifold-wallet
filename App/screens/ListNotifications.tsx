@@ -2,16 +2,15 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Text, View } from 'react-native'
 
-import { useNotifications } from '../hooks/notifcations'
-import { TextTheme } from '../theme'
-
-import NotificationListItem, { NotificationType } from 'components/listItems/NotificationListItem'
-import InfoTextBox from 'components/texts/InfoTextBox'
+import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
+import InfoTextBox from '../components/texts/InfoTextBox'
+import { useNotifications } from '../hooks/notifications'
+import { useThemeContext } from '../utils/themeContext'
 
 const ListNotifications: React.FC = () => {
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-
+  const { TextTheme } = useThemeContext()
   const emptyListComponent = () => (
     <View style={{ margin: 15 }}>
       <InfoTextBox>

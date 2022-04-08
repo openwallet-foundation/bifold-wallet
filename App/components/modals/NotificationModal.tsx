@@ -6,36 +6,9 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ColorPallet, TextTheme } from '../../theme'
 import { HomeStackParams, Screens } from '../../types/navigators'
-
-import Button, { ButtonType } from 'components/buttons/Button'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  childContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 25,
-  },
-  buttonContainer: {
-    marginBottom: 35,
-    marginHorizontal: 20,
-  },
-  iconContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  iconButton: {
-    padding: 20,
-    paddingVertical: 28,
-  },
-})
+import { useThemeContext } from '../../utils/themeContext'
+import Button, { ButtonType } from '..//buttons/Button'
 
 interface NotificationModalProps {
   title: string
@@ -66,7 +39,32 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
-
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    childContainer: {
+      flexGrow: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 25,
+    },
+    buttonContainer: {
+      marginBottom: 35,
+      marginHorizontal: 20,
+    },
+    iconContainer: {
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+    },
+    iconButton: {
+      padding: 20,
+      paddingVertical: 28,
+    },
+  })
   useEffect(() => {
     if (visible !== undefined) {
       setModalVisible(visible)

@@ -4,20 +4,11 @@ import { Dimensions, Modal, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Context } from '../../store/Store'
-import { ColorPallet } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 const { height } = Dimensions.get('window')
 const genericErrorCode = 1024
-const styles = StyleSheet.create({
-  container: {
-    minHeight: height,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-})
 
 const ErrorModal: React.FC = () => {
   const { t } = useTranslation()
@@ -26,7 +17,16 @@ const ErrorModal: React.FC = () => {
   const onDismissModalTouched = () => {
     setModalVisible(false)
   }
-
+  const { ColorPallet } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      minHeight: height,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+  })
   useEffect(() => {
     if (state.error && state.error.title && state.error.message && state.error.code) {
       setModalVisible(true)

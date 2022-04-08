@@ -24,7 +24,8 @@ const translation = {
     "View": "View",
     "Home": "Home",
     "ErrorCode": "Error Code",
-    "Okay": "Okay"
+    "Okay": "Okay",
+    "GoBack": "Go Back",
   },
   "Language": {
     "English": "English",
@@ -33,6 +34,9 @@ const translation = {
   "Error": {
     "Unknown": "Unknown Error",
     "Problem": "A problem has occurred",
+  },
+  "StatusMessages": {
+    "InitAgent": "Initializing agent .."
   },
   "Terms": {
     "TermsOfService": "Terms of Service",
@@ -90,7 +94,8 @@ const translation = {
     "UnableToHandleRedirection": "Unable to handle redirection"
   },
   "Connection": {
-    "JustAMoment": "Just a moment while we make a secure connection..."
+    "JustAMoment": "Just a moment while we make a secure connection...",
+    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
   },
   "CredentialOffer": {
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
@@ -106,7 +111,9 @@ const translation = {
     "CredentialDeclined": "Credential declined",
     "CredentialOnTheWay": "Your credential is on the way",
     "CredentialOffer": "New Credential Offer",
-    "IsOfferingYouACredential": "is offering you a credential"
+    "IsOfferingYouACredential": "is offering you a credential",
+    "ConfirmDeclineCredential": "Yes, decline this credential",
+    "AbortDeclineCredential": "No, go back"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",

@@ -6,12 +6,11 @@ export interface Onboarding {
   DidCreatePIN: boolean
 }
 
-export interface Notifications {
-  ConnectionPending: boolean
+export interface ConnectionDetails {
+  connectionId: string
 }
 
 export interface State {
   onboarding: Onboarding
-  notifications: Notifications
   error: BifoldError | null
 }
