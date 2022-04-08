@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useReducer } from 'react'
+import React, { createContext, Dispatch, useContext, useReducer } from 'react'
 
 import { State } from '../types/state'
 
@@ -15,7 +15,7 @@ const initialState: State = {
     DidCreatePIN: false,
   },
   notifications: {
-    ConnectionPending: false,
+    ConnectionEstablished: undefined,
   },
   error: null,
 }
@@ -26,6 +26,8 @@ export const Context = createContext<[State, Dispatch<ReducerAction>]>([
     return
   },
 ])
+
+export const useStore = () => useContext(Context)
 
 const StoreProvider: React.FC<StoreProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)

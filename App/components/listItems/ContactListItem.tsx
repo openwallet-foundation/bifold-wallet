@@ -6,7 +6,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { dateFormatOptions } from '../../constants'
-import { borderRadius, ColorPallet } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -15,20 +15,20 @@ interface Props {
   navigation: StackNavigationProp<SettingStackParams, Screens.Settings>
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 15,
-    marginHorizontal: 15,
-    padding: 10,
-    borderRadius,
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-  },
-  date: {
-    textAlign: 'right',
-  },
-})
-
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
+  const { ColorPallet, borderRadius } = useThemeContext()
+  const styles = StyleSheet.create({
+    container: {
+      marginTop: 15,
+      marginHorizontal: 15,
+      padding: 10,
+      borderRadius,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+    },
+    date: {
+      textAlign: 'right',
+    },
+  })
   return (
     <TouchableOpacity
       onPress={() =>

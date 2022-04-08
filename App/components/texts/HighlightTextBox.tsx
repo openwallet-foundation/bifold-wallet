@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { ColorPallet, TextTheme } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 
 export interface TextBoxProps {
   children: string
@@ -9,26 +9,26 @@ export interface TextBoxProps {
 
 const offset = 10
 
-const style = StyleSheet.create({
-  icon: {
-    marginRight: offset,
-  },
-  container: {
-    flexDirection: 'row',
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  accentBox: {
-    marginRight: offset,
-    backgroundColor: ColorPallet.brand.highlight,
-    width: 8,
-  },
-  headerText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-  },
-})
-
 const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const style = StyleSheet.create({
+    icon: {
+      marginRight: offset,
+    },
+    container: {
+      flexDirection: 'row',
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    accentBox: {
+      marginRight: offset,
+      backgroundColor: ColorPallet.brand.highlight,
+      width: 8,
+    },
+    headerText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+    },
+  })
   return (
     <View style={[style.container]}>
       <View style={[style.accentBox]} />

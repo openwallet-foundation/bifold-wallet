@@ -5,9 +5,8 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 
-import { ColorPallet } from '../theme'
-
-import { ContactListItem, Text } from 'components'
+import { ContactListItem, Text } from '../components'
+import { useThemeContext } from '../utils/themeContext'
 
 interface Props {
   navigation: any
@@ -16,7 +15,7 @@ interface Props {
 const ListContacts: React.FC<Props> = ({ navigation }) => {
   const { connections } = useConnections()
   const { t } = useTranslation()
-
+  const { ColorPallet } = useThemeContext()
   return (
     <FlatList
       data={connections}

@@ -2,34 +2,38 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ColorPallet } from '../../theme'
+import { Theme } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 
 interface Props {
   active: boolean
   onPress?: () => void
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: 48,
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: ColorPallet.grayscale.white,
-    borderRadius: 24,
-    marginBottom: 50,
-  },
-  icon: {
-    marginLeft: 2,
-    marginTop: 2,
-  },
-})
-
+function createStyles({ ColorPallet }: Theme) {
+  return StyleSheet.create({
+    container: {
+      width: 48,
+      height: 48,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: ColorPallet.grayscale.white,
+      borderRadius: 24,
+      marginBottom: 50,
+    },
+    icon: {
+      marginLeft: 2,
+      marginTop: 2,
+    },
+  })
+}
 const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
+  const theme = useThemeContext()
+  const styles = createStyles(theme)
   return (
     <TouchableOpacity
-      style={[styles.container, { backgroundColor: active ? ColorPallet.grayscale.white : undefined }]}
+      style={[styles.container, { backgroundColor: active ? theme.ColorPallet.grayscale.white : undefined }]}
       onPress={onPress}
     >
       {children}
@@ -38,10 +42,12 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
 }
 
 const TorchIcon: React.FC<Props> = ({ active }) => {
+  const theme = useThemeContext()
+  const styles = createStyles(theme)
   return (
     <Icon
       name={active ? 'flash-on' : 'flash-off'}
-      color={active ? ColorPallet.grayscale.black : ColorPallet.grayscale.white}
+      color={active ? theme.ColorPallet.grayscale.black : theme.ColorPallet.grayscale.white}
       size={24}
       style={styles.icon}
     />

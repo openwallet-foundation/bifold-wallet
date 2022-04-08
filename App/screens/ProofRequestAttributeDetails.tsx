@@ -10,7 +10,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Title from '../components/texts/Title'
 import { ToastType } from '../components/toast/BaseToast'
 import { dateFormatOptions } from '../constants'
-import { ColorPallet, TextTheme } from '../theme'
 import { HomeStackParams, Screens } from '../types/navigators'
 import {
   connectionRecordFromId,
@@ -20,28 +19,9 @@ import {
   proofRecordFromId,
   valueFromAttributeCredential,
 } from '../utils/helpers'
+import { useThemeContext } from '../utils/themeContext'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
-
-const styles = StyleSheet.create({
-  headerTextContainer: {
-    paddingHorizontal: 25,
-    paddingVertical: 16,
-  },
-  headerText: {
-    ...TextTheme.normal,
-    flexShrink: 1,
-  },
-  listItem: {
-    paddingHorizontal: 25,
-    paddingTop: 16,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-    borderTopColor: ColorPallet.brand.secondaryBackground,
-    borderBottomColor: ColorPallet.brand.secondaryBackground,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-  },
-})
 
 const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
@@ -51,7 +31,26 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const [retrievedCredentialAttributes, setRetrievedCredentialAttributes] = useState<[string, RequestedAttribute[]][]>(
     []
   )
-
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const styles = StyleSheet.create({
+    headerTextContainer: {
+      paddingHorizontal: 25,
+      paddingVertical: 16,
+    },
+    headerText: {
+      ...TextTheme.normal,
+      flexShrink: 1,
+    },
+    listItem: {
+      paddingHorizontal: 25,
+      paddingTop: 16,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      borderTopColor: ColorPallet.brand.secondaryBackground,
+      borderBottomColor: ColorPallet.brand.secondaryBackground,
+      borderTopWidth: 2,
+      borderBottomWidth: 2,
+    },
+  })
   const { proofId, attributeName } = route?.params
 
   if (!(proofId && attributeName && agent?.proofs && credentials)) {

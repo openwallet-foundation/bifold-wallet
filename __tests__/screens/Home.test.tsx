@@ -6,10 +6,9 @@ import React from 'react'
 import { FlatList } from 'react-native'
 import { create } from 'react-test-renderer'
 
+import { Button, NotificationListItem } from '../../App/components'
+import { NotificationType } from '../../App/components/listItems/NotificationListItem'
 import Home from '../../App/screens/Home'
-
-import { Button, NotificationListItem } from 'components'
-import { NotificationType } from 'components/listItems/NotificationListItem'
 
 describe('displays a home screen', () => {
   it('renders correctly', () => {
