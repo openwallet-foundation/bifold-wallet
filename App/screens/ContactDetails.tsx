@@ -9,11 +9,12 @@ import { SafeAreaScrollView, Label } from 'components'
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
 const ContactDetails: React.FC<ContactDetailsProps> = ({ navigation, route }) => {
-  const connection = useConnectionById(route?.params?.connectionId)
+  const connectionId = route?.params?.connectionId.connectionId
+  const connection = useConnectionById(connectionId)
 
   useEffect(() => {
     navigation.setOptions({
-      title: connection?.alias,
+      headerTitle: connection?.alias,
     })
   }, [])
 

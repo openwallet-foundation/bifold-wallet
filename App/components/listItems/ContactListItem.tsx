@@ -1,7 +1,9 @@
 import type { ConnectionRecord } from '@aries-framework/core'
+import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack'
+import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
 
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { dateFormatOptions } from '../../constants'
 import { borderRadius, ColorPallet } from '../../theme'
@@ -10,6 +12,7 @@ import Title from '../texts/Title'
 
 interface Props {
   contact: ConnectionRecord
+  navigation: StackNavigationProp<SettingStackParams, Screens.Settings>
 }
 
 const styles = StyleSheet.create({
@@ -25,13 +28,21 @@ const styles = StyleSheet.create({
   },
 })
 
-const ContactListItem: React.FC<Props> = ({ contact }) => {
+const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   return (
-    <View key={contact.id} style={styles.container}>
-      <Title>{contact?.alias || contact?.invitation?.label}</Title>
-      <Text>{contact.did}</Text>
-      <Text style={styles.date}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
-    </View>
+    <TouchableOpacity
+      onPress={() =>
+        navigation
+          .getParent()
+          ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
+      }
+    >
+      <View key={contact.id} style={styles.container}>
+        <Title>{contact?.alias || contact?.invitation?.label}</Title>
+        <Text>{contact.did}</Text>
+        <Text style={styles.date}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 
