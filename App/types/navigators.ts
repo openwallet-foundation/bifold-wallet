@@ -19,6 +19,7 @@ export enum Screens {
   Language = 'Language',
   Contacts = 'Contacts',
   ContactDetails = 'Contact Details',
+  Chat = 'Chat',
 }
 
 export enum Stacks {
@@ -61,6 +62,7 @@ export type AuthenticateStackParams = {
 
 export type ContactStackParams = {
   [Screens.Contacts]: undefined
+  [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
 }
 
