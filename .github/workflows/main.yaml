@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Configure node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
@@ -68,7 +68,7 @@ jobs:
 
       - name: Install react native dependencies
         run: |
-          npm ci && \
+          npm version && npm ci && \
           git status
 
       - name: Install iOS dependencies
@@ -109,6 +109,12 @@ jobs:
         sdk-tools: [4333796]
     steps:
       - uses: actions/checkout@v1
+
+      - name: Configure node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: setup ubuntu
         run: |
@@ -151,7 +157,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci
+          npm version && npm ci
 
       - name: Android Debug Build
         working-directory: ./android
