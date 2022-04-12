@@ -2,9 +2,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Chat from '../screens/Chat'
 import ContactDetails from '../screens/ContactDetails'
 import ListContacts from '../screens/ListContacts'
-import Chat from '../screens/Chat'
 import { ContactStackParams, Screens } from '../types/navigators'
 import { useThemeContext } from '../utils/themeContext'
 
