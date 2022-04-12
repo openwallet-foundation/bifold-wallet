@@ -1,13 +1,11 @@
 import { useAgent, useConnectionById, useBasicMessagesByConnectionId } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
-
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
-import { ContactStackParams, Screens } from '../types/navigators'
-import InfoIcon from '../components/misc/InfoIcon'
-
 import { renderBubble, renderInputToolbar, renderComposer, renderSend } from '../components/chat'
+import InfoIcon from '../components/misc/InfoIcon'
+import { ContactStackParams, Screens } from '../types/navigators'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 

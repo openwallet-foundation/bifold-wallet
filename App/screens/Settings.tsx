@@ -55,7 +55,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
           <TouchableOpacity
             style={styles.row}
-            onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: {navigation: navigation}})}
+            onPress={() =>
+              navigation
+                .getParent()
+                ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
+            }
           >
             <Text>{t('RootStack.Contacts')}</Text>
             <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
