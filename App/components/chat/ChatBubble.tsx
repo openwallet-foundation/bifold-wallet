@@ -1,7 +1,7 @@
 import React from 'react'
+import { Bubble } from 'react-native-gifted-chat'
+
 import { ColorPallet, TextTheme } from '../../theme'
-import { Bubble, IMessage } from 'react-native-gifted-chat'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export const renderBubble = (props: any) => {
   return (

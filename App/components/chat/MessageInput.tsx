@@ -1,7 +1,8 @@
 import React from 'react'
-import { ColorPallet, TextTheme } from '../../theme'
 import { Composer, InputToolbar, Send } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+import { ColorPallet, TextTheme } from '../../theme'
 
 export const renderInputToolbar = (props: any) => (
   <InputToolbar

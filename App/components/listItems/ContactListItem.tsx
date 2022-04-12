@@ -1,11 +1,11 @@
 import type { ConnectionRecord } from '@aries-framework/core'
-import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack'
-import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
 
+import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { dateFormatOptions } from '../../constants'
+import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
 import { useThemeContext } from '../../utils/themeContext'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
