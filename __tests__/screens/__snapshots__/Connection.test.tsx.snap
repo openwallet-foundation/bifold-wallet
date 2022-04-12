@@ -43,6 +43,7 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
             },
           ]
         }
+        testID="com.ariesbifold:id/JustAMoment"
       >
         Connection.JustAMoment
       </Text>
@@ -106,6 +107,7 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
             },
           ]
         }
+        testID="com.ariesbifold:id/JustAMoment"
       >
         Connection.JustAMoment
       </Text>
@@ -169,6 +171,7 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
             },
           ]
         }
+        testID="com.ariesbifold:id/JustAMoment"
       >
         Connection.JustAMoment
       </Text>
@@ -207,11 +210,12 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
               },
             ]
           }
+          testID="com.ariesbifold:id/TakingTooLong"
         >
           Connection.TakingTooLong
         </Text>
         <View
-          accessibilityLabel="Global.Home"
+          accessibilityLabel="Loading.BackToHome"
           accessibilityState={
             Object {
               "disabled": false,

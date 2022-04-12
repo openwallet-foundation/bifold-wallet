@@ -82,6 +82,7 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
               "fontWeight": "bold",
             }
           }
+          testID="com.ariesbifold:id/HeaderText"
         >
           Error.Unknown
         </Text>
@@ -106,6 +107,7 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
               "marginVertical": 16,
             }
           }
+          testID="com.ariesbifold:id/BodyText"
         >
           Error.Problem
         </Text>
@@ -125,16 +127,18 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
               },
             ]
           }
+          testID="com.ariesbifold:id/ErrorCode"
         >
           Global.ErrorCode 1024
         </Text>
         <View
+          accessibilityLabel="Global.Okay"
           accessibilityState={
             Object {
               "disabled": false,
             }
           }
-          accessible={false}
+          accessible={true}
           collapsable={false}
           focusable={true}
           nativeID="animatedComponent"
@@ -153,6 +157,7 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
               "padding": 16,
             }
           }
+          testID="com.ariesbifold:id/Okay"
         >
           <Text
             style={
@@ -258,6 +263,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               "fontWeight": "bold",
             }
           }
+          testID="com.ariesbifold:id/HeaderText"
         >
           Error.Unknown
         </Text>
@@ -282,6 +288,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               "marginVertical": 16,
             }
           }
+          testID="com.ariesbifold:id/BodyText"
         >
           Error.Problem
         </Text>
@@ -301,16 +308,18 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               },
             ]
           }
+          testID="com.ariesbifold:id/ErrorCode"
         >
           Global.ErrorCode 1024
         </Text>
         <View
+          accessibilityLabel="Global.Okay"
           accessibilityState={
             Object {
               "disabled": false,
             }
           }
-          accessible={false}
+          accessible={true}
           collapsable={false}
           focusable={true}
           nativeID="animatedComponent"
@@ -329,6 +338,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               "padding": 16,
             }
           }
+          testID="com.ariesbifold:id/Okay"
         >
           <Text
             style={
