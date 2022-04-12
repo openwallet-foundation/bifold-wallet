@@ -47,9 +47,7 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
       >
         Connection.JustAMoment
       </Text>
-      <
-        fill="#FFFFFF"
-        height={250}
+      <View
         style={
           Array [
             Object {
@@ -57,8 +55,33 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
             },
           ]
         }
-        width={250}
-      />
+      >
+        <View>
+          <
+            fill="#FFFFFF"
+            height={250}
+            width={250}
+          />
+          <View
+            style={
+              Object {
+                "position": "absolute",
+                "transform": Array [
+                  Object {
+                    "rotate": "360deg",
+                  },
+                ],
+              }
+            }
+          >
+            <
+              fill="#FFFFFF"
+              height={250}
+              width={250}
+            />
+          </View>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaView>
 </Modal>
@@ -111,9 +134,7 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
       >
         Connection.JustAMoment
       </Text>
-      <
-        fill="#FFFFFF"
-        height={250}
+      <View
         style={
           Array [
             Object {
@@ -121,8 +142,33 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
             },
           ]
         }
-        width={250}
-      />
+      >
+        <View>
+          <
+            fill="#FFFFFF"
+            height={250}
+            width={250}
+          />
+          <View
+            style={
+              Object {
+                "position": "absolute",
+                "transform": Array [
+                  Object {
+                    "rotate": "0deg",
+                  },
+                ],
+              }
+            }
+          >
+            <
+              fill="#FFFFFF"
+              height={250}
+              width={250}
+            />
+          </View>
+        </View>
+      </View>
     </View>
   </RNCSafeAreaView>
 </Modal>
@@ -175,9 +221,7 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
       >
         Connection.JustAMoment
       </Text>
-      <
-        fill="#FFFFFF"
-        height={250}
+      <View
         style={
           Array [
             Object {
@@ -185,8 +229,33 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
             },
           ]
         }
-        width={250}
-      />
+      >
+        <View>
+          <
+            fill="#FFFFFF"
+            height={250}
+            width={250}
+          />
+          <View
+            style={
+              Object {
+                "position": "absolute",
+                "transform": Array [
+                  Object {
+                    "rotate": "360deg",
+                  },
+                ],
+              }
+            }
+          >
+            <
+              fill="#FFFFFF"
+              height={250}
+              width={250}
+            />
+          </View>
+        </View>
+      </View>
       <View
         style={
           Array [
