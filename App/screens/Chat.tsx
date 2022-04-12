@@ -16,8 +16,6 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const connectionId = route?.params?.connectionId
   const connection = useConnectionById(route?.params?.connectionId)
   const basicMessages = useBasicMessagesByConnectionId(route?.params?.connectionId)
-  console.log(connectionId)
-  console.log(basicMessages)
 
   const [messages, setMessages] = useState<any>({})
 
