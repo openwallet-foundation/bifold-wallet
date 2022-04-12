@@ -41,8 +41,8 @@ describe('displays a credential decline screen', () => {
       />
     )
 
-    const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDecline'))
-    const abortDeclineButton = tree.getByTestId(testIdWithKey('NoGoBack'))
+    const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDeclineCredential'))
+    const abortDeclineButton = tree.getByTestId(testIdWithKey('AbortDeclineCredential'))
 
     expect(tree).toMatchSnapshot()
     expect(confirmDeclineButton).not.toBeNull()
@@ -59,7 +59,7 @@ describe('displays a credential decline screen', () => {
       />
     )
 
-    const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDecline'))
+    const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDeclineCredential'))
 
     fireEvent(confirmDeclineButton, 'press')
 
@@ -77,7 +77,7 @@ describe('displays a credential decline screen', () => {
       />
     )
 
-    const abortDeclineButton = tree.getByTestId(testIdWithKey('NoGoBack'))
+    const abortDeclineButton = tree.getByTestId(testIdWithKey('AbortDeclineCredential'))
 
     fireEvent(abortDeclineButton, 'press')
 
