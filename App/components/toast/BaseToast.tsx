@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
 
 interface BaseToastProps {
@@ -92,8 +93,12 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
     <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
       <Icon style={[styles.icon]} name={iconName} color={iconColor} size={iconSize} />
       <View style={[styles.textContainer]}>
-        <Text style={[TextTheme.normal, styles.title, { color: textColor }]}>{title}</Text>
-        <Text style={[TextTheme.normal, styles.body, { color: textColor }]}>{body}</Text>
+        <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
+          {title}
+        </Text>
+        <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
+          {body}
+        </Text>
       </View>
     </View>
   )

@@ -96,7 +96,12 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRight title={t('Global.Skip')} testID={testIdWithKey('Skip')} onPress={onSkipTouched} />
+        <HeaderRight
+          title={t('Global.Skip')}
+          accessibilityLabel={t('Global.Skip')}
+          testID={testIdWithKey('Skip')}
+          onPress={onSkipTouched}
+        />
       ),
     })
 

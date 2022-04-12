@@ -5,8 +5,8 @@ import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 
 import { dateFormatOptions } from '../../constants'
 import { parsedSchema } from '../../utils/helpers'
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
-import Title from '../texts/Title'
 
 import AvatarView from './AvatarView'
 
@@ -37,11 +37,13 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {} 
       <View style={styles.row}>
         <AvatarView name={parsedSchema(credential).name} />
         <View style={styles.details}>
-          <Title>{parsedSchema(credential).name}</Title>
-          <Text style={{ ...TextTheme.caption }}>
+          <Text style={[TextTheme.headingFour]} testID={testIdWithKey('CredentialName')}>
+            {parsedSchema(credential).name}
+          </Text>
+          <Text style={[TextTheme.caption]} testID={testIdWithKey('CredentialVersion')}>
             {t('CredentialDetails.Version')}: {parsedSchema(credential).version}
           </Text>
-          <Text style={{ ...TextTheme.caption }}>
+          <Text style={[TextTheme.caption]} testID={testIdWithKey('CredentialIssued')}>
             {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
           </Text>
         </View>

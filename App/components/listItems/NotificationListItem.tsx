@@ -8,8 +8,9 @@ import { StyleSheet, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { GenericFn } from '../../types/fn'
-import { HomeStackParams, NotificationStackParams, Screens, Stacks } from '../../types/navigators'
+import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
 import Button, { ButtonType } from '../buttons/Button'
 
@@ -102,11 +103,21 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         <View style={[styles.icon]}>
           <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
         </View>
-        <Text style={styles.headerText}>{title}</Text>
+        <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+          {title}
+        </Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.bodyText}>{body}</Text>
-        <Button buttonType={ButtonType.Primary} title={t('Global.View')} onPress={onPress} />
+        <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+          {body}
+        </Text>
+        <Button
+          title={t('Global.View')}
+          accessibilityLabel={t('Global.View')}
+          testID={testIdWithKey('View')}
+          buttonType={ButtonType.Primary}
+          onPress={onPress}
+        />
       </View>
     </View>
   )

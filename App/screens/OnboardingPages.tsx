@@ -1,4 +1,5 @@
 import React from 'react'
+import { TFunction, useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
@@ -85,7 +86,7 @@ export function createImageDisplayOptions(theme: Theme) {
   }
 }
 const customPages = (onTutorialCompleted: GenericFn, theme: Theme) => {
-  //const theme = useThemeContext()
+  const { t } = useTranslation()
   const defaultStyle = createStyle(theme)
   const imageDisplayOptions = createImageDisplayOptions(theme)
   return (
@@ -94,16 +95,18 @@ const customPages = (onTutorialCompleted: GenericFn, theme: Theme) => {
         <SecureImage {...imageDisplayOptions} />
       </View>
       <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
-        <Text style={[defaultStyle.headerText, { fontSize: 18 }]}>Ornare suspendisse sed nisi lacus</Text>
-        <Text style={[defaultStyle.bodyText, { marginTop: 20 }]}>
+        <Text style={[defaultStyle.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+          Ornare suspendisse sed nisi lacus
+        </Text>
+        <Text style={[defaultStyle.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
           Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer quis
           auctor elit sed.
         </Text>
       </View>
       <View style={{ marginTop: 'auto', marginBottom: 20, paddingHorizontal: 20 }}>
         <Button
-          title={'Get Started'}
-          accessibilityLabel={'Get Started'}
+          title={t('Global.GetStarted')}
+          accessibilityLabel={t('Global.GetStarted')}
           testID={testIdWithKey('GetStarted')}
           onPress={onTutorialCompleted}
           buttonType={ButtonType.Primary}
@@ -127,15 +130,18 @@ const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string }> 
 ]
 
 const createPageWith = (image: React.FC<SvgProps>, title: string, body: string, theme: Theme) => {
-  //const theme = useThemeContext()
   const defaultStyle = createStyle(theme)
   const imageDisplayOptions = createImageDisplayOptions(theme)
   return (
     <>
       <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
       <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
-        <Text style={[defaultStyle.headerText, { fontSize: 18 }]}>{title}</Text>
-        <Text style={[defaultStyle.bodyText, { marginTop: 20 }]}>{body}</Text>
+        <Text style={[defaultStyle.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+          {title}
+        </Text>
+        <Text style={[defaultStyle.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
+          {body}
+        </Text>
       </View>
     </>
   )

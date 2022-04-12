@@ -5,8 +5,10 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 
-import { ContactListItem, Text } from '../components'
+import { ContactListItem } from '../components'
 import { useThemeContext } from '../utils/themeContext'
+
+import EmptyList from 'App/components/misc/EmptyList'
 
 const ListContacts: React.FC = () => {
   const { connections } = useConnections()
@@ -14,11 +16,11 @@ const ListContacts: React.FC = () => {
   const { ColorPallet } = useThemeContext()
   return (
     <FlatList
-      data={connections}
-      renderItem={({ item }) => <ContactListItem contact={item} />}
-      keyExtractor={(item: ConnectionRecord) => item.did}
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-      ListEmptyComponent={() => <Text style={{ textAlign: 'center', margin: 100 }}>{t('Global.NoneYet!')}</Text>}
+      data={connections}
+      keyExtractor={(item: ConnectionRecord) => item.did}
+      ListEmptyComponent={() => <EmptyList />}
+      renderItem={({ item }) => <ContactListItem contact={item} />}
     />
   )
 }
