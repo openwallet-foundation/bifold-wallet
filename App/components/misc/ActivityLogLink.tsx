@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
 
 const ActivityLogLink: React.FC = () => {
@@ -18,7 +19,7 @@ const ActivityLogLink: React.FC = () => {
     },
   })
   return (
-    <View style={styles.textContainer}>
+    <View style={styles.textContainer} testID={testIdWithKey('ActivityLogLink')}>
       <Text style={styles.text}>Your</Text>
       <Text> </Text>
       <Text style={styles.link}>activity log</Text>

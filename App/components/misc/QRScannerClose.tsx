@@ -1,7 +1,9 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
 
 interface Props {
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const CloseButton: React.FC<Props> = ({ onPress }) => {
+  const { t } = useTranslation()
   const { ColorPallet } = useThemeContext()
   const styles = StyleSheet.create({
     container: {
@@ -22,7 +25,13 @@ const CloseButton: React.FC<Props> = ({ onPress }) => {
   })
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity
+        accessible={true}
+        accessibilityLabel={t('Scan.Close')}
+        testID={testIdWithKey('ScanClose')}
+        style={styles.button}
+        onPress={onPress}
+      >
         <Icon name="close" size={24} color={ColorPallet.grayscale.white}></Icon>
       </TouchableOpacity>
     </View>

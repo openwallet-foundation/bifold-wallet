@@ -26,6 +26,7 @@ import {
   getConnectionName,
   valueFromAttributeCredential,
 } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 import { useThemeContext } from '../utils/themeContext'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
@@ -197,13 +198,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   color={TextTheme.headingOne.color}
                   size={TextTheme.headingOne.fontSize}
                 ></Icon>
-                <Text style={styles.headerText}>
+                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
-              <Text style={styles.headerText}>
+              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                 <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                 {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
@@ -216,6 +217,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
               <View style={styles.footerButton}>
                 <Button
                   title={t('Global.Share')}
+                  accessibilityLabel={t('Global.Share')}
+                  testID={testIdWithKey('Share')}
                   buttonType={ButtonType.Primary}
                   onPress={handleAcceptPress}
                   disabled={!buttonsVisible}
@@ -225,6 +228,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Decline')}
+                accessibilityLabel={t('Global.Decline')}
+                testID={testIdWithKey('Decline')}
                 buttonType={
                   anyUnavailable(attributeCredentials) || anyRevoked(attributeCredentials)
                     ? ButtonType.Primary
@@ -256,19 +261,25 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                         size={TextTheme.normal.fontSize}
                       ></Icon>
 
-                      <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+                      <Text
+                        style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}
+                        testID={testIdWithKey('RevokedOrNotAvailable')}
+                      >
                         {(attribute?.value as RequestedAttribute)?.revoked
                           ? t('CredentialDetails.Revoked')
                           : t('ProofRequest.NotAvailableInYourWallet')}
                       </Text>
                     </View>
                   ) : (
-                    <Text style={TextTheme.normal}>
+                    <Text style={TextTheme.normal} testID={testIdWithKey('AttributeValue')}>
                       {valueFromAttributeCredential(attribute.name, attribute.value as RequestedAttribute)}
                     </Text>
                   )}
                   {attribute?.values?.length ? (
                     <TouchableOpacity
+                      accessible={true}
+                      accessibilityLabel={t('ProofRequest.Details')}
+                      testID={testIdWithKey('Details')}
                       activeOpacity={1}
                       onPress={() =>
                         navigation.navigate(Screens.ProofRequestAttributeDetails, {

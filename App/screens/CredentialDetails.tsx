@@ -11,6 +11,7 @@ import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
 import { ToastType } from '../components/toast/BaseToast'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 import { useThemeContext } from '../utils/themeContext'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -82,7 +83,12 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       header={() => <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginTop: 16 }} />}
       footer={() => (
         <View style={{ marginBottom: 30 }}>
-          <TouchableOpacity activeOpacity={1}>
+          <TouchableOpacity
+            accessible={true}
+            accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
+            testID={testIdWithKey('RemoveFromWallet')}
+            activeOpacity={1}
+          >
             <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
               {t('CredentialDetails.RemoveFromWallet')}
             </Text>

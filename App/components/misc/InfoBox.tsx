@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { GenericFn } from '../../types/fn'
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
 import Button, { ButtonType } from '../buttons/Button'
 
@@ -153,17 +154,27 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
         <View style={[styles.icon]}>
           <Icon name={iconName} size={iconSize} color={iconColor} />
         </View>
-        <Text style={styles.headerText}>{title}</Text>
+        <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+          {title}
+        </Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.bodyText}>{message}</Text>
+        <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+          {message}
+        </Text>
         {code && (
-          <Text style={[styles.bodyText, { marginTop: 0, marginBottom: 24 }]}>{`${t(
+          <Text style={[styles.bodyText, { marginTop: 0, marginBottom: 24 }]} testID={testIdWithKey('ErrorCode')}>{`${t(
             'Global.ErrorCode'
           )} ${code}`}</Text>
         )}
         {onCallToActionPressed && (
-          <Button buttonType={ButtonType.Primary} title={t('Global.Okay')} onPress={onCallToActionPressed} />
+          <Button
+            title={t('Global.Okay')}
+            accessibilityLabel={t('Global.Okay')}
+            testID={testIdWithKey('Okay')}
+            buttonType={ButtonType.Primary}
+            onPress={onCallToActionPressed}
+          />
         )}
       </View>
     </View>

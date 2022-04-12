@@ -1,8 +1,10 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { Theme } from '../../theme'
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
 
 interface Props {
@@ -29,10 +31,14 @@ function createStyles({ ColorPallet }: Theme) {
   })
 }
 const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
+  const { t } = useTranslation()
   const theme = useThemeContext()
   const styles = createStyles(theme)
   return (
     <TouchableOpacity
+      accessible={true}
+      accessibilityLabel={t('Scan.Torch')}
+      testID={testIdWithKey('ScanTorch')}
       style={[styles.container, { backgroundColor: active ? theme.ColorPallet.grayscale.white : undefined }]}
       onPress={onPress}
     >

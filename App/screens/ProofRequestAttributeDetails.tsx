@@ -19,6 +19,7 @@ import {
   proofRecordFromId,
   valueFromAttributeCredential,
 } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 import { useThemeContext } from '../utils/themeContext'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
@@ -131,11 +132,13 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
     <FlatList
       ListHeaderComponent={() => (
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>
+          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
             {t('ProofRequest.IsRequestng')}:
           </Text>
-          <Title style={{ paddingVertical: 16 }}>{attributeName}</Title>
+          <Text style={[TextTheme.headingFour, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
+            {attributeName}
+          </Text>
           <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
         </View>
       )}
@@ -143,7 +146,9 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       keyExtractor={(credential) => credential.credentialId || credential.id}
       renderItem={({ item: credential }) => (
         <View style={styles.listItem}>
-          <Text style={TextTheme.normal}>{parsedSchema(credential).name}</Text>
+          <Text style={TextTheme.normal} testID={testIdWithKey('CredentialName')}>
+            {parsedSchema(credential).name}
+          </Text>
           {attributeCredential.revoked ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
@@ -152,18 +157,21 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
                 color={ColorPallet.semantic.error}
                 size={TextTheme.normal.fontSize}
               ></Icon>
-              <Text style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}>
+              <Text
+                style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}
+                testID={testIdWithKey('RevokedOrNotAvailable')}
+              >
                 {t('CredentialDetails.Revoked')}
               </Text>
             </View>
           ) : (
-            <Text style={TextTheme.normal}>
+            <Text style={TextTheme.normal} testID={testIdWithKey('Issued')}>
               {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
             </Text>
           )}
-          <Title style={{ paddingVertical: 16 }}>
+          <Text style={[TextTheme.headingFour, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeValue')}>
             {valueFromAttributeCredential(attributeName, attributeCredential)}
-          </Title>
+          </Text>
         </View>
       )}
     ></FlatList>

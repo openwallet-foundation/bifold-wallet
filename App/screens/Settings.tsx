@@ -1,12 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { SafeAreaScrollView, Text } from '../components'
+import { SafeAreaScrollView } from '../components'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 import { useThemeContext } from '../utils/themeContext'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
@@ -40,8 +41,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
         <View style={styles.rowGroup}>
-          <TouchableOpacity style={styles.row} onPress={() => navigation.navigate(Screens.Language)}>
-            <Text>{t('Settings.Language')}</Text>
+          <TouchableOpacity
+            accessible={true}
+            accessibilityLabel={t('Settings.Language')}
+            testID={testIdWithKey('Language')}
+            style={styles.row}
+            onPress={() => navigation.navigate(Screens.Language)}
+          >
+            <Text style={[TextTheme.normal]}>{t('Settings.Language')}</Text>
             <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
           </TouchableOpacity>
         </View>
@@ -49,15 +56,23 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         <Text style={styles.groupHeader}>{t('Settings.AboutApp')}</Text>
         <View style={styles.rowGroup}>
           <View style={styles.row}>
-            <Text>{t('Settings.Version')}</Text>
-            <Text>{`${getVersion()}-${getBuildNumber()}`}</Text>
+            <Text style={[TextTheme.normal]} testID={testIdWithKey('VersionLabel')}>
+              {t('Settings.Version')}
+            </Text>
+            <Text
+              style={[TextTheme.normal]}
+              testID={testIdWithKey('Version')}
+            >{`${getVersion()}-${getBuildNumber()}`}</Text>
           </View>
 
           <TouchableOpacity
+            accessible={true}
+            accessibilityLabel={t('RootStack.Contacts')}
+            testID={testIdWithKey('Contacts')}
             style={styles.row}
             onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
           >
-            <Text>{t('RootStack.Contacts')}</Text>
+            <Text style={[TextTheme.normal]}>{t('RootStack.Contacts')}</Text>
             <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
           </TouchableOpacity>
         </View>

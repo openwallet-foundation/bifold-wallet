@@ -4,8 +4,10 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
-import { CredentialListItem, Text } from '../components'
+import { CredentialListItem } from '../components'
 import { useThemeContext } from '../utils/themeContext'
+
+import EmptyList from 'App/components/misc/EmptyList'
 
 const ListCredentials: React.FC = () => {
   const credentials = [
@@ -14,14 +16,13 @@ const ListCredentials: React.FC = () => {
   ]
   const { t } = useTranslation()
   const { ColorPallet } = useThemeContext()
-  const emptyListComponent = () => <Text style={{ textAlign: 'center', marginTop: 100 }}>{t('Global.NoneYet!')}</Text>
 
   return (
     <FlatList
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
       data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
       keyExtractor={(item: CredentialRecord) => item.credentialId || item.id}
-      ListEmptyComponent={emptyListComponent}
+      ListEmptyComponent={() => <EmptyList />}
       renderItem={({ item, index }) => (
         <View
           style={{

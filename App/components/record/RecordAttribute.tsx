@@ -77,12 +77,12 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
             </View>
             {hideAttributeValue ? (
               <TouchableOpacity
+                accessible={true}
+                accessibilityLabel={shown ? t('Record.Hide') : t('Record.Show')}
+                testID={testIdWithKey('ShowHide')}
                 activeOpacity={1}
                 onPress={onToggleViewPressed}
                 style={styles.link}
-                testID={testIdWithKey('ShowHide')}
-                accessible={true}
-                accessibilityLabel={shown ? t('Record.Hide') : t('Record.Show')}
               >
                 <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>
                   {shown ? t('Record.Hide') : t('Record.Show')}

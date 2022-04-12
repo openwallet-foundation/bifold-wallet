@@ -34,8 +34,8 @@ const HeaderRight: React.FC<HeaderButtonProps> = ({ title, testID, accessibility
   })
   return (
     <TouchableOpacity
-      accessibilityLabel={accessibilityLabel}
       accessible={accessible}
+      accessibilityLabel={accessibilityLabel}
       testID={testID}
       onPress={onPress}
       style={[style.touchableArea]}

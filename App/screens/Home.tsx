@@ -5,11 +5,13 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
-import { InfoTextBox, NotificationListItem } from '../components'
+import { NotificationListItem } from '../components'
 import { NotificationType } from '../components/listItems/NotificationListItem'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { useThemeContext } from '../utils/themeContext'
+
+import NoNewUpdates from 'App/components/misc/NoNewUpdates'
 
 const { width } = Dimensions.get('window')
 const offset = 25
@@ -54,13 +56,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       color: ColorPallet.brand.link,
     },
   })
-  const emptyListComponent = () => (
-    <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
-      <InfoTextBox>
-        <Text style={[TextTheme.normal]}>{t('Home.NoNewUpdates')}</Text>
-      </InfoTextBox>
-    </View>
-  )
 
   const displayMessage = (credentialCount: number) => {
     if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
@@ -126,7 +121,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             .slice(1),
         ]}
         decelerationRate="fast"
-        ListEmptyComponent={emptyListComponent()}
+        ListEmptyComponent={() => (
+          <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
+            <NoNewUpdates />
+          </View>
+        )}
         data={notifications}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (

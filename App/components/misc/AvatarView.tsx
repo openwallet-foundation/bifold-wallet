@@ -1,9 +1,9 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { hashCode, hashToRGBA } from '../../utils/helpers'
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
-import Title from '../texts/Title'
 
 interface AvatarViewProps {
   name: string
@@ -25,7 +25,9 @@ const AvatarView: React.FC<AvatarViewProps> = ({ name }) => {
   })
   return (
     <View style={[styles.avatar, { borderColor: hashToRGBA(hashCode(name)) }]}>
-      <Title style={{ ...TextTheme.headingTwo, fontWeight: 'normal' }}>{name.charAt(0)}</Title>
+      <Text style={[TextTheme.headingTwo, { fontWeight: 'normal' }]} testID={testIdWithKey('AvatarName')}>
+        {name.charAt(0)}
+      </Text>
     </View>
   )
 }
