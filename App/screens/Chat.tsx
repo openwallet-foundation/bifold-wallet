@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
 import { ContactStackParams, Screens } from '../types/navigators'
-import InfoIcon from 'components/misc/InfoIcon'
+import InfoIcon from '../components/misc/InfoIcon'
 
-import { renderBubble, renderInputToolbar, renderComposer, renderSend } from 'components/chat'
+import { renderBubble, renderInputToolbar, renderComposer, renderSend } from '../components/chat'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -16,6 +16,8 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const connectionId = route?.params?.connectionId
   const connection = useConnectionById(route?.params?.connectionId)
   const basicMessages = useBasicMessagesByConnectionId(route?.params?.connectionId)
+  console.log(connectionId)
+  console.log(basicMessages)
 
   const [messages, setMessages] = useState<any>({})
 
