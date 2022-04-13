@@ -90,8 +90,8 @@ export function firstAttributeCredential(attributes: RequestedAttribute[], revok
   return first
 }
 
-export const valueFromAttributeCredential = (name: string, credential: RequestedAttribute) => {
-  if (!credential) {
+export const valueFromAttributeCredential = (name: string | null, credential: RequestedAttribute) => {
+  if (!(name && credential)) {
     return ''
   }
   return credential.credentialInfo?.attributes[name]
