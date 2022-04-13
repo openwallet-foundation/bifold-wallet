@@ -1,4 +1,3 @@
-import { RequestedAttribute } from '@aries-framework/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 
 export enum Screens {
@@ -93,8 +92,7 @@ export type NotificationStackParams = {
   [Screens.ProofRequest]: { proofId: string }
   [Screens.ProofRequestAttributeDetails]: {
     proofId: string
-    attributeName: string
-    attributeCredentials: RequestedAttribute[]
+    attributeName: string | null
   }
 }
 

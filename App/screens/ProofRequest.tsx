@@ -20,7 +20,7 @@ import { DispatchAction } from '../store/reducer'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
-import { connectionRecordFromId, firstAttributeCredential, getConnectionName } from '../utils/helpers'
+import { connectionRecordFromId, getConnectionName, processProofAttributes } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { useThemeContext } from '../utils/themeContext'
 
@@ -39,10 +39,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
-
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
   const { ColorPallet, TextTheme } = useThemeContext()
+
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
@@ -66,6 +66,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       paddingVertical: 4,
     },
   })
+
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
   }
@@ -82,7 +83,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
         return credentials
-      } catch (error) {
+      } catch (error: unknown) {
         dispatch({
           type: DispatchAction.SetError,
           payload: [{ error }],
@@ -123,27 +124,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const anyRevoked = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
     Object.values(attributes).some((credentials) => credentials?.every((credential) => credential.revoked))
-
-  const processProofAttributes = (
-    proof: ProofRecord,
-    attributes: Record<string, RequestedAttribute[]> = {}
-  ): Attribute[] => {
-    const processedAttributes = [] as Attribute[]
-    const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
-
-    requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
-      const firstCredential = firstAttributeCredential(attributes[attributeName] || [])
-      const credentialAttributes = names?.length ? names : [name || attributeName]
-      credentialAttributes.forEach((attribute) => {
-        processedAttributes.push({
-          name: attribute,
-          value: firstCredential?.credentialInfo?.attributes[attribute] || null,
-          revoked: firstCredential?.revoked || false,
-        })
-      })
-    })
-    return processedAttributes
-  }
 
   const handleAcceptPress = async () => {
     try {
@@ -290,12 +270,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       testID={testIdWithKey('Details')}
                       activeOpacity={1}
                       onPress={() =>
-                        // TODO: Fix
                         navigation.navigate(Screens.ProofRequestAttributeDetails, {
                           proofId,
                           attributeName: attribute.name,
-                          // attributeCredentials: attribute.values || [],
-                          attributeCredentials: [],
                         })
                       }
                       style={styles.link}
