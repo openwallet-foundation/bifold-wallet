@@ -1,7 +1,6 @@
 import { CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
 import { CredentialListItem } from '../components'
@@ -14,7 +13,6 @@ const ListCredentials: React.FC = () => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-  const { t } = useTranslation()
   const { ColorPallet } = useThemeContext()
 
   return (

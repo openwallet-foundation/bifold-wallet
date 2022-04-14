@@ -1,6 +1,6 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
-import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
