@@ -7,7 +7,7 @@ import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CredentialPending from '../assets/img/credential-pending.svg'
-import CredentialSuccess from '../assets/img/credential-success.svg'
+import CredentialAdded from '../components/animated/CredentialAdded'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -46,7 +46,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       backgroundColor: ColorPallet.brand.primaryBackground,
     },
     image: {
-      marginVertical: 66,
+      marginTop: 66,
     },
     messageContainer: {
       marginHorizontal: 25,
@@ -58,7 +58,9 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       marginTop: 90,
     },
     controlsContainer: {
+      backgroundColor: 'green',
       marginHorizontal: 25,
+      marginTop: 80,
     },
     controlsMessageText: {
       textAlign: 'center',
@@ -122,7 +124,9 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
             >
               {t('CredentialOffer.CredentialAddedToYourWallet')}
             </Text>
-            <CredentialSuccess style={[styles.image]} {...imageDisplayOptions} />
+            <View style={[styles.image]}>
+              <CredentialAdded />
+            </View>
           </View>
         )}
 
