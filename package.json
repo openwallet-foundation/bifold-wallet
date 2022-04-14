@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@aries-framework/core": "^0.2.0-alpha.20",
-    "@aries-framework/react-hooks": "^0.1.2",
+    "@aries-framework/react-hooks": "^0.2.0",
     "@aries-framework/react-native": "^0.2.0-alpha.20",
     "@formatjs/intl-datetimeformat": "^4.2.3",
     "@formatjs/intl-displaynames": "^5.2.3",
@@ -53,6 +53,7 @@
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-random-values": "^1.7.0",
+    "react-native-gifted-chat": "^0.16.3",
     "react-native-keychain": "^6.2.0",
     "react-native-localize": "^2.1.5",
     "react-native-qrcode-svg": "^6.0.6",
