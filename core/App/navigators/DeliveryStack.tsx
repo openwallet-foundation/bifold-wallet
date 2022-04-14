@@ -14,7 +14,6 @@ const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
   const theme = useThemeContext()
   const defaultStackOptions = createDefaultStackOptions(theme)
-
   return (
     <Stack.Navigator
       initialRouteName={Screens.Connection}

@@ -45,7 +45,7 @@ You can watch a recording of setting up and running the mobile wallet and receiv
 3. (iOS) iOS specific install:
    - Install iOS Pods:
      ```sh
-     cd ios
+     cd app/ios
      pod install
      ```
    - In the /ios directory, open the project workspace file in Xcode.
@@ -67,18 +67,21 @@ Note - To run your own mediator or use a different network, go [here for advance
 
 - Launch the metro bundler:
   ```sh
+  cd app
   npm run start
   ```
 - Open a second terminal and run:
   - (Android)
     ```sh
+    cd app
     npm run android
     ```
   - (iOS)
     ```sh
+    cd app
     npm run ios
     ```
-  - (iOS) Via Xcode:
+  - (iOS) Via Xcode: Open `app\ios\AriesBifold.xcworkspace`
     Choose your physical iOS device as the destination. Click the "Play" button to Build and Run.
 
 **NOTE: Bifold does not work on iOS simulators** -- use a physical device instead.
@@ -110,14 +113,15 @@ If you end up changing dependencies or structures, you may need to perform the f
 #### Android
 
 ```sh
-rm -rf node_modules
+rm -rf app/node_modules
+rm -rf core/node_modules
 npm install
 ```
 
 Clean the Android build:
 
 ```sh
-cd android
+cd app/android
 ./gradlew clean
 cd ..
 ```
@@ -125,12 +129,14 @@ cd ..
 Start and clean the Metro cache:
 
 ```sh
+cd app
 npm run start
 ```
 
 In your second terminal, you can now run:
 
 ```sh
+cd app
 npm run android
 ```
 
