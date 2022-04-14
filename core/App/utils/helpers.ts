@@ -8,7 +8,7 @@ import {
 import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
 import { parseUrl } from 'query-string'
 
-import { Attribute } from 'App/types/record'
+import { Attribute } from '../types/record'
 
 export function parseSchema(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'

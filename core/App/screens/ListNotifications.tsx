@@ -2,9 +2,8 @@ import React from 'react'
 import { FlatList, View } from 'react-native'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
+import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useNotifications } from '../hooks/notifications'
-
-import NoNewUpdates from 'App/components/misc/NoNewUpdates'
 
 const ListNotifications: React.FC = () => {
   const { notifications } = useNotifications()

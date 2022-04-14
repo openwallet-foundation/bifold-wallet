@@ -4,9 +4,8 @@ import React from 'react'
 import { FlatList, View } from 'react-native'
 
 import { CredentialListItem } from '../components'
+import EmptyList from '../components/misc/EmptyList'
 import { useThemeContext } from '../utils/themeContext'
-
-import EmptyList from 'App/components/misc/EmptyList'
 
 const ListCredentials: React.FC = () => {
   const credentials = [
