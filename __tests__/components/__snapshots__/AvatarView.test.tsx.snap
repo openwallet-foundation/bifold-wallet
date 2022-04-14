@@ -25,16 +25,15 @@ exports[`AvatarView Component Renders correctly 1`] = `
       Array [
         Object {
           "color": "#FFFFFF",
-          "fontSize": 20,
+          "fontSize": 32,
           "fontWeight": "bold",
         },
         Object {
-          "color": "#FFFFFF",
-          "fontSize": 32,
           "fontWeight": "normal",
         },
       ]
     }
+    testID="com.ariesbifold:id/AvatarName"
   >
     B
   </Text>

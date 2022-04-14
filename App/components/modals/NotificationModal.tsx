@@ -7,8 +7,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { HomeStackParams, Screens } from '../../types/navigators'
+import { testIdWithKey } from '../../utils/testable'
 import { useThemeContext } from '../../utils/themeContext'
-import Button, { ButtonType } from '..//buttons/Button'
+import Button, { ButtonType } from '../buttons/Button'
 
 interface NotificationModalProps {
   title: string
@@ -86,10 +87,11 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
         {homeVisible ? (
           <View style={styles.iconContainer}>
             <TouchableOpacity
-              style={styles.iconButton}
-              onPress={onHome || closeHome}
               accessible={true}
               accessibilityLabel={t('Global.Home')}
+              testID={testIdWithKey('Home')}
+              style={styles.iconButton}
+              onPress={onHome || closeHome}
             >
               <Icon name="home" size={24} color={ColorPallet.notification.infoText}></Icon>
             </TouchableOpacity>
@@ -102,10 +104,11 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
         {doneVisible ? (
           <View style={styles.buttonContainer}>
             <Button
-              buttonType={doneType}
               title={doneTitle || t('Global.Done')}
-              onPress={onDone || close}
               accessibilityLabel={doneAccessibilityLabel || t('Global.Done')}
+              testID={testIdWithKey('Done')}
+              buttonType={doneType}
+              onPress={onDone || close}
             ></Button>
           </View>
         ) : null}

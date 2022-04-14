@@ -32,32 +32,7 @@ exports[`displays a home screen renders correctly 1`] = `
     </Text>
   </View>
   <RCTScrollView
-    ListEmptyComponent={
-      <View
-        style={
-          Object {
-            "marginHorizontal": 25,
-            "width": 700,
-          }
-        }
-      >
-        <InfoTextBox>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-              ]
-            }
-          >
-            Home.NoNewUpdates
-          </Text>
-        </InfoTextBox>
-      </View>
-    }
+    ListEmptyComponent={[Function]}
     data={Array []}
     decelerationRate="fast"
     getItem={[Function]}
@@ -86,7 +61,6 @@ exports[`displays a home screen renders correctly 1`] = `
   >
     <View>
       <View
-        onLayout={[Function]}
         style={
           Object {
             "marginHorizontal": 25,
@@ -144,14 +118,13 @@ exports[`displays a home screen renders correctly 1`] = `
             </View>
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                }
               }
+              testID="com.ariesbifold:id/NoNewUpdates"
             >
               Home.NoNewUpdates
             </Text>
