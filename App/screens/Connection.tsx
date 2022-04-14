@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import ConnectionPending from '../assets/img/connection-pending.svg'
+import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useNotifications } from '../hooks/notifications'
 import { ColorPallet, TextTheme } from '../theme'
@@ -12,13 +12,7 @@ import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const { height } = Dimensions.get('window')
-const connectionTimerDelay = 13000 // in ms
-const imageDisplayOptions = {
-  fill: ColorPallet.notification.infoText,
-  height: 250,
-  width: 250,
-}
-
+const connectionTimerDelay = 10000 // in ms
 const styles = StyleSheet.create({
   container: {
     minHeight: height,
@@ -128,7 +122,9 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('JustAMoment')}>
             {t('Connection.JustAMoment')}
           </Text>
-          <ConnectionPending style={[styles.image]} {...imageDisplayOptions} />
+          <View style={[styles.image]}>
+            <ConnectionLoading />
+          </View>
           {shouldShowDelayMessage && (
             <View style={[styles.delayMessageContainer]}>
               <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
