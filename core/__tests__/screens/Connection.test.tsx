@@ -7,6 +7,8 @@ import { testIdWithKey } from '../../App/utils/testable'
 
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
+// jest.mock('NativeAnimatedHelp')
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 
 const props = { params: { connectionId: '123' } }
 
