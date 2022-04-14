@@ -20,20 +20,11 @@ import { DispatchAction } from '../store/reducer'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
-import {
-  connectionRecordFromId,
-  firstAttributeCredential,
-  getConnectionName,
-  valueFromAttributeCredential,
-} from '../utils/helpers'
+import { connectionRecordFromId, getConnectionName, processProofAttributes } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { useThemeContext } from '../utils/themeContext'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
-
-interface ProofRequestAttribute extends Attribute {
-  values?: RequestedAttribute[]
-}
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -48,12 +39,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
-
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
-  const [attributeCredentials, setAttributeCredentials] = useState<[string, RequestedAttribute[]][]>([])
-
   const proof = useProofById(proofId)
   const { ColorPallet, TextTheme } = useThemeContext()
+
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
@@ -77,6 +66,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       paddingVertical: 4,
     },
   })
+
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
   }
@@ -86,32 +76,34 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    const updateRetrievedCredentials = async (proof: ProofRecord) => {
+    const retrieveCredentialsForProof = async (proof: ProofRecord) => {
       try {
-        const creds = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
-        if (!creds) {
+        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
+        if (!credentials) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
-        setCredentials(creds)
-        setAttributeCredentials(Object.entries(creds?.requestedAttributes || {}))
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(`ERROR1:`, error)
-        throw error
+        return credentials
+      } catch (error: unknown) {
+        dispatch({
+          type: DispatchAction.SetError,
+          payload: [{ error }],
+        })
       }
     }
 
-    updateRetrievedCredentials(proof).catch(() => {
-      const error = new BifoldError(
-        'Unable to update retrieved credentials',
-        'There was a problem while updating retrieved credentials.',
-        1026
-      )
-      dispatch({
-        type: DispatchAction.SetError,
-        payload: [{ error }],
+    retrieveCredentialsForProof(proof)
+      .then((credentials) => setCredentials(credentials))
+      .catch(() => {
+        const error = new BifoldError(
+          'Unable to update retrieved credentials',
+          'There was a problem while updating retrieved credentials.',
+          1026
+        )
+        dispatch({
+          type: DispatchAction.SetError,
+          payload: [{ error }],
+        })
       })
-    })
   }, [])
 
   useEffect(() => {
@@ -127,11 +119,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [proof])
 
-  const anyUnavailable = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
-    attributes.some(([, values]) => !values?.length)
+  const anyUnavailable = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
+    Object.values(attributes).some((credentials) => !credentials?.length)
 
-  const anyRevoked = (attributes: [string, RequestedAttribute[]][] = []): boolean =>
-    attributes.some(([, values]) => values?.every((value) => value.revoked))
+  const anyRevoked = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
+    Object.values(attributes).some((credentials) => credentials?.every((credential) => credential.revoked))
 
   const handleAcceptPress = async () => {
     try {
@@ -190,7 +182,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
-            {anyUnavailable(attributeCredentials) ? (
+            {anyUnavailable(credentials?.requestedAttributes) ? (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon
                   style={{ marginLeft: -2, marginRight: 10 }}
@@ -213,7 +205,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )}
         footer={() => (
           <View style={{ marginBottom: 30 }}>
-            {!(anyUnavailable(attributeCredentials) || anyRevoked(attributeCredentials)) ? (
+            {!(anyUnavailable(credentials?.requestedAttributes) || anyRevoked(credentials?.requestedAttributes)) ? (
               <View style={styles.footerButton}>
                 <Button
                   title={t('Global.Share')}
@@ -231,7 +223,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 accessibilityLabel={t('Global.Decline')}
                 testID={testIdWithKey('Decline')}
                 buttonType={
-                  anyUnavailable(attributeCredentials) || anyRevoked(attributeCredentials)
+                  anyUnavailable(credentials?.requestedAttributes) || anyRevoked(credentials?.requestedAttributes)
                     ? ButtonType.Primary
                     : ButtonType.Secondary
                 }
@@ -241,18 +233,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             </View>
           </View>
         )}
-        attributes={attributeCredentials.map(([name, values]) => ({
-          name,
-          value: firstAttributeCredential(values),
-          values,
-        }))}
+        attributes={processProofAttributes(proof, credentials?.requestedAttributes)}
         attribute={(attribute) => {
           return (
             <RecordAttribute
               attribute={attribute}
-              attributeValue={(attribute: ProofRequestAttribute) => (
+              attributeValue={(attribute: Attribute) => (
                 <>
-                  {!attribute?.values?.length || (attribute?.value as RequestedAttribute)?.revoked ? (
+                  {!attribute?.value || attribute?.revoked ? (
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Icon
                         style={{ paddingTop: 2, paddingHorizontal: 2 }}
@@ -265,17 +253,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                         style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}
                         testID={testIdWithKey('RevokedOrNotAvailable')}
                       >
-                        {(attribute?.value as RequestedAttribute)?.revoked
+                        {attribute?.revoked
                           ? t('CredentialDetails.Revoked')
                           : t('ProofRequest.NotAvailableInYourWallet')}
                       </Text>
                     </View>
                   ) : (
                     <Text style={TextTheme.normal} testID={testIdWithKey('AttributeValue')}>
-                      {valueFromAttributeCredential(attribute.name, attribute.value as RequestedAttribute)}
+                      {attribute?.value}
                     </Text>
                   )}
-                  {attribute?.values?.length ? (
+                  {attribute?.value ? (
                     <TouchableOpacity
                       accessible={true}
                       accessibilityLabel={t('ProofRequest.Details')}
@@ -285,7 +273,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                         navigation.navigate(Screens.ProofRequestAttributeDetails, {
                           proofId,
                           attributeName: attribute.name,
-                          attributeCredentials: attribute.values || [],
                         })
                       }
                       style={styles.link}

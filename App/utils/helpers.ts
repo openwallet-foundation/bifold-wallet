@@ -8,6 +8,8 @@ import {
 import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
 import { parseUrl } from 'query-string'
 
+import { Attribute } from 'App/types/record'
+
 export function parseSchema(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'
   let version = ''
@@ -90,14 +92,29 @@ export function firstAttributeCredential(attributes: RequestedAttribute[], revok
   return first
 }
 
-export const valueFromAttributeCredential = (name: string, credential: RequestedAttribute) => {
-  if (!credential) {
-    return ''
-  }
-  return credential.credentialInfo?.attributes[name]
-}
-
 export const isRedirection = (url: string): boolean => {
   const queryParams = parseUrl(url).query
   return !(queryParams['c_i'] || queryParams['d_m'])
+}
+
+export const processProofAttributes = (
+  proof: ProofRecord,
+  attributes: Record<string, RequestedAttribute[]> = {}
+): Attribute[] => {
+  const processedAttributes = [] as Attribute[]
+  const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
+
+  requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
+    const firstCredential = firstAttributeCredential(attributes[attributeName] || [])
+    const credentialAttributes = names?.length ? names : [name || attributeName]
+    credentialAttributes.forEach((attribute) => {
+      processedAttributes.push({
+        name: attribute,
+        value: firstCredential?.credentialInfo?.attributes[attribute] || null,
+        revoked: firstCredential?.revoked || false,
+        credentialId: firstCredential?.credentialId,
+      })
+    })
+  })
+  return processedAttributes
 }

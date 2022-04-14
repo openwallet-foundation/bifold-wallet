@@ -1,5 +1,5 @@
 import React from 'react'
-import { TFunction, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
