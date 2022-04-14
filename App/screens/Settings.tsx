@@ -70,7 +70,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             accessibilityLabel={t('RootStack.Contacts')}
             testID={testIdWithKey('Contacts')}
             style={styles.row}
-            onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
+            onPress={() =>
+              navigation
+                .getParent()
+                ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
+            }
           >
             <Text style={[TextTheme.normal]}>{t('RootStack.Contacts')}</Text>
             <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
