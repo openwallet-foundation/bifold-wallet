@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
   },
 })
 
-type ConnectionModalProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
+type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
-const ConnectionModal: React.FC<ConnectionModalProps> = ({ navigation, route }) => {
+const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { connectionId } = route.params
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
@@ -73,18 +73,31 @@ const ConnectionModal: React.FC<ConnectionModalProps> = ({ navigation, route }) 
     }
 
     notifications.forEach((notification) => {
-      if (notification.type === 'CredentialRecord' && notification.connectionId === connectionId) {
-        setDidProcessNotification(true)
+      if (notification.connectionId !== connectionId) {
+        return
+      }
 
-        navigation.navigate(Screens.CredentialOffer, { credentialId: notification.id })
+      // This delay makes the modal disappear after the offer
+      // screen is already in place. Would be better to have a
+      // hook like `animationDidComplete`
+      setTimeout(() => {
+        setShouldShowDelayMessage(false)
+        setModalVisible(false)
+      }, 1500)
 
-        // This delay makes the modal disappear after the offer
-        // screen is already in place. Would be better to have a
-        // hook like `animationDidComplete`
-        setTimeout(() => {
-          setShouldShowDelayMessage(false)
-          setModalVisible(false)
-        }, 1500)
+      setDidProcessNotification(true)
+
+      switch (notification.type) {
+        case 'CredentialRecord':
+          navigation.navigate(Screens.CredentialOffer, { credentialId: notification.id })
+
+          break
+        case 'ProofRecord':
+          navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
+
+          break
+        default:
+          throw new Error('Unhandled notification type')
       }
     })
   }, [notifications])
@@ -136,4 +149,4 @@ const ConnectionModal: React.FC<ConnectionModalProps> = ({ navigation, route }) 
   )
 }
 
-export default ConnectionModal
+export default Connection

@@ -101,6 +101,8 @@ export type NotificationStackParams = {
 export type DeliveryStackParams = {
   [Screens.Connection]: { connectionId: string }
   [Screens.CredentialOffer]: { credentialId: string }
+  [Screens.ProofRequest]: { proofId: string }
+  [Screens.ProofRequestAttributeDetails]: undefined
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
 }
