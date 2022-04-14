@@ -2,12 +2,13 @@ import {
   CredentialRecord,
   CredentialState,
   IndyCredentialInfo,
+  INDY_PROOF_REQUEST_ATTACHMENT_ID,
   ProofRecord,
   ProofState,
   RequestedAttribute,
   RequestPresentationMessage,
 } from '@aries-framework/core'
-import { Attachment } from '@aries-framework/core/build/decorators/attachment/Attachment'
+import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, render } from '@testing-library/react-native'
@@ -60,34 +61,38 @@ describe('displays a proof request screen', () => {
       }),
     ]
 
-    const testProofRequests = [
-      new ProofRecord({
-        threadId: '2',
-        state: ProofState.RequestReceived,
-        requestMessage: new RequestPresentationMessage({
-          requestPresentationAttachments: [
-            new Attachment({
-              data: {
-                json: {
+    const requestPresentationMessage = new RequestPresentationMessage({
+      comment: 'some comment',
+      requestPresentationAttachments: [
+        new Attachment({
+          id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
+          mimeType: 'application/json',
+          data: new AttachmentData({
+            json: {
+              name: 'test proof request',
+              version: '1.0.0',
+              nonce: '1',
+              requestedAttributes: {
+                email: {
                   name: 'email',
-                  'mime-type': 'text/plain',
-                  value: testEmail,
+                },
+                time: {
+                  names: ['time'],
                 },
               },
-            }),
-            new Attachment({
-              data: {
-                json: {
-                  name: 'time',
-                  'mime-type': 'text/plain',
-                  value: testTime,
-                },
-              },
-            }),
-          ],
+              requestedPredicates: {},
+            },
+          }),
         }),
-      }),
-    ]
+      ],
+    })
+
+    const testProofRequest = new ProofRecord({
+      connectionId: '123',
+      threadId: requestPresentationMessage.id,
+      requestMessage: requestPresentationMessage,
+      state: ProofState.RequestReceived,
+    })
 
     const attributeBase = {
       referent: '',
@@ -125,7 +130,7 @@ describe('displays a proof request screen', () => {
       jest.clearAllMocks()
 
       // @ts-ignore
-      useProofById.mockReturnValue(testProofRequests[0])
+      useProofById.mockReturnValue(testProofRequest)
     })
 
     test('displays a proof request with all claims available', async () => {
@@ -134,8 +139,8 @@ describe('displays a proof request screen', () => {
       // @ts-ignore
       agent?.proofs.getRequestedCredentialsForProofRequest.mockResolvedValue(testRetrievedCredentials)
 
-      const { getByText, getAllByText, queryByText, debug } = render(
-        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequests[0].id } } as any} />
+      const { getByText, getAllByText, queryByText } = render(
+        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
       )
 
       await act(() => Promise.resolve())
@@ -177,7 +182,7 @@ describe('displays a proof request screen', () => {
       })
 
       const { getByText, getAllByText, queryByText } = render(
-        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequests[0].id } } as any} />
+        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
       )
 
       await act(() => Promise.resolve())

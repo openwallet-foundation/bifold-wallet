@@ -62,7 +62,7 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
         attributeLabel(attribute)
       ) : (
         <Text style={TextTheme.label} testID={testIdWithKey('AttributeName')}>
-          {startCase(attribute.name)}
+          {startCase(attribute.name || '')}
         </Text>
       )}
       <View style={styles.valueContainer}>
