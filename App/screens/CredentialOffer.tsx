@@ -22,7 +22,7 @@ import CredentialOfferDecline from './CredentialOfferDecline'
 
 type CredentialOfferProps = StackScreenProps<DeliveryStackParams, Screens.CredentialOffer>
 
-const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
+const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
   if (!route?.params) {
     throw new Error('CredentialOffer route prams were not set properly')
   }
@@ -112,7 +112,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           header={() => (
             <>
               <View style={styles.headerTextContainer}>
-                <Text style={styles.headerText}>
+                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                   {t('CredentialOffer.IsOfferingYouACredential')}
                 </Text>

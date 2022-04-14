@@ -107,14 +107,19 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       <SafeAreaView style={[styles.container]}>
         {credentialDeliveryStatus === DeliveryStatus.Pending && (
           <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]}>{t('CredentialOffer.CredentialOnTheWay')}</Text>
+            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+              {t('CredentialOffer.CredentialOnTheWay')}
+            </Text>
             <CredentialPending style={[styles.image]} {...imageDisplayOptions} />
           </View>
         )}
 
         {credentialDeliveryStatus === DeliveryStatus.Completed && (
           <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]}>
+            <Text
+              style={[TextTheme.headingThree, styles.messageText]}
+              testID={testIdWithKey('CredentialAddedToYourWallet')}
+            >
               {t('CredentialOffer.CredentialAddedToYourWallet')}
             </Text>
             <CredentialSuccess style={[styles.image]} {...imageDisplayOptions} />
@@ -125,10 +130,12 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           <View style={[styles.controlsContainer]}>
             {credentialDeliveryStatus !== DeliveryStatus.Completed && (
               <>
-                <Text style={[TextTheme.normal, styles.controlsMessageText]}>{t('Connection.TakingTooLong')}</Text>
+                <Text style={[TextTheme.normal, styles.controlsMessageText]} testID={testIdWithKey('TakingTooLong')}>
+                  {t('Connection.TakingTooLong')}
+                </Text>
                 <Button
                   title={t('Loading.BackToHome')}
-                  accessibilityLabel={t('Global.Home')}
+                  accessibilityLabel={t('Loading.BackToHome')}
                   testID={testIdWithKey('BackToHome')}
                   onPress={onBackToHomeTouched}
                   buttonType={ButtonType.Secondary}
@@ -142,7 +149,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           <View style={[styles.controlsContainer]}>
             <Button
               title={t('Global.Done')}
-              accessibilityLabel={t('Global.Home')}
+              accessibilityLabel={t('Global.Done')}
               testID={testIdWithKey('Done')}
               onPress={onDoneTouched}
               buttonType={ButtonType.Primary}

@@ -81,16 +81,16 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
               <View style={[styles.controlsContainer]}>
                 <Button
                   title={t('CredentialOffer.ConfirmDeclineCredential')}
-                  accessibilityLabel={t('Global.Confirm')}
-                  testID={testIdWithKey('ConfirmDecline')}
+                  accessibilityLabel={t('CredentialOffer.ConfirmDeclineCredential')}
+                  testID={testIdWithKey('ConfirmDeclineCredential')}
                   onPress={onDeclinedConformationTouched}
                   buttonType={ButtonType.Primary}
                 />
                 <View style={[{ marginTop: 10 }]}>
                   <Button
                     title={t('CredentialOffer.AbortDeclineCredential')}
-                    accessibilityLabel={t('Global.GoBack')}
-                    testID={testIdWithKey('NoGoBack')}
+                    accessibilityLabel={t('CredentialOffer.AbortDeclineCredential')}
+                    testID={testIdWithKey('AbortDeclineCredential')}
                     onPress={onGoBackTouched}
                     buttonType={ButtonType.Secondary}
                   />
@@ -102,7 +102,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
           {didDeclineOffer && (
             <>
               <View style={[styles.messageContainer]}>
-                <Text style={[TextTheme.headingThree, styles.messageText]}>
+                <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialDeclined')}>
                   {t('CredentialOffer.CredentialDeclined')}
                 </Text>
                 <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
@@ -111,7 +111,8 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
               <View style={[styles.controlsContainer]}>
                 <Button
                   title={t('Global.Done')}
-                  accessibilityLabel={t('Global.Home')}
+                  accessibilityLabel={t('Global.Done')}
+                  testID={testIdWithKey('Done')}
                   onPress={onDoneTouched}
                   buttonType={ButtonType.Primary}
                 />

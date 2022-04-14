@@ -21,9 +21,9 @@ const SettingsCog: React.FC = () => {
   const { ColorPallet } = useThemeContext()
   return (
     <TouchableOpacity
-      testID={testIdWithKey('Settings')}
       accessible={true}
       accessibilityLabel={t('Screens.Settings')}
+      testID={testIdWithKey('Settings')}
       style={styles.button}
       onPress={() => navigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })}
     >

@@ -8,7 +8,7 @@ import ConnectionPending from '../assets/img/connection-pending.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useNotifications } from '../hooks/notifications'
 import { ColorPallet, TextTheme } from '../theme'
-import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
+import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const { height } = Dimensions.get('window')
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 })
 
-type ConnectionModalProps = StackScreenProps<DeliveryStackParams, Screens.ConnectionModal>
+type ConnectionModalProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const ConnectionModal: React.FC<ConnectionModalProps> = ({ navigation, route }) => {
   const { connectionId } = route.params
@@ -112,14 +112,18 @@ const ConnectionModal: React.FC<ConnectionModalProps> = ({ navigation, route }) 
     <Modal visible={modalVisible} transparent={true} animationType={'slide'}>
       <SafeAreaView style={[styles.container]}>
         <View style={[styles.messageContainer]}>
-          <Text style={[TextTheme.headingThree, styles.messageText]}>{t('Connection.JustAMoment')}</Text>
+          <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('JustAMoment')}>
+            {t('Connection.JustAMoment')}
+          </Text>
           <ConnectionPending style={[styles.image]} {...imageDisplayOptions} />
           {shouldShowDelayMessage && (
             <View style={[styles.delayMessageContainer]}>
-              <Text style={[TextTheme.normal, styles.delayMessageText]}>{t('Connection.TakingTooLong')}</Text>
+              <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+                {t('Connection.TakingTooLong')}
+              </Text>
               <Button
                 title={t('Loading.BackToHome')}
-                accessibilityLabel={t('Global.Home')}
+                accessibilityLabel={t('Loading.BackToHome')}
                 testID={testIdWithKey('BackToHome')}
                 onPress={onDismissModalTouched}
                 buttonType={ButtonType.Secondary}

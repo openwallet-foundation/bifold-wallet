@@ -30,8 +30,8 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      accessibilityLabel={accessibilityLabel}
       accessible={accessible}
+      accessibilityLabel={accessibilityLabel}
       testID={testID}
       style={[
         buttonType === ButtonType.Primary ? Buttons.primary : Buttons.secondary,

@@ -14,9 +14,6 @@ const initialState: State = {
     DidCompleteTutorial: false,
     DidCreatePIN: false,
   },
-  notifications: {
-    ConnectionEstablished: undefined,
-  },
   error: null,
 }
 

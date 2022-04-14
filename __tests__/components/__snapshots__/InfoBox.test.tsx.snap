@@ -64,6 +64,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           "fontWeight": "bold",
         }
       }
+      testID="com.ariesbifold:id/HeaderText"
     >
       Hello Title
     </Text>
@@ -88,6 +89,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           "marginVertical": 16,
         }
       }
+      testID="com.ariesbifold:id/BodyText"
     >
       The quick brown fox jumped over the lazy dog.
     </Text>
@@ -107,16 +109,18 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           },
         ]
       }
+      testID="com.ariesbifold:id/ErrorCode"
     >
       Global.ErrorCode 1024
     </Text>
     <View
+      accessibilityLabel="Global.Okay"
       accessibilityState={
         Object {
           "disabled": false,
         }
       }
-      accessible={false}
+      accessible={true}
       collapsable={false}
       focusable={true}
       nativeID="animatedComponent"
@@ -135,6 +139,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           "padding": 16,
         }
       }
+      testID="com.ariesbifold:id/Okay"
     >
       <Text
         style={
@@ -220,6 +225,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
           "fontWeight": "bold",
         }
       }
+      testID="com.ariesbifold:id/HeaderText"
     >
       Hello Title
     </Text>
@@ -244,6 +250,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
           "marginVertical": 16,
         }
       }
+      testID="com.ariesbifold:id/BodyText"
     >
       The quick brown fox jumped over the lazy dog.
     </Text>
@@ -263,16 +270,18 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
           },
         ]
       }
+      testID="com.ariesbifold:id/ErrorCode"
     >
       Global.ErrorCode 1024
     </Text>
     <View
+      accessibilityLabel="Global.Okay"
       accessibilityState={
         Object {
           "disabled": false,
         }
       }
-      accessible={false}
+      accessible={true}
       collapsable={false}
       focusable={true}
       nativeID="animatedComponent"
@@ -291,6 +300,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
           "padding": 16,
         }
       }
+      testID="com.ariesbifold:id/Okay"
     >
       <Text
         style={
@@ -376,6 +386,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
           "fontWeight": "bold",
         }
       }
+      testID="com.ariesbifold:id/HeaderText"
     >
       Hello Title
     </Text>
@@ -400,6 +411,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
           "marginVertical": 16,
         }
       }
+      testID="com.ariesbifold:id/BodyText"
     >
       The quick brown fox jumped over the lazy dog.
     </Text>
@@ -419,16 +431,18 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
           },
         ]
       }
+      testID="com.ariesbifold:id/ErrorCode"
     >
       Global.ErrorCode 1024
     </Text>
     <View
+      accessibilityLabel="Global.Okay"
       accessibilityState={
         Object {
           "disabled": false,
         }
       }
-      accessible={false}
+      accessible={true}
       collapsable={false}
       focusable={true}
       nativeID="animatedComponent"
@@ -447,6 +461,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
           "padding": 16,
         }
       }
+      testID="com.ariesbifold:id/Okay"
     >
       <Text
         style={
@@ -532,6 +547,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
           "fontWeight": "bold",
         }
       }
+      testID="com.ariesbifold:id/HeaderText"
     >
       Hello Title
     </Text>
@@ -556,6 +572,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
           "marginVertical": 16,
         }
       }
+      testID="com.ariesbifold:id/BodyText"
     >
       The quick brown fox jumped over the lazy dog.
     </Text>
@@ -575,16 +592,18 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
           },
         ]
       }
+      testID="com.ariesbifold:id/ErrorCode"
     >
       Global.ErrorCode 1024
     </Text>
     <View
+      accessibilityLabel="Global.Okay"
       accessibilityState={
         Object {
           "disabled": false,
         }
       }
-      accessible={false}
+      accessible={true}
       collapsable={false}
       focusable={true}
       nativeID="animatedComponent"
@@ -603,6 +622,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
           "padding": 16,
         }
       }
+      testID="com.ariesbifold:id/Okay"
     >
       <Text
         style={
