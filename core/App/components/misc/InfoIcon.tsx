@@ -19,7 +19,7 @@ type InfoProps = {
   connectionId: any
 }
 
-const InfoIcon: React.FC<InfoProps> = (connectionId: any) => {
+const InfoIcon: React.FC<InfoProps> = ({ connectionId }: any) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { t } = useTranslation()
 
