@@ -32,7 +32,7 @@ const InfoIcon: React.FC<InfoProps> = (connectionId: any) => {
       onPress={() =>
         navigation.navigate(Stacks.ContactStack, {
           screen: Screens.ContactDetails,
-          params: { connectionId: connectionId },
+          params: { connectionId },
         })
       }
     >
