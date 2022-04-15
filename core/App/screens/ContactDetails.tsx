@@ -8,7 +8,7 @@ import { ContactStackParams, Screens } from '../types/navigators'
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
 const ContactDetails: React.FC<ContactDetailsProps> = ({ navigation, route }) => {
-  const { connectionId } = route?.params
+  const { connectionId } = route?.params.connectionId
   const connection = useConnectionById(connectionId)
 
   useEffect(() => {
