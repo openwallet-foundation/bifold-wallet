@@ -131,7 +131,7 @@ const translation = {
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
     "ProofRequest": "New Proof Request",
     "NotAvailableInYourWallet": "Not available in your wallet",
-    "IsRequestng": "is requesting",
+    "IsRequesting": "is requesting",
     "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
     "IsRequestingYouToShare": "is requesting you to share",
     "WhichYouCanProvideFrom": "which you can provide from",
