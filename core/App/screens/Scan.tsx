@@ -29,7 +29,6 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       })
       const message = await res.json()
-
       await agent?.receiveMessage(message)
     } catch (err: unknown) {
       const error = new BifoldError(
@@ -37,13 +36,12 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         'There was a problem while accepting the connection redirection',
         1024
       )
-
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-
       dispatch({
         type: DispatchAction.SetError,
         payload: [{ error }],
       })
+    } finally {
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     }
   }
 
@@ -52,7 +50,6 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
         autoAcceptConnection: true,
       })
-
       if (!connectionRecord?.id) {
         throw new BifoldError(
           'Unable to accept connection',
@@ -60,7 +57,6 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
           1024
         )
       }
-
       setConnectionId(connectionRecord.id)
     } catch (err) {
       const error = new BifoldError(
@@ -68,13 +64,11 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         'There was a problem while accepting the connection.',
         1024
       )
-
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-
       dispatch({
         type: DispatchAction.SetError,
         payload: [{ error }],
       })
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     }
   }
 
