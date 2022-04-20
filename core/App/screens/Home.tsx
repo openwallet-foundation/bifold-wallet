@@ -25,7 +25,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   ]
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme, HomeTheme } = useThemeContext()
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: offset,
@@ -84,9 +84,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     return (
       <View style={[styles.messageContainer]}>
         {credentialCount === 0 ? (
-          <Text style={[TextTheme.headingOne, { marginTop: offset, marginBottom: 35 }]}>{t('Home.Welcome')}</Text>
+          <Text style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 35 }]}>{t('Home.Welcome')}</Text>
         ) : null}
-        <Text style={[TextTheme.normal, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
+        <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
       </View>
     )
   }
@@ -94,7 +94,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   return (
     <View>
       <View style={styles.rowContainer}>
-        <Text style={[TextTheme.headingThree, styles.header]}>
+        <Text style={[HomeTheme.notificationsHeader, styles.header]}>
           {t('Home.Notifications')}
           {notifications?.length ? ` (${notifications.length})` : ''}
         </Text>

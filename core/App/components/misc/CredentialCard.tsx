@@ -17,11 +17,11 @@ interface CredentialCardProps {
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {} }) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useThemeContext()
+  const { ListItems } = useThemeContext()
   const styles = StyleSheet.create({
     container: {
       minHeight: 125,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ListItems.credentialBackground,
       justifyContent: 'center',
       borderRadius: 15,
       padding: 10,
@@ -37,13 +37,13 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {} 
       <View style={styles.row}>
         <AvatarView name={parsedSchema(credential).name} />
         <View style={styles.details}>
-          <Text style={[TextTheme.headingFour]} testID={testIdWithKey('CredentialName')}>
+          <Text style={ListItems.credentialTitle} testID={testIdWithKey('CredentialName')}>
             {parsedSchema(credential).name}
           </Text>
-          <Text style={[TextTheme.caption]} testID={testIdWithKey('CredentialVersion')}>
+          <Text style={ListItems.credentialDetails} testID={testIdWithKey('CredentialVersion')}>
             {t('CredentialDetails.Version')}: {parsedSchema(credential).version}
           </Text>
-          <Text style={[TextTheme.caption]} testID={testIdWithKey('CredentialIssued')}>
+          <Text style={ListItems.credentialDetails} testID={testIdWithKey('CredentialIssued')}>
             {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
           </Text>
         </View>

@@ -2,9 +2,28 @@ import { StyleSheet } from 'react-native'
 
 interface FontAttributes {
   fontFamily?: string
+  fontStyle?: string
   fontSize: number
   fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
   color: string
+}
+
+interface InputAttributes {
+  padding?: number
+  borderRadius?: number
+  fontSize?: number
+  backgroundColor?: string
+  color?: string
+  borderWidth?: number
+  borderColor?: string
+}
+
+interface Inputs {
+  textInput: InputAttributes
+  inputSelected: InputAttributes
+  singleSelect: InputAttributes
+  singleSelectText: FontAttributes
+  singleSelectIcon: string
 }
 
 interface TextTheme {
@@ -14,7 +33,11 @@ interface TextTheme {
   headingFour: FontAttributes
   normal: FontAttributes
   label: FontAttributes
+  labelTitle: FontAttributes
+  labelSubtitle: FontAttributes
+  labelText: FontAttributes
   caption: FontAttributes
+  title: FontAttributes
 }
 
 interface BrandColors {
@@ -158,12 +181,65 @@ export const TextTheme: TextTheme = {
     fontWeight: 'bold',
     color: ColorPallet.grayscale.white,
   },
+  labelTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  labelSubtitle: {
+    fontSize: 14,
+    fontWeight: 'normal',
+    color: ColorPallet.grayscale.white,
+  },
+  labelText: {
+    fontSize: 10,
+    fontWeight: 'normal',
+    fontStyle: 'italic',
+    color: ColorPallet.grayscale.white,
+  },
   caption: {
     fontSize: 14,
     fontWeight: 'normal',
     color: ColorPallet.grayscale.white,
   },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: ColorPallet.notification.infoText,
+  }
 }
+
+export const Inputs: Inputs = StyleSheet.create({
+  label: {
+    ...TextTheme.label,
+  },
+  textInput: {
+    padding: 10,
+    borderRadius,
+    fontSize: 16,
+    backgroundColor: ColorPallet.brand.primaryBackground,
+    color: ColorPallet.notification.infoText,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.secondary,
+  },
+  inputSelected: {
+    borderColor: ColorPallet.brand.primary,
+  },
+  singleSelect: {
+    padding: 12,
+    borderRadius: borderRadius * 2,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+  },
+  singleSelectText: {
+    ...TextTheme.normal,
+  },
+  singleSelectIcon: ColorPallet.grayscale.white,
+  checkBoxColor: ColorPallet.brand.primary,
+  checkBoxText: {
+    ...TextTheme.normal,
+  },
+})
+
 export const Buttons = StyleSheet.create({
   primary: {
     padding: 16,
@@ -213,10 +289,136 @@ export const Buttons = StyleSheet.create({
   },
 })
 
+const ListItems =  StyleSheet.create({
+  credentialBackground: ColorPallet.brand.secondaryBackground,
+  credentialTitle: {
+    ...TextTheme.headingFour,
+  },
+  credentialDetails: {
+    ...TextTheme.caption,
+  },
+  contactBackground: ColorPallet.brand.secondaryBackground,
+
+})
+
+export const TabTheme = StyleSheet.create({
+  tabBarStyle: {
+    height: 60,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+    shadowOffset: { width: 0, height: -3 },
+    shadowRadius: 6,
+    shadowColor: ColorPallet.grayscale.black,
+    shadowOpacity: 0.1,
+    borderTopWidth: 0,
+    paddingBottom: 0,
+  },
+  tabBarActiveTintColor: ColorPallet.brand.primary,
+  tabBarInactiveTintColor: ColorPallet.notification.infoText,
+  tabTextStyle: {
+    ...TextTheme.label,
+    fontWeight: 'normal',
+    paddingBottom: 5,
+  },
+  focusTabIconStyle: {
+    height: 60,
+    width: 60,
+    backgroundColor: ColorPallet.brand.primary,
+    top: -20,
+    borderRadius: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+})
+
+export const NavigationTheme = StyleSheet.create({
+  dark: true,
+  colors: {
+    primary: ColorPallet.brand.primary,
+    background: ColorPallet.brand.primaryBackground,
+    card: ColorPallet.brand.primary,
+    text: ColorPallet.grayscale.white,
+    border: ColorPallet.grayscale.white,
+    notification: ColorPallet.grayscale.white,
+  },
+})
+
+export const HomeTheme = StyleSheet.create({
+  welcomeHeader: {
+    ...TextTheme.headingOne,
+  },
+  credentialMsg: {
+    ...TextTheme.normal,
+  },
+  notificationsHeader: {
+    ...TextTheme.headingThree,
+  }
+})
+
+export const SettingsTheme = StyleSheet.create({
+  groupHeader: {
+    ...TextTheme.normal,
+    marginBottom: 8,
+  },
+  groupBackground: ColorPallet.brand.secondaryBackground,
+  iconColor: ColorPallet.grayscale.white,
+  text: {
+    ...TextTheme.normal,
+    color: ColorPallet.grayscale.white,
+  }
+})
+
+export const ChatTheme = StyleSheet.create({
+  leftBubble: {
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+    borderRadius: 20,
+    padding: 4,
+    marginLeft: -4,
+  },
+  rightBubble: {
+    backgroundColor: ColorPallet.brand.primary, 
+    borderRadius: 20, 
+    padding: 4, 
+    marginRight: 4
+  },
+  leftText: {
+    color: ColorPallet.brand.secondary, 
+    fontSize: TextTheme.normal.fontSize
+  },
+  rightText: {
+    color: ColorPallet.brand.secondary, 
+    fontSize: TextTheme.normal.fontSize
+  },
+  inputToolbar: {
+    backgroundColor: ColorPallet.brand.secondary,
+    shadowColor: ColorPallet.brand.primaryDisabled,
+    borderRadius: 10,
+  },
+  inputText: {
+    lineHeight: undefined,
+    fontWeight: '500',
+    fontSize: TextTheme.normal.fontSize,
+  },
+  placeholderText: ColorPallet.grayscale.lightGrey,
+  sendContainer: {
+    marginBottom: 4,
+    paddingHorizontal: 4,
+    justifyContent: 'center',
+  },
+  sendEnabled: ColorPallet.brand.primary,
+  sendDisabled: ColorPallet.brand.primaryDisabled,
+})
+
 export interface Theme {
   ColorPallet: ColorPallet
   TextTheme: TextTheme
+  Inputs: Inputs
   Buttons: any
+  ListItems: any
+  TabTheme: any
+  NavigationTheme: any
+  HomeTheme: any
+  SettingsTheme: any
+  ChatTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -225,7 +427,14 @@ export interface Theme {
 export const defaultTheme: Theme = {
   ColorPallet,
   TextTheme,
+  Inputs,
   Buttons,
+  ListItems,
+  TabTheme,
+  NavigationTheme,
+  HomeTheme,
+  SettingsTheme,
+  ChatTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,

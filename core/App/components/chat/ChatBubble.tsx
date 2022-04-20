@@ -1,24 +1,22 @@
 import React from 'react'
 import { Bubble } from 'react-native-gifted-chat'
 
-import { ColorPallet, TextTheme } from '../../theme'
+import { useThemeContext } from '../../utils/themeContext'
 
 export const renderBubble = (props: any) => {
+  const { ChatTheme } = useThemeContext()
   return (
     <Bubble
       {...props}
       wrapperStyle={{
         left: {
-          backgroundColor: ColorPallet.brand.secondaryBackground,
-          borderRadius: 20,
-          padding: 4,
-          marginLeft: -4,
+          ...ChatTheme.leftBubble,
         },
-        right: { backgroundColor: ColorPallet.brand.primary, borderRadius: 20, padding: 4, marginRight: 4 },
+        right: { ...ChatTheme.rightBubble },
       }}
       textStyle={{
-        left: { color: ColorPallet.brand.secondary, fontSize: TextTheme.normal.fontSize },
-        right: { color: ColorPallet.brand.secondary, fontSize: TextTheme.normal.fontSize },
+        left: { ...ChatTheme.leftText },
+        right: { ...ChatTheme.rightText },
       }}
     />
   )
