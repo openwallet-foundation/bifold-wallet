@@ -106,7 +106,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
-            {t('ProofRequest.IsRequestng')}:
+            {t('ProofRequest.IsRequesting')}:
           </Text>
           <Text style={[TextTheme.headingFour, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
             {attributeName}
