@@ -7,40 +7,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CredentialDeclined from '../assets/img/credential-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
-import { ColorPallet, TextTheme } from '../theme'
 import { GenericFn } from '../types/fn'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-
-const imageDisplayOptions = {
-  fill: ColorPallet.notification.infoText,
-  height: 250,
-  width: 250,
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  image: {
-    marginVertical: 66,
-  },
-  messageContainer: {
-    marginHorizontal: 25,
-    marginTop: 25,
-    alignItems: 'center',
-  },
-  messageText: {
-    fontWeight: 'normal',
-    textAlign: 'center',
-    marginTop: 90,
-  },
-  controlsContainer: {
-    marginHorizontal: 25,
-    marginTop: 25,
-  },
-})
+import { useThemeContext } from '../utils/themeContext'
 
 export interface CredentialOfferDeclineProps {
   visible: boolean
@@ -58,6 +28,35 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const navigation = useNavigation()
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const imageDisplayOptions = {
+    fill: ColorPallet.notification.infoText,
+    height: 250,
+    width: 250,
+  }
+  const styles = StyleSheet.create({
+    container: {
+      flexGrow: 1,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    image: {
+      marginVertical: 66,
+    },
+    messageContainer: {
+      marginHorizontal: 25,
+      marginTop: 25,
+      alignItems: 'center',
+    },
+    messageText: {
+      fontWeight: 'normal',
+      textAlign: 'center',
+      marginTop: 90,
+    },
+    controlsContainer: {
+      marginHorizontal: 25,
+      marginTop: 25,
+    },
+  })
 
   const onDoneTouched = () => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
