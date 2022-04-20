@@ -16,14 +16,14 @@ interface Props {
 }
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
-  const { ColorPallet, borderRadius } = useThemeContext()
+  const { ListItems, borderRadius } = useThemeContext()
   const styles = StyleSheet.create({
     container: {
       marginTop: 15,
       marginHorizontal: 15,
       padding: 10,
       borderRadius,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ListItems.contactBackground,
     },
     date: {
       textAlign: 'right',
