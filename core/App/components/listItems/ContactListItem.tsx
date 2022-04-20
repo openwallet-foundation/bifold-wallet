@@ -3,6 +3,7 @@ import type { ConnectionRecord } from '@aries-framework/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { dateFormatOptions } from '../../constants'
 import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
@@ -18,15 +19,30 @@ interface Props {
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { ListItems, borderRadius } = useThemeContext()
   const styles = StyleSheet.create({
-    container: {
+    outerContainer: {
       marginTop: 15,
       marginHorizontal: 15,
-      padding: 10,
-      borderRadius,
+      borderRadius: 15,
       backgroundColor: ListItems.contactBackground,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    textContainer: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      padding: 15,
+    },
+    iconContainer: {
+      backgroundColor: ListItems.contactIconBackground,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+      borderTopRightRadius: 15,
+      borderBottomRightRadius: 15,
     },
     date: {
-      textAlign: 'right',
+      marginTop: 10,
     },
   })
   return (
@@ -37,10 +53,14 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
           ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
       }
     >
-      <View key={contact.id} style={styles.container}>
-        <Title>{contact?.alias || contact?.invitation?.label}</Title>
-        <Text>{contact.did}</Text>
-        <Text style={styles.date}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
+      <View key={contact.id} style={styles.outerContainer}>
+        <View style={styles.textContainer}>
+          <Title>{contact?.alias || contact?.invitation?.label}</Title>
+          <Text style={styles.date}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
+        </View>
+        <View style={styles.iconContainer}>
+          <Icon name="message" size={32} color={ListItems.contactIcon} />
+        </View>
       </View>
     </TouchableOpacity>
   )

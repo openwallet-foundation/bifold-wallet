@@ -298,7 +298,8 @@ const ListItems =  StyleSheet.create({
     ...TextTheme.caption,
   },
   contactBackground: ColorPallet.brand.secondaryBackground,
-
+  contactIconBackground: ColorPallet.brand.primary,
+  contactIcon: ColorPallet.grayscale.white,
 })
 
 export const TabTheme = StyleSheet.create({
@@ -351,6 +352,10 @@ export const HomeTheme = StyleSheet.create({
   },
   notificationsHeader: {
     ...TextTheme.headingThree,
+  },
+  noNewUpdatesText: {
+    ...TextTheme.normal,
+    color: ColorPallet.notification.infoText,
   }
 })
 
