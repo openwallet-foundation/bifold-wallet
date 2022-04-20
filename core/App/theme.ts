@@ -19,11 +19,14 @@ interface InputAttributes {
 }
 
 interface Inputs {
+  label: FontAttributes
   textInput: InputAttributes
   inputSelected: InputAttributes
   singleSelect: InputAttributes
   singleSelectText: FontAttributes
   singleSelectIcon: string
+  checkBoxColor: string
+  checkBoxText: FontAttributes
 }
 
 interface TextTheme {
@@ -206,7 +209,7 @@ export const TextTheme: TextTheme = {
     fontSize: 20,
     fontWeight: 'bold',
     color: ColorPallet.notification.infoText,
-  }
+  },
 }
 
 export const Inputs: Inputs = StyleSheet.create({
@@ -289,7 +292,7 @@ export const Buttons = StyleSheet.create({
   },
 })
 
-const ListItems =  StyleSheet.create({
+const ListItems = StyleSheet.create({
   credentialBackground: ColorPallet.brand.secondaryBackground,
   credentialTitle: {
     ...TextTheme.headingFour,
@@ -328,7 +331,7 @@ export const TabTheme = StyleSheet.create({
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 })
 
 export const NavigationTheme = StyleSheet.create({
@@ -356,7 +359,7 @@ export const HomeTheme = StyleSheet.create({
   noNewUpdatesText: {
     ...TextTheme.normal,
     color: ColorPallet.notification.infoText,
-  }
+  },
 })
 
 export const SettingsTheme = StyleSheet.create({
@@ -369,7 +372,7 @@ export const SettingsTheme = StyleSheet.create({
   text: {
     ...TextTheme.normal,
     color: ColorPallet.grayscale.white,
-  }
+  },
 })
 
 export const ChatTheme = StyleSheet.create({
@@ -380,18 +383,18 @@ export const ChatTheme = StyleSheet.create({
     marginLeft: -4,
   },
   rightBubble: {
-    backgroundColor: ColorPallet.brand.primary, 
-    borderRadius: 20, 
-    padding: 4, 
-    marginRight: 4
+    backgroundColor: ColorPallet.brand.primary,
+    borderRadius: 20,
+    padding: 4,
+    marginRight: 4,
   },
   leftText: {
-    color: ColorPallet.brand.secondary, 
-    fontSize: TextTheme.normal.fontSize
+    color: ColorPallet.brand.secondary,
+    fontSize: TextTheme.normal.fontSize,
   },
   rightText: {
-    color: ColorPallet.brand.secondary, 
-    fontSize: TextTheme.normal.fontSize
+    color: ColorPallet.brand.secondary,
+    fontSize: TextTheme.normal.fontSize,
   },
   inputToolbar: {
     backgroundColor: ColorPallet.brand.secondary,

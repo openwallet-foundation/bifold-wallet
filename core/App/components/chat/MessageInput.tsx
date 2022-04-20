@@ -40,13 +40,9 @@ export const renderSend = (props: any) => (
     alwaysShowSend={true}
     disabled={!props.text}
     containerStyle={{
-      ...ChatTheme.sendContainer
+      ...ChatTheme.sendContainer,
     }}
   >
-    <Icon
-      name="arrow-up-circle"
-      size={38}
-      color={props.text ? ChatTheme.sendEnabled : ChatTheme.sendDisabled}
-    />
+    <Icon name="arrow-up-circle" size={38} color={props.text ? ChatTheme.sendEnabled : ChatTheme.sendDisabled} />
   </Send>
 )

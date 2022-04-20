@@ -11,7 +11,7 @@ const NoNewUpdates: React.FC = () => {
   const { HomeTheme } = useThemeContext()
   const styles = StyleSheet.create({
     text: {
-      ...HomeTheme.noNewUpdatesText
+      ...HomeTheme.noNewUpdatesText,
     },
   })
   return (

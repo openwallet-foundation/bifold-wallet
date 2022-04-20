@@ -12,7 +12,7 @@ const Text: React.FC<Props> = ({ children, style }) => {
   const { TextTheme } = useThemeContext()
   const styles = StyleSheet.create({
     text: {
-      color: TextTheme.normal.color
+      color: TextTheme.normal.color,
     },
   })
   return <T style={[styles.text, style]}>{children}</T>
