@@ -19,7 +19,7 @@ const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
       marginBottom: 3,
     },
     textInput: {
-      ...Inputs.textInput
+      ...Inputs.textInput,
     },
   })
   return (

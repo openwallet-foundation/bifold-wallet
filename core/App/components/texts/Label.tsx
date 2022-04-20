@@ -1,8 +1,9 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import Text from './Text'
 import { useThemeContext } from '../../utils/themeContext'
+
+import Text from './Text'
 
 interface Props {
   title: string

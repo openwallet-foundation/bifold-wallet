@@ -58,7 +58,7 @@ const TabStack: React.FC = () => {
             tabBarIcon: () => (
               <View
                 style={{
-                  ...TabTheme.focusTabIconStyle
+                  ...TabTheme.focusTabIconStyle,
                 }}
               >
                 <Icon

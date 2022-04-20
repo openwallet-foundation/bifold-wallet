@@ -17,7 +17,7 @@ interface Props {
 }
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
-  const { ListItems, borderRadius } = useThemeContext()
+  const { ListItems } = useThemeContext()
   const styles = StyleSheet.create({
     outerContainer: {
       marginTop: 15,
