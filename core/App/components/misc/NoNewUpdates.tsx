@@ -8,11 +8,10 @@ import InfoTextBox from '../texts/InfoTextBox'
 
 const NoNewUpdates: React.FC = () => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { HomeTheme } = useThemeContext()
   const styles = StyleSheet.create({
     text: {
-      ...TextTheme.normal,
-      color: ColorPallet.notification.infoText,
+      ...HomeTheme.noNewUpdatesText
     },
   })
   return (
