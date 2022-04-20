@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 interface FontAttributes {
   fontFamily?: string
-  fontStyle?: string
+  fontStyle?: 'normal' | 'italic'
   fontSize: number
   fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
   color: string
@@ -24,8 +24,8 @@ interface Inputs {
   inputSelected: InputAttributes
   singleSelect: InputAttributes
   singleSelectText: FontAttributes
-  singleSelectIcon: string
-  checkBoxColor: string
+  singleSelectIcon: InputAttributes
+  checkBoxColor: InputAttributes
   checkBoxText: FontAttributes
 }
 
@@ -236,8 +236,12 @@ export const Inputs: Inputs = StyleSheet.create({
   singleSelectText: {
     ...TextTheme.normal,
   },
-  singleSelectIcon: ColorPallet.grayscale.white,
-  checkBoxColor: ColorPallet.brand.primary,
+  singleSelectIcon: {
+    color: ColorPallet.grayscale.white,
+  },
+  checkBoxColor: {
+    color: ColorPallet.brand.primary,
+  },
   checkBoxText: {
     ...TextTheme.normal,
   },
@@ -293,19 +297,27 @@ export const Buttons = StyleSheet.create({
 })
 
 const ListItems = StyleSheet.create({
-  credentialBackground: ColorPallet.brand.secondaryBackground,
+  credentialBackground: {
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+  },
   credentialTitle: {
     ...TextTheme.headingFour,
   },
   credentialDetails: {
     ...TextTheme.caption,
   },
-  contactBackground: ColorPallet.brand.secondaryBackground,
-  contactIconBackground: ColorPallet.brand.primary,
-  contactIcon: ColorPallet.grayscale.white,
+  contactBackground: {
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+  },
+  contactIconBackground: {
+    backgroundColor: ColorPallet.brand.primary,
+  },
+  contactIcon: {
+    color: ColorPallet.grayscale.white,
+  },
 })
 
-export const TabTheme = StyleSheet.create({
+export const TabTheme = {
   tabBarStyle: {
     height: 60,
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -332,9 +344,9 @@ export const TabTheme = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+}
 
-export const NavigationTheme = StyleSheet.create({
+export const NavigationTheme = {
   dark: true,
   colors: {
     primary: ColorPallet.brand.primary,
@@ -344,7 +356,7 @@ export const NavigationTheme = StyleSheet.create({
     border: ColorPallet.grayscale.white,
     notification: ColorPallet.grayscale.white,
   },
-})
+}
 
 export const HomeTheme = StyleSheet.create({
   welcomeHeader: {
@@ -362,7 +374,7 @@ export const HomeTheme = StyleSheet.create({
   },
 })
 
-export const SettingsTheme = StyleSheet.create({
+export const SettingsTheme = {
   groupHeader: {
     ...TextTheme.normal,
     marginBottom: 8,
@@ -373,9 +385,9 @@ export const SettingsTheme = StyleSheet.create({
     ...TextTheme.normal,
     color: ColorPallet.grayscale.white,
   },
-})
+}
 
-export const ChatTheme = StyleSheet.create({
+export const ChatTheme = {
   leftBubble: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
     borderRadius: 20,
@@ -414,7 +426,7 @@ export const ChatTheme = StyleSheet.create({
   },
   sendEnabled: ColorPallet.brand.primary,
   sendDisabled: ColorPallet.brand.primaryDisabled,
-})
+}
 
 export interface Theme {
   ColorPallet: ColorPallet
