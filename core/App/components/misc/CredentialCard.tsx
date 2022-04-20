@@ -20,8 +20,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {} 
   const { ListItems } = useThemeContext()
   const styles = StyleSheet.create({
     container: {
+      ...ListItems.credentialBackground,
       minHeight: 125,
-      backgroundColor: ListItems.credentialBackground,
       justifyContent: 'center',
       borderRadius: 15,
       padding: 10,

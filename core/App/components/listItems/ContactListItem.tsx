@@ -20,10 +20,10 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { ListItems } = useThemeContext()
   const styles = StyleSheet.create({
     outerContainer: {
+      ...ListItems.contactBackground,
       marginTop: 15,
       marginHorizontal: 15,
       borderRadius: 15,
-      backgroundColor: ListItems.contactBackground,
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
@@ -34,7 +34,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       padding: 15,
     },
     iconContainer: {
-      backgroundColor: ListItems.contactIconBackground,
+      ...ListItems.contactIconBackground,
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
@@ -59,7 +59,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
           <Text style={styles.date}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
         </View>
         <View style={styles.iconContainer}>
-          <Icon name="message" size={32} color={ListItems.contactIcon} />
+          <Icon name="message" size={32} color={ListItems.contactIcon.color} />
         </View>
       </View>
     </TouchableOpacity>
