@@ -9,42 +9,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CredentialPending from '../assets/img/credential-pending.svg'
 import CredentialSuccess from '../assets/img/credential-success.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
-import { ColorPallet, TextTheme } from '../theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { useThemeContext } from '../utils/themeContext'
 
 const connectionTimerDelay = 5000 // in ms
-const imageDisplayOptions = {
-  fill: ColorPallet.notification.infoText,
-  height: 250,
-  width: 250,
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  image: {
-    marginVertical: 66,
-  },
-  messageContainer: {
-    marginHorizontal: 25,
-    alignItems: 'center',
-  },
-  messageText: {
-    fontWeight: 'normal',
-    textAlign: 'center',
-    marginTop: 90,
-  },
-  controlsContainer: {
-    marginHorizontal: 25,
-  },
-  controlsMessageText: {
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-})
 
 enum DeliveryStatus {
   Pending,
@@ -65,6 +34,37 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [timer, setTimer] = useState<NodeJS.Timeout>()
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
+  const { ColorPallet, TextTheme } = useThemeContext()
+  const imageDisplayOptions = {
+    fill: ColorPallet.notification.infoText,
+    height: 250,
+    width: 250,
+  }
+  const styles = StyleSheet.create({
+    container: {
+      flexGrow: 1,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    image: {
+      marginVertical: 66,
+    },
+    messageContainer: {
+      marginHorizontal: 25,
+      alignItems: 'center',
+    },
+    messageText: {
+      fontWeight: 'normal',
+      textAlign: 'center',
+      marginTop: 90,
+    },
+    controlsContainer: {
+      marginHorizontal: 25,
+    },
+    controlsMessageText: {
+      textAlign: 'center',
+      marginBottom: 30,
+    },
+  })
 
   if (!credential) {
     throw new Error('Unable to fetch credential from AFJ')
