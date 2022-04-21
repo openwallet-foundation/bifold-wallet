@@ -22,7 +22,6 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
 import Splash from '../screens/Splash'
-import Terms from '../screens/Terms'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { StateFn } from '../types/fn'
@@ -57,6 +56,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const ColorPallet = theme.ColorPallet
   const {
     onboarding: { pages },
+    terms,
   } = useConfigurationContext()
   const onTutorialCompleted = () => {
     dispatch({
@@ -194,7 +194,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
             headerLeft: () => false,
             rightLeft: () => false,
           })}
-          component={Terms}
+          component={terms}
         />
         <Stack.Screen name={Screens.CreatePin}>
           {(props) => <PinCreate {...props} setAuthenticated={setAuthenticated} />}
