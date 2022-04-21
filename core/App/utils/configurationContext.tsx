@@ -1,4 +1,4 @@
-import { createContext, useContext, FC } from 'react'
+import { createContext, useContext } from 'react'
 
 import { pages } from '../screens/OnboardingPages'
 
@@ -6,8 +6,8 @@ export interface ConfigurationContext {
   onboarding: {
     pages: typeof pages
   }
-  splash: FC
-  terms: FC
+  splash: React.FC
+  terms: React.FC
 }
 
 const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
