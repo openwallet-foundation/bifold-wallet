@@ -71,7 +71,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             JSON.parse(data) || []
           )
           const credentialState: StoreCredentialState = {
-            all: credentials,
             revoked,
           }
           dispatch({ type: DispatchAction.CREDENTIALS_UPDATED, payload: [credentialState] })
@@ -81,7 +80,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       }
     }
     init()
-  }, [dispatch, credentials])
+  }, [])
 
   const displayMessage = (credentialCount: number) => {
     if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
