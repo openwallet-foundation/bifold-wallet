@@ -9,14 +9,14 @@ import { LocalStorageKeys } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { Onboarding } from '../types/state'
+import { Onboarding as StoreOnboardingState } from '../types/state'
 import { useThemeContext } from '../utils/themeContext'
 
-const onboardingComplete = (state: Onboarding): boolean => {
+const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN
 }
 
-const resumeOnboardingAt = (state: Onboarding): Screens => {
+const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
   if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didCreatePIN) {
     return Screens.CreatePin
   }
@@ -50,28 +50,23 @@ const Splash: React.FC = () => {
       try {
         // await AsyncStorage.removeItem(LocalStorageKeys.Onboarding)
         const data = await AsyncStorage.getItem(LocalStorageKeys.Onboarding)
-
         if (data) {
-          const dataAsJSON = JSON.parse(data) as Onboarding
-          dispatch({ type: DispatchAction.ONBOARDING_STATE_UPDATED, payload: [dataAsJSON] })
-
-          if (onboardingComplete(dataAsJSON)) {
+          const onboardingState = JSON.parse(data) as StoreOnboardingState
+          dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
+          if (onboardingComplete(onboardingState)) {
             navigation.navigate(Screens.EnterPin)
-            return
+          } else {
+            // If onboarding was interrupted we need to pickup from where we left off.
+            const destination = resumeOnboardingAt(onboardingState)
+            // @ts-ignore
+            navigation.navigate({ name: destination })
           }
-
-          // If onboarding was interrupted we need to pickup from where we left off.
-          const destination = resumeOnboardingAt(dataAsJSON)
-          // @ts-ignore
-          navigation.navigate({ name: destination })
-
           return
         }
-
         // We have no onboarding state, starting from step zero.
         navigation.navigate(Screens.Onboarding)
       } catch (error) {
-        // TODO:(jl)
+        // TODO:(am add error handling here)
       }
     }
     init()

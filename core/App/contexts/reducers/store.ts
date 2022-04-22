@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
-import { Onboarding as OnboardingState, State } from '../../types/state'
+import { Onboarding as OnboardingState, Credential as CredentialState, State } from '../../types/state'
 
 enum OnboardingDispatchAction {
-  ONBOARDING_STATE_UPDATED = 'onboarding/onboardingStateLoaded',
+  ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePin',
@@ -15,11 +15,18 @@ enum ErrorDispatchAction {
   ERROR_REMOVED = 'error/errorRemoved',
 }
 
-export type DispatchAction = OnboardingDispatchAction | ErrorDispatchAction
+// FIXME: Once hooks are updated this should no longer be necessary
+enum CredentialDispatchAction {
+  CREDENTIALS_UPDATED = 'credentials/credentialsUpdated',
+  CREDENTIAL_REVOKED = 'credentials/credentialRevoked',
+}
+
+export type DispatchAction = OnboardingDispatchAction | ErrorDispatchAction | CredentialDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
   ...ErrorDispatchAction,
+  ...CredentialDispatchAction,
 }
 
 export interface ReducerAction {
@@ -29,7 +36,7 @@ export interface ReducerAction {
 
 const reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {
-    case OnboardingDispatchAction.ONBOARDING_STATE_UPDATED: {
+    case OnboardingDispatchAction.ONBOARDING_UPDATED: {
       const onboarding: OnboardingState = (action?.payload || []).pop()
       return {
         ...state,
@@ -70,6 +77,29 @@ const reducer = (state: State, action: ReducerAction): State => {
         onboarding,
       }
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    // FIXME: Once hooks are updated this should no longer be necessary
+    case CredentialDispatchAction.CREDENTIALS_UPDATED: {
+      const credential: CredentialState = (action?.payload || []).pop()
+      return {
+        ...state,
+        credential,
+      }
+    }
+    case CredentialDispatchAction.CREDENTIAL_REVOKED: {
+      const revokedCredential = (action.payload || []).pop()
+      const revoked = state.credential.revoked
+      revoked.add(revokedCredential.id || revokedCredential.credentialId)
+      const credential: CredentialState = {
+        ...state.credential,
+        revoked,
+      }
+      const newState = {
+        ...state,
+        credential,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.RevokedCredentials, JSON.stringify(Array.from(revoked.values())))
       return newState
     }
     case ErrorDispatchAction.ERROR_ADDED: {
