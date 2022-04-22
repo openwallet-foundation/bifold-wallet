@@ -2,9 +2,7 @@ import React from 'react'
 import { Composer, InputToolbar, Send } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { useThemeContext } from '../../utils/themeContext'
-
-const { ChatTheme } = useThemeContext()
+import { ChatTheme } from '../../theme'
 
 export const renderInputToolbar = (props: any) => (
   <InputToolbar
