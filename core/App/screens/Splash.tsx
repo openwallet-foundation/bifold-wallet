@@ -70,7 +70,7 @@ const Splash: React.FC = () => {
       }
     }
     init()
-  }, [dispatch])
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>

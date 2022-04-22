@@ -15,7 +15,6 @@ const initialState: State = {
     didCreatePIN: false,
   },
   credential: {
-    all: [],
     revoked: new Set(),
   },
   error: null,

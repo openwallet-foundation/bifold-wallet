@@ -10,7 +10,6 @@ export interface Onboarding {
 
 // FIXME: Once hooks are updated this should no longer be necessary
 export interface Credential {
-  all: CredentialRecord[]
   revoked: Set<CredentialRecord['id'] | CredentialRecord['credentialId']>
 }
 
