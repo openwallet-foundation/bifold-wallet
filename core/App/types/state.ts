@@ -1,13 +1,9 @@
 import { BifoldError } from './error'
 
 export interface Onboarding {
-  DidCompleteTutorial: boolean
-  DidAgreeToTerms: boolean
-  DidCreatePIN: boolean
-}
-
-export interface ConnectionDetails {
-  connectionId: string
+  didCompleteTutorial: boolean
+  didAgreeToTerms: boolean
+  didCreatePIN: boolean
 }
 
 export interface State {
