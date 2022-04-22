@@ -14,6 +14,10 @@ const initialState: State = {
     didCompleteTutorial: false,
     didCreatePIN: false,
   },
+  credential: {
+    all: [],
+    revoked: new Set(),
+  },
   error: null,
 }
 
