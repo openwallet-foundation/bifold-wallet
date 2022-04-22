@@ -1,10 +1,9 @@
 import React from 'react'
 import { Bubble } from 'react-native-gifted-chat'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { ChatTheme } from '../../theme'
 
 export const renderBubble = (props: any) => {
-  const { ChatTheme } = useThemeContext()
   return (
     <Bubble
       {...props}
