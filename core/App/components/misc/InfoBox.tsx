@@ -24,9 +24,17 @@ interface BifoldErrorProps {
   message: string
   code?: number
   onCallToActionPressed?: GenericFn
+  onCallToActionLabel?: string
 }
 
-const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message, code, onCallToActionPressed }) => {
+const InfoBox: React.FC<BifoldErrorProps> = ({
+  notificationType,
+  title,
+  message,
+  code,
+  onCallToActionPressed,
+  onCallToActionLabel,
+}) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useThemeContext()
   const styles = StyleSheet.create({
@@ -169,8 +177,8 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
         )}
         {onCallToActionPressed && (
           <Button
-            title={t('Global.Okay')}
-            accessibilityLabel={t('Global.Okay')}
+            title={onCallToActionLabel || t('Global.Okay')}
+            accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
             testID={testIdWithKey('Okay')}
             buttonType={ButtonType.Primary}
             onPress={onCallToActionPressed}
