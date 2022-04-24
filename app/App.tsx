@@ -5,7 +5,7 @@ import {
   ConfigurationProvider,
   StoreProvider,
   ThemeProvider,
-  defaultTheme as theme,
+  theme,
   initLanguages,
   initStoredLanguage,
   translationResources,
