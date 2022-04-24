@@ -8,7 +8,8 @@ export interface ConfigurationContext {
   terms: React.FC
 }
 
-const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
+export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
+
 export const ConfigurationProvider = ConfigurationContext.Provider
 
 export const useConfiguration = () => useContext(ConfigurationContext)
