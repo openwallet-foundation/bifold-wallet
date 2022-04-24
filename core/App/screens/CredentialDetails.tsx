@@ -12,15 +12,15 @@ import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import Record from '../components/record/Record'
 import { ToastType } from '../components/toast/BaseToast'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const [state] = useStore()
   const { revoked } = state.credential
   const [isRevoked, setIsRevoked] = useState<boolean>(false)

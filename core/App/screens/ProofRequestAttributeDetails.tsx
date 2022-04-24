@@ -10,11 +10,11 @@ import Title from '../components/texts/Title'
 import { dateFormatOptions } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName, parsedSchema, processProofAttributes } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
 
@@ -29,7 +29,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const [, dispatch] = useStore()
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {

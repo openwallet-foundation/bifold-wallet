@@ -9,9 +9,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CredentialPending from '../assets/img/credential-pending.svg'
 import CredentialSuccess from '../assets/img/credential-success.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 const connectionTimerDelay = 5000 // in ms
 
@@ -34,7 +34,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [timer, setTimer] = useState<NodeJS.Timeout>()
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const imageDisplayOptions = {
     fill: ColorPallet.notification.infoText,
     height: 250,

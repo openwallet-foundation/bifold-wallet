@@ -6,4 +6,4 @@ export const ThemeContext = createContext<Theme>(theme)
 
 export const ThemeProvider = ThemeContext.Provider
 
-export const useThemeContext = () => useContext(ThemeContext)
+export const useTheme = () => useContext(ThemeContext)

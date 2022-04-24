@@ -3,9 +3,9 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
 import { Attribute } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 interface RecordAttributeProps {
   attribute: Attribute
@@ -25,7 +25,7 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
   attributeValue = null,
 }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: 25,

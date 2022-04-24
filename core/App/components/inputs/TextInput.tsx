@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput as RNTextInput, TextInputProps } from 'react-native'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 interface Props extends TextInputProps {
   label: string
@@ -9,7 +9,7 @@ interface Props extends TextInputProps {
 
 const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
   const [focused, setFocused] = useState(false)
-  const { ColorPallet, TextTheme, borderRadius } = useThemeContext()
+  const { ColorPallet, TextTheme, borderRadius } = useTheme()
   const styles = StyleSheet.create({
     container: {
       marginVertical: 10,
