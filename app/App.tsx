@@ -1,42 +1,44 @@
 import {
   Agent,
   AgentProvider,
-  toastConfig,
-  initStoredLanguage,
-  RootStack,
-  ErrorModal,
+  ConfigurationContext,
+  ConfigurationProvider,
   StoreProvider,
   ThemeProvider,
   defaultTheme as theme,
-  ConfigurationContext,
-  ConfigurationProvider,
   initLanguages,
-  defaultTranslationResources,
+  initStoredLanguage,
+  translationResources,
+  RootStack,
   OnboardingPages,
   Splash,
-  Terms
+  Terms,
+  ErrorModal,
+  toastConfig,
 } from 'aries-bifold'
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
-const translationResources = defaultTranslationResources
+const defaultConfiguration: ConfigurationContext = {
+  pages: OnboardingPages,
+  splash: Splash,
+  terms: Terms,
+}
+
 initLanguages(translationResources)
+
 const App = () => {
-  const [agent, setAgent] = useState<Agent | undefined>(undefined)
   initStoredLanguage()
+  const [agent, setAgent] = useState<Agent | undefined>(undefined)
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our
     // RN version can be displayed.
     SplashScreen.hide()
   }, [])
-  const defaultConfiguration: ConfigurationContext = {
-    pages: OnboardingPages,
-    splash: Splash,
-    terms: Terms,
-  }
+
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
