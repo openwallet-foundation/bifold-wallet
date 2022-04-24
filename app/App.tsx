@@ -12,9 +12,9 @@ import {
   ConfigurationProvider,
   initLanguages,
   defaultTranslationResources,
-  defaultOnboardingPages as onboardingPages,
-  defaultSplashScreen as splashSreen,
-  defaultTerms as termsSreen,
+  OnboardingPages,
+  Splash,
+  Terms
 } from 'aries-bifold'
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'react-native'
@@ -33,11 +33,9 @@ const App = () => {
     SplashScreen.hide()
   }, [])
   const defaultConfiguration: ConfigurationContext = {
-    onboarding: {
-      pages: onboardingPages,
-    },
-    splash: splashSreen,
-    terms: termsSreen,
+    pages: OnboardingPages,
+    splash: Splash,
+    terms: Terms,
   }
   return (
     <StoreProvider>
