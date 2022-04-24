@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 import Button, { ButtonType } from '../buttons/Button'
 
 const iconSize = 30
@@ -36,7 +36,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   onCallToActionLabel,
 }) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useThemeContext()
+  const { TextTheme, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.notification.info,

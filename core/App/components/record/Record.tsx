@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
 import { Attribute } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 import RecordAttribute from './RecordAttribute'
 import RecordFooter from './RecordFooter'
@@ -27,7 +27,7 @@ const Record: React.FC<RecordProps> = ({
 }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     linkContainer: {
       flexDirection: 'row',

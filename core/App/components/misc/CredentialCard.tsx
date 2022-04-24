@@ -5,9 +5,9 @@ import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { dateFormatOptions } from '../../constants'
+import { useTheme } from '../../contexts/theme'
 import { parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 import AvatarView from './AvatarView'
 
@@ -19,7 +19,7 @@ interface CredentialCardProps {
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = false, style = {} }) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useThemeContext()
+  const { TextTheme, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       minHeight: 125,

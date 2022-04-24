@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 interface Props {
   title: string
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, checked, onPress }) => {
-  const { TextTheme, ColorPallet } = useThemeContext()
+  const { TextTheme, ColorPallet } = useTheme()
   const style = StyleSheet.create({
     container: {
       flex: 1,

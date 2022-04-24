@@ -5,8 +5,8 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { dateFormatOptions } from '../../constants'
+import { useTheme } from '../../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
-import { useThemeContext } from '../../utils/themeContext'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
-  const { ColorPallet, borderRadius } = useThemeContext()
+  const { ColorPallet, borderRadius } = useTheme()
   const styles = StyleSheet.create({
     container: {
       marginTop: 15,
