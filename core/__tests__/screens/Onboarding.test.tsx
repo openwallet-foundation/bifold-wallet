@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { Text } from 'react-native'
 
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
 import { createCarouselStyle } from '../../App/screens/OnboardingPages'
-import { defaultTheme, ColorPallet } from '../../App/theme'
+import { defaultTheme } from '../../App/theme'
 import * as themeContext from '../../App/utils/themeContext' // note we're importing with a * to import all the exports
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(defaultTheme)

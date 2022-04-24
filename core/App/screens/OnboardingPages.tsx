@@ -52,7 +52,8 @@ export const createCarouselStyle = (theme: Theme): OnboardingStyleSheet => {
     },
   })
 }
-export const createStyle = (theme: Theme) => {
+
+export const createStyles = (theme: Theme) => {
   return StyleSheet.create({
     headerText: {
       fontSize: 32,
@@ -78,16 +79,18 @@ export const createStyle = (theme: Theme) => {
     },
   })
 }
-export function createImageDisplayOptions(theme: Theme) {
+
+const createImageDisplayOptions = (theme: Theme) => {
   return {
     fill: theme.ColorPallet.notification.infoText,
     height: 180,
     width: 180,
   }
 }
+
 const customPages = (onTutorialCompleted: GenericFn, theme: Theme) => {
   const { t } = useTranslation()
-  const defaultStyle = createStyle(theme)
+  const styles = createStyles(theme)
   const imageDisplayOptions = createImageDisplayOptions(theme)
   return (
     <>
@@ -95,10 +98,10 @@ const customPages = (onTutorialCompleted: GenericFn, theme: Theme) => {
         <SecureImage {...imageDisplayOptions} />
       </View>
       <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
-        <Text style={[defaultStyle.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+        <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
           Ornare suspendisse sed nisi lacus
         </Text>
-        <Text style={[defaultStyle.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
+        <Text style={[styles.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
           Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer quis
           auctor elit sed.
         </Text>
@@ -130,16 +133,16 @@ const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string }> 
 ]
 
 const createPageWith = (image: React.FC<SvgProps>, title: string, body: string, theme: Theme) => {
-  const defaultStyle = createStyle(theme)
+  const styles = createStyles(theme)
   const imageDisplayOptions = createImageDisplayOptions(theme)
   return (
     <>
       <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
       <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
-        <Text style={[defaultStyle.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+        <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
           {title}
         </Text>
-        <Text style={[defaultStyle.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
+        <Text style={[styles.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
           {body}
         </Text>
       </View>
@@ -147,9 +150,11 @@ const createPageWith = (image: React.FC<SvgProps>, title: string, body: string, 
   )
 }
 
-export const pages = (onTutorialCompleted: GenericFn, theme: Theme): Array<Element> => {
+const OnboardingPages = (onTutorialCompleted: GenericFn, theme: Theme): Array<Element> => {
   return [
     ...guides.map((g) => createPageWith(g.image, g.title, g.body, theme)),
     customPages(onTutorialCompleted, theme),
   ]
 }
+
+export default OnboardingPages
