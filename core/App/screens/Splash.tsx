@@ -1,27 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Image, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { LocalStorageKeys } from '../constants'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { Onboarding } from '../types/state'
+import { Onboarding as StoreOnboardingState } from '../types/state'
 import { useThemeContext } from '../utils/themeContext'
 
-const onboardingComplete = (state: Onboarding): boolean => {
-  return state.DidCompleteTutorial && state.DidAgreeToTerms && state.DidCreatePIN
+const onboardingComplete = (state: StoreOnboardingState): boolean => {
+  return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN
 }
 
-const resumeOnboardingAt = (state: Onboarding): Screens => {
-  if (state.DidCompleteTutorial && state.DidAgreeToTerms && !state.DidCreatePIN) {
+const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
+  if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didCreatePIN) {
     return Screens.CreatePin
   }
 
-  if (state.DidCompleteTutorial && !state.DidAgreeToTerms) {
+  if (state.didCompleteTutorial && !state.didAgreeToTerms) {
     return Screens.Terms
   }
 
@@ -34,7 +34,7 @@ const resumeOnboardingAt = (state: Onboarding): Screens => {
 */
 
 const Splash: React.FC = () => {
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { ColorPallet } = useThemeContext()
   const styles = StyleSheet.create({
@@ -50,32 +50,27 @@ const Splash: React.FC = () => {
       try {
         // await AsyncStorage.removeItem(LocalStorageKeys.Onboarding)
         const data = await AsyncStorage.getItem(LocalStorageKeys.Onboarding)
-
         if (data) {
-          const dataAsJSON = JSON.parse(data) as Onboarding
-          dispatch({ type: DispatchAction.SetOnboardingState, payload: [dataAsJSON] })
-
-          if (onboardingComplete(dataAsJSON)) {
+          const onboardingState = JSON.parse(data) as StoreOnboardingState
+          dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
+          if (onboardingComplete(onboardingState)) {
             navigation.navigate(Screens.EnterPin)
-            return
+          } else {
+            // If onboarding was interrupted we need to pickup from where we left off.
+            const destination = resumeOnboardingAt(onboardingState)
+            // @ts-ignore
+            navigation.navigate({ name: destination })
           }
-
-          // If onboarding was interrupted we need to pickup from where we left off.
-          const destination = resumeOnboardingAt(dataAsJSON)
-          // @ts-ignore
-          navigation.navigate({ name: destination })
-
           return
         }
-
         // We have no onboarding state, starting from step zero.
         navigation.navigate(Screens.Onboarding)
       } catch (error) {
-        // TODO:(jl)
+        // TODO:(am add error handling here)
       }
     }
     init()
-  }, [dispatch])
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>

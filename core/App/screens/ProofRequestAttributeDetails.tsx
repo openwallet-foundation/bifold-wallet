@@ -1,15 +1,15 @@
 import { ProofRecord, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Title from '../components/texts/Title'
 import { dateFormatOptions } from '../constants'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { BifoldError } from '../types/error'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName, parsedSchema, processProofAttributes } from '../utils/helpers'
@@ -26,7 +26,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const { proofId, attributeName } = route?.params
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
   const { ColorPallet, TextTheme } = useThemeContext()
@@ -69,7 +69,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
         return credentials
       } catch (error: unknown) {
         dispatch({
-          type: DispatchAction.SetError,
+          type: DispatchAction.ERROR_ADDED,
           payload: [{ error }],
         })
       }
@@ -86,7 +86,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
           1026
         )
         dispatch({
-          type: DispatchAction.SetError,
+          type: DispatchAction.ERROR_ADDED,
           payload: [{ error }],
         })
       })

@@ -5,6 +5,7 @@ import { FlatList, View } from 'react-native'
 
 import { CredentialListItem } from '../components'
 import EmptyList from '../components/misc/EmptyList'
+import { useStore } from '../contexts/store'
 import { useThemeContext } from '../utils/themeContext'
 
 const ListCredentials: React.FC = () => {
@@ -12,6 +13,8 @@ const ListCredentials: React.FC = () => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
+  const [state] = useStore()
+  const { revoked } = state.credential
   const { ColorPallet } = useThemeContext()
 
   return (
@@ -28,7 +31,7 @@ const ListCredentials: React.FC = () => {
             marginBottom: index === credentials.length - 1 ? 45 : 0,
           }}
         >
-          <CredentialListItem credential={item} />
+          <CredentialListItem credential={item} revoked={revoked.has(item.id) || revoked.has(item.credentialId)} />
         </View>
       )}
     />
