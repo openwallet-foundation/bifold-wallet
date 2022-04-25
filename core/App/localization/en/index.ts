@@ -26,7 +26,8 @@ const translation = {
     "ErrorCode": "Error Code",
     "Okay": "Okay",
     "GoBack": "Go Back",
-    "GetStarted": "Get Started"
+    "GetStarted": "Get Started",
+    "Dismiss": "Dismiss"
   },
   "Language": {
     "English": "English",
@@ -73,7 +74,9 @@ const translation = {
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
-    "Revoked": "Revoked"
+    "Revoked": "Revoked",
+    "CredentialRevokedMessageTitle": "This credential is revoked",
+    "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the isser.",
   },
   "Home": {
     "Welcome": "Welcome",

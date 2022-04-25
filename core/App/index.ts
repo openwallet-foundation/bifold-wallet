@@ -4,7 +4,7 @@ import type { OnboardingStyleSheet } from './screens/Onboarding'
 import { Agent } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 
-export { DispatchAction } from './store/reducer'
+export { DispatchAction } from './contexts/reducers/store'
 
 import { InfoTextBox, CheckBoxRow } from './components'
 import Button, { ButtonType } from './components/buttons/Button'
@@ -15,7 +15,8 @@ import RootStack from './navigators/RootStack'
 export { ColorPallet } from './theme'
 export { default as indyLedgers } from '../configs/ledgers/indy'
 export { default as ErrorModal } from './components/modals/ErrorModal'
-import StoreProvider, { Context as StoreContext, StoreProviderProps } from './store/Store'
+export { StoreProvider, StoreContext } from './contexts/store'
+export type { StoreProviderProps } from './contexts/store'
 
 export { defaultTheme } from './theme'
 export type { Theme } from './theme'
@@ -34,6 +35,6 @@ export type { Onboarding as OnboardingState } from './types/state'
 export { Screens } from './types/navigators'
 export type { AuthenticateStackParams } from './types/navigators'
 
-export { InfoTextBox, CheckBoxRow, Button, ButtonType, StoreProvider, StoreContext, RootStack, Agent, AgentProvider }
+export { InfoTextBox, CheckBoxRow, Button, ButtonType, RootStack, Agent, AgentProvider }
 
-export type { OnboardingStyleSheet, StoreProviderProps }
+export type { OnboardingStyleSheet }

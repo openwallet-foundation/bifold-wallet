@@ -1,6 +1,6 @@
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Modal } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -9,8 +9,8 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
 import Title from '../components/texts/Title'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { BifoldError } from '../types/error'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
@@ -30,7 +30,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
   const { credentialId } = route.params
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [didDeclineOffer, setDidDeclineOffer] = useState<boolean>(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
@@ -74,7 +74,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
         1024
       )
       dispatch({
-        type: DispatchAction.SetError,
+        type: DispatchAction.ERROR_ADDED,
         payload: [{ error }],
       })
     }
@@ -99,7 +99,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
         1024
       )
       dispatch({
-        type: DispatchAction.SetError,
+        type: DispatchAction.ERROR_ADDED,
         payload: [{ error }],
       })
     }

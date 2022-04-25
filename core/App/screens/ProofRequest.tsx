@@ -2,7 +2,8 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
-import React, { useState, useEffect, useContext } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -15,8 +16,9 @@ import NotificationModal from '../components/modals/NotificationModal'
 import Record from '../components/record/Record'
 import RecordAttribute from '../components/record/RecordAttribute'
 import Title from '../components/texts/Title'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { LocalStorageKeys } from '../constants'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
@@ -34,12 +36,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { proofId } = route?.params
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
+  const [attributes, setAttributes] = useState<Attribute[]>([])
   const proof = useProofById(proofId)
   const { ColorPallet, TextTheme } = useThemeContext()
 
@@ -75,7 +78,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     throw new Error('Unable to fetch proof from AFJ')
   }
 
-  useEffect(() => {
+  useMemo(() => {
     const retrieveCredentialsForProof = async (proof: ProofRecord) => {
       try {
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
@@ -85,14 +88,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         return credentials
       } catch (error: unknown) {
         dispatch({
-          type: DispatchAction.SetError,
+          type: DispatchAction.ERROR_ADDED,
           payload: [{ error }],
         })
       }
     }
 
     retrieveCredentialsForProof(proof)
-      .then((credentials) => setCredentials(credentials))
+      .then((credentials) => {
+        // FIXME: Once hooks are updated this should no longer be necessary
+        Object.values(credentials?.requestedAttributes || {}).forEach((credentials) => {
+          credentials.forEach((credential) => {
+            if (credential.revoked) {
+              dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
+            }
+          })
+        })
+        setCredentials(credentials)
+        const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
+        setAttributes(attributes)
+      })
       .catch(() => {
         const error = new BifoldError(
           'Unable to update retrieved credentials',
@@ -100,7 +115,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           1026
         )
         dispatch({
-          type: DispatchAction.SetError,
+          type: DispatchAction.ERROR_ADDED,
           payload: [{ error }],
         })
       })
@@ -143,7 +158,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         1025
       )
       dispatch({
-        type: DispatchAction.SetError,
+        type: DispatchAction.ERROR_ADDED,
         payload: [{ error }],
       })
     }
@@ -166,7 +181,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
               1025
             )
             dispatch({
-              type: DispatchAction.SetError,
+              type: DispatchAction.ERROR_ADDED,
               payload: [{ error }],
             })
           }
@@ -233,7 +248,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             </View>
           </View>
         )}
-        attributes={processProofAttributes(proof, credentials?.requestedAttributes)}
+        attributes={attributes}
         attribute={(attribute) => {
           return (
             <RecordAttribute

@@ -10,20 +10,20 @@ import {
 import { agentDependencies } from '@aries-framework/react-native'
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Config } from 'react-native-config'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
 import Splash from '../screens/Splash'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { useConfigurationContext } from '../utils/configurationContext'
@@ -43,7 +43,7 @@ interface RootStackProps {
 
 const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const { setAgent } = props
-  const [state, dispatch] = useContext(Context)
+  const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
 
@@ -60,8 +60,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   } = useConfigurationContext()
   const onTutorialCompleted = () => {
     dispatch({
-      type: DispatchAction.SetTutorialCompletionStatus,
-      payload: [{ DidCompleteTutorial: true }],
+      type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
 
     navigation.navigate(Screens.Terms)
@@ -203,7 +202,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     )
   }
 
-  if (state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN) {
+  if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
     return authenticated ? mainStack() : authStack(setAuthenticated)
   }
 
