@@ -13,8 +13,9 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
         Object {
           "backgroundColor": "#000000",
           "flexDirection": "column",
-          "minHeight": 1334,
+          "flexGrow": 1,
           "paddingHorizontal": 25,
+          "paddingTop": 20,
         },
       ]
     }
@@ -24,7 +25,6 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "marginTop": 54,
           },
         ]
       }
@@ -39,47 +39,53 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
             },
             Object {
               "fontWeight": "normal",
+              "marginTop": 90,
               "textAlign": "center",
             },
           ]
         }
-        testID="com.ariesbifold:id/JustAMoment"
+        testID="com.ariesbifold:id/CredentialOnTheWay"
       >
         Connection.JustAMoment
       </Text>
-      <View
-        style={
-          Array [
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "marginTop": 20,
+          },
+          Object {
+            "alignItems": "center",
+            "justifyContent": "flex-end",
+            "minHeight": 250,
+          },
+        ]
+      }
+    >
+      <View>
+        <
+          fill="#FFFFFF"
+          height={250}
+          width={250}
+        />
+        <View
+          style={
             Object {
-              "marginTop": 40,
-            },
-          ]
-        }
-      >
-        <View>
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            }
+          }
+        >
           <
             fill="#FFFFFF"
             height={250}
             width={250}
           />
-          <View
-            style={
-              Object {
-                "position": "absolute",
-                "transform": Array [
-                  Object {
-                    "rotate": "360deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
         </View>
       </View>
     </View>
@@ -100,8 +106,9 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
         Object {
           "backgroundColor": "#000000",
           "flexDirection": "column",
-          "minHeight": 1334,
+          "flexGrow": 1,
           "paddingHorizontal": 25,
+          "paddingTop": 20,
         },
       ]
     }
@@ -111,7 +118,6 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "marginTop": 54,
           },
         ]
       }
@@ -126,47 +132,53 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
             },
             Object {
               "fontWeight": "normal",
+              "marginTop": 90,
               "textAlign": "center",
             },
           ]
         }
-        testID="com.ariesbifold:id/JustAMoment"
+        testID="com.ariesbifold:id/CredentialOnTheWay"
       >
         Connection.JustAMoment
       </Text>
-      <View
-        style={
-          Array [
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "marginTop": 20,
+          },
+          Object {
+            "alignItems": "center",
+            "justifyContent": "flex-end",
+            "minHeight": 250,
+          },
+        ]
+      }
+    >
+      <View>
+        <
+          fill="#FFFFFF"
+          height={250}
+          width={250}
+        />
+        <View
+          style={
             Object {
-              "marginTop": 40,
-            },
-          ]
-        }
-      >
-        <View>
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            }
+          }
+        >
           <
             fill="#FFFFFF"
             height={250}
             width={250}
           />
-          <View
-            style={
-              Object {
-                "position": "absolute",
-                "transform": Array [
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
         </View>
       </View>
     </View>
@@ -187,8 +199,9 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
         Object {
           "backgroundColor": "#000000",
           "flexDirection": "column",
-          "minHeight": 1334,
+          "flexGrow": 1,
           "paddingHorizontal": 25,
+          "paddingTop": 20,
         },
       ]
     }
@@ -198,7 +211,6 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "marginTop": 54,
           },
         ]
       }
@@ -213,121 +225,128 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
             },
             Object {
               "fontWeight": "normal",
+              "marginTop": 90,
               "textAlign": "center",
             },
           ]
         }
-        testID="com.ariesbifold:id/JustAMoment"
+        testID="com.ariesbifold:id/CredentialOnTheWay"
       >
         Connection.JustAMoment
       </Text>
-      <View
-        style={
-          Array [
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "marginTop": 20,
+          },
+          Object {
+            "alignItems": "center",
+            "justifyContent": "flex-end",
+            "minHeight": 250,
+          },
+        ]
+      }
+    >
+      <View>
+        <
+          fill="#FFFFFF"
+          height={250}
+          width={250}
+        />
+        <View
+          style={
             Object {
-              "marginTop": 40,
-            },
-          ]
-        }
-      >
-        <View>
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            }
+          }
+        >
           <
             fill="#FFFFFF"
             height={250}
             width={250}
           />
-          <View
-            style={
-              Object {
-                "position": "absolute",
-                "transform": Array [
-                  Object {
-                    "rotate": "360deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
         </View>
       </View>
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "marginTop": 20,
+            "textAlign": "center",
+          },
+        ]
+      }
+      testID="com.ariesbifold:id/TakingTooLong"
+    >
+      Connection.TakingTooLong
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "marginBottom": 20,
+            "marginTop": "auto",
+          },
+        ]
+      }
+    >
       <View
-        style={
-          Array [
-            Object {
-              "marginTop": 30,
-            },
-          ]
+        accessibilityLabel="Loading.BackToHome"
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
         }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "borderColor": "#42803E",
+            "borderRadius": 4,
+            "borderWidth": 2,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/BackToHome"
       >
         <Text
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#42803E",
                 "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              Object {
-                "marginBottom": 30,
+                "fontWeight": "bold",
                 "textAlign": "center",
               },
+              false,
             ]
           }
-          testID="com.ariesbifold:id/TakingTooLong"
         >
-          Connection.TakingTooLong
+          Loading.BackToHome
         </Text>
-        <View
-          accessibilityLabel="Loading.BackToHome"
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "borderColor": "#42803E",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "opacity": 1,
-              "padding": 16,
-            }
-          }
-          testID="com.ariesbifold:id/BackToHome"
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#42803E",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
-            }
-          >
-            Loading.BackToHome
-          </Text>
-        </View>
       </View>
     </View>
   </RNCSafeAreaView>

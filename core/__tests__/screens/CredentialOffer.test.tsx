@@ -10,6 +10,8 @@ import CredentialOffer from '../../App/screens/CredentialOffer'
 import { testIdWithKey } from '../../App/utils/testable'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.useFakeTimers('legacy')
+jest.spyOn(global, 'setTimeout')
 
 const props = { params: { visible: true, credentialId: '123' } }
 
