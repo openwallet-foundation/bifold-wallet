@@ -4,7 +4,7 @@ import { Dimensions, Modal, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useStore } from '../../contexts/store'
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 const { height } = Dimensions.get('window')
@@ -17,7 +17,7 @@ const ErrorModal: React.FC = () => {
   const onDismissModalTouched = () => {
     setModalVisible(false)
   }
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       minHeight: height,

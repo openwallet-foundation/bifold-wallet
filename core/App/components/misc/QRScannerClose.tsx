@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 interface Props {
   onPress?: () => void
@@ -12,7 +12,7 @@ interface Props {
 
 const CloseButton: React.FC<Props> = ({ onPress }) => {
   const { t } = useTranslation()
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       width: '100%',

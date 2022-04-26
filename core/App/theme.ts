@@ -222,7 +222,7 @@ export interface Theme {
   borderWidth: typeof borderWidth
 }
 
-export const defaultTheme: Theme = {
+export const theme: Theme = {
   ColorPallet,
   TextTheme,
   Buttons,

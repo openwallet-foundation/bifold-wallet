@@ -20,6 +20,7 @@ import { ToastType } from '../components/toast/BaseToast'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
@@ -27,7 +28,6 @@ import PinEnter from '../screens/PinEnter'
 import Splash from '../screens/Splash'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
-import { useThemeContext } from '../utils/themeContext'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -51,7 +51,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [agentInitDone, setAgentInitDone] = useState(false)
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
 
-  const theme = useThemeContext()
+  const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const ColorPallet = theme.ColorPallet
   const { pages, terms } = useConfiguration()

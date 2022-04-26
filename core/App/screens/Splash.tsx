@@ -8,9 +8,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { LocalStorageKeys } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { Onboarding as StoreOnboardingState } from '../types/state'
-import { useThemeContext } from '../utils/themeContext'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN
@@ -36,7 +36,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
 const Splash: React.FC = () => {
   const [, dispatch] = useStore()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flex: 1,

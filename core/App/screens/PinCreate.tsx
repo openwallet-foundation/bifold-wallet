@@ -8,8 +8,8 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
@@ -20,7 +20,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pinTwo, setPinTwo] = useState('')
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const style = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,

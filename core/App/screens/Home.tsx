@@ -12,10 +12,10 @@ import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { LocalStorageKeys } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { Credential as StoreCredentialState } from '../types/state'
-import { useThemeContext } from '../utils/themeContext'
 
 const { width } = Dimensions.get('window')
 const offset = 25
@@ -30,7 +30,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   ]
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const [, dispatch] = useStore()
   const styles = StyleSheet.create({
     container: {

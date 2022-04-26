@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
 import { hashCode, hashToRGBA } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 interface AvatarViewProps {
   name: string
@@ -11,7 +11,7 @@ interface AvatarViewProps {
 }
 
 const AvatarView: React.FC<AvatarViewProps> = ({ name, style = {} }) => {
-  const { TextTheme, ColorPallet } = useThemeContext()
+  const { TextTheme, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     avatar: {
       width: TextTheme.headingTwo.fontSize * 2,

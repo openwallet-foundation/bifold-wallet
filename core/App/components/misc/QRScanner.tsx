@@ -5,8 +5,8 @@ import { useWindowDimensions, Vibration, View, StyleSheet, Text } from 'react-na
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
-import { useThemeContext } from '../../utils/themeContext'
 
 import QRScannerClose from './QRScannerClose'
 import QRScannerTorch from './QRScannerTorch'
@@ -39,7 +39,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const portraitMode = height > width
   const { t } = useTranslation()
   const invalidQrCodes = new Set<string>()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       height: '100%',

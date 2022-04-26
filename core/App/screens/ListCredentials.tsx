@@ -6,7 +6,7 @@ import { FlatList, View } from 'react-native'
 import { CredentialListItem } from '../components'
 import EmptyList from '../components/misc/EmptyList'
 import { useStore } from '../contexts/store'
-import { useThemeContext } from '../utils/themeContext'
+import { useTheme } from '../contexts/theme'
 
 const ListCredentials: React.FC = () => {
   const credentials = [
@@ -15,7 +15,7 @@ const ListCredentials: React.FC = () => {
   ]
   const [state] = useStore()
   const { revoked } = state.credential
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
 
   return (
     <FlatList

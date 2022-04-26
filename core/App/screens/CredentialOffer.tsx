@@ -11,11 +11,11 @@ import Record from '../components/record/Record'
 import Title from '../components/texts/Title'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
 import CredentialOfferDecline from './CredentialOfferDecline'
@@ -35,7 +35,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
   const [didDeclineOffer, setDidDeclineOffer] = useState<boolean>(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-  const { TextTheme } = useThemeContext()
+  const { TextTheme } = useTheme()
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
