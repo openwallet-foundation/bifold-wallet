@@ -17,6 +17,7 @@ import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import Onboarding from '../screens/Onboarding'
@@ -26,7 +27,6 @@ import PinEnter from '../screens/PinEnter'
 import Splash from '../screens/Splash'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
-import { useConfigurationContext } from '../utils/configurationContext'
 import { useThemeContext } from '../utils/themeContext'
 
 import ConnectStack from './ConnectStack'
@@ -54,10 +54,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const theme = useThemeContext()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const ColorPallet = theme.ColorPallet
-  const {
-    onboarding: { pages },
-    terms,
-  } = useConfigurationContext()
+  const { pages, terms } = useConfiguration()
   const onTutorialCompleted = () => {
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,

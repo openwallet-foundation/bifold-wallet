@@ -1,11 +1,9 @@
 import { createContext, useContext } from 'react'
 
-import { pages } from '../screens/OnboardingPages'
+import OnboardingPages from '../screens/OnboardingPages'
 
 export interface ConfigurationContext {
-  onboarding: {
-    pages: typeof pages
-  }
+  pages: typeof OnboardingPages
   splash: React.FC
   terms: React.FC
 }
@@ -13,4 +11,4 @@ export interface ConfigurationContext {
 const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
 export const ConfigurationProvider = ConfigurationContext.Provider
 
-export const useConfigurationContext = () => useContext(ConfigurationContext)
+export const useConfiguration = () => useContext(ConfigurationContext)
