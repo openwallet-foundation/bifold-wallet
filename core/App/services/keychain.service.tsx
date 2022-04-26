@@ -4,18 +4,17 @@ import Keychain from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
 import { keychainOptions, keychainWalletIDOptions } from '../../configs/keychainConfig/KeychainConfig'
-import { KEYCHAIN_SERVICE_KEY, KEYCHAIN_SERVICE_ID, STORAGE_KEY_SALT } from '../constants'
+import { keychainRandKeyOptions } from '../config/KeychainConfig'
+import { KEYCHAIN_SERVICE_KEY, STORAGE_KEY_SALT } from '../constants'
 import { WalletSecret } from '../types/security'
 
 import { hashPin } from './kdf.service'
 
-const serviceKey = KEYCHAIN_SERVICE_KEY
-const serviceId = KEYCHAIN_SERVICE_ID
-const userNameKey = 'Wallet Key'
-const userNameId = 'Wallet Id'
+const userNameKey = 'WalletKey'
+const userNameRandKey = 'RandKey'
 
 /**
- * This function will take the user input pin (First login) and does the following
+ * This function will take the user inpzut pin (First login) and does the following
  * - generates wallet ID,
  * - Derive the wallet Key from user Pin using Argon2 KDF
  * - Saves wallet ID/Key using different storage flows to be able to have different security flows to unlock the wallet
@@ -27,30 +26,36 @@ const userNameId = 'Wallet Id'
 
 export async function setGenericPassword(pincode: string): Promise<WalletSecret | undefined> {
   try {
+    //Deriving a secret from entered PIN
     const randomSalt = uuid.v4().toString()
-    const encodedHash = await generateKeyForPin(pincode, randomSalt)
+    const pinSecret = await generateKeyForPin(pincode, randomSalt)
+
+    //Creating random keys for wallet ID & Key
     const randomId = uuid.v4().toString()
+
+    //Creating the wallet secret object to be saved in keychain
     const keychainData: WalletSecret = {
       walletId: randomId,
-      walletKey: encodedHash,
+      walletKey: pinSecret,
     }
 
-    //Saving hashed key
-    const keychainProps: Keychain.Options = {
-      service: serviceKey,
-      accessControl: keychainOptions.accessControl,
-      accessible: keychainOptions.accessible,
+    //Creating random key to flag biometrics
+    const randomKey = uuid.v4().toString()
+
+    //Saving key (pin derived key, wallet ID, wallet Key) to keychain (No biometrics)
+    await Keychain.setGenericPassword(userNameKey, JSON.stringify(keychainData))
+
+    //Saving biometryFlag to keychain (used to trigger biometrics only)
+    const keychainProps3: Keychain.Options = {
+      service: keychainRandKeyOptions.service,
+      accessControl: keychainRandKeyOptions.accessControl,
+      accessible: keychainRandKeyOptions.accessible,
     }
     if (Platform.OS === 'android') {
-      keychainProps.securityLevel = keychainOptions.securityLevel
-      keychainProps.storage = keychainOptions.storage
+      keychainProps3.securityLevel = keychainRandKeyOptions.securityLevel
+      keychainProps3.storage = keychainRandKeyOptions.storage
     }
-
-    //Saving key to keychain
-    await Keychain.setGenericPassword(userNameKey, encodedHash, keychainProps) // user name copied from Bifold code
-
-    //Saving wallet ID to Async Storage (Cannot save to keychain because of simultaneous access crash)
-    await AsyncStorage.setItem(KEYCHAIN_SERVICE_ID, randomId)
+    await Keychain.setGenericPassword(userNameRandKey, randomKey, keychainProps3)
 
     //Saving Salt
     await AsyncStorage.setItem(STORAGE_KEY_SALT, randomSalt)
@@ -67,15 +72,13 @@ export async function setGenericPassword(pincode: string): Promise<WalletSecret 
  *
  * @returns saved wallet key after biometrics check
  * */
-export async function getWalletKey(): Promise<string | undefined> {
-  return Keychain.getGenericPassword({
-    service: serviceKey,
-  })
+export async function getWalletKey(): Promise<WalletSecret | undefined> {
+  return Keychain.getGenericPassword()
     .then((result: any | { service: string; username: string; password: string }) => {
-      return result.password
+      return JSON.parse(result.password)
     })
     .catch(async (error) => {
-      throw new Error(`Error[getWalletKey] = ${error}`)
+      throw new Error(`[82]found key error:${error}`)
     })
 }
 
@@ -85,7 +88,8 @@ export async function getWalletKey(): Promise<string | undefined> {
  * @returns saved wallet ID
  * */
 export async function getStoredWalletId(): Promise<string | null> {
-  return AsyncStorage.getItem(KEYCHAIN_SERVICE_ID)
+  // return AsyncStorage.getItem(KEYCHAIN_SERVICE_ID)
+  return null
 }
 
 /**
@@ -93,8 +97,8 @@ export async function getStoredWalletId(): Promise<string | null> {
  *
  * */
 export async function resetStorage() {
-  await Keychain.resetGenericPassword({ service: serviceId })
-  return Keychain.resetGenericPassword({ service: serviceKey })
+  // await Keychain.resetGenericPassword({ service: serviceId })
+  // return Keychain.resetGenericPassword({ service: serviceKey })
 }
 
 /**

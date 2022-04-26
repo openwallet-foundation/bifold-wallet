@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
+import { useAuth } from '../providers/AuthProvider'
 import { Context } from '../store/Store'
 import { DispatchAction } from '../store/reducer'
 import { testIdWithKey } from '../utils/testable'
@@ -19,6 +20,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
   const [, dispatch] = useContext(Context)
+  const { setAppPin } = useAuth()
   const { t } = useTranslation()
   const { ColorPallet } = useThemeContext()
   const style = StyleSheet.create({
@@ -31,16 +33,23 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     const passcode = JSON.stringify(pin)
     const description = t('PinCreate.UserAuthenticationPin')
     try {
-      await Keychain.setGenericPassword(description, passcode, {
-        service: 'passcode',
-      })
+      // await Keychain.setGenericPassword(description, passcode, {
+      //   service: 'passcode',
+      // })
+      console.log('here3')
+      await setAppPin(pin)
+      console.log('here4')
+      //This will trigger initAgent
+      setAuthenticated(true)
 
+      //This will trigger navigation to internal pages
       dispatch({
         type: DispatchAction.SetDidCreatePIN,
         payload: [{ DidCreatePIN: true }],
       })
     } catch (e) {
       // TODO:(jl)
+      Alert.alert(`${e}`)
     }
   }
 
@@ -51,7 +60,6 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       Alert.alert(t('PinCreate.PinsEnteredDoNotMatch'))
     } else {
       passcodeCreate(x)
-      setAuthenticated(true)
     }
   }
 
