@@ -118,13 +118,11 @@ exports[`displays a home screen renders correctly 1`] = `
             </View>
             <Text
               style={
-                Array [
                   Object {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "normal",
-                  },
-                ]
+                  }
               }
               testID="com.ariesbifold:id/NoNewUpdates"
             >

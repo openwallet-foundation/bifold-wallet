@@ -306,6 +306,15 @@ export const ListItems = StyleSheet.create({
   credentialDetails: {
     ...TextTheme.caption,
   },
+  credentialOfferBackground: {
+    backgroundColor: ColorPallet.brand.primaryBackground,
+  },
+  credentialOfferTitle: {
+    ...TextTheme.headingThree,
+  },
+  credentialOfferDetails: {
+    ...TextTheme.normal,
+  },
   contactBackground: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
   },

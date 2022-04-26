@@ -36,7 +36,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
   }
   const styles = StyleSheet.create({
     container: {
-      ...ListItems.credentialBackground,
+      ...ListItems.credentialOfferBackground,
       flexGrow: 1,
     },
     image: {
@@ -102,7 +102,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
             <>
               <View style={[styles.messageContainer]}>
                 <Text
-                  style={[ListItems.credentialTitle, styles.messageText]}
+                  style={[ListItems.credentialOfferTitle, styles.messageText]}
                   testID={testIdWithKey('CredentialDeclined')}
                 >
                   {t('CredentialOffer.CredentialDeclined')}
