@@ -11,16 +11,16 @@ import HighlightTextBox from '../components/texts/HighlightTextBox'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 const Terms: React.FC = () => {
   const [, dispatch] = useStore()
   const [checked, setChecked] = useState(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const onSubmitPressed = () => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,

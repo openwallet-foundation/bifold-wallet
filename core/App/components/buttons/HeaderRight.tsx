@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import Arrow from '../../assets/icons/large-arrow.svg'
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 interface HeaderButtonProps {
   title: string
@@ -14,7 +14,7 @@ interface HeaderButtonProps {
 
 const HeaderRight: React.FC<HeaderButtonProps> = ({ title, testID, accessibilityLabel, onPress, disabled = false }) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const style = StyleSheet.create({
     container: {
       flexDirection: 'row',

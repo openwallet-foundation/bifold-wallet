@@ -5,16 +5,16 @@ import {
   ConfigurationProvider,
   StoreProvider,
   ThemeProvider,
-  defaultTheme as theme,
+  theme,
   initLanguages,
   initStoredLanguage,
   translationResources,
+  ErrorModal,
+  toastConfig,
   RootStack,
   OnboardingPages,
   Splash,
-  Terms,
-  ErrorModal,
-  toastConfig,
+  Terms
 } from 'aries-bifold'
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'react-native'

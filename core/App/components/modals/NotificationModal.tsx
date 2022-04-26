@@ -6,9 +6,9 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTheme } from '../../contexts/theme'
 import { HomeStackParams, Screens } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 import Button, { ButtonType } from '../buttons/Button'
 
 interface NotificationModalProps {
@@ -40,7 +40,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flex: 1,

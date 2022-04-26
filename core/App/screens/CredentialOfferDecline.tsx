@@ -7,10 +7,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CredentialDeclined from '../assets/img/credential-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
+import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 export interface CredentialOfferDeclineProps {
   visible: boolean
@@ -28,7 +28,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const navigation = useNavigation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const imageDisplayOptions = {
     fill: ColorPallet.notification.infoText,
     height: 250,

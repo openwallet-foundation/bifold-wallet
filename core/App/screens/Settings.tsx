@@ -6,15 +6,15 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { SafeAreaScrollView } from '../components'
+import { useTheme } from '../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t } = useTranslation()
-  const { borderRadius, ColorPallet, TextTheme } = useThemeContext()
+  const { borderRadius, ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       width: '100%',
