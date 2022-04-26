@@ -34,16 +34,16 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [timer, setTimer] = useState<NodeJS.Timeout>()
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ListItems } = useThemeContext()
   const imageDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ListItems.credentialIconColor.color,
     height: 250,
     width: 250,
   }
   const styles = StyleSheet.create({
     container: {
+      ...ListItems.credentialBackground,
       flexGrow: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
     },
     image: {
       marginVertical: 66,
@@ -107,7 +107,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       <SafeAreaView style={[styles.container]}>
         {credentialDeliveryStatus === DeliveryStatus.Pending && (
           <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+            <Text style={[ListItems.credentialTitle, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
               {t('CredentialOffer.CredentialOnTheWay')}
             </Text>
             <CredentialPending style={[styles.image]} {...imageDisplayOptions} />
@@ -117,7 +117,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
         {credentialDeliveryStatus === DeliveryStatus.Completed && (
           <View style={[styles.messageContainer]}>
             <Text
-              style={[TextTheme.headingThree, styles.messageText]}
+              style={[ListItems.credentialTitle, styles.messageText]}
               testID={testIdWithKey('CredentialAddedToYourWallet')}
             >
               {t('CredentialOffer.CredentialAddedToYourWallet')}
@@ -130,7 +130,10 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           <View style={[styles.controlsContainer]}>
             {credentialDeliveryStatus !== DeliveryStatus.Completed && (
               <>
-                <Text style={[TextTheme.normal, styles.controlsMessageText]} testID={testIdWithKey('TakingTooLong')}>
+                <Text
+                  style={[ListItems.recordAttributeText, styles.controlsMessageText]}
+                  testID={testIdWithKey('TakingTooLong')}
+                >
                   {t('Connection.TakingTooLong')}
                 </Text>
                 <Button

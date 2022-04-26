@@ -47,12 +47,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       marginBottom: 20,
     },
     linkContainer: {
-      minHeight: TextTheme.normal.fontSize,
+      minHeight: HomeTheme.link.fontSize,
       marginTop: 10,
     },
     link: {
-      ...TextTheme.normal,
-      color: ColorPallet.brand.link,
+      ...HomeTheme.link,
     },
   })
 

@@ -296,7 +296,7 @@ export const Buttons = StyleSheet.create({
   },
 })
 
-const ListItems = StyleSheet.create({
+export const ListItems = StyleSheet.create({
   credentialBackground: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
   },
@@ -309,11 +309,49 @@ const ListItems = StyleSheet.create({
   contactBackground: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
   },
+  credentialIconColor: {
+    color: ColorPallet.notification.infoText,
+  },
+  contactTitle: {
+    color: ColorPallet.grayscale.white,
+  },
+  contactDate: {
+    color: ColorPallet.grayscale.white,
+    marginTop: 10,
+  },
   contactIconBackground: {
     backgroundColor: ColorPallet.brand.primary,
   },
   contactIcon: {
     color: ColorPallet.grayscale.white,
+  },
+  recordAttributeLabel: {
+    ...TextTheme.normal,
+  },
+  recordContainer: {
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+  },
+  recordBorder: {
+    borderBottomColor: ColorPallet.brand.primaryBackground,
+  },
+  recordLink: {
+    color: ColorPallet.brand.link,
+  },
+  recordAttributeText: {
+    ...TextTheme.normal,
+  },
+  avatarText: {
+    ...TextTheme.headingTwo,
+    fontWeight: 'normal',
+  },
+  avatarCircle: {
+    borderRadius: TextTheme.headingTwo.fontSize,
+    borderColor: TextTheme.headingTwo.color,
+    width: TextTheme.headingTwo.fontSize * 2,
+    height: TextTheme.headingTwo.fontSize * 2,
+  },
+  emptyList: {
+    ...TextTheme.normal,
   },
 })
 
@@ -344,6 +382,9 @@ export const TabTheme = {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  focusTabActiveTintColor: {
+    backgroundColor: ColorPallet.brand.secondary,
+  },
 }
 
 export const NavigationTheme = {
@@ -371,6 +412,10 @@ export const HomeTheme = StyleSheet.create({
   noNewUpdatesText: {
     ...TextTheme.normal,
     color: ColorPallet.notification.infoText,
+  },
+  link: {
+    ...TextTheme.normal,
+    color: ColorPallet.brand.link,
   },
 })
 
@@ -428,6 +473,41 @@ export const ChatTheme = {
   sendDisabled: ColorPallet.brand.primaryDisabled,
 }
 
+export const OnboardingTheme = {
+  container: {
+    backgroundColor: ColorPallet.brand.primaryBackground,
+  },
+  carouselContainer: {
+    backgroundColor: ColorPallet.brand.primaryBackground,
+  },
+  pagerDot: {
+    borderColor: ColorPallet.brand.primary,
+  },
+  pagerDotActive: {
+    color: ColorPallet.brand.primary,
+  },
+  pagerDotInactive: {
+    color: ColorPallet.brand.secondary,
+  },
+  pagerNavigationButton: {
+    color: ColorPallet.brand.primary,
+  },
+  headerTintColor: ColorPallet.grayscale.white,
+  headerText: {
+    color: ColorPallet.notification.infoText,
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+  bodyText: {
+    fontSize: 18,
+    fontWeight: 'normal',
+    color: ColorPallet.notification.infoText,
+  },
+  imageDisplayOptions: {
+    fill: ColorPallet.notification.infoText,
+  },
+}
+
 export interface Theme {
   ColorPallet: ColorPallet
   TextTheme: TextTheme
@@ -439,6 +519,7 @@ export interface Theme {
   HomeTheme: any
   SettingsTheme: any
   ChatTheme: any
+  OnboardingTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -455,6 +536,7 @@ export const defaultTheme: Theme = {
   HomeTheme,
   SettingsTheme,
   ChatTheme,
+  OnboardingTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,

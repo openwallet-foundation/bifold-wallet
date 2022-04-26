@@ -27,7 +27,7 @@ const Record: React.FC<RecordProps> = ({
 }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ListItems, TextTheme } = useThemeContext()
   const styles = StyleSheet.create({
     linkContainer: {
       flexDirection: 'row',
@@ -38,7 +38,6 @@ const Record: React.FC<RecordProps> = ({
     link: {
       minHeight: TextTheme.normal.fontSize,
       paddingVertical: 2,
-      color: ColorPallet.brand.link,
     },
   })
   const resetShown = (): void => {
@@ -64,7 +63,7 @@ const Record: React.FC<RecordProps> = ({
                 accessible={true}
                 accessibilityLabel={t('Record.HideAll')}
               >
-                <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>{t('Record.HideAll')}</Text>
+                <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
               </TouchableOpacity>
             </View>
           ) : null}

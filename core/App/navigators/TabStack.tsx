@@ -56,11 +56,7 @@ const TabStack: React.FC = () => {
           name={TabStacks.ConnectStack}
           options={{
             tabBarIcon: () => (
-              <View
-                style={{
-                  ...TabTheme.focusTabIconStyle,
-                }}
-              >
+              <View style={TabTheme.focusTabIconStyle}>
                 <Icon
                   name="qrcode-scan"
                   color={TabTheme.tabBarInactiveTintColor}
