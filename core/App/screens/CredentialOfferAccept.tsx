@@ -42,7 +42,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }
   const styles = StyleSheet.create({
     container: {
-      ...ListItems.credentialBackground,
+      ...ListItems.credentialOfferBackground,
       flexGrow: 1,
     },
     image: {
@@ -107,7 +107,10 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       <SafeAreaView style={[styles.container]}>
         {credentialDeliveryStatus === DeliveryStatus.Pending && (
           <View style={[styles.messageContainer]}>
-            <Text style={[ListItems.credentialTitle, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+            <Text
+              style={[ListItems.credentialOfferTitle, styles.messageText]}
+              testID={testIdWithKey('CredentialOnTheWay')}
+            >
               {t('CredentialOffer.CredentialOnTheWay')}
             </Text>
             <CredentialPending style={[styles.image]} {...imageDisplayOptions} />
@@ -117,7 +120,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
         {credentialDeliveryStatus === DeliveryStatus.Completed && (
           <View style={[styles.messageContainer]}>
             <Text
-              style={[ListItems.credentialTitle, styles.messageText]}
+              style={[ListItems.credentialOfferTitle, styles.messageText]}
               testID={testIdWithKey('CredentialAddedToYourWallet')}
             >
               {t('CredentialOffer.CredentialAddedToYourWallet')}
@@ -131,7 +134,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
             {credentialDeliveryStatus !== DeliveryStatus.Completed && (
               <>
                 <Text
-                  style={[ListItems.recordAttributeText, styles.controlsMessageText]}
+                  style={[ListItems.credentialOfferDetails, styles.controlsMessageText]}
                   testID={testIdWithKey('TakingTooLong')}
                 >
                   {t('Connection.TakingTooLong')}

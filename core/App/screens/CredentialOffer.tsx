@@ -42,7 +42,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
       paddingVertical: 16,
     },
     headerText: {
-      ...ListItems.credentialAttributesTitle,
+      ...ListItems.recordAttributeLabel,
       flexShrink: 1,
     },
     footerButton: {
