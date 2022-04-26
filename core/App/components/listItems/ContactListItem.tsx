@@ -41,9 +41,6 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       borderTopRightRadius: 15,
       borderBottomRightRadius: 15,
     },
-    date: {
-      marginTop: 10,
-    },
   })
   return (
     <TouchableOpacity
@@ -55,8 +52,8 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     >
       <View key={contact.id} style={styles.outerContainer}>
         <View style={styles.textContainer}>
-          <Title>{contact?.alias || contact?.invitation?.label}</Title>
-          <Text style={styles.date}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
+          <Title style={ListItems.contactTitle}>{contact?.alias || contact?.invitation?.label}</Title>
+          <Text style={ListItems.contactDate}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
         </View>
         <View style={styles.iconContainer}>
           <Icon name="message" size={32} color={ListItems.contactIcon.color} />

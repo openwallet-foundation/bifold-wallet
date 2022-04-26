@@ -10,7 +10,7 @@ export interface TextBoxProps {
 const offset = 10
 
 const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, OnboardingTheme } = useThemeContext()
   const style = StyleSheet.create({
     icon: {
       marginRight: offset,
@@ -25,7 +25,7 @@ const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
       width: 8,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...OnboardingTheme.bodyText,
       flexShrink: 1,
     },
   })
