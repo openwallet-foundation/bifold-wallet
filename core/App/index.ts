@@ -12,6 +12,7 @@ export { testIdWithKey } from './utils/testable'
 export { default as toastConfig } from './components/toast/ToastConfig'
 export { initLanguages, initStoredLanguage, defaultTranslationResources } from './localization'
 import RootStack from './navigators/RootStack'
+import AuthProvider from './providers/AuthProvider'
 export { ColorPallet } from './theme'
 export { default as indyLedgers } from '../configs/ledgers/indy'
 export { default as ErrorModal } from './components/modals/ErrorModal'
@@ -34,6 +35,17 @@ export type { Onboarding as OnboardingState } from './types/state'
 export { Screens } from './types/navigators'
 export type { AuthenticateStackParams } from './types/navigators'
 
-export { InfoTextBox, CheckBoxRow, Button, ButtonType, StoreProvider, StoreContext, RootStack, Agent, AgentProvider }
+export {
+  AuthProvider,
+  InfoTextBox,
+  CheckBoxRow,
+  Button,
+  ButtonType,
+  StoreProvider,
+  StoreContext,
+  RootStack,
+  Agent,
+  AgentProvider,
+}
 
 export type { OnboardingStyleSheet, StoreProviderProps }

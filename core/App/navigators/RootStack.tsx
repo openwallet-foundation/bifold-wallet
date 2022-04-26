@@ -17,6 +17,7 @@ import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { useAuth } from '../providers/AuthProvider'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
@@ -36,6 +37,7 @@ import NotificationStack from './NotificationStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { createDefaultStackOptions } from './defaultStackOptions'
+import { Alert } from 'react-native'
 
 interface RootStackProps {
   setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
@@ -46,6 +48,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [state, dispatch] = useContext(Context)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const { getWalletIdSecret } = useAuth()
 
   const [authenticated, setAuthenticated] = useState(false)
   const [agentInitDone, setAgentInitDone] = useState(false)
@@ -82,12 +85,20 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     setInitAgentInProcess(true)
 
     try {
+      const walletSecret = await getWalletIdSecret()
+
+      if (!walletSecret?.walletId || !walletSecret.walletKey) {
+        Alert.alert('Error', 'Cannot find wallet id/secret!')
+        Toast.hide()
+        return
+      }
+
       const newAgent = new Agent(
         {
           label: 'Aries Bifold',
           mediatorConnectionsInvite: Config.MEDIATOR_URL,
           mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-          walletConfig: { id: 'wallet4', key: '123' },
+          walletConfig: { id: walletSecret.walletId, key: walletSecret.walletKey },
           autoAcceptConnections: true,
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),
