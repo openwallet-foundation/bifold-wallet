@@ -22,12 +22,12 @@ exports[`AvatarView Component Renders correctly 1`] = `
 >
   <Text
     style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 32,
-          "fontWeight": "normal",
-        }
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 32,
+        "fontWeight": "normal",
       }
+    }
     testID="com.ariesbifold:id/AvatarName"
   >
     B
