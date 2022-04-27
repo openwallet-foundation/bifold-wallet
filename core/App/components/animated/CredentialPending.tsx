@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { View, StyleSheet, Animated } from 'react-native'
 
-import CheckInCircle from '../../assets/img/check-in-circle.svg'
 import CredentialCard from '../../assets/img/credential-card.svg'
 import WalletBack from '../../assets/img/wallet-back.svg'
 import WalletFront from '../../assets/img/wallet-front.svg'
@@ -16,7 +15,7 @@ const ConnectionLoading: React.FC = () => {
   }
   const fadeTiming: Animated.TimingAnimationConfig = {
     toValue: 1,
-    duration: 600,
+    duration: 400,
     useNativeDriver: true,
   }
   const style = StyleSheet.create({
@@ -43,22 +42,19 @@ const ConnectionLoading: React.FC = () => {
     const animationDelay = 300
 
     setTimeout(() => {
-      Animated.sequence([Animated.timing(tranAnim, slideTiming), Animated.timing(fadeAnim, fadeTiming)]).start()
+      Animated.loop(
+        Animated.sequence([Animated.timing(fadeAnim, fadeTiming), Animated.timing(tranAnim, slideTiming)])
+      ).start()
     }, animationDelay)
   }, [])
 
   return (
     <View style={[style.container]}>
-      <Animated.View style={[{ opacity: fadeAnim }, style.check]}>
-        <CheckInCircle />
+      <WalletBack style={[style.wallet]} {...imageDisplayOptions} />
+      <Animated.View style={[{ opacity: fadeAnim, transform: [{ translateY: tranAnim }] }]}>
+        <CredentialCard style={[style.card]} {...imageDisplayOptions} />
       </Animated.View>
-      <View>
-        <WalletBack style={[style.wallet]} {...imageDisplayOptions} />
-        <Animated.View style={[{ transform: [{ translateY: tranAnim }] }]}>
-          <CredentialCard style={[style.card]} {...imageDisplayOptions} />
-        </Animated.View>
-        <WalletFront style={[style.wallet]} {...imageDisplayOptions} />
-      </View>
+      <WalletFront style={[style.wallet]} {...imageDisplayOptions} />
     </View>
   )
 }
