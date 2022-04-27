@@ -12,7 +12,7 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
   transformIgnorePatterns: ['/node_modules/(?!.*react-native.*)'],
-  testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js|jsx)$',
-  testPathIgnorePatterns: ['\\.snap$', '<rootDir>/node_modules/'],
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$',
+  testPathIgnorePatterns: ['\\.snap$', '<rootDir>/node_modules/', '<rootDir>/__tests__/util/'],
   cacheDirectory: '.jest/cache',
 }
