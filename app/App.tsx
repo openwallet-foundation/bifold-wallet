@@ -14,35 +14,35 @@ import {
   RootStack,
   OnboardingPages,
   Splash,
-  Terms
-} from 'aries-bifold'
-import React, { useEffect, useState } from 'react'
-import { StatusBar } from 'react-native'
-import SplashScreen from 'react-native-splash-screen'
-import Toast from 'react-native-toast-message'
+  Terms,
+} from "aries-bifold";
+import React, { useEffect, useState } from "react";
+import { StatusBar } from "react-native";
+import SplashScreen from "react-native-splash-screen";
+import Toast from "react-native-toast-message";
 
 const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
   splash: Splash,
   terms: Terms,
-}
+};
 
-initLanguages(translationResources)
+initLanguages(translationResources);
 
 const App = () => {
-  initStoredLanguage()
-  const [agent, setAgent] = useState<Agent | undefined>(undefined)
+  initStoredLanguage();
+  const [agent, setAgent] = useState<Agent | undefined>(undefined);
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our
     // RN version can be displayed.
-    SplashScreen.hide()
-  }, [])
+    SplashScreen.hide();
+  }, []);
 
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
-        <ThemeProvider value={theme}>
+        <ThemeProvider value={Theme}>
           <ConfigurationProvider value={defaultConfiguration}>
             <StatusBar
               barStyle="light-content"
@@ -57,7 +57,7 @@ const App = () => {
         </ThemeProvider>
       </AgentProvider>
     </StoreProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;

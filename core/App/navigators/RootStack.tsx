@@ -25,7 +25,6 @@ import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import Splash from '../screens/Splash'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
@@ -54,7 +53,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const ColorPallet = theme.ColorPallet
-  const { pages, terms } = useConfiguration()
+  const { pages, terms, splash } = useConfiguration()
   const onTutorialCompleted = () => {
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
@@ -158,9 +157,10 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const onboardingStack = (setAuthenticated: StateFn) => {
     const Stack = createStackNavigator()
     const carousel = createCarouselStyle(theme)
+
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash} component={Splash} />
+        <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
