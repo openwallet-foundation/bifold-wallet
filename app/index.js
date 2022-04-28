@@ -33,11 +33,11 @@ const navigationTheme = {
 }
 
 const Base = () => {
-	return (
-		<NavigationContainer theme={navigationTheme}>
-			<App />
-		</NavigationContainer>
-	)
+  return (
+    <NavigationContainer theme={navigationTheme}>
+      <App />
+    </NavigationContainer>
+  )
 }
 
 AppRegistry.registerComponent(appName, () => Base)
