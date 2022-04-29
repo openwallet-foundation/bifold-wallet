@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="43.38" height="43.38" viewBox="0 0 43.38 43.38">
-  <path id="Path_525" data-name="Path 525" d="M123.628,60.639a19.69,19.69,0,1,1-19.69-19.69,19.69,19.69,0,0,1,19.69,19.69" transform="translate(-84.248 -40.949)" fill="#dff0d8"/>
-  <path id="Path_527" data-name="Path 527" d="M92.811,59.264l7.079,7.079L112.464,51.49" transform="translate(-80.0 -36.5)" fill="none" stroke="#2d4821" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
-  <circle id="Ellipse_64" data-name="Ellipse 64" cx="19.69" cy="19.69" r="19.69" transform="translate(2 2)" fill="none" stroke="#2d4821" stroke-miterlimit="10" stroke-width="4"/>
-</svg>
-
-
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.5 35.5"><defs><style>.cls-1{fill:#dff0d8;}.cls-2{fill:#2d4821;}</style></defs><circle class="cls-1" cx="17.75" cy="17.75" r="15.75"/><path class="cls-2" d="M17.75,35.5A17.75,17.75,0,1,1,35.5,17.75,17.77,17.77,0,0,1,17.75,35.5Zm0-31.5A13.75,13.75,0,1,0,31.5,17.75,13.77,13.77,0,0,0,17.75,4Z"/><path class="cls-2" d="M16.23,26.42a2,2,0,0,1-1.42-.58L9.15,20.17A2,2,0,0,1,12,17.35l4.12,4.12,8.66-10.22a2,2,0,1,1,3,2.58L17.75,25.71a2,2,0,0,1-1.44.71Z"/></svg>
