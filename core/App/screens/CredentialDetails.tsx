@@ -94,7 +94,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       header={() => (
         <>
           {isRevoked && !isCredentialRevokedMessageHidden ? (
-            <View style={{ marginHorizontal: -10, marginTop: 16 }}>
+            <View style={{ marginTop: 16 }}>
               <InfoBox
                 notificationType={InfoBoxType.Warn}
                 title={t('CredentialDetails.CredentialRevokedMessageTitle')}
