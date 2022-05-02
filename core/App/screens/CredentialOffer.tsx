@@ -148,6 +148,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
         />
         <CredentialOfferDecline
           visible={declinedModalVisible}
+          credentialId={credentialId}
           didDeclineOffer={didDeclineOffer}
           onDeclinedConformationTouched={onDeclinedConformationTouched}
           onGoBackTouched={onGoBackTouched}

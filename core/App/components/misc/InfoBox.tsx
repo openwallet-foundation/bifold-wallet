@@ -44,7 +44,6 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       borderRadius: 5,
       borderWidth: 1,
       padding: 10,
-      marginHorizontal: 25,
       minWidth: width - 2 * 25,
     },
     headerContainer: {
