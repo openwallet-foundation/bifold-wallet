@@ -5,12 +5,12 @@ import CredentialCard from '../../assets/img/credential-card.svg'
 import WalletBack from '../../assets/img/wallet-back.svg'
 import WalletFront from '../../assets/img/wallet-front.svg'
 
-const ConnectionLoading: React.FC = () => {
+const CredentialPending: React.FC = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current
-  const tranAnim = useRef(new Animated.Value(-105)).current
+  const tranAnim = useRef(new Animated.Value(-90)).current
   const slideTiming: Animated.TimingAnimationConfig = {
     toValue: -15,
-    duration: 2000,
+    duration: 1400,
     useNativeDriver: true,
   }
   const fadeTiming: Animated.TimingAnimationConfig = {
@@ -22,21 +22,20 @@ const ConnectionLoading: React.FC = () => {
     container: {
       flexDirection: 'column',
     },
-    wallet: {
+    back: {
       backgroundColor: 'transparent',
       position: 'absolute',
+      marginTop: -30,
+    },
+    front: {
+      backgroundColor: 'transparent',
     },
     card: {
       backgroundColor: 'transparent',
-    },
-    check: {
-      alignItems: 'center',
+      position: 'absolute',
+      marginLeft: 10,
     },
   })
-  const imageDisplayOptions = {
-    height: 140,
-    width: 140,
-  }
 
   useEffect(() => {
     const animationDelay = 300
@@ -50,13 +49,13 @@ const ConnectionLoading: React.FC = () => {
 
   return (
     <View style={[style.container]}>
-      <WalletBack style={[style.wallet]} {...imageDisplayOptions} />
+      <WalletBack style={[style.back]} {...{ height: 110, width: 110 }} />
       <Animated.View style={[{ opacity: fadeAnim, transform: [{ translateY: tranAnim }] }]}>
-        <CredentialCard style={[style.card]} {...imageDisplayOptions} />
+        <CredentialCard style={[style.card]} {...{ height: 110, width: 110 }} />
       </Animated.View>
-      <WalletFront style={[style.wallet]} {...imageDisplayOptions} />
+      <WalletFront style={[style.front]} {...{ height: 140, width: 140 }} />
     </View>
   )
 }
 
-export default ConnectionLoading
+export default CredentialPending
