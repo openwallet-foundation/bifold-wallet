@@ -4,7 +4,7 @@ const translation = {
     "EnterPin": "Enter Pin",
     "6DigitPin": "6 Digit Pin",
     "Submit": "Submit",
-    "NoneYet!": "None yet!",
+    "NoneYet!": "Your wallet is empty. Your accepted credentials will be added here.",
     "Cancel": "Cancel",
     "Confirm": "Confirm",
     "Accept": "Accept",

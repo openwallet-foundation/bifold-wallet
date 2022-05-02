@@ -135,7 +135,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }, [proof])
 
   const anyUnavailable = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
-    Object.values(attributes).some((credentials) => !credentials?.length)
+    !Object.values(attributes).length || Object.values(attributes).some((credentials) => !credentials?.length)
 
   const anyRevoked = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
     Object.values(attributes).some((credentials) => credentials?.every((credential) => credential.revoked))

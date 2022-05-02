@@ -109,7 +109,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       )}
       footer={() => (
         <View style={{ marginBottom: 30 }}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             accessible={true}
             accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
             testID={testIdWithKey('RemoveFromWallet')}
@@ -118,7 +118,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
               {t('CredentialDetails.RemoveFromWallet')}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )}
       attributes={credential.credentialAttributes}
