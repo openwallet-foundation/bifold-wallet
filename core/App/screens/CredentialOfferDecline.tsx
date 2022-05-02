@@ -1,3 +1,4 @@
+import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CredentialDeclined from '../assets/img/credential-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
+import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
@@ -15,6 +17,7 @@ import { testIdWithKey } from '../utils/testable'
 export interface CredentialOfferDeclineProps {
   visible: boolean
   didDeclineOffer: boolean
+  credentialId: string
   onGoBackTouched: GenericFn
   onDeclinedConformationTouched: GenericFn
 }
@@ -22,9 +25,11 @@ export interface CredentialOfferDeclineProps {
 const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
   visible,
   didDeclineOffer,
+  credentialId,
   onGoBackTouched,
   onDeclinedConformationTouched,
 }) => {
+  const credential = useCredentialById(credentialId)
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const navigation = useNavigation()
@@ -38,12 +43,12 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
     container: {
       flexGrow: 1,
       backgroundColor: ColorPallet.brand.primaryBackground,
+      paddingHorizontal: 25,
     },
     image: {
       marginVertical: 66,
     },
     messageContainer: {
-      marginHorizontal: 25,
       marginTop: 25,
       alignItems: 'center',
     },
@@ -52,11 +57,12 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
       textAlign: 'center',
       marginTop: 90,
     },
-    controlsContainer: {
-      marginHorizontal: 25,
-      marginTop: 25,
-    },
+    controlsContainer: {},
   })
+
+  if (!credential) {
+    throw new Error('Unable to fetch credential from AFJ')
+  }
 
   const onDoneTouched = () => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
@@ -77,6 +83,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
                 title={'Are you sure you want to decline this credential?'}
                 message={'In order to receive the credential offer again, you will need to reapply with the issuer.'}
               />
+              <CredentialCard credential={credential} style={{ marginVertical: 25 }} />
               <View style={[styles.controlsContainer]}>
                 <Button
                   title={t('CredentialOffer.ConfirmDeclineCredential')}

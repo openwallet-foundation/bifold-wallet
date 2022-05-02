@@ -64,7 +64,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    if (timerDidFire || didProcessNotification) {
+    if (didProcessNotification) {
       return
     }
 
