@@ -48,7 +48,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             style={styles.row}
             onPress={() => navigation.navigate(Screens.Language)}
           >
-            <Text style={[TextTheme.normal]}>{t('Settings.Language')}</Text>
+            <Text style={[TextTheme.caption]}>{t('Settings.Language')}</Text>
             <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
           </TouchableOpacity>
         </View>
@@ -56,11 +56,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         <Text style={styles.groupHeader}>{t('Settings.AboutApp')}</Text>
         <View style={styles.rowGroup}>
           <View style={styles.row}>
-            <Text style={[TextTheme.normal]} testID={testIdWithKey('VersionLabel')}>
+            <Text style={[TextTheme.caption]} testID={testIdWithKey('VersionLabel')}>
               {t('Settings.Version')}
             </Text>
             <Text
-              style={[TextTheme.normal]}
+              style={[TextTheme.caption]}
               testID={testIdWithKey('Version')}
             >{`${getVersion()}-${getBuildNumber()}`}</Text>
           </View>
@@ -76,7 +76,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
                 ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
             }
           >
-            <Text style={[TextTheme.normal]}>{t('RootStack.Contacts')}</Text>
+            <Text style={[TextTheme.caption]}>{t('RootStack.Contacts')}</Text>
             <Icon name={'chevron-right'} size={25} color={ColorPallet.notification.infoText} />
           </TouchableOpacity>
         </View>
