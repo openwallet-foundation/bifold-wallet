@@ -16,16 +16,16 @@ import { testIdWithKey } from '../utils/testable'
 
 export interface CredentialOfferDeclineProps {
   visible: boolean
-  didDeclineOffer: boolean
   credentialId: string
+  didDeclineOffer: boolean
   onGoBackTouched: GenericFn
   onDeclinedConformationTouched: GenericFn
 }
 
 const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
   visible,
-  didDeclineOffer,
   credentialId,
+  didDeclineOffer,
   onGoBackTouched,
   onDeclinedConformationTouched,
 }) => {

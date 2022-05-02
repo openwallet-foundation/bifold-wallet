@@ -8,7 +8,6 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       "borderColor": "#D8292F",
       "borderRadius": 5,
       "borderWidth": 1,
-      "marginHorizontal": 25,
       "minWidth": 700,
       "padding": 10,
     }
@@ -169,7 +168,6 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       "borderColor": "#0099FF",
       "borderRadius": 5,
       "borderWidth": 1,
-      "marginHorizontal": 25,
       "minWidth": 700,
       "padding": 10,
     }
@@ -330,7 +328,6 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       "borderColor": "#2E8540",
       "borderRadius": 5,
       "borderWidth": 1,
-      "marginHorizontal": 25,
       "minWidth": 700,
       "padding": 10,
     }
@@ -491,7 +488,6 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       "borderColor": "#FCBA19",
       "borderRadius": 5,
       "borderWidth": 1,
-      "marginHorizontal": 25,
       "minWidth": 700,
       "padding": 10,
     }
