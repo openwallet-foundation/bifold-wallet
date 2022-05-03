@@ -202,7 +202,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   const handleDeclinePress = async () => {
-    Alert.alert(t('ProofRequest.RejectThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
+    Alert.alert(t('ProofRequest.DeclineThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
       { text: t('Global.Cancel'), style: 'cancel' },
       {
         text: t('Global.Confirm'),
@@ -372,7 +372,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       ) : null}
       {declinedModalVisible ? (
         <NotificationModal
-          title={t('ProofRequest.ProofRejected')}
+          title={t('ProofRequest.ProofRequestDeclined')}
           visible={declinedModalVisible}
           homeVisible={false}
           onDone={() => {
