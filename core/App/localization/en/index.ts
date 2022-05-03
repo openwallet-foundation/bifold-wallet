@@ -124,7 +124,8 @@ const translation = {
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
-    "RejectThisProof?": "Reject this Proof?",
+    "RejectThisProof?": "Reject this Proof Request?",
+    "DeclineThisProof?": "Decline this Proof Request?",
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
     "ProofNotFound": "Proof not Found",
