@@ -1,7 +1,13 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { ProofRecord, ProofState, RequestedAttribute, RetrievedCredentials } from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import {
+  CredentialState,
+  ProofRecord,
+  ProofState,
+  RequestedAttribute,
+  RetrievedCredentials,
+} from '@aries-framework/core'
+import { useAgent, useCredentialByState, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
@@ -39,6 +45,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [successModalVisible, setSuccessModalVisible] = useState(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
+  const timestamps: Record<string, Date> = [
+    ...useCredentialByState(CredentialState.CredentialReceived),
+    ...useCredentialByState(CredentialState.Done),
+  ].reduce(
+    (timestamps, credential) => ({
+      ...timestamps,
+      [credential.credentialId || credential.id]: new Date(credential.createdAt),
+    }),
+    {}
+  )
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const proof = useProofById(proofId)
@@ -94,13 +110,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
     retrieveCredentialsForProof(proof)
       .then((credentials) => {
-        // FIXME: Once hooks are updated this should no longer be necessary
         Object.values(credentials?.requestedAttributes || {}).forEach((credentials) => {
-          credentials.forEach((credential) => {
-            if (credential.revoked) {
-              dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
-            }
-          })
+          credentials
+            .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
+            .forEach((credential) => {
+              // FIXME: Once hooks are updated this should no longer be necessary
+              if (credential.revoked) {
+                dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
+              }
+            })
         })
         setCredentials(credentials)
         const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
