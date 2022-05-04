@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 const ActivityLogLink: React.FC = () => {
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     textContainer: {
       flexDirection: 'row',

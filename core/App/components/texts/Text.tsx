@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text as T, StyleSheet, TextStyle } from 'react-native'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 interface Props {
   children: React.ReactNode
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Text: React.FC<Props> = ({ children, style }) => {
-  const { TextTheme } = useThemeContext()
+  const { TextTheme } = useTheme()
   const styles = StyleSheet.create({
     text: {
       color: TextTheme.normal.color,

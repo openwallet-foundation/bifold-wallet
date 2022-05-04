@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 import Text from '../texts/Text'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ModularView: React.FC<Props> = ({ title, subtitle, content }) => {
-  const { borderRadius, TextTheme, ColorPallet } = useThemeContext()
+  const { borderRadius, TextTheme, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       borderRadius,

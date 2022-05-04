@@ -2,13 +2,13 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 import InfoTextBox from '../texts/InfoTextBox'
 
 const NoNewUpdates: React.FC = () => {
   const { t } = useTranslation()
-  const { HomeTheme } = useThemeContext()
+  const { HomeTheme } = useTheme()
 
   return (
     <InfoTextBox>

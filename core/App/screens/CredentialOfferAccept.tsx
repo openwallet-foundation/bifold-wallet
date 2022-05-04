@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import CredentialPending from '../assets/img/credential-pending.svg'
-import CredentialSuccess from '../assets/img/credential-success.svg'
+import CredentialAdded from '../components/animated/CredentialAdded'
+import CredentialPending from '../components/animated/CredentialPending'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 const connectionTimerDelay = 5000 // in ms
 
@@ -34,7 +34,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [timer, setTimer] = useState<NodeJS.Timeout>()
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
-  const { ListItems } = useThemeContext()
+  const { ListItems } = useTheme()
   const imageDisplayOptions = {
     fill: ListItems.credentialIconColor.color,
     height: 250,
@@ -44,12 +44,14 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     container: {
       ...ListItems.credentialOfferBackground,
       flexGrow: 1,
+      flexDirection: 'column',
+      paddingHorizontal: 25,
+      paddingTop: 20,
     },
     image: {
-      marginVertical: 66,
+      marginTop: 20,
     },
     messageContainer: {
-      marginHorizontal: 25,
       alignItems: 'center',
     },
     messageText: {
@@ -58,11 +60,12 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       marginTop: 90,
     },
     controlsContainer: {
-      marginHorizontal: 25,
+      marginTop: 'auto',
+      marginBottom: 20,
     },
-    controlsMessageText: {
+    delayMessageText: {
       textAlign: 'center',
-      marginBottom: 30,
+      marginTop: 20,
     },
   })
 
@@ -105,54 +108,52 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={[styles.container]}>
-        {credentialDeliveryStatus === DeliveryStatus.Pending && (
-          <View style={[styles.messageContainer]}>
+        <View style={[styles.messageContainer]}>
+          {credentialDeliveryStatus === DeliveryStatus.Pending && (
             <Text
               style={[ListItems.credentialOfferTitle, styles.messageText]}
               testID={testIdWithKey('CredentialOnTheWay')}
             >
               {t('CredentialOffer.CredentialOnTheWay')}
             </Text>
-            <CredentialPending style={[styles.image]} {...imageDisplayOptions} />
-          </View>
-        )}
+          )}
 
-        {credentialDeliveryStatus === DeliveryStatus.Completed && (
-          <View style={[styles.messageContainer]}>
+          {credentialDeliveryStatus === DeliveryStatus.Completed && (
             <Text
               style={[ListItems.credentialOfferTitle, styles.messageText]}
               testID={testIdWithKey('CredentialAddedToYourWallet')}
             >
               {t('CredentialOffer.CredentialAddedToYourWallet')}
             </Text>
-            <CredentialSuccess style={[styles.image]} {...imageDisplayOptions} />
-          </View>
+          )}
+        </View>
+
+        <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
+          {credentialDeliveryStatus === DeliveryStatus.Completed && <CredentialAdded />}
+          {credentialDeliveryStatus === DeliveryStatus.Pending && <CredentialPending />}
+        </View>
+
+        {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
+          <Text
+            style={[ListItems.credentialOfferDetails, styles.delayMessageText]}
+            testID={testIdWithKey('TakingTooLong')}
+          >
+            {t('Connection.TakingTooLong')}
+          </Text>
         )}
 
-        {shouldShowDelayMessage && (
-          <View style={[styles.controlsContainer]}>
-            {credentialDeliveryStatus !== DeliveryStatus.Completed && (
-              <>
-                <Text
-                  style={[ListItems.credentialOfferDetails, styles.controlsMessageText]}
-                  testID={testIdWithKey('TakingTooLong')}
-                >
-                  {t('Connection.TakingTooLong')}
-                </Text>
-                <Button
-                  title={t('Loading.BackToHome')}
-                  accessibilityLabel={t('Loading.BackToHome')}
-                  testID={testIdWithKey('BackToHome')}
-                  onPress={onBackToHomeTouched}
-                  buttonType={ButtonType.Secondary}
-                />
-              </>
-            )}
-          </View>
-        )}
+        <View style={[styles.controlsContainer]}>
+          {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
+            <Button
+              title={t('Loading.BackToHome')}
+              accessibilityLabel={t('Loading.BackToHome')}
+              testID={testIdWithKey('BackToHome')}
+              onPress={onBackToHomeTouched}
+              buttonType={ButtonType.Secondary}
+            />
+          )}
 
-        {credentialDeliveryStatus === DeliveryStatus.Completed && (
-          <View style={[styles.controlsContainer]}>
+          {credentialDeliveryStatus === DeliveryStatus.Completed && (
             <Button
               title={t('Global.Done')}
               accessibilityLabel={t('Global.Done')}
@@ -160,8 +161,8 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
               onPress={onDoneTouched}
               buttonType={ButtonType.Primary}
             />
-          </View>
-        )}
+          )}
+        </View>
       </SafeAreaView>
     </Modal>
   )

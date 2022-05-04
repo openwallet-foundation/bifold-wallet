@@ -1,11 +1,12 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { Text } from 'react-native'
 
+import * as themeContext from '../../App/contexts/theme' // note we're importing with a * to import all the exports
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
 import { createCarouselStyle } from '../../App/screens/OnboardingPages'
-import { defaultTheme, ColorPallet, OnboardingTheme } from '../../App/theme'
-import * as themeContext from '../../App/utils/themeContext' // note we're importing with a * to import all the exports
+import { OnboardingTheme } from '../../App/theme'
+import { theme } from '../../App/theme'
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 
@@ -20,7 +21,7 @@ const pages = [
 
 describe('Onboarding', () => {
   it('Renders correctly', () => {
-    jest.spyOn(themeContext, 'useThemeContext').mockImplementation(() => defaultTheme)
+    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)
 
     expect(tree).toMatchSnapshot()
@@ -35,7 +36,7 @@ describe('Onboarding', () => {
   // })
 
   it('Pages exist', async () => {
-    jest.spyOn(themeContext, 'useThemeContext').mockImplementation(() => defaultTheme)
+    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const { findAllByTestId } = render(
       <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
     )

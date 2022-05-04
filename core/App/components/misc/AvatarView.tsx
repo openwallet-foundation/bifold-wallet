@@ -1,16 +1,17 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
 import { hashCode, hashToRGBA } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 interface AvatarViewProps {
   name: string
+  style?: ViewStyle
 }
 
 const AvatarView: React.FC<AvatarViewProps> = ({ name }) => {
-  const { TextTheme, ListItems } = useThemeContext()
+  const { ListItems } = useTheme()
   const styles = StyleSheet.create({
     avatar: {
       ...ListItems.avatarCircle,

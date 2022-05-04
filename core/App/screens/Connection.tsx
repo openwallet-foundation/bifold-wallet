@@ -1,44 +1,17 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Modal, StyleSheet, Text, View } from 'react-native'
+import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { ColorPallet, TextTheme } from '../theme'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-const { height } = Dimensions.get('window')
 const connectionTimerDelay = 10000 // in ms
-const styles = StyleSheet.create({
-  container: {
-    minHeight: height,
-    flexDirection: 'column',
-    paddingHorizontal: 25,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  image: {
-    marginTop: 40,
-  },
-  messageContainer: {
-    alignItems: 'center',
-    marginTop: 54,
-  },
-  messageText: {
-    fontWeight: 'normal',
-    textAlign: 'center',
-  },
-  delayMessageContainer: {
-    marginTop: 30,
-  },
-  delayMessageText: {
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-})
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -51,6 +24,35 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const [timer, setTimer] = useState<NodeJS.Timeout>()
   const [didProcessNotification, setDidProcessNotification] = useState<boolean>(false)
   const { notifications } = useNotifications()
+  const { ColorPallet, TextTheme } = useTheme()
+  const styles = StyleSheet.create({
+    container: {
+      flexGrow: 1,
+      flexDirection: 'column',
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      paddingHorizontal: 25,
+      paddingTop: 20,
+    },
+    image: {
+      marginTop: 20,
+    },
+    messageContainer: {
+      alignItems: 'center',
+    },
+    messageText: {
+      fontWeight: 'normal',
+      textAlign: 'center',
+      marginTop: 90,
+    },
+    controlsContainer: {
+      marginTop: 'auto',
+      marginBottom: 20,
+    },
+    delayMessageText: {
+      textAlign: 'center',
+      marginTop: 20,
+    },
+  })
 
   const onDismissModalTouched = () => {
     timer && clearTimeout(timer)
@@ -119,17 +121,22 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     <Modal visible={modalVisible} transparent={true} animationType={'slide'}>
       <SafeAreaView style={[styles.container]}>
         <View style={[styles.messageContainer]}>
-          <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('JustAMoment')}>
+          <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
             {t('Connection.JustAMoment')}
           </Text>
-          <View style={[styles.image]}>
-            <ConnectionLoading />
-          </View>
-          {shouldShowDelayMessage && (
-            <View style={[styles.delayMessageContainer]}>
-              <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
-                {t('Connection.TakingTooLong')}
-              </Text>
+        </View>
+
+        <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
+          <ConnectionLoading />
+        </View>
+
+        {shouldShowDelayMessage && (
+          <>
+            <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+              {t('Connection.TakingTooLong')}
+            </Text>
+
+            <View style={[styles.controlsContainer]}>
               <Button
                 title={t('Loading.BackToHome')}
                 accessibilityLabel={t('Loading.BackToHome')}
@@ -138,8 +145,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
                 buttonType={ButtonType.Secondary}
               />
             </View>
-          )}
-        </View>
+          </>
+        )}
       </SafeAreaView>
     </Modal>
   )
