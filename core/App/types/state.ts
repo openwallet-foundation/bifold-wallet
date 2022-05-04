@@ -11,6 +11,7 @@ export interface Onboarding {
 // FIXME: Once hooks are updated this should no longer be necessary
 export interface Credential {
   revoked: Set<CredentialRecord['id'] | CredentialRecord['credentialId']>
+  revokedMessageDismissed: Set<CredentialRecord['id'] | CredentialRecord['credentialId']>
 }
 
 export interface State {
