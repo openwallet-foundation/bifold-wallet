@@ -42,7 +42,7 @@ const App = () => {
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
-        <ThemeProvider value={Theme}>
+        <ThemeProvider value={theme}>
           <ConfigurationProvider value={defaultConfiguration}>
             <StatusBar
               barStyle="light-content"
