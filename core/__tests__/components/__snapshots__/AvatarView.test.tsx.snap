@@ -17,7 +17,6 @@ exports[`AvatarView Component Renders correctly 1`] = `
       Object {
         "borderColor": "#CFA8C3",
       },
-      Object {},
     ]
   }
 >
