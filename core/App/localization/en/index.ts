@@ -76,7 +76,7 @@ const translation = {
     "RemoveFromWallet": "Remove from wallet",
     "Revoked": "Revoked",
     "CredentialRevokedMessageTitle": "This credential is revoked",
-    "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the isser.",
+    "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the issuer.",
   },
   "Home": {
     "Welcome": "Welcome",
@@ -124,7 +124,8 @@ const translation = {
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
-    "RejectThisProof?": "Reject this Proof?",
+    "RejectThisProof?": "Reject this Proof Request?",
+    "DeclineThisProof?": "Decline this Proof Request?",
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
     "ProofNotFound": "Proof not Found",
