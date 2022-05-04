@@ -6,7 +6,7 @@ import { FlatList } from 'react-native'
 
 import ContactListItem from '../components/listItems/ContactListItem'
 import EmptyList from '../components/misc/EmptyList'
-import { useThemeContext } from '../utils/themeContext'
+import { useTheme } from '../contexts/theme'
 
 interface ListContactsProps {
   navigation: any
@@ -14,7 +14,7 @@ interface ListContactsProps {
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { connections } = useConnections()
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   return (
     <FlatList
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}

@@ -12,9 +12,10 @@ import CredentialCard from '../misc/CredentialCard'
 
 interface CredentialListItemProps {
   credential: CredentialRecord
+  revoked?: boolean
 }
 
-const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) => {
+const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential, revoked = false }) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
 
@@ -25,7 +26,7 @@ const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential }) =
       testID={testIdWithKey('CredentialDetails')}
       onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
     >
-      <CredentialCard credential={credential} />
+      <CredentialCard credential={credential} revoked={revoked} />
     </TouchableOpacity>
   )
 }

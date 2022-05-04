@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -9,22 +9,21 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import CheckBoxRow from '../components/inputs/CheckBoxRow'
 import HighlightTextBox from '../components/texts/HighlightTextBox'
 import InfoTextBox from '../components/texts/InfoTextBox'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 const Terms: React.FC = () => {
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
   const [checked, setChecked] = useState(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { OnboardingTheme } = useThemeContext()
+  const { OnboardingTheme } = useTheme()
   const onSubmitPressed = () => {
     dispatch({
-      type: DispatchAction.SetDidAgreeToTerms,
-      payload: [{ DidAgreeToTerms: checked }],
+      type: DispatchAction.DID_AGREE_TO_TERMS,
     })
 
     navigation.navigate(Screens.CreatePin)

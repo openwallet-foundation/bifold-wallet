@@ -315,6 +315,10 @@ export const ListItems = StyleSheet.create({
   credentialOfferDetails: {
     ...TextTheme.normal,
   },
+  revoked: {
+    backgroundColor: ColorPallet.semantic.error,
+    borderColor: ColorPallet.notification.errorBorder,
+  },
   contactBackground: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
   },
@@ -534,7 +538,7 @@ export interface Theme {
   borderWidth: typeof borderWidth
 }
 
-export const defaultTheme: Theme = {
+export const theme: Theme = {
   ColorPallet,
   TextTheme,
   Inputs,

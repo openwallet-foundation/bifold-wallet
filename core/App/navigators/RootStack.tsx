@@ -10,24 +10,23 @@ import {
 import { agentDependencies } from '@aries-framework/react-native'
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Config } from 'react-native-config'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import Splash from '../screens/Splash'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
-import { useConfigurationContext } from '../utils/configurationContext'
-import { useThemeContext } from '../utils/themeContext'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -43,7 +42,7 @@ interface RootStackProps {
 
 const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const { setAgent } = props
-  const [state, dispatch] = useContext(Context)
+  const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
 
@@ -51,17 +50,13 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [agentInitDone, setAgentInitDone] = useState(false)
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
 
-  const theme = useThemeContext()
+  const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const {
-    onboarding: { pages },
-    terms,
-  } = useConfigurationContext()
+  const { pages, terms, splash } = useConfiguration()
   const onTutorialCompleted = () => {
     dispatch({
-      type: DispatchAction.SetTutorialCompletionStatus,
-      payload: [{ DidCompleteTutorial: true }],
+      type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
 
     navigation.navigate(Screens.Terms)
@@ -164,7 +159,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     const carousel = createCarouselStyle(OnboardingTheme)
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash} component={Splash} />
+        <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
@@ -203,7 +198,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     )
   }
 
-  if (state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN) {
+  if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
     return authenticated ? mainStack() : authStack(setAuthenticated)
   }
 

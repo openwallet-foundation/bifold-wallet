@@ -1,16 +1,21 @@
-import { CredentialState } from '@aries-framework/core'
+import { CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
 import { NotificationListItem } from '../components'
 import { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
+import { LocalStorageKeys } from '../constants'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens } from '../types/navigators'
-import { useThemeContext } from '../utils/themeContext'
+import { Credential as StoreCredentialState } from '../types/state'
 
 const { width } = Dimensions.get('window')
 const offset = 25
@@ -25,7 +30,8 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   ]
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, HomeTheme } = useThemeContext()
+  const { HomeTheme } = useTheme()
+  const [, dispatch] = useStore()
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: offset,
@@ -54,6 +60,26 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       ...HomeTheme.link,
     },
   })
+
+  useMemo(() => {
+    async function init() {
+      try {
+        const data = await AsyncStorage.getItem(LocalStorageKeys.RevokedCredentials)
+        if (data) {
+          const revoked: Set<CredentialRecord['id'] | CredentialRecord['credentialId']> = new Set(
+            JSON.parse(data) || []
+          )
+          const credentialState: StoreCredentialState = {
+            revoked,
+          }
+          dispatch({ type: DispatchAction.CREDENTIALS_UPDATED, payload: [credentialState] })
+        }
+      } catch (error) {
+        // TODO:(am add error handling here)
+      }
+    }
+    init()
+  }, [])
 
   const displayMessage = (credentialCount: number) => {
     if (typeof credentialCount === 'undefined' && credentialCount >= 0) {

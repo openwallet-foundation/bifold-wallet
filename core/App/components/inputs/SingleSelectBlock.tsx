@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 import Text from '../texts/Text'
 
 export interface BlockSelection {
@@ -18,7 +18,7 @@ interface Props {
 
 const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect }) => {
   const [selected, setSelected] = useState(initialSelect ?? selection[0])
-  const { Inputs } = useThemeContext()
+  const { Inputs } = useTheme()
   const styles = StyleSheet.create({
     container: {
       width: '100%',

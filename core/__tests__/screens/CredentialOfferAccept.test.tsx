@@ -7,10 +7,9 @@ import React from 'react'
 
 import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
 import { testIdWithKey } from '../../App/utils/testable'
+import timeTravel from '../util/timetravel'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
-jest.useFakeTimers('legacy')
-jest.spyOn(global, 'setTimeout')
 
 const credentialId = '123'
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
@@ -39,7 +38,7 @@ describe('displays a credential accept screen', () => {
     const tree = render(<CredentialOfferAccept visible={true} credentialId={credentialId} />)
 
     await waitFor(() => {
-      jest.runAllTimers()
+      timeTravel(10000)
     })
 
     const backToHomeButton = tree.getByTestId(testIdWithKey('BackToHome'))

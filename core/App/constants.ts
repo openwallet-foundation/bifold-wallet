@@ -6,7 +6,8 @@ export const testIdPrefix = 'com.ariesbifold:id/'
 
 export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',
-  TutorialStatus = 'TutorialStatus',
+  // FIXME: Once hooks are updated this should no longer be necessary
+  RevokedCredentials = 'RevokedCredentials',
 }
 
 //Keys for items saved in keychain/async storage

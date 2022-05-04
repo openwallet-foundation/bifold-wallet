@@ -1,18 +1,18 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import { useTheme } from '../contexts/theme'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
 import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
 import { DeliveryStackParams, Screens } from '../types/navigators'
-import { useThemeContext } from '../utils/themeContext'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
 const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
-  const theme = useThemeContext()
+  const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   return (
     <Stack.Navigator

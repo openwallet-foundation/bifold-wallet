@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, StyleSheet } from 'react-native'
 import * as Keychain from 'react-native-keychain'
@@ -6,10 +6,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,9 +18,9 @@ interface PinCreateProps {
 const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const style = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
@@ -36,8 +36,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       })
 
       dispatch({
-        type: DispatchAction.SetDidCreatePIN,
-        payload: [{ DidCreatePIN: true }],
+        type: DispatchAction.DID_CREATE_PIN,
       })
     } catch (e) {
       // TODO:(jl)

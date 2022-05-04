@@ -3,10 +3,10 @@ import { View, StyleSheet, Animated } from 'react-native'
 
 import ActivityIndicator from '../../assets/img/activity-indicator-circle.svg'
 import Wallet from '../../assets/img/wallet.svg'
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 const ConnectionLoading: React.FC = () => {
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const rotationAnim = useRef(new Animated.Value(0)).current
   const timing: Animated.TimingAnimationConfig = {
     toValue: 1,
