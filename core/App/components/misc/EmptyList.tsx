@@ -2,11 +2,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 const EmptyList: React.FC = () => {
-  const { ListItems } = useThemeContext()
+  const { ListItems } = useTheme()
   const { t } = useTranslation()
 
   return (

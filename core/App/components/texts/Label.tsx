@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 import Text from './Text'
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Label: React.FC<Props> = ({ title, subtitle, label }) => {
-  const { TextTheme } = useThemeContext()
+  const { TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
