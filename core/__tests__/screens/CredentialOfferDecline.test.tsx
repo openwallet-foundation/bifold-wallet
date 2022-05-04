@@ -13,17 +13,18 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
+const credentialId = '123'
+const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
+const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
+const credentialRecord = new CredentialRecord(credential)
+// TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
+credentialRecord.createdAt = new Date(credentialRecord.createdAt)
+
 const onGoBackTouched = jest.fn()
 const onDeclinedConformationTouched = jest.fn()
 
-// const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
-// const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
-// const credentialRecord = new CredentialRecord(credential)
-// // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
-// credentialRecord.createdAt = new Date(credentialRecord.createdAt)
-
-// // @ts-ignore
-// useCredentialById.mockReturnValue(credentialRecord)
+// @ts-ignore
+useCredentialById.mockReturnValue(credentialRecord)
 
 describe('displays a credential decline screen', () => {
   beforeEach(() => {
@@ -35,6 +36,7 @@ describe('displays a credential decline screen', () => {
     const tree = render(
       <CredentialOfferDecline
         visible={true}
+        credentialId={credentialId}
         didDeclineOffer={false}
         onGoBackTouched={onGoBackTouched}
         onDeclinedConformationTouched={onDeclinedConformationTouched}
@@ -53,6 +55,7 @@ describe('displays a credential decline screen', () => {
     const tree = render(
       <CredentialOfferDecline
         visible={true}
+        credentialId={credentialId}
         didDeclineOffer={false}
         onGoBackTouched={onGoBackTouched}
         onDeclinedConformationTouched={onDeclinedConformationTouched}
@@ -71,6 +74,7 @@ describe('displays a credential decline screen', () => {
     const tree = render(
       <CredentialOfferDecline
         visible={true}
+        credentialId={credentialId}
         didDeclineOffer={false}
         onGoBackTouched={onGoBackTouched}
         onDeclinedConformationTouched={onDeclinedConformationTouched}
