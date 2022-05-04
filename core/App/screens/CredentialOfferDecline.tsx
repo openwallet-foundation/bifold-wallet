@@ -57,7 +57,6 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
       textAlign: 'center',
       marginTop: 90,
     },
-    controlsContainer: {},
   })
 
   if (!credential) {
@@ -84,7 +83,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
                 message={'In order to receive the credential offer again, you will need to reapply with the issuer.'}
               />
               <CredentialCard credential={credential} style={{ marginVertical: 25 }} />
-              <View style={[styles.controlsContainer]}>
+              <View>
                 <Button
                   title={t('CredentialOffer.ConfirmDeclineCredential')}
                   accessibilityLabel={t('CredentialOffer.ConfirmDeclineCredential')}
@@ -114,7 +113,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
                 <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
               </View>
 
-              <View style={[styles.controlsContainer]}>
+              <View>
                 <Button
                   title={t('Global.Done')}
                   accessibilityLabel={t('Global.Done')}
