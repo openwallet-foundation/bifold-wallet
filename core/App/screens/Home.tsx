@@ -109,9 +109,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
     return (
       <View style={[styles.messageContainer]}>
-        {credentialCount === 0 ? (
-          <Text style={[TextTheme.headingOne, { marginTop: offset, marginBottom: 35 }]}>{t('Home.Welcome')}</Text>
-        ) : null}
         <Text style={[TextTheme.normal, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
       </View>
     )
@@ -149,6 +146,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
         ListEmptyComponent={() => (
           <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
             <NoNewUpdates />
+            <View style={[styles.messageContainer]}>
+              <Text style={[TextTheme.headingOne, { marginTop: offset, marginBottom: 20 }]}>{t('Home.Welcome')}</Text>
+            </View>
           </View>
         )}
         data={notifications}
