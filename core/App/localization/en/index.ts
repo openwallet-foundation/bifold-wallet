@@ -106,7 +106,11 @@ const translation = {
   },
   "Connection": {
     "JustAMoment": "Just a moment while we make a secure connection...",
-    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
+    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
+    "Camera": "Scan a QR Code with your camera",
+    "DisplayCode": "Display a QR code for someone else",
+    "Scan": "Scan a code",
+    "Display": "Display a code",
   },
   "CredentialOffer": {
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",

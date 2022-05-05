@@ -7,8 +7,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
+import { TabStackParams, TabStacks } from '../types/navigators'
 
+import ConnectStack from './ConnectStack'
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 
@@ -53,6 +54,7 @@ const TabStack: React.FC = () => {
         />
         <Tab.Screen
           name={TabStacks.ConnectStack}
+          component={ConnectStack}
           options={{
             tabBarIcon: () => (
               <View style={TabTheme.focusTabIconStyle}>
@@ -76,15 +78,7 @@ const TabStack: React.FC = () => {
             ),
             tabBarAccessibilityLabel: t('TabStack.Scan'),
           }}
-          listeners={({ navigation }) => ({
-            tabPress: (e) => {
-              e.preventDefault()
-              navigation.navigate(Stacks.ConnectStack, { screen: Screens.Scan })
-            },
-          })}
-        >
-          {() => <View />}
-        </Tab.Screen>
+        />
         <Tab.Screen
           name={TabStacks.CredentialStack}
           component={CredentialStack}

@@ -300,6 +300,16 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  connectButton: {
+    backgroundColor: ColorPallet.grayscale.lightGrey,
+    padding: 20,
+    marginHorizontal: 15,
+    borderRadius: 25,
+  },
+  connectButtonText: {
+    ...TextTheme.normal,
+    color: ColorPallet.grayscale.darkGrey,
+  },
 })
 
 export const ListItems = StyleSheet.create({
