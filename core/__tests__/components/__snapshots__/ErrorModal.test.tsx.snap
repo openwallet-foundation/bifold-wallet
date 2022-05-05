@@ -26,7 +26,6 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
           "borderColor": "#D8292F",
           "borderRadius": 5,
           "borderWidth": 1,
-          "marginHorizontal": 25,
           "minWidth": 700,
           "padding": 10,
         }
@@ -207,7 +206,6 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           "borderColor": "#D8292F",
           "borderRadius": 5,
           "borderWidth": 1,
-          "marginHorizontal": 25,
           "minWidth": 700,
           "padding": 10,
         }
