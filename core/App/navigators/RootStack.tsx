@@ -145,7 +145,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
-        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
+        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} />
         <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />

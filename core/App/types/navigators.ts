@@ -16,6 +16,8 @@ export enum Screens {
   ProofRequestAttributeDetails = 'Proof Request Attribute Details',
   Settings = 'Settings',
   Language = 'Language',
+  Connect = 'Connect',
+  DisplayCode = 'Display Code',
   Contacts = 'Contacts',
   ContactDetails = 'Contact Details',
   Chat = 'Chat',
@@ -81,7 +83,9 @@ export type HomeStackParams = {
 }
 
 export type ConnectStackParams = {
+  [Screens.Connect]: undefined
   [Screens.Scan]: undefined
+  [Screens.DisplayCode]: undefined
 }
 
 export type SettingStackParams = {
