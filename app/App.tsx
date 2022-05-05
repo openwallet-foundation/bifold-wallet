@@ -39,28 +39,6 @@ const App = () => {
 		SplashScreen.hide()
 	}, [])
 
-<<<<<<< HEAD
-	return (
-		<StoreProvider>
-			<AgentProvider agent={agent}>
-				<ThemeProvider value={theme}>
-					<ConfigurationProvider value={defaultConfiguration}>
-						<StatusBar
-							barStyle="light-content"
-							hidden={false}
-							backgroundColor={theme.ColorPallet.brand.primary}
-							translucent={false}
-						/>
-						<ErrorModal />
-						<RootStack setAgent={setAgent} />
-						<Toast topOffset={15} config={toastConfig} />
-					</ConfigurationProvider>
-				</ThemeProvider>
-			</AgentProvider>
-		</StoreProvider>
-	)
-}
-=======
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
@@ -81,6 +59,5 @@ const App = () => {
     </StoreProvider>
   );
 };
->>>>>>> 60256928ac4a09aa978f3a778e9abebab00c7b9c
 
 export default App;
