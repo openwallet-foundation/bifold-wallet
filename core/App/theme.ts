@@ -353,6 +353,9 @@ export const ListItems = StyleSheet.create({
   recordAttributeText: {
     ...TextTheme.normal,
   },
+  proofIcon: {
+    ...TextTheme.headingOne,
+  },
   avatarText: {
     ...TextTheme.headingTwo,
     fontWeight: 'normal',

@@ -29,7 +29,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const [, dispatch] = useStore()
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, ListItems } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -37,17 +37,11 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       paddingVertical: 16,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...ListItems.recordAttributeText,
       flexShrink: 1,
     },
     listItem: {
-      paddingHorizontal: 25,
-      paddingTop: 16,
-      backgroundColor: ColorPallet.brand.primaryBackground,
-      borderTopColor: ColorPallet.brand.secondaryBackground,
-      borderBottomColor: ColorPallet.brand.secondaryBackground,
-      borderTopWidth: 2,
-      borderBottomWidth: 2,
+      ...ListItems.proofListItem,
     },
   })
 
@@ -108,7 +102,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
             <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
             {t('ProofRequest.IsRequesting')}:
           </Text>
-          <Text style={[TextTheme.headingFour, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
+          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
             {attributeName}
           </Text>
           <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
@@ -118,7 +112,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       keyExtractor={(credential) => credential.credentialId || credential.id}
       renderItem={({ item: credential }) => (
         <View style={styles.listItem}>
-          <Text style={TextTheme.normal} testID={testIdWithKey('CredentialName')}>
+          <Text style={ListItems.recordAttributeText} testID={testIdWithKey('CredentialName')}>
             {parsedSchema(credential).name}
           </Text>
           {matchingAttribute?.revoked ? (
@@ -126,22 +120,22 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
               <Icon
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
                 name="close"
-                color={ColorPallet.semantic.error}
-                size={TextTheme.normal.fontSize}
+                color={ListItems.proofError.color}
+                size={ListItems.recordAttributeText.fontSize}
               ></Icon>
               <Text
-                style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}
+                style={[ListItems.recordAttributeText, { color: ColorPallet.semantic.error }]}
                 testID={testIdWithKey('RevokedOrNotAvailable')}
               >
                 {t('CredentialDetails.Revoked')}
               </Text>
             </View>
           ) : (
-            <Text style={TextTheme.normal} testID={testIdWithKey('Issued')}>
+            <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
               {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
             </Text>
           )}
-          <Text style={[TextTheme.headingFour, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeValue')}>
+          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeValue')}>
             {matchingAttribute?.value}
           </Text>
         </View>
