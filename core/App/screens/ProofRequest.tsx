@@ -58,7 +58,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const proof = useProofById(proofId)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ListItems } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -66,20 +66,19 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       paddingVertical: 16,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...ListItems.recordAttributeText,
       flexShrink: 1,
     },
     footerButton: {
       paddingTop: 10,
     },
     link: {
-      ...TextTheme.normal,
-      minHeight: TextTheme.normal.fontSize,
-      color: ColorPallet.brand.link,
+      ...ListItems.recordAttributeText,
+      ...ListItems.recordLink,
       paddingVertical: 2,
     },
     valueContainer: {
-      minHeight: TextTheme.normal.fontSize,
+      minHeight: ListItems.recordAttributeText.fontSize,
       paddingVertical: 4,
     },
   })
@@ -239,8 +238,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <Icon
                   style={{ marginLeft: -2, marginRight: 10 }}
                   name="highlight-off"
-                  color={TextTheme.headingOne.color}
-                  size={TextTheme.headingOne.fontSize}
+                  color={ListItems.proofIcon.color}
+                  size={ListItems.proofIcon.fontSize}
                 ></Icon>
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
@@ -297,12 +296,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       <Icon
                         style={{ paddingTop: 2, paddingHorizontal: 2 }}
                         name="close"
-                        color={ColorPallet.semantic.error}
-                        size={TextTheme.normal.fontSize}
+                        color={ListItems.proofError.color}
+                        size={ListItems.recordAttributeText.fontSize}
                       ></Icon>
 
                       <Text
-                        style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}
+                        style={[ListItems.recordAttributeText, { color: ListItems.proofEror.color }]}
                         testID={testIdWithKey('RevokedOrNotAvailable')}
                       >
                         {attribute?.revoked
@@ -311,7 +310,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       </Text>
                     </View>
                   ) : (
-                    <Text style={TextTheme.normal} testID={testIdWithKey('AttributeValue')}>
+                    <Text style={ListItems.recordAttributeText} testID={testIdWithKey('AttributeValue')}>
                       {attribute?.value}
                     </Text>
                   )}
@@ -329,7 +328,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       }
                       style={styles.link}
                     >
-                      <Text style={TextTheme.normal}>{t('ProofRequest.Details')}</Text>
+                      <Text style={ListItems.recordAttributeText}>{t('ProofRequest.Details')}</Text>
                     </TouchableOpacity>
                   ) : null}
                 </>
