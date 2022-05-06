@@ -301,7 +301,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       ></Icon>
 
                       <Text
-                        style={[ListItems.recordAttributeText, { color: ListItems.proofEror.color }]}
+                        style={[ListItems.recordAttributeText, { color: ListItems.proofError.color }]}
                         testID={testIdWithKey('RevokedOrNotAvailable')}
                       >
                         {attribute?.revoked
