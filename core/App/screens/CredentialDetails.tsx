@@ -4,44 +4,42 @@ import { CredentialRecord } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import Record from '../components/record/Record'
 import { ToastType } from '../components/toast/BaseToast'
+import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { useTheme } from '../contexts/theme'
 import { CredentialStackParams, Screens } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
-  const [state] = useStore()
-  const { revoked } = state.credential
+  const [state, dispatch] = useStore()
+  const { revoked, revokedMessageDismissed } = state.credential
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  const [isCredentialRevokedMessageHidden, setIsCredentialRevokedMessageHidden] = useState<boolean>(false)
-  const styles = StyleSheet.create({
-    headerText: {
-      ...TextTheme.normal,
-    },
-    footerText: {
-      ...TextTheme.normal,
-      paddingTop: 16,
-    },
-    linkContainer: {
-      minHeight: TextTheme.normal.fontSize,
-      paddingVertical: 2,
-    },
-    link: {
-      ...TextTheme.normal,
-      color: ColorPallet.brand.link,
-    },
-  })
+  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
+  // const styles = StyleSheet.create({
+  //   headerText: {
+  //     ...TextTheme.normal,
+  //   },
+  //   footerText: {
+  //     ...TextTheme.normal,
+  //     paddingTop: 16,
+  //   },
+  //   linkContainer: {
+  //     minHeight: TextTheme.normal.fontSize,
+  //     paddingVertical: 2,
+  //   },
+  //   link: {
+  //     ...TextTheme.normal,
+  //     color: ColorPallet.brand.link,
+  //   },
+  // })
   const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
     try {
       if (!credentialId) {
@@ -87,20 +85,28 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   useEffect(() => {
     const isRevoked = revoked.has(credential.id) || revoked.has(credential.credentialId)
     setIsRevoked(isRevoked)
+    const isRevokedMessageDismissed =
+      revokedMessageDismissed.has(credential.id) || revokedMessageDismissed.has(credential.credentialId)
+    setIsRevokedMessageHidden(isRevokedMessageDismissed)
   }, [])
+
+  const dismissRevokedMessage = (credential: CredentialRecord) => {
+    dispatch({ type: DispatchAction.CREDENTIAL_REVOKED_MESSAGE_DISMISSED, payload: [credential] })
+    setIsRevokedMessageHidden(true)
+  }
 
   return (
     <Record
       header={() => (
         <>
-          {isRevoked && !isCredentialRevokedMessageHidden ? (
-            <View style={{ marginTop: 16 }}>
+          {isRevoked && !isRevokedMessageHidden ? (
+            <View style={{ marginHorizontal: 15, marginTop: 16 }}>
               <InfoBox
                 notificationType={InfoBoxType.Warn}
                 title={t('CredentialDetails.CredentialRevokedMessageTitle')}
                 message={t('CredentialDetails.CredentialRevokedMessageBody')}
                 onCallToActionLabel={t('Global.Dismiss')}
-                onCallToActionPressed={() => setIsCredentialRevokedMessageHidden(true)}
+                onCallToActionPressed={() => dismissRevokedMessage(credential)}
               />
             </View>
           ) : null}

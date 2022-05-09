@@ -16,6 +16,7 @@ const initialState: State = {
   },
   credential: {
     revoked: new Set(),
+    revokedMessageDismissed: new Set(),
   },
   error: null,
 }
