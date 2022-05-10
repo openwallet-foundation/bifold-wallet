@@ -5,9 +5,10 @@ import {
   ProofRecord,
   ProofState,
   RequestedAttribute,
+  RequestedPredicate,
   RetrievedCredentials,
 } from '@aries-framework/core'
-import { useAgent, useCredentialByState, useCredentials, useProofById } from '@aries-framework/react-hooks'
+import { useAgent, useCredentialByState, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
@@ -26,8 +27,13 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { Attribute } from '../types/record'
-import { connectionRecordFromId, getConnectionName, processProofAttributes } from '../utils/helpers'
+import { Attribute, Predicate } from '../types/record'
+import {
+  connectionRecordFromId,
+  getConnectionName,
+  processProofAttributes,
+  processProofPredicates,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
@@ -57,6 +63,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   )
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
+  const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -110,19 +117,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
     retrieveCredentialsForProof(proof)
       .then((credentials) => {
-        Object.values(credentials?.requestedAttributes || {}).forEach((credentials) => {
-          credentials
-            .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
-            .forEach((credential) => {
-              // FIXME: Once hooks are updated this should no longer be necessary
-              if (credential.revoked) {
-                dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
-              }
-            })
-        })
+        const markRevokedCredentials = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}) => {
+          Object.values(fields).forEach((credentials) => {
+            credentials
+              .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
+              .forEach((credential) => {
+                // FIXME: Once hooks are updated this should no longer be necessary
+                if (credential.revoked) {
+                  dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
+                }
+              })
+          })
+        }
+        markRevokedCredentials(credentials?.requestedAttributes)
+        markRevokedCredentials(credentials?.requestedPredicates)
         setCredentials(credentials)
+
         const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
+        const predicates = processProofPredicates(proof, credentials?.requestedPredicates)
         setAttributes(attributes)
+        setPredicates(predicates)
       })
       .catch(() => {
         const error = new BifoldError(
