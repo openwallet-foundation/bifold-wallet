@@ -4,8 +4,7 @@ export const defaultLanguage = 'en'
 // by on-device automated testing systems like SauceLabs.
 export const testIdPrefix = 'com.ariesbifold:id/'
 
-// App named used for generating invites / connections
-
+// App name used for generating invites / connections
 export const myLabel = 'Aries Bifold'
 
 export enum LocalStorageKeys {
