@@ -65,16 +65,27 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   useMemo(() => {
     async function init() {
       try {
-        const data = await AsyncStorage.getItem(LocalStorageKeys.RevokedCredentials)
-        if (data) {
-          const revoked: Set<CredentialRecord['id'] | CredentialRecord['credentialId']> = new Set(
-            JSON.parse(data) || []
-          )
-          const credentialState: StoreCredentialState = {
-            revoked,
-          }
-          dispatch({ type: DispatchAction.CREDENTIALS_UPDATED, payload: [credentialState] })
+        const revokedData = await AsyncStorage.getItem(LocalStorageKeys.RevokedCredentials)
+        const revokedMessageDismissedData = await AsyncStorage.getItem(
+          LocalStorageKeys.RevokedCredentialsMessageDismissed
+        )
+        const credentialState: StoreCredentialState = {
+          revoked: new Set(),
+          revokedMessageDismissed: new Set(),
         }
+        if (revokedData) {
+          const revoked: Set<CredentialRecord['id'] | CredentialRecord['credentialId']> = new Set(
+            JSON.parse(revokedData) || []
+          )
+          credentialState.revoked = revoked
+        }
+        if (revokedMessageDismissedData) {
+          const revokedMessageDismissed: Set<CredentialRecord['id'] | CredentialRecord['credentialId']> = new Set(
+            JSON.parse(revokedMessageDismissedData)
+          )
+          credentialState.revokedMessageDismissed = revokedMessageDismissed
+        }
+        dispatch({ type: DispatchAction.CREDENTIALS_UPDATED, payload: [credentialState] })
       } catch (error) {
         // TODO:(am add error handling here)
       }
