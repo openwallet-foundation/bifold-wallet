@@ -144,7 +144,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
               </View>
             </View>
           )}
-          attributes={credential.credentialAttributes}
+          fields={credential.credentialAttributes}
         />
         <CredentialOfferDecline
           visible={declinedModalVisible}

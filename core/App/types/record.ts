@@ -1,5 +1,3 @@
-import { RequestedAttribute, RequestedPredicate } from '@aries-framework/core'
-
 export interface Field {
   name: string | null
   mimeType?: string
@@ -8,10 +6,10 @@ export interface Field {
 }
 
 export interface Attribute extends Field {
-  value: RequestedAttribute | string | null
+  value: string | number | null
 }
 
 export interface Predicate extends Field {
-  value: RequestedPredicate | number | null
-  type: string
+  pValue: string | number | null
+  pType: string
 }

@@ -135,8 +135,8 @@ export const processProofPredicates = (
     const predicate = name || predicateName
     processedPredicates.push({
       name: predicate,
-      value: predicateValue,
-      type: predicateType,
+      pValue: predicateValue,
+      pType: predicateType,
       revoked: firstCredential?.revoked || false,
       credentialId: firstCredential?.credentialId,
     })
