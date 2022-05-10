@@ -19,6 +19,7 @@ enum ErrorDispatchAction {
 enum CredentialDispatchAction {
   CREDENTIALS_UPDATED = 'credentials/credentialsUpdated',
   CREDENTIAL_REVOKED = 'credentials/credentialRevoked',
+  CREDENTIAL_REVOKED_MESSAGE_DISMISSED = 'credentials/credentialRevokedMessageDismissed',
 }
 
 export type DispatchAction = OnboardingDispatchAction | ErrorDispatchAction | CredentialDispatchAction
@@ -100,6 +101,24 @@ const reducer = (state: State, action: ReducerAction): State => {
         credential,
       }
       AsyncStorage.setItem(LocalStorageKeys.RevokedCredentials, JSON.stringify(Array.from(revoked.values())))
+      return newState
+    }
+    case CredentialDispatchAction.CREDENTIAL_REVOKED_MESSAGE_DISMISSED: {
+      const revokedCredential = (action.payload || []).pop()
+      const revokedMessageDismissed = state.credential.revokedMessageDismissed
+      revokedMessageDismissed.add(revokedCredential.id || revokedCredential.credentialId)
+      const credential: CredentialState = {
+        ...state.credential,
+        revokedMessageDismissed,
+      }
+      const newState = {
+        ...state,
+        credential,
+      }
+      AsyncStorage.setItem(
+        LocalStorageKeys.RevokedCredentialsMessageDismissed,
+        JSON.stringify(Array.from(revokedMessageDismissed.values()))
+      )
       return newState
     }
     case ErrorDispatchAction.ERROR_ADDED: {

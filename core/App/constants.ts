@@ -8,6 +8,7 @@ export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',
   // FIXME: Once hooks are updated this should no longer be necessary
   RevokedCredentials = 'RevokedCredentials',
+  RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
 }
 
 //Keys for items saved in keychain/async storage
