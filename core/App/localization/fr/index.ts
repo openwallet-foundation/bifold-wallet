@@ -15,9 +15,7 @@ const translation = {
         "Next": "Suivant",
         "Continue": "Continuer",
         "Info": "Information",
-        "ThisDecisionCannotBeChanged": {
-            "": "Cette décision ne peut être modifiée."
-        },
+        "ThisDecisionCannotBeChanged": "Cette décision ne peut être modifiée.",
         "Failure": "Échec",
         "Success": "Succès",
         "SomethingWentWrong": "Un problème est survenu",
