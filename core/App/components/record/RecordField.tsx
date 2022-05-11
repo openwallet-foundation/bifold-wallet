@@ -25,25 +25,24 @@ const RecordField: React.FC<RecordFieldProps> = ({
   fieldValue = null,
 }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ListItems } = useTheme()
   const styles = StyleSheet.create({
     container: {
+      ...ListItems.recordContainer,
       paddingHorizontal: 25,
       paddingTop: 16,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
     },
     border: {
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      ...ListItems.recordBorder,
       borderBottomWidth: 2,
       paddingTop: 12,
     },
     link: {
-      minHeight: TextTheme.normal.fontSize,
+      ...ListItems.recordLink,
       paddingVertical: 2,
-      color: ColorPallet.brand.link,
     },
     text: {
-      ...TextTheme.normal,
+      ...ListItems.recordAttributeText,
     },
     valueContainer: {
       flexDirection: 'row',
@@ -51,7 +50,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
       paddingTop: 10,
     },
     valueText: {
-      minHeight: TextTheme.normal.fontSize,
+      ...ListItems.recordAttributeText,
       paddingVertical: 4,
     },
   })
@@ -61,7 +60,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
       {fieldLabel ? (
         fieldLabel(field)
       ) : (
-        <Text style={TextTheme.label} testID={testIdWithKey('AttributeName')}>
+        <Text style={ListItems.recordAttributeLabel} testID={testIdWithKey('AttributeName')}>
           {startCase(field.name || '')}
         </Text>
       )}
@@ -84,9 +83,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
                 onPress={onToggleViewPressed}
                 style={styles.link}
               >
-                <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>
-                  {shown ? t('Record.Hide') : t('Record.Show')}
-                </Text>
+                <Text style={ListItems.recordLink}>{shown ? t('Record.Hide') : t('Record.Show')}</Text>
               </TouchableOpacity>
             ) : null}
           </>

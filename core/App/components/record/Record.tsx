@@ -21,7 +21,7 @@ interface RecordProps {
 const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldValues = false, field = null }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ListItems, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     linkContainer: {
       flexDirection: 'row',
@@ -32,7 +32,6 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldV
     link: {
       minHeight: TextTheme.normal.fontSize,
       paddingVertical: 2,
-      color: ColorPallet.brand.link,
     },
   })
   const resetShown = (): void => {
@@ -58,7 +57,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldV
                 accessible={true}
                 accessibilityLabel={t('Record.HideAll')}
               >
-                <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>{t('Record.HideAll')}</Text>
+                <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
               </TouchableOpacity>
             </View>
           ) : null}

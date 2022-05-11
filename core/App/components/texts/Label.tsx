@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
+import { useTheme } from '../../contexts/theme'
+
 import Text from './Text'
 
 interface Props {
@@ -9,32 +11,32 @@ interface Props {
   label?: string
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '90%',
-    marginTop: 10,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginRight: 7,
-  },
-  subtitle: {},
-  label: {
-    marginLeft: 10,
-    fontSize: 10,
-    fontStyle: 'italic',
-  },
-})
-
 const Label: React.FC<Props> = ({ title, subtitle, label }) => {
+  const { TextTheme } = useTheme()
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '90%',
+      marginTop: 10,
+    },
+    titleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    title: {
+      ...TextTheme.labelTitle,
+      marginRight: 7,
+    },
+    subtitle: {
+      ...TextTheme.labelSubtitle,
+    },
+    label: {
+      marginLeft: 10,
+      ...TextTheme.labelText,
+    },
+  })
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
