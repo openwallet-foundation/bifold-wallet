@@ -33,16 +33,16 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const navigation = useNavigation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ListItems } = useTheme()
   const imageDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ListItems.credentialIconColor.color,
     height: 250,
     width: 250,
   }
   const styles = StyleSheet.create({
     container: {
+      ...ListItems.credentialOfferBackground,
       flexGrow: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
       paddingHorizontal: 25,
     },
     image: {
@@ -107,7 +107,10 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
           {didDeclineOffer && (
             <>
               <View style={[styles.messageContainer]}>
-                <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialDeclined')}>
+                <Text
+                  style={[ListItems.credentialOfferTitle, styles.messageText]}
+                  testID={testIdWithKey('CredentialDeclined')}
+                >
                   {t('CredentialOffer.CredentialDeclined')}
                 </Text>
                 <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />

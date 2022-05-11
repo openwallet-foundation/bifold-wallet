@@ -34,12 +34,17 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [timer, setTimer] = useState<NodeJS.Timeout>()
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ListItems } = useTheme()
+  const imageDisplayOptions = {
+    fill: ListItems.credentialIconColor.color,
+    height: 250,
+    width: 250,
+  }
   const styles = StyleSheet.create({
     container: {
+      ...ListItems.credentialOfferBackground,
       flexGrow: 1,
       flexDirection: 'column',
-      backgroundColor: ColorPallet.brand.primaryBackground,
       paddingHorizontal: 25,
       paddingTop: 20,
     },
@@ -105,14 +110,17 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       <SafeAreaView style={[styles.container]}>
         <View style={[styles.messageContainer]}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+            <Text
+              style={[ListItems.credentialOfferTitle, styles.messageText]}
+              testID={testIdWithKey('CredentialOnTheWay')}
+            >
               {t('CredentialOffer.CredentialOnTheWay')}
             </Text>
           )}
 
           {credentialDeliveryStatus === DeliveryStatus.Completed && (
             <Text
-              style={[TextTheme.headingThree, styles.messageText]}
+              style={[ListItems.credentialOfferTitle, styles.messageText]}
               testID={testIdWithKey('CredentialAddedToYourWallet')}
             >
               {t('CredentialOffer.CredentialAddedToYourWallet')}
@@ -126,7 +134,10 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
         </View>
 
         {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
-          <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+          <Text
+            style={[ListItems.credentialOfferDetails, styles.delayMessageText]}
+            testID={testIdWithKey('TakingTooLong')}
+          >
             {t('Connection.TakingTooLong')}
           </Text>
         )}

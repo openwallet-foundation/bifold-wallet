@@ -15,7 +15,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const connection = useConnectionById(route?.params?.connectionId)
   const basicMessages = useBasicMessagesByConnectionId(route?.params?.connectionId)
 
-  const [messages, setMessages] = useState<any>({})
+  const [messages, setMessages] = useState<any>([])
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,7 +27,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   }, [connection])
 
   useEffect(() => {
-    const transformedMessages = basicMessages.map((m) => {
+    const transformedMessages = basicMessages.map((m: any) => {
       return {
         _id: m.id,
         text: m.content,

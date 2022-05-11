@@ -17,23 +17,16 @@ const TabStack: React.FC = () => {
   const { total } = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TabTheme } = useTheme()
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.secondary }}>
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            height: 60,
-            backgroundColor: ColorPallet.brand.secondaryBackground,
-            shadowOffset: { width: 0, height: -3 },
-            shadowRadius: 6,
-            shadowColor: ColorPallet.grayscale.black,
-            shadowOpacity: 0.1,
-            borderTopWidth: 0,
-            paddingBottom: 0,
+            ...TabTheme.tabBarStyle,
           },
-          tabBarActiveTintColor: ColorPallet.brand.primary,
-          tabBarInactiveTintColor: ColorPallet.notification.infoText,
+          tabBarActiveTintColor: TabTheme.tabBarActiveTintColor,
+          tabBarInactiveTintColor: TabTheme.tabBarInactiveTintColor,
           header: () => null,
         }}
       >
@@ -49,10 +42,8 @@ const TabStack: React.FC = () => {
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
-                  ...TextTheme.label,
-                  fontWeight: 'normal',
-                  paddingBottom: 5,
-                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                  ...TabTheme.tabTextStyle,
+                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
                 }}
               >
                 {t('TabStack.Home')}
@@ -65,20 +56,10 @@ const TabStack: React.FC = () => {
           name={TabStacks.ConnectStack}
           options={{
             tabBarIcon: () => (
-              <View
-                style={{
-                  height: 60,
-                  width: 60,
-                  backgroundColor: ColorPallet.brand.primary,
-                  top: -20,
-                  borderRadius: 60,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
+              <View style={TabTheme.focusTabIconStyle}>
                 <Icon
                   name="qrcode-scan"
-                  color={ColorPallet.grayscale.white}
+                  color={TabTheme.tabBarInactiveTintColor}
                   size={32}
                   style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
                 />
@@ -87,10 +68,8 @@ const TabStack: React.FC = () => {
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
-                  ...TextTheme.label,
-                  fontWeight: 'normal',
-                  paddingBottom: 5,
-                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                  ...TabTheme.tabTextStyle,
+                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
                 }}
               >
                 {t('TabStack.Scan')}
@@ -117,10 +96,8 @@ const TabStack: React.FC = () => {
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
-                  ...TextTheme.label,
-                  fontWeight: 'normal',
-                  paddingBottom: 5,
-                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                  ...TabTheme.tabTextStyle,
+                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
                 }}
               >
                 {t('TabStack.Credentials')}
