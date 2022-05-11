@@ -9,12 +9,10 @@ interface Props {
 }
 
 const Title: React.FC<Props> = ({ children, style }) => {
-  const { ColorPallet } = useTheme()
+  const { TextTheme } = useTheme()
   const styles = StyleSheet.create({
     title: {
-      fontWeight: 'bold',
-      fontSize: 20,
-      color: ColorPallet.notification.infoText,
+      ...TextTheme.title,
     },
   })
   return <Text style={[styles.title, style]}>{children}</Text>

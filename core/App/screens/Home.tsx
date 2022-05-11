@@ -30,7 +30,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   ]
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { HomeTheme } = useTheme()
   const [, dispatch] = useStore()
   const styles = StyleSheet.create({
     container: {
@@ -53,12 +53,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       marginBottom: 20,
     },
     linkContainer: {
-      minHeight: TextTheme.normal.fontSize,
+      minHeight: HomeTheme.link.fontSize,
       marginTop: 10,
     },
     link: {
-      ...TextTheme.normal,
-      color: ColorPallet.brand.link,
+      ...HomeTheme.link,
     },
   })
 
@@ -120,7 +119,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
     return (
       <View style={[styles.messageContainer]}>
-        <Text style={[TextTheme.normal, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
+        <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
       </View>
     )
   }
@@ -128,7 +127,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   return (
     <View>
       <View style={styles.rowContainer}>
-        <Text style={[TextTheme.headingThree, styles.header]}>
+        <Text style={[HomeTheme.notificationsHeader, styles.header]}>
           {t('Home.Notifications')}
           {notifications?.length ? ` (${notifications.length})` : ''}
         </Text>
@@ -158,7 +157,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
             <NoNewUpdates />
             <View style={[styles.messageContainer]}>
-              <Text style={[TextTheme.headingOne, { marginTop: offset, marginBottom: 20 }]}>{t('Home.Welcome')}</Text>
+              <Text style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+                {t('Home.Welcome')}
+              </Text>
             </View>
           </View>
         )}
