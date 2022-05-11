@@ -1,4 +1,3 @@
-import { ProofState } from '@aries-framework/core'
 import { useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
@@ -6,9 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import CredentialDeclined from '../assets/img/credential-declined.svg'
+import PRDeclined from '../assets/img/proof-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
-import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
@@ -111,9 +109,9 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
                   style={[TextTheme.headingThree, styles.messageText]}
                   testID={testIdWithKey('ProofRequestDeclined')}
                 >
-                  {t('CredentialOffer.CredentialDeclined')}
+                  {t('ProofRequest.ProofRequestDeclined')}
                 </Text>
-                <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
+                <PRDeclined style={[styles.image]} {...imageDisplayOptions} />
               </View>
 
               <View>
