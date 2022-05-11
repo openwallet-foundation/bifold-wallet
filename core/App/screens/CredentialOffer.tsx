@@ -35,14 +35,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
   const [didDeclineOffer, setDidDeclineOffer] = useState<boolean>(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-  const { TextTheme } = useTheme()
+  const { ListItems } = useTheme()
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
       paddingVertical: 16,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...ListItems.recordAttributeLabel,
       flexShrink: 1,
     },
     footerButton: {
