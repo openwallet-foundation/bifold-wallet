@@ -396,10 +396,13 @@ export const TabTheme = {
   },
   tabBarActiveTintColor: ColorPallet.brand.primary,
   tabBarInactiveTintColor: ColorPallet.notification.infoText,
-  tabTextStyle: {
+  tabBarTextStyle: {
     ...TextTheme.label,
     fontWeight: 'normal',
     paddingBottom: 5,
+  },
+  tabBarButtonIconColor: {
+    color: ColorPallet.notification.infoText,
   },
   focusTabIconStyle: {
     height: 60,
@@ -455,7 +458,7 @@ export const SettingsTheme = {
   groupBackground: ColorPallet.brand.secondaryBackground,
   iconColor: ColorPallet.grayscale.white,
   text: {
-    ...TextTheme.normal,
+    ...TextTheme.caption,
     color: ColorPallet.grayscale.white,
   },
 }
