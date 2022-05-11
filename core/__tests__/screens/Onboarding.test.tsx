@@ -10,6 +10,13 @@ import { theme } from '../../App/theme'
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
+
 const pages = [
   <>
     <Text testID={'bodyText'}>Hello</Text>

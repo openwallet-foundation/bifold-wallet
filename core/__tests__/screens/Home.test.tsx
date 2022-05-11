@@ -11,6 +11,13 @@ import { Button, NotificationListItem } from '../../App/components'
 import { NotificationType } from '../../App/components/listItems/NotificationListItem'
 import Home from '../../App/screens/Home'
 
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
+
 describe('displays a home screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()

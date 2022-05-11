@@ -1,5 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -16,15 +17,22 @@ const connectionTimerDelay = 10000 // in ms
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { connectionId } = route.params
+  const { connectionId, threadId } = route.params
   const { t } = useTranslation()
-  const [modalVisible, setModalVisible] = useState<boolean>(true)
-  const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
-  const [timerDidFire, setTimerDidFire] = useState<boolean>(false)
-  const [timer, setTimer] = useState<NodeJS.Timeout>()
-  const [didProcessNotification, setDidProcessNotification] = useState<boolean>(false)
+  const [state, setState] = useState<{
+    isVisible: boolean
+    notificationRecord?: any
+    isInitialized: boolean
+    shouldShowDelayMessage: boolean
+  }>({
+    isVisible: true,
+    isInitialized: false,
+    shouldShowDelayMessage: false,
+  })
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
+  const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord } = state
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -54,71 +62,77 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     },
   })
 
+  const setModalVisible = (value: boolean) => {
+    setState((prev) => ({ ...prev, isVisible: value }))
+  }
+  const setIsInitialized = (value: boolean) => {
+    setState((prev) => ({ ...prev, isInitialized: value }))
+  }
+  const setShouldShowDelayMessage = (value: boolean) => {
+    setState((prev) => ({ ...prev, shouldShowDelayMessage: value }))
+  }
+  const abortTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+  }
   const onDismissModalTouched = () => {
-    timer && clearTimeout(timer)
-
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-
     setShouldShowDelayMessage(false)
     setModalVisible(false)
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
-
-  useEffect(() => {
-    if (didProcessNotification) {
-      return
+  const startTimer = () => {
+    if (!isInitialized) {
+      timerRef.current = setTimeout(() => {
+        setShouldShowDelayMessage(true)
+        timerRef.current = null
+      }, connectionTimerDelay)
+      setIsInitialized(true)
     }
-
-    notifications.forEach((notification) => {
-      if (notification.connectionId !== connectionId) {
-        return
-      }
-
-      // This delay makes the modal disappear after the offer
-      // screen is already in place. Would be better to have a
-      // hook like `animationDidComplete`
-      setTimeout(() => {
-        setShouldShowDelayMessage(false)
-        setModalVisible(false)
-      }, 1500)
-
-      setDidProcessNotification(true)
-
-      switch (notification.type) {
+  }
+  useFocusEffect(
+    useCallback(() => {
+      startTimer()
+      return () => abortTimer
+    }, [])
+  )
+  useEffect(() => {
+    if (notificationRecord) {
+      switch (notificationRecord.type) {
         case 'CredentialRecord':
-          navigation.navigate(Screens.CredentialOffer, { credentialId: notification.id })
-
+          navigation.navigate(Screens.CredentialOffer, { credentialId: notificationRecord.id })
           break
         case 'ProofRecord':
-          navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
-
+          navigation.navigate(Screens.ProofRequest, { proofId: notificationRecord.id })
           break
         default:
           throw new Error('Unhandled notification type')
       }
-    })
-  }, [notifications])
-
+    }
+  }, [notificationRecord])
   useEffect(() => {
-    if (timerDidFire) {
-      return
+    if (isVisible && isInitialized && !notificationRecord) {
+      for (const notification of notifications) {
+        if (
+          (connectionId && notification.connectionId === connectionId) ||
+          (threadId && notification.threadId == threadId)
+        ) {
+          setState((prev) => ({ ...prev, notificationRecord: notification, visible: false }))
+          break
+        }
+      }
     }
-
-    setModalVisible(true)
-
-    const aTimer = setTimeout(() => {
-      setShouldShowDelayMessage(true)
-      setTimerDidFire(true)
-    }, connectionTimerDelay)
-
-    setTimer(aTimer)
-
-    return () => {
-      aTimer && clearTimeout(aTimer)
-    }
-  }, [])
-
+  }, [notifications, state])
   return (
-    <Modal visible={modalVisible} transparent={true} animationType={'slide'}>
+    <Modal
+      visible={isVisible}
+      transparent={true}
+      animationType={'slide'}
+      onRequestClose={() => {
+        setModalVisible(false)
+      }}
+    >
       <SafeAreaView style={[styles.container]}>
         <View style={[styles.messageContainer]}>
           <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>

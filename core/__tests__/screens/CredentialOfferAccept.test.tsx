@@ -10,6 +10,12 @@ import { testIdWithKey } from '../../App/utils/testable'
 import timeTravel from '../util/timetravel'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
 
 const credentialId = '123'
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
