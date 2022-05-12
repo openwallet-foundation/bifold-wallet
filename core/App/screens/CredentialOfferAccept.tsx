@@ -3,7 +3,7 @@ import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, View } from 'react-native'
+import { Modal, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CredentialAdded from '../components/animated/CredentialAdded'
@@ -11,6 +11,7 @@ import CredentialPending from '../components/animated/CredentialPending'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
+import { statusBarStyleForColor } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 const connectionTimerDelay = 5000 // in ms
@@ -107,6 +108,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
+      <StatusBar barStyle={statusBarStyleForColor(styles.container.backgroundColor)} />
       <SafeAreaView style={[styles.container]}>
         <View style={[styles.messageContainer]}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
