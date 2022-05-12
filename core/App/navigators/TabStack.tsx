@@ -8,10 +8,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { TabStackParams, TabStacks } from '../types/navigators'
+import { showScanLabel, fiveTabDisplay } from '../../configs/uiConfig'
 
 import ConnectStack from './ConnectStack'
+import ContactStack from './ContactStack'
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
+import SettingStack from './SettingStack'
 
 const TabStack: React.FC = () => {
   const { total } = useNotifications()
@@ -52,6 +55,28 @@ const TabStack: React.FC = () => {
             tabBarAccessibilityLabel: t('TabStack.Home'),
           }}
         />
+        { fiveTabDisplay &&
+          <Tab.Screen
+            name={TabStacks.CredentialStack}
+            component={CredentialStack}
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+              ),
+              tabBarLabel: ({ focused }) => (
+                <Text
+                  style={{
+                    ...TabTheme.tabTextStyle,
+                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                  }}
+                >
+                  {t('TabStack.Credentials')}
+                </Text>
+              ),
+              tabBarAccessibilityLabel: t('TabStack.Credentials'),
+            }}
+          />
+        }
         <Tab.Screen
           name={TabStacks.ConnectStack}
           component={ConnectStack}
@@ -66,42 +91,99 @@ const TabStack: React.FC = () => {
                 />
               </View>
             ),
-            tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  ...TabTheme.tabTextStyle,
-                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                }}
-              >
-                {t('TabStack.Scan')}
-              </Text>
-            ),
+            tabBarShowLabel: showScanLabel,
+            tabBarLabel: ({focused}) => {
+              if (showScanLabel) {
+                return scanLabelTrue(focused, TabTheme, t)
+              } else {
+                return scanLabelFalse()
+              }
+            },
             tabBarAccessibilityLabel: t('TabStack.Scan'),
+            // tabBarLabel: ({focused}) => scanLabelTrue(focused, TabTheme, t)
           }}
         />
-        <Tab.Screen
-          name={TabStacks.CredentialStack}
-          component={CredentialStack}
-          options={{
-            tabBarIcon: ({ color, focused }) => (
-              <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
-            ),
-            tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  ...TabTheme.tabTextStyle,
-                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                }}
-              >
-                {t('TabStack.Credentials')}
-              </Text>
-            ),
-            tabBarAccessibilityLabel: t('TabStack.Credentials'),
-          }}
-        />
+        { fiveTabDisplay ? 
+        <>
+          <Tab.Screen
+            name={TabStacks.ContactStack}
+            component={ContactStack}
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <Icon name={focused ? 'account-multiple' : 'account-multiple-outline'} color={color} size={30} />
+              ),
+              tabBarBadge: total || undefined,
+              tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
+              tabBarLabel: ({ focused }) => (
+                <Text
+                  style={{
+                    ...TabTheme.tabTextStyle,
+                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                  }}
+                >
+                  {t('TabStack.Contacts')}
+                </Text>
+              ),
+              tabBarAccessibilityLabel: t('TabStack.Contacts'),
+            }}
+          />
+          <Tab.Screen
+            name={TabStacks.SettingStack}
+            component={SettingStack}
+            options={{
+              tabBarIcon: ({ color, focused }) => <Icon name={focused ? 'cog' : 'cog-outline'} color={color} size={30} />,
+              tabBarLabel: ({ focused }) => (
+                <Text
+                  style={{
+                    ...TabTheme.tabTextStyle,
+                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                  }}
+                >
+                  {t('TabStack.Settings')}
+                </Text>
+              ),
+              tabBarAccessibilityLabel: t('TabStack.Settings'),
+            }}
+          />
+        </>
+        :
+          <Tab.Screen
+            name={TabStacks.CredentialStack}
+            component={CredentialStack}
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+              ),
+              tabBarLabel: ({ focused }) => (
+                <Text
+                  style={{
+                    ...TabTheme.tabTextStyle,
+                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                  }}
+                >
+                  {t('TabStack.Credentials')}
+                </Text>
+              ),
+              tabBarAccessibilityLabel: t('TabStack.Credentials'),
+            }}
+          />
+        }
       </Tab.Navigator>
     </SafeAreaView>
   )
 }
+
+const scanLabelTrue = (focused: any, TabTheme: any, t: any) => (
+  <Text
+    style={{
+      ...TabTheme.tabTextStyle,
+      color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+    }}
+  >
+    {t('TabStack.Scan')}
+  </Text>
+)
+
+const scanLabelFalse = () => {null}
 
 export default TabStack

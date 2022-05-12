@@ -6,6 +6,7 @@ import { useTheme } from '../contexts/theme'
 import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'
 import { HomeStackParams, Screens } from '../types/navigators'
+import { fiveTabDisplay } from '../../configs/uiConfig'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -18,9 +19,9 @@ const HomeStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Home}
         component={Home}
-        options={() => ({
+        options={() => ( !fiveTabDisplay ? {
           headerRight: () => <SettingsCog />,
-        })}
+        } : {})}
       />
       <Stack.Screen name={Screens.Notifications} component={ListNotifications} />
     </Stack.Navigator>

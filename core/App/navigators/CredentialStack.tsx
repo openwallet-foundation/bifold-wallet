@@ -6,6 +6,7 @@ import { useTheme } from '../contexts/theme'
 import CredentialDetails from '../screens/CredentialDetails'
 import ListCredentials from '../screens/ListCredentials'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import { fiveTabDisplay } from '../../configs/uiConfig'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -18,9 +19,9 @@ const CredentialStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Credentials}
         component={ListCredentials}
-        options={() => ({
+        options={() => ( !fiveTabDisplay ? {
           headerRight: () => <SettingsCog />,
-        })}
+        } : {})}
       />
       <Stack.Screen name={Screens.CredentialDetails} component={CredentialDetails} />
     </Stack.Navigator>

@@ -10,6 +10,7 @@ import QRScanner from '../components/misc/QRScanner'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
+import { navigateOnConnection } from '../../configs/uiConfig'
 
 type ScanProps = StackScreenProps<ConnectStackParams>
 
@@ -78,7 +79,11 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
   useEffect(() => {
     if (connectionId) {
+      if (navigateOnConnection) {
+        navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connectionId } })
+      } else {
       navigation.getParent()?.navigate(Stacks.ConnectionStack, { screen: Screens.Connection, params: { connectionId } })
+      }
     }
   }, [connectionId])
 
