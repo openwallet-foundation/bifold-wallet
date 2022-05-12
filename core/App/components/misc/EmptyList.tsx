@@ -6,14 +6,11 @@ import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
 const EmptyList: React.FC = () => {
+  const { ListItems } = useTheme()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
 
   return (
-    <Text
-      style={[TextTheme.normal, { color: ColorPallet.notification.infoText, textAlign: 'center', marginTop: 100 }]}
-      testID={testIdWithKey('NoneYet')}
-    >
+    <Text style={[ListItems.emptyList, { textAlign: 'center', marginTop: 100 }]} testID={testIdWithKey('NoneYet')}>
       {t('Global.NoneYet!')}
     </Text>
   )

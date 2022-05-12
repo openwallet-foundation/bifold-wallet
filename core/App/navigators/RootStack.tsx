@@ -53,7 +53,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const ColorPallet = theme.ColorPallet
+  const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, splash } = useConfiguration()
   const onTutorialCompleted = () => {
     dispatch({
@@ -157,8 +157,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
   const onboardingStack = (setAuthenticated: StateFn) => {
     const Stack = createStackNavigator()
-    const carousel = createCarouselStyle(theme)
-
+    const carousel = createCarouselStyle(OnboardingTheme)
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
@@ -166,7 +165,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           name={Screens.Onboarding}
           options={() => ({
             title: t('Screens.Onboarding'),
-            headerTintColor: ColorPallet.grayscale.white,
+            headerTintColor: OnboardingTheme.headerTintColor,
             headerShown: true,
             gestureEnabled: false,
             headerLeft: () => false,
@@ -177,7 +176,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
               {...props}
               nextButtonText={'Next'}
               previousButtonText={'Back'}
-              pages={pages(onTutorialCompleted, theme)}
+              pages={pages(onTutorialCompleted, OnboardingTheme)}
               style={carousel}
             />
           )}
@@ -186,7 +185,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           name={Screens.Terms}
           options={() => ({
             title: t('Screens.Terms'),
-            headerTintColor: ColorPallet.grayscale.white,
+            headerTintColor: OnboardingTheme.headerTintColor,
             headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
