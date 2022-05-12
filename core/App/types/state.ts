@@ -18,4 +18,5 @@ export interface State {
   onboarding: Onboarding
   credential: Credential
   error: BifoldError | null
+  loading: boolean
 }

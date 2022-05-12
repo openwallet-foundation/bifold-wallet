@@ -19,6 +19,7 @@ const initialState: State = {
     revokedMessageDismissed: new Set(),
   },
   error: null,
+  loading: false,
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction>]>([
