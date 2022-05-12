@@ -81,8 +81,8 @@ const TabStack: React.FC = () => {
           name={TabStacks.ConnectStack}
           component={ConnectStack}
           options={{
-            tabBarIcon: () => (
-              <View style={TabTheme.focusTabIconStyle}>
+            tabBarIcon: ({focused}) => (
+              <View style={[TabTheme.focusTabIconStyle, focused && TabTheme.focusTabActiveTintColor]}>
                 <Icon
                   name="qrcode-scan"
                   color={TabTheme.tabBarInactiveTintColor}
@@ -100,7 +100,6 @@ const TabStack: React.FC = () => {
               }
             },
             tabBarAccessibilityLabel: t('TabStack.Scan'),
-            // tabBarLabel: ({focused}) => scanLabelTrue(focused, TabTheme, t)
           }}
         />
         { fiveTabDisplay ? 
