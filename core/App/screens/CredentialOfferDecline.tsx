@@ -12,6 +12,7 @@ import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
 import { Screens, TabStacks } from '../types/navigators'
+import { statusBarStyleForColor } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 export interface CredentialOfferDeclineProps {
@@ -73,7 +74,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
 
   return (
     <Modal visible={modalVisible} transparent={true} animationType={'none'}>
-      <StatusBar barStyle="light-content" hidden={false} translucent={false} />
+      <StatusBar barStyle={statusBarStyleForColor(styles.container.backgroundColor)} />
       <SafeAreaView style={[styles.container]}>
         <View style={[{ marginTop: 25 }]}>
           {!didDeclineOffer && (
