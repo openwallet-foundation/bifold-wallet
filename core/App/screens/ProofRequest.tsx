@@ -137,13 +137,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }, [])
 
   useEffect(() => {
-    // if (proof.state === ProofState.Done) {
-    //   pendingModalVisible && setPendingModalVisible(false)
-    //   setSuccessModalVisible(true)
-    // }
-  }, [proof])
-
-  useEffect(() => {
     if (proof.state === ProofState.Declined) {
       setDeclinedModalVisible(true)
     }
