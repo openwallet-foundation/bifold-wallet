@@ -9,7 +9,7 @@ import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const Connect = ({ navigation }: any) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, Buttons } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
     outerContainer: {
@@ -19,18 +19,14 @@ const Connect = ({ navigation }: any) => {
       paddingBottom: 15,
     },
     innerContainer: {
+      ...Buttons.connectButton,
       flexDirection: 'column',
       justifyContent: 'space-evenly',
       alignItems: 'center',
-      backgroundColor: ColorPallet.grayscale.lightGrey,
       height: '45%',
-      padding: 20,
-      marginHorizontal: 15,
-      borderRadius: 25,
     },
     text: {
-      ...TextTheme.normal,
-      color: ColorPallet.grayscale.darkGrey,
+      ...Buttons.connectButtonText,
       width: '50%',
       textAlign: 'center',
     },
