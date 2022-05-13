@@ -2,7 +2,7 @@ import { useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, View } from 'react-native'
+import { Modal, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import PRDeclined from '../assets/img/proof-declined.svg'
@@ -11,6 +11,7 @@ import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
 import { Screens, TabStacks } from '../types/navigators'
+import { statusBarStyleForColor } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 export interface ProofRequestDeclinedProps {
@@ -71,7 +72,8 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
   })
 
   return (
-    <Modal visible={modalVisible} transparent={true} animationType={'none'}>
+    <Modal visible={modalVisible} transparent={true} animationType={'none'} statusBarTranslucent>
+      <StatusBar barStyle={statusBarStyleForColor(styles.container.backgroundColor)} />
       <SafeAreaView style={[styles.container]}>
         <View style={[{ marginTop: 25 }]}>
           {!didDeclineOffer && (
@@ -109,7 +111,7 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
                   style={[TextTheme.headingThree, styles.messageText]}
                   testID={testIdWithKey('ProofRequestDeclined')}
                 >
-                  {t('ProofRequest.ProofRequestDeclined')}
+                  2{t('ProofRequest.ProofRequestDeclined')}
                 </Text>
                 <PRDeclined style={[styles.image]} {...imageDisplayOptions} />
               </View>
