@@ -16,6 +16,10 @@ import React from 'react'
 
 import ProofRequest from '../../App/screens/ProofRequest'
 
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.useFakeTimers('legacy')
+jest.spyOn(global, 'setTimeout')
+
 describe('displays a proof request screen', () => {
   afterEach(() => {
     cleanup()
