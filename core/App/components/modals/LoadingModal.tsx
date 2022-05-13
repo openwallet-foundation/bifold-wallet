@@ -2,6 +2,7 @@ import React from 'react'
 import { ActivityIndicator, Dimensions, Image, Modal, SafeAreaView, StyleSheet } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
+import { testIdWithKey } from '../../utils/testable'
 
 const { height } = Dimensions.get('window')
 
@@ -18,10 +19,10 @@ const LoadingModal: React.FC = () => {
   })
 
   return (
-    <Modal visible={true} transparent={true}>
+    <Modal visible={true} transparent={true} testID={testIdWithKey('LoadingModalScreen')}>
       <SafeAreaView style={[styles.container]}>
         <Image source={Assets.img.logoLarge} />
-        <ActivityIndicator color={ColorPallet.grayscale.white} />
+        <ActivityIndicator color={ColorPallet.grayscale.white} testID={testIdWithKey('LoadingActivityIndicator')} />
       </SafeAreaView>
     </Modal>
   )
