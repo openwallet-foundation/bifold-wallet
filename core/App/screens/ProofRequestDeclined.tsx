@@ -111,7 +111,7 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
                   style={[TextTheme.headingThree, styles.messageText]}
                   testID={testIdWithKey('ProofRequestDeclined')}
                 >
-                  2{t('ProofRequest.ProofRequestDeclined')}
+                  {t('ProofRequest.ProofRequestDeclined')}
                 </Text>
                 <PRDeclined style={[styles.image]} {...imageDisplayOptions} />
               </View>
