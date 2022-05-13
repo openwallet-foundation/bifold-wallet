@@ -13,6 +13,7 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Config } from 'react-native-config'
+import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
@@ -54,11 +55,11 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, splash } = useConfiguration()
+
   const onTutorialCompleted = () => {
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
-
     navigation.navigate(Screens.Terms)
   }
 
@@ -67,11 +68,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       return
     }
 
-    Toast.show({
-      type: ToastType.Info,
-      text1: t('StatusMessages.InitAgent'),
-      position: 'bottom',
-    })
+    // TODO: Show loading indicator here
+    dispatch({ type: DispatchAction.LOADING_ENABLED })
 
     //Flag to protect the init process from being duplicated
     setInitAgentInProcess(true)
@@ -101,13 +99,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       await newAgent.initialize()
       setAgent(newAgent) // -> This will set the agent in the global provider
       setAgentInitDone(true)
-      Toast.show({
-        type: ToastType.Success,
-        text1: 'Wallet initialized',
-        autoHide: true,
-        visibilityTime: 2000,
-        position: 'bottom',
-      })
+
+      dispatch({ type: DispatchAction.LOADING_DISABLED })
     } catch (e: unknown) {
       Toast.show({
         type: ToastType.Error,

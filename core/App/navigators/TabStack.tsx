@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { ColorPallet, TextTheme } from '../theme'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 
 import CredentialStack from './CredentialStack'
