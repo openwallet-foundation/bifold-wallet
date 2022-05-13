@@ -11,14 +11,10 @@ import {
 import { useAgent, useCredentialByState, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import ProofDeclined from '../assets/img/proof-declined.svg'
-import ProofPending from '../assets/img/proof-pending.svg'
-import ProofSuccess from '../assets/img/proof-success.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
-import NotificationModal from '../components/modals/NotificationModal'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
 import Title from '../components/texts/Title'
@@ -26,8 +22,8 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { Attribute, Field, Predicate } from '../types/record'
+import { NotificationStackParams, Screens } from '../types/navigators'
+import { Attribute, Predicate } from '../types/record'
 import {
   connectionRecordFromId,
   getConnectionName,
@@ -35,6 +31,9 @@ import {
   processProofPredicates,
 } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+
+import ProofRequestAccepted from './ProofRequestAccepted'
+import ProofRequestDeclined from './ProofRequestDeclined'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 
@@ -49,7 +48,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  const [successModalVisible, setSuccessModalVisible] = useState(false)
+  // const [successModalVisible, setSuccessModalVisible] = useState(false)
+  const [didDeclineProofRequest, setDidDeclineProofRequest] = useState<boolean>(false)
   const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
   const timestamps: Record<string, Date> = [
     ...useCredentialByState(CredentialState.CredentialReceived),
@@ -151,13 +151,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }, [])
 
   useEffect(() => {
-    if (proof.state === ProofState.Done) {
-      pendingModalVisible && setPendingModalVisible(false)
-      setSuccessModalVisible(true)
-    }
-  }, [proof])
-
-  useEffect(() => {
     if (proof.state === ProofState.Declined) {
       setDeclinedModalVisible(true)
     }
@@ -223,29 +216,28 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   const handleDeclinePress = async () => {
-    Alert.alert(t('ProofRequest.DeclineThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
-      { text: t('Global.Cancel'), style: 'cancel' },
-      {
-        text: t('Global.Confirm'),
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            setButtonsVisible(false)
-            await agent.proofs.declineRequest(proof.id)
-          } catch (e: unknown) {
-            const error = new BifoldError(
-              'Unable to reject proof request',
-              'There was a problem while rejecting the proof request.',
-              1025
-            )
-            dispatch({
-              type: DispatchAction.ERROR_ADDED,
-              payload: [{ error }],
-            })
-          }
-        },
-      },
-    ])
+    setDeclinedModalVisible(true)
+  }
+
+  const onGoBackTouched = () => {
+    setDeclinedModalVisible(false)
+  }
+
+  const onDeclinedConformationTouched = async () => {
+    try {
+      await agent.proofs.declineRequest(proof.id)
+      setDidDeclineProofRequest(true)
+    } catch (e: unknown) {
+      const error = new BifoldError(
+        'Unable to reject offer',
+        'There was a problem while rejecting the credential offer.',
+        1024
+      )
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [{ error }],
+      })
+    }
   }
 
   const connection = connectionRecordFromId(proof.connectionId)
@@ -262,7 +254,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   name="highlight-off"
                   color={ListItems.proofIcon.color}
                   size={ListItems.proofIcon.fontSize}
-                ></Icon>
+                />
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
@@ -324,7 +316,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                         name="close"
                         color={ListItems.proofError.color}
                         size={ListItems.recordAttributeText.fontSize}
-                      ></Icon>
+                      />
 
                       <Text
                         style={[ListItems.recordAttributeText, { color: ListItems.proofError.color }]}
@@ -361,52 +353,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           )
         }}
       />
-      {pendingModalVisible ? (
-        <NotificationModal
-          testID={t('ProofRequest.SendingTheInformationSecurely')}
-          title={t('ProofRequest.SendingTheInformationSecurely')}
-          visible={pendingModalVisible}
-          homeVisible={false}
-          doneTitle={t('Loading.BackToHome')}
-          doneType={ButtonType.Secondary}
-          doneAccessibilityLabel={t('Loading.BackToHome')}
-          onDone={() => {
-            setPendingModalVisible(false)
-            navigation.pop()
-            navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-          }}
-        >
-          <ProofPending style={{ marginVertical: 20 }}></ProofPending>
-        </NotificationModal>
-      ) : null}
-      {successModalVisible ? (
-        <NotificationModal
-          title={t('ProofRequest.InformationSentSuccessfully')}
-          visible={successModalVisible}
-          homeVisible={false}
-          onDone={() => {
-            setSuccessModalVisible(false)
-            navigation.pop()
-            navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
-          }}
-        >
-          <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
-        </NotificationModal>
-      ) : null}
-      {declinedModalVisible ? (
-        <NotificationModal
-          title={t('ProofRequest.ProofRequestDeclined')}
-          visible={declinedModalVisible}
-          homeVisible={false}
-          onDone={() => {
-            setDeclinedModalVisible(false)
-            navigation.pop()
-            navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
-          }}
-        >
-          <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
-        </NotificationModal>
-      ) : null}
+      <ProofRequestAccepted visible={pendingModalVisible} proofId={proofId} />
+      <ProofRequestDeclined
+        visible={declinedModalVisible}
+        proofId={proofId}
+        didDeclineOffer={didDeclineProofRequest}
+        onDeclinedConformationTouched={onDeclinedConformationTouched}
+        onGoBackTouched={onGoBackTouched}
+      />
     </>
   )
 }
