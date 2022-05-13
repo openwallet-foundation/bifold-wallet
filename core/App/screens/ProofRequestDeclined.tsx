@@ -1,48 +1,47 @@
-import { useCredentialById } from '@aries-framework/react-hooks'
+import { useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import CredentialDeclined from '../assets/img/credential-declined.svg'
+import PRDeclined from '../assets/img/proof-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
-import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-export interface CredentialOfferDeclineProps {
+export interface ProofRequestDeclinedProps {
   visible: boolean
-  credentialId: string
+  proofId: string
   didDeclineOffer: boolean
   onGoBackTouched: GenericFn
   onDeclinedConformationTouched: GenericFn
 }
 
-const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
+const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
   visible,
-  credentialId,
+  proofId,
   didDeclineOffer,
   onGoBackTouched,
   onDeclinedConformationTouched,
 }) => {
-  const credential = useCredentialById(credentialId)
+  const proof = useProofById(proofId)
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const navigation = useNavigation()
-  const { ListItems } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const imageDisplayOptions = {
-    fill: ListItems.credentialIconColor.color,
+    fill: ColorPallet.notification.infoText,
     height: 250,
     width: 250,
   }
   const styles = StyleSheet.create({
     container: {
-      ...ListItems.credentialOfferBackground,
       flexGrow: 1,
+      backgroundColor: ColorPallet.brand.primaryBackground,
       paddingHorizontal: 25,
     },
     image: {
@@ -59,8 +58,8 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
     },
   })
 
-  if (!credential) {
-    throw new Error('Unable to fetch credential from AFJ')
+  if (!proof) {
+    throw new Error('Unable to fetch proof from AFJ')
   }
 
   const onDoneTouched = () => {
@@ -79,23 +78,22 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
             <>
               <InfoBox
                 notificationType={InfoBoxType.Warn}
-                title={t('CredentialOffer.ConfirmDeclinedTitle')}
-                message={t('CredentialOffer.ConfirmDeclinedMessage')}
+                title={t('ProofRequest.ConfirmDeclinedTitle')}
+                message={t('ProofRequest.ConfirmDeclinedMessage')}
               />
-              <CredentialCard credential={credential} style={{ marginVertical: 25 }} />
-              <View>
+              <View style={{ marginVertical: 25 }}>
                 <Button
-                  title={t('CredentialOffer.ConfirmDecline')}
-                  accessibilityLabel={t('CredentialOffer.ConfirmDecline')}
-                  testID={testIdWithKey('ConfirmDeclineCredential')}
+                  title={t('ProofRequest.ConfirmDecline')}
+                  accessibilityLabel={t('ProofRequest.ConfirmDecline')}
+                  testID={testIdWithKey('ConfirmDeclineProofRequest')}
                   onPress={onDeclinedConformationTouched}
                   buttonType={ButtonType.Primary}
                 />
                 <View style={[{ marginTop: 10 }]}>
                   <Button
-                    title={t('CredentialOffer.AbortDecline')}
-                    accessibilityLabel={t('CredentialOffer.AbortDecline')}
-                    testID={testIdWithKey('AbortDeclineCredential')}
+                    title={t('ProofRequest.AbortDecline')}
+                    accessibilityLabel={t('ProofRequest.AbortDecline')}
+                    testID={testIdWithKey('AbortDeclineProofRequest')}
                     onPress={onGoBackTouched}
                     buttonType={ButtonType.Secondary}
                   />
@@ -108,12 +106,12 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
             <>
               <View style={[styles.messageContainer]}>
                 <Text
-                  style={[ListItems.credentialOfferTitle, styles.messageText]}
-                  testID={testIdWithKey('CredentialDeclined')}
+                  style={[TextTheme.headingThree, styles.messageText]}
+                  testID={testIdWithKey('ProofRequestDeclined')}
                 >
-                  {t('CredentialOffer.CredentialDeclined')}
+                  {t('ProofRequest.ProofRequestDeclined')}
                 </Text>
-                <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
+                <PRDeclined style={[styles.image]} {...imageDisplayOptions} />
               </View>
 
               <View>
@@ -133,4 +131,4 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
   )
 }
 
-export default CredentialOfferDecline
+export default ProofRequestDeclined
