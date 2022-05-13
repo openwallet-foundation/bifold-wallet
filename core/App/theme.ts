@@ -95,6 +95,12 @@ interface ColorPallet {
   grayscale: GrayscaleColors
 }
 
+interface Assets {
+  img: {
+    logoLarge: any
+  }
+}
+
 export const borderRadius = 4
 export const heavyOpacity = 0.7
 export const lightOpacity = 0.35
@@ -539,6 +545,12 @@ export const OnboardingTheme = {
   },
 }
 
+export const Assets = {
+  img: {
+    logoLarge: require('./assets/img/logo-large.png'),
+  },
+}
+
 export interface Theme {
   ColorPallet: ColorPallet
   TextTheme: TextTheme
@@ -554,6 +566,7 @@ export interface Theme {
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
+  Assets: Assets
 }
 
 export const theme: Theme = {
@@ -571,4 +584,5 @@ export const theme: Theme = {
   heavyOpacity,
   borderRadius,
   borderWidth,
+  Assets,
 }
