@@ -158,7 +158,7 @@ const translation = {
   "TabStack": {
     "Home": "Home",
     "Scan": "Scan",
-    "Credentials": "Credentials",
+    "Credentials": "Wallet",
     "Contacts": "Contacts",
     "Settings": "Settings",
   },

@@ -91,7 +91,6 @@ const TabStack: React.FC = () => {
                 />
               </View>
             ),
-            tabBarShowLabel: showScanLabel,
             tabBarLabel: ({focused}) => {
               if (showScanLabel) {
                 return scanLabelTrue(focused, TabTheme, t)
