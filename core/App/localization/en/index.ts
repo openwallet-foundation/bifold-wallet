@@ -4,7 +4,7 @@ const translation = {
     "EnterPin": "Enter Pin",
     "6DigitPin": "6 Digit Pin",
     "Submit": "Submit",
-    "NoneYet!": "Your wallet is empty. Your accepted credentials will be added here.",
+    "NoneYet!": "None yet!",
     "Cancel": "Cancel",
     "Confirm": "Confirm",
     "Accept": "Accept",
@@ -57,6 +57,9 @@ const translation = {
   "PinEnter": {
     "IncorrectPin": "Incorrect Pin",
   },
+  "Contacts": {
+    "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
+  },
   "ContactDetails": {
     "Created": "Created",
     "ConnectionState": "Connection State",
@@ -64,7 +67,8 @@ const translation = {
   },
   "Credentials": {
     "CredentialsNotFound": "Credentials not found",
-    "CredentialDetails": "Credential Details"
+    "CredentialDetails": "Credential Details",
+    "EmptyList": "Your wallet is empty. Your accepted credentials will be added here.",
   },
   "CredentialDetails": {
     "Id": "Id:",
