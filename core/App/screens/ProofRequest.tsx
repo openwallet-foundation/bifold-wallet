@@ -5,6 +5,7 @@ import {
   ProofRecord,
   ProofState,
   RequestedAttribute,
+  RequestedPredicate,
   RetrievedCredentials,
 } from '@aries-framework/core'
 import { useAgent, useCredentialByState, useProofById } from '@aries-framework/react-hooks'
@@ -15,15 +16,20 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import Record from '../components/record/Record'
-import RecordAttribute from '../components/record/RecordAttribute'
+import RecordField from '../components/record/RecordField'
 import Title from '../components/texts/Title'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { Attribute } from '../types/record'
-import { connectionRecordFromId, getConnectionName, processProofAttributes } from '../utils/helpers'
+import { Attribute, Predicate } from '../types/record'
+import {
+  connectionRecordFromId,
+  getConnectionName,
+  processProofAttributes,
+  processProofPredicates,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccepted from './ProofRequestAccepted'
@@ -57,6 +63,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   )
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
+  const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
   const { ListItems } = useTheme()
 
@@ -109,19 +116,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
     retrieveCredentialsForProof(proof)
       .then((credentials) => {
-        Object.values(credentials?.requestedAttributes || {}).forEach((credentials) => {
-          credentials
-            .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
-            .forEach((credential) => {
-              // FIXME: Once hooks are updated this should no longer be necessary
-              if (credential.revoked) {
-                dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
-              }
-            })
-        })
+        const markRevokedCredentials = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}) => {
+          Object.values(fields).forEach((credentials) => {
+            credentials
+              .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
+              .forEach((credential) => {
+                // FIXME: Once hooks are updated this should no longer be necessary
+                if (credential.revoked) {
+                  dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
+                }
+              })
+          })
+        }
+        markRevokedCredentials(credentials?.requestedAttributes)
+        markRevokedCredentials(credentials?.requestedPredicates)
         setCredentials(credentials)
+
         const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
+        const predicates = processProofPredicates(proof, credentials?.requestedPredicates)
         setAttributes(attributes)
+        setPredicates(predicates)
       })
       .catch(() => {
         const error = new BifoldError(
@@ -142,11 +156,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [proof])
 
-  const anyUnavailable = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
-    !Object.values(attributes).length || Object.values(attributes).some((credentials) => !credentials?.length)
+  const anyUnavailable = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}): boolean =>
+    !Object.values(fields).length || Object.values(fields).some((credentials) => !credentials?.length)
 
-  const anyRevoked = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
-    Object.values(attributes).some((credentials) => credentials?.every((credential) => credential.revoked))
+  const anyRevoked = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}): boolean =>
+    Object.values(fields).some((credentials) => credentials?.every((credential) => credential.revoked))
 
   // FIXME: Once AFJ is updated this should no longer be necessary.
   const filterRevokedCredentialsFromReceived = (
@@ -162,7 +176,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         },
         {}
       ),
-      requestedPredicates: credentials.requestedPredicates,
+      requestedPredicates: Object.entries(credentials.requestedPredicates).reduce(
+        (filteredCredentials, [predicateName, predicateValues]) => {
+          return {
+            ...filteredCredentials,
+            [predicateName]: predicateValues.filter((credential) => !credential.revoked),
+          }
+        },
+        {}
+      ),
     }
   }
 
@@ -225,7 +247,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
-            {anyUnavailable(credentials?.requestedAttributes) ? (
+            {anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ? (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon
                   style={{ marginLeft: -2, marginRight: 10 }}
@@ -248,7 +270,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )}
         footer={() => (
           <View style={{ marginBottom: 30 }}>
-            {!(anyUnavailable(credentials?.requestedAttributes) || anyRevoked(credentials?.requestedAttributes)) ? (
+            {!(
+              anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ||
+              anyRevoked({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates })
+            ) ? (
               <View style={styles.footerButton}>
                 <Button
                   title={t('Global.Share')}
@@ -266,7 +291,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 accessibilityLabel={t('Global.Decline')}
                 testID={testIdWithKey('Decline')}
                 buttonType={
-                  anyUnavailable(credentials?.requestedAttributes) || anyRevoked(credentials?.requestedAttributes)
+                  anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ||
+                  anyRevoked({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates })
                     ? ButtonType.Primary
                     : ButtonType.Secondary
                 }
@@ -276,14 +302,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             </View>
           </View>
         )}
-        attributes={attributes}
-        attribute={(attribute) => {
+        fields={[...attributes, ...predicates]}
+        field={(field) => {
           return (
-            <RecordAttribute
-              attribute={attribute}
-              attributeValue={(attribute: Attribute) => (
+            <RecordField
+              field={field}
+              fieldValue={(field) => (
                 <>
-                  {!attribute?.value || attribute?.revoked ? (
+                  {(!(field as Attribute)?.value && !(field as Predicate)?.pValue) || field?.revoked ? (
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Icon
                         style={{ paddingTop: 2, paddingHorizontal: 2 }}
@@ -296,17 +322,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                         style={[ListItems.recordAttributeText, { color: ListItems.proofError.color }]}
                         testID={testIdWithKey('RevokedOrNotAvailable')}
                       >
-                        {attribute?.revoked
-                          ? t('CredentialDetails.Revoked')
-                          : t('ProofRequest.NotAvailableInYourWallet')}
+                        {field?.revoked ? t('CredentialDetails.Revoked') : t('ProofRequest.NotAvailableInYourWallet')}
                       </Text>
                     </View>
                   ) : (
                     <Text style={ListItems.recordAttributeText} testID={testIdWithKey('AttributeValue')}>
-                      {attribute?.value}
+                      {(field as Attribute)?.value || `${(field as Predicate)?.pType} ${(field as Predicate)?.pValue}`}
                     </Text>
                   )}
-                  {attribute?.value ? (
+                  {(field as Attribute)?.value ? (
                     <TouchableOpacity
                       accessible={true}
                       accessibilityLabel={t('ProofRequest.Details')}
@@ -315,7 +339,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       onPress={() =>
                         navigation.navigate(Screens.ProofRequestAttributeDetails, {
                           proofId,
-                          attributeName: attribute.name,
+                          attributeName: field.name,
                         })
                       }
                       style={styles.link}
