@@ -2,7 +2,7 @@ import { CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
@@ -33,7 +33,8 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { t } = useTranslation()
   const { HomeTheme } = useTheme()
   const [store, dispatch] = useStore()
-  const [loading, setLoading] = useState<boolean>(true)
+  // This syntax is required for the jest mocks to work
+  const [loading, setLoading] = React.useState<boolean>(true)
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: offset,
