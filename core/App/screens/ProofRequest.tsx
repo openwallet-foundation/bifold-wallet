@@ -11,7 +11,7 @@ import {
 import { useAgent, useCredentialByState, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -243,7 +243,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const connection = connectionRecordFromId(proof.connectionId)
 
   return (
-    <>
+    <SafeAreaView>
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
@@ -361,7 +361,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         onDeclinedConformationTouched={onDeclinedConformationTouched}
         onGoBackTouched={onGoBackTouched}
       />
-    </>
+    </SafeAreaView>
   )
 }
 
