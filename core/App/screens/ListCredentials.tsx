@@ -1,6 +1,7 @@
 import { CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
 import { CredentialListItem } from '../components'
@@ -9,6 +10,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 
 const ListCredentials: React.FC = () => {
+  const { t } = useTranslation()
   const credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
@@ -22,7 +24,7 @@ const ListCredentials: React.FC = () => {
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
       data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
       keyExtractor={(item: CredentialRecord) => item.credentialId || item.id}
-      ListEmptyComponent={() => <EmptyList />}
+      ListEmptyComponent={() => <EmptyList message={t('Credentials.EmptyList')} />}
       renderItem={({ item, index }) => (
         <View
           style={{

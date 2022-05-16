@@ -36,7 +36,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
 const Splash: React.FC = () => {
   const [, dispatch] = useStore()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, Assets } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -74,7 +74,7 @@ const Splash: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require('../assets/img/logo-large.png')} />
+      <Image source={Assets.img.logoLarge} />
     </SafeAreaView>
   )
 }

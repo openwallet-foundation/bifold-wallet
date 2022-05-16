@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays loading screen renders correctly 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  testID="com.ariesbifold:id/LoadingModalScreen"
+  transparent={true}
+  visible={true}
+>
+  <RCTSafeAreaView
+    emulateUnlessSupported={true}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#42803E",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "minHeight": 1334,
+        },
+      ]
+    }
+  >
+    <Image
+      source={
+        Object {
+          "default": "",
+        }
+      }
+    />
+    <ActivityIndicator
+      color="#FFFFFF"
+      testID="com.ariesbifold:id/LoadingActivityIndicator"
+    />
+  </RCTSafeAreaView>
+</Modal>
+`;

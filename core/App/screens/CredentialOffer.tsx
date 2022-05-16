@@ -106,56 +106,54 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
   }
 
   return (
-    <Modal transparent={true} animationType={'fade'}>
-      <SafeAreaView>
-        <Record
-          header={() => (
-            <>
-              <View style={styles.headerTextContainer}>
-                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
-                  {t('CredentialOffer.IsOfferingYouACredential')}
-                </Text>
-              </View>
-              <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
-            </>
-          )}
-          footer={() => (
-            <View style={{ marginBottom: 30 }}>
-              <View style={styles.footerButton}>
-                <Button
-                  title={t('Global.Accept')}
-                  accessibilityLabel={t('Global.Accept')}
-                  testID={testIdWithKey('AcceptCredentialOffer')}
-                  buttonType={ButtonType.Primary}
-                  onPress={handleAcceptPress}
-                  disabled={!buttonsVisible}
-                />
-              </View>
-              <View style={styles.footerButton}>
-                <Button
-                  title={t('Global.Decline')}
-                  accessibilityLabel={t('Global.Decline')}
-                  testID={testIdWithKey('DeclineCredentialOffer')}
-                  buttonType={ButtonType.Secondary}
-                  onPress={handleDeclinePress}
-                  disabled={!buttonsVisible}
-                />
-              </View>
+    <SafeAreaView>
+      <Record
+        header={() => (
+          <>
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                {t('CredentialOffer.IsOfferingYouACredential')}
+              </Text>
             </View>
-          )}
-          attributes={credential.credentialAttributes}
-        />
-        <CredentialOfferDecline
-          visible={declinedModalVisible}
-          credentialId={credentialId}
-          didDeclineOffer={didDeclineOffer}
-          onDeclinedConformationTouched={onDeclinedConformationTouched}
-          onGoBackTouched={onGoBackTouched}
-        />
-        <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
-      </SafeAreaView>
-    </Modal>
+            <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+          </>
+        )}
+        footer={() => (
+          <View style={{ marginBottom: 30 }}>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Accept')}
+                accessibilityLabel={t('Global.Accept')}
+                testID={testIdWithKey('AcceptCredentialOffer')}
+                buttonType={ButtonType.Primary}
+                onPress={handleAcceptPress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Decline')}
+                accessibilityLabel={t('Global.Decline')}
+                testID={testIdWithKey('DeclineCredentialOffer')}
+                buttonType={ButtonType.Secondary}
+                onPress={handleDeclinePress}
+                disabled={!buttonsVisible}
+              />
+            </View>
+          </View>
+        )}
+        fields={credential.credentialAttributes}
+      />
+      <CredentialOfferDecline
+        visible={declinedModalVisible}
+        credentialId={credentialId}
+        didDeclineOffer={didDeclineOffer}
+        onDeclinedConformationTouched={onDeclinedConformationTouched}
+        onGoBackTouched={onGoBackTouched}
+      />
+      <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
+    </SafeAreaView>
   )
 }
 
