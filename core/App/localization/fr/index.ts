@@ -1,7 +1,7 @@
 // prettier-ignore
 const translation = {
     "Global": {
-        "EnterPin": "Entrer le NIP",
+        "EnterPin": "Saisir le NIP",
         "6DigitPin": "NIP à 6 chiffres",
         "Submit": "Soumettre",
         "NoneYet!": "Votre portefeuille est vide. Vos justificatifs acceptés seront ajoutés ici.",
