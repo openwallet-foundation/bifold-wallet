@@ -51,7 +51,7 @@ const translation = {
         "PinMustBe6DigitsInLength": "Le NIP doit comporter 6 chiffres",
         "PinsEnteredDoNotMatch": "Les NIP saisis ne correspondent pas",
         "6DigitPin": "NIP à 6 chiffres",
-        "ReenterPin": "Entrer le NIP à nouveau",
+        "ReenterPin": "Saisir le NIP à nouveau",
         "Create": "Créer"
     },
     "PinEnter": {
@@ -175,7 +175,7 @@ const translation = {
         "Onboarding": "Inscription",
         "Terms": "Conditions d'utilisation",
         "CreatePin": "Créer un NIP à 6 chiffres",
-        "EnterPin": "Entrer le NIP",
+        "EnterPin": "Saisir le NIP",
         "Home": "Accueil",
         "Scan": "Numériser",
         "Credentials": "Justificatifs",
