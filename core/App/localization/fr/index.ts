@@ -71,7 +71,7 @@ const translation = {
         "CreatedAt": "Créé à :",
         "Version": "Version",
         "Issued": "Délivré",
-        "PrivacyPolicy": "Politique sur la protection de la vie privée",
+        "PrivacyPolicy": "Politique de confidentialité",
         "TermsAndConditions": "Conditions d'utilisation",
         "RemoveFromWallet": "Retirer du portefeuille",
         "Revoked": "Révoqué",
