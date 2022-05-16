@@ -4,11 +4,12 @@ import {
   CredentialRecord,
   ProofRecord,
   RequestedAttribute,
+  RequestedPredicate,
 } from '@aries-framework/core'
 import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
 import { parseUrl } from 'query-string'
 
-import { Attribute } from '../types/record'
+import { Attribute, Predicate } from '../types/record'
 
 export function parseSchema(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'
@@ -72,17 +73,20 @@ export function getConnectionName(connection: ConnectionRecord | void): string |
   return connection?.alias || connection?.invitation?.label
 }
 
-export function firstAttributeCredential(attributes: RequestedAttribute[], revoked = true): RequestedAttribute | null {
-  if (!attributes.length) {
+export function firstValidCredential(
+  fields: RequestedAttribute[] | RequestedPredicate[],
+  revoked = true
+): RequestedAttribute | RequestedPredicate | null {
+  if (!fields.length) {
     return null
   }
 
   let first = null
-  const firstNonRevoked = attributes.filter((attribute) => !attribute.revoked)[0]
+  const firstNonRevoked = fields.filter((field) => !field.revoked)[0]
   if (firstNonRevoked) {
     first = firstNonRevoked
-  } else if (attributes.length && revoked) {
-    first = attributes[0]
+  } else if (fields.length && revoked) {
+    first = fields[0]
   }
 
   if (!first?.credentialInfo) {
@@ -105,7 +109,7 @@ export const processProofAttributes = (
   const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
 
   requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
-    const firstCredential = firstAttributeCredential(attributes[attributeName] || [])
+    const firstCredential = firstValidCredential(attributes[attributeName] || [])
     const credentialAttributes = names?.length ? names : [name || attributeName]
     credentialAttributes.forEach((attribute) => {
       processedAttributes.push({
@@ -117,4 +121,25 @@ export const processProofAttributes = (
     })
   })
   return processedAttributes
+}
+
+export const processProofPredicates = (
+  proof: ProofRecord,
+  predicates: Record<string, RequestedPredicate[]> = {}
+): Predicate[] => {
+  const processedPredicates = [] as Predicate[]
+  const { requestedPredicates: requestedProofPredicates } = proof.requestMessage?.indyProofRequest || {}
+
+  requestedProofPredicates?.forEach(({ name, predicateType, predicateValue }, predicateName) => {
+    const firstCredential = firstValidCredential(predicates[predicateName] || [])
+    const predicate = name || predicateName
+    processedPredicates.push({
+      name: predicate,
+      pValue: predicateValue,
+      pType: predicateType,
+      revoked: firstCredential?.revoked || false,
+      credentialId: firstCredential?.credentialId,
+    })
+  })
+  return processedPredicates
 }

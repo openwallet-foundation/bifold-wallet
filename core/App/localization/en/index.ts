@@ -4,7 +4,7 @@ const translation = {
     "EnterPin": "Enter Pin",
     "6DigitPin": "6 Digit Pin",
     "Submit": "Submit",
-    "NoneYet!": "Your wallet is empty. Your accepted credentials will be added here.",
+    "NoneYet!": "None yet!",
     "Cancel": "Cancel",
     "Confirm": "Confirm",
     "Accept": "Accept",
@@ -57,6 +57,9 @@ const translation = {
   "PinEnter": {
     "IncorrectPin": "Incorrect Pin",
   },
+  "Contacts": {
+    "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
+  },
   "ContactDetails": {
     "Created": "Created",
     "ConnectionState": "Connection State",
@@ -64,7 +67,8 @@ const translation = {
   },
   "Credentials": {
     "CredentialsNotFound": "Credentials not found",
-    "CredentialDetails": "Credential Details"
+    "CredentialDetails": "Credential Details",
+    "EmptyList": "Your wallet is empty. Your accepted credentials will be added here.",
   },
   "CredentialDetails": {
     "Id": "Id:",
@@ -119,8 +123,10 @@ const translation = {
     "CredentialOnTheWay": "Your credential is on the way",
     "CredentialOffer": "New Credential Offer",
     "IsOfferingYouACredential": "is offering you a credential",
-    "ConfirmDeclineCredential": "Yes, decline this credential",
-    "AbortDeclineCredential": "No, go back"
+    "ConfirmDeclinedTitle": "Are you sure you want to decline this credential?",
+    "ConfirmDeclinedMessage": "In order to receive the credential offer again, you will need to reapply with the issuer.",
+    "ConfirmDecline": "Yes, decline this credential",
+    "AbortDecline": "No, go back"
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -142,7 +148,12 @@ const translation = {
     "Details": "Details",
     "SendingTheInformationSecurely": "Sending the information securely",
     "InformationSentSuccessfully": "Information sent successfully",
-    "ProofRequestDeclined": "Proof request declined"
+    "ProofRequestCompleted": "Information approved",
+    "ProofRequestDeclined": "Proof request declined",
+    "ConfirmDeclinedTitle": "Are you sure you want to decline this proof request?",
+    "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
+    "ConfirmDecline": "Yes, decline this proof request",
+    "AbortDecline": "No, go back"
   },
   "Settings": {
     "Version": "Version",

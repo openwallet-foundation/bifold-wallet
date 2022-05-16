@@ -127,8 +127,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           </TouchableOpacity> */}
         </View>
       )}
-      attributes={credential.credentialAttributes}
-      hideAttributeValues={true}
+      fields={credential.credentialAttributes}
+      hideFieldValues={true}
     />
   )
 }
