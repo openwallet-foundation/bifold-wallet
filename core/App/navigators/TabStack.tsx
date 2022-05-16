@@ -58,7 +58,7 @@ const TabStack: React.FC = () => {
               <View style={TabTheme.focusTabIconStyle}>
                 <Icon
                   name="qrcode-scan"
-                  color={TabTheme.tabBarButtonIconStyle.color}
+                  color={TabTheme.tabBarButtonIconColor.color}
                   size={32}
                   style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
                 />
