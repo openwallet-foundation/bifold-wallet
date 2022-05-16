@@ -55,7 +55,7 @@ const translation = {
         "Create": "Créer"
     },
     "PinEnter": {
-        "IncorrectPin": "NIP incorrect"
+        "IncorrectPin": "NIP erroné"
     },
     "ContactDetails": {
         "Created": "Créé",
