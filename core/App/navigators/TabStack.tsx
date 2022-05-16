@@ -18,7 +18,7 @@ const TabStack: React.FC = () => {
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { ColorPallet, TabTheme } = useTheme()
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.secondary }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
@@ -58,7 +58,7 @@ const TabStack: React.FC = () => {
               <View style={TabTheme.focusTabIconStyle}>
                 <Icon
                   name="qrcode-scan"
-                  color={TabTheme.tabBarButtonIconStyle.color}
+                  color={TabTheme.tabBarButtonIconColor.color}
                   size={32}
                   style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
                 />
