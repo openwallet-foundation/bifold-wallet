@@ -407,7 +407,7 @@ export const TabTheme = {
     fontWeight: 'normal',
     paddingBottom: 5,
   },
-  tabBarButtonIconColor: {
+  tabBarButtonIconStyle: {
     color: ColorPallet.notification.infoText,
   },
   focusTabIconStyle: {
