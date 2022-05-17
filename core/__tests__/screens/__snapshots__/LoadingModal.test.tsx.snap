@@ -3,7 +3,6 @@
 exports[`displays loading screen renders correctly 1`] = `
 <Modal
   hardwareAccelerated={false}
-  testID="com.ariesbifold:id/LoadingModalScreen"
   transparent={true}
   visible={true}
 >
@@ -21,17 +20,44 @@ exports[`displays loading screen renders correctly 1`] = `
       ]
     }
   >
-    <Image
-      source={
+    <View
+      style={
         Object {
-          "default": "",
+          "alignItems": "center",
+          "justifyContent": "center",
         }
       }
-    />
-    <ActivityIndicator
-      color="#FFFFFF"
       testID="com.ariesbifold:id/LoadingActivityIndicator"
-    />
+    >
+      <Image
+        source={
+          Object {
+            "default": "",
+          }
+        }
+        testID="com.ariesbifold:id/LoadingActivityIndicatorX"
+      />
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "position": "absolute",
+            "transform": Array [
+              Object {
+                "rotate": "0deg",
+              },
+            ],
+          }
+        }
+      >
+        <
+          fill="#FFFFFF"
+          height={200}
+          width={200}
+        />
+      </View>
+    </View>
   </RCTSafeAreaView>
 </Modal>
 `;
