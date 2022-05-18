@@ -55,24 +55,30 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
           Object {
             "marginTop": 20,
           },
-          Object {
-            "alignItems": "center",
-            "justifyContent": "flex-end",
-            "minHeight": 250,
-          },
         ]
       }
     >
-      <View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+          }
+        }
+      >
         <
           fill="#FFFFFF"
-          height={250}
-          width={250}
+          height={130}
+          style={
+            Object {
+              "position": "absolute",
+            }
+          }
+          width={130}
         />
         <View
           style={
             Object {
-              "position": "absolute",
               "transform": Array [
                 Object {
                   "rotate": "360deg",
@@ -148,24 +154,30 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
           Object {
             "marginTop": 20,
           },
-          Object {
-            "alignItems": "center",
-            "justifyContent": "flex-end",
-            "minHeight": 250,
-          },
         ]
       }
     >
-      <View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+          }
+        }
+      >
         <
           fill="#FFFFFF"
-          height={250}
-          width={250}
+          height={130}
+          style={
+            Object {
+              "position": "absolute",
+            }
+          }
+          width={130}
         />
         <View
           style={
             Object {
-              "position": "absolute",
               "transform": Array [
                 Object {
                   "rotate": "0deg",
@@ -241,24 +253,30 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
           Object {
             "marginTop": 20,
           },
-          Object {
-            "alignItems": "center",
-            "justifyContent": "flex-end",
-            "minHeight": 250,
-          },
         ]
       }
     >
-      <View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+          }
+        }
+      >
         <
           fill="#FFFFFF"
-          height={250}
-          width={250}
+          height={130}
+          style={
+            Object {
+              "position": "absolute",
+            }
+          }
+          width={130}
         />
         <View
           style={
             Object {
-              "position": "absolute",
               "transform": Array [
                 Object {
                   "rotate": "360deg",
