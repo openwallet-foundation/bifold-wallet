@@ -19,7 +19,7 @@ interface CredentialCardProps {
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = false, style = {} }) => {
   const { t } = useTranslation()
-  const { ListItems } = useTheme()
+  const { ColorPallet, ListItems } = useTheme()
   const styles = StyleSheet.create({
     container: {
       ...ListItems.credentialBackground,
@@ -47,7 +47,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = f
       <View style={styles.row}>
         <AvatarView
           name={parsedSchema(credential).name}
-          style={revoked ? { borderColor: ListItems.revoked.borderColor } : {}}
+          style={
+            revoked
+              ? { borderColor: ListItems.revoked.borderColor, backgroundColor: ColorPallet.brand.primaryBackground }
+              : {}
+          }
         />
         <View style={styles.details}>
           <Text style={ListItems.credentialTitle} testID={testIdWithKey('CredentialName')}>
