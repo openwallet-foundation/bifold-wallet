@@ -10,7 +10,7 @@ interface AvatarViewProps {
   style?: ViewStyle
 }
 
-const AvatarView: React.FC<AvatarViewProps> = ({ name }) => {
+const AvatarView: React.FC<AvatarViewProps> = ({ name, style }) => {
   const { ListItems } = useTheme()
   const styles = StyleSheet.create({
     avatar: {
@@ -22,7 +22,7 @@ const AvatarView: React.FC<AvatarViewProps> = ({ name }) => {
     },
   })
   return (
-    <View style={[styles.avatar, { borderColor: hashToRGBA(hashCode(name)) }]}>
+    <View style={[styles.avatar, { borderColor: hashToRGBA(hashCode(name)) }, style]}>
       <Text style={ListItems.avatarText} testID={testIdWithKey('AvatarName')}>
         {name.charAt(0)}
       </Text>
