@@ -62,15 +62,15 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = f
           </Text>
 
           {revoked ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
               <Icon
                 style={{ marginRight: 5 }}
                 name="cancel"
-                color={ListItems.revoked.backgroundColor}
+                color={ColorPallet.semantic.error}
                 size={ListItems.credentialTitle.fontSize}
               ></Icon>
               <Text
-                style={[ListItems.credentialDetails, { color: ListItems.revoked.backgroundColor, fontWeight: 'bold' }]}
+                style={[ListItems.credentialDetails, { color: ColorPallet.semantic.error, fontWeight: 'bold' }]}
                 testID={testIdWithKey('CredentialRevoked')}
               >
                 Revoked
