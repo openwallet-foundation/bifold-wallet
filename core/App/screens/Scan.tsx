@@ -17,7 +17,6 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
-  const [connectionId, setConnectionId] = useState<string>()
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
     try {
@@ -27,12 +26,15 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       })
       const message = await res.json()
       await agent?.receiveMessage(message)
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+        screen: Screens.Connection,
+        params: { threadId: message['@id'] },
+      })
     } catch (err: unknown) {
       const error = new BifoldError(
         'Unable to accept connection',
         'There was a problem while accepting the connection redirection',
-        1024
+        1024.1
       )
       throw error
     }
@@ -47,11 +49,15 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         throw new BifoldError(
           'Unable to accept connection',
           'There was a problem while accepting the connection.',
-          1024
+          1024.2
         )
       }
-      setConnectionId(connectionRecord.id)
-    } catch (err: unknown) {
+      //setConnectionId(connectionRecord.id)
+      navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+        screen: Screens.Connection,
+        params: { connectionId: connectionRecord.id },
+      })
+    } catch (err) {
       const error = new BifoldError(
         'Unable to accept connection',
         'There was a problem while accepting the connection.',
@@ -75,12 +81,6 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       setQrCodeScanError(error)
     }
   }
-
-  useEffect(() => {
-    if (connectionId) {
-      navigation.getParent()?.navigate(Stacks.ConnectionStack, { screen: Screens.Connection, params: { connectionId } })
-    }
-  }, [connectionId])
 
   return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
 }
