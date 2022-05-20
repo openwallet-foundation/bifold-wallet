@@ -13,6 +13,13 @@ interface CredentialContextInterface {
   credentials: CredentialRecord[]
 }
 
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
+
 describe('displays a credentials list screen', () => {
   const testOpenVPCredentialRecord = new CredentialRecord({
     threadId: '1',
