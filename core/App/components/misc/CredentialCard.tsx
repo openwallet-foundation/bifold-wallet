@@ -19,7 +19,7 @@ interface CredentialCardProps {
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = false, style = {} }) => {
   const { t } = useTranslation()
-  const { ListItems } = useTheme()
+  const { ColorPallet, ListItems } = useTheme()
   const styles = StyleSheet.create({
     container: {
       ...ListItems.credentialBackground,
@@ -47,7 +47,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = f
       <View style={styles.row}>
         <AvatarView
           name={parsedSchema(credential).name}
-          style={revoked ? { borderColor: ListItems.revoked.borderColor } : {}}
+          style={
+            revoked
+              ? { borderColor: ListItems.revoked.borderColor, backgroundColor: ColorPallet.brand.primaryBackground }
+              : {}
+          }
         />
         <View style={styles.details}>
           <Text style={ListItems.credentialTitle} testID={testIdWithKey('CredentialName')}>
@@ -58,15 +62,15 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = f
           </Text>
 
           {revoked ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
               <Icon
                 style={{ marginRight: 5 }}
                 name="cancel"
-                color={ListItems.revoked.backgroundColor}
+                color={ColorPallet.semantic.error}
                 size={ListItems.credentialTitle.fontSize}
               ></Icon>
               <Text
-                style={[ListItems.credentialDetails, { color: ListItems.revoked.backgroundColor, fontWeight: 'bold' }]}
+                style={[ListItems.credentialDetails, { color: ColorPallet.semantic.error, fontWeight: 'bold' }]}
                 testID={testIdWithKey('CredentialRevoked')}
               >
                 Revoked
