@@ -65,7 +65,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
-  const { ListItems } = useTheme()
+  const { ColorPallet, ListItems } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -87,6 +87,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     valueContainer: {
       minHeight: ListItems.recordAttributeText.fontSize,
       paddingVertical: 4,
+    },
+    detailsButton: {
+      ...ListItems.recordAttributeText,
+      color: ColorPallet.brand.primary,
     },
   })
 
@@ -344,7 +348,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       }
                       style={styles.link}
                     >
-                      <Text style={ListItems.recordAttributeText}>{t('ProofRequest.Details')}</Text>
+                      <Text style={styles.detailsButton}>{t('ProofRequest.Details')}</Text>
                     </TouchableOpacity>
                   ) : null}
                 </>
