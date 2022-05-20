@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { TabStackParams, TabStacks } from '../types/navigators'
-import { showScanLabel, fiveTabDisplay } from '../../configs/uiConfig'
+import { uiConfig } from '../../configs/uiConfig'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -22,14 +22,14 @@ const TabStack: React.FC = () => {
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { ColorPallet, TabTheme } = useTheme()
 
-  const renderTabScreen = (name: TabStacks, translatedName: string, component: React.FC, iconFilled: string, iconOutline?: string) => {
+  const renderTabScreen = (name: TabStacks, translatedName: string, component: React.FC, iconFilled: string, iconOutline: string, focusTab: boolean = false) => {
     return (
       <Tab.Screen
         name={name}
         component={component}
         options={{
           tabBarIcon: ({ color, focused }) => {
-            if (!iconOutline) {
+            if (focusTab) {
               return (
                 <View style={[TabTheme.focusTabIconStyle, focused && TabTheme.focusTabActiveTintColor]}>
                 <Icon
@@ -46,8 +46,8 @@ const TabStack: React.FC = () => {
           tabBarBadge: name == TabStacks.HomeStack ? total || undefined : undefined,
           tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
           tabBarLabel: ({ focused }) => {
-            if (!iconOutline) {
-              if (showScanLabel) {
+            if (focusTab) {
+              if (uiConfig.showScanLabel) {
                 return <Text
                   style={{
                     ...TabTheme.tabTextStyle,
@@ -86,11 +86,11 @@ const TabStack: React.FC = () => {
         }}
       >
         {renderTabScreen(TabStacks.HomeStack, t('TabStack.Home'), HomeStack, 'home', 'home-outline')}
-        {fiveTabDisplay && 
+        {uiConfig.fiveTabDisplay && 
         renderTabScreen(TabStacks.ContactStack, t('TabStack.Contacts'), ContactStack, 'account-multiple', 'account-multiple-outline')}
-        {renderTabScreen(TabStacks.ConnectStack, t('TabStack.Scan'), ConnectStack, 'qrcode-scan')}
+        {renderTabScreen(TabStacks.ConnectStack, t('TabStack.Scan'), ConnectStack, 'qrcode-scan', 'qrcode-scan')}
         {renderTabScreen(TabStacks.CredentialStack, t('TabStack.Credentials'), CredentialStack, 'wallet', 'wallet-outline')}
-        {fiveTabDisplay && 
+        {uiConfig.fiveTabDisplay && 
         renderTabScreen(TabStacks.SettingStack, t('TabStack.Settings'), SettingStack, 'cog', 'cog-outline')}
       </Tab.Navigator>
     </SafeAreaView>

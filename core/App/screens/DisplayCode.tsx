@@ -63,7 +63,8 @@ const DisplayCode = ({ navigation }: any) => {
 
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
-      navigation.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connection?.id } })
+      navigation.goBack()
+      navigation.navigate(Stacks.ConnectionStack, { screen: Screens.Connection, params: { connectionId } })
     }
   }, [connection])
 

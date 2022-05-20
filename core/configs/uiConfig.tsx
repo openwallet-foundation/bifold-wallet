@@ -1,7 +1,3 @@
-export const showScanLabel = true
-export const fiveTabDisplay = true
-export const navigateOnConnection = true
-
 type uiConfigType = {
   showScanLabel: boolean,
   fiveTabDisplay: boolean,

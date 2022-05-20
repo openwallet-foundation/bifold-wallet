@@ -11,7 +11,7 @@ import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Stacks, Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { navigateOnConnection } from '../../configs/uiConfig'
+import { uiConfig } from '../../configs/uiConfig'
 
 const connectionTimerDelay = 10000 // in ms
 
@@ -67,7 +67,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    if (navigateOnConnection && connection?.state == 'complete') {
+    if (uiConfig.navigateOnConnection && connection?.state == 'complete') {
       navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connectionId } })
     }
 
