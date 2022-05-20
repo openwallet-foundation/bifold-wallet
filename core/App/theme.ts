@@ -421,7 +421,7 @@ export const TabTheme = {
     alignItems: 'center',
   },
   focusTabActiveTintColor: {
-    backgroundColor: ColorPallet.brand.secondary,
+    backgroundColor: ColorPallet.grayscale.mediumGrey,
   },
 }
 

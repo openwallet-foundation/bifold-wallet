@@ -1,6 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useConnectionById } from '@aries-framework/react-hooks'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -8,8 +9,9 @@ import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
+import { Stacks, Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { navigateOnConnection } from '../../configs/uiConfig'
 
 const connectionTimerDelay = 10000 // in ms
 
@@ -18,6 +20,7 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { connectionId } = route.params
   const { t } = useTranslation()
+  const connection = useConnectionById(connectionId)
   const [modalVisible, setModalVisible] = useState<boolean>(true)
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [timerDidFire, setTimerDidFire] = useState<boolean>(false)
@@ -64,6 +67,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   useEffect(() => {
+    if (navigateOnConnection && connection?.state == 'complete') {
+      navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connectionId } })
+    }
+
     if (didProcessNotification) {
       return
     }
@@ -96,7 +103,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           throw new Error('Unhandled notification type')
       }
     })
-  }, [notifications])
+  }, [notifications, connection])
 
   useEffect(() => {
     if (timerDidFire) {
