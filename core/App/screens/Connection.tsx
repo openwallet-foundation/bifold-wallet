@@ -126,7 +126,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           </Text>
         </View>
 
-        <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
+        <View style={[styles.image]}>
           <ConnectionLoading />
         </View>
 
