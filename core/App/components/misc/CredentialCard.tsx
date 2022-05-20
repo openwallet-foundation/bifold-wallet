@@ -44,7 +44,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, revoked = f
         style,
       ]}
     >
-      <View style={styles.row}>
+      <View style={styles.row} testID={testIdWithKey('CredentialCard')}>
         <AvatarView
           name={parsedSchema(credential).name}
           style={

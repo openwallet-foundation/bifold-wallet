@@ -23,7 +23,6 @@ const CredentialListItem: React.FC<CredentialListItemProps> = ({ credential, rev
     <TouchableOpacity
       accessible={true}
       accessibilityLabel={t('Credentials.CredentialDetails')}
-      testID={testIdWithKey('CredentialDetails')}
       onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
     >
       <CredentialCard credential={credential} revoked={revoked} />
