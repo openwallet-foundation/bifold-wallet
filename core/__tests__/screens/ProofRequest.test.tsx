@@ -17,6 +17,12 @@ import React from 'react'
 import ProofRequest from '../../App/screens/ProofRequest'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 

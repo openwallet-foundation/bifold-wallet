@@ -103,7 +103,7 @@ export type NotificationStackParams = {
 }
 
 export type DeliveryStackParams = {
-  [Screens.Connection]: { connectionId: string }
+  [Screens.Connection]: { connectionId?: string; threadId?: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
   [Screens.ProofRequestAttributeDetails]: undefined
