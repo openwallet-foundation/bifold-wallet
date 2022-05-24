@@ -91,12 +91,14 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       setIsInitialized(true)
     }
   }
+
   useFocusEffect(
     useCallback(() => {
       startTimer()
       return () => abortTimer
     }, [])
   )
+
   useEffect(() => {
     if (notificationRecord) {
       switch (notificationRecord.type) {
@@ -111,6 +113,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
     }
   }, [notificationRecord])
+
   useEffect(() => {
     if (isVisible && isInitialized && !notificationRecord) {
       for (const notification of notifications) {
@@ -118,12 +121,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           (connectionId && notification.connectionId === connectionId) ||
           (threadId && notification.threadId == threadId)
         ) {
-          setState((prev) => ({ ...prev, notificationRecord: notification, visible: false }))
+          setState((prev) => ({ ...prev, notificationRecord: notification, isVisible: false }))
           break
         }
       }
     }
   }, [notifications, state])
+
   return (
     <Modal
       visible={isVisible}

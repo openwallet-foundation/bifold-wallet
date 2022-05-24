@@ -2,7 +2,7 @@ import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Modal } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
