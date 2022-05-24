@@ -1,4 +1,4 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
 import { useTheme } from '../contexts/theme'
@@ -17,7 +17,12 @@ const DeliveryStack: React.FC = () => {
   return (
     <Stack.Navigator
       initialRouteName={Screens.Connection}
-      screenOptions={{ ...defaultStackOptions, headerShown: false, presentation: 'modal' }}
+      screenOptions={{
+        ...defaultStackOptions,
+        cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+        headerShown: false,
+        presentation: 'modal',
+      }}
     >
       <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
       <Stack.Screen name={Screens.ProofRequest} component={ProofRequest} />
