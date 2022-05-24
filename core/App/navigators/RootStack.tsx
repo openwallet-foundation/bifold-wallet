@@ -85,7 +85,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),
           indyLedgers,
-          connectToIndyLedgersOnStartup: false,
+          connectToIndyLedgersOnStartup: true,
         },
         agentDependencies
       )
