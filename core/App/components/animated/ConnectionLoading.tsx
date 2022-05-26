@@ -18,11 +18,20 @@ const ConnectionLoading: React.FC = () => {
     outputRange: ['0deg', '360deg'],
   })
   const style = StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     animation: {
       position: 'absolute',
     },
   })
-  const imageDisplayOptions = {
+  const credentialInHandDisplayOptions = {
+    fill: ColorPallet.notification.infoText,
+    height: 130,
+    width: 130,
+  }
+  const animatedCircleDisplayOptions = {
     fill: ColorPallet.notification.infoText,
     height: 250,
     width: 250,
@@ -33,10 +42,10 @@ const ConnectionLoading: React.FC = () => {
   }, [rotationAnim])
 
   return (
-    <View>
-      <Wallet {...imageDisplayOptions} />
-      <Animated.View style={[style.animation, { transform: [{ rotate: rotation }] }]}>
-        <ActivityIndicator {...imageDisplayOptions} />
+    <View style={style.container}>
+      <Wallet style={style.animation} {...credentialInHandDisplayOptions} />
+      <Animated.View style={{ transform: [{ rotate: rotation }] }}>
+        <ActivityIndicator {...animatedCircleDisplayOptions} />
       </Animated.View>
     </View>
   )
