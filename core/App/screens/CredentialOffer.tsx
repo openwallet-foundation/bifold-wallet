@@ -96,7 +96,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
       const error = new BifoldError(
         'Unable to reject offer',
         'There was a problem while rejecting the credential offer.',
-        1024
+        1025
       )
       dispatch({
         type: DispatchAction.ERROR_ADDED,

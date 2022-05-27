@@ -3,12 +3,12 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 import { Agent } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import QRScanner from '../components/misc/QRScanner'
 import { BifoldError, QrCodeScanError } from '../types/error'
-import { ConnectStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
+import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
 
 type ScanProps = StackScreenProps<ConnectStackParams>
@@ -34,7 +34,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       const error = new BifoldError(
         'Unable to accept connection',
         'There was a problem while accepting the connection redirection',
-        1024.1
+        1030
       )
       throw error
     }
@@ -49,10 +49,10 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         throw new BifoldError(
           'Unable to accept connection',
           'There was a problem while accepting the connection.',
-          1024.2
+          1031
         )
       }
-      //setConnectionId(connectionRecord.id)
+
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { connectionId: connectionRecord.id },
@@ -61,7 +61,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       const error = new BifoldError(
         'Unable to accept connection',
         'There was a problem while accepting the connection.',
-        1024
+        1032
       )
       throw error
     }

@@ -210,7 +210,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       const error = new BifoldError(
         'Unable to accept proof request',
         'There was a problem while accepting the proof request.',
-        1025
+        1027
       )
       dispatch({
         type: DispatchAction.ERROR_ADDED,
@@ -235,7 +235,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       const error = new BifoldError(
         'Unable to reject offer',
         'There was a problem while rejecting the credential offer.',
-        1024
+        1028
       )
       dispatch({
         type: DispatchAction.ERROR_ADDED,

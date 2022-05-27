@@ -77,7 +77,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
         const error = new BifoldError(
           'Unable to update retrieved credentials',
           'There was a problem while updating retrieved credentials.',
-          1026
+          1029
         )
         dispatch({
           type: DispatchAction.ERROR_ADDED,
