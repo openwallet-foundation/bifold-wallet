@@ -1,6 +1,7 @@
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
@@ -20,8 +21,10 @@ const DeliveryStack: React.FC = () => {
       screenOptions={{
         ...defaultStackOptions,
         cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-        headerShown: false,
+        headerShown: true,
         presentation: 'modal',
+        headerLeft: () => null,
+        headerRight: () => <HeaderRightHome />,
       }}
     >
       <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
