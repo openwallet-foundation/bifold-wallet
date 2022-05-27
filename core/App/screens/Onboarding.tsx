@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Animated, BackHandler, Dimensions, FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import HeaderRight from '../components/buttons/HeaderRight'
+import HeaderRight from '../components/buttons/HeaderRightSkip'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
