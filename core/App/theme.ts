@@ -545,9 +545,19 @@ export const OnboardingTheme = {
   },
 }
 
+const LoadingTheme = {
+  backgroundColor: ColorPallet.brand.primaryBackground,
+}
+
 export const Assets = {
   img: {
-    logoLarge: require('./assets/img/logo-large.png'),
+    logoLarge: {
+      src: require('./assets/img/logo-large.png'),
+      aspectRatio: 1,
+      height: '33%',
+      width: '33%',
+      resizeMode: 'contain',
+    },
   },
 }
 
@@ -563,6 +573,7 @@ export interface Theme {
   SettingsTheme: any
   ChatTheme: any
   OnboardingTheme: any
+  LoadingTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -581,6 +592,7 @@ export const theme: Theme = {
   SettingsTheme,
   ChatTheme,
   OnboardingTheme,
+  LoadingTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,
