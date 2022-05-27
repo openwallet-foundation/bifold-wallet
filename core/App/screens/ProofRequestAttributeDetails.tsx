@@ -73,10 +73,11 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       .then((credentials) => {
         setCredentials(credentials)
       })
-      .catch(() => {
+      .catch((err: unknown) => {
         const error = new BifoldError(
           'Unable to update retrieved credentials',
           'There was a problem while updating retrieved credentials.',
+          (err as Error).message,
           1029
         )
         dispatch({

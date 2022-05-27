@@ -104,7 +104,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               <InfoBox
                 notificationType={InfoBoxType.Warn}
                 title={t('CredentialDetails.CredentialRevokedMessageTitle')}
-                message={t('CredentialDetails.CredentialRevokedMessageBody')}
+                description={t('CredentialDetails.CredentialRevokedMessageBody')}
                 onCallToActionLabel={t('Global.Dismiss')}
                 onCallToActionPressed={() => dismissRevokedMessage(credential)}
               />

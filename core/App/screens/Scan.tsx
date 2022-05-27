@@ -34,6 +34,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       const error = new BifoldError(
         'Unable to accept connection',
         'There was a problem while accepting the connection redirection',
+        (err as Error).message,
         1030
       )
       throw error
@@ -45,23 +46,21 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
         autoAcceptConnection: true,
       })
+
       if (!connectionRecord?.id) {
-        throw new BifoldError(
-          'Unable to accept connection',
-          'There was a problem while accepting the connection.',
-          1031
-        )
+        throw new Error('Connection does not have an ID')
       }
 
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { connectionId: connectionRecord.id },
       })
-    } catch (err) {
+    } catch (err: unknown) {
       const error = new BifoldError(
         'Unable to accept connection',
         'There was a problem while accepting the connection.',
-        1032
+        (err as Error).message,
+        1031
       )
       throw error
     }
