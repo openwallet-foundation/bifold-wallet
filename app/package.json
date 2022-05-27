@@ -7,7 +7,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-		"postinstall": "patch-package"
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@aries-framework/core": "0.2.0-alpha.20",
@@ -41,6 +41,7 @@
     "react-native-argon2": "2.0.1",
     "react-native-camera": "3.44.3",
     "react-native-config": "1.4.4",
+    "react-native-confirmation-code-field": "^7.3.0",
     "react-native-device-info": "8.4.9",
     "react-native-encrypted-storage": "4.0.2",
     "react-native-fs": "2.18.0",
