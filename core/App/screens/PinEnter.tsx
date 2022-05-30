@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
+import AlertModal from '../components/modals/AlertModal'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 
@@ -16,6 +17,7 @@ interface PinEnterProps {
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const { t } = useTranslation()
   const [pin, setPin] = useState('')
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const style = StyleSheet.create({
@@ -30,7 +32,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
     if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
       setAuthenticated(true)
     } else {
-      Alert.alert(t('PinEnter.IncorrectPin'))
+      setModalVisible(true)
     }
   }
 
@@ -46,18 +48,21 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           marginBottom: 20,
         }}
       />
-      <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>Please enter your PIN</Text>
+      <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
       <PinInput onPinChanged={setPin} />
       <Button
-        title={t('Global.Submit')}
+        title={t('Global.Enter')}
         buttonType={ButtonType.Primary}
-        testID={testIdWithKey('Submit')}
-        accessibilityLabel={t('Global.Submit')}
+        testID={testIdWithKey('Enter')}
+        accessibilityLabel={t('Global.Enter')}
         onPress={() => {
           Keyboard.dismiss()
           checkPin(pin)
         }}
       />
+      {modalVisible && (
+        <AlertModal title={t('PinEnter.IncorrectPIN')} message="" submit={() => setModalVisible(false)} />
+      )}
     </SafeAreaView>
   )
 }

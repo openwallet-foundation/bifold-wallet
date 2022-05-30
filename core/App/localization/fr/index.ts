@@ -45,15 +45,24 @@ const translation = {
         "Attestation": "J'ai lu, je comprends et j'accepte les conditions."
     },
     "PinCreate": {
-        "UserAuthenticationPin": "NIP d'authentification de l'utilisateur",
-        "PinMustBe6DigitsInLength": "Le NIP doit comporter 6 chiffres",
-        "PinsEnteredDoNotMatch": "Les NIP saisis ne correspondent pas",
+        "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
+        "PINTooShort": "PIN too short",
+        "InvalidPIN": "Invalid PIN",
+        "PINsDoNotMatch": "PINs do not match",
+        "PleaseUseOnlyNumbersInYourPIN": "Please use only numbers in your PIN",
+        "YourPINMustBe6DigitsInLength": "Your PIN must be six digits in length",
+        "EnteredPINsDoNotMatch": "The entered PINs do not match. Please try again.",
+        "YouNeedToCreateA6DigitPIN": "You need to create a 6 digit PIN",
+        "PleaseReenterYourPIN": "Please re-enter your PIN",
         "EnterPIN": "Enter a 6 digit PIN",
         "ReenterPIN": "Saisir le NIP à nouveau",
-        "CreatePIN": "Create PIN"
-    },
+        "CreatePIN": "Create PIN",
+        "RememberPIN": "Remember your PIN.",
+        "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
+      },
     "PinEnter": {
-        "IncorrectPin": "NIP erroné"
+        "IncorrectPIN": "NIP erroné",
+        "EnterPIN": "Please enter your PIN",
     },
     "ContactDetails": {
         "Created": "Créé",
