@@ -1,8 +1,6 @@
 // prettier-ignore
 const translation = {
   "Global": {
-    "EnterPin": "Enter Pin",
-    "6DigitPin": "6 Digit Pin",
     "Submit": "Submit",
     "NoneYet!": "None yet!",
     "Cancel": "Cancel",
@@ -50,9 +48,11 @@ const translation = {
     "UserAuthenticationPin": "User authentication pin",
     "PinMustBe6DigitsInLength": "Pin must be 6 digits in length",
     "PinsEnteredDoNotMatch": "Pins entered do not match",
-    "6DigitPin": "6 Digit Pin",
-    "ReenterPin": "Re-Enter Pin",
-    "Create": "Create"
+    "EnterPIN": "Enter a 6 digit PIN",
+    "ReenterPIN": "Re-Enter PIN",
+    "CreatePIN": "Create PIN",
+    "RememberPIN": "Remember your PIN.",
+    "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
   },
   "PinEnter": {
     "IncorrectPin": "Incorrect Pin",

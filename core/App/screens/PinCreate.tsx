@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Keyboard, StyleSheet } from 'react-native'
+import { Alert, Keyboard, StyleSheet, View } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { Text } from '../../lib/commonjs/components'
 import Button, { ButtonType } from '../components/buttons/Button'
-import TextInput from '../components/inputs/TextInput'
+import PinInput from '../components/inputs/PinInput'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
+
+import { TextTheme } from 'theme'
 
 interface PinCreateProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
@@ -20,7 +23,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pinTwo, setPinTwo] = useState('')
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const style = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
@@ -56,40 +59,24 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
   return (
     <SafeAreaView style={[style.container]}>
-      <TextInput
-        accessibilityLabel={t('Global.EnterPin')}
-        testID={testIdWithKey('EnterPin')}
-        label={t('Global.EnterPin')}
-        placeholder={t('Global.6DigitPin')}
-        placeholderTextColor={ColorPallet.grayscale.lightGrey}
-        maxLength={6}
-        autoFocus
-        keyboardType="numeric"
-        secureTextEntry={true}
-        value={pin}
-        onChangeText={setPin}
-      />
-      <TextInput
-        accessibilityLabel={t('PinCreate.ReenterPin')}
-        testID={testIdWithKey('ReenterPin')}
-        label={t('PinCreate.ReenterPin')}
-        placeholder={t('Global.6DigitPin')}
-        placeholderTextColor={ColorPallet.grayscale.lightGrey}
-        maxLength={6}
-        keyboardType="numeric"
-        secureTextEntry
-        value={pinTwo}
-        onChangeText={(text: string) => {
-          setPinTwo(text)
-          if (text.length === 6) {
+      <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
+        <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
+      </Text>
+      <PinInput label={t('PinCreate.EnterPIN')} onPinChanged={setPin} />
+      <PinInput
+        label={t('PinCreate.ReenterPIN')}
+        onPinChanged={(p: string) => {
+          setPinTwo(p)
+          if (p.length === 6) {
             Keyboard.dismiss()
           }
         }}
       />
+
       <Button
-        title={t('PinCreate.Create')}
-        accessibilityLabel={t('PinCreate.Create')}
-        testID={testIdWithKey('Create')}
+        title={t('PinCreate.CreatePIN')}
+        accessibilityLabel={t('PinCreate.CreatePIN')}
+        testID={testIdWithKey('CreatePIN')}
         buttonType={ButtonType.Primary}
         onPress={() => {
           Keyboard.dismiss()

@@ -1,8 +1,6 @@
 // prettier-ignore
 const translation = {
     "Global": {
-        "EnterPin": "Saisir le NIP",
-        "6DigitPin": "NIP à 6 chiffres",
         "Submit": "Soumettre",
         "NoneYet!": "Votre portefeuille est vide. Vos justificatifs acceptés seront ajoutés ici.",
         "Cancel": "Annuler",
@@ -50,9 +48,9 @@ const translation = {
         "UserAuthenticationPin": "NIP d'authentification de l'utilisateur",
         "PinMustBe6DigitsInLength": "Le NIP doit comporter 6 chiffres",
         "PinsEnteredDoNotMatch": "Les NIP saisis ne correspondent pas",
-        "6DigitPin": "NIP à 6 chiffres",
-        "ReenterPin": "Saisir le NIP à nouveau",
-        "Create": "Créer"
+        "EnterPIN": "Enter a 6 digit PIN",
+        "ReenterPIN": "Saisir le NIP à nouveau",
+        "CreatePIN": "Create PIN"
     },
     "PinEnter": {
         "IncorrectPin": "NIP erroné"
