@@ -6,6 +6,7 @@ import React from 'react'
 
 import { dateFormatOptions } from '../../App/constants'
 import CredentialDetails from '../../App/screens/CredentialDetails'
+import { testIdWithKey } from '../../App/utils/testable'
 
 interface CredentialContextInterface {
   loading: boolean
@@ -54,6 +55,11 @@ describe('displays a credential details screen', () => {
       {
         name: 'postalCode',
         value: 'V1V1V1',
+        toJSON: jest.fn(),
+      },
+      {
+        name: 'picture',
+        value: 'data:image/png;base64,',
         toJSON: jest.fn(),
       },
     ],
@@ -133,7 +139,7 @@ describe('displays a credential details screen', () => {
 
     const hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
 
-    expect(hiddenValues.length).toBe(3)
+    expect(hiddenValues.length).toBe(4)
   })
 
   test('pressing the `Show` button un-hides an attribute value', async () => {
@@ -148,8 +154,8 @@ describe('displays a credential details screen', () => {
     let hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
     let familyName = await queryByText('Last', { exact: false })
 
-    expect(showButtons.length).toBe(3)
-    expect(hiddenValues.length).toBe(3)
+    expect(showButtons.length).toBe(4)
+    expect(hiddenValues.length).toBe(4)
     expect(familyName).toBe(null)
 
     fireEvent(showButtons[0], 'press')
@@ -158,8 +164,8 @@ describe('displays a credential details screen', () => {
     hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
     familyName = await queryByText('Last', { exact: false })
 
-    expect(showButtons.length).toBe(2)
-    expect(hiddenValues.length).toBe(2)
+    expect(showButtons.length).toBe(3)
+    expect(hiddenValues.length).toBe(3)
     expect(familyName).not.toBe(null)
   })
 
@@ -191,7 +197,32 @@ describe('displays a credential details screen', () => {
     showButtons = await findAllByText('Record.Show')
     hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
 
-    expect(showButtons.length).toBe(3)
-    expect(hiddenValues.length).toBe(3)
+    expect(showButtons.length).toBe(4)
+    expect(hiddenValues.length).toBe(4)
   }, 10000)
+
+  test('pressing the `Show` button un-hides an attribute that is a base64 image', async () => {
+    const { queryByText, findAllByText, queryByTestId } = render(
+      <CredentialDetails
+        navigation={useNavigation()}
+        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+      ></CredentialDetails>
+    )
+
+    const showButtons = await findAllByText('Record.Show')
+
+    let pictureBase64AsString = await queryByText('data:image/png;base64,', { exact: false })
+    let picture = await queryByTestId(testIdWithKey('credentialImage'))
+
+    expect(picture).toBeNull()
+    expect(pictureBase64AsString).toBeNull()
+
+    fireEvent(showButtons[3], 'press')
+
+    pictureBase64AsString = await queryByText('data:image/png;base64,', { exact: false })
+    picture = await queryByTestId(testIdWithKey('credentialImage'))
+
+    expect(picture).not.toBeNull()
+    expect(pictureBase64AsString).toBeNull()
+  })
 })

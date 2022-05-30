@@ -1,7 +1,7 @@
 import startCase from 'lodash.startcase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { Attribute, Field } from '../../types/record'
@@ -26,6 +26,8 @@ const RecordField: React.FC<RecordFieldProps> = ({
 }) => {
   const { t } = useTranslation()
   const { ListItems } = useTheme()
+  const regexImageBase64 = new RegExp('^data:image/(jpeg|png);base64,')
+
   const styles = StyleSheet.create({
     container: {
       ...ListItems.recordContainer,
@@ -36,6 +38,12 @@ const RecordField: React.FC<RecordFieldProps> = ({
       ...ListItems.recordBorder,
       borderBottomWidth: 2,
       paddingTop: 12,
+    },
+    image: {
+      height: 150,
+      aspectRatio: 1,
+      resizeMode: 'contain',
+      borderRadius: 10,
     },
     link: {
       ...ListItems.recordLink,
@@ -55,6 +63,14 @@ const RecordField: React.FC<RecordFieldProps> = ({
     },
   })
 
+  const displayAttribute = (attribute: Attribute) => {
+    if (typeof attribute.value === 'string' && regexImageBase64.test(attribute.value)) {
+      return <Image testID={testIdWithKey('credentialImage')} style={styles.image} source={{ uri: attribute.value }} />
+    } else {
+      return attribute.value
+    }
+  }
+
   return (
     <View style={styles.container}>
       {fieldLabel ? (
@@ -71,7 +87,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
           <>
             <View style={styles.valueText}>
               <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-                {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
+                {shown ? displayAttribute(field as Attribute) : Array(10).fill('\u2022').join('')}
               </Text>
             </View>
             {hideFieldValue ? (
