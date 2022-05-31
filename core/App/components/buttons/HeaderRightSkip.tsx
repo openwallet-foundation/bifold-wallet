@@ -32,6 +32,7 @@ const HeaderRight: React.FC<HeaderButtonProps> = ({ title, testID, accessibility
       transform: [{ rotate: '180deg' }],
     },
   })
+
   return (
     <TouchableOpacity
       accessible={accessible}
