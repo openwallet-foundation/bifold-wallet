@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import HeaderRight from '../../App/components/buttons/HeaderRight'
+import HeaderRightSkip from '../../App/components/buttons/HeaderRightSkip'
 
 describe('Header Right Button Component', () => {
   test('Renders correctly', () => {
     const tree = render(
-      <HeaderRight
+      <HeaderRightSkip
         title={'Hello Header'}
         testID={'TestID.Button'}
         accessibilityLabel={'Hello'}
