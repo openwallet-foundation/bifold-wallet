@@ -549,6 +549,22 @@ const LoadingTheme = {
   backgroundColor: ColorPallet.brand.primaryBackground,
 }
 
+const PinInputTheme = {
+  cell: {
+    backgroundColor: ColorPallet.grayscale.darkGrey,
+    borderColor: ColorPallet.grayscale.darkGrey,
+  },
+  focussedCell: {
+    borderColor: ColorPallet.grayscale.lightGrey,
+  },
+  cellText: {
+    color: ColorPallet.grayscale.white,
+  },
+  icon: {
+    color: ColorPallet.grayscale.white,
+  },
+}
+
 export const Assets = {
   img: {
     logoLarge: {
@@ -574,6 +590,7 @@ export interface Theme {
   ChatTheme: any
   OnboardingTheme: any
   LoadingTheme: any
+  PinInputTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -593,6 +610,7 @@ export const theme: Theme = {
   ChatTheme,
   OnboardingTheme,
   LoadingTheme,
+  PinInputTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,
