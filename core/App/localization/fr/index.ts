@@ -129,7 +129,8 @@ const translation = {
         "CredentialOffer": "Nouvelle offre de justificatif",
         "IsOfferingYouACredential": "vous offre un justificatif",
         "ConfirmDeclineCredential": "Oui, refuser ce justificatif",
-        "AbortDeclineCredential": "Non, revenir en arrière"
+        "AbortDeclineCredential": "Non, revenir en arrière",
+        "DeclineTitle": "Decline Credential",
     },
     "ProofRequest": {
         "OfferDelay": "Retard de l'offre",
@@ -150,7 +151,8 @@ const translation = {
         "Details": "Détails",
         "SendingTheInformationSecurely": "Envoi sécurisé de l'information",
         "InformationSentSuccessfully": "Informations envoyées avec succès",
-        "ProofRequestDeclined": "Demande de preuve refusée"
+        "ProofRequestDeclined": "Demande de preuve refusée",
+        "DeclineTitle": "Decline Credential",
     },
     "Settings": {
         "Version": "Version",
