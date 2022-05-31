@@ -39,7 +39,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
-      paddingVertical: 16,
+      paddingBottom: 16,
     },
     headerText: {
       ...ListItems.recordAttributeLabel,
