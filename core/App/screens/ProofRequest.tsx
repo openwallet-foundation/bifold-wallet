@@ -3,13 +3,12 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import {
   CredentialState,
   ProofRecord,
-  ProofState,
   RequestedAttribute,
   RequestedPredicate,
   RetrievedCredentials,
 } from '@aries-framework/core'
 import { useAgent, useCredentialByState, useProofById } from '@aries-framework/react-hooks'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -21,6 +20,7 @@ import Title from '../components/texts/Title'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute, Predicate } from '../types/record'
@@ -32,7 +32,6 @@ import {
 } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
-import CommonDecline, { DeclineType } from './CommonDecline'
 import ProofRequestAccepted from './ProofRequestAccepted'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
@@ -48,9 +47,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  // const [successModalVisible, setSuccessModalVisible] = useState(false)
-  const [didDeclineProofRequest, setDidDeclineProofRequest] = useState<boolean>(false)
-  const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
   const timestamps: Record<string, Date> = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
@@ -156,12 +152,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       })
   }, [])
 
-  useEffect(() => {
-    if (proof.state === ProofState.Declined) {
-      setDeclinedModalVisible(true)
-    }
-  }, [proof])
-
   const anyUnavailable = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}): boolean =>
     !Object.values(fields).length || Object.values(fields).some((credentials) => !credentials?.length)
 
@@ -224,29 +214,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   const handleDeclinePress = async () => {
-    setDeclinedModalVisible(true)
-  }
-
-  const onGoBackTouched = () => {
-    setDeclinedModalVisible(false)
-  }
-
-  const onDeclinedConformationTouched = async () => {
-    try {
-      await agent.proofs.declineRequest(proof.id)
-      setDidDeclineProofRequest(true)
-    } catch (err: unknown) {
-      const error = new BifoldError(
-        'Unable to reject offer',
-        'There was a problem while rejecting the credential offer.',
-        (err as Error).message,
-        1028
-      )
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
-    }
+    navigation.navigate(Screens.CommonDecline, {
+      declineType: DeclineType.ProofRequest,
+      itemId: proofId,
+    })
   }
 
   const connection = connectionRecordFromId(proof.connectionId)
@@ -363,13 +334,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }}
       />
       <ProofRequestAccepted visible={pendingModalVisible} proofId={proofId} />
-      <CommonDecline
-        visible={declinedModalVisible}
-        declineType={DeclineType.ProofRequest}
-        didDeclineOfferOrProof={didDeclineProofRequest}
-        onDeclinedConformationTouched={onDeclinedConformationTouched}
-        onGoBackTouched={onGoBackTouched}
-      />
     </SafeAreaView>
   )
 }

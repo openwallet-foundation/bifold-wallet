@@ -1,5 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/core'
 
+import { DeclineType } from './decline'
+
 export enum Screens {
   Splash = 'Splash',
   Onboarding = 'Onboarding',
@@ -22,6 +24,7 @@ export enum Screens {
   Connection = 'Connection',
   OnTheWay = 'On The Way',
   Declined = 'Declined',
+  CommonDecline = 'CommonDecline',
 }
 
 export enum Stacks {
@@ -96,6 +99,10 @@ export type NotificationStackParams = {
     proofId: string
     attributeName: string | null
   }
+  [Screens.CommonDecline]: {
+    declineType: DeclineType
+    itemId: string
+  }
 }
 
 export type DeliveryStackParams = {
@@ -105,4 +112,8 @@ export type DeliveryStackParams = {
   [Screens.ProofRequestAttributeDetails]: undefined
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
+  [Screens.CommonDecline]: {
+    declineType: DeclineType
+    itemId: string
+  }
 }

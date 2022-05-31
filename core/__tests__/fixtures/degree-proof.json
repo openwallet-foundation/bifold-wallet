@@ -1,0 +1,22 @@
+{
+  "_tags": {},
+  "metadata": {},
+  "id": "b04060c8-902a-4f62-9390-7b8bb2204f13",
+  "createdAt": "2022-06-02T23:14:10.897Z",
+  "requestMessage": {
+    "@type": "https://didcomm.org/present-proof/1.0/request-presentation",
+    "@id": "31c6dcfb-46bf-4d39-9c19-b694cf4d3f9b",
+    "request_presentations~attach": [
+      {
+        "@id": "libindy-request-presentation-0",
+        "mime-type": "application/json",
+        "data": {
+          "base64": "eyJuYW1lIjogIlByb29mIG9mIEVkdWNhdGlvbiIsICJ2ZXJzaW9uIjogIjEuMCIsICJyZXF1ZXN0ZWRfYXR0cmlidXRlcyI6IHsiMF9uYW1lX3V1aWQiOiB7Im5hbWUiOiAibmFtZSIsICJyZXN0cmljdGlvbnMiOiBbeyJzY2hlbWFfbmFtZSI6ICJkZWdyZWUgc2NoZW1hIn1dfSwgIjBfZGF0ZV91dWlkIjogeyJuYW1lIjogImRhdGUiLCAicmVzdHJpY3Rpb25zIjogW3sic2NoZW1hX25hbWUiOiAiZGVncmVlIHNjaGVtYSJ9XX0sICIwX2RlZ3JlZV91dWlkIjogeyJuYW1lIjogImRlZ3JlZSIsICJyZXN0cmljdGlvbnMiOiBbeyJzY2hlbWFfbmFtZSI6ICJkZWdyZWUgc2NoZW1hIn1dLCAibm9uX3Jldm9rZWQiOiB7InRvIjogMTY1NDIxMTY0Nn19fSwgInJlcXVlc3RlZF9wcmVkaWNhdGVzIjogeyIwX2JpcnRoZGF0ZV9kYXRlaW50X0dFX3V1aWQiOiB7Im5hbWUiOiAiYmlydGhkYXRlX2RhdGVpbnQiLCAicF90eXBlIjogIjw9IiwgInBfdmFsdWUiOiAyMDA0MDYwMiwgInJlc3RyaWN0aW9ucyI6IFt7InNjaGVtYV9uYW1lIjogImRlZ3JlZSBzY2hlbWEifV19fSwgIm5vbl9yZXZva2VkIjogeyJ0byI6IDE2NTQyMTE2NDd9LCAibm9uY2UiOiAiOTIwMTYwNDk5MjMwMzI0MjYxMDU5ODMifQ=="
+        }
+      }
+    ]
+  },
+  "state": "request-received",
+  "connectionId": "6bd0a8e5-6d60-4166-82ff-8b25f50ccf31",
+  "threadId": "31c6dcfb-46bf-4d39-9c19-b694cf4d3f9b"
+}

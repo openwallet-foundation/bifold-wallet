@@ -136,7 +136,8 @@ const translation = {
     "ConfirmDeclinedTitle": "Are you sure you want to decline this credential?",
     "ConfirmDeclinedMessage": "In order to receive the credential offer again, you will need to reapply with the issuer.",
     "ConfirmDecline": "Yes, decline this credential",
-    "AbortDecline": "No, go back"
+    "AbortDecline": "No, go back",
+    "DeclineTitle": "Decline Credential",
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
@@ -163,7 +164,8 @@ const translation = {
     "ConfirmDeclinedTitle": "Are you sure you want to decline this proof request?",
     "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
     "ConfirmDecline": "Yes, decline this proof request",
-    "AbortDecline": "No, go back"
+    "AbortDecline": "No, go back",
+    "DeclineTitle": "Decline Proof",
   },
   "Settings": {
     "Version": "Version",
