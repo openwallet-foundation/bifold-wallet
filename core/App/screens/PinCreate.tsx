@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet } from 'react-native'
+import { Keyboard, StyleSheet, Text } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Text } from '../../lib/commonjs/components'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
@@ -58,13 +57,25 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
   const confirmEntry = (x: string, y: string) => {
     const negativePattern = /[^0-9]/g
-    if (!x.length) {
+    if (negativePattern.test(x)) {
+      setModalState({
+        visible: true,
+        title: t('PinCreate.InvalidPIN'),
+        message: t('PinCreate.PleaseUseOnlyNumbersInYourPIN'),
+      })
+    } else if (!x.length) {
       setModalState({
         visible: true,
         title: t('PinCreate.EnterPIN'),
         message: t('PinCreate.YouNeedToCreateA6DigitPIN'),
       })
-    } else if (negativePattern.test(x)) {
+    } else if (x.length < 6) {
+      setModalState({
+        visible: true,
+        title: t('PinCreate.PINTooShort'),
+        message: t('PinCreate.YourPINMustBe6DigitsInLength'),
+      })
+    } else if (negativePattern.test(y)) {
       setModalState({
         visible: true,
         title: t('PinCreate.InvalidPIN'),
@@ -76,13 +87,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         title: t('PinCreate.ReenterPIN'),
         message: t('PinCreate.PleaseReenterYourPIN'),
       })
-    } else if (negativePattern.test(y)) {
-      setModalState({
-        visible: true,
-        title: t('PinCreate.InvalidPIN'),
-        message: t('PinCreate.PleaseUseOnlyNumbersInYourPIN'),
-      })
-    } else if (x.length < 6 || y.length < 6) {
+    } else if (y.length < 6) {
       setModalState({
         visible: true,
         title: t('PinCreate.PINTooShort'),

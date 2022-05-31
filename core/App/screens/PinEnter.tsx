@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Keyboard, StyleSheet, Text, Image } from 'react-native'
+import { Keyboard, StyleSheet, Text, Image, View } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -23,7 +23,6 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const style = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
-      margin: 20,
     },
   })
 
@@ -38,28 +37,31 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
 
   return (
     <SafeAreaView style={[style.container]}>
-      <Image
-        source={Assets.img.logoLarge.src}
-        style={{
-          height: Assets.img.logoLarge.height,
-          width: Assets.img.logoLarge.width,
-          resizeMode: Assets.img.logoLarge.resizeMode,
-          alignSelf: 'center',
-          marginBottom: 20,
-        }}
-      />
-      <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
-      <PinInput onPinChanged={setPin} />
-      <Button
-        title={t('Global.Enter')}
-        buttonType={ButtonType.Primary}
-        testID={testIdWithKey('Enter')}
-        accessibilityLabel={t('Global.Enter')}
-        onPress={() => {
-          Keyboard.dismiss()
-          checkPin(pin)
-        }}
-      />
+      <View style={{ margin: 20 }}>
+        <Image
+          source={Assets.img.logoLarge.src}
+          style={{
+            height: Assets.img.logoLarge.height,
+            width: Assets.img.logoLarge.width,
+            resizeMode: Assets.img.logoLarge.resizeMode,
+            alignSelf: 'center',
+            marginBottom: 20,
+          }}
+        />
+        <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
+        <PinInput onPinChanged={setPin} />
+        <Button
+          title={t('Global.Enter')}
+          buttonType={ButtonType.Primary}
+          testID={testIdWithKey('Enter')}
+          accessibilityLabel={t('Global.Enter')}
+          onPress={() => {
+            Keyboard.dismiss()
+            checkPin(pin)
+          }}
+        />
+      </View>
+
       {modalVisible && (
         <AlertModal title={t('PinEnter.IncorrectPIN')} message="" submit={() => setModalVisible(false)} />
       )}

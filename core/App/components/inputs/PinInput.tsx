@@ -20,7 +20,7 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged }) => {
     setValue: setPin,
   })
 
-  const { ColorPallet, TextTheme } = useTheme()
+  const { TextTheme, PinInputTheme } = useTheme()
   const style = StyleSheet.create({
     codeField: {
       flexDirection: 'row',
@@ -33,18 +33,18 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged }) => {
     cell: {
       width: 40,
       height: 48,
-      backgroundColor: ColorPallet.grayscale.darkGrey,
+      backgroundColor: PinInputTheme.cell.backgroundColor,
       borderWidth: 2,
       borderRadius: 5,
-      borderColor: ColorPallet.grayscale.darkGrey,
+      borderColor: PinInputTheme.cell.borderColor,
       marginRight: 8,
     },
     focusedCell: {
-      borderColor: ColorPallet.grayscale.lightGrey,
+      borderColor: PinInputTheme.focussedCell.borderColor,
     },
     cellText: {
       ...TextTheme.headingThree,
-      color: ColorPallet.grayscale.white,
+      color: PinInputTheme.cellText.color,
       textAlign: 'center',
       textAlignVertical: 'center',
       lineHeight: 42,
@@ -89,7 +89,7 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged }) => {
           autoFocus
         />
         <TouchableOpacity onPress={() => setShowPin(!showPin)} style={[{ marginRight: 8, marginBottom: 32 }]}>
-          <Icon color="white" name={showPin ? 'visibility-off' : 'visibility'} size={30}></Icon>
+          <Icon color={PinInputTheme.icon.color} name={showPin ? 'visibility-off' : 'visibility'} size={30}></Icon>
         </TouchableOpacity>
       </View>
     </View>
