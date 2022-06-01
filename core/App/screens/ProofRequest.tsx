@@ -32,8 +32,8 @@ import {
 } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
+import CommonDecline, { DeclineType } from './CommonDecline'
 import ProofRequestAccepted from './ProofRequestAccepted'
-import ProofRequestDeclined from './ProofRequestDeclined'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 
@@ -362,10 +362,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }}
       />
       <ProofRequestAccepted visible={pendingModalVisible} proofId={proofId} />
-      <ProofRequestDeclined
+      <CommonDecline
         visible={declinedModalVisible}
-        proofId={proofId}
-        didDeclineOffer={didDeclineProofRequest}
+        declineType={DeclineType.ProofRequest}
+        didDeclineOfferOrProof={didDeclineProofRequest}
         onDeclinedConformationTouched={onDeclinedConformationTouched}
         onGoBackTouched={onGoBackTouched}
       />
