@@ -25,7 +25,8 @@ const translation = {
         "Okay": "Ok",
         "GoBack": "Retour",
         "GetStarted": "Commencer",
-        "Dismiss": "Rejeter"
+        "Dismiss": "Rejeter",
+        "ShowDetails": "Afficher les détails",
     },
     "Language": {
         "English": "Anglais",
@@ -33,7 +34,8 @@ const translation = {
     },
     "Error": {
         "Unknown": "Erreur inconnue",
-        "Problem": "Un problème est survenu"
+        "Problem": "Un problème est survenu",
+        "ErrorCode": "Code d'erreur",
     },
     "StatusMessages": {
         "InitAgent": "Initialisation de l'agent ..."

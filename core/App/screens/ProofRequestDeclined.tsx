@@ -85,7 +85,7 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
               <InfoBox
                 notificationType={InfoBoxType.Warn}
                 title={t('ProofRequest.ConfirmDeclinedTitle')}
-                message={t('ProofRequest.ConfirmDeclinedMessage')}
+                description={t('ProofRequest.ConfirmDeclinedMessage')}
               />
               <View style={{ marginVertical: 25 }}>
                 <Button

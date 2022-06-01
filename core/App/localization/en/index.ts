@@ -26,7 +26,8 @@ const translation = {
     "Okay": "Okay",
     "GoBack": "Go Back",
     "GetStarted": "Get Started",
-    "Dismiss": "Dismiss"
+    "Dismiss": "Dismiss",
+    "ShowDetails": "Show Details",
   },
   "Language": {
     "English": "English",
@@ -35,6 +36,7 @@ const translation = {
   "Error": {
     "Unknown": "Unknown Error",
     "Problem": "A problem has occurred",
+    "ErrorCode": "Error code",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
