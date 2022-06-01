@@ -28,6 +28,8 @@ target 'AriesBifold' do
     :hermes_enabled => true
   )
 
+  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
+
   target 'AriesBifoldTests' do
     inherit! :complete
     # Pods for testing
