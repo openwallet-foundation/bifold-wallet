@@ -1,11 +1,11 @@
-import { useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Modal, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import PRDeclined from '../assets/img/proof-declined.svg'
+import CredentialDeclined from '../assets/img/credential-declined.svg'
+import ProofRequestDeclined from '../assets/img/proof-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { useTheme } from '../contexts/theme'
@@ -14,22 +14,26 @@ import { Screens, TabStacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-export interface ProofRequestDeclinedProps {
+export enum DeclineType {
+  ProofRequest,
+  CredentialOffer,
+}
+
+export interface CommonDeclineProps {
   visible: boolean
-  proofId: string
-  didDeclineOffer: boolean
+  declineType: DeclineType
+  didDeclineOfferOrProof: boolean
   onGoBackTouched: GenericFn
   onDeclinedConformationTouched: GenericFn
 }
 
-const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
+const CommonDecline: React.FC<CommonDeclineProps> = ({
   visible,
-  proofId,
-  didDeclineOffer,
+  declineType,
+  didDeclineOfferOrProof,
   onGoBackTouched,
   onDeclinedConformationTouched,
 }) => {
-  const proof = useProofById(proofId)
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const navigation = useNavigation()
@@ -59,10 +63,6 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
     },
   })
 
-  if (!proof) {
-    throw new Error('Unable to fetch proof from AFJ')
-  }
-
   const onDoneTouched = () => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
@@ -80,26 +80,50 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
       />
       <SafeAreaView style={[styles.container]}>
         <View style={[{ marginTop: 25 }]}>
-          {!didDeclineOffer && (
+          {!didDeclineOfferOrProof && (
             <>
               <InfoBox
                 notificationType={InfoBoxType.Warn}
-                title={t('ProofRequest.ConfirmDeclinedTitle')}
-                description={t('ProofRequest.ConfirmDeclinedMessage')}
+                title={
+                  declineType === DeclineType.ProofRequest
+                    ? t('ProofRequest.ConfirmDeclinedTitle')
+                    : t('CredentialOffer.ConfirmDeclinedTitle')
+                }
+                description={
+                  declineType === DeclineType.ProofRequest
+                    ? t('ProofRequest.ConfirmDeclinedMessage')
+                    : t('CredentialOffer.ConfirmDeclinedMessage')
+                }
               />
               <View style={{ marginVertical: 25 }}>
                 <Button
-                  title={t('ProofRequest.ConfirmDecline')}
-                  accessibilityLabel={t('ProofRequest.ConfirmDecline')}
-                  testID={testIdWithKey('ConfirmDeclineProofRequest')}
+                  title={
+                    declineType === DeclineType.ProofRequest
+                      ? t('ProofRequest.ConfirmDecline')
+                      : t('CredentialOffer.ConfirmDecline')
+                  }
+                  accessibilityLabel={
+                    declineType === DeclineType.ProofRequest
+                      ? t('ProofRequest.ConfirmDecline')
+                      : t('CredentialOffer.ConfirmDecline')
+                  }
+                  testID={testIdWithKey('ConfirmDeclineButton')}
                   onPress={onDeclinedConformationTouched}
                   buttonType={ButtonType.Primary}
                 />
                 <View style={[{ marginTop: 10 }]}>
                   <Button
-                    title={t('ProofRequest.AbortDecline')}
-                    accessibilityLabel={t('ProofRequest.AbortDecline')}
-                    testID={testIdWithKey('AbortDeclineProofRequest')}
+                    title={
+                      declineType === DeclineType.ProofRequest
+                        ? t('ProofRequest.AbortDecline')
+                        : t('CredentialOffer.AbortDecline')
+                    }
+                    accessibilityLabel={
+                      declineType === DeclineType.ProofRequest
+                        ? t('ProofRequest.AbortDecline')
+                        : t('CredentialOffer.AbortDecline')
+                    }
+                    testID={testIdWithKey('AbortDeclineButton')}
                     onPress={onGoBackTouched}
                     buttonType={ButtonType.Secondary}
                   />
@@ -108,16 +132,22 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
             </>
           )}
 
-          {didDeclineOffer && (
+          {didDeclineOfferOrProof && (
             <>
               <View style={[styles.messageContainer]}>
                 <Text
                   style={[TextTheme.headingThree, styles.messageText]}
-                  testID={testIdWithKey('ProofRequestDeclined')}
+                  testID={testIdWithKey('RequestOrOfferDeclined')}
                 >
-                  {t('ProofRequest.ProofRequestDeclined')}
+                  {declineType === DeclineType.ProofRequest
+                    ? t('ProofRequest.ProofRequestDeclined')
+                    : t('CredentialOffer.CredentialDeclined')}
                 </Text>
-                <PRDeclined style={[styles.image]} {...imageDisplayOptions} />
+                {declineType === DeclineType.ProofRequest ? (
+                  <ProofRequestDeclined style={[styles.image]} {...imageDisplayOptions} />
+                ) : (
+                  <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
+                )}
               </View>
 
               <View>
@@ -137,4 +167,4 @@ const ProofRequestDeclined: React.FC<ProofRequestDeclinedProps> = ({
   )
 }
 
-export default ProofRequestDeclined
+export default CommonDecline

@@ -18,8 +18,8 @@ import { DeliveryStackParams, Screens } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
+import CommonDecline, { DeclineType } from './CommonDecline'
 import CredentialOfferAccept from './CredentialOfferAccept'
-import CredentialOfferDecline from './CredentialOfferDecline'
 
 type CredentialOfferProps = StackScreenProps<DeliveryStackParams, Screens.CredentialOffer>
 
@@ -149,10 +149,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
         )}
         fields={credential.credentialAttributes}
       />
-      <CredentialOfferDecline
+      <CommonDecline
         visible={declinedModalVisible}
-        credentialId={credentialId}
-        didDeclineOffer={didDeclineOffer}
+        declineType={DeclineType.CredentialOffer}
+        didDeclineOfferOrProof={didDeclineOffer}
         onDeclinedConformationTouched={onDeclinedConformationTouched}
         onGoBackTouched={onGoBackTouched}
       />
