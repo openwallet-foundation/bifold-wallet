@@ -30,7 +30,7 @@ const AlertModal: React.FC<AlertModalProps> = ({ title, message, submit }) => {
         <InfoBox
           notificationType={InfoBoxType.Info}
           title={title}
-          message={message}
+          description={message}
           onCallToActionLabel={t('Global.Okay')}
           onCallToActionPressed={submit ? () => submit() : () => undefined}
         />
