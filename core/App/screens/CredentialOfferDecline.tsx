@@ -86,7 +86,7 @@ const CredentialOfferDecline: React.FC<CredentialOfferDeclineProps> = ({
               <InfoBox
                 notificationType={InfoBoxType.Warn}
                 title={t('CredentialOffer.ConfirmDeclinedTitle')}
-                message={t('CredentialOffer.ConfirmDeclinedMessage')}
+                description={t('CredentialOffer.ConfirmDeclinedMessage')}
               />
               <CredentialCard credential={credential} style={{ marginVertical: 25 }} />
               <View>

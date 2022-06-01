@@ -141,10 +141,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         setAttributes(attributes)
         setPredicates(predicates)
       })
-      .catch(() => {
+      .catch((err: unknown) => {
         const error = new BifoldError(
           'Unable to update retrieved credentials',
           'There was a problem while updating retrieved credentials.',
+          (err as Error).message,
           1026
         )
         dispatch({
@@ -204,13 +205,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
       await agent.proofs.acceptRequest(proof.id, automaticRequestedCreds)
-    } catch (e: unknown) {
+    } catch (err: unknown) {
       setButtonsVisible(true)
       setPendingModalVisible(false)
+
       const error = new BifoldError(
         'Unable to accept proof request',
         'There was a problem while accepting the proof request.',
-        1025
+        (err as Error).message,
+        1027
       )
       dispatch({
         type: DispatchAction.ERROR_ADDED,
@@ -231,11 +234,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     try {
       await agent.proofs.declineRequest(proof.id)
       setDidDeclineProofRequest(true)
-    } catch (e: unknown) {
+    } catch (err: unknown) {
       const error = new BifoldError(
         'Unable to reject offer',
         'There was a problem while rejecting the credential offer.',
-        1024
+        (err as Error).message,
+        1028
       )
       dispatch({
         type: DispatchAction.ERROR_ADDED,
