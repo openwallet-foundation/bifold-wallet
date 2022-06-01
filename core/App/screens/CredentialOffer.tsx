@@ -1,3 +1,4 @@
+import { AriesFrameworkError } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
@@ -66,11 +67,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
       setAcceptModalVisible(true)
 
       await agent.credentials.acceptOffer(credential.id)
-    } catch (e: unknown) {
+    } catch (err: unknown) {
       setButtonsVisible(true)
       const error = new BifoldError(
         'Unable to accept offer',
         'There was a problem while accepting the credential offer.',
+        (err as Error).message,
         1024
       )
       dispatch({
@@ -92,12 +94,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ route }) => {
     try {
       await agent.credentials.declineOffer(credential.id)
       setDidDeclineOffer(true)
-    } catch (e: unknown) {
+    } catch (err: unknown) {
       const error = new BifoldError(
         'Unable to reject offer',
         'There was a problem while rejecting the credential offer.',
-        1024
+        (err as Error).message,
+        1025
       )
+
       dispatch({
         type: DispatchAction.ERROR_ADDED,
         payload: [{ error }],

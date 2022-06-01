@@ -89,29 +89,70 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
         }
       }
       testID="com.ariesbifold:id/BodyText"
+    />
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+      testID="com.ariesbifold:id/ShowDetails"
     >
-      The quick brown fox jumped over the lazy dog.
-    </Text>
-    <Text
-      style={
-        Array [
+      <View
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
           Object {
-            "color": "#FFFFFF",
-            "flexShrink": 1,
-            "fontSize": 18,
-            "fontWeight": "normal",
-            "marginVertical": 16,
-          },
-          Object {
-            "marginBottom": 24,
-            "marginTop": 0,
-          },
-        ]
-      }
-      testID="com.ariesbifold:id/ErrorCode"
-    >
-      Global.ErrorCode 1024
-    </Text>
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "normal",
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </RNGestureHandlerButton>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={
@@ -249,29 +290,70 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
         }
       }
       testID="com.ariesbifold:id/BodyText"
+    />
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+      testID="com.ariesbifold:id/ShowDetails"
     >
-      The quick brown fox jumped over the lazy dog.
-    </Text>
-    <Text
-      style={
-        Array [
+      <View
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
           Object {
-            "color": "#FFFFFF",
-            "flexShrink": 1,
-            "fontSize": 18,
-            "fontWeight": "normal",
-            "marginVertical": 16,
-          },
-          Object {
-            "marginBottom": 24,
-            "marginTop": 0,
-          },
-        ]
-      }
-      testID="com.ariesbifold:id/ErrorCode"
-    >
-      Global.ErrorCode 1024
-    </Text>
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "normal",
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </RNGestureHandlerButton>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={
@@ -409,29 +491,70 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
         }
       }
       testID="com.ariesbifold:id/BodyText"
+    />
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+      testID="com.ariesbifold:id/ShowDetails"
     >
-      The quick brown fox jumped over the lazy dog.
-    </Text>
-    <Text
-      style={
-        Array [
+      <View
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
           Object {
-            "color": "#FFFFFF",
-            "flexShrink": 1,
-            "fontSize": 18,
-            "fontWeight": "normal",
-            "marginVertical": 16,
-          },
-          Object {
-            "marginBottom": 24,
-            "marginTop": 0,
-          },
-        ]
-      }
-      testID="com.ariesbifold:id/ErrorCode"
-    >
-      Global.ErrorCode 1024
-    </Text>
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "normal",
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </RNGestureHandlerButton>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={
@@ -569,29 +692,70 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
         }
       }
       testID="com.ariesbifold:id/BodyText"
+    />
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+      testID="com.ariesbifold:id/ShowDetails"
     >
-      The quick brown fox jumped over the lazy dog.
-    </Text>
-    <Text
-      style={
-        Array [
+      <View
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
           Object {
-            "color": "#FFFFFF",
-            "flexShrink": 1,
-            "fontSize": 18,
-            "fontWeight": "normal",
-            "marginVertical": 16,
-          },
-          Object {
-            "marginBottom": 24,
-            "marginTop": 0,
-          },
-        ]
-      }
-      testID="com.ariesbifold:id/ErrorCode"
-    >
-      Global.ErrorCode 1024
-    </Text>
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "normal",
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </RNGestureHandlerButton>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={
