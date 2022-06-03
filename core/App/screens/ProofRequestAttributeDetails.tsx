@@ -1,11 +1,12 @@
 import { ProofRecord, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
 import Title from '../components/texts/Title'
 import { dateFormatOptions } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -18,7 +19,7 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
 
-const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ route }) => {
+const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ navigation, route }) => {
   if (!route?.params) {
     throw new Error('ProofRequest route prams were not set properly')
   }
@@ -52,6 +53,24 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   if (!proof) {
     throw new Error('Unable to fetch proof from AFJ')
   }
+
+  useMemo(() => {
+    navigation.setOptions({
+      title: t('ProofRequest.Details'),
+      headerRight: undefined,
+      headerLeft: () => (
+        <HeaderLeftBack
+          title={t('Global.Back')}
+          onPress={() => {
+            navigation.pop()
+          }}
+        />
+      ),
+      headerBackTitle: t('Global.Back'),
+      headerBackAccessibilityLabel: t('Global.Back'),
+      headerBackTestID: testIdWithKey('BackButton'),
+    })
+  }, [])
 
   useEffect(() => {
     const retrieveCredentialsForProof = async (proof: ProofRecord) => {
