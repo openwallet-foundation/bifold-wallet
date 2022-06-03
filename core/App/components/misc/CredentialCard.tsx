@@ -35,6 +35,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       justifyContent: 'center',
       borderRadius: 15,
       padding: 10,
+      backgroundColor: 'red',
     },
     row: {
       flexDirection: 'row',
