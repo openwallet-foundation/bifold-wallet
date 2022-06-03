@@ -3,9 +3,8 @@ import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { CodeField, useClearByFocusCell } from 'react-native-confirmation-code-field'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-
-const CELL_COUNT = 6
 
 interface PinInputProps {
   label?: string
@@ -61,11 +60,11 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged }) => {
           onChangeText={(value: string) => {
             onPinChanged && onPinChanged(value)
             setPin(value)
-            if (value.length === 6) {
+            if (value.length === minPINLength) {
               Keyboard.dismiss()
             }
           }}
-          cellCount={CELL_COUNT}
+          cellCount={minPINLength}
           keyboardType="numeric"
           textContentType="password"
           rootStyle={style.codeFieldRoot}

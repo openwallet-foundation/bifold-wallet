@@ -23,3 +23,5 @@ export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric
   month: 'short',
   day: 'numeric',
 }
+
+export const minPINLength = 6
