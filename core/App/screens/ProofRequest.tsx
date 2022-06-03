@@ -90,7 +90,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     },
     detailsButton: {
       ...ListItems.recordAttributeText,
-      color: ColorPallet.brand.primary,
+      color: ColorPallet.brand.link,
+      textDecorationLine: 'underline',
     },
   })
 
