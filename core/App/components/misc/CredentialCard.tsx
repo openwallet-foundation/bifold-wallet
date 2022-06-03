@@ -35,7 +35,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       justifyContent: 'center',
       borderRadius: 15,
       padding: 10,
-      backgroundColor: 'red',
     },
     row: {
       flexDirection: 'row',
@@ -47,7 +46,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     <TouchableOpacity
       disabled={typeof onPress === 'undefined' ? true : false}
       onPress={onPress}
-      style={[styles.container, revoked && {}, style]}
+      style={[styles.container, revoked && { backgroundColor: ListItems.revoked.backgroundColor }, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
       <View style={styles.row} testID={testIdWithKey('CredentialCard')}>
