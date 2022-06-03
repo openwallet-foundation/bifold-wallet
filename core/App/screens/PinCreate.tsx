@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
+import { minPINLength } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -69,7 +70,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         title: t('PinCreate.EnterPIN'),
         message: t('PinCreate.YouNeedToCreateA6DigitPIN'),
       })
-    } else if (x.length < 6) {
+    } else if (x.length < minPINLength) {
       setModalState({
         visible: true,
         title: t('PinCreate.PINTooShort'),
@@ -87,7 +88,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         title: t('PinCreate.ReenterPIN'),
         message: t('PinCreate.PleaseReenterYourPIN'),
       })
-    } else if (y.length < 6) {
+    } else if (y.length < minPINLength) {
       setModalState({
         visible: true,
         title: t('PinCreate.PINTooShort'),
@@ -115,7 +116,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         label={t('PinCreate.ReenterPIN')}
         onPinChanged={(p: string) => {
           setPinTwo(p)
-          if (p.length === 6) {
+          if (p.length === minPINLength) {
             Keyboard.dismiss()
           }
         }}
