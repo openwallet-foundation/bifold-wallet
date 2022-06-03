@@ -27,7 +27,11 @@ const NotificationStack: React.FC = () => {
         component={ProofRequest}
         options={{ headerBackTitle: t('Global.Back') }}
       />
-      <Stack.Screen name={Screens.ProofRequestAttributeDetails} component={ProofRequestAttributeDetails} />
+      <Stack.Screen
+        name={Screens.ProofRequestAttributeDetails}
+        component={ProofRequestAttributeDetails}
+        options={{ headerBackTitle: t('Global.Back') }}
+      />
     </Stack.Navigator>
   )
 }
