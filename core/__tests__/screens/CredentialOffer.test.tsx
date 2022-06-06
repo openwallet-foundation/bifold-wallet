@@ -1,4 +1,4 @@
-import { CredentialRecord, ConnectionRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord as CredentialRecord, ConnectionRecord } from '@aries-framework/core'
 import { useCredentialById, useConnectionById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { fireEvent, render } from '@testing-library/react-native'
