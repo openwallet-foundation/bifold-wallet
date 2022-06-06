@@ -1,14 +1,18 @@
-import { CredentialMetadataKeys, CredentialRecord, CredentialState } from '@aries-framework/core'
+import {
+  CredentialMetadataKeys,
+  CredentialExchangeRecord as CredentialRecord,
+  CredentialState,
+} from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
-import { testIdWithKey } from '../../App/utils/testable'
 
 import { CredentialListItem } from '../../App/components'
-import ListCredentials from '../../App/screens/ListCredentials'
 import CredentialCard from '../../App/components/misc/CredentialCard'
+import ListCredentials from '../../App/screens/ListCredentials'
+import { testIdWithKey } from '../../App/utils/testable'
 
 interface CredentialContextInterface {
   loading: boolean
