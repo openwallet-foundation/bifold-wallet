@@ -64,7 +64,7 @@ const translation = {
       },
     "PinEnter": {
         "IncorrectPIN": "NIP erroné",
-        "EnterPIN": "Please enter your PIN",
+        "EnterPIN": "Veuillez saisir votre NIP",
     },
     "ContactDetails": {
         "Created": "Créé",
