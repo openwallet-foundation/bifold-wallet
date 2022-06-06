@@ -31,7 +31,11 @@ const ListCredentials: React.FC = () => {
             marginBottom: index === credentials.length - 1 ? 45 : 0,
           }}
         >
-          <CredentialListItem credential={item} revoked={revoked.has(item.id) || revoked.has(item.credentialId)} />
+          <CredentialListItem
+            credential={item}
+            revoked={true}
+            // revoked.has(item.id) || revoked.has(item.credentialId)}
+          />
         </View>
       )}
     />
