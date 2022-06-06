@@ -1,4 +1,4 @@
-import { CredentialRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'

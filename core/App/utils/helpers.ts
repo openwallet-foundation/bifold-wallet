@@ -1,7 +1,7 @@
 import {
   ConnectionRecord,
   CredentialMetadataKeys,
-  CredentialRecord,
+  CredentialExchangeRecord as CredentialRecord,
   ProofRecord,
   RequestedAttribute,
   RequestedPredicate,
@@ -70,7 +70,7 @@ export function getConnectionName(connection: ConnectionRecord | void): string |
   if (!connection) {
     return
   }
-  return connection?.alias || connection?.invitation?.label
+  return connection?.alias
 }
 
 export function firstValidCredential(

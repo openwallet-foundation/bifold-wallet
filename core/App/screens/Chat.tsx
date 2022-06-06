@@ -19,7 +19,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: connection?.alias || connection?.invitation?.label,
+      title: connection?.alias,
       headerTitleAlign: 'center',
       headerRight: () => <InfoIcon connectionId={connection?.id} />,
       headerBackTitle: ' ',

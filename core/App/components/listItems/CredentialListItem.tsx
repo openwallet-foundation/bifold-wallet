@@ -1,4 +1,4 @@
-import type { CredentialRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next'
 import { TouchableOpacity } from 'react-native'
 
 import { CredentialStackParams, Screens } from '../../types/navigators'
-import { testIdWithKey } from '../../utils/testable'
 import CredentialCard from '../misc/CredentialCard'
 
 interface CredentialListItemProps {
