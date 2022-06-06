@@ -28,10 +28,6 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
 
   const { declineType, itemId } = route.params
 
-  if (!declineType) {
-    throw new Error('declineType cannot be undefined')
-  }
-
   if (!itemId) {
     throw new Error('itemId cannot be undefined')
   }
