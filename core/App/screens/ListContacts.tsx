@@ -20,7 +20,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
       data={connections}
       renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
-      keyExtractor={(item: ConnectionRecord) => item.did}
+      keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
       ListEmptyComponent={() => <EmptyList />}
     />
   )
