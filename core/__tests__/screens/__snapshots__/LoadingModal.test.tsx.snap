@@ -12,7 +12,7 @@ exports[`displays loading screen renders correctly 1`] = `
       Array [
         Object {
           "alignItems": "center",
-          "backgroundColor": "#42803E",
+          "backgroundColor": "#000000",
           "flexDirection": "column",
           "justifyContent": "center",
           "minHeight": 1334,

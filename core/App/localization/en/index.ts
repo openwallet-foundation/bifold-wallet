@@ -1,8 +1,7 @@
 // prettier-ignore
 const translation = {
   "Global": {
-    "EnterPin": "Enter Pin",
-    "6DigitPin": "6 Digit Pin",
+    "Enter": "Enter",
     "Submit": "Submit",
     "NoneYet!": "None yet!",
     "Cancel": "Cancel",
@@ -49,15 +48,24 @@ const translation = {
     "Attestation": "I have read, understand and accept the terms and conditions.",
   },
   "PinCreate": {
-    "UserAuthenticationPin": "User authentication pin",
-    "PinMustBe6DigitsInLength": "Pin must be 6 digits in length",
-    "PinsEnteredDoNotMatch": "Pins entered do not match",
-    "6DigitPin": "6 Digit Pin",
-    "ReenterPin": "Re-Enter Pin",
-    "Create": "Create"
+    "UserAuthenticationPIN": "User authentication PIN",
+    "PINTooShort": "PIN too short",
+    "InvalidPIN": "Invalid PIN",
+    "PINsDoNotMatch": "PINs do not match",
+    "PleaseUseOnlyNumbersInYourPIN": "Please use only numbers in your PIN",
+    "YourPINMustBe6DigitsInLength": "Your PIN must be six digits in length",
+    "EnteredPINsDoNotMatch": "The entered PINs do not match. Please try again.",
+    "YouNeedToCreateA6DigitPIN": "You need to create a 6 digit PIN",
+    "PleaseReenterYourPIN": "Please re-enter your PIN",
+    "EnterPIN": "Enter a 6 digit PIN",
+    "ReenterPIN": "Re-Enter PIN",
+    "CreatePIN": "Create PIN",
+    "RememberPIN": "Remember your PIN.",
+    "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
   },
   "PinEnter": {
-    "IncorrectPin": "Incorrect Pin",
+    "EnterPIN": "Please enter your PIN",
+    "IncorrectPIN": "Incorrect PIN",
   },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
@@ -188,8 +196,8 @@ const translation = {
     "Splash": 'Splash',
     "Onboarding": "Onboarding",
     "Terms": "Terms & Conditions",
-    "CreatePin": 'Create 6-Digit Pin',
-    "EnterPin": 'Enter Pin',
+    "CreatePin": 'Create a PIN',
+    "EnterPin": 'Enter PIN',
     "Home": 'Home',
     "Scan": 'Scan',
     "Credentials": 'Credentials',
