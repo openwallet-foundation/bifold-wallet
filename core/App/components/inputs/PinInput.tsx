@@ -5,13 +5,16 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
+import { testIdWithKey } from '../../utils/testable'
 
 interface PinInputProps {
   label?: string
   onPinChanged?: (pin: string) => void
+  testID?: string
+  autoFocus?: boolean
 }
 
-const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged }) => {
+const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID = 'PINInput', autoFocus = false }) => {
   const [pin, setPin] = useState('')
   const [showPin, setShowPin] = useState(false)
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -79,13 +82,17 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged }) => {
                 style={[style.cell, isFocused && style.focusedCell]}
                 onLayout={getCellOnLayoutHandler(index)}
               >
-                <Text style={[style.cellText]} maxFontSizeMultiplier={1}>
+                <Text
+                  style={[style.cellText]}
+                  maxFontSizeMultiplier={1}
+                  testID={testIdWithKey(`${testID}-${index + 1}`)}
+                >
                   {child}
                 </Text>
               </View>
             )
           }}
-          autoFocus
+          autoFocus={autoFocus}
         />
         <TouchableOpacity onPress={() => setShowPin(!showPin)} style={[{ marginRight: 8, marginBottom: 32 }]}>
           <Icon color={PinInputTheme.icon.color} name={showPin ? 'visibility-off' : 'visibility'} size={30}></Icon>
