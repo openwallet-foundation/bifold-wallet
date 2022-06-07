@@ -5,10 +5,9 @@ import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { ColorPallet, TextTheme } from '../theme'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
-import { useThemeContext } from '../utils/themeContext'
 
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
@@ -17,23 +16,16 @@ const TabStack: React.FC = () => {
   const { total } = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TabTheme } = useTheme()
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            height: 60,
-            backgroundColor: ColorPallet.brand.secondaryBackground,
-            shadowOffset: { width: 0, height: -3 },
-            shadowRadius: 6,
-            shadowColor: ColorPallet.grayscale.black,
-            shadowOpacity: 0.1,
-            borderTopWidth: 0,
-            paddingBottom: 0,
+            ...TabTheme.tabBarStyle,
           },
-          tabBarActiveTintColor: ColorPallet.brand.primary,
-          tabBarInactiveTintColor: ColorPallet.notification.infoText,
+          tabBarActiveTintColor: TabTheme.tabBarActiveTintColor,
+          tabBarInactiveTintColor: TabTheme.tabBarInactiveTintColor,
           header: () => null,
         }}
       >
@@ -49,10 +41,8 @@ const TabStack: React.FC = () => {
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
-                  ...TextTheme.label,
-                  fontWeight: 'normal',
-                  paddingBottom: 5,
-                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                  ...TabTheme.tabBarTextStyle,
+                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
                 }}
               >
                 {t('TabStack.Home')}
@@ -65,20 +55,10 @@ const TabStack: React.FC = () => {
           name={TabStacks.ConnectStack}
           options={{
             tabBarIcon: () => (
-              <View
-                style={{
-                  height: 60,
-                  width: 60,
-                  backgroundColor: ColorPallet.brand.primary,
-                  top: -20,
-                  borderRadius: 60,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
+              <View style={TabTheme.focusTabIconStyle}>
                 <Icon
                   name="qrcode-scan"
-                  color={ColorPallet.grayscale.white}
+                  color={TabTheme.tabBarButtonIconStyle.color}
                   size={32}
                   style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
                 />
@@ -87,10 +67,8 @@ const TabStack: React.FC = () => {
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
-                  ...TextTheme.label,
-                  fontWeight: 'normal',
-                  paddingBottom: 5,
-                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                  ...TabTheme.tabBarTextStyle,
+                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
                 }}
               >
                 {t('TabStack.Scan')}
@@ -117,10 +95,8 @@ const TabStack: React.FC = () => {
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
-                  ...TextTheme.label,
-                  fontWeight: 'normal',
-                  paddingBottom: 5,
-                  color: focused ? ColorPallet.brand.primary : ColorPallet.notification.infoText,
+                  ...TabTheme.tabBarTextStyle,
+                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
                 }}
               >
                 {t('TabStack.Credentials')}

@@ -2,32 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import { Attribute } from '../../types/record'
+import { useTheme } from '../../contexts/theme'
+import { Field } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
-import RecordAttribute from './RecordAttribute'
+import RecordField from './RecordField'
 import RecordFooter from './RecordFooter'
 import RecordHeader from './RecordHeader'
 
 interface RecordProps {
   header: () => React.ReactElement | null
   footer: () => React.ReactElement | null
-  attributes?: Array<Attribute>
-  hideAttributeValues?: boolean
-  attribute?: (attribute: Attribute) => React.ReactElement | null
+  fields?: Array<Field>
+  hideFieldValues?: boolean
+  field?: (field: Field) => React.ReactElement | null
 }
 
-const Record: React.FC<RecordProps> = ({
-  header,
-  footer,
-  attributes = [],
-  hideAttributeValues = false,
-  attribute = null,
-}) => {
+const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldValues = false, field = null }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ListItems, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     linkContainer: {
       flexDirection: 'row',
@@ -38,11 +32,10 @@ const Record: React.FC<RecordProps> = ({
     link: {
       minHeight: TextTheme.normal.fontSize,
       paddingVertical: 2,
-      color: ColorPallet.brand.link,
     },
   })
   const resetShown = (): void => {
-    setShown(attributes.map(() => false))
+    setShown(fields.map(() => false))
   }
 
   useEffect(() => {
@@ -54,7 +47,7 @@ const Record: React.FC<RecordProps> = ({
       ListHeaderComponent={
         <RecordHeader>
           {header()}
-          {hideAttributeValues ? (
+          {hideFieldValues ? (
             <View style={styles.linkContainer}>
               <TouchableOpacity
                 style={styles.link}
@@ -64,28 +57,28 @@ const Record: React.FC<RecordProps> = ({
                 accessible={true}
                 accessibilityLabel={t('Record.HideAll')}
               >
-                <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>{t('Record.HideAll')}</Text>
+                <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
               </TouchableOpacity>
             </View>
           ) : null}
         </RecordHeader>
       }
       ListFooterComponent={<RecordFooter>{footer()}</RecordFooter>}
-      data={attributes}
+      data={fields}
       keyExtractor={({ name }, index) => name || index.toString()}
       renderItem={({ item: attr, index }) =>
-        attribute ? (
-          attribute(attr)
+        field ? (
+          field(attr)
         ) : (
-          <RecordAttribute
-            attribute={attr}
-            hideAttributeValue={hideAttributeValues}
+          <RecordField
+            field={attr}
+            hideFieldValue={hideFieldValues}
             onToggleViewPressed={() => {
               const newShowState = [...shown]
               newShowState[index] = !shown[index]
               setShown(newShowState)
             }}
-            shown={hideAttributeValues ? !!shown[index] : true}
+            shown={hideFieldValues ? !!shown[index] : true}
           />
         )
       }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 export enum ButtonType {
   Primary,
@@ -26,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
 }) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
-  const { Buttons, heavyOpacity } = useThemeContext()
+  const { Buttons, heavyOpacity } = useTheme()
   return (
     <TouchableOpacity
       onPress={onPress}

@@ -11,10 +11,20 @@ import {
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { act, cleanup, render } from '@testing-library/react-native'
+import { cleanup, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import ProofRequest from '../../App/screens/ProofRequest'
+
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
+jest.useFakeTimers('legacy')
+jest.spyOn(global, 'setTimeout')
 
 describe('displays a proof request screen', () => {
   afterEach(() => {
@@ -143,7 +153,9 @@ describe('displays a proof request screen', () => {
         <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
       )
 
-      await act(() => Promise.resolve())
+      await waitFor(() => {
+        Promise.resolve()
+      })
 
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
@@ -185,7 +197,9 @@ describe('displays a proof request screen', () => {
         <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
       )
 
-      await act(() => Promise.resolve())
+      await waitFor(() => {
+        Promise.resolve()
+      })
 
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = getByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })

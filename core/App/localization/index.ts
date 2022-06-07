@@ -14,7 +14,7 @@ type TranslationResources = {
   [key: string]: any
 }
 
-export const defaultTranslationResources: TranslationResources = {
+export const translationResources: TranslationResources = {
   en: {
     translation: en,
   },

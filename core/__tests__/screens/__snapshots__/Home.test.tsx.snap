@@ -118,19 +118,47 @@ exports[`displays a home screen renders correctly 1`] = `
             </View>
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                }
               }
               testID="com.ariesbifold:id/NoNewUpdates"
             >
               Home.NoNewUpdates
             </Text>
           </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "marginHorizontal": 60,
+                "marginTop": 35,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 38,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginBottom": 20,
+                  "marginTop": 25,
+                },
+              ]
+            }
+          >
+            Home.Welcome
+          </Text>
         </View>
       </View>
     </View>
@@ -154,23 +182,6 @@ exports[`displays a home screen renders correctly 1`] = `
         ]
       }
     >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 38,
-              "fontWeight": "bold",
-            },
-            Object {
-              "marginBottom": 35,
-              "marginTop": 25,
-            },
-          ]
-        }
-      >
-        Home.Welcome
-      </Text>
       <Text
         style={
           Array [
