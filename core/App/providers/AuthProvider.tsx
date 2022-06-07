@@ -19,10 +19,10 @@ const AuthProvider: React.FC = ({ children }) => {
 
   //Set pin and create wallet secret from Pin
   const setAppPin = async (pin: string): Promise<void> => {
-    console.log('AuthProvider: setting pin:', pin)
+    // console.log('AuthProvider: setting pin:', pin)
     try {
       const _walletSecretObject = await setGenericPassword(pin)
-      console.log('AuthProvider: Wallet secret created:', _walletSecretObject)
+      // console.log('AuthProvider: Wallet secret created:', _walletSecretObject)
       setWalletSecret(_walletSecretObject)
     } catch (e) {
       throw new Error(`${e}`)
@@ -31,31 +31,31 @@ const AuthProvider: React.FC = ({ children }) => {
 
   //Get wallet secret that includes wallet key
   const getWalletIdSecret = async (): Promise<WalletSecret | undefined> => {
-    console.log('AuthProvider: getWalletIdSecret ..')
+    // console.log('AuthProvider: getWalletIdSecret ..')
     try {
       if (!walletSecret) {
         const walletKey = await getWalletKey()
         if (!walletKey) {
-          console.log(`[79]Cannot get wallet key`)
+          // console.log(`[79]Cannot get wallet key`)
           throw new Error(`[79]Cannot get wallet key`)
         }
 
-        console.log(`[79]Wallet secret fetched:${walletKey}`)
+        // console.log(`[79]Wallet secret fetched:${walletKey}`)
         setWalletSecret(walletKey)
 
         return walletKey
       } else {
-        console.log(`[48]Wallet secret already found:${JSON.stringify(walletSecret)}`)
+        // console.log(`[48]Wallet secret already found:${JSON.stringify(walletSecret)}`)
         return walletSecret
       }
     } catch (error) {
-      console.log('Error[69] fetching wallet secret!', error)
+      // console.log('Error[69] fetching wallet secret!', error)
       throw new Error(`${error}`)
     }
   }
 
   useEffect(() => {
-    console.log('Auth provider initilized ..')
+    // console.log('Auth provider initilized ..')
   }, [])
 
   return (

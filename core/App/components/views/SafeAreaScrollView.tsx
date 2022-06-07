@@ -2,14 +2,14 @@ import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 interface Props {
   children: React.ReactNode
 }
 
 const SafeAreaScrollView: React.FC<Props> = ({ children }) => {
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flex: 1,

@@ -1,8 +1,7 @@
 // prettier-ignore
 const translation = {
   "Global": {
-    "EnterPin": "Enter Pin",
-    "6DigitPin": "6 Digit Pin",
+    "Enter": "Enter",
     "Submit": "Submit",
     "NoneYet!": "None yet!",
     "Cancel": "Cancel",
@@ -26,7 +25,9 @@ const translation = {
     "ErrorCode": "Error Code",
     "Okay": "Okay",
     "GoBack": "Go Back",
-    "GetStarted": "Get Started"
+    "GetStarted": "Get Started",
+    "Dismiss": "Dismiss",
+    "ShowDetails": "Show Details",
   },
   "Language": {
     "English": "English",
@@ -35,6 +36,7 @@ const translation = {
   "Error": {
     "Unknown": "Unknown Error",
     "Problem": "A problem has occurred",
+    "ErrorCode": "Error code",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
@@ -46,15 +48,27 @@ const translation = {
     "Attestation": "I have read, understand and accept the terms and conditions.",
   },
   "PinCreate": {
-    "UserAuthenticationPin": "User authentication pin",
-    "PinMustBe6DigitsInLength": "Pin must be 6 digits in length",
-    "PinsEnteredDoNotMatch": "Pins entered do not match",
-    "6DigitPin": "6 Digit Pin",
-    "ReenterPin": "Re-Enter Pin",
-    "Create": "Create"
+    "UserAuthenticationPIN": "User authentication PIN",
+    "PINTooShort": "PIN too short",
+    "InvalidPIN": "Invalid PIN",
+    "PINsDoNotMatch": "PINs do not match",
+    "PleaseUseOnlyNumbersInYourPIN": "Please use only numbers in your PIN",
+    "YourPINMustBe6DigitsInLength": "Your PIN must be six digits in length",
+    "EnteredPINsDoNotMatch": "The entered PINs do not match. Please try again.",
+    "YouNeedToCreateA6DigitPIN": "You need to create a 6 digit PIN",
+    "PleaseReenterYourPIN": "Please re-enter your PIN",
+    "EnterPIN": "Enter a 6 digit PIN",
+    "ReenterPIN": "Re-Enter PIN",
+    "CreatePIN": "Create PIN",
+    "RememberPIN": "Remember your PIN.",
+    "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
   },
   "PinEnter": {
-    "IncorrectPin": "Incorrect Pin",
+    "EnterPIN": "Please enter your PIN",
+    "IncorrectPIN": "Incorrect PIN",
+  },
+  "Contacts": {
+    "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -63,7 +77,8 @@ const translation = {
   },
   "Credentials": {
     "CredentialsNotFound": "Credentials not found",
-    "CredentialDetails": "Credential Details"
+    "CredentialDetails": "Credential Details",
+    "EmptyList": "Your wallet is empty. Your accepted credentials will be added here.",
   },
   "CredentialDetails": {
     "Id": "Id:",
@@ -73,7 +88,9 @@ const translation = {
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
-    "Revoked": "Revoked"
+    "Revoked": "Revoked",
+    "CredentialRevokedMessageTitle": "This credential is revoked",
+    "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the issuer.",
   },
   "Home": {
     "Welcome": "Welcome",
@@ -116,12 +133,16 @@ const translation = {
     "CredentialOnTheWay": "Your credential is on the way",
     "CredentialOffer": "New Credential Offer",
     "IsOfferingYouACredential": "is offering you a credential",
-    "ConfirmDeclineCredential": "Yes, decline this credential",
-    "AbortDeclineCredential": "No, go back"
+    "ConfirmDeclinedTitle": "Are you sure you want to decline this credential?",
+    "ConfirmDeclinedMessage": "In order to receive the credential offer again, you will need to reapply with the issuer.",
+    "ConfirmDecline": "Yes, decline this credential",
+    "AbortDecline": "No, go back",
+    "DeclineTitle": "Decline Credential",
   },
   "ProofRequest": {
     "OfferDelay": "Offer delay",
-    "RejectThisProof?": "Reject this Proof?",
+    "RejectThisProof?": "Reject this Proof Request?",
+    "DeclineThisProof?": "Decline this Proof Request?",
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
     "ProofNotFound": "Proof not Found",
@@ -138,7 +159,13 @@ const translation = {
     "Details": "Details",
     "SendingTheInformationSecurely": "Sending the information securely",
     "InformationSentSuccessfully": "Information sent successfully",
-    "ProofRequestDeclined": "Proof request declined"
+    "ProofRequestCompleted": "Information approved",
+    "ProofRequestDeclined": "Proof request declined",
+    "ConfirmDeclinedTitle": "Are you sure you want to decline this proof request?",
+    "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
+    "ConfirmDecline": "Yes, decline this proof request",
+    "AbortDecline": "No, go back",
+    "DeclineTitle": "Decline Proof",
   },
   "Settings": {
     "Version": "Version",
@@ -171,8 +198,8 @@ const translation = {
     "Splash": 'Splash',
     "Onboarding": "Onboarding",
     "Terms": "Terms & Conditions",
-    "CreatePin": 'Create 6-Digit Pin',
-    "EnterPin": 'Enter Pin',
+    "CreatePin": 'Create a PIN',
+    "EnterPin": 'Enter PIN',
     "Home": 'Home',
     "Scan": 'Scan',
     "Credentials": 'Credentials',

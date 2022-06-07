@@ -6,7 +6,9 @@ export const testIdPrefix = 'com.ariesbifold:id/'
 
 export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',
-  TutorialStatus = 'TutorialStatus',
+  // FIXME: Once hooks are updated this should no longer be necessary
+  RevokedCredentials = 'RevokedCredentials',
+  RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
 }
 
 //Keys for items saved in keychain/async storage
@@ -22,3 +24,5 @@ export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric
   month: 'short',
   day: 'numeric',
 }
+
+export const minPINLength = 6

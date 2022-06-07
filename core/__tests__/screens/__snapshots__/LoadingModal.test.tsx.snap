@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays loading screen renders correctly 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <RCTSafeAreaView
+    emulateUnlessSupported={true}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#000000",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "minHeight": 1334,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+      testID="com.ariesbifold:id/LoadingActivityIndicator"
+    >
+      <Image
+        source={
+          Object {
+            "default": "",
+          }
+        }
+        testID="com.ariesbifold:id/LoadingActivityIndicatorX"
+      />
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "position": "absolute",
+            "transform": Array [
+              Object {
+                "rotate": "0deg",
+              },
+            ],
+          }
+        }
+      >
+        <
+          fill="#FFFFFF"
+          height={200}
+          width={200}
+        />
+      </View>
+    </View>
+  </RCTSafeAreaView>
+</Modal>
+`;

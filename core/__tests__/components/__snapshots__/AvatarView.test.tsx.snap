@@ -17,21 +17,17 @@ exports[`AvatarView Component Renders correctly 1`] = `
       Object {
         "borderColor": "#CFA8C3",
       },
+      undefined,
     ]
   }
 >
   <Text
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 32,
-          "fontWeight": "bold",
-        },
-        Object {
-          "fontWeight": "normal",
-        },
-      ]
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 32,
+        "fontWeight": "normal",
+      }
     }
     testID="com.ariesbifold:id/AvatarName"
   >
