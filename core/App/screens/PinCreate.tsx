@@ -111,7 +111,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
         <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
       </Text>
-      <PinInput label={t('PinCreate.EnterPIN')} onPinChanged={setPin} />
+      <PinInput label={t('PinCreate.EnterPIN')} onPinChanged={setPin} testID="EnterPIN" />
       <PinInput
         label={t('PinCreate.ReenterPIN')}
         onPinChanged={(p: string) => {
@@ -120,6 +120,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
             Keyboard.dismiss()
           }
         }}
+        testID="ReenterPIN"
       />
 
       <Button
