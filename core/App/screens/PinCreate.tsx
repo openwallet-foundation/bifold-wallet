@@ -33,6 +33,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   })
   const [, dispatch] = useStore()
   const { t } = useTranslation()
+
   const { ColorPallet, TextTheme } = useTheme()
   const style = StyleSheet.create({
     container: {
@@ -40,6 +41,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       margin: 20,
     },
   })
+
   const passcodeCreate = async (pin: string) => {
     const passcode = JSON.stringify(pin)
     const description = t('PinCreate.UserAuthenticationPIN')
@@ -111,7 +113,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
         <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
       </Text>
-      <PinInput label={t('PinCreate.EnterPIN')} onPinChanged={setPin} testID="EnterPIN" />
+      <PinInput label={t('PinCreate.EnterPIN')} onPinChanged={setPin} testID="EnterPIN" autoFocus={true} />
       <PinInput
         label={t('PinCreate.ReenterPIN')}
         onPinChanged={(p: string) => {
