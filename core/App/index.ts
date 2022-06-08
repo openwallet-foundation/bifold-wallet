@@ -11,6 +11,7 @@ import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ErrorModal from './components/modals/ErrorModal'
 import InfoTextBox from './components/texts/InfoTextBox'
 import toastConfig from './components/toast/ToastConfig'
+import { AuthProvider } from './contexts/auth'
 import RootStack from './navigators/RootStack'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
@@ -41,7 +42,7 @@ export {
   indyLedgers,
   Agent,
   AgentProvider,
-  // AuthProvider,
+  AuthProvider,
   Button,
   ButtonType,
   CheckBoxRow,
