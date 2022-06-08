@@ -1,18 +1,14 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import {
-  CredentialState,
-  ProofRecord,
-  RequestedAttribute,
-  RequestedPredicate,
-  RetrievedCredentials,
-} from '@aries-framework/core'
-import { useAgent, useCredentialByState, useProofById } from '@aries-framework/react-hooks'
+import { ProofRecord, RequestedAttribute, RequestedPredicate, RetrievedCredentials } from '@aries-framework/core'
+import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import flatten from 'lodash.flatten'
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
@@ -29,12 +25,14 @@ import {
   getConnectionName,
   processProofAttributes,
   processProofPredicates,
+  sortCredentialsForAutoSelect,
 } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccepted from './ProofRequestAccepted'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
+type Fields = Record<string, RequestedAttribute[] | RequestedPredicate[]>
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -45,18 +43,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [, dispatch] = useStore()
-  const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  const timestamps: Record<string, Date> = [
-    ...useCredentialByState(CredentialState.CredentialReceived),
-    ...useCredentialByState(CredentialState.Done),
-  ].reduce(
-    (timestamps, credential) => ({
-      ...timestamps,
-      [credential.credentialId || credential.id]: new Date(credential.createdAt),
-    }),
-    {}
-  )
+  // const timestamps: Record<string, Date> = [
+  //   ...useCredentialByState(CredentialState.CredentialReceived),
+  //   ...useCredentialByState(CredentialState.Done),
+  // ].reduce(
+  //   (timestamps, credential) => ({
+  //     ...timestamps,
+  //     [credential.credentialId || credential.id]: new Date(credential.createdAt),
+  //   }),
+  //   {}
+  // )
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const [predicates, setPredicates] = useState<Predicate[]>([])
@@ -106,6 +103,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         if (!credentials) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
+
         return credentials
       } catch (error: unknown) {
         dispatch({
@@ -117,24 +115,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
     retrieveCredentialsForProof(proof)
       .then((credentials) => {
-        const markRevokedCredentials = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}) => {
-          Object.values(fields).forEach((credentials) => {
-            credentials
-              .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
-              .forEach((credential) => {
-                // FIXME: Once hooks are updated this should no longer be necessary
-                if (credential.revoked) {
-                  dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
-                }
-              })
-          })
+        if (!credentials) {
+          return
         }
-        markRevokedCredentials(credentials?.requestedAttributes)
-        markRevokedCredentials(credentials?.requestedPredicates)
-        setCredentials(credentials)
+
+        const fields: Fields = {
+          ...credentials?.requestedAttributes,
+          ...credentials?.requestedPredicates,
+        }
+
+        flatten(Object.values(fields))
+          .filter((credential) => credential.revoked)
+          .forEach((credential) => {
+            // console.log(`Marking revoked, ID = ${credential.credentialId}`)
+            dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
+          })
 
         const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
         const predicates = processProofPredicates(proof, credentials?.requestedPredicates)
+
+        setCredentials(credentials)
         setAttributes(attributes)
         setPredicates(predicates)
       })
@@ -152,52 +152,33 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       })
   }, [])
 
-  const anyUnavailable = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}): boolean =>
-    !Object.values(fields).length || Object.values(fields).some((credentials) => !credentials?.length)
-
-  const anyRevoked = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}): boolean =>
-    Object.values(fields).some((credentials) => credentials?.every((credential) => credential.revoked))
-
-  // FIXME: Once AFJ is updated this should no longer be necessary.
-  const filterRevokedCredentialsFromReceived = (
-    credentials: RetrievedCredentials = { requestedAttributes: {}, requestedPredicates: {} }
-  ): RetrievedCredentials => {
-    return {
-      requestedAttributes: Object.entries(credentials.requestedAttributes).reduce(
-        (filteredCredentials, [attributeName, attributeValues]) => {
-          return {
-            ...filteredCredentials,
-            [attributeName]: attributeValues.filter((credential) => !credential.revoked),
-          }
-        },
-        {}
-      ),
-      requestedPredicates: Object.entries(credentials.requestedPredicates).reduce(
-        (filteredCredentials, [predicateName, predicateValues]) => {
-          return {
-            ...filteredCredentials,
-            [predicateName]: predicateValues.filter((credential) => !credential.revoked),
-          }
-        },
-        {}
-      ),
+  const hasAvailableCredentials = (): boolean => {
+    const fields: Fields = {
+      ...credentials?.requestedAttributes,
+      ...credentials?.requestedPredicates,
     }
+
+    // TODO:(jl) Need to test with partial match? Maybe `.some` would work?
+    return typeof credentials !== 'undefined' && Object.values(fields).every((c) => c.length > 0)
   }
 
   const handleAcceptPress = async () => {
     try {
-      setButtonsVisible(false)
       setPendingModalVisible(true)
-      // FIXME: Once AFJ is updated this should no longer be necessary.
-      const nonRevokedCredentials = filterRevokedCredentialsFromReceived(credentials)
-      const automaticRequestedCreds =
-        credentials && agent.proofs.autoSelectCredentialsForProofRequest(nonRevokedCredentials)
+
+      if (!credentials) {
+        throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+      }
+
+      const sortedCreds = sortCredentialsForAutoSelect(credentials)
+      const automaticRequestedCreds = credentials && agent.proofs.autoSelectCredentialsForProofRequest(sortedCreds)
+
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
+
       await agent.proofs.acceptRequest(proof.id, automaticRequestedCreds)
     } catch (err: unknown) {
-      setButtonsVisible(true)
       setPendingModalVisible(false)
 
       const error = new BifoldError(
@@ -227,7 +208,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
-            {anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ? (
+            {!hasAvailableCredentials() ? (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon
                   style={{ marginLeft: -2, marginRight: 10 }}
@@ -250,34 +231,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )}
         footer={() => (
           <View style={{ marginBottom: 30 }}>
-            {!(
-              anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ||
-              anyRevoked({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates })
-            ) ? (
-              <View style={styles.footerButton}>
-                <Button
-                  title={t('Global.Share')}
-                  accessibilityLabel={t('Global.Share')}
-                  testID={testIdWithKey('Share')}
-                  buttonType={ButtonType.Primary}
-                  onPress={handleAcceptPress}
-                  disabled={!buttonsVisible}
-                />
-              </View>
-            ) : null}
+            {!credentials ? <RecordLoading /> : null}
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Share')}
+                accessibilityLabel={t('Global.Share')}
+                testID={testIdWithKey('Share')}
+                buttonType={ButtonType.Primary}
+                onPress={handleAcceptPress}
+                disabled={!hasAvailableCredentials()}
+              />
+            </View>
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Decline')}
                 accessibilityLabel={t('Global.Decline')}
                 testID={testIdWithKey('Decline')}
-                buttonType={
-                  anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ||
-                  anyRevoked({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates })
-                    ? ButtonType.Primary
-                    : ButtonType.Secondary
-                }
+                buttonType={!credentials ? ButtonType.Primary : ButtonType.Secondary}
                 onPress={handleDeclinePress}
-                disabled={!buttonsVisible}
               />
             </View>
           </View>
