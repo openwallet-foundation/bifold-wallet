@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text, Image, View } from 'react-native'
-import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
 import { useTheme } from '../contexts/theme'
+import { generateKeyForPin, getWalletKey } from '../services/keychain.service'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
@@ -27,8 +27,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   })
 
   const checkPin = async (pin: string) => {
-    const keychainEntry = await Keychain.getGenericPassword({ service: 'passcode' })
-    if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
+    const keyForPIN = await generateKeyForPin(pin)
+    const keychainEntry = await getWalletKey()
+    if (keychainEntry && keyForPIN === keychainEntry.walletKey) {
       setAuthenticated(true)
     } else {
       setModalVisible(true)

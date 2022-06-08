@@ -1,64 +1,61 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Platform } from 'react-native'
+// import { Platform } from 'react-native'
 import Keychain from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
-import { keychainOptions, keychainWalletIDOptions } from '../../configs/keychainConfig/KeychainConfig'
-import { keychainRandKeyOptions } from '../config/KeychainConfig'
-import { KEYCHAIN_SERVICE_KEY, STORAGE_KEY_SALT } from '../constants'
+// import { keychainRandKeyOptions } from '../config/keychain'
+import { storageKeySalt, userNameKey } from '../constants'
 import { WalletSecret } from '../types/security'
 
-import { hashPin } from './kdf.service'
-
-const userNameKey = 'WalletKey'
-const userNameRandKey = 'RandKey'
+import { hashPIN } from './kdf.service'
 
 /**
- * This function will take the user inpzut pin (First login) and does the following
- * - generates wallet ID,
- * - Derive the wallet Key from user Pin using Argon2 KDF
+ * This function will take the user input PIN (on first login) and does the following
+ * - Generates wallet ID,
+ * - Derive the wallet Key from user PIN using Argon2 KDF
  * - Saves wallet ID/Key using different storage flows to be able to have different security flows to unlock the wallet
  *
- * @param pincode pin code entered by user
+ * @param pin PIN entered by user
  *
  * @returns a wallet secret object that contains generated wallet ID/Key
  * */
 
-export async function setGenericPassword(pincode: string): Promise<WalletSecret | undefined> {
+export async function setGenericPassword(pin: string): Promise<WalletSecret | undefined> {
   try {
-    //Deriving a secret from entered PIN
+    // Deriving a secret from entered PIN
     const randomSalt = uuid.v4().toString()
-    const pinSecret = await generateKeyForPin(pincode, randomSalt)
+    const pinSecret = await generateKeyForPin(pin, randomSalt)
 
-    //Creating random keys for wallet ID & Key
+    // Creating random keys for wallet ID & Key
     const randomId = uuid.v4().toString()
 
-    //Creating the wallet secret object to be saved in keychain
+    // Creating the wallet secret object to be saved in keychain
     const keychainData: WalletSecret = {
       walletId: randomId,
       walletKey: pinSecret,
     }
 
-    //Creating random key to flag biometrics
-    const randomKey = uuid.v4().toString()
+    // Creating random key to flag biometrics
+    // const randomKey = uuid.v4().toString()
 
-    //Saving key (pin derived key, wallet ID, wallet Key) to keychain (No biometrics)
+    // Saving key (PIN derived key, wallet ID, wallet Key) to keychain (no biometrics)
     await Keychain.setGenericPassword(userNameKey, JSON.stringify(keychainData))
 
-    //Saving biometryFlag to keychain (used to trigger biometrics only)
-    const keychainProps3: Keychain.Options = {
-      service: keychainRandKeyOptions.service,
-      accessControl: keychainRandKeyOptions.accessControl,
-      accessible: keychainRandKeyOptions.accessible,
-    }
-    if (Platform.OS === 'android') {
-      keychainProps3.securityLevel = keychainRandKeyOptions.securityLevel
-      keychainProps3.storage = keychainRandKeyOptions.storage
-    }
-    await Keychain.setGenericPassword(userNameRandKey, randomKey, keychainProps3)
+    // FIXME: Saving biometryFlag to keychain (used to trigger biometrics only)
+    // const keychainProps: Keychain.Options = {
+    //   service: keychainRandKeyOptions.service,
+    //   accessControl: keychainRandKeyOptions.accessControl,
+    //   accessible: keychainRandKeyOptions.accessible,
+    // }
+    // if (Platform.OS === 'android') {
+    //   keychainProps.securityLevel = keychainRandKeyOptions.securityLevel
+    //   keychainProps.storage = keychainRandKeyOptions.storage
+    // }
 
-    //Saving Salt
-    await AsyncStorage.setItem(STORAGE_KEY_SALT, randomSalt)
+    // await Keychain.setGenericPassword(userNameRandKey, randomKey, keychainProps)
+
+    // Saving Salt
+    await AsyncStorage.setItem(storageKeySalt, randomSalt)
 
     return keychainData
   } catch (error) {
@@ -111,13 +108,13 @@ export async function resetStorage() {
 export async function generateKeyForPin(pin: string, providedSalt?: string) {
   let salt: string | null = null
   if (!providedSalt) {
-    salt = await AsyncStorage.getItem(STORAGE_KEY_SALT)
+    salt = await AsyncStorage.getItem(storageKeySalt)
   } else {
     salt = providedSalt
   }
 
   if (salt) {
-    return await hashPin(pin, salt)
+    return await hashPIN(pin, salt)
   } else {
     throw new Error(`Error[generateKeyForPin] Cannot fetch SALT`)
   }
