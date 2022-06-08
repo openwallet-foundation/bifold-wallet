@@ -11,13 +11,15 @@ export enum LocalStorageKeys {
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
 }
 
-//Keys for items saved in keychain/async storage
-export const KEYCHAIN_SERVICE_KEY = 'secret.wallet.key'
-export const KEYCHAIN_SERVICE_PIN_KEY = 'secret.pin.key'
-export const KEYCHAIN_SERVICE_RAND_KEY = 'secret.rand.key'
-export const STORAGE_KEY_SALT = 'savedalt'
-export const STORAGE_FIRSTLOGIN = 'firstlogin'
-export const STORAGE_AUTHLEVEL = 'authlevel'
+// Keys for items saved in keychain/async storage
+export const keychainServiceKey = 'secret.wallet.key'
+export const keychainServicePINKey = 'secret.pin.key'
+export const keychainServiceRandKey = 'secret.rand.key'
+export const storageKeySalt = 'savedSalt'
+export const storageFirstLogin = 'firstLogin'
+export const storageAuthLevel = 'authLevel'
+export const userNameKey = 'WalletKey'
+export const userNameRandKey = 'RandKey'
 
 export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric' } = {
   year: 'numeric',

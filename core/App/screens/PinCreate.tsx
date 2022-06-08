@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text } from 'react-native'
-import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-// import { Context } from '../store/Store'
-// import { DispatchAction } from '../store/reducer'
 import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
 import { minPINLength } from '../constants'
+import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { useAuth } from '../providers/AuthProvider'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
@@ -29,8 +26,7 @@ interface ModalState {
 const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
-  // const [, dispatch] = useContext(Context)
-  const { setAppPin } = useAuth()
+  const { setAppPIN } = useAuth()
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
     title: '',
@@ -48,29 +44,20 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   })
 
   const passcodeCreate = async (pin: string) => {
-    const passcode = JSON.stringify(pin)
-    const description = t('PinCreate.UserAuthenticationPIN')
     try {
-      // await Keychain.setGenericPassword(description, passcode, {
-      //   service: 'passcode',
-      // })
-      // console.log('here3')
-      await setAppPin(pin)
-      // console.log('here4')
-      //This will trigger initAgent
+      await setAppPIN(pin)
+      // This will trigger initAgent
       setAuthenticated(true)
-
-      //This will trigger navigation to internal pages
+      // This will trigger navigation to internal pages
       dispatch({
         type: DispatchAction.DID_CREATE_PIN,
       })
     } catch (e) {
       // TODO:(jl)
-      // Alert.alert(`${e}`)
     }
   }
 
-  const confirmEntry = (x: string, y: string) => {
+  const confirmEntry = async (x: string, y: string) => {
     const negativePattern = /[^0-9]/g
     if (negativePattern.test(x)) {
       setModalState({
@@ -115,7 +102,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         message: t('PinCreate.EnteredPINsDoNotMatch'),
       })
     } else {
-      passcodeCreate(x)
+      await passcodeCreate(x)
     }
   }
 
@@ -141,9 +128,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         accessibilityLabel={t('PinCreate.CreatePIN')}
         testID={testIdWithKey('CreatePIN')}
         buttonType={ButtonType.Primary}
-        onPress={() => {
+        onPress={async () => {
           Keyboard.dismiss()
-          confirmEntry(pin, pinTwo)
+          await confirmEntry(pin, pinTwo)
         }}
       />
       {modalState.visible && (
