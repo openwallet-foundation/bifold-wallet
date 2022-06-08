@@ -36,7 +36,7 @@ const TabStack: React.FC = () => {
         component={component}
         options={{
           tabBarIcon: ({ color, focused }) => {
-            if (focusTab) {
+            if (focusTab && uiConfig.focusScanTab) {
               return (
                 <View style={[TabTheme.focusTabIconStyle, focused && TabTheme.focusTabActiveTintColor]}>
                   <Icon
@@ -52,33 +52,17 @@ const TabStack: React.FC = () => {
           },
           tabBarBadge: name == TabStacks.HomeStack ? total || undefined : undefined,
           tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
-          tabBarLabel: ({ focused }) => {
-            if (focusTab) {
-              if (uiConfig.showScanLabel) {
-                return (
-                  <Text
-                    style={{
-                      ...TabTheme.tabTextStyle,
-                      color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                    }}
-                  >
-                    {translatedName}
-                  </Text>
-                )
-              }
-              return null
-            }
-            return (
-              <Text
-                style={{
-                  ...TabTheme.tabTextStyle,
-                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                }}
-              >
-                {translatedName}
-              </Text>
-            )
-          },
+          tabBarShowLabel: uiConfig.showTabLabel,
+          tabBarLabel: ({ focused }) => (
+            <Text
+              style={{
+                ...TabTheme.tabTextStyle,
+                color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+              }}
+            >
+              {translatedName}
+            </Text>
+          ),
           tabBarAccessibilityLabel: translatedName,
         }}
       />
