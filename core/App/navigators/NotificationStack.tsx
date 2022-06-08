@@ -1,8 +1,10 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
+import CommonDecline from '../screens/CommonDecline'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
 import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
@@ -15,6 +17,7 @@ const NotificationStack: React.FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
+
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
@@ -27,7 +30,23 @@ const NotificationStack: React.FC = () => {
         component={ProofRequest}
         options={{ headerBackTitle: t('Global.Back') }}
       />
-      <Stack.Screen name={Screens.ProofRequestAttributeDetails} component={ProofRequestAttributeDetails} />
+      <Stack.Screen
+        name={Screens.ProofRequestAttributeDetails}
+        component={ProofRequestAttributeDetails}
+        options={{ headerBackTitle: t('Global.Back') }}
+      />
+      <Stack.Screen
+        name={Screens.CommonDecline}
+        component={CommonDecline}
+        options={() => ({
+          title: 'Decline',
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+          headerShown: true,
+          presentation: 'modal',
+          headerLeft: () => null,
+          headerRight: () => <HeaderRightHome />,
+        })}
+      />
     </Stack.Navigator>
   )
 }

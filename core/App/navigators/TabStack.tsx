@@ -69,7 +69,7 @@ const TabStack: React.FC = () => {
     )
   }
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.secondary }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {

@@ -95,6 +95,12 @@ interface ColorPallet {
   grayscale: GrayscaleColors
 }
 
+interface Assets {
+  img: {
+    logoLarge: any
+  }
+}
+
 export const borderRadius = 4
 export const heavyOpacity = 0.7
 export const lightOpacity = 0.35
@@ -326,7 +332,7 @@ export const ListItems = StyleSheet.create({
     ...TextTheme.normal,
   },
   revoked: {
-    backgroundColor: ColorPallet.semantic.error,
+    backgroundColor: ColorPallet.notification.error,
     borderColor: ColorPallet.notification.errorBorder,
   },
   contactBackground: {
@@ -406,10 +412,13 @@ export const TabTheme = {
   },
   tabBarActiveTintColor: ColorPallet.brand.primary,
   tabBarInactiveTintColor: ColorPallet.notification.infoText,
-  tabTextStyle: {
+  tabBarTextStyle: {
     ...TextTheme.label,
     fontWeight: 'normal',
     paddingBottom: 5,
+  },
+  tabBarButtonIconStyle: {
+    color: ColorPallet.notification.infoText,
   },
   focusTabIconStyle: {
     height: 60,
@@ -465,7 +474,7 @@ export const SettingsTheme = {
   groupBackground: ColorPallet.brand.secondaryBackground,
   iconColor: ColorPallet.grayscale.white,
   text: {
-    ...TextTheme.normal,
+    ...TextTheme.caption,
     color: ColorPallet.grayscale.white,
   },
 }
@@ -546,6 +555,38 @@ export const OnboardingTheme = {
   },
 }
 
+const LoadingTheme = {
+  backgroundColor: ColorPallet.brand.primaryBackground,
+}
+
+const PinInputTheme = {
+  cell: {
+    backgroundColor: ColorPallet.grayscale.darkGrey,
+    borderColor: ColorPallet.grayscale.darkGrey,
+  },
+  focussedCell: {
+    borderColor: ColorPallet.grayscale.lightGrey,
+  },
+  cellText: {
+    color: ColorPallet.grayscale.white,
+  },
+  icon: {
+    color: ColorPallet.grayscale.white,
+  },
+}
+
+export const Assets = {
+  img: {
+    logoLarge: {
+      src: require('./assets/img/logo-large.png'),
+      aspectRatio: 1,
+      height: '33%',
+      width: '33%',
+      resizeMode: 'contain',
+    },
+  },
+}
+
 export interface Theme {
   ColorPallet: ColorPallet
   TextTheme: TextTheme
@@ -558,9 +599,12 @@ export interface Theme {
   SettingsTheme: any
   ChatTheme: any
   OnboardingTheme: any
+  LoadingTheme: any
+  PinInputTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
+  Assets: Assets
 }
 
 export const theme: Theme = {
@@ -575,7 +619,10 @@ export const theme: Theme = {
   SettingsTheme,
   ChatTheme,
   OnboardingTheme,
+  LoadingTheme,
+  PinInputTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,
+  Assets,
 }

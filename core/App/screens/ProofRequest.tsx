@@ -3,32 +3,36 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import {
   CredentialState,
   ProofRecord,
-  ProofState,
   RequestedAttribute,
+  RequestedPredicate,
   RetrievedCredentials,
 } from '@aries-framework/core'
-import { useAgent, useCredentialByState, useCredentials, useProofById } from '@aries-framework/react-hooks'
-import React, { useState, useEffect, useMemo } from 'react'
+import { useAgent, useCredentialByState, useProofById } from '@aries-framework/react-hooks'
+import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import ProofDeclined from '../assets/img/proof-declined.svg'
-import ProofPending from '../assets/img/proof-pending.svg'
-import ProofSuccess from '../assets/img/proof-success.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
-import NotificationModal from '../components/modals/NotificationModal'
 import Record from '../components/record/Record'
-import RecordAttribute from '../components/record/RecordAttribute'
+import RecordField from '../components/record/RecordField'
 import Title from '../components/texts/Title'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { Attribute } from '../types/record'
-import { connectionRecordFromId, getConnectionName, processProofAttributes } from '../utils/helpers'
+import { NotificationStackParams, Screens } from '../types/navigators'
+import { Attribute, Predicate } from '../types/record'
+import {
+  connectionRecordFromId,
+  getConnectionName,
+  processProofAttributes,
+  processProofPredicates,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+
+import ProofRequestAccepted from './ProofRequestAccepted'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 
@@ -43,8 +47,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  const [successModalVisible, setSuccessModalVisible] = useState(false)
-  const [declinedModalVisible, setDeclinedModalVisible] = useState(false)
   const timestamps: Record<string, Date> = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
@@ -57,8 +59,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   )
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
+  const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
-  const { ListItems } = useTheme()
+  const { ColorPallet, ListItems } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -80,6 +83,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     valueContainer: {
       minHeight: ListItems.recordAttributeText.fontSize,
       paddingVertical: 4,
+    },
+    detailsButton: {
+      ...ListItems.recordAttributeText,
+      color: ColorPallet.brand.link,
+      textDecorationLine: 'underline',
     },
   })
 
@@ -109,24 +117,32 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
     retrieveCredentialsForProof(proof)
       .then((credentials) => {
-        Object.values(credentials?.requestedAttributes || {}).forEach((credentials) => {
-          credentials
-            .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
-            .forEach((credential) => {
-              // FIXME: Once hooks are updated this should no longer be necessary
-              if (credential.revoked) {
-                dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
-              }
-            })
-        })
+        const markRevokedCredentials = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}) => {
+          Object.values(fields).forEach((credentials) => {
+            credentials
+              .sort((a, b) => timestamps[b.credentialId].valueOf() - timestamps[a.credentialId].valueOf())
+              .forEach((credential) => {
+                // FIXME: Once hooks are updated this should no longer be necessary
+                if (credential.revoked) {
+                  dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
+                }
+              })
+          })
+        }
+        markRevokedCredentials(credentials?.requestedAttributes)
+        markRevokedCredentials(credentials?.requestedPredicates)
         setCredentials(credentials)
+
         const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
+        const predicates = processProofPredicates(proof, credentials?.requestedPredicates)
         setAttributes(attributes)
+        setPredicates(predicates)
       })
-      .catch(() => {
+      .catch((err: unknown) => {
         const error = new BifoldError(
           'Unable to update retrieved credentials',
           'There was a problem while updating retrieved credentials.',
+          (err as Error).message,
           1026
         )
         dispatch({
@@ -136,24 +152,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       })
   }, [])
 
-  useEffect(() => {
-    if (proof.state === ProofState.Done) {
-      pendingModalVisible && setPendingModalVisible(false)
-      setSuccessModalVisible(true)
-    }
-  }, [proof])
+  const anyUnavailable = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}): boolean =>
+    !Object.values(fields).length || Object.values(fields).some((credentials) => !credentials?.length)
 
-  useEffect(() => {
-    if (proof.state === ProofState.Declined) {
-      setDeclinedModalVisible(true)
-    }
-  }, [proof])
-
-  const anyUnavailable = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
-    !Object.values(attributes).length || Object.values(attributes).some((credentials) => !credentials?.length)
-
-  const anyRevoked = (attributes: Record<string, RequestedAttribute[]> = {}): boolean =>
-    Object.values(attributes).some((credentials) => credentials?.every((credential) => credential.revoked))
+  const anyRevoked = (fields: Record<string, RequestedAttribute[] | RequestedPredicate[]> = {}): boolean =>
+    Object.values(fields).some((credentials) => credentials?.every((credential) => credential.revoked))
 
   // FIXME: Once AFJ is updated this should no longer be necessary.
   const filterRevokedCredentialsFromReceived = (
@@ -169,7 +172,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         },
         {}
       ),
-      requestedPredicates: credentials.requestedPredicates,
+      requestedPredicates: Object.entries(credentials.requestedPredicates).reduce(
+        (filteredCredentials, [predicateName, predicateValues]) => {
+          return {
+            ...filteredCredentials,
+            [predicateName]: predicateValues.filter((credential) => !credential.revoked),
+          }
+        },
+        {}
+      ),
     }
   }
 
@@ -185,13 +196,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
       await agent.proofs.acceptRequest(proof.id, automaticRequestedCreds)
-    } catch (e: unknown) {
+    } catch (err: unknown) {
       setButtonsVisible(true)
       setPendingModalVisible(false)
+
       const error = new BifoldError(
         'Unable to accept proof request',
         'There was a problem while accepting the proof request.',
-        1025
+        (err as Error).message,
+        1027
       )
       dispatch({
         type: DispatchAction.ERROR_ADDED,
@@ -201,46 +214,27 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   const handleDeclinePress = async () => {
-    Alert.alert(t('ProofRequest.DeclineThisProof?'), t('Global.ThisDecisionCannotBeChanged.'), [
-      { text: t('Global.Cancel'), style: 'cancel' },
-      {
-        text: t('Global.Confirm'),
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            setButtonsVisible(false)
-            await agent.proofs.declineRequest(proof.id)
-          } catch (e: unknown) {
-            const error = new BifoldError(
-              'Unable to reject proof request',
-              'There was a problem while rejecting the proof request.',
-              1025
-            )
-            dispatch({
-              type: DispatchAction.ERROR_ADDED,
-              payload: [{ error }],
-            })
-          }
-        },
-      },
-    ])
+    navigation.navigate(Screens.CommonDecline, {
+      declineType: DeclineType.ProofRequest,
+      itemId: proofId,
+    })
   }
 
   const connection = connectionRecordFromId(proof.connectionId)
 
   return (
-    <>
+    <SafeAreaView>
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
-            {anyUnavailable(credentials?.requestedAttributes) ? (
+            {anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ? (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon
                   style={{ marginLeft: -2, marginRight: 10 }}
                   name="highlight-off"
                   color={ListItems.proofIcon.color}
                   size={ListItems.proofIcon.fontSize}
-                ></Icon>
+                />
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Title style={styles.headerText}>
                     {getConnectionName(connection) || t('ContactDetails.AContact')}
@@ -258,7 +252,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )}
         footer={() => (
           <View style={{ marginBottom: 30 }}>
-            {!(anyUnavailable(credentials?.requestedAttributes) || anyRevoked(credentials?.requestedAttributes)) ? (
+            {!(
+              anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ||
+              anyRevoked({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates })
+            ) ? (
               <View style={styles.footerButton}>
                 <Button
                   title={t('Global.Share')}
@@ -276,7 +273,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 accessibilityLabel={t('Global.Decline')}
                 testID={testIdWithKey('Decline')}
                 buttonType={
-                  anyUnavailable(credentials?.requestedAttributes) || anyRevoked(credentials?.requestedAttributes)
+                  anyUnavailable({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates }) ||
+                  anyRevoked({ ...credentials?.requestedAttributes, ...credentials?.requestedPredicates })
                     ? ButtonType.Primary
                     : ButtonType.Secondary
                 }
@@ -286,37 +284,35 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             </View>
           </View>
         )}
-        attributes={attributes}
-        attribute={(attribute) => {
+        fields={[...attributes, ...predicates]}
+        field={(field) => {
           return (
-            <RecordAttribute
-              attribute={attribute}
-              attributeValue={(attribute: Attribute) => (
+            <RecordField
+              field={field}
+              fieldValue={(field) => (
                 <>
-                  {!attribute?.value || attribute?.revoked ? (
+                  {(!(field as Attribute)?.value && !(field as Predicate)?.pValue) || field?.revoked ? (
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Icon
                         style={{ paddingTop: 2, paddingHorizontal: 2 }}
                         name="close"
                         color={ListItems.proofError.color}
                         size={ListItems.recordAttributeText.fontSize}
-                      ></Icon>
+                      />
 
                       <Text
                         style={[ListItems.recordAttributeText, { color: ListItems.proofError.color }]}
                         testID={testIdWithKey('RevokedOrNotAvailable')}
                       >
-                        {attribute?.revoked
-                          ? t('CredentialDetails.Revoked')
-                          : t('ProofRequest.NotAvailableInYourWallet')}
+                        {field?.revoked ? t('CredentialDetails.Revoked') : t('ProofRequest.NotAvailableInYourWallet')}
                       </Text>
                     </View>
                   ) : (
                     <Text style={ListItems.recordAttributeText} testID={testIdWithKey('AttributeValue')}>
-                      {attribute?.value}
+                      {(field as Attribute)?.value || `${(field as Predicate)?.pType} ${(field as Predicate)?.pValue}`}
                     </Text>
                   )}
-                  {attribute?.value ? (
+                  {(field as Attribute)?.value ? (
                     <TouchableOpacity
                       accessible={true}
                       accessibilityLabel={t('ProofRequest.Details')}
@@ -325,12 +321,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       onPress={() =>
                         navigation.navigate(Screens.ProofRequestAttributeDetails, {
                           proofId,
-                          attributeName: attribute.name,
+                          attributeName: field.name,
                         })
                       }
                       style={styles.link}
                     >
-                      <Text style={ListItems.recordAttributeText}>{t('ProofRequest.Details')}</Text>
+                      <Text style={styles.detailsButton}>{t('ProofRequest.Details')}</Text>
                     </TouchableOpacity>
                   ) : null}
                 </>
@@ -339,53 +335,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           )
         }}
       />
-      {pendingModalVisible ? (
-        <NotificationModal
-          testID={t('ProofRequest.SendingTheInformationSecurely')}
-          title={t('ProofRequest.SendingTheInformationSecurely')}
-          visible={pendingModalVisible}
-          homeVisible={false}
-          doneTitle={t('Loading.BackToHome')}
-          doneType={ButtonType.Secondary}
-          doneAccessibilityLabel={t('Loading.BackToHome')}
-          onDone={() => {
-            setPendingModalVisible(false)
-            navigation.pop()
-            navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-          }}
-        >
-          <ProofPending style={{ marginVertical: 20 }}></ProofPending>
-        </NotificationModal>
-      ) : null}
-      {successModalVisible ? (
-        <NotificationModal
-          title={t('ProofRequest.InformationSentSuccessfully')}
-          visible={successModalVisible}
-          homeVisible={false}
-          onDone={() => {
-            setSuccessModalVisible(false)
-            navigation.pop()
-            navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
-          }}
-        >
-          <ProofSuccess style={{ marginVertical: 20 }}></ProofSuccess>
-        </NotificationModal>
-      ) : null}
-      {declinedModalVisible ? (
-        <NotificationModal
-          title={t('ProofRequest.ProofRequestDeclined')}
-          visible={declinedModalVisible}
-          homeVisible={false}
-          onDone={() => {
-            setDeclinedModalVisible(false)
-            navigation.pop()
-            navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
-          }}
-        >
-          <ProofDeclined style={{ marginVertical: 20 }}></ProofDeclined>
-        </NotificationModal>
-      ) : null}
-    </>
+      <ProofRequestAccepted visible={pendingModalVisible} proofId={proofId} />
+    </SafeAreaView>
   )
 }
 

@@ -110,26 +110,6 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
         >
           Error.Problem
         </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "flexShrink": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "marginVertical": 16,
-              },
-              Object {
-                "marginBottom": 24,
-                "marginTop": 0,
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/ErrorCode"
-        >
-          Global.ErrorCode 1024
-        </Text>
         <View
           accessibilityLabel="Global.Okay"
           accessibilityState={
@@ -289,26 +269,6 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           testID="com.ariesbifold:id/BodyText"
         >
           Error.Problem
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "flexShrink": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "marginVertical": 16,
-              },
-              Object {
-                "marginBottom": 24,
-                "marginTop": 0,
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/ErrorCode"
-        >
-          Global.ErrorCode 1024
         </Text>
         <View
           accessibilityLabel="Global.Okay"

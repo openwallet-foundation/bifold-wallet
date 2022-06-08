@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
@@ -21,8 +22,8 @@ export enum InfoBoxType {
 interface BifoldErrorProps {
   notificationType: InfoBoxType
   title: string
-  message: string
-  code?: number
+  description: string
+  message?: string
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
 }
@@ -30,13 +31,14 @@ interface BifoldErrorProps {
 const InfoBox: React.FC<BifoldErrorProps> = ({
   notificationType,
   title,
+  description,
   message,
-  code,
   onCallToActionPressed,
   onCallToActionLabel,
 }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
+  const [showDetails, setShowDetails] = useState<boolean>(false)
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.notification.info,
@@ -73,6 +75,11 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
     icon: {
       marginRight: 10,
       alignSelf: 'center',
+    },
+    showDetailsText: {
+      ...TextTheme.title,
+      fontWeight: 'normal',
+      color: ColorPallet.brand.link,
     },
   })
   let iconName = 'info'
@@ -152,7 +159,11 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       break
 
     default:
-      throw new Error('InfoTextBoxIIType needs to be set correctly')
+      throw new Error('InfoTextBoxType needs to be set correctly')
+  }
+
+  const onShowDetailsTouched = () => {
+    setShowDetails(true)
   }
 
   return (
@@ -167,12 +178,20 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-          {message}
+          {showDetails ? message : description}
         </Text>
-        {code && (
-          <Text style={[styles.bodyText, { marginTop: 0, marginBottom: 24 }]} testID={testIdWithKey('ErrorCode')}>{`${t(
-            'Global.ErrorCode'
-          )} ${code}`}</Text>
+        {message && !showDetails && (
+          <TouchableOpacity
+            accessibilityLabel={t('Global.ShowDetails')}
+            testID={testIdWithKey('ShowDetails')}
+            style={{ marginVertical: 14 }}
+            onPress={onShowDetailsTouched}
+          >
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.showDetailsText}>{t('Global.ShowDetails')} </Text>
+              <Icon name="chevron-right" size={iconSize} color={ColorPallet.brand.link} />
+            </View>
+          </TouchableOpacity>
         )}
         {onCallToActionPressed && (
           <Button

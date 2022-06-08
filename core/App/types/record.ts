@@ -1,9 +1,15 @@
-import { RequestedAttribute } from '@aries-framework/core'
-
-export interface Attribute {
+export interface Field {
   name: string | null
-  value: RequestedAttribute | string | null
   mimeType?: string
   revoked?: boolean
   credentialId?: string
+}
+
+export interface Attribute extends Field {
+  value: string | number | null
+}
+
+export interface Predicate extends Field {
+  pValue: string | number | null
+  pType: string
 }

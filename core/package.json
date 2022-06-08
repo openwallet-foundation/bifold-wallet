@@ -48,6 +48,7 @@
     "react-native-argon2": "^2.0.1",
     "react-native-camera": "^3.31.1",
     "react-native-config": "^1.4.2",
+    "react-native-confirmation-code-field": "^7.3.0",
     "react-native-device-info": "^8.4.9",
     "react-native-encrypted-storage": "^4.0.2",
     "react-native-fs": "^2.16.6",
