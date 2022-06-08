@@ -1,45 +1,80 @@
 import { useNavigation } from '@react-navigation/core'
+import { NavigationContainer, NavigationContext } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import { render, waitFor, fireEvent } from '@testing-library/react-native'
 import React from 'react'
+import { Modal } from 'react-native'
 
+import { ThemeProvider } from '../../App/contexts/theme'
 import ConnectionModal from '../../App/screens/Connection'
+import { theme } from '../../App/theme'
+import { DeliveryStackParams, Screens, TabStacks } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
 const props = { params: { connectionId: '123' } }
+const createNavigationContext = () => {
+  const actualNav = jest.requireActual('@react-navigation/native')
+  const navigate = jest.fn()
+  const navContext = {
+    ...actualNav.navigation,
+    navigate: navigate,
+    dangerouslyGetState: () => {},
+    setOptions: () => {},
+    addListener: () => () => {},
+    isFocused: () => true,
+    getParent: () => {
+      return navContext
+    },
+  }
+  return navContext
+}
 
 describe('ConnectionModal Component', () => {
   test('Renders correctly', async () => {
-    const tree = render(<ConnectionModal route={props as any} navigation={useNavigation()} />)
+    const navContext = createNavigationContext()
+    const element = (
+      <NavigationContext.Provider value={navContext}>
+        <ConnectionModal navigation={navContext} route={props as any} />
+      </NavigationContext.Provider>
+    )
+    const tree = render(element)
 
     const backHomeBtn = tree.queryByTestId(testIdWithKey('BackToHome'))
-
     expect(tree).toMatchSnapshot()
     expect(backHomeBtn).toBeNull()
+    jest.clearAllTimers()
   })
 
   test('Updates after delay', async () => {
-    const tree = render(<ConnectionModal route={props as any} navigation={useNavigation()} />)
-
+    const navContext = createNavigationContext()
+    const element = (
+      <NavigationContext.Provider value={navContext}>
+        <ConnectionModal navigation={navContext} route={props as any} />
+      </NavigationContext.Provider>
+    )
+    const tree = render(element)
     await waitFor(() => {
       jest.runAllTimers()
     })
-
     expect(tree).toMatchSnapshot()
   })
 
   test('Dismiss on demand', async () => {
-    const tree = render(<ConnectionModal route={props as any} navigation={useNavigation()} />)
-
+    const navContext = createNavigationContext()
+    const element = (
+      <NavigationContext.Provider value={navContext}>
+        <ConnectionModal navigation={navContext} route={props as any} />
+      </NavigationContext.Provider>
+    )
+    const tree = render(element)
     await waitFor(() => {
       jest.runAllTimers()
     })
-
     const backHomeBtn = tree.getByTestId(testIdWithKey('BackToHome'))
     fireEvent(backHomeBtn, 'press')
-
     expect(tree).toMatchSnapshot()
   })
 })

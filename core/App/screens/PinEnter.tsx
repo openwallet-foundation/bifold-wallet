@@ -1,67 +1,70 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Keyboard, StyleSheet } from 'react-native'
+import { Keyboard, StyleSheet, Text, Image, View } from 'react-native'
 import * as Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import TextInput from '../components/inputs/TextInput'
+import PinInput from '../components/inputs/PinInput'
+import AlertModal from '../components/modals/AlertModal'
+import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 interface PinEnterProps {
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
-  const [pin, setPin] = useState('')
   const { t } = useTranslation()
-  const { ColorPallet } = useThemeContext()
+  const [pin, setPin] = useState('')
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
+
+  const { ColorPallet, TextTheme, Assets } = useTheme()
   const style = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
-      margin: 20,
     },
   })
+
   const checkPin = async (pin: string) => {
     const keychainEntry = await Keychain.getGenericPassword({ service: 'passcode' })
     if (keychainEntry && JSON.stringify(pin) === keychainEntry.password) {
       setAuthenticated(true)
     } else {
-      Alert.alert(t('PinEnter.IncorrectPin'))
+      setModalVisible(true)
     }
   }
 
   return (
     <SafeAreaView style={[style.container]}>
-      <TextInput
-        accessibilityLabel={t('Global.EnterPin')}
-        testID={testIdWithKey('EnterPin')}
-        label={t('Global.EnterPin')}
-        placeholder={t('Global.6DigitPin')}
-        placeholderTextColor={ColorPallet.grayscale.lightGrey}
-        autoFocus
-        maxLength={6}
-        keyboardType="numeric"
-        secureTextEntry={true}
-        value={pin}
-        onChangeText={(pin: string) => {
-          setPin(pin.replace(/[^0-9]/g, ''))
-          if (pin.length == 6) {
+      <View style={{ margin: 20 }}>
+        <Image
+          source={Assets.img.logoLarge.src}
+          style={{
+            height: Assets.img.logoLarge.height,
+            width: Assets.img.logoLarge.width,
+            resizeMode: Assets.img.logoLarge.resizeMode,
+            alignSelf: 'center',
+            marginBottom: 20,
+          }}
+        />
+        <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
+        <PinInput onPinChanged={setPin} testID="EnterPIN" autoFocus={true} />
+        <Button
+          title={t('Global.Enter')}
+          buttonType={ButtonType.Primary}
+          testID={testIdWithKey('Enter')}
+          accessibilityLabel={t('Global.Enter')}
+          onPress={() => {
             Keyboard.dismiss()
-          }
-        }}
-      />
-      <Button
-        title={t('Global.Submit')}
-        buttonType={ButtonType.Primary}
-        testID={testIdWithKey('Submit')}
-        accessibilityLabel={t('Global.Submit')}
-        onPress={() => {
-          Keyboard.dismiss()
-          checkPin(pin)
-        }}
-      />
+            checkPin(pin)
+          }}
+        />
+      </View>
+
+      {modalVisible && (
+        <AlertModal title={t('PinEnter.IncorrectPIN')} message="" submit={() => setModalVisible(false)} />
+      )}
     </SafeAreaView>
   )
 }

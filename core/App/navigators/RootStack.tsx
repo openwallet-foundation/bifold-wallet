@@ -10,25 +10,26 @@ import {
 import { agentDependencies } from '@aries-framework/react-native'
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Alert } from 'react-native'
 import { Config } from 'react-native-config'
+import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { useAuth } from '../providers/AuthProvider'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import Splash from '../screens/Splash'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
-import { useConfigurationContext } from '../utils/configurationContext'
-import { useThemeContext } from '../utils/themeContext'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -37,7 +38,6 @@ import NotificationStack from './NotificationStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { createDefaultStackOptions } from './defaultStackOptions'
-import { Alert } from 'react-native'
 
 interface RootStackProps {
   setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
@@ -45,7 +45,7 @@ interface RootStackProps {
 
 const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const { setAgent } = props
-  const [state, dispatch] = useContext(Context)
+  const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { getWalletIdSecret } = useAuth()
@@ -54,19 +54,15 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [agentInitDone, setAgentInitDone] = useState(false)
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
 
-  const theme = useThemeContext()
+  const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const ColorPallet = theme.ColorPallet
-  const {
-    onboarding: { pages },
-    terms,
-  } = useConfigurationContext()
+  const OnboardingTheme = theme.OnboardingTheme
+  const { pages, terms, splash } = useConfiguration()
+
   const onTutorialCompleted = () => {
     dispatch({
-      type: DispatchAction.SetTutorialCompletionStatus,
-      payload: [{ DidCompleteTutorial: true }],
+      type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
-
     navigation.navigate(Screens.Terms)
   }
 
@@ -75,11 +71,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       return
     }
 
-    Toast.show({
-      type: ToastType.Info,
-      text1: t('StatusMessages.InitAgent'),
-      position: 'bottom',
-    })
+    // TODO: Show loading indicator here
+    dispatch({ type: DispatchAction.LOADING_ENABLED })
 
     //Flag to protect the init process from being duplicated
     setInitAgentInProcess(true)
@@ -103,7 +96,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),
           indyLedgers,
-          connectToIndyLedgersOnStartup: false,
+          connectToIndyLedgersOnStartup: true,
         },
         agentDependencies
       )
@@ -117,13 +110,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       await newAgent.initialize()
       setAgent(newAgent) // -> This will set the agent in the global provider
       setAgentInitDone(true)
-      Toast.show({
-        type: ToastType.Success,
-        text1: 'Wallet initialized',
-        autoHide: true,
-        visibilityTime: 2000,
-        position: 'bottom',
-      })
+
+      dispatch({ type: DispatchAction.LOADING_DISABLED })
     } catch (e: unknown) {
       Toast.show({
         type: ToastType.Error,
@@ -172,15 +160,15 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
   const onboardingStack = (setAuthenticated: StateFn) => {
     const Stack = createStackNavigator()
-    const carousel = createCarouselStyle(theme)
+    const carousel = createCarouselStyle(OnboardingTheme)
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash} component={Splash} />
+        <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
             title: t('Screens.Onboarding'),
-            headerTintColor: ColorPallet.grayscale.white,
+            headerTintColor: OnboardingTheme.headerTintColor,
             headerShown: true,
             gestureEnabled: false,
             headerLeft: () => false,
@@ -191,7 +179,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
               {...props}
               nextButtonText={'Next'}
               previousButtonText={'Back'}
-              pages={pages(onTutorialCompleted, theme)}
+              pages={pages(onTutorialCompleted, OnboardingTheme)}
               style={carousel}
             />
           )}
@@ -200,7 +188,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           name={Screens.Terms}
           options={() => ({
             title: t('Screens.Terms'),
-            headerTintColor: ColorPallet.grayscale.white,
+            headerTintColor: OnboardingTheme.headerTintColor,
             headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
@@ -214,7 +202,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     )
   }
 
-  if (state.onboarding.DidAgreeToTerms && state.onboarding.DidCompleteTutorial && state.onboarding.DidCreatePIN) {
+  if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
     return authenticated ? mainStack() : authStack(setAuthenticated)
   }
 

@@ -1,15 +1,15 @@
 import { useNavigation } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { Ref, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Animated, BackHandler, Dimensions, FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import HeaderRight from '../components/buttons/HeaderRight'
+import HeaderRight from '../components/buttons/HeaderRightSkip'
 import { Pagination } from '../components/misc/Pagination'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -39,7 +39,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
   const scrollX = useRef(new Animated.Value(0)).current
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
 
   const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
     if (!viewableItems[0]) {
@@ -86,8 +86,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
 
   const onSkipTouched = () => {
     dispatch({
-      type: DispatchAction.SetTutorialCompletionStatus,
-      payload: [{ DidCompleteTutorial: true }],
+      type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
 
     navigation.navigate(Screens.Terms)

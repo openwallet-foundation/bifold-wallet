@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput as RNTextInput, TextInputProps } from 'react-native'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 interface Props extends TextInputProps {
   label: string
@@ -9,31 +9,25 @@ interface Props extends TextInputProps {
 
 const TextInput: React.FC<Props> = ({ label, ...textInputProps }) => {
   const [focused, setFocused] = useState(false)
-  const { ColorPallet, TextTheme, borderRadius } = useThemeContext()
+  const { Inputs } = useTheme()
   const styles = StyleSheet.create({
     container: {
       marginVertical: 10,
     },
     label: {
-      ...TextTheme.label,
+      ...Inputs.label,
       marginBottom: 3,
     },
     textInput: {
-      padding: 10,
-      borderRadius,
-      fontSize: 16,
-      backgroundColor: ColorPallet.brand.primaryBackground,
-      color: ColorPallet.notification.infoText,
-      borderWidth: 2,
-      borderColor: ColorPallet.brand.secondary,
+      ...Inputs.textInput,
     },
   })
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <RNTextInput
-        style={[styles.textInput, focused && { borderColor: ColorPallet.brand.primary }]}
-        selectionColor={ColorPallet.brand.primary}
+        style={[styles.textInput, focused && { ...Inputs.inputSelected }]}
+        selectionColor={Inputs.inputSelected.borderColor}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         {...textInputProps}

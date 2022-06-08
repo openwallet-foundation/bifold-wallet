@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 import Button, { ButtonType } from '../buttons/Button'
 
 const iconSize = 30
@@ -21,14 +22,23 @@ export enum InfoBoxType {
 interface BifoldErrorProps {
   notificationType: InfoBoxType
   title: string
-  message: string
-  code?: number
+  description: string
+  message?: string
   onCallToActionPressed?: GenericFn
+  onCallToActionLabel?: string
 }
 
-const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message, code, onCallToActionPressed }) => {
+const InfoBox: React.FC<BifoldErrorProps> = ({
+  notificationType,
+  title,
+  description,
+  message,
+  onCallToActionPressed,
+  onCallToActionLabel,
+}) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useThemeContext()
+  const { TextTheme, ColorPallet } = useTheme()
+  const [showDetails, setShowDetails] = useState<boolean>(false)
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.notification.info,
@@ -36,7 +46,6 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
       borderRadius: 5,
       borderWidth: 1,
       padding: 10,
-      marginHorizontal: 25,
       minWidth: width - 2 * 25,
     },
     headerContainer: {
@@ -66,6 +75,11 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
     icon: {
       marginRight: 10,
       alignSelf: 'center',
+    },
+    showDetailsText: {
+      ...TextTheme.title,
+      fontWeight: 'normal',
+      color: ColorPallet.brand.link,
     },
   })
   let iconName = 'info'
@@ -145,7 +159,11 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
       break
 
     default:
-      throw new Error('InfoTextBoxIIType needs to be set correctly')
+      throw new Error('InfoTextBoxType needs to be set correctly')
+  }
+
+  const onShowDetailsTouched = () => {
+    setShowDetails(true)
   }
 
   return (
@@ -160,17 +178,25 @@ const InfoBox: React.FC<BifoldErrorProps> = ({ notificationType, title, message,
       </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-          {message}
+          {showDetails ? message : description}
         </Text>
-        {code && (
-          <Text style={[styles.bodyText, { marginTop: 0, marginBottom: 24 }]} testID={testIdWithKey('ErrorCode')}>{`${t(
-            'Global.ErrorCode'
-          )} ${code}`}</Text>
+        {message && !showDetails && (
+          <TouchableOpacity
+            accessibilityLabel={t('Global.ShowDetails')}
+            testID={testIdWithKey('ShowDetails')}
+            style={{ marginVertical: 14 }}
+            onPress={onShowDetailsTouched}
+          >
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.showDetailsText}>{t('Global.ShowDetails')} </Text>
+              <Icon name="chevron-right" size={iconSize} color={ColorPallet.brand.link} />
+            </View>
+          </TouchableOpacity>
         )}
         {onCallToActionPressed && (
           <Button
-            title={t('Global.Okay')}
-            accessibilityLabel={t('Global.Okay')}
+            title={onCallToActionLabel || t('Global.Okay')}
+            accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
             testID={testIdWithKey('Okay')}
             buttonType={ButtonType.Primary}
             onPress={onCallToActionPressed}

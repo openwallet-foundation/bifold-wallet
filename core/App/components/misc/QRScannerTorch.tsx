@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTheme } from '../../contexts/theme'
 import { Theme } from '../../theme'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 interface Props {
   active: boolean
@@ -32,7 +32,7 @@ function createStyles({ ColorPallet }: Theme) {
 }
 const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
   const { t } = useTranslation()
-  const theme = useThemeContext()
+  const theme = useTheme()
   const styles = createStyles(theme)
   return (
     <TouchableOpacity
@@ -48,7 +48,7 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
 }
 
 const TorchIcon: React.FC<Props> = ({ active }) => {
-  const theme = useThemeContext()
+  const theme = useTheme()
   const styles = createStyles(theme)
   return (
     <Icon
