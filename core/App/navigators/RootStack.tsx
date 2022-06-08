@@ -14,16 +14,15 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { Config } from 'react-native-config'
-import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { useAuth } from '../providers/AuthProvider'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
@@ -48,7 +47,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { getWalletIdSecret } = useAuth()
+  const { getWalletSecret } = useAuth()
 
   const [authenticated, setAuthenticated] = useState(false)
   const [agentInitDone, setAgentInitDone] = useState(false)
@@ -71,14 +70,13 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       return
     }
 
-    // TODO: Show loading indicator here
     dispatch({ type: DispatchAction.LOADING_ENABLED })
 
-    //Flag to protect the init process from being duplicated
+    // Flag to protect the init process from being duplicated
     setInitAgentInProcess(true)
 
     try {
-      const walletSecret = await getWalletIdSecret()
+      const walletSecret = await getWalletSecret()
 
       if (!walletSecret?.walletId || !walletSecret.walletKey) {
         Alert.alert('Error', 'Cannot find wallet id/secret!')

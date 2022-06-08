@@ -1,10 +1,9 @@
-import { Config } from 'react-native-config'
 import { ACCESSIBLE, ACCESS_CONTROL, SECURITY_LEVEL, STORAGE_TYPE } from 'react-native-keychain'
 
-import { KEYCHAIN_SERVICE_KEY, KEYCHAIN_SERVICE_PIN_KEY, KEYCHAIN_SERVICE_RAND_KEY } from '../../App/constants'
+import { keychainServiceKey, keychainServicePINKey, keychainServiceRandKey } from '../constants'
 
 export const keychainOptions = {
-  service: KEYCHAIN_SERVICE_KEY,
+  service: keychainServiceKey,
   accessControl: ACCESS_CONTROL.BIOMETRY_CURRENT_SET,
   accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
   securityLevel: SECURITY_LEVEL.ANY,
@@ -12,7 +11,7 @@ export const keychainOptions = {
 }
 
 export const keychainPinKeyOptions = {
-  service: KEYCHAIN_SERVICE_PIN_KEY,
+  service: keychainServicePINKey,
   accessControl: ACCESS_CONTROL.BIOMETRY_CURRENT_SET,
   accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
   securityLevel: SECURITY_LEVEL.ANY,
@@ -20,7 +19,7 @@ export const keychainPinKeyOptions = {
 }
 
 export const keychainRandKeyOptions = {
-  service: KEYCHAIN_SERVICE_RAND_KEY,
+  service: keychainServiceRandKey,
   accessControl: ACCESS_CONTROL.BIOMETRY_ANY,
   accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
   securityLevel: SECURITY_LEVEL.ANY,
