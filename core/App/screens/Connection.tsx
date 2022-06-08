@@ -1,17 +1,17 @@
+import { useConnectionById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useConnectionById } from '@aries-framework/react-hooks'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { uiConfig } from '../../configs/uiConfig'
 import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Stacks, Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { uiConfig } from '../../configs/uiConfig'
 
 const connectionTimerDelay = 10000 // in ms
 
@@ -68,7 +68,9 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (uiConfig.navigateOnConnection && connection?.state == 'complete') {
-      navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connectionId } })
+      navigation
+        .getParent()
+        ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connectionId } })
     }
 
     if (didProcessNotification) {

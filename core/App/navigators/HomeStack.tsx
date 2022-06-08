@@ -1,12 +1,12 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import { uiConfig } from '../../configs/uiConfig'
 import SettingsCog from '../components/misc/SettingsCog'
 import { useTheme } from '../contexts/theme'
 import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'
 import { HomeStackParams, Screens } from '../types/navigators'
-import { fiveTabDisplay } from '../../configs/uiConfig'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -19,9 +19,13 @@ const HomeStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Home}
         component={Home}
-        options={() => ( !fiveTabDisplay ? {
-          headerRight: () => <SettingsCog />,
-        } : {})}
+        options={() =>
+          !uiConfig.fiveTabDisplay
+            ? {
+                headerRight: () => <SettingsCog />,
+              }
+            : {}
+        }
       />
       <Stack.Screen name={Screens.Notifications} component={ListNotifications} />
     </Stack.Navigator>

@@ -10,7 +10,6 @@ import QRScanner from '../components/misc/QRScanner'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
-import { navigateOnConnection } from '../../configs/uiConfig'
 
 type ScanProps = StackScreenProps<ConnectStackParams>
 

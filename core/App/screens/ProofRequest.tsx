@@ -242,7 +242,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   size={ListItems.proofIcon.fontSize}
                 ></Icon>
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Title style={styles.headerText}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                  <Title style={styles.headerText}>
+                    {getConnectionName(connection) || t('ContactDetails.AContact')}
+                  </Title>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
