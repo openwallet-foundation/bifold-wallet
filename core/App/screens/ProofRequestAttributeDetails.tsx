@@ -1,24 +1,25 @@
 import { ProofRecord, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
 import Title from '../components/texts/Title'
 import { dateFormatOptions } from '../constants'
-import { Context } from '../store/Store'
-import { DispatchAction } from '../store/reducer'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName, parsedSchema, processProofAttributes } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
-import { useThemeContext } from '../utils/themeContext'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
 
-const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ route }) => {
+const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ navigation, route }) => {
   if (!route?.params) {
     throw new Error('ProofRequest route prams were not set properly')
   }
@@ -26,10 +27,10 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const { proofId, attributeName } = route?.params
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [, dispatch] = useContext(Context)
+  const [, dispatch] = useStore()
   const [credentials, setCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, ListItems } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -37,17 +38,11 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       paddingVertical: 16,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...ListItems.recordAttributeText,
       flexShrink: 1,
     },
     listItem: {
-      paddingHorizontal: 25,
-      paddingTop: 16,
-      backgroundColor: ColorPallet.brand.primaryBackground,
-      borderTopColor: ColorPallet.brand.secondaryBackground,
-      borderBottomColor: ColorPallet.brand.secondaryBackground,
-      borderTopWidth: 2,
-      borderBottomWidth: 2,
+      ...ListItems.proofListItem,
     },
   })
 
@@ -59,6 +54,24 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
     throw new Error('Unable to fetch proof from AFJ')
   }
 
+  useMemo(() => {
+    navigation.setOptions({
+      title: t('ProofRequest.Details'),
+      headerRight: undefined,
+      headerLeft: () => (
+        <HeaderLeftBack
+          title={t('Global.Back')}
+          onPress={() => {
+            navigation.pop()
+          }}
+        />
+      ),
+      headerBackTitle: t('Global.Back'),
+      headerBackAccessibilityLabel: t('Global.Back'),
+      headerBackTestID: testIdWithKey('BackButton'),
+    })
+  }, [])
+
   useEffect(() => {
     const retrieveCredentialsForProof = async (proof: ProofRecord) => {
       try {
@@ -69,7 +82,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
         return credentials
       } catch (error: unknown) {
         dispatch({
-          type: DispatchAction.SetError,
+          type: DispatchAction.ERROR_ADDED,
           payload: [{ error }],
         })
       }
@@ -79,14 +92,15 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       .then((credentials) => {
         setCredentials(credentials)
       })
-      .catch(() => {
+      .catch((err: unknown) => {
         const error = new BifoldError(
           'Unable to update retrieved credentials',
           'There was a problem while updating retrieved credentials.',
-          1026
+          (err as Error).message,
+          1029
         )
         dispatch({
-          type: DispatchAction.SetError,
+          type: DispatchAction.ERROR_ADDED,
           payload: [{ error }],
         })
       })
@@ -108,7 +122,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
             <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
             {t('ProofRequest.IsRequesting')}:
           </Text>
-          <Text style={[TextTheme.headingFour, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
+          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
             {attributeName}
           </Text>
           <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
@@ -118,7 +132,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       keyExtractor={(credential) => credential.credentialId || credential.id}
       renderItem={({ item: credential }) => (
         <View style={styles.listItem}>
-          <Text style={TextTheme.normal} testID={testIdWithKey('CredentialName')}>
+          <Text style={ListItems.recordAttributeText} testID={testIdWithKey('CredentialName')}>
             {parsedSchema(credential).name}
           </Text>
           {matchingAttribute?.revoked ? (
@@ -126,22 +140,22 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
               <Icon
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
                 name="close"
-                color={ColorPallet.semantic.error}
-                size={TextTheme.normal.fontSize}
+                color={ListItems.proofError.color}
+                size={ListItems.recordAttributeText.fontSize}
               ></Icon>
               <Text
-                style={[TextTheme.normal, { color: ColorPallet.semantic.error }]}
+                style={[ListItems.recordAttributeText, { color: ColorPallet.semantic.error }]}
                 testID={testIdWithKey('RevokedOrNotAvailable')}
               >
                 {t('CredentialDetails.Revoked')}
               </Text>
             </View>
           ) : (
-            <Text style={TextTheme.normal} testID={testIdWithKey('Issued')}>
+            <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
               {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
             </Text>
           )}
-          <Text style={[TextTheme.headingFour, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeValue')}>
+          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeValue')}>
             {matchingAttribute?.value}
           </Text>
         </View>

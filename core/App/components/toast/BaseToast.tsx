@@ -2,8 +2,8 @@ import React from 'react'
 import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
 interface BaseToastProps {
   title?: string
@@ -19,7 +19,7 @@ export enum ToastType {
 }
 
 const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
-  const { TextTheme, borderRadius, borderWidth, ColorPallet } = useThemeContext()
+  const { TextTheme, borderRadius, borderWidth, ColorPallet } = useTheme()
   const { width } = useWindowDimensions()
   const iconSize = 24
   let iconName = ''

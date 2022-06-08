@@ -1,44 +1,44 @@
 import {
   Agent,
   AgentProvider,
-  toastConfig,
-  initStoredLanguage,
-  RootStack,
-  ErrorModal,
-  StoreProvider,
-  ThemeProvider,
-  defaultTheme as theme,
   ConfigurationContext,
   ConfigurationProvider,
+  StoreProvider,
+  ThemeProvider,
+  theme,
   initLanguages,
-  defaultTranslationResources,
-  defaultOnboardingPages as onboardingPages,
-  defaultSplashScreen as splashSreen,
-  defaultTerms as termsSreen,
-} from 'aries-bifold'
-import React, { useEffect, useState } from 'react'
-import { StatusBar } from 'react-native'
-import SplashScreen from 'react-native-splash-screen'
-import Toast from 'react-native-toast-message'
+  initStoredLanguage,
+  translationResources,
+  ErrorModal,
+  toastConfig,
+  RootStack,
+  OnboardingPages,
+  Splash,
+  Terms,
+} from "aries-bifold";
+import React, { useEffect, useState } from "react";
+import { StatusBar } from "react-native";
+import SplashScreen from "react-native-splash-screen";
+import Toast from "react-native-toast-message";
 
-const translationResources = defaultTranslationResources
-initLanguages(translationResources)
+const defaultConfiguration: ConfigurationContext = {
+  pages: OnboardingPages,
+  splash: Splash,
+  terms: Terms,
+};
+
+initLanguages(translationResources);
+
 const App = () => {
-  const [agent, setAgent] = useState<Agent | undefined>(undefined)
-  initStoredLanguage()
+  initStoredLanguage();
+  const [agent, setAgent] = useState<Agent | undefined>(undefined);
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our
     // RN version can be displayed.
-    SplashScreen.hide()
-  }, [])
-  const defaultConfiguration: ConfigurationContext = {
-    onboarding: {
-      pages: onboardingPages,
-    },
-    splash: splashSreen,
-    terms: termsSreen,
-  }
+    SplashScreen.hide();
+  }, []);
+
   return (
     <StoreProvider>
       <AgentProvider agent={agent}>
@@ -57,7 +57,7 @@ const App = () => {
         </ThemeProvider>
       </AgentProvider>
     </StoreProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;

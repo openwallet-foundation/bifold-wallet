@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Modal, StyleSheet } from 'react-native'
+import { Dimensions, Modal, StyleSheet, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Context } from '../../store/Store'
-import { useThemeContext } from '../../utils/themeContext'
+import { BifoldError } from '../../../lib/commonjs/types/error'
+import { useStore } from '../../contexts/store'
+import { useTheme } from '../../contexts/theme'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 const { height } = Dimensions.get('window')
-const genericErrorCode = 1024
 
 const ErrorModal: React.FC = () => {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const [state] = useContext(Context)
+  const [state] = useStore()
   const onDismissModalTouched = () => {
     setModalVisible(false)
   }
-  const { ColorPallet } = useThemeContext()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       minHeight: height,
@@ -27,8 +27,9 @@ const ErrorModal: React.FC = () => {
       backgroundColor: ColorPallet.brand.primaryBackground,
     },
   })
+
   useEffect(() => {
-    if (state.error && state.error.title && state.error.message && state.error.code) {
+    if (state.error && state.error.title && state.error.message) {
       setModalVisible(true)
 
       return
@@ -37,14 +38,23 @@ const ErrorModal: React.FC = () => {
     setModalVisible(false)
   }, [state])
 
+  const formattedMessageForError = (err: BifoldError | null): string | undefined => {
+    if (!err) {
+      return undefined
+    }
+
+    return `${t('Error.ErrorCode')} ${err.code} - ${err.message}`
+  }
+
   return (
     <Modal visible={modalVisible} transparent={true}>
+      <StatusBar hidden={true} />
       <SafeAreaView style={[styles.container]}>
         <InfoBox
           notificationType={InfoBoxType.Error}
           title={state.error ? state.error.title : t('Error.Unknown')}
-          message={state.error ? state.error.message : t('Error.Problem')}
-          code={state.error ? state.error.code : genericErrorCode}
+          description={state.error ? state.error.description : t('Error.Problem')}
+          message={formattedMessageForError(state.error)}
           onCallToActionPressed={onDismissModalTouched}
         />
       </SafeAreaView>

@@ -4,14 +4,23 @@ import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
+import { testIdWithKey } from '../../App/utils/testable'
 
 import { CredentialListItem } from '../../App/components'
 import ListCredentials from '../../App/screens/ListCredentials'
+import CredentialCard from '../../App/components/misc/CredentialCard'
 
 interface CredentialContextInterface {
   loading: boolean
   credentials: CredentialRecord[]
 }
+
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
 
 describe('displays a credentials list screen', () => {
   const testOpenVPCredentialRecord = new CredentialRecord({
@@ -84,16 +93,15 @@ describe('displays a credentials list screen', () => {
    * Then the credentials are ordered to most recent to least recent (top to bottom)
    */
   test('credentials should display in descending order of issued date', () => {
-    const { UNSAFE_getAllByType } = render(<ListCredentials />)
+    const tree = render(<ListCredentials />)
+    const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-    const credentialItemInstances = UNSAFE_getAllByType(CredentialListItem)
+    expect(credentialCards.length).toBe(3)
 
-    expect(credentialItemInstances.length).toBe(3)
+    const createdAtDates = credentialCards.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
 
-    const dates = credentialItemInstances.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
-
-    expect(new Date(dates[0])).toEqual(new Date('2020-01-02T00:00:00'))
-    expect(new Date(dates[1])).toEqual(new Date('2020-01-01T00:01:00'))
-    expect(new Date(dates[2])).toEqual(new Date('2020-01-01T00:00:00'))
+    expect(new Date(createdAtDates[0])).toEqual(new Date('2020-01-02T00:00:00'))
+    expect(new Date(createdAtDates[1])).toEqual(new Date('2020-01-01T00:01:00'))
+    expect(new Date(createdAtDates[2])).toEqual(new Date('2020-01-01T00:00:00'))
   })
 })

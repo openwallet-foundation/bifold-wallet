@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 export interface TextBoxProps {
   children: React.ReactElement | string
@@ -12,7 +12,7 @@ const iconSize = 30
 const offset = 10
 
 const InfoTextBox: React.FC<TextBoxProps> = ({ children }) => {
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.notification.info,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { useThemeContext } from '../../utils/themeContext'
+import { useTheme } from '../../contexts/theme'
 
 export interface TextBoxProps {
   children: string
@@ -10,7 +10,7 @@ export interface TextBoxProps {
 const offset = 10
 
 const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ColorPallet, OnboardingTheme } = useTheme()
   const style = StyleSheet.create({
     icon: {
       marginRight: offset,
@@ -25,7 +25,7 @@ const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
       width: 8,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...OnboardingTheme.bodyText,
       flexShrink: 1,
     },
   })

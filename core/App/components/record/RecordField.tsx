@@ -3,47 +3,46 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import { Attribute } from '../../types/record'
+import { useTheme } from '../../contexts/theme'
+import { Attribute, Field } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
-import { useThemeContext } from '../../utils/themeContext'
 
-interface RecordAttributeProps {
-  attribute: Attribute
-  hideAttributeValue?: boolean
+interface RecordFieldProps {
+  field: Field
+  hideFieldValue?: boolean
   shown?: boolean
   onToggleViewPressed?: () => void
-  attributeLabel?: (attribute: Attribute) => React.ReactElement | null
-  attributeValue?: (attribute: Attribute) => React.ReactElement | null
+  fieldLabel?: (field: Field) => React.ReactElement | null
+  fieldValue?: (field: Field) => React.ReactElement | null
 }
 
-const RecordAttribute: React.FC<RecordAttributeProps> = ({
-  attribute,
-  hideAttributeValue = false,
-  shown = hideAttributeValue ? false : true,
+const RecordField: React.FC<RecordFieldProps> = ({
+  field,
+  hideFieldValue = false,
+  shown = hideFieldValue ? false : true,
   onToggleViewPressed = () => undefined,
-  attributeLabel = null,
-  attributeValue = null,
+  fieldLabel = null,
+  fieldValue = null,
 }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useThemeContext()
+  const { ListItems } = useTheme()
   const styles = StyleSheet.create({
     container: {
+      ...ListItems.recordContainer,
       paddingHorizontal: 25,
       paddingTop: 16,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
     },
     border: {
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      ...ListItems.recordBorder,
       borderBottomWidth: 2,
       paddingTop: 12,
     },
     link: {
-      minHeight: TextTheme.normal.fontSize,
+      ...ListItems.recordLink,
       paddingVertical: 2,
-      color: ColorPallet.brand.link,
     },
     text: {
-      ...TextTheme.normal,
+      ...ListItems.recordAttributeText,
     },
     valueContainer: {
       flexDirection: 'row',
@@ -51,31 +50,31 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
       paddingTop: 10,
     },
     valueText: {
-      minHeight: TextTheme.normal.fontSize,
+      ...ListItems.recordAttributeText,
       paddingVertical: 4,
     },
   })
 
   return (
     <View style={styles.container}>
-      {attributeLabel ? (
-        attributeLabel(attribute)
+      {fieldLabel ? (
+        fieldLabel(field)
       ) : (
-        <Text style={TextTheme.label} testID={testIdWithKey('AttributeName')}>
-          {startCase(attribute.name || '')}
+        <Text style={[ListItems.recordAttributeLabel, { fontWeight: 'bold' }]} testID={testIdWithKey('AttributeName')}>
+          {startCase(field.name || '')}
         </Text>
       )}
       <View style={styles.valueContainer}>
-        {attributeValue ? (
-          attributeValue(attribute)
+        {fieldValue ? (
+          fieldValue(field)
         ) : (
           <>
             <View style={styles.valueText}>
               <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-                {shown ? attribute.value : Array(10).fill('\u2022').join('')}
+                {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
               </Text>
             </View>
-            {hideAttributeValue ? (
+            {hideFieldValue ? (
               <TouchableOpacity
                 accessible={true}
                 accessibilityLabel={shown ? t('Record.Hide') : t('Record.Show')}
@@ -84,9 +83,7 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
                 onPress={onToggleViewPressed}
                 style={styles.link}
               >
-                <Text style={[TextTheme.normal, { color: ColorPallet.brand.link }]}>
-                  {shown ? t('Record.Hide') : t('Record.Show')}
-                </Text>
+                <Text style={ListItems.recordLink}>{shown ? t('Record.Hide') : t('Record.Show')}</Text>
               </TouchableOpacity>
             ) : null}
           </>
@@ -97,4 +94,4 @@ const RecordAttribute: React.FC<RecordAttributeProps> = ({
   )
 }
 
-export default RecordAttribute
+export default RecordField
