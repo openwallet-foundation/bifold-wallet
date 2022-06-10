@@ -52,20 +52,10 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         throw new Error('Connection does not have an ID')
       }
 
-      if (uiConfig.navigateOnConnection) {
-        navigation.goBack()
-        navigation.navigate(TabStacks.ContactStack, {
-          screen: Screens.Chat,
-          params: {
-            connectionId: connectionRecord.id,
-          },
-        })
-      } else {
-        navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-          screen: Screens.Connection,
-          params: { connectionId: connectionRecord.id },
-        })
-      }
+      navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+        screen: Screens.Connection,
+        params: { connectionId: connectionRecord.id },
+      })
     } catch (err: unknown) {
       const error = new BifoldError(
         'Unable to accept connection',

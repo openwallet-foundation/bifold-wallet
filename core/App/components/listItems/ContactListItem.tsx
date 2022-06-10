@@ -45,9 +45,9 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate(Screens.Chat, {
-          connectionId: contact.id,
-        })
+        navigation
+          .getParent()
+          ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
       }
     >
       <View key={contact.id} style={styles.outerContainer}>
