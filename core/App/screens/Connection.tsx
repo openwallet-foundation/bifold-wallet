@@ -11,7 +11,7 @@ import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { Stacks, Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
+import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const connectionTimerDelay = 10000 // in ms
@@ -21,7 +21,6 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { connectionId, threadId } = route.params
   const { t } = useTranslation()
-  const connection = useConnectionById(connectionId || '')
   const [state, setState] = useState<{
     isVisible: boolean
     notificationRecord?: any
@@ -103,11 +102,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   )
 
   useEffect(() => {
-    if (uiConfig.navigateOnConnection && connection?.state == 'complete') {
-      navigation
-        .getParent()
-        ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connectionId } })
-    }
     if (notificationRecord) {
       switch (notificationRecord.type) {
         case 'CredentialRecord':
@@ -120,7 +114,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           throw new Error('Unhandled notification type')
       }
     }
-  }, [notificationRecord, connection])
+  }, [notificationRecord])
 
   useEffect(() => {
     if (isVisible && isInitialized && !notificationRecord) {

@@ -4,10 +4,11 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 
+import { uiConfig } from '../../configs/uiConfig'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRContainer from '../components/misc/QRContainer'
 import { myLabel } from '../constants'
-import { Screens, Stacks } from '../types/navigators'
+import { Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const DisplayCode = ({ navigation }: any) => {
@@ -63,8 +64,16 @@ const DisplayCode = ({ navigation }: any) => {
 
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
-      navigation.goBack()
-      navigation.navigate(Stacks.ConnectionStack, { screen: Screens.Connection, params: { connectionId } })
+      if (uiConfig.navigateOnConnection) {
+        navigation.goBack()
+        navigation.navigate(TabStacks.ContactStack, {
+          screen: Screens.Chat,
+          params: { connectionId: connection.id },
+        })
+      } else {
+        navigation.goBack()
+        navigation.navigate(Stacks.ConnectionStack, { screen: Screens.Connection, params: { connectionId } })
+      }
     }
   }, [connection])
 

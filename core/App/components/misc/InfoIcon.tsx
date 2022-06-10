@@ -6,7 +6,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { ColorPallet } from '../../theme'
-import { RootStackParams, Screens, Stacks } from '../../types/navigators'
+import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
 const styles = StyleSheet.create({
@@ -20,7 +20,7 @@ type InfoProps = {
 }
 
 const InfoIcon: React.FC<InfoProps> = ({ connectionId }: any) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
+  const navigation = useNavigation<StackNavigationProp<ContactStackParams>>()
   const { t } = useTranslation()
 
   return (
@@ -29,12 +29,7 @@ const InfoIcon: React.FC<InfoProps> = ({ connectionId }: any) => {
       accessible={true}
       accessibilityLabel={t('Screens.Settings')}
       style={styles.button}
-      onPress={() =>
-        navigation.navigate(Stacks.ContactStack, {
-          screen: Screens.ContactDetails,
-          params: { connectionId: connectionId },
-        })
-      }
+      onPress={() => navigation.navigate(Screens.ContactDetails, { connectionId: connectionId })}
     >
       <Icon name="information" size={24} color={ColorPallet.grayscale.white}></Icon>
     </TouchableOpacity>

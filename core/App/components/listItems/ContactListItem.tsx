@@ -7,13 +7,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { dateFormatOptions } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
+import { Screens, ContactStackParams, Stacks } from '../../types/navigators'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
 interface Props {
   contact: ConnectionRecord
-  navigation: StackNavigationProp<SettingStackParams, Screens.Settings>
+  navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
 }
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
@@ -45,9 +45,9 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation
-          .getParent()
-          ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
+        navigation.navigate(Screens.Chat, {
+          connectionId: contact.id,
+        })
       }
     >
       <View key={contact.id} style={styles.outerContainer}>
