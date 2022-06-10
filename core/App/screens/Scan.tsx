@@ -51,7 +51,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       if (!connectionRecord?.id) {
         throw new Error('Connection does not have an ID')
       }
-
+      navigation.goBack()
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { connectionId: connectionRecord.id },

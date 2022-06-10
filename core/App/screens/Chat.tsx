@@ -6,7 +6,7 @@ import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
 import { renderBubble, renderInputToolbar, renderComposer, renderSend } from '../components/chat'
 import InfoIcon from '../components/misc/InfoIcon'
-import { ContactStackParams, Screens, Stacks } from '../types/navigators'
+import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -23,7 +23,12 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       title: connection?.alias || connection?.invitation?.label,
       headerTitleAlign: 'center',
       headerRight: () => <InfoIcon connectionId={connection?.id} />,
-      // headerLeft: () => <HeaderLeftBack title={'Back'} onPress={() => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })} />
+      headerLeft: () => (
+        <HeaderLeftBack
+          title={'Back'}
+          onPress={() => navigation.getParent()?.navigate(TabStacks.ContactStack, { screen: Screens.Contacts })}
+        />
+      ),
     })
   }, [connection])
 
