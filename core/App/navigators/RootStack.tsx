@@ -13,7 +13,6 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Config } from 'react-native-config'
-import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'

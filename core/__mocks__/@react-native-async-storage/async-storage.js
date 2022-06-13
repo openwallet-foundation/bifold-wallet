@@ -1,6 +1,6 @@
 const AsyncStorage = {}
 
-AsyncStorage.getItem = (key) => {
+AsyncStorage.getItem = () => {
   return null
 }
 
