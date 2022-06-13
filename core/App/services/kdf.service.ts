@@ -1,3 +1,8 @@
+/*
+https://www.npmjs.com/package/react-native-argon2
+
+*/
+
 import argon2 from 'react-native-argon2'
 
 export async function hashPIN(pin: string, salt: string) {
