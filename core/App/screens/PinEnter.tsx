@@ -49,7 +49,12 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           }}
         />
         <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
-        <PinInput onPinChanged={setPin} testID="EnterPIN" autoFocus={true} />
+        <PinInput
+          onPinChanged={setPin}
+          testID="EnterPIN"
+          autoFocus={true}
+          accessibilityLabel={t('PinEnter.EnterPIN')}
+        />
         <Button
           title={t('Global.Enter')}
           buttonType={ButtonType.Primary}

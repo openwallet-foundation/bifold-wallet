@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next'
 import { TouchableOpacity } from 'react-native'
 
 import { CredentialStackParams, Screens } from '../../types/navigators'
-import { testIdWithKey } from '../../utils/testable'
 import CredentialCard from '../misc/CredentialCard'
 
 interface CredentialListItemProps {
