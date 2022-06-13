@@ -96,6 +96,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-1"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -109,7 +111,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/EnterPIN-1"
+            testID="EnterPIN-1"
           >
             
           </Text>
@@ -132,6 +134,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-2"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -145,7 +149,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/EnterPIN-2"
+            testID="EnterPIN-2"
           >
             
           </Text>
@@ -168,6 +172,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-3"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -181,7 +187,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/EnterPIN-3"
+            testID="EnterPIN-3"
           >
             
           </Text>
@@ -204,6 +210,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-4"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -217,7 +225,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/EnterPIN-4"
+            testID="EnterPIN-4"
           >
             
           </Text>
@@ -240,6 +248,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-5"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -253,7 +263,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/EnterPIN-5"
+            testID="EnterPIN-5"
           >
             
           </Text>
@@ -276,6 +286,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-6"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -289,7 +301,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/EnterPIN-6"
+            testID="EnterPIN-6"
           >
             
           </Text>
@@ -427,6 +439,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-1"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -440,7 +454,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/ReenterPIN-1"
+            testID="ReenterPIN-1"
           >
             
           </Text>
@@ -463,6 +477,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-2"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -476,7 +492,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/ReenterPIN-2"
+            testID="ReenterPIN-2"
           >
             
           </Text>
@@ -499,6 +515,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-3"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -512,7 +530,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/ReenterPIN-3"
+            testID="ReenterPIN-3"
           >
             
           </Text>
@@ -535,6 +553,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-4"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -548,7 +568,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/ReenterPIN-4"
+            testID="ReenterPIN-4"
           >
             
           </Text>
@@ -571,6 +591,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-5"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -584,7 +606,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/ReenterPIN-5"
+            testID="ReenterPIN-5"
           >
             
           </Text>
@@ -607,6 +629,8 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-6"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
@@ -620,7 +644,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 },
               ]
             }
-            testID="com.ariesbifold:id/ReenterPIN-6"
+            testID="ReenterPIN-6"
           >
             
           </Text>
