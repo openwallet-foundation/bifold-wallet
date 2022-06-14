@@ -23,6 +23,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       title: connection?.alias || connection?.invitation?.label,
       headerTitleAlign: 'center',
       headerRight: () => <InfoIcon connectionId={connection?.id} />,
+      // Limit string to 30 chars
       headerLeft: () => (
         <HeaderLeftBack
           title={'Back'}

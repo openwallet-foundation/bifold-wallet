@@ -69,7 +69,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       paddingVertical: 16,
     },
     headerText: {
-      ...ListItems.recordAttributeText,
+      ...ListItems.recordAttributeLabel,
       flexShrink: 1,
     },
     footerButton: {
