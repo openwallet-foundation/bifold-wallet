@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { CodeField, useClearByFocusCell } from 'react-native-confirmation-code-field'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -11,16 +12,19 @@ interface PinInputProps {
   label?: string
   onPinChanged?: (pin: string) => void
   testID?: string
+  accessibilityLabel?: string
   autoFocus?: boolean
 }
 
-const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID = 'PINInput', autoFocus = false }) => {
+const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, accessibilityLabel, autoFocus = false }) => {
+  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [pin, setPin] = useState('')
   const [showPin, setShowPin] = useState(false)
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value: pin,
     setValue: setPin,
   })
+  const { t } = useTranslation()
 
   const { TextTheme, PinInputTheme } = useTheme()
   const style = StyleSheet.create({
@@ -85,7 +89,9 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID = 'PINI
                 <Text
                   style={[style.cellText]}
                   maxFontSizeMultiplier={1}
-                  testID={testIdWithKey(`${testID}-${index + 1}`)}
+                  testID={testID ? `${testID}-${index + 1}` : testIdWithKey(`${'PINInput'}-${index + 1}`)}
+                  accessible={accessible}
+                  accessibilityLabel={`${accessibilityLabel || t('PinEnter.EnterPIN')}-${index + 1}`}
                 >
                   {child}
                 </Text>

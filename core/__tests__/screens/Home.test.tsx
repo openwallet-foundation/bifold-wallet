@@ -2,7 +2,6 @@ import { CredentialRecord, CredentialState, ProofRecord, ProofState } from '@ari
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { fireEvent, render } from '@testing-library/react-native'
-// import React from 'react'
 import React from 'react'
 import { FlatList } from 'react-native'
 import { create } from 'react-test-renderer'
