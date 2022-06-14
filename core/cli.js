@@ -4,8 +4,6 @@
 
 function syncPackageJson() {
   const { execSync } = require('child_process')
-  const fs = require('fs')
-  const targetDir = process.cwd()
   const pak = require('./package.json')
   function parseNameAndVersion(val) {
     const sep = val.lastIndexOf('@')

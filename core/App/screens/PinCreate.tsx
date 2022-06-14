@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text } from 'react-native'
-import * as Keychain from 'react-native-keychain'
+import Keychain from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -113,7 +113,13 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
         <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
       </Text>
-      <PinInput label={t('PinCreate.EnterPIN')} onPinChanged={setPin} testID="EnterPIN" autoFocus={true} />
+      <PinInput
+        label={t('PinCreate.EnterPIN')}
+        onPinChanged={setPin}
+        testID="EnterPIN"
+        accessibilityLabel={t('PinCreate.EnterPIN')}
+        autoFocus={true}
+      />
       <PinInput
         label={t('PinCreate.ReenterPIN')}
         onPinChanged={(p: string) => {
@@ -123,12 +129,13 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
           }
         }}
         testID="ReenterPIN"
+        accessibilityLabel={t('PinCreate.ReenterPIN')}
       />
 
       <Button
         title={t('PinCreate.CreatePIN')}
-        accessibilityLabel={t('PinCreate.CreatePIN')}
         testID={testIdWithKey('CreatePIN')}
+        accessibilityLabel={t('PinCreate.CreatePIN')}
         buttonType={ButtonType.Primary}
         onPress={() => {
           Keyboard.dismiss()
