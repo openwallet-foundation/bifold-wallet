@@ -60,6 +60,9 @@ export async function setGenericPassword(
     //Saving wallet ID to Async Storage
     await AsyncStorage.setItem(KEYCHAIN_SERVICE_ID, randomId)
 
+    //Saving Salt
+    await AsyncStorage.setItem(STORAGE_KEY_SALT, randomSalt)
+
     return keychainData
   } catch (error) {
     throw new Error(`Error[setGenericPassword] = ${error}`)
