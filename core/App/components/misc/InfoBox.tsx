@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
