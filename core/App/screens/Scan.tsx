@@ -31,12 +31,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         params: { threadId: message['@id'] },
       })
     } catch (err: unknown) {
-      const error = new BifoldError(
-        'Unable to accept connection',
-        'There was a problem while accepting the connection redirection',
-        (err as Error).message,
-        1030
-      )
+      const error = new BifoldError(t('Error.Title1030'), t('Error.Message1030'), (err as Error).message, 1030)
       throw error
     }
   }
@@ -56,12 +51,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
         params: { connectionId: connectionRecord.id },
       })
     } catch (err: unknown) {
-      const error = new BifoldError(
-        'Unable to accept connection',
-        'There was a problem while accepting the connection.',
-        (err as Error).message,
-        1031
-      )
+      const error = new BifoldError(t('Error.Title1031'), t('Error.Message1031'), (err as Error).message, 1031)
       throw error
     }
   }
