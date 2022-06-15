@@ -29,6 +29,7 @@ import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
+import { WalletSecret } from '../types/security'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -57,6 +58,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, splash } = useConfiguration()
+  const { getWalletID, getKeyForPIN } = useAuth()
 
   const onTutorialCompleted = () => {
     dispatch({
@@ -65,18 +67,24 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     navigation.navigate(Screens.Terms)
   }
 
-  const initAgent = async () => {
+  const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
     if (initAgentInProcess) {
       return
     }
 
-    dispatch({ type: DispatchAction.LOADING_ENABLED })
+    if (agentInitDone) {
+      return 'Agent already initialised'
+    }
+
+    if (!predefinedSecret) {
+      dispatch({ type: DispatchAction.LOADING_ENABLED })
+    }
 
     // Flag to protect the init process from being duplicated
     setInitAgentInProcess(true)
 
     try {
-      const walletSecret = await getWalletSecret()
+      const walletSecret = predefinedSecret ?? (await getWalletSecret())
 
       if (!walletSecret?.walletId || !walletSecret.walletKey) {
         Alert.alert('Error', 'Cannot find wallet id/secret!')
@@ -118,9 +126,41 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         visibilityTime: 2000,
         position: 'bottom',
       })
+      return `${e}`
     }
 
     setInitAgentInProcess(false)
+  }
+
+  //This will test the user by attempting to initialize the wallet using a key derived from that pin
+  //If wallet init success == pin correct otherwise pin incorrect
+  //need to be enhanced
+  const checkPIN = async (pin: string): Promise<boolean> => {
+    const walletID = await getWalletID()
+    if (!walletID) {
+      return true
+    }
+    const generatedKey = await getKeyForPIN(pin)
+
+    if (!generatedKey) {
+      return true
+    }
+
+    const generatedSecret = {
+      walletId: walletID,
+      walletKey: generatedKey,
+    }
+
+    const error = await initAgent({
+      walletId: walletID,
+      walletKey: generatedKey,
+    })
+    if (!error) {
+      return false
+    } else {
+      //TODO: Handle error
+    }
+    return true
   }
 
   useEffect(() => {
@@ -135,7 +175,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.EnterPin}>
-          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} />}
+          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} checkPIN={checkPIN} />}
         </Stack.Screen>
       </Stack.Navigator>
     )
