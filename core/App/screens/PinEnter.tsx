@@ -23,7 +23,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [pin, setPin] = useState('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const [authLevel, setAuthLevel] = useState<AuthLevel>(AuthLevel.BiometricsAndPin)
+  const [authLevel, setAuthLevel] = useState<AuthLevel>(AuthLevel.BiometricsFallbackPin)
   //Flags for protecting flow
   const [isInitializingSecret, setIsInitializingSecret] = useState(false)
 
