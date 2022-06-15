@@ -5,8 +5,7 @@ import { Text } from 'react-native'
 import * as themeContext from '../../App/contexts/theme' // note we're importing with a * to import all the exports
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
 import { createCarouselStyle } from '../../App/screens/OnboardingPages'
-import { OnboardingTheme } from '../../App/theme'
-import { theme } from '../../App/theme'
+import { OnboardingTheme, theme } from '../../App/theme'
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 
