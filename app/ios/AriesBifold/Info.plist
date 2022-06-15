@@ -39,6 +39,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera used for in-app QR Code scanning</string>
+  <key>NSFaceIDUsageDescription</key>
+  <string>$(PRODUCT_NAME) Wants to use your FaceID/TouchID to Authenticate your Identity</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>
