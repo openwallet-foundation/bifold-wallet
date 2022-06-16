@@ -1,10 +1,9 @@
-import { render, fireEvent, waitFor, wait } from '@testing-library/react-native'
-import path from 'path'
-import fs from 'fs'
 import { CredentialRecord, CredentialState, ProofRecord, ProofState } from '@aries-framework/core'
 import { useCredentialById, useProofById, useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-
+import { render, fireEvent } from '@testing-library/react-native'
+import fs from 'fs'
+import path from 'path'
 import React from 'react'
 
 import CommonDecline from '../../App/screens/CommonDecline'

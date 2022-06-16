@@ -1,14 +1,8 @@
-import { useNavigation } from '@react-navigation/core'
-import { NavigationContainer, NavigationContext } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContext } from '@react-navigation/native'
 import { render, waitFor, fireEvent } from '@testing-library/react-native'
 import React from 'react'
-import { Modal } from 'react-native'
 
-import { ThemeProvider } from '../../App/contexts/theme'
 import ConnectionModal from '../../App/screens/Connection'
-import { theme } from '../../App/theme'
-import { DeliveryStackParams, Screens, TabStacks } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 
 jest.useFakeTimers('legacy')
