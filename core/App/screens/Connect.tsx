@@ -29,6 +29,7 @@ const Connect = ({ navigation }: any) => {
       ...Buttons.connectButtonText,
       width: '50%',
       textAlign: 'center',
+      marginBottom: 15,
     },
   })
   return (
