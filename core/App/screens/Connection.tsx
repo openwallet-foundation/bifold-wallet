@@ -105,11 +105,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (uiConfig.navigateOnConnection) {
-      connection?.state === ConnectionState.Complete &&
-        navigation.goBack()
-        navigation
-          .getParent()
-          ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connection.id } })
+      connection?.state === ConnectionState.Complete && navigation.goBack()
+      navigation
+        .getParent()
+        ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connection?.id } })
     } else if (notificationRecord) {
       switch (notificationRecord.type) {
         case 'CredentialRecord':
