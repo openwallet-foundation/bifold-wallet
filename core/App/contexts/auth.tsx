@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 
-import { generateKeyForPin, getStoredWalletId, getWalletKey, setGenericPassword } from '../services/keychain.service'
+import { generateKeyForPIN, getStoredWalletId, getWalletKey, setGenericPassword } from '../services/keychain.service'
 import { WalletSecret } from '../types/security'
 
 export interface AuthContext {
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   const getKeyForPIN = (pin: string, providedSalt?: string): Promise<any> => {
-    return generateKeyForPin(pin, providedSalt)
+    return generateKeyForPIN(pin, providedSalt)
   }
 
   const comparePIN = async (newPin: string): Promise<boolean> => {
