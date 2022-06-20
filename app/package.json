@@ -10,9 +10,9 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@aries-framework/core": "file:../core/aries-framework-core-0.1.0.tgz",
+    "@aries-framework/core": "0.2.0-alpha.136",
     "@aries-framework/react-hooks": "0.2.0",
-    "@aries-framework/react-native": "file:../core/aries-framework-react-native-0.1.0.tgz",
+    "@aries-framework/react-native": "0.2.0-alpha.136",
     "@formatjs/intl-datetimeformat": "4.2.4",
     "@formatjs/intl-displaynames": "5.2.4",
     "@formatjs/intl-getcanonicallocales": "1.7.3",

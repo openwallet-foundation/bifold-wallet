@@ -13,7 +13,6 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Config } from 'react-native-config'
-import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
@@ -83,10 +82,10 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           walletConfig: { id: 'wallet4', key: '123' },
           autoAcceptConnections: true,
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-          // logger: new ConsoleLogger(LogLevel.trace),
-          logger: new ConsoleLogger(LogLevel.test),
+          logger: new ConsoleLogger(LogLevel.trace),
           indyLedgers,
           connectToIndyLedgersOnStartup: true,
+          autoUpdateStorageOnStartup: true,
         },
         agentDependencies
       )
