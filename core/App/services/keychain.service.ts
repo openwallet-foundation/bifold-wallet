@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import Keychain from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
-import { keychainOptions, keychainWalletIDOptions } from '../../configs/keychainConfig/KeychainConfig'
+import { keychainOptions } from '../config/keychain'
 import { KEYCHAIN_SERVICE_ID, KEYCHAIN_SERVICE_KEY, STORAGE_KEY_SALT } from '../constants'
 import { WalletSecret } from '../types/security'
 
@@ -11,15 +11,14 @@ import { hashPIN } from './kdf.service'
 
 const serviceKey = KEYCHAIN_SERVICE_KEY
 const userNameKey = 'WalletKey'
-const userNameRandKey = 'RandKey'
 
 /**
- * This function will take the user inpzut pin (First login) and does the following
+ * This function will take the user input PIN (First login) and does the following
  * - generates wallet ID,
- * - Derive the wallet Key from user Pin using Argon2 KDF
+ * - Derive the wallet Key from user PIN using Argon2 KDF
  * - Saves wallet ID/Key using different storage flows to be able to have different security flows to unlock the wallet
  *
- * @param pincode pin code entered by user
+ * @param pincode PIN code entered by user
  *
  * @returns a wallet secret object that contains generated wallet ID/Key
  * */
@@ -32,7 +31,7 @@ export async function setGenericPassword(
   try {
     //Deriving a secret from entered PIN
     const randomSalt = preDefinedSalt ?? generateSalt()
-    const encodedHash = preDefinedSecret?.walletKey ?? (await generateKeyForPin(pincode, randomSalt))
+    const encodedHash = preDefinedSecret?.walletKey ?? (await generateKeyForPIN(pincode, randomSalt))
 
     //Creating random keys for wallet ID & Key
     const randomId = preDefinedSecret?.walletId ?? uuid.v4().toString()
@@ -111,12 +110,12 @@ export async function resetStorage() {
 
 /**
  * This function is used in 2 scenarios.
- * 1- Creating new wallet key so generate the key out of the user entered Pin
- * 2- Verifying user Pin as a result of a biometric fallback to Pin security flow
+ * 1- Creating new wallet key so generate the key out of the user entered PIN
+ * 2- Verifying user PIN as a result of a biometric fallback to PIN security flow
  *
- * @returns Generated Key from entered Pin, using Argon 2 KDF
+ * @returns Generated Key from entered PIN, using Argon 2 KDF
  * */
-export async function generateKeyForPin(pin: string, providedSalt?: string) {
+export async function generateKeyForPIN(pincode: string, providedSalt?: string) {
   let salt: string | null = null
   if (!providedSalt) {
     salt = await AsyncStorage.getItem(STORAGE_KEY_SALT)
@@ -125,9 +124,9 @@ export async function generateKeyForPin(pin: string, providedSalt?: string) {
   }
 
   if (salt) {
-    return await hashPIN(pin, salt)
+    return await hashPIN(pincode, salt)
   } else {
-    throw new Error(`Error[generateKeyForPin] Cannot fetch SALT`)
+    throw new Error(`Error[generateKeyForPIN] Cannot fetch SALT`)
   }
 }
 
