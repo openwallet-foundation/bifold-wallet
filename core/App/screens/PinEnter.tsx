@@ -8,7 +8,7 @@ import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
 import { useAuth } from '../contexts/auth'
 import { useTheme } from '../contexts/theme'
-import { generateKeyForPin, getWalletKey } from '../services/keychain.service'
+import { generateKeyForPIN } from '../services/keychain.service'
 import { AuthLevel, WalletSecret } from '../types/security'
 import { testIdWithKey } from '../utils/testable'
 
@@ -23,8 +23,8 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [pin, setPin] = useState('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const [authLevel, setAuthLevel] = useState<AuthLevel>(AuthLevel.BiometricsFallbackPin)
-  //Flags for protecting flow
+  const [authLevel] = useState<AuthLevel>(AuthLevel.BiometricsFallbackPin)
+  // Flags for protecting flow
   const [isInitializingSecret, setIsInitializingSecret] = useState(false)
 
   const { ColorPallet, TextTheme, Assets } = useTheme()
@@ -44,12 +44,12 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
           setModalVisible(true)
         }
       } else {
-        //TODO: Error handling
+        // TODO: Error handling
         Alert.alert('Error: Wallet secret undefined!.\nPlease reload the app')
       }
-      const keyForPIN = await generateKeyForPin(pin)
+      await generateKeyForPIN(pin)
     } else {
-      //Fallback to PIN, attempt to init wallet with generated key
+      // Fallback to PIN, attempt to init wallet with generated key
       const isError = await checkPIN(pin)
 
       if (isError) {
@@ -62,7 +62,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
   }
 
   const initWithBiometrics = async () => {
-    //TODO: get auth level from settings
+    // TODO: get auth level from settings
     // const authLevel = await getAuthLevel()
     try {
       const fetchedWalletSecret = await getWalletSecret()
@@ -85,13 +85,13 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
     }
   }
 
-  //This will try to get keys and will trigger biometrics
+  // This will try to get keys and will trigger biometrics
   useEffect(() => {
     if (!isInitializingSecret) return
     initWithBiometrics()
   }, [isInitializingSecret])
 
-  //This will try to get keys and will trigger biometrics
+  // This will try to get keys and will trigger biometrics
   useEffect(() => {
     if (!isInitializingSecret) {
       setIsInitializingSecret(true)

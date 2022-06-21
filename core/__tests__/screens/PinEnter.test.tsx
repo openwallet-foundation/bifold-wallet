@@ -2,17 +2,18 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import { AuthContext } from '../../App/contexts/auth'
-import PinCreate from '../../App/screens/PinCreate'
+import PinEnter from '../../App/screens/PinEnter'
 
 describe('displays a pin create screen', () => {
   test('pin create renders correctly', () => {
     const tree = render(
       <AuthContext.Provider
         value={{
-          setAppPIN: jest.fn(),
+          getWalletSecret: jest.fn(),
+          getKeyForPIN: jest.fn(),
         }}
       >
-        <PinCreate setAuthenticated={jest.fn()} />
+        <PinEnter setAuthenticated={jest.fn()} checkPIN={jest.fn()} />
       </AuthContext.Provider>
     )
     expect(tree).toMatchSnapshot()
