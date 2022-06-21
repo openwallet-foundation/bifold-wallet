@@ -68,7 +68,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     } else if (!x.length) {
       setModalState({
         visible: true,
-        title: t('PinCreate.EnterPIN'),
+        title: t('PinCreate.EnterPINTitle'),
         message: t('PinCreate.YouNeedToCreateA6DigitPIN'),
       })
     } else if (x.length < minPINLength) {
@@ -86,7 +86,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     } else if (!y.length) {
       setModalState({
         visible: true,
-        title: t('PinCreate.ReenterPIN'),
+        title: t('PinCreate.ReenterPINTitle'),
         message: t('PinCreate.PleaseReenterYourPIN'),
       })
     } else if (y.length < minPINLength) {
@@ -112,9 +112,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
       </Text>
       <PinInput
-        label={t('PinCreate.EnterPIN')}
+        label={t('PinCreate.EnterPINTitle')}
         onPinChanged={setPin}
-        testID="EnterPIN"
+        testID={testIdWithKey('EnterPIN')}
         accessibilityLabel={t('PinCreate.EnterPIN')}
         autoFocus={true}
       />
@@ -126,7 +126,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
             Keyboard.dismiss()
           }
         }}
-        testID="ReenterPIN"
+        testID={testIdWithKey('ReenterPIN')}
         accessibilityLabel={t('PinCreate.ReenterPIN')}
       />
 
