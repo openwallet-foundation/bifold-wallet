@@ -17,7 +17,7 @@ interface PinInputProps {
 }
 
 const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, accessibilityLabel, autoFocus = false }) => {
-  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+  // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [pin, setPin] = useState('')
   const [showPin, setShowPin] = useState(false)
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -63,6 +63,8 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
         <CodeField
           {...props}
           testID={testID}
+          accessibilityLabel={accessibilityLabel}
+          accessible
           value={pin}
           onChangeText={(value: string) => {
             onPinChanged && onPinChanged(value)
@@ -86,13 +88,7 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
                 style={[style.cell, isFocused && style.focusedCell]}
                 onLayout={getCellOnLayoutHandler(index)}
               >
-                <Text
-                  style={[style.cellText]}
-                  maxFontSizeMultiplier={1}
-                  testID={testID ? `${testID}-${index + 1}` : testIdWithKey(`${'PINInput'}-${index + 1}`)}
-                  accessible={accessible}
-                  accessibilityLabel={`${accessibilityLabel || t('PinEnter.EnterPIN')}-${index + 1}`}
-                >
+                <Text style={[style.cellText]} maxFontSizeMultiplier={1}>
                   {child}
                 </Text>
               </View>
@@ -100,7 +96,12 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
           }}
           autoFocus={autoFocus}
         />
-        <TouchableOpacity onPress={() => setShowPin(!showPin)} style={[{ marginRight: 8, marginBottom: 32 }]}>
+        <TouchableOpacity
+          accessibilityLabel={showPin ? t('PinCreate.Hide') : t('PinCreate.Show')}
+          testID={showPin ? testIdWithKey('Hide') : testIdWithKey('Show')}
+          onPress={() => setShowPin(!showPin)}
+          style={[{ marginRight: 8, marginBottom: 32 }]}
+        >
           <Icon color={PinInputTheme.icon.color} name={showPin ? 'visibility-off' : 'visibility'} size={30}></Icon>
         </TouchableOpacity>
       </View>
