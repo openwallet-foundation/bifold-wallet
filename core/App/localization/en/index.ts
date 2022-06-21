@@ -68,7 +68,7 @@ const translation = {
     "Hide": "Hide",
   },
   "PinEnter": {
-    "EnterPIN": "Please enter your PIN",
+    "EnterPIN": "Enter PIN",
     "IncorrectPIN": "Incorrect PIN",
   },
   "Contacts": {
