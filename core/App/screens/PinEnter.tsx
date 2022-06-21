@@ -18,7 +18,6 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const { t } = useTranslation()
   const [pin, setPin] = useState('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const style = StyleSheet.create({
     container: {
@@ -51,9 +50,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
         <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
         <PinInput
           onPinChanged={setPin}
-          testID="EnterPIN"
-          autoFocus={true}
+          testID={testIdWithKey('EnterPIN')}
           accessibilityLabel={t('PinEnter.EnterPIN')}
+          autoFocus={true}
         />
         <Button
           title={t('Global.Enter')}
