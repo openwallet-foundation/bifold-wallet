@@ -25,7 +25,6 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
     setValue: setPin,
   })
   const { t } = useTranslation()
-
   const { TextTheme, PinInputTheme } = useTheme()
   const style = StyleSheet.create({
     codeField: {
@@ -63,6 +62,7 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
       <View style={[style.codeField]}>
         <CodeField
           {...props}
+          testID={testID}
           value={pin}
           onChangeText={(value: string) => {
             onPinChanged && onPinChanged(value)
