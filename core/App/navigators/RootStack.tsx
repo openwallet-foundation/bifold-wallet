@@ -12,11 +12,13 @@ import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Alert } from 'react-native'
 import { Config } from 'react-native-config'
 import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -27,6 +29,7 @@ import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
+import { WalletSecret } from '../types/security'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -45,6 +48,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const { getWalletSecret } = useAuth()
 
   const [authenticated, setAuthenticated] = useState(false)
   const [agentInitDone, setAgentInitDone] = useState(false)
@@ -54,6 +58,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, splash } = useConfiguration()
+  const { getWalletID, getKeyForPIN } = useAuth()
 
   const onTutorialCompleted = () => {
     dispatch({
@@ -62,24 +67,37 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     navigation.navigate(Screens.Terms)
   }
 
-  const initAgent = async () => {
+  const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
     if (initAgentInProcess) {
       return
     }
 
-    // TODO: Show loading indicator here
-    dispatch({ type: DispatchAction.LOADING_ENABLED })
+    if (agentInitDone) {
+      return 'Agent already initialised'
+    }
 
-    //Flag to protect the init process from being duplicated
+    if (!predefinedSecret) {
+      dispatch({ type: DispatchAction.LOADING_ENABLED })
+    }
+
+    // Flag to protect the init process from being duplicated
     setInitAgentInProcess(true)
 
     try {
+      const walletSecret = predefinedSecret ?? (await getWalletSecret())
+
+      if (!walletSecret?.walletId || !walletSecret.walletKey) {
+        Alert.alert('Error', 'Cannot find wallet id/secret!')
+        Toast.hide()
+        return
+      }
+
       const newAgent = new Agent(
         {
           label: 'Aries Bifold',
           mediatorConnectionsInvite: Config.MEDIATOR_URL,
           mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-          walletConfig: { id: 'wallet4', key: '123' },
+          walletConfig: { id: walletSecret.walletId, key: walletSecret.walletKey },
           autoAcceptConnections: true,
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),
@@ -108,9 +126,41 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         visibilityTime: 2000,
         position: 'bottom',
       })
+      return `${e}`
     }
 
     setInitAgentInProcess(false)
+  }
+
+  //This will test the user by attempting to initialize the wallet using a key derived from that pin
+  //If wallet init success == pin correct otherwise pin incorrect
+  //need to be enhanced
+  const checkPIN = async (pin: string): Promise<boolean> => {
+    const walletID = await getWalletID()
+    if (!walletID) {
+      return true
+    }
+    const generatedKey = await getKeyForPIN(pin)
+
+    if (!generatedKey) {
+      return true
+    }
+
+    const generatedSecret = {
+      walletId: walletID,
+      walletKey: generatedKey,
+    }
+
+    const error = await initAgent({
+      walletId: walletID,
+      walletKey: generatedKey,
+    })
+    if (!error) {
+      return false
+    } else {
+      //TODO: Handle error
+    }
+    return true
   }
 
   useEffect(() => {
@@ -125,7 +175,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.EnterPin}>
-          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} />}
+          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} checkPIN={checkPIN} />}
         </Stack.Screen>
       </Stack.Navigator>
     )
