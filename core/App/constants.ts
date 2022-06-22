@@ -16,7 +16,7 @@ export const KEYCHAIN_SERVICE_KEY = 'secret.wallet.key'
 export const KEYCHAIN_SERVICE_ID = 'walletid'
 export const KEYCHAIN_SERVICE_PIN_KEY = 'secret.pin.key'
 export const KEYCHAIN_SERVICE_RAND_KEY = 'secret.rand.key'
-export const STORAGE_KEY_SALT = 'savedalt'
+export const STORAGE_KEY_SALT = 'savedsalt'
 export const STORAGE_FIRSTLOGIN = 'firstlogin'
 export const STORAGE_AUTHLEVEL = 'authlevel'
 
