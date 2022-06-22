@@ -1,4 +1,9 @@
-import { isRedirection } from '../App/utils/helpers'
+import { isRedirection, sortCredentialsForAutoSelect } from '../App/utils/helpers'
+import path from 'path'
+import fs from 'fs'
+
+const proofCredentialPath = path.join(__dirname, './fixtures/proof-credential.json')
+const credentials = JSON.parse(fs.readFileSync(proofCredentialPath, 'utf8'))
 
 describe('Helpers', () => {
   it('URL with c_i is not a redirect', () => {
@@ -20,5 +25,11 @@ describe('Helpers', () => {
     const result = isRedirection(url)
 
     expect(result).toBeTruthy()
+  })
+
+  test('Sorts credentials for auto select', async () => {
+    const sortedCreds = sortCredentialsForAutoSelect(credentials)
+
+    expect(sortedCreds).toMatchSnapshot()
   })
 })
