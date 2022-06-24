@@ -39,7 +39,7 @@ const translation = {
     "ErrorCode": "Error code",
     "Title1025": "Unable to reject proof request",
     "Message1025": "There was a problem while rejecting the proof request",
-    "Title1024": "Unable to accept offer.",
+    "Title1024": "Unable to accept credential offer.",
     "Message1024": "There was a problem while accepting the credential offer.",
     "Title1026": "Unable to update retrieved credentials.",
     "Message1026": "There was a problem while updating retrieved credentials.",
