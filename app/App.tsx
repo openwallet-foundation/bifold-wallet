@@ -1,6 +1,7 @@
 import {
   Agent,
   AgentProvider,
+  AuthProvider,
   ConfigurationContext,
   ConfigurationProvider,
   StoreProvider,
@@ -44,15 +45,17 @@ const App = () => {
       <AgentProvider agent={agent}>
         <ThemeProvider value={theme}>
           <ConfigurationProvider value={defaultConfiguration}>
-            <StatusBar
-              barStyle="light-content"
-              hidden={false}
-              backgroundColor={theme.ColorPallet.brand.primary}
-              translucent={false}
-            />
-            <ErrorModal />
-            <RootStack setAgent={setAgent} />
-            <Toast topOffset={15} config={toastConfig} />
+            <AuthProvider>
+              <StatusBar
+                barStyle="light-content"
+                hidden={false}
+                backgroundColor={theme.ColorPallet.brand.primary}
+                translucent={false}
+              />
+              <ErrorModal />
+              <RootStack setAgent={setAgent} />
+              <Toast topOffset={15} config={toastConfig} />
+            </AuthProvider>
           </ConfigurationProvider>
         </ThemeProvider>
       </AgentProvider>

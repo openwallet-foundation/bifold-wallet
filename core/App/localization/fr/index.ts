@@ -1,8 +1,6 @@
 // prettier-ignore
 const translation = {
     "Global": {
-        "EnterPin": "Saisir le NIP",
-        "6DigitPin": "NIP à 6 chiffres",
         "Submit": "Soumettre",
         "NoneYet!": "Votre portefeuille est vide. Vos justificatifs acceptés seront ajoutés ici.",
         "Cancel": "Annuler",
@@ -49,15 +47,24 @@ const translation = {
         "Attestation": "J'ai lu, je comprends et j'accepte les conditions."
     },
     "PinCreate": {
-        "UserAuthenticationPin": "NIP d'authentification de l'utilisateur",
-        "PinMustBe6DigitsInLength": "Le NIP doit comporter 6 chiffres",
-        "PinsEnteredDoNotMatch": "Les NIP saisis ne correspondent pas",
-        "6DigitPin": "NIP à 6 chiffres",
-        "ReenterPin": "Saisir le NIP à nouveau",
-        "Create": "Créer"
-    },
+        "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
+        "PINTooShort": "NIP trop court",
+        "InvalidPIN": "NIP invalide",
+        "PINsDoNotMatch": "Les NIP ne correspondent pas",
+        "PleaseUseOnlyNumbersInYourPIN": "Veuillez utiliser uniquement des chiffres dans votre NIP",
+        "YourPINMustBe6DigitsInLength": "Votre NIP doit être composé de six chiffres",
+        "EnteredPINsDoNotMatch": "Les NIP saisis ne correspondent pas. Veuillez réessayer.",
+        "YouNeedToCreateA6DigitPIN": "Vous devez créer un NIP à 6 chiffres",
+        "PleaseReenterYourPIN": "Veuillez saisir à nouveau votre NIP",
+        "EnterPIN": "Saisir un NIP à 6 chiffres",
+        "ReenterPIN": "Saisir le NIP à nouveau",
+        "CreatePIN": "Créer un NIP",
+        "RememberPIN": "Mémorisez votre NIP.",
+        "PINDisclaimer": "Si vous l'oubliez, vous devrez configurer à nouveau votre portefeuille et ajouter à nouveau vos cartes.",
+      },
     "PinEnter": {
-        "IncorrectPin": "NIP erroné"
+        "IncorrectPIN": "NIP erroné",
+        "EnterPIN": "Veuillez saisir votre NIP",
     },
     "ContactDetails": {
         "Created": "Créé",
@@ -122,7 +129,8 @@ const translation = {
         "CredentialOffer": "Nouvelle offre de justificatif",
         "IsOfferingYouACredential": "vous offre un justificatif",
         "ConfirmDeclineCredential": "Oui, refuser ce justificatif",
-        "AbortDeclineCredential": "Non, revenir en arrière"
+        "AbortDeclineCredential": "Non, revenir en arrière",
+        "DeclineTitle": "Decline Credential",
     },
     "ProofRequest": {
         "OfferDelay": "Retard de l'offre",
@@ -143,7 +151,8 @@ const translation = {
         "Details": "Détails",
         "SendingTheInformationSecurely": "Envoi sécurisé de l'information",
         "InformationSentSuccessfully": "Informations envoyées avec succès",
-        "ProofRequestDeclined": "Demande de preuve refusée"
+        "ProofRequestDeclined": "Demande de preuve refusée",
+        "DeclineTitle": "Decline Credential",
     },
     "Settings": {
         "Version": "Version",

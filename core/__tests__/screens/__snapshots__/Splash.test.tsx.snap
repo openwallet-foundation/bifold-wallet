@@ -17,6 +17,11 @@ exports[`Splash Screen Renders correctly 1`] = `
         "default": "",
       }
     }
+    style={
+      Object {
+        "resizeMode": "contain",
+      }
+    }
   />
 </RNCSafeAreaView>
 `;

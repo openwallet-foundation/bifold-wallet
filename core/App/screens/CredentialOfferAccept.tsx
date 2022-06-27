@@ -36,11 +36,6 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
   const { ListItems } = useTheme()
-  const imageDisplayOptions = {
-    fill: ListItems.credentialIconColor.color,
-    height: 250,
-    width: 250,
-  }
   const styles = StyleSheet.create({
     container: {
       ...ListItems.credentialOfferBackground,

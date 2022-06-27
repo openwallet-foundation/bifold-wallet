@@ -5,6 +5,7 @@ import {
   ProofRecord,
   RequestedAttribute,
   RequestedPredicate,
+  RetrievedCredentials,
 } from '@aries-framework/core'
 import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
 import { parseUrl } from 'query-string'
@@ -142,4 +143,23 @@ export const processProofPredicates = (
     })
   })
   return processedPredicates
+}
+
+export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials): RetrievedCredentials => {
+  const requestedAttributes = Object.values(credentials?.requestedAttributes).pop()
+  const requestedPredicates = Object.values(credentials?.requestedPredicates).pop()
+  const sortFn = (a: any, b: any) => {
+    if (a.revoked && !b.revoked) {
+      return 1
+    } else if (!a.revoked && b.revoked) {
+      return -1
+    } else {
+      return b.timestamp - a.timestamp
+    }
+  }
+
+  requestedAttributes && requestedAttributes.sort(sortFn)
+  requestedPredicates && requestedPredicates.sort(sortFn)
+
+  return credentials
 }
