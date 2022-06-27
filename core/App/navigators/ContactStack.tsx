@@ -18,8 +18,12 @@ const ContactStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen name={Screens.Contacts} component={ListContacts} options={{ headerBackTitle: t('Global.Back') }} />
-      <Stack.Screen name={Screens.ContactDetails} component={ContactDetails} />
-      <Stack.Screen name={Screens.Chat} component={Chat} />
+      <Stack.Screen
+        name={Screens.ContactDetails}
+        component={ContactDetails}
+        options={{ headerBackTitle: t('Global.Back') }}
+      />
+      <Stack.Screen name={Screens.Chat} component={Chat} options={{ headerBackTitle: t('Global.Back') }} />
     </Stack.Navigator>
   )
 }

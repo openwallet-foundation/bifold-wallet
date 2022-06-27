@@ -18,6 +18,7 @@ import Toast from 'react-native-toast-message'
 
 import indyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
+import { myLabel } from '../constants'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -94,7 +95,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
       const newAgent = new Agent(
         {
-          label: 'Aries Bifold',
+          label: myLabel,
           mediatorConnectionsInvite: Config.MEDIATOR_URL,
           mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
           walletConfig: { id: walletSecret.walletId, key: walletSecret.walletKey },
@@ -187,7 +188,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
-        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
+        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} />
         <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />

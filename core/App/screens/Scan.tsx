@@ -6,12 +6,13 @@ import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { uiConfig } from '../../configs/uiConfig'
 import QRScanner from '../components/misc/QRScanner'
 import { BifoldError, QrCodeScanError } from '../types/error'
-import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
+import { TabStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
 
-type ScanProps = StackScreenProps<ConnectStackParams>
+type ScanProps = StackScreenProps<TabStackParams>
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
@@ -50,7 +51,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       if (!connectionRecord?.id) {
         throw new Error('Connection does not have an ID')
       }
-
+      navigation.goBack()
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { connectionId: connectionRecord.id },

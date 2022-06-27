@@ -58,9 +58,11 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
     navigation.setOptions({
       title: t('ProofRequest.Details'),
       headerRight: undefined,
+      headerTitleAlign: 'center',
       headerLeft: () => (
         <HeaderLeftBack
           title={t('Global.Back')}
+          accessibilityLabel={t('Global.Back')}
           onPress={() => {
             navigation.pop()
           }}
@@ -119,7 +121,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       ListHeaderComponent={() => (
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-            <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+            <Title style={styles.headerText}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
             {t('ProofRequest.IsRequesting')}:
           </Text>
           <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>

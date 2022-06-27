@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import { uiConfig } from '../../configs/uiConfig'
 import SettingsCog from '../components/misc/SettingsCog'
 import { useTheme } from '../contexts/theme'
 import CredentialDetails from '../screens/CredentialDetails'
@@ -18,9 +19,13 @@ const CredentialStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Credentials}
         component={ListCredentials}
-        options={() => ({
-          headerRight: () => <SettingsCog />,
-        })}
+        options={() =>
+          !uiConfig.fiveTabDisplay
+            ? {
+                headerRight: () => <SettingsCog />,
+              }
+            : {}
+        }
       />
       <Stack.Screen name={Screens.CredentialDetails} component={CredentialDetails} />
     </Stack.Navigator>
