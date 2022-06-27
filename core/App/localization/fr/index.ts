@@ -38,7 +38,7 @@ const translation = {
         "ErrorCode": "Code d'erreur",
         "Title1025": "Impossible de rejeter la demande de preuve.",
         "Message1025": "Il y a eu un problème lors du rejet de la demande de preuve.",
-        "Title1024": "Impossible d'accepter l'offre.",
+        "Title1024": "Impossible d'accepter l'offre de justificatif(s).",
         "Message1024": "Un problème est survenu lors de l'acceptation de l'offre de justificatif(s).",
         "Title1026": "Impossible de mettre à jour les justificatifs récupérés.",
         "Message1026": "Un problème est survenu lors de la mise à jour des justificatifs récupérés.",
