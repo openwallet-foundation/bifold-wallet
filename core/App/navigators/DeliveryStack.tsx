@@ -3,6 +3,7 @@ import React from 'react'
 
 import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
+import CommonDecline from '../screens/CommonDecline'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
@@ -31,6 +32,13 @@ const DeliveryStack: React.FC = () => {
       <Stack.Screen name={Screens.ProofRequest} component={ProofRequest} />
       <Stack.Screen name={Screens.ProofRequestAttributeDetails} component={ProofRequestAttributeDetails} />
       <Stack.Screen name={Screens.CredentialOffer} component={CredentialOffer} />
+      <Stack.Screen
+        name={Screens.CommonDecline}
+        component={CommonDecline}
+        options={() => ({
+          title: 'Decline',
+        })}
+      />
     </Stack.Navigator>
   )
 }

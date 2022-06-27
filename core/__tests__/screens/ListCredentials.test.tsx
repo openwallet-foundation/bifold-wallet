@@ -9,7 +9,6 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
 
-import { CredentialListItem } from '../../App/components'
 import CredentialCard from '../../App/components/misc/CredentialCard'
 import ListCredentials from '../../App/screens/ListCredentials'
 import { testIdWithKey } from '../../App/utils/testable'

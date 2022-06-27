@@ -7,14 +7,14 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 const { height } = Dimensions.get('window')
 
 const LoadingModal: React.FC = () => {
-  const { ColorPallet } = useTheme()
+  const { LoadingTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       minHeight: height,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.brand.primary,
+      backgroundColor: LoadingTheme.backgroundColor,
     },
   })
 

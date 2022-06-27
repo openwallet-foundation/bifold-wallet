@@ -1,7 +1,7 @@
 name: Native Build & Test
 
 env:
-  cacheId: '5' # increment to expire the cache
+  cacheId: '6' # increment to expire the cache
 
 on:
   pull_request:
@@ -22,7 +22,7 @@ jobs:
       - name: Configure node
         uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
+          node-version: '16.15.0'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Configure ruby
@@ -114,7 +114,7 @@ jobs:
       - name: Configure node
         uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
+          node-version: '16.15.0'
           registry-url: 'https://registry.npmjs.org'
 
       - name: setup ubuntu
