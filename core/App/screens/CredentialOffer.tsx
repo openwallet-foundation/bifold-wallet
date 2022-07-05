@@ -65,7 +65,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       setAcceptModalVisible(true)
       await agent.credentials.acceptOffer({
         credentialRecordId: credential.id,
-        autoAcceptCredential: AutoAcceptCredential.Always,
+        autoAcceptCredential: AutoAcceptCredential.ContentApproved,
       })
     } catch (err: unknown) {
       setButtonsVisible(true)
