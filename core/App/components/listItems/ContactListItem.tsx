@@ -52,7 +52,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     >
       <View key={contact.id} style={styles.outerContainer}>
         <View style={styles.textContainer}>
-          <Title style={ListItems.contactTitle}>{contact?.alias}</Title>
+          <Title style={ListItems.contactTitle}>{contact?.alias || contact?.theirLabel}</Title>
           <Text style={ListItems.contactDate}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
         </View>
         <View style={styles.iconContainer}>
