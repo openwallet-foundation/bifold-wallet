@@ -71,7 +71,7 @@ export function getConnectionName(connection: ConnectionRecord | void): string |
   if (!connection) {
     return
   }
-  return connection?.alias
+  return connection?.alias || connection?.theirLabel
 }
 
 export function firstValidCredential(
