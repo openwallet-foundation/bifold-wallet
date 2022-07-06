@@ -74,7 +74,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.9.0)
-  - indy-sdk-react-native (0.1.20):
+  - indy-sdk-react-native (0.2.2):
     - React
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
@@ -652,7 +652,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
-  indy-sdk-react-native: e25e5ed5375ce71cad262adc9355ff8e706e374e
+  indy-sdk-react-native: 52c3fdd11b673d11cdae5c28fa79a184084c6688
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
