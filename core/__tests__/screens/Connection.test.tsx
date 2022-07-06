@@ -4,6 +4,7 @@ import React from 'react'
 
 import ConnectionModal from '../../App/screens/Connection'
 import { testIdWithKey } from '../../App/utils/testable'
+import timeTravel from '../util/timetravel'
 
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
@@ -35,11 +36,10 @@ describe('ConnectionModal Component', () => {
       </NavigationContext.Provider>
     )
     const tree = render(element)
-
     const backHomeBtn = tree.queryByTestId(testIdWithKey('BackToHome'))
+
     expect(tree).toMatchSnapshot()
     expect(backHomeBtn).toBeNull()
-    jest.clearAllTimers()
   })
 
   test('Updates after delay', async () => {
@@ -50,9 +50,11 @@ describe('ConnectionModal Component', () => {
       </NavigationContext.Provider>
     )
     const tree = render(element)
+
     await waitFor(() => {
-      jest.runAllTimers()
+      timeTravel(10000)
     })
+
     expect(tree).toMatchSnapshot()
   })
 
@@ -64,11 +66,14 @@ describe('ConnectionModal Component', () => {
       </NavigationContext.Provider>
     )
     const tree = render(element)
+
     await waitFor(() => {
-      jest.runAllTimers()
+      timeTravel(10000)
     })
+
     const backHomeBtn = tree.getByTestId(testIdWithKey('BackToHome'))
     fireEvent(backHomeBtn, 'press')
+
     expect(tree).toMatchSnapshot()
   })
 })
