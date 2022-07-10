@@ -16,7 +16,7 @@ import { Alert } from 'react-native'
 import { Config } from 'react-native-config'
 import Toast from 'react-native-toast-message'
 
-import indyLedgers from '../../configs/ledgers/indy'
+import getIndyLedgers from '../../configs/ledgers/indy'
 import { ToastType } from '../components/toast/BaseToast'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
@@ -91,6 +91,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         Toast.hide()
         return
       }
+
+      const indyLedgers = await getIndyLedgers()
 
       const newAgent = new Agent(
         {

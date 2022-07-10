@@ -4,8 +4,6 @@ import type { OnboardingStyleSheet } from './screens/Onboarding'
 import { Agent } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 
-import indyLedgers from '../configs/ledgers/indy'
-
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ErrorModal from './components/modals/ErrorModal'
@@ -39,7 +37,6 @@ export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 
 export {
-  indyLedgers,
   Agent,
   AgentProvider,
   AuthProvider,
