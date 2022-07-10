@@ -1,4 +1,4 @@
-import Config from 'react-native-config'
+import { Config } from 'react-native-config'
 
 import BCovrinTest from './bcovrin-test/pool-config'
 import CandyDev from './candy-dev/pool-config'
