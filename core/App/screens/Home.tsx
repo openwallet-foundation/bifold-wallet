@@ -1,4 +1,4 @@
-import { CredentialRecord, CredentialState } from '@aries-framework/core'
+import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -76,15 +76,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           revokedMessageDismissed: new Set(),
         }
         if (revokedData) {
-          const revoked: Set<CredentialRecord['id'] | CredentialRecord['credentialId']> = new Set(
-            JSON.parse(revokedData) || []
-          )
+          const revoked: Set<CredentialRecord['id']> = new Set(JSON.parse(revokedData) || [])
           credentialState.revoked = revoked
         }
         if (revokedMessageDismissedData) {
-          const revokedMessageDismissed: Set<CredentialRecord['id'] | CredentialRecord['credentialId']> = new Set(
-            JSON.parse(revokedMessageDismissedData)
-          )
+          const revokedMessageDismissed: Set<CredentialRecord['id']> = new Set(JSON.parse(revokedMessageDismissedData))
           credentialState.revokedMessageDismissed = revokedMessageDismissed
         }
         dispatch({ type: DispatchAction.CREDENTIALS_UPDATED, payload: [credentialState] })

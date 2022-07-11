@@ -1,4 +1,4 @@
-import type { CredentialRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'

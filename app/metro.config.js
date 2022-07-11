@@ -47,7 +47,7 @@ module.exports = (async () => {
       blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
       extraNodeModules: extraNodeModules,
       assetExts: assetExts.filter((ext) => ext !== 'svg'),
-      sourceExts: [...sourceExts, 'svg'],
+      sourceExts: [...sourceExts, 'svg', 'cjs'],
     },
     watchFolders,
   };

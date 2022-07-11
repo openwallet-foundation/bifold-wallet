@@ -1,4 +1,9 @@
-import { CredentialRecord, CredentialState, ProofRecord, ProofState } from '@aries-framework/core'
+import {
+  CredentialExchangeRecord as CredentialRecord,
+  CredentialState,
+  ProofRecord,
+  ProofState,
+} from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 
 interface Notifications {
