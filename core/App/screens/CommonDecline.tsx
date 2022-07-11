@@ -92,10 +92,8 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
       }
     } catch (err: unknown) {
       const error = new BifoldError(
-        `Unable to reject ${declineType === DeclineType.ProofRequest ? 'proof' : 'offer'}`,
-        `There was a problem while rejecting the ${
-          declineType === DeclineType.ProofRequest ? 'proof request' : 'credential offer'
-        }.`,
+        declineType === DeclineType.ProofRequest ? t('Error.Title1025') : t('Error.Title1028'),
+        declineType === DeclineType.ProofRequest ? t('Error.Message1025') : t('Error.Message1028'),
         (err as Error).message,
         1025
       )

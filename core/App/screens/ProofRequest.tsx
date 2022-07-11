@@ -139,12 +139,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         setPredicates(predicates)
       })
       .catch((err: unknown) => {
-        const error = new BifoldError(
-          'Unable to update retrieved credentials',
-          'There was a problem while updating retrieved credentials.',
-          (err as Error).message,
-          1026
-        )
+        const error = new BifoldError(t('Error.Title1026'), t('Error.Message1026'), (err as Error).message, 1026)
         dispatch({
           type: DispatchAction.ERROR_ADDED,
           payload: [{ error }],
@@ -181,12 +176,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     } catch (err: unknown) {
       setPendingModalVisible(false)
 
-      const error = new BifoldError(
-        'Unable to accept proof request',
-        'There was a problem while accepting the proof request.',
-        (err as Error).message,
-        1027
-      )
+      const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error).message, 1027)
       dispatch({
         type: DispatchAction.ERROR_ADDED,
         payload: [{ error }],

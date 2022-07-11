@@ -65,12 +65,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
     } catch (err: unknown) {
       setButtonsVisible(true)
-      const error = new BifoldError(
-        'Unable to accept offer',
-        'There was a problem while accepting the credential offer.',
-        (err as Error).message,
-        1024
-      )
+      const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error).message, 1024)
       dispatch({
         type: DispatchAction.ERROR_ADDED,
         payload: [{ error }],
