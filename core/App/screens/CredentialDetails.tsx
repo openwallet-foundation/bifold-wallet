@@ -1,6 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { CredentialRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -83,10 +83,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   useEffect(() => {
-    const isRevoked = revoked.has(credential.id) || revoked.has(credential.credentialId)
+    const isRevoked = revoked.has(credential.id)
     setIsRevoked(isRevoked)
-    const isRevokedMessageDismissed =
-      revokedMessageDismissed.has(credential.id) || revokedMessageDismissed.has(credential.credentialId)
+    const isRevokedMessageDismissed = revokedMessageDismissed.has(credential.id)
     setIsRevokedMessageHidden(isRevokedMessageDismissed)
   }, [])
 

@@ -103,6 +103,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           logger: new ConsoleLogger(LogLevel.trace),
           indyLedgers,
           connectToIndyLedgersOnStartup: true,
+          autoUpdateStorageOnStartup: true,
         },
         agentDependencies
       )

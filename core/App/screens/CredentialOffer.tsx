@@ -62,8 +62,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const handleAcceptPress = async () => {
     try {
       setAcceptModalVisible(true)
-
-      await agent.credentials.acceptOffer(credential.id)
+      await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
     } catch (err: unknown) {
       setButtonsVisible(true)
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error).message, 1024)

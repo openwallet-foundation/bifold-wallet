@@ -38,10 +38,13 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
   const handleInvitation = async (url: string): Promise<void> => {
     try {
-      const connectionRecord = await agent?.connections.receiveInvitationFromUrl(url, {
-        autoAcceptConnection: true,
-      })
+      const invitation = await agent?.oob.parseInvitation(url)
+      if (!invitation) {
+        throw new Error('Could not parse invitation from URL')
+      }
 
+      const record = await agent?.oob.receiveInvitation(invitation)
+      const connectionRecord = record?.connectionRecord
       if (!connectionRecord?.id) {
         throw new Error('Connection does not have an ID')
       }
