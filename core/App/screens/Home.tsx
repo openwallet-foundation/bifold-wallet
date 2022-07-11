@@ -181,7 +181,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
                 }}
               >
                 {item.type === 'CredentialRecord' ? (
-                  <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+                  item.revocationNotification ? (
+                    <NotificationListItem notificationType={NotificationType.Revocation} notification={item} />
+                  ) : (
+                    <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+                  )
                 ) : (
                   <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
                 )}

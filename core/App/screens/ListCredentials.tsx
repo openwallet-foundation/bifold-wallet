@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+import { useCredentialByState, useCredentials } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
@@ -18,8 +18,6 @@ const ListCredentials: React.FC = () => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-  const [state] = useStore()
-  const { revoked } = state.credential
   const { ColorPallet } = useTheme()
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
 
@@ -39,7 +37,7 @@ const ListCredentials: React.FC = () => {
         >
           <CredentialCard
             credential={item}
-            revoked={revoked.has(item.id)}
+            revoked={item.revocationNotification !== undefined}
             onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: item.id })}
           />
         </View>

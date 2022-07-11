@@ -93,8 +93,9 @@ const translation = {
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
     "Revoked": "Revoked",
-    "CredentialRevokedMessageTitle": "This credential is revoked",
+    "CredentialRevokedMessageTitle": "Revoked On",
     "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the issuer.",
+    "NewRevoked": "Credential Was Revoked",
   },
   "Home": {
     "Welcome": "Welcome",

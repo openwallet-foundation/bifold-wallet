@@ -19,6 +19,7 @@ const iconSize = 30
 export enum NotificationType {
   CredentialOffer = 'Offer',
   ProofRequest = 'Proof',
+  Revocation = 'Revocation',
 }
 
 interface NotificationListItemProps {
@@ -92,6 +93,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         navigation
           .getParent()
           ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
+      break
+    case NotificationType.Revocation:
+      title = t('CredentialDetails.NewRevoked')
+      body = `${name} v${version}`
+      onPress = () => navigation.getParent()?.navigate(Screens.CredentialDetails, { credentialId: notification.id })
       break
     default:
       throw new Error('NotificationType was not set correctly.')
