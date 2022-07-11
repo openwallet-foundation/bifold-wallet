@@ -64,9 +64,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   useEffect(() => {
-    credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
-    const date = new Date(credential.revocationNotification!.revocationDate)
-    setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
+    if (credential.revocationNotification) {
+      setIsRevoked(true)
+      const date = new Date(credential.revocationNotification?.revocationDate)
+      setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
+    }
   }, [])
 
   useEffect(() => {
