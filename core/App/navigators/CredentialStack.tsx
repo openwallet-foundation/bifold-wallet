@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import SettingsCog from '../components/misc/SettingsCog'
 import { useTheme } from '../contexts/theme'
 import CredentialDetails from '../screens/CredentialDetails'

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useTheme } from '../contexts/theme'
@@ -106,9 +106,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (uiConfig.navigateOnConnection) {
       connection?.state === ConnectionState.Complete && navigation.goBack()
+      uiConfig.enableChat ? navigation
+      .getParent()
+      ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connection?.id } }) :
       navigation
         .getParent()
-        ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connection?.id } })
+        ?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } else if (notificationRecord) {
       switch (notificationRecord.type) {
         case 'CredentialRecord':

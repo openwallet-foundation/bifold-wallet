@@ -3,10 +3,10 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 import { Agent } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import QRScanner from '../components/misc/QRScanner'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { TabStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
@@ -81,6 +81,13 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       setQrCodeScanError(error)
     }
   }
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+      
+  //   });
+  //   return unsubscribe;
+  // }, [navigation])
 
   return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
 }

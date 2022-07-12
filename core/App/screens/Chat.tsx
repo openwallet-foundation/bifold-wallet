@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
 import { renderBubble, renderInputToolbar, renderComposer, renderSend } from '../components/chat'
 import InfoIcon from '../components/misc/InfoIcon'

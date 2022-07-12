@@ -4,6 +4,7 @@ type uiConfigType = {
   navigateOnConnection: boolean
   allowQrDisplay: boolean
   focusScanTab: boolean
+  enableChat: boolean
 }
 
 export const uiConfig: uiConfigType = {
@@ -12,9 +13,11 @@ export const uiConfig: uiConfigType = {
   // Determines if the tab bar will display 5 tabs or only 3
   fiveTabDisplay: false,
   // Determines if the app will navigate to the chat screen upon connection or wait for a notification
-  navigateOnConnection: false,
+  navigateOnConnection: true,
   // If true, allows the user to display their own invite QR code
   allowQrDisplay: false,
   // Determines if the scan tab will have a highlight circle around it
   focusScanTab: true,
+  // If true, Chat screen and basic messaging is enabled
+  enableChat: false,
 }

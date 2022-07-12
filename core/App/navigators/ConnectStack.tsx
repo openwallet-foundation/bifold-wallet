@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import { useTheme } from '../contexts/theme'
 import Connect from '../screens/Connect'
 import DisplayCode from '../screens/DisplayCode'

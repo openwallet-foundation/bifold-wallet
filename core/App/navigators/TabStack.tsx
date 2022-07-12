@@ -5,7 +5,7 @@ import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { TabStackParams, TabStacks } from '../types/navigators'
@@ -78,7 +78,8 @@ const TabStack: React.FC = () => {
           tabBarActiveTintColor: TabTheme.tabBarActiveTintColor,
           tabBarInactiveTintColor: TabTheme.tabBarInactiveTintColor,
           header: () => null,
-          lazy: uiConfig.fiveTabDisplay ? true : false,
+          // lazy: uiConfig.fiveTabDisplay ? true : false,
+          lazy: false,
         }}
       >
         {renderTabScreen(TabStacks.HomeStack, t('TabStack.Home'), HomeStack, 'home', 'home-outline')}

@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import { SafeAreaScrollView } from '../components'
 import { useTheme } from '../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'

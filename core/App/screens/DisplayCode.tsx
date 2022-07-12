@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 
-import { uiConfig } from '../../configs/uiConfig'
+import { uiConfig } from '../config/ui'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRContainer from '../components/misc/QRContainer'
 import { myLabel } from '../constants'

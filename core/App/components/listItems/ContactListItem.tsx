@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { uiConfig } from '../../config/ui'
 
 import { dateFormatOptions } from '../../constants'
 import { useTheme } from '../../contexts/theme'
@@ -42,14 +43,18 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       borderBottomRightRadius: 15,
     },
   })
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation
+  const handlePress = () => {
+    uiConfig.enableChat ? 
+      navigation
+        .getParent()
+        ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
+          :
+          navigation
           .getParent()
-          ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
-      }
-    >
+          ?.navigate(Stacks.ContactStack, { screen: Screens.ContactDetails, params: { connectionId: contact.id } })
+  }
+  return (
+    <TouchableOpacity onPress={() => handlePress()}>
       <View key={contact.id} style={styles.outerContainer}>
         <View style={styles.textContainer}>
           <Title style={ListItems.contactTitle}>{contact?.alias || contact?.invitation?.label}</Title>
