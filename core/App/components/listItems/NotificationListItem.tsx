@@ -1,4 +1,4 @@
-import type { CredentialRecord, ProofRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord as CredentialRecord, ProofRecord } from '@aries-framework/core'
 
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -82,11 +82,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           screen: Screens.CredentialOffer,
           params: { credentialId: notification.id },
         })
-      title = t('CredentialOffer.CredentialOffer')
+      title = t('CredentialOffer.NewCredentialOffer')
       body = `${name} v${version}`
       break
     case NotificationType.ProofRequest:
-      title = t('ProofRequest.ProofRequest')
+      title = t('ProofRequest.NewProofRequest')
       body = (notification as ProofRecord).requestMessage?.indyProofRequest?.name || ''
       onPress = () =>
         navigation

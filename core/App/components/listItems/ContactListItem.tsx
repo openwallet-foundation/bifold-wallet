@@ -57,7 +57,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     <TouchableOpacity onPress={() => handlePress()}>
       <View key={contact.id} style={styles.outerContainer}>
         <View style={styles.textContainer}>
-          <Title style={ListItems.contactTitle}>{contact?.alias || contact?.invitation?.label}</Title>
+          <Title style={ListItems.contactTitle}>{contact?.alias || contact?.theirLabel}</Title>
           <Text style={ListItems.contactDate}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
         </View>
         <View style={styles.iconContainer}>
