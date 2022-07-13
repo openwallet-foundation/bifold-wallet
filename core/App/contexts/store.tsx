@@ -11,6 +11,7 @@ export interface StoreProviderProps {
 const initialState: State = {
   onboarding: {
     didAgreeToTerms: false,
+    didAgreeToPrivacy: false,
     didCompleteTutorial: false,
     didCreatePIN: false,
   },

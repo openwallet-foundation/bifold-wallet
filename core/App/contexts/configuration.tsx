@@ -5,6 +5,7 @@ import OnboardingPages from '../screens/OnboardingPages'
 export interface ConfigurationContext {
   pages: typeof OnboardingPages
   splash: React.FC
+  privacy: React.FC
   terms: React.FC
 }
 

@@ -6,6 +6,7 @@ import { Onboarding as OnboardingState, Credential as CredentialState, State } f
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
+  DID_AGREE_TO_PRIVACY = 'onboarding/didAgreeToPrivacy',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePin',
 }
@@ -58,6 +59,18 @@ const reducer = (state: State, action: ReducerAction): State => {
       const onboarding = {
         ...state.onboarding,
         didCompleteTutorial: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_AGREE_TO_PRIVACY: {
+      const onboarding: OnboardingState = {
+        ...state.onboarding,
+        didAgreeToPrivacy: true,
       }
       const newState = {
         ...state,

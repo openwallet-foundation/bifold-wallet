@@ -14,6 +14,7 @@ import toastConfig from './components/toast/ToastConfig'
 import RootStack from './navigators/RootStack'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
+import Privacy from './screens/Privacy'
 import Terms from './screens/Terms'
 
 export { LocalStorageKeys } from './constants'
@@ -50,5 +51,6 @@ export {
   RootStack,
   OnboardingPages,
   Splash,
+  Privacy,
   Terms,
 }
