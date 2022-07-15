@@ -17,7 +17,7 @@ export function useNotifications(): Notifications {
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
   const revoked = useCredentialByState(CredentialState.Done).filter((cred: CredentialRecord) => {
-    if (cred.revocationNotification && !cred.metadata.get('revoked_seen') == true) {
+    if (cred.revocationNotification && cred.metadata.get('revoked_seen') !== true) {
       return cred
     }
   })

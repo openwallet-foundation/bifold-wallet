@@ -8,7 +8,6 @@ import { FlatList, View } from 'react-native'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import EmptyList from '../components/misc/EmptyList'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { CredentialStackParams, Screens } from '../types/navigators'
 
