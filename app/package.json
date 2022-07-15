@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@aries-framework/core": "^0.2.0",
-    "@aries-framework/react-hooks": "^0.2.0",
+    "@aries-framework/react-hooks": "^0.3.0",
     "@aries-framework/react-native": "^0.2.0",
     "@formatjs/intl-datetimeformat": "4.2.4",
     "@formatjs/intl-displaynames": "5.2.4",
@@ -31,8 +31,8 @@
     "axios": "0.21.4",
     "i18next": "21.4.0",
     "indy-sdk-react-native": "^0.2.2",
-    "lodash.startcase": "4.4.0",
     "lodash.flatten": "^4.4.0",
+    "lodash.startcase": "4.4.0",
     "patch-package": "^6.4.7",
     "query-string": "7.0.1",
     "react": "17.0.2",
@@ -65,8 +65,8 @@
   "devDependencies": {
     "@babel/core": "7.15.5",
     "@babel/runtime": "7.15.4",
-    "@types/lodash.merge": "^4.6.6",
     "@types/lodash.flatten": "^4.4.6",
+    "@types/lodash.merge": "^4.6.6",
     "@types/lodash.startcase": "^4.4.6",
     "@types/react": "16.14.15",
     "@types/react-native": "0.63.53",
