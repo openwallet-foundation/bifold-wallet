@@ -27,6 +27,11 @@ const Privacy: React.FC = () => {
     navigation.navigate(Screens.Terms)
   }
   const style = StyleSheet.create({
+    scrollView: {
+      // backgroundColor: ColorPallet.grayscale.veryLightGrey,
+      padding: 10,
+      borderRadius,
+    },
     container: {
       ...OnboardingTheme.container,
       margin: 10,
@@ -64,8 +69,8 @@ const Privacy: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={[style.container]}>
-      <ScrollView style={{ backgroundColor: ColorPallet.grayscale.darkGrey, padding: 10, borderRadius }}>
+    <SafeAreaView style={style.container}>
+      <ScrollView style={style.scrollView}>
         <Text style={[style.bodyText, style.bold]}>Last Updated: July 1, 2022</Text>
         <Text style={style.bodyText}>
           If you download or use the Indicio, Inc. Holdr+ mobile app (“<Text style={style.bold}>App</Text>”), Indicio ("
@@ -81,12 +86,16 @@ const Privacy: React.FC = () => {
           This document (our “<Text style={style.bold}>Privacy Policy</Text>”) explains how your Personal Data will be
           collected, stored and used. This Privacy Policy is subject to the Holdr Terms of Service (“
           <Text style={style.bold}>Terms</Text>”) available at{' '}
-          <Text style={[style.bold, style.link]} onPress={() => Linking.openURL('http://google.com')}>
-            [LINK]
+          <Text style={[style.bold, style.link]} onPress={() => Linking.openURL('indicio.tech/holdr-privacy-policy')}>
+            indicio.tech/holdr-privacy-policy
           </Text>{' '}
           which is incorporated by reference into this Privacy Policy, and all capitalized terms (unless defined in this
           document) are defined in our Terms. If you have questions about this Privacy Policy, or have suggestions for
-          how we can improve it, please contact us at [email].
+          how we can improve it, please contact us at{' '}
+          <Text style={[style.bold, style.link]} onPress={() => Linking.openURL('mailto:support@indicio.tech')}>
+            support@indicio.tech
+          </Text>
+          .
         </Text>
         <Text style={style.bodyText}>
           If you do not want your Personal Data to be stored on your Device, you should not use the App.
@@ -96,10 +105,9 @@ const Privacy: React.FC = () => {
           Indicio does not collect or store any Personal Data. All data including your Credentials, Messages, and
           Personal Data created or uploaded via the App is stored locally on your Device. As a result, we do not have
           any access to your Credentials, Messages, or Personal Data. Any Messages that you send via the messaging
-          feature will also be stored locally on the recipient's Device and are end-to-end encrypted. We use a [mediator
-          server] for relaying the Messages between Users. Information about your contacts is also stored locally on
-          your Device. Indicio can never access, collect, or store your Credentials, Messages, Personal Data, or
-          contacts.
+          feature will also be stored locally on the recipient's Device and are end-to-end encrypted. We use a mediator
+          server for relaying the Messages between Users. Information about your contacts is also stored locally on your
+          Device. Indicio can never access, collect, or store your Credentials, Messages, Personal Data, or contacts.
         </Text>
         <Text style={style.bold}>⦁ Sharing of Data</Text>
         <Text style={style.bodyText}>
@@ -112,7 +120,7 @@ const Privacy: React.FC = () => {
         </Text>
         <Text style={style.bold}>⦁ Deletion of Data</Text>
         <Text style={style.bodyText}>
-          You may delete your Personal Data from your Device at anytime by [instructions].
+          You may delete your Personal Data from your Device at anytime by uninstalling the Holdr+ app.
         </Text>
         <Text style={style.bold}>⦁ No Sale or Disclosure of Personal Information</Text>
         <Text style={style.bodyText}>
@@ -161,9 +169,16 @@ const Privacy: React.FC = () => {
           deemed to have agreed to the changes, so please check this Privacy Policy periodically for updates.
         </Text>
         <Text style={style.bold}>⦁ Contact Us</Text>
-        <Text style={style.bodyText}>
-          If you have any questions about this Privacy Policy, please contact us at: [insert mailing address, email
-          address, phone number and/or fax number].
+        <Text style={style.bodyText}>If you have any questions about this Privacy Policy, please contact us at:</Text>
+        <Text style={style.bodyText}>⦁ Email: </Text>
+        <Text style={[style.bold, style.link]} onPress={() => Linking.openURL('mailto:support@indicio.tech')}>
+          {' '}
+          support@indicio.tech
+        </Text>
+        <Text style={style.bodyText}>⦁ Discord: </Text>
+        <Text style={[style.bold, style.link]} onPress={() => Linking.openURL('https://discord.gg/pq7v6Fj3tk')}>
+          {' '}
+          https://discord.gg/pq7v6Fj3tk
         </Text>
         <View style={[style.controls]}>
           <CheckBoxRow
