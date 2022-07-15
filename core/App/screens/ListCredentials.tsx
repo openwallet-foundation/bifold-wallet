@@ -27,9 +27,8 @@ const ListCredentials: React.FC = () => {
     <FlatList
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
       data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
-      keyExtractor={(item: CredentialRecord) => item.id}
-      ListEmptyComponent={() => <EmptyList message={t('Credentials.EmptyList')} />}
-      renderItem={({ item, index }) => (
+      keyExtractor={(credential) => credential.id}
+      renderItem={({ item: credential, index }) => (
         <View
           style={{
             marginHorizontal: 15,
@@ -38,12 +37,13 @@ const ListCredentials: React.FC = () => {
           }}
         >
           <CredentialCard
-            credential={item}
-            revoked={revoked.has(item.id)}
-            onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: item.id })}
+            credential={credential}
+            revoked={revoked.has(credential.id)}
+            onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
           />
         </View>
       )}
+      ListEmptyComponent={() => <EmptyList message={t('Credentials.EmptyList')} />}
     />
   )
 }
