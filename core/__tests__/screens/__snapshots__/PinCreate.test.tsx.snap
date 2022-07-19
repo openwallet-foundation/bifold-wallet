@@ -6,6 +6,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
     Array [
       Object {
         "backgroundColor": "#000000",
+        "flex": 1,
         "margin": 20,
       },
     ]
@@ -92,6 +93,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -103,12 +105,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="EnterPIN-1"
@@ -130,6 +132,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -141,11 +144,10 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
               ]
             }
@@ -179,12 +181,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="EnterPIN-3"
@@ -206,6 +208,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -217,12 +220,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="EnterPIN-4"
@@ -244,6 +247,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -255,12 +259,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="EnterPIN-5"
@@ -282,6 +286,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -293,12 +298,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="EnterPIN-6"
@@ -362,7 +367,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#D3D3D3",
                 "fontSize": 30,
               },
               undefined,
@@ -435,6 +440,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -446,12 +452,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="ReenterPIN-1"
@@ -473,6 +479,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -484,12 +491,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="ReenterPIN-2"
@@ -511,6 +518,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -522,12 +530,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="ReenterPIN-3"
@@ -549,6 +557,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -560,12 +569,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="ReenterPIN-4"
@@ -587,6 +596,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -598,12 +608,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="ReenterPIN-5"
@@ -625,6 +635,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
@@ -636,12 +647,12 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
             testID="ReenterPIN-6"
@@ -705,7 +716,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#D3D3D3",
                 "fontSize": 30,
               },
               undefined,
