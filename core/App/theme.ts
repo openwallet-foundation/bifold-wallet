@@ -564,14 +564,19 @@ const PinInputTheme = {
     backgroundColor: ColorPallet.grayscale.darkGrey,
     borderColor: ColorPallet.grayscale.darkGrey,
   },
-  focussedCell: {
+  focusedCell: {
     borderColor: ColorPallet.grayscale.lightGrey,
   },
+  filledCell: {
+    backgroundColor: ColorPallet.grayscale.darkGrey,
+  },
   cellText: {
-    color: ColorPallet.grayscale.white,
+    hidden: ColorPallet.brand.link,
+    visible: ColorPallet.brand.link,
   },
   icon: {
-    color: ColorPallet.grayscale.white,
+    hide: ColorPallet.grayscale.lightGrey,
+    show: ColorPallet.brand.link,
   },
 }
 
