@@ -1,4 +1,4 @@
-import { ConnectionState } from '@aries-framework/core'
+import { DidExchangeState } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -105,7 +105,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (uiConfig.navigateOnConnection) {
-      connection?.state === ConnectionState.Complete && navigation.goBack()
+      connection?.state === DidExchangeState.Completed && navigation.goBack()
       uiConfig.enableChat ? navigation
       .getParent()
       ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connection?.id } }) :
