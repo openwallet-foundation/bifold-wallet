@@ -17,7 +17,7 @@ interface PinInputProps {
 }
 
 const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, accessibilityLabel, autoFocus = false }) => {
-  // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [pin, setPin] = useState('')
   const [showPin, setShowPin] = useState(false)
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -110,11 +110,12 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
           }}
           autoFocus={autoFocus}
         />
-        <TouchableOpacity 
+        <TouchableOpacity
           accessibilityLabel={showPin ? t('PinCreate.Hide') : t('PinCreate.Show')}
-          onPress={() => setShowPin(!showPin)} 
+          onPress={() => setShowPin(!showPin)}
           testID={showPin ? testIdWithKey('Hide') : testIdWithKey('Show')}
-          style={[{ marginRight: 8, marginBottom: 32 }]}>
+          style={[{ marginRight: 8, marginBottom: 32 }]}
+        >
           <Icon
             color={showPin ? PinInputTheme.icon.show : PinInputTheme.icon.hide}
             name={showPin ? 'visibility-off' : 'visibility'}
