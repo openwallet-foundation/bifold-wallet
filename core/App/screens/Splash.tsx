@@ -21,8 +21,12 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
     return Screens.CreatePin
   }
 
-  if (state.didCompleteTutorial && !state.didAgreeToTerms) {
+  if (state.didCompleteTutorial && state.didAgreeToPrivacy && !state.didAgreeToTerms) {
     return Screens.Terms
+  }
+
+  if (state.didCompleteTutorial && !state.didAgreeToPrivacy) {
+    return Screens.Privacy
   }
 
   return Screens.Onboarding

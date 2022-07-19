@@ -58,14 +58,14 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash } = useConfiguration()
+  const { pages, terms, privacy, splash } = useConfiguration()
   const { getWalletID, getKeyForPIN } = useAuth()
 
   const onTutorialCompleted = () => {
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
-    navigation.navigate(Screens.Terms)
+    navigation.navigate(Screens.Privacy)
   }
 
   const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
@@ -223,6 +223,17 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
             />
           )}
         </Stack.Screen>
+        <Stack.Screen
+          name={Screens.Privacy}
+          options={() => ({
+            title: t('Screens.Privacy'),
+            headerTintColor: OnboardingTheme.headerTintColor,
+            headerShown: true,
+            headerLeft: () => false,
+            rightLeft: () => false,
+          })}
+          component={privacy}
+        />
         <Stack.Screen
           name={Screens.Terms}
           options={() => ({

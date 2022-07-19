@@ -30,6 +30,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const style = StyleSheet.create({
     container: {
+      flex: 1,
       backgroundColor: ColorPallet.brand.primaryBackground,
     },
   })

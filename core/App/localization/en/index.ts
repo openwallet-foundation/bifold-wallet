@@ -207,7 +207,8 @@ const translation = {
   "Screens": {
     "Splash": 'Splash',
     "Onboarding": "Onboarding",
-    "Terms": "Terms & Conditions",
+    "Privacy": "Privacy Policy",
+    "Terms": "Terms of Use",
     "CreatePin": 'Create a PIN',
     "EnterPin": 'Enter PIN',
     "Home": 'Home',

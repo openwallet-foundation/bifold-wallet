@@ -53,15 +53,13 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
   </View>
   <Text
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginLeft": 10,
-        },
-      ]
+      Object {
+        "color": "#FFFFFF",
+        "flexShrink": 1,
+        "fontSize": 18,
+        "fontWeight": "normal",
+        "marginLeft": 10,
+      }
     }
   >
     Hello Friend

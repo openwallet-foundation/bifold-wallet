@@ -5,6 +5,7 @@ import { DeclineType } from './decline'
 export enum Screens {
   Splash = 'Splash',
   Onboarding = 'Onboarding',
+  Privacy = 'Privacy',
   Terms = 'Terms',
   CreatePin = 'Create a PIN',
   EnterPin = 'Enter PIN',
@@ -67,6 +68,7 @@ export type TabStackParams = {
 export type AuthenticateStackParams = {
   [Screens.Splash]: undefined
   [Screens.Onboarding]: undefined
+  [Screens.Privacy]: undefined
   [Screens.Terms]: undefined
   [Screens.CreatePin]: { setAuthenticated: (auth: boolean) => void } | undefined
   [Screens.EnterPin]: { setAuthenticated: (auth: boolean) => void } | undefined
