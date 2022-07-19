@@ -17,7 +17,7 @@ interface PinInputProps {
 }
 
 const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, accessibilityLabel, autoFocus = false }) => {
-  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+  // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [pin, setPin] = useState('')
   const [showPin, setShowPin] = useState(false)
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -25,7 +25,6 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
     setValue: setPin,
   })
   const { t } = useTranslation()
-
   const { TextTheme, PinInputTheme } = useTheme()
   const style = StyleSheet.create({
     codeField: {
@@ -71,6 +70,9 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
       <View style={[style.codeField]}>
         <CodeField
           {...props}
+          testID={testID}
+          accessibilityLabel={accessibilityLabel}
+          accessible
           value={pin}
           onChangeText={(value: string) => {
             onPinChanged && onPinChanged(value)
@@ -108,7 +110,11 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
           }}
           autoFocus={autoFocus}
         />
-        <TouchableOpacity onPress={() => setShowPin(!showPin)} style={[{ marginRight: 8, marginBottom: 32 }]}>
+        <TouchableOpacity 
+          accessibilityLabel={showPin ? t('PinCreate.Hide') : t('PinCreate.Show')}
+          onPress={() => setShowPin(!showPin)} 
+          testID={showPin ? testIdWithKey('Hide') : testIdWithKey('Show')}
+          style={[{ marginRight: 8, marginBottom: 32 }]}>
           <Icon
             color={showPin ? PinInputTheme.icon.show : PinInputTheme.icon.hide}
             name={showPin ? 'visibility-off' : 'visibility'}
