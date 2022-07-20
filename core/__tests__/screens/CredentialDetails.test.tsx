@@ -1,4 +1,8 @@
-import { CredentialMetadataKeys, CredentialRecord, CredentialState } from '@aries-framework/core'
+import {
+  CredentialMetadataKeys,
+  CredentialExchangeRecord as CredentialRecord,
+  CredentialState,
+} from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'

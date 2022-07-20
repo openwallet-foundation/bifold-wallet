@@ -93,8 +93,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             }
           >
             <Text
-              accessibilityLabel="PinEnter.EnterPIN-1"
-              accessible={true}
               maxFontSizeMultiplier={1}
               style={
                 Array [
@@ -108,7 +106,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                   },
                 ]
               }
-              testID="EnterPIN-1"
             >
               
             </Text>
@@ -131,8 +128,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             }
           >
             <Text
-              accessibilityLabel="PinEnter.EnterPIN-2"
-              accessible={true}
               maxFontSizeMultiplier={1}
               style={
                 Array [
@@ -146,7 +141,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                   },
                 ]
               }
-              testID="EnterPIN-2"
             >
               
             </Text>
@@ -169,8 +163,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             }
           >
             <Text
-              accessibilityLabel="PinEnter.EnterPIN-3"
-              accessible={true}
               maxFontSizeMultiplier={1}
               style={
                 Array [
@@ -184,7 +176,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                   },
                 ]
               }
-              testID="EnterPIN-3"
             >
               
             </Text>
@@ -207,8 +198,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             }
           >
             <Text
-              accessibilityLabel="PinEnter.EnterPIN-4"
-              accessible={true}
               maxFontSizeMultiplier={1}
               style={
                 Array [
@@ -222,7 +211,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                   },
                 ]
               }
-              testID="EnterPIN-4"
             >
               
             </Text>
@@ -245,8 +233,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             }
           >
             <Text
-              accessibilityLabel="PinEnter.EnterPIN-5"
-              accessible={true}
               maxFontSizeMultiplier={1}
               style={
                 Array [
@@ -260,7 +246,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                   },
                 ]
               }
-              testID="EnterPIN-5"
             >
               
             </Text>
@@ -283,8 +268,6 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             }
           >
             <Text
-              accessibilityLabel="PinEnter.EnterPIN-6"
-              accessible={true}
               maxFontSizeMultiplier={1}
               style={
                 Array [
@@ -298,12 +281,13 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                   },
                 ]
               }
-              testID="EnterPIN-6"
             >
               
             </Text>
           </View>
           <TextInput
+            accessibilityLabel="PinEnter.EnterPIN"
+            accessible={true}
             autoCapitalize="characters"
             autoCorrect={false}
             autoFocus={true}
@@ -329,12 +313,14 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "top": 0,
               }
             }
+            testID="com.ariesbifold:id/EnterPIN"
             textContentType="password"
             underlineColorAndroid="transparent"
             value=""
           />
         </View>
         <View
+          accessibilityLabel="PinCreate.Show"
           accessible={true}
           focusable={true}
           onClick={[Function]}
@@ -351,6 +337,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
               "opacity": 1,
             }
           }
+          testID="com.ariesbifold:id/Show"
         >
           <Text
             allowFontScaling={false}
