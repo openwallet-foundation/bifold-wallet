@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
+import { CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -20,8 +20,8 @@ const ListCredentials: React.FC = () => {
   ]
   const [state] = useStore()
   const { revoked } = state.credential
-  const { ColorPallet } = useTheme()
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
+  const { ColorPallet } = useTheme()
 
   return (
     <FlatList
