@@ -1,125 +1,145 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Faux Navigation Bar Component Renders with home icon 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "flex-end",
-      "backgroundColor": "#42803E",
-      "flexDirection": "row",
-      "flexGrow": 1,
-      "height": 90,
-      "justifyContent": "center",
-      "paddingBottom": 4,
-    }
-  }
->
+Array [
   <View
     style={
       Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
         "flexDirection": "row",
-        "justifyContent": "space-between",
-        "marginHorizontal": 15,
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  />,
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
       }
     }
   >
-    <Text
+    <View
       style={
         Object {
-          "color": "#FFFFFF",
-          "flexGrow": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "paddingLeft": 26,
-          "textAlign": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
         }
       }
     >
-      Hello
-    </Text>
-    <RNGestureHandlerButton
-      collapsable={false}
-      onGestureEvent={[Function]}
-      onGestureHandlerEvent={[Function]}
-      onGestureHandlerStateChange={[Function]}
-      onHandlerStateChange={[Function]}
-      rippleColor={0}
-      testID="com.ariesbifold:id/HomeButton"
-    >
-      <View
-        accessibilityLabel="Global.Home"
-        accessible={true}
-        collapsable={false}
-        nativeID="animatedComponent"
+      <Text
         style={
           Object {
-            "opacity": 1,
+            "color": "#FFFFFF",
+            "flexGrow": 1,
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "paddingBottom": 12,
+            "textAlign": "center",
           }
         }
       >
-        <Text
-          allowFontScaling={false}
+        Hello
+      </Text>
+      <RNGestureHandlerButton
+        collapsable={false}
+        onGestureEvent={[Function]}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
+        onHandlerStateChange={[Function]}
+        rippleColor={0}
+        testID="com.ariesbifold:id/HomeButton"
+      >
+        <View
+          accessibilityLabel="Global.Home"
+          accessible={true}
+          collapsable={false}
+          nativeID="animatedComponent"
           style={
-            Array [
-              Object {
-                "color": "white",
-                "fontSize": 26,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Design Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
+            Object {
+              "opacity": 1,
+            }
           }
         >
-          󰋜
-        </Text>
-      </View>
-    </RNGestureHandlerButton>
-  </View>
-</View>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 24,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰋜
+          </Text>
+        </View>
+      </RNGestureHandlerButton>
+    </View>
+  </View>,
+]
 `;
 
 exports[`Faux Navigation Bar Component Renders without home icon 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "flex-end",
-      "backgroundColor": "#42803E",
-      "flexDirection": "row",
-      "flexGrow": 1,
-      "height": 90,
-      "justifyContent": "center",
-      "paddingBottom": 4,
-    }
-  }
->
+Array [
   <View
     style={
       Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
         "flexDirection": "row",
-        "justifyContent": "space-between",
-        "marginHorizontal": 15,
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  />,
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
       }
     }
   >
-    <Text
+    <View
       style={
         Object {
-          "color": "#FFFFFF",
-          "flexGrow": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "paddingLeft": 26,
-          "textAlign": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
         }
       }
     >
-      Hello
-    </Text>
-  </View>
-</View>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "flexGrow": 1,
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "paddingBottom": 12,
+            "textAlign": "center",
+          }
+        }
+      >
+        Hello
+      </Text>
+    </View>
+  </View>,
+]
 `;
