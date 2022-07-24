@@ -9,11 +9,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Button, { ButtonType } from '../../components/buttons/Button'
 import FauxNavigationBar from '../../components/views/FauxNavigationBar'
 import { useTheme } from '../../contexts/theme'
+import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CommonDeleteModalProps {
-  onSubmit?: () => void
-  onCancel?: () => void
+  onSubmit?: GenericFn
+  onCancel?: GenericFn
   visible?: boolean
 }
 
