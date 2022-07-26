@@ -13,6 +13,7 @@ import {
   ErrorModal,
   toastConfig,
   RootStack,
+  NetInfo,
   OnboardingPages,
   Splash,
   Terms,
@@ -52,6 +53,7 @@ const App = () => {
                 backgroundColor={theme.ColorPallet.brand.primary}
                 translucent={false}
               />
+              <NetInfo />
               <ErrorModal />
               <RootStack setAgent={setAgent} />
               <Toast topOffset={15} config={toastConfig} />
