@@ -13,6 +13,6 @@ export function createDefaultStackOptions({ ColorPallet }: Theme) {
       shadowOpacity: 0.15,
       borderBottomWidth: 0,
     },
-    headerTitleAlign: 'center' as 'center' | 'left'
+    headerTitleAlign: 'center' as 'center' | 'left',
   }
 }

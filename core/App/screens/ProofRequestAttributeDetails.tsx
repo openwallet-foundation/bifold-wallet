@@ -60,14 +60,13 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       headerRight: undefined,
       headerLeft: () => (
         <HeaderLeftBack
-          title={t('Global.Back')}
+          title={' '}
           onPress={() => {
             navigation.pop()
           }}
         />
       ),
-      headerBackTitle: t('Global.Back'),
-      headerBackAccessibilityLabel: t('Global.Back'),
+      headerBackTitleVisible: false,
       headerBackTestID: testIdWithKey('BackButton'),
     })
   }, [])
