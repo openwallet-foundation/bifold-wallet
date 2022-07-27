@@ -1,6 +1,5 @@
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 
 import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
@@ -14,7 +13,6 @@ import { createDefaultStackOptions } from './defaultStackOptions'
 
 const NotificationStack: React.FC = () => {
   const Stack = createStackNavigator<NotificationStackParams>()
-  const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
 
@@ -23,17 +21,13 @@ const NotificationStack: React.FC = () => {
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
-        options={{ headerBackTitle: t('Global.Back') }}
+        options={{ headerBackTitleVisible: false }}
       />
-      <Stack.Screen
-        name={Screens.ProofRequest}
-        component={ProofRequest}
-        options={{ headerBackTitle: t('Global.Back') }}
-      />
+      <Stack.Screen name={Screens.ProofRequest} component={ProofRequest} options={{ headerBackTitleVisible: false }} />
       <Stack.Screen
         name={Screens.ProofRequestAttributeDetails}
         component={ProofRequestAttributeDetails}
-        options={{ headerBackTitle: t('Global.Back') }}
+        options={{ headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name={Screens.CommonDecline}
