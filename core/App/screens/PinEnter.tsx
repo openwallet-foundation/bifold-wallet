@@ -102,11 +102,11 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
     <SafeAreaView style={[style.container]}>
       <View style={{ margin: 20 }}>
         <Image
-          source={Assets.img.logoPrimary.src}
+          source={Assets.img.logoSecondary.src}
           style={{
-            height: Assets.img.logoPrimary.height,
-            width: Assets.img.logoPrimary.width,
-            resizeMode: Assets.img.logoPrimary.resizeMode,
+            height: Assets.img.logoSecondary.height,
+            width: Assets.img.logoSecondary.width,
+            resizeMode: Assets.img.logoSecondary.resizeMode,
             alignSelf: 'center',
             marginBottom: 20,
           }}

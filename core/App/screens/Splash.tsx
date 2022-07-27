@@ -74,7 +74,7 @@ const Splash: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={Assets.img.logoSecondary.src} style={{ resizeMode: Assets.img.logoSecondary.resizeMode }} />
+      <Image source={Assets.img.logoPrimary.src} style={{ resizeMode: Assets.img.logoPrimary.resizeMode }} />
     </SafeAreaView>
   )
 }
