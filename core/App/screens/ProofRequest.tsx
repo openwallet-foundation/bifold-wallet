@@ -5,14 +5,14 @@ import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import flatten from 'lodash.flatten'
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
-import Title from '../components/texts/Title'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -58,7 +58,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
-  const { ColorPallet, ListItems } = useTheme()
+  const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -194,7 +194,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const connection = connectionRecordFromId(proof.connectionId)
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record
         header={() => (
           <View style={styles.headerTextContainer}>
@@ -207,20 +207,27 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   size={ListItems.proofIcon.fontSize}
                 />
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                  <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
                 {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
             )}
           </View>
         )}
         footer={() => (
-          <View style={{ marginBottom: 30 }}>
+          <View
+            style={{
+              paddingHorizontal: 25,
+              paddingVertical: 16,
+              paddingBottom: 26,
+              backgroundColor: ColorPallet.brand.secondaryBackground,
+            }}
+          >
             {!credentials ? <RecordLoading /> : null}
             <View style={styles.footerButton}>
               <Button
@@ -244,7 +251,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           </View>
         )}
         fields={[...attributes, ...predicates]}
-        field={(field) => {
+        field={(field, index, fields) => {
           return (
             <RecordField
               field={field}
@@ -290,6 +297,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   ) : null}
                 </>
               )}
+              hideBottomBorder={index === fields.length - 1}
             />
           )
         }}
