@@ -1,10 +1,11 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
 import CredentialCard from '../components/misc/CredentialCard'
@@ -35,6 +36,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
   const [isDeleteModalDisplayed, setIsDeleteModalDisplayed] = useState<boolean>(false)
   const credential = useCredentialById(credentialId)
+  const credentialConnectionLabel = credential?.connectionId
+    ? useConnectionById(credential.connectionId)?.theirLabel
+    : credential?.connectionId ?? ''
   const { TextTheme, ColorPallet } = useTheme()
 
   const { revoked, revokedMessageDismissed } = state.credential
@@ -45,7 +49,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     },
     footerText: {
       ...TextTheme.normal,
-      paddingTop: 16,
     },
     linkContainer: {
       minHeight: TextTheme.normal.fontSize,
@@ -143,7 +146,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
       <Record
         header={() => (
           <>
@@ -171,17 +174,50 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         )}
         footer={() => (
           <View style={{ marginBottom: 30 }}>
-            <TouchableOpacity
-              accessible={true}
-              accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
-              testID={testIdWithKey('RemoveFromWallet')}
-              activeOpacity={1}
-              onPress={() => handleRemovePressed()}
+            {credentialConnectionLabel ? (
+              <View
+                style={{
+                  backgroundColor: ColorPallet.brand.secondaryBackground,
+                  marginTop: 16,
+                  paddingHorizontal: 25,
+                  paddingVertical: 16,
+                }}
+              >
+                <View>
+                  <Text>
+                    <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')}</Text>{' '}
+                    <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
+                  </Text>
+                </View>
+              </View>
+            ) : null}
+
+            <View
+              style={{
+                backgroundColor: ColorPallet.brand.secondaryBackground,
+                marginTop: 16,
+                paddingHorizontal: 25,
+                paddingVertical: 16,
+              }}
             >
-              <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
-                {t('CredentialDetails.RemoveFromWallet')}
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                accessible={true}
+                accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
+                testID={testIdWithKey('RemoveFromWallet')}
+                activeOpacity={1}
+                onPress={() => handleRemovePressed()}
+              >
+                <Text
+                  style={[
+                    styles.footerText,
+                    styles.link,
+                    { color: ColorPallet.semantic.error, textDecorationLine: 'underline' },
+                  ]}
+                >
+                  {t('CredentialDetails.RemoveFromWallet')}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
         fields={credential?.credentialAttributes}
