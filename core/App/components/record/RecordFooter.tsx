@@ -7,10 +7,8 @@ const RecordFooter: React.FC = ({ children }) => {
   const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPallet.brand.primaryBackground,
       height: '100%',
-      paddingHorizontal: 25,
-      paddingVertical: 16,
     },
   })
   return <View style={styles.container}>{children}</View>
