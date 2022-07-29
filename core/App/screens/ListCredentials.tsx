@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
+import { CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -20,16 +20,15 @@ const ListCredentials: React.FC = () => {
   ]
   const [state] = useStore()
   const { revoked } = state.credential
-  const { ColorPallet } = useTheme()
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
+  const { ColorPallet } = useTheme()
 
   return (
     <FlatList
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
       data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
-      keyExtractor={(item: CredentialRecord) => item.id}
-      ListEmptyComponent={() => <EmptyList message={t('Credentials.EmptyList')} />}
-      renderItem={({ item, index }) => (
+      keyExtractor={(credential) => credential.id}
+      renderItem={({ item: credential, index }) => (
         <View
           style={{
             marginHorizontal: 15,
@@ -38,12 +37,13 @@ const ListCredentials: React.FC = () => {
           }}
         >
           <CredentialCard
-            credential={item}
-            revoked={revoked.has(item.id)}
-            onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: item.id })}
+            credential={credential}
+            revoked={revoked.has(credential.id)}
+            onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
           />
         </View>
       )}
+      ListEmptyComponent={() => <EmptyList message={t('Credentials.EmptyList')} />}
     />
   )
 }
