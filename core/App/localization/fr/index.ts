@@ -155,7 +155,6 @@ const translation = {
         "RejectThisProof?": "Rejeter cette preuve?",
         "AcceptingProof": "Acceptation de la preuve",
         "SuccessfullyAcceptedProof": "Preuve acceptée avec succès",
-        "ProofNotFound": "Preuve non trouvée",
         "RejectingProof": "Rejet de la preuve",
         "ProofAccepted": "Preuve acceptée",
         "ProofRejected": "Preuve rejetée",

@@ -1,7 +1,7 @@
 import {
   ConnectionRecord,
   CredentialMetadataKeys,
-  CredentialExchangeRecord as CredentialRecord,
+  CredentialExchangeRecord,
   ProofRecord,
   RequestedAttribute,
   RequestedPredicate,
@@ -29,11 +29,11 @@ export function parseSchema(schemaId?: string): { name: string; version: string 
   return { name, version }
 }
 
-export function credentialSchema(credential: CredentialRecord): string | undefined {
+export function credentialSchema(credential: CredentialExchangeRecord): string | undefined {
   return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
 }
 
-export function parsedSchema(credential: CredentialRecord): { name: string; version: string } {
+export function parsedSchema(credential: CredentialExchangeRecord): { name: string; version: string } {
   return parseSchema(credentialSchema(credential))
 }
 
@@ -49,7 +49,7 @@ export function hashToRGBA(i: number) {
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
 }
 
-export function credentialRecordFromId(credentialId?: string): CredentialRecord | void {
+export function credentialRecordFromId(credentialId?: string): CredentialExchangeRecord | void {
   if (credentialId) {
     return useCredentialById(credentialId)
   }
@@ -102,15 +102,18 @@ export const isRedirection = (url: string): boolean => {
   return !(queryParams['c_i'] || queryParams['d_m'])
 }
 
-export const processProofAttributes = (
-  proof: ProofRecord,
-  attributes: Record<string, RequestedAttribute[]> = {}
-): Attribute[] => {
+export const processProofAttributes = (proof: ProofRecord, credentials?: RetrievedCredentials): Attribute[] => {
   const processedAttributes = [] as Attribute[]
+
+  if (!credentials) {
+    return processedAttributes
+  }
+
+  const { requestedAttributes: retrievedCredentialAttributes } = credentials
   const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
 
   requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
-    const firstCredential = firstValidCredential(attributes[attributeName] || [])
+    const firstCredential = firstValidCredential(retrievedCredentialAttributes[attributeName] || [])
     const credentialAttributes = names?.length ? names : [name || attributeName]
     credentialAttributes.forEach((attribute) => {
       processedAttributes.push({
@@ -124,15 +127,18 @@ export const processProofAttributes = (
   return processedAttributes
 }
 
-export const processProofPredicates = (
-  proof: ProofRecord,
-  predicates: Record<string, RequestedPredicate[]> = {}
-): Predicate[] => {
+export const processProofPredicates = (proof: ProofRecord, credentials?: RetrievedCredentials): Predicate[] => {
   const processedPredicates = [] as Predicate[]
+
+  if (!credentials) {
+    return processedPredicates
+  }
+
+  const { requestedPredicates: retrievedCredentialPredicates } = credentials
   const { requestedPredicates: requestedProofPredicates } = proof.requestMessage?.indyProofRequest || {}
 
   requestedProofPredicates?.forEach(({ name, predicateType, predicateValue }, predicateName) => {
-    const firstCredential = firstValidCredential(predicates[predicateName] || [])
+    const firstCredential = firstValidCredential(retrievedCredentialPredicates[predicateName] || [])
     const predicate = name || predicateName
     processedPredicates.push({
       name: predicate,
