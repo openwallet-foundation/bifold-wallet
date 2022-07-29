@@ -1,5 +1,3 @@
-import type { ConnectionRecord } from '@aries-framework/core'
-
 import { useConnections } from '@aries-framework/react-hooks'
 import React from 'react'
 import { FlatList } from 'react-native'
@@ -13,14 +11,14 @@ interface ListContactsProps {
 }
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
-  const { connections } = useConnections()
+  const { records: connections } = useConnections()
   const { ColorPallet } = useTheme()
   return (
     <FlatList
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
       data={connections}
-      renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
-      keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
+      keyExtractor={(connection) => connection.id}
+      renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
       ListEmptyComponent={() => <EmptyList />}
     />
   )
