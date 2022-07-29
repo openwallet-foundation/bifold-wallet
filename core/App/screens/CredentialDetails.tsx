@@ -1,134 +1,198 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
-import { useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialExchangeRecord } from '@aries-framework/core'
+import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
+import CommonDeleteModal from '../components/modals/CommonDeleteModal'
 import Record from '../components/record/Record'
 import { ToastType } from '../components/toast/BaseToast'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
+  if (!route?.params) {
+    throw new Error('CredentialDetails route prams were not set properly')
+  }
+
+  const { credentialId } = route?.params
+
+  const { agent } = useAgent()
   const { t } = useTranslation()
   const [state, dispatch] = useStore()
-  const { revoked, revokedMessageDismissed } = state.credential
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
-  // const styles = StyleSheet.create({
-  //   headerText: {
-  //     ...TextTheme.normal,
-  //   },
-  //   footerText: {
-  //     ...TextTheme.normal,
-  //     paddingTop: 16,
-  //   },
-  //   linkContainer: {
-  //     minHeight: TextTheme.normal.fontSize,
-  //     paddingVertical: 2,
-  //   },
-  //   link: {
-  //     ...TextTheme.normal,
-  //     color: ColorPallet.brand.link,
-  //   },
-  // })
-  const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
-    try {
-      if (!credentialId) {
-        throw new Error(t('CredentialOffer.CredentialNotFound'))
-      }
+  const [isDeleteModalDisplayed, setIsDeleteModalDisplayed] = useState<boolean>(false)
+  const credential = useCredentialById(credentialId)
+  const { TextTheme, ColorPallet } = useTheme()
 
-      return useCredentialById(credentialId)
-    } catch (e: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (e as Error)?.message || t('CredentialOffer.CredentialNotFound'),
-      })
+  const { revoked, revokedMessageDismissed } = state.credential
 
-      navigation.goBack()
-    }
-  }
-
-  if (!route.params.credentialId) {
-    Toast.show({
-      type: ToastType.Error,
-      text1: t('Global.Failure'),
-      text2: t('CredentialOffer.CredentialNotFound'),
-    })
-
-    navigation.goBack()
-    return null
-  }
-
-  const credential = getCredentialRecord(route.params.credentialId)
-
-  if (!credential) {
-    Toast.show({
-      type: ToastType.Error,
-      text1: t('Global.Failure'),
-      text2: t('CredentialOffer.CredentialNotFound'),
-    })
-
-    navigation.goBack()
-    return null
-  }
+  const styles = StyleSheet.create({
+    headerText: {
+      ...TextTheme.normal,
+    },
+    footerText: {
+      ...TextTheme.normal,
+      paddingTop: 16,
+    },
+    linkContainer: {
+      minHeight: TextTheme.normal.fontSize,
+      paddingVertical: 2,
+    },
+    link: {
+      ...TextTheme.normal,
+      color: ColorPallet.brand.link,
+    },
+  })
 
   useEffect(() => {
+    if (!agent) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1033'),
+              t('Error.Message1033'),
+              t('CredentialDetails.CredentialNotFound'),
+              1033
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!credential) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1033'),
+              t('Error.Message1033'),
+              t('CredentialDetails.CredentialNotFound'),
+              1033
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!credential) {
+      return
+    }
     const isRevoked = revoked.has(credential.id)
     setIsRevoked(isRevoked)
     const isRevokedMessageDismissed = revokedMessageDismissed.has(credential.id)
     setIsRevokedMessageHidden(isRevokedMessageDismissed)
-  }, [])
+  }, [credential])
 
-  const dismissRevokedMessage = (credential: CredentialRecord) => {
+  const goBackToListCredentials = () => {
+    navigation.pop()
+    navigation.navigate(Screens.Credentials)
+  }
+
+  const handleDismissRevokedMessagePressed = (credential: CredentialExchangeRecord) => {
     dispatch({ type: DispatchAction.CREDENTIAL_REVOKED_MESSAGE_DISMISSED, payload: [credential] })
     setIsRevokedMessageHidden(true)
   }
 
+  const handleRemovePressed = () => {
+    setIsDeleteModalDisplayed(true)
+  }
+
+  const handleSubmitRemovePressed = async () => {
+    try {
+      if (!(agent && credential)) {
+        return
+      }
+      await agent.credentials.deleteById(credential.id)
+      Toast.show({
+        type: ToastType.Success,
+        text1: t('CredentialDetails.CredentialRemoved'),
+      })
+      goBackToListCredentials()
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
+
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [{ error }],
+      })
+    }
+  }
+
+  const handleCancelRemovePressed = () => {
+    setIsDeleteModalDisplayed(false)
+  }
+
   return (
-    <Record
-      header={() => (
-        <>
-          {isRevoked && !isRevokedMessageHidden ? (
-            <View style={{ marginHorizontal: 15, marginTop: 16 }}>
-              <InfoBox
-                notificationType={InfoBoxType.Warn}
-                title={t('CredentialDetails.CredentialRevokedMessageTitle')}
-                description={t('CredentialDetails.CredentialRevokedMessageBody')}
-                onCallToActionLabel={t('Global.Dismiss')}
-                onCallToActionPressed={() => dismissRevokedMessage(credential)}
+    <SafeAreaView>
+      <Record
+        header={() => (
+          <>
+            {isRevoked && !isRevokedMessageHidden ? (
+              <View style={{ marginHorizontal: 15, marginTop: 16 }}>
+                {credential && (
+                  <InfoBox
+                    notificationType={InfoBoxType.Warn}
+                    title={t('CredentialDetails.CredentialRevokedMessageTitle')}
+                    description={t('CredentialDetails.CredentialRevokedMessageBody')}
+                    onCallToActionLabel={t('Global.Dismiss')}
+                    onCallToActionPressed={() => handleDismissRevokedMessagePressed(credential)}
+                  />
+                )}
+              </View>
+            ) : null}
+            {credential && (
+              <CredentialCard
+                credential={credential}
+                revoked={isRevoked}
+                style={{ marginHorizontal: 15, marginTop: 16 }}
               />
-            </View>
-          ) : null}
-          <CredentialCard credential={credential} revoked={isRevoked} style={{ marginHorizontal: 15, marginTop: 16 }} />
-        </>
-      )}
-      footer={() => (
-        <View style={{ marginBottom: 30 }}>
-          {/* <TouchableOpacity
-            accessible={true}
-            accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
-            testID={testIdWithKey('RemoveFromWallet')}
-            activeOpacity={1}
-          >
-            <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
-              {t('CredentialDetails.RemoveFromWallet')}
-            </Text>
-          </TouchableOpacity> */}
-        </View>
-      )}
-      fields={credential.credentialAttributes}
-      hideFieldValues={true}
-    />
+            )}
+          </>
+        )}
+        footer={() => (
+          <View style={{ marginBottom: 30 }}>
+            <TouchableOpacity
+              accessible={true}
+              accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
+              testID={testIdWithKey('RemoveFromWallet')}
+              activeOpacity={1}
+              onPress={() => handleRemovePressed()}
+            >
+              <Text style={[styles.footerText, styles.link, { color: ColorPallet.semantic.error }]}>
+                {t('CredentialDetails.RemoveFromWallet')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        fields={credential?.credentialAttributes}
+        hideFieldValues={true}
+      />
+      <CommonDeleteModal
+        visible={isDeleteModalDisplayed}
+        onSubmit={() => handleSubmitRemovePressed()}
+        onCancel={() => handleCancelRemovePressed()}
+      ></CommonDeleteModal>
+    </SafeAreaView>
   )
 }
 

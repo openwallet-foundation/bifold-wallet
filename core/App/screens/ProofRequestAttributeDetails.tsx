@@ -28,7 +28,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [, dispatch] = useStore()
-  const [credentials, setCredentials] = useState<RetrievedCredentials>()
+  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
   const { ColorPallet, ListItems } = useTheme()
 
@@ -90,7 +90,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
     retrieveCredentialsForProof(proof)
       .then((credentials) => {
-        setCredentials(credentials)
+        setRetrievedCredentials(credentials)
       })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1029'), t('Error.Message1029'), (err as Error).message, 1029)
@@ -101,30 +101,16 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       })
   }, [])
 
-  const { credentials: allCredentials } = useCredentials()
+  const { records: credentials } = useCredentials()
   const connection = connectionRecordFromId(proof.connectionId)
-  const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
+  const attributes = processProofAttributes(proof, retrievedCredentials?.requestedAttributes)
   const matchingAttribute = attributes.find((attribute) => attribute.name === attributeName)
-  const matchingCredentials = allCredentials.filter(
-    (credential) => credential.credentialId === matchingAttribute?.credentialId
-  )
+  const matchingCredentials = credentials.filter((credential) => credential.id === matchingAttribute?.credentialId)
 
   return (
     <FlatList
-      ListHeaderComponent={() => (
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-            <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
-            {t('ProofRequest.IsRequesting')}:
-          </Text>
-          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
-            {attributeName}
-          </Text>
-          <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
-        </View>
-      )}
       data={matchingCredentials}
-      keyExtractor={(credential) => credential.credentialId || credential.id}
+      keyExtractor={(credential) => credential.id}
       renderItem={({ item: credential }) => (
         <View style={styles.listItem}>
           <Text style={ListItems.recordAttributeText} testID={testIdWithKey('CredentialName')}>
@@ -153,6 +139,18 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
           <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeValue')}>
             {matchingAttribute?.value}
           </Text>
+        </View>
+      )}
+      ListHeaderComponent={() => (
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+            <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+            {t('ProofRequest.IsRequesting')}:
+          </Text>
+          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
+            {attributeName}
+          </Text>
+          <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
         </View>
       )}
     ></FlatList>
