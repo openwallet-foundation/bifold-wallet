@@ -44,6 +44,24 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldV
 
   return (
     <FlatList
+      data={fields}
+      keyExtractor={({ name }, index) => name || index.toString()}
+      renderItem={({ item: attr, index }) =>
+        field ? (
+          field(attr)
+        ) : (
+          <RecordField
+            field={attr}
+            hideFieldValue={hideFieldValues}
+            onToggleViewPressed={() => {
+              const newShowState = [...shown]
+              newShowState[index] = !shown[index]
+              setShown(newShowState)
+            }}
+            shown={hideFieldValues ? !!shown[index] : true}
+          />
+        )
+      }
       ListHeaderComponent={
         <RecordHeader>
           {header()}
@@ -64,24 +82,6 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldV
         </RecordHeader>
       }
       ListFooterComponent={<RecordFooter>{footer()}</RecordFooter>}
-      data={fields}
-      keyExtractor={({ name }, index) => name || index.toString()}
-      renderItem={({ item: attr, index }) =>
-        field ? (
-          field(attr)
-        ) : (
-          <RecordField
-            field={attr}
-            hideFieldValue={hideFieldValues}
-            onToggleViewPressed={() => {
-              const newShowState = [...shown]
-              newShowState[index] = !shown[index]
-              setShown(newShowState)
-            }}
-            shown={hideFieldValues ? !!shown[index] : true}
-          />
-        )
-      }
     />
   )
 }

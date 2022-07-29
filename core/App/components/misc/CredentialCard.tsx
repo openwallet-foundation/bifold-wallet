@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord } from '@aries-framework/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
@@ -14,7 +14,7 @@ import { testIdWithKey } from '../../utils/testable'
 import AvatarView from './AvatarView'
 
 interface CredentialCardProps {
-  credential: CredentialRecord
+  credential: CredentialExchangeRecord
   revoked?: boolean
   style?: ViewStyle
   onPress?: GenericFn
