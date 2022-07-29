@@ -12,6 +12,21 @@ import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
 
+export function parseCredDefName(credDefId?: string): string {
+  let name = 'Credential'
+  if (credDefId) {
+    const credDefRegex = /[^:]+/g
+    const credDefIdParts = credDefId.match(credDefRegex)
+    if (credDefIdParts?.length === 5) {
+      name = `${credDefIdParts?.[4].replace(/_|-/g, ' ')}`
+        .split(' ')
+        .map((credIdPart) => credIdPart.charAt(0).toUpperCase() + credIdPart.substring(1))
+        .join(' ')
+    }
+  }
+  return name
+}
+
 export function parseSchema(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'
   let version = ''
@@ -27,6 +42,14 @@ export function parseSchema(schemaId?: string): { name: string; version: string 
     }
   }
   return { name, version }
+}
+
+export function credentialDefenition(credential: CredentialRecord): string | undefined {
+  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
+}
+
+export function parsedCredDefName(credential: CredentialRecord): string {
+  return parseCredDefName(credentialDefenition(credential))
 }
 
 export function credentialSchema(credential: CredentialRecord): string | undefined {
