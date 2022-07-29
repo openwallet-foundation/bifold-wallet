@@ -1,4 +1,4 @@
-import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent, useCredentialById, useCredentials } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'

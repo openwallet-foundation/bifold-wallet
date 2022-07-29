@@ -33,7 +33,7 @@ const NotificationStack: React.FC = () => {
       <Stack.Screen
         name={Screens.ProofRequestAttributeDetails}
         component={ProofRequestAttributeDetails}
-        options={{ headerBackTitle: t('Global.Back') }}
+        options={{ title: t('ProofRequest.Details'), headerBackTitle: t('Global.Back') }}
       />
       <Stack.Screen
         name={Screens.CommonDecline}

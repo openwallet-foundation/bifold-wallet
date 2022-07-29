@@ -1,23 +1,21 @@
 import { ProofRecord, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
-import Title from '../components/texts/Title'
 import { dateFormatOptions } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { HomeStackParams, Screens } from '../types/navigators'
+import { NotificationStackParams, Screens } from '../types/navigators'
 import { connectionRecordFromId, getConnectionName, parsedSchema, processProofAttributes } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
-type ProofRequestAttributeDetailsProps = StackScreenProps<HomeStackParams, Screens.ProofRequestAttributeDetails>
+type ProofRequestAttributeDetailsProps = StackScreenProps<NotificationStackParams, Screens.ProofRequestAttributeDetails>
 
 const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -30,7 +28,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const [, dispatch] = useStore()
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
-  const { ColorPallet, ListItems } = useTheme()
+  const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -53,24 +51,6 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   if (!proof) {
     throw new Error('Unable to fetch proof from AFJ')
   }
-
-  useMemo(() => {
-    navigation.setOptions({
-      title: t('ProofRequest.Details'),
-      headerRight: undefined,
-      headerLeft: () => (
-        <HeaderLeftBack
-          title={t('Global.Back')}
-          onPress={() => {
-            navigation.pop()
-          }}
-        />
-      ),
-      headerBackTitle: t('Global.Back'),
-      headerBackAccessibilityLabel: t('Global.Back'),
-      headerBackTestID: testIdWithKey('BackButton'),
-    })
-  }, [])
 
   useEffect(() => {
     const retrieveCredentialsForProof = async (proof: ProofRecord) => {
@@ -103,9 +83,11 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
   const { records: credentials } = useCredentials()
   const connection = connectionRecordFromId(proof.connectionId)
-  const attributes = processProofAttributes(proof, retrievedCredentials?.requestedAttributes)
-  const matchingAttribute = attributes.find((attribute) => attribute.name === attributeName)
-  const matchingCredentials = credentials.filter((credential) => credential.id === matchingAttribute?.credentialId)
+  const attributes = processProofAttributes(proof, retrievedCredentials)
+  const matchingAttribute = attributes.find((a) => a.name === attributeName)
+  const matchingCredentials = credentials.filter(
+    (credential) => !!credential.credentials.find((c) => c.credentialRecordId === matchingAttribute?.credentialId)
+  )
 
   return (
     <FlatList
@@ -144,7 +126,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       ListHeaderComponent={() => (
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-            <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+            <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
             {t('ProofRequest.IsRequesting')}:
           </Text>
           <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>

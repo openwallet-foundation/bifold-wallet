@@ -29,7 +29,7 @@ import {
 } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
-import ProofRequestAccepted from './ProofRequestAccepted'
+import ProofRequestAccept from './ProofRequestAccept'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 type Fields = Record<string, RequestedAttribute[] | RequestedPredicate[]>
@@ -44,17 +44,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
   const [, dispatch] = useStore()
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  // const timestamps: Record<string, Date> = [
-  //   ...useCredentialByState(CredentialState.CredentialReceived),
-  //   ...useCredentialByState(CredentialState.Done),
-  // ].reduce(
-  //   (timestamps, credential) => ({
-  //     ...timestamps,
-  //     [credential.credentialId || credential.id]: new Date(credential.createdAt),
-  //   }),
-  //   {}
-  // )
-  const [credentials, setCredentials] = useState<RetrievedCredentials>()
+  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
@@ -114,14 +104,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     retrieveCredentialsForProof(proof)
-      .then((credentials) => {
-        if (!credentials) {
+      .then((retrievedCredentials) => {
+        if (!retrievedCredentials) {
           return
         }
 
         const fields: Fields = {
-          ...credentials?.requestedAttributes,
-          ...credentials?.requestedPredicates,
+          ...retrievedCredentials?.requestedAttributes,
+          ...retrievedCredentials?.requestedPredicates,
         }
 
         flatten(Object.values(fields))
@@ -131,10 +121,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
           })
 
-        const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
-        const predicates = processProofPredicates(proof, credentials?.requestedPredicates)
+        const attributes = processProofAttributes(proof, retrievedCredentials)
+        const predicates = processProofPredicates(proof, retrievedCredentials)
 
-        setCredentials(credentials)
+        setRetrievedCredentials(retrievedCredentials)
         setAttributes(attributes)
         setPredicates(predicates)
       })
@@ -149,24 +139,25 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const hasAvailableCredentials = (): boolean => {
     const fields: Fields = {
-      ...credentials?.requestedAttributes,
-      ...credentials?.requestedPredicates,
+      ...retrievedCredentials?.requestedAttributes,
+      ...retrievedCredentials?.requestedPredicates,
     }
 
     // TODO:(jl) Need to test with partial match? Maybe `.some` would work?
-    return typeof credentials !== 'undefined' && Object.values(fields).every((c) => c.length > 0)
+    return typeof retrievedCredentials !== 'undefined' && Object.values(fields).every((c) => c.length > 0)
   }
 
   const handleAcceptPress = async () => {
     try {
       setPendingModalVisible(true)
 
-      if (!credentials) {
+      if (!retrievedCredentials) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
 
-      const sortedCreds = sortCredentialsForAutoSelect(credentials)
-      const automaticRequestedCreds = credentials && agent.proofs.autoSelectCredentialsForProofRequest(sortedCreds)
+      const sortedCreds = sortCredentialsForAutoSelect(retrievedCredentials)
+      const automaticRequestedCreds =
+        retrievedCredentials && agent.proofs.autoSelectCredentialsForProofRequest(sortedCreds)
 
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
@@ -228,7 +219,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
               backgroundColor: ColorPallet.brand.secondaryBackground,
             }}
           >
-            {!credentials ? <RecordLoading /> : null}
+            {!retrievedCredentials ? <RecordLoading /> : null}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Share')}
@@ -244,7 +235,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 title={t('Global.Decline')}
                 accessibilityLabel={t('Global.Decline')}
                 testID={testIdWithKey('Decline')}
-                buttonType={!credentials ? ButtonType.Primary : ButtonType.Secondary}
+                buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
                 onPress={handleDeclinePress}
               />
             </View>
@@ -287,7 +278,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       onPress={() =>
                         navigation.navigate(Screens.ProofRequestAttributeDetails, {
                           proofId,
-                          attributeName: field.name,
+                          attributeName: (field as Attribute).name,
                         })
                       }
                       style={styles.link}
@@ -302,7 +293,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           )
         }}
       />
-      <ProofRequestAccepted visible={pendingModalVisible} proofId={proofId} />
+      <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
     </SafeAreaView>
   )
 }
