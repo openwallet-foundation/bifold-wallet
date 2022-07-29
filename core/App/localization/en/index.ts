@@ -197,7 +197,7 @@ const translation = {
     "Details": "Details",
     "SendingTheInformationSecurely": "Sending the information securely",
     "InformationSentSuccessfully": "Information sent successfully",
-    "ProofRequestCompleted": "Information approved",
+    "ProofRequestCompleted": "Information received",
     "ProofRequestDeclined": "Proof request declined",
     "ConfirmDeclinedTitle": "Are you sure you want to decline this proof request?",
     "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
