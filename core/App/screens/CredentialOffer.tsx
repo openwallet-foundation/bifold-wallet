@@ -8,7 +8,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
-import Title from '../components/texts/Title'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -33,11 +32,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-  const { ListItems } = useTheme()
+  const { ListItems, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
-      paddingBottom: 16,
+      paddingVertical: 16,
     },
     headerText: {
       ...ListItems.recordAttributeLabel,
@@ -81,13 +80,13 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record
         header={() => (
           <>
             <View style={styles.headerTextContainer}>
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                <Text>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
                 {t('CredentialOffer.IsOfferingYouACredential')}
               </Text>
             </View>
@@ -95,7 +94,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           </>
         )}
         footer={() => (
-          <View style={{ marginBottom: 30 }}>
+          <View
+            style={{
+              paddingHorizontal: 25,
+              paddingVertical: 16,
+              paddingBottom: 26,
+              backgroundColor: ColorPallet.brand.secondaryBackground,
+            }}
+          >
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Accept')}

@@ -124,6 +124,7 @@ const translation = {
     "HowToGetThisCredentialBack": "How to get this credential back",
     "HowToGetThisCredentialBackListItem1": "You will have to go to the organization that issued you this credential and request it again.",
     "CredentialRemoved": "Credential removed",
+    "IssuedBy": "Issued by:"
   },
   "Home": {
     "Welcome": "Welcome",
@@ -251,6 +252,10 @@ const translation = {
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
     "BackToHome": "Go back to home"
+  },
+  "NetInfo": {
+    "NoInternetConnectionTitle": "No internet connection",
+    "NoInternetConnectionMessage": "You're unable to access services using Bifold or receive credentials until you're back online.\n\nPlease check your internet connection."
   }
 }
 

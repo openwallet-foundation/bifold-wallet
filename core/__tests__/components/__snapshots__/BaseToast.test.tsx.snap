@@ -2,400 +2,476 @@
 
 exports[`BaseToast Component Error renders correctly 1`] = `
 <View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "alignItems": "flex-start",
-        "borderRadius": 4,
-        "borderWidth": 2,
-        "flex": 1,
-        "flexDirection": "row",
-        "marginTop": 25,
-      },
-      Object {
-        "backgroundColor": "#313132",
-        "borderColor": "#D8292F",
-        "width": 675,
-      },
-    ]
+    Object {
+      "opacity": 1,
+    }
   }
 >
-  <Text
-    allowFontScaling={false}
-    style={
-      Array [
-        Object {
-          "color": "#D8292F",
-          "fontSize": 24,
-        },
-        Array [
-          Object {
-            "marginHorizontal": 15,
-            "marginTop": 15,
-          },
-        ],
-        Object {
-          "fontFamily": "Material Icons",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
-        },
-        Object {},
-      ]
-    }
-  >
-    
-  </Text>
   <View
     style={
       Array [
         Object {
-          "flexShrink": 1,
-          "marginRight": 10,
-          "marginVertical": 15,
+          "alignItems": "flex-start",
+          "borderRadius": 4,
+          "borderWidth": 2,
+          "flex": 1,
+          "flexDirection": "row",
+          "marginTop": 25,
+        },
+        Object {
+          "backgroundColor": "#313132",
+          "borderColor": "#D8292F",
+          "width": 675,
         },
       ]
     }
   >
     <Text
+      allowFontScaling={false}
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
+            "color": "#D8292F",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "marginHorizontal": 15,
+              "marginTop": 15,
+            },
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          Object {
-            "fontWeight": "bold",
-          },
-          Object {
-            "color": "#FFFFFF",
-          },
+          Object {},
         ]
       }
-      testID="com.ariesbifold:id/ToastTitle"
     >
-      Hello World
+      
     </Text>
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          },
-          Object {
-            "marginTop": 10,
-          },
-          Object {
-            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "marginRight": 10,
+            "marginVertical": 15,
           },
         ]
       }
-      testID="com.ariesbifold:id/ToastBody"
     >
-      The quick brown fox jumped over the lazy dog
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastTitle"
+      >
+        Hello World
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 10,
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastBody"
+      >
+        The quick brown fox jumped over the lazy dog
+      </Text>
+    </View>
   </View>
 </View>
 `;
 
 exports[`BaseToast Component Info renders correctly 1`] = `
 <View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "alignItems": "flex-start",
-        "borderRadius": 4,
-        "borderWidth": 2,
-        "flex": 1,
-        "flexDirection": "row",
-        "marginTop": 25,
-      },
-      Object {
-        "backgroundColor": "#313132",
-        "borderColor": "#0099FF",
-        "width": 675,
-      },
-    ]
+    Object {
+      "opacity": 1,
+    }
   }
 >
-  <Text
-    allowFontScaling={false}
-    style={
-      Array [
-        Object {
-          "color": "#0099FF",
-          "fontSize": 24,
-        },
-        Array [
-          Object {
-            "marginHorizontal": 15,
-            "marginTop": 15,
-          },
-        ],
-        Object {
-          "fontFamily": "Material Icons",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
-        },
-        Object {},
-      ]
-    }
-  >
-    
-  </Text>
   <View
     style={
       Array [
         Object {
-          "flexShrink": 1,
-          "marginRight": 10,
-          "marginVertical": 15,
+          "alignItems": "flex-start",
+          "borderRadius": 4,
+          "borderWidth": 2,
+          "flex": 1,
+          "flexDirection": "row",
+          "marginTop": 25,
+        },
+        Object {
+          "backgroundColor": "#313132",
+          "borderColor": "#0099FF",
+          "width": 675,
         },
       ]
     }
   >
     <Text
+      allowFontScaling={false}
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
+            "color": "#0099FF",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "marginHorizontal": 15,
+              "marginTop": 15,
+            },
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          Object {
-            "fontWeight": "bold",
-          },
-          Object {
-            "color": "#FFFFFF",
-          },
+          Object {},
         ]
       }
-      testID="com.ariesbifold:id/ToastTitle"
     >
-      Hello World
+      
     </Text>
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          },
-          Object {
-            "marginTop": 10,
-          },
-          Object {
-            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "marginRight": 10,
+            "marginVertical": 15,
           },
         ]
       }
-      testID="com.ariesbifold:id/ToastBody"
     >
-      The quick brown fox jumped over the lazy dog
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastTitle"
+      >
+        Hello World
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 10,
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastBody"
+      >
+        The quick brown fox jumped over the lazy dog
+      </Text>
+    </View>
   </View>
 </View>
 `;
 
 exports[`BaseToast Component Success renders correctly 1`] = `
 <View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "alignItems": "flex-start",
-        "borderRadius": 4,
-        "borderWidth": 2,
-        "flex": 1,
-        "flexDirection": "row",
-        "marginTop": 25,
-      },
-      Object {
-        "backgroundColor": "#313132",
-        "borderColor": "#2E8540",
-        "width": 675,
-      },
-    ]
+    Object {
+      "opacity": 1,
+    }
   }
 >
-  <Text
-    allowFontScaling={false}
-    style={
-      Array [
-        Object {
-          "color": "#2E8540",
-          "fontSize": 24,
-        },
-        Array [
-          Object {
-            "marginHorizontal": 15,
-            "marginTop": 15,
-          },
-        ],
-        Object {
-          "fontFamily": "Material Icons",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
-        },
-        Object {},
-      ]
-    }
-  >
-    
-  </Text>
   <View
     style={
       Array [
         Object {
-          "flexShrink": 1,
-          "marginRight": 10,
-          "marginVertical": 15,
+          "alignItems": "flex-start",
+          "borderRadius": 4,
+          "borderWidth": 2,
+          "flex": 1,
+          "flexDirection": "row",
+          "marginTop": 25,
+        },
+        Object {
+          "backgroundColor": "#313132",
+          "borderColor": "#2E8540",
+          "width": 675,
         },
       ]
     }
   >
     <Text
+      allowFontScaling={false}
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
+            "color": "#2E8540",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "marginHorizontal": 15,
+              "marginTop": 15,
+            },
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          Object {
-            "fontWeight": "bold",
-          },
-          Object {
-            "color": "#FFFFFF",
-          },
+          Object {},
         ]
       }
-      testID="com.ariesbifold:id/ToastTitle"
     >
-      Hello World
+      
     </Text>
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          },
-          Object {
-            "marginTop": 10,
-          },
-          Object {
-            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "marginRight": 10,
+            "marginVertical": 15,
           },
         ]
       }
-      testID="com.ariesbifold:id/ToastBody"
     >
-      The quick brown fox jumped over the lazy dog
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastTitle"
+      >
+        Hello World
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 10,
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastBody"
+      >
+        The quick brown fox jumped over the lazy dog
+      </Text>
+    </View>
   </View>
 </View>
 `;
 
 exports[`BaseToast Component Warn renders correctly 1`] = `
 <View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "alignItems": "flex-start",
-        "borderRadius": 4,
-        "borderWidth": 2,
-        "flex": 1,
-        "flexDirection": "row",
-        "marginTop": 25,
-      },
-      Object {
-        "backgroundColor": "#313132",
-        "borderColor": "#FCBA19",
-        "width": 675,
-      },
-    ]
+    Object {
+      "opacity": 1,
+    }
   }
 >
-  <Text
-    allowFontScaling={false}
-    style={
-      Array [
-        Object {
-          "color": "#FCBA19",
-          "fontSize": 24,
-        },
-        Array [
-          Object {
-            "marginHorizontal": 15,
-            "marginTop": 15,
-          },
-        ],
-        Object {
-          "fontFamily": "Material Icons",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
-        },
-        Object {},
-      ]
-    }
-  >
-    
-  </Text>
   <View
     style={
       Array [
         Object {
-          "flexShrink": 1,
-          "marginRight": 10,
-          "marginVertical": 15,
+          "alignItems": "flex-start",
+          "borderRadius": 4,
+          "borderWidth": 2,
+          "flex": 1,
+          "flexDirection": "row",
+          "marginTop": 25,
+        },
+        Object {
+          "backgroundColor": "#313132",
+          "borderColor": "#FCBA19",
+          "width": 675,
         },
       ]
     }
   >
     <Text
+      allowFontScaling={false}
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
+            "color": "#FCBA19",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "marginHorizontal": 15,
+              "marginTop": 15,
+            },
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          Object {
-            "fontWeight": "bold",
-          },
-          Object {
-            "color": "#FFFFFF",
-          },
+          Object {},
         ]
       }
-      testID="com.ariesbifold:id/ToastTitle"
     >
-      Hello World
+      
     </Text>
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          },
-          Object {
-            "marginTop": 10,
-          },
-          Object {
-            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "marginRight": 10,
+            "marginVertical": 15,
           },
         ]
       }
-      testID="com.ariesbifold:id/ToastBody"
     >
-      The quick brown fox jumped over the lazy dog
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastTitle"
+      >
+        Hello World
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 10,
+            },
+            Object {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/ToastBody"
+      >
+        The quick brown fox jumped over the lazy dog
+      </Text>
+    </View>
   </View>
 </View>
 `;
