@@ -1,14 +1,18 @@
 import React from 'react'
-import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
+import { View, Text, useWindowDimensions, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
+import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 
 interface BaseToastProps {
   title?: string
   body?: string
   toastType: string
+  onPress?: GenericFn
+  onShow?: GenericFn
+  onHide?: GenericFn
 }
 
 export enum ToastType {
@@ -18,7 +22,7 @@ export enum ToastType {
   Error = 'error',
 }
 
-const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
+const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress = () => null }) => {
   const { TextTheme, borderRadius, borderWidth, ColorPallet } = useTheme()
   const { width } = useWindowDimensions()
   const iconSize = 24
@@ -90,17 +94,19 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType }) => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
-      <Icon style={[styles.icon]} name={iconName} color={iconColor} size={iconSize} />
-      <View style={[styles.textContainer]}>
-        <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
-          {title}
-        </Text>
-        <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
-          {body}
-        </Text>
+    <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+      <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
+        <Icon style={[styles.icon]} name={iconName} color={iconColor} size={iconSize} />
+        <View style={[styles.textContainer]}>
+          <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
+            {title}
+          </Text>
+          <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
+            {body}
+          </Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
