@@ -97,7 +97,8 @@ interface ColorPallet {
 
 interface Assets {
   img: {
-    logoLarge: any
+    logoPrimary: any
+    logoSecondary: any
   }
 }
 
@@ -570,7 +571,14 @@ const PinInputTheme = {
 
 export const Assets = {
   img: {
-    logoLarge: {
+    logoPrimary: {
+      src: require('./assets/img/logo-large.png'),
+      aspectRatio: 1,
+      height: '33%',
+      width: '33%',
+      resizeMode: 'contain',
+    },
+    logoSecondary: {
       src: require('./assets/img/logo-large.png'),
       aspectRatio: 1,
       height: '33%',
