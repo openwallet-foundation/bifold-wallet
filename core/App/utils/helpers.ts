@@ -27,6 +27,19 @@ export function parseCredDefName(credDefId?: string): string {
   return name
 }
 
+export function credentialDefinition(credential: CredentialRecord): string | undefined {
+  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
+}
+
+export function parsedCredDefName(credential: CredentialRecord): string {
+  let credDefName = parseCredDefName(credentialDefinition(credential))
+  // if credDef name is `default` use schema name instead
+  if (credDefName === 'default' || credDefName === 'Default') {
+    credDefName = parsedSchema(credential).name
+  }
+  return credDefName
+}
+
 export function parseSchema(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'
   let version = ''
@@ -42,19 +55,6 @@ export function parseSchema(schemaId?: string): { name: string; version: string 
     }
   }
   return { name, version }
-}
-
-export function credentialDefinition(credential: CredentialRecord): string | undefined {
-  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
-}
-
-export function parsedCredDefName(credential: CredentialRecord): string {
-  let credDefName = parseCredDefName(credentialDefinition(credential))
-  // if credDef name is `default` use schema name instead
-  if (credDefName === 'default' || credDefName === 'Default') {
-    credDefName = parsedSchema(credential).name
-  }
-  return credDefName
 }
 
 export function credentialSchema(credential: CredentialRecord): string | undefined {
