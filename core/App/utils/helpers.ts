@@ -1,6 +1,5 @@
 import {
   ConnectionRecord,
-  CredentialMetadataKeys,
   CredentialExchangeRecord as CredentialRecord,
   ProofRecord,
   RequestedAttribute,
@@ -12,58 +11,8 @@ import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
 
-export function parseCredDefName(credDefId?: string): string {
-  let name = 'Credential'
-  if (credDefId) {
-    const credDefRegex = /[^:]+/g
-    const credDefIdParts = credDefId.match(credDefRegex)
-    if (credDefIdParts?.length === 5) {
-      name = `${credDefIdParts?.[4].replace(/_|-/g, ' ')}`
-        .split(' ')
-        .map((credIdPart) => credIdPart.charAt(0).toUpperCase() + credIdPart.substring(1))
-        .join(' ')
-    }
-  }
-  return name
-}
-
-export function credentialDefinition(credential: CredentialRecord): string | undefined {
-  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
-}
-
-export function parsedCredDefName(credential: CredentialRecord): string {
-  let credDefName = parseCredDefName(credentialDefinition(credential))
-  // if credDef name is `default` use schema name instead
-  if (credDefName === 'default' || credDefName === 'Default') {
-    credDefName = parsedSchema(credential).name
-  }
-  return credDefName
-}
-
-export function parseSchema(schemaId?: string): { name: string; version: string } {
-  let name = 'Credential'
-  let version = ''
-  if (schemaId) {
-    const schemaIdRegex = /(.*?):([0-9]):([a-zA-Z .\-_0-9]+):([a-z0-9._-]+)$/
-    const schemaIdParts = schemaId.match(schemaIdRegex)
-    if (schemaIdParts?.length === 5) {
-      name = `${schemaIdParts?.[3].replace(/_|-/g, ' ')}`
-        .split(' ')
-        .map((schemaIdPart) => schemaIdPart.charAt(0).toUpperCase() + schemaIdPart.substring(1))
-        .join(' ')
-      version = schemaIdParts?.[4]
-    }
-  }
-  return { name, version }
-}
-
-export function credentialSchema(credential: CredentialRecord): string | undefined {
-  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
-}
-
-export function parsedSchema(credential: CredentialRecord): { name: string; version: string } {
-  return parseSchema(credentialSchema(credential))
-}
+export { parsedCredDefName } from './cred-def'
+export { parsedSchema } from './schema'
 
 /**
  * Adapted from https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
