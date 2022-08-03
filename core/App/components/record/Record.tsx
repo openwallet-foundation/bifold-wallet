@@ -11,11 +11,11 @@ import RecordFooter from './RecordFooter'
 import RecordHeader from './RecordHeader'
 
 interface RecordProps {
-  header: () => React.ReactElement | null
-  footer: () => React.ReactElement | null
+  header?: () => React.ReactElement | null
+  footer?: () => React.ReactElement | null
   fields?: Array<Field>
   hideFieldValues?: boolean
-  field?: (field: Field) => React.ReactElement | null
+  field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
 }
 
 const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldValues = false, field = null }) => {
@@ -48,7 +48,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldV
       keyExtractor={({ name }, index) => name || index.toString()}
       renderItem={({ item: attr, index }) =>
         field ? (
-          field(attr)
+          field(attr, index, fields)
         ) : (
           <RecordField
             field={attr}
@@ -59,29 +59,32 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldV
               setShown(newShowState)
             }}
             shown={hideFieldValues ? !!shown[index] : true}
+            hideBottomBorder={index === fields.length - 1}
           />
         )
       }
       ListHeaderComponent={
-        <RecordHeader>
-          {header()}
-          {hideFieldValues ? (
-            <View style={styles.linkContainer}>
-              <TouchableOpacity
-                style={styles.link}
-                activeOpacity={1}
-                onPress={() => resetShown()}
-                testID={testIdWithKey('HideAll')}
-                accessible={true}
-                accessibilityLabel={t('Record.HideAll')}
-              >
-                <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
-              </TouchableOpacity>
-            </View>
-          ) : null}
-        </RecordHeader>
+        header ? (
+          <RecordHeader>
+            {header()}
+            {hideFieldValues ? (
+              <View style={styles.linkContainer}>
+                <TouchableOpacity
+                  style={styles.link}
+                  activeOpacity={1}
+                  onPress={() => resetShown()}
+                  testID={testIdWithKey('HideAll')}
+                  accessible={true}
+                  accessibilityLabel={t('Record.HideAll')}
+                >
+                  <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
+          </RecordHeader>
+        ) : null
       }
-      ListFooterComponent={<RecordFooter>{footer()}</RecordFooter>}
+      ListFooterComponent={footer ? <RecordFooter>{footer()}</RecordFooter> : null}
     />
   )
 }
