@@ -22,7 +22,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       title: connection?.alias || connection?.theirLabel,
       headerTitleAlign: 'center',
       headerRight: () => <InfoIcon connectionId={connection?.id} />,
-      headerBackTitle: ' ',
+      headerBackTitleVisible: false,
     })
   }, [connection])
 

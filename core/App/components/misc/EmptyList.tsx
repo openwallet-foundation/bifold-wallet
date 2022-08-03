@@ -15,8 +15,8 @@ const EmptyList: React.FC<EmptyListProps> = ({ message }) => {
   const { ListItems } = useTheme()
 
   return (
-    <View style={{ marginTop: 100 }}>
-      <EmptyWallet fill={ListItems.emptyList.color} />
+    <View style={{ marginTop: 100, height: '100%' }}>
+      <EmptyWallet fill={ListItems.emptyList.color} height={100} />
       <Text style={[ListItems.emptyList, { textAlign: 'center' }]} testID={testIdWithKey('NoneYet')}>
         {message || t('Global.NoneYet!')}
       </Text>

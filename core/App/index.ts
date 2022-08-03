@@ -9,6 +9,7 @@ import indyLedgers from '../configs/ledgers/indy'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ErrorModal from './components/modals/ErrorModal'
+import NetInfo from './components/network/NetInfo'
 import InfoTextBox from './components/texts/InfoTextBox'
 import toastConfig from './components/toast/ToastConfig'
 import { AuthProvider } from './contexts/auth'
@@ -46,10 +47,11 @@ export {
   Button,
   ButtonType,
   CheckBoxRow,
-  InfoTextBox,
   ErrorModal,
+  InfoTextBox,
   toastConfig,
   RootStack,
+  NetInfo,
   OnboardingPages,
   Splash,
   Terms,
