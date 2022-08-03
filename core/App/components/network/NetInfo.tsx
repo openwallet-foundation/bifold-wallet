@@ -1,5 +1,4 @@
 import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
-import { t } from 'i18next'
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
