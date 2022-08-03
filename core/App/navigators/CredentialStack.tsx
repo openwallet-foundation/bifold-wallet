@@ -22,7 +22,11 @@ const CredentialStack: React.FC = () => {
           headerRight: () => <SettingsCog />,
         })}
       />
-      <Stack.Screen name={Screens.CredentialDetails} component={CredentialDetails} />
+      <Stack.Screen
+        name={Screens.CredentialDetails}
+        component={CredentialDetails}
+        options={{ headerBackTitleVisible: false }}
+      />
     </Stack.Navigator>
   )
 }
