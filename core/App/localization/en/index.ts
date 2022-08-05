@@ -94,6 +94,8 @@ const translation = {
   "PinEnter": {
     "EnterPIN": "Enter PIN",
     "IncorrectPIN": "Incorrect PIN",
+    "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
+    "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet."
   },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
@@ -120,7 +122,7 @@ const translation = {
     "CredentialRevokedMessageTitle": "This credential is revoked",
     "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the issuer.",
     "RemoveTitle": "Remove credential from your wallet",
-    "RemoveCaption": "You will lose your ability to prove the information on this credential with BC Wallet.",
+    "RemoveCaption": "You will lose your ability to prove the information on this credential with this Wallet.",
     "CredentialNotFound": "Credential not found",
     "YouWillNotLose": "You will NOT lose",
     "YouWillNotLoseListItem1": "Your credential within the system that issued you your credential.",
@@ -251,6 +253,7 @@ const translation = {
     "Settings": 'Settings',
     "Language": 'Language',
     "Contacts": 'Contacts',
+    "Decline": "Decline",
     "ContactDetails": 'Contact Details',
   },
   "Loading": {
