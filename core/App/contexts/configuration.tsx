@@ -6,6 +6,7 @@ export interface ConfigurationContext {
   pages: typeof OnboardingPages
   splash: React.FC
   terms: React.FC
+  homeContentView: React.FC
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

@@ -30,6 +30,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   const proof = useProofById(proofId)
   const navigation = useNavigation()
   const { ColorPallet, TextTheme } = useTheme()
+
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -81,9 +82,8 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
       (proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId === 'undefined')
     ) {
       timer && clearTimeout(timer)
+      setProofDeliveryStatus(proof.state)
     }
-
-    setProofDeliveryStatus(proof.state)
   }, [proof])
 
   useEffect(() => {

@@ -13,6 +13,8 @@ import { create } from 'react-test-renderer'
 
 import { Button, NotificationListItem } from '../../App/components'
 import { NotificationType } from '../../App/components/listItems/NotificationListItem'
+import HomeContentView from '../../App/components/views/HomeContentView'
+import { ConfigurationContext, ConfigurationProvider } from '../../App/contexts/configuration'
 import Home from '../../App/screens/Home'
 
 jest.mock('@react-navigation/core', () => {
@@ -22,6 +24,13 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
+const defaultConfiguration: ConfigurationContext = {
+  pages: undefined,
+  splash: undefined,
+  terms: undefined,
+  homeContentView: HomeContentView,
+}
+
 describe('displays a home screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -29,7 +38,11 @@ describe('displays a home screen', () => {
   })
 
   it('renders correctly', () => {
-    const tree = create(<Home navigation={useNavigation()} />).toJSON()
+    const tree = create(
+      <ConfigurationProvider value={defaultConfiguration}>
+        <Home navigation={useNavigation()} />
+      </ConfigurationProvider>
+    ).toJSON()
 
     expect(tree).toMatchSnapshot()
   })
@@ -42,7 +55,11 @@ describe('displays a home screen', () => {
    * TODO:(jl) Good enough to be captured by the snapshot?
    */
   it('defaults to no notifications', async () => {
-    const { findByText } = render(<Home navigation={useNavigation()} />)
+    const { findByText } = render(
+      <ConfigurationProvider value={defaultConfiguration}>
+        <Home navigation={useNavigation()} />
+      </ConfigurationProvider>
+    )
     const notificationLabel = await findByText('Home.NoNewUpdates')
 
     expect(notificationLabel).toBeTruthy()
@@ -79,7 +96,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * Then the number of pending notifications is displayed in the "Home" button in the main navigation bar
    */
   it('notification label is displayed with number of notifications', async () => {
-    const { findByText } = render(<Home navigation={useNavigation()} />)
+    const { findByText } = render(
+      <ConfigurationProvider value={defaultConfiguration}>
+        <Home navigation={useNavigation()} />
+      </ConfigurationProvider>
+    )
     const notificationLabel = await findByText('Home.Notifications (2)')
 
     expect(notificationLabel).toBeTruthy()
@@ -87,7 +108,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
   it('Pressing the "See All" button navigates correctly', async () => {
     const navigation = useNavigation()
-    const { findByText } = render(<Home navigation={useNavigation()} />)
+    const { findByText } = render(
+      <ConfigurationProvider value={defaultConfiguration}>
+        <Home navigation={useNavigation()} />
+      </ConfigurationProvider>
+    )
     const seeAllButton = await findByText('Home.SeeAll')
 
     expect(seeAllButton).toBeTruthy()
@@ -104,7 +129,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * Then the credential offer will arrive in the form of a notification in the home screen
    */
   it('notifications are displayed', () => {
-    const tree = create(<Home navigation={useNavigation()} />)
+    const tree = create(
+      <ConfigurationProvider value={defaultConfiguration}>
+        <Home navigation={useNavigation()} />
+      </ConfigurationProvider>
+    )
     const root = tree.root
     const flatListInstance = root.findByType(FlatList)
 
@@ -118,7 +147,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder is taken to the credential offer screen/flow
    */
   it('touch notification triggers navigation correctly', async () => {
-    const tree = create(<Home navigation={useNavigation()} />)
+    const tree = create(
+      <ConfigurationProvider value={defaultConfiguration}>
+        <Home navigation={useNavigation()} />
+      </ConfigurationProvider>
+    )
     const root = tree.root
     const notifications = root.findAllByType(NotificationListItem)
     const credentialOffer = notifications.find(
@@ -145,7 +178,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder is taken to the proof request screen/flow
    */
   it('touch notification triggers navigation correctly', async () => {
-    const tree = create(<Home navigation={useNavigation()} />)
+    const tree = create(
+      <ConfigurationProvider value={defaultConfiguration}>
+        <Home navigation={useNavigation()} />
+      </ConfigurationProvider>
+    )
     const root = tree.root
     const notifications = root.findAllByType(NotificationListItem)
     const proofRequest = notifications.find(

@@ -12,6 +12,7 @@ import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import InfoTextBox from './components/texts/InfoTextBox'
 import toastConfig from './components/toast/ToastConfig'
+import HomeContentView from './components/views/HomeContentView'
 import { AuthProvider } from './contexts/auth'
 import RootStack from './navigators/RootStack'
 import OnboardingPages from './screens/OnboardingPages'
@@ -55,4 +56,5 @@ export {
   OnboardingPages,
   Splash,
   Terms,
+  HomeContentView,
 }

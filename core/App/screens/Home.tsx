@@ -1,5 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useMemo } from 'react'
@@ -11,6 +10,7 @@ import { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import LoadingModal from '../components/modals/LoadingModal'
 import { LocalStorageKeys } from '../constants'
+import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -25,14 +25,12 @@ const offsetPadding = 5
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const credentials = [
-    ...useCredentialByState(CredentialState.CredentialReceived),
-    ...useCredentialByState(CredentialState.Done),
-  ]
   const { notifications } = useNotifications()
   const { t } = useTranslation()
   const { HomeTheme } = useTheme()
   const [store, dispatch] = useStore()
+  const { homeContentView: HomeContentView } = useConfiguration()
+
   // This syntax is required for the jest mocks to work
   const [loading, setLoading] = React.useState<boolean>(true)
   const styles = StyleSheet.create({
@@ -95,38 +93,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     setLoading(store.loading)
   }, [store.loading])
 
-  const displayMessage = (credentialCount: number) => {
-    if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
-      throw new Error('Credential count cannot be undefined')
-    }
-
-    let credentialMsg
-
-    if (credentialCount === 1) {
-      credentialMsg = (
-        <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credential')}{' '}
-          {t('Home.InYourWallet')}
-        </Text>
-      )
-    } else if (credentialCount > 1) {
-      credentialMsg = (
-        <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credentials')}{' '}
-          {t('Home.InYourWallet')}
-        </Text>
-      )
-    } else {
-      credentialMsg = t('Home.NoCredentials')
-    }
-
-    return (
-      <View style={[styles.messageContainer]}>
-        <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
-      </View>
-    )
-  }
-
   return (
     <>
       {loading ? (
@@ -188,7 +154,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
               </View>
             )}
           />
-          <View style={styles.container}>{displayMessage(credentials.length)}</View>
+          <HomeContentView />
         </View>
       )}
     </>
