@@ -1,7 +1,7 @@
-import { CredentialExchangeRecord as CredentialRecord, ConnectionRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord, ConnectionRecord } from '@aries-framework/core'
 import { useCredentialById, useConnectionById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { fireEvent, render } from '@testing-library/react-native'
+import { act, fireEvent, render } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
@@ -28,7 +28,7 @@ const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json'
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
 
 const connectionRecord = new ConnectionRecord(connection)
-const credentialRecord = new CredentialRecord(credential)
+const credentialRecord = new CredentialExchangeRecord(credential)
 // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
 credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 
@@ -38,14 +38,18 @@ useConnectionById.mockReturnValue(connectionRecord)
 useCredentialById.mockReturnValue(credentialRecord)
 
 describe('displays a credential offer screen', () => {
-  test('renders correctly', () => {
+  test('renders correctly', async () => {
     const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+
+    await act(async () => null)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('shows offer controls', async () => {
     const { getByTestId } = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+
+    await act(async () => null)
 
     const acceptButton = getByTestId(testIdWithKey('AcceptCredentialOffer'))
     const declineButton = getByTestId(testIdWithKey('DeclineCredentialOffer'))
@@ -57,6 +61,8 @@ describe('displays a credential offer screen', () => {
   test('accepting a credential', async () => {
     const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
 
+    await act(async () => null)
+
     const acceptButton = tree.getByTestId(testIdWithKey('AcceptCredentialOffer'))
 
     fireEvent(acceptButton, 'press')
@@ -66,6 +72,8 @@ describe('displays a credential offer screen', () => {
 
   test('declining a credential', async () => {
     const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+
+    await act(async () => null)
 
     const declineButton = tree.getByTestId(testIdWithKey('DeclineCredentialOffer'))
 
