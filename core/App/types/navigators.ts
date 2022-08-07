@@ -4,6 +4,7 @@ import { DeclineType } from './decline'
 import { Attribute } from './record'
 
 export enum Screens {
+  WebDisplay = 'WebDisplay',
   Splash = 'Splash',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
@@ -81,6 +82,7 @@ export type CredentialStackParams = {
 export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
+  [Screens.WebDisplay]: { destUrl: string; exitUrl?: string }
 }
 
 export type ConnectStackParams = {

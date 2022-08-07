@@ -17,6 +17,7 @@ import {
   OnboardingPages,
   Splash,
   Terms,
+  HomeContentView,
 } from "aries-bifold";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
@@ -27,6 +28,7 @@ const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
   splash: Splash,
   terms: Terms,
+  homeContentView: HomeContentView,
 };
 
 initLanguages(translationResources);
