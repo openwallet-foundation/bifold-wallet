@@ -1,11 +1,14 @@
 import { ProofRecord, RetrievedCredentials } from '@aries-framework/core'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
+import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import RecordLoading from '../components/animated/RecordLoading'
 import { dateFormatOptions } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -28,19 +31,34 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const [, dispatch] = useStore()
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
+  // This syntax is required for the jest mocks to work
+  // eslint-disable-next-line import/no-named-as-default-member
+  const [loading, setLoading] = React.useState<boolean>(true)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
-    headerTextContainer: {
+    headerContainer: {
       paddingHorizontal: 25,
-      paddingVertical: 16,
+      paddingTop: 16,
     },
     headerText: {
       ...ListItems.recordAttributeText,
       flexShrink: 1,
     },
-    listItem: {
-      ...ListItems.proofListItem,
+    footerContainer: {
+      paddingHorizontal: 25,
+    },
+    container: {
+      ...ListItems.recordContainer,
+      paddingHorizontal: 25,
+      paddingVertical: 16,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    border: {
+      ...ListItems.recordBorder,
+      paddingTop: 12,
+      borderBottomColor: ColorPallet.brand.secondaryBackground,
+      borderBottomWidth: 2,
     },
   })
 
@@ -71,6 +89,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
     retrieveCredentialsForProof(proof)
       .then((credentials) => {
         setRetrievedCredentials(credentials)
+        setLoading(false)
       })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1029'), t('Error.Message1029'), (err as Error).message, 1029)
@@ -90,52 +109,67 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   )
 
   return (
-    <FlatList
-      data={matchingCredentials}
-      keyExtractor={(credential) => credential.id}
-      renderItem={({ item: credential }) => (
-        <View style={styles.listItem}>
-          <Text style={ListItems.recordAttributeText} testID={testIdWithKey('CredentialName')}>
-            {parsedSchema(credential).name}
-          </Text>
-          {matchingAttribute?.revoked ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon
-                style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                name="close"
-                color={ListItems.proofError.color}
-                size={ListItems.recordAttributeText.fontSize}
-              ></Icon>
-              <Text
-                style={[ListItems.recordAttributeText, { color: ColorPallet.semantic.error }]}
-                testID={testIdWithKey('RevokedOrNotAvailable')}
-              >
-                {t('CredentialDetails.Revoked')}
-              </Text>
-            </View>
-          ) : (
-            <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
-              {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
+      <FlatList
+        data={matchingCredentials}
+        keyExtractor={(credential) => credential.id}
+        renderItem={({ item: credential, index }) => (
+          <View style={styles.container}>
+            <Text style={ListItems.recordAttributeText} testID={testIdWithKey('CredentialName')}>
+              {parsedSchema(credential).name}
             </Text>
-          )}
-          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeValue')}>
-            {matchingAttribute?.value}
-          </Text>
-        </View>
-      )}
-      ListHeaderComponent={() => (
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-            <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
-            {t('ProofRequest.IsRequesting')}:
-          </Text>
-          <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
-            {attributeName}
-          </Text>
-          <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
-        </View>
-      )}
-    ></FlatList>
+            {matchingAttribute?.revoked ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon
+                  style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                  name="close"
+                  color={ListItems.proofError.color}
+                  size={ListItems.recordAttributeText.fontSize}
+                ></Icon>
+                <Text
+                  style={[ListItems.recordAttributeText, { color: ColorPallet.semantic.error }]}
+                  testID={testIdWithKey('RevokedOrNotAvailable')}
+                >
+                  {t('CredentialDetails.Revoked')}
+                </Text>
+              </View>
+            ) : (
+              <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
+                {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
+              </Text>
+            )}
+            <Text style={[ListItems.credentialTitle, { paddingTop: 16 }]} testID={testIdWithKey('AttributeValue')}>
+              {matchingAttribute?.value}
+            </Text>
+            {
+              <View
+                style={[styles.border, index === matchingCredentials.length - 1 && { borderBottomWidth: 0 }]}
+              ></View>
+            }
+          </View>
+        )}
+        ListHeaderComponent={() => (
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+              <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
+              {t('ProofRequest.IsRequesting')}:
+            </Text>
+            <Text style={[ListItems.credentialTitle, { paddingVertical: 16 }]} testID={testIdWithKey('AttributeName')}>
+              {startCase(attributeName || '')}
+            </Text>
+            <Text style={styles.headerText}>{t('ProofRequest.WhichYouCanProvideFrom')}:</Text>
+            {<View style={[styles.border]}></View>}
+          </View>
+        )}
+        ListFooterComponent={() =>
+          loading ? (
+            <View style={styles.footerContainer}>
+              <RecordLoading />
+            </View>
+          ) : null
+        }
+      />
+    </SafeAreaView>
   )
 }
 

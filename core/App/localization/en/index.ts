@@ -58,7 +58,9 @@ const translation = {
     "Title1033": "Unable to fetch credential.",
     "Message1033": "Credential could not be found.",
     "Title1034": "Unable to fetch proof request.",
-    "Message1034": "Proof request could not be found."
+    "Message1034": "Proof request could not be found.",
+    "Title1035": "Unable to fetch credential offer.",
+    "Message1035": "Credential offer could not be found.",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."

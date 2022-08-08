@@ -1,9 +1,9 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofRecord, RequestedAttribute, RequestedPredicate, RetrievedCredentials } from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import flatten from 'lodash.flatten'
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -20,13 +20,7 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute, Predicate } from '../types/record'
-import {
-  connectionRecordFromId,
-  getConnectionName,
-  processProofAttributes,
-  processProofPredicates,
-  sortCredentialsForAutoSelect,
-} from '../utils/helpers'
+import { processProofAttributes, processProofPredicates, sortCredentialsForAutoSelect } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -48,6 +42,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
+  const proofConnectionLabel = proof?.connectionId
+    ? useConnectionById(proof.connectionId)?.theirLabel
+    : proof?.connectionId ?? ''
+  // This syntax is required for the jest mocks to work
+  // eslint-disable-next-line import/no-named-as-default-member
+  const [loading, setLoading] = React.useState<boolean>(true)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -78,15 +78,47 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     },
   })
 
-  if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
-  }
+  useEffect(() => {
+    if (!agent) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1034'),
+              t('Error.Message1034'),
+              t('ProofRequest.ProofRequestNotFound'),
+              1034
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
 
-  if (!proof) {
-    throw new Error('Unable to fetch proof from AFJ')
-  }
+  useEffect(() => {
+    if (!proof) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1034'),
+              t('Error.Message1034'),
+              t('ProofRequest.ProofRequestNotFound'),
+              1034
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
 
   useMemo(() => {
+    if (!(agent && proof)) {
+      return
+    }
+    setLoading(true)
     const retrieveCredentialsForProof = async (proof: ProofRecord) => {
       try {
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
@@ -117,7 +149,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         flatten(Object.values(fields))
           .filter((credential) => credential.revoked)
           .forEach((credential) => {
-            // console.log(`Marking revoked, ID = ${credential.credentialId}`)
             dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
           })
 
@@ -127,6 +158,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         setRetrievedCredentials(retrievedCredentials)
         setAttributes(attributes)
         setPredicates(predicates)
+        setLoading(false)
       })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1026'), t('Error.Message1026'), (err as Error).message, 1026)
@@ -149,6 +181,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const handleAcceptPress = async () => {
     try {
+      if (!(agent && proof)) {
+        return
+      }
       setPendingModalVisible(true)
 
       if (!retrievedCredentials) {
@@ -182,8 +217,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     })
   }
 
-  const connection = connectionRecordFromId(proof.connectionId)
-
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record
@@ -198,13 +231,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   size={ListItems.proofIcon.fontSize}
                 />
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
+                  <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
+                <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
                 {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
             )}
@@ -219,7 +252,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
               backgroundColor: ColorPallet.brand.secondaryBackground,
             }}
           >
-            {!retrievedCredentials ? <RecordLoading /> : null}
+            {loading ? <RecordLoading /> : null}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Share')}
