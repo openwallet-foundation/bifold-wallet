@@ -2,12 +2,13 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 
 import { Agent } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import QRScanner from '../components/misc/QRScanner'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
@@ -16,13 +17,11 @@ import CameraDisclosure from './CameraDisclosure'
 
 type ScanProps = StackScreenProps<ConnectStackParams>
 
-const DidShowCameraDisclosureLocalStorageKey = 'DidShowCameraDisclosure'
-
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
-  const [didShowCameraDisclosure, setDidShowCameraDisclosure] = useState<boolean | null>()
+  const [state, dispatch] = useStore()
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
     try {
@@ -41,26 +40,6 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
       throw error
     }
   }
-
-  useMemo(async () => {
-    const data = await AsyncStorage.getItem(DidShowCameraDisclosureLocalStorageKey)
-    const record = data !== null ? JSON.parse(data) : null
-
-    setDidShowCameraDisclosure(record !== null ? record.didShowCameraDisclosure : false)
-  }, [])
-
-  useEffect(() => {
-    const saveDidShowCameraDisclosure = async () => {
-      await AsyncStorage.setItem(
-        DidShowCameraDisclosureLocalStorageKey,
-        JSON.stringify({ didShowCameraDisclosure: didShowCameraDisclosure })
-      )
-    }
-
-    saveDidShowCameraDisclosure().catch((err: unknown) => {
-      // console.log('Problem', err)
-    })
-  }, [didShowCameraDisclosure])
 
   const handleInvitation = async (url: string): Promise<void> => {
     try {
@@ -101,14 +80,14 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   }
 
   const didDismissCameraDisclosure = () => {
-    setDidShowCameraDisclosure(true)
+    dispatch({ type: DispatchAction.DID_SHOW_CAMERA_DISCLOSURE, payload: [] })
   }
 
   return (
     <>
-      {(!didShowCameraDisclosure && <CameraDisclosure didDismissCameraDisclosure={didDismissCameraDisclosure} />) || (
-        <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
-      )}
+      {(!state.privacy.didShowCameraDisclosure && (
+        <CameraDisclosure didDismissCameraDisclosure={didDismissCameraDisclosure} />
+      )) || <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />}
     </>
   )
 }
