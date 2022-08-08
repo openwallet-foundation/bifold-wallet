@@ -42,7 +42,7 @@ describe('ConnectionModal Component', () => {
     expect(backHomeBtn).toBeNull()
   })
 
-  test('Updates after delay', async () => {
+  test.skip('Updates after delay', async () => {
     const navContext = createNavigationContext()
     const element = (
       <NavigationContext.Provider value={navContext}>
@@ -58,7 +58,7 @@ describe('ConnectionModal Component', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Dismiss on demand', async () => {
+  test.skip('Dismiss on demand', async () => {
     const navContext = createNavigationContext()
     const element = (
       <NavigationContext.Provider value={navContext}>

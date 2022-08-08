@@ -18,6 +18,9 @@ const initialState: State = {
     revoked: new Set(),
     revokedMessageDismissed: new Set(),
   },
+  privacy: {
+    didShowCameraDisclosure: false,
+  },
   error: null,
   loading: false,
 }

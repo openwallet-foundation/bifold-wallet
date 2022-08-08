@@ -1,10 +1,12 @@
-import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialMetadataKeys, CredentialPreviewAttributeOptions } from '@aries-framework/core'
+import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
@@ -14,7 +16,6 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { connectionRecordFromId, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -27,12 +28,22 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   const { credentialId } = route.params
+
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
+  const credential = useCredentialById(credentialId)
+  const credentialConnectionLabel = credential?.connectionId
+    ? useConnectionById(credential.connectionId)?.theirLabel
+    : credential?.connectionId ?? ''
+  const [credentialAttributes, setCredentialAttributes] = useState<CredentialPreviewAttributeOptions[]>([])
+  // This syntax is required for the jest mocks to work
+  // eslint-disable-next-line import/no-named-as-default-member
+  const [loading, setLoading] = React.useState<boolean>(true)
   const { ListItems, ColorPallet } = useTheme()
+
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
@@ -46,20 +57,63 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       paddingTop: 10,
     },
   })
-  const credential = useCredentialById(credentialId)
 
-  if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
-  }
+  useEffect(() => {
+    if (!agent) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1033'),
+              t('Error.Message1033'),
+              t('CredentialDetails.CredentialNotFound'),
+              1033
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
 
-  if (!credential) {
-    throw new Error('Unable to fetch credential from AFJ')
-  }
+  useEffect(() => {
+    if (!credential) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1033'),
+              t('Error.Message1033'),
+              t('CredentialDetails.CredentialNotFound'),
+              1033
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
 
-  const connection = connectionRecordFromId(credential.connectionId)
+  useEffect(() => {
+    if (!(agent && credential)) {
+      return
+    }
+    setLoading(true)
+    agent?.credentials.getFormatData(credential.id).then(({ offer, offerAttributes }) => {
+      credential.metadata.add(CredentialMetadataKeys.IndyCredential, {
+        schemaId: offer?.indy?.schema_id,
+        credentialDefinitionId: offer?.indy?.cred_def_id,
+      })
+      setCredentialAttributes(offerAttributes || [])
+      setLoading(false)
+    })
+  }, [credential])
 
   const handleAcceptPress = async () => {
     try {
+      if (!(agent && credential)) {
+        return
+      }
       setAcceptModalVisible(true)
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
     } catch (err: unknown) {
@@ -86,11 +140,13 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           <>
             <View style={styles.headerTextContainer}>
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
+                <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
                 {t('CredentialOffer.IsOfferingYouACredential')}
               </Text>
             </View>
-            <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+            {!loading && credential && (
+              <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+            )}
           </>
         )}
         footer={() => (
@@ -102,6 +158,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
               backgroundColor: ColorPallet.brand.secondaryBackground,
             }}
           >
+            {loading ? <RecordLoading /> : null}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Accept')}
@@ -124,7 +181,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             </View>
           </View>
         )}
-        fields={credential.credentialAttributes}
+        fields={credentialAttributes}
       />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
     </SafeAreaView>
