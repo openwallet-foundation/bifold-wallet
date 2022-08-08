@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text } from 'react-native'
+import { Platform, Keyboard, StyleSheet, Text, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -11,6 +11,7 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
@@ -108,6 +109,11 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
   return (
     <SafeAreaView style={[style.container]}>
+      <StatusBar
+        barStyle={
+          Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
+        }
+      />
       <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
         <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
       </Text>
