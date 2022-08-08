@@ -36,6 +36,7 @@ export type { StoreProviderProps } from './contexts/store'
 export type { Theme } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
 export type { Onboarding as OnboardingState } from './types/state'
+export type { Privacy as PrivacyState } from './types/state'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
