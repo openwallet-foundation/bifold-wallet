@@ -10,7 +10,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { Onboarding as StoreOnboardingState } from '../types/state'
+import { Onboarding as StoreOnboardingState, Privacy as PrivacyState } from '../types/state'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN
@@ -48,7 +48,16 @@ const Splash: React.FC = () => {
   useMemo(() => {
     async function init() {
       try {
-        // await AsyncStorage.removeItem(LocalStorageKeys.Onboarding)
+        const privacyData = await AsyncStorage.getItem(LocalStorageKeys.Privacy)
+        if (privacyData) {
+          const dataAsJSON = JSON.parse(privacyData) as PrivacyState
+
+          dispatch({
+            type: DispatchAction.PRIVACY_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
         const data = await AsyncStorage.getItem(LocalStorageKeys.Onboarding)
         if (data) {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
