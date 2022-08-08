@@ -7,9 +7,13 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import QRScanner from '../components/misc/QRScanner'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
 import { isRedirection } from '../utils/helpers'
+
+import CameraDisclosure from './CameraDisclosure'
 
 type ScanProps = StackScreenProps<ConnectStackParams>
 
@@ -17,6 +21,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
+  const [state, dispatch] = useStore()
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
     try {
@@ -74,7 +79,17 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
     }
   }
 
-  return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
+  const didDismissCameraDisclosure = () => {
+    dispatch({ type: DispatchAction.DID_SHOW_CAMERA_DISCLOSURE, payload: [] })
+  }
+
+  return (
+    <>
+      {(!state.privacy.didShowCameraDisclosure && (
+        <CameraDisclosure didDismissCameraDisclosure={didDismissCameraDisclosure} />
+      )) || <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />}
+    </>
+  )
 }
 
 export default Scan

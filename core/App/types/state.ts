@@ -14,9 +14,14 @@ export interface Credential {
   revokedMessageDismissed: Set<CredentialRecord['id']>
 }
 
+export interface Privacy {
+  didShowCameraDisclosure: boolean
+}
+
 export interface State {
   onboarding: Onboarding
   credential: Credential
+  privacy: Privacy
   error: BifoldError | null
   loading: boolean
 }
