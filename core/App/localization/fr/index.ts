@@ -127,7 +127,8 @@ const translation = {
     },
     "Connection": {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
-        "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre."
+        "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
+        "ConnectionAdded": "Ajouté aux Contacts"
     },
     "CredentialOffer": {
         "CredentialOffer": "Offre de justificatif",

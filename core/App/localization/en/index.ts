@@ -150,7 +150,8 @@ const translation = {
   },
   "Connection": {
     "JustAMoment": "Just a moment while we make a secure connection...",
-    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
+    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
+    "ConnectionAdded": "Added to Contacts"
   },
   "CredentialOffer": {
     "CredentialOffer": "Credential Offer",

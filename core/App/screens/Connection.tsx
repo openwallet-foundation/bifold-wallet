@@ -4,9 +4,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Toast from 'react-native-toast-message'
 
 import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { ToastType } from '../components/toast/BaseToast'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
@@ -103,6 +105,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (notificationRecord) {
       switch (notificationRecord.type) {
         case 'CredentialRecord':
+          Toast.show({
+            type: ToastType.Success,
+            text1: t('Connection.ConnectionAdded'),
+          })
           navigation.navigate(Screens.CredentialOffer, { credentialId: notificationRecord.id })
           break
         case 'ProofRecord':
