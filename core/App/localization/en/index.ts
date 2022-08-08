@@ -71,6 +71,10 @@ const translation = {
     "IAgree": "I Agree",
     "Attestation": "I have read, understand and accept the terms and conditions.",
   },
+  "PrivacyPolicy": {
+    "Title": "Privacy Policy",
+    "CameraDisclosure": "The camera is used to scan QR Codes for immediate on-device processing. No information about the images is stored, used for analytics, or shared.",
+  },
   "PinCreate": {
     "UserAuthenticationPIN": "User authentication PIN",
     "PINTooShort": "PIN too short",
