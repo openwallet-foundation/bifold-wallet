@@ -27,12 +27,13 @@ type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const { HomeTheme } = useTheme()
   const [store, dispatch] = useStore()
   const { homeContentView: HomeContentView } = useConfiguration()
-
   // This syntax is required for the jest mocks to work
+  // eslint-disable-next-line import/no-named-as-default-member
   const [loading, setLoading] = React.useState<boolean>(true)
+  const { HomeTheme } = useTheme()
+
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: offset,
