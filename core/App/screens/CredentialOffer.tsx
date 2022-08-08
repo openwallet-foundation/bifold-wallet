@@ -65,10 +65,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         payload: [
           {
             error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
+              t('Error.Title1035'),
+              t('Error.Message1035'),
+              t('CredentialOffer.CredentialNotFound'),
+              1035
             ),
           },
         ],
@@ -83,10 +83,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         payload: [
           {
             error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
+              t('Error.Title1035'),
+              t('Error.Message1035'),
+              t('CredentialOffer.CredentialNotFound'),
+              1035
             ),
           },
         ],
