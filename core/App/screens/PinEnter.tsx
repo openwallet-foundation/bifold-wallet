@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, Image, View, Alert } from 'react-native'
+import { Platform, StatusBar, Keyboard, StyleSheet, Text, Image, View, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -10,6 +10,7 @@ import { useAuth } from '../contexts/auth'
 import { useTheme } from '../contexts/theme'
 import { generateKeyForPIN } from '../services/keychain.service'
 import { AuthLevel, WalletSecret } from '../types/security'
+import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
@@ -100,6 +101,11 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
 
   return (
     <SafeAreaView style={[style.container]}>
+      <StatusBar
+        barStyle={
+          Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
+        }
+      />
       <View style={{ margin: 20 }}>
         <Image
           source={Assets.img.logoSecondary.src}

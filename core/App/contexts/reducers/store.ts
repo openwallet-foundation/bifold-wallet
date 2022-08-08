@@ -1,7 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
-import { Onboarding as OnboardingState, Credential as CredentialState, State } from '../../types/state'
+import {
+  Privacy as PrivacyState,
+  Onboarding as OnboardingState,
+  Credential as CredentialState,
+  State,
+} from '../../types/state'
 
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
@@ -27,17 +32,24 @@ enum LoadingDispatchAction {
   LOADING_DISABLED = 'loading/loadingDisabled',
 }
 
+enum PrivacyDispatchAction {
+  DID_SHOW_CAMERA_DISCLOSURE = 'privacy/didShowCameraDisclosure',
+  PRIVACY_UPDATED = 'privacy/privacyStateLoaded',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
   | CredentialDispatchAction
   | LoadingDispatchAction
+  | PrivacyDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
   ...ErrorDispatchAction,
   ...CredentialDispatchAction,
   ...LoadingDispatchAction,
+  ...PrivacyDispatchAction,
 }
 
 export interface ReducerAction {
@@ -47,6 +59,23 @@ export interface ReducerAction {
 
 const reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {
+    case PrivacyDispatchAction.DID_SHOW_CAMERA_DISCLOSURE: {
+      const newState = {
+        ...state,
+        ...{ privacy: { didShowCameraDisclosure: true } },
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Privacy, JSON.stringify(newState.privacy))
+
+      return newState
+    }
+    case PrivacyDispatchAction.PRIVACY_UPDATED: {
+      const privacy: PrivacyState = (action?.payload || []).pop()
+      return {
+        ...state,
+        privacy,
+      }
+    }
     case OnboardingDispatchAction.ONBOARDING_UPDATED: {
       const onboarding: OnboardingState = (action?.payload || []).pop()
       return {
