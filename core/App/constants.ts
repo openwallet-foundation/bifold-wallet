@@ -6,6 +6,7 @@ export const testIdPrefix = 'com.ariesbifold:id/'
 
 export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',
+  Privacy = 'PrivacyState',
   // FIXME: Once hooks are updated this should no longer be necessary
   RevokedCredentials = 'RevokedCredentials',
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
