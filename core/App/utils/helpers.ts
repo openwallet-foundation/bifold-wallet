@@ -49,24 +49,28 @@ export function hashToRGBA(i: number) {
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
 }
 
+// DEPRECATED
 export function credentialRecordFromId(credentialId?: string): CredentialExchangeRecord | void {
   if (credentialId) {
     return useCredentialById(credentialId)
   }
 }
 
+// DEPRECATED
 export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
   if (connectionId) {
     return useConnectionById(connectionId)
   }
 }
 
+// DEPRECATED
 export function proofRecordFromId(proofId?: string): ProofRecord | void {
   if (proofId) {
     return useProofById(proofId)
   }
 }
 
+// DEPRECATED
 export function getConnectionName(connection: ConnectionRecord | void): string | void {
   if (!connection) {
     return
