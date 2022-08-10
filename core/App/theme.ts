@@ -369,15 +369,6 @@ export const ListItems = StyleSheet.create({
   proofError: {
     color: ColorPallet.semantic.error,
   },
-  proofListItem: {
-    paddingHorizontal: 25,
-    paddingTop: 16,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-    borderTopColor: ColorPallet.brand.secondaryBackground,
-    borderBottomColor: ColorPallet.brand.secondaryBackground,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-  },
   avatarText: {
     ...TextTheme.headingTwo,
     fontWeight: 'normal',
