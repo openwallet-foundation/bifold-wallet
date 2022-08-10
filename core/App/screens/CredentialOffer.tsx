@@ -10,6 +10,7 @@ import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
+import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -42,6 +43,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const [loading, setLoading] = React.useState<boolean>(true)
+  const { assertConnectedNetwork } = useNetwork()
   const { ListItems, ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
@@ -111,7 +113,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const handleAcceptPress = async () => {
     try {
-      if (!(agent && credential)) {
+      if (!(agent && credential && assertConnectedNetwork())) {
         return
       }
       setAcceptModalVisible(true)

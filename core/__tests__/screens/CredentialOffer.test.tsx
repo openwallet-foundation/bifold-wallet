@@ -1,14 +1,17 @@
 import { CredentialExchangeRecord, ConnectionRecord } from '@aries-framework/core'
 import { useCredentialById, useConnectionById } from '@aries-framework/react-hooks'
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
+import { NetworkProvider } from '../../App/contexts/network'
 import CredentialOffer from '../../App/screens/CredentialOffer'
 import { testIdWithKey } from '../../App/utils/testable'
 
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -16,6 +19,7 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
@@ -39,7 +43,11 @@ useCredentialById.mockReturnValue(credentialRecord)
 
 describe('displays a credential offer screen', () => {
   test('renders correctly', async () => {
-    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+    const tree = render(
+      <NetworkProvider>
+        <CredentialOffer route={props as any} navigation={useNavigation()} />
+      </NetworkProvider>
+    )
 
     await act(async () => null)
 
@@ -47,7 +55,11 @@ describe('displays a credential offer screen', () => {
   })
 
   test('shows offer controls', async () => {
-    const { getByTestId } = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+    const { getByTestId } = render(
+      <NetworkProvider>
+        <CredentialOffer route={props as any} navigation={useNavigation()} />
+      </NetworkProvider>
+    )
 
     await act(async () => null)
 
@@ -59,7 +71,11 @@ describe('displays a credential offer screen', () => {
   })
 
   test('accepting a credential', async () => {
-    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+    const tree = render(
+      <NetworkProvider>
+        <CredentialOffer route={props as any} navigation={useNavigation()} />
+      </NetworkProvider>
+    )
 
     await act(async () => null)
 
@@ -71,7 +87,11 @@ describe('displays a credential offer screen', () => {
   })
 
   test('declining a credential', async () => {
-    const tree = render(<CredentialOffer route={props as any} navigation={useNavigation()} />)
+    const tree = render(
+      <NetworkProvider>
+        <CredentialOffer route={props as any} navigation={useNavigation()} />
+      </NetworkProvider>
+    )
 
     await act(async () => null)
 
