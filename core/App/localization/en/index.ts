@@ -177,6 +177,18 @@ const translation = {
     "ConfirmDecline": "Yes, decline this credential",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Credential",
+    "AddedContacts": "Added to Contacts",
+    "WhatAreContacts": "What are Contacts?",
+    "NotificationBodyUpper": "You can find ",
+    "NotificationBodyLower": " in your Contacts. Manage your Contacts in Settings",
+    "PopupIntro": "Adding organizations as a contact will allow you to:",
+    "PopupPoint1": "Get updates to credentials issued by this organization",
+    "PopupPoint2": "Get Offered new credentials",
+    "PopupPoint3": "Fast-track roof requests",
+    "SettingsLink": "Settings",
+    "SettingsInstruction": "You can always remove contacts at anytime in ",
+    "PrivacyMessage": "Use of your credentials is never shared with your contacts.",
+    "PopupExit":"Got it"
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",

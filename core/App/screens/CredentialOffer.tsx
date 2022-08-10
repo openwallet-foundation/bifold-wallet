@@ -1,21 +1,25 @@
 import { CredentialMetadataKeys, CredentialPreviewAttributeOptions } from '@aries-framework/core'
 import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
-import { StackScreenProps } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Modal } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Unorderedlist from 'react-native-unordered-list'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
+import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import Record from '../components/record/Record'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens } from '../types/navigators'
+import { RootStackParams, Stacks, NotificationStackParams, SettingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -34,6 +38,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
+  const [infoCardVisible, setInfoCardVisible] = useState(false)
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = credential?.connectionId
     ? useConnectionById(credential.connectionId)?.theirLabel
@@ -42,9 +47,48 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const [loading, setLoading] = React.useState<boolean>(true)
-  const { ListItems, ColorPallet } = useTheme()
+  const { ListItems, ColorPallet, TextTheme } = useTheme()
+
+  const settingsNavigation = useNavigation<StackNavigationProp<RootStackParams>>()
 
   const styles = StyleSheet.create({
+    modalCenter: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    notifyTextContainer: {
+      borderLeftColor: ColorPallet.brand.highlight,
+      borderLeftWidth: 10,
+      flex: 1,
+      paddingLeft: 10,
+      paddingVertical: 15,
+      marginVertical: 15,
+    },
+    fakeLink: {
+      ...TextTheme.normal,
+      ...ListItems.recordLink,
+      textDecorationLine: 'underline',
+    },
+    row: {
+      flexDirection: 'row',
+    },
+    notifyTitle: {
+      ...TextTheme.title,
+      marginBottom: 5,
+    },
+    notifyText: {
+      ...TextTheme.normal,
+      marginVertical: 5,
+    },
+    notifyTextList: {
+      marginVertical: 6,
+    },
+    informationIcon: {
+      color: ColorPallet.brand.link,
+      marginLeft: 10,
+    },
     headerTextContainer: {
       paddingHorizontal: 25,
       paddingVertical: 16,
@@ -133,6 +177,15 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     })
   }
 
+  const toggleInfoCard = async () => {
+    setInfoCardVisible(!infoCardVisible)
+  }
+
+  const goToSettings = async () => {
+    toggleInfoCard()
+    settingsNavigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })
+  }
+
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record
@@ -159,6 +212,49 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             }}
           >
             {loading ? <RecordLoading /> : null}
+            <View style={styles.notifyTextContainer}>
+              <View style={styles.row}>
+                <Text style={styles.notifyTitle}>{t('CredentialOffer.AddedContacts')}</Text>
+                <Icon name={'information-outline'} size={30} style={styles.informationIcon} onPress={toggleInfoCard} />
+              </View>
+              <Modal visible={infoCardVisible} transparent>
+                <View style={styles.modalCenter}>
+                  <InfoBox
+                    notificationType={InfoBoxType.Info}
+                    title={t('CredentialOffer.WhatAreContacts')}
+                    bodyContent={
+                      <View>
+                        <Text style={styles.notifyText}>{t('CredentialOffer.PopupIntro')}</Text>
+                        <Unorderedlist color={styles.notifyText.color} style={styles.notifyTextList}>
+                          <Text style={styles.notifyText}>{t('CredentialOffer.PopupPoint1')}</Text>
+                        </Unorderedlist>
+                        <Unorderedlist color={styles.notifyText.color} style={styles.notifyTextList}>
+                          <Text style={styles.notifyText}>{t('CredentialOffer.PopupPoint2')}</Text>
+                        </Unorderedlist>
+                        <Unorderedlist color={styles.notifyText.color} style={styles.notifyTextList}>
+                          <Text style={styles.notifyText}>{t('CredentialOffer.PopupPoint3')}</Text>
+                        </Unorderedlist>
+                        <Text style={styles.notifyText}>
+                          {t('CredentialOffer.SettingsInstruction')}
+                          <Text style={styles.fakeLink} onPress={goToSettings}>
+                            {t('CredentialOffer.SettingsLink')}
+                          </Text>
+                          .
+                        </Text>
+                        <Text style={styles.notifyText}>{t('CredentialOffer.PrivacyMessage')}</Text>
+                      </View>
+                    }
+                    onCallToActionLabel={t('CredentialOffer.PopupExit')}
+                    onCallToActionPressed={toggleInfoCard}
+                  />
+                </View>
+              </Modal>
+              <Text style={styles.notifyText}>
+                {t('CredentialOffer.NotificationBodyUpper') +
+                  (credentialConnectionLabel || t('ContactDetails.AContact').toLowerCase()) +
+                  t('CredentialOffer.NotificationBodyLower')}
+              </Text>
+            </View>
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Accept')}

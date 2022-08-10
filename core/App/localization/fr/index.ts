@@ -77,7 +77,7 @@ const translation = {
         "CreatePIN": "Créer un NIP",
         "RememberPIN": "Mémorisez votre NIP.",
         "PINDisclaimer": "Si vous l'oubliez, vous devrez configurer à nouveau votre portefeuille et ajouter à nouveau vos cartes.",
-      },
+    },
     "PinEnter": {
         "IncorrectPIN": "NIP erroné",
         "EnterPIN": "Veuillez saisir votre NIP",
@@ -148,6 +148,18 @@ const translation = {
         "ConfirmDeclineCredential": "Oui, refuser ce justificatif",
         "AbortDeclineCredential": "Non, revenir en arrière",
         "DeclineTitle": "Decline Credential",
+        "AddedContacts": "Added to Contacts",
+        "WhatAreContacts": "What are Contacts?",
+        "NotificationBodyUpper": "You can find ",
+        "NotificationBodyLower": " in your Contacts. Manage your Contacts in Settings",
+        "PopupIntro": "Adding organizations as a contact will allow you to:",
+        "PopupPoint1": "Get updates to credentials issued by this organization",
+        "PopupPoint2": "Get Offered new credentials",
+        "PopupPoint3": "Fast-track roof requests",
+        "SettingsLink": "Settings",
+        "SettingsInstruction": "You can always remove contacts at anytime in ",
+        "PrivacyMessage": "Use of your credentials is never shared with your contacts.",
+        "PopupExit": "Got it"
     },
     "ProofRequest": {
         "ProofRequest": "Demande de preuve",
