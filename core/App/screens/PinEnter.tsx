@@ -79,9 +79,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
       }
     } catch (error: any) {
       const msg =
-        authLevel === AuthLevel.BiometricsAndPin
-          ? 'You have to enable biometrics to be able to load the wallet'
-          : 'Biometrics not provided, you may use PIN to load the wallet'
+        authLevel === AuthLevel.BiometricsAndPin ? t('PinEnter.EnableBiometrics') : t('PinEnter.BiometricsNotProvided')
       Alert.alert(msg)
     }
   }

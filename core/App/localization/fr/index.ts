@@ -1,6 +1,7 @@
 // prettier-ignore
 const translation = {
     "Global": {
+        "Enter": "Entrer",
         "Submit": "Soumettre",
         "NoneYet!": "Votre portefeuille est vide. Vos justificatifs acceptés seront ajoutés ici.",
         "Cancel": "Annuler",
@@ -36,22 +37,26 @@ const translation = {
         "Unknown": "Erreur inconnue",
         "Problem": "Un problème est survenu",
         "ErrorCode": "Code d'erreur",
-        "Title1025": "Impossible de rejeter la demande de preuve.",
-        "Message1025": "Il y a eu un problème lors du rejet de la demande de preuve.",
         "Title1024": "Impossible d'accepter l'offre de justificatif(s).",
         "Message1024": "Un problème est survenu lors de l'acceptation de l'offre de justificatif(s).",
+        "Title1025": "Impossible de rejeter la demande de preuve.",
+        "Message1025": "Il y a eu un problème lors du rejet de la demande de preuve.",
         "Title1026": "Impossible de mettre à jour les justificatifs récupérés.",
         "Message1026": "Un problème est survenu lors de la mise à jour des justificatifs récupérés.",
         "Title1027": "Impossible d'accepter la demande de preuve.",
         "Message1027": "Un problème est survenu lors de l'acceptation de la demande de preuve.",
-        "Title1029": "Détails	Impossible de mettre à jour les justificatifs récupérés.",
-        "Message1029": "Un problème est survenu lors de la mise à jour des justificatifs récupérés.",
         "Title1028": "Impossible de rejeter l'offre de justificatif(s).",
         "Message1028": "Un problème est survenu lors du rejet de l'offre de justificatif(s).",
+        "Title1029": "Détails	Impossible de mettre à jour les justificatifs récupérés.",
+        "Message1029": "Un problème est survenu lors de la mise à jour des justificatifs récupérés.",
         "Title1030": "Impossible d'accepter la connexion.",
         "Message1030": "Un problème est survenu lors de l'acceptation de la redirection de la connexion.",
         "Title1031": "Impossible d'accepter la connexion.",
         "Message1031": "Un problème est survenu lors de l'acceptation de la connexion.",
+        "Title1032": "Impossible de retirer le justificatif.",
+        "Message1032": "Un problème est survenu lors du retrait du justificatif.",
+        "Title1033": "Impossible de récupérer le justificatif.",
+        "Message1033": "Le justificatif est introuvable."
     },
     "StatusMessages": {
         "InitAgent": "Initialisation de l'agent ..."
@@ -72,15 +77,24 @@ const translation = {
         "EnteredPINsDoNotMatch": "Les NIP saisis ne correspondent pas. Veuillez réessayer.",
         "YouNeedToCreateA6DigitPIN": "Vous devez créer un NIP à 6 chiffres",
         "PleaseReenterYourPIN": "Veuillez saisir à nouveau votre NIP",
+        "EnterPINTitle": "Entrez un NIP à 6 chiffres",
         "EnterPIN": "Saisir un NIP à 6 chiffres",
         "ReenterPIN": "Saisir le NIP à nouveau",
         "CreatePIN": "Créer un NIP",
+        "ReenterPINTitle": "Entrez à nouveau le code NIP",
         "RememberPIN": "Mémorisez votre NIP.",
         "PINDisclaimer": "Si vous l'oubliez, vous devrez configurer à nouveau votre portefeuille et ajouter à nouveau vos cartes.",
-      },
+        "Show": "Afficher",
+        "Hide": "Masquer",
+    },
     "PinEnter": {
-        "IncorrectPIN": "NIP erroné",
         "EnterPIN": "Veuillez saisir votre NIP",
+        "IncorrectPIN": "NIP erroné",
+        "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
+        "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille."
+    },
+    "Contacts": {
+        "EmptyList": "Votre portefeuille est vide. Vos contacts connectés seront ajoutés ici.",
     },
     "ContactDetails": {
         "Created": "Créé",
@@ -89,7 +103,8 @@ const translation = {
     },
     "Credentials": {
         "CredentialsNotFound": "Justificatifs non trouvés",
-        "CredentialDetails": "Détails des justificatifs"
+        "CredentialDetails": "Détails des justificatifs",
+        "EmptyList": "Votre portefeuille est vide. Vos justificatifs acceptés seront ajoutés ici.",
     },
     "CredentialDetails": {
         "Id": "Identifiant :",
@@ -101,7 +116,17 @@ const translation = {
         "RemoveFromWallet": "Retirer du portefeuille",
         "Revoked": "Révoqué",
         "CredentialRevokedMessageTitle": "Ce justificatif est révoqué",
-        "CredentialRevokedMessageBody": "Ce justificatif peut ne plus fonctionner pour certaines demandes de preuve. Vous devrez mettre à jour le justificatif avec l'émetteur."
+        "CredentialRevokedMessageBody": "Ce justificatif peut ne plus fonctionner pour certaines demandes de preuve. Vous devrez mettre à jour le justificatif avec l'émetteur.",
+        "RemoveTitle": "Retirer le justificatif du portefeuille",
+        "RemoveCaption": "Vous allez perdre la capacité d'utiliser ce portefeuille afin de prouver l'information se trouvant sur ce justificatif.",
+        "CredentialNotFound": "Justificatif non trouvé",
+        "YouWillNotLose": "Vous n'allez PAS perdre",
+        "YouWillNotLoseListItem1": "Votre justificatif à l'intérieur du système de l'émetteur.",
+        "YouWillNotLoseListItem2": "L'organisme émetteur en tant que contact.",
+        "HowToGetThisCredentialBack": "Comment récupérer cet identifiant",
+        "HowToGetThisCredentialBackListItem1": "Vous devrez vous rendre auprès de l'organisme qui vous a délivré ce justificatif et le redemander.",
+        "CredentialRemoved": "Justificatif retiré",
+        "IssuedBy": "Émis par:"
     },
     "Home": {
         "Welcome": "Bienvenue",
@@ -147,7 +172,11 @@ const translation = {
         "IsOfferingYouACredential": "vous offre un justificatif",
         "ConfirmDeclineCredential": "Oui, refuser ce justificatif",
         "AbortDeclineCredential": "Non, revenir en arrière",
-        "DeclineTitle": "Decline Credential",
+        "ConfirmDecline": "Oui, décliner le justificatif",
+        "ConfirmDeclinedTitle": "Êtes-vous sûr de vouloir refuser ce justificatif?",
+        "ConfirmDeclinedMessage": "Afin de recevoir à nouveau ce justificatif, vous devrez présenter une nouvelle demande auprès de l'émetteur.",
+        "AbortDecline": "Non, revenir en arrière",
+        "DeclineTitle": "Refuser le justificatif",
     },
     "ProofRequest": {
         "ProofRequest": "Demande de preuve",
@@ -215,11 +244,16 @@ const translation = {
         "Settings": "Paramètres",
         "Language": "Langue",
         "Contacts": "Contacts",
-        "ContactDetails": "Coordonnées"
+        "Decline": "Refuser",
+        "ContactDetails": "Informations du contact"
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
         "BackToHome": "Retour à l'accueil"
+    },
+    "NetInfo": {
+        "NoInternetConnectionTitle": "Aucune connexion Internet",
+        "NoInternetConnectionMessage": "Vous ne pouvez pas accéder aux services à l'aide de Bifold ou recevoir des informations d'identification tant que vous n'êtes pas de nouveau en ligne.\n\nS'il vous plait, vérifiez votre connexion internet."
     }
 }
 export default translation
