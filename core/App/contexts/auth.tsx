@@ -72,15 +72,19 @@ export const AuthProvider: React.FC = ({ children }) => {
     return generateKeyForPIN(pin, providedSalt)
   }
 
-  const comparePIN = async (newPin: string): Promise<boolean> => {
-    const keyforPin = await getKeyForPIN(newPin)
-    const walletSecret = await getWalletSecret()
-    const walletKey = walletSecret?.walletKey
+  const comparePIN = async (newPin: string): Promise<boolean | false> => {
+    try {
+      const keyforPin = await getKeyForPIN(newPin)
+      const walletSecret = await getWalletSecret()
+      const walletKey = walletSecret?.walletKey
 
-    if (keyforPin === walletKey) {
-      return true
-    } else {
-      return false
+      if (keyforPin === walletKey) {
+        return true
+      } else {
+        return false
+      }
+    } catch (error) {
+      throw new Error(`${error}`)
     }
   }
 
