@@ -1,6 +1,6 @@
 import {
   ConnectionRecord,
-  CredentialExchangeRecord as CredentialRecord,
+  CredentialExchangeRecord,
   ProofRecord,
   RequestedAttribute,
   RequestedPredicate,
@@ -27,7 +27,7 @@ export function hashToRGBA(i: number) {
 }
 
 // DEPRECATED
-export function credentialRecordFromId(credentialId?: string): CredentialRecord | void {
+export function credentialRecordFromId(credentialId?: string): CredentialExchangeRecord | void {
   if (credentialId) {
     return useCredentialById(credentialId)
   }
@@ -83,15 +83,18 @@ export const isRedirection = (url: string): boolean => {
   return !(queryParams['c_i'] || queryParams['d_m'])
 }
 
-export const processProofAttributes = (
-  proof: ProofRecord,
-  attributes: Record<string, RequestedAttribute[]> = {}
-): Attribute[] => {
+export const processProofAttributes = (proof: ProofRecord, credentials?: RetrievedCredentials): Attribute[] => {
   const processedAttributes = [] as Attribute[]
+
+  if (!credentials) {
+    return processedAttributes
+  }
+
+  const { requestedAttributes: retrievedCredentialAttributes } = credentials
   const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
 
   requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
-    const firstCredential = firstValidCredential(attributes[attributeName] || [])
+    const firstCredential = firstValidCredential(retrievedCredentialAttributes[attributeName] || [])
     const credentialAttributes = names?.length ? names : [name || attributeName]
     credentialAttributes.forEach((attribute) => {
       processedAttributes.push({
@@ -105,15 +108,18 @@ export const processProofAttributes = (
   return processedAttributes
 }
 
-export const processProofPredicates = (
-  proof: ProofRecord,
-  predicates: Record<string, RequestedPredicate[]> = {}
-): Predicate[] => {
+export const processProofPredicates = (proof: ProofRecord, credentials?: RetrievedCredentials): Predicate[] => {
   const processedPredicates = [] as Predicate[]
+
+  if (!credentials) {
+    return processedPredicates
+  }
+
+  const { requestedPredicates: retrievedCredentialPredicates } = credentials
   const { requestedPredicates: requestedProofPredicates } = proof.requestMessage?.indyProofRequest || {}
 
   requestedProofPredicates?.forEach(({ name, predicateType, predicateValue }, predicateName) => {
-    const firstCredential = firstValidCredential(predicates[predicateName] || [])
+    const firstCredential = firstValidCredential(retrievedCredentialPredicates[predicateName] || [])
     const predicate = name || predicateName
     processedPredicates.push({
       name: predicate,
