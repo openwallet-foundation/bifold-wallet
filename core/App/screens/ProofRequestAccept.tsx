@@ -79,7 +79,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
 
     if (
       proof.state === ProofState.Done ||
-      (proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId === 'undefined')
+      (proof.state === ProofState.PresentationSent && typeof proof.connectionId === 'undefined')
     ) {
       timer && clearTimeout(timer)
       setProofDeliveryStatus(proof.state)
