@@ -56,7 +56,11 @@ const translation = {
     "Title1032": "Unable to remove credential.",
     "Message1032": "There was a problem while removing the credential.",
     "Title1033": "Unable to fetch credential.",
-    "Message1033": "Credential could not be found."
+    "Message1033": "Credential could not be found.",
+    "Title1034": "Unable to fetch proof request.",
+    "Message1034": "Proof request could not be found.",
+    "Title1035": "Unable to fetch credential offer.",
+    "Message1035": "Credential offer could not be found.",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
@@ -187,7 +191,7 @@ const translation = {
     "DeclineThisProof?": "Decline this Proof Request?",
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
-    "ProofNotFound": "Proof not Found",
+    "ProofRequestNotFound": "Proof request not Found",
     "RejectingProof": "Rejecting Proof",
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
