@@ -13,12 +13,12 @@ interface ListContactsProps {
 }
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
-  const { connections } = useConnections()
+  const { records } = useConnections()
   const { ColorPallet } = useTheme()
   return (
     <FlatList
       style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-      data={connections}
+      data={records}
       renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
       keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
       ListEmptyComponent={() => <EmptyList />}

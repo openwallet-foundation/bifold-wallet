@@ -96,7 +96,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       break
     case NotificationType.Revocation:
       title = t('CredentialDetails.NewRevoked')
-      body = `${name} v${version}`
+      body = parsedSchema(notification as CredentialRecord).name
       onPress = () => navigation.getParent()?.navigate(Screens.CredentialDetails, { credentialId: notification.id })
       break
     default:
