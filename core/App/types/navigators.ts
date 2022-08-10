@@ -3,6 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/core'
 import { DeclineType } from './decline'
 
 export enum Screens {
+  WebDisplay = 'WebDisplay',
   Splash = 'Splash',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
@@ -81,6 +82,7 @@ export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
   [Screens.ProofRequestAttributeDetails]: { proofId: string; attributeName: string }
+  [Screens.WebDisplay]: { destUrl: string; exitUrl?: string }
 }
 
 export type ConnectStackParams = {

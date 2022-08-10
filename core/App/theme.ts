@@ -97,7 +97,8 @@ interface ColorPallet {
 
 interface Assets {
   img: {
-    logoLarge: any
+    logoPrimary: any
+    logoSecondary: any
   }
 }
 
@@ -311,6 +312,9 @@ export const ListItems = StyleSheet.create({
   },
   credentialDetails: {
     ...TextTheme.caption,
+  },
+  credentialDeleteBackground: {
+    backgroundColor: ColorPallet.brand.primaryBackground,
   },
   credentialOfferBackground: {
     backgroundColor: ColorPallet.brand.primaryBackground,
@@ -567,7 +571,14 @@ const PinInputTheme = {
 
 export const Assets = {
   img: {
-    logoLarge: {
+    logoPrimary: {
+      src: require('./assets/img/logo-large.png'),
+      aspectRatio: 1,
+      height: '33%',
+      width: '33%',
+      resizeMode: 'contain',
+    },
+    logoSecondary: {
       src: require('./assets/img/logo-large.png'),
       aspectRatio: 1,
       height: '33%',

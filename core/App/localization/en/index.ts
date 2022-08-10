@@ -37,22 +37,26 @@ const translation = {
     "Unknown": "Unknown Error",
     "Problem": "A problem has occurred",
     "ErrorCode": "Error code",
-    "Title1025": "Unable to reject proof request",
-    "Message1025": "There was a problem while rejecting the proof request",
     "Title1024": "Unable to accept credential offer.",
     "Message1024": "There was a problem while accepting the credential offer.",
+    "Title1025": "Unable to reject credential offer",
+    "Message1025": "There was a problem while rejecting the credential offer",
     "Title1026": "Unable to update retrieved credentials.",
     "Message1026": "There was a problem while updating retrieved credentials.",
     "Title1027": "Unable to accept proof request.",
     "Message1027": "There was a problem while accepting the proof request.",
+    "Title1028": "Unable to reject proof request",
+    "Message1028": "There was a problem while rejecting the proof request",
     "Title1029": "Details	Unable to update retrieved credentials.",
     "Message1029": "There was a problem while updating retrieved credentials.",
-    "Title1028": "Unable to reject credential offer",
-    "Message1028": "There was a problem while rejecting the credential offer",
     "Title1030": "Unable to accept connection.",
     "Message1030": "There was a problem while accepting the connection redirection.",
     "Title1031": "Unable to accept connection.",
     "Message1031": "There was a problem while accepting the connection.",
+    "Title1032": "Unable to remove credential.",
+    "Message1032": "There was a problem while removing the credential.",
+    "Title1033": "Unable to fetch credential.",
+    "Message1033": "Credential could not be found."
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
@@ -62,6 +66,10 @@ const translation = {
     "TermsOfServiceText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel consectetur diam. Nunc sit amet elit est. Praesent libero elit, consectetur dapibus diam non, facilisis euismod velit. Etiam a ligula eget leo elementum tincidunt. Fusce et lorem turpis. Nunc tempus nisl consectetur eros vehicula venenatis. Suspendisse potenti. Aenean vitae aliquet augue. Maecenas lacinia nunc vitae blandit hendrerit. Sed congue risus quis magna convallis sollicitudin. Integer in ante vel orci ornare porta quis id libero. Proin mollis urna nec lectus fringilla, sit amet aliquam urna fringilla. Praesent pellentesque non augue et gravida. Donec congue urna ac massa consequat, lacinia condimentum dolor blandit. Nam ultrices tellus at risus dignissim, quis cursus mauris pellentesque. Donec at scelerisque ipsum. Praesent eu massa at tellus cursus ornare. Fusce vel faucibus dolor. Etiam blandit velit sed velit tempus feugiat. Donec condimentum pretium suscipit. Sed suscipit, leo molestie tempus maximus, turpis enim hendrerit nibh, semper sagittis turpis velit sed nisl. Aliquam eu ultrices velit. Aenean tristique mauris justo, eu commodo quam semper non. Curabitur ultricies auctor mi eu tempus. Sed bibendum eros sed neque semper fermentum. Nullam porta tortor ut ante congue molestie. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur sit amet aliquam nunc, malesuada auctor quam. Pellentesque vel lobortis risus, volutpat suscipit velit. Aenean ut erat sed metus interdum mattis. Nam consectetur ante eu felis rhoncus, et volutpat dolor tincidunt. Vivamus sit amet feugiat mi. Proin in dui ac metus vehicula fringilla eget id mauris. Maecenas et elit venenatis dolor pulvinar pulvinar in et leo. Aliquam scelerisque viverra sapien at bibendum. Curabitur et libero nec enim convallis porttitor sed a libero. In hac habitasse platea dictumst. Integer dignissim velit eu pharetra ultricies. Vestibulum at velit hendrerit, pretium purus eget, lobortis tellus. Maecenas non erat ut lacus scelerisque luctus et et tellus.",
     "IAgree": "I Agree",
     "Attestation": "I have read, understand and accept the terms and conditions.",
+  },
+  "PrivacyPolicy": {
+    "Title": "Privacy Policy",
+    "CameraDisclosure": "The camera is used to scan QR Codes for immediate on-device processing. No information about the images is stored, used for analytics, or shared.",
   },
   "PinCreate": {
     "UserAuthenticationPIN": "User authentication PIN",
@@ -86,6 +94,8 @@ const translation = {
   "PinEnter": {
     "EnterPIN": "Enter PIN",
     "IncorrectPIN": "Incorrect PIN",
+    "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
+    "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet."
   },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
@@ -111,6 +121,16 @@ const translation = {
     "Revoked": "Revoked",
     "CredentialRevokedMessageTitle": "This credential is revoked",
     "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the issuer.",
+    "RemoveTitle": "Remove credential from your wallet",
+    "RemoveCaption": "You will lose your ability to prove the information on this credential with this Wallet.",
+    "CredentialNotFound": "Credential not found",
+    "YouWillNotLose": "You will NOT lose",
+    "YouWillNotLoseListItem1": "Your credential within the system that issued you your credential.",
+    "YouWillNotLoseListItem2": "The issuing organization as a Contact.",
+    "HowToGetThisCredentialBack": "How to get this credential back",
+    "HowToGetThisCredentialBackListItem1": "You will have to go to the organization that issued you this credential and request it again.",
+    "CredentialRemoved": "Credential removed",
+    "IssuedBy": "Issued by:"
   },
   "Home": {
     "Welcome": "Welcome",
@@ -181,7 +201,7 @@ const translation = {
     "Details": "Details",
     "SendingTheInformationSecurely": "Sending the information securely",
     "InformationSentSuccessfully": "Information sent successfully",
-    "ProofRequestCompleted": "Information approved",
+    "ProofRequestCompleted": "Information received",
     "ProofRequestDeclined": "Proof request declined",
     "ConfirmDeclinedTitle": "Are you sure you want to decline this proof request?",
     "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
@@ -233,11 +253,16 @@ const translation = {
     "Settings": 'Settings',
     "Language": 'Language',
     "Contacts": 'Contacts',
+    "Decline": "Decline",
     "ContactDetails": 'Contact Details',
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
     "BackToHome": "Go back to home"
+  },
+  "NetInfo": {
+    "NoInternetConnectionTitle": "No internet connection",
+    "NoInternetConnectionMessage": "You're unable to access services using Bifold or receive credentials until you're back online.\n\nPlease check your internet connection."
   }
 }
 

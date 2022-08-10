@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord } from '@aries-framework/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
@@ -8,13 +8,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { dateFormatOptions } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { parsedSchema } from '../../utils/helpers'
+import { parsedCredDefName, parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import AvatarView from './AvatarView'
 
 interface CredentialCardProps {
-  credential: CredentialRecord
+  credential: CredentialExchangeRecord
   revoked?: boolean
   style?: ViewStyle
   onPress?: GenericFn
@@ -51,7 +51,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     >
       <View style={styles.row} testID={testIdWithKey('CredentialCard')}>
         <AvatarView
-          name={parsedSchema(credential).name}
+          name={parsedCredDefName(credential)}
           style={
             revoked
               ? { borderColor: ListItems.revoked.borderColor, backgroundColor: ColorPallet.brand.primaryBackground }
@@ -60,7 +60,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         />
         <View style={styles.details}>
           <Text style={ListItems.credentialTitle} testID={testIdWithKey('CredentialName')}>
-            {parsedSchema(credential).name}
+            {parsedCredDefName(credential)}
           </Text>
           <Text style={ListItems.credentialDetails} testID={testIdWithKey('CredentialVersion')}>
             {t('CredentialDetails.Version')}: {parsedSchema(credential).version}

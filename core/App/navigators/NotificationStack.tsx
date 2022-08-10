@@ -14,8 +14,8 @@ import { createDefaultStackOptions } from './defaultStackOptions'
 
 const NotificationStack: React.FC = () => {
   const Stack = createStackNavigator<NotificationStackParams>()
-  const { t } = useTranslation()
   const theme = useTheme()
+  const { t } = useTranslation()
   const defaultStackOptions = createDefaultStackOptions(theme)
 
   return (
@@ -23,23 +23,23 @@ const NotificationStack: React.FC = () => {
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
-        options={{ headerBackTitle: t('Global.Back') }}
+        options={{ title: t('Screens.CredentialOffer'), headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
-        options={{ headerBackTitle: t('Global.Back') }}
+        options={{ title: t('Screens.ProofRequest'), headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name={Screens.ProofRequestAttributeDetails}
         component={ProofRequestAttributeDetails}
-        options={{ headerBackTitle: t('Global.Back') }}
+        options={{ title: t('Screens.ProofRequestAttributeDetails'), headerBackTitleVisible: false }}
       />
       <Stack.Screen
         name={Screens.CommonDecline}
         component={CommonDecline}
         options={() => ({
-          title: 'Decline',
+          title: t('Screens.Decline'),
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
           headerShown: true,
           presentation: 'modal',

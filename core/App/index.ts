@@ -9,8 +9,10 @@ import indyLedgers from '../configs/ledgers/indy'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ErrorModal from './components/modals/ErrorModal'
+import NetInfo from './components/network/NetInfo'
 import InfoTextBox from './components/texts/InfoTextBox'
 import toastConfig from './components/toast/ToastConfig'
+import HomeContentView from './components/views/HomeContentView'
 import { AuthProvider } from './contexts/auth'
 import RootStack from './navigators/RootStack'
 import OnboardingPages from './screens/OnboardingPages'
@@ -34,6 +36,7 @@ export type { StoreProviderProps } from './contexts/store'
 export type { Theme } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
 export type { Onboarding as OnboardingState } from './types/state'
+export type { Privacy as PrivacyState } from './types/state'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
@@ -46,11 +49,13 @@ export {
   Button,
   ButtonType,
   CheckBoxRow,
-  InfoTextBox,
   ErrorModal,
+  InfoTextBox,
   toastConfig,
   RootStack,
+  NetInfo,
   OnboardingPages,
   Splash,
   Terms,
+  HomeContentView,
 }

@@ -17,12 +17,12 @@ const RecordLoading: React.FC = () => {
       flexDirection: 'column',
     },
     rectangle: {
-      backgroundColor: ColorPallet.grayscale.lightGrey,
+      backgroundColor: ColorPallet.grayscale.veryLightGrey,
       height: 30,
       marginVertical: 10,
     },
     line: {
-      backgroundColor: ColorPallet.grayscale.darkGrey,
+      backgroundColor: ColorPallet.grayscale.lightGrey,
       height: 1,
       marginVertical: 5,
     },

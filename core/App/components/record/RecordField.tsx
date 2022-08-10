@@ -10,6 +10,7 @@ import { testIdWithKey } from '../../utils/testable'
 interface RecordFieldProps {
   field: Field
   hideFieldValue?: boolean
+  hideBottomBorder?: boolean
   shown?: boolean
   onToggleViewPressed?: () => void
   fieldLabel?: (field: Field) => React.ReactElement | null
@@ -19,6 +20,7 @@ interface RecordFieldProps {
 const RecordField: React.FC<RecordFieldProps> = ({
   field,
   hideFieldValue = false,
+  hideBottomBorder = false,
   shown = hideFieldValue ? false : true,
   onToggleViewPressed = () => undefined,
   fieldLabel = null,
@@ -89,7 +91,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
           </>
         )}
       </View>
-      <View style={styles.border}></View>
+      {<View style={[styles.border, hideBottomBorder && { borderBottomWidth: 0 }]}></View>}
     </View>
   )
 }

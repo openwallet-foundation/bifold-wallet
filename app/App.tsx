@@ -13,9 +13,11 @@ import {
   ErrorModal,
   toastConfig,
   RootStack,
+  NetInfo,
   OnboardingPages,
   Splash,
   Terms,
+  HomeContentView,
 } from "aries-bifold";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
@@ -26,6 +28,7 @@ const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
   splash: Splash,
   terms: Terms,
+  homeContentView: HomeContentView,
 };
 
 initLanguages(translationResources);
@@ -52,6 +55,7 @@ const App = () => {
                 backgroundColor={theme.ColorPallet.brand.primary}
                 translucent={false}
               />
+              <NetInfo />
               <ErrorModal />
               <RootStack setAgent={setAgent} />
               <Toast topOffset={15} config={toastConfig} />

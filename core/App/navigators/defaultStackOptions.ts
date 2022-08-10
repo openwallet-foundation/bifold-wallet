@@ -1,6 +1,6 @@
 import { Theme } from '../theme'
 
-export function createDefaultStackOptions({ ColorPallet }: Theme) {
+export function createDefaultStackOptions({ ColorPallet, TextTheme }: Theme) {
   return {
     headerTintColor: ColorPallet.grayscale.white,
     headerShown: true,
@@ -13,5 +13,10 @@ export function createDefaultStackOptions({ ColorPallet }: Theme) {
       shadowOpacity: 0.15,
       borderBottomWidth: 0,
     },
+    headerTitleStyle: {
+      ...TextTheme.title,
+      color: ColorPallet.grayscale.white,
+    },
+    headerTitleAlign: 'center' as 'center' | 'left',
   }
 }

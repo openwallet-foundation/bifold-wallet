@@ -11,12 +11,8 @@ const ListNotifications: React.FC = () => {
   return (
     <FlatList
       data={notifications}
-      ListEmptyComponent={() => (
-        <View style={{ margin: 15 }}>
-          <NoNewUpdates />
-        </View>
-      )}
-      renderItem={({ item, index }) => (
+      keyExtractor={(notification) => notification.id}
+      renderItem={({ item: notification, index }) => (
         <View
           style={{
             marginHorizontal: 15,
@@ -24,11 +20,16 @@ const ListNotifications: React.FC = () => {
             marginBottom: index === notifications.length - 1 ? 45 : 0,
           }}
         >
-          {item.type === 'CredentialRecord' ? (
-            <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+          {notification.type === 'CredentialRecord' ? (
+            <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={notification} />
           ) : (
-            <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+            <NotificationListItem notificationType={NotificationType.ProofRequest} notification={notification} />
           )}
+        </View>
+      )}
+      ListEmptyComponent={() => (
+        <View style={{ margin: 15 }}>
+          <NoNewUpdates />
         </View>
       )}
     />

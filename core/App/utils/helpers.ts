@@ -1,6 +1,5 @@
 import {
   ConnectionRecord,
-  CredentialMetadataKeys,
   CredentialExchangeRecord as CredentialRecord,
   ProofRecord,
   RequestedAttribute,
@@ -12,30 +11,8 @@ import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
 
-export function parseSchema(schemaId?: string): { name: string; version: string } {
-  let name = 'Credential'
-  let version = ''
-  if (schemaId) {
-    const schemaIdRegex = /(.*?):([0-9]):([a-zA-Z .\-_0-9]+):([a-z0-9._-]+)$/
-    const schemaIdParts = schemaId.match(schemaIdRegex)
-    if (schemaIdParts?.length === 5) {
-      name = `${schemaIdParts?.[3].replace(/_|-/g, ' ')}`
-        .split(' ')
-        .map((schemaIdPart) => schemaIdPart.charAt(0).toUpperCase() + schemaIdPart.substring(1))
-        .join(' ')
-      version = schemaIdParts?.[4]
-    }
-  }
-  return { name, version }
-}
-
-export function credentialSchema(credential: CredentialRecord): string | undefined {
-  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
-}
-
-export function parsedSchema(credential: CredentialRecord): { name: string; version: string } {
-  return parseSchema(credentialSchema(credential))
-}
+export { parsedCredDefName } from './cred-def'
+export { parsedSchema } from './schema'
 
 /**
  * Adapted from https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
@@ -49,24 +26,28 @@ export function hashToRGBA(i: number) {
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
 }
 
+// DEPRECATED
 export function credentialRecordFromId(credentialId?: string): CredentialRecord | void {
   if (credentialId) {
     return useCredentialById(credentialId)
   }
 }
 
+// DEPRECATED
 export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
   if (connectionId) {
     return useConnectionById(connectionId)
   }
 }
 
+// DEPRECATED
 export function proofRecordFromId(proofId?: string): ProofRecord | void {
   if (proofId) {
     return useProofById(proofId)
   }
 }
 
+// DEPRECATED
 export function getConnectionName(connection: ConnectionRecord | void): string | void {
   if (!connection) {
     return
