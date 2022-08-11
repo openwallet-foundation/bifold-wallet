@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import ConnectionNotification from '../components/misc/ConnectionNotification'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -253,6 +254,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             }}
           >
             {loading ? <RecordLoading /> : null}
+            {!!proofConnectionLabel && <ConnectionNotification connectionID={proofConnectionLabel} />}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Share')}
