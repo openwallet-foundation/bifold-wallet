@@ -28,6 +28,7 @@ const ConnectionNotification: React.FC<ConnectionNotificationProps> = ({ connect
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(0,0,0,0.5)',
+      padding: 20,
     },
     notifyTextContainer: {
       borderLeftColor: ColorPallet.brand.highlight,
@@ -62,11 +63,11 @@ const ConnectionNotification: React.FC<ConnectionNotificationProps> = ({ connect
     },
   })
 
-  const toggleInfoCard = async () => {
+  function toggleInfoCard() {
     setInfoCardVisible(!infoCardVisible)
   }
 
-  const goToSettings = async () => {
+  function goToSettings() {
     toggleInfoCard()
     settingsNavigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })
   }
@@ -86,7 +87,7 @@ const ConnectionNotification: React.FC<ConnectionNotificationProps> = ({ connect
               <View>
                 <Text style={styles.notifyText}>{t('ConnectionNotification.PopupIntro')}</Text>
                 <UnorderedList
-                  listItems={[
+                  UnorderedListItems={[
                     t('ConnectionNotification.PopupPoint1'),
                     t('ConnectionNotification.PopupPoint2'),
                     t('ConnectionNotification.PopupPoint3'),

@@ -180,7 +180,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       </View>
       <View style={styles.bodyContainer}>
         {bodyContent}
-        {(!!description || !!message) && (
+        {(description || message) && (
           <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
             {showDetails ? message : description}
           </Text>
