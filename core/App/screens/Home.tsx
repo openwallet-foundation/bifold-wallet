@@ -97,7 +97,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   return (
     <>
       {loading ? (
-        <LoadingModal />
+        <LoadingModal isUsingBackgroundLogo={true} />
       ) : (
         <View>
           <View style={styles.rowContainer}>

@@ -6,7 +6,7 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 
 const { height } = Dimensions.get('window')
 
-const LoadingModal: React.FC = () => {
+const LoadingModal = ({ isUsingBackgroundLogo }: { isUsingBackgroundLogo?: boolean }) => {
   const { LoadingTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -21,7 +21,7 @@ const LoadingModal: React.FC = () => {
   return (
     <Modal visible={true} transparent={true}>
       <SafeAreaView style={[styles.container]}>
-        <LoadingIndicator />
+        <LoadingIndicator isUsingBackgroundLogo={Boolean(isUsingBackgroundLogo)} />
       </SafeAreaView>
     </Modal>
   )

@@ -5,7 +5,7 @@ import ActivityIndicator from '../../assets/img/activity-indicator-circle.svg'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
-const LoadingIndicator: React.FC = () => {
+const LoadingIndicator = ({ isUsingBackgroundLogo }: { isUsingBackgroundLogo: boolean }) => {
   const { ColorPallet, Assets } = useTheme()
   const rotationAnim = useRef(new Animated.Value(0)).current
   const timing: Animated.TimingAnimationConfig = {
@@ -34,7 +34,9 @@ const LoadingIndicator: React.FC = () => {
 
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }} testID={testIdWithKey('LoadingActivityIndicator')}>
-      <Image source={Assets.img.logoPrimary.src} testID={testIdWithKey('LoadingActivityIndicatorX')} />
+      {isUsingBackgroundLogo && (
+        <Image source={Assets.img.logoPrimary.src} testID={testIdWithKey('LoadingActivityIndicatorX')} />
+      )}
       <Animated.View style={[style.animation, { transform: [{ rotate: rotation }] }]}>
         <ActivityIndicator {...imageDisplayOptions} />
       </Animated.View>

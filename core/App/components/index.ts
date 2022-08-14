@@ -7,6 +7,7 @@ import ContactListItem from './listItems/ContactListItem'
 import CredentialListItem from './listItems/CredentialListItem'
 import NotificationListItem from './listItems/NotificationListItem'
 import QRScanner from './misc/QRScanner'
+import LoadingModal from './modals/LoadingModal'
 import HighlightTextBox from './texts/HighlightTextBox'
 import InfoTextBox from './texts/InfoTextBox'
 import Label from './texts/Label'
@@ -30,4 +31,5 @@ export {
   Title,
   InfoTextBox,
   HighlightTextBox,
+  LoadingModal,
 }

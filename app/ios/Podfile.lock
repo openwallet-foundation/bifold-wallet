@@ -305,6 +305,8 @@ PODS:
     - react-native-config/App (= 1.4.4)
   - react-native-config/App (1.4.4):
     - React-Core
+  - react-native-document-picker (8.1.1):
+    - React-Core
   - react-native-encrypted-storage (4.0.2):
     - React-Core
   - react-native-flipper (0.154.0):
@@ -433,6 +435,8 @@ PODS:
   - RNScreens (3.7.2):
     - React-Core
     - React-RCTImage
+  - RNShare (7.8.0):
+    - React-Core
   - RNSVG (12.1.1):
     - React
   - RNVectorIcons (8.1.0):
@@ -488,6 +492,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
@@ -517,6 +522,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -583,6 +589,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-document-picker:
+    :path: "../node_modules/react-native-document-picker"
   react-native-encrypted-storage:
     :path: "../node_modules/react-native-encrypted-storage"
   react-native-flipper:
@@ -641,6 +649,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -685,6 +695,7 @@ SPEC CHECKSUMS:
   React-logger: bfddd3418dc1d45b77b822958f3e31422e2c179b
   react-native-camera: b8cc03e2feec0c04403d0998e37cf519d8fd4c6f
   react-native-config: 72d948053a442779b3178fddd571e37f118ef606
+  react-native-document-picker: f68191637788994baed5f57d12994aa32cf8bf88
   react-native-encrypted-storage: e78d848ce0fb663c2ce306e37921d026809322e6
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
@@ -714,6 +725,7 @@ SPEC CHECKSUMS:
   RNLocalize: 74b82db20cc3895ccc25af992c644879bcec2815
   RNReanimated: 65583befd5706cc9c86ae9a081786181ced37b93
   RNScreens: 0591543e343c7444ea1756b6265d81a4295922c9
+  RNShare: 31b418e3ff2084712f0f39618bafa5f97a322c0e
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 2b4a01651f42a32f82e6cef3830a3ba48088237f
@@ -721,4 +733,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 164b8b4ce2aaf79fc254df5d146a4ff81562d7d1
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2
