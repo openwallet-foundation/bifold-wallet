@@ -580,6 +580,45 @@ const PinInputTheme = {
   },
 }
 
+export const ModalTheme = {
+  background: {
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(32, 32, 32, .7)',
+  },
+  container: {
+    width: '95%',
+    height: '30%',
+    justifyContent: 'space-evenly',
+    padding: 10,
+    alignItems: 'center',
+    backgroundColor: ColorPallet.grayscale.darkGrey,
+    borderRadius: 10,
+  },
+  wrapper: {
+    width: '100%',
+    height: '30%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    paddingTop: 5,
+  },
+  title: {
+    ...TextTheme.headingThree,
+    textAlign: 'center',
+  },
+  body: {
+    ...TextTheme.normal,
+    textAlign: 'center',
+  },
+  button: {
+    padding: 10,
+    width: '45%',
+    justifyContent: 'center',
+  },
+}
+
 export const Assets = {
   img: {
     logoLarge: {
@@ -606,6 +645,7 @@ export interface Theme {
   OnboardingTheme: any
   LoadingTheme: any
   PinInputTheme: any
+  ModalTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -626,6 +666,7 @@ export const theme: Theme = {
   OnboardingTheme,
   LoadingTheme,
   PinInputTheme,
+  ModalTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,

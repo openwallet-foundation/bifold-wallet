@@ -15,6 +15,7 @@ interface ButtonProps {
   testID?: string
   onPress?: () => void
   disabled?: boolean
+  styles?: any
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   testID,
   onPress,
   disabled = false,
+  styles,
 }) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const { Buttons, heavyOpacity } = useTheme()
@@ -36,6 +38,7 @@ const Button: React.FC<ButtonProps> = ({
       style={[
         buttonType === ButtonType.Primary ? Buttons.primary : Buttons.secondary,
         disabled && (buttonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
+        styles,
       ]}
       disabled={disabled}
       activeOpacity={heavyOpacity}
