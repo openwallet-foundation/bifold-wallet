@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, TouchableOpacity } from 'react-native'
+import { Buttons } from 'theme'
 
 import { useTheme } from '../../contexts/theme'
 
@@ -29,6 +30,11 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const { Buttons, heavyOpacity } = useTheme()
+
+  const buttonStyle = () => {
+    
+  }
+
   return (
     <TouchableOpacity
       onPress={onPress}

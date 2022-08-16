@@ -300,6 +300,30 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  tertiary: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.primary,
+  },
+  tertiaryDisabled: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.secondaryDisabled,
+  },
+  tertiaryText: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.primary,
+    textAlign: 'center',
+  },
+  tertiaryTextDisabled: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.secondaryDisabled,
+    textAlign: 'center',
+  },
   connectButton: {
     backgroundColor: ColorPallet.grayscale.lightGrey,
     padding: 20,
@@ -582,27 +606,10 @@ const PinInputTheme = {
 
 export const ModalTheme = {
   background: {
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(32, 32, 32, .7)',
+    backgroundColor: `rgba(32, 32, 32, ${heavyOpacity})`,
   },
   container: {
-    width: '95%',
-    height: '30%',
-    justifyContent: 'space-evenly',
-    padding: 10,
-    alignItems: 'center',
     backgroundColor: ColorPallet.grayscale.darkGrey,
-    borderRadius: 10,
-  },
-  wrapper: {
-    width: '100%',
-    height: '30%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    paddingTop: 5,
   },
   title: {
     ...TextTheme.headingThree,
@@ -611,11 +618,7 @@ export const ModalTheme = {
   body: {
     ...TextTheme.normal,
     textAlign: 'center',
-  },
-  button: {
-    padding: 10,
-    width: '45%',
-    justifyContent: 'center',
+    fontSize: 16,
   },
 }
 
