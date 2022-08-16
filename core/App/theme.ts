@@ -304,7 +304,7 @@ export const Buttons = StyleSheet.create({
     padding: 16,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: ColorPallet.brand.primary,
+    borderColor: ColorPallet.grayscale.white,
   },
   tertiaryDisabled: {
     padding: 16,
@@ -315,7 +315,7 @@ export const Buttons = StyleSheet.create({
   tertiaryText: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: ColorPallet.brand.primary,
+    color: ColorPallet.grayscale.white,
     textAlign: 'center',
   },
   tertiaryTextDisabled: {
