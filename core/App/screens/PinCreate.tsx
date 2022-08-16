@@ -110,12 +110,6 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
   return (
     <SafeAreaView style={[style.container]}>
-      <ConfirmModal
-        title={t('CredentialOffer.ConfirmDeclinedTitle')}
-        body={t('CredentialOffer.ConfirmDeclinedMessage')}
-        abort={t('CredentialOffer.AbortDecline')}
-        confirm={t('CredentialOffer.ConfirmDecline')}
-      />
       <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
         <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
       </Text>
