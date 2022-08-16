@@ -40,6 +40,14 @@ const ListCredentials: React.FC = () => {
             credential={credential}
             revoked={revoked.has(credential.id)}
             onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
+            overlay={{
+              imageSource: require('../assets/img/credential-branding/best-bc-student-card.png'),
+              header: {
+                imageSource: require('../assets/img/credential-branding/best-bc-header-logo.png'),
+                color: '#FFFFFF',
+              },
+              footer: { color: 'white' },
+            }}
           />
         </View>
       )}

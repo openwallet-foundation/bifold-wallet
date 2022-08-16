@@ -1,7 +1,17 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, ViewStyle } from 'react-native'
+import {
+  Dimensions,
+  Image,
+  ImageBackground,
+  ImageSourcePropType,
+  LayoutRectangle,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 // import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -14,26 +24,52 @@ import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
   credential: CredentialExchangeRecord
+  overlay?: CredentialCardOverlay
   revoked?: boolean
-  style?: ViewStyle
   onPress?: GenericFn
+  style?: ViewStyle
 }
 
-const height = 160
+export interface CredentialCardOverlay {
+  backgroundColor?: string
+  imageSource?: ImageSourcePropType
+  header?: OverlayHeader
+  footer?: OverlayFooter
+}
+export interface OverlayHeader {
+  color?: string
+  backgroundColor?: string
+  imageSource?: ImageSourcePropType
+  hideIssuer?: boolean
+}
+
+export interface OverlayFooter {
+  color?: string
+  backgroundColor?: string
+}
+
 const padding = 10
+const transparent = 'rgba(0,0,0,0)'
+const borderRadius = 15
+const { width } = Dimensions.get('window')
 
 const CredentialCard: React.FC<CredentialCardProps> = ({
   credential,
   revoked = false,
   style = {},
   onPress = undefined,
+  overlay = undefined,
 }) => {
   const { t } = useTranslation()
-  const { ListItems, ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
 
   const credentialLabel = parsedCredDefName(credential)
   const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+
+  const [headerDimensions, setHeaderDimensions] = useState<LayoutRectangle | null>(null)
+
+  const headerLogoRef = useRef(null)
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
@@ -45,50 +81,85 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: credentialBackgroundColor,
-      minHeight: height,
-      paddingHorizontal: 16,
-      paddingVertical: padding,
-      borderRadius: 15,
+      backgroundColor: overlay?.imageSource ? transparent : overlay?.backgroundColor ?? credentialBackgroundColor,
+      height: width / 2,
+      borderRadius: borderRadius,
     },
     headerContainer: {
       flexDirection: 'row',
+      backgroundColor: overlay?.header?.backgroundColor || transparent,
+      height: width / 7.5,
+      paddingHorizontal: 16,
+      paddingVertical: padding,
+      borderTopLeftRadius: borderRadius,
+      borderTopRightRadius: borderRadius,
+    },
+    bodyContainer: {
       flexGrow: 1,
-      flexShrink: 1,
     },
     footerContainer: {
-      justifyContent: 'flex-end',
-      flexGrow: 1,
-      flexShrink: 1,
+      flexDirection: 'row',
+      backgroundColor: overlay?.footer?.backgroundColor || transparent,
+      paddingHorizontal: 16,
+      paddingVertical: padding,
+      borderBottomLeftRadius: 15,
+      borderBottomRightRadius: 15,
     },
   })
 
   const renderCredentialCardHeader = () => {
     return (
-      <View testID={testIdWithKey('CredentialCardHeader')} style={styles.headerContainer}>
-        <Text
-          style={[
-            TextTheme.normal,
-            {
-              fontWeight: 'bold',
-              color: credentialTextColor(credentialBackgroundColor),
-              flexGrow: 1,
+      <View
+        testID={testIdWithKey('CredentialCardHeader')}
+        style={[styles.headerContainer]}
+        onLayout={({ nativeEvent: { layout } }) => setHeaderDimensions(layout)}
+      >
+        {headerDimensions && overlay?.header?.imageSource && (
+          <Image
+            ref={headerLogoRef}
+            source={overlay?.header?.imageSource}
+            style={{
               flexShrink: 1,
-            },
-          ]}
-          testID={testIdWithKey('CredentialIssuer')}
-          maxFontSizeMultiplier={1}
-        >
-          {credentialConnectionLabel}
-        </Text>
+              height: headerDimensions.height - 1 * padding,
+              marginTop: -0.5 * padding,
+            }}
+            resizeMode="contain"
+          />
+        )}
+        {overlay?.header?.hideIssuer ? null : (
+          <Text
+            numberOfLines={2}
+            style={[
+              TextTheme.label,
+              {
+                color:
+                  overlay?.header?.color ??
+                  credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
+                width: overlay?.header?.imageSource ? '33%' : '50%',
+                paddingLeft: overlay?.header?.imageSource ? 16 : 0,
+              },
+            ]}
+            testID={testIdWithKey('CredentialIssuer')}
+            maxFontSizeMultiplier={1}
+          >
+            {credentialConnectionLabel}
+          </Text>
+        )}
         <Text
+          numberOfLines={2}
           style={[
-            TextTheme.normal,
+            TextTheme.label,
             {
-              fontWeight: 'bold',
-              color: credentialTextColor(credentialBackgroundColor),
-              flexGrow: 1,
-              flexShrink: 1,
+              color:
+                overlay?.header?.color ??
+                credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
+              width: overlay?.header?.imageSource
+                ? overlay?.header?.hideIssuer
+                  ? '66%'
+                  : '33%'
+                : overlay?.header?.hideIssuer
+                ? '100%'
+                : '50%',
               textAlign: 'right',
               paddingLeft: 16,
             },
@@ -100,6 +171,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         </Text>
       </View>
     )
+  }
+
+  const renderCredentialCardBody = () => {
+    return <View style={styles.bodyContainer}></View>
   }
 
   const renderCredentialCardFooter = (revoked = false) => {
@@ -122,7 +197,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           //   </Text>
           // </View>
           <Text
-            style={[TextTheme.normal, { color: credentialTextColor(credentialBackgroundColor) }]}
+            style={[
+              TextTheme.caption,
+              {
+                color:
+                  overlay?.footer?.color ??
+                  credentialTextColor(overlay?.footer?.backgroundColor ?? credentialBackgroundColor),
+              },
+            ]}
             testID={testIdWithKey('CredentialIssued')}
             maxFontSizeMultiplier={1}
           >
@@ -133,16 +215,30 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     )
   }
 
+  const renderCredentialCard = (revoked = false) => {
+    return (
+      <>
+        {renderCredentialCardHeader()}
+        {renderCredentialCardBody()}
+        {renderCredentialCardFooter(revoked)}
+      </>
+    )
+  }
+
   return (
     <TouchableOpacity
       disabled={typeof onPress === 'undefined' ? true : false}
       onPress={onPress}
-      style={[styles.container, revoked && { backgroundColor: ListItems.revoked.backgroundColor }, style]}
+      style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {renderCredentialCardHeader()}
-      {/* {renderCredentialCardBody()} */}
-      {renderCredentialCardFooter(revoked)}
+      {overlay?.imageSource ? (
+        <ImageBackground source={overlay?.imageSource} style={{ flexGrow: 1 }} imageStyle={{ borderRadius }}>
+          {renderCredentialCard(revoked)}
+        </ImageBackground>
+      ) : (
+        renderCredentialCard(revoked)
+      )}
     </TouchableOpacity>
   )
 }
