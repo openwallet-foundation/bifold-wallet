@@ -70,8 +70,8 @@ export type AuthenticateStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Privacy]: undefined
   [Screens.Terms]: undefined
-  [Screens.CreatePin]: { setAuthenticated: (auth: boolean) => void } | undefined
-  [Screens.EnterPin]: { setAuthenticated: (auth: boolean) => void } | undefined
+  [Screens.CreatePin]: undefined
+  [Screens.EnterPin]: undefined
 }
 
 export type ContactStackParams = {

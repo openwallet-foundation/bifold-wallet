@@ -13,13 +13,12 @@ import { AuthLevel, WalletSecret } from '../types/security'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
-  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
   checkPIN: (pin: string) => Promise<boolean>
 }
 
-const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, checkPIN }) => {
+const PinEnter: React.FC<PinEnterProps> = ({ checkPIN }) => {
   const { t } = useTranslation()
-  const { getWalletSecret, getKeyForPIN } = useAuth()
+  const { getWalletSecret, getKeyForPIN, setAuthenticated } = useAuth()
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [pin, setPin] = useState('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)

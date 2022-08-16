@@ -9,6 +9,7 @@ enum OnboardingDispatchAction {
   DID_AGREE_TO_PRIVACY = 'onboarding/didAgreeToPrivacy',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePin',
+  RESET_ONBOARDING = 'onboarding/resetOnboarding',
 }
 
 enum ErrorDispatchAction {
@@ -95,6 +96,21 @@ const reducer = (state: State, action: ReducerAction): State => {
       const onboarding: OnboardingState = {
         ...state.onboarding,
         didCreatePIN: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case OnboardingDispatchAction.RESET_ONBOARDING: {
+      const onboarding: OnboardingState = {
+        ...state.onboarding,
+        didCompleteTutorial: false,
+        didAgreeToPrivacy: false,
+        didAgreeToTerms: false,
+        didCreatePIN: false,
       }
       const newState = {
         ...state,

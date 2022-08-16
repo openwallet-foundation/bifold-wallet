@@ -13,18 +13,14 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 
-interface PinCreateProps {
-  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
-}
-
 interface ModalState {
   visible: boolean
   title: string
   message: string
 }
 
-const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
-  const { setAppPIN } = useAuth()
+const PinCreate: React.FC = () => {
+  const { setAppPIN, setAuthenticated } = useAuth()
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
   const [modalState, setModalState] = useState<ModalState>({

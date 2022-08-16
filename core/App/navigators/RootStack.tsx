@@ -49,9 +49,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { getWalletSecret } = useAuth()
+  const { authenticated, getKeyForPIN, getWalletID, getWalletSecret } = useAuth()
 
-  const [authenticated, setAuthenticated] = useState(false)
   const [agentInitDone, setAgentInitDone] = useState(false)
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
 
@@ -59,7 +58,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, privacy, splash } = useConfiguration()
-  const { getWalletID, getKeyForPIN } = useAuth()
 
   const onTutorialCompleted = () => {
     dispatch({
@@ -69,12 +67,10 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   }
 
   const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
+    console.log('In process? ', initAgentInProcess)
+    
     if (initAgentInProcess) {
       return
-    }
-
-    if (agentInitDone) {
-      return 'Agent already initialised'
     }
 
     if (!predefinedSecret) {
@@ -165,18 +161,18 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   }
 
   useEffect(() => {
-    if (authenticated && !agentInitDone) {
+    if (authenticated) {
       initAgent()
     }
   }, [authenticated])
 
-  const authStack = (setAuthenticated: StateFn) => {
+  const authStack = () => {
     const Stack = createStackNavigator()
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.EnterPin}>
-          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} checkPIN={checkPIN} />}
+          {(props) => <PinEnter {...props} checkPIN={checkPIN} />}
         </Stack.Screen>
       </Stack.Navigator>
     )
@@ -197,7 +193,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     )
   }
 
-  const onboardingStack = (setAuthenticated: StateFn) => {
+  const onboardingStack = () => {
     const Stack = createStackNavigator()
     const carousel = createCarouselStyle(OnboardingTheme)
     return (
@@ -246,17 +242,17 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           component={terms}
         />
         <Stack.Screen name={Screens.CreatePin}>
-          {(props) => <PinCreate {...props} setAuthenticated={setAuthenticated} />}
+          {(props) => <PinCreate {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     )
   }
 
   if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
-    return authenticated ? mainStack() : authStack(setAuthenticated)
+    return authenticated ? mainStack() : authStack()
   }
 
-  return onboardingStack(setAuthenticated)
+  return onboardingStack()
 }
 
 export default RootStack

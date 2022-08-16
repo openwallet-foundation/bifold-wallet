@@ -12,7 +12,7 @@ describe('displays a pin create screen', () => {
           setAppPIN: jest.fn(),
         }}
       >
-        <PinCreate setAuthenticated={jest.fn()} />
+        <PinCreate />
       </AuthContext.Provider>
     )
     expect(tree).toMatchSnapshot()

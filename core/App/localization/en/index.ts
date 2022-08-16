@@ -181,6 +181,7 @@ const translation = {
     "AppPreferences": "App Preferences",
     "AboutApp": "About App",
     "Language": "Language",
+    "ResetWallet": "Reset Wallet"
   },
   "TabStack": {
     "Home": "Home",
