@@ -144,7 +144,19 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
               </Text>
             </View>
             {!loading && credential && (
-              <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+              <CredentialCard
+                credential={credential}
+                style={{ marginHorizontal: 15, marginBottom: 16 }}
+                overlay={{
+                  imageSource: require('../assets/img/credential-branding/lsbc-member-card.png'),
+                  header: {
+                    imageSource: require('../assets/img/credential-branding/lsbc-header-logo.png'),
+                    color: '#FFFFFF',
+                    backgroundColor: '#00698C',
+                    hideIssuer: true,
+                  },
+                }}
+              />
             )}
           </>
         )}
