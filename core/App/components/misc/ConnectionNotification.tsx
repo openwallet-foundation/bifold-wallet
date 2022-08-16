@@ -2,13 +2,14 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
+import PopupModal from '../modals/PopupModal'
 
-import InfoBox, { InfoBoxType } from './InfoBox'
+import { InfoBoxType } from './InfoBox'
 import UnorderedList from './UnorderedList'
 
 interface ConnectionNotificationProps {
@@ -78,36 +79,34 @@ const ConnectionNotification: React.FC<ConnectionNotificationProps> = ({ connect
         <Text style={styles.notifyTitle}>{t('ConnectionNotification.AddedContacts')}</Text>
         <Icon name={'information-outline'} size={30} style={styles.informationIcon} onPress={toggleInfoCard} />
       </View>
-      <Modal visible={infoCardVisible} transparent>
-        <View style={styles.modalCenter}>
-          <InfoBox
-            notificationType={InfoBoxType.Info}
-            title={t('ConnectionNotification.WhatAreContacts')}
-            bodyContent={
-              <View>
-                <Text style={styles.notifyText}>{t('ConnectionNotification.PopupIntro')}</Text>
-                <UnorderedList
-                  UnorderedListItems={[
-                    t('ConnectionNotification.PopupPoint1'),
-                    t('ConnectionNotification.PopupPoint2'),
-                    t('ConnectionNotification.PopupPoint3'),
-                  ]}
-                />
-                <Text style={styles.notifyText}>
-                  {t('ConnectionNotification.SettingsInstruction')}
-                  <Text style={styles.fakeLink} onPress={goToSettings}>
-                    {t('ConnectionNotification.SettingsLink')}
-                  </Text>
-                  .
+      {infoCardVisible && (
+        <PopupModal
+          notificationType={InfoBoxType.Info}
+          title={t('ConnectionNotification.WhatAreContacts')}
+          bodyContent={
+            <View>
+              <Text style={styles.notifyText}>{t('ConnectionNotification.PopupIntro')}</Text>
+              <UnorderedList
+                UnorderedListItems={[
+                  t('ConnectionNotification.PopupPoint1'),
+                  t('ConnectionNotification.PopupPoint2'),
+                  t('ConnectionNotification.PopupPoint3'),
+                ]}
+              />
+              <Text style={styles.notifyText}>
+                {t('ConnectionNotification.SettingsInstruction')}
+                <Text style={styles.fakeLink} onPress={goToSettings}>
+                  {t('ConnectionNotification.SettingsLink')}
                 </Text>
-                <Text style={styles.notifyText}>{t('ConnectionNotification.PrivacyMessage')}</Text>
-              </View>
-            }
-            onCallToActionLabel={t('ConnectionNotification.PopupExit')}
-            onCallToActionPressed={toggleInfoCard}
-          />
-        </View>
-      </Modal>
+                .
+              </Text>
+              <Text style={styles.notifyText}>{t('ConnectionNotification.PrivacyMessage')}</Text>
+            </View>
+          }
+          onCallToActionLabel={t('ConnectionNotification.PopupExit')}
+          onCallToActionPressed={toggleInfoCard}
+        />
+      )}
       <Text style={styles.notifyText}>
         {t('ConnectionNotification.NotificationBodyUpper') +
           (connectionID || t('ContactDetails.AContact').toLowerCase()) +
