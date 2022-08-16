@@ -300,6 +300,30 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  tertiary: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.grayscale.white,
+  },
+  tertiaryDisabled: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.secondaryDisabled,
+  },
+  tertiaryText: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+    textAlign: 'center',
+  },
+  tertiaryTextDisabled: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.secondaryDisabled,
+    textAlign: 'center',
+  },
   connectButton: {
     backgroundColor: ColorPallet.grayscale.lightGrey,
     padding: 20,
