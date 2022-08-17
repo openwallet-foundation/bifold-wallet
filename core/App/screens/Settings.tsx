@@ -1,17 +1,16 @@
-import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-
 import { useAgent } from '@aries-framework/react-hooks'
-
+import { StackScreenProps } from '@react-navigation/stack'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { uiConfig } from '../../configs/uiConfig'
 import { SafeAreaScrollView } from '../components'
-import { DispatchAction } from '../contexts/reducers/store'
+import ConfirmModal from '../components/modals/ConfirmModal'
 import { useAuth } from '../contexts/auth'
+import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { resetStorage } from '../services/keychain.service'
@@ -26,6 +25,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { borderRadius, SettingsTheme } = useTheme()
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   const styles = StyleSheet.create({
     container: {
@@ -54,6 +54,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     dispatch({
       type: DispatchAction.RESET_ONBOARDING,
     })
+    setModalVisible(false)
     setAuthenticated(false)
   }
 
@@ -111,12 +112,22 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             accessibilityLabel={t('Settings.ResetWallet')}
             testID={testIdWithKey('Language')}
             style={[styles.row, {flexDirection: 'column'}]}
-            onPress={() => resetApp()}
+            onPress={() => setModalVisible(true)}
           >
             <Text style={[SettingsTheme.resetText, {textAlign: 'center'}]}>{t('Settings.ResetWallet')}</Text>
           </TouchableOpacity>
         </View>
       </View>
+      {modalVisible && (
+        <ConfirmModal
+          title={t('Settings.ResetTitle')}
+          body={t('Settings.ResetBody')}
+          confirm={t('Settings.ResetConfirm')}
+          abort={t('Settings.ResetAbort')}
+          confirmSubmit={() => resetApp()}
+          abortSubmit={() => setModalVisible(false)}
+        />
+      )}
     </SafeAreaScrollView>
   )
 }
