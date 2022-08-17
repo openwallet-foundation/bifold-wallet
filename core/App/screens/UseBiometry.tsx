@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Switch, StatusBar, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -13,6 +14,7 @@ import { testIdWithKey } from '../utils/testable'
 
 const UseBiometry: React.FC = () => {
   const [, dispatch] = useStore()
+  const { t } = useTranslation()
   const { convertToUseBiometrics } = useAuth()
   const [isEnabled, setIsEnabled] = useState(false)
   const { ColorPallet, TextTheme } = useTheme()
@@ -52,13 +54,11 @@ const UseBiometry: React.FC = () => {
         <View style={{ alignItems: 'center' }}>
           <Biometrics style={[styles.image]} />
         </View>
-        <Text style={[TextTheme.normal]}>
-          Unlock the wallet with your phone's biometrics instead of your wallet PIN.
-        </Text>
+        <Text style={[TextTheme.normal]}>{t('Biometry.Text1')}</Text>
         <Text></Text>
         <Text style={[TextTheme.normal]}>
-          Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.
-          <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}> Ensure only you have access to your wallet.</Text>
+          {t('Biometry.Text2')}
+          <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}> {t('Biometry.Warning')}</Text>
         </Text>
         <View
           style={{
@@ -67,10 +67,12 @@ const UseBiometry: React.FC = () => {
           }}
         >
           <View style={{ flexShrink: 1 }}>
-            <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>Use biometrics to unlock wallet?</Text>
+            <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
             <Switch
+              accessibilityLabel={t('Biometry.Toggle')}
+              testID={testIdWithKey('ToggleBiometrics')}
               trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
               thumbColor={isEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
               ios_backgroundColor={ColorPallet.grayscale.lightGrey}
