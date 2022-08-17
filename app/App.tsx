@@ -55,7 +55,7 @@ const App = () => {
                 translucent={false}
               />
               <ErrorModal />
-              <RootStack setAgent={setAgent} />
+              <RootStack agent={agent} setAgent={setAgent} />
               <Toast topOffset={15} config={toastConfig} />
             </AuthProvider>
           </ConfigurationProvider>

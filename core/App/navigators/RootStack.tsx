@@ -41,17 +41,17 @@ import TabStack from './TabStack'
 import { createDefaultStackOptions } from './defaultStackOptions'
 
 interface RootStackProps {
+  agent: Agent | undefined
   setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
 }
 
 const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
-  const { setAgent } = props
+  const { agent, setAgent } = props
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { authenticated, getKeyForPIN, getWalletID, getWalletSecret } = useAuth()
 
-  const [agentInitDone, setAgentInitDone] = useState(false)
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
 
   const theme = useTheme()
@@ -67,8 +67,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   }
 
   const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
-    console.log('In process? ', initAgentInProcess)
-    
     if (initAgentInProcess) {
       return
     }
@@ -112,7 +110,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
       await newAgent.initialize()
       setAgent(newAgent) // -> This will set the agent in the global provider
-      setAgentInitDone(true)
 
       dispatch({ type: DispatchAction.LOADING_DISABLED })
     } catch (e: unknown) {
@@ -152,6 +149,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       walletId: walletID,
       walletKey: generatedKey,
     })
+
     if (!error) {
       return false
     } else {
@@ -161,7 +159,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   }
 
   useEffect(() => {
-    if (authenticated) {
+    const initialized = agent?.isInitialized
+    if (authenticated && !initialized) {
       initAgent()
     }
   }, [authenticated])
