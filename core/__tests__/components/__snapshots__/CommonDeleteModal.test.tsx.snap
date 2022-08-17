@@ -52,466 +52,15 @@ exports[`ErrorModal Component Renders correctly 1`] = `
       </Text>
     </View>
   </View>
-  <RCTSafeAreaView
-    emulateUnlessSupported={true}
-    style={
-      Array [
-        Object {
-          "backgroundColor": "#000000",
-          "flexGrow": 1,
-        },
-      ]
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginTop": 25,
-            "paddingHorizontal": 25,
-          },
-        ]
-      }
-    >
-      <View
+  <RCTScrollView>
+    <View>
+      <RCTSafeAreaView
+        emulateUnlessSupported={true}
         style={
           Array [
             Object {
-              "marginBottom": 25,
-            },
-          ]
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 20,
-                "fontWeight": "bold",
-              },
-            ]
-          }
-        >
-          CredentialDetails.RemoveTitle
-        </Text>
-      </View>
-      <View>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
-          }
-        >
-          CredentialDetails.RemoveCaption
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 25,
-          }
-        }
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#313132",
-              "borderRadius": 5,
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-              "opacity": 1,
-              "padding": 15,
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
-                  "fontWeight": "bold",
-                },
-              ]
-            }
-          >
-            CredentialDetails.YouWillNotLose
-          </Text>
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 24,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-        <View
-          collapsable={false}
-          nativeID="animatedComponent"
-          pointerEvents="auto"
-          style={Object {}}
-        >
-          <View
-            collapsable={false}
-            forwardedRef={[Function]}
-            nativeID="animatedComponent"
-            onLayout={[Function]}
-            style={Object {}}
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "borderLeftColor": "#313132",
-                    "borderLeftWidth": 2,
-                    "marginTop": 10,
-                  },
-                ]
-              }
-            >
-              <RCTScrollView
-                collapsable={false}
-                data={
-                  Array [
-                    "CredentialDetails.YouWillNotLoseListItem1",
-                    "CredentialDetails.YouWillNotLoseListItem2",
-                  ]
-                }
-                getItem={[Function]}
-                getItemCount={[Function]}
-                keyExtractor={[Function]}
-                onContentSizeChange={[Function]}
-                onGestureHandlerEvent={[Function]}
-                onGestureHandlerStateChange={[Function]}
-                onLayout={[Function]}
-                onMomentumScrollBegin={[Function]}
-                onMomentumScrollEnd={[Function]}
-                onScroll={[Function]}
-                onScrollBeginDrag={[Function]}
-                onScrollEndDrag={[Function]}
-                removeClippedSubviews={false}
-                renderItem={[Function]}
-                renderScrollComponent={[Function]}
-                scrollEventThrottle={50}
-                stickyHeaderIndices={Array []}
-                viewabilityConfigCallbackPairs={Array []}
-              >
-                <View>
-                  <View
-                    onLayout={[Function]}
-                    style={null}
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "display": "flex",
-                            "flexDirection": "row",
-                            "marginBottom": 5,
-                          },
-                        ]
-                      }
-                    >
-                      <Text
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "paddingLeft": 5,
-                            },
-                          ]
-                        }
-                      >
-                        •
-                      </Text>
-                      <Text
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "paddingLeft": 5,
-                            },
-                          ]
-                        }
-                      >
-                        CredentialDetails.YouWillNotLoseListItem1
-                      </Text>
-                    </View>
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={null}
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "display": "flex",
-                            "flexDirection": "row",
-                            "marginBottom": 5,
-                          },
-                        ]
-                      }
-                    >
-                      <Text
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "paddingLeft": 5,
-                            },
-                          ]
-                        }
-                      >
-                        •
-                      </Text>
-                      <Text
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "paddingLeft": 5,
-                            },
-                          ]
-                        }
-                      >
-                        CredentialDetails.YouWillNotLoseListItem2
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </RCTScrollView>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 25,
-          }
-        }
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#313132",
-              "borderRadius": 5,
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-              "opacity": 1,
-              "padding": 15,
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
-                  "fontWeight": "bold",
-                },
-              ]
-            }
-          >
-            CredentialDetails.HowToGetThisCredentialBack
-          </Text>
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 24,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-        <View
-          collapsable={false}
-          nativeID="animatedComponent"
-          pointerEvents="auto"
-          style={Object {}}
-        >
-          <View
-            collapsable={false}
-            forwardedRef={[Function]}
-            nativeID="animatedComponent"
-            onLayout={[Function]}
-            style={Object {}}
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "borderLeftColor": "#313132",
-                    "borderLeftWidth": 2,
-                    "marginTop": 10,
-                  },
-                ]
-              }
-            >
-              <RCTScrollView
-                collapsable={false}
-                data={
-                  Array [
-                    "CredentialDetails.HowToGetThisCredentialBackListItem1",
-                  ]
-                }
-                getItem={[Function]}
-                getItemCount={[Function]}
-                keyExtractor={[Function]}
-                onContentSizeChange={[Function]}
-                onGestureHandlerEvent={[Function]}
-                onGestureHandlerStateChange={[Function]}
-                onLayout={[Function]}
-                onMomentumScrollBegin={[Function]}
-                onMomentumScrollEnd={[Function]}
-                onScroll={[Function]}
-                onScrollBeginDrag={[Function]}
-                onScrollEndDrag={[Function]}
-                removeClippedSubviews={false}
-                renderItem={[Function]}
-                renderScrollComponent={[Function]}
-                scrollEventThrottle={50}
-                stickyHeaderIndices={Array []}
-                viewabilityConfigCallbackPairs={Array []}
-              >
-                <View>
-                  <View
-                    onLayout={[Function]}
-                    style={null}
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "display": "flex",
-                            "flexDirection": "row",
-                            "marginBottom": 5,
-                          },
-                        ]
-                      }
-                    >
-                      <Text
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "paddingLeft": 5,
-                            },
-                          ]
-                        }
-                      >
-                        •
-                      </Text>
-                      <Text
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "paddingLeft": 5,
-                            },
-                          ]
-                        }
-                      >
-                        CredentialDetails.HowToGetThisCredentialBackListItem1
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </RCTScrollView>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "marginVertical": 25,
+              "backgroundColor": "#000000",
+              "flexGrow": 1,
             },
           ]
         }
@@ -520,113 +69,494 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           style={
             Array [
               Object {
-                "marginBottom": 5,
+                "marginTop": 25,
+                "paddingHorizontal": 25,
               },
             ]
           }
         >
           <View
-            accessibilityLabel="CredentialDetails.RemoveFromWallet"
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            nativeID="animatedComponent"
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "backgroundColor": "#42803E",
-                "borderRadius": 4,
-                "opacity": 1,
-                "padding": 16,
-              }
+              Array [
+                Object {
+                  "marginBottom": 25,
+                },
+              ]
             }
-            testID="com.ariesbifold:id/ConfirmRemoveButton"
           >
             <Text
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "fontSize": 18,
+                    "fontSize": 20,
                     "fontWeight": "bold",
-                    "textAlign": "center",
                   },
-                  false,
                 ]
               }
             >
-              CredentialDetails.RemoveFromWallet
+              CredentialDetails.RemoveTitle
             </Text>
           </View>
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "marginTop": 5,
-              },
-            ]
-          }
-        >
-          <View
-            accessibilityLabel="Global.Cancel"
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            nativeID="animatedComponent"
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "borderColor": "#42803E",
-                "borderRadius": 4,
-                "borderWidth": 2,
-                "opacity": 1,
-                "padding": 16,
-              }
-            }
-            testID="com.ariesbifold:id/AbortRemoveButton"
-          >
+          <View>
             <Text
               style={
                 Array [
                   Object {
-                    "color": "#42803E",
+                    "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
+                    "fontWeight": "normal",
                   },
-                  false,
                 ]
               }
             >
-              Global.Cancel
+              CredentialDetails.RemoveCaption
             </Text>
           </View>
+          <View
+            style={
+              Object {
+                "marginTop": 25,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#313132",
+                  "borderRadius": 5,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "opacity": 1,
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                CredentialDetails.YouWillNotLose
+              </Text>
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+            <View
+              collapsable={false}
+              nativeID="animatedComponent"
+              pointerEvents="auto"
+              style={Object {}}
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                nativeID="animatedComponent"
+                onLayout={[Function]}
+                style={Object {}}
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderLeftColor": "#313132",
+                        "borderLeftWidth": 2,
+                        "marginTop": 10,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      CredentialDetails.YouWillNotLoseListItem1
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      CredentialDetails.YouWillNotLoseListItem2
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "marginTop": 25,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#313132",
+                  "borderRadius": 5,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "opacity": 1,
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                CredentialDetails.HowToGetThisCredentialBack
+              </Text>
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+            <View
+              collapsable={false}
+              nativeID="animatedComponent"
+              pointerEvents="auto"
+              style={Object {}}
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                nativeID="animatedComponent"
+                onLayout={[Function]}
+                style={Object {}}
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderLeftColor": "#313132",
+                        "borderLeftWidth": 2,
+                        "marginTop": 10,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      CredentialDetails.HowToGetThisCredentialBackListItem1
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "marginVertical": 25,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "marginBottom": 5,
+                  },
+                ]
+              }
+            >
+              <View
+                accessibilityLabel="CredentialDetails.RemoveFromWallet"
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                nativeID="animatedComponent"
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#42803E",
+                    "borderRadius": 4,
+                    "opacity": 1,
+                    "padding": 16,
+                  }
+                }
+                testID="com.ariesbifold:id/ConfirmRemoveButton"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  CredentialDetails.RemoveFromWallet
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "marginTop": 5,
+                  },
+                ]
+              }
+            >
+              <View
+                accessibilityLabel="Global.Cancel"
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                nativeID="animatedComponent"
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "borderColor": "#42803E",
+                    "borderRadius": 4,
+                    "borderWidth": 2,
+                    "opacity": 1,
+                    "padding": 16,
+                  }
+                }
+                testID="com.ariesbifold:id/AbortRemoveButton"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Global.Cancel
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
-      </View>
+      </RCTSafeAreaView>
     </View>
-  </RCTSafeAreaView>
+  </RCTScrollView>
 </Modal>
 `;
