@@ -1,20 +1,12 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Dimensions,
-  Image,
-  ImageBackground,
-  ImageSourcePropType,
-  LayoutRectangle,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native'
+import { Dimensions, ImageBackground, LayoutRectangle, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 // import Icon from 'react-native-vector-icons/MaterialIcons'
+import Image from 'react-native-scalable-image'
 
+import { Overlay } from '../../assets/img/credential-branding/credential-branding'
 import { dateFormatOptions } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
@@ -24,31 +16,14 @@ import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
   credential: CredentialExchangeRecord
-  overlay?: CredentialCardOverlay
+  overlay?: Overlay
   revoked?: boolean
   onPress?: GenericFn
   style?: ViewStyle
 }
 
-export interface CredentialCardOverlay {
-  backgroundColor?: string
-  imageSource?: ImageSourcePropType
-  header?: OverlayHeader
-  footer?: OverlayFooter
-}
-export interface OverlayHeader {
-  color?: string
-  backgroundColor?: string
-  imageSource?: ImageSourcePropType
-  hideIssuer?: boolean
-}
-
-export interface OverlayFooter {
-  color?: string
-  backgroundColor?: string
-}
-
-const padding = 10
+const paddingVertical = 10
+const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 const { width } = Dimensions.get('window')
@@ -68,8 +43,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
   const [headerDimensions, setHeaderDimensions] = useState<LayoutRectangle | null>(null)
-
-  const headerLogoRef = useRef(null)
+  const [headerLogoDimensions, setHeaderLogoDimensions] = useState<LayoutRectangle | null>(null)
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
@@ -89,8 +63,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       flexDirection: 'row',
       backgroundColor: overlay?.header?.backgroundColor || transparent,
       height: width / 7.5,
-      paddingHorizontal: 16,
-      paddingVertical: padding,
+      paddingHorizontal,
+      paddingVertical,
       borderTopLeftRadius: borderRadius,
       borderTopRightRadius: borderRadius,
     },
@@ -100,14 +74,24 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     footerContainer: {
       flexDirection: 'row',
       backgroundColor: overlay?.footer?.backgroundColor || transparent,
-      paddingHorizontal: 16,
-      paddingVertical: padding,
+      paddingHorizontal,
+      paddingVertical,
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15,
     },
   })
 
   const renderCredentialCardHeader = () => {
+    const calculatePercentageWidthWithLogo = (
+      headerDimensions: LayoutRectangle,
+      headerLogoDimensions: LayoutRectangle,
+      halved = true
+    ) => {
+      return `${
+        (100 * (headerDimensions.width - headerLogoDimensions.width - 8)) / headerDimensions.width / (halved ? 2 : 1)
+      }%`
+    }
+
     return (
       <View
         testID={testIdWithKey('CredentialCardHeader')}
@@ -116,14 +100,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       >
         {headerDimensions && overlay?.header?.imageSource && (
           <Image
-            ref={headerLogoRef}
             source={overlay?.header?.imageSource}
-            style={{
-              flexShrink: 1,
-              height: headerDimensions.height - 1 * padding,
-              marginTop: -0.5 * padding,
-            }}
-            resizeMode="contain"
+            height={headerDimensions.height - paddingVertical}
+            width={headerDimensions.width / 3 - paddingHorizontal}
+            onLayout={({ nativeEvent: { layout } }) => setHeaderLogoDimensions(layout)}
           />
         )}
         {overlay?.header?.hideIssuer ? null : (
@@ -135,8 +115,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
                 color:
                   overlay?.header?.color ??
                   credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
-                width: overlay?.header?.imageSource ? '33%' : '50%',
-                paddingLeft: overlay?.header?.imageSource ? 16 : 0,
+                width:
+                  headerDimensions && overlay?.header?.imageSource && headerLogoDimensions
+                    ? calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions)
+                    : '50%',
+                paddingHorizontal: 0.5 * paddingHorizontal,
               },
             ]}
             testID={testIdWithKey('CredentialIssuer')}
@@ -153,15 +136,16 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
               color:
                 overlay?.header?.color ??
                 credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
-              width: overlay?.header?.imageSource
-                ? overlay?.header?.hideIssuer
-                  ? '66%'
-                  : '33%'
-                : overlay?.header?.hideIssuer
-                ? '100%'
-                : '50%',
+              width:
+                headerDimensions && overlay?.header?.imageSource && headerLogoDimensions
+                  ? overlay?.header?.hideIssuer
+                    ? calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions, false)
+                    : calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions)
+                  : overlay?.header?.hideIssuer
+                  ? '100%'
+                  : '50%',
               textAlign: 'right',
-              paddingLeft: 16,
+              paddingHorizontal: 0.5 * paddingHorizontal,
             },
           ]}
           testID={testIdWithKey('CredentialName')}
