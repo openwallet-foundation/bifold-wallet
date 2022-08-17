@@ -240,9 +240,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           })}
           component={terms}
         />
-        <Stack.Screen name={Screens.CreatePin}>
-          {(props) => <PinCreate {...props} />}
-        </Stack.Screen>
+        <Stack.Screen name={Screens.CreatePin} component={PinCreate} />
       </Stack.Navigator>
     )
   }
