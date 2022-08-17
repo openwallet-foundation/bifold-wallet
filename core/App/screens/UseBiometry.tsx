@@ -16,7 +16,8 @@ const UseBiometry: React.FC = () => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { convertToUseBiometrics } = useAuth()
-  const [isEnabled, setIsEnabled] = useState(false)
+  const [biometryEnabled, setBiometryEnabled] = useState(false)
+  const [continueEnabled, setContinueEnabled] = useState(true)
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -33,17 +34,19 @@ const UseBiometry: React.FC = () => {
   })
 
   const continueTouched = async () => {
-    if (isEnabled) {
+    setContinueEnabled(false)
+
+    if (biometryEnabled) {
       await convertToUseBiometrics()
     }
 
     dispatch({
       type: DispatchAction.USE_BIOMETRY,
-      payload: [isEnabled],
+      payload: [biometryEnabled],
     })
   }
 
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
+  const toggleSwitch = () => setBiometryEnabled((previousState) => !previousState)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,10 +77,10 @@ const UseBiometry: React.FC = () => {
               accessibilityLabel={t('Biometry.Toggle')}
               testID={testIdWithKey('ToggleBiometrics')}
               trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={isEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              thumbColor={biometryEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
               ios_backgroundColor={ColorPallet.grayscale.lightGrey}
               onValueChange={toggleSwitch}
-              value={isEnabled}
+              value={biometryEnabled}
             />
           </View>
         </View>
@@ -88,6 +91,7 @@ const UseBiometry: React.FC = () => {
             testID={testIdWithKey('Continue')}
             onPress={continueTouched}
             buttonType={ButtonType.Primary}
+            disabled={continueEnabled}
           />
         </View>
       </View>

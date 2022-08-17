@@ -103,8 +103,8 @@ const translation = {
   },
   "Biometry": {
     "Toggle": "Toggle Biometrics",
-    "WhyUse": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
-    "Meaning": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
+    "Text1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
+    "Text2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
     "Warning": "Ensure only you have access to your wallet.",
     "UseToUnlock": "Use biometrics to unlock wallet?"
   },
