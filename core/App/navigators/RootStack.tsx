@@ -205,7 +205,17 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         <Stack.Screen name={Screens.CreatePin}>
           {(props) => <PinCreate {...props} setAuthenticated={setAuthenticated} />}
         </Stack.Screen>
-        <Stack.Screen name={Screens.UseBiometry} component={UseBiometry} />
+        <Stack.Screen
+          name={Screens.UseBiometry}
+          options={() => ({
+            title: t('Screens.Biometry'),
+            headerTintColor: OnboardingTheme.headerTintColor,
+            headerShown: true,
+            headerLeft: () => false,
+            rightLeft: () => false,
+          })}
+          component={UseBiometry}
+        />
       </Stack.Navigator>
     )
   }
