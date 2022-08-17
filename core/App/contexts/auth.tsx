@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
 
-import { hashPIN } from '../services/kdf.service'
-import { secretForPIN, storeWalletSecret, loadWalletSecret, convertToUseBiometrics } from '../services/keychain.service'
+import { secretForPIN, storeWalletSecret, loadWalletSecret, convertToUseBiometrics } from '../services/keychain'
 import { WalletSecret } from '../types/security'
+import { hashPIN } from '../utils/crypto'
 
 export interface AuthContext {
   checkPIN: (pin: string) => Promise<boolean>

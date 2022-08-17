@@ -2,10 +2,9 @@ import { Platform } from 'react-native'
 import Keychain, { resetGenericPassword } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
-import { KEYCHAIN_SERVICE_ID, KEYCHAIN_SERVICE_KEY, KEYCHAIN_SERVICE_SALT } from '../constants'
+import { KEYCHAIN_SERVICE_ID, KEYCHAIN_SERVICE_KEY } from '../constants'
 import { WalletSecret } from '../types/security'
-
-import { hashPIN } from './kdf.service'
+import { hashPIN } from '../utils/crypto'
 
 const service = KEYCHAIN_SERVICE_KEY
 const pinUserNameKey = 'WalletFauxPINUserName'
