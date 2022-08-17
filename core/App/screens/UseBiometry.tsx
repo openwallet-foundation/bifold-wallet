@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Switch } from 'react-native'
+import { StyleSheet, Text, View, Switch, StatusBar, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Biometrics from '../assets/img/biometrics.svg'
@@ -8,19 +8,20 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 const UseBiometry: React.FC = () => {
   const [, dispatch] = useStore()
   const { convertToUseBiometrics } = useAuth()
   const [isEnabled, setIsEnabled] = useState(false)
-
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flexGrow: 2,
       flexDirection: 'column',
       paddingHorizontal: 25,
+      backgroundColor: ColorPallet.brand.primaryBackground,
     },
     image: {
       minWidth: 200,
@@ -28,6 +29,7 @@ const UseBiometry: React.FC = () => {
       marginBottom: 66,
     },
   })
+
   const continueTouched = async () => {
     if (isEnabled) {
       await convertToUseBiometrics()
@@ -43,6 +45,9 @@ const UseBiometry: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle={Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(ColorPallet.brand.primary)}
+      />
       <View style={{ flexGrow: 1 }}>
         <View style={{ alignItems: 'center' }}>
           <Biometrics style={[styles.image]} />

@@ -11,13 +11,13 @@ const pinUserNameKey = 'WalletFauxPINUserName'
 
 export const optionsForKeychainAccess = (useBiometrics = false): Keychain.Options => {
   const opts: Keychain.Options = {
-    accessControl: Keychain.ACCESS_CONTROL.DEVICE_PASSCODE,
     accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
     service,
   }
 
   if (useBiometrics) {
-    opts.accessControl = Keychain.ACCESS_CONTROL.USER_PRESENCE
+    opts.accessControl = Keychain.ACCESS_CONTROL.DEVICE_PASSCODE
+    // opts.accessControl = Keychain.ACCESS_CONTROL.USER_PRESENCE
   }
 
   if (Platform.OS === 'android') {
