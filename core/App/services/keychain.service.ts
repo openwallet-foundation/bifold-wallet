@@ -104,6 +104,7 @@ export async function getStoredWalletId(): Promise<string | null> {
  *
  * */
 export async function resetStorage() {
+  await Keychain.resetGenericPassword()
   await Keychain.resetGenericPassword({ service: KEYCHAIN_SERVICE_ID })
   return Keychain.resetGenericPassword({ service: serviceKey })
 }

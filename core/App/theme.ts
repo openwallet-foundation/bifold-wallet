@@ -501,6 +501,17 @@ export const SettingsTheme = {
     ...TextTheme.caption,
     color: ColorPallet.grayscale.white,
   },
+  resetButton: {
+    borderWidth: 1,
+    borderColor: ColorPallet.brand.highlight,
+    borderRadius: borderRadius * 2,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  resetText: {
+    color: ColorPallet.brand.highlight,
+    textAlign: 'center',
+  }
 }
 
 export const ChatTheme = {

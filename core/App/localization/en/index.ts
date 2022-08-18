@@ -181,6 +181,11 @@ const translation = {
     "AppPreferences": "App Preferences",
     "AboutApp": "About App",
     "Language": "Language",
+    "ResetWallet": "Reset Wallet",
+    "ResetTitle": "This cannot be undone!",
+    "ResetBody": "If you reset your wallet, you will need to re-create your pin and you will lose all of your contacts and credentials.",
+    "ResetConfirm": "Confirm Reset",
+    "ResetAbort": "Go Back",
   },
   "TabStack": {
     "Home": "Home",

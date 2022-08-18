@@ -9,12 +9,15 @@ export interface AuthContext {
   getKeyForPIN: (pin: string, providedSalt?: string) => Promise<any>
   setAppPIN: (pin: string) => Promise<void>
   comparePIN: (newPin: string) => Promise<boolean>
+  authenticated: boolean
+  setAuthenticated: (auth: boolean) => void
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
+  const [authenticated, setAuthenticated] = useState(false)
 
   const getWalletSecret = async (): Promise<WalletSecret | undefined> => {
     try {
@@ -92,6 +95,8 @@ export const AuthProvider: React.FC = ({ children }) => {
         getKeyForPIN: getKeyForPIN,
         setAppPIN,
         comparePIN: comparePIN,
+        authenticated,
+        setAuthenticated,
       }}
     >
       {children}
