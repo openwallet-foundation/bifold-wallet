@@ -91,7 +91,7 @@ const UseBiometry: React.FC = () => {
             testID={testIdWithKey('Continue')}
             onPress={continueTouched}
             buttonType={ButtonType.Primary}
-            disabled={continueEnabled}
+            disabled={!continueEnabled}
           />
         </View>
       </View>
