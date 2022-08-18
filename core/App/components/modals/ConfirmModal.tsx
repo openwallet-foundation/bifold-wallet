@@ -12,6 +12,8 @@ export interface props {
   body: string
   confirm: string
   abort: string
+  abortButtonStyles?: any
+  confirmButtonStyles?: any
   abortSubmit?: () => void
   confirmSubmit?: () => void
 }
@@ -77,7 +79,7 @@ const ConfirmModal = (props: props) => {
               accessibilityLabel={'abort'}
               buttonType={ButtonType.Secondary}
               onPress={props.abortSubmit}
-              styles={[styles.button]}
+              styles={props.abortButtonStyles ? [styles.button, ...props.abortButtonStyles] : [styles.button]}
             />
             <Button
               title={props.confirm}
@@ -85,7 +87,7 @@ const ConfirmModal = (props: props) => {
               accessibilityLabel={'confirm'}
               buttonType={ButtonType.Primary}
               onPress={props.confirmSubmit}
-              styles={[styles.button]}
+              styles={props.confirmButtonStyles ? [styles.button, ...props.confirmButtonStyles] : [styles.button]}
             />
           </View>
         </View>
