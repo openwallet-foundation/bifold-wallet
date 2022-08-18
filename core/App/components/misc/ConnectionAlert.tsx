@@ -12,11 +12,11 @@ import PopupModal from '../modals/PopupModal'
 import { InfoBoxType } from './InfoBox'
 import UnorderedList from './UnorderedList'
 
-interface ConnectionNotificationProps {
+interface ConnectionAlertProps {
   connectionID?: string
 }
 
-const ConnectionNotification: React.FC<ConnectionNotificationProps> = ({ connectionID }) => {
+const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
   const { t } = useTranslation()
   const { ListItems, ColorPallet, TextTheme } = useTheme()
   const [infoCardVisible, setInfoCardVisible] = useState(false)
@@ -64,11 +64,9 @@ const ConnectionNotification: React.FC<ConnectionNotificationProps> = ({ connect
     },
   })
 
-  function toggleInfoCard() {
-    setInfoCardVisible(!infoCardVisible)
-  }
+  const toggleInfoCard = () => setInfoCardVisible(!infoCardVisible)
 
-  function goToSettings() {
+  const navigateToSettings = () => {
     toggleInfoCard()
     settingsNavigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })
   }
@@ -76,44 +74,44 @@ const ConnectionNotification: React.FC<ConnectionNotificationProps> = ({ connect
   return (
     <View style={styles.notifyTextContainer}>
       <View style={styles.row}>
-        <Text style={styles.notifyTitle}>{t('ConnectionNotification.AddedContacts')}</Text>
+        <Text style={styles.notifyTitle}>{t('ConnectionAlert.AddedContacts')}</Text>
         <Icon name={'information-outline'} size={30} style={styles.informationIcon} onPress={toggleInfoCard} />
       </View>
       {infoCardVisible && (
         <PopupModal
           notificationType={InfoBoxType.Info}
-          title={t('ConnectionNotification.WhatAreContacts')}
+          title={t('ConnectionAlert.WhatAreContacts')}
           bodyContent={
             <View>
-              <Text style={styles.notifyText}>{t('ConnectionNotification.PopupIntro')}</Text>
+              <Text style={styles.notifyText}>{t('ConnectionAlert.PopupIntro')}</Text>
               <UnorderedList
                 UnorderedListItems={[
-                  t('ConnectionNotification.PopupPoint1'),
-                  t('ConnectionNotification.PopupPoint2'),
-                  t('ConnectionNotification.PopupPoint3'),
+                  t('ConnectionAlert.PopupPoint1'),
+                  t('ConnectionAlert.PopupPoint2'),
+                  t('ConnectionAlert.PopupPoint3'),
                 ]}
               />
               <Text style={styles.notifyText}>
-                {t('ConnectionNotification.SettingsInstruction')}
-                <Text style={styles.fakeLink} onPress={goToSettings}>
-                  {t('ConnectionNotification.SettingsLink')}
+                {t('ConnectionAlert.SettingsInstruction')}
+                <Text style={styles.fakeLink} onPress={navigateToSettings}>
+                  {t('ConnectionAlert.SettingsLink')}
                 </Text>
                 .
               </Text>
-              <Text style={styles.notifyText}>{t('ConnectionNotification.PrivacyMessage')}</Text>
+              <Text style={styles.notifyText}>{t('ConnectionAlert.PrivacyMessage')}</Text>
             </View>
           }
-          onCallToActionLabel={t('ConnectionNotification.PopupExit')}
+          onCallToActionLabel={t('ConnectionAlert.PopupExit')}
           onCallToActionPressed={toggleInfoCard}
         />
       )}
       <Text style={styles.notifyText}>
-        {t('ConnectionNotification.NotificationBodyUpper') +
+        {t('ConnectionAlert.NotificationBodyUpper') +
           (connectionID || t('ContactDetails.AContact').toLowerCase()) +
-          t('ConnectionNotification.NotificationBodyLower')}
+          t('ConnectionAlert.NotificationBodyLower')}
       </Text>
     </View>
   )
 }
 
-export default ConnectionNotification
+export default ConnectionAlert

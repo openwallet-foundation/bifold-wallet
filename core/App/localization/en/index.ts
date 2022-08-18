@@ -162,7 +162,7 @@ const translation = {
     "JustAMoment": "Just a moment while we make a secure connection...",
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
   },
-  "ConnectionNotification": {
+  "ConnectionAlert": {
     "AddedContacts": "Added to Contacts",
     "WhatAreContacts": "What are Contacts?",
     "NotificationBodyUpper": "You can find ",

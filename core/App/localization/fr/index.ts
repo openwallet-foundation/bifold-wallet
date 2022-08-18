@@ -154,7 +154,7 @@ const translation = {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre."
     },
-    "ConnectionNotification": {
+    "ConnectionAlert": {
         "AddedContacts": "Added to Contacts",
         "WhatAreContacts": "What are Contacts?",
         "NotificationBodyUpper": "You can find ",
