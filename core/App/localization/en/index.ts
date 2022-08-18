@@ -162,6 +162,20 @@ const translation = {
     "JustAMoment": "Just a moment while we make a secure connection...",
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
   },
+  "ConnectionAlert": {
+    "AddedContacts": "Added to Contacts",
+    "WhatAreContacts": "What are Contacts?",
+    "NotificationBodyUpper": "You can find ",
+    "NotificationBodyLower": " in your Contacts. Manage your Contacts in Settings",
+    "PopupIntro": "Adding organizations as a contact will allow you to:",
+    "PopupPoint1": "Get updates to credentials issued by this organization",
+    "PopupPoint2": "Get offered new credentials",
+    "PopupPoint3": "Fast-track proof requests",
+    "SettingsLink": "Settings",
+    "SettingsInstruction": "You can always remove contacts at anytime in ",
+    "PrivacyMessage": "Use of your credentials is never shared with your contacts.",
+    "PopupExit": "Got it"
+},
   "CredentialOffer": {
     "CredentialOffer": "Credential Offer",
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",

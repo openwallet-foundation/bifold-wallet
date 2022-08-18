@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import ConnectionAlert from '../components/misc/ConnectionAlert'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -159,6 +160,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             }}
           >
             {loading ? <RecordLoading /> : null}
+            <ConnectionAlert connectionID={credentialConnectionLabel} />
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Accept')}
