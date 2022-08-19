@@ -20,7 +20,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: connection?.alias || connection?.invitation?.label,
+      title: connection?.alias || connection?.theirLabel,
       headerTitleAlign: 'center',
       headerRight: () => <InfoIcon connectionId={connection?.id} />,
       // Limit string to 30 chars
