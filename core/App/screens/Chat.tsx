@@ -3,9 +3,10 @@ import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
+import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
 import { renderBubble, renderInputToolbar, renderComposer, renderSend } from '../components/chat'
 import InfoIcon from '../components/misc/InfoIcon'
-import { ContactStackParams, Screens } from '../types/navigators'
+import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -22,7 +23,13 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       title: connection?.alias || connection?.theirLabel,
       headerTitleAlign: 'center',
       headerRight: () => <InfoIcon connectionId={connection?.id} />,
-      headerBackTitle: ' ',
+      // Limit string to 30 chars
+      headerLeft: () => (
+        <HeaderLeftBack
+          title={'Back'}
+          onPress={() => navigation.getParent()?.navigate(TabStacks.ContactStack, { screen: Screens.Contacts })}
+        />
+      ),
     })
   }, [connection])
 

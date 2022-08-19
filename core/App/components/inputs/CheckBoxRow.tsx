@@ -13,7 +13,7 @@ interface Props {
 }
 
 const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, checked, onPress }) => {
-  const { Inputs } = useTheme()
+  const { Inputs, ColorPallet } = useTheme()
   const style = StyleSheet.create({
     container: {
       flex: 1,
@@ -38,12 +38,12 @@ const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, check
         onPress={onPress}
       >
         {checked ? (
-          <Icon name={'check-box'} size={36} color={Inputs.checkBoxColor.color} />
+          <Icon name={'check-box'} size={36} color={ColorPallet.brand.primary} />
         ) : (
-          <Icon name={'check-box-outline-blank'} size={36} color={Inputs.checkBoxColor.color} />
+          <Icon name={'check-box-outline-blank'} size={36} color={ColorPallet.grayscale.lightGrey} />
         )}
       </TouchableOpacity>
-      <Text style={[style.text]}>{title}</Text>
+      <Text style={style.text}>{title}</Text>
     </View>
   )
 }

@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { uiConfig } from '../../configs/uiConfig'
 import { SafeAreaScrollView } from '../components'
 import { useTheme } from '../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
@@ -64,20 +65,22 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             >{`${getVersion()}-${getBuildNumber()}`}</Text>
           </View>
 
-          <TouchableOpacity
-            accessible={true}
-            accessibilityLabel={t('RootStack.Contacts')}
-            testID={testIdWithKey('Contacts')}
-            style={styles.row}
-            onPress={() =>
-              navigation
-                .getParent()
-                ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
-            }
-          >
-            <Text style={SettingsTheme.text}>{t('RootStack.Contacts')}</Text>
-            <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
-          </TouchableOpacity>
+          {!uiConfig.fiveTabDisplay && (
+            <TouchableOpacity
+              accessible={true}
+              accessibilityLabel={t('RootStack.Contacts')}
+              testID={testIdWithKey('Contacts')}
+              style={styles.row}
+              onPress={() =>
+                navigation
+                  .getParent()
+                  ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
+              }
+            >
+              <Text style={SettingsTheme.text}>{t('RootStack.Contacts')}</Text>
+              <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaScrollView>

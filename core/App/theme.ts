@@ -300,6 +300,40 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  tertiary: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.grayscale.white,
+  },
+  tertiaryDisabled: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.secondaryDisabled,
+  },
+  tertiaryText: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+    textAlign: 'center',
+  },
+  tertiaryTextDisabled: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.secondaryDisabled,
+    textAlign: 'center',
+  },
+  connectButton: {
+    backgroundColor: ColorPallet.grayscale.lightGrey,
+    padding: 20,
+    marginHorizontal: 15,
+    borderRadius: 25,
+  },
+  connectButtonText: {
+    ...TextTheme.normal,
+    color: ColorPallet.grayscale.darkGrey,
+  },
 })
 
 export const ListItems = StyleSheet.create({
@@ -420,7 +454,7 @@ export const TabTheme = {
     alignItems: 'center',
   },
   focusTabActiveTintColor: {
-    backgroundColor: ColorPallet.brand.secondary,
+    backgroundColor: ColorPallet.grayscale.mediumGrey,
   },
 }
 
@@ -554,14 +588,37 @@ const PinInputTheme = {
     backgroundColor: ColorPallet.grayscale.darkGrey,
     borderColor: ColorPallet.grayscale.darkGrey,
   },
-  focussedCell: {
+  focusedCell: {
     borderColor: ColorPallet.grayscale.lightGrey,
   },
+  filledCell: {
+    backgroundColor: ColorPallet.grayscale.darkGrey,
+  },
   cellText: {
-    color: ColorPallet.grayscale.white,
+    hidden: ColorPallet.brand.link,
+    visible: ColorPallet.brand.link,
   },
   icon: {
-    color: ColorPallet.grayscale.white,
+    hide: ColorPallet.grayscale.lightGrey,
+    show: ColorPallet.brand.link,
+  },
+}
+
+export const ModalTheme = {
+  background: {
+    backgroundColor: `rgba(32, 32, 32, ${heavyOpacity})`,
+  },
+  container: {
+    backgroundColor: ColorPallet.grayscale.darkGrey,
+  },
+  title: {
+    ...TextTheme.headingThree,
+    textAlign: 'center',
+  },
+  body: {
+    ...TextTheme.normal,
+    textAlign: 'center',
+    fontSize: 16,
   },
 }
 
@@ -591,6 +648,7 @@ export interface Theme {
   OnboardingTheme: any
   LoadingTheme: any
   PinInputTheme: any
+  ModalTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -611,6 +669,7 @@ export const theme: Theme = {
   OnboardingTheme,
   LoadingTheme,
   PinInputTheme,
+  ModalTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,

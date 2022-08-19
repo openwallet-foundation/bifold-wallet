@@ -15,6 +15,7 @@ import {
   RootStack,
   OnboardingPages,
   Splash,
+  Privacy,
   Terms,
 } from "aries-bifold";
 import React, { useEffect, useState } from "react";
@@ -25,6 +26,7 @@ import Toast from "react-native-toast-message";
 const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
   splash: Splash,
+  privacy: Privacy,
   terms: Terms,
 };
 

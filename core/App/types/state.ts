@@ -4,6 +4,7 @@ import { BifoldError } from './error'
 
 export interface Onboarding {
   didCompleteTutorial: boolean
+  didAgreeToPrivacy: boolean
   didAgreeToTerms: boolean
   didCreatePIN: boolean
 }

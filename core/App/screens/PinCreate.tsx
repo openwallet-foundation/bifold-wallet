@@ -40,6 +40,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
       margin: 20,
+      flex: 1,
     },
   })
 

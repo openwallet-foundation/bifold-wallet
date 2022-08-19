@@ -1,3 +1,5 @@
+import { ConnectionState } from '@aries-framework/core'
+import { useConnectionById } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -5,11 +7,12 @@ import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { uiConfig } from '../../configs/uiConfig'
 import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
+import { Screens, Stacks, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const connectionTimerDelay = 10000 // in ms
@@ -18,6 +21,7 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { connectionId, threadId } = route.params
+  const connection = useConnectionById(connectionId || '')
   const { t } = useTranslation()
   const [state, setState] = useState<{
     isVisible: boolean
@@ -100,7 +104,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   )
 
   useEffect(() => {
-    if (notificationRecord) {
+    if (uiConfig.navigateOnConnection) {
+      connection?.state === ConnectionState.Complete && navigation.goBack()
+      navigation
+        .getParent()
+        ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: connection?.id } })
+    } else if (notificationRecord) {
       switch (notificationRecord.type) {
         case 'CredentialRecord':
           navigation.navigate(Screens.CredentialOffer, { credentialId: notificationRecord.id })
@@ -112,7 +121,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           throw new Error('Unhandled notification type')
       }
     }
-  }, [notificationRecord])
+  }, [notificationRecord, connection])
 
   useEffect(() => {
     if (isVisible && isInitialized && !notificationRecord) {

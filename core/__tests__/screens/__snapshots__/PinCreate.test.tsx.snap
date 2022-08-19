@@ -6,6 +6,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
     Array [
       Object {
         "backgroundColor": "#000000",
+        "flex": 1,
         "margin": 20,
       },
     ]
@@ -92,23 +93,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-1"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/EnterPIN-1"
           >
             
           </Text>
@@ -127,23 +132,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-2"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/EnterPIN-2"
           >
             
           </Text>
@@ -162,23 +171,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-3"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/EnterPIN-3"
           >
             
           </Text>
@@ -197,23 +210,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-4"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/EnterPIN-4"
           >
             
           </Text>
@@ -232,23 +249,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-5"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/EnterPIN-5"
           >
             
           </Text>
@@ -267,23 +288,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.EnterPIN-6"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/EnterPIN-6"
           >
             
           </Text>
@@ -349,7 +374,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#D3D3D3",
                 "fontSize": 30,
               },
               undefined,
@@ -422,23 +447,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-1"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/ReenterPIN-1"
           >
             
           </Text>
@@ -457,23 +486,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-2"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/ReenterPIN-2"
           >
             
           </Text>
@@ -492,23 +525,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-3"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/ReenterPIN-3"
           >
             
           </Text>
@@ -527,23 +564,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-4"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/ReenterPIN-4"
           >
             
           </Text>
@@ -562,23 +603,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-5"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/ReenterPIN-5"
           >
             
           </Text>
@@ -597,23 +642,27 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
                 "width": 40,
               },
               false,
+              "",
             ]
           }
         >
           <Text
+            accessibilityLabel="PinCreate.ReenterPIN-6"
+            accessible={true}
             maxFontSizeMultiplier={1}
             style={
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 26,
+                  "fontSize": 40,
                   "fontWeight": "bold",
-                  "lineHeight": 42,
+                  "lineHeight": 48,
                   "textAlign": "center",
-                  "textAlignVertical": "center",
                 },
+                false,
               ]
             }
+            testID="com.ariesbifold:id/ReenterPIN-6"
           >
             
           </Text>
@@ -679,7 +728,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#FFFFFF",
+                "color": "#D3D3D3",
                 "fontSize": 30,
               },
               undefined,

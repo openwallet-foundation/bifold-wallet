@@ -66,7 +66,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       paddingVertical: 16,
     },
     headerText: {
-      ...ListItems.recordAttributeText,
+      ...ListItems.recordAttributeLabel,
       flexShrink: 1,
     },
     footerButton: {
@@ -217,13 +217,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   size={ListItems.proofIcon.fontSize}
                 />
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                  <Title style={styles.headerText}>
+                    {getConnectionName(connection) || t('ContactDetails.AContact')}
+                  </Title>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                <Title style={styles.headerText}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                 {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
             )}

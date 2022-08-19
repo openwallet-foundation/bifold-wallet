@@ -92,7 +92,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           <>
             <View style={styles.headerTextContainer}>
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Title>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
+                <Title style={styles.headerText}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Title>{' '}
                 {t('CredentialOffer.IsOfferingYouACredential')}
               </Text>
             </View>

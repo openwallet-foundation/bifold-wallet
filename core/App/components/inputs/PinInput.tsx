@@ -17,7 +17,7 @@ interface PinInputProps {
 }
 
 const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, accessibilityLabel, autoFocus = false }) => {
-  // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [pin, setPin] = useState('')
   const [showPin, setShowPin] = useState(false)
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -45,14 +45,22 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
       marginRight: 8,
     },
     focusedCell: {
-      borderColor: PinInputTheme.focussedCell.borderColor,
+      borderColor: PinInputTheme.focusedCell.borderColor,
+      backgroundColor: PinInputTheme.focusedCell.backgroundColor,
     },
+    filledCell: PinInputTheme.filledCell,
     cellText: {
       ...TextTheme.headingThree,
-      color: PinInputTheme.cellText.color,
+      color: PinInputTheme.cellText.hidden,
+      fontSize: 40,
       textAlign: 'center',
-      textAlignVertical: 'center',
-      lineHeight: 42,
+      lineHeight: 48,
+    },
+    cellTextVisible: {
+      ...TextTheme.normal,
+      fontSize: 24,
+      color: PinInputTheme.cellText.visible,
+      lineHeight: 40,
     },
   })
 
@@ -85,10 +93,16 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
             return (
               <View
                 key={index}
-                style={[style.cell, isFocused && style.focusedCell]}
+                style={[style.cell, isFocused && style.focusedCell, symbol && style.filledCell]}
                 onLayout={getCellOnLayoutHandler(index)}
               >
-                <Text style={[style.cellText]} maxFontSizeMultiplier={1}>
+                <Text
+                  style={[style.cellText, showPin && style.cellTextVisible]}
+                  maxFontSizeMultiplier={1}
+                  testID={testID ? `${testID}-${index + 1}` : testIdWithKey(`${'PINInput'}-${index + 1}`)}
+                  accessible={accessible}
+                  accessibilityLabel={`${accessibilityLabel || t('PinEnter.EnterPIN')}-${index + 1}`}
+                >
                   {child}
                 </Text>
               </View>
@@ -98,11 +112,15 @@ const PinInput: React.FC<PinInputProps> = ({ label, onPinChanged, testID, access
         />
         <TouchableOpacity
           accessibilityLabel={showPin ? t('PinCreate.Hide') : t('PinCreate.Show')}
-          testID={showPin ? testIdWithKey('Hide') : testIdWithKey('Show')}
           onPress={() => setShowPin(!showPin)}
+          testID={showPin ? testIdWithKey('Hide') : testIdWithKey('Show')}
           style={[{ marginRight: 8, marginBottom: 32 }]}
         >
-          <Icon color={PinInputTheme.icon.color} name={showPin ? 'visibility-off' : 'visibility'} size={30}></Icon>
+          <Icon
+            color={showPin ? PinInputTheme.icon.show : PinInputTheme.icon.hide}
+            name={showPin ? 'visibility-off' : 'visibility'}
+            size={30}
+          ></Icon>
         </TouchableOpacity>
       </View>
     </View>

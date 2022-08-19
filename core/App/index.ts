@@ -14,6 +14,7 @@ import toastConfig from './components/toast/ToastConfig'
 import { AuthProvider } from './contexts/auth'
 import RootStack from './navigators/RootStack'
 import OnboardingPages from './screens/OnboardingPages'
+import Privacy from './screens/Privacy'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 
@@ -52,5 +53,6 @@ export {
   RootStack,
   OnboardingPages,
   Splash,
+  Privacy,
   Terms,
 }

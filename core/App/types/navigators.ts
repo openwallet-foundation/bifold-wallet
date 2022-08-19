@@ -5,6 +5,7 @@ import { DeclineType } from './decline'
 export enum Screens {
   Splash = 'Splash',
   Onboarding = 'Onboarding',
+  Privacy = 'Privacy',
   Terms = 'Terms',
   CreatePin = 'Create a PIN',
   EnterPin = 'Enter PIN',
@@ -18,6 +19,8 @@ export enum Screens {
   ProofRequestAttributeDetails = 'Proof Request Attribute Details',
   Settings = 'Settings',
   Language = 'Language',
+  Connect = 'Connect',
+  DisplayCode = 'Display Code',
   Contacts = 'Contacts',
   ContactDetails = 'Contact Details',
   Chat = 'Chat',
@@ -42,6 +45,8 @@ export enum TabStacks {
   HomeStack = 'Tab Home Stack',
   ConnectStack = 'Tab Connect Stack',
   CredentialStack = 'Tab Credential Stack',
+  ContactStack = 'Tab Contact Stack',
+  SettingStack = 'Tab Setting Stack',
 }
 
 export type RootStackParams = {
@@ -56,11 +61,14 @@ export type TabStackParams = {
   [TabStacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
   [TabStacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [TabStacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
+  [TabStacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+  [TabStacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
 }
 
 export type AuthenticateStackParams = {
   [Screens.Splash]: undefined
   [Screens.Onboarding]: undefined
+  [Screens.Privacy]: undefined
   [Screens.Terms]: undefined
   [Screens.CreatePin]: { setAuthenticated: (auth: boolean) => void } | undefined
   [Screens.EnterPin]: { setAuthenticated: (auth: boolean) => void } | undefined
@@ -84,7 +92,9 @@ export type HomeStackParams = {
 }
 
 export type ConnectStackParams = {
+  [Screens.Connect]: undefined
   [Screens.Scan]: undefined
+  [Screens.DisplayCode]: undefined
 }
 
 export type SettingStackParams = {
