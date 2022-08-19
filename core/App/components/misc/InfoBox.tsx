@@ -22,7 +22,8 @@ export enum InfoBoxType {
 interface BifoldErrorProps {
   notificationType: InfoBoxType
   title: string
-  description: string
+  description?: string
+  bodyContent?: Element
   message?: string
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
@@ -32,6 +33,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   notificationType,
   title,
   description,
+  bodyContent,
   message,
   onCallToActionPressed,
   onCallToActionLabel,
@@ -177,9 +179,12 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
         </Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-          {showDetails ? message : description}
-        </Text>
+        {bodyContent}
+        {(description || message) && (
+          <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+            {showDetails ? message : description}
+          </Text>
+        )}
         {message && !showDetails && (
           <TouchableOpacity
             accessibilityLabel={t('Global.ShowDetails')}
