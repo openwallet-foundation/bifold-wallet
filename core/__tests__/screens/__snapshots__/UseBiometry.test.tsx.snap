@@ -1,0 +1,410 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UseBiometry Screen Renders correctly 1`] = `
+<RNCSafeAreaView
+  style={
+    Object {
+      "backgroundColor": "#000000",
+      "flexDirection": "column",
+      "flexGrow": 2,
+      "paddingHorizontal": 25,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+        }
+      }
+    >
+      <
+        style={
+          Array [
+            Object {
+              "marginBottom": 66,
+              "minHeight": 200,
+              "minWidth": 200,
+            },
+          ]
+        }
+      />
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      Biometry.Text1
+    </Text>
+    <Text />
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      Biometry.Text2
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+         
+        Biometry.Warning
+      </Text>
+    </Text>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "marginVertical": 30,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Biometry.UseToUnlock
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "justifyContent": "center",
+          }
+        }
+      >
+        <RCTSwitch
+          accessibilityLabel="Biometry.Toggle"
+          accessibilityRole="switch"
+          onChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onTintColor="rgba(53, 130, 63, 0.35)"
+          style={
+            Array [
+              Object {
+                "height": 31,
+                "width": 51,
+              },
+              Object {
+                "backgroundColor": "#D3D3D3",
+                "borderRadius": 16,
+              },
+            ]
+          }
+          testID="com.ariesbifold:id/ToggleBiometrics"
+          thumbTintColor="#606060"
+          tintColor="#D3D3D3"
+          value={false}
+        />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexGrow": 1,
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <View
+        accessibilityLabel="Continue"
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#42803E",
+            "borderRadius": 4,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/Continue"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+            ]
+          }
+        >
+          Continue
+        </Text>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;
+
+exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
+<RNCSafeAreaView
+  style={
+    Object {
+      "backgroundColor": "#000000",
+      "flexDirection": "column",
+      "flexGrow": 2,
+      "paddingHorizontal": 25,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+        }
+      }
+    >
+      <
+        style={
+          Array [
+            Object {
+              "marginBottom": 66,
+              "minHeight": 200,
+              "minWidth": 200,
+            },
+          ]
+        }
+      />
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      Biometry.Text1
+    </Text>
+    <Text />
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      Biometry.Text2
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+         
+        Biometry.Warning
+      </Text>
+    </Text>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "marginVertical": 30,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexShrink": 1,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Biometry.UseToUnlock
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "justifyContent": "center",
+          }
+        }
+      >
+        <RCTSwitch
+          accessibilityLabel="Biometry.Toggle"
+          accessibilityRole="switch"
+          onChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onTintColor="rgba(53, 130, 63, 0.35)"
+          style={
+            Array [
+              Object {
+                "height": 31,
+                "width": 51,
+              },
+              Object {
+                "backgroundColor": "#D3D3D3",
+                "borderRadius": 16,
+              },
+            ]
+          }
+          testID="com.ariesbifold:id/ToggleBiometrics"
+          thumbTintColor="#42803E"
+          tintColor="#D3D3D3"
+          value={true}
+        />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexGrow": 1,
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <View
+        accessibilityLabel="Continue"
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "rgba(53, 130, 63, 0.35)",
+            "borderRadius": 4,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/Continue"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Continue
+        </Text>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;
