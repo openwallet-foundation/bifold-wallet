@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Keyboard, StyleSheet, Text, StatusBar } from 'react-native'
@@ -11,6 +13,7 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
@@ -25,7 +28,7 @@ interface ModalState {
 }
 
 const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
-  const { setAppPIN } = useAuth()
+  const { setPIN } = useAuth()
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
   const [modalState, setModalState] = useState<ModalState>({
@@ -33,6 +36,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     title: '',
     message: '',
   })
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
 
@@ -46,13 +50,15 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
   const passcodeCreate = async (pin: string) => {
     try {
-      await setAppPIN(pin)
+      await setPIN(pin)
       // This will trigger initAgent
       setAuthenticated(true)
-      // This will trigger navigation to internal pages
+
       dispatch({
         type: DispatchAction.DID_CREATE_PIN,
       })
+
+      navigation.navigate(Screens.UseBiometry)
     } catch (e) {
       // TODO:(jl)
     }

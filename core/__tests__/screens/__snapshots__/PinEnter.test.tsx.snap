@@ -322,7 +322,9 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
         <View
           accessibilityLabel="PinCreate.Show"
           accessible={true}
+          collapsable={false}
           focusable={true}
+          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -370,7 +372,9 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
         }
       }
       accessible={true}
+      collapsable={false}
       focusable={true}
+      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}

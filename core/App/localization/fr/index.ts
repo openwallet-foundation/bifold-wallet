@@ -93,6 +93,13 @@ const translation = {
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille."
     },
+    "Biometry": {
+        "Toggle": "Toggle Biometrics",
+        "Text1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
+        "Text2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
+        "Warning": "Ensure only you have access to your wallet.",
+        "UseToUnlock": "Use biometrics to unlock wallet?"
+    },
     "Contacts": {
         "EmptyList": "Votre portefeuille est vide. Vos contacts connectés seront ajoutés ici.",
     },

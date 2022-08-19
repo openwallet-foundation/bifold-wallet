@@ -1,7 +1,6 @@
 import { NavigatorScreenParams } from '@react-navigation/core'
 
 import { DeclineType } from './decline'
-import { Attribute } from './record'
 
 export enum Screens {
   WebDisplay = 'WebDisplay',
@@ -27,6 +26,7 @@ export enum Screens {
   OnTheWay = 'On The Way',
   Declined = 'Declined',
   CommonDecline = 'Common Decline',
+  UseBiometry = 'Use Biometry',
 }
 
 export enum Stacks {
@@ -66,6 +66,7 @@ export type AuthenticateStackParams = {
   [Screens.Terms]: undefined
   [Screens.CreatePin]: { setAuthenticated: (auth: boolean) => void } | undefined
   [Screens.EnterPin]: { setAuthenticated: (auth: boolean) => void } | undefined
+  [Screens.UseBiometry]: undefined
 }
 
 export type ContactStackParams = {

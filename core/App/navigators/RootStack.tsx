@@ -27,6 +27,7 @@ import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
+import UseBiometry from '../screens/UseBiometry'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { WalletSecret } from '../types/security'
@@ -48,17 +49,14 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { getWalletSecret } = useAuth()
-
   const [authenticated, setAuthenticated] = useState(false)
   const [agentInitDone, setAgentInitDone] = useState(false)
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
-
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, splash } = useConfiguration()
-  const { getWalletID, getKeyForPIN } = useAuth()
+  const { getWalletCredentials } = useAuth()
 
   const onTutorialCompleted = () => {
     dispatch({
@@ -84,11 +82,12 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     setInitAgentInProcess(true)
 
     try {
-      const walletSecret = predefinedSecret ?? (await getWalletSecret())
+      const credentials = await getWalletCredentials()
 
-      if (!walletSecret?.walletId || !walletSecret.walletKey) {
+      if (!credentials?.walletId || !credentials.walletKey) {
         Alert.alert('Error', 'Cannot find wallet id/secret!')
         Toast.hide()
+
         return
       }
 
@@ -97,7 +96,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           label: 'Aries Bifold',
           mediatorConnectionsInvite: Config.MEDIATOR_URL,
           mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-          walletConfig: { id: walletSecret.walletId, key: walletSecret.walletKey },
+          walletConfig: { id: credentials.walletId, key: credentials.walletKey },
           autoAcceptConnections: true,
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),
@@ -133,37 +132,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     setInitAgentInProcess(false)
   }
 
-  //This will test the user by attempting to initialize the wallet using a key derived from that pin
-  //If wallet init success == pin correct otherwise pin incorrect
-  //need to be enhanced
-  const checkPIN = async (pin: string): Promise<boolean> => {
-    const walletID = await getWalletID()
-    if (!walletID) {
-      return true
-    }
-    const generatedKey = await getKeyForPIN(pin)
-
-    if (!generatedKey) {
-      return true
-    }
-
-    const generatedSecret = {
-      walletId: walletID,
-      walletKey: generatedKey,
-    }
-
-    const error = await initAgent({
-      walletId: walletID,
-      walletKey: generatedKey,
-    })
-    if (!error) {
-      return false
-    } else {
-      //TODO: Handle error
-    }
-    return true
-  }
-
   useEffect(() => {
     if (authenticated && !agentInitDone) {
       initAgent()
@@ -176,7 +144,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.EnterPin}>
-          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} checkPIN={checkPIN} />}
+          {(props) => <PinEnter {...props} setAuthenticated={setAuthenticated} />}
         </Stack.Screen>
       </Stack.Navigator>
     )
@@ -237,11 +205,27 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         <Stack.Screen name={Screens.CreatePin}>
           {(props) => <PinCreate {...props} setAuthenticated={setAuthenticated} />}
         </Stack.Screen>
+        <Stack.Screen
+          name={Screens.UseBiometry}
+          options={() => ({
+            title: t('Screens.Biometry'),
+            headerTintColor: OnboardingTheme.headerTintColor,
+            headerShown: true,
+            headerLeft: () => false,
+            rightLeft: () => false,
+          })}
+          component={UseBiometry}
+        />
       </Stack.Navigator>
     )
   }
 
-  if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
+  if (
+    state.onboarding.didAgreeToTerms &&
+    state.onboarding.didCompleteTutorial &&
+    state.onboarding.didCreatePIN &&
+    state.onboarding.didConsiderBiometry
+  ) {
     return authenticated ? mainStack() : authStack(setAuthenticated)
   }
 

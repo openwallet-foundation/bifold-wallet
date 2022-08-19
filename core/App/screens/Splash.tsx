@@ -10,13 +10,21 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { Onboarding as StoreOnboardingState, Privacy as PrivacyState } from '../types/state'
+import {
+  Onboarding as StoreOnboardingState,
+  Privacy as PrivacyState,
+  Preferences as PreferencesState,
+} from '../types/state'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
-  return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN
+  return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
 }
 
 const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
+  if (state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && !state.didConsiderBiometry) {
+    return Screens.UseBiometry
+  }
+
   if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didCreatePIN) {
     return Screens.CreatePin
   }
@@ -27,6 +35,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
 
   return Screens.Onboarding
 }
+
 /*
   To customize this splash screen set the background color of the
   iOS and Android launch screen to match the background color of
@@ -45,9 +54,21 @@ const Splash: React.FC = () => {
       backgroundColor: ColorPallet.brand.primaryBackground,
     },
   })
+
   useMemo(() => {
     async function init() {
       try {
+        const preferencesData = await AsyncStorage.getItem(LocalStorageKeys.Preferences)
+
+        if (preferencesData) {
+          const dataAsJSON = JSON.parse(preferencesData) as PreferencesState
+
+          dispatch({
+            type: DispatchAction.PREFERENCES_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
         const privacyData = await AsyncStorage.getItem(LocalStorageKeys.Privacy)
         if (privacyData) {
           const dataAsJSON = JSON.parse(privacyData) as PrivacyState
