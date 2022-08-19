@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { LocalStorageKeys } from '../../constants'
 import {
   Privacy as PrivacyState,
+  Preferences as PreferencesState,
   Onboarding as OnboardingState,
   Credential as CredentialState,
   State,
@@ -37,12 +38,18 @@ enum PrivacyDispatchAction {
   PRIVACY_UPDATED = 'privacy/privacyStateLoaded',
 }
 
+enum PreferencesDispatchAction {
+  USE_BIOMETRY = 'preferences/useBiometry',
+  PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
   | CredentialDispatchAction
   | LoadingDispatchAction
   | PrivacyDispatchAction
+  | PreferencesDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -50,6 +57,7 @@ export const DispatchAction = {
   ...CredentialDispatchAction,
   ...LoadingDispatchAction,
   ...PrivacyDispatchAction,
+  ...PreferencesDispatchAction,
 }
 
 export interface ReducerAction {
@@ -59,6 +67,34 @@ export interface ReducerAction {
 
 const reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {
+    case PreferencesDispatchAction.USE_BIOMETRY: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        useBiometry: choice,
+      }
+      const onboarding = {
+        ...state.onboarding,
+        didConsiderBiometry: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
+    case PreferencesDispatchAction.PREFERENCES_UPDATED: {
+      const preferences: PreferencesState = (action?.payload || []).pop()
+      return {
+        ...state,
+        preferences,
+      }
+    }
     case PrivacyDispatchAction.DID_SHOW_CAMERA_DISCLOSURE: {
       const newState = {
         ...state,

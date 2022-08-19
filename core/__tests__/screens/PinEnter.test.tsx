@@ -13,7 +13,7 @@ describe('displays a pin create screen', () => {
           getKeyForPIN: jest.fn(),
         }}
       >
-        <PinEnter setAuthenticated={jest.fn()} checkPIN={jest.fn()} />
+        <PinEnter setAuthenticated={jest.fn()} />
       </AuthContext.Provider>
     )
     expect(tree).toMatchSnapshot()
