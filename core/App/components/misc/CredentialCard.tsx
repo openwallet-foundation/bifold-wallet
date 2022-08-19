@@ -1,23 +1,23 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, ImageBackground, LayoutRectangle, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-// import Icon from 'react-native-vector-icons/MaterialIcons'
 import Image from 'react-native-scalable-image'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Overlay } from '../../assets/img/credential-branding/credential-branding'
+import branding from '../../assets/img/credential-branding/credential-branding'
 import { dateFormatOptions } from '../../constants'
+import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { getCredentialConnectionLabel, hashCode, hashToRGBA, parsedCredDefName } from '../../utils/helpers'
 import { luminanceForHexColour } from '../../utils/luminance'
+import { credentialSchema } from '../../utils/schema'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
   credential: CredentialExchangeRecord
-  overlay?: Overlay
-  revoked?: boolean
   onPress?: GenericFn
   style?: ViewStyle
 }
@@ -28,22 +28,23 @@ const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 const { width } = Dimensions.get('window')
 
-const CredentialCard: React.FC<CredentialCardProps> = ({
-  credential,
-  revoked = false,
-  style = {},
-  onPress = undefined,
-  overlay = undefined,
-}) => {
+const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, ListItems } = useTheme()
 
   const credentialLabel = parsedCredDefName(credential)
   const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
+  const [state, dispatch] = useStore()
+  const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [headerDimensions, setHeaderDimensions] = useState<LayoutRectangle | null>(null)
   const [headerLogoDimensions, setHeaderLogoDimensions] = useState<LayoutRectangle | null>(null)
+
+  const { revoked } = state.credential
+
+  const schema = credentialSchema(credential) || ''
+  const overlay = branding[schema] ?? undefined
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
@@ -76,10 +77,32 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       backgroundColor: overlay?.footer?.backgroundColor || transparent,
       paddingHorizontal,
       paddingVertical,
-      borderBottomLeftRadius: 15,
-      borderBottomRightRadius: 15,
+      borderBottomLeftRadius: borderRadius,
+      borderBottomRightRadius: borderRadius,
+    },
+    revokedFooter: {
+      backgroundColor: ColorPallet.notification.error,
+      flexGrow: 1,
+      marginHorizontal: -1 * paddingHorizontal,
+      marginVertical: -1 * paddingVertical,
+      paddingHorizontal: paddingHorizontal,
+      paddingVertical: paddingVertical,
+      borderBottomLeftRadius: borderRadius,
+      borderBottomRightRadius: borderRadius,
     },
   })
+
+  useEffect(() => {
+    if (!credential) {
+      return
+    }
+    const indyCredentialFormat = credential.credentials.find((c) => c.credentialRecordType === 'indy')
+    if (!indyCredentialFormat) {
+      return
+    }
+    const isRevoked = revoked.has(indyCredentialFormat.credentialRecordId)
+    setIsRevoked(isRevoked)
+  }, [credential])
 
   const renderCredentialCardHeader = () => {
     const calculatePercentageWidthWithLogo = (
@@ -164,22 +187,16 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const renderCredentialCardFooter = (revoked = false) => {
     return (
       <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
-        {revoked ? null : (
-          // TODO: Fix revocation styling
-          // <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-          //   <Icon
-          //     style={{ marginRight: 5 }}
-          //     name="cancel"
-          //     color={ColorPallet.semantic.error}
-          //     size={ListItems.credentialTitle.fontSize}
-          //   ></Icon>
-          //   <Text
-          //     style={[ListItems.credentialDetails, { color: ColorPallet.semantic.error, fontWeight: 'bold' }]}
-          //     testID={testIdWithKey('CredentialRevoked')}
-          //   >
-          //     Revoked
-          //   </Text>
-          // </View>
+        {revoked ? (
+          <View style={styles.revokedFooter}>
+            <Text
+              style={[TextTheme.label, { color: ColorPallet.semantic.error }]}
+              testID={testIdWithKey('CredentialRevoked')}
+            >
+              Revoked
+            </Text>
+          </View>
+        ) : (
           <Text
             style={[
               TextTheme.caption,
@@ -218,10 +235,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     >
       {overlay?.imageSource ? (
         <ImageBackground source={overlay?.imageSource} style={{ flexGrow: 1 }} imageStyle={{ borderRadius }}>
-          {renderCredentialCard(revoked)}
+          {renderCredentialCard(isRevoked)}
         </ImageBackground>
       ) : (
-        renderCredentialCard(revoked)
+        renderCredentialCard(isRevoked)
       )}
     </TouchableOpacity>
   )

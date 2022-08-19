@@ -23,7 +23,6 @@ const branding: Record<string, Overlay> = {
     imageSource: require('./lsbc-member-card.png'),
     header: {
       imageSource: require('./lsbc-header-logo.png'),
-      color: '#D3D3D3',
       backgroundColor: '#00698C',
       hideIssuer: true,
     },
