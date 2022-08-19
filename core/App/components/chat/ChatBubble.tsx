@@ -1,21 +1,19 @@
 import React from 'react'
 import { Bubble } from 'react-native-gifted-chat'
 
-import { ChatTheme } from '../../theme'
-
-export const renderBubble = (props: any) => {
+export const renderBubble = (props: any, theme: any) => {
   return (
     <Bubble
       {...props}
       wrapperStyle={{
         left: {
-          ...ChatTheme.leftBubble,
+          ...theme.leftBubble,
         },
-        right: { ...ChatTheme.rightBubble },
+        right: { ...theme.rightBubble },
       }}
       textStyle={{
-        left: { ...ChatTheme.leftText },
-        right: { ...ChatTheme.rightText },
+        left: { ...theme.leftText },
+        right: { ...theme.rightText },
       }}
     />
   )

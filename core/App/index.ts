@@ -14,6 +14,7 @@ import InfoTextBox from './components/texts/InfoTextBox'
 import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
 import { AuthProvider } from './contexts/auth'
+import { NetworkProvider } from './contexts/network'
 import RootStack from './navigators/RootStack'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
@@ -32,7 +33,6 @@ export { testIdWithKey } from './utils/testable'
 export { Screens } from './types/navigators'
 export { createStyles } from './screens/OnboardingPages'
 
-export type { StoreProviderProps } from './contexts/store'
 export type { Theme } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
 export type { Onboarding as OnboardingState } from './types/state'
@@ -46,6 +46,7 @@ export {
   Agent,
   AgentProvider,
   AuthProvider,
+  NetworkProvider,
   Button,
   ButtonType,
   CheckBoxRow,

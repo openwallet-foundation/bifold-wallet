@@ -5,6 +5,7 @@ import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
@@ -16,7 +17,9 @@ const TabStack: React.FC = () => {
   const { total } = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
+  const { assertConnectedNetwork } = useNetwork()
   const { ColorPallet, TabTheme } = useTheme()
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
       <Tab.Navigator
@@ -79,6 +82,9 @@ const TabStack: React.FC = () => {
           listeners={({ navigation }) => ({
             tabPress: (e) => {
               e.preventDefault()
+              if (!assertConnectedNetwork()) {
+                return
+              }
               navigation.navigate(Stacks.ConnectStack, { screen: Screens.Scan })
             },
           })}

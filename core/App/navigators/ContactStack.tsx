@@ -27,7 +27,7 @@ const ContactStack: React.FC = () => {
         component={ContactDetails}
         options={{ title: t('Screens.ContactDetails'), headerBackTitleVisible: false }}
       />
-      <Stack.Screen name={Screens.Chat} component={Chat} />
+      <Stack.Screen name={Screens.Chat} component={Chat} options={{ headerBackTitleVisible: false }} />
     </Stack.Navigator>
   )
 }
