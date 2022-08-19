@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, ImageBackground, LayoutRectangle, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Image from 'react-native-scalable-image'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import branding from '../../assets/img/credential-branding/credential-branding'
 import { dateFormatOptions } from '../../constants'
+import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
@@ -30,13 +29,14 @@ const { width } = Dimensions.get('window')
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, ListItems } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
+  const { OCABundle: branding } = useConfiguration()
 
   const credentialLabel = parsedCredDefName(credential)
   const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
-  const [state, dispatch] = useStore()
+  const [state] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [headerDimensions, setHeaderDimensions] = useState<LayoutRectangle | null>(null)
   const [headerLogoDimensions, setHeaderLogoDimensions] = useState<LayoutRectangle | null>(null)
@@ -44,7 +44,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const { revoked } = state.credential
 
   const schema = credentialSchema(credential) || ''
-  const overlay = branding[schema] ?? undefined
+  const overlay = branding[schema]
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2

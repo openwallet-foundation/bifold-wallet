@@ -30,6 +30,7 @@ const defaultConfiguration: ConfigurationContext = {
   splash: Splash,
   terms: Terms,
   homeContentView: HomeContentView,
+  OCABundle: {}
 };
 
 initLanguages(translationResources);
