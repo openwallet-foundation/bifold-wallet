@@ -24,7 +24,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { setAuthenticated } = useAuth()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const { borderRadius, SettingsTheme } = useTheme()
+  const { borderRadius, SettingsTheme, ColorPallet } = useTheme()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   const styles = StyleSheet.create({
@@ -105,16 +105,16 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           )}
         </View>
       </View>
-      <View style={[styles.container, {marginTop: 'auto'}]}>
+      <View style={[styles.container, { marginTop: 'auto' }]}>
         <View style={SettingsTheme.resetButton}>
           <TouchableOpacity
             accessible={true}
             accessibilityLabel={t('Settings.ResetWallet')}
             testID={testIdWithKey('Language')}
-            style={[styles.row, {flexDirection: 'column'}]}
+            style={[styles.row, { flexDirection: 'column' }]}
             onPress={() => setModalVisible(true)}
           >
-            <Text style={[SettingsTheme.resetText, {textAlign: 'center'}]}>{t('Settings.ResetWallet')}</Text>
+            <Text style={[SettingsTheme.resetText, { textAlign: 'center' }]}>{t('Settings.ResetWallet')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -124,6 +124,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           body={t('Settings.ResetBody')}
           confirm={t('Settings.ResetConfirm')}
           abort={t('Settings.ResetAbort')}
+          confirmButtonStyles={[{ backgroundColor: ColorPallet.semantic.error }]}
           confirmSubmit={() => resetApp()}
           abortSubmit={() => setModalVisible(false)}
         />

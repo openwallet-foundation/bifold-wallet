@@ -511,7 +511,7 @@ export const SettingsTheme = {
   resetText: {
     color: ColorPallet.brand.highlight,
     textAlign: 'center',
-  }
+  },
 }
 
 export const ChatTheme = {
