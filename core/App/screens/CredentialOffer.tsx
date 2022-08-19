@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import branding from '../assets/img/credential-branding/credential-branding'
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
@@ -18,7 +17,6 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { getCredentialConnectionLabel } from '../utils/helpers'
-import { credentialSchema } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -40,7 +38,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const [credentialAttributes, setCredentialAttributes] = useState<CredentialPreviewAttributeOptions[]>([])
-  const [schema, setSchema] = useState<string>('')
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const [loading, setLoading] = React.useState<boolean>(true)
@@ -106,7 +103,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         schemaId: offer?.indy?.schema_id,
         credentialDefinitionId: offer?.indy?.cred_def_id,
       })
-      setSchema(credentialSchema(credential) || '')
       setCredentialAttributes(offerAttributes || [])
       setLoading(false)
     })
@@ -148,11 +144,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
               </Text>
             </View>
             {!loading && credential && (
-              <CredentialCard
-                credential={credential}
-                style={{ marginHorizontal: 15, marginBottom: 16 }}
-                overlay={branding[schema] ?? undefined}
-              />
+              <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
             )}
           </>
         )}

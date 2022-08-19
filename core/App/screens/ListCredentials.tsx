@@ -6,13 +6,10 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
-import branding from '../assets/img/credential-branding/credential-branding'
 import CredentialCard from '../components/misc/CredentialCard'
 import EmptyList from '../components/misc/EmptyList'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { CredentialStackParams, Screens } from '../types/navigators'
-import { credentialSchema } from '../utils/schema'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -20,8 +17,6 @@ const ListCredentials: React.FC = () => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-  const [state] = useStore()
-  const { revoked } = state.credential
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
   const { ColorPallet } = useTheme()
 
@@ -31,7 +26,6 @@ const ListCredentials: React.FC = () => {
       data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
       keyExtractor={(credential) => credential.id}
       renderItem={({ item: credential, index }) => {
-        const schema = credentialSchema(credential) || ''
         return (
           <View
             style={{
@@ -42,9 +36,7 @@ const ListCredentials: React.FC = () => {
           >
             <CredentialCard
               credential={credential}
-              revoked={revoked.has(credential.id)}
               onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
-              overlay={branding[schema] ?? undefined}
             />
           </View>
         )

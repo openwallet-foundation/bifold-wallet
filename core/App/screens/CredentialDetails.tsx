@@ -99,9 +99,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (!credential) {
       return
     }
-    const isRevoked = revoked.has(credential.id)
+    const indyCredentialFormat = credential.credentials.find((c) => c.credentialRecordType === 'indy')
+    if (!indyCredentialFormat) {
+      return
+    }
+    const isRevoked = revoked.has(indyCredentialFormat.credentialRecordId)
     setIsRevoked(isRevoked)
-    const isRevokedMessageDismissed = revokedMessageDismissed.has(credential.id)
+    const isRevokedMessageDismissed = revokedMessageDismissed.has(indyCredentialFormat.credentialRecordId)
     setIsRevokedMessageHidden(isRevokedMessageDismissed)
   }, [credential])
 
@@ -162,13 +166,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
                 )}
               </View>
             ) : null}
-            {credential && (
-              <CredentialCard
-                credential={credential}
-                revoked={isRevoked}
-                style={{ marginHorizontal: 15, marginTop: 16 }}
-              />
-            )}
+            {credential && <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginTop: 16 }} />}
           </>
         )}
         footer={() => (

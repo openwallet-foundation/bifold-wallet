@@ -121,7 +121,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     setLoading(true)
     const retrieveCredentialsForProof = async (proof: ProofRecord) => {
       try {
-        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
+        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id, {
+          filterByNonRevocationRequirements: false,
+        })
         if (!credentials) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
