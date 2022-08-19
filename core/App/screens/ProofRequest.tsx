@@ -14,6 +14,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
+import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -49,6 +50,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const [loading, setLoading] = React.useState<boolean>(true)
+  const { assertConnectedNetwork } = useNetwork()
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -182,7 +184,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const handleAcceptPress = async () => {
     try {
-      if (!(agent && proof)) {
+      if (!(agent && proof && assertConnectedNetwork())) {
         return
       }
       setPendingModalVisible(true)

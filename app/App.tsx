@@ -4,6 +4,7 @@ import {
   AuthProvider,
   ConfigurationContext,
   ConfigurationProvider,
+  NetworkProvider,
   StoreProvider,
   ThemeProvider,
   theme,
@@ -49,16 +50,18 @@ const App = () => {
         <ThemeProvider value={theme}>
           <ConfigurationProvider value={defaultConfiguration}>
             <AuthProvider>
-              <StatusBar
-                barStyle="light-content"
-                hidden={false}
-                backgroundColor={theme.ColorPallet.brand.primary}
-                translucent={false}
-              />
-              <NetInfo />
-              <ErrorModal />
-              <RootStack setAgent={setAgent} />
-              <Toast topOffset={15} config={toastConfig} />
+              <NetworkProvider>
+                <StatusBar
+                  hidden={false}
+                  barStyle="light-content"
+                  backgroundColor={theme.ColorPallet.brand.primary}
+                  translucent={false}
+                />
+                <NetInfo />
+                <ErrorModal />
+                <RootStack setAgent={setAgent} />
+                <Toast topOffset={15} config={toastConfig} />
+              </NetworkProvider>
             </AuthProvider>
           </ConfigurationProvider>
         </ThemeProvider>

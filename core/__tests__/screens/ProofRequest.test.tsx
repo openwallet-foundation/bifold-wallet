@@ -10,14 +10,17 @@ import {
 } from '@aries-framework/core'
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
-import timeTravel from '../util/timetravel'
-import { testIdWithKey } from '../../App/utils/testable'
 
+import { NetworkProvider } from '../../App/contexts/network'
 import ProofRequest from '../../App/screens/ProofRequest'
+import { testIdWithKey } from '../../App/utils/testable'
+import timeTravel from '../util/timetravel'
 
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -25,6 +28,7 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
@@ -154,7 +158,9 @@ describe('displays a proof request screen', () => {
       // })
 
       const tree = render(
-        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        <NetworkProvider>
+          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </NetworkProvider>
       )
 
       await waitFor(() => {
@@ -179,7 +185,9 @@ describe('displays a proof request screen', () => {
       agent?.proofs.getRequestedCredentialsForProofRequest.mockResolvedValue(testRetrievedCredentials)
 
       const { getByText, getAllByText, queryByText } = render(
-        <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        <NetworkProvider>
+          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </NetworkProvider>
       )
 
       await waitFor(() => {
