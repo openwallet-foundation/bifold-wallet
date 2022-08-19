@@ -1,5 +1,5 @@
 import {
-  CredentialRecord,
+  CredentialExchangeRecord as CredentialRecord,
   CredentialState,
   IndyCredentialInfo,
   INDY_PROOF_REQUEST_ATTACHMENT_ID,

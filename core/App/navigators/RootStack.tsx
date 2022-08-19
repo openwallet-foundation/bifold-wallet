@@ -98,6 +98,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           logger: new ConsoleLogger(LogLevel.trace),
           indyLedgers,
           connectToIndyLedgersOnStartup: true,
+          autoUpdateStorageOnStartup: true,
         },
         agentDependencies
       )
@@ -170,9 +171,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.EnterPin}>
-          {(props) => <PinEnter {...props} checkPIN={checkPIN} />}
-        </Stack.Screen>
+        <Stack.Screen name={Screens.EnterPin}>{(props) => <PinEnter {...props} checkPIN={checkPIN} />}</Stack.Screen>
       </Stack.Navigator>
     )
   }

@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { CredentialRecord } from '@aries-framework/core'
-import { useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
+import { useCredentialById, useAgent } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
@@ -11,35 +11,16 @@ import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import Record from '../components/record/Record'
 import { ToastType } from '../components/toast/BaseToast'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
+import { dateFormatOptions } from '../constants'
 import { CredentialStackParams, Screens } from '../types/navigators'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  const [state, dispatch] = useStore()
-  const { revoked, revokedMessageDismissed } = state.credential
+  const { agent } = useAgent()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
-  // const styles = StyleSheet.create({
-  //   headerText: {
-  //     ...TextTheme.normal,
-  //   },
-  //   footerText: {
-  //     ...TextTheme.normal,
-  //     paddingTop: 16,
-  //   },
-  //   linkContainer: {
-  //     minHeight: TextTheme.normal.fontSize,
-  //     paddingVertical: 2,
-  //   },
-  //   link: {
-  //     ...TextTheme.normal,
-  //     color: ColorPallet.brand.link,
-  //   },
-  // })
+  const [revocationDate, setRevocationDate] = useState<string>('')
   const getCredentialRecord = (credentialId?: string): CredentialRecord | void => {
     try {
       if (!credentialId) {
@@ -83,34 +64,39 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   useEffect(() => {
-    const isRevoked = revoked.has(credential.id) || revoked.has(credential.credentialId)
-    setIsRevoked(isRevoked)
-    const isRevokedMessageDismissed =
-      revokedMessageDismissed.has(credential.id) || revokedMessageDismissed.has(credential.credentialId)
-    setIsRevokedMessageHidden(isRevokedMessageDismissed)
+    if (credential.revocationNotification) {
+      setIsRevoked(true)
+      const date = new Date(credential.revocationNotification?.revocationDate)
+      setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
+    }
   }, [])
 
-  const dismissRevokedMessage = (credential: CredentialRecord) => {
-    dispatch({ type: DispatchAction.CREDENTIAL_REVOKED_MESSAGE_DISMISSED, payload: [credential] })
-    setIsRevokedMessageHidden(true)
-  }
+  useEffect(() => {
+    if (credential.revocationNotification) {
+      credential.metadata.set('revoked_seen', true)
+      const credService = agent?.credentials.getService('v1')
+      credService?.update(credential)
+    }
+  }, [isRevoked])
 
   return (
     <Record
       header={() => (
         <>
-          {isRevoked && !isRevokedMessageHidden ? (
+          <CredentialCard credential={credential} revoked={isRevoked} style={{ marginHorizontal: 15, marginTop: 16 }} />
+          {isRevoked && (
             <View style={{ marginHorizontal: 15, marginTop: 16 }}>
               <InfoBox
                 notificationType={InfoBoxType.Warn}
-                title={t('CredentialDetails.CredentialRevokedMessageTitle')}
-                description={t('CredentialDetails.CredentialRevokedMessageBody')}
-                onCallToActionLabel={t('Global.Dismiss')}
-                onCallToActionPressed={() => dismissRevokedMessage(credential)}
+                title={t('CredentialDetails.CredentialRevokedMessageTitle') + ' ' + revocationDate}
+                description={
+                  credential?.revocationNotification?.comment
+                    ? credential.revocationNotification.comment
+                    : t('CredentialDetails.CredentialRevokedMessageBody')
+                }
               />
             </View>
-          ) : null}
-          <CredentialCard credential={credential} revoked={isRevoked} style={{ marginHorizontal: 15, marginTop: 16 }} />
+          )}
         </>
       )}
       footer={() => (
