@@ -84,7 +84,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           params: { credentialId: notification.id },
         })
       title = t('CredentialOffer.CredentialOffer')
-      body = `${name} v${version}`
+      body = `${name + (version ? ` v${version}` : '')}`
       break
     case NotificationType.ProofRequest:
       title = t('ProofRequest.ProofRequest')
