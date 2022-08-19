@@ -101,6 +101,13 @@ const translation = {
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet."
   },
+  "Biometry": {
+    "Toggle": "Toggle Biometrics",
+    "Text1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
+    "Text2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
+    "Warning": "Ensure only you have access to your wallet.",
+    "UseToUnlock": "Use biometrics to unlock wallet?"
+  },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
   },
@@ -273,6 +280,7 @@ const translation = {
     "Contacts": 'Contacts',
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
+    "Biometry": "Biometrics"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

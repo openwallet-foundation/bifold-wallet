@@ -10,6 +10,7 @@ export enum LocalStorageKeys {
   // FIXME: Once hooks are updated this should no longer be necessary
   RevokedCredentials = 'RevokedCredentials',
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
+  Preferences = 'PreferencesState',
 }
 
 //Keys for items saved in keychain/async storage
