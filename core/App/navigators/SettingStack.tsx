@@ -9,7 +9,6 @@ import { Screens, SettingStackParams } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
-
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator()
   const { t } = useTranslation()
