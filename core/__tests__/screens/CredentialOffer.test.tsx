@@ -7,9 +7,11 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import CredentialOffer from '../../App/screens/CredentialOffer'
 import { testIdWithKey } from '../../App/utils/testable'
+import configurationContext from '../contexts/configuration'
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
@@ -56,9 +58,11 @@ describe('displays a credential offer screen', () => {
 
   test('shows offer controls', async () => {
     const { getByTestId } = render(
-      <NetworkProvider>
-        <CredentialOffer route={props as any} navigation={useNavigation()} />
-      </NetworkProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <NetworkProvider>
+          <CredentialOffer route={props as any} navigation={useNavigation()} />
+        </NetworkProvider>
+      </ConfigurationContext.Provider>
     )
 
     await act(async () => null)
@@ -72,9 +76,11 @@ describe('displays a credential offer screen', () => {
 
   test('accepting a credential', async () => {
     const tree = render(
-      <NetworkProvider>
-        <CredentialOffer route={props as any} navigation={useNavigation()} />
-      </NetworkProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <NetworkProvider>
+          <CredentialOffer route={props as any} navigation={useNavigation()} />
+        </NetworkProvider>
+      </ConfigurationContext.Provider>
     )
 
     await act(async () => null)
@@ -88,9 +94,11 @@ describe('displays a credential offer screen', () => {
 
   test('declining a credential', async () => {
     const tree = render(
-      <NetworkProvider>
-        <CredentialOffer route={props as any} navigation={useNavigation()} />
-      </NetworkProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <NetworkProvider>
+          <CredentialOffer route={props as any} navigation={useNavigation()} />
+        </NetworkProvider>
+      </ConfigurationContext.Provider>
     )
 
     await act(async () => null)

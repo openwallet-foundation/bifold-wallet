@@ -5,7 +5,9 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
 import { dateFormatOptions } from '../../App/constants'
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialDetails from '../../App/screens/CredentialDetails'
+import configurationContext from '../contexts/configuration'
 
 interface CredentialContextInterface {
   loading: boolean
@@ -82,10 +84,12 @@ describe('displays a credential details screen', () => {
 
     test('a credential name, and issue date is displayed', async () => {
       const { findByText } = render(
-        <CredentialDetails
-          navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-        ></CredentialDetails>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <CredentialDetails
+            navigation={useNavigation()}
+            route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+          ></CredentialDetails>
+        </ConfigurationContext.Provider>
       )
 
       const credentialName = await findByText('Unverified Person', { exact: false })
@@ -104,10 +108,12 @@ describe('displays a credential details screen', () => {
 
   test('a list of credential details is displayed, attribute names are human readable', async () => {
     const { findByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     const familyName = await findByText('Family Name', { exact: false })
@@ -121,10 +127,12 @@ describe('displays a credential details screen', () => {
 
   test('a list of credential details is displayed, attribute values are hidden by default', async () => {
     const { findAllByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     const hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
@@ -134,10 +142,12 @@ describe('displays a credential details screen', () => {
 
   test('pressing the `Show` button un-hides an attribute value', async () => {
     const { queryByText, findAllByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     let showButtons = await findAllByText('Record.Show')
@@ -161,10 +171,12 @@ describe('displays a credential details screen', () => {
 
   test('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
     const { queryAllByText, findAllByText, findByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     let showButtons = await findAllByText('Record.Show')
