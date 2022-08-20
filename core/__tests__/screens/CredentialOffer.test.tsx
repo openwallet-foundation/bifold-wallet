@@ -46,9 +46,11 @@ useCredentialById.mockReturnValue(credentialRecord)
 describe('displays a credential offer screen', () => {
   test('renders correctly', async () => {
     const tree = render(
-      <NetworkProvider>
-        <CredentialOffer route={props as any} navigation={useNavigation()} />
-      </NetworkProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <NetworkProvider>
+          <CredentialOffer route={props as any} navigation={useNavigation()} />
+        </NetworkProvider>
+      </ConfigurationContext.Provider>
     )
 
     await act(async () => null)
