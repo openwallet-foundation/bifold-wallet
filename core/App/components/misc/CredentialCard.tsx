@@ -110,9 +110,22 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       headerLogoDimensions: LayoutRectangle,
       halved = true
     ) => {
-      return `${
-        (100 * (headerDimensions.width - headerLogoDimensions.width - 8)) / headerDimensions.width / (halved ? 2 : 1)
-      }%`
+      const { width: header } = headerDimensions
+      const { width: headerLogo } = headerLogoDimensions
+      const remainingHeader = header - headerLogo
+      return `${((halved ? 50 : 100) * (remainingHeader - 0.5 * paddingHorizontal)) / header}%`
+    }
+
+    const scaleCredentialName = (hideIssuer = false): string | number | undefined => {
+      return hideIssuer ? '100%' : '50%'
+    }
+
+    const scaleCredentialNameByLogo = (
+      hideIssuer = false,
+      headerDimensions: LayoutRectangle,
+      headerLogoDimensions: LayoutRectangle
+    ): string | number | undefined => {
+      return calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions, !hideIssuer)
     }
 
     return (
@@ -160,13 +173,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
                 overlay?.header?.color ??
                 credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
               width:
-                headerDimensions && overlay?.header?.imageSource && headerLogoDimensions
-                  ? overlay?.header?.hideIssuer
-                    ? calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions, false)
-                    : calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions)
-                  : overlay?.header?.hideIssuer
-                  ? '100%'
-                  : '50%',
+                overlay?.header?.imageSource && headerDimensions && headerLogoDimensions
+                  ? scaleCredentialNameByLogo(overlay?.header?.hideIssuer, headerDimensions, headerLogoDimensions)
+                  : scaleCredentialName(overlay?.header?.hideIssuer),
               textAlign: 'right',
               paddingHorizontal: 0.5 * paddingHorizontal,
             },
