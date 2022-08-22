@@ -6,7 +6,7 @@ import {
   RequestedPredicate,
   RetrievedCredentials,
 } from '@aries-framework/core'
-import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
+import { useConnectionById } from '@aries-framework/react-hooks'
 import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
