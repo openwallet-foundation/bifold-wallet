@@ -121,9 +121,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     }
 
     const scaleCredentialNameByLogo = (
-      hideIssuer = false,
       headerDimensions: LayoutRectangle,
-      headerLogoDimensions: LayoutRectangle
+      headerLogoDimensions: LayoutRectangle,
+      hideIssuer = false
     ): string | number | undefined => {
       return calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions, !hideIssuer)
     }
@@ -174,7 +174,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
                 credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
               width:
                 overlay?.header?.imageSource && headerDimensions && headerLogoDimensions
-                  ? scaleCredentialNameByLogo(overlay?.header?.hideIssuer, headerDimensions, headerLogoDimensions)
+                  ? scaleCredentialNameByLogo(headerDimensions, headerLogoDimensions, overlay?.header?.hideIssuer)
                   : scaleCredentialName(overlay?.header?.hideIssuer),
               textAlign: 'right',
               paddingHorizontal: 0.5 * paddingHorizontal,
