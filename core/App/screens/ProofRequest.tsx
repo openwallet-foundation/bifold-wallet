@@ -258,7 +258,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             }}
           >
             {loading ? <RecordLoading /> : null}
-            {proofConnectionLabel && <ConnectionAlert connectionID={proofConnectionLabel} />}
+            {proofConnectionLabel ? <ConnectionAlert connectionID={proofConnectionLabel} /> : null}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Share')}
