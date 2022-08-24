@@ -29,6 +29,7 @@ const defaultConfiguration: ConfigurationContext = {
   splash: undefined,
   terms: undefined,
   homeContentView: HomeContentView,
+  deepLinkSchemas: ['didcomm'],
 }
 
 describe('displays a home screen', () => {
