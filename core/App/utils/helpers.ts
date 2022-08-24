@@ -1,4 +1,5 @@
 import {
+  Agent,
   ConnectionRecord,
   CredentialExchangeRecord,
   ProofRecord,
@@ -149,4 +150,28 @@ export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials):
   requestedPredicates && requestedPredicates.sort(sortFn)
 
   return credentials
+}
+
+export const connectFromRedirection = async (url: string, agent: Agent | undefined) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+  const message = await res.json()
+  await agent?.receiveMessage(message)
+  return message
+}
+
+export const connectFromInvitation = async (url: string, agent: Agent | undefined) => {
+  const invitation = await agent?.oob.parseInvitation(url)
+  if (!invitation) {
+    throw new Error('Could not parse invitation from URL')
+  }
+
+  const record = await agent?.oob.receiveInvitation(invitation)
+  const connectionRecord = record?.connectionRecord
+  if (!connectionRecord?.id) {
+    throw new Error('Connection does not have an ID')
+  }
+  return connectionRecord
 }
