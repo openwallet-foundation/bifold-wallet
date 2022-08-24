@@ -11,7 +11,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
-import { connectFromInvitation, connectFromRedirection, isRedirection } from '../utils/helpers'
+import { connectFromInvitation, isRedirection, receiveMessageFromUrlRedirect } from '../utils/helpers'
 
 import CameraDisclosure from './CameraDisclosure'
 
@@ -25,7 +25,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
 
   const handleRedirection = async (url: string, agent?: Agent): Promise<void> => {
     try {
-      const message = await connectFromRedirection(url, agent)
+      const message = await receiveMessageFromUrlRedirect(url, agent)
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { threadId: message['@id'] },
@@ -36,9 +36,9 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
     }
   }
 
-  const handleInvitation = async (url: string): Promise<void> => {
+  const handleInvitation = async (uri: string): Promise<void> => {
     try {
-      const connectionRecord = await connectFromInvitation(url, agent)
+      const connectionRecord = await connectFromInvitation(uri, agent)
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { connectionId: connectionRecord.id },
@@ -52,11 +52,11 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const handleCodeScan = async (event: BarCodeReadEvent) => {
     setQrCodeScanError(null)
     try {
-      const url = event.data
-      if (isRedirection(url)) {
-        await handleRedirection(url, agent)
+      const uri = event.data
+      if (isRedirection(uri)) {
+        await handleRedirection(uri, agent)
       } else {
-        await handleInvitation(url)
+        await handleInvitation(uri)
       }
     } catch (e: unknown) {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
