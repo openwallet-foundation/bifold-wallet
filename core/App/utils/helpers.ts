@@ -147,6 +147,13 @@ export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials):
   return credentials
 }
 
+/**
+ *
+ * @param url a URL string corresponding to a redirection to a connection invite
+ * or connectionless protocol (ex. proof request)
+ * @param agent an Agent instance
+ * @returns payload from following the redirection
+ */
 export const connectFromRedirection = async (url: string, agent: Agent | undefined) => {
   const res = await fetch(url, {
     method: 'GET',
@@ -157,6 +164,12 @@ export const connectFromRedirection = async (url: string, agent: Agent | undefin
   return message
 }
 
+/**
+ *
+ * @param url a URL string corresponding to a connection invite
+ * @param agent an Agent instance
+ * @returns a connection record from parsing and receiving the invitation
+ */
 export const connectFromInvitation = async (url: string, agent: Agent | undefined) => {
   const invitation = await agent?.oob.parseInvitation(url)
   if (!invitation) {
