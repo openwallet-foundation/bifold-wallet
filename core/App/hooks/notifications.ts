@@ -11,7 +11,7 @@ interface Notifications {
   notifications: Array<CredentialRecord | ProofRecord>
 }
 
-export function useNotifications(): Notifications {
+export const useNotifications = (): Notifications => {
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
 

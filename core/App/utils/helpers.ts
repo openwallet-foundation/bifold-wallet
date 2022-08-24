@@ -1,4 +1,5 @@
 import {
+  Agent,
   ConnectionRecord,
   CredentialExchangeRecord,
   ProofRecord,
@@ -144,4 +145,40 @@ export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials):
   requestedPredicates && requestedPredicates.sort(sortFn)
 
   return credentials
+}
+
+/**
+ *
+ * @param url a redirection URL to retrieve a payload for an invite
+ * @param agent an Agent instance
+ * @returns payload from following the redirection
+ */
+export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+  const message = await res.json()
+  await agent?.receiveMessage(message)
+  return message
+}
+
+/**
+ *
+ * @param uri a URI containing a base64 encoded connection invite in the query parameter
+ * @param agent an Agent instance
+ * @returns a connection record from parsing and receiving the invitation
+ */
+export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
+  const invitation = await agent?.oob.parseInvitation(uri)
+  if (!invitation) {
+    throw new Error('Could not parse invitation from URL')
+  }
+
+  const record = await agent?.oob.receiveInvitation(invitation)
+  const connectionRecord = record?.connectionRecord
+  if (!connectionRecord?.id) {
+    throw new Error('Connection does not have an ID')
+  }
+  return connectionRecord
 }
