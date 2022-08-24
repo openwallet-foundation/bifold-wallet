@@ -149,12 +149,11 @@ export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials):
 
 /**
  *
- * @param url a URL string corresponding to a redirection to a connection invite
- * or connectionless protocol (ex. proof request)
+ * @param url a redirection URL to retrieve a payload for an invite
  * @param agent an Agent instance
  * @returns payload from following the redirection
  */
-export const connectFromRedirection = async (url: string, agent: Agent | undefined) => {
+export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
   const res = await fetch(url, {
     method: 'GET',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -166,12 +165,12 @@ export const connectFromRedirection = async (url: string, agent: Agent | undefin
 
 /**
  *
- * @param url a URL string corresponding to a connection invite
+ * @param uri a URI containing a base64 encoded connection invite in the query parameter
  * @param agent an Agent instance
  * @returns a connection record from parsing and receiving the invitation
  */
-export const connectFromInvitation = async (url: string, agent: Agent | undefined) => {
-  const invitation = await agent?.oob.parseInvitation(url)
+export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
+  const invitation = await agent?.oob.parseInvitation(uri)
   if (!invitation) {
     throw new Error('Could not parse invitation from URL')
   }
