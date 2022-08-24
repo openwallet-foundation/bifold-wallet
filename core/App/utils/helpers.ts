@@ -6,7 +6,7 @@ import {
   RequestedPredicate,
   RetrievedCredentials,
 } from '@aries-framework/core'
-import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
+import { useConnectionById } from '@aries-framework/react-hooks'
 import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
@@ -27,23 +27,9 @@ export function hashToRGBA(i: number) {
 }
 
 // DEPRECATED
-export function credentialRecordFromId(credentialId?: string): CredentialExchangeRecord | void {
-  if (credentialId) {
-    return useCredentialById(credentialId)
-  }
-}
-
-// DEPRECATED
 export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
   if (connectionId) {
     return useConnectionById(connectionId)
-  }
-}
-
-// DEPRECATED
-export function proofRecordFromId(proofId?: string): ProofRecord | void {
-  if (proofId) {
-    return useProofById(proofId)
   }
 }
 
@@ -53,6 +39,15 @@ export function getConnectionName(connection: ConnectionRecord | void): string |
     return
   }
   return connection?.alias || connection?.theirLabel
+}
+
+export function getCredentialConnectionLabel(credential?: CredentialExchangeRecord) {
+  if (!credential) {
+    return ''
+  }
+  return credential?.connectionId
+    ? useConnectionById(credential.connectionId)?.theirLabel
+    : credential?.connectionId ?? ''
 }
 
 export function firstValidCredential(

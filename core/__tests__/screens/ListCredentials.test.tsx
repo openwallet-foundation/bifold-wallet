@@ -10,8 +10,9 @@ import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
 
 import CredentialCard from '../../App/components/misc/CredentialCard'
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import ListCredentials from '../../App/screens/ListCredentials'
-import { testIdWithKey } from '../../App/utils/testable'
+import configurationContext from '../contexts/configuration'
 
 interface CredentialContextInterface {
   loading: boolean
@@ -74,7 +75,11 @@ describe('displays a credentials list screen', () => {
      */
     test('pressing on a credential in the list takes the holder to a credential detail screen', async () => {
       const navigation = useNavigation()
-      const { findAllByText } = render(<ListCredentials />)
+      const { findAllByText } = render(
+        <ConfigurationContext.Provider value={configurationContext}>
+          <ListCredentials />
+        </ConfigurationContext.Provider>
+      )
 
       const credentialItemInstances = await findAllByText('Unverified Person', { exact: false })
 
@@ -96,7 +101,11 @@ describe('displays a credentials list screen', () => {
    * Then the credentials are ordered to most recent to least recent (top to bottom)
    */
   test('credentials should display in descending order of issued date', () => {
-    const tree = render(<ListCredentials />)
+    const tree = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ListCredentials />
+      </ConfigurationContext.Provider>
+    )
     const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
     expect(credentialCards.length).toBe(3)

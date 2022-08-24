@@ -20,7 +20,7 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<NotificationStackParams, Screens.ProofRequestAttributeDetails>
 
-const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ navigation, route }) => {
+const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> = ({ route }) => {
   if (!route?.params) {
     throw new Error('ProofRequest route prams were not set properly')
   }
