@@ -17,7 +17,7 @@ function parseSchema(schemaId?: string): { name: string; version: string } {
   return { name, version }
 }
 
-function credentialSchema(credential: CredentialRecord): string | undefined {
+export function credentialSchema(credential: CredentialRecord): string | undefined {
   return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
 }
 
