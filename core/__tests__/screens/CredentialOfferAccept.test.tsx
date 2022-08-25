@@ -36,7 +36,6 @@ describe('displays a credential accept screen', () => {
 
     expect(tree).toMatchSnapshot()
     expect(doneButton).toBeNull()
-    expect(backToHomeButton).toBeNull()
     expect(useCredentialById).toBeCalledWith(credentialId)
   })
 
