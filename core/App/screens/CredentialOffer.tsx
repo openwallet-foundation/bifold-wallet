@@ -1,5 +1,5 @@
 import { CredentialMetadataKeys, CredentialPreviewAttributeOptions } from '@aries-framework/core'
-import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,6 +18,7 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
+import { getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -37,9 +38,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const credential = useCredentialById(credentialId)
-  const credentialConnectionLabel = credential?.connectionId
-    ? useConnectionById(credential.connectionId)?.theirLabel
-    : credential?.connectionId ?? ''
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const [credentialAttributes, setCredentialAttributes] = useState<CredentialPreviewAttributeOptions[]>([])
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member

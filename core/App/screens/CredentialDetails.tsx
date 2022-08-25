@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -18,6 +18,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import { getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -36,9 +37,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
   const [isDeleteModalDisplayed, setIsDeleteModalDisplayed] = useState<boolean>(false)
   const credential = useCredentialById(credentialId)
-  const credentialConnectionLabel = credential?.connectionId
-    ? useConnectionById(credential.connectionId)?.theirLabel
-    : credential?.connectionId ?? ''
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const { TextTheme, ColorPallet } = useTheme()
 
   const { revoked, revokedMessageDismissed } = state.credential
@@ -100,9 +99,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (!credential) {
       return
     }
-    const isRevoked = revoked.has(credential.id)
+    const indyCredentialFormat = credential.credentials.find((c) => c.credentialRecordType === 'indy')
+    if (!indyCredentialFormat) {
+      return
+    }
+    const isRevoked = revoked.has(indyCredentialFormat.credentialRecordId)
     setIsRevoked(isRevoked)
-    const isRevokedMessageDismissed = revokedMessageDismissed.has(credential.id)
+    const isRevokedMessageDismissed = revokedMessageDismissed.has(indyCredentialFormat.credentialRecordId)
     setIsRevokedMessageHidden(isRevokedMessageDismissed)
   }, [credential])
 
@@ -163,13 +166,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
                 )}
               </View>
             ) : null}
-            {credential && (
-              <CredentialCard
-                credential={credential}
-                revoked={isRevoked}
-                style={{ marginHorizontal: 15, marginTop: 16 }}
-              />
-            )}
+            {credential && <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginTop: 16 }} />}
           </>
         )}
         footer={() => (
