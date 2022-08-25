@@ -1,19 +1,17 @@
-import {
-  CredentialMetadataKeys,
-  CredentialExchangeRecord as CredentialRecord,
-  CredentialState,
-} from '@aries-framework/core'
+import { CredentialMetadataKeys, CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
 import { dateFormatOptions } from '../../App/constants'
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialDetails from '../../App/screens/CredentialDetails'
+import configurationContext from '../contexts/configuration'
 
 interface CredentialContextInterface {
   loading: boolean
-  credentials: CredentialRecord[]
+  credentials: CredentialExchangeRecord[]
 }
 
 jest.mock('@react-navigation/core', () => {
@@ -40,7 +38,8 @@ jest.useRealTimers()
  *  Attribute names are just capitalized name
  */
 describe('displays a credential details screen', () => {
-  const testOpenVPCredentialRecord = new CredentialRecord({
+  const testOpenVPCredentialRecord = new CredentialExchangeRecord({
+    protocolVersion: 'v1',
     threadId: '1',
     state: CredentialState.Done,
     createdAt: new Date('2020-01-01T00:00:00'),
@@ -79,23 +78,21 @@ describe('displays a credential details screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      testCredentialRecords.credentials.forEach((credential: CredentialRecord) => {
-        credential.credentialId = credential.id
-      })
       // @ts-ignore
       useCredentialById.mockReturnValue(testCredentialRecords.credentials[0])
     })
 
-    test('a credential name, credential version and issue date is displayed', async () => {
+    test('a credential name, and issue date is displayed', async () => {
       const { findByText } = render(
-        <CredentialDetails
-          navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-        ></CredentialDetails>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <CredentialDetails
+            navigation={useNavigation()}
+            route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+          ></CredentialDetails>
+        </ConfigurationContext.Provider>
       )
 
       const credentialName = await findByText('Unverified Person', { exact: false })
-      const credentialVersion = await findByText('Version: 0.1.0', { exact: false })
       const credentialIssuedAt = await findByText(
         `CredentialDetails.Issued: ${testOpenVPCredentialRecord.createdAt.toLocaleDateString(
           'en-CA',
@@ -105,17 +102,18 @@ describe('displays a credential details screen', () => {
       )
 
       expect(credentialName).not.toBe(null)
-      expect(credentialVersion).not.toBe(null)
       expect(credentialIssuedAt).not.toBe(null)
     })
   })
 
   test('a list of credential details is displayed, attribute names are human readable', async () => {
     const { findByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     const familyName = await findByText('Family Name', { exact: false })
@@ -129,10 +127,12 @@ describe('displays a credential details screen', () => {
 
   test('a list of credential details is displayed, attribute values are hidden by default', async () => {
     const { findAllByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     const hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
@@ -142,10 +142,12 @@ describe('displays a credential details screen', () => {
 
   test('pressing the `Show` button un-hides an attribute value', async () => {
     const { queryByText, findAllByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     let showButtons = await findAllByText('Record.Show')
@@ -169,10 +171,12 @@ describe('displays a credential details screen', () => {
 
   test('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
     const { queryAllByText, findAllByText, findByText } = render(
-      <CredentialDetails
-        navigation={useNavigation()}
-        route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
-      ></CredentialDetails>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialDetails
+          navigation={useNavigation()}
+          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+        ></CredentialDetails>
+      </ConfigurationContext.Provider>
     )
 
     let showButtons = await findAllByText('Record.Show')

@@ -1,8 +1,8 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { SafeAreaScrollView } from '../components'
 import SingleSelectBlock, { BlockSelection } from '../components/inputs/SingleSelectBlock'
+import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
 import { Locales, storeLanguage } from '../localization'
 
 const Language = () => {

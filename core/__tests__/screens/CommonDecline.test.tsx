@@ -11,9 +11,11 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import CommonDecline from '../../App/screens/CommonDecline'
 import { DeclineType } from '../../App/types/decline'
 import { testIdWithKey } from '../../App/utils/testable'
+import configurationContext from '../contexts/configuration'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@react-navigation/core', () => {
@@ -117,7 +119,11 @@ describe('common decline screen', () => {
     const props = {
       params: { declineType: DeclineType.CredentialOffer, itemId: '0683de72-2d24-4c76-a471-424c832e4b93' },
     }
-    const tree = render(<CommonDecline route={props as any} navigation={useNavigation()} />)
+    const tree = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CommonDecline route={props as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
+    )
     const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDeclineButton'))
     const abortDeclineButton = tree.getByTestId(testIdWithKey('AbortDeclineButton'))
 
@@ -137,7 +143,11 @@ describe('common decline screen', () => {
     const props = {
       params: { declineType: DeclineType.CredentialOffer, itemId: '0683de72-2d24-4c76-a471-424c832e4b93' },
     }
-    const { getByTestId } = render(<CommonDecline route={props as any} navigation={useNavigation()} />)
+    const { getByTestId } = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CommonDecline route={props as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
+    )
     const confirmDeclineButton = getByTestId(testIdWithKey('ConfirmDeclineButton'))
     const { agent } = useAgent()
 
@@ -161,7 +171,11 @@ describe('common decline screen', () => {
     const props = {
       params: { declineType: DeclineType.CredentialOffer, itemId: '0683de72-2d24-4c76-a471-424c832e4b93' },
     }
-    const tree = render(<CommonDecline route={props as any} navigation={useNavigation()} />)
+    const tree = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CommonDecline route={props as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
+    )
     const doneButton = tree.getByTestId(testIdWithKey('Done'))
     const didDeclineText = tree.getByTestId(testIdWithKey('RequestOrOfferDeclined'))
 
@@ -182,7 +196,11 @@ describe('common decline screen', () => {
     const props = {
       params: { declineType: DeclineType.CredentialOffer, itemId: '0683de72-2d24-4c76-a471-424c832e4b93' },
     }
-    const { getByTestId } = render(<CommonDecline route={props as any} navigation={useNavigation()} />)
+    const { getByTestId } = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CommonDecline route={props as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
+    )
     const doneButton = getByTestId(testIdWithKey('Done'))
 
     fireEvent(doneButton, 'press')

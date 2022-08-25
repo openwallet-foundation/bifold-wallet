@@ -1,12 +1,12 @@
 import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
-import { NotificationListItem } from '../components'
-import { NotificationType } from '../components/listItems/NotificationListItem'
+import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import LoadingModal from '../components/modals/LoadingModal'
 import { LocalStorageKeys } from '../constants'
@@ -14,9 +14,11 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { useDeepLinks } from '../hooks/deep-links'
 import { useNotifications } from '../hooks/notifications'
-import { HomeStackParams, Screens } from '../types/navigators'
+import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { Credential as StoreCredentialState } from '../types/state'
+import { connectFromInvitation } from '../utils/helpers'
 
 const { width } = Dimensions.get('window')
 const offset = 25
@@ -25,6 +27,7 @@ const offsetPadding = 5
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
+  const { agent } = useAgent()
   const { notifications } = useNotifications()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
@@ -32,6 +35,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const [loading, setLoading] = React.useState<boolean>(true)
+  const deepLink = useDeepLinks()
   const { HomeTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -93,6 +97,23 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   useEffect(() => {
     setLoading(store.loading)
   }, [store.loading])
+
+  useEffect(() => {
+    async function handleDeepLink(deepLink: string) {
+      try {
+        const connectionRecord = await connectFromInvitation(deepLink, agent)
+        navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+          screen: Screens.Connection,
+          params: { connectionId: connectionRecord.id },
+        })
+      } catch (error) {
+        // TODO:(am add error handling here)
+      }
+    }
+    if (agent && deepLink) {
+      handleDeepLink(deepLink)
+    }
+  }, [agent, deepLink])
 
   return (
     <>
