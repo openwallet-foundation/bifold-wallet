@@ -1,8 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Modal, SafeAreaView, StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-import InfoBox, { InfoBoxType } from '../../components/misc/InfoBox'
+import { InfoBoxType } from '../../components/misc/InfoBox'
+
+import PopupModal from './PopupModal'
 
 const { height } = Dimensions.get('window')
 
@@ -25,17 +28,15 @@ const AlertModal: React.FC<AlertModalProps> = ({ title, message, submit }) => {
   })
 
   return (
-    <Modal visible={true} transparent={true}>
-      <SafeAreaView style={[styles.container]}>
-        <InfoBox
-          notificationType={InfoBoxType.Info}
-          title={title}
-          description={message}
-          onCallToActionLabel={t('Global.Okay')}
-          onCallToActionPressed={submit ? () => submit() : () => undefined}
-        />
-      </SafeAreaView>
-    </Modal>
+    <SafeAreaView style={[styles.container]}>
+      <PopupModal
+        notificationType={InfoBoxType.Info}
+        title={title}
+        description={message}
+        onCallToActionLabel={t('Global.Okay')}
+        onCallToActionPressed={submit ? () => submit() : () => undefined}
+      ></PopupModal>
+    </SafeAreaView>
   )
 }
 
