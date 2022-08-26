@@ -230,11 +230,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const renderCredentialCard = (revoked = false) => {
     return (
-      <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
+      <>
         {renderCredentialCardHeader()}
         {renderCredentialCardBody()}
         {renderCredentialCardFooter(revoked)}
-      </View>
+      </>
     )
   }
 
@@ -245,13 +245,15 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {overlay?.imageSource ? (
-        <ImageBackground source={overlay?.imageSource} style={styles.flexGrow} imageStyle={{ borderRadius }}>
-          {renderCredentialCard(isRevoked)}
-        </ImageBackground>
-      ) : (
-        renderCredentialCard(isRevoked)
-      )}
+      <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
+        {overlay?.imageSource ? (
+          <ImageBackground source={overlay?.imageSource} style={styles.flexGrow} imageStyle={{ borderRadius }}>
+            {renderCredentialCard(isRevoked)}
+          </ImageBackground>
+        ) : (
+          renderCredentialCard(isRevoked)
+        )}
+      </View>
     </TouchableOpacity>
   )
 }
