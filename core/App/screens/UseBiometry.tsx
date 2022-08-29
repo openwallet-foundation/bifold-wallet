@@ -38,7 +38,7 @@ const UseBiometry: React.FC = () => {
     isBiometricsActive().then((result) => {
       setBiometryAvailable(result)
     })
-  })
+  }, [])
 
   const continueTouched = async () => {
     setContinueEnabled(false)

@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react-native'
+import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import { AuthContext } from '../../App/contexts/auth'
@@ -66,10 +66,14 @@ describe('UseBiometry Screen', () => {
     )
 
     const useBiometryToggle = await tree.getByTestId(testIdWithKey('ToggleBiometrics'))
-    fireEvent(useBiometryToggle, 'valueChange', true)
+    await waitFor(async () => {
+      await fireEvent(useBiometryToggle, 'valueChange', true)
+    })
 
     const continueButton = await tree.getByTestId(testIdWithKey('Continue'))
-    fireEvent(continueButton, 'press')
+    await waitFor(async () => {
+      await fireEvent(continueButton, 'press')
+    })
 
     expect(useBiometryToggle).not.toBeNull()
     expect(continueButton).not.toBeNull()
