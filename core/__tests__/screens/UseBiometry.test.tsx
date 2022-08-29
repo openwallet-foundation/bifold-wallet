@@ -13,7 +13,7 @@ jest.mock('@react-navigation/native', () => {
 })
 
 describe('UseBiometry Screen', () => {
-  test('Renders correctly', () => {
+  test('Renders correctly when biometry available', () => {
     const tree = render(
       <AuthContext.Provider
         value={{
@@ -21,6 +21,25 @@ describe('UseBiometry Screen', () => {
           convertToUseBiometrics: jest.fn(),
           getWalletCredentials: jest.fn(),
           setPIN: jest.fn(),
+          isBiometricsActive: jest.fn().mockReturnValue(Promise.resolve(true)),
+        }}
+      >
+        <UseBiometry />
+      </AuthContext.Provider>
+    )
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Renders correctly when biometry not available', () => {
+    const tree = render(
+      <AuthContext.Provider
+        value={{
+          checkPIN: jest.fn(),
+          convertToUseBiometrics: jest.fn(),
+          getWalletCredentials: jest.fn(),
+          setPIN: jest.fn(),
+          isBiometricsActive: jest.fn().mockReturnValue(Promise.resolve(false)),
         }}
       >
         <UseBiometry />
@@ -39,6 +58,7 @@ describe('UseBiometry Screen', () => {
           convertToUseBiometrics,
           getWalletCredentials: jest.fn(),
           setPIN: jest.fn(),
+          isBiometricsActive: jest.fn().mockReturnValue(Promise.resolve(true)),
         }}
       >
         <UseBiometry />
