@@ -115,7 +115,11 @@ const translation = {
     "ConnectionAccepted": "Connection Accepted",
     "ConnectionNotFound": "Connection not found",
     "InvalidQrCode": "Invalid QR code. Please try again.",
+    "CameraUnavailable": "Camera is unavailable.",
+    "NoPermissions": "Enable permissions in your device settings to use the camera.",
     "UnableToHandleRedirection": "Unable to handle redirection",
+    "Dismiss": "Tap to dismiss",
+    "ChangeSettings": "Change Settings",
     "Close": "Close",
     "Torch": "Flash"
   },

@@ -7,6 +7,12 @@ const plugins = [
       extensions: ['.tsx', 'ts'],
     },
   ],
+  [
+    'react-native-reanimated/plugin',
+    {
+      globals: ['__scanCodes'],
+    },
+  ],
 ]
 
 if (process.env['ENV'] === 'prod') {
