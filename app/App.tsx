@@ -19,6 +19,7 @@ import {
   Splash,
   Terms,
   HomeContentView,
+  UseBiometry,
 } from "aries-bifold";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
@@ -30,7 +31,8 @@ const defaultConfiguration: ConfigurationContext = {
   splash: Splash,
   terms: Terms,
   homeContentView: HomeContentView,
-  OCABundle: {}
+  OCABundle: {},
+  useBiometry: UseBiometry,
 };
 
 initLanguages(translationResources);

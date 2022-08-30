@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react-native'
+import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import { AuthContext } from '../../App/contexts/auth'
@@ -13,7 +13,7 @@ jest.mock('@react-navigation/native', () => {
 })
 
 describe('UseBiometry Screen', () => {
-  test('Renders correctly', () => {
+  test('Renders correctly when biometry available', () => {
     const tree = render(
       <AuthContext.Provider
         value={{
@@ -21,6 +21,25 @@ describe('UseBiometry Screen', () => {
           convertToUseBiometrics: jest.fn(),
           getWalletCredentials: jest.fn(),
           setPIN: jest.fn(),
+          isBiometricsActive: jest.fn().mockReturnValue(Promise.resolve(true)),
+        }}
+      >
+        <UseBiometry />
+      </AuthContext.Provider>
+    )
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Renders correctly when biometry not available', () => {
+    const tree = render(
+      <AuthContext.Provider
+        value={{
+          checkPIN: jest.fn(),
+          convertToUseBiometrics: jest.fn(),
+          getWalletCredentials: jest.fn(),
+          setPIN: jest.fn(),
+          isBiometricsActive: jest.fn().mockReturnValue(Promise.resolve(false)),
         }}
       >
         <UseBiometry />
@@ -39,6 +58,7 @@ describe('UseBiometry Screen', () => {
           convertToUseBiometrics,
           getWalletCredentials: jest.fn(),
           setPIN: jest.fn(),
+          isBiometricsActive: jest.fn().mockReturnValue(Promise.resolve(true)),
         }}
       >
         <UseBiometry />
@@ -46,10 +66,14 @@ describe('UseBiometry Screen', () => {
     )
 
     const useBiometryToggle = await tree.getByTestId(testIdWithKey('ToggleBiometrics'))
-    fireEvent(useBiometryToggle, 'valueChange', true)
+    await waitFor(async () => {
+      await fireEvent(useBiometryToggle, 'valueChange', true)
+    })
 
     const continueButton = await tree.getByTestId(testIdWithKey('Continue'))
-    fireEvent(continueButton, 'press')
+    await waitFor(async () => {
+      await fireEvent(continueButton, 'press')
+    })
 
     expect(useBiometryToggle).not.toBeNull()
     expect(continueButton).not.toBeNull()
