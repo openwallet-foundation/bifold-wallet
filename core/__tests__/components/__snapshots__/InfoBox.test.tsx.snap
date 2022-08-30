@@ -78,81 +78,68 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       }
     }
   >
-    <Text
+    <View
+      accessibilityLabel="Global.ShowDetails"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 16,
+          "marginVertical": 14,
+          "opacity": 1,
         }
       }
-      testID="com.ariesbifold:id/BodyText"
-    />
-    <RNGestureHandlerButton
-      collapsable={false}
-      onGestureEvent={[Function]}
-      onGestureHandlerEvent={[Function]}
-      onGestureHandlerStateChange={[Function]}
-      onHandlerStateChange={[Function]}
-      rippleColor={0}
       testID="com.ariesbifold:id/ShowDetails"
     >
       <View
-        accessibilityLabel="Global.ShowDetails"
-        accessible={true}
-        collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
-            "marginVertical": 14,
-            "opacity": 1,
+            "flexDirection": "row",
           }
         }
       >
-        <View
+        <Text
           style={
             Object {
-              "flexDirection": "row",
+              "color": "#FFFFFF",
+              "fontSize": 20,
+              "fontWeight": "normal",
             }
           }
         >
-          <Text
-            style={
+          Global.ShowDetails
+           
+        </Text>
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 20,
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
                 "fontWeight": "normal",
-              }
-            }
-          >
-            Global.ShowDetails
-             
-          </Text>
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 30,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
       </View>
-    </RNGestureHandlerButton>
+    </View>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={
@@ -279,81 +266,68 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       }
     }
   >
-    <Text
+    <View
+      accessibilityLabel="Global.ShowDetails"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 16,
+          "marginVertical": 14,
+          "opacity": 1,
         }
       }
-      testID="com.ariesbifold:id/BodyText"
-    />
-    <RNGestureHandlerButton
-      collapsable={false}
-      onGestureEvent={[Function]}
-      onGestureHandlerEvent={[Function]}
-      onGestureHandlerStateChange={[Function]}
-      onHandlerStateChange={[Function]}
-      rippleColor={0}
       testID="com.ariesbifold:id/ShowDetails"
     >
       <View
-        accessibilityLabel="Global.ShowDetails"
-        accessible={true}
-        collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
-            "marginVertical": 14,
-            "opacity": 1,
+            "flexDirection": "row",
           }
         }
       >
-        <View
+        <Text
           style={
             Object {
-              "flexDirection": "row",
+              "color": "#FFFFFF",
+              "fontSize": 20,
+              "fontWeight": "normal",
             }
           }
         >
-          <Text
-            style={
+          Global.ShowDetails
+           
+        </Text>
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 20,
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
                 "fontWeight": "normal",
-              }
-            }
-          >
-            Global.ShowDetails
-             
-          </Text>
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 30,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
       </View>
-    </RNGestureHandlerButton>
+    </View>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={
@@ -480,81 +454,68 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       }
     }
   >
-    <Text
+    <View
+      accessibilityLabel="Global.ShowDetails"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 16,
+          "marginVertical": 14,
+          "opacity": 1,
         }
       }
-      testID="com.ariesbifold:id/BodyText"
-    />
-    <RNGestureHandlerButton
-      collapsable={false}
-      onGestureEvent={[Function]}
-      onGestureHandlerEvent={[Function]}
-      onGestureHandlerStateChange={[Function]}
-      onHandlerStateChange={[Function]}
-      rippleColor={0}
       testID="com.ariesbifold:id/ShowDetails"
     >
       <View
-        accessibilityLabel="Global.ShowDetails"
-        accessible={true}
-        collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
-            "marginVertical": 14,
-            "opacity": 1,
+            "flexDirection": "row",
           }
         }
       >
-        <View
+        <Text
           style={
             Object {
-              "flexDirection": "row",
+              "color": "#FFFFFF",
+              "fontSize": 20,
+              "fontWeight": "normal",
             }
           }
         >
-          <Text
-            style={
+          Global.ShowDetails
+           
+        </Text>
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 20,
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
                 "fontWeight": "normal",
-              }
-            }
-          >
-            Global.ShowDetails
-             
-          </Text>
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 30,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
       </View>
-    </RNGestureHandlerButton>
+    </View>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={
@@ -681,81 +642,68 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       }
     }
   >
-    <Text
+    <View
+      accessibilityLabel="Global.ShowDetails"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "color": "#FFFFFF",
-          "flexShrink": 1,
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginVertical": 16,
+          "marginVertical": 14,
+          "opacity": 1,
         }
       }
-      testID="com.ariesbifold:id/BodyText"
-    />
-    <RNGestureHandlerButton
-      collapsable={false}
-      onGestureEvent={[Function]}
-      onGestureHandlerEvent={[Function]}
-      onGestureHandlerStateChange={[Function]}
-      onHandlerStateChange={[Function]}
-      rippleColor={0}
       testID="com.ariesbifold:id/ShowDetails"
     >
       <View
-        accessibilityLabel="Global.ShowDetails"
-        accessible={true}
-        collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
-            "marginVertical": 14,
-            "opacity": 1,
+            "flexDirection": "row",
           }
         }
       >
-        <View
+        <Text
           style={
             Object {
-              "flexDirection": "row",
+              "color": "#FFFFFF",
+              "fontSize": 20,
+              "fontWeight": "normal",
             }
           }
         >
-          <Text
-            style={
+          Global.ShowDetails
+           
+        </Text>
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 20,
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
                 "fontWeight": "normal",
-              }
-            }
-          >
-            Global.ShowDetails
-             
-          </Text>
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 30,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
       </View>
-    </RNGestureHandlerButton>
+    </View>
     <View
       accessibilityLabel="Global.Okay"
       accessibilityState={

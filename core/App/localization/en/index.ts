@@ -77,11 +77,11 @@ const translation = {
   },
   "PinCreate": {
     "UserAuthenticationPIN": "User authentication PIN",
-    "PINTooShort": "PIN too short",
+    "PINTooShort": "PIN is too short",
     "InvalidPIN": "Invalid PIN",
     "PINsDoNotMatch": "PINs do not match",
     "PleaseUseOnlyNumbersInYourPIN": "Please use only numbers in your PIN",
-    "YourPINMustBe6DigitsInLength": "Your PIN must be six digits in length",
+    "YourPINMustBe6DigitsInLength": "Your PIN needs to be 6 digits long.",
     "EnteredPINsDoNotMatch": "The entered PINs do not match. Please try again.",
     "YouNeedToCreateA6DigitPIN": "You need to create a 6 digit PIN",
     "PleaseReenterYourPIN": "Please re-enter your PIN",
