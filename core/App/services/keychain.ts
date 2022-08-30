@@ -1,5 +1,5 @@
 import { Platform } from 'react-native'
-import Keychain, { resetGenericPassword } from 'react-native-keychain'
+import Keychain, { resetGenericPassword, getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
 import { KEYCHAIN_SERVICE_ID, KEYCHAIN_SERVICE_KEY } from '../constants'
@@ -16,8 +16,7 @@ export const optionsForKeychainAccess = (useBiometrics = false): Keychain.Option
   }
 
   if (useBiometrics) {
-    // opts.accessControl = Keychain.ACCESS_CONTROL.DEVICE_PASSCODE
-    opts.accessControl = Keychain.ACCESS_CONTROL.USER_PRESENCE
+    opts.accessControl = Keychain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE
   }
 
   if (Platform.OS === 'android') {
@@ -88,4 +87,10 @@ export const convertToUseBiometrics = async (): Promise<boolean> => {
   await storeWalletSecret(secret, useBiometrics)
 
   return true
+}
+
+export const isBiometricsActive = async (): Promise<boolean> => {
+  const result = await getSupportedBiometryType()
+
+  return result !== null ? true : false
 }

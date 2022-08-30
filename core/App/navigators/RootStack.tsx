@@ -27,7 +27,6 @@ import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import UseBiometry from '../screens/UseBiometry'
 import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { WalletSecret } from '../types/security'
@@ -55,7 +54,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash } = useConfiguration()
+  const { pages, terms, splash, useBiometry } = useConfiguration()
   const { getWalletCredentials } = useAuth()
 
   const onTutorialCompleted = () => {
@@ -214,7 +213,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
             headerLeft: () => false,
             rightLeft: () => false,
           })}
-          component={UseBiometry}
+          component={useBiometry}
         />
       </Stack.Navigator>
     )

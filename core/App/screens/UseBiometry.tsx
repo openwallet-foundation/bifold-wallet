@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Switch, StatusBar, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -15,7 +15,8 @@ import { testIdWithKey } from '../utils/testable'
 const UseBiometry: React.FC = () => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const { convertToUseBiometrics } = useAuth()
+  const { convertToUseBiometrics, isBiometricsActive } = useAuth()
+  const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(false)
   const [continueEnabled, setContinueEnabled] = useState(true)
   const { ColorPallet, TextTheme } = useTheme()
@@ -32,6 +33,12 @@ const UseBiometry: React.FC = () => {
       marginBottom: 66,
     },
   })
+
+  useEffect(() => {
+    isBiometricsActive().then((result) => {
+      setBiometryAvailable(result)
+    })
+  }, [])
 
   const continueTouched = async () => {
     setContinueEnabled(false)
@@ -57,12 +64,22 @@ const UseBiometry: React.FC = () => {
         <View style={{ alignItems: 'center' }}>
           <Biometrics style={[styles.image]} />
         </View>
-        <Text style={[TextTheme.normal]}>{t('Biometry.Text1')}</Text>
-        <Text></Text>
-        <Text style={[TextTheme.normal]}>
-          {t('Biometry.Text2')}
-          <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}> {t('Biometry.Warning')}</Text>
-        </Text>
+        {biometryAvailable ? (
+          <View>
+            <Text style={[TextTheme.normal]}>{t('Biometry.EnabledText1')}</Text>
+            <Text></Text>
+            <Text style={[TextTheme.normal]}>
+              {t('Biometry.EnabledText2')}
+              <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}> {t('Biometry.Warning')}</Text>
+            </Text>
+          </View>
+        ) : (
+          <View>
+            <Text style={[TextTheme.normal]}>{t('Biometry.NotEnabledText1')}</Text>
+            <Text></Text>
+            <Text style={[TextTheme.normal]}>{t('Biometry.NotEnabledText2')}</Text>
+          </View>
+        )}
         <View
           style={{
             flexDirection: 'row',
@@ -81,6 +98,7 @@ const UseBiometry: React.FC = () => {
               ios_backgroundColor={ColorPallet.grayscale.lightGrey}
               onValueChange={toggleSwitch}
               value={biometryEnabled}
+              disabled={!biometryAvailable}
             />
           </View>
         </View>

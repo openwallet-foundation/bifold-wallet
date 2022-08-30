@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState } from 'react'
 
-import { secretForPIN, storeWalletSecret, loadWalletSecret, convertToUseBiometrics } from '../services/keychain'
+import {
+  secretForPIN,
+  storeWalletSecret,
+  loadWalletSecret,
+  convertToUseBiometrics,
+  isBiometricsActive,
+} from '../services/keychain'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 
@@ -9,6 +15,7 @@ export interface AuthContext {
   convertToUseBiometrics: () => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
   setPIN: (pin: string) => Promise<void>
+  isBiometricsActive: () => Promise<boolean>
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
@@ -56,6 +63,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         convertToUseBiometrics,
         getWalletCredentials,
         setPIN,
+        isBiometricsActive,
       }}
     >
       {children}
