@@ -9,6 +9,7 @@ export interface ConfigurationContext {
   terms: React.FC
   homeContentView: React.FC
   OCABundle: Record<string, Overlay>
+  useBiometry: React.FC
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
