@@ -52,18 +52,19 @@ exports[`ErrorModal Component Renders correctly 1`] = `
       </Text>
     </View>
   </View>
-  <RCTScrollView>
+  <RCTScrollView
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+          "flexGrow": 1,
+        },
+      ]
+    }
+  >
     <View>
       <RCTSafeAreaView
         emulateUnlessSupported={true}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "flexGrow": 1,
-            },
-          ]
-        }
       >
         <View
           style={
@@ -177,14 +178,19 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                   ]
                 }
               >
-                
+                
               </Text>
             </View>
             <View
               collapsable={false}
               nativeID="animatedComponent"
               pointerEvents="auto"
-              style={Object {}}
+              style={
+                Object {
+                  "height": 0,
+                  "overflow": "hidden",
+                }
+              }
             >
               <View
                 collapsable={false}
@@ -360,14 +366,19 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                   ]
                 }
               >
-                
+                
               </Text>
             </View>
             <View
               collapsable={false}
               nativeID="animatedComponent"
               pointerEvents="auto"
-              style={Object {}}
+              style={
+                Object {
+                  "height": 0,
+                  "overflow": "hidden",
+                }
+              }
             >
               <View
                 collapsable={false}
