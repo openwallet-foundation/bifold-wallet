@@ -77,11 +77,11 @@ const translation = {
   },
   "PinCreate": {
     "UserAuthenticationPIN": "User authentication PIN",
-    "PINTooShort": "PIN too short",
+    "PINTooShort": "PIN is too short",
     "InvalidPIN": "Invalid PIN",
     "PINsDoNotMatch": "PINs do not match",
     "PleaseUseOnlyNumbersInYourPIN": "Please use only numbers in your PIN",
-    "YourPINMustBe6DigitsInLength": "Your PIN must be six digits in length",
+    "YourPINMustBe6DigitsInLength": "Your PIN needs to be 6 digits long.",
     "EnteredPINsDoNotMatch": "The entered PINs do not match. Please try again.",
     "YouNeedToCreateA6DigitPIN": "You need to create a 6 digit PIN",
     "PleaseReenterYourPIN": "Please re-enter your PIN",
@@ -103,8 +103,10 @@ const translation = {
   },
   "Biometry": {
     "Toggle": "Toggle Biometrics",
-    "Text1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
-    "Text2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
+    "EnabledText1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
+    "EnabledText2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
+    "NotEnabledText1": "Biometrics is not currently setup on this device and therefore cannot be enabled.",
+    "NotEnabledText2": "If you wish to enable this feature turn biometrics on in the device settings and then return to this screen.",
     "Warning": "Ensure only you have access to your wallet.",
     "UseToUnlock": "Use biometrics to unlock wallet?"
   },

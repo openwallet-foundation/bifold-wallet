@@ -25,7 +25,7 @@ interface DeleteProps {
 
 const Dropdown: React.FC<DeleteProps> = ({ title, content }) => {
   const { TextTheme, ColorPallet } = useTheme()
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
 
   return (
     <>
@@ -34,7 +34,7 @@ const Dropdown: React.FC<DeleteProps> = ({ title, content }) => {
         style={[
           {
             padding: 15,
-            backgroundColor: ColorPallet.brand.secondaryBackground,
+            backgroundColor: ColorPallet.brand.modalSecondaryBackground,
             borderRadius: 5,
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -45,7 +45,9 @@ const Dropdown: React.FC<DeleteProps> = ({ title, content }) => {
         <Icon name={isCollapsed ? 'expand-more' : 'expand-less'} size={24} color={TextTheme.normal.color} />
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed} enablePointerEvents={true}>
-        <View style={[{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPallet.brand.secondaryBackground }]}>
+        <View
+          style={[{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPallet.brand.modalSecondaryBackground }]}
+        >
           <UnorderedList UnorderedListItems={content} />
         </View>
       </Collapsible>
@@ -60,7 +62,7 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
     },
     main: {
       paddingHorizontal: 25,
@@ -74,8 +76,8 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
   return (
     <Modal visible={visible} animationType="slide">
       <FauxNavigationBar title={t('CredentialDetails.RemoveFromWallet')} />
-      <ScrollView>
-        <SafeAreaView style={[styles.container]}>
+      <ScrollView style={[styles.container]}>
+        <SafeAreaView>
           <View style={[styles.main]}>
             <View style={[{ marginBottom: 25 }]}>
               <Text style={[TextTheme.title]}>{t('CredentialDetails.RemoveTitle')}</Text>
@@ -105,7 +107,7 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
                   accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
                   testID={testIdWithKey('ConfirmRemoveButton')}
                   onPress={() => onSubmit && onSubmit()}
-                  buttonType={ButtonType.Primary}
+                  buttonType={ButtonType.Critical}
                 />
               </View>
               <View style={[{ marginTop: 5 }]}>
