@@ -7,6 +7,8 @@ import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 interface PopupModalProps {
   notificationType: InfoBoxType
   title: string
+  description?: string
+  message?: string
   bodyContent?: Element
   onCallToActionPressed?: GenericFn
   onCallToActionLabel: string
@@ -15,6 +17,8 @@ interface PopupModalProps {
 const PopupModal: React.FC<PopupModalProps> = ({
   title,
   bodyContent,
+  description,
+  message,
   onCallToActionPressed,
   notificationType,
   onCallToActionLabel,
@@ -35,6 +39,8 @@ const PopupModal: React.FC<PopupModalProps> = ({
         <InfoBox
           notificationType={notificationType}
           title={title}
+          description={description}
+          message={message}
           bodyContent={bodyContent}
           onCallToActionLabel={onCallToActionLabel}
           onCallToActionPressed={onCallToActionPressed}

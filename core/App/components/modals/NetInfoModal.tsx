@@ -6,6 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import InfoBox, { InfoBoxType } from '../../components/misc/InfoBox'
 import { GenericFn } from '../../types/fn'
 
+import PopupModal from './PopupModal'
+
 interface NetInfoModalProps {
   onSubmit?: GenericFn
   visible: boolean
@@ -14,27 +16,20 @@ interface NetInfoModalProps {
 const NetInfoModal: React.FC<NetInfoModalProps> = ({ visible, onSubmit = () => null }) => {
   const { t } = useTranslation()
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 5,
-    },
-  })
-
   return (
-    <Modal visible={visible} transparent={true}>
-      <SafeAreaView style={styles.container}>
-        <InfoBox
-          notificationType={InfoBoxType.Error}
-          title={t('NetInfo.NoInternetConnectionTitle')}
-          description={t('NetInfo.NoInternetConnectionMessage')}
-          onCallToActionLabel={t('Global.Okay')}
-          onCallToActionPressed={() => onSubmit()}
-        />
-      </SafeAreaView>
-    </Modal>
+    <>
+      {visible && (
+        <SafeAreaView>
+          <PopupModal
+            notificationType={InfoBoxType.Error}
+            title={t('NetInfo.NoInternetConnectionTitle')}
+            description={t('NetInfo.NoInternetConnectionMessage')}
+            onCallToActionLabel={t('Global.Okay')}
+            onCallToActionPressed={() => onSubmit()}
+          ></PopupModal>
+        </SafeAreaView>
+      )}
+    </>
   )
 }
 
