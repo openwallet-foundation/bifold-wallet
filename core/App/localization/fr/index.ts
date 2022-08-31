@@ -100,7 +100,10 @@ const translation = {
         "NotEnabledText1": "Biometrics is not currently setup on this device and therefore cannot be enabled.",
         "NotEnabledText2": "If you wish to enable this feature turn biometrics on in the device settings and then return to this screen.",
         "Warning": "Ensure only you have access to your wallet.",
-        "UseToUnlock": "Use biometrics to unlock wallet?"
+        "UseToUnlock": "Use biometrics to unlock wallet?",
+        "NoBiometricsErrorTitle": "No Biometrics",
+        "NoBiometricsErrorMessage": "You don't have biometrics enabled on this device.",
+        "NoBiometricsErrorDetails": "To fix this issue enable biometrics in your device Settings.",
     },
     "Contacts": {
         "EmptyList": "Votre portefeuille est vide. Vos contacts connectés seront ajoutés ici.",
