@@ -37,7 +37,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const hash = await hashPIN(pin, secret?.salt)
 
-    return hash === secret.walletKey
+    return hash === secret.key
   }
 
   const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
@@ -46,11 +46,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     const secret = await loadWalletSecret()
-    if (!secret || !secret.walletKey) {
+    if (!secret || !secret.key) {
       return
     }
 
-    delete secret.salt
     setWalletSecret(secret)
 
     return secret

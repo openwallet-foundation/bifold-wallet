@@ -83,7 +83,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     try {
       const credentials = await getWalletCredentials()
 
-      if (!credentials?.walletId || !credentials.walletKey) {
+      if (!credentials?.id || !credentials.key) {
         Alert.alert('Error', 'Cannot find wallet id/secret!')
         Toast.hide()
 
@@ -95,7 +95,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           label: 'Aries Bifold',
           mediatorConnectionsInvite: Config.MEDIATOR_URL,
           mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-          walletConfig: { id: credentials.walletId, key: credentials.walletKey },
+          walletConfig: { id: credentials.id, key: credentials.key },
           autoAcceptConnections: true,
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),

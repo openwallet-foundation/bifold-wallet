@@ -37,7 +37,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
 
     const loadWalletCredentials = async () => {
       const creds = await getWalletCredentials()
-      if (creds && creds.walletKey) {
+      if (creds && creds.key) {
         setAuthenticated(true)
       }
     }

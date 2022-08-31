@@ -1,7 +1,7 @@
 export interface WalletSecret {
-  walletId: string
-  walletKey: string
-  salt?: string
+  id: string
+  key?: string
+  salt: string
 }
 
 export enum AuthLevel {
