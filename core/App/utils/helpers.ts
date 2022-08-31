@@ -8,6 +8,7 @@ import {
   RetrievedCredentials,
 } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import { Buffer } from 'buffer'
 import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
@@ -77,6 +78,15 @@ export function firstValidCredential(
 export const isRedirection = (url: string): boolean => {
   const queryParams = parseUrl(url).query
   return !(queryParams['c_i'] || queryParams['d_m'])
+}
+
+export const getOobDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
+  const queryParams = parseUrl(url).query
+  const b64Message = queryParams['d_m'] ?? queryParams['c_i']
+  const rawmessage = Buffer.from(b64Message as string, 'base64').toString()
+  const message = JSON.parse(rawmessage)
+  await agent?.receiveMessage(message)
+  return message
 }
 
 export const processProofAttributes = (proof: ProofRecord, credentials?: RetrievedCredentials): Attribute[] => {
@@ -154,6 +164,22 @@ export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials):
  * @returns payload from following the redirection
  */
 export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+  const message = await res.json()
+  await agent?.receiveMessage(message)
+  return message
+}
+
+/**
+ *
+ * @param url a redirection URL to retrieve a payload for an invite
+ * @param agent an Agent instance
+ * @returns payload from following the redirection
+ */
+export const receiveMessageFromDeeplink = async (url: string, agent: Agent | undefined) => {
   const res = await fetch(url, {
     method: 'GET',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
