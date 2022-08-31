@@ -23,7 +23,6 @@ describe('ConnectionModal Component', () => {
     const backHomeBtn = tree.queryByTestId(testIdWithKey('BackToHome'))
 
     expect(tree).toMatchSnapshot()
-    expect(backHomeBtn).toBeNull()
   })
 
   test.skip('Updates after delay', async () => {
