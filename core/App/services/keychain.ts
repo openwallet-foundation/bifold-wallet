@@ -2,7 +2,7 @@ import { Platform } from 'react-native'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
-import { KEYCHAIN_SERVICE_ID, KeychainServices } from '../constants'
+import { walletId, KeychainServices } from '../constants'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 
@@ -40,7 +40,7 @@ export const secretForPIN = async (pin: string): Promise<WalletSecret> => {
   const mySalt = uuid.v4().toString()
   const myKey = await hashPIN(pin, mySalt)
   const secret: WalletSecret = {
-    id: KEYCHAIN_SERVICE_ID,
+    id: walletId,
     key: myKey,
     salt: mySalt,
   }

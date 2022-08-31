@@ -18,7 +18,7 @@ export enum KeychainServices {
   Key = 'secret.wallet.key',
 }
 
-export const KEYCHAIN_SERVICE_ID = 'walletid'
+export const walletId = 'walletId'
 
 export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric' } = {
   year: 'numeric',
