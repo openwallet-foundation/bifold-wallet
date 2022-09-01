@@ -33,11 +33,11 @@ export const AuthProvider: React.FC = ({ children }) => {
   const checkPIN = async (pin: string): Promise<boolean> => {
     const secret = await loadWalletSecret()
 
-    if (!secret || !secret.salt) {
+    if (!secret || !secret.salt || !secret.key) {
       return false
     }
 
-    const hash = await hashPIN(pin, secret?.salt)
+    const hash = await hashPIN(pin, secret.salt)
 
     return hash === secret.key
   }
