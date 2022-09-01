@@ -18,7 +18,7 @@ import { useDeepLinks } from '../hooks/deep-links'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { Credential as StoreCredentialState } from '../types/state'
-import { connectFromInvitation, isRedirection, receiveMessageFromUrlRedirect } from '../utils/helpers'
+import { connectFromInvitation, getOobDeepLink, isRedirection, receiveMessageFromUrlRedirect } from '../utils/helpers'
 
 const { width } = Dimensions.get('window')
 const offset = 25
@@ -101,21 +101,23 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   useEffect(() => {
     async function handleDeepLink(deepLink: string) {
       try {
-        if (isRedirection(deepLink)) {
-          const message = await receiveMessageFromUrlRedirect(deepLink, agent)
+        // Try connection based
+        const connectionRecord = await connectFromInvitation(deepLink, agent)
+        navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+          screen: Screens.Connection,
+          params: { connectionId: connectionRecord.id },
+        })
+      } catch {
+        try {
+          // Try connectionless here
+          const message = await getOobDeepLink(deepLink, agent)
           navigation.getParent()?.navigate(Stacks.ConnectionStack, {
             screen: Screens.Connection,
             params: { threadId: message['@id'] },
           })
-        } else {
-          const connectionRecord = await connectFromInvitation(deepLink, agent)
-          navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-            screen: Screens.Connection,
-            params: { connectionId: connectionRecord.id },
-          })
+        } catch (error) {
+          // TODO:(am add error handling here)
         }
-      } catch (error) {
-        // TODO:(am add error handling here)
       }
     }
     if (agent && deepLink) {

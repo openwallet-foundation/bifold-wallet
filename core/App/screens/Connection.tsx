@@ -149,22 +149,19 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         </View>
 
         {shouldShowDelayMessage && (
-          <>
-            <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
-              {t('Connection.TakingTooLong')}
-            </Text>
-
-            <View style={[styles.controlsContainer]}>
-              <Button
-                title={t('Loading.BackToHome')}
-                accessibilityLabel={t('Loading.BackToHome')}
-                testID={testIdWithKey('BackToHome')}
-                onPress={onDismissModalTouched}
-                buttonType={ButtonType.Secondary}
-              />
-            </View>
-          </>
+          <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+            {t('Connection.TakingTooLong')}
+          </Text>
         )}
+        <View style={[styles.controlsContainer]}>
+          <Button
+            title={t('Loading.BackToHome')}
+            accessibilityLabel={t('Loading.BackToHome')}
+            testID={testIdWithKey('BackToHome')}
+            onPress={onDismissModalTouched}
+            buttonType={ButtonType.Secondary}
+          />
+        </View>
       </SafeAreaView>
     </Modal>
   )
