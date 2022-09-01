@@ -1,15 +1,24 @@
 import { Platform } from 'react-native'
-import Keychain, { resetGenericPassword, getSupportedBiometryType } from 'react-native-keychain'
+import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
-import { KEYCHAIN_SERVICE_ID, KEYCHAIN_SERVICE_KEY } from '../constants'
+import { walletId, KeychainServices } from '../constants'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 
-const service = KEYCHAIN_SERVICE_KEY
-const pinUserNameKey = 'WalletFauxPINUserName'
+const keyFauxUserName = 'WalletFauxPINUserName'
+const saltFauxUserName = 'WalletFauxSaltUserName'
 
-export const optionsForKeychainAccess = (useBiometrics = false): Keychain.Options => {
+export interface WalletSalt {
+  id: string
+  salt: string
+}
+
+export interface WalletKey {
+  key: string
+}
+
+export const optionsForKeychainAccess = (service: KeychainServices, useBiometrics = false): Keychain.Options => {
   const opts: Keychain.Options = {
     accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
     service,
@@ -31,29 +40,57 @@ export const secretForPIN = async (pin: string): Promise<WalletSecret> => {
   const mySalt = uuid.v4().toString()
   const myKey = await hashPIN(pin, mySalt)
   const secret: WalletSecret = {
-    walletId: KEYCHAIN_SERVICE_ID,
-    walletKey: myKey,
+    id: walletId,
+    key: myKey,
     salt: mySalt,
   }
 
   return secret
 }
 
-export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = false): Promise<boolean> => {
-  const opts = optionsForKeychainAccess(useBiometrics)
+export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): Promise<boolean> => {
+  const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
   const secretAsString = JSON.stringify(secret)
-  const result = await Keychain.setGenericPassword(pinUserNameKey, secretAsString, opts)
+  const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
 
-  if (typeof result === 'boolean') {
-    return false
-  }
-
-  return true
+  return typeof result === 'boolean' ? false : true
 }
 
-export const loadWalletSecret = async (title?: string, description?: string): Promise<WalletSecret | undefined> => {
+export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
+  const opts = optionsForKeychainAccess(KeychainServices.Salt)
+  const secretAsString = JSON.stringify(secret)
+  const result = await Keychain.setGenericPassword(saltFauxUserName, secretAsString, opts)
+
+  return typeof result === 'boolean' ? false : true
+}
+
+export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = false): Promise<boolean> => {
+  let keyResult = false
+  if (secret.key) {
+    keyResult = await storeWalletKey({ key: secret.key }, useBiometrics)
+  }
+
+  const saltResult = await storeWalletSalt({ id: secret.id, salt: secret.salt })
+
+  return keyResult && saltResult
+}
+
+export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
+  const opts: Keychain.Options = {
+    service: KeychainServices.Salt,
+  }
+  const result = await Keychain.getGenericPassword(opts)
+
+  if (!result) {
+    return
+  }
+
+  return JSON.parse(result.password) as WalletSalt
+}
+
+export const loadWalletKey = async (title?: string, description?: string): Promise<WalletKey | undefined> => {
   let opts: Keychain.Options = {
-    service,
+    service: KeychainServices.Key,
   }
 
   if (title && description) {
@@ -72,7 +109,14 @@ export const loadWalletSecret = async (title?: string, description?: string): Pr
     return
   }
 
-  return JSON.parse(result.password) as WalletSecret
+  return JSON.parse(result.password) as WalletKey
+}
+
+export const loadWalletSecret = async (title?: string, description?: string): Promise<WalletSecret | undefined> => {
+  const salt = await loadWalletSalt()
+  const key = await loadWalletKey(title, description)
+
+  return { ...salt, ...key } as WalletSecret
 }
 
 export const convertToUseBiometrics = async (): Promise<boolean> => {
@@ -83,7 +127,6 @@ export const convertToUseBiometrics = async (): Promise<boolean> => {
     return false
   }
 
-  await resetGenericPassword({ service })
   await storeWalletSecret(secret, useBiometrics)
 
   return true
