@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
   secretForPIN,
@@ -22,6 +23,7 @@ export const AuthContext = createContext<AuthContext>(null as unknown as AuthCon
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
+  const { t } = useTranslation()
 
   const setPIN = async (pin: string): Promise<void> => {
     const secret = await secretForPIN(pin)
@@ -31,11 +33,11 @@ export const AuthProvider: React.FC = ({ children }) => {
   const checkPIN = async (pin: string): Promise<boolean> => {
     const secret = await loadWalletSecret()
 
-    if (!secret || !secret.salt) {
+    if (!secret || !secret.salt || !secret.key) {
       return false
     }
 
-    const hash = await hashPIN(pin, secret?.salt)
+    const hash = await hashPIN(pin, secret.salt)
 
     return hash === secret.key
   }
@@ -45,7 +47,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       return walletSecret
     }
 
-    const secret = await loadWalletSecret()
+    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
     if (!secret || !secret.key) {
       return
     }
