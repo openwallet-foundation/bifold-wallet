@@ -1,7 +1,7 @@
 import { Platform } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
-import DeviceInfo from 'react-native-device-info'
 
 import { walletId, KeychainServices } from '../constants'
 import { WalletSecret } from '../types/security'
@@ -21,7 +21,7 @@ export interface WalletKey {
 
 export const optionsForKeychainAccess = (service: KeychainServices, useBiometrics = false): Keychain.Options => {
   const opts: Keychain.Options = {
-    accessible: useBiometrics?Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY:Keychain.ACCESSIBLE.ALWAYS,
+    accessible: useBiometrics ? Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY : Keychain.ACCESSIBLE.ALWAYS,
     service,
   }
 
@@ -58,18 +58,14 @@ export const secretForPIN = async (pin: string): Promise<WalletSecret> => {
 export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
   const secretAsString = JSON.stringify(secret)
-  //console.log('Saving Wallet Key ...', JSON.stringify(opts))
   const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
-  //console.log('Saving Wallet Key ... Keychain resulted', JSON.stringify(result))
   return typeof result === 'boolean' ? false : true
 }
 
 export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Salt, false)
   const secretAsString = JSON.stringify(secret)
-  //console.log('Saving Wallet Salt ...', JSON.stringify(opts))
   const result = await Keychain.setGenericPassword(saltFauxUserName, secretAsString, opts)
-  //console.log('Saving Wallet Salt ... Keychain resulted', JSON.stringify(result))
   return typeof result === 'boolean' ? false : true
 }
 
@@ -88,9 +84,7 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
   const opts: Keychain.Options = {
     service: KeychainServices.Salt,
   }
-  //console.log('Loading Wallet Salt ...', JSON.stringify(opts))
   const result = await Keychain.getGenericPassword(opts)
-  //console.log('Loading Wallet Salt ... Keychain resulted', JSON.stringify(result))
   if (!result) {
     return
   }
@@ -112,9 +106,7 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
       },
     }
   }
-  //console.log('Loading Wallet Key ...')
   const result = await Keychain.getGenericPassword(opts)
-  //console.log('Loading Wallet Key ... Keychain resulted', JSON.stringify(result))
 
   if (!result) {
     return
