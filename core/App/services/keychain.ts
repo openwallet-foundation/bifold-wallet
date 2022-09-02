@@ -31,13 +31,7 @@ export const optionsForKeychainAccess = (service: KeychainServices, useBiometric
 
   if (Platform.OS === 'android') {
     opts.securityLevel = Keychain.SECURITY_LEVEL.ANY
-    opts.storage = Keychain.STORAGE_TYPE.AES //AES implies not protected by biometrics unlock
-    if (useBiometrics) {
-      if (!DeviceInfo.isEmulatorSync()) {
-        opts.securityLevel = Keychain.SECURITY_LEVEL.SECURE_HARDWARE
-      }
-      opts.storage = Keychain.STORAGE_TYPE.RSA // RSA implies protected by biometrics unlock
-    }
+    opts.storage = Keychain.STORAGE_TYPE.RSA
   }
 
   return opts
