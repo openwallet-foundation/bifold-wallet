@@ -1,6 +1,7 @@
 import { Platform } from 'react-native'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
+import DeviceInfo from 'react-native-device-info'
 
 import { walletId, KeychainServices } from '../constants'
 import { WalletSecret } from '../types/security'
@@ -20,7 +21,7 @@ export interface WalletKey {
 
 export const optionsForKeychainAccess = (service: KeychainServices, useBiometrics = false): Keychain.Options => {
   const opts: Keychain.Options = {
-    accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+    accessible: useBiometrics?Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY:Keychain.ACCESSIBLE.ALWAYS,
     service,
   }
 
@@ -30,7 +31,13 @@ export const optionsForKeychainAccess = (service: KeychainServices, useBiometric
 
   if (Platform.OS === 'android') {
     opts.securityLevel = Keychain.SECURITY_LEVEL.ANY
-    opts.storage = Keychain.STORAGE_TYPE.RSA
+    opts.storage = Keychain.STORAGE_TYPE.AES //AES implies not protected by biometrics unlock
+    if (useBiometrics) {
+      if (!DeviceInfo.isEmulatorSync()) {
+        opts.securityLevel = Keychain.SECURITY_LEVEL.SECURE_HARDWARE
+      }
+      opts.storage = Keychain.STORAGE_TYPE.RSA // RSA implies protected by biometrics unlock
+    }
   }
 
   return opts
@@ -51,23 +58,25 @@ export const secretForPIN = async (pin: string): Promise<WalletSecret> => {
 export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
   const secretAsString = JSON.stringify(secret)
+  //console.log('Saving Wallet Key ...', JSON.stringify(opts))
   const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
-
+  //console.log('Saving Wallet Key ... Keychain resulted', JSON.stringify(result))
   return typeof result === 'boolean' ? false : true
 }
 
 export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
-  const opts = optionsForKeychainAccess(KeychainServices.Salt)
+  const opts = optionsForKeychainAccess(KeychainServices.Salt, false)
   const secretAsString = JSON.stringify(secret)
+  //console.log('Saving Wallet Salt ...', JSON.stringify(opts))
   const result = await Keychain.setGenericPassword(saltFauxUserName, secretAsString, opts)
-
+  //console.log('Saving Wallet Salt ... Keychain resulted', JSON.stringify(result))
   return typeof result === 'boolean' ? false : true
 }
 
-export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = false): Promise<boolean> => {
+export const storeWalletSecret = async (secret: WalletSecret): Promise<boolean> => {
   let keyResult = false
   if (secret.key) {
-    keyResult = await storeWalletKey({ key: secret.key }, useBiometrics)
+    keyResult = await storeWalletKey({ key: secret.key }, true)
   }
 
   const saltResult = await storeWalletSalt({ id: secret.id, salt: secret.salt })
@@ -79,8 +88,9 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
   const opts: Keychain.Options = {
     service: KeychainServices.Salt,
   }
+  //console.log('Loading Wallet Salt ...', JSON.stringify(opts))
   const result = await Keychain.getGenericPassword(opts)
-
+  //console.log('Loading Wallet Salt ... Keychain resulted', JSON.stringify(result))
   if (!result) {
     return
   }
@@ -102,8 +112,9 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
       },
     }
   }
-
+  //console.log('Loading Wallet Key ...')
   const result = await Keychain.getGenericPassword(opts)
+  //console.log('Loading Wallet Key ... Keychain resulted', JSON.stringify(result))
 
   if (!result) {
     return
@@ -127,7 +138,7 @@ export const convertToUseBiometrics = async (): Promise<boolean> => {
     return false
   }
 
-  await storeWalletSecret(secret, useBiometrics)
+  await storeWalletSecret(secret)
 
   return true
 }
