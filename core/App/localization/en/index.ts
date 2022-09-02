@@ -112,6 +112,8 @@ const translation = {
     "NoBiometricsErrorTitle": "No Biometrics",
     "NoBiometricsErrorMessage": "You don't have biometrics enabled on this device.",
     "NoBiometricsErrorDetails": "To fix this issue enable biometrics in your device Settings.",
+    "UnlockPromptTitle": "Wallet Unlock",
+    "UnlockPromptDescription": "Use biometrics to unlock your wallet"
   },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",

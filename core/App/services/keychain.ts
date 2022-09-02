@@ -101,8 +101,8 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
     opts = {
       ...opts,
       authenticationPrompt: {
-        title: title,
-        description: description,
+        title,
+        description,
       },
     }
   }
