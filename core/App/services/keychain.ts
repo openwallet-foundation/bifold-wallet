@@ -69,10 +69,10 @@ export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
   return typeof result === 'boolean' ? false : true
 }
 
-export const storeWalletSecret = async (secret: WalletSecret): Promise<boolean> => {
+export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = false): Promise<boolean> => {
   let keyResult = false
   if (secret.key) {
-    keyResult = await storeWalletKey({ key: secret.key }, true)
+    keyResult = await storeWalletKey({ key: secret.key }, useBiometrics)
   }
 
   const saltResult = await storeWalletSalt({ id: secret.id, salt: secret.salt })
@@ -130,7 +130,7 @@ export const convertToUseBiometrics = async (): Promise<boolean> => {
     return false
   }
 
-  await storeWalletSecret(secret)
+  await storeWalletSecret(secret, useBiometrics)
 
   return true
 }
