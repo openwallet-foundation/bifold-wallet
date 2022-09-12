@@ -4,13 +4,24 @@ import React from 'react'
 import { AuthContext } from '../../App/contexts/auth'
 import PinEnter from '../../App/screens/PinEnter'
 
+jest.mock('react-native-device-info', () => {
+  return {
+    isEmulatorSync: () => {
+      return true
+    },
+  }
+})
+
 describe('displays a pin create screen', () => {
   test('pin create renders correctly', () => {
     const tree = render(
       <AuthContext.Provider
         value={{
-          getWalletSecret: jest.fn(),
-          getKeyForPIN: jest.fn(),
+          getWalletCredentials: jest.fn(),
+          checkPIN: jest.fn(),
+          convertToUseBiometrics: jest.fn(),
+          setPIN: jest.fn(),
+          isBiometricsActive: jest.fn(),
         }}
       >
         <PinEnter setAuthenticated={jest.fn()} />
