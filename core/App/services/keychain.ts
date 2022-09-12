@@ -1,4 +1,5 @@
 import { Platform } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
@@ -20,7 +21,7 @@ export interface WalletKey {
 
 export const optionsForKeychainAccess = (service: KeychainServices, useBiometrics = false): Keychain.Options => {
   const opts: Keychain.Options = {
-    accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+    accessible: useBiometrics ? Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY : Keychain.ACCESSIBLE.ALWAYS,
     service,
   }
 
@@ -52,15 +53,13 @@ export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): 
   const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
   const secretAsString = JSON.stringify(secret)
   const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
-
   return typeof result === 'boolean' ? false : true
 }
 
 export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
-  const opts = optionsForKeychainAccess(KeychainServices.Salt)
+  const opts = optionsForKeychainAccess(KeychainServices.Salt, false)
   const secretAsString = JSON.stringify(secret)
   const result = await Keychain.setGenericPassword(saltFauxUserName, secretAsString, opts)
-
   return typeof result === 'boolean' ? false : true
 }
 
@@ -80,7 +79,6 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
     service: KeychainServices.Salt,
   }
   const result = await Keychain.getGenericPassword(opts)
-
   if (!result) {
     return
   }
@@ -97,12 +95,11 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
     opts = {
       ...opts,
       authenticationPrompt: {
-        title: title,
-        description: description,
+        title,
+        description,
       },
     }
   }
-
   const result = await Keychain.getGenericPassword(opts)
 
   if (!result) {

@@ -35,6 +35,12 @@ exports[`displays loading screen renders correctly 1`] = `
             "default": "",
           }
         }
+        style={
+          Object {
+            "height": "33%",
+            "width": "33%",
+          }
+        }
         testID="com.ariesbifold:id/LoadingActivityIndicatorX"
       />
       <View

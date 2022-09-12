@@ -12,6 +12,14 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
+jest.mock('react-native-device-info', () => {
+  return {
+    isEmulatorSync: () => {
+      return true
+    },
+  }
+})
+
 describe('UseBiometry Screen', () => {
   test('Renders correctly when biometry available', () => {
     const tree = render(
