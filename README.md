@@ -33,6 +33,11 @@ Aries Bifold also utilizes the [Aries Toolbox](https://github.com/hyperledger/ar
 
 You can watch a recording of setting up and running the mobile wallet and receiving a credential using the ACA-Py demo. Watch the video [here](https://youtu.be/AomoHvw4lgc) (thanks [@xtrycatchx](https://github.com/xtrycatchx)).
 
+### Compatible Node Version
+
+- Node: `16.15.0`
+- Npm: `8.5.5`
+
 1. React Native Setup:
    - React Native installation instructions are documented [here](https://reactnative.dev/docs/environment-setup).
    - (iOS) Install [Cocoa Pods](https://cocoapods.org/)
