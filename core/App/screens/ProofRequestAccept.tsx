@@ -147,15 +147,16 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
           )}
 
         <View style={[styles.controlsContainer]}>
-          {proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId !== 'undefined' && (
-            <Button
-              title={t('Loading.BackToHome')}
-              accessibilityLabel={t('Loading.BackToHome')}
-              testID={testIdWithKey('BackToHome')}
-              onPress={onBackToHomeTouched}
-              buttonType={ButtonType.Secondary}
-            />
-          )}
+          {(proofDeliveryStatus !== ProofState.PresentationSent || typeof proof.connectionId !== 'undefined') &&
+            proofDeliveryStatus !== ProofState.Done && (
+              <Button
+                title={t('Loading.BackToHome')}
+                accessibilityLabel={t('Loading.BackToHome')}
+                testID={testIdWithKey('BackToHome')}
+                onPress={onBackToHomeTouched}
+                buttonType={ButtonType.Secondary}
+              />
+            )}
 
           {((proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId === 'undefined') ||
             proofDeliveryStatus === ProofState.Done) && (
