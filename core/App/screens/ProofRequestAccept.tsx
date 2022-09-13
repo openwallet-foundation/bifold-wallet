@@ -88,17 +88,9 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
             </Text>
           )}
 
-          {/* No-Connection, transaction completed */}
-          {proofDeliveryStatus === ProofState.PresentationSent && (
+          {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
             <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
               {t('ProofRequest.InformationSentSuccessfully')}
-            </Text>
-          )}
-
-          {/* Connection, transaction completed */}
-          {proofDeliveryStatus === ProofState.Done && (
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
-              {t('ProofRequest.ProofRequestCompleted')}
             </Text>
           )}
         </View>
