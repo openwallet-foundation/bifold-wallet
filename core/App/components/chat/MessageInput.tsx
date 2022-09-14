@@ -2,13 +2,11 @@ import React from 'react'
 import { Composer, InputToolbar, Send } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { ChatTheme } from '../../theme'
-
-export const renderInputToolbar = (props: any) => (
+export const renderInputToolbar = (props: any, theme: any) => (
   <InputToolbar
     {...props}
     containerStyle={{
-      ...ChatTheme.inputToolbar,
+      ...theme.inputToolbar,
       justifyContent: 'center',
       shadowOffset: {
         width: 0,
@@ -21,26 +19,26 @@ export const renderInputToolbar = (props: any) => (
   />
 )
 
-export const renderComposer = (props: any, placeholder: string) => (
+export const renderComposer = (props: any, theme: any, placeholder: string) => (
   <Composer
     {...props}
     textInputStyle={{
-      ...ChatTheme.inputText,
+      ...theme.inputText,
     }}
     placeholder={placeholder}
-    placeholderTextColor={ChatTheme.placeholderText}
+    placeholderTextColor={theme.placeholderText}
   />
 )
 
-export const renderSend = (props: any) => (
+export const renderSend = (props: any, theme: any) => (
   <Send
     {...props}
     alwaysShowSend={true}
     disabled={!props.text}
     containerStyle={{
-      ...ChatTheme.sendContainer,
+      ...theme.sendContainer,
     }}
   >
-    <Icon name="arrow-up-circle" size={38} color={props.text ? ChatTheme.sendEnabled : ChatTheme.sendDisabled} />
+    <Icon name="arrow-up-circle" size={38} color={props.text ? theme.sendEnabled : theme.sendDisabled} />
   </Send>
 )

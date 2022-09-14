@@ -14,6 +14,11 @@ module.exports = {
   },
   transformIgnorePatterns: ['/node_modules/(?!.*react-native.*)'],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$',
-  testPathIgnorePatterns: ['\\.snap$', '<rootDir>/node_modules/', '<rootDir>/__tests__/util/'],
+  testPathIgnorePatterns: [
+    '\\.snap$',
+    '<rootDir>/node_modules/',
+    '<rootDir>/__tests__/util/',
+    '<rootDir>/__tests__/contexts/',
+  ],
   cacheDirectory: '.jest/cache',
 }

@@ -4,6 +4,7 @@ import {
   AuthProvider,
   ConfigurationContext,
   ConfigurationProvider,
+  NetworkProvider,
   StoreProvider,
   ThemeProvider,
   theme,
@@ -18,6 +19,7 @@ import {
   Splash,
   Terms,
   HomeContentView,
+  UseBiometry,
 } from "aries-bifold";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
@@ -29,6 +31,8 @@ const defaultConfiguration: ConfigurationContext = {
   splash: Splash,
   terms: Terms,
   homeContentView: HomeContentView,
+  OCABundle: {},
+  useBiometry: UseBiometry,
 };
 
 initLanguages(translationResources);
@@ -49,16 +53,18 @@ const App = () => {
         <ThemeProvider value={theme}>
           <ConfigurationProvider value={defaultConfiguration}>
             <AuthProvider>
-              <StatusBar
-                barStyle="light-content"
-                hidden={false}
-                backgroundColor={theme.ColorPallet.brand.primary}
-                translucent={false}
-              />
-              <NetInfo />
-              <ErrorModal />
-              <RootStack setAgent={setAgent} />
-              <Toast topOffset={15} config={toastConfig} />
+              <NetworkProvider>
+                <StatusBar
+                  hidden={false}
+                  barStyle="light-content"
+                  backgroundColor={theme.ColorPallet.brand.primary}
+                  translucent={false}
+                />
+                <NetInfo />
+                <ErrorModal />
+                <RootStack setAgent={setAgent} />
+                <Toast topOffset={15} config={toastConfig} />
+              </NetworkProvider>
             </AuthProvider>
           </ConfigurationProvider>
         </ThemeProvider>

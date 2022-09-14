@@ -56,7 +56,11 @@ const translation = {
     "Title1032": "Unable to remove credential.",
     "Message1032": "There was a problem while removing the credential.",
     "Title1033": "Unable to fetch credential.",
-    "Message1033": "Credential could not be found."
+    "Message1033": "Credential could not be found.",
+    "Title1034": "Unable to fetch proof request.",
+    "Message1034": "Proof request could not be found.",
+    "Title1035": "Unable to fetch credential offer.",
+    "Message1035": "Credential offer could not be found.",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
@@ -73,11 +77,11 @@ const translation = {
   },
   "PinCreate": {
     "UserAuthenticationPIN": "User authentication PIN",
-    "PINTooShort": "PIN too short",
+    "PINTooShort": "PIN is too short",
     "InvalidPIN": "Invalid PIN",
     "PINsDoNotMatch": "PINs do not match",
     "PleaseUseOnlyNumbersInYourPIN": "Please use only numbers in your PIN",
-    "YourPINMustBe6DigitsInLength": "Your PIN must be six digits in length",
+    "YourPINMustBe6DigitsInLength": "Your PIN needs to be 6 digits long.",
     "EnteredPINsDoNotMatch": "The entered PINs do not match. Please try again.",
     "YouNeedToCreateA6DigitPIN": "You need to create a 6 digit PIN",
     "PleaseReenterYourPIN": "Please re-enter your PIN",
@@ -96,6 +100,20 @@ const translation = {
     "IncorrectPIN": "Incorrect PIN",
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet."
+  },
+  "Biometry": {
+    "Toggle": "Toggle Biometrics",
+    "EnabledText1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
+    "EnabledText2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
+    "NotEnabledText1": "Biometrics is not currently setup on this device and therefore cannot be enabled.",
+    "NotEnabledText2": "If you wish to enable this feature turn biometrics on in the device settings and then return to this screen.",
+    "Warning": "Ensure only you have access to your wallet.",
+    "UseToUnlock": "Use biometrics to unlock wallet?",
+    "NoBiometricsErrorTitle": "No Biometrics",
+    "NoBiometricsErrorMessage": "You don't have biometrics enabled on this device.",
+    "NoBiometricsErrorDetails": "To fix this issue enable biometrics in your device Settings.",
+    "UnlockPromptTitle": "Wallet Unlock",
+    "UnlockPromptDescription": "Use biometrics to unlock your wallet"
   },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
@@ -158,6 +176,20 @@ const translation = {
     "JustAMoment": "Just a moment while we make a secure connection...",
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
   },
+  "ConnectionAlert": {
+    "AddedContacts": "Added to Contacts",
+    "WhatAreContacts": "What are Contacts?",
+    "NotificationBodyUpper": "You can find ",
+    "NotificationBodyLower": " in your Contacts. Manage your Contacts in Settings",
+    "PopupIntro": "Adding organizations as a contact will allow you to:",
+    "PopupPoint1": "Get updates to credentials issued by this organization",
+    "PopupPoint2": "Get offered new credentials",
+    "PopupPoint3": "Fast-track proof requests",
+    "SettingsLink": "Settings",
+    "SettingsInstruction": "You can always remove contacts at anytime in ",
+    "PrivacyMessage": "Use of your credentials is never shared with your contacts.",
+    "PopupExit": "Got it"
+},
   "CredentialOffer": {
     "CredentialOffer": "Credential Offer",
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
@@ -187,7 +219,7 @@ const translation = {
     "DeclineThisProof?": "Decline this Proof Request?",
     "AcceptingProof": "Accepting Proof",
     "SuccessfullyAcceptedProof": "Successfully Accepted Proof",
-    "ProofNotFound": "Proof not Found",
+    "ProofRequestNotFound": "Proof request not Found",
     "RejectingProof": "Rejecting Proof",
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
@@ -255,6 +287,7 @@ const translation = {
     "Contacts": 'Contacts',
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
+    "Biometry": "Biometrics"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

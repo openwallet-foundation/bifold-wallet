@@ -1,9 +1,9 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofRecord, RequestedAttribute, RequestedPredicate, RetrievedCredentials } from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import flatten from 'lodash.flatten'
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -11,8 +11,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import ConnectionAlert from '../components/misc/ConnectionAlert'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
+import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -20,16 +22,10 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute, Predicate } from '../types/record'
-import {
-  connectionRecordFromId,
-  getConnectionName,
-  processProofAttributes,
-  processProofPredicates,
-  sortCredentialsForAutoSelect,
-} from '../utils/helpers'
+import { processProofAttributes, processProofPredicates, sortCredentialsForAutoSelect } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
-import ProofRequestAccepted from './ProofRequestAccepted'
+import ProofRequestAccept from './ProofRequestAccept'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 type Fields = Record<string, RequestedAttribute[] | RequestedPredicate[]>
@@ -44,20 +40,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
   const [, dispatch] = useStore()
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  // const timestamps: Record<string, Date> = [
-  //   ...useCredentialByState(CredentialState.CredentialReceived),
-  //   ...useCredentialByState(CredentialState.Done),
-  // ].reduce(
-  //   (timestamps, credential) => ({
-  //     ...timestamps,
-  //     [credential.credentialId || credential.id]: new Date(credential.createdAt),
-  //   }),
-  //   {}
-  // )
-  const [credentials, setCredentials] = useState<RetrievedCredentials>()
+  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const [predicates, setPredicates] = useState<Predicate[]>([])
   const proof = useProofById(proofId)
+  const proofConnectionLabel = proof?.connectionId
+    ? useConnectionById(proof.connectionId)?.theirLabel
+    : proof?.connectionId ?? ''
+  // This syntax is required for the jest mocks to work
+  // eslint-disable-next-line import/no-named-as-default-member
+  const [loading, setLoading] = React.useState<boolean>(true)
+  const { assertConnectedNetwork } = useNetwork()
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -88,18 +81,52 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     },
   })
 
-  if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
-  }
+  useEffect(() => {
+    if (!agent) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1034'),
+              t('Error.Message1034'),
+              t('ProofRequest.ProofRequestNotFound'),
+              1034
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
 
-  if (!proof) {
-    throw new Error('Unable to fetch proof from AFJ')
-  }
+  useEffect(() => {
+    if (!proof) {
+      dispatch({
+        type: DispatchAction.ERROR_ADDED,
+        payload: [
+          {
+            error: new BifoldError(
+              t('Error.Title1034'),
+              t('Error.Message1034'),
+              t('ProofRequest.ProofRequestNotFound'),
+              1034
+            ),
+          },
+        ],
+      })
+    }
+  }, [])
 
   useMemo(() => {
+    if (!(agent && proof)) {
+      return
+    }
+    setLoading(true)
     const retrieveCredentialsForProof = async (proof: ProofRecord) => {
       try {
-        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
+        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id, {
+          filterByNonRevocationRequirements: false,
+        })
         if (!credentials) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
@@ -114,29 +141,29 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     retrieveCredentialsForProof(proof)
-      .then((credentials) => {
-        if (!credentials) {
+      .then((retrievedCredentials) => {
+        if (!retrievedCredentials) {
           return
         }
 
         const fields: Fields = {
-          ...credentials?.requestedAttributes,
-          ...credentials?.requestedPredicates,
+          ...retrievedCredentials?.requestedAttributes,
+          ...retrievedCredentials?.requestedPredicates,
         }
 
         flatten(Object.values(fields))
           .filter((credential) => credential.revoked)
           .forEach((credential) => {
-            // console.log(`Marking revoked, ID = ${credential.credentialId}`)
             dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
           })
 
-        const attributes = processProofAttributes(proof, credentials?.requestedAttributes)
-        const predicates = processProofPredicates(proof, credentials?.requestedPredicates)
+        const attributes = processProofAttributes(proof, retrievedCredentials)
+        const predicates = processProofPredicates(proof, retrievedCredentials)
 
-        setCredentials(credentials)
+        setRetrievedCredentials(retrievedCredentials)
         setAttributes(attributes)
         setPredicates(predicates)
+        setLoading(false)
       })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1026'), t('Error.Message1026'), (err as Error).message, 1026)
@@ -149,24 +176,28 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const hasAvailableCredentials = (): boolean => {
     const fields: Fields = {
-      ...credentials?.requestedAttributes,
-      ...credentials?.requestedPredicates,
+      ...retrievedCredentials?.requestedAttributes,
+      ...retrievedCredentials?.requestedPredicates,
     }
 
     // TODO:(jl) Need to test with partial match? Maybe `.some` would work?
-    return typeof credentials !== 'undefined' && Object.values(fields).every((c) => c.length > 0)
+    return typeof retrievedCredentials !== 'undefined' && Object.values(fields).every((c) => c.length > 0)
   }
 
   const handleAcceptPress = async () => {
     try {
+      if (!(agent && proof && assertConnectedNetwork())) {
+        return
+      }
       setPendingModalVisible(true)
 
-      if (!credentials) {
+      if (!retrievedCredentials) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
 
-      const sortedCreds = sortCredentialsForAutoSelect(credentials)
-      const automaticRequestedCreds = credentials && agent.proofs.autoSelectCredentialsForProofRequest(sortedCreds)
+      const sortedCreds = sortCredentialsForAutoSelect(retrievedCredentials)
+      const automaticRequestedCreds =
+        retrievedCredentials && agent.proofs.autoSelectCredentialsForProofRequest(sortedCreds)
 
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
@@ -191,8 +222,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     })
   }
 
-  const connection = connectionRecordFromId(proof.connectionId)
-
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record
@@ -207,13 +236,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   size={ListItems.proofIcon.fontSize}
                 />
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
+                  <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
                   {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
                 </Text>
               </View>
             ) : (
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text style={[TextTheme.title]}>{getConnectionName(connection) || t('ContactDetails.AContact')}</Text>{' '}
+                <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
                 {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
             )}
@@ -228,7 +257,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
               backgroundColor: ColorPallet.brand.secondaryBackground,
             }}
           >
-            {!credentials ? <RecordLoading /> : null}
+            {loading ? <RecordLoading /> : null}
+            {proofConnectionLabel ? <ConnectionAlert connectionID={proofConnectionLabel} /> : null}
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Share')}
@@ -244,7 +274,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 title={t('Global.Decline')}
                 accessibilityLabel={t('Global.Decline')}
                 testID={testIdWithKey('Decline')}
-                buttonType={!credentials ? ButtonType.Primary : ButtonType.Secondary}
+                buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
                 onPress={handleDeclinePress}
               />
             </View>
@@ -287,7 +317,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       onPress={() =>
                         navigation.navigate(Screens.ProofRequestAttributeDetails, {
                           proofId,
-                          attributeName: field.name,
+                          attributeName: (field as Attribute).name,
                         })
                       }
                       style={styles.link}
@@ -302,7 +332,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           )
         }}
       />
-      <ProofRequestAccepted visible={pendingModalVisible} proofId={proofId} />
+      <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
     </SafeAreaView>
   )
 }

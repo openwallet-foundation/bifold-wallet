@@ -1,5 +1,5 @@
 import { CredentialMetadataKeys, CredentialPreviewAttributeOptions } from '@aries-framework/core'
-import { useAgent, useConnectionById, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,14 +8,17 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import ConnectionAlert from '../components/misc/ConnectionAlert'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
+import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
+import { getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -35,13 +38,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const credential = useCredentialById(credentialId)
-  const credentialConnectionLabel = credential?.connectionId
-    ? useConnectionById(credential.connectionId)?.theirLabel
-    : credential?.connectionId ?? ''
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const [credentialAttributes, setCredentialAttributes] = useState<CredentialPreviewAttributeOptions[]>([])
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const [loading, setLoading] = React.useState<boolean>(true)
+  const { assertConnectedNetwork } = useNetwork()
   const { ListItems, ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
@@ -65,10 +67,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         payload: [
           {
             error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
+              t('Error.Title1035'),
+              t('Error.Message1035'),
+              t('CredentialOffer.CredentialNotFound'),
+              1035
             ),
           },
         ],
@@ -83,10 +85,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         payload: [
           {
             error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
+              t('Error.Title1035'),
+              t('Error.Message1035'),
+              t('CredentialOffer.CredentialNotFound'),
+              1035
             ),
           },
         ],
@@ -111,7 +113,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const handleAcceptPress = async () => {
     try {
-      if (!(agent && credential)) {
+      if (!(agent && credential && assertConnectedNetwork())) {
         return
       }
       setAcceptModalVisible(true)
@@ -159,6 +161,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             }}
           >
             {loading ? <RecordLoading /> : null}
+            <ConnectionAlert connectionID={credentialConnectionLabel} />
             <View style={styles.footerButton}>
               <Button
                 title={t('Global.Accept')}

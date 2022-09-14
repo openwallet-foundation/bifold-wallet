@@ -1,97 +1,70 @@
 import React, { createContext, useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { generateKeyForPIN, getStoredWalletId, getWalletKey, setGenericPassword } from '../services/keychain.service'
+import {
+  secretForPIN,
+  storeWalletSecret,
+  loadWalletSecret,
+  convertToUseBiometrics,
+  isBiometricsActive,
+} from '../services/keychain'
 import { WalletSecret } from '../types/security'
+import { hashPIN } from '../utils/crypto'
 
 export interface AuthContext {
-  getWalletSecret: () => Promise<WalletSecret | undefined>
-  getWalletID: () => Promise<string | undefined>
-  getKeyForPIN: (pin: string, providedSalt?: string) => Promise<any>
-  setAppPIN: (pin: string) => Promise<void>
-  comparePIN: (newPin: string) => Promise<boolean>
+  checkPIN: (pin: string) => Promise<boolean>
+  convertToUseBiometrics: () => Promise<boolean>
+  getWalletCredentials: () => Promise<WalletSecret | undefined>
+  setPIN: (pin: string) => Promise<void>
+  isBiometricsActive: () => Promise<boolean>
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
+  const { t } = useTranslation()
 
-  const getWalletSecret = async (): Promise<WalletSecret | undefined> => {
-    try {
-      if (!walletSecret) {
-        const walletKey = await getWalletKey('Confirm your biometrics to open the wallet', '')
-        if (!walletKey) {
-          throw new Error(`[79]Cannot get wallet key`)
-        }
-
-        const walletID = await getStoredWalletId()
-        if (!walletID) {
-          throw new Error(`[119]:wallet id undefined`)
-        }
-
-        const secret: WalletSecret = {
-          walletId: walletID,
-          walletKey: walletKey,
-        }
-
-        setWalletSecret(secret)
-
-        return secret
-      } else {
-        return walletSecret
-      }
-    } catch (error) {
-      throw new Error(`${error}`)
-    }
+  const setPIN = async (pin: string): Promise<void> => {
+    const secret = await secretForPIN(pin)
+    await storeWalletSecret(secret)
   }
 
-  // Set PIN and create wallet secret from PIN
-  const setAppPIN = async (pin: string): Promise<void> => {
-    try {
-      const walletSecretObject = await setGenericPassword(pin)
-      setWalletSecret(walletSecretObject)
-    } catch (e) {
-      throw new Error(`${e}`)
-    }
-  }
+  const checkPIN = async (pin: string): Promise<boolean> => {
+    const secret = await loadWalletSecret()
 
-  const getWalletID = async (): Promise<string | undefined> => {
-    try {
-      const walletID = await getStoredWalletId()
-      if (!walletID) {
-        return undefined
-      }
-
-      return walletID
-    } catch (e) {
-      throw new Error(`${e}`)
-    }
-  }
-
-  const getKeyForPIN = (pin: string, providedSalt?: string): Promise<any> => {
-    return generateKeyForPIN(pin, providedSalt)
-  }
-
-  const comparePIN = async (newPin: string): Promise<boolean> => {
-    const keyforPin = await getKeyForPIN(newPin)
-    const walletSecret = await getWalletSecret()
-    const walletKey = walletSecret?.walletKey
-
-    if (keyforPin === walletKey) {
-      return true
-    } else {
+    if (!secret || !secret.salt || !secret.key) {
       return false
     }
+
+    const hash = await hashPIN(pin, secret.salt)
+
+    return hash === secret.key
+  }
+
+  const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
+    if (walletSecret) {
+      return walletSecret
+    }
+
+    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
+    if (!secret || !secret.key) {
+      return
+    }
+
+    setWalletSecret(secret)
+
+    return secret
   }
 
   return (
     <AuthContext.Provider
       value={{
-        getWalletSecret,
-        getWalletID: getWalletID,
-        getKeyForPIN: getKeyForPIN,
-        setAppPIN,
-        comparePIN: comparePIN,
+        checkPIN,
+        convertToUseBiometrics,
+        getWalletCredentials,
+        setPIN,
+        isBiometricsActive,
       }}
     >
       {children}

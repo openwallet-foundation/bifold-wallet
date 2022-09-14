@@ -93,6 +93,20 @@ const translation = {
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille."
     },
+    "Biometry": {
+        "Toggle": "Toggle Biometrics",
+        "EnabledText1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
+        "EnabledText2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
+        "NotEnabledText1": "Biometrics is not currently setup on this device and therefore cannot be enabled.",
+        "NotEnabledText2": "If you wish to enable this feature turn biometrics on in the device settings and then return to this screen.",
+        "Warning": "Ensure only you have access to your wallet.",
+        "UseToUnlock": "Use biometrics to unlock wallet?",
+        "NoBiometricsErrorTitle": "No Biometrics",
+        "NoBiometricsErrorMessage": "You don't have biometrics enabled on this device.",
+        "NoBiometricsErrorDetails": "To fix this issue enable biometrics in your device Settings.",
+        "UnlockPromptTitle": "Wallet Unlock",
+        "UnlockPromptDescription": "Use biometrics to unlock your wallet"
+    },
     "Contacts": {
         "EmptyList": "Votre portefeuille est vide. Vos contacts connectés seront ajoutés ici.",
     },
@@ -154,6 +168,20 @@ const translation = {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre."
     },
+    "ConnectionAlert": {
+        "AddedContacts": "Added to Contacts",
+        "WhatAreContacts": "What are Contacts?",
+        "NotificationBodyUpper": "You can find ",
+        "NotificationBodyLower": " in your Contacts. Manage your Contacts in Settings",
+        "PopupIntro": "Adding organizations as a contact will allow you to:",
+        "PopupPoint1": "Get updates to credentials issued by this organization",
+        "PopupPoint2": "Get offered new credentials",
+        "PopupPoint3": "Fast-track proof requests",
+        "SettingsLink": "Settings",
+        "SettingsInstruction": "You can always remove contacts at anytime in ",
+        "PrivacyMessage": "Use of your credentials is never shared with your contacts.",
+        "PopupExit": "Got it"
+    },
     "CredentialOffer": {
         "CredentialOffer": "Offre de justificatif",
         "ThisIsTakingLongerThanExpected": "Cela prend plus de temps que prévu. Revenez plus tard pour votre nouveau justificatif.",
@@ -184,7 +212,6 @@ const translation = {
         "RejectThisProof?": "Rejeter cette preuve?",
         "AcceptingProof": "Acceptation de la preuve",
         "SuccessfullyAcceptedProof": "Preuve acceptée avec succès",
-        "ProofNotFound": "Preuve non trouvée",
         "RejectingProof": "Rejet de la preuve",
         "ProofAccepted": "Preuve acceptée",
         "ProofRejected": "Preuve rejetée",

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Dimensions } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
@@ -22,7 +21,8 @@ export enum InfoBoxType {
 interface BifoldErrorProps {
   notificationType: InfoBoxType
   title: string
-  description: string
+  description?: string
+  bodyContent?: Element
   message?: string
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
@@ -32,6 +32,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   notificationType,
   title,
   description,
+  bodyContent,
   message,
   onCallToActionPressed,
   onCallToActionLabel,
@@ -177,9 +178,12 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
         </Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-          {showDetails ? message : description}
-        </Text>
+        {!showDetails ? bodyContent : null}
+        {(description || (message && showDetails)) && (
+          <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+            {showDetails ? message : description}
+          </Text>
+        )}
         {message && !showDetails && (
           <TouchableOpacity
             accessibilityLabel={t('Global.ShowDetails')}

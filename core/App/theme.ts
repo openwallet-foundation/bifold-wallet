@@ -49,6 +49,8 @@ interface BrandColors {
   secondary: string
   secondaryDisabled: string
   highlight: string
+  modalPrimaryBackground: string
+  modalSecondaryBackground: string
   primaryBackground: string
   secondaryBackground: string
   link: string
@@ -116,6 +118,8 @@ const BrandColors: BrandColors = {
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
+  modalPrimaryBackground: '#000000',
+  modalSecondaryBackground: '#313132',
   link: '#FFFFFF',
 }
 
@@ -255,6 +259,11 @@ export const Inputs: Inputs = StyleSheet.create({
 })
 
 export const Buttons = StyleSheet.create({
+  critical: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: '#42803E',
+  },
   primary: {
     padding: 16,
     borderRadius: 4,
@@ -368,15 +377,6 @@ export const ListItems = StyleSheet.create({
   },
   proofError: {
     color: ColorPallet.semantic.error,
-  },
-  proofListItem: {
-    paddingHorizontal: 25,
-    paddingTop: 16,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-    borderTopColor: ColorPallet.brand.secondaryBackground,
-    borderBottomColor: ColorPallet.brand.secondaryBackground,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
   },
   avatarText: {
     ...TextTheme.headingTwo,

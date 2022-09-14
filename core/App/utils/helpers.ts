@@ -1,12 +1,14 @@
 import {
+  Agent,
   ConnectionRecord,
-  CredentialExchangeRecord as CredentialRecord,
+  CredentialExchangeRecord,
   ProofRecord,
   RequestedAttribute,
   RequestedPredicate,
   RetrievedCredentials,
 } from '@aries-framework/core'
-import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
+import { useConnectionById } from '@aries-framework/react-hooks'
+import { Buffer } from 'buffer'
 import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
@@ -27,23 +29,9 @@ export function hashToRGBA(i: number) {
 }
 
 // DEPRECATED
-export function credentialRecordFromId(credentialId?: string): CredentialRecord | void {
-  if (credentialId) {
-    return useCredentialById(credentialId)
-  }
-}
-
-// DEPRECATED
 export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
   if (connectionId) {
     return useConnectionById(connectionId)
-  }
-}
-
-// DEPRECATED
-export function proofRecordFromId(proofId?: string): ProofRecord | void {
-  if (proofId) {
-    return useProofById(proofId)
   }
 }
 
@@ -53,6 +41,15 @@ export function getConnectionName(connection: ConnectionRecord | void): string |
     return
   }
   return connection?.alias || connection?.theirLabel
+}
+
+export function getCredentialConnectionLabel(credential?: CredentialExchangeRecord) {
+  if (!credential) {
+    return ''
+  }
+  return credential?.connectionId
+    ? useConnectionById(credential.connectionId)?.theirLabel
+    : credential?.connectionId ?? ''
 }
 
 export function firstValidCredential(
@@ -83,15 +80,27 @@ export const isRedirection = (url: string): boolean => {
   return !(queryParams['c_i'] || queryParams['d_m'])
 }
 
-export const processProofAttributes = (
-  proof: ProofRecord,
-  attributes: Record<string, RequestedAttribute[]> = {}
-): Attribute[] => {
+export const getOobDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
+  const queryParams = parseUrl(url).query
+  const b64Message = queryParams['d_m'] ?? queryParams['c_i']
+  const rawmessage = Buffer.from(b64Message as string, 'base64').toString()
+  const message = JSON.parse(rawmessage)
+  await agent?.receiveMessage(message)
+  return message
+}
+
+export const processProofAttributes = (proof: ProofRecord, credentials?: RetrievedCredentials): Attribute[] => {
   const processedAttributes = [] as Attribute[]
+
+  if (!credentials) {
+    return processedAttributes
+  }
+
+  const { requestedAttributes: retrievedCredentialAttributes } = credentials
   const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
 
   requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
-    const firstCredential = firstValidCredential(attributes[attributeName] || [])
+    const firstCredential = firstValidCredential(retrievedCredentialAttributes[attributeName] || [])
     const credentialAttributes = names?.length ? names : [name || attributeName]
     credentialAttributes.forEach((attribute) => {
       processedAttributes.push({
@@ -105,15 +114,18 @@ export const processProofAttributes = (
   return processedAttributes
 }
 
-export const processProofPredicates = (
-  proof: ProofRecord,
-  predicates: Record<string, RequestedPredicate[]> = {}
-): Predicate[] => {
+export const processProofPredicates = (proof: ProofRecord, credentials?: RetrievedCredentials): Predicate[] => {
   const processedPredicates = [] as Predicate[]
+
+  if (!credentials) {
+    return processedPredicates
+  }
+
+  const { requestedPredicates: retrievedCredentialPredicates } = credentials
   const { requestedPredicates: requestedProofPredicates } = proof.requestMessage?.indyProofRequest || {}
 
   requestedProofPredicates?.forEach(({ name, predicateType, predicateValue }, predicateName) => {
-    const firstCredential = firstValidCredential(predicates[predicateName] || [])
+    const firstCredential = firstValidCredential(retrievedCredentialPredicates[predicateName] || [])
     const predicate = name || predicateName
     processedPredicates.push({
       name: predicate,
@@ -143,4 +155,56 @@ export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials):
   requestedPredicates && requestedPredicates.sort(sortFn)
 
   return credentials
+}
+
+/**
+ *
+ * @param url a redirection URL to retrieve a payload for an invite
+ * @param agent an Agent instance
+ * @returns payload from following the redirection
+ */
+export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+  const message = await res.json()
+  await agent?.receiveMessage(message)
+  return message
+}
+
+/**
+ *
+ * @param url a redirection URL to retrieve a payload for an invite
+ * @param agent an Agent instance
+ * @returns payload from following the redirection
+ */
+export const receiveMessageFromDeeplink = async (url: string, agent: Agent | undefined) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+  const message = await res.json()
+  await agent?.receiveMessage(message)
+  return message
+}
+
+/**
+ *
+ * @param uri a URI containing a base64 encoded connection invite in the query parameter
+ * @param agent an Agent instance
+ * @returns a connection record from parsing and receiving the invitation
+ */
+export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
+  const invitation = await agent?.oob.parseInvitation(uri)
+  if (!invitation) {
+    throw new Error('Could not parse invitation from URL')
+  }
+
+  const record = await agent?.oob.receiveInvitation(invitation)
+  const connectionRecord = record?.connectionRecord
+  if (!connectionRecord?.id) {
+    throw new Error('Connection does not have an ID')
+  }
+  return connectionRecord
 }
