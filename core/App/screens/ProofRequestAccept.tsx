@@ -97,7 +97,9 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
 
         <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
           {proofDeliveryStatus === ProofState.RequestReceived && <SendingProof />}
-          {proofDeliveryStatus === ProofState.PresentationSent && <SentProof />}
+          {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+            <SentProof />
+          )}
         </View>
 
         <View style={[styles.controlsContainer]}>
