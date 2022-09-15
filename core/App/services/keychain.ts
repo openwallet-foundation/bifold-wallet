@@ -31,7 +31,11 @@ export const optionsForKeychainAccess = (service: KeychainServices, useBiometric
 
   if (Platform.OS === 'android') {
     opts.securityLevel = Keychain.SECURITY_LEVEL.ANY
-    opts.storage = Keychain.STORAGE_TYPE.RSA
+    if (!useBiometrics) {
+      opts.storage = Keychain.STORAGE_TYPE.AES
+    } else {
+      opts.storage = Keychain.STORAGE_TYPE.RSA
+    }
   }
 
   return opts
@@ -52,6 +56,7 @@ export const secretForPIN = async (pin: string): Promise<WalletSecret> => {
 export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
   const secretAsString = JSON.stringify(secret)
+  await Keychain.resetGenericPassword(opts)
   const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
   return typeof result === 'boolean' ? false : true
 }
