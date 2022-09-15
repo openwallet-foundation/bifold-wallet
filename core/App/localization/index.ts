@@ -7,6 +7,7 @@ import { defaultLanguage } from '../constants'
 
 import en from './en'
 import fr from './fr'
+import ptBr from './pt-br'
 
 export type Translation = typeof en
 
@@ -21,11 +22,15 @@ export const translationResources: TranslationResources = {
   fr: {
     translation: fr,
   },
+  'pt-BR': {
+    translation: ptBr,
+  },
 }
 
 export enum Locales {
   en = 'en',
   fr = 'fr',
+  ptBr = 'pt-BR',
 }
 
 const currentLanguage = i18n.language
