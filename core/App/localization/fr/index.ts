@@ -31,7 +31,8 @@ const translation = {
     },
     "Language": {
         "English": "Anglais",
-        "French": "Français"
+        "French": "Français",
+        "Portuguese": "Portugais",
     },
     "Error": {
         "Unknown": "Erreur inconnue",
