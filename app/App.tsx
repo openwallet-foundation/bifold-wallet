@@ -32,7 +32,7 @@ const defaultConfiguration: ConfigurationContext = {
   splash: Splash,
   terms: Terms,
   homeContentView: HomeContentView,
-  OCABundle: { oca: {}, branding: {}},
+  OCABundle: { oca: undefined, branding: {}},
   useBiometry: UseBiometry,
   record: Record,
 };
