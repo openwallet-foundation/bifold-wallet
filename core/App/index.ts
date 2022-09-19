@@ -11,6 +11,7 @@ import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import InfoTextBox from './components/texts/InfoTextBox'
+import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
 import { AuthProvider } from './contexts/auth'
@@ -45,6 +46,7 @@ export type { Preferences as PreferencesState } from './types/state'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
+export type { WalletSecret } from './types/security'
 
 export {
   indyLedgers,
@@ -57,6 +59,7 @@ export {
   CheckBoxRow,
   ErrorModal,
   InfoTextBox,
+  ToastType,
   toastConfig,
   RootStack,
   NetInfo,
