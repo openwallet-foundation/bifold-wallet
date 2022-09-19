@@ -5,7 +5,7 @@ export default {
   terms: () => null,
   splash: () => null,
   homeContentView: () => null,
-  OCABundle: { branding: {}, oca: {} },
+  OCABundle: { branding: {}, oca: undefined },
   useBiometry: () => null,
   record: Record,
 }
