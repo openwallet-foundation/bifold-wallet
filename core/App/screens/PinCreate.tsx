@@ -13,12 +13,13 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { GenericFn } from '../types/fn'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
-  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+  setAuthenticated: GenericFn
 }
 
 interface ModalState {
@@ -52,7 +53,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     try {
       await setPIN(pin)
       // This will trigger initAgent
-      setAuthenticated(true)
+      setAuthenticated()
 
       dispatch({
         type: DispatchAction.DID_CREATE_PIN,

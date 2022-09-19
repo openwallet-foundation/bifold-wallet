@@ -11,15 +11,18 @@ const initialState: State = {
     didCreatePIN: false,
     didConsiderBiometry: false,
   },
-  credential: {
-    revoked: new Set(),
-    revokedMessageDismissed: new Set(),
+  authentication: {
+    didAuthenticate: false,
   },
   privacy: {
     didShowCameraDisclosure: false,
   },
   preferences: {
     useBiometry: false,
+  },
+  credential: {
+    revoked: new Set(),
+    revokedMessageDismissed: new Set(),
   },
   error: null,
   loading: false,
