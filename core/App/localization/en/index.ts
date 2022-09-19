@@ -32,6 +32,7 @@ const translation = {
   "Language": {
     "English": "English",
     "French": "French",
+    "Portuguese": "Portuguese",
   },
   "Error": {
     "Unknown": "Unknown Error",
@@ -109,9 +110,6 @@ const translation = {
     "NotEnabledText2": "If you wish to enable this feature turn biometrics on in the device settings and then return to this screen.",
     "Warning": "Ensure only you have access to your wallet.",
     "UseToUnlock": "Use biometrics to unlock wallet?",
-    "NoBiometricsErrorTitle": "No Biometrics",
-    "NoBiometricsErrorMessage": "You don't have biometrics enabled on this device.",
-    "NoBiometricsErrorDetails": "To fix this issue enable biometrics in your device Settings.",
     "UnlockPromptTitle": "Wallet Unlock",
     "UnlockPromptDescription": "Use biometrics to unlock your wallet"
   },

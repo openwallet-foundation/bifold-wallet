@@ -14,8 +14,6 @@ import { Screens, TabStacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-const connectionTimerDelay = 5000 // in ms
-
 export interface ProofRequestAcceptProps {
   visible: boolean
   proofId: string
@@ -23,10 +21,7 @@ export interface ProofRequestAcceptProps {
 
 const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofId }) => {
   const { t } = useTranslation()
-  const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
-  const [, setTimerDidFire] = useState<boolean>(false)
-  const [timer, setTimer] = useState<NodeJS.Timeout>()
   const proof = useProofById(proofId)
   const navigation = useNavigation()
   const { ColorPallet, TextTheme } = useTheme()
@@ -68,36 +63,15 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
-  const onDoneTouched = () => {
-    navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
-  }
-
   useEffect(() => {
     if (proof.state === proofDeliveryStatus) {
       return
     }
 
-    if (
-      proof.state === ProofState.Done ||
-      (proof.state === ProofState.PresentationSent && typeof proof.connectionId === 'undefined')
-    ) {
-      timer && clearTimeout(timer)
+    if (proof.state === ProofState.Done || proof.state === ProofState.PresentationSent) {
       setProofDeliveryStatus(proof.state)
     }
   }, [proof])
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShouldShowDelayMessage(true)
-      setTimerDidFire(true)
-    }, connectionTimerDelay)
-
-    setTimer(timer)
-
-    return () => {
-      timer && clearTimeout(timer)
-    }
-  }, [visible])
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
@@ -114,59 +88,28 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
             </Text>
           )}
 
-          {/* No-Connection, transaction completed */}
-          {proofDeliveryStatus === ProofState.PresentationSent && (
+          {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
             <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
               {t('ProofRequest.InformationSentSuccessfully')}
-            </Text>
-          )}
-
-          {/* Connection, transaction completed */}
-          {proofDeliveryStatus === ProofState.Done && (
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
-              {t('ProofRequest.ProofRequestCompleted')}
             </Text>
           )}
         </View>
 
         <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-          {(proofDeliveryStatus === ProofState.RequestReceived ||
-            (proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId !== 'undefined')) && (
-            <SendingProof />
+          {proofDeliveryStatus === ProofState.RequestReceived && <SendingProof />}
+          {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+            <SentProof />
           )}
-          {((proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId === 'undefined') ||
-            proofDeliveryStatus === ProofState.Done) && <SentProof />}
         </View>
 
-        {shouldShowDelayMessage &&
-          proofDeliveryStatus === ProofState.PresentationSent &&
-          typeof proof.connectionId !== 'undefined' && (
-            <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
-              {t('Connection.TakingTooLong')}
-            </Text>
-          )}
-
         <View style={[styles.controlsContainer]}>
-          {proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId !== 'undefined' && (
-            <Button
-              title={t('Loading.BackToHome')}
-              accessibilityLabel={t('Loading.BackToHome')}
-              testID={testIdWithKey('BackToHome')}
-              onPress={onBackToHomeTouched}
-              buttonType={ButtonType.Secondary}
-            />
-          )}
-
-          {((proofDeliveryStatus === ProofState.PresentationSent && typeof proof.connectionId === 'undefined') ||
-            proofDeliveryStatus === ProofState.Done) && (
-            <Button
-              title={t('Global.Done')}
-              accessibilityLabel={t('Global.Done')}
-              testID={testIdWithKey('Done')}
-              onPress={onDoneTouched}
-              buttonType={ButtonType.Primary}
-            />
-          )}
+          <Button
+            title={t('Loading.BackToHome')}
+            accessibilityLabel={t('Loading.BackToHome')}
+            testID={testIdWithKey('BackToHome')}
+            onPress={onBackToHomeTouched}
+            buttonType={ButtonType.Secondary}
+          />
         </View>
       </SafeAreaView>
     </Modal>
