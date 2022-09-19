@@ -9,11 +9,12 @@ import AlertModal from '../components/modals/AlertModal'
 import { useAuth } from '../contexts/auth'
 import { StoreContext } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { GenericFn } from '../types/fn'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
-  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+  setAuthenticated: GenericFn
 }
 
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
@@ -38,7 +39,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
     const loadWalletCredentials = async () => {
       const creds = await getWalletCredentials()
       if (creds && creds.key) {
-        setAuthenticated(true)
+        setAuthenticated()
       }
     }
 
@@ -52,12 +53,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
       const result = await checkPIN(pin)
       if (!result) {
         setModalVisible(true)
-
         return
       }
-
-      setAuthenticated(true)
-
+      setAuthenticated()
       return
     } catch (error: unknown) {
       // TODO:(jl) process error

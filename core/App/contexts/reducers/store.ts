@@ -43,6 +43,10 @@ enum PreferencesDispatchAction {
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
 }
 
+enum AuthenticationDispatchAction {
+  DID_AUTHENTICATE = 'authentication/didAuthenticate',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
@@ -50,6 +54,7 @@ export type DispatchAction =
   | LoadingDispatchAction
   | PrivacyDispatchAction
   | PreferencesDispatchAction
+  | AuthenticationDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -58,6 +63,7 @@ export const DispatchAction = {
   ...LoadingDispatchAction,
   ...PrivacyDispatchAction,
   ...PreferencesDispatchAction,
+  ...AuthenticationDispatchAction,
 }
 
 export interface ReducerAction {
@@ -153,6 +159,13 @@ const reducer = (state: State, action: ReducerAction): State => {
         onboarding,
       }
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case AuthenticationDispatchAction.DID_AUTHENTICATE: {
+      const newState = {
+        ...state,
+        ...{ authentication: { didAuthenticate: true } },
+      }
       return newState
     }
     // FIXME: Once hooks are updated this should no longer be necessary
