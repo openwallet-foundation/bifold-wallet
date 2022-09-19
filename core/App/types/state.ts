@@ -23,11 +23,16 @@ export interface Privacy {
   didShowCameraDisclosure: boolean
 }
 
+export interface Authentication {
+  didAuthenticate: boolean
+}
+
 export interface State {
   onboarding: Onboarding
-  credential: Credential
+  authentication: Authentication
   privacy: Privacy
   preferences: Preferences
+  credential: Credential
   error: BifoldError | null
   loading: boolean
 }
