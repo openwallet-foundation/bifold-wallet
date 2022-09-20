@@ -47,6 +47,7 @@ export enum TabStacks {
 }
 
 export type RootStackParams = {
+  [Screens.Splash]: undefined
   [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
@@ -61,11 +62,10 @@ export type TabStackParams = {
 }
 
 export type AuthenticateStackParams = {
-  [Screens.Splash]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Terms]: undefined
-  [Screens.CreatePin]: { setAuthenticated: (auth: boolean) => void } | undefined
-  [Screens.EnterPin]: { setAuthenticated: (auth: boolean) => void } | undefined
+  [Screens.CreatePin]: { setAuthenticated: () => void } | undefined
+  [Screens.EnterPin]: { setAuthenticated: () => void } | undefined
   [Screens.UseBiometry]: undefined
 }
 

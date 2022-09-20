@@ -1,3 +1,5 @@
+import { IndyPoolConfig } from '@aries-framework/core'
+
 import BCovrinTest from './bcovrin-test/pool-config'
 import CandyDev from './candy-dev/pool-config'
 import IndicioDemoNet from './indicio-demo-net/pool-config'
@@ -16,4 +18,4 @@ export default [
   CandyDev,
   BCovrinTest,
   SovrinBuilderNet,
-]
+] as IndyPoolConfig[]
