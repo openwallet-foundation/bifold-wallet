@@ -665,12 +665,12 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: d8d346844eca5d9120c17d441a2f38596e8ed2b9
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: 43737235ae6a21de4f45297f4f73b6420fc2ecb2
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
   indy-sdk-react-native: 52c3fdd11b673d11cdae5c28fa79a184084c6688
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
-  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
+  RCT-Folly: e2636706cc3fded205cf0d380428ec0ea7455f80
   RCTRequired: 3cc065b52aa18db729268b9bd78a2feffb4d0f91
   RCTTypeSafety: 3c4fc37d5dea452d2ef17324db5504ec2f05083a
   React: 4a00720816c52a213424442954acb7e4b724804a
