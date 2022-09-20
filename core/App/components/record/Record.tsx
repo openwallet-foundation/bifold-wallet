@@ -16,7 +16,7 @@ export interface RecordProps {
   fields?: Array<Field>
   hideFieldValues?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
-  oca?: JSON | undefined
+  oca?: {}
 }
 
 const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldValues = false, field = null }) => {
