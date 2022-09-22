@@ -126,9 +126,5 @@
       "module",
       "typescript"
     ]
-  },
-  "dependencies": {
-    "react-native-vision-camera": "^2.14.1",
-    "vision-camera-code-scanner": "^0.2.0"
   }
 }
