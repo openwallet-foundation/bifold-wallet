@@ -15,7 +15,7 @@ import { testIdWithKey } from '../utils/testable'
 const UseBiometry: React.FC = () => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const { convertToUseBiometrics, isBiometricsActive } = useAuth()
+  const { isBiometricsActive, commitPIN } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(false)
   const [continueEnabled, setContinueEnabled] = useState(true)
@@ -43,9 +43,7 @@ const UseBiometry: React.FC = () => {
   const continueTouched = async () => {
     setContinueEnabled(false)
 
-    if (biometryEnabled) {
-      await convertToUseBiometrics()
-    }
+    await commitPIN(biometryEnabled)
 
     dispatch({
       type: DispatchAction.USE_BIOMETRY,
