@@ -10,7 +10,7 @@ import {
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
@@ -124,7 +124,7 @@ const Splash: React.FC = () => {
   }, [store.authentication.didAuthenticate])
 
   useEffect(() => {
-    if (!store.authentication.didAuthenticate) {
+    if (!store.authentication.didAuthenticate || !store.onboarding.didConsiderBiometry) {
       return
     }
 
@@ -179,7 +179,7 @@ const Splash: React.FC = () => {
     }
 
     initAgent()
-  }, [store.authentication.didAuthenticate])
+  }, [store.authentication.didAuthenticate, store.onboarding.didConsiderBiometry])
 
   return (
     <SafeAreaView style={styles.container}>
