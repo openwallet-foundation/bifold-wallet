@@ -33,6 +33,10 @@ import {
   Preferences as PreferencesState,
 } from '../types/state'
 
+interface SplashProps {
+  setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
+}
+
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
 }
@@ -58,7 +62,8 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * iOS and Android launch screen to match the background color of
  * of this view.
  */
-const Splash: React.FC = () => {
+const Splash: React.FC<SplashProps> = (props: SplashProps) => {
+  const { setAgent } = props
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -164,6 +169,7 @@ const Splash: React.FC = () => {
         newAgent.registerOutboundTransport(httpTransport)
 
         await newAgent.initialize()
+        setAgent(newAgent)
         dispatch({ type: DispatchAction.LOADING_DISABLED })
         navigation.navigate(Stacks.TabStack as never)
       } catch (e: unknown) {
