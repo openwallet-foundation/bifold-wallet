@@ -20,7 +20,7 @@ interface ModalState {
 }
 
 const PinCreate: React.FC = () => {
-  const { setAppPIN, setAuthenticated } = useAuth()
+  const { setPIN, setAuthenticated } = useAuth()
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
   const [modalState, setModalState] = useState<ModalState>({
@@ -42,7 +42,7 @@ const PinCreate: React.FC = () => {
 
   const passcodeCreate = async (pin: string) => {
     try {
-      await setAppPIN(pin)
+      await setPIN(pin)
       // This will trigger initAgent
       setAuthenticated(true)
       // This will trigger navigation to internal pages

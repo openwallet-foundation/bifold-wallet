@@ -15,6 +15,9 @@ const initialState: State = {
     didCompleteTutorial: false,
     didCreatePIN: false,
   },
+  preferences: {
+    useBiometry: false,
+  },
   credential: {
     revoked: new Set(),
     revokedMessageDismissed: new Set(),

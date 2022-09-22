@@ -13,12 +13,11 @@ import { AuthLevel, WalletSecret } from '../types/security'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
-  checkPIN: (pin: string) => Promise<boolean>
 }
 
-const PinEnter: React.FC<PinEnterProps> = ({ checkPIN }) => {
+const PinEnter: React.FC<PinEnterProps> = () => {
   const { t } = useTranslation()
-  const { getWalletSecret, getKeyForPIN, setAuthenticated } = useAuth()
+  const { checkPIN, setAuthenticated } = useAuth()
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [pin, setPin] = useState('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -34,69 +33,19 @@ const PinEnter: React.FC<PinEnterProps> = ({ checkPIN }) => {
     },
   })
 
-  const onPinChanged = async (pin: string) => {
-    if (authLevel === AuthLevel.BiometricsAndPin) {
-      if (walletSecret) {
-        const generatedKey = await getKeyForPIN(pin)
-        if (generatedKey === walletSecret.walletKey) {
-          setAuthenticated(true)
-        } else {
-          setModalVisible(true)
-        }
-      } else {
-        // TODO: Error handling
-        Alert.alert('Error: Wallet secret undefined!.\nPlease reload the app')
-      }
-      await generateKeyForPIN(pin)
-    } else {
-      // Fallback to PIN, attempt to init wallet with generated key
-      const isError = await checkPIN(pin)
-
-      if (isError) {
+  const onPinInputCompleted = async (pin: string) => {
+    try {
+      const result = await checkPIN(pin)
+      if (!result) {
         setModalVisible(true)
         return
-      } else {
-        setAuthenticated(true)
       }
+      setAuthenticated(true)
+      return
+    } catch (error: unknown) {
+      // TODO:(jl) process error
     }
   }
-
-  const initWithBiometrics = async () => {
-    // TODO: get auth level from settings
-    // const authLevel = await getAuthLevel()
-    try {
-      const fetchedWalletSecret = await getWalletSecret()
-      if (fetchedWalletSecret) {
-        // eslint-disable-next-line no-empty
-        if (authLevel === AuthLevel.BiometricsAndPin) {
-          setWalletSecret(fetchedWalletSecret)
-        } else {
-          setAuthenticated(true)
-        }
-      } else {
-        Alert.alert('Error[63] fetching wllet secret')
-      }
-    } catch (error: any) {
-      const msg =
-        authLevel === AuthLevel.BiometricsAndPin
-          ? 'You have to enable biometrics to be able to load the wallet'
-          : 'Biometrics not provided, you may use PIN to load the wallet'
-      Alert.alert(msg)
-    }
-  }
-
-  // This will try to get keys and will trigger biometrics
-  useEffect(() => {
-    if (!isInitializingSecret) return
-    initWithBiometrics()
-  }, [isInitializingSecret])
-
-  // This will try to get keys and will trigger biometrics
-  useEffect(() => {
-    if (!isInitializingSecret) {
-      setIsInitializingSecret(true)
-    }
-  }, [])
 
   return (
     <SafeAreaView style={[style.container]}>
@@ -125,7 +74,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ checkPIN }) => {
           accessibilityLabel={t('Global.Enter')}
           onPress={() => {
             Keyboard.dismiss()
-            onPinChanged(pin)
+            onPinInputCompleted(pin)
           }}
         />
       </View>

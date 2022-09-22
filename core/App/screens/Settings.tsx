@@ -13,7 +13,7 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { resetStorage } from '../services/keychain.service'
+import { resetWalletSecret } from '../services/keychain'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -49,7 +49,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   })
 
   const resetApp = async () => {
-    await resetStorage()
+    await resetWalletSecret()
     await agent?.wallet.delete()
     dispatch({
       type: DispatchAction.RESET_ONBOARDING,

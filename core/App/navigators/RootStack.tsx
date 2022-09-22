@@ -50,7 +50,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { authenticated, getKeyForPIN, getWalletID, getWalletSecret } = useAuth()
+  const { authenticated, getWalletCredentials } = useAuth()
 
   const [initAgentInProcess, setInitAgentInProcess] = useState(false)
 
@@ -67,6 +67,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   }
 
   const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
+    console.log("init agent")
     if (initAgentInProcess) {
       return
     }
@@ -79,9 +80,9 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     setInitAgentInProcess(true)
 
     try {
-      const walletSecret = predefinedSecret ?? (await getWalletSecret())
+      const credentials = await getWalletCredentials()
 
-      if (!walletSecret?.walletId || !walletSecret.walletKey) {
+      if (!credentials?.id || !credentials.key) {
         Alert.alert('Error', 'Cannot find wallet id/secret!')
         Toast.hide()
         return
@@ -92,7 +93,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           label: myLabel,
           mediatorConnectionsInvite: Config.MEDIATOR_URL,
           mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-          walletConfig: { id: walletSecret.walletId, key: walletSecret.walletKey },
+          walletConfig: { id: credentials.id, key: credentials.key },
           autoAcceptConnections: true,
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),
@@ -127,37 +128,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     setInitAgentInProcess(false)
   }
 
-  //This will test the user by attempting to initialize the wallet using a key derived from that pin
-  //If wallet init success == pin correct otherwise pin incorrect
-  //need to be enhanced
-  const checkPIN = async (pin: string): Promise<boolean> => {
-    const walletID = await getWalletID()
-    if (!walletID) {
-      return true
-    }
-    const generatedKey = await getKeyForPIN(pin)
-
-    if (!generatedKey) {
-      return true
-    }
-
-    const generatedSecret = {
-      walletId: walletID,
-      walletKey: generatedKey,
-    }
-
-    const error = await initAgent({
-      walletId: walletID,
-      walletKey: generatedKey,
-    })
-
-    if (!error) {
-      return false
-    } else {
-      //TODO: Handle error
-    }
-    return true
-  }
 
   useEffect(() => {
     const initialized = agent?.isInitialized
@@ -171,7 +141,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.EnterPin}>{(props) => <PinEnter {...props} checkPIN={checkPIN} />}</Stack.Screen>
+        <Stack.Screen name={Screens.EnterPin}>{(props) => <PinEnter {...props} />}</Stack.Screen>
       </Stack.Navigator>
     )
   }
@@ -243,6 +213,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       </Stack.Navigator>
     )
   }
+
+  console.log("Authenticated:", authenticated)
 
   if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
     return authenticated ? mainStack() : authStack()

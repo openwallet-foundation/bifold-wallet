@@ -15,9 +15,14 @@ export interface Credential {
   revokedMessageDismissed: Set<CredentialRecord['id']>
 }
 
+export interface Preferences {
+  useBiometry: boolean
+}
+
 export interface State {
   onboarding: Onboarding
   credential: Credential
+  preferences: Preferences
   error: BifoldError | null
   loading: boolean
 }

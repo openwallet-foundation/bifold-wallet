@@ -1,7 +1,8 @@
 import argon2 from 'react-native-argon2'
 
-export async function hashPIN(pin: string, salt: string) {
+export const hashPIN = async (pin: string, salt: string): Promise<string> => {
   const result = await argon2(pin, salt, {})
   const { rawHash } = result
+
   return rawHash
 }
