@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/core'
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AppState,
@@ -45,7 +45,11 @@ const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, childr
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError }) => {
   const navigation = useNavigation()
   const [cameraActive, setCameraActive] = useState(true)
-  const appState = useRef(AppState.currentState)
+  const [torchActive, setTorchActive] = useState(false)
+  const [hasPermission, setHasPermission] = useState('not-determined' as CameraPermissionStatus)
+
+  const devices = useCameraDevices()
+  const device = devices.back
 
   // Needed to refresh the camera when navigating away and returning
   useFocusEffect(
@@ -60,19 +64,13 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
     }, [setCameraActive])
   )
 
-  const [hasPermission, setHasPermission] = useState('not-determined' as CameraPermissionStatus)
-  const devices = useCameraDevices()
-  const device = devices.back
-
   const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
     checkInverted: true,
   })
 
-  const [torchActive, setTorchActive] = useState(false)
   const { width, height } = useWindowDimensions()
   const portraitMode = height > width
   const { t } = useTranslation()
-  const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -138,7 +136,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
 
   // this useEffect will request camera permissions when the Android app is focused. Example: user changes permissions in settings and returns to the app.
   useEffect(() => {
-    const subscription = AppState.addEventListener('focus', (nextAppState) => {
+    const subscription = AppState.addEventListener('focus', () => {
       requestCameraPermissions()
     })
 
@@ -169,7 +167,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
           <Camera
             style={StyleSheet.absoluteFill}
             device={device}
-            isActive={true}
+            isActive={cameraActive}
             torch={torchActive ? 'on' : 'off'}
             frameProcessor={frameProcessor}
             frameProcessorFps={5}
@@ -232,7 +230,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
             )}
           </View>
           <View style={styles.torchContainer}>
-            <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
+            {/* <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} /> */}
           </View>
         </CameraViewContainer>
       </View>
