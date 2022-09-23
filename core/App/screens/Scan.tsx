@@ -1,10 +1,9 @@
-import type { BarCodeReadEvent } from 'react-native-camera'
-
 import { Agent } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Barcode } from 'vision-camera-code-scanner'
 
 import { uiConfig } from '../../configs/uiConfig'
 import QRScanner from '../components/misc/QRScanner'
@@ -70,22 +69,35 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
     }
   }
 
-  const handleCodeScan = async (event: BarCodeReadEvent) => {
+  const handleCodeScan = async (barcode: Barcode) => {
     setQrCodeScanError(null)
     try {
-      const url = event.data
-      if (isRedirection(url)) {
-        await handleRedirection(url, agent)
-      } else {
-        await handleInvitation(url)
+      const uri = barcode.displayValue
+      if (uri) {
+        if (isRedirection(uri)) {
+          await handleRedirection(uri, agent)
+        } else {
+          await handleInvitation(uri)
+        }
       }
     } catch (e: unknown) {
-      const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
+      const error = new QrCodeScanError(t('Scan.InvalidQrCode'), barcode.displayValue)
       setQrCodeScanError(error)
     }
   }
 
-  return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
+  return (
+    <>
+      {(
+        <QRScanner
+          handleCodeScan={handleCodeScan}
+          error={qrCodeScanError}
+          enableCameraOnError={true}
+          setQrCodeScanError={setQrCodeScanError}
+        />
+      )}
+    </>
+  )
 }
 
 export default Scan

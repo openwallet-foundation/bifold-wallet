@@ -5,6 +5,7 @@ import { Agent } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 
 import indyLedgers from '../configs/ledgers/indy'
+import 'react-native-reanimated'
 
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
