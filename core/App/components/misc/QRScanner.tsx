@@ -1,7 +1,16 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/core'
-import React, { useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, useWindowDimensions, Vibration, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import {
+  AppState,
+  Linking,
+  useWindowDimensions,
+  Vibration,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native'
 import { Camera, useCameraDevices, CameraPermissionStatus } from 'react-native-vision-camera'
 import { Barcode, useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner'
 
@@ -36,6 +45,7 @@ const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, childr
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError }) => {
   const navigation = useNavigation()
   const [cameraActive, setCameraActive] = useState(true)
+  const appState = useRef(AppState.currentState)
 
   // Needed to refresh the camera when navigating away and returning
   useFocusEffect(
@@ -46,9 +56,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
         // Do something when the screen is unfocused
         // Useful for cleanup functions
         setCameraActive(false)
-      };
+      }
     }, [setCameraActive])
-  );
+  )
 
   const [hasPermission, setHasPermission] = useState('not-determined' as CameraPermissionStatus)
   const devices = useCameraDevices()
@@ -117,13 +127,25 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
     setCameraActive(true)
   }
 
+  const requestCameraPermissions = async () => {
+    const status = await Camera.requestCameraPermission()
+    setHasPermission(status)
+  }
+
   useEffect(() => {
-    // eslint-disable-next-line prettier/prettier
-    (async () => {
-      const status = await Camera.requestCameraPermission()
-      setHasPermission(status)
-    })()
+    requestCameraPermissions()
   }, [setHasPermission])
+
+  // this useEffect will request camera permissions when the Android app is focused. Example: user changes permissions in settings and returns to the app.
+  useEffect(() => {
+    const subscription = AppState.addEventListener('focus', (nextAppState) => {
+      requestCameraPermissions()
+    })
+
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   useEffect(() => {
     if (cameraActive && barcodes[0]?.displayValue) {
@@ -187,7 +209,14 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
                 >
                   {t('Scan.NoPermissions')}
                 </Text>
-                <TouchableOpacity style={styles.changeSettings} onPress={() => Linking.openSettings()}>
+
+                <TouchableOpacity
+                  style={styles.changeSettings}
+                  onPress={
+                    // FYI: iOS will restart the app upon permission change. Android uses a hook (above) to return to the camera screen with updated permissions.
+                    () => Linking.openSettings()
+                  }
+                >
                   <Text
                     style={[
                       TextTheme.caption,
