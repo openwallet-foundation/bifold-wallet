@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, useWindowDimensions, Vibration, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { Camera, useCameraDevices } from 'react-native-vision-camera'
+import { Camera, useCameraDevices, CameraPermissionStatus } from 'react-native-vision-camera'
 import { Barcode, useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner'
 
 import { useTheme } from '../../contexts/theme'
@@ -36,7 +36,7 @@ const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, childr
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError }) => {
   const navigation = useNavigation()
 
-  const [hasPermission, setHasPermission] = useState(false)
+  const [hasPermission, setHasPermission] = useState('not-determined' as CameraPermissionStatus)
   const devices = useCameraDevices()
   const device = devices.back
 
@@ -108,10 +108,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const status = await Camera.requestCameraPermission()
-      setHasPermission(status === 'authorized')
-      //Linking.openSettings();
+      setHasPermission(status)
     })()
-  }, [])
+  }, [setHasPermission])
 
   useEffect(() => {
     if (cameraActive && barcodes[0]?.displayValue) {
@@ -131,7 +130,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
   return (
     <>
       <View style={styles.container}>
-        {device != null && hasPermission && (
+        {device != null && hasPermission === 'authorized' && (
           <Camera
             style={StyleSheet.absoluteFill}
             device={device}
@@ -165,7 +164,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
             ) : (
               <></>
             )}
-            {!hasPermission ? (
+            {hasPermission === 'denied' || hasPermission === 'restricted' ? (
               <View style={styles.errorMessage}>
                 <Text style={[TextTheme.caption, { fontSize: 16, color: ColorPallet.grayscale.white }]}>
                   {t(['Scan.CameraUnavailable'])}
