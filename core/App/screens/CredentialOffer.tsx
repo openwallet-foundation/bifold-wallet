@@ -10,7 +10,7 @@ import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import CredentialCard from '../components/misc/CredentialCard'
-import Record from '../components/record/Record'
+import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -45,6 +45,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [loading, setLoading] = React.useState<boolean>(true)
   const { assertConnectedNetwork } = useNetwork()
   const { ListItems, ColorPallet } = useTheme()
+  const { OCABundle, record } = useConfiguration()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -135,57 +136,65 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     })
   }
 
+  const header = () => {
+    return (
+      <>
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+            <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+            {t('CredentialOffer.IsOfferingYouACredential')}
+          </Text>
+        </View>
+        {!loading && credential && (
+          <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+        )}
+      </>
+    )
+  }
+
+  const footer = () => {
+    return (
+      <View
+        style={{
+          paddingHorizontal: 25,
+          paddingVertical: 16,
+          paddingBottom: 26,
+          backgroundColor: ColorPallet.brand.secondaryBackground,
+        }}
+      >
+        {loading ? <RecordLoading /> : null}
+        <ConnectionAlert connectionID={credentialConnectionLabel} />
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Global.Accept')}
+            accessibilityLabel={t('Global.Accept')}
+            testID={testIdWithKey('AcceptCredentialOffer')}
+            buttonType={ButtonType.Primary}
+            onPress={handleAcceptPress}
+            disabled={!buttonsVisible}
+          />
+        </View>
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Global.Decline')}
+            accessibilityLabel={t('Global.Decline')}
+            testID={testIdWithKey('DeclineCredentialOffer')}
+            buttonType={ButtonType.Secondary}
+            onPress={handleDeclinePress}
+            disabled={!buttonsVisible}
+          />
+        </View>
+      </View>
+    )
+  }
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record
-        header={() => (
-          <>
-            <View style={styles.headerTextContainer}>
-              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                {t('CredentialOffer.IsOfferingYouACredential')}
-              </Text>
-            </View>
-            {!loading && credential && (
-              <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
-            )}
-          </>
-        )}
-        footer={() => (
-          <View
-            style={{
-              paddingHorizontal: 25,
-              paddingVertical: 16,
-              paddingBottom: 26,
-              backgroundColor: ColorPallet.brand.secondaryBackground,
-            }}
-          >
-            {loading ? <RecordLoading /> : null}
-            <ConnectionAlert connectionID={credentialConnectionLabel} />
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Accept')}
-                accessibilityLabel={t('Global.Accept')}
-                testID={testIdWithKey('AcceptCredentialOffer')}
-                buttonType={ButtonType.Primary}
-                onPress={handleAcceptPress}
-                disabled={!buttonsVisible}
-              />
-            </View>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Decline')}
-                accessibilityLabel={t('Global.Decline')}
-                testID={testIdWithKey('DeclineCredentialOffer')}
-                buttonType={ButtonType.Secondary}
-                onPress={handleDeclinePress}
-                disabled={!buttonsVisible}
-              />
-            </View>
-          </View>
-        )}
-        fields={credentialAttributes}
-      />
+      {record({
+        header: header,
+        footer: footer,
+        fields: credentialAttributes,
+        oca: OCABundle.oca,
+      })}
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
     </SafeAreaView>
   )

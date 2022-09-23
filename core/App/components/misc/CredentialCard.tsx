@@ -30,7 +30,7 @@ const { width } = Dimensions.get('window')
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
-  const { OCABundle: branding } = useConfiguration()
+  const { OCABundle } = useConfiguration()
 
   const credentialLabel = parsedCredDefName(credential)
   const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
@@ -44,7 +44,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const { revoked } = state.credential
 
   const schema = credentialSchema(credential) || ''
-  const overlay = branding[schema]
+  const overlay = OCABundle.branding[schema]
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
