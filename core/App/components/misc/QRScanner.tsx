@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+import { useFocusEffect, useNavigation } from '@react-navigation/core'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, useWindowDimensions, Vibration, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
@@ -35,6 +35,20 @@ const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, childr
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError }) => {
   const navigation = useNavigation()
+  const [cameraActive, setCameraActive] = useState(true)
+
+  // Needed to refresh the camera when navigating away and returning
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      setCameraActive(true)
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+        setCameraActive(false)
+      };
+    }, [setCameraActive])
+  );
 
   const [hasPermission, setHasPermission] = useState('not-determined' as CameraPermissionStatus)
   const devices = useCameraDevices()
@@ -44,7 +58,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
     checkInverted: true,
   })
 
-  const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
   const { width, height } = useWindowDimensions()
   const portraitMode = height > width
@@ -130,7 +143,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
   return (
     <>
       <View style={styles.container}>
-        {device != null && hasPermission === 'authorized' && (
+        {device != null && hasPermission === 'authorized' && cameraActive && (
           <Camera
             style={StyleSheet.absoluteFill}
             device={device}
