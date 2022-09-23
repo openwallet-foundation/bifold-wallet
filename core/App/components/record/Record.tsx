@@ -10,12 +10,13 @@ import RecordField from './RecordField'
 import RecordFooter from './RecordFooter'
 import RecordHeader from './RecordHeader'
 
-interface RecordProps {
+export interface RecordProps {
   header?: () => React.ReactElement | null
   footer?: () => React.ReactElement | null
   fields?: Array<Field>
   hideFieldValues?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
+  oca?: JSON | null
 }
 
 const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldValues = false, field = null }) => {

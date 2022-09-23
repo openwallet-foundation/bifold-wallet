@@ -11,6 +11,7 @@ import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
+import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
@@ -70,4 +71,5 @@ export {
   Terms,
   HomeContentView,
   UseBiometry,
+  Record,
 }
