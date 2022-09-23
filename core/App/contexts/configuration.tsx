@@ -9,7 +9,7 @@ export interface ConfigurationContext {
   splash: React.FC
   terms: React.FC
   homeContentView: React.FC
-  OCABundle: { branding: Record<string, Overlay>, oca: JSON | undefined }
+  OCABundle: { branding: Record<string, Overlay>; oca: JSON | undefined }
   useBiometry: React.FC
   record: React.FC<RecordProps>
 }
