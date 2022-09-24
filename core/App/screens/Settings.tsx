@@ -1,6 +1,6 @@
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -22,7 +22,7 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { setAuthenticated } = useAuth()
-  const [, dispatch] = useStore()
+  const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const { borderRadius, SettingsTheme, ColorPallet } = useTheme()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -46,6 +46,9 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       justifyContent: 'space-between',
       padding: 12,
     },
+    subHeader: {
+      paddingLeft: 12,
+    },
   })
 
   const resetApp = async () => {
@@ -61,6 +64,21 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>
+        <Text style={styles.groupHeader}>User Settings</Text>
+        <View style={styles.rowGroup}>
+          {/* <Text style={styles.subHeader}>Name</Text> */}
+          <TouchableOpacity
+            accessible={true}
+            accessibilityLabel={'Name'}
+            testID={testIdWithKey('Display Name')}
+            style={styles.row}
+            onPress={() => navigation.navigate(Screens.NameUpdate)}
+          >
+            <Text style={SettingsTheme.text}>{state.user.firstName + ' ' + state.user.lastName}</Text>
+            <Icon name={'edit'} size={20} color={SettingsTheme.iconColor} />
+          </TouchableOpacity>
+        </View>
+
         <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
         <View style={styles.rowGroup}>
           <TouchableOpacity

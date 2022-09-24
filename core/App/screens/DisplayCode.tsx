@@ -1,24 +1,25 @@
-import { ConnectionRecord, ConnectionState } from '@aries-framework/core'
+import { ConnectionInvitationMessage, ConnectionService, ConnectionState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 
 import { uiConfig } from '../../configs/uiConfig'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRContainer from '../components/misc/QRContainer'
-import { myLabel } from '../constants'
-import { Screens, Stacks, TabStacks } from '../types/navigators'
+import { useStore } from '../contexts/store'
+import { Screens, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const DisplayCode = ({ navigation }: any) => {
   const { agent } = useAgent()
+  const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const { width } = useWindowDimensions()
 
   const [connectionId, setConnectionId] = useState('')
-  const [connectionRecord, setConnectionRecord] = useState<ConnectionRecord>()
-  const [mediationEndpoint, setMediationEndpoint] = useState('')
+  const [invitation, setInvitation] = useState<ConnectionInvitationMessage>()
+  const [mediationEndpoint, setMediationEndpoint] = useState<string | undefined>()
   const [value, setValue] = useState('placeholder')
 
   const connection = useConnectionById(connectionId)
@@ -34,12 +35,12 @@ const DisplayCode = ({ navigation }: any) => {
   })
 
   const generateInvitation = async () => {
-    const invitation = await agent?.connections.createConnection({
+    const { invitation } = await agent?.oob.createLegacyInvitation({
       autoAcceptConnection: true,
-      myLabel: myLabel,
+      label: state.user.firstName + ' ' + state.user.lastName,
     })
     const mediationRecord = await agent?.mediationRecipient.findDefaultMediator()
-    setConnectionRecord(invitation?.connectionRecord)
+    setInvitation(invitation)
     if (invitation?.connectionRecord) {
       setConnectionId(invitation.connectionRecord.id)
     }
@@ -49,18 +50,18 @@ const DisplayCode = ({ navigation }: any) => {
   }
 
   useEffect(() => {
-    generateInvitation()
-  }, [])
-
-  useEffect(() => {
-    if (connectionRecord?.invitation && mediationEndpoint !== '') {
+    if (invitation && mediationEndpoint) {
       // TODO: use mediator id in connection record instead of default mediator
-      const url = connectionRecord.invitation.toUrl({
-        domain: mediationEndpoint.split('?')[0],
+      const url = invitation.toUrl({
+        domain: mediationEndpoint,
       })
       setValue(url)
     }
-  }, [connectionRecord, mediationEndpoint])
+  }, [invitation, mediationEndpoint])
+
+  useEffect(() => {
+    generateInvitation()
+  }, [])
 
   useEffect(() => {
     if (connection?.state === ConnectionState.Complete) {
