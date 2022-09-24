@@ -96,7 +96,7 @@ const NameUpdate: React.FC = () => {
         <TextInput label="First name" onChangeText={onChangeFirstName} value={firstName} placeholder="First name" />
         <TextInput label="Last name" onChangeText={onChangeLastName} value={lastName} placeholder="Last name" />
         <Button
-          title="Submit"
+          title={t('Global.Confirm')}
           buttonType={ButtonType.Primary}
           onPress={() => setDisplayName()}
           disabled={!buttonsActive}

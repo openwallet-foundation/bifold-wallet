@@ -12,7 +12,6 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { User as UserState } from '../types/state'
 import { testIdWithKey } from '../utils/testable'
 
 interface ModalState {

@@ -72,6 +72,7 @@ export type AuthenticateStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Privacy]: undefined
   [Screens.Terms]: undefined
+  [Screens.NameCreate]: undefined
   [Screens.CreatePin]: undefined
   [Screens.EnterPin]: undefined
 }
@@ -101,6 +102,7 @@ export type ConnectStackParams = {
 
 export type SettingStackParams = {
   [Screens.Settings]: undefined
+  [Screens.NameUpdate]: undefined
   [Screens.Language]: undefined
 }
 

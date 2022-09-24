@@ -46,9 +46,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
         // Do something when the screen is unfocused
         // Useful for cleanup functions
         setCameraActive(false)
-      };
+      }
     }, [setCameraActive])
-  );
+  )
 
   const [hasPermission, setHasPermission] = useState('not-determined' as CameraPermissionStatus)
   const devices = useCameraDevices()

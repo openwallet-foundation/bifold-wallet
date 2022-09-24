@@ -2,19 +2,16 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
-import AlertModal from '../components/modals/AlertModal'
-import Label from '../components/texts/Label'
 import { DispatchAction } from '../contexts/reducers/store'
 import { StoreContext } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
 
 const NameCreate: React.FC = () => {
   const { t } = useTranslation()
@@ -22,6 +19,7 @@ const NameCreate: React.FC = () => {
   const { ColorPallet } = useTheme()
   const [firstName, onChangeFirstName] = useState('')
   const [lastName, onChangeLastName] = useState('')
+  const [buttonsActive, setButtonsActive] = useState(false)
   const navigation = useNavigation<StackNavigationProp<[AuthenticateStackParams]>>()
 
   const styles = StyleSheet.create({
@@ -53,20 +51,26 @@ const NameCreate: React.FC = () => {
     } else return false
   }
 
+  useEffect(() => {
+    if (isValid(firstName) && isValid(lastName)) {
+      setButtonsActive(true)
+    }
+  })
+
   const setDisplayName = (name: string) => {
     try {
-      if (isValid(name) == true) {
-        dispatch({
-          type: DispatchAction.FIRST_NAME_UPDATED,
-          payload: [name],
-        })
-        dispatch({
-          type: DispatchAction.DID_CREATE_DISPLAY_NAME,
-        })
-        navigation.navigate(Screens.CreatePin)
-      } else {
-        // name error
-      }
+      dispatch({
+        type: DispatchAction.FIRST_NAME_UPDATED,
+        payload: [firstName],
+      })
+      dispatch({
+        type: DispatchAction.LAST_NAME_UPDATED,
+        payload: [lastName],
+      })
+      dispatch({
+        type: DispatchAction.DID_CREATE_DISPLAY_NAME,
+      })
+      navigation.navigate(Screens.CreatePin)
     } catch {
       // dispatch error
     }
@@ -90,9 +94,10 @@ const NameCreate: React.FC = () => {
         <TextInput label="Last name" onChangeText={onChangeLastName} value={lastName} placeholder="Last name" />
         <Text style={styles.text}>You can update this at any time in your settings</Text>
         <Button
-          title="Confirm"
+          title={t('Global.Confirm')}
           buttonType={ButtonType.Primary}
           onPress={() => setDisplayName(firstName + ' ' + lastName)}
+          disabled={!buttonsActive}
         />
       </View>
     </SafeAreaView>
