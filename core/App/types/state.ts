@@ -19,10 +19,16 @@ export interface Preferences {
   useBiometry: boolean
 }
 
+export interface AppVersion {
+  build: string
+  version: string
+}
+
 export interface State {
   onboarding: Onboarding
   credential: Credential
   preferences: Preferences
+  appVersion: AppVersion
   error: BifoldError | null
   loading: boolean
 }
