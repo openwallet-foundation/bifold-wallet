@@ -13,6 +13,7 @@ export enum LocalStorageKeys {
   RevokedCredentials = 'RevokedCredentials',
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
   User = 'UserState',
+  AppVersion = 'AppVersion',
 }
 
 export enum KeychainServices {

@@ -70,6 +70,10 @@ const Splash: React.FC = () => {
       } catch (e) {
         // console.log('get name error: ', e)
         // TODO: name fetch error handling
+      } try {
+        dispatch({ type: DispatchAction.SET_VERSION })
+      } catch (error) {
+        // TODO: version set error handling
       }
       try {
         // await AsyncStorage.removeItem(LocalStorageKeys.Onboarding)

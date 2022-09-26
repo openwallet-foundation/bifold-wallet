@@ -25,11 +25,17 @@ export interface User {
   lastName: string
 }
 
+export interface AppVersion {
+  build: string
+  version: string
+}
+
 export interface State {
   onboarding: Onboarding
   credential: Credential
   preferences: Preferences
   user: User
+  appVersion: AppVersion
   error: BifoldError | null
   loading: boolean
 }
