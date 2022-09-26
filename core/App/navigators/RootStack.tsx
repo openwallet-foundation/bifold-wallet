@@ -29,7 +29,6 @@ import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { WalletSecret } from '../types/security'
 
@@ -60,9 +59,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, privacy, splash } = useConfiguration()
   let name: string
-  if (state.onboarding.didCreateDisplayName) {
-    name = state.user.firstName + ' ' + state.user.lastName
-  } else name = myLabel
 
   const onTutorialCompleted = () => {
     dispatch({
@@ -72,7 +68,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   }
 
   const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
-    // console.log("init agent")
+    console.log("init agent")
     if (initAgentInProcess) {
       return
     }
@@ -92,6 +88,10 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         Toast.hide()
         return
       }
+
+      if (state.onboarding.didCreateDisplayName) {
+        name = state.user.firstName + ' ' + state.user.lastName
+      } else name = myLabel
 
       const newAgent = new Agent(
         {
@@ -218,8 +218,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       </Stack.Navigator>
     )
   }
-
-  // console.log("Authenticated:", authenticated)
 
   if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
     return authenticated ? mainStack() : authStack()

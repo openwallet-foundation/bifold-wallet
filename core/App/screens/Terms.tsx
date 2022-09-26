@@ -26,7 +26,7 @@ const Terms: React.FC = () => {
       type: DispatchAction.DID_AGREE_TO_TERMS,
     })
 
-    navigation.navigate(Screens.NameCreate)
+    navigation.navigate(Screens.Privacy)
   }
   const style = StyleSheet.create({
     scrollView: {

@@ -19,24 +19,24 @@ const onboardingComplete = (state: StoreOnboardingState): boolean => {
 const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
   if (
     state.didCompleteTutorial &&
-    state.didAgreeToPrivacy &&
     state.didAgreeToTerms &&
+    state.didAgreeToPrivacy &&
     state.didCreateDisplayName &&
     !state.didCreatePIN
   ) {
     return Screens.CreatePin
   }
 
-  if (state.didCompleteTutorial && state.didAgreeToPrivacy && state.didAgreeToTerms && !state.didCreateDisplayName) {
+  if (state.didCompleteTutorial && state.didAgreeToTerms && state.didAgreeToPrivacy && !state.didCreateDisplayName) {
     return Screens.NameCreate
   }
 
-  if (state.didCompleteTutorial && state.didAgreeToPrivacy && !state.didAgreeToTerms) {
-    return Screens.Terms
+  if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didAgreeToPrivacy) {
+    return Screens.Privacy
   }
 
-  if (state.didCompleteTutorial && !state.didAgreeToPrivacy) {
-    return Screens.Privacy
+  if (state.didCompleteTutorial && !state.didAgreeToTerms) {
+    return Screens.Terms
   }
 
   return Screens.Onboarding

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text, Image, View, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'

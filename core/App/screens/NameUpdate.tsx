@@ -84,19 +84,18 @@ const NameUpdate: React.FC = () => {
   return (
     <SafeAreaView>
       <View style={{ padding: 20 }}>
-        <Text style={styles.title}>Please enter your name.</Text>
+        <Text style={styles.title}>{t("DisplayName.Enter")}</Text>
         <View style={styles.row}>
           <Icon name={'alert-circle'} size={26} color={ColorPallet.notification.infoIcon} style={{ marginRight: 10 }} />
           <Text style={styles.warningText}>
-            You will be using this name with businesses and services to obtain and share sensitive data.
+            {t("DisplayName.Warning")}
           </Text>
         </View>
         <Text style={styles.text}>
-          We recommend using your full legal name, or a version of your name that banks and governments would recognize
-          as uniquely yours.
+          {t("DisplayName.RecommendedName")}
         </Text>
-        <TextInput label="First name" onChangeText={onChangeFirstName} value={firstName} placeholder="First name" />
-        <TextInput label="Last name" onChangeText={onChangeLastName} value={lastName} placeholder="Last name" />
+        <TextInput label={t("DisplayName.First")} onChangeText={onChangeFirstName} value={firstName} placeholder={t("DisplayName.First")} />
+        <TextInput label={t("DisplayName.Last")} onChangeText={onChangeLastName} value={lastName} placeholder={t("DisplayName.Last")} />
         <Button
           title={t('Global.Confirm')}
           buttonType={ButtonType.Primary}

@@ -89,7 +89,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
 
-    navigation.navigate(Screens.Privacy)
+    navigation.navigate(Screens.Terms)
   }
 
   useEffect(() => {

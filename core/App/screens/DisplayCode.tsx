@@ -1,4 +1,4 @@
-import { ConnectionInvitationMessage, ConnectionService, ConnectionState } from '@aries-framework/core'
+import { ConnectionInvitationMessage, ConnectionState } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
