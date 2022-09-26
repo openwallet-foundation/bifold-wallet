@@ -191,6 +191,7 @@ const reducer = (state: State, action: ReducerAction): State => {
     case VersionDispatchAction.GET_VERSION: {
       const storedAppVersion = AsyncStorage.getItem(LocalStorageKeys.AppVersion)
       if (!storedAppVersion) {
+        // TODO: add log 'Found version in app storage: '
         return {
           ...state,
           appVersion: storedAppVersion,
