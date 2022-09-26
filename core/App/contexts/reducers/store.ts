@@ -24,6 +24,11 @@ enum CredentialDispatchAction {
   CREDENTIAL_REVOKED_MESSAGE_DISMISSED = 'credentials/credentialRevokedMessageDismissed',
 }
 
+enum VersionDispatchAction {
+  GET_VERSION = 'appVersion/getVersion',
+  SET_VERSION = 'appVersion/setVersion',
+}
+
 enum LoadingDispatchAction {
   LOADING_ENABLED = 'loading/loadingEnabled',
   LOADING_DISABLED = 'loading/loadingDisabled',
@@ -33,12 +38,14 @@ export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
   | CredentialDispatchAction
+  | VersionDispatchAction
   | LoadingDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
   ...ErrorDispatchAction,
   ...CredentialDispatchAction,
+  ...VersionDispatchAction,
   ...LoadingDispatchAction,
 }
 
@@ -171,6 +178,27 @@ const reducer = (state: State, action: ReducerAction): State => {
       return {
         ...state,
         error: null,
+      }
+    }
+    case VersionDispatchAction.SET_VERSION: {
+      const currentAppVersion = state.appVersion
+      AsyncStorage.setItem(LocalStorageKeys.AppVersion, JSON.stringify(currentAppVersion.version))
+      return {
+        ...state,
+        appVersion: currentAppVersion,
+      }
+    }
+    case VersionDispatchAction.GET_VERSION: {
+      const storedAppVersion = AsyncStorage.getItem(LocalStorageKeys.AppVersion)
+      if (!storedAppVersion) {
+        return {
+          ...state,
+          appVersion: storedAppVersion,
+        }
+      }
+      return {
+        ...state,
+        appVersion: state.appVersion,
       }
     }
     case LoadingDispatchAction.LOADING_ENABLED: {

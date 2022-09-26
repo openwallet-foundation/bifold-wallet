@@ -52,6 +52,11 @@ const Splash: React.FC = () => {
   useMemo(() => {
     async function init() {
       try {
+        dispatch({ type: DispatchAction.SET_VERSION })
+      } catch (error) {
+        // TODO: version set error handling
+      }
+      try {
         // await AsyncStorage.removeItem(LocalStorageKeys.Onboarding)
         const data = await AsyncStorage.getItem(LocalStorageKeys.Onboarding)
         if (data) {
