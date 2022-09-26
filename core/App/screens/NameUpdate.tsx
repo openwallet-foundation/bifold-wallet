@@ -2,19 +2,16 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import TextInput from '../components/inputs/TextInput'
-import AlertModal from '../components/modals/AlertModal'
-import Label from '../components/texts/Label'
 import { DispatchAction } from '../contexts/reducers/store'
 import { StoreContext } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { SettingStackParams, Screens } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
 
 const NameUpdate: React.FC = () => {
   const { t } = useTranslation()
@@ -84,7 +81,7 @@ const NameUpdate: React.FC = () => {
   return (
     <SafeAreaView>
       <View style={{ padding: 20 }}>
-        <Text style={styles.title}>{t("DisplayName.Enter")}</Text>
+        <Text style={styles.title}>{t("DisplayName.NewName")}</Text>
         <View style={styles.row}>
           <Icon name={'alert-circle'} size={26} color={ColorPallet.notification.infoIcon} style={{ marginRight: 10 }} />
           <Text style={styles.warningText}>
