@@ -49,7 +49,7 @@ const translation = {
   },
   "DisplayName": {
     "First": "First name",
-    "Last": "LastName",
+    "Last": "Last Name",
     "Enter": "Please enter your name.",
     "Warning": "You will be using this name with businesses and services to obtain and share sensitive data.",
     "RecommendedName": "We recommend using your full legal name, or a version of your name that banks and governments would recognize as uniquely yours.",
