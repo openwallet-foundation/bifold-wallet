@@ -10,23 +10,33 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { Onboarding as StoreOnboardingState } from '../types/state'
+import { Onboarding as StoreOnboardingState, User as UserState } from '../types/state'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN
 }
 
 const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
-  if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didCreatePIN) {
+  if (
+    state.didCompleteTutorial &&
+    state.didAgreeToTerms &&
+    state.didAgreeToPrivacy &&
+    state.didCreateDisplayName &&
+    !state.didCreatePIN
+  ) {
     return Screens.CreatePin
   }
 
-  if (state.didCompleteTutorial && state.didAgreeToPrivacy && !state.didAgreeToTerms) {
-    return Screens.Terms
+  if (state.didCompleteTutorial && state.didAgreeToTerms && state.didAgreeToPrivacy && !state.didCreateDisplayName) {
+    return Screens.NameCreate
   }
 
-  if (state.didCompleteTutorial && !state.didAgreeToPrivacy) {
+  if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didAgreeToPrivacy) {
     return Screens.Privacy
+  }
+
+  if (state.didCompleteTutorial && !state.didAgreeToTerms) {
+    return Screens.Terms
   }
 
   return Screens.Onboarding
@@ -52,6 +62,15 @@ const Splash: React.FC = () => {
   useMemo(() => {
     async function init() {
       try {
+        const data = await AsyncStorage.getItem(LocalStorageKeys.User)
+        if (data) {
+          const userState = JSON.parse(data) as UserState
+          dispatch({ type: DispatchAction.USER_UPDATED, payload: [userState] })
+        }
+      } catch (e) {
+        // console.log('get name error: ', e)
+        // TODO: name fetch error handling
+      } try {
         dispatch({ type: DispatchAction.SET_VERSION })
       } catch (error) {
         // TODO: version set error handling

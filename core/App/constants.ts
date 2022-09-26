@@ -12,6 +12,7 @@ export enum LocalStorageKeys {
   // FIXME: Once hooks are updated this should no longer be necessary
   RevokedCredentials = 'RevokedCredentials',
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
+  User = 'UserState',
   AppVersion = 'AppVersion',
 }
 

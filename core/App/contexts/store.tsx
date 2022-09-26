@@ -14,11 +14,16 @@ const initialState: State = {
   onboarding: {
     didAgreeToTerms: false,
     didAgreeToPrivacy: false,
+    didCreateDisplayName: false,
     didCompleteTutorial: false,
     didCreatePIN: false,
   },
   preferences: {
     useBiometry: false,
+  },
+  user: {
+    firstName: '',
+    lastName: '',
   },
   credential: {
     revoked: new Set(),

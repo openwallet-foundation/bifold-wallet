@@ -1,13 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
-import { Onboarding as OnboardingState, Credential as CredentialState, State } from '../../types/state'
+import {
+  Onboarding as OnboardingState,
+  Credential as CredentialState,
+  State,
+  User as UserState,
+} from '../../types/state'
 
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_PRIVACY = 'onboarding/didAgreeToPrivacy',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
+  DID_CREATE_DISPLAY_NAME = 'onboarding/didCreateDisplayName',
   DID_CREATE_PIN = 'onboarding/didCreatePin',
   RESET_ONBOARDING = 'onboarding/resetOnboarding',
 }
@@ -34,12 +40,19 @@ enum LoadingDispatchAction {
   LOADING_DISABLED = 'loading/loadingDisabled',
 }
 
+enum UserDispatchAction {
+  FIRST_NAME_UPDATED = 'user/firstNameUpdated',
+  LAST_NAME_UPDATED = 'user/lastNameUpdated',
+  USER_UPDATED = 'user/userStateLoaded',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
   | CredentialDispatchAction
   | VersionDispatchAction
   | LoadingDispatchAction
+  | UserDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -47,6 +60,7 @@ export const DispatchAction = {
   ...CredentialDispatchAction,
   ...VersionDispatchAction,
   ...LoadingDispatchAction,
+  ...UserDispatchAction,
 }
 
 export interface ReducerAction {
@@ -111,6 +125,18 @@ const reducer = (state: State, action: ReducerAction): State => {
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       return newState
     }
+    case OnboardingDispatchAction.DID_CREATE_DISPLAY_NAME: {
+      const onboarding: OnboardingState = {
+        ...state.onboarding,
+        didCreateDisplayName: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
     case OnboardingDispatchAction.RESET_ONBOARDING: {
       const onboarding: OnboardingState = {
         ...state.onboarding,
@@ -124,6 +150,41 @@ const reducer = (state: State, action: ReducerAction): State => {
         onboarding,
       }
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case UserDispatchAction.USER_UPDATED: {
+      const user: UserState = (action?.payload || []).pop()
+      return {
+        ...state,
+        user,
+      }
+    }
+    case UserDispatchAction.FIRST_NAME_UPDATED: {
+      const user: UserState = {
+        ...state.user,
+        firstName: (action?.payload ?? ['']).pop(),
+      }
+      const newState = {
+        ...state,
+        user,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.User, JSON.stringify(user))
+
+      return newState
+    }
+    case UserDispatchAction.LAST_NAME_UPDATED: {
+      const user: UserState = {
+        ...state.user,
+        lastName: (action?.payload ?? ['']).pop(),
+      }
+      const newState = {
+        ...state,
+        user,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.User, JSON.stringify(user))
+
       return newState
     }
     // FIXME: Once hooks are updated this should no longer be necessary

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../contexts/theme'
 import Language from '../screens/Language'
+import NameUpdate from '../screens/NameUpdate'
 import Settings from '../screens/Settings'
 import { Screens, SettingStackParams } from '../types/navigators'
 
@@ -18,6 +19,7 @@ const SettingStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen name={Screens.Settings} component={Settings} options={{ headerBackTitle: t('Global.Back') }} />
+      <Stack.Screen name={Screens.NameUpdate} component={NameUpdate} />
       <Stack.Screen name={Screens.Language} component={Language} />
     </Stack.Navigator>
   )

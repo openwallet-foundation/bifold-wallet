@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text, Image, View, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,14 +8,10 @@ import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
 import { useAuth } from '../contexts/auth'
 import { useTheme } from '../contexts/theme'
-import { generateKeyForPIN } from '../services/keychain.service'
 import { AuthLevel, WalletSecret } from '../types/security'
 import { testIdWithKey } from '../utils/testable'
 
-interface PinEnterProps {
-}
-
-const PinEnter: React.FC<PinEnterProps> = () => {
+const PinEnter: React.FC = () => {
   const { t } = useTranslation()
   const { checkPIN, setAuthenticated } = useAuth()
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()

@@ -35,7 +35,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const credential = useCredentialById(credentialId)
-  const credentialConnectionLabel = credential?.connectionId ? useConnectionById(credential.connectionId)?.theirLabel : credential?.connectionId ?? ''
+  const credentialConnectionLabel = credential?.connectionId
+    ? useConnectionById(credential.connectionId)?.theirLabel
+    : credential?.connectionId ?? ''
   const [credentialAttributes, setCredentialAttributes] = useState<CredentialPreviewAttributeOptions[]>([])
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
