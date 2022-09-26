@@ -54,8 +54,10 @@ const NameCreate: React.FC = () => {
   useEffect(() => {
     if (isValid(firstName) && isValid(lastName)) {
       setButtonsActive(true)
+    } else {
+      setButtonsActive(false)
     }
-  })
+  }, [firstName, lastName])
 
   const setDisplayName = (name: string) => {
     try {
