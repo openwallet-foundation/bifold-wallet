@@ -12,9 +12,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@aries-framework/core": "^0.2.2",
-    "@aries-framework/react-hooks": "^0.3.1",
-    "@aries-framework/react-native": "^0.2.2",
+    "@aries-framework/core": "file:../aries-framework-core-v0.2.4-connectionType.1.tgz",
+    "@aries-framework/react-hooks": "file:../aries-framework-react-hooks-v0.3.0-connectionType.5.tgz",
+    "@aries-framework/react-native": "^0.2.4",
     "@formatjs/intl-pluralrules": "4.1.4",
     "@react-native-async-storage/async-storage": "1.15.11",
     "@react-native-community/masked-view": "0.1.11",
@@ -25,7 +25,7 @@
     "aries-bifold": "file:./../core",
     "axios": "0.21.4",
     "i18next": "21.4.0",
-    "indy-sdk-react-native": "indy-sdk-react-native-v0.3.0-pre.updatedinstall.0.tgz",
+    "indy-sdk-react-native": "file:../indy-sdk-react-native-v0.3.0-pre.updatedinstall.0.tgz",
     "lodash.flatten": "^4.4.0",
     "lodash.startcase": "^4.4.0",
     "patch-package": "^6.4.7",
