@@ -19,7 +19,7 @@ export interface AuthContext {
   isBiometricsActive: () => Promise<boolean>
   authenticated: boolean
   setAuthenticated: (auth: boolean) => void
-  clearWalletSecret: () => void
+  clearWalletSecretAppState: () => void
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
@@ -61,7 +61,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     return secret
   }
 
-  const clearWalletSecret = () => {
+  const clearWalletSecretAppState = () => {
     setWalletSecret(undefined)
   }
 
@@ -75,7 +75,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         isBiometricsActive,
         authenticated,
         setAuthenticated,
-        clearWalletSecret,
+        clearWalletSecretAppState,
       }}
     >
       {children}

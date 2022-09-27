@@ -21,7 +21,7 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { agent } = useAgent()
-  const { setAuthenticated, clearWalletSecret } = useAuth()
+  const { setAuthenticated, clearWalletSecretAppState } = useAuth()
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const { borderRadius, SettingsTheme, ColorPallet } = useTheme()
@@ -56,7 +56,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       throw new Error('Agent is undefined')
     }
     const keychainClear = await resetWalletSecret()
-    clearWalletSecret()
+    clearWalletSecretAppState()
     if (!keychainClear) {
       throw new Error('Keychain was not succesfully cleared')
     }
