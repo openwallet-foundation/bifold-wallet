@@ -1,10 +1,10 @@
 import {
   CredentialExchangeRecord as CredentialRecord,
-  CredentialState,
+  ConnectionType,
   ConnectionRecord,
   DidExchangeState,
 } from '@aries-framework/core'
-import { useConnectionByState, useCredentialByState } from '@aries-framework/react-hooks'
+import { useConnections } from '@aries-framework/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useMemo } from 'react'
@@ -22,7 +22,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { HomeStackParams, Screens, Stacks } from '../types/navigators'
+import { HomeStackParams, Screens, TabStacks } from '../types/navigators'
 import { Credential as StoreCredentialState } from '../types/state'
 
 const { width } = Dimensions.get('window')
@@ -72,7 +72,10 @@ export const NoContactsMessage = () => {
 }
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const connectionRecords = useConnectionByState(DidExchangeState.Completed)
+  const { records: connectionRecords } = useConnections({
+    excludedTypes: [ConnectionType.Mediator],
+    connectionState: DidExchangeState.Completed,
+  })
   const { notifications } = useNotifications()
   const { t } = useTranslation()
   const { ColorPallet, HomeTheme, ListItems } = useTheme()
@@ -87,7 +90,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     },
     rowContainer: {
       padding: '2%',
-      marginHorizontal: '1%',
+      margin: '1%',
       width: '98%',
       flexDirection: 'row',
       alignItems: 'center',
@@ -160,13 +163,20 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       ) : (
         <View style={styles.container}>
           <View style={styles.rowContainer}>
-            <Text style={[HomeTheme.welcomeHeader]}>{t('Home.Welcome')}</Text>
+            <Text style={[HomeTheme.welcomeHeader]}>
+              {t('Home.Welcome')} {store.user.firstName}
+            </Text>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })
+                //Resolve TabStacks vs Stacks
+                navigation.navigate(TabStacks.SettingStack, { screen: Screens.Settings })
               }}
             >
-              <AvatarView name="H" style={styles.user} textStyle={ListItems.homeAvatarText}></AvatarView>
+              <AvatarView
+                name={store.user.firstName.charAt(0)}
+                style={{ ...styles.user, margin: 0 }}
+                textStyle={ListItems.homeAvatarText}
+              ></AvatarView>
             </TouchableOpacity>
           </View>
           <View style={styles.rowContainer}>
@@ -217,27 +227,29 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           <View style={styles.rowContainer}>
             <Text style={HomeTheme.notificationsHeader}>
               {t('Home.Contacts')}
-              {t(` (${connectionRecords.length})`)}
+              {` (${connectionRecords.length})`}
             </Text>
           </View>
           <View style={styles.contactContainer}>
             {connectionRecords.length > 0 ? (
-              <>
-                <FlatList
-                  style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-                  data={connectionRecords.slice(0, 3)}
-                  renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
-                  keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
-                />
+              <View style={{ width: '100%', height: '100%' }}>
+                <View>
+                  <FlatList
+                    style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+                    data={connectionRecords.slice(0, 3)}
+                    renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
+                    keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
+                  />
+                </View>
                 <View style={{ width: '100%', alignItems: 'center' }}>
                   <TouchableOpacity
                     style={styles.wrapper}
-                    onPress={() => navigation.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
+                    onPress={() => navigation.navigate(TabStacks.ContactStack, { screen: Screens.Contacts })}
                   >
                     <Text style={styles.link}>{t('Home.ShowAll')}</Text>
                   </TouchableOpacity>
                 </View>
-              </>
+              </View>
             ) : (
               <NoContactsMessage />
             )}

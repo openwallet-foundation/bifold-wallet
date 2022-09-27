@@ -107,7 +107,7 @@ const translation = {
     "NewRevoked": "Credential Was Revoked",
   },
   "Home": {
-    "Welcome": "Welcome",
+    "Welcome": "Hi,",
     "Notifications": "Notifications",
     "Contacts": "Contacts",
     "NoNewUpdates": "No new notifications",
