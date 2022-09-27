@@ -24,11 +24,11 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import NameCreate from '../screens/NameCreate'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import { StateFn } from '../types/fn'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { WalletSecret } from '../types/security'
 
@@ -58,6 +58,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, privacy, splash } = useConfiguration()
+  let name: string
 
   const onTutorialCompleted = () => {
     dispatch({
@@ -88,9 +89,13 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         return
       }
 
+      if (state.onboarding.didCreateDisplayName) {
+        name = state.user.firstName + ' ' + state.user.lastName
+      } else name = myLabel
+
       const newAgent = new Agent(
         {
-          label: myLabel,
+          label: name,
           mediatorConnectionsInvite: Config.MEDIATOR_URL,
           mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
           walletConfig: { id: credentials.id, key: credentials.key },
@@ -127,7 +132,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
     setInitAgentInProcess(false)
   }
-
 
   useEffect(() => {
     const initialized = agent?.isInitialized
@@ -209,12 +213,11 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           })}
           component={terms}
         />
+        <Stack.Screen name={Screens.NameCreate} component={NameCreate} />
         <Stack.Screen name={Screens.CreatePin} component={PinCreate} />
       </Stack.Navigator>
     )
   }
-
-  console.log("Authenticated:", authenticated)
 
   if (state.onboarding.didAgreeToTerms && state.onboarding.didCompleteTutorial && state.onboarding.didCreatePIN) {
     return authenticated ? mainStack() : authStack()

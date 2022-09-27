@@ -1,6 +1,5 @@
-import { ConnectionRecord, DidExchangeState } from '@aries-framework/core'
-
-import { useConnectionByState } from '@aries-framework/react-hooks'
+import { ConnectionRecord, ConnectionType, DidExchangeState } from '@aries-framework/core'
+import { useConnections } from '@aries-framework/react-hooks'
 import React from 'react'
 import { FlatList } from 'react-native'
 
@@ -13,8 +12,10 @@ interface ListContactsProps {
 }
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
-  // const { records } = useConnections()
-  const records = useConnectionByState(DidExchangeState.Completed)
+  const { records } = useConnections({
+    excludedTypes: [ConnectionType.Mediator],
+    connectionState: DidExchangeState.Completed,
+  })
   const { ColorPallet } = useTheme()
   return (
     <FlatList

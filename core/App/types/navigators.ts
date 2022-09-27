@@ -7,6 +7,7 @@ export enum Screens {
   Onboarding = 'Onboarding',
   Privacy = 'Privacy',
   Terms = 'Terms',
+  NameCreate = 'Display Name',
   CreatePin = 'Create a PIN',
   EnterPin = 'Enter PIN',
   Home = 'Home',
@@ -18,6 +19,7 @@ export enum Screens {
   ProofRequest = 'Proof Request',
   ProofRequestAttributeDetails = 'Proof Request Attribute Details',
   Settings = 'Settings',
+  NameUpdate = 'Update Name',
   Language = 'Language',
   Connect = 'Connect',
   DisplayCode = 'Display Code',
@@ -70,6 +72,7 @@ export type AuthenticateStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Privacy]: undefined
   [Screens.Terms]: undefined
+  [Screens.NameCreate]: undefined
   [Screens.CreatePin]: undefined
   [Screens.EnterPin]: undefined
 }
@@ -99,6 +102,7 @@ export type ConnectStackParams = {
 
 export type SettingStackParams = {
   [Screens.Settings]: undefined
+  [Screens.NameUpdate]: undefined
   [Screens.Language]: undefined
 }
 

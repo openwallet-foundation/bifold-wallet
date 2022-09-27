@@ -144,8 +144,7 @@ export const isBiometricsActive = async (): Promise<boolean> => {
  * Remove saved wallet keys, used for deleting or resetting the wallet (like a sign out flow)
  *
  * */
- export async function resetWalletSecret() {
-
+export async function resetWalletSecret() {
   const keyOpts = optionsForKeychainAccess(KeychainServices.Key, false)
   const saltOpts = optionsForKeychainAccess(KeychainServices.Salt, false)
   await Keychain.resetGenericPassword(keyOpts)

@@ -47,6 +47,15 @@ const translation = {
     "IAgree": "I Agree",
     "Attestation": "I have read, understand and accept the terms and conditions.",
   },
+  "DisplayName": {
+    "First": "First name",
+    "Last": "Last Name",
+    "Enter": "Please enter your name.",
+    "NewName": "Please enter your new name.",
+    "Warning": "You will be using this name with businesses and services to obtain and share sensitive data.",
+    "RecommendedName": "We recommend using your full legal name, or a version of your name that banks and governments would recognize as uniquely yours.",
+    "Update": "You can update this at any time in your settings"
+  },
   "PinCreate": {
     "UserAuthenticationPIN": "User authentication PIN",
     "PINTooShort": "PIN too short",
