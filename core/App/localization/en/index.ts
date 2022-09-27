@@ -48,6 +48,7 @@ const translation = {
     "Attestation": "I have read, understand and accept the terms and conditions.",
   },
   "DisplayName": {
+    "Name": "Name",
     "First": "First name",
     "Last": "Last Name",
     "Enter": "Please enter your name.",
@@ -191,7 +192,9 @@ const translation = {
   },
   "Settings": {
     "Version": "Version",
-    "VersionString": "0.0.0-0",
+    "VersionString": "0.0.0",
+    "Build": "Build",
+    "UserSettings": "User Settings",
     "AppPreferences": "App Preferences",
     "AboutApp": "About App",
     "Language": "Language",

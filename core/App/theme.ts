@@ -497,8 +497,12 @@ export const SettingsTheme = {
   },
   groupBackground: ColorPallet.brand.secondaryBackground,
   iconColor: ColorPallet.grayscale.white,
-  text: {
+  subtext: {
     ...TextTheme.caption,
+    color: ColorPallet.grayscale.white,
+  },
+  text: {
+    ...TextTheme.normal,
     color: ColorPallet.grayscale.white,
   },
   resetButton: {
