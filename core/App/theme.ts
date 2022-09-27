@@ -412,6 +412,10 @@ export const ListItems = StyleSheet.create({
     ...TextTheme.headingTwo,
     fontWeight: 'normal',
   },
+  homeAvatarText: {
+    ...TextTheme.normal,
+    fontweight: 'bold',
+  },
   avatarCircle: {
     borderRadius: TextTheme.headingTwo.fontSize,
     borderColor: TextTheme.headingTwo.color,
@@ -472,20 +476,24 @@ export const NavigationTheme = {
 
 export const HomeTheme = StyleSheet.create({
   welcomeHeader: {
-    ...TextTheme.headingOne,
+    ...TextTheme.headingTwo,
   },
   credentialMsg: {
     ...TextTheme.normal,
   },
   notificationsHeader: {
-    ...TextTheme.headingThree,
+    ...TextTheme.normal,
+    fontSize: 16,
+    letterSpacing: 0.5,
   },
   noNewUpdatesText: {
     ...TextTheme.normal,
+    fontWeight: '600',
     color: ColorPallet.notification.infoText,
   },
   link: {
-    ...TextTheme.normal,
+    ...TextTheme.caption,
+    fontWeight: 'bold',
     color: ColorPallet.brand.link,
   },
 })

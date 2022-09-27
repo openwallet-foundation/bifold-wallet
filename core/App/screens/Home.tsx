@@ -1,21 +1,28 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+import {
+  CredentialExchangeRecord as CredentialRecord,
+  CredentialState,
+  ConnectionRecord,
+  DidExchangeState,
+} from '@aries-framework/core'
+import { useConnectionByState, useCredentialByState } from '@aries-framework/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { NotificationListItem } from '../components'
+import ContactListItem from '../components/listItems/ContactListItem'
 import { NotificationType } from '../components/listItems/NotificationListItem'
-import NoNewUpdates from '../components/misc/NoNewUpdates'
+import AvatarView from '../components/misc/AvatarView'
 import LoadingModal from '../components/modals/LoadingModal'
 import { LocalStorageKeys } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { HomeStackParams, Screens } from '../types/navigators'
+import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { Credential as StoreCredentialState } from '../types/state'
 
 const { width } = Dimensions.get('window')
@@ -24,43 +31,61 @@ const offsetPadding = 5
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
+// export const noContactsMessage = () => {
+//   return (
+//     <>
+//       <Icon name="qrcode-scan" style={{ color: 'white' }} size={32}></Icon>
+//       <Text></Text>
+//     </>
+//   )
+// }
+
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const credentials = [
-    ...useCredentialByState(CredentialState.CredentialReceived),
-    ...useCredentialByState(CredentialState.Done),
-  ]
+  // const connectionRecords = useConnectionByState(DidExchangeState.Completed)
+  const connectionRecords = []
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const { HomeTheme } = useTheme()
+  const { ColorPallet, HomeTheme, ListItems } = useTheme()
   const [store, dispatch] = useStore()
   // This syntax is required for the jest mocks to work
   const [loading, setLoading] = React.useState<boolean>(true)
   const styles = StyleSheet.create({
+    // We need a responsive solution to the styling below. -Zack
     container: {
-      paddingHorizontal: offset,
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'center',
     },
     rowContainer: {
+      padding: '2%',
+      marginHorizontal: '1%',
+      width: '98%',
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: offset,
+      justifyContent: 'space-between',
     },
     messageContainer: {
+      width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: 35,
-      marginHorizontal: 60,
-    },
-    header: {
-      marginTop: offset,
-      marginBottom: 20,
     },
     linkContainer: {
       minHeight: HomeTheme.link.fontSize,
-      marginTop: 10,
+    },
+    user: {
+      width: 40,
+      height: 40,
+      borderWidth: 0,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+    },
+    wrapper: {
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     link: {
       ...HomeTheme.link,
+      textAlign: 'center',
+      paddingTop: 10,
     },
   })
 
@@ -95,104 +120,92 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     setLoading(store.loading)
   }, [store.loading])
 
-  const displayMessage = (credentialCount: number) => {
-    if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
-      throw new Error('Credential count cannot be undefined')
-    }
-
-    let credentialMsg
-
-    if (credentialCount === 1) {
-      credentialMsg = (
-        <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credential')}{' '}
-          {t('Home.InYourWallet')}
-        </Text>
-      )
-    } else if (credentialCount > 1) {
-      credentialMsg = (
-        <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credentials')}{' '}
-          {t('Home.InYourWallet')}
-        </Text>
-      )
-    } else {
-      credentialMsg = t('Home.NoCredentials')
-    }
-
-    return (
-      <View style={[styles.messageContainer]}>
-        <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
-      </View>
-    )
-  }
-
   return (
     <>
       {loading ? (
         <LoadingModal />
       ) : (
-        <View>
+        <View style={styles.container}>
           <View style={styles.rowContainer}>
-            <Text style={[HomeTheme.notificationsHeader, styles.header]}>
-              {t('Home.Notifications')}
-              {notifications?.length ? ` (${notifications.length})` : ''}
-            </Text>
-            {notifications?.length > 1 ? (
-              <TouchableOpacity
-                style={styles.linkContainer}
-                activeOpacity={1}
-                onPress={() => navigation.navigate(Screens.Notifications)}
-              >
-                <Text style={styles.link}>{t('Home.SeeAll')}</Text>
-              </TouchableOpacity>
-            ) : null}
+            <Text style={[HomeTheme.welcomeHeader]}>{t('Home.Welcome')}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })
+              }}
+            >
+              <AvatarView name="H" style={styles.user} textStyle={ListItems.homeAvatarText}></AvatarView>
+            </TouchableOpacity>
           </View>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            scrollEnabled={notifications?.length > 0 ? true : false}
-            snapToOffsets={[
-              0,
-              ...Array(notifications?.length)
-                .fill(0)
-                .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
-                .slice(1),
-            ]}
-            decelerationRate="fast"
-            ListEmptyComponent={() => (
-              <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
-                <NoNewUpdates />
-                <View style={[styles.messageContainer]}>
-                  <Text style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-                    {t('Home.Welcome')}
-                  </Text>
-                </View>
-              </View>
-            )}
-            data={notifications}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => (
-              <View
-                style={{
-                  width: width - 2 * offset,
-                  marginLeft: !index ? offset : offsetPadding,
-                  marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
-                }}
-              >
-                {item.type === 'CredentialRecord' ? (
-                  item.revocationNotification ? (
-                    <NotificationListItem notificationType={NotificationType.Revocation} notification={item} />
-                  ) : (
-                    <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
-                  )
-                ) : (
-                  <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+          <View style={styles.rowContainer}>
+            <Text style={[HomeTheme.notificationsHeader]}>
+              {t('Home.Notifications')}
+              {` (${notifications.length})`}
+            </Text>
+          </View>
+          <View style={styles.rowContainer}>
+            {notifications.length > 0 ? (
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                scrollEnabled={notifications?.length > 0 ? true : false}
+                snapToOffsets={[
+                  0,
+                  ...notifications?.map((_n, i: number) => i * (width - 2 * (offset - offsetPadding))).slice(1),
+                ]}
+                decelerationRate="fast"
+                data={notifications}
+                keyExtractor={(item: { id: any }) => item.id}
+                renderItem={({ item, index }) => (
+                  <View
+                    style={{
+                      width: width - 2 * offset,
+                      marginLeft: index && offsetPadding,
+                      marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
+                    }}
+                  >
+                    {item.type === 'CredentialRecord' ? (
+                      item.revocationNotification ? (
+                        <NotificationListItem notificationType={NotificationType.Revocation} notification={item} />
+                      ) : (
+                        <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+                      )
+                    ) : (
+                      <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+                    )}
+                  </View>
                 )}
+              />
+            ) : (
+              <View style={[styles.messageContainer]}>
+                <Text style={[HomeTheme.noNewUpdatesText]}>{t('Home.NoNewUpdates')}</Text>
               </View>
             )}
-          />
-          <View style={styles.container}>{displayMessage(credentials.length)}</View>
+          </View>
+          <View style={[styles.rowContainer]}>
+            <Text style={HomeTheme.notificationsHeader}>
+              {t('Home.Contacts')}
+              {t(` (${connectionRecords.length})`)}
+            </Text>
+          </View>
+          <View>
+            <FlatList
+              style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+              data={connectionRecords.slice(0, 3)}
+              renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
+              keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
+            />
+            {/* make connectionRecords an empty array */}
+            {connectionRecords.length > 0 && (
+              <View style={{ width: '100%', alignItems: 'center' }}>
+                <TouchableOpacity
+                  style={styles.wrapper}
+                  onPress={() => navigation.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
+                >
+                  <Text style={styles.link}>{t('Home.ShowAll')}</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
         </View>
       )}
     </>

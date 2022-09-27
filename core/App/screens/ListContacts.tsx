@@ -1,6 +1,6 @@
 import { ConnectionRecord, DidExchangeState } from '@aries-framework/core'
 
-import { useConnections, useConnectionByState } from '@aries-framework/react-hooks'
+import { useConnectionByState } from '@aries-framework/react-hooks'
 import React from 'react'
 import { FlatList } from 'react-native'
 
