@@ -103,7 +103,7 @@ const translation = {
     "Contacts": "Contacts",
     "NoNewUpdates": "No new notifications",
     "Touch": "Touch",
-    "Connect": "Connect",
+    "Scan": "Scan",
     "BelowToCreate": "below to create a contact",
     "NoCredentials": "You have no credentials in your wallet.",
     "ShowAll": "Show all",

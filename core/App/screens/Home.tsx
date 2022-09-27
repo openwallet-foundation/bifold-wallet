@@ -31,18 +31,48 @@ const offsetPadding = 5
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
-// export const noContactsMessage = () => {
-//   return (
-//     <>
-//       <Icon name="qrcode-scan" style={{ color: 'white' }} size={32}></Icon>
-//       <Text></Text>
-//     </>
-//   )
-// }
+export const NoContactsMessage = () => {
+  const { t } = useTranslation()
+  const { ColorPallet, TextTheme } = useTheme()
+  const noContactStyles = StyleSheet.create({
+    container: {
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    content: {
+      width: '45%',
+      alignItems: 'center',
+    },
+    icon: {
+      color: ColorPallet.brand.secondaryBackground,
+    },
+    text: {
+      ...TextTheme.normal,
+      textAlign: 'center',
+      color: ColorPallet.brand.secondaryBackground,
+      paddingVertical: 15,
+    },
+  })
+
+  return (
+    <>
+      <View style={noContactStyles.container}>
+        <View style={noContactStyles.content}>
+          <Icon name={'qrcode-scan'} style={noContactStyles.icon} size={65}></Icon>
+          <Text style={noContactStyles.text}>
+            {t('Home.Touch')} <Text style={{ fontWeight: 'bold' }}>{t('Home.Scan')}</Text> {t('Home.BelowToCreate')}
+          </Text>
+          <Icon name={'arrow-down-thick'} style={noContactStyles.icon} size={40}></Icon>
+        </View>
+      </View>
+    </>
+  )
+}
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  // const connectionRecords = useConnectionByState(DidExchangeState.Completed)
-  const connectionRecords = []
+  const connectionRecords = useConnectionByState(DidExchangeState.Completed)
   const { notifications } = useNotifications()
   const { t } = useTranslation()
   const { ColorPallet, HomeTheme, ListItems } = useTheme()
@@ -52,9 +82,8 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   const styles = StyleSheet.create({
     // We need a responsive solution to the styling below. -Zack
     container: {
-      display: 'flex',
       width: '100%',
-      justifyContent: 'center',
+      flex: 1,
     },
     rowContainer: {
       padding: '2%',
@@ -67,6 +96,10 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     messageContainer: {
       width: '100%',
       alignItems: 'center',
+    },
+    contactContainer: {
+      flex: 1,
+      alignContent: 'center',
       justifyContent: 'center',
     },
     linkContainer: {
@@ -181,29 +214,32 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
               </View>
             )}
           </View>
-          <View style={[styles.rowContainer]}>
+          <View style={styles.rowContainer}>
             <Text style={HomeTheme.notificationsHeader}>
               {t('Home.Contacts')}
               {t(` (${connectionRecords.length})`)}
             </Text>
           </View>
-          <View>
-            <FlatList
-              style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-              data={connectionRecords.slice(0, 3)}
-              renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
-              keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
-            />
-            {/* make connectionRecords an empty array */}
-            {connectionRecords.length > 0 && (
-              <View style={{ width: '100%', alignItems: 'center' }}>
-                <TouchableOpacity
-                  style={styles.wrapper}
-                  onPress={() => navigation.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
-                >
-                  <Text style={styles.link}>{t('Home.ShowAll')}</Text>
-                </TouchableOpacity>
-              </View>
+          <View style={styles.contactContainer}>
+            {connectionRecords.length > 0 ? (
+              <>
+                <FlatList
+                  style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+                  data={connectionRecords.slice(0, 3)}
+                  renderItem={({ item }) => <ContactListItem contact={item} navigation={navigation} />}
+                  keyExtractor={(item: ConnectionRecord) => item?.did || item.id}
+                />
+                <View style={{ width: '100%', alignItems: 'center' }}>
+                  <TouchableOpacity
+                    style={styles.wrapper}
+                    onPress={() => navigation.navigate(Stacks.ContactStack, { screen: Screens.Contacts })}
+                  >
+                    <Text style={styles.link}>{t('Home.ShowAll')}</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : (
+              <NoContactsMessage />
             )}
           </View>
         </View>
