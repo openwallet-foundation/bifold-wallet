@@ -28,11 +28,6 @@ enum CredentialDispatchAction {
   CREDENTIAL_REVOKED_MESSAGE_DISMISSED = 'credentials/credentialRevokedMessageDismissed',
 }
 
-enum LoadingDispatchAction {
-  LOADING_ENABLED = 'loading/loadingEnabled',
-  LOADING_DISABLED = 'loading/loadingDisabled',
-}
-
 enum PrivacyDispatchAction {
   DID_SHOW_CAMERA_DISCLOSURE = 'privacy/didShowCameraDisclosure',
   PRIVACY_UPDATED = 'privacy/privacyStateLoaded',
@@ -51,7 +46,6 @@ export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
   | CredentialDispatchAction
-  | LoadingDispatchAction
   | PrivacyDispatchAction
   | PreferencesDispatchAction
   | AuthenticationDispatchAction
@@ -60,7 +54,6 @@ export const DispatchAction = {
   ...OnboardingDispatchAction,
   ...ErrorDispatchAction,
   ...CredentialDispatchAction,
-  ...LoadingDispatchAction,
   ...PrivacyDispatchAction,
   ...PreferencesDispatchAction,
   ...AuthenticationDispatchAction,
@@ -220,18 +213,6 @@ const reducer = (state: State, action: ReducerAction): State => {
       return {
         ...state,
         error: null,
-      }
-    }
-    case LoadingDispatchAction.LOADING_ENABLED: {
-      return {
-        ...state,
-        loading: true,
-      }
-    }
-    case LoadingDispatchAction.LOADING_DISABLED: {
-      return {
-        ...state,
-        loading: false,
       }
     }
     default:

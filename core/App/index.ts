@@ -6,6 +6,7 @@ import AgentProvider from '@aries-framework/react-hooks'
 
 import indyLedgers from '../configs/ledgers/indy'
 
+import LoadingIndicator from './components/animated/LoadingIndicator'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ErrorModal from './components/modals/ErrorModal'
@@ -33,7 +34,7 @@ export { theme } from './theme'
 export { useAuth } from './contexts/auth'
 export { NavigationTheme } from './theme'
 export { testIdWithKey } from './utils/testable'
-export { Screens } from './types/navigators'
+export { Screens, Stacks } from './types/navigators'
 export { createStyles } from './screens/OnboardingPages'
 export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { BifoldError } from './types/error'
@@ -49,6 +50,7 @@ export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
 
 export {
+  LoadingIndicator,
   indyLedgers,
   Agent,
   AgentProvider,
