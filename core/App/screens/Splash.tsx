@@ -10,7 +10,7 @@ import {
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
@@ -26,7 +26,6 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
-import { WalletSecret } from '../types/security'
 import {
   Onboarding as StoreOnboardingState,
   Privacy as PrivacyState,
@@ -83,7 +82,7 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
       return
     }
 
-    const initOnboarding = async () => {
+    const initOnboarding = async (): Promise<void> => {
       try {
         const preferencesData = await AsyncStorage.getItem(LocalStorageKeys.Preferences)
 
@@ -133,11 +132,7 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
       return
     }
 
-    const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<void> => {
-      if (!predefinedSecret) {
-        dispatch({ type: DispatchAction.LOADING_ENABLED })
-      }
-
+    const initAgent = async (): Promise<void> => {
       try {
         const credentials = await getWalletCredentials()
 
@@ -170,7 +165,6 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
 
         await newAgent.initialize()
         setAgent(newAgent)
-        dispatch({ type: DispatchAction.LOADING_DISABLED })
         navigation.navigate(Stacks.TabStack as never)
       } catch (e: unknown) {
         Toast.show({

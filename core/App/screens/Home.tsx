@@ -6,9 +6,9 @@ import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 
+import LoadingIndicator from '../components/animated/LoadingIndicator'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
-import LoadingModal from '../components/modals/LoadingModal'
 import { LocalStorageKeys } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -18,7 +18,7 @@ import { useDeepLinks } from '../hooks/deep-links'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { Credential as StoreCredentialState } from '../types/state'
-import { connectFromInvitation, getOobDeepLink, isRedirection, receiveMessageFromUrlRedirect } from '../utils/helpers'
+import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
 
 const { width } = Dimensions.get('window')
 const offset = 25
@@ -30,11 +30,10 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const [store, dispatch] = useStore()
+  const [, dispatch] = useStore()
   const { homeContentView: HomeContentView } = useConfiguration()
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
-  const [loading, setLoading] = React.useState<boolean>(true)
   const deepLink = useDeepLinks()
   const { HomeTheme } = useTheme()
 
@@ -95,10 +94,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   }, [])
 
   useEffect(() => {
-    setLoading(store.loading)
-  }, [store.loading])
-
-  useEffect(() => {
     async function handleDeepLink(deepLink: string) {
       try {
         // Try connection based
@@ -127,68 +122,64 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
   return (
     <>
-      {loading ? (
-        <LoadingModal />
-      ) : (
-        <View>
-          <View style={styles.rowContainer}>
-            <Text style={[HomeTheme.notificationsHeader, styles.header]}>
-              {t('Home.Notifications')}
-              {notifications?.length ? ` (${notifications.length})` : ''}
-            </Text>
-            {notifications?.length > 1 ? (
-              <TouchableOpacity
-                style={styles.linkContainer}
-                activeOpacity={1}
-                onPress={() => navigation.navigate(Screens.Notifications)}
-              >
-                <Text style={styles.link}>{t('Home.SeeAll')}</Text>
-              </TouchableOpacity>
-            ) : null}
-          </View>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            scrollEnabled={notifications?.length > 0 ? true : false}
-            snapToOffsets={[
-              0,
-              ...Array(notifications?.length)
-                .fill(0)
-                .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
-                .slice(1),
-            ]}
-            decelerationRate="fast"
-            ListEmptyComponent={() => (
-              <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
-                <NoNewUpdates />
-                <View style={[styles.messageContainer]}>
-                  <Text style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-                    {t('Home.Welcome')}
-                  </Text>
-                </View>
-              </View>
-            )}
-            data={notifications}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => (
-              <View
-                style={{
-                  width: width - 2 * offset,
-                  marginLeft: !index ? offset : offsetPadding,
-                  marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
-                }}
-              >
-                {item.type === 'CredentialRecord' ? (
-                  <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
-                ) : (
-                  <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-                )}
-              </View>
-            )}
-          />
-          <HomeContentView />
+      <View>
+        <View style={styles.rowContainer}>
+          <Text style={[HomeTheme.notificationsHeader, styles.header]}>
+            {t('Home.Notifications')}
+            {notifications?.length ? ` (${notifications.length})` : ''}
+          </Text>
+          {notifications?.length > 1 ? (
+            <TouchableOpacity
+              style={styles.linkContainer}
+              activeOpacity={1}
+              onPress={() => navigation.navigate(Screens.Notifications)}
+            >
+              <Text style={styles.link}>{t('Home.SeeAll')}</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
-      )}
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          scrollEnabled={notifications?.length > 0 ? true : false}
+          snapToOffsets={[
+            0,
+            ...Array(notifications?.length)
+              .fill(0)
+              .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
+              .slice(1),
+          ]}
+          decelerationRate="fast"
+          ListEmptyComponent={() => (
+            <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
+              <NoNewUpdates />
+              <View style={[styles.messageContainer]}>
+                <Text style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+                  {t('Home.Welcome')}
+                </Text>
+              </View>
+            </View>
+          )}
+          data={notifications}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, index }) => (
+            <View
+              style={{
+                width: width - 2 * offset,
+                marginLeft: !index ? offset : offsetPadding,
+                marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
+              }}
+            >
+              {item.type === 'CredentialRecord' ? (
+                <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+              ) : (
+                <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+              )}
+            </View>
+          )}
+        />
+        <HomeContentView />
+      </View>
     </>
   )
 }
