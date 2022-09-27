@@ -1,5 +1,7 @@
 import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 
+import { PinEnterFor } from '../constants'
+
 import { BifoldError } from './error'
 
 export interface Onboarding {
@@ -35,4 +37,5 @@ export interface State {
   credential: Credential
   error: BifoldError | null
   loading: boolean
+  pinEnterFor: PinEnterFor
 }

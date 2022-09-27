@@ -245,6 +245,7 @@ const translation = {
     "AppPreferences": "App Preferences",
     "AboutApp": "About App",
     "Language": "Language",
+    "EnableBiometrics": "Enable Biometrics",
   },
   "TabStack": {
     "Home": "Home",

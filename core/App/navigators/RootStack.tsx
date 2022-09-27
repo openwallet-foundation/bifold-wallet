@@ -75,6 +75,9 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
         <Stack.Screen name={Stacks.ConnectionStack} component={DeliveryStack} />
+        <Stack.Screen name={Screens.EnterPin}>
+          {(props) => <PinEnter {...props} setAuthenticated={() => onAuthenticated()} />}
+        </Stack.Screen>
       </Stack.Navigator>
     )
   }

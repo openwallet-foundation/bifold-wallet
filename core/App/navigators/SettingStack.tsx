@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import PinEnter from '../../lib/module/screens/PinEnter'
 import { useTheme } from '../contexts/theme'
 import Language from '../screens/Language'
 import Settings from '../screens/Settings'

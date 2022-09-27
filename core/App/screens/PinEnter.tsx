@@ -6,8 +6,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
+import { PinEnterFor } from '../constants'
 import { useAuth } from '../contexts/auth'
-import { StoreContext } from '../contexts/store'
+import { DispatchAction } from '../contexts/reducers/store'
+import { StoreContext, useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
@@ -17,13 +19,13 @@ interface PinEnterProps {
   setAuthenticated: GenericFn
 }
 
-const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
+const PinEnter: React.FC<PinEnterProps> = ({ navigation, setAuthenticated }) => {
   const { t } = useTranslation()
-  const { checkPIN, getWalletCredentials } = useAuth()
+  const { convertToUseBiometrics, checkPIN, getWalletCredentials } = useAuth()
   const [pin, setPin] = useState<string>('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
-  const [state] = useContext(StoreContext)
+  const [state, dispatch] = useContext(StoreContext)
 
   const style = StyleSheet.create({
     container: {
@@ -55,7 +57,21 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
         setModalVisible(true)
         return
       }
-      setAuthenticated()
+
+      switch (state.pinEnterFor) {
+        case PinEnterFor.NormalAuth:
+          setAuthenticated()
+          break
+        case PinEnterFor.ReEnableBiometry:
+          await convertToUseBiometrics()
+          dispatch({
+            type: DispatchAction.USE_BIOMETRY,
+            payload: [true],
+          })
+          navigation.goBack()
+          break
+      }
+
       return
     } catch (error: unknown) {
       // TODO:(jl) process error

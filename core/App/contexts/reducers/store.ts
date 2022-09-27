@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { LocalStorageKeys } from '../../constants'
+import { LocalStorageKeys, PinEnterFor } from '../../constants'
 import {
   Privacy as PrivacyState,
   Preferences as PreferencesState,
@@ -45,6 +45,7 @@ enum PreferencesDispatchAction {
 
 enum AuthenticationDispatchAction {
   DID_AUTHENTICATE = 'authentication/didAuthenticate',
+  ENABLEBIOMETRICS = 'authentication/enableBiometrics',
 }
 
 export type DispatchAction =
@@ -165,6 +166,13 @@ const reducer = (state: State, action: ReducerAction): State => {
       const newState = {
         ...state,
         ...{ authentication: { didAuthenticate: true } },
+      }
+      return newState
+    }
+    case AuthenticationDispatchAction.ENABLEBIOMETRICS: {
+      const newState = {
+        ...state,
+        ...{ pinEnterFor: PinEnterFor.ReEnableBiometry },
       }
       return newState
     }

@@ -6,6 +6,8 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -13,6 +15,8 @@ import { testIdWithKey } from '../utils/testable'
 type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
+  const [, dispatch] = useStore()
+
   const { t } = useTranslation()
   const { borderRadius, SettingsTheme } = useTheme()
   const styles = StyleSheet.create({
@@ -35,6 +39,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       padding: 12,
     },
   })
+
+  const enableBiometrics = () => {
+    dispatch({
+      type: DispatchAction.ENABLEBIOMETRICS,
+    })
+    navigation.navigate(Screens.EnterPin)
+  }
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>
@@ -48,6 +59,16 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             onPress={() => navigation.navigate(Screens.Language)}
           >
             <Text style={SettingsTheme.text}>{t('Settings.Language')}</Text>
+            <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            accessible={true}
+            accessibilityLabel={t('Settings.EnableBiometrics')}
+            testID={testIdWithKey('Language')}
+            style={styles.row}
+            onPress={() => enableBiometrics()}
+          >
+            <Text style={SettingsTheme.text}>{t('Settings.EnableBiometrics')}</Text>
             <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
           </TouchableOpacity>
         </View>

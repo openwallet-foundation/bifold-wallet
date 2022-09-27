@@ -18,6 +18,11 @@ export enum KeychainServices {
   Key = 'secret.wallet.key',
 }
 
+export enum PinEnterFor {
+  NormalAuth = 'auth.noraml',
+  ReEnableBiometry = 'auth.enableBio',
+}
+
 export const walletId = 'walletId'
 
 export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric' } = {

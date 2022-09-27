@@ -1,5 +1,6 @@
 import React, { createContext, Dispatch, useContext, useReducer } from 'react'
 
+import { PinEnterFor } from '../constants'
 import { State } from '../types/state'
 
 import reducer, { ReducerAction } from './reducers/store'
@@ -26,6 +27,7 @@ const initialState: State = {
   },
   error: null,
   loading: false,
+  pinEnterFor: PinEnterFor.NormalAuth,
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction>]>([
