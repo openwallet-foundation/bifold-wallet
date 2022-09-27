@@ -81,19 +81,25 @@ const NameCreate: React.FC = () => {
   return (
     <SafeAreaView>
       <View style={{ padding: 20 }}>
-        <Text style={styles.title}>{t("DisplayName.Enter")}</Text>
+        <Text style={styles.title}>{t('DisplayName.Enter')}</Text>
         <View style={styles.row}>
           <Icon name={'alert-circle'} size={26} color={ColorPallet.notification.infoIcon} style={{ marginRight: 10 }} />
-          <Text style={styles.warningText}>
-          {t("DisplayName.Warning")}
-          </Text>
+          <Text style={styles.warningText}>{t('DisplayName.Warning')}</Text>
         </View>
-        <Text style={styles.text}>
-          {t("DisplayName.RecommendedName")}
-        </Text>
-        <TextInput label={t("DisplayName.First")} onChangeText={onChangeFirstName} value={firstName} placeholder={t("DisplayName.First")} />
-        <TextInput label={t("DisplayName.Last")} onChangeText={onChangeLastName} value={lastName} placeholder={t("DisplayName.Last")} />
-        <Text style={styles.text}>{t("DisplayName.Update")}</Text>
+        <Text style={styles.text}>{t('DisplayName.RecommendedName')}</Text>
+        <TextInput
+          label={t('DisplayName.First')}
+          onChangeText={onChangeFirstName}
+          value={firstName}
+          placeholder={t('DisplayName.First')}
+        />
+        <TextInput
+          label={t('DisplayName.Last')}
+          onChangeText={onChangeLastName}
+          value={lastName}
+          placeholder={t('DisplayName.Last')}
+        />
+        <Text style={styles.text}>{t('DisplayName.Update')}</Text>
         <Button
           title={t('Global.Confirm')}
           buttonType={ButtonType.Primary}

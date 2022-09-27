@@ -39,15 +39,29 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       borderRadius: borderRadius * 2,
       backgroundColor: SettingsTheme.groupBackground,
       marginBottom: 16,
+      flexDirection: 'column',
+      padding: 15,
     },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: 12,
+      marginBottom: 4,
     },
     subHeader: {
-      paddingLeft: 12,
+      ...SettingsTheme.subtext,
+      marginBottom: 4,
+    },
+    resetContainer: {
+      width: '100%',
+      paddingVertical: 10,
+      alignItems: 'center',
+    },
+    resetButton: {
+      ...SettingsTheme.resetButton,
+      width: '90%',
+      paddingVertical: 12,
+      textAlign: 'center',
     },
   })
 
@@ -72,9 +86,9 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>
-        <Text style={styles.groupHeader}>User Settings</Text>
+        <Text style={styles.groupHeader}>{t('Settings.UserSettings')}</Text>
         <View style={styles.rowGroup}>
-          {/* <Text style={styles.subHeader}>Name</Text> */}
+          <Text style={styles.subHeader}>{t('DisplayName.Name')}</Text>
           <TouchableOpacity
             accessible={true}
             accessibilityLabel={'Name'}
@@ -107,10 +121,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             <Text style={SettingsTheme.text} testID={testIdWithKey('VersionLabel')}>
               {t('Settings.Version')}
             </Text>
-            <Text
-              style={SettingsTheme.text}
-              testID={testIdWithKey('Version')}
-            >{`${getVersion()}-${getBuildNumber()}`}</Text>
+            <Text style={SettingsTheme.text} testID={testIdWithKey('Version')}>{`${getVersion()}`}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={SettingsTheme.text} testID={testIdWithKey('BuildLabel')}>
+              {t('Settings.Build')}
+            </Text>
+            <Text style={SettingsTheme.text} testID={testIdWithKey('Build')}>{`${getBuildNumber()}`}</Text>
           </View>
 
           {!uiConfig.fiveTabDisplay && (
@@ -131,8 +148,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           )}
         </View>
       </View>
-      <View style={[styles.container, { marginTop: 'auto' }]}>
-        <View style={SettingsTheme.resetButton}>
+      <View style={styles.resetContainer}>
+        <View style={styles.resetButton}>
           <TouchableOpacity
             accessible={true}
             accessibilityLabel={t('Settings.ResetWallet')}
