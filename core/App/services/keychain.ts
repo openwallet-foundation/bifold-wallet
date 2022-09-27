@@ -147,6 +147,5 @@ export const isBiometricsActive = async (): Promise<boolean> => {
 export async function resetWalletSecret() {
   const keyOpts = optionsForKeychainAccess(KeychainServices.Key, false)
   const saltOpts = optionsForKeychainAccess(KeychainServices.Salt, false)
-  await Keychain.resetGenericPassword(keyOpts)
-  await Keychain.resetGenericPassword(saltOpts)
+  return (await Keychain.resetGenericPassword(keyOpts)) && (await Keychain.resetGenericPassword(saltOpts))
 }
