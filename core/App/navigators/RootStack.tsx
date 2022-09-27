@@ -64,7 +64,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
-    navigation.navigate(Screens.Privacy)
+    navigation.navigate(Screens.Terms)
   }
 
   const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
