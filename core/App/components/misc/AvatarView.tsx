@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { hashCode, hashToRGBA } from '../../utils/helpers'
@@ -8,9 +8,10 @@ import { testIdWithKey } from '../../utils/testable'
 interface AvatarViewProps {
   name: string
   style?: ViewStyle
+  textStyle: TextStyle
 }
 
-const AvatarView: React.FC<AvatarViewProps> = ({ name, style }) => {
+const AvatarView: React.FC<AvatarViewProps> = ({ name, style, textStyle }) => {
   const { ListItems } = useTheme()
   const styles = StyleSheet.create({
     avatar: {
@@ -23,7 +24,7 @@ const AvatarView: React.FC<AvatarViewProps> = ({ name, style }) => {
   })
   return (
     <View style={[styles.avatar, { borderColor: hashToRGBA(hashCode(name)) }, style]}>
-      <Text style={ListItems.avatarText} testID={testIdWithKey('AvatarName')}>
+      <Text style={[textStyle]} testID={testIdWithKey('AvatarName')}>
         {name.charAt(0)}
       </Text>
     </View>

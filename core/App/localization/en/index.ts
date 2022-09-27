@@ -81,7 +81,7 @@ const translation = {
     "IncorrectPIN": "Incorrect PIN",
   },
   "Contacts": {
-    "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
+    "EmptyList": "Your contacts are empty. Your added contacts will appear here.",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -107,11 +107,15 @@ const translation = {
     "NewRevoked": "Credential Was Revoked",
   },
   "Home": {
-    "Welcome": "Welcome",
+    "Welcome": "Hi,",
     "Notifications": "Notifications",
-    "NoNewUpdates": "You have no new notifications.",
+    "Contacts": "Contacts",
+    "NoNewUpdates": "No new notifications",
+    "Touch": "Touch",
+    "Scan": "Scan",
+    "BelowToCreate": "below to create a contact",
     "NoCredentials": "You have no credentials in your wallet.",
-    "SeeAll": "See all",
+    "ShowAll": "Show all",
     "YouHave": "You have",
     "Credential": "credential",
     "Credentials": "credentials",

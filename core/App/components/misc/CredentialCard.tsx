@@ -64,6 +64,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
               ? { borderColor: ListItems.revoked.borderColor, backgroundColor: ColorPallet.brand.primaryBackground }
               : {}
           }
+          textStyle={ListItems.avatarText}
         />
         <View style={styles.details}>
           <Text style={ListItems.credentialTitle} testID={testIdWithKey('CredentialName')}>
