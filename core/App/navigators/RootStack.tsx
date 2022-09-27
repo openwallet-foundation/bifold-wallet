@@ -68,7 +68,6 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   }
 
   const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<string | undefined> => {
-    console.log("init agent")
     if (initAgentInProcess) {
       return
     }

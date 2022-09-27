@@ -1,6 +1,6 @@
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -21,7 +21,7 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { agent } = useAgent()
-  const { setAuthenticated } = useAuth()
+  const { setAuthenticated, clearWalletSecret } = useAuth()
   const [state, dispatch] = useStore()
   const { t } = useTranslation()
   const { borderRadius, SettingsTheme, ColorPallet } = useTheme()
@@ -52,13 +52,21 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   })
 
   const resetApp = async () => {
-    await resetWalletSecret()
-    await agent?.wallet.delete()
+    if (!agent) {
+      throw new Error('Agent is undefined')
+    }
+    const keychainClear = await resetWalletSecret()
+    clearWalletSecret()
+    if (!keychainClear) {
+      throw new Error('Keychain was not succesfully cleared')
+    }
+    await agent.shutdown()
+    await agent.wallet.delete()
+    setModalVisible(false)
+    setAuthenticated(false)
     dispatch({
       type: DispatchAction.RESET_ONBOARDING,
     })
-    setModalVisible(false)
-    setAuthenticated(false)
   }
 
   return (
