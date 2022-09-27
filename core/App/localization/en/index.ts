@@ -81,7 +81,7 @@ const translation = {
     "IncorrectPIN": "Incorrect PIN",
   },
   "Contacts": {
-    "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
+    "EmptyList": "Your contacts are empty. Your added contacts will appear here.",
   },
   "ContactDetails": {
     "Created": "Created",
