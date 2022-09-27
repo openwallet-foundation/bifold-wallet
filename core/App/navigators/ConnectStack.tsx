@@ -1,3 +1,4 @@
+import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/core'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
@@ -11,9 +12,31 @@ import { ConnectStackParams, Screens } from '../types/navigators'
 import { createDefaultStackOptions } from './defaultStackOptions'
 
 const ConnectStack: React.FC = () => {
+  const navigation = useNavigation()
   const Stack = createStackNavigator<ConnectStackParams>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
+
+  // Needed to reset the stack history when navigating away for improved UX
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              { name: Screens.Connect },
+            ],
+          })
+        );
+      }
+    }, [])
+  )
+
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       {uiConfig.allowQrDisplay && <Stack.Screen name={Screens.Connect} component={Connect} />}

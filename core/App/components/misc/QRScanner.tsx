@@ -59,6 +59,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
       return () => {
         // Do something when the screen is unfocused
         // Useful for cleanup functions
+        // setTorchActive(false)
         setCameraActive(false)
       }
     }, [setCameraActive])
@@ -163,11 +164,11 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, setQrCodeScanError 
   return (
     <>
       <View style={styles.container}>
-        {device != null && hasPermission === 'authorized' && cameraActive && (
+        {device != null && hasPermission === 'authorized' && (
           <Camera
             style={StyleSheet.absoluteFill}
             device={device}
-            isActive={cameraActive}
+            isActive={true}
             torch={torchActive ? 'on' : 'off'}
             frameProcessor={frameProcessor}
             frameProcessorFps={5}
