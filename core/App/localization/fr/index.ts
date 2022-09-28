@@ -92,7 +92,9 @@ const translation = {
         "EnterPIN": "Veuillez saisir votre NIP",
         "IncorrectPIN": "NIP erroné",
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
-        "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille."
+        "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
+        "LoggedOut": "You're logged out",
+        "LoggedOutDescription": "To protect your information, you're logged out of your wallet if you have not used it for 5 minutes."
     },
     "Biometry": {
         "Toggle": "Toggle Biometrics",

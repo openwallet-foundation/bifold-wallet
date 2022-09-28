@@ -34,6 +34,7 @@ import {
 
 interface SplashProps {
   setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
+  agent: Agent | undefined
 }
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
@@ -62,7 +63,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * of this view.
  */
 const Splash: React.FC<SplashProps> = (props: SplashProps) => {
-  const { setAgent } = props
+  const { setAgent, agent } = props
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -141,29 +142,33 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
           return
         }
 
-        const newAgent = new Agent(
-          {
-            label: 'Aries Bifold',
-            mediatorConnectionsInvite: Config.MEDIATOR_URL,
-            mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-            walletConfig: { id: credentials.id, key: credentials.key },
-            autoAcceptConnections: true,
-            autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-            logger: new ConsoleLogger(LogLevel.trace),
-            indyLedgers,
-            connectToIndyLedgersOnStartup: true,
-            autoUpdateStorageOnStartup: true,
-          },
-          agentDependencies
-        )
+        let newAgent = agent
+        if (!newAgent) {
+          newAgent = new Agent(
+            {
+              label: 'Aries Bifold',
+              mediatorConnectionsInvite: Config.MEDIATOR_URL,
+              mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
+              walletConfig: { id: credentials.id, key: credentials.key },
+              autoAcceptConnections: true,
+              autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
+              logger: new ConsoleLogger(LogLevel.trace),
+              indyLedgers,
+              connectToIndyLedgersOnStartup: true,
+              autoUpdateStorageOnStartup: true,
+            },
+            agentDependencies
+          )
+          const wsTransport = new WsOutboundTransport()
+          const httpTransport = new HttpOutboundTransport()
 
-        const wsTransport = new WsOutboundTransport()
-        const httpTransport = new HttpOutboundTransport()
+          newAgent.registerOutboundTransport(wsTransport)
+          newAgent.registerOutboundTransport(httpTransport)
+        }
 
-        newAgent.registerOutboundTransport(wsTransport)
-        newAgent.registerOutboundTransport(httpTransport)
-
-        await newAgent.initialize()
+        if (!newAgent.isInitialized) {
+          await newAgent.initialize()
+        }
         setAgent(newAgent)
         navigation.navigate(Stacks.TabStack as never)
       } catch (e: unknown) {

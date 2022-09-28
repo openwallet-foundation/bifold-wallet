@@ -62,7 +62,7 @@ const App = () => {
                 />
                 <NetInfo />
                 <ErrorModal />
-                <RootStack setAgent={setAgent} />
+                <RootStack agent={agent} setAgent={setAgent} />
                 <Toast topOffset={15} config={toastConfig} />
               </NetworkProvider>
             </AuthProvider>

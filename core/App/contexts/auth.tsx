@@ -15,6 +15,7 @@ export interface AuthContext {
   checkPIN: (pin: string) => Promise<boolean>
   convertToUseBiometrics: () => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
+  wipeSavedWalletSecret: () => void
   setPIN: (pin: string) => Promise<void>
   isBiometricsActive: () => Promise<boolean>
 }
@@ -42,6 +43,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     return hash === secret.key
   }
 
+  const wipeSavedWalletSecret = () => {
+    setWalletSecret(undefined)
+  }
+
   const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
     if (walletSecret) {
       return walletSecret
@@ -63,6 +68,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         checkPIN,
         convertToUseBiometrics,
         getWalletCredentials,
+        wipeSavedWalletSecret,
         setPIN,
         isBiometricsActive,
       }}
