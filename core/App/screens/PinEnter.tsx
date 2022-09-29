@@ -21,6 +21,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const { t } = useTranslation()
   const { checkPIN, getWalletCredentials } = useAuth()
   const [pin, setPin] = useState<string>('')
+  const [continueEnabled, setContinueEnabled] = useState(true)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const [state] = useContext(StoreContext)
@@ -50,9 +51,12 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
 
   const onPinInputCompleted = async (pin: string) => {
     try {
+      setContinueEnabled(false)
       const result = await checkPIN(pin)
       if (!result) {
         setModalVisible(true)
+        setContinueEnabled(true)
+
         return
       }
       setAuthenticated()
@@ -91,6 +95,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           title={t('Global.Enter')}
           buttonType={ButtonType.Primary}
           testID={testIdWithKey('Enter')}
+          disabled={!continueEnabled}
           accessibilityLabel={t('Global.Enter')}
           onPress={() => {
             Keyboard.dismiss()
