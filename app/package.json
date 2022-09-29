@@ -12,7 +12,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@aries-framework/core": "file:../aries-framework-core-v0.2.4-connectionType.1.tgz",
+    "@aries-framework/core": "file:../aries-framework-core-v0.2.4-connectionType.2.tgz",
     "@aries-framework/react-hooks": "file:../aries-framework-react-hooks-v0.3.0-connectionType.5.tgz",
     "@aries-framework/react-native": "^0.2.4",
     "@formatjs/intl-pluralrules": "4.1.4",
