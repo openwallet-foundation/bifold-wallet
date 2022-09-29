@@ -70,7 +70,7 @@ const Terms: React.FC = () => {
     //   nav.goBack()
     // }
 
-    navigation.navigate(Screens.Privacy)
+    navigation.navigate(Screens.Onboarding)
   }
 
   return (

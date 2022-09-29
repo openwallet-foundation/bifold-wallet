@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import { Config } from 'react-native-config'
 import Toast from 'react-native-toast-message'
 
@@ -102,7 +102,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
           autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
           logger: new ConsoleLogger(LogLevel.trace),
           indyLedgers,
-          connectToIndyLedgersOnStartup: true,
+          connectToIndyLedgersOnStartup : Platform.OS === 'android',
           autoUpdateStorageOnStartup: true,
         },
         agentDependencies
