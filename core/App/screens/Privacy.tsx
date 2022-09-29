@@ -67,7 +67,7 @@ const Privacy: React.FC = () => {
     //   nav.goBack()
     // }
 
-    navigation.navigate(Screens.Onboarding)
+    navigation.navigate(Screens.Terms)
   }
 
   return (
