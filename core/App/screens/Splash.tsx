@@ -7,6 +7,7 @@ import {
   MediatorPickupStrategy,
   WsOutboundTransport,
 } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
@@ -31,10 +32,6 @@ import {
   Privacy as PrivacyState,
   Preferences as PreferencesState,
 } from '../types/state'
-
-interface SplashProps {
-  setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
-}
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
@@ -61,8 +58,8 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * iOS and Android launch screen to match the background color of
  * of this view.
  */
-const Splash: React.FC<SplashProps> = (props: SplashProps) => {
-  const { setAgent } = props
+const Splash: React.FC = () => {
+  const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()

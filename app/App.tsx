@@ -1,5 +1,4 @@
 import {
-  Agent,
   AgentProvider,
   AuthProvider,
   ConfigurationContext,
@@ -21,7 +20,7 @@ import {
   HomeContentView,
   UseBiometry,
 } from "aries-bifold";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import Toast from "react-native-toast-message";
@@ -39,7 +38,6 @@ initLanguages(translationResources);
 
 const App = () => {
   initStoredLanguage();
-  const [agent, setAgent] = useState<Agent | undefined>(undefined);
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our
@@ -49,7 +47,7 @@ const App = () => {
 
   return (
     <StoreProvider>
-      <AgentProvider agent={agent}>
+      <AgentProvider>
         <ThemeProvider value={theme}>
           <ConfigurationProvider value={defaultConfiguration}>
             <AuthProvider>
@@ -62,7 +60,7 @@ const App = () => {
                 />
                 <NetInfo />
                 <ErrorModal />
-                <RootStack setAgent={setAgent} />
+                <RootStack />
                 <Toast topOffset={15} config={toastConfig} />
               </NetworkProvider>
             </AuthProvider>
