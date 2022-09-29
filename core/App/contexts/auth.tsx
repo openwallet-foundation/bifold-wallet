@@ -8,6 +8,7 @@ import {
   secretForPIN,
   storeWalletSecret,
   loadWalletSecret,
+  loadWalletSalt,
   isBiometricsActive,
   wipeWalletKey,
 } from '../services/keychain'
@@ -48,7 +49,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   const checkPIN = async (pin: string): Promise<boolean> => {
-    const secret = await loadWalletSecret('', '', false)
+    const secret = await loadWalletSalt()
 
     if (!secret || !secret.salt) {
       return false
