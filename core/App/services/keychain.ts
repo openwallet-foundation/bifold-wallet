@@ -41,8 +41,8 @@ export const optionsForKeychainAccess = (service: KeychainServices, useBiometric
   return opts
 }
 
-export const secretForPIN = async (pin: string): Promise<WalletSecret> => {
-  const mySalt = uuid.v4().toString()
+export const secretForPIN = async (pin: string, salt?: string): Promise<WalletSecret> => {
+  const mySalt = salt ?? uuid.v4().toString()
   const myKey = await hashPIN(pin, mySalt)
   const secret: WalletSecret = {
     id: walletId,
@@ -53,10 +53,15 @@ export const secretForPIN = async (pin: string): Promise<WalletSecret> => {
   return secret
 }
 
+export const wipeWalletKey = async (useBiometrics: boolean) => {
+  const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
+  await Keychain.resetGenericPassword(opts)
+}
+
 export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
   const secretAsString = JSON.stringify(secret)
-  await Keychain.resetGenericPassword(opts)
+  await wipeWalletKey(useBiometrics)
   const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
   return typeof result === 'boolean' ? false : true
 }
@@ -114,24 +119,19 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
   return JSON.parse(result.password) as WalletKey
 }
 
-export const loadWalletSecret = async (title?: string, description?: string): Promise<WalletSecret | undefined> => {
+export const loadWalletSecret = async (
+  title?: string,
+  description?: string,
+  loadKey = true
+): Promise<WalletSecret | undefined> => {
   const salt = await loadWalletSalt()
-  const key = await loadWalletKey(title, description)
-
-  return { ...salt, ...key } as WalletSecret
-}
-
-export const convertToUseBiometrics = async (): Promise<boolean> => {
-  const useBiometrics = true
-  const secret = await loadWalletSecret()
-
-  if (!secret) {
-    return false
+  let key
+  if (loadKey) {
+    // this allows use to decline loading the key from biometrics storage
+    key = await loadWalletKey(title, description)
   }
 
-  await storeWalletSecret(secret, useBiometrics)
-
-  return true
+  return { ...salt, ...key } as WalletSecret
 }
 
 export const isBiometricsActive = async (): Promise<boolean> => {

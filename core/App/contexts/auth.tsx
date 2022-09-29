@@ -1,3 +1,6 @@
+import { Agent, AgentConfig } from '@aries-framework/core'
+import { IndyWallet } from '@aries-framework/core/build/wallet/IndyWallet'
+import { agentDependencies } from '@aries-framework/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -5,17 +8,17 @@ import {
   secretForPIN,
   storeWalletSecret,
   loadWalletSecret,
-  convertToUseBiometrics,
   isBiometricsActive,
+  wipeWalletKey,
 } from '../services/keychain'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 
 export interface AuthContext {
   checkPIN: (pin: string) => Promise<boolean>
-  convertToUseBiometrics: () => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
   setPIN: (pin: string) => Promise<void>
+  commitPIN: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
 }
 
@@ -30,16 +33,38 @@ export const AuthProvider: React.FC = ({ children }) => {
     await storeWalletSecret(secret)
   }
 
-  const checkPIN = async (pin: string): Promise<boolean> => {
-    const secret = await loadWalletSecret()
+  const commitPIN = async (useBiometry: boolean): Promise<boolean> => {
+    const secret = walletSecret
+    if (!secret) {
+      return false
+    }
+    if (useBiometry) {
+      await storeWalletSecret(secret, useBiometry)
+    } else {
+      // erase wallet key if biometrics is disabled
+      await wipeWalletKey(useBiometry)
+    }
+    return true
+  }
 
-    if (!secret || !secret.salt || !secret.key) {
+  const checkPIN = async (pin: string): Promise<boolean> => {
+    const secret = await loadWalletSecret('', '', false)
+
+    if (!secret || !secret.salt) {
       return false
     }
 
     const hash = await hashPIN(pin, secret.salt)
 
-    return hash === secret.key
+    try {
+      await agentDependencies.indy.openWallet({ id: secret.id }, { key: hash })
+      // need full secret in volatile memory in case user wants to fall back to using PIN
+      const fullSecret = await secretForPIN(pin, secret.salt)
+      setWalletSecret(fullSecret)
+      return true
+    } catch (e) {
+      return false
+    }
   }
 
   const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
@@ -48,7 +73,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
-    if (!secret || !secret.key) {
+    if (!secret) {
       return
     }
 
@@ -61,8 +86,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     <AuthContext.Provider
       value={{
         checkPIN,
-        convertToUseBiometrics,
         getWalletCredentials,
+        commitPIN,
         setPIN,
         isBiometricsActive,
       }}
