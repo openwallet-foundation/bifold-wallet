@@ -1,0 +1,68 @@
+diff --git a/node_modules/@aries-framework/react-hooks/build/AgentProvider.d.ts b/node_modules/@aries-framework/react-hooks/build/AgentProvider.d.ts
+index d6256cc..6ca0215 100644
+--- a/node_modules/@aries-framework/react-hooks/build/AgentProvider.d.ts
++++ b/node_modules/@aries-framework/react-hooks/build/AgentProvider.d.ts
+@@ -4,10 +4,8 @@ import * as React from 'react';
+ interface AgentContextInterface {
+     loading: boolean;
+     agent?: Agent;
++    setAgent: (agent?: Agent) => void;
+ }
+ export declare const useAgent: () => AgentContextInterface;
+-interface Props {
+-    agent: Agent | undefined;
+-}
+-declare const AgentProvider: React.FC<PropsWithChildren<Props>>;
++declare const AgentProvider: React.FC<PropsWithChildren>;
+ export default AgentProvider;
+diff --git a/node_modules/@aries-framework/react-hooks/build/AgentProvider.js b/node_modules/@aries-framework/react-hooks/build/AgentProvider.js
+index b30b8b5..1c6c16a 100644
+--- a/node_modules/@aries-framework/react-hooks/build/AgentProvider.js
++++ b/node_modules/@aries-framework/react-hooks/build/AgentProvider.js
+@@ -38,24 +38,19 @@ const useAgent = () => {
+     return agentContext;
+ };
+ exports.useAgent = useAgent;
+-const AgentProvider = ({ agent, children }) => {
+-    const [agentState, setAgentState] = (0, react_1.useState)({
++const AgentProvider = ({ children }) => {
++    const [state, setState] = (0, react_1.useState)({
+         loading: true,
+-        agent,
++        agent: undefined,
+     });
+-    const setInitialState = async () => {
+-        if (agent) {
+-            setAgentState({ agent, loading: false });
+-        }
++    const setAgent = (agent) => {
++        setState({ agent, loading: false });
+     };
+-    (0, react_1.useEffect)(() => {
+-        setInitialState();
+-    }, [agent]);
+-    return (React.createElement(AgentContext.Provider, { value: agentState },
+-        React.createElement(ConnectionProvider_1.default, { agent: agent },
+-            React.createElement(CredentialProvider_1.default, { agent: agent },
+-                React.createElement(ProofProvider_1.default, { agent: agent },
+-                    React.createElement(BasicMessageProvider_1.default, { agent: agent }, children))))));
++    return (React.createElement(AgentContext.Provider, { value: Object.assign({ setAgent }, state) },
++        React.createElement(ConnectionProvider_1.default, { agent: state.agent },
++            React.createElement(CredentialProvider_1.default, { agent: state.agent },
++                React.createElement(ProofProvider_1.default, { agent: state.agent },
++                    React.createElement(BasicMessageProvider_1.default, { agent: state.agent }, children))))));
+ };
+ exports.default = AgentProvider;
+-//# sourceMappingURL=AgentProvider.js.map
+\ No newline at end of file
++//# sourceMappingURL=AgentProvider.js.maps
+\ No newline at end of file
+diff --git a/node_modules/@aries-framework/react-hooks/build/AgentProvider.js.map b/node_modules/@aries-framework/react-hooks/build/AgentProvider.js.map
+index dd4dc30..f1f17a4 100644
+--- a/node_modules/@aries-framework/react-hooks/build/AgentProvider.js.map
++++ b/node_modules/@aries-framework/react-hooks/build/AgentProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"AgentProvider.js","sourceRoot":"","sources":["../src/AgentProvider.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AAGA,6CAA8B;AAC9B,iCAAsE;AAEtE,kFAAyD;AACzD,8EAAqD;AACrD,8EAAqD;AACrD,oEAA2C;AAO3C,MAAM,YAAY,GAAG,IAAA,qBAAa,EAAoC,SAAS,CAAC,CAAA;AAEzE,MAAM,QAAQ,GAAG,GAAG,EAAE;IAC3B,MAAM,YAAY,GAAG,IAAA,kBAAU,EAAC,YAAY,CAAC,CAAA;IAC7C,IAAI,CAAC,YAAY,EAAE;QACjB,MAAM,IAAI,KAAK,CAAC,qDAAqD,CAAC,CAAA;KACvE;IACD,OAAO,YAAY,CAAA;AACrB,CAAC,CAAA;AANY,QAAA,QAAQ,YAMpB;AAMD,MAAM,aAAa,GAAuC,CAAC,EAAE,KAAK,EAAE,QAAQ,EAAE,EAAE,EAAE;IAChF,MAAM,CAAC,UAAU,EAAE,aAAa,CAAC,GAAG,IAAA,gBAAQ,EAAwB;QAClE,OAAO,EAAE,IAAI;QACb,KAAK;KACN,CAAC,CAAA;IAEF,MAAM,eAAe,GAAG,KAAK,IAAI,EAAE;QACjC,IAAI,KAAK,EAAE;YACT,aAAa,CAAC,EAAE,KAAK,EAAE,OAAO,EAAE,KAAK,EAAE,CAAC,CAAA;SACzC;IACH,CAAC,CAAA;IAED,IAAA,iBAAS,EAAC,GAAG,EAAE;QACb,eAAe,EAAE,CAAA;IACnB,CAAC,EAAE,CAAC,KAAK,CAAC,CAAC,CAAA;IAEX,OAAO,CACL,oBAAC,YAAY,CAAC,QAAQ,IAAC,KAAK,EAAE,UAAU;QACtC,oBAAC,4BAAkB,IAAC,KAAK,EAAE,KAAK;YAC9B,oBAAC,4BAAkB,IAAC,KAAK,EAAE,KAAK;gBAC9B,oBAAC,uBAAa,IAAC,KAAK,EAAE,KAAK;oBACzB,oBAAC,8BAAoB,IAAC,KAAK,EAAE,KAAK,IAAG,QAAQ,CAAwB,CACvD,CACG,CACF,CACC,CACzB,CAAA;AACH,CAAC,CAAA;AAED,kBAAe,aAAa,CAAA"}
+\ No newline at end of file
++{"version":3,"file":"AgentProvider.js","sourceRoot":"","sources":["../src/AgentProvider.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AAGA,6CAA8B;AAC9B,iCAA2D;AAE3D,kFAAyD;AACzD,8EAAqD;AACrD,8EAAqD;AACrD,oEAA2C;AAQ3C,MAAM,YAAY,GAAG,IAAA,qBAAa,EAAoC,SAAS,CAAC,CAAA;AAEzE,MAAM,QAAQ,GAAG,GAAG,EAAE;IAC3B,MAAM,YAAY,GAAG,IAAA,kBAAU,EAAC,YAAY,CAAC,CAAA;IAC7C,IAAI,CAAC,YAAY,EAAE;QACjB,MAAM,IAAI,KAAK,CAAC,qDAAqD,CAAC,CAAA;KACvE;IACD,OAAO,YAAY,CAAA;AACrB,CAAC,CAAA;AANY,QAAA,QAAQ,YAMpB;AAED,MAAM,aAAa,GAAgC,CAAC,EAAE,QAAQ,EAAE,EAAE,EAAE;IAClE,MAAM,CAAC,KAAK,EAAE,QAAQ,CAAC,GAAG,IAAA,gBAAQ,EAAsC;QACtE,OAAO,EAAE,IAAI;QACb,KAAK,EAAE,SAAS;KACjB,CAAC,CAAA;IAEF,MAAM,QAAQ,GAAG,CAAC,KAAa,EAAQ,EAAE;QACvC,QAAQ,CAAC,EAAE,KAAK,EAAE,OAAO,EAAE,KAAK,EAAE,CAAC,CAAA;IACrC,CAAC,CAAA;IAED,OAAO,CACL,oBAAC,YAAY,CAAC,QAAQ,IAAC,KAAK,kBAAI,QAAQ,IAAK,KAAK;QAChD,oBAAC,4BAAkB,IAAC,KAAK,EAAE,KAAK,CAAC,KAAK;YACpC,oBAAC,4BAAkB,IAAC,KAAK,EAAE,KAAK,CAAC,KAAK;gBACpC,oBAAC,uBAAa,IAAC,KAAK,EAAE,KAAK,CAAC,KAAK;oBAC/B,oBAAC,8BAAoB,IAAC,KAAK,EAAE,KAAK,CAAC,KAAK,IAAG,QAAQ,CAAwB,CAC7D,CACG,CACF,CACC,CACzB,CAAA;AACH,CAAC,CAAA;AAED,kBAAe,aAAa,CAAA"}
+\ No newline at end of file
