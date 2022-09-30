@@ -119,17 +119,9 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
   return JSON.parse(result.password) as WalletKey
 }
 
-export const loadWalletSecret = async (
-  title?: string,
-  description?: string,
-  loadKey = true
-): Promise<WalletSecret | undefined> => {
+export const loadWalletSecret = async (title?: string, description?: string): Promise<WalletSecret | undefined> => {
   const salt = await loadWalletSalt()
-  let key
-  if (loadKey) {
-    // this allows use to decline loading the key from biometrics storage
-    key = await loadWalletKey(title, description)
-  }
+  const key = await loadWalletKey(title, description)
 
   return { ...salt, ...key } as WalletSecret
 }

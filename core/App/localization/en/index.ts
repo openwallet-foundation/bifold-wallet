@@ -100,7 +100,9 @@ const translation = {
     "EnterPIN": "Enter PIN",
     "IncorrectPIN": "Incorrect PIN",
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
-    "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet."
+    "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
+    "LoggedOut": "You're logged out",
+    "LoggedOutDescription": "To protect your information, you're logged out of your wallet if you have not used it for 5 minutes."
   },
   "Biometry": {
     "Toggle": "Toggle Biometrics",

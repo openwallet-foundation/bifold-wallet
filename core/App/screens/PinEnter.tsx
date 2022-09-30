@@ -5,9 +5,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
+import { InfoBoxType } from '../components/misc/InfoBox'
 import AlertModal from '../components/modals/AlertModal'
+import PopupModal from '../components/modals/PopupModal'
 import { useAuth } from '../contexts/auth'
-import { StoreContext } from '../contexts/store'
+import { DispatchAction } from '../contexts/reducers/store'
+import { StoreContext, useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
@@ -20,6 +23,7 @@ interface PinEnterProps {
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const { t } = useTranslation()
   const { checkPIN, getWalletCredentials } = useAuth()
+  const [, dispatch] = useStore()
   const [pin, setPin] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -29,6 +33,10 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const style = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    notifyText: {
+      ...TextTheme.normal,
+      marginVertical: 5,
     },
   })
 
@@ -40,6 +48,10 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
     const loadWalletCredentials = async () => {
       const creds = await getWalletCredentials()
       if (creds && creds.key) {
+        dispatch({
+          type: DispatchAction.LOCKOUT_UPDATED,
+          payload: [{ displayNotification: false }],
+        })
         setAuthenticated()
       }
     }
@@ -73,6 +85,24 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
         }
       />
+      {state.lockout.displayNotification && (
+        <PopupModal
+          notificationType={InfoBoxType.Info}
+          title={t('PinEnter.LoggedOut')}
+          bodyContent={
+            <View>
+              <Text style={style.notifyText}>{t('PinEnter.LoggedOutDescription')}</Text>
+            </View>
+          }
+          onCallToActionLabel={t('Global.Okay')}
+          onCallToActionPressed={() => {
+            dispatch({
+              type: DispatchAction.LOCKOUT_UPDATED,
+              payload: [{ displayNotification: false }],
+            })
+          }}
+        />
+      )}
       <View style={{ margin: 20 }}>
         <Image
           source={Assets.img.logoSecondary.src}

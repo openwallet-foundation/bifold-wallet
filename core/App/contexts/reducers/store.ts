@@ -6,6 +6,8 @@ import {
   Preferences as PreferencesState,
   Onboarding as OnboardingState,
   Credential as CredentialState,
+  Authentication as AuthenticationState,
+  Lockout as LockoutState,
   State,
 } from '../../types/state'
 
@@ -28,6 +30,10 @@ enum CredentialDispatchAction {
   CREDENTIAL_REVOKED_MESSAGE_DISMISSED = 'credentials/credentialRevokedMessageDismissed',
 }
 
+enum LockoutDispatchAction {
+  LOCKOUT_UPDATED = 'lockout/lockoutUpdated',
+}
+
 enum PrivacyDispatchAction {
   DID_SHOW_CAMERA_DISCLOSURE = 'privacy/didShowCameraDisclosure',
   PRIVACY_UPDATED = 'privacy/privacyStateLoaded',
@@ -47,6 +53,7 @@ export type DispatchAction =
   | ErrorDispatchAction
   | CredentialDispatchAction
   | PrivacyDispatchAction
+  | LockoutDispatchAction
   | PreferencesDispatchAction
   | AuthenticationDispatchAction
 
@@ -55,6 +62,7 @@ export const DispatchAction = {
   ...ErrorDispatchAction,
   ...CredentialDispatchAction,
   ...PrivacyDispatchAction,
+  ...LockoutDispatchAction,
   ...PreferencesDispatchAction,
   ...AuthenticationDispatchAction,
 }
@@ -111,6 +119,13 @@ const reducer = (state: State, action: ReducerAction): State => {
         privacy,
       }
     }
+    case LockoutDispatchAction.LOCKOUT_UPDATED: {
+      const lockout: LockoutState = (action?.payload || []).pop()
+      return {
+        ...state,
+        lockout,
+      }
+    }
     case OnboardingDispatchAction.ONBOARDING_UPDATED: {
       const onboarding: OnboardingState = (action?.payload || []).pop()
       return {
@@ -155,9 +170,11 @@ const reducer = (state: State, action: ReducerAction): State => {
       return newState
     }
     case AuthenticationDispatchAction.DID_AUTHENTICATE: {
+      const value: AuthenticationState = (action?.payload || []).pop()
+      const payload = value ?? { didAuthenticate: true }
       const newState = {
         ...state,
-        ...{ authentication: { didAuthenticate: true } },
+        ...{ authentication: payload },
       }
       return newState
     }
