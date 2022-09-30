@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/core'
 import { useAgent } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -74,7 +74,7 @@ const RootStack: React.FC = () => {
       setPrevAppStateVisible(appStateVisible)
       //lock user out after 5 minutes
       const msPerMinute = 60000
-      if (backgroundTime && Date.now() - backgroundTime > 5 * (msPerMinute / 60)) {
+      if (backgroundTime && Date.now() - backgroundTime > 5 * msPerMinute) {
         lockoutUser()
       }
     }

@@ -59,7 +59,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { agent, setAgent } = useAgent()
+  const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -158,7 +158,6 @@ const Splash: React.FC = () => {
 
         newAgent.registerOutboundTransport(wsTransport)
         newAgent.registerOutboundTransport(httpTransport)
-
 
         await newAgent.initialize()
         setAgent(newAgent)

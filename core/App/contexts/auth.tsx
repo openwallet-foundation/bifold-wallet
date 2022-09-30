@@ -35,6 +35,20 @@ export const AuthProvider: React.FC = ({ children }) => {
     await storeWalletSecret(secret)
   }
 
+  const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
+    if (walletSecret) {
+      return walletSecret
+    }
+
+    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
+    if (!secret) {
+      return
+    }
+    setWalletSecret(secret)
+
+    return secret
+  }
+
   const commitPIN = async (useBiometry: boolean): Promise<boolean> => {
     const secret = await getWalletCredentials()
     if (!secret) {
@@ -71,20 +85,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const removeSavedWalletSecret = () => {
     setWalletSecret(undefined)
-  }
-
-  const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
-    if (walletSecret) {
-      return walletSecret
-    }
-
-    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
-    if (!secret) {
-      return
-    }
-    setWalletSecret(secret)
-
-    return secret
   }
 
   return (

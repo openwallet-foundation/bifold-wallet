@@ -47,11 +47,11 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
 
     const loadWalletCredentials = async () => {
       const creds = await getWalletCredentials()
-      dispatch({
-        type: DispatchAction.LOCKOUT_UPDATED,
-        payload: [{ displayNotification: false }],
-      })
       if (creds && creds.key) {
+        dispatch({
+          type: DispatchAction.LOCKOUT_UPDATED,
+          payload: [{ displayNotification: false }],
+        })
         setAuthenticated()
       }
     }

@@ -119,11 +119,7 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
   return JSON.parse(result.password) as WalletKey
 }
 
-export const loadWalletSecret = async (
-  title?: string,
-  description?: string,
-  loadKey = true
-): Promise<WalletSecret | undefined> => {
+export const loadWalletSecret = async (title?: string, description?: string): Promise<WalletSecret | undefined> => {
   const salt = await loadWalletSalt()
   const key = await loadWalletKey(title, description)
 
