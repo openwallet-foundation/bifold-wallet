@@ -32,6 +32,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const { setPIN } = useAuth()
   const [pin, setPin] = useState('')
   const [pinTwo, setPinTwo] = useState('')
+  const [continueEnabled, setContinueEnabled] = useState(true)
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
     title: '',
@@ -51,6 +52,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
   const passcodeCreate = async (pin: string) => {
     try {
+      setContinueEnabled(false)
       await setPIN(pin)
       // This will trigger initAgent
       setAuthenticated()
@@ -148,6 +150,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         testID={testIdWithKey('CreatePIN')}
         accessibilityLabel={t('PinCreate.CreatePIN')}
         buttonType={ButtonType.Primary}
+        disabled={!continueEnabled}
         onPress={async () => {
           Keyboard.dismiss()
           await confirmEntry(pin, pinTwo)
