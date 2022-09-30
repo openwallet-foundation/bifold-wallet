@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, View } from 'react-native'
 
+import { walletTimeout } from '../constants'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -73,8 +74,7 @@ const RootStack: React.FC = () => {
       // prevents the user from being locked out during metro reloading
       setPrevAppStateVisible(appStateVisible)
       //lock user out after 5 minutes
-      const msPerMinute = 60000
-      if (backgroundTime && Date.now() - backgroundTime > 5 * msPerMinute) {
+      if (walletTimeout && backgroundTime && Date.now() - backgroundTime > walletTimeout) {
         lockoutUser()
       }
     }
