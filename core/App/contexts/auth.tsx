@@ -8,6 +8,7 @@ import {
   secretForPIN,
   storeWalletSecret,
   loadWalletSecret,
+  loadWalletSalt,
   isBiometricsActive,
   wipeWalletKey,
 } from '../services/keychain'
@@ -17,6 +18,7 @@ import { hashPIN } from '../utils/crypto'
 export interface AuthContext {
   checkPIN: (pin: string) => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
+  removeSavedWalletSecret: () => void
   setPIN: (pin: string) => Promise<void>
   commitPIN: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
@@ -33,8 +35,22 @@ export const AuthProvider: React.FC = ({ children }) => {
     await storeWalletSecret(secret)
   }
 
+  const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
+    if (walletSecret) {
+      return walletSecret
+    }
+
+    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
+    if (!secret) {
+      return
+    }
+    setWalletSecret(secret)
+
+    return secret
+  }
+
   const commitPIN = async (useBiometry: boolean): Promise<boolean> => {
-    const secret = walletSecret
+    const secret = await getWalletCredentials()
     if (!secret) {
       return false
     }
@@ -48,7 +64,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   const checkPIN = async (pin: string): Promise<boolean> => {
-    const secret = await loadWalletSecret('', '', false)
+    const secret = await loadWalletSalt()
 
     if (!secret || !secret.salt) {
       return false
@@ -67,19 +83,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
-    if (walletSecret) {
-      return walletSecret
-    }
-
-    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
-    if (!secret) {
-      return
-    }
-
-    setWalletSecret(secret)
-
-    return secret
+  const removeSavedWalletSecret = () => {
+    setWalletSecret(undefined)
   }
 
   return (
@@ -87,6 +92,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       value={{
         checkPIN,
         getWalletCredentials,
+        removeSavedWalletSecret,
         commitPIN,
         setPIN,
         isBiometricsActive,
