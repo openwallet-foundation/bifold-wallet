@@ -7,6 +7,7 @@ import {
   MediatorPickupStrategy,
   WsOutboundTransport,
 } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
@@ -31,11 +32,6 @@ import {
   Privacy as PrivacyState,
   Preferences as PreferencesState,
 } from '../types/state'
-
-interface SplashProps {
-  setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
-  agent: Agent | undefined
-}
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
@@ -62,8 +58,8 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * iOS and Android launch screen to match the background color of
  * of this view.
  */
-const Splash: React.FC<SplashProps> = (props: SplashProps) => {
-  const { setAgent, agent } = props
+const Splash: React.FC = () => {
+  const { agent, setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -142,33 +138,29 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
           return
         }
 
-        let newAgent = agent
-        if (!newAgent) {
-          newAgent = new Agent(
-            {
-              label: 'Aries Bifold',
-              mediatorConnectionsInvite: Config.MEDIATOR_URL,
-              mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-              walletConfig: { id: credentials.id, key: credentials.key },
-              autoAcceptConnections: true,
-              autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-              logger: new ConsoleLogger(LogLevel.trace),
-              indyLedgers,
-              connectToIndyLedgersOnStartup: true,
-              autoUpdateStorageOnStartup: true,
-            },
-            agentDependencies
-          )
-          const wsTransport = new WsOutboundTransport()
-          const httpTransport = new HttpOutboundTransport()
+        const newAgent = new Agent(
+          {
+            label: 'Aries Bifold',
+            mediatorConnectionsInvite: Config.MEDIATOR_URL,
+            mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
+            walletConfig: { id: credentials.id, key: credentials.key },
+            autoAcceptConnections: true,
+            autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
+            logger: new ConsoleLogger(LogLevel.trace),
+            indyLedgers,
+            connectToIndyLedgersOnStartup: true,
+            autoUpdateStorageOnStartup: true,
+          },
+          agentDependencies
+        )
+        const wsTransport = new WsOutboundTransport()
+        const httpTransport = new HttpOutboundTransport()
 
-          newAgent.registerOutboundTransport(wsTransport)
-          newAgent.registerOutboundTransport(httpTransport)
-        }
+        newAgent.registerOutboundTransport(wsTransport)
+        newAgent.registerOutboundTransport(httpTransport)
 
-        if (!newAgent.isInitialized) {
-          await newAgent.initialize()
-        }
+
+        await newAgent.initialize()
         setAgent(newAgent)
         navigation.navigate(Stacks.TabStack as never)
       } catch (e: unknown) {

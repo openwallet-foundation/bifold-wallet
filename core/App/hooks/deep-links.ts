@@ -1,4 +1,3 @@
-import { useAgent } from '@aries-framework/react-hooks'
 import { useEffect, useState } from 'react'
 import { Linking } from 'react-native'
 

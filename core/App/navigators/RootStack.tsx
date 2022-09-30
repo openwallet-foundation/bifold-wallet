@@ -1,5 +1,5 @@
-import { Agent } from '@aries-framework/core'
 import { useNavigation } from '@react-navigation/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +14,6 @@ import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
 import PinEnter from '../screens/PinEnter'
-import Splash from '../screens/Splash'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 
 import ConnectStack from './ConnectStack'
@@ -25,15 +24,10 @@ import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { createDefaultStackOptions } from './defaultStackOptions'
 
-interface RootStackProps {
-  setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
-  agent: Agent | undefined
-}
-
-const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
-  const { setAgent, agent } = props
+const RootStack: React.FC = () => {
   const [state, dispatch] = useStore()
-  const { wipeSavedWalletSecret } = useAuth()
+  const { removeSavedWalletSecret } = useAuth()
+  const { agent } = useAgent()
   const appState = useRef(AppState.currentState)
   const [backgroundTime, setBackgroundTime] = useState<number | undefined>(undefined)
   const [prevAppStateVisible, setPrevAppStateVisible] = useState<string>('')
@@ -48,11 +42,15 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
   const lockoutUser = async () => {
     if (agent && state.authentication.didAuthenticate) {
       // make shure agent is shutdown so wallet isn't still open
+      removeSavedWalletSecret()
       await agent.shutdown()
-      wipeSavedWalletSecret()
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
         payload: [{ didAuthenticate: false }],
+      })
+      dispatch({
+        type: DispatchAction.LOCKOUT_UPDATED,
+        payload: [{ displayNotification: true }],
       })
     }
   }
@@ -75,12 +73,8 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
       // prevents the user from being locked out during metro reloading
       setPrevAppStateVisible(appStateVisible)
       //lock user out after 5 minutes
-      const MS_PER_MINUTE = 60000
-      if (backgroundTime && Date.now() - backgroundTime > 5 * MS_PER_MINUTE) {
-        dispatch({
-          type: DispatchAction.LOCKOUT_UPDATED,
-          payload: [{ displayNotification: true }],
-        })
+      const msPerMinute = 60000
+      if (backgroundTime && Date.now() - backgroundTime > 5 * (msPerMinute / 60)) {
         lockoutUser()
       }
     }
@@ -104,9 +98,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash}>
-          {(props) => <Splash {...props} agent={agent} setAgent={setAgent} />}
-        </Stack.Screen>
+        <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Screens.EnterPin}>
           {(props) => <PinEnter {...props} setAuthenticated={() => onAuthenticated()} />}
         </Stack.Screen>
@@ -119,9 +111,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
 
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash}>
-          {(props) => <Splash {...props} agent={agent} setAgent={setAgent} />}
-        </Stack.Screen>
+        <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
         <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
         <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
@@ -137,9 +127,7 @@ const RootStack: React.FC<RootStackProps> = (props: RootStackProps) => {
     const carousel = createCarouselStyle(OnboardingTheme)
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash}>
-          {(props) => <Splash {...props} agent={agent} setAgent={setAgent} />}
-        </Stack.Screen>
+        <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
