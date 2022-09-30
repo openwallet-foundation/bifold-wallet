@@ -153,7 +153,6 @@ const Splash: React.FC = () => {
           },
           agentDependencies
         )
-
         const wsTransport = new WsOutboundTransport()
         const httpTransport = new HttpOutboundTransport()
 

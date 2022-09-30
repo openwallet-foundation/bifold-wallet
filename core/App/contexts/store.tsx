@@ -14,6 +14,9 @@ const initialState: State = {
   authentication: {
     didAuthenticate: false,
   },
+  lockout: {
+    displayNotification: false,
+  },
   privacy: {
     didShowCameraDisclosure: false,
   },

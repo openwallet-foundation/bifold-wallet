@@ -1,8 +1,12 @@
+import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AppState, View } from 'react-native'
 
+import { walletTimeout } from '../constants'
+import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -23,12 +27,58 @@ import { createDefaultStackOptions } from './defaultStackOptions'
 
 const RootStack: React.FC = () => {
   const [state, dispatch] = useStore()
+  const { removeSavedWalletSecret } = useAuth()
+  const { agent } = useAgent()
+  const appState = useRef(AppState.currentState)
+  const [backgroundTime, setBackgroundTime] = useState<number | undefined>(undefined)
+  const [prevAppStateVisible, setPrevAppStateVisible] = useState<string>('')
+  const [appStateVisible, setAppStateVisible] = useState<string>('')
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, splash, useBiometry } = useConfiguration()
+
+  const lockoutUser = async () => {
+    if (agent && state.authentication.didAuthenticate) {
+      // make shure agent is shutdown so wallet isn't still open
+      removeSavedWalletSecret()
+      await agent.shutdown()
+      dispatch({
+        type: DispatchAction.DID_AUTHENTICATE,
+        payload: [{ didAuthenticate: false }],
+      })
+      dispatch({
+        type: DispatchAction.LOCKOUT_UPDATED,
+        payload: [{ displayNotification: true }],
+      })
+    }
+  }
+
+  useEffect(() => {
+    AppState.addEventListener('change', (nextAppState) => {
+      if (appState.current.match(/active/) && nextAppState.match(/inactive|background/)) {
+        //update time that app gets put in background
+        setBackgroundTime(Date.now())
+      }
+
+      setPrevAppStateVisible(appState.current)
+      appState.current = nextAppState
+      setAppStateVisible(appState.current)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (appStateVisible.match(/active/) && prevAppStateVisible.match(/inactive|background/) && backgroundTime) {
+      // prevents the user from being locked out during metro reloading
+      setPrevAppStateVisible(appStateVisible)
+      //lock user out after 5 minutes
+      if (walletTimeout && backgroundTime && Date.now() - backgroundTime > walletTimeout) {
+        lockoutUser()
+      }
+    }
+  }, [appStateVisible, prevAppStateVisible, backgroundTime])
 
   const onTutorialCompleted = () => {
     dispatch({

@@ -18,6 +18,9 @@ export enum KeychainServices {
   Key = 'secret.wallet.key',
 }
 
+// wallet timeout of 5 minutes, 0 means the wallet never locks due to inactivity
+export const walletTimeout = 60000 * 5
+
 export const walletId = 'walletId'
 
 export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric' } = {
