@@ -6,6 +6,7 @@ import AgentProvider from '@aries-framework/react-hooks'
 
 import indyLedgers from '../configs/ledgers/indy'
 
+import { defaultConfiguration } from './DefaultConfiguration'
 import LoadingIndicator from './components/animated/LoadingIndicator'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
@@ -70,4 +71,5 @@ export {
   Terms,
   HomeContentView,
   UseBiometry,
+  defaultConfiguration,
 }

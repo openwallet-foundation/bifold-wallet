@@ -1,7 +1,6 @@
 import {
   AgentProvider,
   AuthProvider,
-  ConfigurationContext,
   ConfigurationProvider,
   NetworkProvider,
   StoreProvider,
@@ -14,25 +13,12 @@ import {
   toastConfig,
   RootStack,
   NetInfo,
-  OnboardingPages,
-  Splash,
-  Terms,
-  HomeContentView,
-  UseBiometry,
+  defaultConfiguration,
 } from "aries-bifold";
 import React, { useEffect } from "react";
 import { StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import Toast from "react-native-toast-message";
-
-const defaultConfiguration: ConfigurationContext = {
-  pages: OnboardingPages,
-  splash: Splash,
-  terms: Terms,
-  homeContentView: HomeContentView,
-  OCABundle: {},
-  useBiometry: UseBiometry,
-};
 
 initLanguages(translationResources);
 
