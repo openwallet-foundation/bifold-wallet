@@ -2,6 +2,13 @@
 
 exports[`Onboarding Renders correctly 1`] = `
 <RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+      "bottom",
+    ]
+  }
   style={
     Object {
       "alignItems": "center",
@@ -140,8 +147,8 @@ exports[`Onboarding Renders correctly 1`] = `
       Object {
         "alignItems": "center",
         "flexDirection": "row",
-        "flexShrink": 2,
-        "marginBottom": 35,
+        "flexShrink": 1,
+        "marginBottom": 30,
       }
     }
   >
