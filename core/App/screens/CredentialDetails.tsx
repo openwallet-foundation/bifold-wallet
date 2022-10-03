@@ -170,7 +170,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           </>
         )}
         footer={() => (
-          <View style={{ marginBottom: 30 }}>
+          <View style={{ marginBottom: 52 }}>
             {credentialConnectionLabel ? (
               <View
                 style={{
