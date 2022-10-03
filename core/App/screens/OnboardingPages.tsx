@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import CredentialList from '../assets/img/credential-list.svg'
@@ -24,10 +24,10 @@ export const createCarouselStyle = (OnboardingTheme: any): OnboardingStyleSheet 
       flexDirection: 'column',
     },
     pagerContainer: {
-      flexShrink: 2,
+      flexShrink: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: 35,
+      marginBottom: 30,
     },
     pagerDot: {
       ...OnboardingTheme.pagerDot,
@@ -89,19 +89,21 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
   return (
     <>
-      <View style={{ alignItems: 'center' }}>
-        <SecureImage {...imageDisplayOptions} />
-      </View>
-      <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
-        <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
-          Ornare suspendisse sed nisi lacus
-        </Text>
-        <Text style={[styles.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
-          Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer quis
-          auctor elit sed.
-        </Text>
-      </View>
-      <View style={{ marginTop: 'auto', marginBottom: 20, paddingHorizontal: 20 }}>
+      <ScrollView style={{ padding: 20 }}>
+        <View style={{ alignItems: 'center' }}>
+          <SecureImage {...imageDisplayOptions} />
+        </View>
+        <View style={{ marginBottom: 20 }}>
+          <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+            Ornare suspendisse sed nisi lacus
+          </Text>
+          <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
+            Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer
+            quis auctor elit sed.
+          </Text>
+        </View>
+      </ScrollView>
+      <View style={{ marginTop: 'auto', margin: 20 }}>
         <Button
           title={t('Global.GetStarted')}
           accessibilityLabel={t('Global.GetStarted')}
@@ -131,17 +133,17 @@ const createPageWith = (image: React.FC<SvgProps>, title: string, body: string, 
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
   return (
-    <>
+    <ScrollView style={{ padding: 20 }}>
       <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
-      <View style={{ marginLeft: 20, marginRight: 20, marginTop: 30 }}>
+      <View style={{ marginBottom: 20 }}>
         <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
           {title}
         </Text>
-        <Text style={[styles.bodyText, { marginTop: 20 }]} testID={testIdWithKey('BodyText')}>
+        <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
           {body}
         </Text>
       </View>
-    </>
+    </ScrollView>
   )
 }
 
