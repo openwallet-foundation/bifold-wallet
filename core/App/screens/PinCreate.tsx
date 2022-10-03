@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Keyboard, StyleSheet, Text, StatusBar } from 'react-native'
+import { Platform, Keyboard, StyleSheet, Text, StatusBar, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -45,8 +45,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const { ColorPallet, TextTheme } = useTheme()
   const style = StyleSheet.create({
     container: {
+      height: '100%',
       backgroundColor: ColorPallet.brand.primaryBackground,
-      margin: 20,
+      padding: 20,
     },
   })
 
@@ -117,52 +118,55 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   }
 
   return (
-    <SafeAreaView style={[style.container]}>
+    <SafeAreaView>
       <StatusBar
         barStyle={
           Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
         }
       />
-      <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
-        <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
-      </Text>
-      <PinInput
-        label={t('PinCreate.EnterPINTitle')}
-        onPinChanged={setPin}
-        testID={testIdWithKey('EnterPIN')}
-        accessibilityLabel={t('PinCreate.EnterPIN')}
-        autoFocus={true}
-      />
-      <PinInput
-        label={t('PinCreate.ReenterPIN')}
-        onPinChanged={(p: string) => {
-          setPinTwo(p)
-          if (p.length === minPINLength) {
-            Keyboard.dismiss()
-          }
-        }}
-        testID={testIdWithKey('ReenterPIN')}
-        accessibilityLabel={t('PinCreate.ReenterPIN')}
-      />
-
-      <Button
-        title={t('PinCreate.CreatePIN')}
-        testID={testIdWithKey('CreatePIN')}
-        accessibilityLabel={t('PinCreate.CreatePIN')}
-        buttonType={ButtonType.Primary}
-        disabled={!continueEnabled}
-        onPress={async () => {
-          Keyboard.dismiss()
-          await confirmEntry(pin, pinTwo)
-        }}
-      />
-      {modalState.visible && (
-        <AlertModal
-          title={modalState.title}
-          message={modalState.message}
-          submit={() => setModalState({ ...modalState, visible: false })}
+      <View style={[style.container]}>
+        <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
+          <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
+        </Text>
+        <PinInput
+          label={t('PinCreate.EnterPINTitle')}
+          onPinChanged={setPin}
+          testID={testIdWithKey('EnterPIN')}
+          accessibilityLabel={t('PinCreate.EnterPIN')}
+          autoFocus={true}
         />
-      )}
+        <PinInput
+          label={t('PinCreate.ReenterPIN')}
+          onPinChanged={(p: string) => {
+            setPinTwo(p)
+            if (p.length === minPINLength) {
+              Keyboard.dismiss()
+            }
+          }}
+          testID={testIdWithKey('ReenterPIN')}
+          accessibilityLabel={t('PinCreate.ReenterPIN')}
+        />
+        {modalState.visible && (
+          <AlertModal
+            title={modalState.title}
+            message={modalState.message}
+            submit={() => setModalState({ ...modalState, visible: false })}
+          />
+        )}
+      </View>
+      <View style={{ marginTop: 'auto', margin: 20 }}>
+        <Button
+          title={t('PinCreate.CreatePIN')}
+          testID={testIdWithKey('CreatePIN')}
+          accessibilityLabel={t('PinCreate.CreatePIN')}
+          buttonType={ButtonType.Primary}
+          disabled={!continueEnabled}
+          onPress={async () => {
+            Keyboard.dismiss()
+            await confirmEntry(pin, pinTwo)
+          }}
+        />
+      </View>
     </SafeAreaView>
   )
 }
