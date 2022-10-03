@@ -3,7 +3,7 @@ import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Modal, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Platform, Modal, StatusBar, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CredentialAdded from '../components/animated/CredentialAdded'
@@ -39,10 +39,8 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const styles = StyleSheet.create({
     container: {
       ...ListItems.credentialOfferBackground,
-      flexGrow: 1,
-      flexDirection: 'column',
-      paddingHorizontal: 25,
-      paddingTop: 20,
+      height: '100%',
+      padding: 20,
     },
     image: {
       marginTop: 20,
@@ -53,11 +51,11 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     messageText: {
       fontWeight: 'normal',
       textAlign: 'center',
-      marginTop: 90,
+      marginTop: 30,
     },
     controlsContainer: {
       marginTop: 'auto',
-      marginBottom: 20,
+      margin: 20,
     },
     delayMessageText: {
       textAlign: 'center',
@@ -103,65 +101,71 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
-      <StatusBar
-        barStyle={
-          Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(styles.container.backgroundColor)
-        }
-      />
-      <SafeAreaView style={[styles.container]}>
-        <View style={[styles.messageContainer]}>
-          {credentialDeliveryStatus === DeliveryStatus.Pending && (
+      <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
+        <StatusBar
+          barStyle={
+            Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(styles.container.backgroundColor)
+          }
+        />
+        <ScrollView style={[styles.container]}>
+          <View style={[styles.messageContainer]}>
+            {credentialDeliveryStatus === DeliveryStatus.Pending && (
+              <Text
+                style={[ListItems.credentialOfferTitle, styles.messageText]}
+                testID={testIdWithKey('CredentialOnTheWay')}
+              >
+                {t('CredentialOffer.CredentialOnTheWay')}
+              </Text>
+            )}
+
+            {credentialDeliveryStatus === DeliveryStatus.Completed && (
+              <Text
+                style={[ListItems.credentialOfferTitle, styles.messageText]}
+                testID={testIdWithKey('CredentialAddedToYourWallet')}
+              >
+                {t('CredentialOffer.CredentialAddedToYourWallet')}
+              </Text>
+            )}
+          </View>
+
+          <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
+            {credentialDeliveryStatus === DeliveryStatus.Completed && <CredentialAdded />}
+            {credentialDeliveryStatus === DeliveryStatus.Pending && <CredentialPending />}
+          </View>
+
+          {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
             <Text
-              style={[ListItems.credentialOfferTitle, styles.messageText]}
-              testID={testIdWithKey('CredentialOnTheWay')}
+              style={[ListItems.credentialOfferDetails, styles.delayMessageText]}
+              testID={testIdWithKey('TakingTooLong')}
             >
-              {t('CredentialOffer.CredentialOnTheWay')}
+              {t('Connection.TakingTooLong')}
             </Text>
           )}
-
-          {credentialDeliveryStatus === DeliveryStatus.Completed && (
-            <Text
-              style={[ListItems.credentialOfferTitle, styles.messageText]}
-              testID={testIdWithKey('CredentialAddedToYourWallet')}
-            >
-              {t('CredentialOffer.CredentialAddedToYourWallet')}
-            </Text>
-          )}
-        </View>
-
-        <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-          {credentialDeliveryStatus === DeliveryStatus.Completed && <CredentialAdded />}
-          {credentialDeliveryStatus === DeliveryStatus.Pending && <CredentialPending />}
-        </View>
-
-        {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
-          <Text
-            style={[ListItems.credentialOfferDetails, styles.delayMessageText]}
-            testID={testIdWithKey('TakingTooLong')}
-          >
-            {t('Connection.TakingTooLong')}
-          </Text>
-        )}
+        </ScrollView>
 
         <View style={[styles.controlsContainer]}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
-            <Button
-              title={t('Loading.BackToHome')}
-              accessibilityLabel={t('Loading.BackToHome')}
-              testID={testIdWithKey('BackToHome')}
-              onPress={onBackToHomeTouched}
-              buttonType={ButtonType.Secondary}
-            />
+            <View>
+              <Button
+                title={t('Loading.BackToHome')}
+                accessibilityLabel={t('Loading.BackToHome')}
+                testID={testIdWithKey('BackToHome')}
+                onPress={onBackToHomeTouched}
+                buttonType={ButtonType.Secondary}
+              />
+            </View>
           )}
 
           {credentialDeliveryStatus === DeliveryStatus.Completed && (
-            <Button
-              title={t('Global.Done')}
-              accessibilityLabel={t('Global.Done')}
-              testID={testIdWithKey('Done')}
-              onPress={onDoneTouched}
-              buttonType={ButtonType.Primary}
-            />
+            <View>
+              <Button
+                title={t('Global.Done')}
+                accessibilityLabel={t('Global.Done')}
+                testID={testIdWithKey('Done')}
+                onPress={onDoneTouched}
+                buttonType={ButtonType.Primary}
+              />
+            </View>
           )}
         </View>
       </SafeAreaView>

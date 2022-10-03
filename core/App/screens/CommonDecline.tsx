@@ -3,8 +3,8 @@ import { useAgent, useCredentialById, useProofById } from '@aries-framework/reac
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusBar, StyleSheet, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 
 import CredentialDeclined from '../assets/img/credential-declined.svg'
 import ProofRequestDeclined from '../assets/img/proof-declined.svg'
@@ -50,9 +50,9 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
   }
   const styles = StyleSheet.create({
     container: {
-      flexGrow: 1,
+      height: '100%',
       backgroundColor: ColorPallet.brand.primaryBackground,
-      paddingHorizontal: 25,
+      padding: 20,
     },
     image: {
       marginVertical: 66,
@@ -64,7 +64,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
     messageText: {
       fontWeight: 'normal',
       textAlign: 'center',
-      marginTop: 90,
+      marginTop: 30,
     },
   })
 
@@ -128,48 +128,51 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
   }, [proof])
 
   return (
-    <SafeAreaView style={[styles.container]}>
+    <SafeAreaView edges={['left', 'right', 'bottom'].concat(didDecline ? ['top'] : []) as Edge[]}>
       {didDecline && <StatusBar hidden={true} />}
-      <View style={[{ marginTop: 25 }]}>
+      <>
         {!didDecline && (
           <>
-            <InfoBox
-              notificationType={InfoBoxType.Warn}
-              title={
-                declineType === DeclineType.ProofRequest
-                  ? t('ProofRequest.ConfirmDeclinedTitle')
-                  : t('CredentialOffer.ConfirmDeclinedTitle')
-              }
-              description={
-                declineType === DeclineType.ProofRequest
-                  ? t('ProofRequest.ConfirmDeclinedMessage')
-                  : t('CredentialOffer.ConfirmDeclinedMessage')
-              }
-            />
-
-            {credential && (
-              <View style={{ marginTop: 20 }}>
-                <CredentialCard credential={credential} />
-              </View>
-            )}
-
-            <View style={{ marginVertical: 25 }}>
-              <Button
+            <ScrollView style={[styles.container]}>
+              <InfoBox
+                notificationType={InfoBoxType.Warn}
                 title={
                   declineType === DeclineType.ProofRequest
-                    ? t('ProofRequest.ConfirmDecline')
-                    : t('CredentialOffer.ConfirmDecline')
+                    ? t('ProofRequest.ConfirmDeclinedTitle')
+                    : t('CredentialOffer.ConfirmDeclinedTitle')
                 }
-                accessibilityLabel={
+                description={
                   declineType === DeclineType.ProofRequest
-                    ? t('ProofRequest.ConfirmDecline')
-                    : t('CredentialOffer.ConfirmDecline')
+                    ? t('ProofRequest.ConfirmDeclinedMessage')
+                    : t('CredentialOffer.ConfirmDeclinedMessage')
                 }
-                testID={testIdWithKey('ConfirmDeclineButton')}
-                onPress={confirmDeclineTouched}
-                buttonType={ButtonType.Primary}
               />
-              <View style={[{ marginTop: 10 }]}>
+              {credential && (
+                <View style={{ marginTop: 20 }}>
+                  <CredentialCard credential={credential} />
+                </View>
+              )}
+            </ScrollView>
+
+            <View style={{ marginTop: 'auto', margin: 20 }}>
+              <View style={{ paddingTop: 10 }}>
+                <Button
+                  title={
+                    declineType === DeclineType.ProofRequest
+                      ? t('ProofRequest.ConfirmDecline')
+                      : t('CredentialOffer.ConfirmDecline')
+                  }
+                  accessibilityLabel={
+                    declineType === DeclineType.ProofRequest
+                      ? t('ProofRequest.ConfirmDecline')
+                      : t('CredentialOffer.ConfirmDecline')
+                  }
+                  testID={testIdWithKey('ConfirmDeclineButton')}
+                  onPress={confirmDeclineTouched}
+                  buttonType={ButtonType.Primary}
+                />
+              </View>
+              <View style={[{ paddingTop: 10 }]}>
                 <Button
                   title={
                     declineType === DeclineType.ProofRequest
@@ -194,22 +197,25 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
 
         {didDecline && (
           <>
-            <View style={[styles.messageContainer]}>
-              <Text
-                style={[TextTheme.headingThree, styles.messageText]}
-                testID={testIdWithKey('RequestOrOfferDeclined')}
-              >
-                {declineType === DeclineType.ProofRequest
-                  ? t('ProofRequest.ProofRequestDeclined')
-                  : t('CredentialOffer.CredentialDeclined')}
-              </Text>
-              {declineType === DeclineType.ProofRequest ? (
-                <ProofRequestDeclined style={[styles.image]} {...imageDisplayOptions} />
-              ) : (
-                <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
-              )}
-            </View>
-            <View>
+            <ScrollView style={[styles.container]}>
+              <View style={[styles.messageContainer]}>
+                <Text
+                  style={[TextTheme.headingThree, styles.messageText]}
+                  testID={testIdWithKey('RequestOrOfferDeclined')}
+                >
+                  {declineType === DeclineType.ProofRequest
+                    ? t('ProofRequest.ProofRequestDeclined')
+                    : t('CredentialOffer.CredentialDeclined')}
+                </Text>
+                {declineType === DeclineType.ProofRequest ? (
+                  <ProofRequestDeclined style={[styles.image]} {...imageDisplayOptions} />
+                ) : (
+                  <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
+                )}
+              </View>
+            </ScrollView>
+
+            <View style={{ marginTop: 'auto', margin: 20 }}>
               <Button
                 title={t('Global.Done')}
                 accessibilityLabel={t('Global.Done')}
@@ -220,7 +226,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
             </View>
           </>
         )}
-      </View>
+      </>
     </SafeAreaView>
   )
 }

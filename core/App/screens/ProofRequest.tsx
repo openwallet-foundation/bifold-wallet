@@ -223,117 +223,120 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record
-        header={() => (
-          <View style={styles.headerTextContainer}>
-            {!hasAvailableCredentials() ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon
-                  style={{ marginLeft: -2, marginRight: 10 }}
-                  name="highlight-off"
-                  color={ListItems.proofIcon.color}
-                  size={ListItems.proofIcon.fontSize}
-                />
+    <>
+      <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
+        <Record
+          header={() => (
+            <View style={styles.headerTextContainer}>
+              {!hasAvailableCredentials() ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon
+                    style={{ marginLeft: -2, marginRight: 10 }}
+                    name="highlight-off"
+                    color={ListItems.proofIcon.color}
+                    size={ListItems.proofIcon.fontSize}
+                  />
+                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                    <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                    {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                  </Text>
+                </View>
+              ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                  {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                  {t('ProofRequest.IsRequestingYouToShare')}:
                 </Text>
-              </View>
-            ) : (
-              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                {t('ProofRequest.IsRequestingYouToShare')}:
-              </Text>
-            )}
-          </View>
-        )}
-        footer={() => (
-          <View
-            style={{
-              paddingHorizontal: 25,
-              paddingVertical: 16,
-              paddingBottom: 26,
-              backgroundColor: ColorPallet.brand.secondaryBackground,
-            }}
-          >
-            {loading ? <RecordLoading /> : null}
-            {proofConnectionLabel ? <ConnectionAlert connectionID={proofConnectionLabel} /> : null}
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Share')}
-                accessibilityLabel={t('Global.Share')}
-                testID={testIdWithKey('Share')}
-                buttonType={ButtonType.Primary}
-                onPress={handleAcceptPress}
-                disabled={!hasAvailableCredentials()}
-              />
-            </View>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Decline')}
-                accessibilityLabel={t('Global.Decline')}
-                testID={testIdWithKey('Decline')}
-                buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
-                onPress={handleDeclinePress}
-              />
-            </View>
-          </View>
-        )}
-        fields={[...attributes, ...predicates]}
-        field={(field, index, fields) => {
-          return (
-            <RecordField
-              field={field}
-              fieldValue={(field) => (
-                <>
-                  {(!(field as Attribute)?.value && !(field as Predicate)?.pValue) || field?.revoked ? (
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Icon
-                        style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                        name="close"
-                        color={ListItems.proofError.color}
-                        size={ListItems.recordAttributeText.fontSize}
-                      />
-
-                      <Text
-                        style={[ListItems.recordAttributeText, { color: ListItems.proofError.color }]}
-                        testID={testIdWithKey('RevokedOrNotAvailable')}
-                      >
-                        {field?.revoked ? t('CredentialDetails.Revoked') : t('ProofRequest.NotAvailableInYourWallet')}
-                      </Text>
-                    </View>
-                  ) : (
-                    <Text style={ListItems.recordAttributeText} testID={testIdWithKey('AttributeValue')}>
-                      {(field as Attribute)?.value || `${(field as Predicate)?.pType} ${(field as Predicate)?.pValue}`}
-                    </Text>
-                  )}
-                  {(field as Attribute)?.value ? (
-                    <TouchableOpacity
-                      accessible={true}
-                      accessibilityLabel={t('ProofRequest.Details')}
-                      testID={testIdWithKey('Details')}
-                      activeOpacity={1}
-                      onPress={() =>
-                        navigation.navigate(Screens.ProofRequestAttributeDetails, {
-                          proofId,
-                          attributeName: (field as Attribute).name,
-                        })
-                      }
-                      style={styles.link}
-                    >
-                      <Text style={styles.detailsButton}>{t('ProofRequest.Details')}</Text>
-                    </TouchableOpacity>
-                  ) : null}
-                </>
               )}
-              hideBottomBorder={index === fields.length - 1}
-            />
-          )
-        }}
-      />
+            </View>
+          )}
+          footer={() => (
+            <View
+              style={{
+                paddingHorizontal: 25,
+                paddingVertical: 16,
+                paddingBottom: 26,
+                backgroundColor: ColorPallet.brand.secondaryBackground,
+              }}
+            >
+              {loading ? <RecordLoading /> : null}
+              {proofConnectionLabel ? <ConnectionAlert connectionID={proofConnectionLabel} /> : null}
+              <View style={styles.footerButton}>
+                <Button
+                  title={t('Global.Share')}
+                  accessibilityLabel={t('Global.Share')}
+                  testID={testIdWithKey('Share')}
+                  buttonType={ButtonType.Primary}
+                  onPress={handleAcceptPress}
+                  disabled={!hasAvailableCredentials()}
+                />
+              </View>
+              <View style={styles.footerButton}>
+                <Button
+                  title={t('Global.Decline')}
+                  accessibilityLabel={t('Global.Decline')}
+                  testID={testIdWithKey('Decline')}
+                  buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
+                  onPress={handleDeclinePress}
+                />
+              </View>
+            </View>
+          )}
+          fields={[...attributes, ...predicates]}
+          field={(field, index, fields) => {
+            return (
+              <RecordField
+                field={field}
+                fieldValue={(field) => (
+                  <>
+                    {(!(field as Attribute)?.value && !(field as Predicate)?.pValue) || field?.revoked ? (
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon
+                          style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                          name="close"
+                          color={ListItems.proofError.color}
+                          size={ListItems.recordAttributeText.fontSize}
+                        />
+
+                        <Text
+                          style={[ListItems.recordAttributeText, { color: ListItems.proofError.color }]}
+                          testID={testIdWithKey('RevokedOrNotAvailable')}
+                        >
+                          {field?.revoked ? t('CredentialDetails.Revoked') : t('ProofRequest.NotAvailableInYourWallet')}
+                        </Text>
+                      </View>
+                    ) : (
+                      <Text style={ListItems.recordAttributeText} testID={testIdWithKey('AttributeValue')}>
+                        {(field as Attribute)?.value ||
+                          `${(field as Predicate)?.pType} ${(field as Predicate)?.pValue}`}
+                      </Text>
+                    )}
+                    {(field as Attribute)?.value ? (
+                      <TouchableOpacity
+                        accessible={true}
+                        accessibilityLabel={t('ProofRequest.Details')}
+                        testID={testIdWithKey('Details')}
+                        activeOpacity={1}
+                        onPress={() =>
+                          navigation.navigate(Screens.ProofRequestAttributeDetails, {
+                            proofId,
+                            attributeName: (field as Attribute).name,
+                          })
+                        }
+                        style={styles.link}
+                      >
+                        <Text style={styles.detailsButton}>{t('ProofRequest.Details')}</Text>
+                      </TouchableOpacity>
+                    ) : null}
+                  </>
+                )}
+                hideBottomBorder={index === fields.length - 1}
+              />
+            )
+          }}
+        />
+      </SafeAreaView>
       <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
-    </SafeAreaView>
+    </>
   )
 }
 

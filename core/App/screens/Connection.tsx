@@ -2,7 +2,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, View } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ConnectionLoading from '../components/animated/ConnectionLoading'
@@ -35,11 +35,9 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord } = state
   const styles = StyleSheet.create({
     container: {
-      flexGrow: 1,
-      flexDirection: 'column',
+      height: '100%',
       backgroundColor: ColorPallet.brand.primaryBackground,
-      paddingHorizontal: 25,
-      paddingTop: 20,
+      padding: 20,
     },
     image: {
       marginTop: 20,
@@ -50,11 +48,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     messageText: {
       fontWeight: 'normal',
       textAlign: 'center',
-      marginTop: 90,
+      marginTop: 30,
     },
     controlsContainer: {
       marginTop: 'auto',
-      marginBottom: 20,
+      margin: 20,
     },
     delayMessageText: {
       textAlign: 'center',
@@ -137,22 +135,24 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         setModalVisible(false)
       }}
     >
-      <SafeAreaView style={[styles.container]}>
-        <View style={[styles.messageContainer]}>
-          <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
-            {t('Connection.JustAMoment')}
-          </Text>
-        </View>
+      <SafeAreaView>
+        <ScrollView style={[styles.container]}>
+          <View style={[styles.messageContainer]}>
+            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+              {t('Connection.JustAMoment')}
+            </Text>
+          </View>
 
-        <View style={[styles.image]}>
-          <ConnectionLoading />
-        </View>
+          <View style={[styles.image]}>
+            <ConnectionLoading />
+          </View>
 
-        {shouldShowDelayMessage && (
-          <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
-            {t('Connection.TakingTooLong')}
-          </Text>
-        )}
+          {shouldShowDelayMessage && (
+            <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+              {t('Connection.TakingTooLong')}
+            </Text>
+          )}
+        </ScrollView>
         <View style={[styles.controlsContainer]}>
           <Button
             title={t('Loading.BackToHome')}
