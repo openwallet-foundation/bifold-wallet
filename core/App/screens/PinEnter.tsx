@@ -33,7 +33,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
 
   const style = StyleSheet.create({
     container: {
+      height: '100%',
       backgroundColor: ColorPallet.brand.primaryBackground,
+      padding: 20,
     },
     notifyText: {
       ...TextTheme.normal,
@@ -92,31 +94,13 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   }
 
   return (
-    <SafeAreaView style={[style.container]}>
+    <SafeAreaView>
       <StatusBar
         barStyle={
           Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
         }
       />
-      {state.lockout.displayNotification && (
-        <PopupModal
-          notificationType={InfoBoxType.Info}
-          title={t('PinEnter.LoggedOut')}
-          bodyContent={
-            <View>
-              <Text style={style.notifyText}>{t('PinEnter.LoggedOutDescription')}</Text>
-            </View>
-          }
-          onCallToActionLabel={t('Global.Okay')}
-          onCallToActionPressed={() => {
-            dispatch({
-              type: DispatchAction.LOCKOUT_UPDATED,
-              payload: [{ displayNotification: false }],
-            })
-          }}
-        />
-      )}
-      <View style={{ margin: 20 }}>
+      <View style={[style.container]}>
         <Image
           source={Assets.img.logoSecondary.src}
           style={{
@@ -145,6 +129,29 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           accessibilityLabel={t('PinEnter.EnterPIN')}
           autoFocus={true}
         />
+        {modalVisible && (
+          <AlertModal title={t('PinEnter.IncorrectPIN')} message="" submit={() => setModalVisible(false)} />
+        )}
+        {state.lockout.displayNotification && (
+          <PopupModal
+            notificationType={InfoBoxType.Info}
+            title={t('PinEnter.LoggedOut')}
+            bodyContent={
+              <View>
+                <Text style={style.notifyText}>{t('PinEnter.LoggedOutDescription')}</Text>
+              </View>
+            }
+            onCallToActionLabel={t('Global.Okay')}
+            onCallToActionPressed={() => {
+              dispatch({
+                type: DispatchAction.LOCKOUT_UPDATED,
+                payload: [{ displayNotification: false }],
+              })
+            }}
+          />
+        )}
+      </View>
+      <View style={{ marginTop: 'auto', margin: 20 }}>
         <Button
           title={t('Global.Enter')}
           buttonType={ButtonType.Primary}
@@ -157,10 +164,6 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           }}
         />
       </View>
-
-      {modalVisible && (
-        <AlertModal title={t('PinEnter.IncorrectPIN')} message="" submit={() => setModalVisible(false)} />
-      )}
     </SafeAreaView>
   )
 }

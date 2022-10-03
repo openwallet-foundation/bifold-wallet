@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Switch, StatusBar, Platform } from 'react-native'
+import { StyleSheet, Text, View, Switch, StatusBar, Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Biometrics from '../assets/img/biometrics.svg'
@@ -22,9 +22,8 @@ const UseBiometry: React.FC = () => {
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      flexGrow: 2,
-      flexDirection: 'column',
-      paddingHorizontal: 25,
+      height: '100%',
+      padding: 20,
       backgroundColor: ColorPallet.brand.primaryBackground,
     },
     image: {
@@ -54,11 +53,11 @@ const UseBiometry: React.FC = () => {
   const toggleSwitch = () => setBiometryEnabled((previousState) => !previousState)
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['left', 'right', 'bottom']}>
       <StatusBar
         barStyle={Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(ColorPallet.brand.primary)}
       />
-      <View style={{ flexGrow: 1 }}>
+      <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center' }}>
           <Biometrics style={[styles.image]} />
         </View>
@@ -81,10 +80,10 @@ const UseBiometry: React.FC = () => {
         <View
           style={{
             flexDirection: 'row',
-            marginVertical: 30,
+            marginVertical: 20,
           }}
         >
-          <View style={{ flexShrink: 1 }}>
+          <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
             <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
@@ -100,16 +99,16 @@ const UseBiometry: React.FC = () => {
             />
           </View>
         </View>
-        <View style={{ flexGrow: 1, justifyContent: 'flex-end' }}>
-          <Button
-            title={'Continue'}
-            accessibilityLabel={'Continue'}
-            testID={testIdWithKey('Continue')}
-            onPress={continueTouched}
-            buttonType={ButtonType.Primary}
-            disabled={!continueEnabled}
-          />
-        </View>
+      </ScrollView>
+      <View style={{ marginTop: 'auto', margin: 20 }}>
+        <Button
+          title={'Continue'}
+          accessibilityLabel={'Continue'}
+          testID={testIdWithKey('Continue')}
+          onPress={continueTouched}
+          buttonType={ButtonType.Primary}
+          disabled={!continueEnabled}
+        />
       </View>
     </SafeAreaView>
   )
