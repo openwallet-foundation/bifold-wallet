@@ -52,30 +52,33 @@ exports[`ErrorModal Component Renders correctly 1`] = `
       </Text>
     </View>
   </View>
-  <RCTScrollView
-    style={
+  <RNCSafeAreaView
+    edges={
       Array [
-        Object {
-          "backgroundColor": "#000000",
-          "flexGrow": 1,
-        },
+        "left",
+        "right",
+        "bottom",
       ]
     }
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
   >
-    <View>
-      <RCTSafeAreaView
-        emulateUnlessSupported={true}
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "marginTop": 25,
-                "paddingHorizontal": 25,
-              },
-            ]
-          }
-        >
+    <RCTScrollView
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#000000",
+            "height": "100%",
+            "padding": 20,
+          },
+        ]
+      }
+    >
+      <View>
+        <View>
           <View
             style={
               Array [
@@ -446,128 +449,130 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               </View>
             </View>
           </View>
-          <View
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Array [
+          Object {
+            "marginBottom": 108,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "paddingTop": 10,
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityLabel="CredentialDetails.RemoveFromWallet"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/ConfirmRemoveButton"
+        >
+          <Text
             style={
               Array [
                 Object {
-                  "marginVertical": 25,
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
                 },
+                false,
               ]
             }
           >
-            <View
-              style={
-                Array [
-                  Object {
-                    "marginBottom": 5,
-                  },
-                ]
-              }
-            >
-              <View
-                accessibilityLabel="CredentialDetails.RemoveFromWallet"
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                nativeID="animatedComponent"
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "#42803E",
-                    "borderRadius": 4,
-                    "opacity": 1,
-                    "padding": 16,
-                  }
-                }
-                testID="com.ariesbifold:id/ConfirmRemoveButton"
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  CredentialDetails.RemoveFromWallet
-                </Text>
-              </View>
-            </View>
-            <View
-              style={
-                Array [
-                  Object {
-                    "marginTop": 5,
-                  },
-                ]
-              }
-            >
-              <View
-                accessibilityLabel="Global.Cancel"
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                nativeID="animatedComponent"
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "borderColor": "#42803E",
-                    "borderRadius": 4,
-                    "borderWidth": 2,
-                    "opacity": 1,
-                    "padding": 16,
-                  }
-                }
-                testID="com.ariesbifold:id/AbortRemoveButton"
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#42803E",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Global.Cancel
-                </Text>
-              </View>
-            </View>
-          </View>
+            CredentialDetails.RemoveFromWallet
+          </Text>
         </View>
-      </RCTSafeAreaView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "paddingTop": 10,
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityLabel="Global.Cancel"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "borderColor": "#42803E",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/AbortRemoveButton"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#42803E",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            Global.Cancel
+          </Text>
+        </View>
+      </View>
     </View>
-  </RCTScrollView>
+  </RNCSafeAreaView>
 </Modal>
 `;

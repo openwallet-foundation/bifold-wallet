@@ -108,99 +108,101 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
   transparent={true}
   visible={true}
 >
-  <RNCSafeAreaView
-    style={
-      Array [
-        Object {
-          "backgroundColor": "#000000",
-          "flexDirection": "column",
-          "flexGrow": 1,
-          "paddingHorizontal": 25,
-          "paddingTop": 20,
-        },
-      ]
-    }
-  >
-    <View
+  <RNCSafeAreaView>
+    <RCTScrollView
       style={
         Array [
           Object {
-            "alignItems": "center",
+            "backgroundColor": "#000000",
+            "height": "100%",
+            "padding": 20,
           },
         ]
       }
     >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-            },
-            Object {
-              "fontWeight": "normal",
-              "marginTop": 90,
-              "textAlign": "center",
-            },
-          ]
-        }
-        testID="com.ariesbifold:id/CredentialOnTheWay"
-      >
-        Connection.JustAMoment
-      </Text>
-    </View>
-    <View
-      style={
-        Array [
-          Object {
-            "marginTop": 20,
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <
-          fill="#FFFFFF"
-          height={130}
-          style={
-            Object {
-              "position": "absolute",
-            }
-          }
-          width={130}
-        />
+      <View>
         <View
           style={
-            Object {
-              "transform": Array [
-                Object {
-                  "rotate": "0deg",
-                },
-              ],
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+              },
+            ]
           }
         >
-          <
-            fill="#FFFFFF"
-            height={250}
-            width={250}
-          />
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 26,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "fontWeight": "normal",
+                  "marginTop": 30,
+                  "textAlign": "center",
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/CredentialOnTheWay"
+          >
+            Connection.JustAMoment
+          </Text>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "marginTop": 20,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <
+              fill="#FFFFFF"
+              height={130}
+              style={
+                Object {
+                  "position": "absolute",
+                }
+              }
+              width={130}
+            />
+            <View
+              style={
+                Object {
+                  "transform": Array [
+                    Object {
+                      "rotate": "0deg",
+                    },
+                  ],
+                }
+              }
+            >
+              <
+                fill="#FFFFFF"
+                height={250}
+                width={250}
+              />
+            </View>
+          </View>
         </View>
       </View>
-    </View>
+    </RCTScrollView>
     <View
       style={
         Array [
           Object {
-            "marginBottom": 20,
+            "margin": 20,
             "marginTop": "auto",
           },
         ]
