@@ -136,58 +136,60 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record
-        header={() => (
-          <>
-            <View style={styles.headerTextContainer}>
-              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                {t('CredentialOffer.IsOfferingYouACredential')}
-              </Text>
+    <>
+      <SafeAreaView edges={['left', 'right', 'bottom']}>
+        <Record
+          header={() => (
+            <>
+              <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                  <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                  {t('CredentialOffer.IsOfferingYouACredential')}
+                </Text>
+              </View>
+              {!loading && credential && (
+                <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+              )}
+            </>
+          )}
+          footer={() => (
+            <View
+              style={{
+                paddingHorizontal: 25,
+                paddingVertical: 16,
+                paddingBottom: 26,
+                backgroundColor: ColorPallet.brand.secondaryBackground,
+              }}
+            >
+              {loading ? <RecordLoading /> : null}
+              <ConnectionAlert connectionID={credentialConnectionLabel} />
+              <View style={styles.footerButton}>
+                <Button
+                  title={t('Global.Accept')}
+                  accessibilityLabel={t('Global.Accept')}
+                  testID={testIdWithKey('AcceptCredentialOffer')}
+                  buttonType={ButtonType.Primary}
+                  onPress={handleAcceptPress}
+                  disabled={!buttonsVisible}
+                />
+              </View>
+              <View style={styles.footerButton}>
+                <Button
+                  title={t('Global.Decline')}
+                  accessibilityLabel={t('Global.Decline')}
+                  testID={testIdWithKey('DeclineCredentialOffer')}
+                  buttonType={ButtonType.Secondary}
+                  onPress={handleDeclinePress}
+                  disabled={!buttonsVisible}
+                />
+              </View>
             </View>
-            {!loading && credential && (
-              <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
-            )}
-          </>
-        )}
-        footer={() => (
-          <View
-            style={{
-              paddingHorizontal: 25,
-              paddingVertical: 16,
-              paddingBottom: 26,
-              backgroundColor: ColorPallet.brand.secondaryBackground,
-            }}
-          >
-            {loading ? <RecordLoading /> : null}
-            <ConnectionAlert connectionID={credentialConnectionLabel} />
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Accept')}
-                accessibilityLabel={t('Global.Accept')}
-                testID={testIdWithKey('AcceptCredentialOffer')}
-                buttonType={ButtonType.Primary}
-                onPress={handleAcceptPress}
-                disabled={!buttonsVisible}
-              />
-            </View>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Decline')}
-                accessibilityLabel={t('Global.Decline')}
-                testID={testIdWithKey('DeclineCredentialOffer')}
-                buttonType={ButtonType.Secondary}
-                onPress={handleDeclinePress}
-                disabled={!buttonsVisible}
-              />
-            </View>
-          </View>
-        )}
-        fields={credentialAttributes}
-      />
+          )}
+          fields={credentialAttributes}
+        />
+      </SafeAreaView>
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
-    </SafeAreaView>
+    </>
   )
 }
 
