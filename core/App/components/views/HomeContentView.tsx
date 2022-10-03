@@ -28,7 +28,7 @@ const HomeContentView: React.FC<HomeContentViewProps> = ({ children }) => {
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: 35,
-      marginHorizontal: 60,
+      marginHorizontal: offset,
     },
   })
 
