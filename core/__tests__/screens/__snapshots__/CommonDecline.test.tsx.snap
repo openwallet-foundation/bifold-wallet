@@ -169,8 +169,9 @@ exports[`common decline screen decline offer renders correctly 1`] = `
               testID="com.ariesbifold:id/CredentialCardHeader"
             >
               <Text
+                ellipsizeMode="tail"
                 maxFontSizeMultiplier={1}
-                numberOfLines={2}
+                numberOfLines={1}
                 style={
                   Array [
                     Object {
@@ -188,8 +189,9 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                 testID="com.ariesbifold:id/CredentialIssuer"
               />
               <Text
+                ellipsizeMode="tail"
                 maxFontSizeMultiplier={1}
-                numberOfLines={2}
+                numberOfLines={1}
                 style={
                   Array [
                     Object {
