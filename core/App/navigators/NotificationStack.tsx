@@ -23,17 +23,17 @@ const NotificationStack: React.FC = () => {
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
-        options={{ title: t('Screens.CredentialOffer'), headerBackTitleVisible: false }}
+        options={{ title: t('Screens.CredentialOffer') }}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
-        options={{ title: t('Screens.ProofRequest'), headerBackTitleVisible: false }}
+        options={{ title: t('Screens.ProofRequest') }}
       />
       <Stack.Screen
         name={Screens.ProofRequestAttributeDetails}
         component={ProofRequestAttributeDetails}
-        options={{ title: t('Screens.ProofRequestAttributeDetails'), headerBackTitleVisible: false }}
+        options={{ title: t('Screens.ProofRequestAttributeDetails') }}
       />
       <Stack.Screen
         name={Screens.CommonDecline}
