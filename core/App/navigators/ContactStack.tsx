@@ -17,17 +17,13 @@ const ContactStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
-      <Stack.Screen
-        name={Screens.Contacts}
-        component={ListContacts}
-        options={{ title: t('Screens.Contacts'), headerBackTitleVisible: false }}
-      />
+      <Stack.Screen name={Screens.Contacts} component={ListContacts} options={{ title: t('Screens.Contacts') }} />
       <Stack.Screen
         name={Screens.ContactDetails}
         component={ContactDetails}
-        options={{ title: t('Screens.ContactDetails'), headerBackTitleVisible: false }}
+        options={{ title: t('Screens.ContactDetails') }}
       />
-      <Stack.Screen name={Screens.Chat} component={Chat} options={{ headerBackTitleVisible: false }} />
+      <Stack.Screen name={Screens.Chat} component={Chat} />
     </Stack.Navigator>
   )
 }

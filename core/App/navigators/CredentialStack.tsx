@@ -24,12 +24,13 @@ const CredentialStack: React.FC = () => {
         options={() => ({
           title: t('Screens.Credentials'),
           headerRight: () => <SettingsCog />,
+          headerLeft: () => null,
         })}
       />
       <Stack.Screen
         name={Screens.CredentialDetails}
         component={CredentialDetails}
-        options={{ title: t('Screens.CredentialDetails'), headerBackTitleVisible: false }}
+        options={{ title: t('Screens.CredentialDetails') }}
       />
     </Stack.Navigator>
   )
