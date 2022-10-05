@@ -147,7 +147,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
         )}
         {overlay?.header?.hideIssuer ? null : (
           <Text
-            numberOfLines={2}
+            numberOfLines={1}
+            ellipsizeMode="tail"
             style={[
               TextTheme.label,
               {
@@ -168,7 +169,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
           </Text>
         )}
         <Text
-          numberOfLines={2}
+          numberOfLines={1}
+          ellipsizeMode="tail"
           style={[
             TextTheme.label,
             {
