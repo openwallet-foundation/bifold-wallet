@@ -1,7 +1,8 @@
 import { agentDependencies } from '@aries-framework/react-native'
-import { DispatchAction } from '../contexts/reducers/store'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import {
   secretForPIN,
