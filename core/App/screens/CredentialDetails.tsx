@@ -11,8 +11,8 @@ import Toast from 'react-native-toast-message'
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonDeleteModal from '../components/modals/CommonDeleteModal'
-import Record from '../components/record/Record'
 import { ToastType } from '../components/toast/BaseToast'
+import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -39,6 +39,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const { TextTheme, ColorPallet } = useTheme()
+  const { OCABundle, record } = useConfiguration()
 
   const { revoked, revokedMessageDismissed } = state.credential
 
@@ -148,78 +149,87 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setIsDeleteModalDisplayed(false)
   }
 
-  return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      <Record
-        header={() => (
-          <>
-            {isRevoked && !isRevokedMessageHidden ? (
-              <View style={{ marginHorizontal: 15, marginTop: 16 }}>
-                {credential && (
-                  <InfoBox
-                    notificationType={InfoBoxType.Warn}
-                    title={t('CredentialDetails.CredentialRevokedMessageTitle')}
-                    description={t('CredentialDetails.CredentialRevokedMessageBody')}
-                    onCallToActionLabel={t('Global.Dismiss')}
-                    onCallToActionPressed={() => handleDismissRevokedMessagePressed(credential)}
-                  />
-                )}
-              </View>
-            ) : null}
-            {credential && <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginTop: 16 }} />}
-          </>
-        )}
-        footer={() => (
-          <View style={{ marginBottom: 30 }}>
-            {credentialConnectionLabel ? (
-              <View
-                style={{
-                  backgroundColor: ColorPallet.brand.secondaryBackground,
-                  marginTop: 16,
-                  paddingHorizontal: 25,
-                  paddingVertical: 16,
-                }}
-              >
-                <View>
-                  <Text>
-                    <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')}</Text>{' '}
-                    <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
-                  </Text>
-                </View>
-              </View>
-            ) : null}
+  const header = () => {
+    return (
+      <>
+        {isRevoked && !isRevokedMessageHidden ? (
+          <View style={{ marginHorizontal: 15, marginTop: 16 }}>
+            {credential && (
+              <InfoBox
+                notificationType={InfoBoxType.Warn}
+                title={t('CredentialDetails.CredentialRevokedMessageTitle')}
+                description={t('CredentialDetails.CredentialRevokedMessageBody')}
+                onCallToActionLabel={t('Global.Dismiss')}
+                onCallToActionPressed={() => handleDismissRevokedMessagePressed(credential)}
+              />
+            )}
+          </View>
+        ) : null}
+        {credential && <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginTop: 16 }} />}
+      </>
+    )
+  }
 
-            <View
-              style={{
-                backgroundColor: ColorPallet.brand.secondaryBackground,
-                marginTop: 16,
-                paddingHorizontal: 25,
-                paddingVertical: 16,
-              }}
-            >
-              <TouchableOpacity
-                accessible={true}
-                accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
-                testID={testIdWithKey('RemoveFromWallet')}
-                activeOpacity={1}
-                onPress={() => handleRemovePressed()}
-              >
-                <Text
-                  style={[
-                    styles.footerText,
-                    styles.link,
-                    { color: ColorPallet.semantic.error, textDecorationLine: 'underline' },
-                  ]}
-                >
-                  {t('CredentialDetails.RemoveFromWallet')}
-                </Text>
-              </TouchableOpacity>
+  const footer = () => {
+    return (
+      <View style={{ marginBottom: 30 }}>
+        {credentialConnectionLabel ? (
+          <View
+            style={{
+              backgroundColor: ColorPallet.brand.secondaryBackground,
+              marginTop: 16,
+              paddingHorizontal: 25,
+              paddingVertical: 16,
+            }}
+          >
+            <View>
+              <Text>
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')}</Text>{' '}
+                <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
+              </Text>
             </View>
           </View>
-        )}
-        fields={credential?.credentialAttributes}
-        hideFieldValues={true}
-      />
+        ) : null}
+
+        <View
+          style={{
+            backgroundColor: ColorPallet.brand.secondaryBackground,
+            marginTop: 16,
+            paddingHorizontal: 25,
+            paddingVertical: 16,
+          }}
+        >
+          <TouchableOpacity
+            accessible={true}
+            accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
+            testID={testIdWithKey('RemoveFromWallet')}
+            activeOpacity={1}
+            onPress={() => handleRemovePressed()}
+          >
+            <Text
+              style={[
+                styles.footerText,
+                styles.link,
+                { color: ColorPallet.semantic.error, textDecorationLine: 'underline' },
+              ]}
+            >
+              {t('CredentialDetails.RemoveFromWallet')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
+      {record({
+        header: header,
+        footer: footer,
+        fields: credential?.credentialAttributes,
+        hideFieldValues: true,
+        oca: OCABundle.oca,
+      })}
       <CommonDeleteModal
         visible={isDeleteModalDisplayed}
         onSubmit={() => handleSubmitRemovePressed()}
