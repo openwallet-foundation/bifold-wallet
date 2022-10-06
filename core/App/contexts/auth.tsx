@@ -19,6 +19,7 @@ export interface AuthContext {
   checkPIN: (pin: string) => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
   removeSavedWalletSecret: () => void
+  disableBiometrics: () => Promise<void>
   setPIN: (pin: string) => Promise<void>
   commitPIN: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
@@ -92,12 +93,17 @@ export const AuthProvider: React.FC = ({ children }) => {
     setWalletSecret(undefined)
   }
 
+  const disableBiometrics = async () => {
+    await wipeWalletKey(true)
+  }
+
   return (
     <AuthContext.Provider
       value={{
         checkPIN,
         getWalletCredentials,
         removeSavedWalletSecret,
+        disableBiometrics,
         commitPIN,
         setPIN,
         isBiometricsActive,
