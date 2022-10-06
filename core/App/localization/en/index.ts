@@ -154,7 +154,10 @@ const translation = {
   },
   "Home": {
     "Welcome": "Welcome",
+    "Notification": "Notification",
     "Notifications": "Notifications",
+    "OneNotification": "1 Notification",
+    "CountNotifications": "{{ count }} Notifications",
     "NoNewUpdates": "You have no new notifications.",
     "NoCredentials": "You have no credentials in your wallet.",
     "SeeAll": "See all",
