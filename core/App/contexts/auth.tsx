@@ -1,9 +1,9 @@
-import { Agent, AgentConfig } from '@aries-framework/core'
-import { IndyWallet } from '@aries-framework/core/build/wallet/IndyWallet'
 import { agentDependencies } from '@aries-framework/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import {
   secretForPIN,
   storeWalletSecret,
@@ -28,6 +28,7 @@ export const AuthContext = createContext<AuthContext>(null as unknown as AuthCon
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
+  const [, dispatch] = useStore()
   const { t } = useTranslation()
 
   const setPIN = async (pin: string): Promise<void> => {
@@ -54,6 +55,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     if (!secret) {
       return false
     }
+    // set did authenticate to true if we can get wallet credentials
+    dispatch({
+      type: DispatchAction.DID_AUTHENTICATE,
+    })
     if (useBiometry) {
       await storeWalletSecret(secret, useBiometry)
     } else {
