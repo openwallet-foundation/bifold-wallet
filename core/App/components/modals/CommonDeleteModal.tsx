@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../../components/buttons/Button'
@@ -61,24 +62,26 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
 
   const styles = StyleSheet.create({
     container: {
-      flexGrow: 1,
+      height: '100%',
       backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      padding: 20,
     },
-    main: {
-      paddingHorizontal: 25,
-      marginTop: 25,
-    },
-    actions: {
-      marginVertical: 25,
+    controlsContainer: {
+      marginTop: 'auto',
+      marginHorizontal: 20,
+      marginBottom: 108,
     },
   })
 
   return (
     <Modal visible={visible} animationType="slide">
       <FauxNavigationBar title={t('CredentialDetails.RemoveFromWallet')} />
-      <ScrollView style={[styles.container]}>
-        <SafeAreaView>
-          <View style={[styles.main]}>
+      <SafeAreaView
+        edges={['left', 'right', 'bottom']}
+        style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}
+      >
+        <ScrollView style={[styles.container]}>
+          <View>
             <View style={[{ marginBottom: 25 }]}>
               <Text style={[TextTheme.title]}>{t('CredentialDetails.RemoveTitle')}</Text>
             </View>
@@ -100,29 +103,29 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
                 content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
               />
             </View>
-            <View style={[styles.actions]}>
-              <View style={[{ marginBottom: 5 }]}>
-                <Button
-                  title={t('CredentialDetails.RemoveFromWallet')}
-                  accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
-                  testID={testIdWithKey('ConfirmRemoveButton')}
-                  onPress={() => onSubmit && onSubmit()}
-                  buttonType={ButtonType.Critical}
-                />
-              </View>
-              <View style={[{ marginTop: 5 }]}>
-                <Button
-                  title={t('Global.Cancel')}
-                  accessibilityLabel={t('Global.Cancel')}
-                  testID={testIdWithKey('AbortRemoveButton')}
-                  onPress={() => onCancel && onCancel()}
-                  buttonType={ButtonType.Secondary}
-                />
-              </View>
-            </View>
           </View>
-        </SafeAreaView>
-      </ScrollView>
+        </ScrollView>
+        <View style={[styles.controlsContainer]}>
+          <View style={[{ paddingTop: 10 }]}>
+            <Button
+              title={t('CredentialDetails.RemoveFromWallet')}
+              accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
+              testID={testIdWithKey('ConfirmRemoveButton')}
+              onPress={() => onSubmit && onSubmit()}
+              buttonType={ButtonType.Critical}
+            />
+          </View>
+          <View style={[{ paddingTop: 10 }]}>
+            <Button
+              title={t('Global.Cancel')}
+              accessibilityLabel={t('Global.Cancel')}
+              testID={testIdWithKey('AbortRemoveButton')}
+              onPress={() => onCancel && onCancel()}
+              buttonType={ButtonType.Secondary}
+            />
+          </View>
+        </View>
+      </SafeAreaView>
     </Modal>
   )
 }

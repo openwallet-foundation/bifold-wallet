@@ -3,7 +3,7 @@ import { useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Modal, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Platform, Modal, StatusBar, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import SendingProof from '../components/animated/SendingProof'
@@ -28,11 +28,9 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
 
   const styles = StyleSheet.create({
     container: {
-      flexGrow: 1,
-      flexDirection: 'column',
+      height: '100%',
       backgroundColor: ColorPallet.brand.primaryBackground,
-      paddingHorizontal: 25,
-      paddingTop: 20,
+      padding: 20,
     },
     image: {
       marginTop: 20,
@@ -43,11 +41,11 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
     messageText: {
       fontWeight: 'normal',
       textAlign: 'center',
-      marginTop: 90,
+      marginTop: 30,
     },
     controlsContainer: {
       marginTop: 'auto',
-      marginBottom: 20,
+      margin: 20,
     },
     delayMessageText: {
       textAlign: 'center',
@@ -80,36 +78,40 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
           Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(styles.container.backgroundColor)
         }
       />
-      <SafeAreaView style={[styles.container]}>
-        <View style={[styles.messageContainer]}>
-          {proofDeliveryStatus === ProofState.RequestReceived && (
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
-              {t('ProofRequest.SendingTheInformationSecurely')}
-            </Text>
-          )}
+      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.primaryBackground }}>
+        <ScrollView style={[styles.container]}>
+          <View style={[styles.messageContainer]}>
+            {proofDeliveryStatus === ProofState.RequestReceived && (
+              <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
+                {t('ProofRequest.SendingTheInformationSecurely')}
+              </Text>
+            )}
 
-          {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
-              {t('ProofRequest.InformationSentSuccessfully')}
-            </Text>
-          )}
-        </View>
+            {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+              <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
+                {t('ProofRequest.InformationSentSuccessfully')}
+              </Text>
+            )}
+          </View>
 
-        <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-          {proofDeliveryStatus === ProofState.RequestReceived && <SendingProof />}
-          {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
-            <SentProof />
-          )}
-        </View>
+          <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
+            {proofDeliveryStatus === ProofState.RequestReceived && <SendingProof />}
+            {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+              <SentProof />
+            )}
+          </View>
+        </ScrollView>
 
         <View style={[styles.controlsContainer]}>
-          <Button
-            title={t('Loading.BackToHome')}
-            accessibilityLabel={t('Loading.BackToHome')}
-            testID={testIdWithKey('BackToHome')}
-            onPress={onBackToHomeTouched}
-            buttonType={ButtonType.Secondary}
-          />
+          <View>
+            <Button
+              title={t('Loading.BackToHome')}
+              accessibilityLabel={t('Loading.BackToHome')}
+              testID={testIdWithKey('BackToHome')}
+              onPress={onBackToHomeTouched}
+              buttonType={ButtonType.Secondary}
+            />
+          </View>
         </View>
       </SafeAreaView>
     </Modal>
