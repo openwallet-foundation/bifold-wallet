@@ -196,7 +196,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         oca: OCABundle.oca,
       })}
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
-    </>
+    </SafeAreaView>
   )
 }
 
