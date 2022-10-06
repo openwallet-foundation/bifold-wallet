@@ -22,11 +22,12 @@ interface PinEnterProps {
 
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
   const { t } = useTranslation()
-  const { checkPIN, getWalletCredentials } = useAuth()
+  const { checkPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
   const [, dispatch] = useStore()
   const [pin, setPin] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const [state] = useContext(StoreContext)
 
@@ -44,6 +45,18 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
     if (!state.preferences.useBiometry) {
       return
     }
+
+    isBiometricsActive().then((res) => {
+      if (!res) {
+        // biometry state has changed, display message and disable biometry
+        setBiometricsEnrollmentChange(true)
+        disableBiometrics()
+        dispatch({
+          type: DispatchAction.USE_BIOMETRY,
+          payload: [false],
+        })
+      }
+    })
 
     const loadWalletCredentials = async () => {
       const creds = await getWalletCredentials()
@@ -114,7 +127,18 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
             marginBottom: 20,
           }}
         />
-        <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
+        {biometricsEnrollmentChange ? (
+          <>
+            <Text style={[TextTheme.normal, { alignSelf: 'center', textAlign: 'center' }]}>
+              {t('PinEnter.BiometricsChanged')}
+            </Text>
+            <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
+              {t('PinEnter.BiometricsChangedEnterPIN')}
+            </Text>
+          </>
+        ) : (
+          <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
+        )}
         <PinInput
           onPinChanged={setPin}
           testID={testIdWithKey('EnterPIN')}
