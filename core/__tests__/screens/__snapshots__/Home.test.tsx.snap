@@ -118,11 +118,16 @@ exports[`displays a home screen renders correctly 1`] = `
             </View>
             <Text
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "flexShrink": 1,
+                  },
+                ]
               }
               testID="com.ariesbifold:id/NoNewUpdates"
             >
@@ -136,7 +141,7 @@ exports[`displays a home screen renders correctly 1`] = `
               Object {
                 "alignItems": "center",
                 "justifyContent": "center",
-                "marginHorizontal": 60,
+                "marginHorizontal": 25,
                 "marginTop": 35,
               },
             ]
@@ -177,7 +182,7 @@ exports[`displays a home screen renders correctly 1`] = `
             Object {
               "alignItems": "center",
               "justifyContent": "center",
-              "marginHorizontal": 60,
+              "marginHorizontal": 25,
               "marginTop": 35,
             },
           ]
