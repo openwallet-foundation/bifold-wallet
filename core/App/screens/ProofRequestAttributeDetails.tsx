@@ -52,13 +52,12 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       ...ListItems.recordContainer,
       paddingHorizontal: 25,
       paddingVertical: 16,
-      backgroundColor: ColorPallet.brand.primaryBackground,
     },
     border: {
       ...ListItems.recordBorder,
       paddingTop: 12,
-      borderBottomColor: ColorPallet.brand.secondaryBackground,
       borderBottomWidth: 2,
+      borderBottomColor: ColorPallet.brand.primaryBackground,
     },
   })
 
@@ -109,7 +108,10 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   )
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView
+      style={{ flexGrow: 1, backgroundColor: ColorPallet.brand.secondaryBackground }}
+      edges={['bottom', 'left', 'right']}
+    >
       <FlatList
         data={matchingCredentials}
         keyExtractor={(credential) => credential.id}
