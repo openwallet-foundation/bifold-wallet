@@ -8,6 +8,7 @@ import {
   Credential as CredentialState,
   Authentication as AuthenticationState,
   Lockout as LockoutState,
+  LoginAttempt as LoginAttemptState,
   State,
 } from '../../types/state'
 
@@ -34,6 +35,9 @@ enum LockoutDispatchAction {
   LOCKOUT_UPDATED = 'lockout/lockoutUpdated',
 }
 
+enum LoginAttemptDispatchAction {
+  ATTEMPT_UPDATED = 'loginAttempt/loginAttemptUpdated',
+}
 enum PrivacyDispatchAction {
   DID_SHOW_CAMERA_DISCLOSURE = 'privacy/didShowCameraDisclosure',
   PRIVACY_UPDATED = 'privacy/privacyStateLoaded',
@@ -53,6 +57,7 @@ export type DispatchAction =
   | ErrorDispatchAction
   | CredentialDispatchAction
   | PrivacyDispatchAction
+  | LoginAttemptDispatchAction
   | LockoutDispatchAction
   | PreferencesDispatchAction
   | AuthenticationDispatchAction
@@ -62,6 +67,7 @@ export const DispatchAction = {
   ...ErrorDispatchAction,
   ...CredentialDispatchAction,
   ...PrivacyDispatchAction,
+  ...LoginAttemptDispatchAction,
   ...LockoutDispatchAction,
   ...PreferencesDispatchAction,
   ...AuthenticationDispatchAction,
@@ -118,6 +124,15 @@ const reducer = (state: State, action: ReducerAction): State => {
         ...state,
         privacy,
       }
+    }
+    case LoginAttemptDispatchAction.ATTEMPT_UPDATED: {
+      const loginAttempt: LoginAttemptState = (action?.payload || []).pop()
+      const newState = {
+        ...state,
+        loginAttempt,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.LoginAttempts, JSON.stringify(newState.loginAttempt))
+      return newState
     }
     case LockoutDispatchAction.LOCKOUT_UPDATED: {
       const lockout: LockoutState = (action?.payload || []).pop()

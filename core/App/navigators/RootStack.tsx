@@ -11,6 +11,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import AttemptLockout from '../screens/AttemptLockout'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PinCreate from '../screens/PinCreate'
@@ -102,6 +103,11 @@ const RootStack: React.FC = () => {
         <Stack.Screen name={Screens.EnterPin}>
           {(props) => <PinEnter {...props} setAuthenticated={() => onAuthenticated()} />}
         </Stack.Screen>
+        <Stack.Screen
+          name={Screens.AttemptLockout}
+          component={AttemptLockout}
+          options={{ headerShown: true, headerLeft: () => null }}
+        ></Stack.Screen>
       </Stack.Navigator>
     )
   }
