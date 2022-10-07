@@ -20,6 +20,7 @@ import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
 import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
+import AttemptLockout from './screens/AttemptLockout'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
@@ -46,6 +47,7 @@ export type { ConfigurationContext } from './contexts/configuration'
 export type { Onboarding as OnboardingState } from './types/state'
 export type { Privacy as PrivacyState } from './types/state'
 export type { Preferences as PreferencesState } from './types/state'
+export type { LoginAttempt as LoginAttemptState } from './types/state'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
@@ -72,6 +74,7 @@ export {
   Terms,
   HomeContentView,
   UseBiometry,
+  AttemptLockout,
   Record,
   defaultConfiguration,
 }
