@@ -14,6 +14,10 @@ const initialState: State = {
   authentication: {
     didAuthenticate: false,
   },
+  loginAttempt: {
+    loginAttempts: 0,
+    servedPenalty: true,
+  },
   lockout: {
     displayNotification: false,
   },
