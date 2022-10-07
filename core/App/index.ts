@@ -18,6 +18,7 @@ import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
+import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
 import OnboardingPages from './screens/OnboardingPages'
@@ -75,4 +76,5 @@ export {
   UseBiometry,
   AttemptLockout,
   Record,
+  defaultConfiguration,
 }
