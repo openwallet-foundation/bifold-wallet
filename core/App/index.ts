@@ -18,6 +18,7 @@ import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
+import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
@@ -72,4 +73,5 @@ export {
   HomeContentView,
   UseBiometry,
   Record,
+  defaultConfiguration,
 }
