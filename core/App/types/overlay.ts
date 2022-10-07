@@ -11,9 +11,15 @@ export interface OverlayHeader {
   backgroundColor?: string
   imageSource?: ImageSourcePropType
   hideIssuer?: boolean
+  mapping?: OverlayHeaderMapping
 }
 
 export interface OverlayFooter {
   color?: string
   backgroundColor?: string
+}
+
+export interface OverlayHeaderMapping {
+  connectionLabel?: string
+  credentialLabel?: string
 }
