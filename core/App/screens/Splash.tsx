@@ -75,25 +75,25 @@ const Splash: React.FC = () => {
     },
   })
 
+  const loadAuthAttempts = async (): Promise<LoginAttemptState | undefined> => {
+    try {
+      const attemptsData = await AsyncStorage.getItem(LocalStorageKeys.LoginAttempts)
+      if (attemptsData) {
+        const attempts = JSON.parse(attemptsData) as LoginAttemptState
+        dispatch({
+          type: DispatchAction.ATTEMPT_UPDATED,
+          payload: [attempts],
+        })
+        return attempts
+      }
+    } catch (error) {
+      // todo (WK)
+    }
+  }
+
   useEffect(() => {
     if (store.authentication.didAuthenticate) {
       return
-    }
-
-    const loadAuthAttempts = async (): Promise<LoginAttemptState | undefined> => {
-      try {
-        const attemptsData = await AsyncStorage.getItem(LocalStorageKeys.LoginAttempts)
-        if (attemptsData) {
-          const attempts = JSON.parse(attemptsData) as LoginAttemptState
-          dispatch({
-            type: DispatchAction.ATTEMPT_UPDATED,
-            payload: [attempts],
-          })
-          return attempts
-        }
-      } catch (error) {
-        // todo (WK)
-      }
     }
 
     const initOnboarding = async (): Promise<void> => {
