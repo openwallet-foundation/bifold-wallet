@@ -28,6 +28,7 @@ const translation = {
     "GetStarted": "Get Started",
     "Dismiss": "Dismiss",
     "ShowDetails": "Show Details",
+    "TryAgain": "Try Again",
   },
   "Language": {
     "English": "English",
@@ -99,12 +100,22 @@ const translation = {
   "PinEnter": {
     "EnterPIN": "Enter PIN",
     "IncorrectPIN": "Incorrect PIN",
+    "RepeatPIN": "Please try your PIN again.",
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
     "LoggedOut": "You're logged out",
     "LoggedOutDescription": "To protect your information, you're logged out of your wallet if you have not used it for 5 minutes.",
     "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
-    "BiometricsChangedEnterPIN": "Please enter your wallet PIN."
+    "BiometricsChangedEnterPIN": "Please enter your wallet PIN.",
+    "AttemptLockoutWarning": "Note: for your security, entering another incorrect PIN will temporarily lock the wallet."
+  },
+  "AttemptLockout": {
+    "Title": "Your wallet is temporarily locked",
+    "Description": "You have had too many unsuccessful PIN attempts.",
+    "TryAgain": "You can try again in:",
+    "Hours": "hours",
+    "Minutes": "minutes",
+    "Seconds": "seconds",
   },
   "Biometry": {
     "Toggle": "Toggle Biometrics",
@@ -194,7 +205,7 @@ const translation = {
     "SettingsInstruction": "You can always remove contacts at anytime in ",
     "PrivacyMessage": "Use of your credentials is never shared with your contacts.",
     "PopupExit": "Got it"
-},
+  },
   "CredentialOffer": {
     "CredentialOffer": "Credential Offer",
     "ThisIsTakingLongerThanExpected": "This is taking Longer than expected. Check back later for your new credential.",
