@@ -165,7 +165,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             testID={testIdWithKey('CredentialIssuer')}
             maxFontSizeMultiplier={1}
           >
-            {overlay?.header?.mapping?.connectionLabel || credentialConnectionLabel}
+            {credentialConnectionLabel}
           </Text>
         )}
         <Text
@@ -188,7 +188,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
           testID={testIdWithKey('CredentialName')}
           maxFontSizeMultiplier={1}
         >
-          {overlay?.header?.mapping?.credentialLabel || credentialLabel}
+          {credentialLabel}
         </Text>
       </View>
     )
