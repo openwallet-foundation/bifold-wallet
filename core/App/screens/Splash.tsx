@@ -31,6 +31,7 @@ import {
   Onboarding as StoreOnboardingState,
   Privacy as PrivacyState,
   Preferences as PreferencesState,
+  LoginAttempt as LoginAttemptState,
 } from '../types/state'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
@@ -74,6 +75,22 @@ const Splash: React.FC = () => {
     },
   })
 
+  const loadAuthAttempts = async (): Promise<LoginAttemptState | undefined> => {
+    try {
+      const attemptsData = await AsyncStorage.getItem(LocalStorageKeys.LoginAttempts)
+      if (attemptsData) {
+        const attempts = JSON.parse(attemptsData) as LoginAttemptState
+        dispatch({
+          type: DispatchAction.ATTEMPT_UPDATED,
+          payload: [attempts],
+        })
+        return attempts
+      }
+    } catch (error) {
+      // todo (WK)
+    }
+  }
+
   useEffect(() => {
     if (store.authentication.didAuthenticate) {
       return
@@ -81,6 +98,9 @@ const Splash: React.FC = () => {
 
     const initOnboarding = async (): Promise<void> => {
       try {
+        // load authentication attempts from storage
+        const attemptData = await loadAuthAttempts()
+
         const preferencesData = await AsyncStorage.getItem(LocalStorageKeys.Preferences)
 
         if (preferencesData) {
@@ -106,8 +126,13 @@ const Splash: React.FC = () => {
         if (data) {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
           dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
-          if (onboardingComplete(onboardingState)) {
+          if (onboardingComplete(onboardingState) && !attemptData?.lockoutDate) {
             navigation.navigate(Screens.EnterPin as never)
+            return
+          } else if (onboardingComplete(onboardingState) && attemptData?.lockoutDate) {
+            // return to lockout screen if lockout date is set
+            navigation.navigate(Screens.AttemptLockout as never)
+            return
           } else {
             // If onboarding was interrupted we need to pickup from where we left off.
             navigation.navigate(resumeOnboardingAt(onboardingState) as never)
