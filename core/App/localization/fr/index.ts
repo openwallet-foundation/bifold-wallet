@@ -28,6 +28,7 @@ const translation = {
         "GetStarted": "Commencer",
         "Dismiss": "Rejeter",
         "ShowDetails": "Afficher les détails",
+        "TryAgain": "Try Again",
     },
     "Language": {
         "English": "Anglais",
@@ -91,12 +92,22 @@ const translation = {
     "PinEnter": {
         "EnterPIN": "Veuillez saisir votre NIP",
         "IncorrectPIN": "NIP erroné",
+        "RepeatPIN": "Please try your PIN again.",
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
         "LoggedOut": "You're logged out",
         "LoggedOutDescription": "To protect your information, you're logged out of your wallet if you have not used it for 5 minutes.",
         "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
-        "BiometricsChangedEnterPIN": "Please enter your wallet PIN."
+        "BiometricsChangedEnterPIN": "Please enter your wallet PIN.",
+        "AttemptLockoutWarning": "Note: for your security, entering another incorrect PIN will temporarily lock the wallet."
+    },
+    "AttemptLockout": {
+        "Title": "Your wallet is temporarily locked",
+        "Description": "You have had too many unsuccessful PIN attempts.",
+        "TryAgain": "You can try again in:",
+        "Hours": "hours",
+        "Minutes": "minutes",
+        "Seconds": "seconds",
     },
     "Biometry": {
         "Toggle": "Toggle Biometrics",
