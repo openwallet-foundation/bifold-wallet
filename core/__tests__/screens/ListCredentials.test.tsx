@@ -25,6 +25,7 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('react-native-localize', () => { })
 
 describe('displays a credentials list screen', () => {
   const testOpenVPCredentialRecord = new CredentialRecord({
