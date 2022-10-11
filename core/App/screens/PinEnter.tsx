@@ -236,11 +236,11 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
       </View>
       <View style={{ marginTop: 'auto', margin: 20 }}>
         <Button
-          title={t('Global.Enter')}
+          title={t('PinEnter.LogIn')}
           buttonType={ButtonType.Primary}
           testID={testIdWithKey('Enter')}
           disabled={!continueEnabled}
-          accessibilityLabel={t('Global.Enter')}
+          accessibilityLabel={t('PinEnter.LogIn')}
           onPress={() => {
             Keyboard.dismiss()
             onPinInputCompleted(pin)

@@ -95,6 +95,7 @@ const translation = {
         "RepeatPIN": "Please try your PIN again.",
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
+        "LogIn": "Log in",
         "LoggedOut": "You're logged out",
         "LoggedOutDescription": "To protect your information, you're logged out of your wallet if you have not used it for 5 minutes.",
         "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
