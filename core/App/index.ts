@@ -25,6 +25,7 @@ import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
+import * as types from './types'
 
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources } from './localization'
@@ -52,7 +53,6 @@ export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
-import * as types from './types'
 
 export {
   LoadingIndicator,
