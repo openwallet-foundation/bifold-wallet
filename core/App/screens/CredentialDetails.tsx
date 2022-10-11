@@ -16,8 +16,10 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { getCurrentLanguage } from '../localization'
 import { BifoldError } from '../types/error'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import { Field } from '../types/record'
 import { getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -34,6 +36,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { t } = useTranslation()
   const [state, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
+  const [fields, setFields] = useState<Array<Field>>([])
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
   const [isDeleteModalDisplayed, setIsDeleteModalDisplayed] = useState<boolean>(false)
   const credential = useCredentialById(credentialId)
@@ -108,6 +111,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setIsRevoked(isRevoked)
     const isRevokedMessageDismissed = revokedMessageDismissed.has(indyCredentialFormat.credentialRecordId)
     setIsRevokedMessageHidden(isRevokedMessageDismissed)
+    OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, getCurrentLanguage()).then(
+      (fields) => setFields(fields)
+    )
   }, [credential])
 
   const goBackToListCredentials = () => {
@@ -226,9 +232,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       {record({
         header: header,
         footer: footer,
-        fields: credential?.credentialAttributes,
+        fields: fields,
         hideFieldValues: true,
-        oca: OCABundle.oca,
       })}
       <CommonDeleteModal
         visible={isDeleteModalDisplayed}

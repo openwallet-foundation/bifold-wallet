@@ -52,6 +52,7 @@ export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
+import * as types from './types'
 
 export {
   LoadingIndicator,
@@ -77,4 +78,5 @@ export {
   AttemptLockout,
   Record,
   defaultConfiguration,
+  types,
 }
