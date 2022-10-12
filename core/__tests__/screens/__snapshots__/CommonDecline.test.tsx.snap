@@ -153,6 +153,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
               testID="com.ariesbifold:id/CredentialCard"
             >
               <View
+                onLayout={[Function]}
                 style={
                   Array [
                     Object {
@@ -168,13 +169,6 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                 }
                 testID="com.ariesbifold:id/CredentialCardHeader"
               >
-                <Image
-                  source={
-                    Object {
-                      "uri": undefined,
-                    }
-                  }
-                />
                 <Text
                   ellipsizeMode="tail"
                   maxFontSizeMultiplier={1}
