@@ -100,6 +100,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     flexGrow: {
       flexGrow: 1,
     },
+    logo: {
+      width: 286, //286
+      height: 208, //208
+    },
   })
 
   useEffect(() => {
@@ -150,14 +154,17 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       <View
         testID={testIdWithKey('CredentialCardHeader')}
         style={[styles.headerContainer]}
-        //onLayout={({ nativeEvent: { layout } }) => setHeaderDimensions(layout)}
+        onLayout={({ nativeEvent: { layout } }) => setHeaderDimensions(layout)}
       >
-        <Image
-          source={{ uri: overlay?.header?.imageSource as string }}
-          //height={headerDimensions.height - paddingVertical}
-          //width={headerDimensions.width / 3 - paddingHorizontal}
-          //onLayout={({ nativeEvent: { layout } }) => setHeaderLogoDimensions(layout)}
-        />
+        {headerDimensions && overlay?.header?.imageSource && (
+          <Image
+            style={styles.logo}
+            source={{ uri: overlay?.header?.imageSource as string }}
+            height={headerDimensions.height - paddingVertical}
+            width={headerDimensions.width / 3 - paddingHorizontal}
+            onLayout={({ nativeEvent: { layout } }) => setHeaderLogoDimensions(layout)}
+          />
+        )}
         {overlay?.header?.hideIssuer ? null : (
           <Text
             numberOfLines={1}
