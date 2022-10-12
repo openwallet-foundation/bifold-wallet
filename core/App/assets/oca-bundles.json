@@ -1,9 +1,9 @@
 {
-    "XZQpyaFa9hBUdJXfKHUvVg:2:unverified_person:0.1.0": {
+    "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card": {
         "capture_base": {
             "attributes": {
-                "given_names": "Text",
-                "family_name": "Text"
+                "student_first_name": "Text",
+                "student_last_name": "Text"
             }
         },
         "overlays": [
@@ -24,7 +24,8 @@
                 "type": "spec/overlays/label/1.0",
                 "language": "en",
                 "attr_labels": {
-                    "family_name": "Surname"
+                    "student_first_name": "First Name",
+                    "student_last_name": "Last Name"
                 }
             },
             {
@@ -32,7 +33,7 @@
                 "type": "spec/overlays/label/1.0",
                 "language": "fr",
                 "attr_labels": {
-                    "family_name": "nom de famille"
+                    "student_last_name": "nom de famille"
                 }
             },
             {

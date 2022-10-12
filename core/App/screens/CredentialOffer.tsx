@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialMetadataKeys, CredentialPreviewAttribute } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
@@ -104,11 +104,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       return
     }
     setLoading(true)
-    agent?.credentials.getFormatData(credential.id).then(({ offer }) => {
+    agent?.credentials.getFormatData(credential.id).then(({ offer, offerAttributes }) => {
       credential.metadata.add(CredentialMetadataKeys.IndyCredential, {
         schemaId: offer?.indy?.schema_id,
         credentialDefinitionId: offer?.indy?.cred_def_id,
       })
+      if (offerAttributes) {
+        credential.credentialAttributes = [...offerAttributes.map((item) => new CredentialPreviewAttribute(item))]
+      }
       OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, getCurrentLanguage()).then(
         (fields) => setFields(fields)
       )
