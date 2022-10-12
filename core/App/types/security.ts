@@ -4,6 +4,11 @@ export interface WalletSecret {
   salt: string
 }
 
+export interface PinChangeReturns {
+  walletSecret?: WalletSecret
+  pinCorrect: boolean
+}
+
 export enum AuthLevel {
   BiometricsFallbackPin = 'BiometricsFallbackPin',
   BiometricsAndPin = 'BiometricsAndPin',

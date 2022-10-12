@@ -21,7 +21,7 @@ interface PinEnterProps {
 
 const PinEnter: React.FC<PinEnterProps> = ({ navigation, setAuthenticated }) => {
   const { t } = useTranslation()
-  const { convertToUseBiometrics, checkPIN, getWalletCredentials } = useAuth()
+  const { convertToUseBiometrics, convertToDisableBiometrics, checkPIN, getWalletCredentials } = useAuth()
   const [pin, setPin] = useState<string>('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
@@ -52,8 +52,8 @@ const PinEnter: React.FC<PinEnterProps> = ({ navigation, setAuthenticated }) => 
 
   const onPinInputCompleted = async (pin: string) => {
     try {
-      const result = await checkPIN(pin)
-      if (!result) {
+      const resultCheckPin = await checkPIN(pin)
+      if (!resultCheckPin.pinCorrect) {
         setModalVisible(true)
         return
       }
@@ -67,6 +67,17 @@ const PinEnter: React.FC<PinEnterProps> = ({ navigation, setAuthenticated }) => 
           dispatch({
             type: DispatchAction.USE_BIOMETRY,
             payload: [true],
+          })
+          navigation.goBack()
+          break
+        case PinEnterFor.DisableBiometry:
+          if (!resultCheckPin.walletSecret) {
+            throw new Error('Error[Logical] Wallet secret undefined!')
+          }
+          await convertToDisableBiometrics(resultCheckPin.walletSecret)
+          dispatch({
+            type: DispatchAction.USE_BIOMETRY,
+            payload: [false],
           })
           navigation.goBack()
           break

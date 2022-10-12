@@ -6,14 +6,16 @@ import {
   storeWalletSecret,
   loadWalletSecret,
   convertToUseBiometrics,
+  convertToDisableBiometrics,
   isBiometricsActive,
 } from '../services/keychain'
-import { WalletSecret } from '../types/security'
+import { PinChangeReturns, WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 
 export interface AuthContext {
-  checkPIN: (pin: string) => Promise<boolean>
+  checkPIN: (pin: string) => Promise<PinChangeReturns>
   convertToUseBiometrics: () => Promise<boolean>
+  convertToDisableBiometrics: (walletSecret: WalletSecret) => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
   setPIN: (pin: string) => Promise<void>
   isBiometricsActive: () => Promise<boolean>
@@ -30,16 +32,22 @@ export const AuthProvider: React.FC = ({ children }) => {
     await storeWalletSecret(secret)
   }
 
-  const checkPIN = async (pin: string): Promise<boolean> => {
+  const checkPIN = async (pin: string): Promise<PinChangeReturns> => {
     const secret = await loadWalletSecret()
 
     if (!secret || !secret.salt || !secret.key) {
-      return false
+      return {
+        walletSecret: secret,
+        pinCorrect: false,
+      }
     }
 
     const hash = await hashPIN(pin, secret.salt)
 
-    return hash === secret.key
+    return {
+      walletSecret: secret,
+      pinCorrect: hash === secret.key,
+    }
   }
 
   const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
@@ -62,6 +70,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       value={{
         checkPIN,
         convertToUseBiometrics,
+        convertToDisableBiometrics,
         getWalletCredentials,
         setPIN,
         isBiometricsActive,

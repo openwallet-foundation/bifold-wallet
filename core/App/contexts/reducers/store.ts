@@ -46,6 +46,7 @@ enum PreferencesDispatchAction {
 enum AuthenticationDispatchAction {
   DID_AUTHENTICATE = 'authentication/didAuthenticate',
   ENABLEBIOMETRICS = 'authentication/enableBiometrics',
+  DISABLEBIOMETRICS = 'authentication/disableBiometrics',
 }
 
 export type DispatchAction =
@@ -173,6 +174,13 @@ const reducer = (state: State, action: ReducerAction): State => {
       const newState = {
         ...state,
         ...{ pinEnterFor: PinEnterFor.ReEnableBiometry },
+      }
+      return newState
+    }
+    case AuthenticationDispatchAction.DISABLEBIOMETRICS: {
+      const newState = {
+        ...state,
+        ...{ pinEnterFor: PinEnterFor.DisableBiometry },
       }
       return newState
     }

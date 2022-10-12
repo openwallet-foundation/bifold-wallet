@@ -21,6 +21,7 @@ export enum KeychainServices {
 export enum PinEnterFor {
   NormalAuth = 'auth.noraml',
   ReEnableBiometry = 'auth.enableBio',
+  DisableBiometry = 'auth.disableBio',
 }
 
 export const walletId = 'walletId'

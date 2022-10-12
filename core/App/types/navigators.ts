@@ -9,6 +9,7 @@ export enum Screens {
   Terms = 'Terms',
   CreatePin = 'Create a PIN',
   EnterPin = 'Enter PIN',
+  EnterPinToggleBiometry = 'Enter PIN Toggle Biometry',
   Home = 'Home',
   Scan = 'Scan',
   Credentials = 'Credentials',
@@ -93,7 +94,7 @@ export type ConnectStackParams = {
 export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
-  [Screens.EnterPin]: undefined
+  [Screens.EnterPinToggleBiometry]: undefined
 }
 
 export type NotificationStackParams = {

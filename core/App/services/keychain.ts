@@ -134,6 +134,13 @@ export const convertToUseBiometrics = async (): Promise<boolean> => {
   return true
 }
 
+export const convertToDisableBiometrics = async (walletSecret: WalletSecret): Promise<boolean> => {
+  const useBiometrics = false
+  await storeWalletSecret(walletSecret, useBiometrics)
+
+  return true
+}
+
 export const isBiometricsActive = async (): Promise<boolean> => {
   const result = await getSupportedBiometryType()
 

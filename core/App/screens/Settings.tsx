@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -15,7 +15,8 @@ import { testIdWithKey } from '../utils/testable'
 type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
+  const [toglleBiometricsWording, setToglleBiometricsWording] = useState('')
 
   const { t } = useTranslation()
   const { borderRadius, SettingsTheme } = useTheme()
@@ -42,10 +43,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
   const enableBiometrics = () => {
     dispatch({
-      type: DispatchAction.ENABLEBIOMETRICS,
+      type: store.preferences.useBiometry ? DispatchAction.DISABLEBIOMETRICS : DispatchAction.ENABLEBIOMETRICS,
     })
-    navigation.navigate(Screens.EnterPin)
+    navigation.navigate(Screens.EnterPinToggleBiometry)
   }
+
+  useEffect(() => {
+    setToglleBiometricsWording(store.preferences.useBiometry ? 'Disable Biometry' : 'Enable Biometry')
+  }, [store.preferences.useBiometry])
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>
@@ -63,12 +68,12 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             accessible={true}
-            accessibilityLabel={t('Settings.EnableBiometrics')}
+            accessibilityLabel={toglleBiometricsWording}
             testID={testIdWithKey('Language')}
             style={styles.row}
             onPress={() => enableBiometrics()}
           >
-            <Text style={SettingsTheme.text}>{t('Settings.EnableBiometrics')}</Text>
+            <Text style={SettingsTheme.text}>{toglleBiometricsWording}</Text>
             <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
           </TouchableOpacity>
         </View>
