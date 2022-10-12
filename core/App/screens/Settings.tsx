@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import Logo from '../assets/img/aries-logo.svg'
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
 import { useTheme } from '../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
@@ -29,6 +30,15 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+    },
+    logo: {
+      height: 64,
+      width: 64,
+      marginVertical: 15,
+    },
+    footer: {
+      marginTop: 22,
+      alignItems: 'center',
     },
   })
 
@@ -123,33 +133,12 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             />
           </View>
         </View>
-        {/* <Text style={styles.groupHeader}>{t('Settings.AboutApp')}</Text>
-        <View style={styles.rowGroup}>
-          <View style={styles.row}>
-            <Text style={SettingsTheme.text} testID={testIdWithKey('VersionLabel')}>
-              {t('Settings.Version')}
-            </Text>
-            <Text
-              style={SettingsTheme.text}
-              testID={testIdWithKey('Version')}
-            >{`${getVersion()}-${getBuildNumber()}`}</Text>
-          </View>
-
-          <TouchableOpacity
-            accessible={true}
-            accessibilityLabel={t('RootStack.Contacts')}
-            testID={testIdWithKey('Contacts')}
-            style={styles.row}
-            onPress={() =>
-              navigation
-                .getParent()
-                ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
-            }
-          >
-            <Text style={SettingsTheme.text}>{t('RootStack.Contacts')}</Text>
-            <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
-          </TouchableOpacity>
-        </View> */}
+      </View>
+      <View style={styles.footer}>
+        <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>{`${t(
+          'Settings.Version'
+        )} ${getVersion()} Build (${getBuildNumber()})`}</Text>
+        <Logo {...styles.logo} />
       </View>
     </SafeAreaScrollView>
   )
