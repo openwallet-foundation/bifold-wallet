@@ -24,6 +24,7 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('react-native-localize', () => { })
 
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))

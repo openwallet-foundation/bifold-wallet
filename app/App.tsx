@@ -21,7 +21,6 @@ import SplashScreen from "react-native-splash-screen";
 import Toast from "react-native-toast-message";
 
 
-
 initLanguages(translationResources);
 
 const App = () => {
