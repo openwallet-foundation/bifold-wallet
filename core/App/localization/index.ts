@@ -67,4 +67,8 @@ const initStoredLanguage = async () => {
   }
 }
 
-export { i18n, initStoredLanguage, initLanguages, storeLanguage, currentLanguage }
+const getCurrentLanguage = (): string => {
+  return i18n.language
+}
+
+export { i18n, initStoredLanguage, initLanguages, storeLanguage, currentLanguage, getCurrentLanguage }

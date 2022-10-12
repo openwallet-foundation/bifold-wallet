@@ -13,16 +13,16 @@ import RecordHeader from './RecordHeader'
 export interface RecordProps {
   header?: () => React.ReactElement | null
   footer?: () => React.ReactElement | null
-  fields?: Array<Field>
+  fields: Array<Field>
   hideFieldValues?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
-  oca?: JSON | null
 }
 
-const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldValues = false, field = null }) => {
+const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
   const { ListItems, TextTheme } = useTheme()
+
   const styles = StyleSheet.create({
     linkContainer: {
       flexDirection: 'row',
@@ -38,7 +38,6 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields = [], hideFieldV
   const resetShown = (): void => {
     setShown(fields.map(() => false))
   }
-
   useEffect(() => {
     resetShown()
   }, [])

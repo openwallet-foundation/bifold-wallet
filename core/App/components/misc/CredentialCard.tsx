@@ -1,18 +1,18 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, ImageBackground, LayoutRectangle, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { Dimensions, ImageBackground, LayoutRectangle, StyleSheet, Text, View, ViewStyle, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import Image from 'react-native-scalable-image'
 
 import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
+import { getCurrentLanguage } from '../../localization'
 import { GenericFn } from '../../types/fn'
+import { OCACredentialBundle } from '../../types/oca'
 import { getCredentialConnectionLabel, hashCode, hashToRGBA, parsedCredDefName } from '../../utils/helpers'
 import { luminanceForHexColour } from '../../utils/luminance'
-import { credentialSchema } from '../../utils/schema'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
@@ -32,19 +32,19 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
-  const credentialLabel = parsedCredDefName(credential)
-  const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
-  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
-
   const [state] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [headerDimensions, setHeaderDimensions] = useState<LayoutRectangle | null>(null)
   const [headerLogoDimensions, setHeaderLogoDimensions] = useState<LayoutRectangle | null>(null)
 
   const { revoked } = state.credential
+  const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
 
-  const schema = credentialSchema(credential) || ''
-  const overlay = OCABundle.branding[schema]
+  const overlay = bundle?.getCardLayoutOverlay()
+  const metaLayer = bundle?.getMetaOverlay(getCurrentLanguage())
+  const credentialLabel = metaLayer?.name ?? parsedCredDefName(credential)
+  const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
@@ -56,13 +56,17 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: overlay?.imageSource ? transparent : overlay?.backgroundColor ?? credentialBackgroundColor,
+      backgroundColor: bundle
+        ? overlay?.imageSource
+          ? transparent
+          : overlay?.backgroundColor ?? credentialBackgroundColor
+        : transparent,
       height: width / 2,
       borderRadius: borderRadius,
     },
     headerContainer: {
       flexDirection: 'row',
-      backgroundColor: overlay?.header?.backgroundColor || transparent,
+      backgroundColor: bundle ? overlay?.header?.backgroundColor || transparent : transparent,
       height: width / 7.5,
       paddingHorizontal,
       paddingVertical,
@@ -74,7 +78,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     },
     footerContainer: {
       flexDirection: 'row',
-      backgroundColor: overlay?.footer?.backgroundColor || transparent,
+      backgroundColor: bundle ? overlay?.footer?.backgroundColor || transparent : transparent,
       paddingHorizontal,
       paddingVertical,
       borderBottomLeftRadius: borderRadius,
@@ -93,7 +97,19 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     flexGrow: {
       flexGrow: 1,
     },
+    logo: {
+      width: 286, //286
+      height: 208, //208
+    },
   })
+
+  useEffect(() => {
+    OCABundle.resolve(credential).then((_bundle) => {
+      if (_bundle !== undefined) {
+        setBundle(_bundle)
+      }
+    })
+  }, [])
 
   useEffect(() => {
     if (!credential) {
@@ -139,7 +155,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       >
         {headerDimensions && overlay?.header?.imageSource && (
           <Image
-            source={overlay?.header?.imageSource}
+            style={styles.logo}
+            source={{ uri: overlay?.header?.imageSource as string }}
             height={headerDimensions.height - paddingVertical}
             width={headerDimensions.width / 3 - paddingHorizontal}
             onLayout={({ nativeEvent: { layout } }) => setHeaderLogoDimensions(layout)}
@@ -248,13 +265,16 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       testID={testIdWithKey('ShowCredentialDetails')}
     >
       <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
-        {overlay?.imageSource ? (
-          <ImageBackground source={overlay?.imageSource} style={styles.flexGrow} imageStyle={{ borderRadius }}>
+        {bundle !== null && overlay?.imageSource ? (
+          <ImageBackground
+            source={{ uri: overlay?.imageSource as string }}
+            style={styles.flexGrow}
+            imageStyle={{ borderRadius }}
+          >
             {renderCredentialCard(isRevoked)}
           </ImageBackground>
-        ) : (
-          renderCredentialCard(isRevoked)
-        )}
+        ) : null}
+        {bundle !== null && !overlay?.imageSource ? renderCredentialCard(isRevoked) : null}
       </View>
     </TouchableOpacity>
   )
