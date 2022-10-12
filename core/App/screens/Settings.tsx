@@ -14,45 +14,116 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t } = useTranslation()
-  const { borderRadius, SettingsTheme } = useTheme()
+  const { SettingsTheme, TextTheme, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
+      backgroundColor: ColorPallet.brand.primaryBackground,
       width: '100%',
-      padding: 20,
     },
-    groupHeader: {
-      ...SettingsTheme.groupHeader,
-    },
-    rowGroup: {
-      borderRadius: borderRadius * 2,
+    section: {
       backgroundColor: SettingsTheme.groupBackground,
-      marginBottom: 16,
+      padding: 25,
+      marginBottom: 10,
     },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: 12,
     },
   })
+
+  const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25 }}>
+      <Icon name={icon} size={42} style={{ marginRight: 10 }} />
+      <Text style={TextTheme.headingThree}>{title}</Text>
+    </View>
+  )
+
+  const SeparatorLine: React.FC = () => (
+    <View
+      style={{
+        height: 1,
+        backgroundColor: ColorPallet.grayscale.lightGrey,
+        marginVertical: 20,
+      }}
+    />
+  )
+
+  const Row: React.FC<{
+    title: string
+    value?: string
+    accessibilityLabel: string
+    testID: string
+    onPress: () => void
+  }> = ({ title, value, accessibilityLabel, testID, onPress }) => (
+    <View style={{ flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
+      <TouchableOpacity
+        accessible={true}
+        accessibilityLabel={accessibilityLabel}
+        testID={testID}
+        style={styles.row}
+        onPress={onPress}
+      >
+        <Text style={[TextTheme.normal, { fontSize: 22, flexGrow: 1 }]}>{title}</Text>
+        <Text style={[TextTheme.normal, { fontSize: 22 }]}>{value}</Text>
+      </TouchableOpacity>
+    </View>
+  )
+
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>
-        <Text style={styles.groupHeader}>{t('Settings.AppPreferences')}</Text>
-        <View style={styles.rowGroup}>
-          <TouchableOpacity
-            accessible={true}
-            accessibilityLabel={t('Settings.Language')}
-            testID={testIdWithKey('Language')}
-            style={styles.row}
-            onPress={() => navigation.navigate(Screens.Language)}
-          >
-            <Text style={SettingsTheme.text}>{t('Settings.Language')}</Text>
-            <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
-          </TouchableOpacity>
+        <View style={styles.section}>
+          <SectionHeader icon="apartment" title="Contacts" />
+          <View style={{ flexGrow: 1, flexDirection: 'column' }}>
+            <Row
+              title={'Contacts'}
+              accessibilityLabel={t('RootStack.Contacts')}
+              testID={testIdWithKey('Contacts')}
+              onPress={() =>
+                navigation
+                  .getParent()
+                  ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
+              }
+            />
+            <SeparatorLine />
+            <Row
+              title={'What are Contacts?'}
+              accessibilityLabel={'What are Contacts?'}
+              testID={testIdWithKey('WhatContacts')}
+              onPress={() => null}
+            />
+          </View>
         </View>
 
-        <Text style={styles.groupHeader}>{t('Settings.AboutApp')}</Text>
+        <View style={styles.section}>
+          <SectionHeader icon="settings" title="App Settings" />
+          <View style={{ flexGrow: 1, flexDirection: 'column' }}>
+            <Row
+              title={'Biometrics'}
+              value={'Off'}
+              accessibilityLabel={'Biometrics'}
+              testID={testIdWithKey('Biometrics')}
+              onPress={() => null}
+            />
+            <SeparatorLine />
+            <Row
+              title={'Change PIN'}
+              accessibilityLabel={'Change PIN'}
+              testID={testIdWithKey('ChangePIN')}
+              onPress={() => null}
+            />
+            <SeparatorLine />
+            <Row
+              title={'Language'}
+              value={'English'}
+              accessibilityLabel={'Language'}
+              testID={testIdWithKey('Language')}
+              onPress={() => null}
+            />
+          </View>
+        </View>
+        {/* <Text style={styles.groupHeader}>{t('Settings.AboutApp')}</Text>
         <View style={styles.rowGroup}>
           <View style={styles.row}>
             <Text style={SettingsTheme.text} testID={testIdWithKey('VersionLabel')}>
@@ -78,7 +149,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             <Text style={SettingsTheme.text}>{t('RootStack.Contacts')}</Text>
             <Icon name={'chevron-right'} size={25} color={SettingsTheme.iconColor} />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </SafeAreaScrollView>
   )
