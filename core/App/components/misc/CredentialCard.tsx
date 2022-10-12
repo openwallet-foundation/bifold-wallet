@@ -42,7 +42,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const overlay = bundle?.getCardLayoutOverlay()
   const metaLayer = bundle?.getMetaOverlay(getCurrentLanguage())
-  const credentialLabel = metaLayer?.name || parsedCredDefName(credential)
+  const credentialLabel = metaLayer?.name ?? parsedCredDefName(credential)
   const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
