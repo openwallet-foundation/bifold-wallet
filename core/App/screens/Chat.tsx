@@ -39,7 +39,8 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         _id: m.id,
         text: m.content,
         record: m,
-        createdAt: m.createdAt,
+        createdAt: m.sentTime,
+        // createdAt: m.createdAt,
         type: m.type,
         user: { _id: m.role },
       }
