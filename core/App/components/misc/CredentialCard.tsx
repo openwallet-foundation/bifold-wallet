@@ -46,9 +46,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
-  // console.log('overlay header.imageSource:', overlay?.header?.imageSource?.substring(0, 25))
-  // console.log('headerDimensions:', JSON.stringify(headerDimensions))
-  // console.log('headerLogoDimensions:', JSON.stringify(headerLogoDimensions))
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
     if ((luminanceForHexColour(hex ?? '') ?? 0) >= midpoint) {

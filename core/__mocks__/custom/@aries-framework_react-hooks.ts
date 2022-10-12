@@ -26,13 +26,10 @@ export default (credentials:CredentialExchangeRecord[]) => {
   const useCredentials = jest.fn().mockReturnValue({ credentials: [] } as any)
   const useCredentialById = () => {
     if (credentials !== undefined && credentials.length > 0){
-      //console.log('calling useCredentialById, returning ', credentials)
       return credentials[0]
     }
-    //console.log('calling useCredentialById, returning <undefined>')
     return undefined
   }
-  // console.log('Mocking ...')
   return {
     useAgent,
     useConnectionById,

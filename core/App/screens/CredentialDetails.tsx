@@ -100,7 +100,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [])
 
   useEffect(() => {
-    //console.log('Credential:', credential)
     if (!credential) {
       return
     }
@@ -112,7 +111,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setIsRevoked(isRevoked)
     const isRevokedMessageDismissed = revokedMessageDismissed.has(indyCredentialFormat.credentialRecordId)
     setIsRevokedMessageHidden(isRevokedMessageDismissed)
-    //console.log('OCABundle.getCredentialPresentationFields:')
     OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, getCurrentLanguage()).then(
       (fields) => setFields(fields)
     )
