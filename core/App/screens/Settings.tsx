@@ -5,7 +5,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Logo from '../assets/img/aries-logo.svg'
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -18,7 +17,7 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store] = useStore()
-  const { SettingsTheme, TextTheme, ColorPallet } = useTheme()
+  const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
     { id: Locales.fr, value: t('Language.French') },
@@ -41,7 +40,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     logo: {
       height: 64,
-      width: 64,
+      width: 164,
       marginVertical: 15,
     },
     footer: {
@@ -148,7 +147,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
           {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
         </Text>
-        <Logo {...styles.logo} />
+        <Assets.svg.logo {...styles.logo} />
       </View>
     </SafeAreaScrollView>
   )
