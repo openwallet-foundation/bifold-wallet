@@ -7,15 +7,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Logo from '../assets/img/aries-logo.svg'
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { Locales } from '../localization'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const [store] = useStore()
   const { SettingsTheme, TextTheme, ColorPallet } = useTheme()
+  const languages = [
+    { id: Locales.en, value: t('Language.English') },
+    { id: Locales.fr, value: t('Language.French') },
+    { id: Locales.ptBr, value: t('Language.Portuguese') },
+  ]
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
@@ -41,6 +49,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       alignItems: 'center',
     },
   })
+
+  const currentLanguage = languages.find((l) => l.id === i18n.language)?.value
 
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25 }}>
@@ -84,11 +94,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     <SafeAreaScrollView>
       <View style={styles.container}>
         <View style={styles.section}>
-          <SectionHeader icon="apartment" title="Contacts" />
+          <SectionHeader icon="apartment" title={t('Screens.Contacts')} />
           <View style={{ flexGrow: 1, flexDirection: 'column' }}>
             <Row
-              title={'Contacts'}
-              accessibilityLabel={t('RootStack.Contacts')}
+              title={t('Screens.Contacts')}
+              accessibilityLabel={t('Screens.Contacts')}
               testID={testIdWithKey('Contacts')}
               onPress={() =>
                 navigation
@@ -96,48 +106,48 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
                   ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
               }
             />
-            <SeparatorLine />
+            {/* <SeparatorLine />
             <Row
               title={'What are Contacts?'}
               accessibilityLabel={'What are Contacts?'}
               testID={testIdWithKey('WhatContacts')}
               onPress={() => null}
-            />
+            /> */}
           </View>
         </View>
 
         <View style={styles.section}>
-          <SectionHeader icon="settings" title="App Settings" />
+          <SectionHeader icon="settings" title={t('Settings.AppPreferences')} />
           <View style={{ flexGrow: 1, flexDirection: 'column' }}>
             <Row
-              title={'Biometrics'}
-              value={'Off'}
-              accessibilityLabel={'Biometrics'}
+              title={t('Global.Biometrics')}
+              value={store.preferences.useBiometry ? t('Global.On') : t('Global.Off')}
+              accessibilityLabel={t('Global.Biometrics')}
               testID={testIdWithKey('Biometrics')}
               onPress={() => null}
             />
             <SeparatorLine />
-            <Row
+            {/* <Row
               title={'Change PIN'}
               accessibilityLabel={'Change PIN'}
               testID={testIdWithKey('ChangePIN')}
               onPress={() => null}
             />
-            <SeparatorLine />
+            <SeparatorLine /> */}
             <Row
-              title={'Language'}
-              value={'English'}
-              accessibilityLabel={'Language'}
+              title={t('Settings.Language')}
+              value={currentLanguage}
+              accessibilityLabel={t('Settings.Language')}
               testID={testIdWithKey('Language')}
-              onPress={() => null}
+              onPress={() => navigation.navigate(Screens.Language)}
             />
           </View>
         </View>
       </View>
       <View style={styles.footer}>
-        <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>{`${t(
-          'Settings.Version'
-        )} ${getVersion()} Build (${getBuildNumber()})`}</Text>
+        <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
+          {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
+        </Text>
         <Logo {...styles.logo} />
       </View>
     </SafeAreaScrollView>
