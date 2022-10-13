@@ -153,7 +153,6 @@ exports[`common decline screen decline offer renders correctly 1`] = `
               testID="com.ariesbifold:id/CredentialCard"
             >
               <View
-                onLayout={[Function]}
                 style={
                   Array [
                     Object {
@@ -165,30 +164,48 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                       "paddingHorizontal": 10,
                       "paddingVertical": 10,
                     },
+                    Object {
+                      "alignContent": "flex-start",
+                      "alignItems": "flex-start",
+                      "flex": 1,
+                    },
                   ]
                 }
                 testID="com.ariesbifold:id/CredentialCardHeader"
               >
-                <Text
-                  ellipsizeMode="tail"
-                  maxFontSizeMultiplier={1}
-                  numberOfLines={1}
+                <View
                   style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 14,
-                        "fontWeight": "bold",
-                      },
-                      Object {
-                        "color": "#313132",
-                        "paddingHorizontal": 5,
-                        "width": "50%",
-                      },
-                    ]
+                    Object {
+                      "flex": 5,
+                      "flexDirection": "row",
+                      "flexWrap": "nowrap",
+                    }
                   }
-                  testID="com.ariesbifold:id/CredentialIssuer"
-                />
+                >
+                  <Text
+                    ellipsizeMode="tail"
+                    maxFontSizeMultiplier={1}
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 14,
+                          "fontWeight": "bold",
+                        },
+                        Object {
+                          "color": "#313132",
+                          "flex": 4,
+                          "left": 40,
+                          "paddingLeft": 10,
+                          "position": "absolute",
+                          "textAlign": "left",
+                        },
+                      ]
+                    }
+                    testID="com.ariesbifold:id/CredentialIssuer"
+                  />
+                </View>
                 <Text
                   ellipsizeMode="tail"
                   maxFontSizeMultiplier={1}
@@ -202,9 +219,9 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                       },
                       Object {
                         "color": "#313132",
-                        "paddingHorizontal": 5,
+                        "flex": 3,
+                        "paddingRight": 10,
                         "textAlign": "right",
-                        "width": "50%",
                       },
                     ]
                   }
