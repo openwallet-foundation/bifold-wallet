@@ -1,7 +1,16 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, ImageBackground, LayoutRectangle, StyleSheet, Text, View, ViewStyle, Image } from 'react-native'
+import {
+  Dimensions,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+  Image,
+  ImageSourcePropType,
+} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { dateFormatOptions } from '../../constants'
@@ -27,6 +36,12 @@ const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 const { width } = Dimensions.get('window')
 
+const toImageSource = (source: unknown): ImageSourcePropType => {
+  if (typeof source === 'string') {
+    return { uri: source as string }
+  }
+  return source as ImageSourcePropType
+}
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
@@ -34,8 +49,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const [state] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  const [headerDimensions, setHeaderDimensions] = useState<LayoutRectangle | null>(null)
-  const [headerLogoDimensions, setHeaderLogoDimensions] = useState<LayoutRectangle | null>(null)
 
   const { revoked } = state.credential
   const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
@@ -44,7 +57,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const metaLayer = bundle?.getMetaOverlay(getCurrentLanguage())
   const credentialLabel = metaLayer?.name ?? parsedCredDefName(credential)
   const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
-  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+  const credentialConnectionLabel = metaLayer?.issuer_name ?? getCredentialConnectionLabel(credential)
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
@@ -124,13 +137,12 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       <View
         testID={testIdWithKey('CredentialCardHeader')}
         style={[styles.headerContainer, { flex: 1, alignContent: 'flex-start', alignItems: 'flex-start' }]}
-        onLayout={({ nativeEvent: { layout } }) => setHeaderDimensions(layout)}
       >
         <View style={{ flex: 5, flexWrap: 'nowrap', flexDirection: 'row' }}>
-          {headerDimensions && overlay?.header?.imageSource && (
+          {overlay?.header?.imageSource && (
             <Image
-              style={{ resizeMode: 'contain', aspectRatio: 1, maxHeight: 42, minWidth: 40 }}
-              source={{ uri: overlay?.header?.imageSource as string }}
+              style={{ resizeMode: 'contain', maxHeight: 42, flex: 0.2 }}
+              source={toImageSource(overlay?.header?.imageSource)}
             />
           )}
           {overlay?.header?.hideIssuer ? null : (
@@ -236,7 +248,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
         {bundle !== null && overlay?.imageSource ? (
           <ImageBackground
-            source={{ uri: overlay?.imageSource as string }}
+            source={toImageSource(overlay?.imageSource)}
             style={styles.flexGrow}
             imageStyle={{ borderRadius }}
           >

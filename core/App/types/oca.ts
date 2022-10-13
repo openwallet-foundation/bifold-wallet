@@ -43,7 +43,7 @@ export interface CaptureBaseOverlay extends BaseL10nOverlay {
 
 export interface MetaOverlay extends BaseL10nOverlay {
   name: string
-  attributes: AttributeLabels
+  issuer_name: string
 }
 
 export interface CardLayoutOverlay extends BaseOverlay {
@@ -147,7 +147,7 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
     const baseOverlay = bundle?.getCaptureBase()
     const labelOverlay = bundle?.getLabelOverlay(language)
     const _fields: Array<Field> = []
-    if (baseOverlay) {
+    if (baseOverlay && baseOverlay.attributes) {
       for (const key in baseOverlay?.attributes) {
         if (Object.prototype.hasOwnProperty.call(baseOverlay?.attributes, key)) {
           const _sourceField = credential?.credentialAttributes?.find((item) => item.name === key)
@@ -172,6 +172,9 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
             value: _sourceField.value,
             mimeType: _sourceField.mimeType,
           } as Attribute
+          if (labelOverlay?.attr_labels[_sourceField.name]) {
+            _field.label = labelOverlay?.attr_labels[_sourceField.name]
+          }
           _fields.push(_field)
         }
       }
