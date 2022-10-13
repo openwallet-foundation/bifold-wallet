@@ -85,7 +85,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         onPress={onPress}
       >
         <Text style={[TextTheme.normal, { fontSize: 22, flexGrow: 1 }]}>{title}</Text>
-        <Text style={[TextTheme.normal, { fontSize: 22 }]}>{value}</Text>
+        <Text style={[TextTheme.normal, { fontSize: 22, color: ColorPallet.brand.link }]}>{value}</Text>
       </TouchableOpacity>
     </View>
   )
