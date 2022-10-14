@@ -7,6 +7,7 @@ export enum BaseType {
   TEXT = 'Text',
   DATETIME = 'DateTime',
   NUMERIC = 'Numeric',
+  DATEINT = 'Dateint',
 }
 
 export enum OverlayType {

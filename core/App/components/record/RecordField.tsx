@@ -4,10 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
+import { BaseType } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
 
 import RecordBinaryField from './RecordBinaryField'
+import RecordDateIntField from './RecordDateIntField'
 
 interface RecordFieldProps {
   field: Field
@@ -65,12 +67,15 @@ const RecordField: React.FC<RecordFieldProps> = ({
   const displayAttribute = (field: Field) => {
     if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
       return <RecordBinaryField attributeValue={(field as Attribute).value as string} shown={shown} />
+    } else if (field.type == BaseType.DATEINT) {
+      return <RecordDateIntField field={field} shown={shown} />
+    } else {
+      return (
+        <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
+          {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
+        </Text>
+      )
     }
-    return (
-      <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-        {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
-      </Text>
-    )
   }
 
   return (
