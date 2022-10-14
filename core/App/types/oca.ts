@@ -161,7 +161,7 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
   }
   public loadDefaultBundles(): OCABundleResolver {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return this.loadBundles(require('../assets/oca-bundles-qc.json'))
+    return this.loadBundles(require('../assets/oca-bundles.json'))
   }
   public async getCredentialPresentationFields(
     credential: CredentialExchangeRecord,
