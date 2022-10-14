@@ -28,6 +28,9 @@ const translation = {
     "GetStarted": "Iniciar",
     "Dismiss": "Dispensar",
     "ShowDetails": "Mostrar Detalhes",
+    "Biometrics": "Biometrics",
+    "On" : "On",
+    "Off": "Off",
   },
   "Language": {
     "English": "Inglês",

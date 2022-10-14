@@ -1,4 +1,11 @@
 import { StyleSheet } from 'react-native'
+import { SvgProps } from 'react-native-svg'
+
+import Logo from './assets/img/logo.svg'
+
+interface SVGAssets {
+  logo: React.FC<SvgProps>
+}
 
 interface FontAttributes {
   fontFamily?: string
@@ -98,6 +105,7 @@ interface ColorPallet {
 }
 
 interface Assets {
+  svg: SVGAssets
   img: {
     logoPrimary: any
     logoSecondary: any
@@ -570,6 +578,9 @@ const PinInputTheme = {
 }
 
 export const Assets = {
+  svg: {
+    logo: Logo,
+  },
   img: {
     logoPrimary: {
       src: require('./assets/img/logo-large.png'),
