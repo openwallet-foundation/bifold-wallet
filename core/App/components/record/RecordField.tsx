@@ -65,12 +65,13 @@ const RecordField: React.FC<RecordFieldProps> = ({
   const displayAttribute = (field: Field) => {
     if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
       return <RecordBinaryField attributeValue={(field as Attribute).value as string} shown={shown} />
+    } else {
+      return (
+        <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
+          {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
+        </Text>
+      )
     }
-    return (
-      <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-        {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
-      </Text>
-    )
   }
 
   return (
