@@ -1,13 +1,18 @@
+import { agentDependencies } from '@aries-framework/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import {
   secretForPIN,
   storeWalletSecret,
   loadWalletSecret,
   convertToUseBiometrics,
   convertToDisableBiometrics,
+  loadWalletSalt,
   isBiometricsActive,
+  wipeWalletKey,
 } from '../services/keychain'
 import { PinChangeReturns, WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
@@ -17,7 +22,10 @@ export interface AuthContext {
   convertToUseBiometrics: () => Promise<boolean>
   convertToDisableBiometrics: (walletSecret: WalletSecret) => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
+  removeSavedWalletSecret: () => void
+  disableBiometrics: () => Promise<void>
   setPIN: (pin: string) => Promise<void>
+  commitPIN: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
 }
 
@@ -25,6 +33,7 @@ export const AuthContext = createContext<AuthContext>(null as unknown as AuthCon
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
+  const [, dispatch] = useStore()
   const { t } = useTranslation()
 
   const setPIN = async (pin: string): Promise<void> => {
@@ -50,19 +59,64 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
+  const checkPINToReset = async (pin: string): Promise<boolean> => {
+    const secret = await loadWalletSalt()
+
+    if (!secret || !secret.salt) {
+      return false
+    }
+
+    const hash = await hashPIN(pin, secret.salt)
+
+    try {
+      await agentDependencies.indy.openWallet({ id: secret.id }, { key: hash })
+      // need full secret in volatile memory in case user wants to fall back to using PIN
+      const fullSecret = await secretForPIN(pin, secret.salt)
+      setWalletSecret(fullSecret)
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+
   const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
     if (walletSecret) {
       return walletSecret
     }
 
     const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
-    if (!secret || !secret.key) {
+    if (!secret) {
       return
     }
-
     setWalletSecret(secret)
 
     return secret
+  }
+
+  const commitPIN = async (useBiometry: boolean): Promise<boolean> => {
+    const secret = await getWalletCredentials()
+    if (!secret) {
+      return false
+    }
+    // set did authenticate to true if we can get wallet credentials
+    dispatch({
+      type: DispatchAction.DID_AUTHENTICATE,
+    })
+    if (useBiometry) {
+      await storeWalletSecret(secret, useBiometry)
+    } else {
+      // erase wallet key if biometrics is disabled
+      await wipeWalletKey(useBiometry)
+    }
+    return true
+  }
+
+  const removeSavedWalletSecret = () => {
+    setWalletSecret(undefined)
+  }
+
+  const disableBiometrics = async () => {
+    await wipeWalletKey(true)
   }
 
   return (
@@ -72,6 +126,9 @@ export const AuthProvider: React.FC = ({ children }) => {
         convertToUseBiometrics,
         convertToDisableBiometrics,
         getWalletCredentials,
+        removeSavedWalletSecret,
+        disableBiometrics,
+        commitPIN,
         setPIN,
         isBiometricsActive,
       }}

@@ -15,6 +15,16 @@ export interface Preferences {
   useBiometry: boolean
 }
 
+export interface Lockout {
+  displayNotification: boolean
+}
+
+export interface LoginAttempt {
+  lockoutDate?: number
+  servedPenalty: boolean
+  loginAttempts: number
+}
+
 // FIXME: Once hooks are updated this should no longer be necessary
 export interface Credential {
   revoked: Set<CredentialRecord['id']>
@@ -33,6 +43,8 @@ export interface State {
   onboarding: Onboarding
   authentication: Authentication
   privacy: Privacy
+  lockout: Lockout
+  loginAttempt: LoginAttempt
   preferences: Preferences
   credential: Credential
   error: BifoldError | null

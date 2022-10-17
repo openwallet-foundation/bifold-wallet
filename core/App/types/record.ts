@@ -3,6 +3,7 @@ export interface Field {
   mimeType?: string
   revoked?: boolean
   credentialId?: string
+  label?: string
 }
 
 export interface Attribute extends Field {

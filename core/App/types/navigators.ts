@@ -3,7 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/core'
 import { DeclineType } from './decline'
 
 export enum Screens {
-  WebDisplay = 'WebDisplay',
+  AttemptLockout = 'Temporarily Locked',
   Splash = 'Splash',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
@@ -65,6 +65,7 @@ export type TabStackParams = {
 export type AuthenticateStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Terms]: undefined
+  [Screens.AttemptLockout]: undefined
   [Screens.CreatePin]: { setAuthenticated: () => void } | undefined
   [Screens.EnterPin]: { setAuthenticated: () => void } | undefined
   [Screens.UseBiometry]: undefined
@@ -84,7 +85,6 @@ export type CredentialStackParams = {
 export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
-  [Screens.WebDisplay]: { destUrl: string; exitUrl?: string }
 }
 
 export type ConnectStackParams = {

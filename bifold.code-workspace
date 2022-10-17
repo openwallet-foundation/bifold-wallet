@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "core"
+		},
+		{
+			"path": "app"
+		}
+	],
+	"settings": {
+		"javascript.preferences.importModuleSpecifier": "relative"
+	}
+}

@@ -6,7 +6,6 @@ import SettingsCog from '../components/misc/SettingsCog'
 import { useTheme } from '../contexts/theme'
 import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'
-import WebDisplay from '../screens/WebDisplay'
 import { HomeStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
@@ -18,7 +17,7 @@ const HomeStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerLeft: () => null }}>
       <Stack.Screen
         name={Screens.Home}
         component={Home}
@@ -34,7 +33,6 @@ const HomeStack: React.FC = () => {
           title: t('Screens.Notifications'),
         })}
       />
-      <Stack.Screen name={Screens.WebDisplay} component={WebDisplay} />
     </Stack.Navigator>
   )
 }

@@ -7,10 +7,11 @@ import {
   MediatorPickupStrategy,
   WsOutboundTransport,
 } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
@@ -26,16 +27,12 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
-import { WalletSecret } from '../types/security'
 import {
   Onboarding as StoreOnboardingState,
   Privacy as PrivacyState,
   Preferences as PreferencesState,
+  LoginAttempt as LoginAttemptState,
 } from '../types/state'
-
-interface SplashProps {
-  setAgent: React.Dispatch<React.SetStateAction<Agent | undefined>>
-}
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
@@ -62,8 +59,8 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * iOS and Android launch screen to match the background color of
  * of this view.
  */
-const Splash: React.FC<SplashProps> = (props: SplashProps) => {
-  const { setAgent } = props
+const Splash: React.FC = () => {
+  const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -78,13 +75,32 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
     },
   })
 
+  const loadAuthAttempts = async (): Promise<LoginAttemptState | undefined> => {
+    try {
+      const attemptsData = await AsyncStorage.getItem(LocalStorageKeys.LoginAttempts)
+      if (attemptsData) {
+        const attempts = JSON.parse(attemptsData) as LoginAttemptState
+        dispatch({
+          type: DispatchAction.ATTEMPT_UPDATED,
+          payload: [attempts],
+        })
+        return attempts
+      }
+    } catch (error) {
+      // todo (WK)
+    }
+  }
+
   useEffect(() => {
     if (store.authentication.didAuthenticate) {
       return
     }
 
-    const initOnboarding = async () => {
+    const initOnboarding = async (): Promise<void> => {
       try {
+        // load authentication attempts from storage
+        const attemptData = await loadAuthAttempts()
+
         const preferencesData = await AsyncStorage.getItem(LocalStorageKeys.Preferences)
 
         if (preferencesData) {
@@ -110,8 +126,13 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
         if (data) {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
           dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
-          if (onboardingComplete(onboardingState)) {
+          if (onboardingComplete(onboardingState) && !attemptData?.lockoutDate) {
             navigation.navigate(Screens.EnterPin as never)
+            return
+          } else if (onboardingComplete(onboardingState) && attemptData?.lockoutDate) {
+            // return to lockout screen if lockout date is set
+            navigation.navigate(Screens.AttemptLockout as never)
+            return
           } else {
             // If onboarding was interrupted we need to pickup from where we left off.
             navigation.navigate(resumeOnboardingAt(onboardingState) as never)
@@ -133,11 +154,7 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
       return
     }
 
-    const initAgent = async (predefinedSecret?: WalletSecret | null): Promise<void> => {
-      if (!predefinedSecret) {
-        dispatch({ type: DispatchAction.LOADING_ENABLED })
-      }
-
+    const initAgent = async (): Promise<void> => {
       try {
         const credentials = await getWalletCredentials()
 
@@ -161,7 +178,6 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
           },
           agentDependencies
         )
-
         const wsTransport = new WsOutboundTransport()
         const httpTransport = new HttpOutboundTransport()
 
@@ -170,7 +186,6 @@ const Splash: React.FC<SplashProps> = (props: SplashProps) => {
 
         await newAgent.initialize()
         setAgent(newAgent)
-        dispatch({ type: DispatchAction.LOADING_DISABLED })
         navigation.navigate(Stacks.TabStack as never)
       } catch (e: unknown) {
         Toast.show({

@@ -63,7 +63,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
         fieldLabel(field)
       ) : (
         <Text style={[ListItems.recordAttributeLabel, { fontWeight: 'bold' }]} testID={testIdWithKey('AttributeName')}>
-          {startCase(field.name || '')}
+          {field.label ?? startCase(field.name || '')}
         </Text>
       )}
       <View style={styles.valueContainer}>

@@ -6,6 +6,9 @@ import {
   Preferences as PreferencesState,
   Onboarding as OnboardingState,
   Credential as CredentialState,
+  Authentication as AuthenticationState,
+  Lockout as LockoutState,
+  LoginAttempt as LoginAttemptState,
   State,
 } from '../../types/state'
 
@@ -28,11 +31,13 @@ enum CredentialDispatchAction {
   CREDENTIAL_REVOKED_MESSAGE_DISMISSED = 'credentials/credentialRevokedMessageDismissed',
 }
 
-enum LoadingDispatchAction {
-  LOADING_ENABLED = 'loading/loadingEnabled',
-  LOADING_DISABLED = 'loading/loadingDisabled',
+enum LockoutDispatchAction {
+  LOCKOUT_UPDATED = 'lockout/lockoutUpdated',
 }
 
+enum LoginAttemptDispatchAction {
+  ATTEMPT_UPDATED = 'loginAttempt/loginAttemptUpdated',
+}
 enum PrivacyDispatchAction {
   DID_SHOW_CAMERA_DISCLOSURE = 'privacy/didShowCameraDisclosure',
   PRIVACY_UPDATED = 'privacy/privacyStateLoaded',
@@ -53,8 +58,9 @@ export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
   | CredentialDispatchAction
-  | LoadingDispatchAction
   | PrivacyDispatchAction
+  | LoginAttemptDispatchAction
+  | LockoutDispatchAction
   | PreferencesDispatchAction
   | AuthenticationDispatchAction
 
@@ -62,8 +68,9 @@ export const DispatchAction = {
   ...OnboardingDispatchAction,
   ...ErrorDispatchAction,
   ...CredentialDispatchAction,
-  ...LoadingDispatchAction,
   ...PrivacyDispatchAction,
+  ...LoginAttemptDispatchAction,
+  ...LockoutDispatchAction,
   ...PreferencesDispatchAction,
   ...AuthenticationDispatchAction,
 }
@@ -120,6 +127,22 @@ const reducer = (state: State, action: ReducerAction): State => {
         privacy,
       }
     }
+    case LoginAttemptDispatchAction.ATTEMPT_UPDATED: {
+      const loginAttempt: LoginAttemptState = (action?.payload || []).pop()
+      const newState = {
+        ...state,
+        loginAttempt,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.LoginAttempts, JSON.stringify(newState.loginAttempt))
+      return newState
+    }
+    case LockoutDispatchAction.LOCKOUT_UPDATED: {
+      const lockout: LockoutState = (action?.payload || []).pop()
+      return {
+        ...state,
+        lockout,
+      }
+    }
     case OnboardingDispatchAction.ONBOARDING_UPDATED: {
       const onboarding: OnboardingState = (action?.payload || []).pop()
       return {
@@ -164,9 +187,11 @@ const reducer = (state: State, action: ReducerAction): State => {
       return newState
     }
     case AuthenticationDispatchAction.DID_AUTHENTICATE: {
+      const value: AuthenticationState = (action?.payload || []).pop()
+      const payload = value ?? { didAuthenticate: true }
       const newState = {
         ...state,
-        ...{ authentication: { didAuthenticate: true } },
+        ...{ authentication: payload },
       }
       return newState
     }
@@ -236,18 +261,6 @@ const reducer = (state: State, action: ReducerAction): State => {
       return {
         ...state,
         error: null,
-      }
-    }
-    case LoadingDispatchAction.LOADING_ENABLED: {
-      return {
-        ...state,
-        loading: true,
-      }
-    }
-    case LoadingDispatchAction.LOADING_DISABLED: {
-      return {
-        ...state,
-        loading: false,
       }
     }
     default:
