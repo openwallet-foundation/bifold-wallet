@@ -6,6 +6,7 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
+import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Locales } from '../localization'
@@ -16,7 +17,7 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
-  const [store] = useStore()
+  const [store, dispatch] = useStore()
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
@@ -48,6 +49,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       alignItems: 'center',
     },
   })
+
+  const toggleBiometrics = () => {
+    dispatch({
+      type: DispatchAction.USE_BIOMETRY,
+      payload: [!store.preferences.useBiometry],
+    })
+  }
 
   const currentLanguage = languages.find((l) => l.id === i18n.language)?.value
 
@@ -123,7 +131,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               value={store.preferences.useBiometry ? t('Global.On') : t('Global.Off')}
               accessibilityLabel={t('Global.Biometrics')}
               testID={testIdWithKey('Biometrics')}
-              onPress={() => null}
+              onPress={toggleBiometrics}
             />
             <SeparatorLine />
             {/* <Row
