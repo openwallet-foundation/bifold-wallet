@@ -20,8 +20,9 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) 
     if (moment((field as Attribute).value as string, dateIntFormat).isValid()) {
       const dateObject = moment((field as Attribute).value as string, dateIntFormat)
       setDate(moment(dateObject).format(field.format))
+    } else {
+      setDate((field as Attribute).value as string)
     }
-    setDate((field as Attribute).value as string)
   })
 
   const styles = StyleSheet.create({
