@@ -40,27 +40,17 @@ const DisplayCode = ({ navigation }: any) => {
 
   const handleEvent = (event: ConnectionStateChangedEvent) => {
     if (event.payload.connectionRecord.outOfBandId === oobRecord?.id) {
-      console.log(`Connection state changed for connection with out of band id ${oobRecord?.id}`)
-      console.log(`Connection Record ID: ${event.payload.connectionRecord.id}`)
       setConnectionId(event.payload.connectionRecord.id)
     }
   }
 
-  useEffect(() => {
-    agent?.events.on<ConnectionStateChangedEvent>(ConnectionEventTypes.ConnectionStateChanged, (event) => handleEvent(event))
+    useEffect(() => {
+    agent?.events.on(ConnectionEventTypes.ConnectionStateChanged, (event: ConnectionStateChangedEvent) => handleEvent(event))
 
     return () => {
-      agent?.events.off(ConnectionEventTypes.ConnectionStateChanged, () => {})
+      agent?.events.off(ConnectionEventTypes.ConnectionStateChanged, (event: ConnectionStateChangedEvent) => handleEvent(event))
     }
-  }, [])
-
-  // agent?.events.on<ConnectionStateChangedEvent>(ConnectionEventTypes.ConnectionStateChanged, (event) => {
-  //   if (event.payload.connectionRecord.outOfBandId === oobRecord?.id) {
-  //     console.log(`Connection state changed for connection with out of band id ${oobRecord?.id}`)
-  //     console.log(`Connection Record ID: ${event.payload.connectionRecord.id}`)
-  //     setConnectionId(event.payload.connectionRecord.id)
-  //   }
-  // })
+  }, [agent, oobRecord])
 
   const generateInvitation = async () => {
     const { outOfBandRecord, invitation } = await agent!.oob.createLegacyInvitation({
@@ -70,8 +60,6 @@ const DisplayCode = ({ navigation }: any) => {
     const mediationRecord = await agent?.mediationRecipient.findDefaultMediator()
     setInvitation(invitation)
     if (invitation) {
-      console.log('oob record : ',JSON.stringify(outOfBandRecord))
-      console.log('invitation : ', JSON.stringify(invitation))
       setOobRecord(outOfBandRecord)
     }
     if (mediationRecord?.endpoint) {
@@ -94,16 +82,15 @@ const DisplayCode = ({ navigation }: any) => {
   }, [])
 
   useEffect(() => {
-    console.log('connection id : ', connectionId)
-    console.log('connection state : ', connection)
     if (connection?.state === DidExchangeState.Completed) {
-      console.log('SUCCESS!!!')
       if (uiConfig.navigateOnConnection) {
         navigation.goBack()
-        navigation.navigate(Stacks.ContactStack, {
-          screen: Screens.Chat,
-          params: { connectionId: connection.id },
-        })
+        //  NOTE: Below is the code to navigate to chat screen, leaving in for later use
+        // navigation.navigate(Stacks.ContactStack, {
+        //   screen: Screens.Chat,
+        //   params: { connectionId: connection.id },
+        // })
+        navigation.navigate(Screens.Home)
       } else {
         navigation.goBack()
         navigation.navigate(Stacks.ConnectionStack, { screen: Screens.Connection, params: { connectionId } })

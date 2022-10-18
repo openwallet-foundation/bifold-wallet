@@ -13,11 +13,10 @@ interface ListContactsProps {
 }
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
-  // const { records } = useConnections({
-  //   excludedTypes: [ConnectionType.Mediator],
-  //   connectionState: DidExchangeState.Completed,
-  // })
-  const { records } = useConnections()
+  const { records } = useConnections({
+    excludedTypes: [ConnectionType.Mediator],
+    connectionState: DidExchangeState.Completed,
+  })
   const { ColorPallet } = useTheme()
   return (
     <>

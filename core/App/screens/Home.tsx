@@ -72,11 +72,10 @@ export const NoContactsMessage = () => {
 }
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  // const { records: connectionRecords } = useConnections({
-  //   excludedTypes: [ConnectionType.Mediator],
-  //   connectionState: DidExchangeState.Completed,
-  // })
-  const { records: connectionRecords } = useConnections()
+  const { records: connectionRecords } = useConnections({
+    excludedTypes: [ConnectionType.Mediator],
+    connectionState: DidExchangeState.Completed,
+  })
   const { notifications } = useNotifications()
   const { t } = useTranslation()
   const { ColorPallet, HomeTheme, ListItems } = useTheme()
