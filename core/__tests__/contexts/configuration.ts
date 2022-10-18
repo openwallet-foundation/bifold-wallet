@@ -1,5 +1,5 @@
-import Record from '../../App/components/record/Record'
-import { DefaultOCABundleResolver } from '../../App/types/oca'
+import Record from '../../src/components/record/Record'
+import { DefaultOCABundleResolver } from '../../src/types/oca'
 
 export default {
   pages: () => [],

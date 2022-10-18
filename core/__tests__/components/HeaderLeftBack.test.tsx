@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import HeaderLeftBack from '../../App/components/buttons/HeaderLeftBack'
+import HeaderLeftBack from '../../src/components/buttons/HeaderLeftBack'
 
 describe('Header Left Button Component', () => {
   test('Renders correctly', () => {

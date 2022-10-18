@@ -116,18 +116,18 @@
   "bin": {
     "bifold": "bin/bifold"
   },
-  "react-native": "App/index.ts",
+  "react-native": "src/index.ts",
   "module": "lib/module/index.js",
-  "types": "lib/typescript/App/index.d.ts",
+  "types": "lib/typescript/src/index.d.ts",
   "files": [
-    "App",
+    "src",
     "lib",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
   ],
   "react-native-builder-bob": {
-    "source": "App",
+    "source": "src",
     "output": "lib",
     "targets": [
       "commonjs",

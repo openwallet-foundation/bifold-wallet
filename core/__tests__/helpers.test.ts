@@ -1,4 +1,4 @@
-import { isRedirection, sortCredentialsForAutoSelect } from '../App/utils/helpers'
+import { isRedirection, sortCredentialsForAutoSelect } from '../src/utils/helpers'
 import path from 'path'
 import fs from 'fs'
 

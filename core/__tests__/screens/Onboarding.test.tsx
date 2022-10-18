@@ -2,10 +2,10 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 import { Text } from 'react-native'
 
-import * as themeContext from '../../App/contexts/theme' // note we're importing with a * to import all the exports
-import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
-import { createCarouselStyle } from '../../App/screens/OnboardingPages'
-import { OnboardingTheme, theme } from '../../App/theme'
+import * as themeContext from '../../src/contexts/theme' // note we're importing with a * to import all the exports
+import Onboarding, { OnboardingStyleSheet } from '../../src/screens/Onboarding'
+import { createCarouselStyle } from '../../src/screens/OnboardingPages'
+import { OnboardingTheme, theme } from '../../src/theme'
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 

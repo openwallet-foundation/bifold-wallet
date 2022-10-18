@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import HeaderRightSkip from '../../App/components/buttons/HeaderRightSkip'
+import HeaderRightSkip from '../../src/components/buttons/HeaderRightSkip'
 
 describe('Header Right Button Component', () => {
   test('Renders correctly', () => {

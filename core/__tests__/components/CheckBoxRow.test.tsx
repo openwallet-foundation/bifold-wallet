@@ -1,7 +1,7 @@
 import React from 'react'
 import { create } from 'react-test-renderer'
 
-import CheckBoxRow from '../../App/components/inputs/CheckBoxRow'
+import CheckBoxRow from '../../src/components/inputs/CheckBoxRow'
 
 describe('CheckBoxRow Component', () => {
   it('Renders correctly', () => {

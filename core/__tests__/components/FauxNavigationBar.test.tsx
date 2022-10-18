@@ -1,8 +1,8 @@
 import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
-import FauxNavigationBar from '../../App/components/views/FauxNavigationBar'
-import { testIdWithKey } from '../../App/utils/testable'
+import FauxNavigationBar from '../../src/components/views/FauxNavigationBar'
+import { testIdWithKey } from '../../src/utils/testable'
 
 describe('Faux Navigation Bar Component', () => {
   it('Renders without home icon', () => {

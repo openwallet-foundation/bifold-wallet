@@ -6,12 +6,12 @@ import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Button, { ButtonType } from '../../components/buttons/Button'
-import FauxNavigationBar from '../../components/views/FauxNavigationBar'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
+import Button, { ButtonType } from '../buttons/Button'
 import UnorderedList from '../misc/UnorderedList'
+import FauxNavigationBar from '../views/FauxNavigationBar'
 
 interface CommonDeleteModalProps {
   onSubmit?: GenericFn

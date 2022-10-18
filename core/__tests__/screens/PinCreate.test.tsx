@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import { AuthContext } from '../../App/contexts/auth'
-import PinCreate from '../../App/screens/PinCreate'
+import { AuthContext } from '../../src/contexts/auth'
+import PinCreate from '../../src/screens/PinCreate'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')

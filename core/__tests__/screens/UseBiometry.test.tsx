@@ -1,9 +1,9 @@
 import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { AuthContext } from '../../App/contexts/auth'
-import UseBiometry from '../../App/screens/UseBiometry'
-import { testIdWithKey } from '../../App/utils/testable'
+import { AuthContext } from '../../src/contexts/auth'
+import UseBiometry from '../../src/screens/UseBiometry'
+import { testIdWithKey } from '../../src/utils/testable'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')

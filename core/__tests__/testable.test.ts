@@ -1,4 +1,4 @@
-import { testIdWithKey } from '../App/utils/testable'
+import { testIdWithKey } from '../src/utils/testable'
 
 describe('Testable', () => {
   it('Produces the correct testID', () => {

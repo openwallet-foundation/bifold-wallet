@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { InfoBoxType } from '../../components/misc/InfoBox'
+import { InfoBoxType } from '../misc/InfoBox'
 
 import PopupModal from './PopupModal'
 

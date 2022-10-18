@@ -4,9 +4,9 @@ import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import { dateFormatOptions } from '../../App/constants'
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import CredentialDetails from '../../App/screens/CredentialDetails'
+import { dateFormatOptions } from '../../src/constants'
+import { ConfigurationContext } from '../../src/contexts/configuration'
+import CredentialDetails from '../../src/screens/CredentialDetails'
 import configurationContext from '../contexts/configuration'
 
 const buildCredentialExchangeRecord = () => {

@@ -9,9 +9,9 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
 
-import CredentialCard from '../../App/components/misc/CredentialCard'
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import ListCredentials from '../../App/screens/ListCredentials'
+import CredentialCard from '../../src/components/misc/CredentialCard'
+import { ConfigurationContext } from '../../src/contexts/configuration'
+import ListCredentials from '../../src/screens/ListCredentials'
 import configurationContext from '../contexts/configuration'
 
 interface CredentialContextInterface {

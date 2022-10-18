@@ -7,10 +7,10 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import { NetworkProvider } from '../../App/contexts/network'
-import CredentialOffer from '../../App/screens/CredentialOffer'
-import { testIdWithKey } from '../../App/utils/testable'
+import { ConfigurationContext } from '../../src/contexts/configuration'
+import { NetworkProvider } from '../../src/contexts/network'
+import CredentialOffer from '../../src/screens/CredentialOffer'
+import { testIdWithKey } from '../../src/utils/testable'
 import configurationContext from '../contexts/configuration'
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)

@@ -2,8 +2,8 @@ import { NavigationContext } from '@react-navigation/native'
 import { render, waitFor, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
-import ConnectionModal from '../../App/screens/Connection'
-import { testIdWithKey } from '../../App/utils/testable'
+import ConnectionModal from '../../src/screens/Connection'
+import { testIdWithKey } from '../../src/utils/testable'
 import navigationContext from '../contexts/navigation'
 import timeTravel from '../util/timetravel'
 

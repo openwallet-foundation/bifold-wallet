@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import AvatarView from '../../App/components/misc/AvatarView'
-import * as themeContext from '../../App/contexts/theme' // note we're importing with a * to import all the exports
-import { theme } from '../../App/theme'
+import AvatarView from '../../src/components/misc/AvatarView'
+import * as themeContext from '../../src/contexts/theme' // note we're importing with a * to import all the exports
+import { theme } from '../../src/theme'
 
 describe('AvatarView Component', () => {
   test('Renders correctly', async () => {

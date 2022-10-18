@@ -1,4 +1,4 @@
-import { luminanceForHexColour, statusBarStyleForColor } from '../App/utils/luminance'
+import { luminanceForHexColour, statusBarStyleForColor } from '../src/utils/luminance'
 
 describe('Luminance', () => {
   it('Non-hex color strings are not processed', () => {

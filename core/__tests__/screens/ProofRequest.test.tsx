@@ -15,9 +15,9 @@ import { useNavigation } from '@react-navigation/core'
 import { cleanup, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { NetworkProvider } from '../../App/contexts/network'
-import ProofRequest from '../../App/screens/ProofRequest'
-import { testIdWithKey } from '../../App/utils/testable'
+import { NetworkProvider } from '../../src/contexts/network'
+import ProofRequest from '../../src/screens/ProofRequest'
+import { testIdWithKey } from '../../src/utils/testable'
 import timeTravel from '../util/timetravel'
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { create } from 'react-test-renderer'
 
-import Button, { ButtonType } from '../../App/components/buttons/Button'
+import Button, { ButtonType } from '../../src/components/buttons/Button'
 
 describe('Button Component', () => {
   it('Primary renders correctly', () => {

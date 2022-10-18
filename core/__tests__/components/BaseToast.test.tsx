@@ -1,7 +1,7 @@
 import React from 'react'
 import { create } from 'react-test-renderer'
 
-import BaseToast, { ToastType } from '../../App/components/toast/BaseToast'
+import BaseToast, { ToastType } from '../../src/components/toast/BaseToast'
 
 describe('BaseToast Component', () => {
   it('Info renders correctly', () => {

@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import { AuthContext } from '../../App/contexts/auth'
-import PinEnter from '../../App/screens/PinEnter'
+import { AuthContext } from '../../src/contexts/auth'
+import PinEnter from '../../src/screens/PinEnter'
 
 jest.mock('react-native-device-info', () => {
   return {

@@ -1,8 +1,8 @@
 import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
-import CameraDisclosure from '../../App/screens/CameraDisclosure'
-import { testIdWithKey } from '../../App/utils/testable'
+import CameraDisclosure from '../../src/screens/CameraDisclosure'
+import { testIdWithKey } from '../../src/utils/testable'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')

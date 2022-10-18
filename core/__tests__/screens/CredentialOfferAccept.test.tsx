@@ -5,8 +5,8 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
-import { testIdWithKey } from '../../App/utils/testable'
+import CredentialOfferAccept from '../../src/screens/CredentialOfferAccept'
+import { testIdWithKey } from '../../src/utils/testable'
 import timeTravel from '../util/timetravel'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')

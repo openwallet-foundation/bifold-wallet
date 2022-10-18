@@ -11,10 +11,10 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import CommonDecline from '../../App/screens/CommonDecline'
-import { DeclineType } from '../../App/types/decline'
-import { testIdWithKey } from '../../App/utils/testable'
+import { ConfigurationContext } from '../../src/contexts/configuration'
+import CommonDecline from '../../src/screens/CommonDecline'
+import { DeclineType } from '../../src/types/decline'
+import { testIdWithKey } from '../../src/utils/testable'
 import configurationContext from '../contexts/configuration'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')

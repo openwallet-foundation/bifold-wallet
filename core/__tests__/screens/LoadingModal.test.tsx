@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import LoadingModal from '../../App/components/modals/LoadingModal'
-import { testIdWithKey } from '../../App/utils/testable'
+import LoadingModal from '../../src/components/modals/LoadingModal'
+import { testIdWithKey } from '../../src/utils/testable'
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 

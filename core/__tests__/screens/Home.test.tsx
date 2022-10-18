@@ -11,11 +11,11 @@ import React from 'react'
 import { FlatList } from 'react-native'
 import { create } from 'react-test-renderer'
 
-import Button from '../../App/components/buttons/Button'
-import NotificationListItem, { NotificationType } from '../../App/components/listItems/NotificationListItem'
-import HomeContentView from '../../App/components/views/HomeContentView'
-import { ConfigurationContext, ConfigurationProvider } from '../../App/contexts/configuration'
-import Home from '../../App/screens/Home'
+import Button from '../../src/components/buttons/Button'
+import NotificationListItem, { NotificationType } from '../../src/components/listItems/NotificationListItem'
+import HomeContentView from '../../src/components/views/HomeContentView'
+import { ConfigurationContext, ConfigurationProvider } from '../../src/contexts/configuration'
+import Home from '../../src/screens/Home'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
