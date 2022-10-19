@@ -29,6 +29,9 @@ const translation = {
     "Dismiss": "Dismiss",
     "ShowDetails": "Show Details",
     "TryAgain": "Try Again",
+    "Biometrics": "Biometrics",
+    "On" : "On",
+    "Off": "Off",
   },
   "Language": {
     "English": "English",
@@ -263,6 +266,7 @@ const translation = {
     "AppPreferences": "App Preferences",
     "AboutApp": "About App",
     "Language": "Language",
+    "Build": "Build"
   },
   "TabStack": {
     "Home": "Home",
