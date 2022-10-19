@@ -5,14 +5,13 @@ import {
   Dimensions,
   ImageBackground,
   ImageSourcePropType,
-  LayoutRectangle,
   StyleSheet,
   Text,
   View,
   ViewStyle,
+  Image,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import Image from 'react-native-scalable-image'
 
 import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
@@ -21,9 +20,7 @@ import { useTheme } from '../../contexts/theme'
 import { getCurrentLanguage } from '../../localization'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
-import { getCredentialConnectionLabel, hashCode, hashToRGBA, parsedCredDefName } from '../../utils/helpers'
 import { luminanceForHexColour } from '../../utils/luminance'
-import { credentialSchema } from '../../utils/schema'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
@@ -36,6 +33,7 @@ const paddingVertical = 10
 const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
+const borderPadding = 8
 const { width } = Dimensions.get('window')
 
 const toImageSource = (source: unknown): ImageSourcePropType => {
@@ -51,19 +49,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const { OCABundle } = useConfiguration()
 
   const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
-
-  const overlay = bundle?.getCardLayoutOverlay()
-  const metaLayer = bundle?.getMetaOverlay(getCurrentLanguage())
-
-  const credentialLabel = metaLayer?.name ?? parsedCredDefName(credential)
-  const credentialBackgroundColor = hashToRGBA(hashCode(credentialLabel))
-  const credentialConnectionLabel = metaLayer?.issuer_name ?? getCredentialConnectionLabel(credential)
+  const [defaultBundle, setDefaultBundle] = useState<OCACredentialBundle | undefined>(undefined)
+  const lang = getCurrentLanguage()
+  const metaLayer = bundle?.getMetaOverlay(lang) ?? defaultBundle?.getMetaOverlay(lang)
+  const overlay = bundle?.getCardLayoutOverlay() ?? defaultBundle?.getCardLayoutOverlay()
 
   const [state] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  const [headerDimensions, setHeaderDimensions] = useState<LayoutRectangle | null>(null)
-  const [headerLogoDimensions, setHeaderLogoDimensions] = useState<LayoutRectangle | null>(null)
-
+  const bundleLoaded = bundle !== undefined || defaultBundle !== undefined
   const { revoked } = state.credential
 
   const credentialTextColor = (hex?: string) => {
@@ -76,18 +69,35 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: overlay?.imageSource ? transparent : overlay?.backgroundColor ?? credentialBackgroundColor,
+      backgroundColor: overlay?.imageSource ? transparent : overlay?.backgroundColor,
       height: width / 2,
       borderRadius: borderRadius,
+      //borderColor: 'black',
+      //borderStyle: 'solid',
+      //borderWidth: 1,
     },
-    headerContainer: {
-      flexDirection: 'row',
+    outerHeaderContainer: {
+      flexDirection: 'column',
       backgroundColor: overlay?.header?.backgroundColor || transparent,
-      height: width / 7.5,
-      paddingHorizontal,
-      paddingVertical,
+      // eslint-disable-next-line prettier/prettier
+      height: (width / 2 / 4) +  (borderPadding),
+      //paddingHorizontal,
+      //paddingVertical,
       borderTopLeftRadius: borderRadius,
       borderTopRightRadius: borderRadius,
+      //paddingLeft: 10,
+      //paddingRight: 10,
+      //paddingTop: 10,
+    },
+    innerHeaderContainer: {
+      flexDirection: 'row',
+      // eslint-disable-next-line prettier/prettier
+      height: (width / 2 / 4),
+      marginLeft: borderPadding,
+      marginRight: borderPadding,
+      marginTop: borderPadding,
+      marginBottom: borderPadding,
+      backgroundColor: overlay?.header?.backgroundColor || transparent,
     },
     bodyContainer: {
       flexGrow: 1,
@@ -128,93 +138,67 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     OCABundle.resolve(credential).then((_bundle) => {
       if (_bundle !== undefined) {
         setBundle(_bundle)
+      } else {
+        //console.log(`Loading Default Bundle for ${JSON.stringify(credential.toJSON())}`)
+        return OCABundle.resolveDefaultBundle(credential).then((defaultBundle) => {
+          setDefaultBundle(defaultBundle)
+        })
       }
     })
   }, [credential])
 
-  const renderCredentialCardHeader = () => {
-    const calculatePercentageWidthWithLogo = (
-      headerDimensions: LayoutRectangle,
-      headerLogoDimensions: LayoutRectangle,
-      halved = true
-    ) => {
-      const { width: header } = headerDimensions
-      const { width: headerLogo } = headerLogoDimensions
-      const remainingHeader = header - headerLogo
-      return `${((halved ? 50 : 100) * (remainingHeader - 0.5 * paddingHorizontal)) / header}%`
-    }
-
-    const scaleCredentialName = (hideIssuer = false): string | number | undefined => {
-      return hideIssuer ? '100%' : '50%'
-    }
-
-    const scaleCredentialNameByLogo = (
-      headerDimensions: LayoutRectangle,
-      headerLogoDimensions: LayoutRectangle,
-      hideIssuer = false
-    ): string | number | undefined => {
-      return calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions, !hideIssuer)
-    }
-
+  const renderCredentialCardHeader2 = () => {
     return (
-      <View
-        testID={testIdWithKey('CredentialCardHeader')}
-        style={[styles.headerContainer]}
-        onLayout={({ nativeEvent: { layout } }) => setHeaderDimensions(layout)}
-      >
-        {headerDimensions && overlay?.header?.imageSource && (
-          <Image
-            source={toImageSource(overlay?.header?.imageSource)}
-            height={headerDimensions.height - paddingVertical}
-            width={headerDimensions.width / 3 - paddingHorizontal}
-            onLayout={({ nativeEvent: { layout } }) => setHeaderLogoDimensions(layout)}
-          />
-        )}
-        {overlay?.header?.hideIssuer ? null : (
+      <View style={[styles.outerHeaderContainer]}>
+        <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
+          {overlay?.header?.imageSource && (
+            <Image
+              source={toImageSource(overlay?.header?.imageSource)}
+              style={{
+                flex: !overlay?.header?.hideIssuer ? 1 : 4,
+                resizeMode: 'contain',
+                maxHeight: styles.outerHeaderContainer.height - borderPadding,
+              }}
+            />
+          )}
+          {overlay?.header?.hideIssuer ? null : (
+            <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={[
+                TextTheme.label,
+                {
+                  color: overlay?.header?.color ?? credentialTextColor(overlay?.header?.backgroundColor),
+                  paddingHorizontal: 0.5 * paddingHorizontal,
+                  flex: !overlay?.header?.imageSource ? 4 : 3,
+                  textAlignVertical: 'center',
+                },
+              ]}
+              testID={testIdWithKey('CredentialIssuer')}
+              maxFontSizeMultiplier={1}
+            >
+              {metaLayer?.issuer_name}
+            </Text>
+          )}
           <Text
             numberOfLines={1}
             ellipsizeMode="tail"
             style={[
               TextTheme.label,
               {
-                color:
-                  overlay?.header?.color ??
-                  credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
-                width:
-                  headerDimensions && overlay?.header?.imageSource && headerLogoDimensions
-                    ? calculatePercentageWidthWithLogo(headerDimensions, headerLogoDimensions)
-                    : '50%',
+                color: overlay?.header?.color ?? credentialTextColor(overlay?.header?.backgroundColor),
+                textAlign: 'right',
                 paddingHorizontal: 0.5 * paddingHorizontal,
+                flex: 4,
+                textAlignVertical: 'center',
               },
             ]}
-            testID={testIdWithKey('CredentialIssuer')}
+            testID={testIdWithKey('CredentialName')}
             maxFontSizeMultiplier={1}
           >
-            {credentialConnectionLabel}
+            {metaLayer?.name}
           </Text>
-        )}
-        <Text
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          style={[
-            TextTheme.label,
-            {
-              color:
-                overlay?.header?.color ??
-                credentialTextColor(overlay?.header?.backgroundColor ?? credentialBackgroundColor),
-              width:
-                overlay?.header?.imageSource && headerDimensions && headerLogoDimensions
-                  ? scaleCredentialNameByLogo(headerDimensions, headerLogoDimensions, overlay?.header?.hideIssuer)
-                  : scaleCredentialName(overlay?.header?.hideIssuer),
-              textAlign: 'right',
-              paddingHorizontal: 0.5 * paddingHorizontal,
-            },
-          ]}
-          testID={testIdWithKey('CredentialName')}
-          maxFontSizeMultiplier={1}
-        >
-          {credentialLabel}
-        </Text>
+        </View>
       </View>
     )
   }
@@ -240,9 +224,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             style={[
               TextTheme.caption,
               {
-                color:
-                  overlay?.footer?.color ??
-                  credentialTextColor(overlay?.footer?.backgroundColor ?? credentialBackgroundColor),
+                color: overlay?.footer?.color ?? credentialTextColor(overlay?.footer?.backgroundColor),
               },
             ]}
             testID={testIdWithKey('CredentialIssued')}
@@ -258,7 +240,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCard = (revoked = false) => {
     return (
       <>
-        {renderCredentialCardHeader()}
+        {renderCredentialCardHeader2()}
         {renderCredentialCardBody()}
         {renderCredentialCardFooter(revoked)}
       </>
@@ -272,7 +254,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {bundle ? (
+      {bundleLoaded ? (
         <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
           {overlay?.imageSource ? (
             <ImageBackground

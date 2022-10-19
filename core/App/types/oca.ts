@@ -1,5 +1,8 @@
 import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framework/core'
 
+import { parsedCredDefName } from '../utils/cred-def'
+import { getCredentialConnectionLabel, hashCode, hashToRGBA } from '../utils/helpers'
+
 import { Attribute, Field } from './record'
 
 export enum BaseType {
@@ -20,7 +23,7 @@ export enum OverlayType {
 
 export interface Bundle {
   capture_base: CaptureBaseOverlay
-  overlays: [BaseOverlay]
+  overlays: BaseOverlay[]
 }
 
 export interface Bundles {
@@ -54,12 +57,12 @@ export interface CharacterEncodingOverlay extends BaseL10nOverlay {
 
 export interface CaptureBaseOverlay extends BaseL10nOverlay {
   type: string
-  attributes: AttributeLabels
+  attributes?: AttributeLabels
 }
 
 export interface MetaOverlay extends BaseL10nOverlay {
   name: string
-  issuer_name: string
+  issuer_name?: string
 }
 
 export interface CardLayoutOverlay extends BaseOverlay {
@@ -94,6 +97,7 @@ export interface OCABundleResolver {
   loadDefaultBundles(): OCABundleResolver
   loadBundles(bundles: Bundles): OCABundleResolver
   resolve(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined>
+  resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined>
 }
 export class DefaultOCACredentialBundle implements OCACredentialBundle {
   private bundle: Bundle
@@ -154,6 +158,25 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
       }
     }
     return Promise.resolve(undefined)
+  }
+  public resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined> {
+    const defaultMetaOverlay: MetaOverlay = {
+      capture_base: '',
+      type: OverlayType.META_10,
+      name: parsedCredDefName(credential),
+      language: 'en',
+      issuer_name: credential?.connectionId ?? '',
+    }
+    const defaultCardLayoutLayer: CardLayoutOverlay = {
+      capture_base: '',
+      type: OverlayType.CARD_LAYOUT_10,
+      backgroundColor: hashToRGBA(hashCode(defaultMetaOverlay?.name ?? '')),
+    }
+    const bundle: Bundle = {
+      capture_base: { capture_base: '', type: OverlayType.BASE_10 },
+      overlays: [defaultMetaOverlay, defaultCardLayoutLayer],
+    }
+    return Promise.resolve(new DefaultOCACredentialBundle(bundle))
   }
   public loadBundles(bundles: Bundles): OCABundleResolver {
     Object.assign(this.bundles, bundles)
