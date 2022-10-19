@@ -55,7 +55,7 @@ export interface CharacterEncodingOverlay extends BaseL10nOverlay {
   attr_character_encoding: AttributeLabels
 }
 
-export interface CaptureBaseOverlay extends BaseL10nOverlay {
+export interface CaptureBaseOverlay extends BaseOverlay {
   type: string
   attributes?: AttributeLabels
 }
@@ -229,7 +229,7 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
             _field.label = labelOverlay?.attr_labels[_sourceField.name]
           }
           _field.format = formatOverlay?.attr_formats[_sourceField.name]
-          _field.type = baseOverlay?.attributes[_sourceField.name]
+          _field.type = baseOverlay?.attributes?.[_sourceField.name]
           _field.encoding = characterEncodingOverlay?.attr_character_encoding[_sourceField.name]
 
           _fields.push(_field)
