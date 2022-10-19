@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -42,21 +42,27 @@ const toImageSource = (source: unknown): ImageSourcePropType => {
   }
   return source as ImageSourcePropType
 }
+interface BundlePair {
+  bundle1?: OCACredentialBundle
+  bundle2?: OCACredentialBundle
+}
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
-  const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
-  const [defaultBundle, setDefaultBundle] = useState<OCACredentialBundle | undefined>(undefined)
+  const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
+  //const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
+  //const [defaultBundle, setDefaultBundle] = useState<OCACredentialBundle | undefined>(undefined)
+  //const { bundle1: bundle, bundle2: defaultBundle } = bundles
   const lang = getCurrentLanguage()
-  const metaLayer = bundle?.getMetaOverlay(lang) ?? defaultBundle?.getMetaOverlay(lang)
-  const overlay = bundle?.getCardLayoutOverlay() ?? defaultBundle?.getCardLayoutOverlay()
+  const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
+  const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
 
   const [state] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  const bundleLoaded = bundle !== undefined || defaultBundle !== undefined
+  const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined
   const { revoked } = state.credential
 
   const credentialTextColor = (hex?: string) => {
@@ -78,7 +84,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     },
     outerHeaderContainer: {
       flexDirection: 'column',
-      backgroundColor: overlay?.header?.backgroundColor || transparent,
+      backgroundColor: overlay?.header?.backgroundColor ?? transparent,
       // eslint-disable-next-line prettier/prettier
       height: (width / 2 / 4) +  (borderPadding),
       //paddingHorizontal,
@@ -97,14 +103,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       marginRight: borderPadding,
       marginTop: borderPadding,
       marginBottom: borderPadding,
-      backgroundColor: overlay?.header?.backgroundColor || transparent,
+      backgroundColor: overlay?.header?.backgroundColor ?? transparent,
     },
     bodyContainer: {
       flexGrow: 1,
     },
     footerContainer: {
       flexDirection: 'row',
-      backgroundColor: overlay?.footer?.backgroundColor || transparent,
+      backgroundColor: overlay?.footer?.backgroundColor ?? transparent,
       paddingHorizontal,
       paddingVertical,
       borderBottomLeftRadius: borderRadius,
@@ -129,23 +135,24 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     if (!credential) {
       return
     }
-    const indyCredentialFormat = credential.credentials.find((c) => c.credentialRecordType === 'indy')
-    if (!indyCredentialFormat) {
-      return
+    if (credential.state !== CredentialState.OfferReceived) {
+      const indyCredentialFormat = credential.credentials.find((c) => c.credentialRecordType === 'indy')
+      if (!indyCredentialFormat) {
+        return
+      }
+      const isRevoked = revoked.has(indyCredentialFormat.credentialRecordId)
+      setIsRevoked(isRevoked)
     }
-    const isRevoked = revoked.has(indyCredentialFormat.credentialRecordId)
-    setIsRevoked(isRevoked)
-    OCABundle.resolve(credential).then((_bundle) => {
+    OCABundle.resolve(credential).then(async (_bundle) => {
       if (_bundle !== undefined) {
-        setBundle(_bundle)
+        setBundles({ bundle1: _bundle, bundle2: undefined })
       } else {
-        //console.log(`Loading Default Bundle for ${JSON.stringify(credential.toJSON())}`)
-        return OCABundle.resolveDefaultBundle(credential).then((defaultBundle) => {
-          setDefaultBundle(defaultBundle)
+        await OCABundle.resolveDefaultBundle(credential).then((_defaultBundle) => {
+          setBundles({ bundle1: undefined, bundle2: _defaultBundle })
         })
       }
     })
-  }, [credential])
+  }, [])
 
   const renderCredentialCardHeader2 = () => {
     return (
@@ -254,7 +261,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {bundleLoaded ? (
+      {bundleLoaded === true ? (
         <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
           {overlay?.imageSource ? (
             <ImageBackground
