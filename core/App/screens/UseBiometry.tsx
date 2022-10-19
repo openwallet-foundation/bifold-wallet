@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Switch, StatusBar, Platform, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Modal, Switch, StatusBar, Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Biometrics from '../assets/img/biometrics.svg'
@@ -9,10 +9,9 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import PinEnter, { PinEntryUsage } from '../screens/PinEnter'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
-
-import CheckPin, { Action } from './CheckPin'
 
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -23,6 +22,7 @@ const UseBiometry: React.FC = () => {
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [canSeeCheckPin, setCanSeeCheckPin] = useState<boolean>(false)
   const { ColorPallet, TextTheme } = useTheme()
+
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -56,6 +56,7 @@ const UseBiometry: React.FC = () => {
   const toggleSwitch = () => {
     if (store.onboarding.didConsiderBiometry) {
       setCanSeeCheckPin(true)
+
       return
     }
 
@@ -137,11 +138,9 @@ const UseBiometry: React.FC = () => {
           />
         )}
       </View>
-      <CheckPin
-        visible={canSeeCheckPin}
-        action={store.preferences.useBiometry ? Action.Disable : Action.Enable}
-        onAuthenticationComplete={onAuthenticationComplete}
-      />
+      <Modal visible={canSeeCheckPin} transparent={true} animationType={'slide'}>
+        <PinEnter pinEntryUsage={PinEntryUsage.PinCheck} setAuthenticated={onAuthenticationComplete} />
+      </Modal>
     </SafeAreaView>
   )
 }
