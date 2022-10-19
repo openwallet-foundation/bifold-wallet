@@ -21,7 +21,7 @@ const UseBiometry: React.FC = () => {
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
-  const [canSeeCheckPin, setCanSeeCheckPin] = React.useState<boolean>(false)
+  const [canSeeCheckPin, setCanSeeCheckPin] = useState<boolean>(false)
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
@@ -42,17 +42,6 @@ const UseBiometry: React.FC = () => {
     })
   }, [])
 
-  useEffect(() => {
-    if (store.onboarding.didConsiderBiometry && store.preferences.useBiometry !== biometryEnabled) {
-      setCanSeeCheckPin(true)
-
-      dispatch({
-        type: DispatchAction.USE_BIOMETRY,
-        payload: [biometryEnabled],
-      })
-    }
-  }, [biometryEnabled])
-
   const continueTouched = async () => {
     setContinueEnabled(false)
 
@@ -64,9 +53,27 @@ const UseBiometry: React.FC = () => {
     })
   }
 
-  const toggleSwitch = () => setBiometryEnabled((previousState) => !previousState)
+  const toggleSwitch = () => {
+    if (store.onboarding.didConsiderBiometry) {
+      setCanSeeCheckPin(true)
+      return
+    }
 
-  const blarb = () => {
+    setBiometryEnabled((previousState) => !previousState)
+  }
+
+  const onAuthenticationComplete = (status: boolean) => {
+    if (status) {
+      setBiometryEnabled(!biometryEnabled)
+
+      dispatch({
+        type: DispatchAction.USE_BIOMETRY,
+        payload: [!biometryEnabled],
+      })
+    } else {
+      setBiometryEnabled(biometryEnabled)
+    }
+
     setCanSeeCheckPin(false)
   }
 
@@ -132,8 +139,8 @@ const UseBiometry: React.FC = () => {
       </View>
       <CheckPin
         visible={canSeeCheckPin}
-        action={store.preferences.useBiometry ? Action.Enable : Action.Disable}
-        onAuthenticationComplete={blarb}
+        action={store.preferences.useBiometry ? Action.Disable : Action.Enable}
+        onAuthenticationComplete={onAuthenticationComplete}
       />
     </SafeAreaView>
   )
