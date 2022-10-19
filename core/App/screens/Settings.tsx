@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { UseBiometry } from '../../lib/commonjs'
 
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -12,6 +13,8 @@ import { useTheme } from '../contexts/theme'
 import { Locales } from '../localization'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+
+import CheckPin, { Action } from './CheckPin'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -24,6 +27,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     { id: Locales.fr, value: t('Language.French') },
     { id: Locales.ptBr, value: t('Language.Portuguese') },
   ]
+  const [canSeeCheckPin, setCanSeeCheckPin] = React.useState<boolean>(false)
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
@@ -50,11 +54,15 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
   })
 
-  const toggleBiometrics = () => {
-    dispatch({
-      type: DispatchAction.USE_BIOMETRY,
-      payload: [!store.preferences.useBiometry],
-    })
+  const onAuthenticationComplete = (success: boolean): void => {
+    setCanSeeCheckPin(!canSeeCheckPin)
+
+    if (success) {
+      dispatch({
+        type: DispatchAction.USE_BIOMETRY,
+        payload: [!store.preferences.useBiometry],
+      })
+    }
   }
 
   const currentLanguage = languages.find((l) => l.id === i18n.language)?.value
@@ -131,7 +139,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               value={store.preferences.useBiometry ? t('Global.On') : t('Global.Off')}
               accessibilityLabel={t('Global.Biometrics')}
               testID={testIdWithKey('Biometrics')}
-              onPress={toggleBiometrics}
+              onPress={() => navigation.navigate(Screens.UseBiometry)}
             />
             <SeparatorLine />
             {/* <Row
