@@ -36,7 +36,7 @@ const CheckPin: React.FC<CheckPinProps> = ({ visible, action, onAuthenticationCo
     },
   })
 
-  const unlockWalletWithPIN = async (pin: string): Promise<boolean> => {
+  const verifyPIN = async (pin: string): Promise<boolean> => {
     try {
       const credentials = await getWalletCredentials()
       if (!credentials) {
@@ -45,44 +45,45 @@ const CheckPin: React.FC<CheckPinProps> = ({ visible, action, onAuthenticationCo
 
       const key = await hashPIN(pin, credentials.salt)
 
-      if (agent?.wallet.isInitialized ?? false) {
-        console.log('closing at ', Date.now())
-        await agent?.wallet.close()
-        console.log('closed at ', Date.now())
-      }
+      return credentials.key === key
+      // if (agent?.wallet.isInitialized ?? false) {
+      //   console.log('closing at ', Date.now())
+      //   await agent?.wallet.close()
+      //   console.log('closed at ', Date.now())
+      // }
 
-      console.log('opening at ', Date.now())
-      await agent?.wallet.open({
-        id: credentials.id,
-        key,
-      })
-      console.log('open at ', Date.now())
+      // console.log('opening at ', Date.now())
+      // await agent?.wallet.open({
+      //   id: credentials.id,
+      //   key,
+      // })
+      // console.log('open at ', Date.now())
 
-      return agent?.wallet.isInitialized ?? false
+      // return agent?.wallet.isInitialized ?? false
     } catch (error) {
       return false
     }
   }
 
-  const unlockWalletWithCurrentCredentials = async (): Promise<void> => {
-    try {
-      const credentials = await getWalletCredentials()
-      if (!credentials) {
-        throw new Error('Problem')
-      }
+  // const unlockWalletWithCurrentCredentials = async (): Promise<void> => {
+  //   try {
+  //     const credentials = await getWalletCredentials()
+  //     if (!credentials) {
+  //       throw new Error('Problem')
+  //     }
 
-      if (agent?.wallet.isInitialized ?? false) {
-        await agent?.wallet.close()
-      }
+  //     if (agent?.wallet.isInitialized ?? false) {
+  //       await agent?.wallet.close()
+  //     }
 
-      await agent?.wallet.open({
-        id: credentials.id,
-        key: credentials.key,
-      })
-    } catch (error) {
-      console.log('************** error: =', (error as Error).message)
-    }
-  }
+  //     await agent?.wallet.open({
+  //       id: credentials.id,
+  //       key: credentials.key,
+  //     })
+  //   } catch (error) {
+  //     console.log('************** error: =', (error as Error).message)
+  //   }
+  // }
 
   const handleEnterTouched = async () => {
     let pinDidMatch = false
@@ -92,12 +93,13 @@ const CheckPin: React.FC<CheckPinProps> = ({ visible, action, onAuthenticationCo
       Keyboard.dismiss()
 
       if (pin && pin.length > 0) {
-        pinDidMatch = await unlockWalletWithPIN(pin)
+        pinDidMatch = await verifyPIN(pin)
       }
+      console.log('did the pin match?', pinDidMatch)
     } catch (error) {
       console.log('************** error: =', (error as Error).message)
     } finally {
-      await unlockWalletWithCurrentCredentials()
+      // await unlockWalletWithCurrentCredentials()
       onAuthenticationComplete(pinDidMatch)
       setContinueEnabled(true)
     }
