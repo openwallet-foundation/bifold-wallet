@@ -4,6 +4,7 @@ import { createContext, useContext } from 'react'
 import { RecordProps } from '../components/record/Record'
 import OnboardingPages from '../screens/OnboardingPages'
 import { OCABundleResolver } from '../types/oca'
+import { PinSecurityParams } from '../types/security'
 
 export interface ConfigurationContext {
   pages: typeof OnboardingPages
@@ -13,6 +14,7 @@ export interface ConfigurationContext {
   OCABundle: OCABundleResolver
   useBiometry: React.FC
   record: React.FC<RecordProps>
+  pinSecurity: PinSecurityParams
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

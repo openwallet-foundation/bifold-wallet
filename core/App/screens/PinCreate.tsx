@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Keyboard, StyleSheet, Text, StatusBar, View } from 'react-native'
+import { Keyboard, Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -10,13 +10,23 @@ import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
 import { minPINLength } from '../constants'
 import { useAuth } from '../contexts/auth'
+import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { GenericFn } from '../types/fn'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { PinSecurityLevel } from '../types/security'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
+
+const consecutiveNumber = new RegExp(/(\d)\1{1,}/) // 2 or more consecutive digits
+const consecutiveSeries = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/) // 3 or more consecutive digits
+const evenNumberSeries = new RegExp('^d*[13579]$')
+const OddNumberSeries = new RegExp('^d*[02468]$')
+const consecutiveTwoNumber = new RegExp('([0-9]*[0-9])\\1+')
+const isNumber = new RegExp('^[0-9]+$')
+const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
 interface PinCreateProps {
   setAuthenticated: GenericFn
@@ -41,6 +51,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
+  const { pinSecurity } = useConfiguration()
 
   const { ColorPallet, TextTheme } = useTheme()
   const style = StyleSheet.create({
@@ -116,6 +127,61 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       await passcodeCreate(x)
     }
   }
+  const confirmEntry2 = async (x: string, y: string) => {
+    if (
+      pinSecurity.level >= PinSecurityLevel.Level3 &&
+      (consecutiveNumber.test(x) || consecutiveTwoNumber.test(x) || crossNumberPattern.includes(x))
+    ) {
+      setModalState({
+        visible: true,
+        title: 'ERROR LEVEL 3',
+        message: t('PinCreate.EnteredPINsDoNotMatch'),
+      })
+      return
+    }
+    if (
+      pinSecurity.level >= PinSecurityLevel.Level2 &&
+      (consecutiveSeries.test(x) || evenNumberSeries.test(x) || OddNumberSeries.test(x))
+    ) {
+      setModalState({
+        visible: true,
+        title: 'ERROR LEVEL 2',
+        message: t('PinCreate.EnteredPINsDoNotMatch'),
+      })
+      return
+    }
+    if (pinSecurity.level >= PinSecurityLevel.Level1)
+      if (!isNumber.test(x)) {
+        setModalState({
+          visible: true,
+          title: t('PinCreate.InvalidPIN'),
+          message: t('PinCreate.PleaseUseOnlyNumbersInYourPIN'),
+        })
+        return
+      } else if (x.length < pinSecurity.minLength) {
+        setModalState({
+          visible: true,
+          title: t('PinCreate.PINTooShort'),
+          message: t('PinCreate.YourPINMustBe6DigitsInLength'),
+        })
+        return
+      } else if (x.length > pinSecurity.maxLength) {
+        setModalState({
+          visible: true,
+          title: 'ERROR Too Long',
+          message: t('PinCreate.YourPINMustBe6DigitsInLength'),
+        })
+        return
+      } else if (x !== y) {
+        setModalState({
+          visible: true,
+          title: t('PinCreate.PINsDoNotMatch'),
+          message: t('PinCreate.EnteredPINsDoNotMatch'),
+        })
+        return
+      }
+    await passcodeCreate(x)
+  }
 
   return (
     <SafeAreaView>
@@ -163,7 +229,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
           disabled={!continueEnabled}
           onPress={async () => {
             Keyboard.dismiss()
-            await confirmEntry(pin, pinTwo)
+            await confirmEntry2(pin, pinTwo)
           }}
         />
       </View>

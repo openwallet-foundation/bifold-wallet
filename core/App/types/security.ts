@@ -9,3 +9,15 @@ export enum AuthLevel {
   BiometricsAndPin = 'BiometricsAndPin',
   BiometricsOnly = 'BiometricsOnly',
 }
+
+export enum PinSecurityLevel {
+  Level1 = 1,
+  Level2 = 2,
+  Level3 = 3,
+}
+
+export interface PinSecurityParams {
+  level: PinSecurityLevel
+  minLength: number
+  maxLength: number
+}
