@@ -46,44 +46,10 @@ const CheckPin: React.FC<CheckPinProps> = ({ visible, action, onAuthenticationCo
       const key = await hashPIN(pin, credentials.salt)
 
       return credentials.key === key
-      // if (agent?.wallet.isInitialized ?? false) {
-      //   console.log('closing at ', Date.now())
-      //   await agent?.wallet.close()
-      //   console.log('closed at ', Date.now())
-      // }
-
-      // console.log('opening at ', Date.now())
-      // await agent?.wallet.open({
-      //   id: credentials.id,
-      //   key,
-      // })
-      // console.log('open at ', Date.now())
-
-      // return agent?.wallet.isInitialized ?? false
     } catch (error) {
       return false
     }
   }
-
-  // const unlockWalletWithCurrentCredentials = async (): Promise<void> => {
-  //   try {
-  //     const credentials = await getWalletCredentials()
-  //     if (!credentials) {
-  //       throw new Error('Problem')
-  //     }
-
-  //     if (agent?.wallet.isInitialized ?? false) {
-  //       await agent?.wallet.close()
-  //     }
-
-  //     await agent?.wallet.open({
-  //       id: credentials.id,
-  //       key: credentials.key,
-  //     })
-  //   } catch (error) {
-  //     console.log('************** error: =', (error as Error).message)
-  //   }
-  // }
 
   const handleEnterTouched = async () => {
     let pinDidMatch = false

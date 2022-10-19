@@ -88,7 +88,12 @@ const RootStack: React.FC = () => {
     navigation.navigate(Screens.Terms)
   }
 
-  const onAuthenticated = () => {
+  const onAuthenticated = (status: boolean): void => {
+    console.log('mango', status)
+    if (!status) {
+      return
+    }
+
     dispatch({
       type: DispatchAction.DID_AUTHENTICATE,
     })
@@ -101,7 +106,7 @@ const RootStack: React.FC = () => {
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Screens.EnterPin}>
-          {(props) => <PinEnter {...props} setAuthenticated={() => onAuthenticated()} />}
+          {(props) => <PinEnter {...props} setAuthenticated={onAuthenticated} />}
         </Stack.Screen>
         <Stack.Screen
           name={Screens.AttemptLockout}
@@ -166,7 +171,7 @@ const RootStack: React.FC = () => {
           component={terms}
         />
         <Stack.Screen name={Screens.CreatePin}>
-          {(props) => <PinCreate {...props} setAuthenticated={() => onAuthenticated()} />}
+          {(props) => <PinCreate {...props} setAuthenticated={onAuthenticated} />}
         </Stack.Screen>
         <Stack.Screen
           name={Screens.UseBiometry}
