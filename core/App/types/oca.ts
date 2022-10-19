@@ -2,12 +2,20 @@ import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framewo
 
 import { Attribute, Field } from './record'
 
+export enum BaseType {
+  BINARY = 'Binary',
+  TEXT = 'Text',
+  DATETIME = 'DateTime',
+  NUMERIC = 'Numeric',
+}
+
 export enum OverlayType {
   BASE_10 = 'spec/capture_base/1.0',
   META_10 = 'spec/overlays/meta/1.0',
   LABEL_10 = 'spec/overlays/label/1.0',
   CARD_LAYOUT_10 = 'spec/overlays/card_layout/1.0',
   FORMAT_10 = 'spec/overlays/format/1.0',
+  ENCODING_10 = 'spec/overlays/character_encoding/1.0',
 }
 
 export interface Bundle {
@@ -34,6 +42,14 @@ export interface AttributeLabels {
 
 export interface LabelOverlay extends BaseL10nOverlay {
   attr_labels: AttributeLabels
+}
+
+export interface FormatOverlay extends BaseL10nOverlay {
+  attr_formats: AttributeLabels
+}
+
+export interface CharacterEncodingOverlay extends BaseL10nOverlay {
+  attr_character_encoding: AttributeLabels
 }
 
 export interface CaptureBaseOverlay extends BaseL10nOverlay {
@@ -68,6 +84,8 @@ export interface OCACredentialBundle {
   getCaptureBase(): CaptureBaseOverlay
   getOverlay<F extends BaseOverlay>(type: string, language?: string): F | undefined
   getLabelOverlay(language: string): LabelOverlay | undefined
+  getFormatOverlay(): FormatOverlay | undefined
+  getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined
   getCardLayoutOverlay(): CardLayoutOverlay | undefined
   getMetaOverlay(language: string): MetaOverlay | undefined
 }
@@ -98,6 +116,12 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
   }
   public getLabelOverlay(language: string): LabelOverlay | undefined {
     return this.getOverlay<LabelOverlay>(OverlayType.LABEL_10, language)
+  }
+  public getFormatOverlay(): FormatOverlay | undefined {
+    return this.getOverlay<FormatOverlay>(OverlayType.FORMAT_10)
+  }
+  public getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined {
+    return this.getOverlay<CharacterEncodingOverlay>(OverlayType.ENCODING_10)
   }
   public getOverlay<F extends BaseOverlay>(type: string, language?: string): F | undefined {
     if (type === OverlayType.BASE_10) {
@@ -146,6 +170,8 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
     const bundle = await this.resolve(credential)
     const baseOverlay = bundle?.getCaptureBase()
     const labelOverlay = bundle?.getLabelOverlay(language)
+    const formatOverlay = bundle?.getFormatOverlay()
+    const characterEncodingOverlay = bundle?.getCharacterEncodingOverlay()
     const _fields: Array<Field> = []
     if (baseOverlay && baseOverlay.attributes) {
       for (const key in baseOverlay?.attributes) {
@@ -160,6 +186,10 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
             if (labelOverlay?.attr_labels[key]) {
               _field.label = labelOverlay?.attr_labels[key]
             }
+            _field.format = formatOverlay?.attr_formats[key]
+            _field.type = baseOverlay?.attributes[key]
+            _field.encoding = characterEncodingOverlay?.attr_character_encoding[key]
+
             _fields.push(_field)
           }
         }
@@ -175,6 +205,10 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
           if (labelOverlay?.attr_labels[_sourceField.name]) {
             _field.label = labelOverlay?.attr_labels[_sourceField.name]
           }
+          _field.format = formatOverlay?.attr_formats[_sourceField.name]
+          _field.type = baseOverlay?.attributes[_sourceField.name]
+          _field.encoding = characterEncodingOverlay?.attr_character_encoding[_sourceField.name]
+
           _fields.push(_field)
         }
       }
