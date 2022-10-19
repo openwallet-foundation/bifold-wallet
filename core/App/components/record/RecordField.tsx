@@ -7,6 +7,8 @@ import { useTheme } from '../../contexts/theme'
 import { Attribute, Field } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
 
+import RecordBinaryField from './RecordBinaryField'
+
 interface RecordFieldProps {
   field: Field
   hideFieldValue?: boolean
@@ -16,6 +18,9 @@ interface RecordFieldProps {
   fieldLabel?: (field: Field) => React.ReactElement | null
   fieldValue?: (field: Field) => React.ReactElement | null
 }
+
+const validEncoding = 'base64'
+const validFormat = new RegExp('^image/(jpeg|png|jpg)')
 
 const RecordField: React.FC<RecordFieldProps> = ({
   field,
@@ -57,6 +62,18 @@ const RecordField: React.FC<RecordFieldProps> = ({
     },
   })
 
+  const displayAttribute = (field: Field) => {
+    if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
+      return <RecordBinaryField attributeValue={(field as Attribute).value as string} shown={shown} />
+    } else {
+      return (
+        <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
+          {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
+        </Text>
+      )
+    }
+  }
+
   return (
     <View style={styles.container}>
       {fieldLabel ? (
@@ -71,11 +88,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
           fieldValue(field)
         ) : (
           <>
-            <View style={styles.valueText}>
-              <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-                {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
-              </Text>
-            </View>
+            <View style={styles.valueText}>{displayAttribute(field)}</View>
             {hideFieldValue ? (
               <TouchableOpacity
                 accessible={true}
