@@ -248,9 +248,11 @@ const translation = {
   "Settings": {
     "Version": "Versão",
     "VersionString": "0.0.0-0",
-    "AppPreferences": "Preferências do App",
+    "AppSettings": "App Settings (PT-BR)",
     "AboutApp": "Sobre o App",
     "Language": "Idioma",
+    "ChangePIN": "Change PIN (PT-BR)",
+    "WhatAreContacts": "What are Contacts? (PT-BR)"
   },
   "TabStack": {
     "Home": "Home",
