@@ -88,9 +88,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const { OCABundle } = useConfiguration()
 
   const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
-  //const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
-  //const [defaultBundle, setDefaultBundle] = useState<OCACredentialBundle | undefined>(undefined)
-  //const { bundle1: bundle, bundle2: defaultBundle } = bundles
   const lang = getCurrentLanguage()
   const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
   const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
@@ -113,26 +110,16 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       backgroundColor: overlay?.imageSource ? transparent : overlay?.backgroundColor,
       height: cardHeight,
       borderRadius: borderRadius,
-      //borderColor: 'black',
-      //borderStyle: 'solid',
-      //borderWidth: 1,
     },
     outerHeaderContainer: {
       flexDirection: 'column',
       backgroundColor: overlay?.header?.backgroundColor ?? transparent,
-      // eslint-disable-next-line prettier/prettier
-      height: cardHeaderHeight +  (borderPadding),
-      //paddingHorizontal,
-      //paddingVertical,
+      height: cardHeaderHeight + borderPadding,
       borderTopLeftRadius: borderRadius,
       borderTopRightRadius: borderRadius,
-      //paddingLeft: 10,
-      //paddingRight: 10,
-      //paddingTop: 10,
     },
     innerHeaderContainer: {
       flexDirection: 'row',
-      // eslint-disable-next-line prettier/prettier
       height: cardHeaderHeight,
       marginLeft: borderPadding,
       marginRight: borderPadding,
