@@ -93,6 +93,7 @@ export type ConnectStackParams = {
 export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
+  [Screens.UseBiometry]: undefined
 }
 
 export type NotificationStackParams = {
