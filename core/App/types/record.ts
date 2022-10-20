@@ -1,5 +1,8 @@
 export interface Field {
   name: string | null
+  format?: string
+  type?: string
+  encoding?: string
   mimeType?: string
   revoked?: boolean
   credentialId?: string
