@@ -101,6 +101,9 @@ const translation = {
   },
   "PinEnter": {
     "EnterPIN": "Digitar PIN",
+    "Unlock":"Unlock",
+    "Or":"Or",
+    "BiometricsUnlock": "Unlock with biometrics",
     "IncorrectPIN": "PIN incorreto",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
     "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira."

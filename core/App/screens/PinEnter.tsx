@@ -85,6 +85,24 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
     return penalty
   }
 
+  const loadWalletCredentials = async () => {
+    const creds = await getWalletCredentials()
+    if (creds && creds.key) {
+      //remove lockout notification
+      dispatch({
+        type: DispatchAction.LOCKOUT_UPDATED,
+        payload: [{ displayNotification: false }],
+      })
+
+      // reset login attempts if login is successful
+      dispatch({
+        type: DispatchAction.ATTEMPT_UPDATED,
+        payload: [{ loginAttempts: 0 }],
+      })
+      setAuthenticated()
+    }
+  }
+
   useEffect(() => {
     if (!state.preferences.useBiometry) {
       return
@@ -101,24 +119,6 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
         })
       }
     })
-
-    const loadWalletCredentials = async () => {
-      const creds = await getWalletCredentials()
-      if (creds && creds.key) {
-        //remove lockout notification
-        dispatch({
-          type: DispatchAction.LOCKOUT_UPDATED,
-          payload: [{ displayNotification: false }],
-        })
-
-        // reset login attempts if login is successful
-        dispatch({
-          type: DispatchAction.ATTEMPT_UPDATED,
-          payload: [{ loginAttempts: 0 }],
-        })
-        setAuthenticated()
-      }
-    }
 
     loadWalletCredentials().catch((error: unknown) => {
       // TODO:(jl) Handle error
@@ -234,19 +234,35 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
           />
         )}
       </View>
-      <View style={{ marginTop: 'auto', margin: 20 }}>
+      <View style={{ marginTop: 'auto', margin: 20, marginBottom: 10 }}>
         <Button
-          title={t('Global.Enter')}
+          title={t('PinEnter.Unlock')}
           buttonType={ButtonType.Primary}
           testID={testIdWithKey('Enter')}
           disabled={!continueEnabled}
-          accessibilityLabel={t('Global.Enter')}
+          accessibilityLabel={t('PinEnter.Unlock')}
           onPress={() => {
             Keyboard.dismiss()
             onPinInputCompleted(pin)
           }}
         />
       </View>
+
+      {state.preferences.useBiometry && (
+        <>
+          <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>{t('PinEnter.Or')}</Text>
+          <View style={{ margin: 20, marginTop: 10 }}>
+            <Button
+              title={t('PinEnter.BiometricsUnlock')}
+              buttonType={ButtonType.Secondary}
+              testID={testIdWithKey('Enter')}
+              disabled={!continueEnabled}
+              accessibilityLabel={t('PinEnter.BiometricsUnlock')}
+              onPress={loadWalletCredentials}
+            />
+          </View>
+        </>
+      )}
 
       {modalVisible && (
         <PopupModal
