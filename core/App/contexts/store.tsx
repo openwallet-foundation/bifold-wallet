@@ -4,36 +4,39 @@ import { State } from '../types/state'
 
 import reducer, { ReducerAction } from './reducers/store'
 
-const initialState: State = {
-  onboarding: {
-    didAgreeToTerms: false,
-    didCompleteTutorial: false,
-    didCreatePIN: false,
-    didConsiderBiometry: false,
-  },
-  authentication: {
-    didAuthenticate: false,
-  },
-  loginAttempt: {
-    loginAttempts: 0,
-    servedPenalty: true,
-  },
-  lockout: {
-    displayNotification: false,
-  },
-  privacy: {
-    didShowCameraDisclosure: false,
-  },
-  preferences: {
-    useBiometry: false,
-  },
-  credential: {
-    revoked: new Set(),
-    revokedMessageDismissed: new Set(),
-  },
-  error: null,
-  loading: false,
+export const initialStateFactory = (): State => {
+  return {
+    onboarding: {
+      didAgreeToTerms: false,
+      didCompleteTutorial: false,
+      didCreatePIN: false,
+      didConsiderBiometry: false,
+    },
+    authentication: {
+      didAuthenticate: false,
+    },
+    loginAttempt: {
+      loginAttempts: 0,
+      servedPenalty: true,
+    },
+    lockout: {
+      displayNotification: false,
+    },
+    privacy: {
+      didShowCameraDisclosure: false,
+    },
+    preferences: {
+      useBiometry: false,
+    },
+    credential: {
+      revoked: new Set(),
+      revokedMessageDismissed: new Set(),
+    },
+    error: null,
+    loading: false,
+  }
 }
+const initialState = initialStateFactory()
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction>]>([
   initialState,
