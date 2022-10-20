@@ -180,7 +180,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated }) => {
     <SafeAreaView>
       <StatusBar
         barStyle={
-          Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
+          Platform.OS === 'android' || PinEntryUsage.WalletUnlock
+            ? StatusBarStyles.Light
+            : statusBarStyleForColor(style.container.backgroundColor)
         }
       />
       <View style={[style.container]}>
