@@ -67,7 +67,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     logo: {
       height: 64,
-      width: '100%',
+      width: '50%',
       marginVertical: 16,
     },
     footer: {
