@@ -5,7 +5,7 @@ import {
 } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { cleanup, fireEvent, render } from '@testing-library/react-native'
+import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { ReactTestInstance } from 'react-test-renderer'
 
@@ -35,6 +35,10 @@ describe('displays a credentials list screen', () => {
   })
   testOpenVPCredentialRecord.metadata.set(CredentialMetadataKeys.IndyCredential, {
     schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
+  })
+  testOpenVPCredentialRecord.credentials.push({
+    credentialRecordType: 'indy',
+    credentialRecordId: ''
   })
   const testCredential1 = new CredentialRecord({
     threadId: '2',
@@ -81,16 +85,16 @@ describe('displays a credentials list screen', () => {
           <ListCredentials />
         </ConfigurationContext.Provider>
       )
+      await act( async () => {
+        const credentialItemInstances = await findAllByText('Person', { exact: false })
 
-      const credentialItemInstances = await findAllByText('Unverified Person', { exact: false })
-
-      expect(credentialItemInstances.length).toBe(1)
-
-      const credentialItemInstance = credentialItemInstances[0]
-
-      fireEvent(credentialItemInstance, 'press')
-
-      expect(navigation.navigate).toBeCalledWith('Credential Details', { credentialId: testOpenVPCredentialRecord.id })
+        expect(credentialItemInstances.length).toBe(1)
+  
+        const credentialItemInstance = credentialItemInstances[0]
+  
+        fireEvent(credentialItemInstance, 'press')
+        expect(navigation.navigate).toBeCalledWith('Credential Details', { credentialId: testOpenVPCredentialRecord.id })
+      })
     })
   })
 
@@ -101,20 +105,22 @@ describe('displays a credentials list screen', () => {
    * And the holder has accepted the credential offer
    * Then the credentials are ordered to most recent to least recent (top to bottom)
    */
-  test('credentials should display in descending order of issued date', () => {
+  test('credentials should display in descending order of issued date', async () => {
     const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <ListCredentials />
       </ConfigurationContext.Provider>
     )
-    const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+    await act( async () => {
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-    expect(credentialCards.length).toBe(3)
+      expect(credentialCards.length).toBe(3)
 
-    const createdAtDates = credentialCards.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
+      const createdAtDates = credentialCards.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
 
-    expect(new Date(createdAtDates[0])).toEqual(new Date('2020-01-02T00:00:00'))
-    expect(new Date(createdAtDates[1])).toEqual(new Date('2020-01-01T00:01:00'))
-    expect(new Date(createdAtDates[2])).toEqual(new Date('2020-01-01T00:00:00'))
+      expect(new Date(createdAtDates[0])).toEqual(new Date('2020-01-02T00:00:00'))
+      expect(new Date(createdAtDates[1])).toEqual(new Date('2020-01-01T00:01:00'))
+      expect(new Date(createdAtDates[2])).toEqual(new Date('2020-01-01T00:00:00'))
+    })
   })
 })

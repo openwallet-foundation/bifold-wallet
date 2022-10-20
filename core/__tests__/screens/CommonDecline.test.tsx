@@ -6,10 +6,11 @@ import {
 } from '@aries-framework/core'
 import { useCredentialById, useProofById, useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { render, fireEvent } from '@testing-library/react-native'
+import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
+import { act } from 'react-test-renderer'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import CommonDecline from '../../App/screens/CommonDecline'
@@ -109,8 +110,12 @@ describe('common decline screen', () => {
   // Offer
   //
 
-  test('decline offer renders correctly', () => {
+  test('decline offer renders correctly', async () => {
     const rec = new CredentialRecord(credential)
+    rec.credentials.push({
+      credentialRecordType: 'indy',
+      credentialRecordId: ''
+    })
     // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
     rec.createdAt = new Date(rec.createdAt)
 
@@ -125,15 +130,20 @@ describe('common decline screen', () => {
         <CommonDecline route={props as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDeclineButton'))
-    const abortDeclineButton = tree.getByTestId(testIdWithKey('AbortDeclineButton'))
-
-    expect(tree).toMatchSnapshot()
-    expect(confirmDeclineButton).not.toBeNull()
-    expect(abortDeclineButton).not.toBeNull()
+    await act(async ()=>{
+      // wait for appearance inside an assertion
+      await waitFor(() => {
+        expect(tree.getByTestId(testIdWithKey('ShowCredentialDetails'))).toBeDefined()
+      },{timeout: 50000})
+      const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDeclineButton'))
+      const abortDeclineButton = tree.getByTestId(testIdWithKey('AbortDeclineButton'))
+      expect(confirmDeclineButton).not.toBeNull()
+      expect(abortDeclineButton).not.toBeNull()
+      expect(tree).toMatchSnapshot()
+    })
   })
 
-  test('decline offer triggers AFJ', () => {
+  test('decline offer triggers AFJ', async () => {
     const rec = new CredentialRecord(credential)
     // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
     rec.createdAt = new Date(rec.createdAt)
@@ -149,12 +159,14 @@ describe('common decline screen', () => {
         <CommonDecline route={props as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    const confirmDeclineButton = getByTestId(testIdWithKey('ConfirmDeclineButton'))
-    const { agent } = useAgent()
+    await act(async ()=>{
+      const confirmDeclineButton = getByTestId(testIdWithKey('ConfirmDeclineButton'))
+      const { agent } = useAgent()
 
-    fireEvent(confirmDeclineButton, 'press')
+      fireEvent(confirmDeclineButton, 'press')
 
-    expect(agent?.credentials.declineOffer).toBeCalledWith('0683de72-2d24-4c76-a471-424c832e4b93')
+      expect(agent?.credentials.declineOffer).toBeCalledWith('0683de72-2d24-4c76-a471-424c832e4b93')
+    })
   })
 
   test('did decline offer renders correctly', () => {
