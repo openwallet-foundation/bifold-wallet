@@ -62,7 +62,7 @@ export interface CaptureBaseOverlay extends BaseOverlay {
 
 export interface MetaOverlay extends BaseL10nOverlay {
   name: string
-  issuer_name?: string
+  issuerName?: string
 }
 
 export interface CardLayoutOverlay extends BaseOverlay {
@@ -165,7 +165,7 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
       type: OverlayType.META_10,
       name: parsedCredDefName(credential),
       language: 'en',
-      issuer_name: credential?.connectionId ?? '',
+      issuerName: credential?.connectionId ?? '',
     }
     const defaultCardLayoutLayer: CardLayoutOverlay = {
       capture_base: '',

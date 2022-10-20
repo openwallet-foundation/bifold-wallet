@@ -206,7 +206,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               testID={testIdWithKey('CredentialIssuer')}
               maxFontSizeMultiplier={1}
             >
-              {metaLayer?.issuer_name}
+              {metaLayer?.issuerName}
             </Text>
           )}
           <Text
