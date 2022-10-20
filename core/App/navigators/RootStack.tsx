@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState, View } from 'react-native'
+import { AppState } from 'react-native'
 
 import { walletTimeout } from '../constants'
 import { useAuth } from '../contexts/auth'
@@ -89,7 +89,6 @@ const RootStack: React.FC = () => {
   }
 
   const onAuthenticated = (status: boolean): void => {
-    console.log('mango', status)
     if (!status) {
       return
     }
