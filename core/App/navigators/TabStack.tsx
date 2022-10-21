@@ -9,6 +9,7 @@ import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
@@ -54,6 +55,7 @@ const TabStack: React.FC = () => {
             tabBarAccessibilityLabel: `${t('TabStack.Home')} (${
               total === 1 ? t('Home.OneNotification') : t('Home.CountNotifications', { count: total || 0 })
             })`,
+            tabBarTestID: testIdWithKey(t('TabStack.Scan')),
           }}
         />
         <Tab.Screen
@@ -80,6 +82,7 @@ const TabStack: React.FC = () => {
               </Text>
             ),
             tabBarAccessibilityLabel: t('TabStack.Scan'),
+            tabBarTestID: testIdWithKey(t('TabStack.Scan')),
           }}
           listeners={({ navigation }) => ({
             tabPress: (e) => {
@@ -111,6 +114,7 @@ const TabStack: React.FC = () => {
               </Text>
             ),
             tabBarAccessibilityLabel: t('TabStack.Credentials'),
+            tabBarTestID: testIdWithKey(t('TabStack.Credentials')),
           }}
         />
       </Tab.Navigator>
