@@ -1,3 +1,5 @@
+import defaultIndyLedgers from '../configs/ledgers/indy'
+
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
 import { ConfigurationContext } from './contexts/configuration'
@@ -15,4 +17,5 @@ export const defaultConfiguration: ConfigurationContext = {
   OCABundle: new oca.DefaultOCABundleResolver().loadDefaultBundles(),
   useBiometry: UseBiometry,
   record: Record,
+  indyLedgers: defaultIndyLedgers,
 }

@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialMetadataKeys, IndyPoolConfig } from '@aries-framework/core'
 import { createContext, useContext } from 'react'
 
 import { RecordProps } from '../components/record/Record'
@@ -13,6 +13,7 @@ export interface ConfigurationContext {
   OCABundle: OCABundleResolver
   useBiometry: React.FC
   record: React.FC<RecordProps>
+  indyLedgers: IndyPoolConfig[]
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

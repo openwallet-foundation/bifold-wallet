@@ -30,7 +30,7 @@ const translation = {
         "ShowDetails": "Afficher les détails",
         "TryAgain": "Try Again",
         "Biometrics": "Biometrics",
-        "On" : "On",
+        "On": "On",
         "Off": "Off",
     },
     "Language": {
@@ -94,6 +94,9 @@ const translation = {
     },
     "PinEnter": {
         "EnterPIN": "Veuillez saisir votre NIP",
+        "Unlock": "Unlock",
+        "Or": "Or",
+        "BiometricsUnlock": "Unlock with biometrics",
         "IncorrectPIN": "NIP erroné",
         "RepeatPIN": "Please try your PIN again.",
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",

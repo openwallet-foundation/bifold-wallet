@@ -101,7 +101,10 @@ const translation = {
     "Hide": "Hide",
   },
   "PinEnter": {
-    "EnterPIN": "Enter PIN",
+    "EnterPIN": "Enter your wallet PIN",
+    "Unlock":"Unlock",
+    "Or":"Or",
+    "BiometricsUnlock": "Unlock with biometrics",
     "IncorrectPIN": "Incorrect PIN",
     "RepeatPIN": "Please try your PIN again.",
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
