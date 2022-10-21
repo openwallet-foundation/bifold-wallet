@@ -9,7 +9,7 @@ import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { createDefaultStackOptions } from './defaultStackOptions'
 
 interface AuthenticateStackProps {
-  setAuthenticated: () => void
+  setAuthenticated: (status: boolean) => void
 }
 
 const AuthenticateStack: React.FC<AuthenticateStackProps> = ({ setAuthenticated }) => {
