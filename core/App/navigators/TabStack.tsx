@@ -55,7 +55,7 @@ const TabStack: React.FC = () => {
             tabBarAccessibilityLabel: `${t('TabStack.Home')} (${
               total === 1 ? t('Home.OneNotification') : t('Home.CountNotifications', { count: total || 0 })
             })`,
-            tabBarTestID: testIdWithKey(t('TabStack.Scan')),
+            tabBarTestID: testIdWithKey(t('TabStack.Home')),
           }}
         />
         <Tab.Screen
