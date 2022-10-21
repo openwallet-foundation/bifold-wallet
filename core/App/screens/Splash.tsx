@@ -18,11 +18,11 @@ import { Config } from 'react-native-config'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
-import indyLedgers from '../../configs/ledgers/indy'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import { ToastType } from '../components/toast/BaseToast'
 import { LocalStorageKeys } from '../constants'
 import { useAuth } from '../contexts/auth'
+import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -60,6 +60,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * of this view.
  */
 const Splash: React.FC = () => {
+  const { indyLedgers } = useConfiguration()
   const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
