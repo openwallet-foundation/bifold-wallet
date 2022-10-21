@@ -45,11 +45,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       backgroundColor: ColorPallet.brand.primaryBackground,
       width: '100%',
     },
-    sectionContainer: {},
     section: {
       backgroundColor: SettingsTheme.groupBackground,
       paddingHorizontal: 25,
-      paddingVertical: 16,
+      paddingVertical: 24,
     },
     sectionHeader: {
       flexDirection: 'row',
@@ -64,6 +63,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+    },
+    itemSeparator: {
+      borderBottomWidth: 1,
+      borderBottomColor: ColorPallet.brand.primaryBackground,
+      marginHorizontal: 25,
     },
     logo: {
       height: 64,
@@ -179,7 +183,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               header: { title, icon },
             },
           }) => <SectionHeader icon={icon} title={title} />}
-          ItemSeparatorComponent={() => null}
+          ItemSeparatorComponent={() => (
+            <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
+              <View style={[styles.itemSeparator]}></View>
+            </View>
+          )}
           SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
           ListFooterComponent={() => (
             <View style={styles.footer}>

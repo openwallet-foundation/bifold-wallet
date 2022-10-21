@@ -27,21 +27,20 @@ const Language = () => {
       backgroundColor: ColorPallet.brand.primaryBackground,
       width: '100%',
     },
-    sectionContainer: {},
     section: {
       backgroundColor: SettingsTheme.groupBackground,
       paddingHorizontal: 25,
       paddingVertical: 16,
     },
-    sectionSeparator: {
-      borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
-      marginHorizontal: 25,
-    },
     sectionRow: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+    },
+    itemSeparator: {
+      borderBottomWidth: 1,
+      borderBottomColor: ColorPallet.brand.primaryBackground,
+      marginHorizontal: 25,
     },
   })
 
@@ -81,7 +80,7 @@ const Language = () => {
         }}
         ItemSeparatorComponent={() => (
           <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-            <View style={[styles.sectionSeparator]}></View>
+            <View style={[styles.itemSeparator]}></View>
           </View>
         )}
       />
