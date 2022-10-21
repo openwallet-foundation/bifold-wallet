@@ -14,6 +14,7 @@ export interface ConfigurationContext {
   useBiometry: React.FC
   record: React.FC<RecordProps>
   indyLedgers: IndyPoolConfig[]
+  shortenerUrls: string[]
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

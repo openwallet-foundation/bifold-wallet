@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import QRScanner from '../components/misc/QRScanner'
+import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
@@ -18,6 +19,7 @@ import CameraDisclosure from './CameraDisclosure'
 type ScanProps = StackScreenProps<ConnectStackParams>
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
+  const { shortenerUrls } = useConfiguration()
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
@@ -53,7 +55,7 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
     setQrCodeScanError(null)
     try {
       const uri = event.data
-      if (isRedirection(uri)) {
+      if (isRedirection(uri, shortenerUrls)) {
         await handleRedirection(uri, agent)
       } else {
         await handleInvitation(uri)
