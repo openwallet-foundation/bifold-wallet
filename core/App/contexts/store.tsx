@@ -28,10 +28,6 @@ export const initialStateFactory = (): State => {
     preferences: {
       useBiometry: false,
     },
-    credential: {
-      revoked: new Set(),
-      revokedMessageDismissed: new Set(),
-    },
     error: null,
     loading: false,
   }
