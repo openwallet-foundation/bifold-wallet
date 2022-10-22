@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 
 import Label from '../components/texts/Label'
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
+import { dateFormatOptions } from '../constants'
 import { ContactStackParams, Screens } from '../types/navigators'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
@@ -20,7 +21,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ navigation, route }) =>
 
   return (
     <SafeAreaScrollView>
-      <Label title="Created" subtitle={JSON.stringify(connection?.createdAt)} />
+      <Label title="Created" subtitle={JSON.stringify(connection?.createdAt.toLocaleDateString('en-CA', dateFormatOptions))} />
       <Label title="Connection State" subtitle={connection?.state} />
     </SafeAreaScrollView>
   )

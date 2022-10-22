@@ -8,15 +8,12 @@ import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from '
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
-import { LocalStorageKeys } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens, Stacks } from '../types/navigators'
-import { Credential as StoreCredentialState } from '../types/state'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
 
 const { width } = Dimensions.get('window')
@@ -29,7 +26,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { notifications } = useNotifications()
   const { t } = useTranslation()
-  const [, dispatch] = useStore()
   const { homeContentView: HomeContentView } = useConfiguration()
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
@@ -64,33 +60,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       ...HomeTheme.link,
     },
   })
-
-  useMemo(() => {
-    async function init() {
-      try {
-        const revokedData = await AsyncStorage.getItem(LocalStorageKeys.RevokedCredentials)
-        const revokedMessageDismissedData = await AsyncStorage.getItem(
-          LocalStorageKeys.RevokedCredentialsMessageDismissed
-        )
-        const credentialState: StoreCredentialState = {
-          revoked: new Set(),
-          revokedMessageDismissed: new Set(),
-        }
-        if (revokedData) {
-          const revoked: Set<CredentialRecord['id']> = new Set(JSON.parse(revokedData) || [])
-          credentialState.revoked = revoked
-        }
-        if (revokedMessageDismissedData) {
-          const revokedMessageDismissed: Set<CredentialRecord['id']> = new Set(JSON.parse(revokedMessageDismissedData))
-          credentialState.revokedMessageDismissed = revokedMessageDismissed
-        }
-        dispatch({ type: DispatchAction.CREDENTIALS_UPDATED, payload: [credentialState] })
-      } catch (error) {
-        // TODO:(am add error handling here)
-      }
-    }
-    init()
-  }, [])
 
   useEffect(() => {
     async function handleDeepLink(deepLink: string) {
@@ -170,7 +139,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
               }}
             >
               {item.type === 'CredentialRecord' ? (
-                <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+                item.revocationNotification ? (
+                  <NotificationListItem notificationType={NotificationType.Revocation} notification={item} />
+                ) : (
+                  <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
+                )
               ) : (
                 <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
               )}

@@ -36,6 +36,7 @@ const ListCredentials: React.FC = () => {
           >
             <CredentialCard
               credential={credential}
+              revoked={credential.revocationNotification !== undefined}
               onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
             />
           </View>
