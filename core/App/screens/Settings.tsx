@@ -23,6 +23,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     { id: Locales.fr, value: t('Language.French') },
     { id: Locales.ptBr, value: t('Language.Portuguese') },
   ]
+
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
@@ -123,7 +124,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               value={store.preferences.useBiometry ? t('Global.On') : t('Global.Off')}
               accessibilityLabel={t('Global.Biometrics')}
               testID={testIdWithKey('Biometrics')}
-              onPress={() => null}
+              onPress={() => navigation.navigate(Screens.UseBiometry)}
             />
             <SeparatorLine />
             {/* <Row
