@@ -23,12 +23,6 @@ export interface LoginAttempt {
   loginAttempts: number
 }
 
-// FIXME: Once hooks are updated this should no longer be necessary
-export interface Credential {
-  revoked: Set<CredentialRecord['id']>
-  revokedMessageDismissed: Set<CredentialRecord['id']>
-}
-
 export interface Privacy {
   didShowCameraDisclosure: boolean
 }
@@ -44,7 +38,6 @@ export interface State {
   lockout: Lockout
   loginAttempt: LoginAttempt
   preferences: Preferences
-  credential: Credential
   error: BifoldError | null
   loading: boolean
 }
