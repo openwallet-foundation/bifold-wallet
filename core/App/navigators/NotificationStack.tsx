@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import CommonDecline from '../screens/CommonDecline'
+import CredentialDetails from '../screens/CredentialDetails'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
 import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
@@ -20,6 +21,11 @@ const NotificationStack: React.FC = () => {
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
+      <Stack.Screen
+        name={Screens.CredentialDetails}
+        component={CredentialDetails}
+        options={{ title: t('Screens.CredentialDetails') }}
+      />
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
