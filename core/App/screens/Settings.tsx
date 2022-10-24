@@ -122,10 +122,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.UseBiometry),
         },
         {
-          title: t('Settings.ChangePIN'),
-          accessibilityLabel: t('Settings.ChangePIN'),
+          title: t('PinCreate.ChangePIN'),
+          accessibilityLabel: t('PinCreate.ChangePIN'),
           testID: testIdWithKey('ChangePIN'),
-          onPress: () => null,
+          onPress: () => navigation.navigate(Screens.RecreatePin),
         },
         {
           title: t('Settings.Language'),
