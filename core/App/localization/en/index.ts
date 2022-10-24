@@ -99,6 +99,9 @@ const translation = {
     "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
     "Show": "Show",
     "Hide": "Hide",
+    "ChangePIN": "Change PIN",
+    "Continue": "Continue",
+    "EnterYourCurrentPIN": "Enter your current PIN"
   },
   "PinEnter": {
     "EnterPIN": "Enter your wallet PIN",
@@ -270,7 +273,6 @@ const translation = {
     "AboutApp": "About App",
     "Language": "Language",
     "Build": "Build",
-    "ChangePIN": "Change PIN",
     "WhatAreContacts": "What are Contacts?"
   },
   "TabStack": {
@@ -312,7 +314,8 @@ const translation = {
     "Contacts": 'Contacts',
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
-    "Biometry": "Biometrics"
+    "Biometry": "Biometrics",
+    "ChangePin": "Change PIN"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
