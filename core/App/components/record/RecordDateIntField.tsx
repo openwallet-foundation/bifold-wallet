@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -17,9 +17,9 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) 
   const [date, setDate] = useState<string | undefined>()
 
   useEffect(() => {
-    if (moment((field as Attribute).value as string, dateIntFormat).isValid()) {
-      const dateObject = moment((field as Attribute).value as string, dateIntFormat)
-      setDate(moment(dateObject).format(field.format))
+    if (dayjs((field as Attribute).value as string, dateIntFormat, true).isValid()) {
+      const dateObject = dayjs((field as Attribute).value as string, dateIntFormat)
+      setDate(dayjs(dateObject).format(field.format))
     } else {
       setDate((field as Attribute).value as string)
     }
