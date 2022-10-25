@@ -17,13 +17,14 @@ const HomeStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions, headerLeft: () => null }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
         name={Screens.Home}
         component={Home}
         options={() => ({
           title: t('Screens.Home'),
           headerRight: () => <SettingsCog />,
+          headerLeft: () => null,
         })}
       />
       <Stack.Screen
