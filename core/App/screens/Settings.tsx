@@ -1,11 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
+import { touchCountToEnableBiometrics } from '../constants'
+import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Locales } from '../localization'
@@ -16,7 +18,9 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
-  const [store] = useStore()
+  const [store, dispatch] = useStore()
+  const developerOptionCount = useRef(0)
+  const [x, setX] = useState<boolean>(false)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
@@ -90,6 +94,20 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     </View>
   )
 
+  const incrementDeveloperMenuCounter = () => {
+    if (developerOptionCount.current >= touchCountToEnableBiometrics) {
+      setX(true)
+      dispatch({
+        type: DispatchAction.ENABLE_DEVELOPER_MODE,
+        payload: [true],
+      })
+
+      return
+    }
+
+    developerOptionCount.current = developerOptionCount.current + 1
+  }
+
   return (
     <SafeAreaScrollView>
       <View style={styles.container}>
@@ -141,14 +159,29 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               testID={testIdWithKey('Language')}
               onPress={() => navigation.navigate(Screens.Language)}
             />
+            {store.preferences.developerModeEnabled && (
+              <>
+                <SeparatorLine />
+                <Row
+                  title={'Developer'}
+                  accessibilityLabel={'Developer'}
+                  testID={testIdWithKey('Developer')}
+                  onPress={() => navigation.navigate(Screens.UseBiometry)}
+                />
+              </>
+            )}
           </View>
         </View>
       </View>
       <View style={styles.footer}>
-        <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
-          {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
-        </Text>
-        <Assets.svg.logo {...styles.logo} />
+        <TouchableWithoutFeedback onPress={incrementDeveloperMenuCounter} disabled={x}>
+          <View>
+            <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
+              {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
+            </Text>
+            <Assets.svg.logo {...styles.logo} />
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     </SafeAreaScrollView>
   )
