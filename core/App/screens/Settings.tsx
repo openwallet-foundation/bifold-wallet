@@ -166,7 +166,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
                   title={'Developer'}
                   accessibilityLabel={'Developer'}
                   testID={testIdWithKey('Developer')}
-                  onPress={() => navigation.navigate(Screens.UseBiometry)}
+                  onPress={() => navigation.navigate(Screens.Developer)}
                 />
               </>
             )}

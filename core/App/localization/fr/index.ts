@@ -296,7 +296,10 @@ const translation = {
         "Language": "Langue",
         "Contacts": "Contacts",
         "Decline": "Refuser",
-        "ContactDetails": "Informations du contact"
+        "ContactDetails": "Informations du contact",
+        "Biometry": "Biometrics",
+        "Developer": "Developer"
+
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",

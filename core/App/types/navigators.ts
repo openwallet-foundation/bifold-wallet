@@ -27,6 +27,7 @@ export enum Screens {
   Declined = 'Declined',
   CommonDecline = 'Common Decline',
   UseBiometry = 'Use Biometry',
+  Developer = 'Developer',
 }
 
 export enum Stacks {
@@ -94,6 +95,7 @@ export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
   [Screens.UseBiometry]: undefined
+  [Screens.Developer]: undefined
 }
 
 export type NotificationStackParams = {

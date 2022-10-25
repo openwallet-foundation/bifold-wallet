@@ -310,7 +310,8 @@ const translation = {
     "Contacts": 'Contacts',
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
-    "Biometry": "Biometrics"
+    "Biometry": "Biometrics",
+    "Developer": "Developer"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

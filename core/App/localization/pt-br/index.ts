@@ -294,7 +294,8 @@ const translation = {
     "Contacts": 'Contatos',
     "Decline": "Recusar",
     "ContactDetails": 'Detalhes do Contato',
-    "Biometry": "Biometria"
+    "Biometry": "Biometria",
+    "Developer": "Developer"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
