@@ -39,6 +39,7 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
     "axios": "^0.21.0",
+    "dayjs": "^1.10.4",
     "i18next": "^21.4.0",
     "indy-sdk-react-native": "^0.2.2",
     "lodash.flatten": "^4.4.0",
