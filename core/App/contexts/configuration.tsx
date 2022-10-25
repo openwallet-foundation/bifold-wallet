@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, CredentialMetadataKeys, IndyPoolConfig } from '@aries-framework/core'
+import { IndyPoolConfig } from '@aries-framework/core'
 import { createContext, useContext } from 'react'
 
 import { RecordProps } from '../components/record/Record'
@@ -9,6 +9,7 @@ export interface ConfigurationContext {
   pages: typeof OnboardingPages
   splash: React.FC
   terms: React.FC
+  developer: React.FC
   homeContentView: React.FC
   OCABundle: OCABundleResolver
   useBiometry: React.FC
