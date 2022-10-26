@@ -97,6 +97,8 @@ export type SettingStackParams = {
   [Screens.UseBiometry]: undefined
   [Screens.CreatePin]: undefined
   [Screens.RecreatePin]: undefined
+  [Screens.Terms]: undefined
+  [Screens.Onboarding]: undefined
 }
 
 export type NotificationStackParams = {

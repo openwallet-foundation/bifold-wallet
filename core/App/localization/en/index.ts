@@ -273,7 +273,9 @@ const translation = {
     "AboutApp": "About App",
     "Language": "Language",
     "Build": "Build",
-    "WhatAreContacts": "What are Contacts?"
+    "WhatAreContacts": "What are Contacts?",
+    "Help": "Help",
+    "MoreInformation": "More information"
   },
   "TabStack": {
     "Home": "Home",
@@ -315,7 +317,7 @@ const translation = {
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
     "Biometry": "Biometrics",
-    "ChangePin": "Change PIN"
+    "ChangePin": "Change PIN",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

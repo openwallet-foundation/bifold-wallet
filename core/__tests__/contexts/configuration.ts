@@ -9,4 +9,5 @@ export default {
   OCABundle: new DefaultOCABundleResolver(),
   useBiometry: () => null,
   record: Record,
+  settings: [],
 }
