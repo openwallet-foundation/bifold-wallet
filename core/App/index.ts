@@ -94,4 +94,5 @@ export {
   types,
   components,
   contexts,
+  appLog,
 }
