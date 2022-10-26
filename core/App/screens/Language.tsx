@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
@@ -51,8 +52,9 @@ const Language = () => {
    * @param {BlockSelection} language
    */
   const handleLanguageChange = async (language: Language) => {
-    i18n.changeLanguage(language.id as Locales)
+    await i18n.changeLanguage(language.id as Locales)
     await storeLanguage(language.id)
+    // const langId = await AsyncStorage.getItem('language')
   }
 
   return (
@@ -71,7 +73,7 @@ const Language = () => {
                 size={36}
                 innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
                 ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary}></Icon>}
-                onPress={() => handleLanguageChange(language)}
+                onPress={async () => await handleLanguageChange(language)}
                 isChecked={id === i18n.language}
                 disableBuiltInState
               />

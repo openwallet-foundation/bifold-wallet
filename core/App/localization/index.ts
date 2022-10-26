@@ -60,10 +60,8 @@ const initLanguages = (resources: TranslationResources) => {
 //** Fetch user preference language from the AsyncStorage and set if require  */
 const initStoredLanguage = async () => {
   const langId = await AsyncStorage.getItem('language')
-  if (langId !== null) {
-    if (langId !== currentLanguage) {
-      await i18n.changeLanguage(langId)
-    }
+  if (langId && langId !== currentLanguage) {
+    await i18n.changeLanguage(langId)
   }
 }
 

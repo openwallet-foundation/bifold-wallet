@@ -6,35 +6,22 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Locales } from '../localization'
 import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
+import { SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
-
-interface Setting {
-  title: string
-  value?: string
-  onPress?: GenericFn
-  accessibilityLabel?: string
-  testID?: string
-}
-
-interface SettingSection {
-  header: {
-    title: string
-    icon: string
-  }
-  data: Setting[]
-}
 
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store] = useStore()
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
+  const { settings } = useConfiguration()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
     { id: Locales.fr, value: t('Language.French') },
@@ -83,7 +70,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
   const currentLanguage = languages.find((l) => l.id === i18n.language)?.value
 
-  const settings: SettingSection[] = [
+  const settingsSections: SettingSection[] = [
     {
       header: {
         icon: 'apartment',
@@ -121,12 +108,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           testID: testIdWithKey('Biometrics'),
           onPress: () => navigation.navigate(Screens.UseBiometry),
         },
-        {
-          title: t('PinCreate.ChangePIN'),
-          accessibilityLabel: t('PinCreate.ChangePIN'),
-          testID: testIdWithKey('ChangePIN'),
-          onPress: () => navigation.navigate(Screens.RecreatePin),
-        },
+        // TODO: Need to resolve methods for changing PIN
+        // {
+        //   title: t('PinCreate.ChangePIN'),
+        //   accessibilityLabel: t('PinCreate.ChangePIN'),
+        //   testID: testIdWithKey('ChangePIN'),
+        //   onPress: () => navigation.navigate(Screens.RecreatePin),
+        // },
         {
           title: t('Settings.Language'),
           value: currentLanguage,
@@ -136,6 +124,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         },
       ],
     },
+    ...(settings || []),
   ]
 
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
@@ -198,7 +187,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               <Assets.svg.logo {...styles.logo} />
             </View>
           )}
-          sections={settings}
+          sections={settingsSections}
         ></SectionList>
       </View>
     </SafeAreaView>
