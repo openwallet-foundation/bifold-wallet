@@ -13,15 +13,23 @@ import PinEnter, { PinEntryUsage } from '../screens/PinEnter'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
+enum UseBiometryUsage {
+  InitialSetup,
+  ToggleOnOff,
+}
+
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { isBiometricsActive, commitPIN } = useAuth()
+  const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [canSeeCheckPin, setCanSeeCheckPin] = useState<boolean>(false)
   const { ColorPallet, TextTheme } = useTheme()
+  const screenUsage = store.onboarding.didConsiderBiometry
+    ? UseBiometryUsage.ToggleOnOff
+    : UseBiometryUsage.InitialSetup
 
   const styles = StyleSheet.create({
     container: {
@@ -42,6 +50,28 @@ const UseBiometry: React.FC = () => {
     })
   }, [])
 
+  useEffect(() => {
+    if (screenUsage === UseBiometryUsage.InitialSetup) {
+      return
+    }
+
+    if (biometryEnabled) {
+      commitPIN(biometryEnabled).then(() => {
+        dispatch({
+          type: DispatchAction.USE_BIOMETRY,
+          payload: [biometryEnabled],
+        })
+      })
+    } else {
+      disableBiometrics().then(() => {
+        dispatch({
+          type: DispatchAction.USE_BIOMETRY,
+          payload: [biometryEnabled],
+        })
+      })
+    }
+  }, [biometryEnabled])
+
   const continueTouched = async () => {
     setContinueEnabled(false)
 
@@ -54,7 +84,9 @@ const UseBiometry: React.FC = () => {
   }
 
   const toggleSwitch = () => {
-    if (store.onboarding.didConsiderBiometry) {
+    // If the user is toggling biometrics on/off they need
+    // to first authenticate before this action is accepted
+    if (screenUsage === UseBiometryUsage.ToggleOnOff) {
       setCanSeeCheckPin(true)
 
       return
@@ -64,15 +96,9 @@ const UseBiometry: React.FC = () => {
   }
 
   const onAuthenticationComplete = (status: boolean) => {
+    // If successfully authenticated the toggle may proceed.
     if (status) {
-      setBiometryEnabled(!biometryEnabled)
-
-      dispatch({
-        type: DispatchAction.USE_BIOMETRY,
-        payload: [!biometryEnabled],
-      })
-    } else {
-      setBiometryEnabled(biometryEnabled)
+      setBiometryEnabled((previousState) => !previousState)
     }
 
     setCanSeeCheckPin(false)
