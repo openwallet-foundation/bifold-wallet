@@ -33,7 +33,8 @@ export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources } from './localization'
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
 export { StoreProvider, StoreContext, useStore } from './contexts/store'
-export { DispatchAction } from './contexts/reducers/store'
+export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
+
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { ColorPallet } from './theme'
 export { theme } from './theme'
@@ -55,6 +56,8 @@ export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
+export type { State as DefaultState } from './types/state'
+export type { ReducerAction } from './contexts/reducers/store'
 
 export {
   LoadingIndicator,
