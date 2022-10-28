@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -20,7 +20,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
-  const [x, setX] = useState<boolean>(false)
+  const [developerModeTriggerDisabled, setDeveloperModeTriggerDisabled] = useState<boolean>(false)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
@@ -96,7 +96,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
   const incrementDeveloperMenuCounter = () => {
     if (developerOptionCount.current >= touchCountToEnableBiometrics) {
-      setX(true)
+      setDeveloperModeTriggerDisabled(true)
       dispatch({
         type: DispatchAction.ENABLE_DEVELOPER_MODE,
         payload: [true],
@@ -174,7 +174,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.footer}>
-        <TouchableWithoutFeedback onPress={incrementDeveloperMenuCounter} disabled={x}>
+        <TouchableWithoutFeedback onPress={incrementDeveloperMenuCounter} disabled={developerModeTriggerDisabled}>
           <View>
             <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
               {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
