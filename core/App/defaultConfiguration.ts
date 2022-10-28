@@ -3,6 +3,7 @@ import defaultIndyLedgers from '../configs/ledgers/indy'
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
 import { ConfigurationContext } from './contexts/configuration'
+import { useStore } from './contexts/store'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
@@ -18,4 +19,5 @@ export const defaultConfiguration: ConfigurationContext = {
   useBiometry: UseBiometry,
   record: Record,
   indyLedgers: defaultIndyLedgers,
+  useStore,
 }
