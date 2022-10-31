@@ -263,5 +263,4 @@ export const reducer = (state: State, action: ReducerAction): State => {
       return state
   }
 }
-
 export default reducer
