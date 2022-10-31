@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import { lengthOfhiddenAttributes } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { BaseType } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
@@ -72,7 +73,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
     } else {
       return (
         <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-          {shown ? (field as Attribute).value : Array(10).fill('\u2022').join('')}
+          {shown ? (field as Attribute).value : Array(lengthOfhiddenAttributes).fill('\u2022').join('')}
         </Text>
       )
     }
