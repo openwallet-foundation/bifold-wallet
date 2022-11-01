@@ -32,7 +32,7 @@ import * as types from './types'
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources } from './localization'
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
-export { StoreProvider, StoreContext, useStore } from './contexts/store'
+export { DefaultBifoldState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
 
 export { ThemeProvider, useTheme } from './contexts/theme'
@@ -57,7 +57,7 @@ export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
 // export type { State as DefaultState } from './types/state'
-// export type { ReducerAction } from './contexts/reducers/store'
+export type { ReducerAction } from './contexts/reducers/store'
 
 export {
   LoadingIndicator,

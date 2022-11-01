@@ -14,14 +14,14 @@ import {
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
 
-type ReduceType = (state: State, action: ReducerAction) => State
+type Reducer = <S extends State>(state: S, action: ReducerAction) => S
 
 interface StoreProviderProps {
   initialState?: State
-  reducer?: (state: State, action: ReducerAction) => State
+  reducer?: Reducer
 }
 
-export class DefaultBiFoldState implements State {
+export class DefaultBifoldState implements State {
   public onboarding: Onboarding = {
     didAgreeToTerms: false,
     didCompleteTutorial: false,
@@ -60,22 +60,22 @@ export class DefaultBiFoldState implements State {
   public loading = false
 }
 
-export const createInitialStateFactory = (): DefaultBiFoldState => {
-  return new DefaultBiFoldState()
+export const createInitialStateFactory = (): DefaultBifoldState => {
+  return new DefaultBifoldState()
 }
 
 const initialState = createInitialStateFactory()
 
-export const StoreContext = createContext<[DefaultBiFoldState, Dispatch<ReducerAction>]>([
+export const StoreContext = createContext<[DefaultBifoldState, Dispatch<ReducerAction>]>([
   initialState,
   () => {
     return
   },
 ])
 
-export const mergeReducers = (reducer1: ReduceType, reducer2: ReduceType): ReduceType => {
-  return (state: State, action: ReducerAction): State => {
-    return reducer1(reducer2(state, action), action)
+export const mergeReducers = (a: Reducer, b: Reducer): Reducer => {
+  return <S extends State>(state: S, action: ReducerAction): S => {
+    return a(b(state, action), action)
   }
 }
 
@@ -91,5 +91,6 @@ export const StoreProvider: React.FC<StoreProviderProps> = ({ children, initialS
 
 export const useStore = <T extends State>(): [T, Dispatch<ReducerAction>] => {
   const context = useContext(StoreContext)
+
   return context as unknown as [T, Dispatch<ReducerAction>]
 }
