@@ -11,9 +11,8 @@ import AlertModal from '../components/modals/AlertModal'
 import PopupModal from '../components/modals/PopupModal'
 import { attemptLockoutBaseRules, attemptLockoutThresholdRules } from '../constants'
 import { useAuth } from '../contexts/auth'
-import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
-// import { useStore } from '../contexts/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
@@ -33,7 +32,6 @@ export enum PinEntryUsage {
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = PinEntryUsage.WalletUnlock }) => {
   const { t } = useTranslation()
   const { checkPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
-  const { useStore } = useConfiguration()
   const [store, dispatch] = useStore()
   const [pin, setPin] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)

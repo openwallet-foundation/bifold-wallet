@@ -56,8 +56,8 @@ export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
-export type { State as DefaultState } from './types/state'
-export type { ReducerAction } from './contexts/reducers/store'
+// export type { State as DefaultState } from './types/state'
+// export type { ReducerAction } from './contexts/reducers/store'
 
 export {
   LoadingIndicator,
