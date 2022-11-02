@@ -78,7 +78,7 @@ export interface ReducerAction {
   payload?: Array<any>
 }
 
-const reducer = (state: State, action: ReducerAction): State => {
+export const reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {
     case PreferencesDispatchAction.USE_BIOMETRY: {
       const choice = (action?.payload ?? []).pop() ?? false
