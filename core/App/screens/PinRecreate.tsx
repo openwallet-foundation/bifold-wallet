@@ -11,6 +11,7 @@ import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import { useAuth } from '../contexts/auth'
 import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
@@ -42,7 +43,7 @@ const PinRecreate: React.FC = () => {
     try {
       const credentials = await getWalletCredentials()
       if (!credentials) {
-        throw new Error('Problem')
+        throw new BifoldError(t('Error.Title1036'), t('Error.Message1036'), t('Error.Message1036'), 1036)
       }
 
       const key = await hashPIN(pin, credentials.salt)
