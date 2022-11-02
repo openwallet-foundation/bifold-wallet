@@ -66,6 +66,8 @@ const translation = {
     "Message1034": "Proof request could not be found.",
     "Title1035": "Unable to fetch credential offer.",
     "Message1035": "Credential offer could not be found.",
+    "Title1036": "Unable to fetch wallet credentials",
+    "Message1036": "Wallet credentials could not be found",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
