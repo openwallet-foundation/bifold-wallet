@@ -51,6 +51,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   })
 
   const passcodeCreate = async (pin: string) => {
+    // TODO: Update this
     try {
       setContinueEnabled(false)
       await setPIN(pin)
@@ -61,6 +62,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         type: DispatchAction.DID_CREATE_PIN,
       })
 
+      // TODO: Navigate back if in settings
       navigation.navigate(Screens.UseBiometry)
     } catch (e) {
       // TODO:(jl)

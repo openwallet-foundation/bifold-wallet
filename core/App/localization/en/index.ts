@@ -66,6 +66,8 @@ const translation = {
     "Message1034": "Proof request could not be found.",
     "Title1035": "Unable to fetch credential offer.",
     "Message1035": "Credential offer could not be found.",
+    "Title1036": "Unable to fetch wallet credentials",
+    "Message1036": "Wallet credentials could not be found",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
@@ -99,6 +101,9 @@ const translation = {
     "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
     "Show": "Show",
     "Hide": "Hide",
+    "ChangePIN": "Change PIN",
+    "Continue": "Continue",
+    "EnterYourCurrentPIN": "Enter your current PIN"
   },
   "PinEnter": {
     "EnterPIN": "Enter your wallet PIN",
@@ -266,10 +271,13 @@ const translation = {
   "Settings": {
     "Version": "Version",
     "VersionString": "0.0.0-0",
-    "AppPreferences": "App Preferences",
+    "AppSettings": "App Settings",
     "AboutApp": "About App",
     "Language": "Language",
-    "Build": "Build"
+    "Build": "Build",
+    "WhatAreContacts": "What are Contacts?",
+    "Help": "Help",
+    "MoreInformation": "More information"
   },
   "TabStack": {
     "Home": "Home",
@@ -310,7 +318,8 @@ const translation = {
     "Contacts": 'Contacts',
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
-    "Biometry": "Biometrics"
+    "Biometry": "Biometrics",
+    "ChangePin": "Change PIN",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
