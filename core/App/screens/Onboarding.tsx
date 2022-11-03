@@ -31,9 +31,16 @@ interface OnboardingProps {
   nextButtonText: string
   previousButtonText: string
   style: OnboardingStyleSheet
+  disableSkip?: boolean
 }
 
-const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previousButtonText, style }) => {
+const Onboarding: React.FC<OnboardingProps> = ({
+  pages,
+  nextButtonText,
+  previousButtonText,
+  style,
+  disableSkip = false,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const flatList: Ref<FlatList> = useRef(null)
   const scrollX = useRef(new Animated.Value(0)).current
@@ -93,18 +100,19 @@ const Onboarding: React.FC<OnboardingProps> = ({ pages, nextButtonText, previous
   }
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <HeaderRight
-          title={t('Global.Skip')}
-          accessibilityLabel={t('Global.Skip')}
-          testID={testIdWithKey('Skip')}
-          onPress={onSkipTouched}
-        />
-      ),
-    })
+    !disableSkip &&
+      navigation.setOptions({
+        headerRight: () => (
+          <HeaderRight
+            title={t('Global.Skip')}
+            accessibilityLabel={t('Global.Skip')}
+            testID={testIdWithKey('Skip')}
+            onPress={onSkipTouched}
+          />
+        ),
+      })
 
-    if (activeIndex + 1 === pages.length) {
+    if (!disableSkip && activeIndex + 1 === pages.length) {
       navigation.setOptions({
         headerRight: () => false,
       })

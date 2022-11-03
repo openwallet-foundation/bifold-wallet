@@ -1,15 +1,18 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SectionList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
+import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Locales } from '../localization'
+import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
+import { SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
@@ -18,6 +21,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store] = useStore()
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
+  const { settings } = useConfiguration()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
     { id: Locales.fr, value: t('Language.French') },
@@ -31,126 +35,162 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     section: {
       backgroundColor: SettingsTheme.groupBackground,
-      padding: 25,
+      paddingHorizontal: 25,
+      paddingVertical: 24,
+    },
+    sectionHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingBottom: 0,
+      marginBottom: -11,
+    },
+    sectionSeparator: {
       marginBottom: 10,
     },
-    row: {
+    sectionRow: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
+    itemSeparator: {
+      borderBottomWidth: 1,
+      borderBottomColor: ColorPallet.brand.primaryBackground,
+      marginHorizontal: 25,
+    },
     logo: {
       height: 64,
-      width: 164,
-      marginVertical: 15,
+      width: '50%',
+      marginVertical: 16,
     },
     footer: {
-      marginTop: 22,
+      marginVertical: 25,
       alignItems: 'center',
     },
   })
 
   const currentLanguage = languages.find((l) => l.id === i18n.language)?.value
 
+  const settingsSections: SettingSection[] = [
+    {
+      header: {
+        icon: 'apartment',
+        title: t('Screens.Contacts'),
+      },
+      data: [
+        {
+          title: t('Screens.Contacts'),
+          accessibilityLabel: t('Screens.Contacts'),
+          testID: testIdWithKey('Contacts'),
+          onPress: () =>
+            navigation
+              .getParent()
+              ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } }),
+        },
+        {
+          title: t('Settings.WhatAreContacts'),
+          accessibilityLabel: t('Settings.WhatAreContacts'),
+          testID: testIdWithKey('WhatAreContacts'),
+          onPress: () => null,
+          value: undefined,
+        },
+      ],
+    },
+    {
+      header: {
+        icon: 'settings',
+        title: t('Settings.AppSettings'),
+      },
+      data: [
+        {
+          title: t('Global.Biometrics'),
+          value: store.preferences.useBiometry ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Global.Biometrics'),
+          testID: testIdWithKey('Biometrics'),
+          onPress: () => navigation.navigate(Screens.UseBiometry),
+        },
+        // TODO: Need to resolve methods for changing PIN
+        // {
+        //   title: t('PinCreate.ChangePIN'),
+        //   accessibilityLabel: t('PinCreate.ChangePIN'),
+        //   testID: testIdWithKey('ChangePIN'),
+        //   onPress: () => navigation.navigate(Screens.RecreatePin),
+        // },
+        {
+          title: t('Settings.Language'),
+          value: currentLanguage,
+          accessibilityLabel: t('Settings.Language'),
+          testID: testIdWithKey('Language'),
+          onPress: () => navigation.navigate(Screens.Language),
+        },
+      ],
+    },
+    ...(settings || []),
+  ]
+
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25 }}>
-      <Icon name={icon} size={42} style={{ marginRight: 10 }} />
-      <Text style={TextTheme.headingThree}>{title}</Text>
+    <View style={[styles.section, styles.sectionHeader]}>
+      <Icon name={icon} size={24} style={{ marginRight: 10, color: TextTheme.normal.color }} />
+      <Text style={[TextTheme.headingThree, { flexShrink: 1 }]}>{title}</Text>
     </View>
   )
 
-  const SeparatorLine: React.FC = () => (
-    <View
-      style={{
-        height: 1,
-        backgroundColor: ColorPallet.grayscale.lightGrey,
-        marginVertical: 20,
-      }}
-    />
-  )
-
-  const Row: React.FC<{
+  const SectionRow: React.FC<{
     title: string
     value?: string
-    accessibilityLabel: string
-    testID: string
-    onPress: () => void
+    accessibilityLabel?: string
+    testID?: string
+    onPress?: GenericFn
   }> = ({ title, value, accessibilityLabel, testID, onPress }) => (
-    <View style={{ flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
+    <View style={[styles.section]}>
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={accessibilityLabel}
         testID={testID}
-        style={styles.row}
+        style={styles.sectionRow}
         onPress={onPress}
       >
-        <Text style={[TextTheme.normal, { fontSize: 22, flexGrow: 1 }]}>{title}</Text>
-        <Text style={[TextTheme.normal, { fontSize: 22, color: ColorPallet.brand.link }]}>{value}</Text>
+        <Text style={[TextTheme.headingFour, { fontWeight: 'normal' }]}>{title}</Text>
+        <Text style={[TextTheme.headingFour, { fontWeight: 'normal', color: ColorPallet.brand.link }]}>{value}</Text>
       </TouchableOpacity>
     </View>
   )
 
   return (
-    <SafeAreaScrollView>
+    <SafeAreaView>
       <View style={styles.container}>
-        <View style={styles.section}>
-          <SectionHeader icon="apartment" title={t('Screens.Contacts')} />
-          <View style={{ flexGrow: 1, flexDirection: 'column' }}>
-            <Row
-              title={t('Screens.Contacts')}
-              accessibilityLabel={t('Screens.Contacts')}
-              testID={testIdWithKey('Contacts')}
-              onPress={() =>
-                navigation
-                  .getParent()
-                  ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
-              }
-            />
-            {/* <SeparatorLine />
-            <Row
-              title={'What are Contacts?'}
-              accessibilityLabel={'What are Contacts?'}
-              testID={testIdWithKey('WhatContacts')}
-              onPress={() => null}
-            /> */}
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <SectionHeader icon="settings" title={t('Settings.AppPreferences')} />
-          <View style={{ flexGrow: 1, flexDirection: 'column' }}>
-            <Row
-              title={t('Global.Biometrics')}
-              value={store.preferences.useBiometry ? t('Global.On') : t('Global.Off')}
-              accessibilityLabel={t('Global.Biometrics')}
-              testID={testIdWithKey('Biometrics')}
-              onPress={() => navigation.navigate(Screens.UseBiometry)}
-            />
-            <SeparatorLine />
-            {/* <Row
-              title={'Change PIN'}
-              accessibilityLabel={'Change PIN'}
-              testID={testIdWithKey('ChangePIN')}
-              onPress={() => null}
-            />
-            <SeparatorLine /> */}
-            <Row
-              title={t('Settings.Language')}
-              value={currentLanguage}
-              accessibilityLabel={t('Settings.Language')}
-              testID={testIdWithKey('Language')}
-              onPress={() => navigation.navigate(Screens.Language)}
-            />
-          </View>
-        </View>
+        <SectionList
+          renderItem={({ item: { title, value, onPress } }) => (
+            <SectionRow
+              title={title}
+              accessibilityLabel={title}
+              testID={testIdWithKey(title)}
+              value={value}
+              onPress={onPress}
+            ></SectionRow>
+          )}
+          renderSectionHeader={({
+            section: {
+              header: { title, icon },
+            },
+          }) => <SectionHeader icon={icon} title={title} />}
+          ItemSeparatorComponent={() => (
+            <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
+              <View style={[styles.itemSeparator]}></View>
+            </View>
+          )}
+          SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
+          ListFooterComponent={() => (
+            <View style={styles.footer}>
+              <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
+                {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
+              </Text>
+              <Assets.svg.logo {...styles.logo} />
+            </View>
+          )}
+          sections={settingsSections}
+        ></SectionList>
       </View>
-      <View style={styles.footer}>
-        <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
-          {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
-        </Text>
-        <Assets.svg.logo {...styles.logo} />
-      </View>
-    </SafeAreaScrollView>
+    </SafeAreaView>
   )
 }
 

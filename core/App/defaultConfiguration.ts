@@ -18,4 +18,5 @@ export const defaultConfiguration: ConfigurationContext = {
   useBiometry: UseBiometry,
   record: Record,
   indyLedgers: defaultIndyLedgers,
+  settings: [],
 }
