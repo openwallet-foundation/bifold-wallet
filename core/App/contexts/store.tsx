@@ -1,16 +1,6 @@
 import React, { createContext, Dispatch, useContext, useReducer } from 'react'
 
-import { BifoldError } from '../types/error'
-import {
-  Authentication,
-  Credential,
-  Lockout,
-  LoginAttempt,
-  Onboarding,
-  Preferences,
-  Privacy,
-  State,
-} from '../types/state'
+import { State } from '../types/state'
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
 
@@ -21,52 +11,42 @@ interface StoreProviderProps {
   reducer?: Reducer
 }
 
-export class DefaultBifoldState implements State {
-  public onboarding: Onboarding = {
+const initialState: State = {
+  onboarding: {
     didAgreeToTerms: false,
     didCompleteTutorial: false,
     didCreatePIN: false,
     didConsiderBiometry: false,
-  }
-
-  public authentication: Authentication = {
+  },
+  authentication: {
     didAuthenticate: false,
-  }
-
-  public privacy: Privacy = {
-    didShowCameraDisclosure: false,
-  }
-
-  public lockout: Lockout = {
-    displayNotification: false,
-  }
-
-  public loginAttempt: LoginAttempt = {
+  },
+  loginAttempt: {
     loginAttempts: 0,
     servedPenalty: true,
-  }
-
-  public preferences: Preferences = {
+  },
+  lockout: {
+    displayNotification: false,
+  },
+  privacy: {
+    didShowCameraDisclosure: false,
+  },
+  preferences: {
     useBiometry: false,
-  }
-
-  public credential: Credential = {
+  },
+  credential: {
     revoked: new Set(),
     revokedMessageDismissed: new Set(),
-  }
-
-  public error: BifoldError | null = null
-
-  public loading = false
+  },
+  error: null,
+  loading: false,
 }
 
-export const createInitialStateFactory = (): DefaultBifoldState => {
-  return new DefaultBifoldState()
+export const createInitialStateFactory = (): State => {
+  return initialState
 }
 
-const initialState = createInitialStateFactory()
-
-export const StoreContext = createContext<[DefaultBifoldState, Dispatch<ReducerAction>]>([
+export const StoreContext = createContext<[State, Dispatch<ReducerAction>]>([
   initialState,
   () => {
     return
