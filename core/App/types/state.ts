@@ -11,6 +11,7 @@ export interface Onboarding {
 
 export interface Preferences {
   useBiometry: boolean
+  developerModeEnabled: false
 }
 
 export interface Lockout {
