@@ -1,3 +1,5 @@
+import defaultIndyLedgers from '../configs/ledgers/indy'
+
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
 import { minPINLength } from './constants'
@@ -18,4 +20,6 @@ export const defaultConfiguration: ConfigurationContext = {
   useBiometry: UseBiometry,
   record: Record,
   pinSecurity: { level: PinSecurityLevel.Level3, minLength: minPINLength, maxLength: minPINLength },
+  indyLedgers: defaultIndyLedgers,
+  settings: [],
 }

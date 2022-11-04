@@ -14,7 +14,6 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { GenericFn } from '../types/fn'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { PinSecurityLevel } from '../types/security'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
@@ -29,7 +28,7 @@ const isNumber = new RegExp('^[0-9]+$')
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
 interface PinCreateProps {
-  setAuthenticated: GenericFn
+  setAuthenticated: (status: boolean) => void
 }
 
 interface ModalState {
@@ -63,16 +62,18 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   })
 
   const passcodeCreate = async (pin: string) => {
+    // TODO: Update this
     try {
       setContinueEnabled(false)
       await setPIN(pin)
       // This will trigger initAgent
-      setAuthenticated()
+      setAuthenticated(true)
 
       dispatch({
         type: DispatchAction.DID_CREATE_PIN,
       })
 
+      // TODO: Navigate back if in settings
       navigation.navigate(Screens.UseBiometry)
     } catch (e) {
       // TODO:(jl)
