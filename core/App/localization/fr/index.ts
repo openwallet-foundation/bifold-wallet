@@ -82,6 +82,8 @@ const translation = {
         "EnteredPINsDoNotMatch": "Les NIP saisis ne correspondent pas. Veuillez réessayer.",
         "YouNeedToCreateA6DigitPIN": "Vous devez créer un NIP à 6 chiffres",
         "PleaseReenterYourPIN": "Veuillez saisir à nouveau votre NIP",
+        "SeriesDetectedInYourPIN": "Une séquence a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
+        "PatternDetectedInYourPIN": "Un patron a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
         "EnterPINTitle": "Entrez un NIP à 6 chiffres",
         "EnterPIN": "Saisir un NIP à 6 chiffres",
         "ReenterPIN": "Saisir le NIP à nouveau",

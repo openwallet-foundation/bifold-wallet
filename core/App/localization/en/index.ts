@@ -90,6 +90,8 @@ const translation = {
     "EnteredPINsDoNotMatch": "The entered PINs do not match. Please try again.",
     "YouNeedToCreateA6DigitPIN": "You need to create a 6 digit PIN",
     "PleaseReenterYourPIN": "Please re-enter your PIN",
+    "SeriesDetectedInYourPIN": "A series was detected in your PIN. Please try again.",
+    "PatternDetectedInYourPIN": "A pattern was detected in your PIN. Please try again.",
     "EnterPINTitle": "Enter a 6 digit PIN",
     "EnterPIN": "Enter PIN",
     "ReenterPIN": "Confirm PIN",

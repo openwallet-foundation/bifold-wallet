@@ -135,7 +135,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       setModalState({
         visible: true,
         title: 'ERROR LEVEL 3',
-        message: t('PinCreate.EnteredPINsDoNotMatch'),
+        message: t('PinCreate.PatternDetectedInYourPIN'),
       })
       return
     }
@@ -146,7 +146,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       setModalState({
         visible: true,
         title: 'ERROR LEVEL 2',
-        message: t('PinCreate.EnteredPINsDoNotMatch'),
+        message: t('PinCreate.SeriesDetectedInYourPIN'),
       })
       return
     }
