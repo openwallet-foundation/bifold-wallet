@@ -40,6 +40,30 @@ describe('Record DateInt Field Component', () => {
 
     expect(tree).toMatchSnapshot()
   })
+  it('Valid dateInt and date format with only year should render only field value year', async () => {
+    const field = {
+      name: 'Test',
+      format: 'YYYY',
+      type: 'DateInt',
+      value: '20000101',
+    }
+    const tree = render(<RecordDateIntField field={field} shown={true} />)
+    const fieldValueText = tree.getByTestId(testIdWithKey('AttributeValue'))
+
+    expect(fieldValueText.children[0]).toEqual(field.value.substring(0, 4))
+  })
+  it('Valid dateInt and random date format should render field value in random format', async () => {
+    const field = {
+      name: 'Test',
+      format: 'YYYY re',
+      type: 'DateInt',
+      value: '20000101',
+    }
+    const tree = render(<RecordDateIntField field={field} shown={true} />)
+    const fieldValueText = tree.getByTestId(testIdWithKey('AttributeValue'))
+
+    expect(fieldValueText.children[0]).toEqual(field.value.substring(0, 4) + ' re')
+  })
   it('Hidden field', async () => {
     const field = {
       name: 'Test',
