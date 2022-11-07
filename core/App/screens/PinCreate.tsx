@@ -19,13 +19,14 @@ import { PinSecurityLevel } from '../types/security'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-const consecutiveNumber = new RegExp(/(\d)\1{1,}/) // 2 or more consecutive digits
-const consecutiveSeries = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/) // 3 or more consecutive digits
-const evenNumberSeries = new RegExp('^d*[13579]$')
-const OddNumberSeries = new RegExp('^d*[02468]$')
-const consecutiveTwoNumber = new RegExp('([0-9]*[0-9])\\1+')
-const isNumber = new RegExp('^[0-9]+$')
-const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
+const consecutive2Numbers = new RegExp(/(\d)\1{1,}/) // 2 or more consecutive digits ✔️
+const consecutive3Numbers = new RegExp(/(\d)\1{2,}/) // 3 or more consecutive digits ✔️
+const consecutiveSeries = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/) // 3 or more consecutive digits ✔️
+const evenNumberSeries = new RegExp('^d*[13579]$') // ✔️
+const OddNumberSeries = new RegExp('^d*[02468]$') // ✔️
+const consecutiveTwoNumber = new RegExp('([0-9]*[0-9])\\1+') // ex: 1515 ✔️
+const isNumber = new RegExp('^[0-9]+$') // ✔️
+const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951'] // ✔️
 
 interface PinCreateProps {
   setAuthenticated: (status: boolean) => void
@@ -129,25 +130,51 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     }
   }
   const confirmEntry2 = async (x: string, y: string) => {
-    if (
-      pinSecurity.level >= PinSecurityLevel.Level3 &&
-      (consecutiveNumber.test(x) || consecutiveTwoNumber.test(x) || crossNumberPattern.includes(x))
-    ) {
+    if (pinSecurity.level >= PinSecurityLevel.Level7 && crossNumberPattern.includes(x)) {
       setModalState({
         visible: true,
-        title: 'ERROR LEVEL 3',
+        title: 'ERROR LEVEL 7',
         message: t('PinCreate.PatternDetectedInYourPIN'),
       })
       return
     }
-    if (
-      pinSecurity.level >= PinSecurityLevel.Level2 &&
-      (consecutiveSeries.test(x) || evenNumberSeries.test(x) || OddNumberSeries.test(x))
-    ) {
+    if (pinSecurity.level >= PinSecurityLevel.Level6 && consecutive2Numbers.test(x)) {
+      setModalState({
+        visible: true,
+        title: 'ERROR LEVEL 6',
+        message: t('PinCreate.Repeating2NumbersInYourPIN'),
+      })
+      return
+    }
+    if (pinSecurity.level >= PinSecurityLevel.Level5 && consecutiveTwoNumber.test(x)) {
+      setModalState({
+        visible: true,
+        title: 'ERROR LEVEL 5',
+        message: t('PinCreate.Repeating2DigitsSequenceDetectedInYourPIN'),
+      })
+      return
+    }
+    if (pinSecurity.level >= PinSecurityLevel.Level4 && (evenNumberSeries.test(x) || OddNumberSeries.test(x))) {
+      setModalState({
+        visible: true,
+        title: 'ERROR LEVEL 4',
+        message: t('PinCreate.OddOrEvenSequenceDetectedInYourPIN'),
+      })
+      return
+    }
+    if (pinSecurity.level >= PinSecurityLevel.Level3 && consecutiveSeries.test(x)) {
+      setModalState({
+        visible: true,
+        title: 'ERROR LEVEL 3',
+        message: t('PinCreate.SeriesDetectedInYourPIN'),
+      })
+      return
+    }
+    if (pinSecurity.level >= PinSecurityLevel.Level2 && consecutive3Numbers.test(x)) {
       setModalState({
         visible: true,
         title: 'ERROR LEVEL 2',
-        message: t('PinCreate.SeriesDetectedInYourPIN'),
+        message: t('PinCreate.Repeating3NumbersInYourPIN'),
       })
       return
     }

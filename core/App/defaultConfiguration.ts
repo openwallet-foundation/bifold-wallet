@@ -19,7 +19,7 @@ export const defaultConfiguration: ConfigurationContext = {
   OCABundle: new oca.DefaultOCABundleResolver().loadDefaultBundles(),
   useBiometry: UseBiometry,
   record: Record,
-  pinSecurity: { level: PinSecurityLevel.Level3, minLength: minPINLength, maxLength: minPINLength },
+  pinSecurity: { level: PinSecurityLevel.Level7, minLength: minPINLength, maxLength: minPINLength },
   indyLedgers: defaultIndyLedgers,
   settings: [],
 }
