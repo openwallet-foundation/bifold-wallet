@@ -75,12 +75,6 @@ export function firstValidCredential(
   return first
 }
 
-export const isRedirection = (url: string, shortenerUrls: string[]): boolean => {
-  const queryParams = parseUrl(url).query
-  const shortenerFound = shortenerUrls.find((shortenerUrl) => url.startsWith(shortenerUrl))
-  return !(shortenerFound || queryParams['c_i'] || queryParams['d_m'])
-}
-
 export const getOobDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
   const queryParams = parseUrl(url).query
   const b64Message = queryParams['d_m'] ?? queryParams['c_i']

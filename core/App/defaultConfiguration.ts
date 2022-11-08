@@ -19,5 +19,4 @@ export const defaultConfiguration: ConfigurationContext = {
   record: Record,
   indyLedgers: defaultIndyLedgers,
   settings: [],
-  shortenerUrls: [],
 }

@@ -16,7 +16,6 @@ export interface ConfigurationContext {
   record: React.FC<RecordProps>
   indyLedgers: IndyPoolConfig[]
   settings: SettingSection[]
-  shortenerUrls: string[]
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
