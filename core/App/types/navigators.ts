@@ -27,6 +27,7 @@ export enum Screens {
   Declined = 'Declined',
   CommonDecline = 'Common Decline',
   UseBiometry = 'Use Biometry',
+  RecreatePin = 'Change PIN',
 }
 
 export enum Stacks {
@@ -94,6 +95,10 @@ export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
   [Screens.UseBiometry]: undefined
+  [Screens.CreatePin]: undefined
+  [Screens.RecreatePin]: undefined
+  [Screens.Terms]: undefined
+  [Screens.Onboarding]: undefined
 }
 
 export type NotificationStackParams = {

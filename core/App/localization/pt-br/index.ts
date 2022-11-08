@@ -98,6 +98,9 @@ const translation = {
     "PINDisclaimer": "Se você o esquecer, você precisará redefinir sua carteira e readicionar seus cards.",
     "Show": "Mostrar",
     "Hide": "Esconder",
+    "ChangePIN": "Change PIN",
+    "Continue": "Continue",
+    "EnterYourCurrentPIN": "Enter your current PIN"
   },
   "PinEnter": {
     "EnterPIN": "Digitar PIN",
@@ -251,9 +254,10 @@ const translation = {
   "Settings": {
     "Version": "Versão",
     "VersionString": "0.0.0-0",
-    "AppPreferences": "Preferências do App",
+    "AppSettings": "App Settings (PT-BR)",
     "AboutApp": "Sobre o App",
     "Language": "Idioma",
+    "WhatAreContacts": "What are Contacts? (PT-BR)"
   },
   "TabStack": {
     "Home": "Home",
@@ -294,7 +298,8 @@ const translation = {
     "Contacts": 'Contatos',
     "Decline": "Recusar",
     "ContactDetails": 'Detalhes do Contato',
-    "Biometry": "Biometria"
+    "Biometry": "Biometria",
+    "ChangePin": "Change PIN (FR)"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",

@@ -91,6 +91,9 @@ const translation = {
         "PINDisclaimer": "Si vous l'oubliez, vous devrez configurer à nouveau votre portefeuille et ajouter à nouveau vos cartes.",
         "Show": "Afficher",
         "Hide": "Masquer",
+        "ChangePIN": "Change PIN (FR)",
+        "Continue": "Continue (FR)",
+        "EnterYourCurrentPIN": "Enter your current PIN (FR)"
     },
     "PinEnter": {
         "EnterPIN": "Veuillez saisir votre NIP",
@@ -253,10 +256,11 @@ const translation = {
     "Settings": {
         "Version": "Version",
         "VersionString": "0.0.0-0",
-        "AppPreferences": "Préférences de l'application",
+        "AppSettings": "App Settings (FR)",
         "AboutApp": "À propos de l'application",
         "Language": "Langue",
-        "Build": "Build"
+        "Build": "Build",
+        "WhatAreContacts": "What are Contacts? (FR)"
     },
     "TabStack": {
         "Home": "Accueil",
@@ -296,7 +300,9 @@ const translation = {
         "Language": "Langue",
         "Contacts": "Contacts",
         "Decline": "Refuser",
-        "ContactDetails": "Informations du contact"
+        "ContactDetails": "Informations du contact",
+        "Biometry": "Biometrics (FR)",
+        "ChangePin": "Change PIN (FR)"
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
