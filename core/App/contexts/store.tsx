@@ -11,7 +11,7 @@ interface StoreProviderProps {
   reducer?: Reducer
 }
 
-const initialState: State = {
+export const defaultState: State = {
   onboarding: {
     didAgreeToTerms: false,
     didCompleteTutorial: false,
@@ -42,12 +42,8 @@ const initialState: State = {
   loading: false,
 }
 
-export const createInitialStateFactory = (): State => {
-  return initialState
-}
-
 export const StoreContext = createContext<[State, Dispatch<ReducerAction>]>([
-  initialState,
+  defaultState,
   () => {
     return
   },
@@ -62,9 +58,9 @@ export const mergeReducers = (a: Reducer, b: Reducer): Reducer => {
 export const defaultReducer = _defaultReducer
 
 export const StoreProvider: React.FC<StoreProviderProps> = ({ children, initialState, reducer }) => {
-  const initialStateValues: State = initialState ?? createInitialStateFactory()
   const _reducer = reducer ?? defaultReducer
-  const [state, dispatch] = useReducer(_reducer, initialStateValues)
+  const _state = initialState ?? defaultState
+  const [state, dispatch] = useReducer(_reducer, _state)
 
   return <StoreContext.Provider value={[state, dispatch]}>{children}</StoreContext.Provider>
 }

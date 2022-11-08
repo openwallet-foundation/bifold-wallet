@@ -32,7 +32,7 @@ import * as types from './types'
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources } from './localization'
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
-export { createInitialStateFactory, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
+export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
 
 export { ThemeProvider, useTheme } from './contexts/theme'
