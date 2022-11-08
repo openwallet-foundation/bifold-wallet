@@ -6,6 +6,7 @@ import AgentProvider from '@aries-framework/react-hooks'
 
 import indyLedgers from '../configs/ledgers/indy'
 
+import * as components from './components'
 import LoadingIndicator from './components/animated/LoadingIndicator'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
@@ -16,6 +17,7 @@ import InfoTextBox from './components/texts/InfoTextBox'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
+import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
 import { defaultConfiguration } from './defaultConfiguration'
@@ -79,4 +81,6 @@ export {
   Record,
   defaultConfiguration,
   types,
+  components,
+  contexts,
 }

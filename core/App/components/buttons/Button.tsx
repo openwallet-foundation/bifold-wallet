@@ -9,7 +9,7 @@ export enum ButtonType {
   Secondary,
 }
 
-interface ButtonProps {
+export interface ButtonProps {
   title: string
   buttonType: ButtonType
   accessibilityLabel?: string
@@ -18,7 +18,7 @@ interface ButtonProps {
   disabled?: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   title,
   buttonType,
   accessibilityLabel,

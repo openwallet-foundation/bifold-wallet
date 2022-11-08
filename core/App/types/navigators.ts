@@ -27,6 +27,7 @@ export enum Screens {
   Declined = 'Declined',
   CommonDecline = 'Common Decline',
   UseBiometry = 'Use Biometry',
+  RecreatePin = 'Change PIN',
 }
 
 export enum Stacks {
@@ -65,8 +66,8 @@ export type AuthenticateStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
-  [Screens.CreatePin]: { setAuthenticated: () => void } | undefined
-  [Screens.EnterPin]: { setAuthenticated: () => void } | undefined
+  [Screens.CreatePin]: { setAuthenticated: (status: boolean) => void } | undefined
+  [Screens.EnterPin]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.UseBiometry]: undefined
 }
 
@@ -93,6 +94,11 @@ export type ConnectStackParams = {
 export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
+  [Screens.UseBiometry]: undefined
+  [Screens.CreatePin]: undefined
+  [Screens.RecreatePin]: undefined
+  [Screens.Terms]: undefined
+  [Screens.Onboarding]: undefined
 }
 
 export type NotificationStackParams = {

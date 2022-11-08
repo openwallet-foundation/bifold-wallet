@@ -13,13 +13,12 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { GenericFn } from '../types/fn'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
-  setAuthenticated: GenericFn
+  setAuthenticated: (status: boolean) => void
 }
 
 interface ModalState {
@@ -52,16 +51,18 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   })
 
   const passcodeCreate = async (pin: string) => {
+    // TODO: Update this
     try {
       setContinueEnabled(false)
       await setPIN(pin)
       // This will trigger initAgent
-      setAuthenticated()
+      setAuthenticated(true)
 
       dispatch({
         type: DispatchAction.DID_CREATE_PIN,
       })
 
+      // TODO: Navigate back if in settings
       navigation.navigate(Screens.UseBiometry)
     } catch (e) {
       // TODO:(jl)
