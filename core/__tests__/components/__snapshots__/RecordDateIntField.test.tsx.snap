@@ -11,11 +11,11 @@ exports[`Record DateInt Field Component Invalid dateInt render field value as is
   }
   testID="com.ariesbifold:id/AttributeValue"
 >
-  invalid date
+  Record.InvalidDateinvalid date
 </Text>
 `;
 
-exports[`Record DateInt Field Component Valid dateInt render field value in format 1`] = `
+exports[`Valid dateInt render field value in format 1`] = `
 <Text
   style={
     Object {
@@ -26,6 +26,6 @@ exports[`Record DateInt Field Component Valid dateInt render field value in form
   }
   testID="com.ariesbifold:id/AttributeValue"
 >
-  00-01-01
+  Jan 1, 2000
 </Text>
 `;

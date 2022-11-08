@@ -7,7 +7,7 @@ export enum BaseType {
   TEXT = 'Text',
   DATETIME = 'DateTime',
   NUMERIC = 'Numeric',
-  DATEINT = 'Dateint',
+  DATEINT = 'DateInt',
 }
 
 export enum OverlayType {
@@ -162,7 +162,7 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
   }
   public loadDefaultBundles(): OCABundleResolver {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return this.loadBundles(require('../assets/oca-bundles.json'))
+    return this.loadBundles(require('../assets/oca-bundles-qc.json'))
   }
   public async getCredentialPresentationFields(
     credential: CredentialExchangeRecord,

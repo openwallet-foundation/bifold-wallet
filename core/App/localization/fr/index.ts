@@ -273,7 +273,8 @@ const translation = {
         "Hide": "Masquer",
         "Show": "Afficher",
         "HideAll": "Masquer tout",
-        "Hidden": "Masqué"
+        "Hidden": "Masqué",
+        "InvalidDate": "Date invalide: ",
     },
     "Screens": {
         "Splash": "Page de garde",

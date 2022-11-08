@@ -286,7 +286,8 @@ const translation = {
     "Hide": "Hide",
     "Show": "Show",
     "HideAll": "Hide all",
-    "Hidden": "Hidden"
+    "Hidden": "Hidden",
+    "InvalidDate": "Invalid Date: "
   },
   "Screens": {
     "Splash": 'Splash',
