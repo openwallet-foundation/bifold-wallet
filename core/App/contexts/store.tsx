@@ -32,6 +32,7 @@ export const defaultState: State = {
     didShowCameraDisclosure: false,
   },
   preferences: {
+    developerModeEnabled: false,
     useBiometry: false,
   },
   credential: {
