@@ -27,6 +27,7 @@ export const initialStateFactory = (): State => {
     },
     preferences: {
       useBiometry: false,
+      developerModeEnabled: false,
     },
     credential: {
       revoked: new Set(),
