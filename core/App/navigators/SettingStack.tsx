@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import Developer from '../screens/Developer'
 import Language from '../screens/Language'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
@@ -32,6 +33,7 @@ const SettingStack: React.FC = () => {
       <Stack.Screen name={Screens.RecreatePin} component={PinRecreate} options={{ title: t('Screens.ChangePin') }} />
       <Stack.Screen name={Screens.CreatePin} component={PinCreate} options={{ title: t('Screens.ChangePin') }} />
       <Stack.Screen name={Screens.Terms} component={terms} options={{ title: t('Screens.Terms') }} />
+      <Stack.Screen name={Screens.Developer} component={Developer} options={{ title: t('Screens.Developer') }} />
       <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>
         {(props) => (
           <Onboarding

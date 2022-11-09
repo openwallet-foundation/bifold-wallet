@@ -260,7 +260,8 @@ const translation = {
         "AboutApp": "À propos de l'application",
         "Language": "Langue",
         "Build": "Build",
-        "WhatAreContacts": "What are Contacts? (FR)"
+        "WhatAreContacts": "What are Contacts? (FR)",
+        "Developer": "Developer (FR)"
     },
     "TabStack": {
         "Home": "Accueil",
@@ -302,6 +303,7 @@ const translation = {
         "Decline": "Refuser",
         "ContactDetails": "Informations du contact",
         "Biometry": "Biometrics (FR)",
+        "Developer": "Developer (FR)",
         "ChangePin": "Change PIN (FR)"
     },
     "Loading": {

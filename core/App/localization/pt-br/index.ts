@@ -257,7 +257,8 @@ const translation = {
     "AppSettings": "App Settings (PT-BR)",
     "AboutApp": "Sobre o App",
     "Language": "Idioma",
-    "WhatAreContacts": "What are Contacts? (PT-BR)"
+    "WhatAreContacts": "What are Contacts? (PT-BR)",
+    "Developer": "Developer (PT-BR)"
   },
   "TabStack": {
     "Home": "Home",
@@ -299,7 +300,8 @@ const translation = {
     "Decline": "Recusar",
     "ContactDetails": 'Detalhes do Contato',
     "Biometry": "Biometria",
-    "ChangePin": "Change PIN (FR)"
+    "Developer": "Developer (BR)",
+    "ChangePin": "Change PIN (BR)"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
