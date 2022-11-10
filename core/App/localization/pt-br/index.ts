@@ -28,9 +28,9 @@ const translation = {
     "GetStarted": "Iniciar",
     "Dismiss": "Dispensar",
     "ShowDetails": "Mostrar Detalhes",
-    "Biometrics": "Biometrics",
-    "On" : "On",
-    "Off": "Off",
+    "Biometrics": "Biometria",
+    "On" : "Ligado",
+    "Off": "Desligado",
   },
   "Language": {
     "English": "Inglês",
@@ -98,15 +98,15 @@ const translation = {
     "PINDisclaimer": "Se você o esquecer, você precisará redefinir sua carteira e readicionar seus cards.",
     "Show": "Mostrar",
     "Hide": "Esconder",
-    "ChangePIN": "Change PIN",
-    "Continue": "Continue",
-    "EnterYourCurrentPIN": "Enter your current PIN"
+    "ChangePIN": "Alterar PIN",
+    "Continue": "Continuar",
+    "EnterYourCurrentPIN": "Digite seu PIN atual."
   },
   "PinEnter": {
     "EnterPIN": "Digitar PIN",
-    "Unlock":"Unlock",
-    "Or":"Or",
-    "BiometricsUnlock": "Unlock with biometrics",
+    "Unlock":"Destravar",
+    "Or":"Ou",
+    "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
     "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira."
@@ -254,11 +254,11 @@ const translation = {
   "Settings": {
     "Version": "Versão",
     "VersionString": "0.0.0-0",
-    "AppSettings": "App Settings (PT-BR)",
+    "AppSettings": "Configurações do Aplicativo",
     "AboutApp": "Sobre o App",
     "Language": "Idioma",
-    "WhatAreContacts": "What are Contacts? (PT-BR)",
-    "Developer": "Developer (PT-BR)"
+    "WhatAreContacts": "O que são Contatos?",
+    "Developer": "Desenvolvedor"
   },
   "TabStack": {
     "Home": "Home",
@@ -300,8 +300,8 @@ const translation = {
     "Decline": "Recusar",
     "ContactDetails": 'Detalhes do Contato',
     "Biometry": "Biometria",
-    "Developer": "Developer (BR)",
-    "ChangePin": "Change PIN (BR)"
+    "Developer": "Desenvolvedor",
+    "ChangePin": "Alterar PIN"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
