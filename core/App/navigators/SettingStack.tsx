@@ -20,7 +20,7 @@ const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const { pages, terms } = useConfiguration()
+  const { pages, terms, developer } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
@@ -33,7 +33,7 @@ const SettingStack: React.FC = () => {
       <Stack.Screen name={Screens.RecreatePin} component={PinRecreate} options={{ title: t('Screens.ChangePin') }} />
       <Stack.Screen name={Screens.CreatePin} component={PinCreate} options={{ title: t('Screens.ChangePin') }} />
       <Stack.Screen name={Screens.Terms} component={terms} options={{ title: t('Screens.Terms') }} />
-      <Stack.Screen name={Screens.Developer} component={Developer} options={{ title: t('Screens.Developer') }} />
+      <Stack.Screen name={Screens.Developer} component={developer} options={{ title: t('Screens.Developer') }} />
       <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>
         {(props) => (
           <Onboarding
