@@ -23,6 +23,7 @@ import { NetworkProvider } from './contexts/network'
 import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
+import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
@@ -79,6 +80,7 @@ export {
   NetInfo,
   OnboardingPages,
   Splash,
+  Developer,
   Terms,
   HomeContentView,
   UseBiometry,

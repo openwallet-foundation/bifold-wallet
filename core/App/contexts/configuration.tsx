@@ -11,6 +11,7 @@ export interface ConfigurationContext {
   splash: React.FC
   terms: React.FC
   homeContentView: React.FC
+  developer: React.FC
   OCABundle: OCABundleResolver
   useBiometry: React.FC
   record: React.FC<RecordProps>
