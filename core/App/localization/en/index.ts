@@ -85,6 +85,26 @@ const translation = {
       'The camera is used to scan QR Codes for immediate on-device processing. No information about the images is stored, used for analytics, or shared.',
   },
   PinCreate: {
+    Message: {
+      CrossPatternValidation: 'A pattern of cross was detected in your PIN. Please try again.',
+      OddOrEvenSequenceValidation: 'An odd or even sequence was detected in your PIN. Please try again.',
+      ConsecutiveSameNumbersTwoTimesValidation: 'Repeating two numbers in your PIN is not allowed.Please try again.',
+      ConsecutiveTwoNumberRepetitionValidation:
+        'A repeating 2 digits sequence was detected in your PIN. Please try again.',
+      ConsecutiveSameNumbersThreeTimesValidation:
+        'Repeating three numbers in your PIN is not allowed.Please try again.',
+      SeriesOfThreeNumbersValidation: 'A series was detected in your PIN. Please try again.',
+      PinOnlyContain6NumbersValidation: 'Your PIN needs to be 6 digits long. Please try again.',
+    },
+    Helper: {
+      CrossPatternValidation: 'Does not contain a pattern of cross',
+      OddOrEvenSequenceValidation: 'Does not contain an odd or even sequence',
+      ConsecutiveSameNumbersTwoTimesValidation: 'Does not contain two same consecutive numbers',
+      ConsecutiveTwoNumberRepetitionValidation: 'Does not contain repeating 2 digits sequence',
+      ConsecutiveSameNumbersThreeTimesValidation: 'Does not contain three same consecutive numbers',
+      SeriesOfThreeNumbersValidation: 'Does not contain a series of three numbers',
+      PinOnlyContain6NumbersValidation: 'Must contain 6 numbers',
+    },
     UserAuthenticationPIN: 'User authentication PIN',
     PINTooShort: 'PIN is too short',
     InvalidPIN: 'Invalid PIN',

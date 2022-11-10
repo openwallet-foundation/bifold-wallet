@@ -74,6 +74,28 @@ const translation = {
     Attestation: "J'ai lu, je comprends et j'accepte les conditions.",
   },
   PinCreate: {
+    Message: {
+      CrossPatternValidation: 'Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.',
+      OddOrEvenSequenceValidation:
+        'Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
+      ConsecutiveSameNumbersTwoTimesValidation:
+        'Répétition de deux chiffres dans votre NIP. Veuillez saisir un NIP différent.',
+      ConsecutiveTwoNumberRepetitionValidation:
+        'Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
+      ConsecutiveSameNumbersThreeTimesValidation:
+        'Répétition de trois chiffres dans votre NIP. Veuillez saisir un NIP différent',
+      SeriesOfThreeNumbersValidation: 'Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
+      PinOnlyContain6NumbersValidation: 'Votre NIP doit contenir 6 chiffres. Veuillez saisir un NIP différent.',
+    },
+    Helper: {
+      CrossPatternValidation: 'Ne doit pas contenir un patron de croix.',
+      OddOrEvenSequenceValidation: 'Ne doit pas contenir une suite paire ou impaire',
+      ConsecutiveSameNumbersTwoTimesValidation: 'Ne doit pas contenir de répétition de deux chiffres ou plus',
+      ConsecutiveTwoNumberRepetitionValidation: 'Ne doit pas contenir deux chiffres qui se répètent',
+      ConsecutiveSameNumbersThreeTimesValidation: 'Ne doit pas contenir de répétition (111).',
+      SeriesOfThreeNumbersValidation: 'Ne doit pas contenir de suite (123).',
+      PinOnlyContain6NumbersValidation: 'Doit contenir 6 chiffres',
+    },
     UserAuthenticationPIN: "NIP d'authentification de l'utilisateur",
     PINTooShort: 'NIP trop court',
     InvalidPIN: 'NIP invalide',
@@ -84,7 +106,7 @@ const translation = {
     YouNeedToCreateA6DigitPIN: 'Vous devez créer un NIP à 6 chiffres',
     PleaseReenterYourPIN: 'Veuillez saisir à nouveau votre NIP',
     Repeating3NumbersInYourPIN: 'Répétition de trois chiffres dans votre NIP. Veuillez saisir un NIP différent.',
-    "Repeating2NumbersInYourPIN": 'Répétition de deux chiffres dans votre NIP. Veuillez saisir un NIP différent.',
+    Repeating2NumbersInYourPIN: 'Répétition de deux chiffres dans votre NIP. Veuillez saisir un NIP différent.',
     SeriesDetectedInYourPIN: 'Une séquence a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
     OddOrEvenSequenceDetectedInYourPIN:
       'Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.',

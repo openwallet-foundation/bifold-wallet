@@ -17,11 +17,9 @@ export enum PinSecurityLevel {
   Level4 = 4,
   Level5 = 5,
   Level6 = 6,
-  Level7 = 7,
 }
 
 export interface PinSecurityParams {
   level: PinSecurityLevel
-  minLength: number
-  maxLength: number
+  displayHelper: boolean
 }
