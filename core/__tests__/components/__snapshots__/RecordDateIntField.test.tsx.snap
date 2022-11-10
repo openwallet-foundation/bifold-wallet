@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Record DateInt Field Component Invalid dateInt render field value as is 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#FFFFFF",
+      "fontSize": 18,
+      "fontWeight": "normal",
+    }
+  }
+  testID="com.ariesbifold:id/AttributeValue"
+>
+  Record.InvalidDateinvalid date
+</Text>
+`;
+
+exports[`Valid dateInt render field value in format 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#FFFFFF",
+      "fontSize": 18,
+      "fontWeight": "normal",
+    }
+  }
+  testID="com.ariesbifold:id/AttributeValue"
+>
+  Jan 1, 2000
+</Text>
+`;
