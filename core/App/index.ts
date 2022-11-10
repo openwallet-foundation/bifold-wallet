@@ -32,8 +32,9 @@ import * as types from './types'
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources } from './localization'
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
-export { StoreProvider, StoreContext, useStore } from './contexts/store'
-export { DispatchAction } from './contexts/reducers/store'
+export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
+export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
+
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { ColorPallet } from './theme'
 export { theme } from './theme'
@@ -47,14 +48,18 @@ export { BifoldError } from './types/error'
 
 export type { Theme } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
-export type { Onboarding as OnboardingState } from './types/state'
-export type { Privacy as PrivacyState } from './types/state'
-export type { Preferences as PreferencesState } from './types/state'
-export type { LoginAttempt as LoginAttemptState } from './types/state'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
+export type { ReducerAction } from './contexts/reducers/store'
+export type {
+  State,
+  Privacy as PrivacyState,
+  Onboarding as OnboardingState,
+  LoginAttempt as LoginAttemptState,
+  Preferences as PreferencesState,
+} from './types/state'
 
 export {
   LoadingIndicator,
