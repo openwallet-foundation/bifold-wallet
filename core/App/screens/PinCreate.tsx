@@ -17,7 +17,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
-import { pinOneCreationValidations, PinOneValidationsType } from '../utils/pinOneCreationValidation'
+import { pinCreationValidations, PinValidationsType } from '../utils/pinCreationValidation'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
@@ -40,7 +40,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     title: '',
     message: '',
   })
-  const [pinOneValidations, setPinOneValidations] = useState<PinOneValidationsType[]>([])
+  const [pinOneValidations, setPinOneValidations] = useState<PinValidationsType[]>([])
 
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
@@ -115,7 +115,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
           label={t('PinCreate.EnterPINTitle')}
           onPinChanged={(p: string) => {
             setPin(p)
-            setPinOneValidations(pinOneCreationValidations(p, pinSecurity.level))
+            setPinOneValidations(pinCreationValidations(p, pinSecurity.level))
           }}
           testID={testIdWithKey('EnterPIN')}
           accessibilityLabel={t('PinCreate.EnterPIN')}
@@ -123,7 +123,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         />
         {pinSecurity.displayHelper && (
           <View style={{ marginBottom: 16 }}>
-            {pinOneValidations.map((validation, index) => {
+            {pinOneValidations.map((validation) => {
               return (
                 <View style={{ flexDirection: 'row' }}>
                   {validation.isInvalid ? (

@@ -2,7 +2,6 @@ import defaultIndyLedgers from '../configs/ledgers/indy'
 
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
-import { minPINLength } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import OnboardingPages from './screens/OnboardingPages'
 import Splash from './screens/Splash'

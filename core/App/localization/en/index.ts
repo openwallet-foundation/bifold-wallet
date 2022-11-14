@@ -88,20 +88,19 @@ const translation = {
     Message: {
       CrossPatternValidation: 'A pattern of cross was detected in your PIN. Please try again.',
       OddOrEvenSequenceValidation: 'An odd or even sequence was detected in your PIN. Please try again.',
-      ConsecutiveSameNumbersTwoTimesValidation: 'Repeating two numbers in your PIN is not allowed.Please try again.',
-      ConsecutiveTwoNumberRepetitionValidation:
+      SameNumberTwoTimesConsecutiveValidation: 'Repeating two numbers in your PIN is not allowed.Please try again.',
+      ConsecutiveTwoNumbersRepetitionValidation:
         'A repeating 2 digits sequence was detected in your PIN. Please try again.',
-      ConsecutiveSameNumbersThreeTimesValidation:
-        'Repeating three numbers in your PIN is not allowed.Please try again.',
+      SameNumberThreeTimesConsecutiveValidation: 'Repeating three numbers in your PIN is not allowed.Please try again.',
       SeriesOfThreeNumbersValidation: 'A series was detected in your PIN. Please try again.',
       PinOnlyContain6NumbersValidation: 'Your PIN needs to be 6 digits long. Please try again.',
     },
     Helper: {
       CrossPatternValidation: 'Does not contain a pattern of cross',
       OddOrEvenSequenceValidation: 'Does not contain an odd or even sequence',
-      ConsecutiveSameNumbersTwoTimesValidation: 'Does not contain two same consecutive numbers',
-      ConsecutiveTwoNumberRepetitionValidation: 'Does not contain repeating 2 digits sequence',
-      ConsecutiveSameNumbersThreeTimesValidation: 'Does not contain three same consecutive numbers',
+      SameNumberTwoTimesConsecutiveValidation: 'Does not contain two same consecutive numbers',
+      ConsecutiveTwoNumbersRepetitionValidation: 'Does not contain repeating 2 digits sequence',
+      SameNumberThreeTimesConsecutiveValidation: 'Does not contain three same consecutive numbers',
       SeriesOfThreeNumbersValidation: 'Does not contain a series of three numbers',
       PinOnlyContain6NumbersValidation: 'Must contain 6 numbers',
     },
