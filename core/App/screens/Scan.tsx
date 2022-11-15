@@ -14,7 +14,7 @@ import { connectFromInvitation, receiveMessageFromUrlRedirect } from '../utils/h
 
 import CameraDisclosure from './CameraDisclosure'
 
-type ScanProps = StackScreenProps<ConnectStackParams>
+export type ScanProps = StackScreenProps<ConnectStackParams>
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
