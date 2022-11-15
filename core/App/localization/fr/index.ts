@@ -90,7 +90,7 @@ const translation = {
             "CrossPatternValidation": 'Ne doit pas contenir un patron de croix.',
             "OddOrEvenSequenceValidation": 'Ne doit pas contenir une suite paire ou impaire',
             "SameNumberTwoTimesConsecutiveValidation": 'Ne doit pas contenir de répétition de deux chiffres ou plus',
-            "ConsecutiveTwoNumbersRepetitionValidation": 'Ne doit pas contenir deux chiffres qui se répètent',
+            "ConsecutiveTwoNumbersRepetitionValidation": 'Ne doit pas contenir deux chiffres qui se répètent (1818)',
             "SameNumberThreeTimesConsecutiveValidation": 'Ne doit pas contenir de répétition (111).',
             "SeriesOfThreeNumbersValidation": 'Ne doit pas contenir de suite (123).',
             "PinOnlyContain6NumbersValidation": 'Doit contenir 6 chiffres',
