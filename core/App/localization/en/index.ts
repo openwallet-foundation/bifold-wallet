@@ -278,7 +278,8 @@ const translation = {
     "Build": "Build",
     "WhatAreContacts": "What are Contacts?",
     "Help": "Help",
-    "MoreInformation": "More information"
+    "MoreInformation": "More information",
+    "Developer": "Developer"
   },
   "TabStack": {
     "Home": "Home",
@@ -298,7 +299,8 @@ const translation = {
     "Hide": "Hide",
     "Show": "Show",
     "HideAll": "Hide all",
-    "Hidden": "Hidden"
+    "Hidden": "Hidden",
+    "InvalidDate": "Invalid Date: "
   },
   "Screens": {
     "Splash": 'Splash',
@@ -320,6 +322,7 @@ const translation = {
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
     "Biometry": "Biometrics",
+    "Developer": "Developer",
     "ChangePin": "Change PIN",
     "CommonDecline": "Decline",
   },
