@@ -78,8 +78,6 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const confirmEntry = async (pinX: string, pinY: string) => {
     for (const validation of pinOneValidations) {
       if (validation.isInvalid) {
-        // eslint-disable-next-line no-console
-        console.log(validation)
         setModalState({
           visible: true,
           title: t('PinCreate.InvalidPIN'),

@@ -75,11 +75,6 @@ export function firstValidCredential(
   return first
 }
 
-export const isRedirection = (url: string): boolean => {
-  const queryParams = parseUrl(url).query
-  return !(queryParams['c_i'] || queryParams['d_m'])
-}
-
 export const getOobDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
   const queryParams = parseUrl(url).query
   const b64Message = queryParams['d_m'] ?? queryParams['c_i']
@@ -196,7 +191,7 @@ export const receiveMessageFromDeeplink = async (url: string, agent: Agent | und
  * @returns a connection record from parsing and receiving the invitation
  */
 export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
-  const invitation = await agent?.oob.parseInvitation(uri)
+  const invitation = await agent?.oob.parseInvitationShortUrl(uri)
   if (!invitation) {
     throw new Error('Could not parse invitation from URL')
   }

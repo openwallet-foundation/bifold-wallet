@@ -5,7 +5,7 @@ const sameNumberTwoTimesConsecutive = new RegExp(/(\d)\1{1,}/) // 2 or more cons
 const sameNumberThreeTimesConsecutive = new RegExp(/(\d)\1{2,}/) // 3 or more consecutive digits ✔️
 const consecutiveSeriesOfThree = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/) // 3 or more consecutive digits ✔️
 const evenNumberSeries = new RegExp('(13579)') // ✔️
-const OddNumberSeries = new RegExp('(02468)') // ✔️
+const oddNumberSeries = new RegExp('(02468)') // ✔️
 const consecutiveTwoNumberRepetition = new RegExp(/([0-9][0-9])\1{1,}/) // ex: 1515 ✔️
 const isNumber = new RegExp('^[0-9]+$') // ✔️
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951'] // ✔️
@@ -32,7 +32,7 @@ export const pinCreationValidations = (pin: string, pinSecurityLevel: number) =>
   }
   if (pinSecurityLevel >= PinSecurityLevel.Level5) {
     pinValidations.push({
-      isInvalid: evenNumberSeries.test(pin) || OddNumberSeries.test(pin),
+      isInvalid: evenNumberSeries.test(pin) || oddNumberSeries.test(pin),
       errorName: 'OddOrEvenSequenceValidation',
     } as PinValidationsType)
   }
