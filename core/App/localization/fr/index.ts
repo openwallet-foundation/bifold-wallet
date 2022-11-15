@@ -73,6 +73,11 @@ const translation = {
     IAgree: "J'accepte",
     Attestation: "J'ai lu, je comprends et j'accepte les conditions.",
   },
+  PrivacyPolicy: {
+    Title: 'Politique de confidentialité',
+    CameraDisclosure:
+      "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
+  },
   PinCreate: {
     UserAuthenticationPIN: "NIP d'authentification de l'utilisateur",
     PINTooShort: 'NIP trop court',
