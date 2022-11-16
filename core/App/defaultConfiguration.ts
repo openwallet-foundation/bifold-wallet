@@ -5,6 +5,7 @@ import HomeContentView from './components/views/HomeContentView'
 import { ConfigurationContext } from './contexts/configuration'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
+import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
@@ -18,6 +19,7 @@ export const defaultConfiguration: ConfigurationContext = {
   developer: Developer,
   homeContentView: HomeContentView,
   OCABundle: new oca.DefaultOCABundleResolver().loadDefaultBundles(),
+  scan: Scan,
   useBiometry: UseBiometry,
   record: Record,
   pinSecurity: { level: PinSecurityLevel.Level1, displayHelper: false },
