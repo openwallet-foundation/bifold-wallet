@@ -131,7 +131,7 @@ describe('PIN creation validations', () => {
   test('PIN security level 4 with same number two times consecutive should return SameNumberTwoTimesConsecutiveValidation to invalid', async () => {
     const pinContainingSameNumbersTwoTimesConsecutive = '118305'
     const pinValidations = pinCreationValidations(pinContainingSameNumbersTwoTimesConsecutive, PinSecurityLevel.Level4)
-    console.log(pinValidations)
+
     for (const pinValidation of pinValidations) {
       if (pinValidation.errorName === 'SameNumberTwoTimesConsecutiveValidation') {
         expect(pinValidation.isInvalid).toBe(true)
@@ -162,7 +162,7 @@ describe('PIN creation validations', () => {
   test('PIN security level 5 with an even series should return OddOrEvenSequenceValidation to invalid', async () => {
     const pinContainingEvenSequenceValidation = '902468'
     const pinValidations = pinCreationValidations(pinContainingEvenSequenceValidation, PinSecurityLevel.Level5)
-    console.log(pinValidations)
+
     for (const pinValidation of pinValidations) {
       if (pinValidation.errorName === 'OddOrEvenSequenceValidation') {
         expect(pinValidation.isInvalid).toBe(true)
@@ -174,7 +174,7 @@ describe('PIN creation validations', () => {
   test('PIN security level 5 with an odd series should return OddOrEvenSequenceValidation to invalid', async () => {
     const pinContainingOddSequenceValidation = '135794'
     const pinValidations = pinCreationValidations(pinContainingOddSequenceValidation, PinSecurityLevel.Level5)
-    console.log(pinValidations)
+
     for (const pinValidation of pinValidations) {
       if (pinValidation.errorName === 'OddOrEvenSequenceValidation') {
         expect(pinValidation.isInvalid).toBe(true)
@@ -205,7 +205,7 @@ describe('PIN creation validations', () => {
   test('PIN security level 6 with an cross pattern should return CrossPatternValidation to invalid', async () => {
     const pinContainingCrossPattern = '753951'
     const pinValidations = pinCreationValidations(pinContainingCrossPattern, PinSecurityLevel.Level6)
-    console.log(pinValidations)
+
     for (const pinValidation of pinValidations) {
       if (pinValidation.errorName === 'CrossPatternValidation') {
         expect(pinValidation.isInvalid).toBe(true)
