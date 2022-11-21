@@ -34,7 +34,11 @@ const DeliveryStack: React.FC = () => {
       }}
     >
       <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
-      <Stack.Screen name={Screens.ProofRequest} component={ProofRequest} />
+      <Stack.Screen
+        name={Screens.ProofRequest}
+        component={ProofRequest}
+        options={{ title: t('Screens.ProofRequest') }}
+      />
       <Stack.Screen
         name={Screens.ProofRequestAttributeDetails}
         component={ProofRequestAttributeDetails}
@@ -53,8 +57,16 @@ const DeliveryStack: React.FC = () => {
           ),
         })}
       />
-      <Stack.Screen name={Screens.CredentialOffer} component={CredentialOffer} />
-      <Stack.Screen name={Screens.CommonDecline} component={CommonDecline} />
+      <Stack.Screen
+        name={Screens.CredentialOffer}
+        component={CredentialOffer}
+        options={{ title: t('Screens.CredentialOffer') }}
+      />
+      <Stack.Screen
+        name={Screens.CommonDecline}
+        component={CommonDecline}
+        options={{ title: t('Screens.CommonDecline') }}
+      />
     </Stack.Navigator>
   )
 }

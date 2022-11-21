@@ -141,6 +141,7 @@ const translation = {
   },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
+    "TypeHere": "Type Message Here",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -323,6 +324,7 @@ const translation = {
     "Biometry": "Biometrics",
     "Developer": "Developer",
     "ChangePin": "Change PIN",
+    "CommonDecline": "Decline",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
