@@ -121,9 +121,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         />
         {pinSecurity.displayHelper && (
           <View style={{ marginBottom: 16 }}>
-            {pinOneValidations.map((validation) => {
+            {pinOneValidations.map((validation, index) => {
               return (
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row' }} key={index}>
                   {validation.isInvalid ? (
                     <Icon name="clear" size={24} color={ColorPallet.notification.errorIcon} />
                   ) : (
