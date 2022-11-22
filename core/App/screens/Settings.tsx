@@ -1,12 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SectionList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SectionList, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Locales } from '../localization'
@@ -17,9 +18,13 @@ import { testIdWithKey } from '../utils/testable'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
+const touchCountToEnableBiometrics = 9
+
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
-  const [store] = useStore()
+  const [store, dispatch] = useStore()
+  const developerOptionCount = useRef(0)
+  const [developerModeTriggerDisabled, setDeveloperModeTriggerDisabled] = useState<boolean>(false)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const { settings } = useConfiguration()
   const languages = [
@@ -69,6 +74,20 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   })
 
   const currentLanguage = languages.find((l) => l.id === i18n.language)?.value
+
+  const incrementDeveloperMenuCounter = () => {
+    if (developerOptionCount.current >= touchCountToEnableBiometrics) {
+      setDeveloperModeTriggerDisabled(true)
+      dispatch({
+        type: DispatchAction.ENABLE_DEVELOPER_MODE,
+        payload: [true],
+      })
+
+      return
+    }
+
+    developerOptionCount.current = developerOptionCount.current + 1
+  }
 
   const settingsSections: SettingSection[] = [
     {
@@ -127,6 +146,21 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     ...(settings || []),
   ]
 
+  if (store.preferences.developerModeEnabled) {
+    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
+    if (section) {
+      section.data = [
+        ...section.data,
+        {
+          title: t('Settings.Developer'),
+          accessibilityLabel: t('Settings.Developer'),
+          testID: testIdWithKey('Developer'),
+          onPress: () => navigation.navigate(Screens.Developer),
+        },
+      ]
+    }
+  }
+
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
     <View style={[styles.section, styles.sectionHeader]}>
       <Icon name={icon} size={24} style={{ marginRight: 10, color: TextTheme.normal.color }} />
@@ -166,7 +200,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               testID={testIdWithKey(title)}
               value={value}
               onPress={onPress}
-            ></SectionRow>
+            />
           )}
           renderSectionHeader={({
             section: {
@@ -181,10 +215,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
           ListFooterComponent={() => (
             <View style={styles.footer}>
-              <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
-                {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
-              </Text>
-              <Assets.svg.logo {...styles.logo} />
+              <TouchableWithoutFeedback onPress={incrementDeveloperMenuCounter} disabled={developerModeTriggerDisabled}>
+                <View>
+                  <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
+                    {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
+                  </Text>
+                  <Assets.svg.logo {...styles.logo} />
+                </View>
+              </TouchableWithoutFeedback>
             </View>
           )}
           sections={settingsSections}
