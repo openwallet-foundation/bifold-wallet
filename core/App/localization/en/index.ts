@@ -141,6 +141,7 @@ const translation = {
   },
   "Contacts": {
     "EmptyList": "Your wallet is empty. Your connected contacts will be added here.",
+    "TypeHere": "Type Message Here",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -277,7 +278,8 @@ const translation = {
     "Build": "Build",
     "WhatAreContacts": "What are Contacts?",
     "Help": "Help",
-    "MoreInformation": "More information"
+    "MoreInformation": "More information",
+    "Developer": "Developer"
   },
   "TabStack": {
     "Home": "Home",
@@ -297,7 +299,8 @@ const translation = {
     "Hide": "Hide",
     "Show": "Show",
     "HideAll": "Hide all",
-    "Hidden": "Hidden"
+    "Hidden": "Hidden",
+    "InvalidDate": "Invalid Date: "
   },
   "Screens": {
     "Splash": 'Splash',
@@ -319,7 +322,9 @@ const translation = {
     "Decline": "Decline",
     "ContactDetails": 'Contact Details',
     "Biometry": "Biometrics",
+    "Developer": "Developer",
     "ChangePin": "Change PIN",
+    "CommonDecline": "Decline",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

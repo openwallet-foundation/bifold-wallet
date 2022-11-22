@@ -28,10 +28,10 @@ const translation = {
         "GetStarted": "Commencer",
         "Dismiss": "Rejeter",
         "ShowDetails": "Afficher les détails",
-        "TryAgain": "Try Again",
-        "Biometrics": "Biometrics",
-        "On": "On",
-        "Off": "Off",
+        "TryAgain": "Réessayer",
+        "Biometrics": "Biométrie",
+        "On": 'Activé',
+        "Off": 'Désactivé',
     },
     "Language": {
         "English": "Anglais",
@@ -72,6 +72,11 @@ const translation = {
         "IAgree": "J'accepte",
         "Attestation": "J'ai lu, je comprends et j'accepte les conditions."
     },
+    "PrivacyPolicy": {
+    "Title": 'Politique de confidentialité',
+    "CameraDisclosure":
+      "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
+  },
     "PinCreate": {
         "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
         "PINTooShort": "NIP trop court",
@@ -91,43 +96,43 @@ const translation = {
         "PINDisclaimer": "Si vous l'oubliez, vous devrez configurer à nouveau votre portefeuille et ajouter à nouveau vos cartes.",
         "Show": "Afficher",
         "Hide": "Masquer",
-        "ChangePIN": "Change PIN (FR)",
-        "Continue": "Continue (FR)",
-        "EnterYourCurrentPIN": "Enter your current PIN (FR)"
+        "ChangePIN": "Changer votre NIP",
+        "Continue": "Continuer",
+        "EnterYourCurrentPIN": "Entrez votre NIP actuel"
     },
     "PinEnter": {
         "EnterPIN": "Veuillez saisir votre NIP",
-        "Unlock": "Unlock",
-        "Or": "Or",
-        "BiometricsUnlock": "Unlock with biometrics",
+        "Unlock": "Déverrouiller",
+        "Or": "Ou",
+        "BiometricsUnlock": "Déverrouiller avec la biométrie",
         "IncorrectPIN": "NIP erroné",
-        "RepeatPIN": "Please try your PIN again.",
+        "RepeatPIN": "Essayez votre NIP à nouveau",
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
-        "LoggedOut": "You're logged out",
-        "LoggedOutDescription": "To protect your information, you're logged out of your wallet if you have not used it for 5 minutes.",
-        "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
-        "BiometricsChangedEnterPIN": "Please enter your wallet PIN.",
-        "AttemptLockoutWarning": "Note: for your security, entering another incorrect PIN will temporarily lock the wallet."
+        "LoggedOut": "Vous avez été déconnecté du portefeuille.",
+        "LoggedOutDescription": "Pour protéger vos informations, vous êtes déconnecté de votre portefeuille si vous ne l'avez pas utilisé pendant 5 minutes.",
+        "BiometricsChanged": "Le déverrouillage avec la biométrie a été désactivé, car les données biométriques de votre appareil ont changé.",
+        "BiometricsChangedEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
+        "AttemptLockoutWarning": "Note: pour votre sécurité, la saisie d'un autre NIP incorrect verrouillera temporairement le portefeuille."
     },
     "AttemptLockout": {
-        "Title": "Your wallet is temporarily locked",
-        "Description": "You have had too many unsuccessful PIN attempts.",
-        "TryAgain": "You can try again in:",
-        "Hours": "hours",
+        "Title": "Votre portefeuille est temporairement verrouillé",
+        "Description": "Vous avez eu trop de tentatives infructueuses.",
+        "TryAgain": "Vous pouvez réessayer dans: ",
+        "Hours": "heures",
         "Minutes": "minutes",
-        "Seconds": "seconds",
+        "Seconds": "secondes",
     },
     "Biometry": {
-        "Toggle": "Toggle Biometrics",
-        "EnabledText1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
-        "EnabledText2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
-        "NotEnabledText1": "Biometrics is not currently setup on this device and therefore cannot be enabled.",
-        "NotEnabledText2": "If you wish to enable this feature turn biometrics on in the device settings and then return to this screen.",
-        "Warning": "Ensure only you have access to your wallet.",
-        "UseToUnlock": "Use biometrics to unlock wallet?",
-        "UnlockPromptTitle": "Wallet Unlock",
-        "UnlockPromptDescription": "Use biometrics to unlock your wallet"
+        "Toggle": "Basculer la biométrie",
+        "EnabledText1": "Déverrouiller votre portefeuille avec la biométrie de votre appareil au lieu d’utiliser le NIP du portefeuille.",
+        "EnabledText2": "Toute personne qui a des données biométriques enregistrées sur cet appareil pourra déverrouiller votre portefeuille et avoir accès à vos attestations.",
+        "NotEnabledText1": "La biométrie n'est pas actuellement configurée sur cet appareil et ne peut donc pas être activée.",
+        "NotEnabledText2": "Si vous souhaitez activer cette fonctionnalité, activez la biométrie dans les paramètres de l'appareil, puis revenez à cet écran.",
+        "Warning": "\n\nAssurez-vous que vous seul avez accès à votre portefeuille.",
+        "UseToUnlock": "Utiliser la biométrie pour déverrouiller le portefeuille ?",
+        "UnlockPromptTitle": "Déverrouillage du portefeuille",
+        "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille"
     },
     "Contacts": {
         "EmptyList": "Votre portefeuille est vide. Vos contacts connectés seront ajoutés ici.",
@@ -194,18 +199,18 @@ const translation = {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre."
     },
     "ConnectionAlert": {
-        "AddedContacts": "Added to Contacts",
-        "WhatAreContacts": "What are Contacts?",
-        "NotificationBodyUpper": "You can find ",
-        "NotificationBodyLower": " in your Contacts. Manage your Contacts in Settings",
-        "PopupIntro": "Adding organizations as a contact will allow you to:",
-        "PopupPoint1": "Get updates to credentials issued by this organization",
-        "PopupPoint2": "Get offered new credentials",
-        "PopupPoint3": "Fast-track proof requests",
-        "SettingsLink": "Settings",
-        "SettingsInstruction": "You can always remove contacts at anytime in ",
-        "PrivacyMessage": "Use of your credentials is never shared with your contacts.",
-        "PopupExit": "Got it"
+        "AddedContacts": "Ajouté aux contacts",
+        "WhatAreContacts": "Que sont les contacts ?",
+        "NotificationBodyUpper": "Vous pouvez trouver ",
+        "NotificationBodyLower": " dans vos contacts. Gérez vos contacts dans les paramètres",
+        "PopupIntro": "L'ajout d'organisations en tant que contact vous permettra de: ",
+        "PopupPoint1": "Obtenir des mises à jour des informations d'identification émises par cette organisation",
+        "PopupPoint2": "Obtenir de nouvelles informations d'identification",
+        "PopupPoint3": "Demandes de preuves accélérées",
+        "SettingsLink": "Réglages",
+        "SettingsInstruction": "Vous pouvez à tout moment supprimer des contacts dans ",
+        "PrivacyMessage": "L'utilisation de vos informations d'identification n'est jamais partagée avec vos contacts.",
+        "PopupExit": "J'ai compris"
     },
     "CredentialOffer": {
         "CredentialOffer": "Offre de justificatif",
@@ -256,11 +261,12 @@ const translation = {
     "Settings": {
         "Version": "Version",
         "VersionString": "0.0.0-0",
-        "AppSettings": "App Settings (FR)",
+        "AppSettings": "Réglage de l'application",
         "AboutApp": "À propos de l'application",
         "Language": "Langue",
         "Build": "Build",
-        "WhatAreContacts": "What are Contacts? (FR)"
+        "WhatAreContacts": "Qu’est-ce qu’un contact?",
+        "Developer": "Développeur"
     },
     "TabStack": {
         "Home": "Accueil",
@@ -280,7 +286,8 @@ const translation = {
         "Hide": "Masquer",
         "Show": "Afficher",
         "HideAll": "Masquer tout",
-        "Hidden": "Masqué"
+        "Hidden": "Masqué",
+        "InvalidDate": "Date invalide: ",
     },
     "Screens": {
         "Splash": "Page de garde",
@@ -301,8 +308,10 @@ const translation = {
         "Contacts": "Contacts",
         "Decline": "Refuser",
         "ContactDetails": "Informations du contact",
-        "Biometry": "Biometrics (FR)",
-        "ChangePin": "Change PIN (FR)"
+        "Biometry": "Biométrie",
+        "Developer": "Développeur",
+        "ChangePin": "Changer NIP",
+        "CommonDecline": 'Refuser',
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
