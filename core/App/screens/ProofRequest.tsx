@@ -152,10 +152,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }
 
         flatten(Object.values(fields))
-          .filter((credential) => credential.revoked)
-          .forEach((credential) => {
-            dispatch({ type: DispatchAction.CREDENTIAL_REVOKED, payload: [credential] })
-          })
 
         const attributes = processProofAttributes(proof, retrievedCredentials)
         const predicates = processProofPredicates(proof, retrievedCredentials)
