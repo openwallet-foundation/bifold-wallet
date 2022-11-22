@@ -113,7 +113,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
     OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, getCurrentLanguage()).then(
       (fields) =>
-       setFields(fields)
+        setFields(fields)
     )
   }, [credential])
 
@@ -131,11 +131,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const goBackToListCredentials = () => {
     navigation.pop()
     navigation.navigate(Screens.Credentials)
-  }
-
-  const handleDismissRevokedMessagePressed = (credential: CredentialExchangeRecord) => {
-    dispatch({ type: DispatchAction.CREDENTIAL_REVOKED_MESSAGE_DISMISSED, payload: [credential] })
-    setIsRevokedMessageHidden(true)
   }
 
   const handleRemovePressed = () => {
