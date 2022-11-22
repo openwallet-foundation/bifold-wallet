@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import Button, { ButtonType } from '../components/buttons/Button'
+import { Button, ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import AlertModal from '../components/modals/AlertModal'
@@ -12,7 +12,7 @@ import PopupModal from '../components/modals/PopupModal'
 import { attemptLockoutBaseRules, attemptLockoutThresholdRules } from '../constants'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
-import { StoreContext, useStore } from '../contexts/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
@@ -32,7 +32,7 @@ export enum PinEntryUsage {
 const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = PinEntryUsage.WalletUnlock }) => {
   const { t } = useTranslation()
   const { checkPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const [pin, setPin] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
@@ -40,7 +40,6 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
-  const [state] = useContext(StoreContext)
 
   const style = StyleSheet.create({
     container: {
@@ -60,8 +59,8 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [
         {
-          loginAttempts: state.loginAttempt.loginAttempts,
-          lockoutDate: state.loginAttempt.lockoutDate,
+          loginAttempts: store.loginAttempt.loginAttempts,
+          lockoutDate: store.loginAttempt.lockoutDate,
           servedPenalty: false,
         },
       ],
@@ -73,7 +72,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
     dispatch({
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [
-        { loginAttempts: state.loginAttempt.loginAttempts, lockoutDate: Date.now() + penalty, servedPenalty: false },
+        { loginAttempts: store.loginAttempt.loginAttempts, lockoutDate: Date.now() + penalty, servedPenalty: false },
       ],
     })
     navigation.navigate(Screens.AttemptLockout as never)
@@ -115,7 +114,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
   }
 
   useEffect(() => {
-    if (!state.preferences.useBiometry) {
+    if (!store.preferences.useBiometry) {
       return
     }
 
@@ -138,9 +137,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
 
   useEffect(() => {
     // check number of login attempts and determine if app should apply lockout
-    const attempts = state.loginAttempt.loginAttempts
+    const attempts = store.loginAttempt.loginAttempts
     const penalty = getLockoutPenalty(attempts)
-    if (penalty && !state.loginAttempt.servedPenalty) {
+    if (penalty && !store.loginAttempt.servedPenalty) {
       // only apply lockout if user has not served their penalty
       attemptLockout(penalty)
     }
@@ -148,20 +147,20 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
     // display warning if we are one away from a lockout
     const displayWarning = !!getLockoutPenalty(attempts + 1)
     setDisplayLockoutWarning(displayWarning)
-  }, [state.loginAttempt.loginAttempts])
+  }, [store.loginAttempt.loginAttempts])
 
   const unlockWalletWithPIN = async (pin: string) => {
     try {
       setContinueEnabled(false)
       const result = await checkPIN(pin)
 
-      if (state.loginAttempt.servedPenalty) {
+      if (store.loginAttempt.servedPenalty) {
         // once the user starts entering their PIN, unMark them as having served their lockout penalty
         unMarkServedPenalty()
       }
 
       if (!result) {
-        const newAttempt = state.loginAttempt.loginAttempts + 1
+        const newAttempt = store.loginAttempt.loginAttempts + 1
         if (!getLockoutPenalty(newAttempt)) {
           // skip displaying modals if we are going to lockout
           setAlertModalVisible(true)
@@ -282,7 +281,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
           autoFocus={true}
         />
         {alertModalVisible && <AlertModal title={t('PinEnter.IncorrectPIN')} message="" submit={clearAlertModal} />}
-        {state.lockout.displayNotification && (
+        {store.lockout.displayNotification && (
           <PopupModal
             notificationType={InfoBoxType.Info}
             title={t('PinEnter.LoggedOut')}
@@ -315,7 +314,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
         />
       </View>
 
-      {state.preferences.useBiometry && pinEntryUsage === PinEntryUsage.WalletUnlock && (
+      {store.preferences.useBiometry && pinEntryUsage === PinEntryUsage.WalletUnlock && (
         <>
           <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>{t('PinEnter.Or')}</Text>
           <View style={{ margin: 20, marginTop: 10 }}>

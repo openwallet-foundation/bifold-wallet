@@ -15,16 +15,18 @@ import {
   NetInfo,
   defaultConfiguration,
 } from "aries-bifold";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import Toast from "react-native-toast-message";
 
-
 initLanguages(translationResources);
 
 const App = () => {
-  initStoredLanguage();
+  
+  useMemo(() => {
+    initStoredLanguage().then();
+  }, [])
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our

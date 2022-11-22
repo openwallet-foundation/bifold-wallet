@@ -1,4 +1,6 @@
 export const defaultLanguage = 'en'
+export const dateIntFormat = 'YYYYMMDD'
+export const lengthOfhiddenAttributes = 10
 
 // Used to property prefix TestIDs so they can be looked up
 // by on-device automated testing systems like SauceLabs.
