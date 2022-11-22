@@ -1,4 +1,4 @@
-import type { CredentialExchangeRecord, CredentialExchangeRecord as CredentialRecord, ProofRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord as CredentialRecord, ProofRecord } from '@aries-framework/core'
 
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -74,11 +74,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   let title = ''
   let body = ''
 
-  const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
-
   switch (notificationType) {
     case NotificationType.CredentialOffer:
       // eslint-disable-next-line no-case-declarations
+      const { name, version } = parsedSchema(notification as CredentialRecord)
       onPress = () =>
         navigation.getParent()?.navigate(Stacks.NotificationStack, {
           screen: Screens.CredentialOffer,
