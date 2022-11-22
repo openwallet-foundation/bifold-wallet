@@ -5,6 +5,7 @@ import {
   ProofState,
 } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
+import { CredentialMetadata, customMetadata } from '../types/metadata'
 
 interface Notifications {
   total: number
@@ -15,9 +16,8 @@ export const useNotifications = (): Notifications => {
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
   const revoked = useCredentialByState(CredentialState.Done).filter((cred: CredentialRecord) => {
-    if (cred.revocationNotification && !cred.metadata.get('revoked_seen') == true) {
-      return cred
-    }
+    let metadata = cred!.metadata.get(CredentialMetadata.customMetadata) as customMetadata
+    return metadata.revoked_seen
   })
 
   const notifications = [...offers, ...proofs, ...revoked,].sort(
