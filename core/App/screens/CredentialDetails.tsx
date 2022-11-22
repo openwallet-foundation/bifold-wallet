@@ -110,8 +110,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
     if (isRevoked) {
-      const date = new Date(credential.revocationNotification!.revocationDate)
-    setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
+      const date = new Date(credential.revocationNotification?.revocationDate)
+      setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
     }
     OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, getCurrentLanguage()).then(
       (fields) =>
@@ -122,12 +122,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   useEffect(() => {
     if (credential) {
       if (credential.revocationNotification) {
-        credential.metadata.set(CredentialMetadata.customMetadata, {'revoked_seen': true})
+        credential.metadata.set(CredentialMetadata.customMetadata, { 'revoked_seen': true })
         const credService = agent?.credentials.getService('v1')
         credService?.update(credential)
       }
     }
-    
   }, [isRevoked])
 
   const goBackToListCredentials = () => {
