@@ -19,6 +19,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { getCurrentLanguage } from '../localization'
 import { BifoldError } from '../types/error'
+import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { Field } from '../types/record'
 import { getCredentialConnectionLabel } from '../utils/helpers'
@@ -117,11 +118,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [credential])
 
   useEffect(() => {
-    if (credential.revocationNotification) {
-      credential.metadata.set('revoked_seen', true)
-      const credService = agent?.credentials.getService('v1')
-      credService?.update(credential)
+    if (credential) {
+      if (credential.revocationNotification) {
+        credential.metadata.set(CredentialMetadata.customMetadata, {'revoked_seen': true})
+        const credService = agent?.credentials.getService('v1')
+        credService?.update(credential)
+      }
     }
+    
   }, [isRevoked])
 
   const goBackToListCredentials = () => {
