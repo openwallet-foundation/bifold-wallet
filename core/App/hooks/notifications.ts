@@ -18,7 +18,7 @@ export const useNotifications = (): Notifications => {
   const proofs = useProofByState(ProofState.RequestReceived)
   const revoked = useCredentialByState(CredentialState.Done).filter((cred: CredentialRecord) => {
     const metadata = cred!.metadata.get(CredentialMetadata.customMetadata) as customMetadata
-    return metadata.revoked_seen
+    if (metadata?.revoked_seen == undefined) {return cred}
   })
 
   const notifications = [...offers, ...proofs, ...revoked].sort(
