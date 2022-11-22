@@ -1,4 +1,4 @@
-import type { CredentialExchangeRecord as CredentialRecord, ProofRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord, CredentialExchangeRecord as CredentialRecord, ProofRecord } from '@aries-framework/core'
 
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -74,7 +74,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   let title = ''
   let body = ''
 
-  const { name, version } = parsedSchema(notification)
+  const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
 
   switch (notificationType) {
     case NotificationType.CredentialOffer:
@@ -97,7 +97,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       break
       case NotificationType.Revocation:
       title = t('CredentialDetails.NewRevoked')
-      body = `${name} v${version}`
+      body = `${name + (version ? ` v${version}` : '')}`
       onPress = () =>
         navigation.getParent()?.navigate(Stacks.NotificationStack, {
           screen: Screens.CredentialDetails,

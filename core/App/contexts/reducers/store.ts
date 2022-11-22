@@ -5,7 +5,6 @@ import {
   Privacy as PrivacyState,
   Preferences as PreferencesState,
   Onboarding as OnboardingState,
-  Credential as CredentialState,
   Authentication as AuthenticationState,
   Lockout as LockoutState,
   LoginAttempt as LoginAttemptState,
@@ -22,13 +21,6 @@ enum OnboardingDispatchAction {
 enum ErrorDispatchAction {
   ERROR_ADDED = 'error/errorAdded',
   ERROR_REMOVED = 'error/errorRemoved',
-}
-
-// FIXME: Once hooks are updated this should no longer be necessary
-enum CredentialDispatchAction {
-  CREDENTIALS_UPDATED = 'credentials/credentialsUpdated',
-  CREDENTIAL_REVOKED = 'credentials/credentialRevoked',
-  CREDENTIAL_REVOKED_MESSAGE_DISMISSED = 'credentials/credentialRevokedMessageDismissed',
 }
 
 enum LockoutDispatchAction {
@@ -56,7 +48,6 @@ enum AuthenticationDispatchAction {
 export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
-  | CredentialDispatchAction
   | PrivacyDispatchAction
   | LoginAttemptDispatchAction
   | LockoutDispatchAction
@@ -66,7 +57,6 @@ export type DispatchAction =
 export const DispatchAction = {
   ...OnboardingDispatchAction,
   ...ErrorDispatchAction,
-  ...CredentialDispatchAction,
   ...PrivacyDispatchAction,
   ...LoginAttemptDispatchAction,
   ...LockoutDispatchAction,
@@ -203,47 +193,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction): S => 
         ...state,
         ...{ authentication: payload },
       }
-      return newState
-    }
-    // FIXME: Once hooks are updated this should no longer be necessary
-    case CredentialDispatchAction.CREDENTIALS_UPDATED: {
-      const credential: CredentialState = (action?.payload || []).pop()
-      return {
-        ...state,
-        credential,
-      }
-    }
-    case CredentialDispatchAction.CREDENTIAL_REVOKED: {
-      const revokedCredential = (action.payload || []).pop()
-      const revoked = state.credential.revoked
-      revoked.add(revokedCredential.id || revokedCredential.credentialId)
-      const credential: CredentialState = {
-        ...state.credential,
-        revoked,
-      }
-      const newState = {
-        ...state,
-        credential,
-      }
-      AsyncStorage.setItem(LocalStorageKeys.RevokedCredentials, JSON.stringify(Array.from(revoked.values())))
-      return newState
-    }
-    case CredentialDispatchAction.CREDENTIAL_REVOKED_MESSAGE_DISMISSED: {
-      const revokedCredential = (action.payload || []).pop()
-      const revokedMessageDismissed = state.credential.revokedMessageDismissed
-      revokedMessageDismissed.add(revokedCredential.id || revokedCredential.credentialId)
-      const credential: CredentialState = {
-        ...state.credential,
-        revokedMessageDismissed,
-      }
-      const newState = {
-        ...state,
-        credential,
-      }
-      AsyncStorage.setItem(
-        LocalStorageKeys.RevokedCredentialsMessageDismissed,
-        JSON.stringify(Array.from(revokedMessageDismissed.values()))
-      )
       return newState
     }
     case ErrorDispatchAction.ERROR_ADDED: {
