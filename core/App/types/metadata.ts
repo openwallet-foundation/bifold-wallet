@@ -1,5 +1,5 @@
 export enum CredentialMetadata {
-  customMetadata = 'customMetadata'
+  customMetadata = 'customMetadata',
 }
 
 export interface customMetadata {
