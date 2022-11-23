@@ -14,9 +14,9 @@ describe('displays loading screen', () => {
   })
 
   test('contains testIDs', () => {
-    const tree = render(<LoadingModal />)
+    const { getByTestId } = render(<LoadingModal />)
 
-    const loadingActivityIndicatorID = tree.getByTestId(testIdWithKey('LoadingActivityIndicator'))
+    const loadingActivityIndicatorID = getByTestId(testIdWithKey('LoadingActivityIndicator'))
 
     expect(loadingActivityIndicatorID).not.toBeNull()
   })
