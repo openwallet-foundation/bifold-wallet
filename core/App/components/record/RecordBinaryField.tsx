@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-import { lengthOfhiddenAttributes } from '../../constants'
+import { hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -31,7 +31,7 @@ const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, s
         <Image style={styles.image} source={{ uri: attributeValue }} />
       ) : (
         <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-          {Array(lengthOfhiddenAttributes).fill('\u2022').join('')}
+          {hiddenFieldValue}
         </Text>
       )}
     </View>
