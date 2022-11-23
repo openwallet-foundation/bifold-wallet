@@ -36,11 +36,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [state, dispatch] = useStore()
+  const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [fields, setFields] = useState<Array<Field>>([])
-  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
+  const [isRevokedMessageHidden] = useState<boolean>(false)
   const [isDeleteModalDisplayed, setIsDeleteModalDisplayed] = useState<boolean>(false)
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
@@ -109,20 +109,19 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       return
     }
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
-    if (isRevoked && credential.revocationNotification.revocationDate) {
+    if (isRevoked && credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
       setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
     }
     OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, getCurrentLanguage()).then(
-      (fields) =>
-        setFields(fields)
+      (fields) => setFields(fields)
     )
   }, [credential])
 
   useEffect(() => {
     if (credential) {
       if (credential.revocationNotification) {
-        credential.metadata.set(CredentialMetadata.customMetadata, { 'revoked_seen': true })
+        credential.metadata.set(CredentialMetadata.customMetadata, { revoked_seen: true })
         const credService = agent?.credentials.getService('v1')
         credService?.update(credential)
       }

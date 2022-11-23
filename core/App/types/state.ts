@@ -1,5 +1,3 @@
-import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
-
 import { BifoldError } from './error'
 
 export interface Onboarding {

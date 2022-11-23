@@ -92,7 +92,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
   const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
 
-  const [isRevoked, setIsRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
+  const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
   const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined
 
   const credentialTextColor = (hex?: string) => {

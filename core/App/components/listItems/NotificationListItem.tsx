@@ -94,7 +94,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           .getParent()
           ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
       break
-      case NotificationType.Revocation:
+    case NotificationType.Revocation:
       title = t('CredentialDetails.NewRevoked')
       body = `${name + (version ? ` v${version}` : '')}`
       onPress = () =>
