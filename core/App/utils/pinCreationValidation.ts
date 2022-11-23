@@ -1,70 +1,77 @@
-import { minPINLength } from '../../lib/module/constants'
-import { PinSecurityLevel } from '../types/security'
+import { PINRules } from '../types/security'
 
-const sameNumberTwoTimesConsecutive = new RegExp(/(\d)\1{1,}/) // 2 or more consecutive digits ✔️
-const sameNumberThreeTimesConsecutive = new RegExp(/(\d)\1{2,}/) // 3 or more consecutive digits ✔️
-const consecutiveSeriesOfThree = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/) // 3 or more consecutive digits ✔️
-const evenNumberSeries = new RegExp('(13579)') // ✔️
-const oddNumberSeries = new RegExp('(02468)') // ✔️
-const consecutiveTwoNumberRepetition = new RegExp(/([0-9][0-9])\1{1,}/) // ex: 1515 ✔️
-const isNumber = new RegExp('^[0-9]+$') // ✔️
-const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951'] // ✔️
+const consecutiveSeriesOfThree = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/)
+const evenNumberSeries = new RegExp('(13579)')
+const oddNumberSeries = new RegExp('(02468)')
+const isNumber = new RegExp('^[0-9]+$')
+const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
 export interface PinValidationsType {
   isInvalid: boolean
   errorName:
     | 'CrossPatternValidation'
     | 'OddOrEvenSequenceValidation'
-    | 'SameNumberTwoTimesConsecutiveValidation'
-    | 'ConsecutiveTwoNumbersRepetitionValidation'
-    | 'SameNumberThreeTimesConsecutiveValidation'
-    | 'SeriesOfThreeNumbersValidation'
-    | 'PinOnlyContain6NumbersValidation'
+    | 'NoRepetitionOfTheSameNumbersValidation'
+    | 'NoRepetitionOfTheTwoSameNumbersValidation'
+    | 'NoSeriesOfNumbersValidation'
+    | 'PinOnlyContainDigitsValidation'
+    | 'PinTooShortValidation'
+    | 'PinTooLongValidation'
 }
 
-export const pinCreationValidations = (pin: string, pinSecurityLevel: number) => {
+export const pinCreationValidations = (pin: string, pinRules: PINRules) => {
   const pinValidations: PinValidationsType[] = []
-  if (pinSecurityLevel >= PinSecurityLevel.Level6) {
+  if (pinRules.no_cross_pattern) {
     pinValidations.push({
       isInvalid: crossNumberPattern.includes(pin),
       errorName: 'CrossPatternValidation',
     } as PinValidationsType)
   }
-  if (pinSecurityLevel >= PinSecurityLevel.Level5) {
+  if (pinRules.no_even_or_odd_series_of_numbers) {
     pinValidations.push({
       isInvalid: evenNumberSeries.test(pin) || oddNumberSeries.test(pin),
       errorName: 'OddOrEvenSequenceValidation',
     } as PinValidationsType)
   }
-  if (pinSecurityLevel >= PinSecurityLevel.Level4) {
+  if (pinRules.no_repeated_numbers) {
+    let noRepeatedNumbers = new RegExp(/(\d)\1{1,}/)
+    if (typeof pinRules.no_repeated_numbers === 'number') {
+      noRepeatedNumbers = new RegExp(`(\\d)\\1{${pinRules.no_repeated_numbers - 1},}`)
+    }
     pinValidations.push({
-      isInvalid: sameNumberTwoTimesConsecutive.test(pin),
-      errorName: 'SameNumberTwoTimesConsecutiveValidation',
+      isInvalid: noRepeatedNumbers.test(pin),
+      errorName: 'NoRepetitionOfTheSameNumbersValidation',
     } as PinValidationsType)
   }
-  if (pinSecurityLevel >= PinSecurityLevel.Level3) {
+  if (pinRules.no_repetition_of_the_two_same_numbers) {
+    let noRepetitionOfTheTwoSameNumbers = new RegExp(/([0-9][0-9])\1{1,}/)
+    if (typeof pinRules.no_repetition_of_the_two_same_numbers === 'number') {
+      noRepetitionOfTheTwoSameNumbers = new RegExp(
+        `([0-9][0-9])\\1{${pinRules.no_repetition_of_the_two_same_numbers - 1},}`
+      )
+    }
     pinValidations.push({
-      isInvalid: consecutiveTwoNumberRepetition.test(pin),
-      errorName: 'ConsecutiveTwoNumbersRepetitionValidation',
+      isInvalid: noRepetitionOfTheTwoSameNumbers.test(pin),
+      errorName: 'NoRepetitionOfTheTwoSameNumbersValidation',
     } as PinValidationsType)
   }
-  if (pinSecurityLevel >= PinSecurityLevel.Level2) {
-    pinValidations.push(
-      {
-        isInvalid: sameNumberThreeTimesConsecutive.test(pin),
-        errorName: 'SameNumberThreeTimesConsecutiveValidation',
-      } as PinValidationsType,
-      {
-        isInvalid: consecutiveSeriesOfThree.test(pin),
-        errorName: 'SeriesOfThreeNumbersValidation',
-      } as PinValidationsType
-    )
-  }
-  if (pinSecurityLevel >= PinSecurityLevel.Level1) {
+  if (pinRules.no_series_of_numbers) {
     pinValidations.push({
-      isInvalid: !isNumber.test(pin) || pin.length !== minPINLength,
-      errorName: 'PinOnlyContain6NumbersValidation',
+      isInvalid: consecutiveSeriesOfThree.test(pin),
+      errorName: 'NoSeriesOfNumbersValidation',
     } as PinValidationsType)
   }
+  if (pinRules.only_numbers) {
+    pinValidations.push({
+      isInvalid: !isNumber.test(pin),
+      errorName: 'PinOnlyContainDigitsValidation',
+    } as PinValidationsType)
+  }
+
+  pinValidations.push({
+    isInvalid: pin.length < pinRules.min_length || pin.length > pinRules.max_length,
+    errorName: pin.length < pinRules.max_length ? 'PinTooShortValidation' : 'PinTooLongValidation',
+  } as PinValidationsType)
+
   return pinValidations
 }

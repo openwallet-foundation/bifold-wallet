@@ -10,16 +10,18 @@ export enum AuthLevel {
   BiometricsOnly = 'BiometricsOnly',
 }
 
-export enum PinSecurityLevel {
-  Level1 = 1,
-  Level2 = 2,
-  Level3 = 3,
-  Level4 = 4,
-  Level5 = 5,
-  Level6 = 6,
+export interface PINRules {
+  only_numbers: boolean
+  min_length: number
+  max_length: number
+  no_repeated_numbers: boolean | number
+  no_repetition_of_the_two_same_numbers: boolean | number
+  no_series_of_numbers: boolean
+  no_even_or_odd_series_of_numbers: boolean
+  no_cross_pattern: boolean
 }
 
 export interface PinSecurityParams {
-  level: PinSecurityLevel
+  rules: PINRules
   displayHelper: boolean
 }

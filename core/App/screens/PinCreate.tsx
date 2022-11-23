@@ -113,7 +113,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
           label={t('PinCreate.EnterPINTitle')}
           onPinChanged={(p: string) => {
             setPin(p)
-            setPinOneValidations(pinCreationValidations(p, pinSecurity.level))
+            setPinOneValidations(pinCreationValidations(p, pinSecurity.rules))
           }}
           testID={testIdWithKey('EnterPIN')}
           accessibilityLabel={t('PinCreate.EnterPIN')}

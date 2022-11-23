@@ -10,7 +10,18 @@ import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
 import * as oca from './types/oca'
-import { PinSecurityLevel } from './types/security'
+import { PINRules } from './types/security'
+
+const pinRules: PINRules = {
+  only_numbers: true,
+  min_length: 6,
+  max_length: 6,
+  no_repeated_numbers: false,
+  no_repetition_of_the_two_same_numbers: false,
+  no_series_of_numbers: false,
+  no_even_or_odd_series_of_numbers: false,
+  no_cross_pattern: false,
+}
 
 export const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
@@ -22,7 +33,7 @@ export const defaultConfiguration: ConfigurationContext = {
   scan: Scan,
   useBiometry: UseBiometry,
   record: Record,
-  pinSecurity: { level: PinSecurityLevel.Level1, displayHelper: false },
+  pinSecurity: { rules: pinRules, displayHelper: false },
   indyLedgers: defaultIndyLedgers,
   settings: [],
 }
