@@ -107,6 +107,7 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Screens.EnterPin}
           options={() => ({
+            title: t('Screens.EnterPin'),
             headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
@@ -179,6 +180,7 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Screens.CreatePin}
           options={() => ({
+            title: t('Screens.CreatePin'),
             headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
