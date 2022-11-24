@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useState, createRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Keyboard, StyleSheet, Text, StatusBar, View } from 'react-native'
+import { Keyboard, StyleSheet, Text, StatusBar, View, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -14,7 +14,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
+import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinCreateProps {
@@ -40,8 +40,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-
+  const pinTwoInputRef = createRef<TextInput>()
   const { ColorPallet, TextTheme } = useTheme()
+
   const style = StyleSheet.create({
     container: {
       height: '100%',
@@ -127,21 +128,30 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         </Text>
         <PinInput
           label={t('PinCreate.EnterPINTitle')}
-          onPinChanged={setPin}
+          onPinChanged={(p: string) => {
+            setPin(p)
+
+            if (p.length === minPINLength && pinTwoInputRef.current) {
+              pinTwoInputRef.current.focus()
+            }
+          }}
           testID={testIdWithKey('EnterPIN')}
           accessibilityLabel={t('PinCreate.EnterPIN')}
-          autoFocus={true}
+          autoFocus={false}
         />
         <PinInput
           label={t('PinCreate.ReenterPIN')}
           onPinChanged={(p: string) => {
             setPinTwo(p)
+
             if (p.length === minPINLength) {
               Keyboard.dismiss()
             }
           }}
           testID={testIdWithKey('ReenterPIN')}
           accessibilityLabel={t('PinCreate.ReenterPIN')}
+          autoFocus={false}
+          ref={pinTwoInputRef}
         />
         {modalState.visible && (
           <AlertModal
