@@ -18,6 +18,7 @@ import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
+import { minPINLength } from '../constants'
 
 interface PinEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -269,7 +270,13 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
           <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
         )}
         <PinInput
-          onPinChanged={setPin}
+          onPinChanged={(p: string) => {
+            setPin(p)
+
+            if (p.length === minPINLength) {
+              Keyboard.dismiss()
+            }
+          }}
           testID={testIdWithKey('EnterPIN')}
           accessibilityLabel={t('PinEnter.EnterPIN')}
           autoFocus={true}
