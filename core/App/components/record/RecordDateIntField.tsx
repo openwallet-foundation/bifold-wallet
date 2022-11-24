@@ -24,7 +24,8 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) 
       const year = dateint.substring(0, 4)
       const month = dateint.substring(4, 6)
       const day = dateint.substring(6, 8)
-      const date = new Date([year, month, day].join('/'))
+      //NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
+      const date = new Date(Number(year), Number(month) - 1, Number(day))
       if (!isNaN(date.getDate())) {
         setDate(date.toLocaleDateString('en-CA', dateFormatOptions))
         return

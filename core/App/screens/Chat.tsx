@@ -1,6 +1,7 @@
 import { useAgent, useConnectionById, useBasicMessagesByConnectionId } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
 import { renderBubble, renderInputToolbar, renderComposer, renderSend } from '../components/chat'
@@ -17,7 +18,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   }
 
   const { connectionId } = route.params
-
+  const { t } = useTranslation()
   const { agent } = useAgent()
   const connection = useConnectionById(connectionId)
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
@@ -65,7 +66,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       renderBubble={(props) => renderBubble(props, theme)}
       renderInputToolbar={(props) => renderInputToolbar(props, theme)}
       renderSend={(props) => renderSend(props, theme)}
-      renderComposer={(props) => renderComposer(props, theme, 'Type Message Here')}
+      renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
       disableComposer={!silentAssertConnectedNetwork()}
       onSend={onSend}
       user={{
