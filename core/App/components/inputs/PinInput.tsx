@@ -16,7 +16,9 @@ interface PinInputProps {
   autoFocus?: boolean
 }
 
-const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement>> = forwardRef(
+// TODO:(jl) Would be great if someone can figure out the proper type for
+// ref below.
+const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
   ({ label, onPinChanged, testID, accessibilityLabel, autoFocus = false }, ref: any) => {
     // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const [pin, setPin] = useState('')
@@ -27,6 +29,7 @@ const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement>> 
     })
     const { t } = useTranslation()
     const { TextTheme, PinInputTheme } = useTheme()
+
     const style = StyleSheet.create({
       codeField: {
         flexDirection: 'row',

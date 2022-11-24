@@ -1,8 +1,18 @@
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, createRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, StatusBar, View, TextInput } from 'react-native'
+import {
+  AccessibilityInfo,
+  Keyboard,
+  StyleSheet,
+  Text,
+  StatusBar,
+  View,
+  TextInput,
+  TouchableOpacity,
+  findNodeHandle,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -40,8 +50,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const pinTwoInputRef = createRef<TextInput>()
   const { ColorPallet, TextTheme } = useTheme()
+  const pinTwoInputRef = useRef<TextInput>()
+  const createPinButtonRef = useRef<TouchableOpacity>()
 
   const style = StyleSheet.create({
     container: {
@@ -131,8 +142,14 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
           onPinChanged={(p: string) => {
             setPin(p)
 
-            if (p.length === minPINLength && pinTwoInputRef.current) {
-              pinTwoInputRef.current.focus()
+            if (p.length === minPINLength) {
+              if (pinTwoInputRef && pinTwoInputRef.current) {
+                pinTwoInputRef.current.focus()
+                const reactTag = findNodeHandle(pinTwoInputRef.current)
+                if (reactTag) {
+                  AccessibilityInfo.setAccessibilityFocus(reactTag)
+                }
+              }
             }
           }}
           testID={testIdWithKey('EnterPIN')}
@@ -146,6 +163,12 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
             if (p.length === minPINLength) {
               Keyboard.dismiss()
+              if (createPinButtonRef && createPinButtonRef.current) {
+                const reactTag = findNodeHandle(createPinButtonRef.current)
+                if (reactTag) {
+                  AccessibilityInfo.setAccessibilityFocus(reactTag)
+                }
+              }
             }
           }}
           testID={testIdWithKey('ReenterPIN')}
@@ -169,9 +192,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
           buttonType={ButtonType.Primary}
           disabled={!continueEnabled}
           onPress={async () => {
-            Keyboard.dismiss()
             await confirmEntry(pin, pinTwo)
           }}
+          ref={createPinButtonRef}
         />
       </View>
     </SafeAreaView>
