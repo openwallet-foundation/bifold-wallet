@@ -26,7 +26,6 @@ interface CredentialCardProps {
   credential: CredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
-  revoked?: boolean
 }
 
 const paddingVertical = 10
