@@ -35,10 +35,6 @@ export const defaultState: State = {
     developerModeEnabled: false,
     useBiometry: false,
   },
-  credential: {
-    revoked: new Set(),
-    revokedMessageDismissed: new Set(),
-  },
   error: null,
   loading: false,
 }
