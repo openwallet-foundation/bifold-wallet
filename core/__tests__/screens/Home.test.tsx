@@ -101,7 +101,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
         <Home navigation={useNavigation()} />
       </ConfigurationProvider>
     )
-    const notificationLabel = await findByText('Home.Notifications (3)')
+    const notificationLabel = await findByText('Home.Notifications (2)')
 
     expect(notificationLabel).toBeTruthy()
   })
@@ -137,7 +137,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
     const root = tree.root
     const flatListInstance = root.findByType(FlatList)
 
-    expect(flatListInstance.findAllByType(NotificationListItem)).toHaveLength(3)
+    expect(flatListInstance.findAllByType(NotificationListItem)).toHaveLength(2)
   })
 
   /**
