@@ -74,10 +74,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   let title = ''
   let body = ''
 
+  // eslint-disable-next-line no-case-declarations
+  const { name, version } = parsedSchema(notification as CredentialRecord)
+  
   switch (notificationType) {
     case NotificationType.CredentialOffer:
-      // eslint-disable-next-line no-case-declarations
-      const { name, version } = parsedSchema(notification as CredentialRecord)
       onPress = () =>
         navigation.getParent()?.navigate(Stacks.NotificationStack, {
           screen: Screens.CredentialOffer,
