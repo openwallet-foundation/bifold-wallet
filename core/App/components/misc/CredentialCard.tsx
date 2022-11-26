@@ -15,7 +15,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
-import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { getCurrentLanguage } from '../../localization'
 import { GenericFn } from '../../types/fn'
@@ -92,10 +91,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
   const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
 
-  const [state] = useStore()
-  const [isRevoked, setIsRevoked] = useState<boolean>(false)
+  const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
   const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined
-  const { revoked } = state.credential
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
@@ -162,8 +159,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       if (!indyCredentialFormat) {
         return
       }
-      const isRevoked = revoked.has(indyCredentialFormat.credentialRecordId)
-      setIsRevoked(isRevoked)
     }
     OCABundle.resolve(credential).then(async (_bundle) => {
       if (_bundle !== undefined) {
