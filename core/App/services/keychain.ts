@@ -26,7 +26,7 @@ export const optionsForKeychainAccess = (service: KeychainServices, useBiometric
   }
 
   if (useBiometrics) {
-    opts.accessControl = Keychain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE
+    opts.accessControl = Keychain.ACCESS_CONTROL.BIOMETRY_ANY
   }
 
   if (Platform.OS === 'android') {
