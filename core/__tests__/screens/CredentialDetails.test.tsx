@@ -1,10 +1,15 @@
-import { CredentialMetadataKeys, CredentialExchangeRecord, CredentialState, CredentialExchangeRecordProps } from '@aries-framework/core'
+import {
+  CredentialMetadataKeys,
+  CredentialExchangeRecord,
+  CredentialState,
+  CredentialExchangeRecordProps,
+} from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import { dateFormatOptions } from '../../App/constants'
+import { dateFormatOptions, hiddenFieldValue } from '../../App/constants'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 import configurationContext from '../contexts/configuration'
@@ -35,7 +40,7 @@ const buildCredentialExchangeRecord = () => {
   })
   testOpenVPCredentialRecord.credentials.push({
     credentialRecordType: 'indy',
-    credentialRecordId: ''
+    credentialRecordId: '',
   })
   testOpenVPCredentialRecord.metadata.set(CredentialMetadataKeys.IndyCredential, {
     schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
@@ -56,7 +61,7 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('react-native-localize', () => {
   return require('../../__mocks__/custom/react-native-localize')
 })
-const mock_testOpenVPCredentialRecord =  buildCredentialExchangeRecord()
+const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
 jest.useRealTimers()
 
 /**
@@ -74,7 +79,6 @@ jest.useRealTimers()
  *  Attribute names are just capitalized name
  */
 describe('displays a credential details screen', () => {
-
   const testCredentialRecords: CredentialContextInterface = {
     loading: false,
     credentials: [mock_testOpenVPCredentialRecord],
@@ -145,7 +149,7 @@ describe('displays a credential details screen', () => {
       </ConfigurationContext.Provider>
     )
 
-    const hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
+    const hiddenValues = await findAllByText(hiddenFieldValue)
 
     expect(hiddenValues.length).toBe(3)
   })
@@ -161,7 +165,7 @@ describe('displays a credential details screen', () => {
     )
 
     let showButtons = await findAllByText('Record.Show')
-    let hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
+    let hiddenValues = await findAllByText(hiddenFieldValue)
     let familyName = await queryByText('Last', { exact: false })
 
     expect(showButtons.length).toBe(3)
@@ -171,7 +175,7 @@ describe('displays a credential details screen', () => {
     fireEvent(showButtons[0], 'press')
 
     showButtons = await findAllByText('Record.Show')
-    hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
+    hiddenValues = await findAllByText(hiddenFieldValue)
     familyName = await queryByText('Last', { exact: false })
 
     expect(showButtons.length).toBe(2)
@@ -180,7 +184,7 @@ describe('displays a credential details screen', () => {
   })
 
   test('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
-    const { queryAllByText, findAllByText, findByText} = await render(
+    const { queryAllByText, findAllByText, findByText } = await render(
       <ConfigurationContext.Provider value={configurationContext}>
         <CredentialDetails
           navigation={useNavigation()}
@@ -188,14 +192,14 @@ describe('displays a credential details screen', () => {
         ></CredentialDetails>
       </ConfigurationContext.Provider>
     )
-    await act( async () => {
+    await act(async () => {
       let showButtons = await findAllByText('Record.Show')
-      let hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
+      let hiddenValues = await findAllByText(hiddenFieldValue)
 
       showButtons.forEach((button) => fireEvent(button, 'press'))
 
       showButtons = await queryAllByText('Record.Show')
-      hiddenValues = await queryAllByText(Array(10).fill('\u2022').join(''))
+      hiddenValues = await queryAllByText(hiddenFieldValue)
 
       expect(showButtons.length).toBe(0)
       expect(hiddenValues.length).toBe(0)
@@ -207,7 +211,7 @@ describe('displays a credential details screen', () => {
       fireEvent(hideAllButton, 'press')
 
       showButtons = await findAllByText('Record.Show')
-      hiddenValues = await findAllByText(Array(10).fill('\u2022').join(''))
+      hiddenValues = await findAllByText(hiddenFieldValue)
 
       expect(showButtons.length).toBe(3)
       expect(hiddenValues.length).toBe(3)
