@@ -129,6 +129,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <View
+              accessible={true}
               style={{
                 width: width - 2 * offset,
                 marginLeft: !index ? offset : offsetPadding,
