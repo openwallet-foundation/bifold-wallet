@@ -104,7 +104,15 @@ const RootStack: React.FC = () => {
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
-        <Stack.Screen name={Screens.EnterPin}>
+        <Stack.Screen
+          name={Screens.EnterPin}
+          options={() => ({
+            title: t('Screens.EnterPin'),
+            headerShown: true,
+            headerLeft: () => false,
+            rightLeft: () => false,
+          })}
+        >
           {(props) => <PinEnter {...props} setAuthenticated={onAuthenticated} />}
         </Stack.Screen>
         <Stack.Screen
@@ -169,7 +177,15 @@ const RootStack: React.FC = () => {
           })}
           component={terms}
         />
-        <Stack.Screen name={Screens.CreatePin}>
+        <Stack.Screen
+          name={Screens.CreatePin}
+          options={() => ({
+            title: t('Screens.CreatePin'),
+            headerShown: true,
+            headerLeft: () => false,
+            rightLeft: () => false,
+          })}
+        >
           {(props) => <PinCreate {...props} setAuthenticated={onAuthenticated} />}
         </Stack.Screen>
         <Stack.Screen

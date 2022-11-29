@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import Label from '../components/texts/Label'
 import SafeAreaScrollView from '../components/views/SafeAreaScrollView'
+import { dateFormatOptions } from '../constants'
 import { ContactStackParams, Screens } from '../types/navigators'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>

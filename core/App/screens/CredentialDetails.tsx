@@ -12,12 +12,14 @@ import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonDeleteModal from '../components/modals/CommonDeleteModal'
 import { ToastType } from '../components/toast/BaseToast'
+import { dateFormatOptions } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { getCurrentLanguage } from '../localization'
 import { BifoldError } from '../types/error'
+import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { Field } from '../types/record'
 import { getCredentialConnectionLabel } from '../utils/helpers'
@@ -34,17 +36,16 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [state, dispatch] = useStore()
+  const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
+  const [revocationDate, setRevocationDate] = useState<string>('')
   const [fields, setFields] = useState<Array<Field>>([])
-  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
+  const [isRevokedMessageHidden] = useState<boolean>(false)
   const [isDeleteModalDisplayed, setIsDeleteModalDisplayed] = useState<boolean>(false)
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const { TextTheme, ColorPallet } = useTheme()
   const { OCABundle, record } = useConfiguration()
-
-  const { revoked, revokedMessageDismissed } = state.credential
 
   const styles = StyleSheet.create({
     headerText: {
@@ -107,23 +108,27 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (!indyCredentialFormat) {
       return
     }
-    const isRevoked = revoked.has(indyCredentialFormat.credentialRecordId)
-    setIsRevoked(isRevoked)
-    const isRevokedMessageDismissed = revokedMessageDismissed.has(indyCredentialFormat.credentialRecordId)
-    setIsRevokedMessageHidden(isRevokedMessageDismissed)
+    credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
+    if (isRevoked && credential?.revocationNotification?.revocationDate) {
+      const date = new Date(credential.revocationNotification.revocationDate)
+      setRevocationDate(date.toLocaleDateString('en-CA', dateFormatOptions))
+    }
     OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, getCurrentLanguage()).then(
       (fields) => setFields(fields)
     )
   }, [credential])
 
+  useEffect(() => {
+    if (credential?.revocationNotification) {
+      credential.metadata.set(CredentialMetadata.customMetadata, { revoked_seen: true })
+      const credService = agent?.credentials.getService('v1')
+      credService?.update(credential)
+    }
+  }, [isRevoked])
+
   const goBackToListCredentials = () => {
     navigation.pop()
     navigation.navigate(Screens.Credentials)
-  }
-
-  const handleDismissRevokedMessagePressed = (credential: CredentialExchangeRecord) => {
-    dispatch({ type: DispatchAction.CREDENTIAL_REVOKED_MESSAGE_DISMISSED, payload: [credential] })
-    setIsRevokedMessageHidden(true)
   }
 
   const handleRemovePressed = () => {
@@ -163,10 +168,12 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             {credential && (
               <InfoBox
                 notificationType={InfoBoxType.Warn}
-                title={t('CredentialDetails.CredentialRevokedMessageTitle')}
-                description={t('CredentialDetails.CredentialRevokedMessageBody')}
-                onCallToActionLabel={t('Global.Dismiss')}
-                onCallToActionPressed={() => handleDismissRevokedMessagePressed(credential)}
+                title={t('CredentialDetails.CredentialRevokedMessageTitle') + ' ' + revocationDate}
+                description={
+                  credential?.revocationNotification?.comment
+                    ? credential.revocationNotification.comment
+                    : t('CredentialDetails.CredentialRevokedMessageBody')
+                }
               />
             )}
           </View>
