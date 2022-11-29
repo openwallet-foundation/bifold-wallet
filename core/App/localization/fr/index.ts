@@ -94,8 +94,8 @@ const translation = {
         "ReenterPINTitle": "Entrez à nouveau le code NIP",
         "RememberPIN": "Mémorisez votre NIP.",
         "PINDisclaimer": "Si vous l'oubliez, vous devrez configurer à nouveau votre portefeuille et ajouter à nouveau vos cartes.",
-        "Show": "Afficher",
-        "Hide": "Masquer",
+        "Show": "Afficher NIP",
+        "Hide": "Masquer NIP",
         "ChangePIN": "Changer votre NIP",
         "Continue": "Continuer",
         "EnterYourCurrentPIN": "Entrez votre NIP actuel"
