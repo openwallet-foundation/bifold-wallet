@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
 
-import { dateFormatOptions, dateIntFormat, lengthOfhiddenAttributes } from '../../constants'
+import { dateFormatOptions, dateIntFormat, hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { Attribute, Field } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
@@ -48,7 +48,7 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) 
 
   return (
     <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-      {shown ? date : Array(lengthOfhiddenAttributes).fill('\u2022').join('')}
+      {shown ? date : hiddenFieldValue}
     </Text>
   )
 }
