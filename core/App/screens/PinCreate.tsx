@@ -120,11 +120,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
   return (
     <SafeAreaView>
-      <StatusBar
-        barStyle={
-          Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
-        }
-      />
+      <StatusBar barStyle={StatusBarStyles.Light} />
       <View style={[style.container]}>
         <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
           <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}

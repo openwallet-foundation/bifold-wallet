@@ -244,13 +244,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
 
   return (
     <SafeAreaView>
-      <StatusBar
-        barStyle={
-          Platform.OS === 'android' || pinEntryUsage === PinEntryUsage.PinCheck
-            ? StatusBarStyles.Light
-            : statusBarStyleForColor(style.container.backgroundColor)
-        }
-      />
+      <StatusBar barStyle={StatusBarStyles.Light} />
       <View style={[style.container]}>
         <Image
           source={Assets.img.logoSecondary.src}
