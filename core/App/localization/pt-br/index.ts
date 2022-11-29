@@ -96,8 +96,8 @@ const translation = {
     "CreatePIN": "Criar PIN",
     "RememberPIN": "Lembre-se do seu PIN.",
     "PINDisclaimer": "Se você o esquecer, você precisará redefinir sua carteira e readicionar seus cards.",
-    "Show": "Mostrar",
-    "Hide": "Esconder",
+    "Show": "Mostrar PIN",
+    "Hide": "Esconder PIN",
     "ChangePIN": "Alterar PIN",
     "Continue": "Continuar",
     "EnterYourCurrentPIN": "Digite seu PIN atual."
