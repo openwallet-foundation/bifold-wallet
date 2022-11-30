@@ -130,6 +130,8 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     }
   }
 
+  // const r: ?React.ElementRef<typeof View>
+
   return (
     <SafeAreaView>
       <StatusBar barStyle={StatusBarStyles.Light} />
@@ -144,6 +146,8 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
 
             if (p.length === minPINLength) {
               if (pinTwoInputRef && pinTwoInputRef.current) {
+                // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
+                // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
                 pinTwoInputRef.current.focus()
                 const reactTag = findNodeHandle(pinTwoInputRef.current)
                 if (reactTag) {
@@ -164,6 +168,8 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
             if (p.length === minPINLength) {
               Keyboard.dismiss()
               if (createPinButtonRef && createPinButtonRef.current) {
+                // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
+                // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
                 const reactTag = findNodeHandle(createPinButtonRef.current)
                 if (reactTag) {
                   AccessibilityInfo.setAccessibilityFocus(reactTag)
