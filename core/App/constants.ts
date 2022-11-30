@@ -1,7 +1,11 @@
+import { PINRules } from '../lib/typescript/App/types/security'
+
 export const defaultLanguage = 'en'
 export const dateIntFormat = 'YYYYMMDD'
-export const lengthOfhiddenAttributes = 10
 
+const lengthOfhiddenAttributes = 10
+const unicodeForBulletCharacter = '\u2022'
+export const hiddenFieldValue = Array(lengthOfhiddenAttributes).fill(unicodeForBulletCharacter).join('')
 // Used to property prefix TestIDs so they can be looked up
 // by on-device automated testing systems like SauceLabs.
 export const testIdPrefix = 'com.ariesbifold:id/'
@@ -56,3 +60,14 @@ export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric
 }
 
 export const minPINLength = 6
+
+export const pinRules: PINRules = {
+  only_numbers: true,
+  min_length: 6,
+  max_length: 6,
+  no_repeated_numbers: false,
+  no_repetition_of_the_two_same_numbers: false,
+  no_series_of_numbers: false,
+  no_even_or_odd_series_of_numbers: false,
+  no_cross_pattern: false,
+}

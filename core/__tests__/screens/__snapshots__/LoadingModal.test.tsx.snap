@@ -41,7 +41,7 @@ exports[`displays loading screen renders correctly 1`] = `
             "width": "33%",
           }
         }
-        testID="com.ariesbifold:id/LoadingActivityIndicatorX"
+        testID="com.ariesbifold:id/LoadingActivityIndicatorImage"
       />
       <View
         collapsable={false}

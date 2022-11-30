@@ -2,7 +2,7 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import RecordDateIntField from '../../App/components/record/RecordDateIntField'
-import { lengthOfhiddenAttributes } from '../../App/constants'
+import { hiddenFieldValue } from '../../App/constants'
 import { testIdWithKey } from '../../App/utils/testable'
 
 describe('Record DateInt Field Component', () => {
@@ -40,5 +40,5 @@ it('Hidden field should render hidden value', async () => {
 
   const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 
-  expect(hiddenFieldText.children[0]).toEqual(Array(lengthOfhiddenAttributes).fill('\u2022').join(''))
+  expect(hiddenFieldText.children[0]).toEqual(hiddenFieldValue)
 })

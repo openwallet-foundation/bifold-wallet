@@ -104,6 +104,7 @@ export type SettingStackParams = {
 }
 
 export type NotificationStackParams = {
+  [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
   [Screens.ProofRequestAttributeDetails]: {
