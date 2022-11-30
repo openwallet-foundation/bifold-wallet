@@ -1,6 +1,7 @@
 import React from 'react'
 import { create } from 'react-test-renderer'
 
+// eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../../App/components/buttons/Button'
 
 describe('Button Component', () => {

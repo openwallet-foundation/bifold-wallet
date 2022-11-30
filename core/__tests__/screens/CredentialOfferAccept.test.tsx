@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { render, waitFor } from '@testing-library/react-native'
@@ -32,7 +33,7 @@ describe('displays a credential accept screen', () => {
     const tree = render(<CredentialOfferAccept visible={true} credentialId={credentialId} />)
 
     const doneButton = tree.queryByTestId('Done')
-    const backToHomeButton = tree.queryByTestId(testIdWithKey('BackToHome'))
+    // const backToHomeButton = tree.queryByTestId(testIdWithKey('BackToHome'))
 
     expect(tree).toMatchSnapshot()
     expect(doneButton).toBeNull()

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
@@ -11,11 +13,12 @@ import React from 'react'
 import { FlatList } from 'react-native'
 import { create } from 'react-test-renderer'
 
+// eslint-disable-next-line import/no-named-as-default
 import Button from '../../App/components/buttons/Button'
 import NotificationListItem, { NotificationType } from '../../App/components/listItems/NotificationListItem'
-import HomeContentView from '../../App/components/views/HomeContentView'
-import { ConfigurationContext, ConfigurationProvider } from '../../App/contexts/configuration'
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import Home from '../../App/screens/Home'
+import configurationContext from '../contexts/configuration'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -24,24 +27,18 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
-const defaultConfiguration: ConfigurationContext = {
-  pages: undefined,
-  splash: undefined,
-  terms: undefined,
-  homeContentView: HomeContentView,
-}
-
 describe('displays a home screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // eslint-disable-next-line import/no-named-as-default-member
     React.useState = jest.fn().mockReturnValue([false, jest.fn()])
   })
 
   it('renders correctly', () => {
     const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     ).toJSON()
 
     expect(tree).toMatchSnapshot()
@@ -56,9 +53,9 @@ describe('displays a home screen', () => {
    */
   it('defaults to no notifications', async () => {
     const { findByText } = render(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const notificationLabel = await findByText('Home.NoNewUpdates')
 
@@ -71,6 +68,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
     new CredentialRecord({
       threadId: '1',
       state: CredentialState.OfferReceived,
+      protocolVersion: 'v1',
     }),
   ]
   const testProofRecords: ProofRecord[] = [
@@ -82,6 +80,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
   beforeEach(() => {
     jest.clearAllMocks()
+    // eslint-disable-next-line import/no-named-as-default-member
     React.useState = jest.fn().mockReturnValue([false, jest.fn()])
     // @ts-ignore
     useCredentialByState.mockReturnValue(testCredentialRecords)
@@ -97,9 +96,9 @@ describe('with a notifications module, when an issuer sends a credential offer',
    */
   it('notification label is displayed with number of notifications', async () => {
     const { findByText } = render(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const notificationLabel = await findByText('Home.Notifications (2)')
 
@@ -109,9 +108,9 @@ describe('with a notifications module, when an issuer sends a credential offer',
   it('Pressing the "See All" button navigates correctly', async () => {
     const navigation = useNavigation()
     const { findByText } = render(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const seeAllButton = await findByText('Home.SeeAll')
 
@@ -130,9 +129,9 @@ describe('with a notifications module, when an issuer sends a credential offer',
    */
   it('notifications are displayed', () => {
     const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const root = tree.root
     const flatListInstance = root.findByType(FlatList)
@@ -148,9 +147,9 @@ describe('with a notifications module, when an issuer sends a credential offer',
    */
   it('touch notification triggers navigation correctly', async () => {
     const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const root = tree.root
     const notifications = root.findAllByType(NotificationListItem)
@@ -179,9 +178,9 @@ describe('with a notifications module, when an issuer sends a credential offer',
    */
   it('touch notification triggers navigation correctly', async () => {
     const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const root = tree.root
     const notifications = root.findAllByType(NotificationListItem)

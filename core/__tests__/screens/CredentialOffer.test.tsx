@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { CredentialExchangeRecord, ConnectionRecord } from '@aries-framework/core'
 import { useCredentialById, useConnectionById } from '@aries-framework/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
@@ -21,7 +23,8 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
-jest.mock('react-native-localize', () => { })
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+jest.mock('react-native-localize', () => {})
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
@@ -37,7 +40,7 @@ const connectionRecord = new ConnectionRecord(connection)
 const credentialRecord = new CredentialExchangeRecord(credential)
 credentialRecord.credentials.push({
   credentialRecordType: 'indy',
-  credentialRecordId: ''
+  credentialRecordId: '',
 })
 // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
 credentialRecord.createdAt = new Date(credentialRecord.createdAt)

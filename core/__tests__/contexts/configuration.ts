@@ -1,7 +1,8 @@
+import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { DefaultOCABundleResolver } from '../../App/types/oca'
 
-export default {
+const configurationContext: ConfigurationContext = {
   pages: () => [],
   terms: () => null,
   splash: () => null,
@@ -10,4 +11,9 @@ export default {
   useBiometry: () => null,
   record: Record,
   settings: [],
+  developer: () => null,
+  scan: () => null,
+  indyLedgers: [],
 }
+
+export default configurationContext
