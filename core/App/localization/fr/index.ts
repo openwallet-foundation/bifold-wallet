@@ -78,6 +78,29 @@ const translation = {
       "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
   },
     "PinCreate": {
+        "Message": {
+            "CrossPatternValidation": 'Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.',
+            "OddOrEvenSequenceValidation":
+                'Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
+            "NoRepetitionOfTheTwoSameNumbersValidation":
+                'Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
+            "NoRepetitionOfTheSameNumbersValidation":
+                'Votre NIP possède des nombres consécutifs identiques. Veuillez saisir un NIP différent',
+            "NoSeriesOfNumbersValidation": 'Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
+            "PinOnlyContainDigitsValidation": 'Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.',
+            "PinTooShortValidation": 'Votre NIP est trop court. Veuillez saisir un NIP différent.',
+            "PinTooLongValidation": 'Votre NIP est trop long. Veuillez saisir un NIP différent.',
+        },
+        "Helper": {
+            "CrossPatternValidation": 'Ne doit pas contenir un patron de croix.',
+            "OddOrEvenSequenceValidation": 'Ne doit pas contenir une suite paire ou impaire.',
+            "NoRepetitionOfTheTwoSameNumbersValidation": 'Ne doit pas contenir deux chiffres qui se répètent.',
+            "NoRepetitionOfTheSameNumbersValidation": 'Ne doit pas contenir de répétition.',
+            "NoSeriesOfNumbersValidation": 'Ne doit pas contenir de suite (123).',
+            "PinOnlyContainDigitsValidation": 'Doit contenir que des chiffres.',
+            "PinTooShortValidation": 'Le NIP est de la bonne longueur.',
+            "PinTooLongValidation": 'Le NIP est de la bonne longueur.',
+        },
         "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
         "PINTooShort": "NIP trop court",
         "InvalidPIN": "NIP invalide",
