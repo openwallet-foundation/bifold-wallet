@@ -1,4 +1,4 @@
-import { PINRules } from '../lib/typescript/App/types/security'
+import { PINRules } from './types/security'
 
 export const defaultLanguage = 'en'
 export const dateIntFormat = 'YYYYMMDD'
