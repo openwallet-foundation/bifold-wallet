@@ -190,7 +190,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   )
 
   return (
-    <SafeAreaView>
+    <SafeAreaView edges={['bottom', 'left', 'right']}>
       <View style={styles.container}>
         <SectionList
           renderItem={({ item: { title, value, onPress } }) => (
@@ -226,6 +226,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             </View>
           )}
           sections={settingsSections}
+          stickySectionHeadersEnabled={false}
         ></SectionList>
       </View>
     </SafeAreaView>

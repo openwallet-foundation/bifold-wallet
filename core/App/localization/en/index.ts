@@ -99,8 +99,8 @@ const translation = {
     "CreatePIN": "Create PIN",
     "RememberPIN": "Remember your PIN.",
     "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
-    "Show": "Show",
-    "Hide": "Hide",
+    "Show": "Show PIN",
+    "Hide": "Hide PIN",
     "ChangePIN": "Change PIN",
     "Continue": "Continue",
     "EnterYourCurrentPIN": "Enter your current PIN"
