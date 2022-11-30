@@ -5,3 +5,5 @@ declare module '*.svg' {
 }
 
 declare module 'react-native-argon2'
+
+declare module '@react-native-community/netinfo/jest/netinfo-mock'
