@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
+import { StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ButtonType } from '../components/buttons/Button'
@@ -9,14 +9,14 @@ import PinInput from '../components/inputs/PinInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import AlertModal from '../components/modals/AlertModal'
 import PopupModal from '../components/modals/PopupModal'
-import { attemptLockoutBaseRules, attemptLockoutThresholdRules } from '../constants'
+import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules } from '../constants'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
-import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
+import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PinEnterProps {
@@ -269,7 +269,13 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
           <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
         )}
         <PinInput
-          onPinChanged={setPin}
+          onPinChanged={(p: string) => {
+            setPin(p)
+
+            if (p.length === minPINLength) {
+              Keyboard.dismiss()
+            }
+          }}
           testID={testIdWithKey('EnterPIN')}
           accessibilityLabel={t('PinEnter.EnterPIN')}
           autoFocus={true}

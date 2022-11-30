@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef, useState } from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
@@ -18,44 +18,42 @@ export interface ButtonProps {
   disabled?: boolean
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  title,
-  buttonType,
-  accessibilityLabel,
-  testID,
-  onPress,
-  disabled = false,
-}) => {
-  const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
-  const { Buttons, heavyOpacity } = useTheme()
-  const buttonStyles = {
-    [ButtonType.Primary]: { color: Buttons.primary, text: Buttons.primaryText },
-    [ButtonType.Secondary]: { color: Buttons.secondary, text: Buttons.secondaryText },
-    [ButtonType.Critical]: { color: Buttons.critical, text: Buttons.primaryText },
-  }
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      accessible={accessible}
-      accessibilityLabel={accessibilityLabel}
-      testID={testID}
-      style={[
-        buttonStyles[buttonType].color,
-        disabled && (buttonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
-      ]}
-      disabled={disabled}
-      activeOpacity={heavyOpacity}
-    >
-      <Text
+export const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
+  ({ title, buttonType, accessibilityLabel, testID, onPress, disabled = false }, ref: any) => {
+    const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
+    const { Buttons, heavyOpacity } = useTheme()
+    const buttonStyles = {
+      [ButtonType.Primary]: { color: Buttons.primary, text: Buttons.primaryText },
+      [ButtonType.Secondary]: { color: Buttons.secondary, text: Buttons.secondaryText },
+      [ButtonType.Critical]: { color: Buttons.critical, text: Buttons.primaryText },
+    }
+
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        accessible={accessible}
+        accessibilityLabel={accessibilityLabel}
+        testID={testID}
         style={[
-          buttonStyles[buttonType].text,
-          disabled && (buttonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
+          buttonStyles[buttonType].color,
+          disabled && (buttonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
         ]}
+        disabled={disabled}
+        activeOpacity={heavyOpacity}
+        ref={ref}
       >
-        {title}
-      </Text>
-    </TouchableOpacity>
-  )
-}
+        <Text
+          style={[
+            buttonStyles[buttonType].text,
+            disabled &&
+              (buttonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
+          ]}
+        >
+          {title}
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+)
 
 export default Button
