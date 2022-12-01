@@ -83,6 +83,27 @@ const translation = {
     "CameraDisclosure": "The camera is used to scan QR Codes for immediate on-device processing. No information about the images is stored, used for analytics, or shared.",
   },
   "PinCreate": {
+    "Message": {
+      "CrossPatternValidation": 'A pattern of cross was detected in your PIN. Please try again.',
+      "OddOrEvenSequenceValidation": 'An odd or even sequence was detected in your PIN. Please try again.',
+      "NoRepetitionOfTheSameNumbersValidation":
+        "The PIN can't have a repetition of the same digit. Please try again.",
+      "NoRepetitionOfTheTwoSameNumbersValidation": 'A repeated two-digit sequence was detected in your PIN. Please try again.',
+      "NoSeriesOfNumbersValidation": 'A series was detected in your PIN. Please try again.',
+      "PinOnlyContainDigitsValidation": 'Your PIN needs to only contain digits. Please try again.',
+      "PinTooShortValidation": 'Your PIN is too short. Please try again.',
+      "PinTooLongValidation": 'Your PIN is too long. Please try again.',
+    },
+    "Helper": {
+      "CrossPatternValidation": 'Does not contain a pattern of cross.',
+      "OddOrEvenSequenceValidation": 'Does not contain an odd or even sequence.',
+      "NoRepetitionOfTheSameNumbersValidation": 'Does not contain the same repeating number.',
+      "NoRepetitionOfTheTwoSameNumbersValidation": 'Does not contain repeating two-digit sequence.',
+      "NoSeriesOfNumbersValidation": 'Does not contain a series of numbers (123).',
+      "PinOnlyContainDigitsValidation": 'Must contain only digits.',
+      "PinTooShortValidation": 'The PIN is long enought.',
+      "PinTooLongValidation": 'The PIN is long enought.',
+    },
     "UserAuthenticationPIN": "User authentication PIN",
     "PINTooShort": "PIN is too short",
     "InvalidPIN": "Invalid PIN",

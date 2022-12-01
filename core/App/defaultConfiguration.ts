@@ -2,6 +2,7 @@ import defaultIndyLedgers from '../configs/ledgers/indy'
 
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
+import { pinRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
@@ -21,6 +22,7 @@ export const defaultConfiguration: ConfigurationContext = {
   scan: Scan,
   useBiometry: UseBiometry,
   record: Record,
+  pinSecurity: { rules: pinRules, displayHelper: false },
   indyLedgers: defaultIndyLedgers,
   settings: [],
 }
