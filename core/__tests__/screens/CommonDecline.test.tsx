@@ -41,10 +41,6 @@ describe('common decline screen', () => {
     jest.clearAllMocks()
   })
 
-  //
-  // Proof
-  //
-
   test('decline proof renders correctly', () => {
     // @ts-ignore
     useProofById.mockReturnValueOnce(new ProofRecord(proof))
@@ -104,14 +100,11 @@ describe('common decline screen', () => {
     const doneButton = getByTestId(testIdWithKey('Done'))
 
     fireEvent(doneButton, 'press')
+
     const navigation = useNavigation()
 
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
   })
-
-  //
-  // Offer
-  //
 
   test('decline offer renders correctly', async () => {
     const rec = new CredentialRecord(credential)
@@ -133,6 +126,7 @@ describe('common decline screen', () => {
         <CommonDecline route={props as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
+
     await act(async () => {
       // wait for appearance inside an assertion
       await waitFor(
@@ -143,6 +137,7 @@ describe('common decline screen', () => {
       )
       const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDeclineButton'))
       const abortDeclineButton = tree.getByTestId(testIdWithKey('AbortDeclineButton'))
+
       expect(confirmDeclineButton).not.toBeNull()
       expect(abortDeclineButton).not.toBeNull()
       expect(tree).toMatchSnapshot()
@@ -165,6 +160,7 @@ describe('common decline screen', () => {
         <CommonDecline route={props as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
+
     await act(async () => {
       const confirmDeclineButton = getByTestId(testIdWithKey('ConfirmDeclineButton'))
       const { agent } = useAgent()
@@ -223,6 +219,7 @@ describe('common decline screen', () => {
     const doneButton = getByTestId(testIdWithKey('Done'))
 
     fireEvent(doneButton, 'press')
+
     const navigation = useNavigation()
 
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })

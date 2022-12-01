@@ -34,12 +34,12 @@ describe('displays a home screen', () => {
     React.useState = jest.fn().mockReturnValue([false, jest.fn()])
   })
 
-  it('renders correctly', () => {
-    const tree = create(
+  test('renders correctly', () => {
+    const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
-    ).toJSON()
+    )
 
     expect(tree).toMatchSnapshot()
   })
@@ -51,7 +51,7 @@ describe('displays a home screen', () => {
    * Then the Home Screen is displayed
    * TODO:(jl) Good enough to be captured by the snapshot?
    */
-  it('defaults to no notifications', async () => {
+  test('defaults to no notifications', async () => {
     const { findByText } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
@@ -94,7 +94,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the Home Screen successfully loads
    * Then the number of pending notifications is displayed in the "Home" button in the main navigation bar
    */
-  it('notification label is displayed with number of notifications', async () => {
+  test('notification label is displayed with number of notifications', async () => {
     const { findByText } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
@@ -105,7 +105,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
     expect(notificationLabel).toBeTruthy()
   })
 
-  it('Pressing the "See All" button navigates correctly', async () => {
+  test('Pressing the "See All" button navigates correctly', async () => {
     const navigation = useNavigation()
     const { findByText } = render(
       <ConfigurationContext.Provider value={configurationContext}>
@@ -127,7 +127,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the issuer sends a credential offer
    * Then the credential offer will arrive in the form of a notification in the home screen
    */
-  it('notifications are displayed', () => {
+  test('notifications are displayed', () => {
     const tree = create(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
@@ -145,7 +145,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the credential offer
    * When the holder is taken to the credential offer screen/flow
    */
-  it('touch notification triggers navigation correctly', async () => {
+  test('touch notification triggers navigation correctly', async () => {
     const tree = create(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
@@ -176,7 +176,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the proof request
    * When the holder is taken to the proof request screen/flow
    */
-  it('touch notification triggers navigation correctly', async () => {
+  test('touch notification triggers navigation correctly', async () => {
     const tree = create(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />

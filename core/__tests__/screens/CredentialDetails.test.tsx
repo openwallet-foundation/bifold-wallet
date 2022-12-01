@@ -58,8 +58,9 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('react-native-localize', () => {
   return require('../../__mocks__/custom/react-native-localize')
 })
-const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
 jest.useRealTimers()
+
+const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
 
 /**
  * Given a credential has been accepted

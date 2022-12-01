@@ -53,6 +53,7 @@ describe('ConnectionModal Component', () => {
     })
 
     const backHomeBtn = tree.getByTestId(testIdWithKey('BackToHome'))
+
     fireEvent(backHomeBtn, 'press')
 
     expect(tree).toMatchSnapshot()

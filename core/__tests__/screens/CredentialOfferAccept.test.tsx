@@ -10,7 +10,6 @@ import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
 import { testIdWithKey } from '../../App/utils/testable'
 import timeTravel from '../util/timetravel'
 
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })

@@ -64,10 +64,6 @@ describe('displays a credentials list screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // testCredentialRecords.credentials.forEach((credential: CredentialExchangeRecord) => {
-      //   credential.credentials[0].credentialRecordId = credential.id
-      // })
-
       // @ts-ignore
       useCredentialByState.mockImplementation((state) =>
         testCredentialRecords.credentials.filter((c) => c.state === state)
@@ -95,6 +91,7 @@ describe('displays a credentials list screen', () => {
         const credentialItemInstance = credentialItemInstances[0]
 
         fireEvent(credentialItemInstance, 'press')
+
         expect(navigation.navigate).toBeCalledWith('Credential Details', {
           credentialId: testOpenVPCredentialRecord.id,
         })
