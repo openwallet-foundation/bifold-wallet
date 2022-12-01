@@ -21,6 +21,7 @@ describe('PIN creation validations', () => {
       expect(pinValidation.isInvalid).toBe(false)
     }
   })
+
   test('PIN too short with every validations to false should return PinTooShortValidation as invalid', async () => {
     const pinTooShort = '12345'
     const pinValidations = pinCreationValidations(pinTooShort, defaultPinRules)
@@ -31,6 +32,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('PIN too long with every validations to false should return PinTooLongValidation as invalid', async () => {
     const pinTooLong = '1234567'
     const pinValidations = pinCreationValidations(pinTooLong, defaultPinRules)
@@ -41,6 +43,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('PIN without only number and only number validation to true should return PinOnlyContainDigitsValidation as invalid', async () => {
     const pinRulesWithOnlyNumbers = {
       ...defaultPinRules,
@@ -56,6 +59,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('PIN with only number and only number validation to true should return PinOnlyContainDigitsValidation as valid', async () => {
     const pinRulesWithOnlyNumbers = {
       ...defaultPinRules,
@@ -69,6 +73,7 @@ describe('PIN creation validations', () => {
       expect(pinValidation.isInvalid).toBe(false)
     }
   })
+
   test('PIN with repeated numbers and repeated numbers validation to true, so the validation use the default of two repeated numbers, should return NoRepetitionOfTheSameNumbersValidation as invalid', async () => {
     const pinRulesWithRepeatedNumbers = {
       ...defaultPinRules,
@@ -84,6 +89,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('PIN with repeated numbers and repeated numbers validation to a number, so the validation use that number as validation limit, should return NoRepetitionOfTheSameNumbersValidation as invalid', async () => {
     const pinRulesWithRepeatedNumbers = {
       ...defaultPinRules,
@@ -99,6 +105,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('PIN with a numbers repeated two times and repeated numbers validation set to 3 should return NoRepetitionOfTheSameNumbersValidation as valid', async () => {
     const pinRulesWithRepeatedNumbers = {
       ...defaultPinRules,
@@ -114,6 +121,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('PIN containing a serie of three numbers and no series of numbers validation to true should return NoSeriesOfNumbersValidation as invalid', async () => {
     const pinRulesWithNoSeriesOfNumbers = {
       ...defaultPinRules,
@@ -129,6 +137,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('PIN without a serie of three numbers and no series of numbers validation to true should return NoSeriesOfNumbersValidation as valid', async () => {
     const pinRulesWithNoSeriesOfNumbers = {
       ...defaultPinRules,
@@ -143,6 +152,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin containing a repetition of two numbers and no repetition of two same numbers validation to true, so the validation use the default of two repetition of two numbers, should return NoRepetitionOfTheTwoSameNumbersValidation as invalid', async () => {
     const pinRulesWithNoRepetitionOfTwoSameNumbers = {
       ...defaultPinRules,
@@ -161,6 +171,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin containing a three times repetition of two numbers and no repetition of two same numbers validation set to 3 should return NoRepetitionOfTheTwoSameNumbersValidation as invalid', async () => {
     const pinRulesWithNoRepetitionOfTwoSameNumbers = {
       ...defaultPinRules,
@@ -179,6 +190,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin containing a repetition of two numbers and no repetition of two same numbers validation set to 3 should return NoRepetitionOfTheTwoSameNumbersValidation as valid', async () => {
     const pinRulesWithNoRepetitionOfTwoSameNumbers = {
       ...defaultPinRules,
@@ -197,6 +209,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin containing a serie of odd numbers and no series of odd numbers validation to true should return NoSeriesOfOddNumbersValidation as invalid', async () => {
     const pinRulesWithNoSeriesOfOddNumbers = {
       ...defaultPinRules,
@@ -212,6 +225,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin containing a serie of even numbers and no series of even numbers validation to true should return NoSeriesOfEvenNumbersValidation as invalid', async () => {
     const pinRulesWithNoSeriesOfEvenNumbers = {
       ...defaultPinRules,
@@ -227,6 +241,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin without a serie of odd or even numbers and no series of odd numbers validation to true should return NoSeriesOfOddNumbersValidation as valid', async () => {
     const pinRulesWithNoSeriesOfOddNumbers = {
       ...defaultPinRules,
@@ -241,6 +256,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin containing a cross pattern and no cross pattern validation to true should return NoCrossPatternValidation as invalid', async () => {
     const pinRulesWithNoCrossPattern = {
       ...defaultPinRules,
@@ -256,6 +272,7 @@ describe('PIN creation validations', () => {
       }
     }
   })
+
   test('Pin without a cross pattern and no cross pattern validation to true should return NoCrossPatternValidation as valid', async () => {
     const pinRulesWithNoCrossPattern = {
       ...defaultPinRules,

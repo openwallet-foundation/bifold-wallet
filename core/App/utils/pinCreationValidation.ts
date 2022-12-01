@@ -17,6 +17,7 @@ export interface PinValidationsType {
     | 'PinOnlyContainDigitsValidation'
     | 'PinTooShortValidation'
     | 'PinTooLongValidation'
+    | 'SeriesOfThreeNumbersValidation'
 }
 
 export const pinCreationValidations = (pin: string, pinRules: PINRules) => {
