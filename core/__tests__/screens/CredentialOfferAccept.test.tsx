@@ -32,7 +32,6 @@ describe('displays a credential accept screen', () => {
     const tree = render(<CredentialOfferAccept visible={true} credentialId={credentialId} />)
 
     const doneButton = tree.queryByTestId('Done')
-    // const backToHomeButton = tree.queryByTestId(testIdWithKey('BackToHome'))
 
     expect(tree).toMatchSnapshot()
     expect(doneButton).toBeNull()

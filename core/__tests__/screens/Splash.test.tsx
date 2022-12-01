@@ -28,5 +28,3 @@ describe('Splash Screen', () => {
     expect(true).toBe(true)
   })
 })
-
-export {}
