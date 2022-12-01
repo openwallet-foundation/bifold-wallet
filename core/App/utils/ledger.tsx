@@ -5,7 +5,7 @@ import { GenesisTransaction } from '../types/genesis'
 
 export const canConnectToLedgerNode = async (node: { host: string; port: number }): Promise<boolean> =>
   new Promise((resolve) => {
-    const socketTimeoutInMs = 8000
+    const socketTimeoutInMs = 3000
     const client = TcpSocket.createConnection(node, () => {
       resolve(true)
       client.destroy()
