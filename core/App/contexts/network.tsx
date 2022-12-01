@@ -1,9 +1,9 @@
-import NetInfo, { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
+import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
 import * as React from 'react'
 import { createContext, useContext, useState } from 'react'
-import TcpSocket from 'react-native-tcp-socket'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
+import { fetchLedgerNodes, canConnectToLedgerNode } from '../utils/ledger'
 
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean
@@ -40,24 +40,22 @@ export const NetworkProvider: React.FC = ({ children }) => {
     return isConnected
   }
 
-  const assertLedgerConnectivity = (): Promise<boolean> =>
-    new Promise((resolve) => {
-      const opts = { host: '138.197.138.255', port: 9708 }
+  const assertLedgerConnectivity = async (): Promise<boolean> => {
+    const nodes = fetchLedgerNodes()
+    const connections = []
 
-      const client = TcpSocket.createConnection(opts, () => {
-        resolve(true)
+    if (typeof nodes === 'undefined' || nodes.length === 0) {
+      return false
+    }
 
-        client.destroy()
-      })
+    for (const n of nodes) {
+      connections.push(canConnectToLedgerNode(n))
+    }
 
-      client.on('error', () => {
-        resolve(false)
-      })
+    const results = await Promise.all(connections)
 
-      // Other events that can be safely be ignored. See the
-      // library for more details:
-      // https://www.npmjs.com/package/react-native-tcp-socket
-    })
+    return results.includes(true)
+  }
 
   return (
     <NetworkContext.Provider
