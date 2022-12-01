@@ -135,5 +135,8 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "react-native-tcp-socket": "^6.0.3"
   }
 }

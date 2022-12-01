@@ -1,6 +1,7 @@
-import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
+import NetInfo, { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
 import * as React from 'react'
 import { createContext, useContext, useState } from 'react'
+import TcpSocket from 'react-native-tcp-socket'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
 
@@ -9,6 +10,7 @@ export interface NetworkContext {
   assertConnectedNetwork: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
+  assertLedgerConnectivity: () => Promise<boolean>
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
@@ -34,8 +36,28 @@ export const NetworkProvider: React.FC = ({ children }) => {
     if (!isConnected) {
       displayNetInfoModal()
     }
+
     return isConnected
   }
+
+  const assertLedgerConnectivity = (): Promise<boolean> =>
+    new Promise((resolve) => {
+      const opts = { host: '138.197.138.255', port: 9708 }
+
+      const client = TcpSocket.createConnection(opts, () => {
+        resolve(true)
+
+        client.destroy()
+      })
+
+      client.on('error', () => {
+        resolve(false)
+      })
+
+      // Other events that can be safely be ignored. See the
+      // library for more details:
+      // https://www.npmjs.com/package/react-native-tcp-socket
+    })
 
   return (
     <NetworkContext.Provider
@@ -44,6 +66,7 @@ export const NetworkProvider: React.FC = ({ children }) => {
         assertConnectedNetwork,
         displayNetInfoModal,
         hideNetInfoModal,
+        assertLedgerConnectivity,
       }}
     >
       {children}
