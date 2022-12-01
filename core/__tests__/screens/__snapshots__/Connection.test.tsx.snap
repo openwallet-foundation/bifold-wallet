@@ -235,21 +235,31 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
         }
         testID="com.ariesbifold:id/BackToHome"
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
           }
         >
-          Loading.BackToHome
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#42803E",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            Loading.BackToHome
+          </Text>
+        </View>
       </View>
     </View>
   </RNCSafeAreaView>
