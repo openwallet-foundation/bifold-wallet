@@ -79,3 +79,78 @@ exports[`Record Field Component Shown binary field should render a binary field 
   />
 </View>
 `;
+
+exports[`Record Field Component Shown date field should render a date field 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#313132",
+      "paddingHorizontal": 25,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        },
+        Object {
+          "fontWeight": "bold",
+        },
+      ]
+    }
+    testID="com.ariesbifold:id/AttributeName"
+  >
+    Test
+  </Text>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingTop": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "paddingVertical": 4,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          }
+        }
+        testID="com.ariesbifold:id/AttributeValue"
+      >
+        Record.InvalidDate20000101
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "borderBottomColor": "#000000",
+          "borderBottomWidth": 2,
+          "paddingTop": 12,
+        },
+        false,
+      ]
+    }
+  />
+</View>
+`;

@@ -12,14 +12,14 @@ jest.mock('@react-navigation/native', () => {
 })
 
 describe('CameraDisclosure Screen', () => {
-  it('Renders correctly', () => {
+  test('Renders correctly', () => {
     const cb = jest.fn()
     const tree = render(<CameraDisclosure didDismissCameraDisclosure={cb} />)
 
     expect(tree).toMatchSnapshot()
   })
 
-  it('Okay button triggers callback', () => {
+  test('Okay button triggers callback', () => {
     const cb = jest.fn()
     const { getByTestId } = render(<CameraDisclosure didDismissCameraDisclosure={cb} />)
 

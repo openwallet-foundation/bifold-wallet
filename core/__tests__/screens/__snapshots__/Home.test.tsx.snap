@@ -168,45 +168,5 @@ exports[`displays a home screen renders correctly 1`] = `
       </View>
     </View>
   </RCTScrollView>
-  <View>
-    <View
-      style={
-        Object {
-          "paddingHorizontal": 25,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-              "marginHorizontal": 25,
-              "marginTop": 35,
-            },
-          ]
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              Object {
-                "marginTop": 25,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Home.NoCredentials
-        </Text>
-      </View>
-    </View>
-  </View>
 </View>
 `;

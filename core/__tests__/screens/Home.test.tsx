@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
@@ -11,11 +13,12 @@ import React from 'react'
 import { FlatList } from 'react-native'
 import { create } from 'react-test-renderer'
 
+// eslint-disable-next-line import/no-named-as-default
 import Button from '../../App/components/buttons/Button'
 import NotificationListItem, { NotificationType } from '../../App/components/listItems/NotificationListItem'
-import HomeContentView from '../../App/components/views/HomeContentView'
-import { ConfigurationContext, ConfigurationProvider } from '../../App/contexts/configuration'
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import Home from '../../App/screens/Home'
+import configurationContext from '../contexts/configuration'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -24,25 +27,19 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
-const defaultConfiguration: ConfigurationContext = {
-  pages: undefined,
-  splash: undefined,
-  terms: undefined,
-  homeContentView: HomeContentView,
-}
-
 describe('displays a home screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // eslint-disable-next-line import/no-named-as-default-member
     React.useState = jest.fn().mockReturnValue([false, jest.fn()])
   })
 
-  it('renders correctly', () => {
-    const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
-    ).toJSON()
+  test('renders correctly', () => {
+    const tree = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
+    )
 
     expect(tree).toMatchSnapshot()
   })
@@ -54,11 +51,11 @@ describe('displays a home screen', () => {
    * Then the Home Screen is displayed
    * TODO:(jl) Good enough to be captured by the snapshot?
    */
-  it('defaults to no notifications', async () => {
+  test('defaults to no notifications', async () => {
     const { findByText } = render(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const notificationLabel = await findByText('Home.NoNewUpdates')
 
@@ -71,6 +68,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
     new CredentialRecord({
       threadId: '1',
       state: CredentialState.OfferReceived,
+      protocolVersion: 'v1',
     }),
   ]
   const testProofRecords: ProofRecord[] = [
@@ -82,6 +80,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
   beforeEach(() => {
     jest.clearAllMocks()
+    // eslint-disable-next-line import/no-named-as-default-member
     React.useState = jest.fn().mockReturnValue([false, jest.fn()])
     // @ts-ignore
     useCredentialByState.mockReturnValue(testCredentialRecords)
@@ -95,23 +94,23 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the Home Screen successfully loads
    * Then the number of pending notifications is displayed in the "Home" button in the main navigation bar
    */
-  it('notification label is displayed with number of notifications', async () => {
+  test('notification label is displayed with number of notifications', async () => {
     const { findByText } = render(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const notificationLabel = await findByText('Home.Notifications (2)')
 
     expect(notificationLabel).toBeTruthy()
   })
 
-  it('Pressing the "See All" button navigates correctly', async () => {
+  test('Pressing the "See All" button navigates correctly', async () => {
     const navigation = useNavigation()
     const { findByText } = render(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const seeAllButton = await findByText('Home.SeeAll')
 
@@ -128,11 +127,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the issuer sends a credential offer
    * Then the credential offer will arrive in the form of a notification in the home screen
    */
-  it('notifications are displayed', () => {
+  test('notifications are displayed', () => {
     const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const root = tree.root
     const flatListInstance = root.findByType(FlatList)
@@ -146,11 +145,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the credential offer
    * When the holder is taken to the credential offer screen/flow
    */
-  it('touch notification triggers navigation correctly', async () => {
+  test('touch notification triggers navigation correctly', async () => {
     const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const root = tree.root
     const notifications = root.findAllByType(NotificationListItem)
@@ -177,11 +176,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the proof request
    * When the holder is taken to the proof request screen/flow
    */
-  it('touch notification triggers navigation correctly', async () => {
+  test('touch notification triggers navigation correctly', async () => {
     const tree = create(
-      <ConfigurationProvider value={defaultConfiguration}>
-        <Home navigation={useNavigation()} />
-      </ConfigurationProvider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
     )
     const root = tree.root
     const notifications = root.findAllByType(NotificationListItem)
