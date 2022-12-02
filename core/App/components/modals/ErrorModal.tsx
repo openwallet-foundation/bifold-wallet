@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, Modal, StyleSheet, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { BifoldError } from '../../../lib/commonjs/types/error'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
+import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 const { height } = Dimensions.get('window')

@@ -4,7 +4,7 @@ import { State } from '../types/state'
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
 
-type Reducer = <S extends State>(state: S, action: ReducerAction) => S
+type Reducer = <S extends State>(state: S, action: ReducerAction<any>) => S
 
 interface StoreProviderProps {
   initialState?: State
@@ -39,7 +39,7 @@ export const defaultState: State = {
   loading: false,
 }
 
-export const StoreContext = createContext<[State, Dispatch<ReducerAction>]>([
+export const StoreContext = createContext<[State, Dispatch<ReducerAction<any>>]>([
   defaultState,
   () => {
     return
@@ -47,7 +47,7 @@ export const StoreContext = createContext<[State, Dispatch<ReducerAction>]>([
 ])
 
 export const mergeReducers = (a: Reducer, b: Reducer): Reducer => {
-  return <S extends State>(state: S, action: ReducerAction): S => {
+  return <S extends State>(state: S, action: ReducerAction<any>): S => {
     return a(b(state, action), action)
   }
 }
@@ -62,8 +62,8 @@ export const StoreProvider: React.FC<StoreProviderProps> = ({ children, initialS
   return <StoreContext.Provider value={[state, dispatch]}>{children}</StoreContext.Provider>
 }
 
-export const useStore = <T extends State>(): [T, Dispatch<ReducerAction>] => {
+export const useStore = <S extends State>(): [S, Dispatch<ReducerAction<any>>] => {
   const context = useContext(StoreContext)
 
-  return context as unknown as [T, Dispatch<ReducerAction>]
+  return context as unknown as [S, Dispatch<ReducerAction<any>>]
 }
