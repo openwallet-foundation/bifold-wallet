@@ -1,13 +1,13 @@
+import { render } from '@testing-library/react-native'
 import React from 'react'
-import { create } from 'react-test-renderer'
 
 import InfoTextBox from '../../App/components/texts/InfoTextBox'
 
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon')
 
 describe('InfoTextBox Component', () => {
-  it('Renders correctly', () => {
-    const tree = create(<InfoTextBox>Hello World</InfoTextBox>).toJSON()
+  test('Renders correctly', () => {
+    const tree = render(<InfoTextBox>Hello World</InfoTextBox>)
 
     expect(tree).toMatchSnapshot()
   })

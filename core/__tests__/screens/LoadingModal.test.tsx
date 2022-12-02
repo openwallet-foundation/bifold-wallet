@@ -4,8 +4,6 @@ import React from 'react'
 import LoadingModal from '../../App/components/modals/LoadingModal'
 import { testIdWithKey } from '../../App/utils/testable'
 
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
-
 describe('displays loading screen', () => {
   test('renders correctly', () => {
     const tree = render(<LoadingModal />)

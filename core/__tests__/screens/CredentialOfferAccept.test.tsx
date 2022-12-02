@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { render, waitFor } from '@testing-library/react-native'
@@ -9,7 +10,6 @@ import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
 import { testIdWithKey } from '../../App/utils/testable'
 import timeTravel from '../util/timetravel'
 
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })
@@ -32,7 +32,6 @@ describe('displays a credential accept screen', () => {
     const tree = render(<CredentialOfferAccept visible={true} credentialId={credentialId} />)
 
     const doneButton = tree.queryByTestId('Done')
-    const backToHomeButton = tree.queryByTestId(testIdWithKey('BackToHome'))
 
     expect(tree).toMatchSnapshot()
     expect(doneButton).toBeNull()

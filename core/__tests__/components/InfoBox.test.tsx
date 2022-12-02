@@ -12,7 +12,6 @@ describe('ErrorModal Component', () => {
         notificationType={InfoBoxType.Info}
         title={'Hello Title'}
         message={'The quick brown fox jumped over the lazy dog.'}
-        code={1024}
         onCallToActionPressed={callToAction}
       />
     )
@@ -27,7 +26,6 @@ describe('ErrorModal Component', () => {
         notificationType={InfoBoxType.Success}
         title={'Hello Title'}
         message={'The quick brown fox jumped over the lazy dog.'}
-        code={1024}
         onCallToActionPressed={callToAction}
       />
     )
@@ -42,7 +40,6 @@ describe('ErrorModal Component', () => {
         notificationType={InfoBoxType.Warn}
         title={'Hello Title'}
         message={'The quick brown fox jumped over the lazy dog.'}
-        code={1024}
         onCallToActionPressed={callToAction}
       />
     )
@@ -57,7 +54,6 @@ describe('ErrorModal Component', () => {
         notificationType={InfoBoxType.Error}
         title={'Hello Title'}
         message={'The quick brown fox jumped over the lazy dog.'}
-        code={1024}
         onCallToActionPressed={callToAction}
       />
     )
@@ -85,7 +81,6 @@ describe('ErrorModal Component', () => {
         notificationType={InfoBoxType.Info}
         title={'Hello Title'}
         message={'The quick brown fox jumped over the lazy dog.'}
-        code={1024}
         onCallToActionPressed={callToAction}
       />
     )

@@ -6,17 +6,21 @@ const oddNumberSeries = new RegExp('(02468)')
 const isNumber = new RegExp('^[0-9]+$')
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
+export enum PinError {
+  CrossPatternValidation = 'CrossPatternValidation',
+  OddOrEvenSequenceValidation = 'OddOrEvenSequenceValidation',
+  NoRepetitionOfTheSameNumbersValidation = 'NoRepetitionOfTheSameNumbersValidation',
+  NoRepetitionOfTheTwoSameNumbersValidation = 'NoRepetitionOfTheTwoSameNumbersValidation',
+  NoSeriesOfNumbersValidation = 'NoSeriesOfNumbersValidation',
+  PinOnlyContainDigitsValidation = 'PinOnlyContainDigitsValidation',
+  PinTooShortValidation = 'PinTooShortValidation',
+  PinTooLongValidation = 'PinTooLongValidation',
+  SeriesOfThreeNumbersValidation = 'SeriesOfThreeNumbersValidation',
+}
+
 export interface PinValidationsType {
   isInvalid: boolean
-  errorName:
-    | 'CrossPatternValidation'
-    | 'OddOrEvenSequenceValidation'
-    | 'NoRepetitionOfTheSameNumbersValidation'
-    | 'NoRepetitionOfTheTwoSameNumbersValidation'
-    | 'NoSeriesOfNumbersValidation'
-    | 'PinOnlyContainDigitsValidation'
-    | 'PinTooShortValidation'
-    | 'PinTooLongValidation'
+  errorName: PinError
 }
 
 export const pinCreationValidations = (pin: string, pinRules: PINRules) => {
@@ -24,13 +28,13 @@ export const pinCreationValidations = (pin: string, pinRules: PINRules) => {
   if (pinRules.no_cross_pattern) {
     pinValidations.push({
       isInvalid: crossNumberPattern.includes(pin),
-      errorName: 'CrossPatternValidation',
+      errorName: PinError.CrossPatternValidation,
     } as PinValidationsType)
   }
   if (pinRules.no_even_or_odd_series_of_numbers) {
     pinValidations.push({
       isInvalid: evenNumberSeries.test(pin) || oddNumberSeries.test(pin),
-      errorName: 'OddOrEvenSequenceValidation',
+      errorName: PinError.OddOrEvenSequenceValidation,
     } as PinValidationsType)
   }
   if (pinRules.no_repeated_numbers) {
@@ -40,7 +44,7 @@ export const pinCreationValidations = (pin: string, pinRules: PINRules) => {
     }
     pinValidations.push({
       isInvalid: noRepeatedNumbers.test(pin),
-      errorName: 'NoRepetitionOfTheSameNumbersValidation',
+      errorName: PinError.NoRepetitionOfTheSameNumbersValidation,
     } as PinValidationsType)
   }
   if (pinRules.no_repetition_of_the_two_same_numbers) {
@@ -52,25 +56,25 @@ export const pinCreationValidations = (pin: string, pinRules: PINRules) => {
     }
     pinValidations.push({
       isInvalid: noRepetitionOfTheTwoSameNumbers.test(pin),
-      errorName: 'NoRepetitionOfTheTwoSameNumbersValidation',
+      errorName: PinError.NoRepetitionOfTheTwoSameNumbersValidation,
     } as PinValidationsType)
   }
   if (pinRules.no_series_of_numbers) {
     pinValidations.push({
       isInvalid: consecutiveSeriesOfThree.test(pin),
-      errorName: 'NoSeriesOfNumbersValidation',
+      errorName: PinError.NoSeriesOfNumbersValidation,
     } as PinValidationsType)
   }
   if (pinRules.only_numbers) {
     pinValidations.push({
       isInvalid: !isNumber.test(pin),
-      errorName: 'PinOnlyContainDigitsValidation',
+      errorName: PinError.PinOnlyContainDigitsValidation,
     } as PinValidationsType)
   }
 
   pinValidations.push({
     isInvalid: pin.length < pinRules.min_length || pin.length > pinRules.max_length,
-    errorName: pin.length < pinRules.max_length ? 'PinTooShortValidation' : 'PinTooLongValidation',
+    errorName: pin.length < pinRules.max_length ? PinError.PinTooShortValidation : PinError.PinTooLongValidation,
   } as PinValidationsType)
 
   return pinValidations

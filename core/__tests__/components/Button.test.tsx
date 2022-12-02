@@ -1,11 +1,12 @@
+import { render } from '@testing-library/react-native'
 import React from 'react'
-import { create } from 'react-test-renderer'
 
+// eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../../App/components/buttons/Button'
 
 describe('Button Component', () => {
-  it('Primary renders correctly', () => {
-    const tree = create(
+  test('Primary renders correctly', () => {
+    const tree = render(
       <Button
         title={'Hello Primary'}
         accessibilityLabel={'primary'}
@@ -14,13 +15,13 @@ describe('Button Component', () => {
         }}
         buttonType={ButtonType.Primary}
       />
-    ).toJSON()
+    )
 
     expect(tree).toMatchSnapshot()
   })
 
-  it('Secondary renders correctly', () => {
-    const tree = create(
+  test('Secondary renders correctly', () => {
+    const tree = render(
       <Button
         title={'Hello Secondary'}
         accessibilityLabel={'secondary'}
@@ -29,7 +30,7 @@ describe('Button Component', () => {
         }}
         buttonType={ButtonType.Secondary}
       />
-    ).toJSON()
+    )
 
     expect(tree).toMatchSnapshot()
   })
