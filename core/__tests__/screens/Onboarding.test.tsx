@@ -26,22 +26,14 @@ const pages = [
 ]
 
 describe('Onboarding', () => {
-  it('Renders correctly', () => {
+  test('Renders correctly', () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)
 
     expect(tree).toMatchSnapshot()
   })
 
-  // it('Next works correctly', () => {
-  //   // @ts-ignore
-  //   const tree = renderer.create(<Onboarding pages={pages} onOnboardingDismissed={markTutorialFin} style={carousel} />)
-  //   const b = tree.root!.findByProps({ testID: 'nextButton' })
-
-  //   expect(markTutorialFin).toBeCalledTimes(1)
-  // })
-
-  it('Pages exist', async () => {
+  test('Pages exist', async () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const { findAllByTestId } = render(
       <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />

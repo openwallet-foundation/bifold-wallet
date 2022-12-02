@@ -1,8 +1,5 @@
-import {
-  CredentialMetadataKeys,
-  CredentialExchangeRecord as CredentialRecord,
-  CredentialState,
-} from '@aries-framework/core'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { CredentialMetadataKeys, CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
@@ -16,7 +13,7 @@ import configurationContext from '../contexts/configuration'
 
 interface CredentialContextInterface {
   loading: boolean
-  credentials: CredentialRecord[]
+  credentials: CredentialExchangeRecord[]
 }
 
 jest.mock('@react-navigation/core', () => {
@@ -25,30 +22,34 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
-jest.mock('react-native-localize', () => { })
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+jest.mock('react-native-localize', () => {})
 
 describe('displays a credentials list screen', () => {
-  const testOpenVPCredentialRecord = new CredentialRecord({
+  const testOpenVPCredentialRecord = new CredentialExchangeRecord({
     threadId: '1',
     state: CredentialState.Done,
     createdAt: new Date('2020-01-01T00:00:00'),
+    protocolVersion: 'v1',
   })
   testOpenVPCredentialRecord.metadata.set(CredentialMetadataKeys.IndyCredential, {
     schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
   })
   testOpenVPCredentialRecord.credentials.push({
     credentialRecordType: 'indy',
-    credentialRecordId: ''
+    credentialRecordId: '',
   })
-  const testCredential1 = new CredentialRecord({
+  const testCredential1 = new CredentialExchangeRecord({
     threadId: '2',
     state: CredentialState.Done,
     createdAt: new Date('2020-01-01T00:01:00'),
+    protocolVersion: 'v1',
   })
-  const testCredential2 = new CredentialRecord({
+  const testCredential2 = new CredentialExchangeRecord({
     threadId: '3',
     state: CredentialState.Done,
     createdAt: new Date('2020-01-02T00:00:00'),
+    protocolVersion: 'v1',
   })
   const testCredentialRecords: CredentialContextInterface = {
     loading: false,
@@ -63,9 +64,6 @@ describe('displays a credentials list screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      testCredentialRecords.credentials.forEach((credential: CredentialRecord) => {
-        credential.credentialId = credential.id
-      })
       // @ts-ignore
       useCredentialByState.mockImplementation((state) =>
         testCredentialRecords.credentials.filter((c) => c.state === state)
@@ -85,15 +83,18 @@ describe('displays a credentials list screen', () => {
           <ListCredentials />
         </ConfigurationContext.Provider>
       )
-      await act( async () => {
+      await act(async () => {
         const credentialItemInstances = await findAllByText('Person', { exact: false })
 
         expect(credentialItemInstances.length).toBe(1)
-  
+
         const credentialItemInstance = credentialItemInstances[0]
-  
+
         fireEvent(credentialItemInstance, 'press')
-        expect(navigation.navigate).toBeCalledWith('Credential Details', { credentialId: testOpenVPCredentialRecord.id })
+
+        expect(navigation.navigate).toBeCalledWith('Credential Details', {
+          credentialId: testOpenVPCredentialRecord.id,
+        })
       })
     })
   })
@@ -111,7 +112,7 @@ describe('displays a credentials list screen', () => {
         <ListCredentials />
       </ConfigurationContext.Provider>
     )
-    await act( async () => {
+    await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
       expect(credentialCards.length).toBe(3)

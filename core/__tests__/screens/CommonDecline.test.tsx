@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
@@ -25,7 +27,8 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
-jest.mock('react-native-localize', () => { })
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+jest.mock('react-native-localize', () => {})
 
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
@@ -37,10 +40,6 @@ describe('common decline screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
-
-  //
-  // Proof
-  //
 
   test('decline proof renders correctly', () => {
     // @ts-ignore
@@ -101,20 +100,17 @@ describe('common decline screen', () => {
     const doneButton = getByTestId(testIdWithKey('Done'))
 
     fireEvent(doneButton, 'press')
+
     const navigation = useNavigation()
 
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
   })
 
-  //
-  // Offer
-  //
-
   test('decline offer renders correctly', async () => {
     const rec = new CredentialRecord(credential)
     rec.credentials.push({
       credentialRecordType: 'indy',
-      credentialRecordId: ''
+      credentialRecordId: '',
     })
     // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
     rec.createdAt = new Date(rec.createdAt)
@@ -130,13 +126,18 @@ describe('common decline screen', () => {
         <CommonDecline route={props as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    await act(async ()=>{
+
+    await act(async () => {
       // wait for appearance inside an assertion
-      await waitFor(() => {
-        expect(tree.getByTestId(testIdWithKey('ShowCredentialDetails'))).toBeDefined()
-      },{timeout: 50000})
+      await waitFor(
+        () => {
+          expect(tree.getByTestId(testIdWithKey('ShowCredentialDetails'))).toBeDefined()
+        },
+        { timeout: 50000 }
+      )
       const confirmDeclineButton = tree.getByTestId(testIdWithKey('ConfirmDeclineButton'))
       const abortDeclineButton = tree.getByTestId(testIdWithKey('AbortDeclineButton'))
+
       expect(confirmDeclineButton).not.toBeNull()
       expect(abortDeclineButton).not.toBeNull()
       expect(tree).toMatchSnapshot()
@@ -159,7 +160,8 @@ describe('common decline screen', () => {
         <CommonDecline route={props as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    await act(async ()=>{
+
+    await act(async () => {
       const confirmDeclineButton = getByTestId(testIdWithKey('ConfirmDeclineButton'))
       const { agent } = useAgent()
 
@@ -217,6 +219,7 @@ describe('common decline screen', () => {
     const doneButton = getByTestId(testIdWithKey('Done'))
 
     fireEvent(doneButton, 'press')
+
     const navigation = useNavigation()
 
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CredentialExchangeRecord, GetFormatDataReturn, IndyCredentialFormat, ProofRecord } from '@aries-framework/core'
 
 const useCredentials = jest.fn().mockReturnValue({ credentials: [] } as any)

@@ -21,7 +21,7 @@ export interface PINRules {
   no_cross_pattern: boolean
 }
 
-export interface PinSecurityParams {
+export interface PINSecurityParams {
   rules: PINRules
   displayHelper: boolean
 }

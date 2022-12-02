@@ -5,20 +5,20 @@ import FauxNavigationBar from '../../App/components/views/FauxNavigationBar'
 import { testIdWithKey } from '../../App/utils/testable'
 
 describe('Faux Navigation Bar Component', () => {
-  it('Renders without home icon', () => {
+  test('Renders without home icon', () => {
     const tree = render(<FauxNavigationBar title={'Hello'} />)
 
     expect(tree).toMatchSnapshot()
   })
 
-  it('Renders with home icon', () => {
+  test('Renders with home icon', () => {
     const cb = jest.fn()
     const tree = render(<FauxNavigationBar title={'Hello'} onHomeTouched={cb} />)
 
     expect(tree).toMatchSnapshot()
   })
 
-  it('Home button triggers callback as expected', () => {
+  test('Home button triggers callback as expected', () => {
     const cb = jest.fn()
     const tree = render(<FauxNavigationBar title={'Hello'} onHomeTouched={cb} />)
     const homeButton = tree.getByTestId(testIdWithKey('HomeButton'))

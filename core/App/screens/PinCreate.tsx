@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
@@ -16,6 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+// eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
 import AlertModal from '../components/modals/AlertModal'
@@ -94,7 +95,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         setModalState({
           visible: true,
           title: t('PinCreate.InvalidPIN'),
-          message: t(`PinCreate.Message.${validation.errorName}`),
+          message: t('PinCreate.Message.Interpolation', { message: validation.errorName }),
         })
         return
       }
@@ -154,7 +155,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
                     <Icon name="check" size={24} color={ColorPallet.notification.success} />
                   )}
                   <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                    {t(`PinCreate.Helper.${validation.errorName}`)}
+                    {t('PinCreate.Helper.Interpolation', { helper: validation.errorName })}
                   </Text>
                 </View>
               )

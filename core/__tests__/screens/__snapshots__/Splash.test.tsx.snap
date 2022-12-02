@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Splash Screen Renders correctly 1`] = `
+<RNCSafeAreaView
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#000000",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      }
+    }
+    testID="com.ariesbifold:id/LoadingActivityIndicator"
+  >
+    <Image
+      source={
+        Object {
+          "default": "",
+        }
+      }
+      style={
+        Object {
+          "height": "33%",
+          "width": "33%",
+        }
+      }
+      testID="com.ariesbifold:id/LoadingActivityIndicatorImage"
+    />
+    <View
+      collapsable={false}
+      nativeID="animatedComponent"
+      style={
+        Object {
+          "position": "absolute",
+          "transform": Array [
+            Object {
+              "rotate": "0deg",
+            },
+          ],
+        }
+      }
+    >
+      <
+        fill="#FFFFFF"
+        height={200}
+        width={200}
+      />
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;

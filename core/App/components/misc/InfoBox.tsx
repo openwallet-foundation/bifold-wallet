@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
+// eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../buttons/Button'
 
 const iconSize = 30

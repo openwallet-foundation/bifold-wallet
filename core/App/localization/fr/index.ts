@@ -30,8 +30,8 @@ const translation = {
         "ShowDetails": "Afficher les détails",
         "TryAgain": "Réessayer",
         "Biometrics": "Biométrie",
-        "On": 'Activé',
-        "Off": 'Désactivé',
+        "On": "Activé",
+        "Off": "Désactivé",
     },
     "Language": {
         "English": "Anglais",
@@ -73,33 +73,32 @@ const translation = {
         "Attestation": "J'ai lu, je comprends et j'accepte les conditions."
     },
     "PrivacyPolicy": {
-    "Title": 'Politique de confidentialité',
+    "Title": "Politique de confidentialité",
     "CameraDisclosure":
       "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
   },
     "PinCreate": {
         "Message": {
-            "CrossPatternValidation": 'Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.',
-            "OddOrEvenSequenceValidation":
-                'Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
-            "NoRepetitionOfTheTwoSameNumbersValidation":
-                'Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
-            "NoRepetitionOfTheSameNumbersValidation":
-                'Votre NIP possède des nombres consécutifs identiques. Veuillez saisir un NIP différent',
-            "NoSeriesOfNumbersValidation": 'Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.',
-            "PinOnlyContainDigitsValidation": 'Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.',
-            "PinTooShortValidation": 'Votre NIP est trop court. Veuillez saisir un NIP différent.',
-            "PinTooLongValidation": 'Votre NIP est trop long. Veuillez saisir un NIP différent.',
+            "Interpolation": "{{ message }}", // Do not translate
+            "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
+            "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
+            "NoRepetitionOfTheTwoSameNumbersValidation": "Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
+            "NoRepetitionOfTheSameNumbersValidation": "Votre NIP possède des nombres consécutifs identiques. Veuillez saisir un NIP différent",
+            "NoSeriesOfNumbersValidation": "Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
+            "PinOnlyContainDigitsValidation": "Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.",
+            "PinTooShortValidation": "Votre NIP est trop court. Veuillez saisir un NIP différent.",
+            "PinTooLongValidation": "Votre NIP est trop long. Veuillez saisir un NIP différent.",
         },
         "Helper": {
-            "CrossPatternValidation": 'Ne doit pas contenir un patron de croix.',
-            "OddOrEvenSequenceValidation": 'Ne doit pas contenir une suite paire ou impaire.',
-            "NoRepetitionOfTheTwoSameNumbersValidation": 'Ne doit pas contenir deux chiffres qui se répètent.',
-            "NoRepetitionOfTheSameNumbersValidation": 'Ne doit pas contenir de répétition.',
-            "NoSeriesOfNumbersValidation": 'Ne doit pas contenir de suite (123).',
-            "PinOnlyContainDigitsValidation": 'Doit contenir que des chiffres.',
-            "PinTooShortValidation": 'Le NIP est de la bonne longueur.',
-            "PinTooLongValidation": 'Le NIP est de la bonne longueur.',
+            "Interpolation": "{{ helper }}", // Do not translate
+            "CrossPatternValidation": "Ne doit pas contenir un patron de croix.",
+            "OddOrEvenSequenceValidation": "Ne doit pas contenir une suite paire ou impaire.",
+            "NoRepetitionOfTheTwoSameNumbersValidation": "Ne doit pas contenir deux chiffres qui se répètent.",
+            "NoRepetitionOfTheSameNumbersValidation": "Ne doit pas contenir de répétition.",
+            "NoSeriesOfNumbersValidation": "Ne doit pas contenir de suite (123).",
+            "PinOnlyContainDigitsValidation": "Doit contenir que des chiffres.",
+            "PinTooShortValidation": "Le NIP est de la bonne longueur.",
+            "PinTooLongValidation": "Le NIP est de la bonne longueur.",
         },
         "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
         "PINTooShort": "NIP trop court",
@@ -334,7 +333,7 @@ const translation = {
         "Biometry": "Biométrie",
         "Developer": "Développeur",
         "ChangePin": "Changer NIP",
-        "CommonDecline": 'Refuser',
+        "CommonDecline": "Refuser",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",

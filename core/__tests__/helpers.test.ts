@@ -1,6 +1,7 @@
-import { sortCredentialsForAutoSelect } from '../App/utils/helpers'
-import path from 'path'
 import fs from 'fs'
+import path from 'path'
+
+import { sortCredentialsForAutoSelect } from '../App/utils/helpers'
 
 const proofCredentialPath = path.join(__dirname, './fixtures/proof-credential.json')
 const credentials = JSON.parse(fs.readFileSync(proofCredentialPath, 'utf8'))
