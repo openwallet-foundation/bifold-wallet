@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import MockDate from 'mockdate'
 
 jest.useFakeTimers('legacy')
@@ -8,13 +9,12 @@ const unitOfTime = 10
 // Polyfill `requestAnimationFrame` so that it simulates a
 // new animation frame every `unitOfTime`.
 global.requestAnimationFrame = (fn) => {
-  setTimeout(fn, unitOfTime)
+  return setTimeout(fn, unitOfTime)
 }
 
 const advanceToNextFrame = () => {
   const now = Date.now()
   MockDate.set(new Date(now + unitOfTime))
-  // Date.now = jest.fn().mockReturnValue(new Date(now + unitOfTime))
   jest.advanceTimersByTime(unitOfTime)
 }
 
