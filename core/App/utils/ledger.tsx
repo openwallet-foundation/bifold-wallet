@@ -32,6 +32,10 @@ export const canConnectToLedgerNode = async (node: { host: string; port: number 
 
 export const fetchLedgerNodes = (ledger = 'SovrinMainNet'): Array<{ host: string; port: number }> => {
   const [pool] = pools.filter((p) => p.id === ledger)
+  if (!pool) {
+    return []
+  }
+
   const genesisTransactionsAsString = pool.genesisTransactions
   let genesisTransactions: Array<GenesisTransaction> = []
 
