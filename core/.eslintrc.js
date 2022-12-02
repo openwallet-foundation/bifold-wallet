@@ -15,11 +15,6 @@ module.exports = {
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
   settings: {
-    // 'import/ignore': ['react-native'],
-    // 'import/extensions': ['.js', '.ts', 'tsx', 'jsx'],
-    // 'import/parsers': {
-    //   '@typescript-eslint/parser': ['.ts', '.tsx'],
-    // },
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
@@ -29,6 +24,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import'],
   rules: {
+    '@typescript-eslint/no-unused-vars': 'error',
     // Type is enforced by callers. Not entirely, but it's good enough.
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
-import Developer from '../screens/Developer'
 import Language from '../screens/Language'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'

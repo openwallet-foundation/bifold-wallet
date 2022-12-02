@@ -1,5 +1,4 @@
 import { Platform } from 'react-native'
-import DeviceInfo from 'react-native-device-info'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 

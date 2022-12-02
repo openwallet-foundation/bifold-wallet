@@ -1,7 +1,7 @@
 import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framework/core'
 
 import { parsedCredDefName } from '../utils/cred-def'
-import { getCredentialConnectionLabel, hashCode, hashToRGBA } from '../utils/helpers'
+import { hashCode, hashToRGBA } from '../utils/helpers'
 
 import { Attribute, Field } from './record'
 

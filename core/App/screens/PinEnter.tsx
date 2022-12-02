@@ -130,7 +130,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
       }
     })
 
-    loadWalletCredentials().catch((error: unknown) => {
+    loadWalletCredentials().catch(() => {
       // TODO:(jl) Handle error
     })
   }, [])
