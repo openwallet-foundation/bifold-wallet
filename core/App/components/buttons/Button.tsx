@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef } from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
@@ -18,7 +18,7 @@ export interface ButtonProps {
   disabled?: boolean
 }
 
-export const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
+const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
   ({ title, buttonType, accessibilityLabel, testID, onPress, disabled = false }, ref: any) => {
     const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const { Buttons, heavyOpacity } = useTheme()

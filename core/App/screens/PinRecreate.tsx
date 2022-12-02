@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Platform, StyleSheet, Text, StatusBar, View, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Button, ButtonType } from '../components/buttons/Button'
+import Button, { ButtonType } from '../components/buttons/Button'
 import PinInput from '../components/inputs/PinInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
