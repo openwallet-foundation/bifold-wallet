@@ -42,19 +42,13 @@ export const NetworkProvider: React.FC = ({ children }) => {
 
   const assertLedgerConnectivity = async (): Promise<boolean> => {
     const nodes = fetchLedgerNodes()
-    const connections = []
 
     if (typeof nodes === 'undefined' || nodes.length === 0) {
       return false
     }
 
-    for (const n of nodes) {
-      connections.push(canConnectToLedgerNode(n))
-    }
-
-    const results = await Promise.all(connections)
-
-    return results.includes(true)
+    const connections = await Promise.all(nodes.map((n: { host: string; port: number }) => canConnectToLedgerNode(n)))
+    return connections.includes(true)
   }
 
   return (
