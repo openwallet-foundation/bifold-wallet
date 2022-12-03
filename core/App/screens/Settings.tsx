@@ -127,13 +127,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           testID: testIdWithKey('Biometrics'),
           onPress: () => navigation.navigate(Screens.UseBiometry),
         },
-        // TODO: Need to resolve methods for changing PIN
-        // {
-        //   title: t('PinCreate.ChangePIN'),
-        //   accessibilityLabel: t('PinCreate.ChangePIN'),
-        //   testID: testIdWithKey('ChangePIN'),
-        //   onPress: () => navigation.navigate(Screens.RecreatePin),
-        // },
         {
           title: t('Settings.Language'),
           value: currentLanguage,

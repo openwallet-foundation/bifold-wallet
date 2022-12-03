@@ -1,4 +1,4 @@
-import { PINRules } from './types/security'
+import { PINValidationRules } from './types/security'
 
 export const defaultLanguage = 'en'
 export const dateIntFormat = 'YYYYMMDD'
@@ -61,7 +61,7 @@ export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric
 
 export const minPINLength = 6
 
-export const pinRules: PINRules = {
+export const PINRules: PINValidationRules = {
   only_numbers: true,
   min_length: 6,
   max_length: 6,

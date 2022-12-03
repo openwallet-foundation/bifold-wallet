@@ -561,7 +561,7 @@ const LoadingTheme = {
   backgroundColor: ColorPallet.brand.primaryBackground,
 }
 
-const PinInputTheme = {
+const PINInputTheme = {
   cell: {
     backgroundColor: ColorPallet.grayscale.darkGrey,
     borderColor: ColorPallet.grayscale.darkGrey,
@@ -612,7 +612,7 @@ export interface Theme {
   ChatTheme: any
   OnboardingTheme: any
   LoadingTheme: any
-  PinInputTheme: any
+  PINInputTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -632,7 +632,7 @@ export const theme: Theme = {
   ChatTheme,
   OnboardingTheme,
   LoadingTheme,
-  PinInputTheme,
+  PINInputTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,
