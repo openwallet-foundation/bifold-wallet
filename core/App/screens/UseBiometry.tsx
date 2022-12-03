@@ -9,9 +9,10 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import PinEnter, { PINEntryUsage } from '../screens/PinEnter'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
+
+import PINEnter, { PINEntryUsage } from './PINEnter'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -165,7 +166,7 @@ const UseBiometry: React.FC = () => {
         )}
       </View>
       <Modal visible={canSeeCheckPIN} transparent={true} animationType={'slide'}>
-        <PinEnter usage={PINEntryUsage.PINCheck} setAuthenticated={onAuthenticationComplete} />
+        <PINEnter usage={PINEntryUsage.PINCheck} setAuthenticated={onAuthenticationComplete} />
       </Modal>
     </SafeAreaView>
   )

@@ -5,7 +5,7 @@ import { StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import PinInput from '../components/inputs/PinInput'
+import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import AlertModal from '../components/modals/AlertModal'
 import PopupModal from '../components/modals/PopupModal'
@@ -19,7 +19,7 @@ import { hashPIN } from '../utils/crypto'
 import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-interface PinEnterProps {
+interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
   usage?: PINEntryUsage
 }
@@ -29,7 +29,7 @@ export enum PINEntryUsage {
   WalletUnlock,
 }
 
-const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock }) => {
+const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock }) => {
   const { t } = useTranslation()
   const { checkPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
   const [store, dispatch] = useStore()
@@ -268,7 +268,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, usage = PINEntryU
         ) : (
           <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PINEnter.EnterPIN')}</Text>
         )}
-        <PinInput
+        <PINInput
           onPINChanged={(p: string) => {
             setPIN(p)
             if (p.length === minPINLength) {
@@ -349,4 +349,4 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, usage = PINEntryU
   )
 }
 
-export default PinEnter
+export default PINEnter

@@ -255,7 +255,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
             ]
           }
         >
-          PinEnter.EnterPIN
+          PINEnter.EnterPIN
         </Text>
         <View>
           <View
@@ -493,7 +493,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                 </Text>
               </View>
               <TextInput
-                accessibilityLabel="PinEnter.EnterPIN"
+                accessibilityLabel="PINEnter.EnterPIN"
                 accessible={true}
                 autoCapitalize="characters"
                 autoCorrect={false}
@@ -527,7 +527,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
               />
             </View>
             <View
-              accessibilityLabel="PinCreate.Show"
+              accessibilityLabel="PINCreate.Show"
               accessible={true}
               focusable={true}
               onClick={[Function]}
@@ -580,7 +580,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
         }
       >
         <View
-          accessibilityLabel="PinEnter.Unlock"
+          accessibilityLabel="PINEnter.Unlock"
           accessibilityState={
             Object {
               "disabled": false,
@@ -618,7 +618,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
               ]
             }
           >
-            PinEnter.Unlock
+            PINEnter.Unlock
           </Text>
         </View>
       </View>
@@ -867,7 +867,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
             ]
           }
         >
-          PinEnter.EnterPIN
+          PINEnter.EnterPIN
         </Text>
         <View>
           <View
@@ -1105,7 +1105,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                 </Text>
               </View>
               <TextInput
-                accessibilityLabel="PinEnter.EnterPIN"
+                accessibilityLabel="PINEnter.EnterPIN"
                 accessible={true}
                 autoCapitalize="characters"
                 autoCorrect={false}
@@ -1139,7 +1139,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
               />
             </View>
             <View
-              accessibilityLabel="PinCreate.Show"
+              accessibilityLabel="PINCreate.Show"
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -1194,7 +1194,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
         }
       >
         <View
-          accessibilityLabel="PinEnter.Unlock"
+          accessibilityLabel="PINEnter.Unlock"
           accessibilityState={
             Object {
               "disabled": false,
@@ -1234,7 +1234,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
               ]
             }
           >
-            PinEnter.Unlock
+            PINEnter.Unlock
           </Text>
         </View>
       </View>
@@ -1503,7 +1503,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
             ]
           }
         >
-          PinEnter.EnterPIN
+          PINEnter.EnterPIN
         </Text>
         <View>
           <View
@@ -1741,7 +1741,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                 </Text>
               </View>
               <TextInput
-                accessibilityLabel="PinEnter.EnterPIN"
+                accessibilityLabel="PINEnter.EnterPIN"
                 accessible={true}
                 autoCapitalize="characters"
                 autoCorrect={false}
@@ -1775,7 +1775,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
               />
             </View>
             <View
-              accessibilityLabel="PinCreate.Show"
+              accessibilityLabel="PINCreate.Show"
               accessible={true}
               focusable={true}
               onClick={[Function]}
@@ -1828,7 +1828,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
         }
       >
         <View
-          accessibilityLabel="PinEnter.Unlock"
+          accessibilityLabel="PINEnter.Unlock"
           accessibilityState={
             Object {
               "disabled": false,
@@ -1866,7 +1866,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
               ]
             }
           >
-            PinEnter.Unlock
+            PINEnter.Unlock
           </Text>
         </View>
       </View>

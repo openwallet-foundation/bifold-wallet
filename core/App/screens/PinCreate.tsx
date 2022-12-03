@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../components/buttons/Button'
-import PinInput from '../components/inputs/PinInput'
+import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
 import { minPINLength } from '../constants'
 import { useAuth } from '../contexts/auth'
@@ -31,7 +31,7 @@ import { PINCreationValidations, PINValidationsType } from '../utils/PINCreation
 import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-interface PinCreateProps {
+interface PINCreateProps {
   setAuthenticated: (status: boolean) => void
 }
 
@@ -41,7 +41,7 @@ interface ModalState {
   message: string
 }
 
-const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
+const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
   const { setPIN: setWalletPIN } = useAuth()
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
@@ -120,7 +120,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
         <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
           <Text style={{ fontWeight: 'bold' }}>{t('PINCreate.RememberPIN')}</Text> {t('PINCreate.PINDisclaimer')}
         </Text>
-        <PinInput
+        <PINInput
           label={t('PINCreate.EnterPINTitle')}
           onPINChanged={(p: string) => {
             setPIN(p)
@@ -160,7 +160,7 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
             })}
           </View>
         )}
-        <PinInput
+        <PINInput
           label={t('PINCreate.ReenterPIN')}
           onPINChanged={(p: string) => {
             setPINTwo(p)
@@ -207,4 +207,4 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
   )
 }
 
-export default PinCreate
+export default PINCreate

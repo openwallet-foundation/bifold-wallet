@@ -8,7 +8,7 @@ import { minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
-interface PinInputProps {
+interface PINInputProps {
   label?: string
   onPINChanged?: (PIN: string) => void
   testID?: string
@@ -18,7 +18,7 @@ interface PinInputProps {
 
 // TODO:(jl) Would be great if someone can figure out the proper type for
 // ref below.
-const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
+const PINInput: React.FC<PINInputProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
   ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }, ref: any) => {
     // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const [PIN, setPIN] = useState('')
@@ -112,4 +112,4 @@ const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | 
   }
 )
 
-export default PinInput
+export default PINInput

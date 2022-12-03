@@ -6,7 +6,7 @@ import { Platform, StyleSheet, Text, StatusBar, View, Keyboard } from 'react-nat
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import PinInput from '../components/inputs/PinInput'
+import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import { useAuth } from '../contexts/auth'
@@ -17,7 +17,7 @@ import { hashPIN } from '../utils/crypto'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-const PinRecreate: React.FC = () => {
+const PINRecreate: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<SettingStackParams>>()
   const { getWalletCredentials } = useAuth()
@@ -51,7 +51,7 @@ const PinRecreate: React.FC = () => {
       if (credentials.key !== key) {
         setAlertModalVisible(true)
       } else {
-        navigation.navigate(Screens.CreatePin)
+        navigation.navigate(Screens.CreatePIN)
       }
     } catch (error) {
       /* eslint-disable:no-empty */
@@ -78,7 +78,7 @@ const PinRecreate: React.FC = () => {
         <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
           <Text style={{ fontWeight: 'bold' }}>{t('PINCreate.RememberPIN')}</Text> {t('PINCreate.PINDisclaimer')}
         </Text>
-        <PinInput
+        <PINInput
           label={t('PINCreate.EnterYourCurrentPIN')}
           testID={testIdWithKey('EnterCurrentPIN')}
           accessibilityLabel={t('PINCreate.EnterYourCurrentPIN')}
@@ -119,4 +119,4 @@ const PinRecreate: React.FC = () => {
   )
 }
 
-export default PinRecreate
+export default PINRecreate
