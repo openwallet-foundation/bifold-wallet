@@ -77,7 +77,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
   const incrementDeveloperMenuCounter = () => {
     if (developerOptionCount.current >= touchCountToEnableBiometrics) {
-      setDeveloperModeTriggerDisabled(true)
+      developerOptionCount.current = 0
       dispatch({
         type: DispatchAction.ENABLE_DEVELOPER_MODE,
         payload: [true],
@@ -215,7 +215,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
           ListFooterComponent={() => (
             <View style={styles.footer}>
-              <TouchableWithoutFeedback onPress={incrementDeveloperMenuCounter} disabled={developerModeTriggerDisabled}>
+              <TouchableWithoutFeedback
+                onPress={incrementDeveloperMenuCounter}
+                disabled={store.preferences.developerModeEnabled}
+              >
                 <View>
                   <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
                     {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
