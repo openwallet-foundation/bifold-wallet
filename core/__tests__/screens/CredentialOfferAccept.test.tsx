@@ -7,7 +7,7 @@ import React from 'react'
 
 import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
 import { testIdWithKey } from '../../App/utils/testable'
-import timeTravel from '../util/timetravel'
+import timeTravel from '../helpers/timetravel'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')

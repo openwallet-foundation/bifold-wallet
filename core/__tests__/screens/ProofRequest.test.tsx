@@ -20,7 +20,7 @@ import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
 import ProofRequest from '../../App/screens/ProofRequest'
 import { testIdWithKey } from '../../App/utils/testable'
 import networkContext from '../contexts/network'
-import timeTravel from '../util/timetravel'
+import timeTravel from '../helpers/timetravel'
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')

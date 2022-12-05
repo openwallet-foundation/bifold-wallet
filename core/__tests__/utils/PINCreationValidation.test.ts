@@ -1,4 +1,4 @@
-import { PINCreationValidations } from '../App/utils/PINCreationValidation'
+import { PINCreationValidations } from '../../App/utils/PINCreationValidation'
 
 const defaultPINRules = {
   only_numbers: false,

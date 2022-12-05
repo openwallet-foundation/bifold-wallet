@@ -1,4 +1,4 @@
-import { hashPIN } from '../App/utils/crypto'
+import { hashPIN } from '../../App/utils/crypto'
 
 describe('Crypto Utils', () => {
   test('The correct argon2i hash is returned', async () => {
