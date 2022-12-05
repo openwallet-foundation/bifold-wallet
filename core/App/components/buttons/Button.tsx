@@ -13,14 +13,13 @@ export interface ButtonProps {
   title: string
   buttonType: ButtonType
   accessibilityLabel?: string
-  icon?: Element
   testID?: string
   onPress?: () => void
   disabled?: boolean
 }
 
 export const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
-  ({ title, buttonType, accessibilityLabel, icon, testID, onPress, disabled = false }, ref: any) => {
+  ({ title, buttonType, accessibilityLabel, children, testID, onPress, disabled = false }, ref: any) => {
     const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const { Buttons, heavyOpacity } = useTheme()
     const buttonStyles = {
@@ -50,7 +49,7 @@ export const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement
             alignItems: 'center',
           }}
         >
-          {icon}
+          {children}
           <Text
             style={[
               buttonStyles[buttonType].text,

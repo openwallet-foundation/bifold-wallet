@@ -189,21 +189,31 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
       }
       testID="com.ariesbifold:id/Continue"
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            },
-            false,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
         }
       >
-        Continue
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+            ]
+          }
+        >
+          Continue
+        </Text>
+      </View>
     </View>
   </View>
   <Modal
@@ -605,21 +615,31 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
           }
           testID="com.ariesbifold:id/Enter"
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            PinEnter.Unlock
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              PinEnter.Unlock
+            </Text>
+          </View>
         </View>
       </View>
     </RNCSafeAreaView>
@@ -801,21 +821,31 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
       }
       testID="com.ariesbifold:id/Continue"
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            },
-            false,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
         }
       >
-        Continue
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+            ]
+          }
+        >
+          Continue
+        </Text>
+      </View>
     </View>
   </View>
   <Modal
@@ -1221,21 +1251,31 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
           }
           testID="com.ariesbifold:id/Enter"
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            PinEnter.Unlock
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              PinEnter.Unlock
+            </Text>
+          </View>
         </View>
       </View>
     </RNCSafeAreaView>
@@ -1432,26 +1472,36 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
       }
       testID="com.ariesbifold:id/Continue"
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            },
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            },
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
         }
       >
-        Continue
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Continue
+        </Text>
+      </View>
     </View>
   </View>
   <Modal
@@ -1853,21 +1903,31 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
           }
           testID="com.ariesbifold:id/Enter"
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            PinEnter.Unlock
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              PinEnter.Unlock
+            </Text>
+          </View>
         </View>
       </View>
     </RNCSafeAreaView>
