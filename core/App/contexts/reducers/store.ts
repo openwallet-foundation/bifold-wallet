@@ -64,12 +64,12 @@ export const DispatchAction = {
   ...AuthenticationDispatchAction,
 }
 
-export interface ReducerAction {
-  type: DispatchAction
+export interface ReducerAction<R> {
+  type: R
   payload?: Array<any>
 }
 
-export const reducer = <S extends State>(state: S, action: ReducerAction): S => {
+export const reducer = <S extends State>(state: S, action: ReducerAction<DispatchAction>): S => {
   switch (action.type) {
     case PreferencesDispatchAction.ENABLE_DEVELOPER_MODE: {
       const choice = (action?.payload ?? []).pop() ?? false
