@@ -398,21 +398,31 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
       }
       testID="com.ariesbifold:id/Enter"
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            },
-            false,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
         }
       >
-        PinEnter.Unlock
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+            ]
+          }
+        >
+          PinEnter.Unlock
+        </Text>
+      </View>
     </View>
   </View>
 </RNCSafeAreaView>
