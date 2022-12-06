@@ -28,21 +28,31 @@ exports[`Button Component Primary renders correctly 1`] = `
     }
   }
 >
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "bold",
-          "textAlign": "center",
-        },
-        false,
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
     }
   >
-    Hello Primary
-  </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "bold",
+            "textAlign": "center",
+          },
+          false,
+        ]
+      }
+    >
+      Hello Primary
+    </Text>
+  </View>
 </View>
 `;
 
@@ -75,20 +85,30 @@ exports[`Button Component Secondary renders correctly 1`] = `
     }
   }
 >
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#42803E",
-          "fontSize": 18,
-          "fontWeight": "bold",
-          "textAlign": "center",
-        },
-        false,
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
     }
   >
-    Hello Secondary
-  </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#42803E",
+            "fontSize": 18,
+            "fontWeight": "bold",
+            "textAlign": "center",
+          },
+          false,
+        ]
+      }
+    >
+      Hello Secondary
+    </Text>
+  </View>
 </View>
 `;

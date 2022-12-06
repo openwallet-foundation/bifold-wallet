@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
@@ -19,7 +19,7 @@ export interface ButtonProps {
 }
 
 export const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
-  ({ title, buttonType, accessibilityLabel, testID, onPress, disabled = false }, ref: any) => {
+  ({ title, buttonType, accessibilityLabel, children, testID, onPress, disabled = false }, ref: any) => {
     const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const { Buttons, heavyOpacity } = useTheme()
     const buttonStyles = {
@@ -42,15 +42,24 @@ export const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement
         activeOpacity={heavyOpacity}
         ref={ref}
       >
-        <Text
-          style={[
-            buttonStyles[buttonType].text,
-            disabled &&
-              (buttonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
-          ]}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
-          {title}
-        </Text>
+          {children}
+          <Text
+            style={[
+              buttonStyles[buttonType].text,
+              disabled &&
+                (buttonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
+            ]}
+          >
+            {title}
+          </Text>
+        </View>
       </TouchableOpacity>
     )
   }
