@@ -288,7 +288,7 @@ const translation = {
         "Language": "Langue",
         "Build": "Build",
         "WhatAreContacts": "Qu’est-ce qu’un contact?",
-        "Developer": "Développeur"
+        "Developer": "Developer options"
     },
     "TabStack": {
         "Home": "Accueil",
@@ -331,7 +331,7 @@ const translation = {
         "Decline": "Refuser",
         "ContactDetails": "Informations du contact",
         "Biometry": "Biométrie",
-        "Developer": "Développeur",
+        "Developer": "Developer options",
         "ChangePin": "Changer NIP",
         "CommonDecline": "Refuser",
     },
