@@ -302,7 +302,7 @@ const translation = {
     "WhatAreContacts": "What are Contacts?",
     "Help": "Help",
     "MoreInformation": "More information",
-    "Developer": "Developer"
+    "Developer": "Developer options"
   },
   "TabStack": {
     "Home": "Home",
@@ -345,7 +345,7 @@ const translation = {
     "Decline": "Decline",
     "ContactDetails": "Contact Details",
     "Biometry": "Biometrics",
-    "Developer": "Developer",
+    "Developer": "Developer options",
     "ChangePin": "Change PIN",
     "CommonDecline": "Decline",
   },
