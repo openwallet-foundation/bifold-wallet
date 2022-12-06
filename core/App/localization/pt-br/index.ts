@@ -280,7 +280,7 @@ const translation = {
     "AboutApp": "Sobre o App",
     "Language": "Idioma",
     "WhatAreContacts": "O que são Contatos?",
-    "Developer": "Desenvolvedor"
+    "Developer": "Developer options"
   },
   "TabStack": {
     "Home": "Home",
@@ -322,7 +322,7 @@ const translation = {
     "Decline": "Recusar",
     "ContactDetails": "Detalhes do Contato",
     "Biometry": "Biometria",
-    "Developer": "Desenvolvedor",
+    "Developer": "Developer options",
     "ChangePin": "Alterar PIN"
   },
   "Loading": {
