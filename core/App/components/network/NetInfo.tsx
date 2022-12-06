@@ -12,14 +12,6 @@ const NetInfo: React.FC = () => {
   const isConnected = silentAssertConnectedNetwork()
 
   useEffect(() => {
-    if (!isConnected) {
-      Toast.show({
-        type: 'error',
-        autoHide: true,
-        text1: t('NetInfo.NoInternetConnectionTitle'),
-      })
-    }
-
     if (isConnected) {
       assertLedgerConnectivity().then((status) => {
         if (status) {
@@ -32,7 +24,15 @@ const NetInfo: React.FC = () => {
           text1: t('NetInfo.LedgerConnectivityIssueMessage'),
         })
       })
+
+      return
     }
+
+    Toast.show({
+      type: 'error',
+      autoHide: true,
+      text1: t('NetInfo.NoInternetConnectionTitle'),
+    })
   }, [isConnected])
 
   return null
