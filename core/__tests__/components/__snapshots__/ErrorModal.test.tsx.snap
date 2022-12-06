@@ -138,21 +138,31 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
           }
           testID="com.ariesbifold:id/Okay"
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            Global.Okay
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              Global.Okay
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -298,21 +308,31 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           }
           testID="com.ariesbifold:id/Okay"
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            Global.Okay
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              Global.Okay
+            </Text>
+          </View>
         </View>
       </View>
     </View>

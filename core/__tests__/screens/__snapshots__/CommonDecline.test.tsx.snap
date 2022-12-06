@@ -319,21 +319,31 @@ exports[`common decline screen decline offer renders correctly 1`] = `
         }
         testID="com.ariesbifold:id/ConfirmDeclineButton"
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
           }
         >
-          CredentialOffer.ConfirmDecline
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            CredentialOffer.ConfirmDecline
+          </Text>
+        </View>
       </View>
     </View>
     <View
@@ -374,21 +384,31 @@ exports[`common decline screen decline offer renders correctly 1`] = `
         }
         testID="com.ariesbifold:id/AbortDeclineButton"
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
           }
         >
-          CredentialOffer.AbortDecline
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#42803E",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            CredentialOffer.AbortDecline
+          </Text>
+        </View>
       </View>
     </View>
   </View>
@@ -555,21 +575,31 @@ exports[`common decline screen decline proof renders correctly 1`] = `
         }
         testID="com.ariesbifold:id/ConfirmDeclineButton"
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
           }
         >
-          ProofRequest.ConfirmDecline
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            ProofRequest.ConfirmDecline
+          </Text>
+        </View>
       </View>
     </View>
     <View
@@ -610,21 +640,31 @@ exports[`common decline screen decline proof renders correctly 1`] = `
         }
         testID="com.ariesbifold:id/AbortDeclineButton"
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
           }
         >
-          ProofRequest.AbortDecline
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#42803E",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            ProofRequest.AbortDecline
+          </Text>
+        </View>
       </View>
     </View>
   </View>
@@ -734,21 +774,31 @@ exports[`common decline screen did decline offer renders correctly 1`] = `
       }
       testID="com.ariesbifold:id/Done"
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            },
-            false,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
         }
       >
-        Global.Done
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+            ]
+          }
+        >
+          Global.Done
+        </Text>
+      </View>
     </View>
   </View>
 </RNCSafeAreaView>
@@ -857,21 +907,31 @@ exports[`common decline screen did decline proof renders correctly 1`] = `
       }
       testID="com.ariesbifold:id/Done"
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            },
-            false,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
         }
       >
-        Global.Done
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+            ]
+          }
+        >
+          Global.Done
+        </Text>
+      </View>
     </View>
   </View>
 </RNCSafeAreaView>

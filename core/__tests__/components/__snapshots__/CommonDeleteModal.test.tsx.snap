@@ -500,21 +500,31 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           }
           testID="com.ariesbifold:id/ConfirmRemoveButton"
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            CredentialDetails.RemoveFromWallet
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              CredentialDetails.RemoveFromWallet
+            </Text>
+          </View>
         </View>
       </View>
       <View
@@ -555,21 +565,31 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           }
           testID="com.ariesbifold:id/AbortRemoveButton"
         >
-          <Text
+          <View
             style={
-              Array [
-                Object {
-                  "color": "#42803E",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
           >
-            Global.Cancel
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              Global.Cancel
+            </Text>
+          </View>
         </View>
       </View>
     </View>
