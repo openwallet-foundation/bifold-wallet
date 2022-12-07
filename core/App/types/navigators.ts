@@ -7,8 +7,8 @@ export enum Screens {
   Splash = 'Splash',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
-  CreatePin = 'Create a PIN',
-  EnterPin = 'Enter PIN',
+  CreatePIN = 'Create a PIN',
+  EnterPIN = 'Enter PIN',
   Home = 'Home',
   Scan = 'Scan',
   Credentials = 'Credentials',
@@ -27,7 +27,7 @@ export enum Screens {
   Declined = 'Declined',
   CommonDecline = 'Common Decline',
   UseBiometry = 'Use Biometry',
-  RecreatePin = 'Change PIN',
+  RecreatePIN = 'Change PIN',
   Developer = 'Developer',
 }
 
@@ -67,8 +67,8 @@ export type AuthenticateStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
-  [Screens.CreatePin]: { setAuthenticated: (status: boolean) => void } | undefined
-  [Screens.EnterPin]: { setAuthenticated: (status: boolean) => void } | undefined
+  [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
+  [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.UseBiometry]: undefined
 }
 
@@ -96,8 +96,8 @@ export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
   [Screens.UseBiometry]: undefined
-  [Screens.CreatePin]: undefined
-  [Screens.RecreatePin]: undefined
+  [Screens.CreatePIN]: undefined
+  [Screens.RecreatePIN]: undefined
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined

@@ -82,7 +82,7 @@ const translation = {
     "Title": "Privacy Policy",
     "CameraDisclosure": "The camera is used to scan QR Codes for immediate on-device processing. No information about the images is stored, used for analytics, or shared.",
   },
-  "PinCreate": {
+  "PINCreate": {
     "Message": {
       "Interpolation": "{{ message }}",
       "CrossPatternValidation": "A pattern of cross was detected in your PIN. Please try again.",
@@ -90,9 +90,9 @@ const translation = {
       "NoRepetitionOfTheSameNumbersValidation": "The PIN can't have a repetition of the same digit. Please try again.",
       "NoRepetitionOfTheTwoSameNumbersValidation": "A repeated two-digit sequence was detected in your PIN. Please try again.",
       "NoSeriesOfNumbersValidation": "A series was detected in your PIN. Please try again.",
-      "PinOnlyContainDigitsValidation": "Your PIN needs to only contain digits. Please try again.",
-      "PinTooShortValidation": "Your PIN is too short. Please try again.",
-      "PinTooLongValidation": "Your PIN is too long. Please try again.",
+      "PINOnlyContainDigitsValidation": "Your PIN needs to only contain digits. Please try again.",
+      "PINTooShortValidation": "Your PIN is too short. Please try again.",
+      "PINTooLongValidation": "Your PIN is too long. Please try again.",
     },
     "Helper": {
       "Interpolation": "{{ helper }}",
@@ -101,9 +101,9 @@ const translation = {
       "NoRepetitionOfTheSameNumbersValidation": "Does not contain the same repeating number.",
       "NoRepetitionOfTheTwoSameNumbersValidation": "Does not contain repeating two-digit sequence.",
       "NoSeriesOfNumbersValidation": "Does not contain a series of numbers (123).",
-      "PinOnlyContainDigitsValidation": "Must contain only digits.",
-      "PinTooShortValidation": "The PIN is long enought.",
-      "PinTooLongValidation": "The PIN is long enought.",
+      "PINOnlyContainDigitsValidation": "Must contain only digits.",
+      "PINTooShortValidation": "The PIN is long enought.",
+      "PINTooLongValidation": "The PIN is long enought.",
     },
     "UserAuthenticationPIN": "User authentication PIN",
     "PINTooShort": "PIN is too short",
@@ -127,7 +127,7 @@ const translation = {
     "Continue": "Continue",
     "EnterYourCurrentPIN": "Enter your current PIN"
   },
-  "PinEnter": {
+  "PINEnter": {
     "EnterPIN": "Enter your wallet PIN",
     "Unlock":"Unlock",
     "Or":"Or",
@@ -329,8 +329,8 @@ const translation = {
     "Splash": "Splash",
     "Onboarding": "Onboarding",
     "Terms": "Terms & Conditions",
-    "CreatePin": "Create a PIN",
-    "EnterPin": "Enter PIN",
+    "CreatePIN": "Create a PIN",
+    "EnterPIN": "Enter PIN",
     "Home": "Home",
     "Scan": "Scan",
     "Credentials": "Credentials",
@@ -346,7 +346,7 @@ const translation = {
     "ContactDetails": "Contact Details",
     "Biometry": "Biometrics",
     "Developer": "Developer options",
-    "ChangePin": "Change PIN",
+    "ChangePIN": "Change PIN",
     "CommonDecline": "Decline",
   },
   "Loading": {

@@ -77,7 +77,7 @@ const translation = {
     "CameraDisclosure":
       "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
   },
-    "PinCreate": {
+    "PINCreate": {
         "Message": {
             "Interpolation": "{{ message }}", // Do not translate
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
@@ -85,9 +85,9 @@ const translation = {
             "NoRepetitionOfTheTwoSameNumbersValidation": "Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
             "NoRepetitionOfTheSameNumbersValidation": "Votre NIP possède des nombres consécutifs identiques. Veuillez saisir un NIP différent",
             "NoSeriesOfNumbersValidation": "Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
-            "PinOnlyContainDigitsValidation": "Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.",
-            "PinTooShortValidation": "Votre NIP est trop court. Veuillez saisir un NIP différent.",
-            "PinTooLongValidation": "Votre NIP est trop long. Veuillez saisir un NIP différent.",
+            "PINOnlyContainDigitsValidation": "Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.",
+            "PINTooShortValidation": "Votre NIP est trop court. Veuillez saisir un NIP différent.",
+            "PINTooLongValidation": "Votre NIP est trop long. Veuillez saisir un NIP différent.",
         },
         "Helper": {
             "Interpolation": "{{ helper }}", // Do not translate
@@ -96,9 +96,9 @@ const translation = {
             "NoRepetitionOfTheTwoSameNumbersValidation": "Ne doit pas contenir deux chiffres qui se répètent.",
             "NoRepetitionOfTheSameNumbersValidation": "Ne doit pas contenir de répétition.",
             "NoSeriesOfNumbersValidation": "Ne doit pas contenir de suite (123).",
-            "PinOnlyContainDigitsValidation": "Doit contenir que des chiffres.",
-            "PinTooShortValidation": "Le NIP est de la bonne longueur.",
-            "PinTooLongValidation": "Le NIP est de la bonne longueur.",
+            "PINOnlyContainDigitsValidation": "Doit contenir que des chiffres.",
+            "PINTooShortValidation": "Le NIP est de la bonne longueur.",
+            "PINTooLongValidation": "Le NIP est de la bonne longueur.",
         },
         "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
         "PINTooShort": "NIP trop court",
@@ -122,7 +122,7 @@ const translation = {
         "Continue": "Continuer",
         "EnterYourCurrentPIN": "Entrez votre NIP actuel"
     },
-    "PinEnter": {
+    "PINEnter": {
         "EnterPIN": "Veuillez saisir votre NIP",
         "Unlock": "Déverrouiller",
         "Or": "Ou",
@@ -315,8 +315,8 @@ const translation = {
         "Splash": "Page de garde",
         "Onboarding": "Inscription",
         "Terms": "Conditions d'utilisation",
-        "CreatePin": "Créer un NIP à 6 chiffres",
-        "EnterPin": "Saisir le NIP",
+        "CreatePIN": "Créer un NIP à 6 chiffres",
+        "EnterPIN": "Saisir le NIP",
         "Home": "Accueil",
         "Scan": "Numériser",
         "Credentials": "Justificatifs",
@@ -332,7 +332,7 @@ const translation = {
         "ContactDetails": "Informations du contact",
         "Biometry": "Biométrie",
         "Developer": "Developer options",
-        "ChangePin": "Changer NIP",
+        "ChangePIN": "Changer NIP",
         "CommonDecline": "Refuser",
     },
     "Loading": {

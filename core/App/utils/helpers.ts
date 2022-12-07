@@ -174,7 +174,7 @@ export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | 
  * @param agent an Agent instance
  * @returns payload from following the redirection
  */
-export const receiveMessageFromDeeplink = async (url: string, agent: Agent | undefined) => {
+export const receiveMessageFromDeepLink = async (url: string, agent: Agent | undefined) => {
   const res = await fetch(url, {
     method: 'GET',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },

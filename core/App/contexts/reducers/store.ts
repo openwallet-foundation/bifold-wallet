@@ -15,7 +15,7 @@ enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
-  DID_CREATE_PIN = 'onboarding/didCreatePin',
+  DID_CREATE_PIN = 'onboarding/didCreatePIN',
 }
 
 enum ErrorDispatchAction {

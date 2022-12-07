@@ -8,9 +8,9 @@ import { minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
-interface PinInputProps {
+interface PINInputProps {
   label?: string
-  onPinChanged?: (pin: string) => void
+  onPINChanged?: (PIN: string) => void
   testID?: string
   accessibilityLabel?: string
   autoFocus?: boolean
@@ -18,17 +18,17 @@ interface PinInputProps {
 
 // TODO:(jl) Would be great if someone can figure out the proper type for
 // ref below.
-const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
-  ({ label, onPinChanged, testID, accessibilityLabel, autoFocus = false }, ref: any) => {
+const PINInput: React.FC<PINInputProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
+  ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }, ref: any) => {
     // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
-    const [pin, setPin] = useState('')
-    const [showPin, setShowPin] = useState(false)
+    const [PIN, setPIN] = useState('')
+    const [showPIN, setShowPIN] = useState(false)
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-      value: pin,
-      setValue: setPin,
+      value: PIN,
+      setValue: setPIN,
     })
     const { t } = useTranslation()
-    const { TextTheme, PinInputTheme } = useTheme()
+    const { TextTheme, PINInputTheme } = useTheme()
 
     const style = StyleSheet.create({
       codeField: {
@@ -42,18 +42,18 @@ const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | 
       cell: {
         width: 40,
         height: 48,
-        backgroundColor: PinInputTheme.cell.backgroundColor,
+        backgroundColor: PINInputTheme.cell.backgroundColor,
         borderWidth: 2,
         borderRadius: 5,
-        borderColor: PinInputTheme.cell.borderColor,
+        borderColor: PINInputTheme.cell.borderColor,
         marginRight: 8,
       },
       focusedCell: {
-        borderColor: PinInputTheme.focussedCell.borderColor,
+        borderColor: PINInputTheme.focussedCell.borderColor,
       },
       cellText: {
         ...TextTheme.headingThree,
-        color: PinInputTheme.cellText.color,
+        color: PINInputTheme.cellText.color,
         textAlign: 'center',
         textAlignVertical: 'center',
         lineHeight: 42,
@@ -69,10 +69,10 @@ const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | 
             testID={testID}
             accessibilityLabel={accessibilityLabel}
             accessible
-            value={pin}
+            value={PIN}
             onChangeText={(value: string) => {
-              onPinChanged && onPinChanged(value)
-              setPin(value)
+              onPINChanged && onPINChanged(value)
+              setPIN(value)
             }}
             cellCount={minPINLength}
             keyboardType="numeric"
@@ -81,7 +81,7 @@ const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | 
             renderCell={({ index, symbol, isFocused }) => {
               let child = ''
               if (symbol) {
-                child = showPin ? symbol : '•'
+                child = showPIN ? symbol : '•'
               }
               return (
                 <View
@@ -99,12 +99,12 @@ const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | 
             ref={ref}
           />
           <TouchableOpacity
-            accessibilityLabel={showPin ? t('PinCreate.Hide') : t('PinCreate.Show')}
-            testID={showPin ? testIdWithKey('Hide') : testIdWithKey('Show')}
-            onPress={() => setShowPin(!showPin)}
+            accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
+            testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
+            onPress={() => setShowPIN(!showPIN)}
             style={[{ marginRight: 8, marginBottom: 32 }]}
           >
-            <Icon color={PinInputTheme.icon.color} name={showPin ? 'visibility-off' : 'visibility'} size={30}></Icon>
+            <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30}></Icon>
           </TouchableOpacity>
         </View>
       </View>
@@ -112,4 +112,4 @@ const PinInput: React.FC<PinInputProps & React.RefAttributes<HTMLInputElement | 
   }
 )
 
-export default PinInput
+export default PINInput

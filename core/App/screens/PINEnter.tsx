@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Button, ButtonType } from '../components/buttons/Button'
-import PinInput from '../components/inputs/PinInput'
+import Button, { ButtonType } from '../components/buttons/Button'
+import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import AlertModal from '../components/modals/AlertModal'
 import PopupModal from '../components/modals/PopupModal'
@@ -19,21 +19,21 @@ import { hashPIN } from '../utils/crypto'
 import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-interface PinEnterProps {
+interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
-  pinEntryUsage?: PinEntryUsage
+  usage?: PINEntryUsage
 }
 
-export enum PinEntryUsage {
-  PinCheck,
+export enum PINEntryUsage {
+  PINCheck,
   WalletUnlock,
 }
 
-const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = PinEntryUsage.WalletUnlock }) => {
+const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock }) => {
   const { t } = useTranslation()
   const { checkPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
   const [store, dispatch] = useStore()
-  const [pin, setPin] = useState<string>('')
+  const [PIN, setPIN] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const navigation = useNavigation()
@@ -91,7 +91,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
   }
 
   const loadWalletCredentials = async () => {
-    if (pinEntryUsage === PinEntryUsage.PinCheck) {
+    if (usage === PINEntryUsage.PINCheck) {
       return
     }
 
@@ -130,7 +130,7 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
       }
     })
 
-    loadWalletCredentials().catch((error: unknown) => {
+    loadWalletCredentials().catch(() => {
       // TODO:(jl) Handle error
     })
   }, [])
@@ -149,10 +149,10 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
     setDisplayLockoutWarning(displayWarning)
   }, [store.loginAttempt.loginAttempts])
 
-  const unlockWalletWithPIN = async (pin: string) => {
+  const unlockWalletWithPIN = async (PIN: string) => {
     try {
       setContinueEnabled(false)
-      const result = await checkPIN(pin)
+      const result = await checkPIN(PIN)
 
       if (store.loginAttempt.servedPenalty) {
         // once the user starts entering their PIN, unMark them as having served their lockout penalty
@@ -190,8 +190,8 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
   }
 
   const clearAlertModal = () => {
-    switch (pinEntryUsage) {
-      case PinEntryUsage.PinCheck:
+    switch (usage) {
+      case PINEntryUsage.PINCheck:
         setAlertModalVisible(false)
         setAuthenticated(false)
         break
@@ -205,14 +205,14 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
     setAlertModalVisible(false)
   }
 
-  const verifyPIN = async (pin: string) => {
+  const verifyPIN = async (PIN: string) => {
     try {
       const credentials = await getWalletCredentials()
       if (!credentials) {
         throw new Error('Problem')
       }
 
-      const key = await hashPIN(pin, credentials.salt)
+      const key = await hashPIN(PIN, credentials.salt)
 
       if (credentials.key !== key) {
         setAlertModalVisible(true)
@@ -226,16 +226,16 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
     }
   }
 
-  const onPinInputCompleted = async (pin: string) => {
+  const onPINInputCompleted = async (PIN: string) => {
     try {
       setContinueEnabled(false)
 
-      if (pinEntryUsage === PinEntryUsage.PinCheck) {
-        await verifyPIN(pin)
+      if (usage === PINEntryUsage.PINCheck) {
+        await verifyPIN(PIN)
       }
 
-      if (pinEntryUsage === PinEntryUsage.WalletUnlock) {
-        await unlockWalletWithPIN(pin)
+      if (usage === PINEntryUsage.WalletUnlock) {
+        await unlockWalletWithPIN(PIN)
       }
     } catch (error: unknown) {
       // TODO:(jl) process error
@@ -259,35 +259,34 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
         {biometricsEnrollmentChange ? (
           <>
             <Text style={[TextTheme.normal, { alignSelf: 'center', textAlign: 'center' }]}>
-              {t('PinEnter.BiometricsChanged')}
+              {t('PINEnter.BiometricsChanged')}
             </Text>
             <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
-              {t('PinEnter.BiometricsChangedEnterPIN')}
+              {t('PINEnter.BiometricsChangedEnterPIN')}
             </Text>
           </>
         ) : (
-          <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PinEnter.EnterPIN')}</Text>
+          <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PINEnter.EnterPIN')}</Text>
         )}
-        <PinInput
-          onPinChanged={(p: string) => {
-            setPin(p)
-
+        <PINInput
+          onPINChanged={(p: string) => {
+            setPIN(p)
             if (p.length === minPINLength) {
               Keyboard.dismiss()
             }
           }}
           testID={testIdWithKey('EnterPIN')}
-          accessibilityLabel={t('PinEnter.EnterPIN')}
+          accessibilityLabel={t('PINEnter.EnterPIN')}
           autoFocus={true}
         />
-        {alertModalVisible && <AlertModal title={t('PinEnter.IncorrectPIN')} message="" submit={clearAlertModal} />}
+        {alertModalVisible && <AlertModal title={t('PINEnter.IncorrectPIN')} message="" submit={clearAlertModal} />}
         {store.lockout.displayNotification && (
           <PopupModal
             notificationType={InfoBoxType.Info}
-            title={t('PinEnter.LoggedOut')}
+            title={t('PINEnter.LoggedOut')}
             bodyContent={
               <View>
-                <Text style={style.notifyText}>{t('PinEnter.LoggedOutDescription')}</Text>
+                <Text style={style.notifyText}>{t('PINEnter.LoggedOutDescription')}</Text>
               </View>
             }
             onCallToActionLabel={t('Global.Okay')}
@@ -302,28 +301,28 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
       </View>
       <View style={{ marginTop: 'auto', margin: 20, marginBottom: 10 }}>
         <Button
-          title={t('PinEnter.Unlock')}
+          title={t('PINEnter.Unlock')}
           buttonType={ButtonType.Primary}
           testID={testIdWithKey('Enter')}
           disabled={!continueEnabled}
-          accessibilityLabel={t('PinEnter.Unlock')}
+          accessibilityLabel={t('PINEnter.Unlock')}
           onPress={() => {
             Keyboard.dismiss()
-            onPinInputCompleted(pin)
+            onPINInputCompleted(PIN)
           }}
         />
       </View>
 
-      {store.preferences.useBiometry && pinEntryUsage === PinEntryUsage.WalletUnlock && (
+      {store.preferences.useBiometry && usage === PINEntryUsage.WalletUnlock && (
         <>
-          <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>{t('PinEnter.Or')}</Text>
+          <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>{t('PINEnter.Or')}</Text>
           <View style={{ margin: 20, marginTop: 10 }}>
             <Button
-              title={t('PinEnter.BiometricsUnlock')}
+              title={t('PINEnter.BiometricsUnlock')}
               buttonType={ButtonType.Secondary}
               testID={testIdWithKey('Enter')}
               disabled={!continueEnabled}
-              accessibilityLabel={t('PinEnter.BiometricsUnlock')}
+              accessibilityLabel={t('PINEnter.BiometricsUnlock')}
               onPress={loadWalletCredentials}
             />
           </View>
@@ -333,12 +332,12 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
       {alertModalVisible && (
         <PopupModal
           notificationType={InfoBoxType.Info}
-          title={t('PinEnter.IncorrectPIN')}
+          title={t('PINEnter.IncorrectPIN')}
           bodyContent={
             <View>
-              <Text style={style.notifyText}>{t('PinEnter.RepeatPIN')}</Text>
+              <Text style={style.notifyText}>{t('PINEnter.RepeatPIN')}</Text>
               {displayLockoutWarning ? (
-                <Text style={style.notifyText}>{t('PinEnter.AttemptLockoutWarning')}</Text>
+                <Text style={style.notifyText}>{t('PINEnter.AttemptLockoutWarning')}</Text>
               ) : null}
             </View>
           }
@@ -350,4 +349,4 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
   )
 }
 
-export default PinEnter
+export default PINEnter
