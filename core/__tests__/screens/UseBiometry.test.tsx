@@ -6,7 +6,7 @@ import { AuthContext } from '../../App/contexts/auth'
 import UseBiometry from '../../App/screens/UseBiometry'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
-import timeTravel from '../util/timetravel'
+import timeTravel from '../helpers/timetravel'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')

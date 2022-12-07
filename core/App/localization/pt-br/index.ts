@@ -79,7 +79,7 @@ const translation = {
     "Title": "Política de Privacidade",
     "CameraDisclosure": "A câmera é usada para escanear QR Codes para processamento imediato no dispositivo. Nenhuma informação sobre as imagens é armazenada, usada para análise, ou compartilhada.",
   },
-  "PinCreate": {
+  "PINCreate": {
     "Message": {
       "Interpolation": "{{ message }}", // Do not translate
       "CrossPatternValidation": "A pattern of cross was detected in your PIN. Please try again. (PT-BR)",
@@ -87,9 +87,9 @@ const translation = {
       "NoRepetitionOfTheSameNumbersValidation": "The PIN can't have a repetition of the same digit. Please try again. (PT-BR)",
       "NoRepetitionOfTheTwoSameNumbersValidation": "A repeated two-digit sequence was detected in your PIN. Please try again. (PT-BR)",
       "NoSeriesOfNumbersValidation": "A series was detected in your PIN. Please try again. (PT-BR)",
-      "PinOnlyContainDigitsValidation": "Your PIN needs to only contain digits. Please try again. (PT-BR)",
-      "PinTooShortValidation": "Your PIN is too short. Please try again. (PT-BR)",
-      "PinTooLongValidation": "Your PIN is too long. Please try again. (PT-BR)",
+      "PINOnlyContainDigitsValidation": "Your PIN needs to only contain digits. Please try again. (PT-BR)",
+      "PINTooShortValidation": "Your PIN is too short. Please try again. (PT-BR)",
+      "PINTooLongValidation": "Your PIN is too long. Please try again. (PT-BR)",
     },
     "Helper": {
       "Interpolation": "{{ helper }}", // Do not translate
@@ -98,9 +98,9 @@ const translation = {
       "NoRepetitionOfTheSameNumbersValidation": "Does not contain the same repeating number. (PT-BR)",
       "NoRepetitionOfTheTwoSameNumbersValidation": "Does not contain repeating two-digit sequence. (PT-BR)",
       "NoSeriesOfNumbersValidation": "Does not contain a series of numbers (123). (PT-BR)",
-      "PinOnlyContainDigitsValidation": "Must contain only digits. (PT-BR)",
-      "PinTooShortValidation": "The PIN is long enought. (PT-BR)",
-      "PinTooLongValidation": "The PIN is long enought. (PT-BR)",
+      "PINOnlyContainDigitsValidation": "Must contain only digits. (PT-BR)",
+      "PINTooShortValidation": "The PIN is long enought. (PT-BR)",
+      "PINTooLongValidation": "The PIN is long enought. (PT-BR)",
     },
     "UserAuthenticationPIN": "PIN de autenticação do usuário",
     "PINTooShort": "PIN é curto demais",
@@ -124,7 +124,7 @@ const translation = {
     "Continue": "Continuar",
     "EnterYourCurrentPIN": "Digite seu PIN atual."
   },
-  "PinEnter": {
+  "PINEnter": {
     "EnterPIN": "Digitar PIN",
     "Unlock":"Destravar",
     "Or":"Ou",
@@ -306,8 +306,8 @@ const translation = {
     "Splash": "Splash",
     "Onboarding": "Onboarding",
     "Terms": "Termos & Condições",
-    "CreatePin": "Criar um PIN",
-    "EnterPin": "Digitar o PIN",
+    "CreatePIN": "Criar um PIN",
+    "EnterPIN": "Digitar o PIN",
     "Home": "Home",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
@@ -323,7 +323,7 @@ const translation = {
     "ContactDetails": "Detalhes do Contato",
     "Biometry": "Biometria",
     "Developer": "Developer options",
-    "ChangePin": "Alterar PIN"
+    "ChangePIN": "Alterar PIN"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",

@@ -16,11 +16,11 @@ import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 
 export interface AuthContext {
-  checkPIN: (pin: string) => Promise<boolean>
+  checkPIN: (PIN: string) => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
   removeSavedWalletSecret: () => void
   disableBiometrics: () => Promise<void>
-  setPIN: (pin: string) => Promise<void>
+  setPIN: (PIN: string) => Promise<void>
   commitPIN: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
 }
@@ -32,8 +32,8 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
 
-  const setPIN = async (pin: string): Promise<void> => {
-    const secret = await secretForPIN(pin)
+  const setPIN = async (PIN: string): Promise<void> => {
+    const secret = await secretForPIN(PIN)
     await storeWalletSecret(secret)
   }
 
@@ -69,19 +69,19 @@ export const AuthProvider: React.FC = ({ children }) => {
     return true
   }
 
-  const checkPIN = async (pin: string): Promise<boolean> => {
+  const checkPIN = async (PIN: string): Promise<boolean> => {
     const secret = await loadWalletSalt()
 
     if (!secret || !secret.salt) {
       return false
     }
 
-    const hash = await hashPIN(pin, secret.salt)
+    const hash = await hashPIN(PIN, secret.salt)
 
     try {
       await agentDependencies.indy.openWallet({ id: secret.id }, { key: hash })
       // need full secret in volatile memory in case user wants to fall back to using PIN
-      const fullSecret = await secretForPIN(pin, secret.salt)
+      const fullSecret = await secretForPIN(PIN, secret.salt)
       setWalletSecret(fullSecret)
       return true
     } catch (e) {

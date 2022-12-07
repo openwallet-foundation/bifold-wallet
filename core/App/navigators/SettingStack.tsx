@@ -4,12 +4,11 @@ import { useTranslation } from 'react-i18next'
 
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
-import Developer from '../screens/Developer'
 import Language from '../screens/Language'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
-import PinCreate from '../screens/PinCreate'
-import PinRecreate from '../screens/PinRecreate'
+import PINCreate from '../screens/PINCreate'
+import PINRecreate from '../screens/PINRecreate'
 import Settings from '../screens/Settings'
 import UseBiometry from '../screens/UseBiometry'
 import { Screens, SettingStackParams } from '../types/navigators'
@@ -30,8 +29,8 @@ const SettingStack: React.FC = () => {
       <Stack.Screen name={Screens.Settings} component={Settings} options={{ title: t('Screens.Settings') }} />
       <Stack.Screen name={Screens.Language} component={Language} options={{ title: t('Screens.Language') }} />
       <Stack.Screen name={Screens.UseBiometry} component={UseBiometry} options={{ title: t('Screens.Biometry') }} />
-      <Stack.Screen name={Screens.RecreatePin} component={PinRecreate} options={{ title: t('Screens.ChangePin') }} />
-      <Stack.Screen name={Screens.CreatePin} component={PinCreate} options={{ title: t('Screens.ChangePin') }} />
+      <Stack.Screen name={Screens.RecreatePIN} component={PINRecreate} options={{ title: t('Screens.ChangePIN') }} />
+      <Stack.Screen name={Screens.CreatePIN} component={PINCreate} options={{ title: t('Screens.ChangePIN') }} />
       <Stack.Screen name={Screens.Terms} component={terms} options={{ title: t('Screens.Terms') }} />
       <Stack.Screen name={Screens.Developer} component={developer} options={{ title: t('Screens.Developer') }} />
       <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>

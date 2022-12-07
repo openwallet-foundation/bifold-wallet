@@ -6,7 +6,7 @@ import React from 'react'
 import ConnectionModal from '../../App/screens/Connection'
 import { testIdWithKey } from '../../App/utils/testable'
 import navigationContext from '../contexts/navigation'
-import timeTravel from '../util/timetravel'
+import timeTravel from '../helpers/timetravel'
 
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')

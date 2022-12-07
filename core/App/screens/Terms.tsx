@@ -26,7 +26,7 @@ const Terms: React.FC = () => {
       type: DispatchAction.DID_AGREE_TO_TERMS,
     })
 
-    navigation.navigate(Screens.CreatePin)
+    navigation.navigate(Screens.CreatePIN)
   }
   const style = StyleSheet.create({
     container: {

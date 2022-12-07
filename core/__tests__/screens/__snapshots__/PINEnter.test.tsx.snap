@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays a pin create screen pin create renders correctly 1`] = `
+exports[`displays a PIN create screen PIN create renders correctly 1`] = `
 <RNCSafeAreaView>
   <View
     style={
@@ -44,7 +44,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
         ]
       }
     >
-      PinEnter.EnterPIN
+      PINEnter.EnterPIN
     </Text>
     <View>
       <View
@@ -282,7 +282,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             </Text>
           </View>
           <TextInput
-            accessibilityLabel="PinEnter.EnterPIN"
+            accessibilityLabel="PINEnter.EnterPIN"
             accessible={true}
             autoCapitalize="characters"
             autoCorrect={false}
@@ -316,7 +316,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
           />
         </View>
         <View
-          accessibilityLabel="PinCreate.Show"
+          accessibilityLabel="PINCreate.Show"
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -371,7 +371,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
     }
   >
     <View
-      accessibilityLabel="PinEnter.Unlock"
+      accessibilityLabel="PINEnter.Unlock"
       accessibilityState={
         Object {
           "disabled": false,
@@ -420,7 +420,7 @@ exports[`displays a pin create screen pin create renders correctly 1`] = `
             ]
           }
         >
-          PinEnter.Unlock
+          PINEnter.Unlock
         </Text>
       </View>
     </View>

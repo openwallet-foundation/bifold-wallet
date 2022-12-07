@@ -18,7 +18,7 @@ export interface ConfigurationContext {
   scan: React.FC<ScanProps>
   useBiometry: React.FC
   record: React.FC<RecordProps>
-  pinSecurity: PINSecurityParams
+  PINSecurity: PINSecurityParams
   indyLedgers: IndyPoolConfig[]
   settings: SettingSection[]
 }

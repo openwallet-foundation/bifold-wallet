@@ -5,12 +5,12 @@ export interface WalletSecret {
 }
 
 export enum AuthLevel {
-  BiometricsFallbackPin = 'BiometricsFallbackPin',
-  BiometricsAndPin = 'BiometricsAndPin',
+  BiometricsFallbackPIN = 'BiometricsFallbackPIN',
+  BiometricsAndPIN = 'BiometricsAndPIN',
   BiometricsOnly = 'BiometricsOnly',
 }
 
-export interface PINRules {
+export interface PINValidationRules {
   only_numbers: boolean
   min_length: number
   max_length: number
@@ -22,6 +22,6 @@ export interface PINRules {
 }
 
 export interface PINSecurityParams {
-  rules: PINRules
+  rules: PINValidationRules
   displayHelper: boolean
 }

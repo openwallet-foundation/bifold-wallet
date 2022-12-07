@@ -110,7 +110,7 @@ const AttemptLockout: React.FC = () => {
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [{ loginAttempts: state.loginAttempt.loginAttempts, lockoutDate: undefined, servedPenalty: true }],
     })
-    navigation.navigate(Screens.EnterPin as never)
+    navigation.navigate(Screens.EnterPIN as never)
   }
 
   return (

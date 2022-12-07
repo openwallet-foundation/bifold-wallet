@@ -15,11 +15,6 @@ module.exports = {
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
   settings: {
-    // 'import/ignore': ['react-native'],
-    // 'import/extensions': ['.js', '.ts', 'tsx', 'jsx'],
-    // 'import/parsers': {
-    //   '@typescript-eslint/parser': ['.ts', '.tsx'],
-    // },
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
@@ -29,17 +24,17 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import'],
   rules: {
+    'no-console': 'error',
+    // Because of early development, we only warn on ts-ignore. In future we want to move to error
+    '@typescript-eslint/ban-ts-comment': 'warn',
+    // Aries protocol defines attributes with snake case.
+    '@typescript-eslint/camelcase': 'off',
     // Type is enforced by callers. Not entirely, but it's good enough.
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    // Aries protocol defines attributes with snake case.
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: true }],
     '@typescript-eslint/explicit-member-accessibility': 'error',
-    // Because of early development, we only warn on ts-ignore. In future we want to move to error
-    '@typescript-eslint/ban-ts-comment': 'warn',
-    'no-console': 'error',
-    'import/no-cycle': 'error',
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: true }],
     'import/order': [
       'error',
       {
@@ -50,6 +45,7 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'import/no-cycle': 'error',
     'import/no-extraneous-dependencies': [
       'error',
       {

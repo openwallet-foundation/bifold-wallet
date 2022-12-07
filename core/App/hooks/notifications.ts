@@ -17,6 +17,7 @@ export const useNotifications = (): Notifications => {
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofs = useProofByState(ProofState.RequestReceived)
   const revoked = useCredentialByState(CredentialState.Done).filter((cred: CredentialRecord) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const metadata = cred!.metadata.get(CredentialMetadata.customMetadata) as customMetadata
     if (cred?.revocationNotification && metadata?.revoked_seen == undefined) {
       return cred

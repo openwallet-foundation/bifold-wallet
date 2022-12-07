@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { render, fireEvent } from '@testing-library/react-native'
 import React, { useContext } from 'react'
 

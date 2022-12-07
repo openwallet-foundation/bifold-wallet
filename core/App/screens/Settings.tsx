@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SectionList, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -24,7 +24,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
-  const [developerModeTriggerDisabled, setDeveloperModeTriggerDisabled] = useState<boolean>(false)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const { settings } = useConfiguration()
   const languages = [
@@ -127,13 +126,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           testID: testIdWithKey('Biometrics'),
           onPress: () => navigation.navigate(Screens.UseBiometry),
         },
-        // TODO: Need to resolve methods for changing PIN
-        // {
-        //   title: t('PinCreate.ChangePIN'),
-        //   accessibilityLabel: t('PinCreate.ChangePIN'),
-        //   testID: testIdWithKey('ChangePIN'),
-        //   onPress: () => navigation.navigate(Screens.RecreatePin),
-        // },
         {
           title: t('Settings.Language'),
           value: currentLanguage,

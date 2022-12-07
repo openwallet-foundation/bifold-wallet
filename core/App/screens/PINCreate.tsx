@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../components/buttons/Button'
-import PinInput from '../components/inputs/PinInput'
+import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
 import { minPINLength } from '../constants'
 import { useAuth } from '../contexts/auth'
@@ -27,11 +27,11 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { PINCreationValidations, PINValidationsType } from '../utils/PINCreationValidation'
 import { StatusBarStyles } from '../utils/luminance'
-import { pinCreationValidations, PinValidationsType } from '../utils/pinCreationValidation'
 import { testIdWithKey } from '../utils/testable'
 
-interface PinCreateProps {
+interface PINCreateProps {
   setAuthenticated: (status: boolean) => void
 }
 
@@ -41,26 +41,26 @@ interface ModalState {
   message: string
 }
 
-const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
-  const { setPIN } = useAuth()
-  const [pin, setPin] = useState('')
-  const [pinTwo, setPinTwo] = useState('')
+const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
+  const { setPIN: setWalletPIN } = useAuth()
+  const [PIN, setPIN] = useState('')
+  const [PINTwo, setPINTwo] = useState('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
     title: '',
     message: '',
   })
-  const [pinOneValidations, setPinOneValidations] = useState<PinValidationsType[]>([])
+  const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>([])
 
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const { pinSecurity } = useConfiguration()
+  const { PINSecurity } = useConfiguration()
 
   const { ColorPallet, TextTheme } = useTheme()
-  const pinTwoInputRef = useRef<TextInput>()
-  const createPinButtonRef = useRef<TouchableOpacity>()
+  const PINTwoInputRef = useRef<TextInput>()
+  const createPINButtonRef = useRef<TouchableOpacity>()
 
   const style = StyleSheet.create({
     container: {
@@ -70,11 +70,10 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     },
   })
 
-  const passcodeCreate = async (pin: string) => {
-    // TODO: Update this
+  const passcodeCreate = async (PIN: string) => {
     try {
       setContinueEnabled(false)
-      await setPIN(pin)
+      await setWalletPIN(PIN)
       // This will trigger initAgent
       setAuthenticated(true)
 
@@ -89,27 +88,27 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
     }
   }
 
-  const confirmEntry = async (pinX: string, pinY: string) => {
-    for (const validation of pinOneValidations) {
+  const confirmEntry = async (PINOne: string, PINTwo: string) => {
+    for (const validation of PINOneValidations) {
       if (validation.isInvalid) {
         setModalState({
           visible: true,
-          title: t('PinCreate.InvalidPIN'),
-          message: t('PinCreate.Message.Interpolation', { message: validation.errorName }),
+          title: t('PINCreate.InvalidPIN'),
+          message: t('PINCreate.Message.Interpolation', { message: validation.errorName }),
         })
         return
       }
     }
-    if (pinX !== pinY) {
+    if (PINOne !== PINTwo) {
       setModalState({
         visible: true,
-        title: t('PinCreate.InvalidPIN'),
-        message: t('PinCreate.PINsDoNotMatch'),
+        title: t('PINCreate.InvalidPIN'),
+        message: t('PINCreate.PINsDoNotMatch'),
       })
       return
     }
 
-    await passcodeCreate(pinX)
+    await passcodeCreate(PINOne)
   }
 
   // const r: ?React.ElementRef<typeof View>
@@ -119,21 +118,20 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       <StatusBar barStyle={StatusBarStyles.Light} />
       <View style={[style.container]}>
         <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
-          <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
+          <Text style={{ fontWeight: 'bold' }}>{t('PINCreate.RememberPIN')}</Text> {t('PINCreate.PINDisclaimer')}
         </Text>
-        <PinInput
-          label={t('PinCreate.EnterPINTitle')}
-          onPinChanged={(p: string) => {
-            setPin(p)
-
-            setPinOneValidations(pinCreationValidations(p, pinSecurity.rules))
+        <PINInput
+          label={t('PINCreate.EnterPINTitle')}
+          onPINChanged={(p: string) => {
+            setPIN(p)
+            setPINOneValidations(PINCreationValidations(p, PINSecurity.rules))
 
             if (p.length === minPINLength) {
-              if (pinTwoInputRef && pinTwoInputRef.current) {
-                pinTwoInputRef.current.focus()
+              if (PINTwoInputRef && PINTwoInputRef.current) {
+                PINTwoInputRef.current.focus()
                 // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
                 // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
-                const reactTag = findNodeHandle(pinTwoInputRef.current)
+                const reactTag = findNodeHandle(PINTwoInputRef.current)
                 if (reactTag) {
                   AccessibilityInfo.setAccessibilityFocus(reactTag)
                 }
@@ -141,12 +139,12 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
             }
           }}
           testID={testIdWithKey('EnterPIN')}
-          accessibilityLabel={t('PinCreate.EnterPIN')}
+          accessibilityLabel={t('PINCreate.EnterPIN')}
           autoFocus={false}
         />
-        {pinSecurity.displayHelper && (
+        {PINSecurity.displayHelper && (
           <View style={{ marginBottom: 16 }}>
-            {pinOneValidations.map((validation, index) => {
+            {PINOneValidations.map((validation, index) => {
               return (
                 <View style={{ flexDirection: 'row' }} key={index}>
                   {validation.isInvalid ? (
@@ -155,24 +153,24 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
                     <Icon name="check" size={24} color={ColorPallet.notification.success} />
                   )}
                   <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                    {t('PinCreate.Helper.Interpolation', { helper: validation.errorName })}
+                    {t('PINCreate.Helper.Interpolation', { helper: validation.errorName })}
                   </Text>
                 </View>
               )
             })}
           </View>
         )}
-        <PinInput
-          label={t('PinCreate.ReenterPIN')}
-          onPinChanged={(p: string) => {
-            setPinTwo(p)
+        <PINInput
+          label={t('PINCreate.ReenterPIN')}
+          onPINChanged={(p: string) => {
+            setPINTwo(p)
 
             if (p.length === minPINLength) {
               Keyboard.dismiss()
-              if (createPinButtonRef && createPinButtonRef.current) {
+              if (createPINButtonRef && createPINButtonRef.current) {
                 // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
                 // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
-                const reactTag = findNodeHandle(createPinButtonRef.current)
+                const reactTag = findNodeHandle(createPINButtonRef.current)
                 if (reactTag) {
                   AccessibilityInfo.setAccessibilityFocus(reactTag)
                 }
@@ -180,9 +178,9 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
             }
           }}
           testID={testIdWithKey('ReenterPIN')}
-          accessibilityLabel={t('PinCreate.ReenterPIN')}
+          accessibilityLabel={t('PINCreate.ReenterPIN')}
           autoFocus={false}
-          ref={pinTwoInputRef}
+          ref={PINTwoInputRef}
         />
         {modalState.visible && (
           <AlertModal
@@ -194,19 +192,19 @@ const PinCreate: React.FC<PinCreateProps> = ({ setAuthenticated }) => {
       </View>
       <View style={{ marginTop: 'auto', margin: 20 }}>
         <Button
-          title={t('PinCreate.CreatePIN')}
+          title={t('PINCreate.CreatePIN')}
           testID={testIdWithKey('CreatePIN')}
-          accessibilityLabel={t('PinCreate.CreatePIN')}
+          accessibilityLabel={t('PINCreate.CreatePIN')}
           buttonType={ButtonType.Primary}
           disabled={!continueEnabled}
           onPress={async () => {
-            await confirmEntry(pin, pinTwo)
+            await confirmEntry(PIN, PINTwo)
           }}
-          ref={createPinButtonRef}
+          ref={createPINButtonRef}
         />
       </View>
     </SafeAreaView>
   )
 }
 
-export default PinCreate
+export default PINCreate
