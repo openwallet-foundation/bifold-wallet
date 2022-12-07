@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SectionList, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
