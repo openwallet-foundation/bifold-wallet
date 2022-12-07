@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Modal, Switch, StatusBar, Platform, ScrollView 
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Biometrics from '../assets/img/biometrics.svg'
+import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -161,7 +162,9 @@ const UseBiometry: React.FC = () => {
             onPress={continueTouched}
             buttonType={ButtonType.Primary}
             disabled={!continueEnabled}
-          />
+          >
+            {!continueEnabled && <ButtonLoading />}
+          </Button>
         )}
       </View>
       <Modal visible={canSeeCheckPin} transparent={true} animationType={'slide'}>
