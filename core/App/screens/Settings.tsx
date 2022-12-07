@@ -24,7 +24,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
-  const [developerModeTriggerDisabled, setDeveloperModeTriggerDisabled] = useState<boolean>(false)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const { settings } = useConfiguration()
   const languages = [
