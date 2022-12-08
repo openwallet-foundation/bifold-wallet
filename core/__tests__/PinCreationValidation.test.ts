@@ -132,7 +132,7 @@ describe('PIN creation validations', () => {
     const pinValidations = pinCreationValidations(pinWithSeriesOfNumbers, pinRulesWithNoSeriesOfNumbers)
 
     for (const pinValidation of pinValidations) {
-      if (pinValidation.errorName === 'SeriesOfThreeNumbersValidation') {
+      if (pinValidation.errorName === 'NoSeriesOfNumbersValidation') {
         expect(pinValidation.isInvalid).toBe(true)
       }
     }
@@ -147,7 +147,7 @@ describe('PIN creation validations', () => {
     const pinValidations = pinCreationValidations(validPin, pinRulesWithNoSeriesOfNumbers)
 
     for (const pinValidation of pinValidations) {
-      if (pinValidation.errorName === 'SeriesOfThreeNumbersValidation') {
+      if (pinValidation.errorName === 'NoSeriesOfNumbersValidation') {
         expect(pinValidation.isInvalid).toBe(false)
       }
     }
