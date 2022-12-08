@@ -84,7 +84,6 @@ const translation = {
   },
   "PINCreate": {
     "Message": {
-      "Interpolation": "{{ message }}",
       "CrossPatternValidation": "A pattern of cross was detected in your PIN. Please try again.",
       "OddOrEvenSequenceValidation": "An odd or even sequence was detected in your PIN. Please try again.",
       "NoRepetitionOfTheSameNumbersValidation": "The PIN can't have a repetition of the same digit. Please try again.",
@@ -95,7 +94,6 @@ const translation = {
       "PINTooLongValidation": "Your PIN is too long. Please try again.",
     },
     "Helper": {
-      "Interpolation": "{{ helper }}",
       "CrossPatternValidation": "Does not contain a pattern of cross.",
       "OddOrEvenSequenceValidation": "Does not contain an odd or even sequence.",
       "NoRepetitionOfTheSameNumbersValidation": "Does not contain the same repeating number.",
