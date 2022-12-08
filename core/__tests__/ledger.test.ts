@@ -1,7 +1,4 @@
 import { canConnectToLedgerNode, fetchLedgerNodes } from '../App/utils/ledger'
-import timeTravel from './util/timetravel'
-import { waitFor } from '@testing-library/react-native'
-// import { sendTimeoutEvent } from 'react-native-tcp-socket'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('../configs/ledgers/indy')
