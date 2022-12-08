@@ -94,7 +94,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
         setModalState({
           visible: true,
           title: t('PINCreate.InvalidPIN'),
-          message: t('PINCreate.Message.Interpolation', { message: validation.errorName }),
+          message: t(`PINCreate.Message.${validation.errorName}`),
         })
         return
       }
@@ -153,7 +153,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
                     <Icon name="check" size={24} color={ColorPallet.notification.success} />
                   )}
                   <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                    {t('PINCreate.Helper.Interpolation', { helper: validation.errorName })}
+                    {t(`PINCreate.Helper.${validation.errorName}`)}
                   </Text>
                 </View>
               )

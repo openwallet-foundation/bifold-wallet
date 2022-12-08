@@ -79,7 +79,6 @@ const translation = {
   },
     "PINCreate": {
         "Message": {
-            "Interpolation": "{{ message }}", // Do not translate
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
             "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
             "NoRepetitionOfTheTwoSameNumbersValidation": "Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
@@ -90,7 +89,6 @@ const translation = {
             "PINTooLongValidation": "Votre NIP est trop long. Veuillez saisir un NIP différent.",
         },
         "Helper": {
-            "Interpolation": "{{ helper }}", // Do not translate
             "CrossPatternValidation": "Ne doit pas contenir un patron de croix.",
             "OddOrEvenSequenceValidation": "Ne doit pas contenir une suite paire ou impaire.",
             "NoRepetitionOfTheTwoSameNumbersValidation": "Ne doit pas contenir deux chiffres qui se répètent.",
