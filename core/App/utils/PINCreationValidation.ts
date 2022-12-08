@@ -15,7 +15,6 @@ export enum PINError {
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
   PINTooShortValidation = 'PINTooShortValidation',
   PINTooLongValidation = 'PINTooLongValidation',
-  SeriesOfThreeNumbersValidation = 'SeriesOfThreeNumbersValidation',
 }
 
 export interface PINValidationsType {
@@ -74,7 +73,7 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
 
   PINValidations.push({
     isInvalid: PIN.length < PINRules.min_length || PIN.length > PINRules.max_length,
-    errorName: PIN.length < PINRules.max_length ? PINError.PINTooShortValidation : PINError.PINTooLongValidation,
+    errorName: PIN.length <= PINRules.max_length ? PINError.PINTooShortValidation : PINError.PINTooLongValidation,
   } as PINValidationsType)
 
   return PINValidations
