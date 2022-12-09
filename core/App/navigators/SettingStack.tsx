@@ -1,7 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { testIdWithKey } from 'utils/testable'
 
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
@@ -13,6 +12,7 @@ import PINRecreate from '../screens/PINRecreate'
 import Settings from '../screens/Settings'
 import UseBiometry from '../screens/UseBiometry'
 import { Screens, SettingStackParams } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
