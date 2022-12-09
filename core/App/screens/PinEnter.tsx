@@ -37,7 +37,6 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
   const [pin, setPin] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
-  const [buttonLoading, setButtonLoading] = useState(false)
   const navigation = useNavigation()
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
@@ -312,10 +311,9 @@ const PinEnter: React.FC<PinEnterProps> = ({ setAuthenticated, pinEntryUsage = P
           onPress={() => {
             Keyboard.dismiss()
             onPinInputCompleted(pin)
-            setButtonLoading(true)
           }}
         >
-          {buttonLoading && <ButtonLoading />}
+          {!continueEnabled && <ButtonLoading />}
         </Button>
       </View>
 
