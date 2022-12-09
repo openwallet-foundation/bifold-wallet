@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react'
-import { View, StyleSheet, Animated, Image } from 'react-native'
+import { Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import ActivityIndicator from '../../assets/img/activity-indicator-circle.svg'
 import { useTheme } from '../../contexts/theme'
-import { testIdWithKey } from '../../utils/testable'
 
 const ButtonLoading: React.FC = () => {
   const { ColorPallet } = useTheme()
