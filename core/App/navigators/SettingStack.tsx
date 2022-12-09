@@ -12,6 +12,7 @@ import PINRecreate from '../screens/PINRecreate'
 import Settings from '../screens/Settings'
 import UseBiometry from '../screens/UseBiometry'
 import { Screens, SettingStackParams } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -26,13 +27,41 @@ const SettingStack: React.FC = () => {
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
-      <Stack.Screen name={Screens.Settings} component={Settings} options={{ title: t('Screens.Settings') }} />
-      <Stack.Screen name={Screens.Language} component={Language} options={{ title: t('Screens.Language') }} />
-      <Stack.Screen name={Screens.UseBiometry} component={UseBiometry} options={{ title: t('Screens.Biometry') }} />
-      <Stack.Screen name={Screens.RecreatePIN} component={PINRecreate} options={{ title: t('Screens.ChangePIN') }} />
-      <Stack.Screen name={Screens.CreatePIN} component={PINCreate} options={{ title: t('Screens.ChangePIN') }} />
-      <Stack.Screen name={Screens.Terms} component={terms} options={{ title: t('Screens.Terms') }} />
-      <Stack.Screen name={Screens.Developer} component={developer} options={{ title: t('Screens.Developer') }} />
+      <Stack.Screen
+        name={Screens.Settings}
+        component={Settings}
+        options={{ title: t('Screens.Settings'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.Language}
+        component={Language}
+        options={{ title: t('Screens.Language'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.UseBiometry}
+        component={UseBiometry}
+        options={{ title: t('Screens.Biometry'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.RecreatePIN}
+        component={PINRecreate}
+        options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.CreatePIN}
+        component={PINCreate}
+        options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.Terms}
+        component={terms}
+        options={{ title: t('Screens.Terms'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.Developer}
+        component={developer}
+        options={{ title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
+      />
       <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>
         {(props) => (
           <Onboarding
