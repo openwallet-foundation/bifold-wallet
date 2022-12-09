@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { Platform, StyleSheet, Text, StatusBar, View, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Button, ButtonType } from '../components/buttons/Button'
-import PinInput from '../components/inputs/PinInput'
+import Button, { ButtonType } from '../components/buttons/Button'
+import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import { useAuth } from '../contexts/auth'
@@ -17,12 +17,12 @@ import { hashPIN } from '../utils/crypto'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-const PinRecreate: React.FC = () => {
+const PINRecreate: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<SettingStackParams>>()
   const { getWalletCredentials } = useAuth()
 
-  const [pin, setPin] = useState('')
+  const [PIN, setPIN] = useState('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
 
@@ -39,29 +39,29 @@ const PinRecreate: React.FC = () => {
     },
   })
 
-  const verifyPIN = async (pin: string) => {
+  const verifyPIN = async (PIN: string) => {
     try {
       const credentials = await getWalletCredentials()
       if (!credentials) {
         throw new BifoldError(t('Error.Title1036'), t('Error.Message1036'), t('Error.Message1036'), 1036)
       }
 
-      const key = await hashPIN(pin, credentials.salt)
+      const key = await hashPIN(PIN, credentials.salt)
 
       if (credentials.key !== key) {
         setAlertModalVisible(true)
       } else {
-        navigation.navigate(Screens.CreatePin)
+        navigation.navigate(Screens.CreatePIN)
       }
     } catch (error) {
       /* eslint-disable:no-empty */
     }
   }
 
-  const onVerifyPIN = async (pin: string) => {
+  const onVerifyPIN = async (PIN: string) => {
     try {
       setContinueEnabled(false)
-      await verifyPIN(pin)
+      await verifyPIN(PIN)
     } catch (error: unknown) {
       /* eslint-disable:no-empty */
     }
@@ -76,36 +76,36 @@ const PinRecreate: React.FC = () => {
       />
       <View style={[style.container]}>
         <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
-          <Text style={{ fontWeight: 'bold' }}>{t('PinCreate.RememberPIN')}</Text> {t('PinCreate.PINDisclaimer')}
+          <Text style={{ fontWeight: 'bold' }}>{t('PINCreate.RememberPIN')}</Text> {t('PINCreate.PINDisclaimer')}
         </Text>
-        <PinInput
-          label={t('PinCreate.EnterYourCurrentPIN')}
+        <PINInput
+          label={t('PINCreate.EnterYourCurrentPIN')}
           testID={testIdWithKey('EnterCurrentPIN')}
-          accessibilityLabel={t('PinCreate.EnterYourCurrentPIN')}
-          onPinChanged={setPin}
+          accessibilityLabel={t('PINCreate.EnterYourCurrentPIN')}
+          onPINChanged={setPIN}
           autoFocus={true}
         />
       </View>
       <View style={{ marginTop: 'auto', margin: 20 }}>
         <Button
-          title={t('PinCreate.Continue')}
+          title={t('PINCreate.Continue')}
           testID={testIdWithKey('Continue')}
-          accessibilityLabel={t('PinCreate.Continue')}
+          accessibilityLabel={t('PINCreate.Continue')}
           buttonType={ButtonType.Primary}
           disabled={!continueEnabled}
           onPress={async () => {
             Keyboard.dismiss()
-            await onVerifyPIN(pin)
+            await onVerifyPIN(PIN)
           }}
         />
       </View>
       {alertModalVisible && (
         <PopupModal
           notificationType={InfoBoxType.Info}
-          title={t('PinEnter.IncorrectPIN')}
+          title={t('PINEnter.IncorrectPIN')}
           bodyContent={
             <View>
-              <Text style={style.notifyText}>{t('PinEnter.RepeatPIN')}</Text>
+              <Text style={style.notifyText}>{t('PINEnter.RepeatPIN')}</Text>
             </View>
           }
           onCallToActionLabel={t('Global.Okay')}
@@ -119,4 +119,4 @@ const PinRecreate: React.FC = () => {
   )
 }
 
-export default PinRecreate
+export default PINRecreate

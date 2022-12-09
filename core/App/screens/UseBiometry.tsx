@@ -10,9 +10,10 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import PinEnter, { PinEntryUsage } from '../screens/PinEnter'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
+
+import PINEnter, { PINEntryUsage } from './PINEnter'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -26,7 +27,7 @@ const UseBiometry: React.FC = () => {
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
-  const [canSeeCheckPin, setCanSeeCheckPin] = useState<boolean>(false)
+  const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme } = useTheme()
   const screenUsage = store.onboarding.didConsiderBiometry
     ? UseBiometryUsage.ToggleOnOff
@@ -88,7 +89,7 @@ const UseBiometry: React.FC = () => {
     // If the user is toggling biometrics on/off they need
     // to first authenticate before this action is accepted
     if (screenUsage === UseBiometryUsage.ToggleOnOff) {
-      setCanSeeCheckPin(true)
+      setCanSeeCheckPIN(true)
 
       return
     }
@@ -102,7 +103,7 @@ const UseBiometry: React.FC = () => {
       setBiometryEnabled((previousState) => !previousState)
     }
 
-    setCanSeeCheckPin(false)
+    setCanSeeCheckPIN(false)
   }
 
   return (
@@ -167,8 +168,8 @@ const UseBiometry: React.FC = () => {
           </Button>
         )}
       </View>
-      <Modal visible={canSeeCheckPin} transparent={true} animationType={'slide'}>
-        <PinEnter pinEntryUsage={PinEntryUsage.PinCheck} setAuthenticated={onAuthenticationComplete} />
+      <Modal visible={canSeeCheckPIN} transparent={true} animationType={'slide'}>
+        <PINEnter usage={PINEntryUsage.PINCheck} setAuthenticated={onAuthenticationComplete} />
       </Modal>
     </SafeAreaView>
   )

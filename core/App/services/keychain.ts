@@ -1,5 +1,4 @@
 import { Platform } from 'react-native'
-import DeviceInfo from 'react-native-device-info'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
@@ -41,9 +40,9 @@ export const optionsForKeychainAccess = (service: KeychainServices, useBiometric
   return opts
 }
 
-export const secretForPIN = async (pin: string, salt?: string): Promise<WalletSecret> => {
+export const secretForPIN = async (PIN: string, salt?: string): Promise<WalletSecret> => {
   const mySalt = salt ?? uuid.v4().toString()
-  const myKey = await hashPIN(pin, mySalt)
+  const myKey = await hashPIN(PIN, mySalt)
   const secret: WalletSecret = {
     id: walletId,
     key: myKey,

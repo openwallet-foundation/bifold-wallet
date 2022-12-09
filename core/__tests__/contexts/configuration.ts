@@ -14,7 +14,7 @@ const configurationContext: ConfigurationContext = {
   developer: () => null,
   scan: () => null,
   indyLedgers: [],
-  pinSecurity: {
+  PINSecurity: {
     rules: {
       only_numbers: true,
       min_length: 6,
