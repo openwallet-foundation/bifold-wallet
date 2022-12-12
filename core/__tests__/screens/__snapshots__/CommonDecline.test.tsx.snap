@@ -191,7 +191,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                           "fontWeight": "bold",
                         },
                         Object {
-                          "color": "#FFFFFF",
+                          "color": "#313132",
                           "flex": 4,
                           "paddingHorizontal": 5,
                           "textAlignVertical": "center",
@@ -214,7 +214,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                           "fontWeight": "bold",
                         },
                         Object {
-                          "color": "#FFFFFF",
+                          "color": "#313132",
                           "flex": 4,
                           "paddingHorizontal": 5,
                           "textAlign": "right",
@@ -259,7 +259,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#313132",
                       },
                     ]
                   }

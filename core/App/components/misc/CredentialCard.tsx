@@ -160,18 +160,18 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
         return
       }
     }
-    OCABundle.resolve(credential).then(async (_bundle) => {
-      if (_bundle !== undefined) {
-        setBundles({ bundle1: _bundle, bundle2: undefined })
+    OCABundle.resolve(credential).then(async (bundle) => {
+      if (bundle !== undefined) {
+        setBundles({ bundle1: bundle, bundle2: undefined })
       } else {
-        await OCABundle.resolveDefaultBundle(credential).then((_defaultBundle) => {
-          setBundles({ bundle1: undefined, bundle2: _defaultBundle })
+        await OCABundle.resolveDefaultBundle(credential).then((defaultBundle) => {
+          setBundles({ bundle1: undefined, bundle2: defaultBundle })
         })
       }
     })
   }, [])
 
-  const renderCredentialCardHeader2 = () => {
+  const renderCredentialCardHeader = () => {
     return (
       <View style={[styles.outerHeaderContainer]}>
         <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
@@ -192,7 +192,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               style={[
                 TextTheme.label,
                 {
-                  color: overlay?.header?.color ?? credentialTextColor(overlay?.header?.backgroundColor),
+                  color:
+                    overlay?.header?.color ??
+                    credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
                   paddingHorizontal: 0.5 * paddingHorizontal,
                   flex: !overlay?.header?.imageSource ? 4 : 3,
                   textAlignVertical: 'center',
@@ -210,7 +212,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             style={[
               TextTheme.label,
               {
-                color: overlay?.header?.color ?? credentialTextColor(overlay?.header?.backgroundColor),
+                color:
+                  overlay?.header?.color ??
+                  credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
                 textAlign: 'right',
                 paddingHorizontal: 0.5 * paddingHorizontal,
                 flex: 4,
@@ -248,7 +252,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             style={[
               TextTheme.caption,
               {
-                color: overlay?.footer?.color ?? credentialTextColor(overlay?.footer?.backgroundColor),
+                color:
+                  overlay?.footer?.color ??
+                  credentialTextColor(overlay?.footer?.backgroundColor || overlay?.backgroundColor),
               },
             ]}
             testID={testIdWithKey('CredentialIssued')}
@@ -264,7 +270,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCard = (revoked = false) => {
     return (
       <>
-        {renderCredentialCardHeader2()}
+        {renderCredentialCardHeader()}
         {renderCredentialCardBody()}
         {renderCredentialCardFooter(revoked)}
       </>
