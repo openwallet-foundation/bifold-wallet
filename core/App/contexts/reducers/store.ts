@@ -38,6 +38,7 @@ enum PrivacyDispatchAction {
 enum PreferencesDispatchAction {
   ENABLE_DEVELOPER_MODE = 'preferences/enableDeveloperMode',
   USE_BIOMETRY = 'preferences/useBiometry',
+  BIOMETRY_PREFERENCES_UPDATED = 'preferences/biometryPreferencesUpdated',
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
 }
 
@@ -108,6 +109,14 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
+    }
+    case PreferencesDispatchAction.BIOMETRY_PREFERENCES_UPDATED: {
+      const updatePending = (action?.payload ?? []).pop() ?? false
+      const preferences = { ...state.preferences, biometryPreferencesUpdated: updatePending }
+      return {
+        ...state,
+        preferences,
+      }
     }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
