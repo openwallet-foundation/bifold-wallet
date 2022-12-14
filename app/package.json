@@ -62,6 +62,7 @@
     "react-native-screens": "3.7.2",
     "react-native-splash-screen": "3.3.0",
     "react-native-svg": "12.1.1",
+    "react-native-tcp-socket": "^6.0.3",
     "react-native-toast-message": "2.0.1",
     "react-native-uuid": "2.0.1",
     "react-native-vector-icons": "8.1.0",

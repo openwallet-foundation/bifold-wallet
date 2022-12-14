@@ -339,7 +339,9 @@ const translation = {
     },
     "NetInfo": {
         "NoInternetConnectionTitle": "Aucune connexion Internet",
-        "NoInternetConnectionMessage": "Vous ne pouvez pas accéder aux services à l'aide de Bifold ou recevoir des informations d'identification tant que vous n'êtes pas de nouveau en ligne.\n\nS'il vous plait, vérifiez votre connexion internet."
+        "NoInternetConnectionMessage": "Vous ne pouvez pas accéder aux services à l'aide de Bifold ou recevoir des informations d'identification tant que vous n'êtes pas de nouveau en ligne.\n\nS'il vous plait, vérifiez votre connexion internet.",
+        "LedgerConnectivityIssueTitle": "Wallet Services (FR)",
+        "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services. (FR)",    
     }
 }
 export default translation

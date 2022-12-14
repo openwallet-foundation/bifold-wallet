@@ -22,6 +22,7 @@ import { testIdWithKey } from '../../App/utils/testable'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
 
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@react-navigation/core', () => {
