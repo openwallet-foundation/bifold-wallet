@@ -7,7 +7,7 @@ const http = require('http')
 const url = require('url')
 
 const networkUrl = 'https://raw.githubusercontent.com/hyperledger/indy-node-monitor/main/fetch-validator-status/networks.json'
-const targetNetworks = [
+const networksToAdd = [
   { id: "bct", production: false },
   { id: "cdn", production: false },
   { id: "ctn", production: false },
@@ -39,18 +39,18 @@ const getUrlContents = async (aUrl) => {
 const main = async () => {
   const networksAsString = await getUrlContents(url.parse(networkUrl))
   const networks = JSON.parse(networksAsString)
-  const targets = targetNetworks.map((t) => Object({ ...t, ...networks[t.id] }))
+  const myNetworks = networksToAdd.map((n) => Object({ ...n, ...networks[n.id] }))
   let ledgers = []
 
-  for (let t of targets) {
-    const aUrl = url.parse(t['genesisUrl'])
-    const name = t['name'].split(' ').filter(w => !networkNameRe.test(w)).join('')
-    const block = await getUrlContents(aUrl)
+  for (let n of myNetworks) {
+    const aUrl = url.parse(n['genesisUrl'])
+    const name = n['name'].split(' ').filter(w => !networkNameRe.test(w)).join('')
+    const transaction = await getUrlContents(aUrl)
     // const data = `export default \`${block.trim()}\`\n`
     ledgers.push({
-      genesisTransactions: block.trim(),
+      genesisTransactions: transaction.trim(),
       id: name,
-      isProduction: t['production']
+      isProduction: n['production']
     })
 
   }
