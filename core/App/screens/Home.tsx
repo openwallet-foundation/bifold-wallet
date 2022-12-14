@@ -7,8 +7,9 @@ import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from '
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { useDeepLinks } from '../hooks/deep-links'
 import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
@@ -24,9 +25,9 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { notifications } = useNotifications()
   const { t } = useTranslation()
   const { homeContentView: HomeContentView } = useConfiguration()
+  const [store, dispatch] = useStore()
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
-  const deepLink = useDeepLinks()
   const { HomeTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -60,6 +61,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
   useEffect(() => {
     async function handleDeepLink(deepLink: string) {
+      let success = false
       try {
         // Try connection based
         const connectionRecord = await connectFromInvitation(deepLink, agent)
@@ -67,6 +69,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           screen: Screens.Connection,
           params: { connectionId: connectionRecord.id },
         })
+        success = true
       } catch {
         try {
           // Try connectionless here
@@ -75,15 +78,23 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             screen: Screens.Connection,
             params: { threadId: message['@id'] },
           })
+          success = true
         } catch (error) {
           // TODO:(am add error handling here)
         }
       }
+      if (success) {
+        //reset deepLink if succeeds
+        dispatch({
+          type: DispatchAction.ACTIVE_DEEP_LINK,
+          payload: [undefined],
+        })
+      }
     }
-    if (agent && deepLink) {
-      handleDeepLink(deepLink)
+    if (agent && store.deepLink.activeDeepLink) {
+      handleDeepLink(store.deepLink.activeDeepLink)
     }
-  }, [agent, deepLink])
+  }, [agent, store.deepLink.activeDeepLink, store.authentication.didAuthenticate])
 
   return (
     <>
