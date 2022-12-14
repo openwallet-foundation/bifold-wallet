@@ -1481,6 +1481,40 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
           }
         }
       >
+        <View
+          style={
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 35,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
         <Text
           style={
             Array [

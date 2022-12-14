@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // eslint-disable-next-line import/no-named-as-default
+import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
@@ -201,7 +202,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
             await confirmEntry(PIN, PINTwo)
           }}
           ref={createPINButtonRef}
-        />
+        >
+          {!continueEnabled && <ButtonLoading />}
+        </Button>
       </View>
     </SafeAreaView>
   )
