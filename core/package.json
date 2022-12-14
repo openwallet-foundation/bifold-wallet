@@ -65,6 +65,7 @@
     "react-native-localize": "^2.1.5",
     "react-native-qrcode-svg": "^6.0.6",
     "react-native-reanimated": "^2.2.4",
+    "react-native-tcp-socket": "^6.0.3",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-scalable-image": "^1.1.0",
     "react-native-screens": "^3.3.0",
