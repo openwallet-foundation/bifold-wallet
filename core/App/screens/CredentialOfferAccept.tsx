@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CredentialAdded from '../components/animated/CredentialAdded'
 import CredentialPending from '../components/animated/CredentialPending'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
@@ -32,6 +33,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [credentialDeliveryStatus, setCredentialDeliveryStatus] = useState<DeliveryStatus>(DeliveryStatus.Pending)
   const [timerDidFire, setTimerDidFire] = useState<boolean>(false)
+  const [store] = useStore()
   const [timer, setTimer] = useState<NodeJS.Timeout>()
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
@@ -98,6 +100,13 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       timer && clearTimeout(timer)
     }
   }, [visible])
+
+  useEffect(() => {
+    if (store.deepLink.activeDeepLink) {
+      //navigate back to home to handle deepLink
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    }
+  }, [store.deepLink.activeDeepLink])
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>

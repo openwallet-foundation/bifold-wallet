@@ -35,6 +35,9 @@ export const defaultState: State = {
     developerModeEnabled: false,
     useBiometry: false,
   },
+  deepLink: {
+    activeDeepLink: '',
+  },
   error: null,
   loading: false,
 }

@@ -45,6 +45,10 @@ enum AuthenticationDispatchAction {
   DID_AUTHENTICATE = 'authentication/didAuthenticate',
 }
 
+enum DeepLinkDispatchAction {
+  ACTIVE_DEEP_LINK = 'deepLink/activeDeepLink',
+}
+
 export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
@@ -53,6 +57,7 @@ export type DispatchAction =
   | LockoutDispatchAction
   | PreferencesDispatchAction
   | AuthenticationDispatchAction
+  | DeepLinkDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -62,6 +67,7 @@ export const DispatchAction = {
   ...LockoutDispatchAction,
   ...PreferencesDispatchAction,
   ...AuthenticationDispatchAction,
+  ...DeepLinkDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -206,6 +212,13 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return {
         ...state,
         error: null,
+      }
+    }
+    case DeepLinkDispatchAction.ACTIVE_DEEP_LINK: {
+      const value = (action?.payload || []).pop()
+      return {
+        ...state,
+        ...{ deepLink: { activeDeepLink: value } },
       }
     }
     default:
