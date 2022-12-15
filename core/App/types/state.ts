@@ -30,6 +30,10 @@ export interface Authentication {
   didAuthenticate: boolean
 }
 
+export interface DeepLink {
+  activeDeepLink?: string
+}
+
 export interface State {
   onboarding: Onboarding
   authentication: Authentication
@@ -38,5 +42,6 @@ export interface State {
   loginAttempt: LoginAttempt
   preferences: Preferences
   error: BifoldError | null
+  deepLink: DeepLink
   loading: boolean
 }

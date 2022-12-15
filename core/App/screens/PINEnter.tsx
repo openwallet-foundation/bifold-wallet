@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
@@ -310,7 +311,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
             Keyboard.dismiss()
             onPINInputCompleted(PIN)
           }}
-        />
+        >
+          {!continueEnabled && <ButtonLoading />}
+        </Button>
       </View>
 
       {store.preferences.useBiometry && usage === PINEntryUsage.WalletUnlock && (
