@@ -146,7 +146,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         {
           title: t('Settings.Developer'),
           accessibilityLabel: t('Settings.Developer'),
-          testID: testIdWithKey('Developer'),
+          testID: testIdWithKey('DeveloperOptions'),
           onPress: () => navigation.navigate(Screens.Developer),
         },
       ]
@@ -185,11 +185,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     <SafeAreaView edges={['bottom', 'left', 'right']}>
       <View style={styles.container}>
         <SectionList
-          renderItem={({ item: { title, value, onPress } }) => (
+          renderItem={({ item: { title, value, accessibilityLabel, testID, onPress } }) => (
             <SectionRow
               title={title}
-              accessibilityLabel={title}
-              testID={testIdWithKey(title)}
+              accessibilityLabel={accessibilityLabel}
+              testID={testID ?? 'NoTestIdFound'}
               value={value}
               onPress={onPress}
             />
