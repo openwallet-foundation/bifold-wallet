@@ -52,12 +52,15 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
     title: '',
     message: '',
   })
-  const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>([])
 
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { PINSecurity } = useConfiguration()
+
+  const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
+    PINCreationValidations(PIN, PINSecurity.rules)
+  )
 
   const { ColorPallet, TextTheme } = useTheme()
   const PINTwoInputRef = useRef<TextInput>()
