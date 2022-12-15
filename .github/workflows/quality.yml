@@ -1,7 +1,7 @@
 name: Code Quality
 
 env:
-  cacheId: '4' # increment to expire the cache
+  cacheId: "4" # increment to expire the cache
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     name: Linting
     steps:
       - name: Checkout aries-mobile-agent-react-native
@@ -20,7 +20,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '16.15.0'
+          node-version: "16.15.0"
 
         # GitHub recommends not caching node_modules but rather
         # .npm because it can break across Node versions and
@@ -46,7 +46,7 @@ jobs:
         run: |
           npm run lint
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     name: Testing
     steps:
       - name: Checkout aries-mobile-agent-react-native
@@ -55,7 +55,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '16.15.0'
+          node-version: "16.15.0"
 
         # GitHub recommends not caching node_modules but rather
         # .npm because it can break across Node versions and
