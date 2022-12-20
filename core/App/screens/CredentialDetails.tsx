@@ -17,7 +17,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { getCurrentLanguage } from '../localization'
+import { getCurrentLanguage, i18n } from '../localization'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
@@ -199,6 +199,16 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               <Text>
                 <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')}</Text>{' '}
                 <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
+              </Text>
+              <Text>
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.Issued')}:</Text>{' '}
+                <Text style={[TextTheme.normal]}>{`${credential?.createdAt.toLocaleString(i18n.language, {
+                  day: 'numeric',
+                })} ${credential?.createdAt.toLocaleString(i18n.language, {
+                  month: 'long',
+                })} ${credential?.createdAt.toLocaleString(i18n.language, {
+                  year: 'numeric',
+                })}, ${credential?.createdAt.toLocaleTimeString(i18n.language, { hour12: false })}`}</Text>
               </Text>
             </View>
           </View>
