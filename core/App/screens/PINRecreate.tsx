@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StyleSheet, Text, StatusBar, View, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -14,7 +14,6 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
-import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 const PINRecreate: React.FC = () => {
@@ -69,11 +68,6 @@ const PINRecreate: React.FC = () => {
 
   return (
     <SafeAreaView>
-      <StatusBar
-        barStyle={
-          Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(style.container.backgroundColor)
-        }
-      />
       <View style={[style.container]}>
         <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
           <Text style={{ fontWeight: 'bold' }}>{t('PINCreate.RememberPIN')}</Text> {t('PINCreate.PINDisclaimer')}

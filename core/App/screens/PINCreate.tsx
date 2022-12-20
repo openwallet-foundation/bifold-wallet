@@ -7,7 +7,6 @@ import {
   Keyboard,
   StyleSheet,
   Text,
-  StatusBar,
   View,
   TextInput,
   TouchableOpacity,
@@ -29,7 +28,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { PINCreationValidations, PINValidationsType } from '../utils/PINCreationValidation'
-import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PINCreateProps {
@@ -119,7 +117,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle={StatusBarStyles.Light} />
       <View style={[style.container]}>
         <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
           <Text style={{ fontWeight: 'bold' }}>{t('PINCreate.RememberPIN')}</Text> {t('PINCreate.PINDisclaimer')}

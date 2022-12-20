@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
+import { Keyboard, StyleSheet, Text, Image, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ButtonLoading from '../components/animated/ButtonLoading'
@@ -17,7 +17,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
-import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PINEnterProps {
@@ -245,7 +244,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle={StatusBarStyles.Light} />
       <View style={[style.container]}>
         <Image
           source={Assets.img.logoSecondary.src}
