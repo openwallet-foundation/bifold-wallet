@@ -6,7 +6,7 @@ import EmptyWallet from '../../assets/img/empty-wallet.svg'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
-interface EmptyListProps {
+export interface EmptyListProps {
   message?: string
 }
 
