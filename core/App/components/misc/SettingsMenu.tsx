@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const SettingsCog: React.FC = () => {
+const SettingsMenu: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
@@ -27,9 +27,9 @@ const SettingsCog: React.FC = () => {
       style={styles.button}
       onPress={() => navigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })}
     >
-      <Icon name="cog" size={24} color={ColorPallet.grayscale.white}></Icon>
+      <Icon name="menu" size={24} color={ColorPallet.grayscale.white}></Icon>
     </TouchableOpacity>
   )
 }
 
-export default SettingsCog
+export default SettingsMenu

@@ -1,6 +1,7 @@
 import { IndyPoolConfig } from '@aries-framework/core'
 import { createContext, useContext } from 'react'
 
+import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import OnboardingPages from '../screens/OnboardingPages'
 import { ScanProps } from '../screens/Scan'
@@ -13,6 +14,9 @@ export interface ConfigurationContext {
   splash: React.FC
   terms: React.FC
   homeContentView: React.FC
+  credentialListHeaderRight: React.FC
+  credentialListOptions: React.FC
+  credentialEmptyList: React.FC<EmptyListProps>
   developer: React.FC
   OCABundle: OCABundleResolver
   scan: React.FC<ScanProps>
