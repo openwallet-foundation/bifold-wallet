@@ -1,172 +1,178 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`displays a home screen renders correctly 1`] = `
-<View>
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "paddingHorizontal": 25,
-      }
-    }
-  >
-    <Text
+<RCTScrollView
+  collapsable={false}
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
+>
+  <View>
+    <View
       style={
-        Array [
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 26,
-            "fontWeight": "bold",
-          },
-          Object {
-            "marginBottom": 20,
-            "marginTop": 25,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "paddingHorizontal": 25,
+        }
       }
     >
-      Home.Notifications
-      
-    </Text>
-  </View>
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    data={Array []}
-    decelerationRate="fast"
-    getItem={[Function]}
-    getItemCount={[Function]}
-    horizontal={true}
-    keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
-    renderItem={[Function]}
-    scrollEnabled={false}
-    scrollEventThrottle={50}
-    showsHorizontalScrollIndicator={false}
-    snapToOffsets={
-      Array [
-        0,
-      ]
-    }
-    stickyHeaderIndices={Array []}
-    viewabilityConfigCallbackPairs={Array []}
-  >
-    <View>
-      <View
+      <Text
         style={
-          Object {
-            "marginHorizontal": 25,
-            "width": 700,
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
+              "marginBottom": 20,
+              "marginTop": 25,
+            },
+          ]
         }
       >
+        Home.Notifications
+        
+      </Text>
+    </View>
+    <RCTScrollView
+      ListEmptyComponent={[Function]}
+      data={Array []}
+      decelerationRate="fast"
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEnabled={false}
+      scrollEventThrottle={50}
+      showsHorizontalScrollIndicator={false}
+      snapToOffsets={
+        Array [
+          0,
+        ]
+      }
+      stickyHeaderIndices={Array []}
+      viewabilityConfigCallbackPairs={Array []}
+    >
+      <View>
         <View
           style={
             Object {
-              "backgroundColor": "#313132",
-              "borderColor": "#0099FF",
-              "borderRadius": 5,
-              "borderWidth": 1,
-              "padding": 10,
+              "marginHorizontal": 25,
+              "width": 700,
             }
           }
         >
           <View
             style={
               Object {
-                "alignItems": "center",
-                "flexDirection": "row",
+                "backgroundColor": "#313132",
+                "borderColor": "#0099FF",
+                "borderRadius": 5,
+                "borderWidth": 1,
+                "padding": 10,
               }
             }
           >
             <View
               style={
                 Object {
-                  "alignSelf": "center",
-                  "marginRight": 10,
+                  "alignItems": "center",
+                  "flexDirection": "row",
                 }
               }
             >
+              <View
+                style={
+                  Object {
+                    "alignSelf": "center",
+                    "marginRight": 10,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#0099FF",
+                        "fontSize": 30,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
               <Text
-                allowFontScaling={false}
                 style={
                   Array [
                     Object {
-                      "color": "#0099FF",
-                      "fontSize": 30,
-                    },
-                    undefined,
-                    Object {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    Object {
+                      "flexShrink": 1,
+                    },
                   ]
                 }
+                testID="com.ariesbifold:id/NoNewUpdates"
               >
-                
+                Home.NoNewUpdates
               </Text>
             </View>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "marginHorizontal": 25,
+                  "marginTop": 35,
+                },
+              ]
+            }
+          >
             <Text
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
+                    "fontSize": 38,
+                    "fontWeight": "bold",
                   },
                   Object {
-                    "flexShrink": 1,
+                    "marginBottom": 20,
+                    "marginTop": 25,
                   },
                 ]
               }
-              testID="com.ariesbifold:id/NoNewUpdates"
             >
-              Home.NoNewUpdates
+              Home.Welcome
             </Text>
           </View>
         </View>
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "justifyContent": "center",
-                "marginHorizontal": 25,
-                "marginTop": 35,
-              },
-            ]
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 38,
-                  "fontWeight": "bold",
-                },
-                Object {
-                  "marginBottom": 20,
-                  "marginTop": 25,
-                },
-              ]
-            }
-          >
-            Home.Welcome
-          </Text>
-        </View>
       </View>
-    </View>
-  </RCTScrollView>
-</View>
+    </RCTScrollView>
+  </View>
+</RCTScrollView>
 `;
