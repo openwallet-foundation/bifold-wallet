@@ -3,6 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
@@ -98,7 +99,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
   return (
     <>
-      <View>
+      <ScrollView>
         <View style={styles.rowContainer}>
           <Text style={[HomeTheme.notificationsHeader, styles.header]}>
             {t('Home.Notifications')}
@@ -160,7 +161,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           )}
         />
         <HomeContentView />
-      </View>
+      </ScrollView>
     </>
   )
 }
