@@ -11,6 +11,7 @@ import Toast from 'react-native-toast-message'
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonDeleteModal from '../components/modals/CommonDeleteModal'
+import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
 import { dateFormatOptions } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
@@ -22,7 +23,6 @@ import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { Field } from '../types/record'
 import { getCredentialConnectionLabel } from '../utils/helpers'
-// import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
@@ -112,9 +112,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     navigation.navigate(Screens.Credentials)
   }
 
-  // const handleRemovePressed = () => {
-  //   setIsDeleteModalDisplayed(true)
-  // }
+  const handleRemovePressed = () => {
+    setIsDeleteModalDisplayed(true)
+  }
 
   const handleSubmitRemovePressed = async () => {
     try {
@@ -184,33 +184,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             </View>
           </View>
         ) : null}
-
-        {/* <View
-          style={{
-            backgroundColor: ColorPallet.brand.secondaryBackground,
-            marginTop: 16,
-            paddingHorizontal: 25,
-            paddingVertical: 16,
-          }}
-        >
-          <TouchableOpacity
-            accessible={true}
-            accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
-            testID={testIdWithKey('RemoveFromWallet')}
-            activeOpacity={1}
-            onPress={() => handleRemovePressed()}
-          >
-            <Text
-              style={[
-                styles.footerText,
-                styles.link,
-                { color: ColorPallet.semantic.error, textDecorationLine: 'underline' },
-              ]}
-            >
-              {t('CredentialDetails.RemoveFromWallet')}
-            </Text>
-          </TouchableOpacity>
-        </View> */}
+        <RecordRemove onRemove={() => handleRemovePressed()} />
       </View>
     )
   }
