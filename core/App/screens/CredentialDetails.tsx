@@ -2,7 +2,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -112,11 +112,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     navigation.navigate(Screens.Credentials)
   }
 
-  const handleRemovePressed = () => {
+  const handleOnRemove = () => {
     setIsDeleteModalDisplayed(true)
   }
 
-  const handleSubmitRemovePressed = async () => {
+  const handleSubmitRemove = async () => {
     try {
       if (!(agent && credential)) {
         return
@@ -137,9 +137,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
   }
 
-  const handleCancelRemovePressed = () => {
+  const handleCancelRemove = () => {
     setIsDeleteModalDisplayed(false)
   }
+
+  const callOnRemove = useCallback(() => handleOnRemove(), [])
+  const callSubmitRemove = useCallback(() => handleSubmitRemove(), [])
+  const callCancelRemove = useCallback(() => handleCancelRemove(), [])
 
   const header = () => {
     return (
@@ -184,7 +188,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             </View>
           </View>
         ) : null}
-        <RecordRemove onRemove={() => handleRemovePressed()} />
+        <RecordRemove onRemove={callOnRemove} />
       </View>
     )
   }
@@ -199,8 +203,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       })}
       <CommonDeleteModal
         visible={isDeleteModalDisplayed}
-        onSubmit={() => handleSubmitRemovePressed()}
-        onCancel={() => handleCancelRemovePressed()}
+        onSubmit={callSubmitRemove}
+        onCancel={callCancelRemove}
       ></CommonDeleteModal>
     </SafeAreaView>
   )
