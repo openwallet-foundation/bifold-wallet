@@ -6,14 +6,16 @@ import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Button, { ButtonType } from '../../components/buttons/Button'
-import FauxNavigationBar from '../../components/views/FauxNavigationBar'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
+import { RemoveType } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
+import Button, { ButtonType } from '../buttons/Button'
 import UnorderedList from '../misc/UnorderedList'
+import FauxNavigationBar from '../views/FauxNavigationBar'
 
-interface CommonDeleteModalProps {
+interface CommonRemoveModalProps {
+  removeType: RemoveType
   onSubmit?: GenericFn
   onCancel?: GenericFn
   visible?: boolean
@@ -56,7 +58,11 @@ const Dropdown: React.FC<DeleteProps> = ({ title, content }) => {
   )
 }
 
-const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit, onCancel }) => {
+const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visible, onSubmit, onCancel }) => {
+  if (!removeType) {
+    throw new Error('removeType cannot be undefined')
+  }
+
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -130,4 +136,4 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
   )
 }
 
-export default CommonDeleteModal
+export default CommonRemoveModal

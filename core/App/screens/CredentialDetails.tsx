@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
-import CommonDeleteModal from '../components/modals/CommonDeleteModal'
+import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
 import { dateFormatOptions } from '../constants'
@@ -22,6 +22,7 @@ import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { Field } from '../types/record'
+import { RemoveType } from '../types/remove'
 import { getCredentialConnectionLabel } from '../utils/helpers'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -201,11 +202,12 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         fields,
         hideFieldValues: true,
       })}
-      <CommonDeleteModal
+      <CommonRemoveModal
+        removeType={RemoveType.Credential}
         visible={isDeleteModalDisplayed}
         onSubmit={callSubmitRemove}
         onCancel={callCancelRemove}
-      ></CommonDeleteModal>
+      ></CommonRemoveModal>
     </SafeAreaView>
   )
 }
