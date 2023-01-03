@@ -87,29 +87,41 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
         style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}
       >
         <ScrollView style={[styles.container]}>
-          <View>
-            <View style={[{ marginBottom: 25 }]}>
-              <Text style={[TextTheme.title]}>{t('CredentialDetails.RemoveTitle')}</Text>
-            </View>
+          {removeType === RemoveType.Contact && (
             <View>
-              <Text style={[TextTheme.normal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+              <View style={[{ marginBottom: 25 }]}>
+                <Text style={[TextTheme.title]}>{t('ContactDetails.RemoveTitle')}</Text>
+              </View>
+              <View>
+                <Text style={[TextTheme.normal]}>{t('ContactDetails.RemoveCaption')}</Text>
+              </View>
             </View>
-            <View style={{ marginTop: 25 }}>
-              <Dropdown
-                title={t('CredentialDetails.YouWillNotLose')}
-                content={[
-                  t('CredentialDetails.YouWillNotLoseListItem1'),
-                  t('CredentialDetails.YouWillNotLoseListItem2'),
-                ]}
-              />
+          )}
+          {removeType === RemoveType.Credential && (
+            <View>
+              <View style={[{ marginBottom: 25 }]}>
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.RemoveTitle')}</Text>
+              </View>
+              <View>
+                <Text style={[TextTheme.normal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+              </View>
+              <View style={{ marginTop: 25 }}>
+                <Dropdown
+                  title={t('CredentialDetails.YouWillNotLose')}
+                  content={[
+                    t('CredentialDetails.YouWillNotLoseListItem1'),
+                    t('CredentialDetails.YouWillNotLoseListItem2'),
+                  ]}
+                />
+              </View>
+              <View style={{ marginTop: 25 }}>
+                <Dropdown
+                  title={t('CredentialDetails.HowToGetThisCredentialBack')}
+                  content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
+                />
+              </View>
             </View>
-            <View style={{ marginTop: 25 }}>
-              <Dropdown
-                title={t('CredentialDetails.HowToGetThisCredentialBack')}
-                content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
-              />
-            </View>
-          </View>
+          )}
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>

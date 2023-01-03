@@ -152,6 +152,9 @@ const translation = {
     "Created": "Criado",
     "ConnectionState": "Estado da conexão",
     "AContact": "Um contato",
+    "DateOfConnection": "Date of connection: {{ date }} (PT-BR)",
+    "RemoveTitle": "Remove this contact (PT-BR)",
+    "RemoveCaption": "To add credentials, the issuing organization needs to be a contact. (PT-BR)",
   },
   "Credentials": {
     "CredentialsNotFound": "Credenciais não encontradas",
