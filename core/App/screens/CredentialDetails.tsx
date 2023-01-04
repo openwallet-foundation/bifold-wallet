@@ -40,7 +40,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [fields, setFields] = useState<Field[]>([])
   const [isRevokedMessageHidden] = useState<boolean>(false)
-  const [isDeleteModalDisplayed, setIsDeleteModalDisplayed] = useState<boolean>(false)
+  const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const { TextTheme, ColorPallet } = useTheme()
@@ -114,7 +114,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   const handleOnRemove = () => {
-    setIsDeleteModalDisplayed(true)
+    setIsRemoveModalDisplayed(true)
   }
 
   const handleSubmitRemove = async () => {
@@ -139,7 +139,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   const handleCancelRemove = () => {
-    setIsDeleteModalDisplayed(false)
+    setIsRemoveModalDisplayed(false)
   }
 
   const callOnRemove = useCallback(() => handleOnRemove(), [])
@@ -204,10 +204,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       })}
       <CommonRemoveModal
         removeType={RemoveType.Credential}
-        visible={isDeleteModalDisplayed}
+        visible={isRemoveModalDisplayed}
         onSubmit={callSubmitRemove}
         onCancel={callCancelRemove}
-      ></CommonRemoveModal>
+      />
     </SafeAreaView>
   )
 }

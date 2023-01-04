@@ -21,12 +21,12 @@ interface CommonRemoveModalProps {
   visible?: boolean
 }
 
-interface DeleteProps {
+interface RemoveProps {
   title: string
   content: string[]
 }
 
-const Dropdown: React.FC<DeleteProps> = ({ title, content }) => {
+const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
   const { TextTheme, ColorPallet } = useTheme()
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
 
