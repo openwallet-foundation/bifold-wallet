@@ -9,6 +9,7 @@ export interface Onboarding {
 
 export interface Preferences {
   useBiometry: boolean
+  biometryPreferencesUpdated: boolean
   developerModeEnabled: boolean
 }
 
