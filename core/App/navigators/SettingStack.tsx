@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useConfiguration } from '../contexts/configuration'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import Language from '../screens/Language'
 import Onboarding from '../screens/Onboarding'
@@ -19,6 +20,7 @@ import { createDefaultStackOptions } from './defaultStackOptions'
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
   const theme = useTheme()
+  const [store] = useStore()
   const { t } = useTranslation()
   const { pages, terms, developer } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
@@ -40,7 +42,11 @@ const SettingStack: React.FC = () => {
       <Stack.Screen
         name={Screens.UseBiometry}
         component={UseBiometry}
-        options={{ title: t('Screens.Biometry'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.Biometry'),
+          headerLeft: store.preferences.biometryPreferencesUpdated ? () => null : undefined,
+          headerBackTestID: testIdWithKey('Back'),
+        }}
       />
       <Stack.Screen
         name={Screens.RecreatePIN}
