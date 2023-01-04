@@ -75,4 +75,4 @@ jobs:
 
       - name: Automated testing
         run: |
-          npm run test
+          npm run test -- --coverage
