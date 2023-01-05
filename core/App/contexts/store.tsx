@@ -33,6 +33,7 @@ export const defaultState: State = {
   },
   preferences: {
     developerModeEnabled: false,
+    biometryPreferencesUpdated: false,
     useBiometry: false,
   },
   deepLink: {

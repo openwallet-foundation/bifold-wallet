@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import SettingsCog from '../components/misc/SettingsCog'
+import SettingsMenu from '../components/misc/SettingsMenu'
 import { useTheme } from '../contexts/theme'
 import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'
@@ -23,8 +23,8 @@ const HomeStack: React.FC = () => {
         component={Home}
         options={() => ({
           title: t('Screens.Home'),
-          headerRight: () => <SettingsCog />,
-          headerLeft: () => null,
+          headerRight: () => null,
+          headerLeft: () => <SettingsMenu />,
         })}
       />
       <Stack.Screen
