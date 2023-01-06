@@ -1,6 +1,6 @@
 import {
   AgentProvider,
-  AppCommonsProvider,
+  CommonUtilProvider,
   AuthProvider,
   ConfigurationProvider,
   NetworkProvider,
@@ -39,7 +39,7 @@ const App = () => {
       <AgentProvider>
         <ThemeProvider value={theme}>
           <ConfigurationProvider value={defaultConfiguration}>
-            <AppCommonsProvider>
+            <CommonUtilProvider>
               <AuthProvider>
                 <NetworkProvider>
                   <StatusBar
@@ -54,7 +54,7 @@ const App = () => {
                   <Toast topOffset={15} config={toastConfig} />
                 </NetworkProvider>
               </AuthProvider>
-            </AppCommonsProvider>
+            </CommonUtilProvider>
           </ConfigurationProvider>
         </ThemeProvider>
       </AgentProvider>

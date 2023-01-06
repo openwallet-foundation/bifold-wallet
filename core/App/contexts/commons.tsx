@@ -8,7 +8,7 @@ export interface AppCommonsContext {
 
 export const AppCommons = createContext<AppCommonsContext>(null as unknown as AppCommonsContext)
 
-export const AppCommonsProvider: React.FC = ({ children }) => {
+export const CommonUtilProvider: React.FC = ({ children }) => {
   const logger = new AppConsoleLogger(LogLevel.test)
   const log = async (messaage: string, logLevel: Exclude<LogLevel, LogLevel.off>) => {
     logger.log(logLevel, messaage)
@@ -29,7 +29,7 @@ export const AppCommonsProvider: React.FC = ({ children }) => {
 export const useCommons = () => {
   const commonsContext = useContext(AppCommons)
   if (!commonsContext) {
-    throw new Error('commonsContext must be used within a AppCommonsProvider')
+    throw new Error('commonsContext must be used within a CommonUtilProvider')
   }
   return commonsContext
 }
