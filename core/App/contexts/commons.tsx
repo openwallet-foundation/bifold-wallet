@@ -33,8 +33,3 @@ export const useCommons = () => {
   }
   return commonsContext
 }
-
-export const appLog = (messaage: string, logLevel: Exclude<LogLevel, LogLevel.off>) => {
-  const { log } = useCommons()
-  log(messaage, logLevel)
-}
