@@ -9,6 +9,17 @@ import { OCABundleResolver } from '../types/oca'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
 
+import { GenericFn } from 'types/fn'
+
+interface NotificationConfiguration {
+  component: React.FC
+  onCloseAction: GenericFn
+  title: string
+  description: string
+  buttonTitle: string
+  pageTitle: string
+}
+
 export interface ConfigurationContext {
   pages: typeof OnboardingPages
   splash: React.FC
@@ -25,6 +36,8 @@ export interface ConfigurationContext {
   PINSecurity: PINSecurityParams
   indyLedgers: IndyPoolConfig[]
   settings: SettingSection[]
+  customNotification: NotificationConfiguration
+  useNotifications: () => { total: number; notifications: any }
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

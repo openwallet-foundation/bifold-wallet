@@ -30,7 +30,7 @@ const translation = {
     "ShowDetails": "Show Details",
     "TryAgain": "Try Again",
     "Biometrics": "Biometrics",
-    "On" : "On",
+    "On": "On",
     "Off": "Off",
   },
   "Language": {
@@ -127,8 +127,8 @@ const translation = {
   },
   "PINEnter": {
     "EnterPIN": "Enter your wallet PIN",
-    "Unlock":"Unlock",
-    "Or":"Or",
+    "Unlock": "Unlock",
+    "Or": "Or",
     "BiometricsUnlock": "Unlock with biometrics",
     "IncorrectPIN": "Incorrect PIN",
     "RepeatPIN": "Please try your PIN again.",

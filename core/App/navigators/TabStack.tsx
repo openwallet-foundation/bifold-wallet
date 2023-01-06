@@ -5,9 +5,9 @@ import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
-import { useNotifications } from '../hooks/notifications'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -15,6 +15,7 @@ import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
+  const { useNotifications } = useConfiguration()
   const { total } = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()

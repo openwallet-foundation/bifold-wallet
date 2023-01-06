@@ -29,6 +29,7 @@ export enum Screens {
   UseBiometry = 'Use Biometry',
   RecreatePIN = 'Change PIN',
   Developer = 'Developer',
+  CustomNotification = 'Custom Notification',
 }
 
 export enum Stacks {
@@ -115,6 +116,7 @@ export type NotificationStackParams = {
     declineType: DeclineType
     itemId: string
   }
+  [Screens.CustomNotification]: undefined
 }
 
 export type DeliveryStackParams = {

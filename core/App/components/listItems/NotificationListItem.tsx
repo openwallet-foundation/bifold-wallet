@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
@@ -20,6 +21,7 @@ export enum NotificationType {
   CredentialOffer = 'Offer',
   ProofRequest = 'Proof',
   Revocation = 'Revocation',
+  Custom = 'Custom',
 }
 
 interface NotificationListItemProps {
@@ -29,6 +31,7 @@ interface NotificationListItemProps {
 
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
+  const { customNotification } = useConfiguration()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
@@ -71,8 +74,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     },
   })
   let onPress: GenericFn
-  let title = ''
-  let body = ''
+  let title,
+    body,
+    buttonTitle = ''
 
   // eslint-disable-next-line no-case-declarations
   const { name, version } = parsedSchema(notification as CredentialRecord)
@@ -104,6 +108,15 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           params: { credentialId: notification.id },
         })
       break
+    case NotificationType.Custom:
+      title = t(customNotification.title as any)
+      body = t(customNotification.description as any)
+      buttonTitle = t(customNotification.buttonTitle as any)
+      onPress = () =>
+        navigation.getParent()?.navigate(Stacks.NotificationStack, {
+          screen: Screens.CustomNotification,
+        })
+      break
     default:
       throw new Error('NotificationType was not set correctly.')
   }
@@ -123,8 +136,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           {body}
         </Text>
         <Button
-          title={t('Global.View')}
-          accessibilityLabel={t('Global.View')}
+          title={buttonTitle !== '' ? buttonTitle : t('Global.View')}
+          accessibilityLabel={buttonTitle !== '' ? buttonTitle : t('Global.View')}
           testID={testIdWithKey('View')}
           buttonType={ButtonType.Primary}
           onPress={onPress}
