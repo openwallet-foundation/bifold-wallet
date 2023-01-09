@@ -1,25 +1,25 @@
 import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   ImageBackground,
   ImageSourcePropType,
   StyleSheet,
-  Text,
+  // Text,
   View,
   ViewStyle,
-  Image,
+  // Image,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { dateFormatOptions } from '../../constants'
+// import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
-import { getCurrentLanguage } from '../../localization'
+// import { getCurrentLanguage } from '../../localization'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
-import { luminanceForHexColour } from '../../utils/luminance'
+// import { luminanceForHexColour } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
@@ -82,25 +82,26 @@ interface BundlePair {
 }
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
-  const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  // const { t } = useTranslation()
+  const { ColorPallet } = useTheme()
+  // const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
   const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
-  const lang = getCurrentLanguage()
-  const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
+  // const lang = getCurrentLanguage()
+  // const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
   const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
 
-  const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
+  // const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
   const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined
 
-  const credentialTextColor = (hex?: string) => {
-    const midpoint = 255 / 2
-    if ((luminanceForHexColour(hex ?? '') ?? 0) >= midpoint) {
-      return ColorPallet.grayscale.darkGrey
-    }
-    return ColorPallet.grayscale.white
-  }
+  // const credentialTextColor = (hex?: string) => {
+  //   const midpoint = 255 / 2
+  //   if ((luminanceForHexColour(hex ?? '') ?? 0) >= midpoint) {
+  //     return ColorPallet.grayscale.darkGrey
+  //   }
+  //   return ColorPallet.grayscale.white
+  // }
 
   const styles = StyleSheet.create({
     container: {
@@ -171,108 +172,109 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     })
   }, [])
 
-  const renderCredentialCardHeader = () => {
-    return (
-      <View style={[styles.outerHeaderContainer]}>
-        <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
-          {overlay?.header?.imageSource && (
-            <Image
-              source={toImageSource(overlay?.header?.imageSource)}
-              style={{
-                flex: !overlay?.header?.hideIssuer ? 1 : 4,
-                resizeMode: 'contain',
-                maxHeight: styles.outerHeaderContainer.height - borderPadding,
-              }}
-            />
-          )}
-          {overlay?.header?.hideIssuer ? null : (
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={[
-                TextTheme.label,
-                {
-                  color:
-                    overlay?.header?.color ??
-                    credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
-                  paddingHorizontal: 0.5 * paddingHorizontal,
-                  flex: !overlay?.header?.imageSource ? 4 : 3,
-                  textAlignVertical: 'center',
-                },
-              ]}
-              testID={testIdWithKey('CredentialIssuer')}
-              maxFontSizeMultiplier={1}
-            >
-              {metaLayer?.issuerName}
-            </Text>
-          )}
-          <Text
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={[
-              TextTheme.label,
-              {
-                color:
-                  overlay?.header?.color ??
-                  credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
-                textAlign: 'right',
-                paddingHorizontal: 0.5 * paddingHorizontal,
-                flex: 4,
-                textAlignVertical: 'center',
-              },
-            ]}
-            testID={testIdWithKey('CredentialName')}
-            maxFontSizeMultiplier={1}
-          >
-            {metaLayer?.name}
-          </Text>
-        </View>
-      </View>
-    )
-  }
+  // const renderCredentialCardHeader = () => {
+  //   return (
+  //     <View style={[styles.outerHeaderContainer]}>
+  //       <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
+  //         {overlay?.header?.imageSource && (
+  //           <Image
+  //             source={toImageSource(overlay?.header?.imageSource)}
+  //             style={{
+  //               flex: !overlay?.header?.hideIssuer ? 1 : 4,
+  //               resizeMode: 'contain',
+  //               maxHeight: styles.outerHeaderContainer.height - borderPadding,
+  //             }}
+  //           />
+  //         )}
+  //         {overlay?.header?.hideIssuer ? null : (
+  //           <Text
+  //             numberOfLines={1}
+  //             ellipsizeMode="tail"
+  //             style={[
+  //               TextTheme.label,
+  //               {
+  //                 color:
+  //                   overlay?.header?.color ??
+  //                   credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
+  //                 paddingHorizontal: 0.5 * paddingHorizontal,
+  //                 flex: !overlay?.header?.imageSource ? 4 : 3,
+  //                 textAlignVertical: 'center',
+  //               },
+  //             ]}
+  //             testID={testIdWithKey('CredentialIssuer')}
+  //             maxFontSizeMultiplier={1}
+  //           >
+  //             {metaLayer?.issuerName}
+  //           </Text>
+  //         )}
+  //         <Text
+  //           numberOfLines={1}
+  //           ellipsizeMode="tail"
+  //           style={[
+  //             TextTheme.label,
+  //             {
+  //               color:
+  //                 overlay?.header?.color ??
+  //                 credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
+  //               textAlign: 'right',
+  //               paddingHorizontal: 0.5 * paddingHorizontal,
+  //               flex: 4,
+  //               textAlignVertical: 'center',
+  //             },
+  //           ]}
+  //           testID={testIdWithKey('CredentialName')}
+  //           maxFontSizeMultiplier={1}
+  //         >
+  //           {metaLayer?.name}
+  //         </Text>
+  //       </View>
+  //     </View>
+  //   )
+  // }
 
   const renderCredentialCardBody = () => {
     return <View style={styles.bodyContainer} testID={testIdWithKey('CredentialCardBody')}></View>
   }
 
-  const renderCredentialCardFooter = (revoked = false) => {
-    return (
-      <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
-        {revoked ? (
-          <View style={styles.revokedFooter}>
-            <Text
-              style={[TextTheme.label, { color: ColorPallet.semantic.error }]}
-              testID={testIdWithKey('CredentialRevoked')}
-            >
-              Revoked
-            </Text>
-          </View>
-        ) : (
-          <Text
-            style={[
-              TextTheme.caption,
-              {
-                color:
-                  overlay?.footer?.color ??
-                  credentialTextColor(overlay?.footer?.backgroundColor || overlay?.backgroundColor),
-              },
-            ]}
-            testID={testIdWithKey('CredentialIssued')}
-            maxFontSizeMultiplier={1}
-          >
-            {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
-          </Text>
-        )}
-      </View>
-    )
-  }
+  // const renderCredentialCardFooter = (revoked = false) => {
+  //   return (
+  //     <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
+  //       {revoked ? (
+  //         <View style={styles.revokedFooter}>
+  //           <Text
+  //             style={[TextTheme.label, { color: ColorPallet.semantic.error }]}
+  //             testID={testIdWithKey('CredentialRevoked')}
+  //           >
+  //             Revoked
+  //           </Text>
+  //         </View>
+  //       ) : (
+  //         <Text
+  //           style={[
+  //             TextTheme.caption,
+  //             {
+  //               color:
+  //                 overlay?.footer?.color ??
+  //                 credentialTextColor(overlay?.footer?.backgroundColor || overlay?.backgroundColor),
+  //             },
+  //           ]}
+  //           testID={testIdWithKey('CredentialIssued')}
+  //           maxFontSizeMultiplier={1}
+  //         >
+  //           {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
+  //         </Text>
+  //       )}
+  //     </View>
+  //   )
+  // }
 
-  const renderCredentialCard = (revoked = false) => {
+  // const renderCredentialCard = (revoked = false) => {
+  const renderCredentialCard = () => {
     return (
       <>
-        {renderCredentialCardHeader()}
+        {/* {renderCredentialCardHeader()} */}
         {renderCredentialCardBody()}
-        {renderCredentialCardFooter(revoked)}
+        {/* {renderCredentialCardFooter(revoked)} */}
       </>
     )
   }
@@ -292,10 +294,12 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               style={styles.flexGrow}
               imageStyle={{ borderRadius }}
             >
-              {renderCredentialCard(isRevoked)}
+              {renderCredentialCard()}
+              {/* {renderCredentialCard(isRevoked)} */}
             </ImageBackground>
           ) : (
-            renderCredentialCard(isRevoked)
+            renderCredentialCard()
+            // renderCredentialCard(isRevoked)
           )}
         </View>
       ) : null}
