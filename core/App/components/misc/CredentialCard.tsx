@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 // import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
-  ImageBackground,
-  ImageSourcePropType,
+  // ImageBackground,
+  // ImageSourcePropType,
   StyleSheet,
   // Text,
   View,
@@ -70,12 +70,13 @@ Note: The small logo MUST be provided as 1x1 (height/width) ratio, while the lar
 const cardHeight = width / 2 // a card height is half of the screen width
 const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
 
-const toImageSource = (source: unknown): ImageSourcePropType => {
-  if (typeof source === 'string') {
-    return { uri: source as string }
-  }
-  return source as ImageSourcePropType
-}
+// const toImageSource = (source: unknown): ImageSourcePropType => {
+//   if (typeof source === 'string') {
+//     return { uri: source as string }
+//   }
+//   return source as ImageSourcePropType
+// }
+
 interface BundlePair {
   bundle1?: OCACredentialBundle
   bundle2?: OCACredentialBundle
@@ -286,23 +287,22 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {bundleLoaded === true ? (
-        <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
-          {overlay?.imageSource ? (
-            <ImageBackground
-              source={toImageSource(overlay?.imageSource)}
-              style={styles.flexGrow}
-              imageStyle={{ borderRadius }}
-            >
-              {renderCredentialCard()}
-              {/* {renderCredentialCard(isRevoked)} */}
-            </ImageBackground>
-          ) : (
-            renderCredentialCard()
-            // renderCredentialCard(isRevoked)
-          )}
-        </View>
-      ) : null}
+      {bundleLoaded === true
+        ? // <View testID={testIdWithKey('CredentialCard')}>
+          //   {overlay?.imageSource ? (
+          //     <ImageBackground
+          //       source={toImageSource(overlay?.imageSource)}
+          //       style={styles.flexGrow}
+          //       imageStyle={{ borderRadius }}
+          //     >
+          //       {renderCredentialCard(isRevoked)}
+          //     </ImageBackground>
+          //   ) : (
+          //     renderCredentialCard(isRevoked)
+          //   )}
+          // </View>
+          renderCredentialCard()
+        : null}
     </TouchableOpacity>
   )
 }
