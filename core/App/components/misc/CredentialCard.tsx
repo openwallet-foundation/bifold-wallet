@@ -12,11 +12,13 @@ import {
   // Image,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 // import { getCurrentLanguage } from '../../localization'
+import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
 // import { luminanceForHexColour } from '../../utils/luminance'
@@ -28,8 +30,8 @@ interface CredentialCardProps {
   style?: ViewStyle
 }
 
-const paddingVertical = 10
-const paddingHorizontal = 10
+// const paddingVertical = 10
+// const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 // const borderPadding = 8
@@ -85,7 +87,6 @@ interface BundlePair {
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   // const { t } = useTranslation()
   const { ColorPallet } = useTheme()
-  // const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
   const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
@@ -93,7 +94,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   // const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
   const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
 
-  // const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
+  const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
   const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined
 
   // const credentialTextColor = (hex?: string) => {
@@ -139,23 +140,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     primaryBodyContainer: {
       flexGrow: 6,
     },
-    footerContainer: {
-      flexDirection: 'row',
-      backgroundColor: overlay?.footer?.backgroundColor ?? transparent,
-      paddingHorizontal,
-      paddingVertical,
-      borderBottomLeftRadius: borderRadius,
-      borderBottomRightRadius: borderRadius,
-    },
-    revokedFooter: {
-      backgroundColor: ColorPallet.notification.error,
-      flexGrow: 1,
-      marginHorizontal: -1 * paddingHorizontal,
-      marginVertical: -1 * paddingVertical,
-      paddingHorizontal: paddingHorizontal,
-      paddingVertical: paddingVertical,
-      borderBottomLeftRadius: borderRadius,
-      borderBottomRightRadius: borderRadius,
+    statusContainer: {
+      alignItems: 'center',
     },
     // flexGrow: {
     //   flexGrow: 1,
@@ -251,45 +237,35 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     return <View style={styles.primaryBodyContainer} testID={testIdWithKey('CredentialCardBody')}></View>
   }
 
-  // const renderCredentialCardFooter = (revoked = false) => {
-  //   return (
-  //     <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
-  //       {revoked ? (
-  //         <View style={styles.revokedFooter}>
-  //           <Text
-  //             style={[TextTheme.label, { color: ColorPallet.semantic.error }]}
-  //             testID={testIdWithKey('CredentialRevoked')}
-  //           >
-  //             Revoked
-  //           </Text>
-  //         </View>
-  //       ) : (
-  //         <Text
-  //           style={[
-  //             TextTheme.caption,
-  //             {
-  //               color:
-  //                 overlay?.footer?.color ??
-  //                 credentialTextColor(overlay?.footer?.backgroundColor || overlay?.backgroundColor),
-  //             },
-  //           ]}
-  //           testID={testIdWithKey('CredentialIssued')}
-  //           maxFontSizeMultiplier={1}
-  //         >
-  //           {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
-  //         </Text>
-  //       )}
-  //     </View>
-  //   )
-  // }
+  const renderCredentialCardStatus = (status?: CredentialStatus) => {
+    switch (status) {
+      case CredentialStatus.REVOKED:
+        return (
+          <View style={styles.statusContainer}>
+            <View
+              style={{
+                backgroundColor: ColorPallet.notification.error,
+                borderTopRightRadius: borderRadius,
+                borderBottomLeftRadius: borderRadius,
+                padding: 10,
+              }}
+            >
+              <Icon size={24} style={{ color: ColorPallet.semantic.error }} name="error" />
+            </View>
+          </View>
+        )
+      default:
+        return null
+    }
+  }
 
   // const renderCredentialCard = (revoked = false) => {
-  const renderCredentialCard = () => {
+  const renderCredentialCard = (status?: CredentialStatus) => {
     return (
       <View style={styles.cardContainer}>
         {renderCredentialCardSecondaryBody()}
         {renderCredentialCardPrimaryBody()}
-        {/* {renderCredentialCardFooter(revoked)} */}
+        {renderCredentialCardStatus(status)}
       </View>
     )
   }
@@ -315,7 +291,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
           //     renderCredentialCard(isRevoked)
           //   )}
           // </View>
-          renderCredentialCard()
+          renderCredentialCard(isRevoked ? CredentialStatus.REVOKED : undefined)
         : null}
     </TouchableOpacity>
   )
