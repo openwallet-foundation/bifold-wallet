@@ -238,10 +238,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   }
 
   const renderCredentialCardStatus = (status?: CredentialStatus) => {
-    switch (status) {
-      case CredentialStatus.REVOKED:
-        return (
-          <View style={styles.statusContainer}>
+    const renderStatus = (status?: CredentialStatus) => {
+      switch (status) {
+        case CredentialStatus.REVOKED:
+          return (
             <View
               style={{
                 backgroundColor: ColorPallet.notification.error,
@@ -252,11 +252,24 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             >
               <Icon size={24} style={{ color: ColorPallet.semantic.error }} name="error" />
             </View>
-          </View>
-        )
-      default:
-        return null
+          )
+        default:
+          return (
+            <View
+              style={{
+                backgroundColor: transparent,
+                borderTopRightRadius: borderRadius,
+                borderBottomLeftRadius: borderRadius,
+                padding: 10,
+              }}
+            >
+              <View style={{ width: 24, height: 24 }} />
+            </View>
+          )
+      }
     }
+
+    return <View style={styles.statusContainer}>{renderStatus(status)}</View>
   }
 
   // const renderCredentialCard = (revoked = false) => {
