@@ -17,7 +17,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 // import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
-// import { getCurrentLanguage } from '../../localization'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
@@ -33,7 +32,6 @@ interface CredentialCardProps {
 const transparent = 'rgba(0,0,0,0)'
 const padding = 10
 const borderRadius = 15
-// const borderPadding = 8
 const { width } = Dimensions.get('window')
 
 /**
@@ -119,31 +117,12 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
     },
-    // outerHeaderContainer: {
-    //   flexDirection: 'column',
-    //   backgroundColor: overlay?.header?.backgroundColor ?? transparent,
-    //   height: cardHeaderHeight + borderPadding,
-    //   borderTopLeftRadius: borderRadius,
-    //   borderTopRightRadius: borderRadius,
-    // },
-    // innerHeaderContainer: {
-    //   flexDirection: 'row',
-    //   height: cardHeaderHeight,
-    //   marginLeft: borderPadding,
-    //   marginRight: borderPadding,
-    //   marginTop: borderPadding,
-    //   marginBottom: borderPadding,
-    //   backgroundColor: overlay?.header?.backgroundColor ?? transparent,
-    // },
     primaryBodyContainer: {
       flex: 6,
     },
     statusContainer: {
       alignItems: 'center',
     },
-    // flexGrow: {
-    //   flexGrow: 1,
-    // },
   })
 
   useEffect(() => {
@@ -174,10 +153,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
           <Text
             testID={testIdWithKey('CredentialIssuer')}
             style={[
-              TextTheme.label,
+              TextTheme.labelSubtitle,
               {
                 paddingVertical: padding,
                 paddingHorizontal: 2 * padding,
+                paddingBottom: 0.25 * padding,
                 color:
                   overlay?.header?.color ??
                   credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
@@ -187,6 +167,23 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             {metaLayer?.issuerName}
           </Text>
         )}
+        <Text
+          testID={testIdWithKey('CredentialName')}
+          style={[
+            TextTheme.labelTitle,
+            {
+              paddingVertical: padding,
+              paddingHorizontal: 2 * padding,
+              paddingTop: 0.25 * padding,
+              color:
+                overlay?.header?.color ??
+                credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
+            },
+          ]}
+          maxFontSizeMultiplier={1}
+        >
+          {metaLayer?.name}
+        </Text>
       </View>
     )
   }
@@ -194,66 +191,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCardSecondaryBody = () => {
     return <View testID={testIdWithKey('CredentialCardSecondaryBody')} style={styles.secondaryBodyContainer} />
   }
-
-  // const renderCredentialCardHeader = () => {
-  //   return (
-  //     <View style={[styles.outerHeaderContainer]}>
-  //       <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
-  //         {overlay?.header?.imageSource && (
-  //           <Image
-  //             source={toImageSource(overlay?.header?.imageSource)}
-  //             style={{
-  //               flex: !overlay?.header?.hideIssuer ? 1 : 4,
-  //               resizeMode: 'contain',
-  //               maxHeight: styles.outerHeaderContainer.height - borderPadding,
-  //             }}
-  //           />
-  //         )}
-  //         {overlay?.header?.hideIssuer ? null : (
-  //           <Text
-  //             numberOfLines={1}
-  //             ellipsizeMode="tail"
-  //             style={[
-  //               TextTheme.label,
-  //               {
-  //                 color:
-  //                   overlay?.header?.color ??
-  //                   credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
-  //                 paddingHorizontal: 0.5 * paddingHorizontal,
-  //                 flex: !overlay?.header?.imageSource ? 4 : 3,
-  //                 textAlignVertical: 'center',
-  //               },
-  //             ]}
-  //             testID={testIdWithKey('CredentialIssuer')}
-  //             maxFontSizeMultiplier={1}
-  //           >
-  //             {metaLayer?.issuerName}
-  //           </Text>
-  //         )}
-  //         <Text
-  //           numberOfLines={1}
-  //           ellipsizeMode="tail"
-  //           style={[
-  //             TextTheme.label,
-  //             {
-  //               color:
-  //                 overlay?.header?.color ??
-  //                 credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
-  //               textAlign: 'right',
-  //               paddingHorizontal: 0.5 * paddingHorizontal,
-  //               flex: 4,
-  //               textAlignVertical: 'center',
-  //             },
-  //           ]}
-  //           testID={testIdWithKey('CredentialName')}
-  //           maxFontSizeMultiplier={1}
-  //         >
-  //           {metaLayer?.name}
-  //         </Text>
-  //       </View>
-  //     </View>
-  //   )
-  // }
 
   const renderCredentialCardStatus = (status?: CredentialStatus) => {
     const renderStatus = (status?: CredentialStatus) => {
