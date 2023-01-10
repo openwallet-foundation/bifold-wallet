@@ -114,7 +114,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       flexGrow: 1,
       flexDirection: 'row',
     },
-    headerContainer: {
+    secondaryBodyContainer: {
       flexGrow: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.24)',
       borderTopLeftRadius: borderRadius,
@@ -136,7 +136,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     //   marginBottom: borderPadding,
     //   backgroundColor: overlay?.header?.backgroundColor ?? transparent,
     // },
-    bodyContainer: {
+    primaryBodyContainer: {
       flexGrow: 6,
     },
     footerContainer: {
@@ -183,8 +183,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     })
   }, [])
 
-  const renderCredentialCardHeader = () => {
-    return <View style={styles.headerContainer} />
+  const renderCredentialCardSecondaryBody = () => {
+    return <View style={styles.secondaryBodyContainer} />
   }
 
   // const renderCredentialCardHeader = () => {
@@ -247,8 +247,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   //   )
   // }
 
-  const renderCredentialCardBody = () => {
-    return <View style={styles.bodyContainer} testID={testIdWithKey('CredentialCardBody')}></View>
+  const renderCredentialCardPrimaryBody = () => {
+    return <View style={styles.primaryBodyContainer} testID={testIdWithKey('CredentialCardBody')}></View>
   }
 
   // const renderCredentialCardFooter = (revoked = false) => {
@@ -287,8 +287,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCard = () => {
     return (
       <View style={styles.cardContainer}>
-        {renderCredentialCardHeader()}
-        {renderCredentialCardBody()}
+        {renderCredentialCardSecondaryBody()}
+        {renderCredentialCardPrimaryBody()}
         {/* {renderCredentialCardFooter(revoked)} */}
       </View>
     )
