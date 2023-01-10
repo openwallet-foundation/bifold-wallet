@@ -21,7 +21,7 @@ import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
-import { luminanceForHexColour } from '../../utils/luminance'
+import { luminanceForHexColor } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
@@ -97,7 +97,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
-    if ((luminanceForHexColour(hex ?? '') ?? 0) >= midpoint) {
+    if ((luminanceForHexColor(hex ?? '') ?? 0) >= midpoint) {
       return ColorPallet.grayscale.darkGrey
     }
     return ColorPallet.grayscale.white

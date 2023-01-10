@@ -24,8 +24,8 @@ export function hashCode(s: string): number {
 }
 
 export function hashToRGBA(i: number) {
-  const colour = (i & 0x00ffffff).toString(16).toUpperCase()
-  return '#' + '00000'.substring(0, 6 - colour.length) + colour
+  const color = (i & 0x00ffffff).toString(16).toUpperCase()
+  return '#' + '00000'.substring(0, 6 - color.length) + color
 }
 
 // DEPRECATED
