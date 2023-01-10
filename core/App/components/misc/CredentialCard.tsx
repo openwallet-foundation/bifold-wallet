@@ -32,7 +32,7 @@ const paddingVertical = 10
 const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
-const borderPadding = 8
+// const borderPadding = 8
 const { width } = Dimensions.get('window')
 
 /**
@@ -68,7 +68,7 @@ Variation 1:
 Note: The small logo MUST be provided as 1x1 (height/width) ratio, while the large logo MUST be provided as 1x4 (height/width) ratio
  */
 const cardHeight = width / 2 // a card height is half of the screen width
-const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
+// const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
 
 // const toImageSource = (source: unknown): ImageSourcePropType => {
 //   if (typeof source === 'string') {
@@ -110,24 +110,34 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       height: cardHeight,
       borderRadius: borderRadius,
     },
-    outerHeaderContainer: {
-      flexDirection: 'column',
-      backgroundColor: overlay?.header?.backgroundColor ?? transparent,
-      height: cardHeaderHeight + borderPadding,
-      borderTopLeftRadius: borderRadius,
-      borderTopRightRadius: borderRadius,
-    },
-    innerHeaderContainer: {
-      flexDirection: 'row',
-      height: cardHeaderHeight,
-      marginLeft: borderPadding,
-      marginRight: borderPadding,
-      marginTop: borderPadding,
-      marginBottom: borderPadding,
-      backgroundColor: overlay?.header?.backgroundColor ?? transparent,
-    },
-    bodyContainer: {
+    cardContainer: {
       flexGrow: 1,
+      flexDirection: 'row',
+    },
+    headerContainer: {
+      flexGrow: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.24)',
+      borderTopLeftRadius: borderRadius,
+      borderBottomLeftRadius: borderRadius,
+    },
+    // outerHeaderContainer: {
+    //   flexDirection: 'column',
+    //   backgroundColor: overlay?.header?.backgroundColor ?? transparent,
+    //   height: cardHeaderHeight + borderPadding,
+    //   borderTopLeftRadius: borderRadius,
+    //   borderTopRightRadius: borderRadius,
+    // },
+    // innerHeaderContainer: {
+    //   flexDirection: 'row',
+    //   height: cardHeaderHeight,
+    //   marginLeft: borderPadding,
+    //   marginRight: borderPadding,
+    //   marginTop: borderPadding,
+    //   marginBottom: borderPadding,
+    //   backgroundColor: overlay?.header?.backgroundColor ?? transparent,
+    // },
+    bodyContainer: {
+      flexGrow: 6,
     },
     footerContainer: {
       flexDirection: 'row',
@@ -147,9 +157,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       borderBottomLeftRadius: borderRadius,
       borderBottomRightRadius: borderRadius,
     },
-    flexGrow: {
-      flexGrow: 1,
-    },
+    // flexGrow: {
+    //   flexGrow: 1,
+    // },
   })
 
   useEffect(() => {
@@ -172,6 +182,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       }
     })
   }, [])
+
+  const renderCredentialCardHeader = () => {
+    return <View style={styles.headerContainer} />
+  }
 
   // const renderCredentialCardHeader = () => {
   //   return (
@@ -272,11 +286,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   // const renderCredentialCard = (revoked = false) => {
   const renderCredentialCard = () => {
     return (
-      <>
-        {/* {renderCredentialCardHeader()} */}
+      <View style={styles.cardContainer}>
+        {renderCredentialCardHeader()}
         {renderCredentialCardBody()}
         {/* {renderCredentialCardFooter(revoked)} */}
-      </>
+      </View>
     )
   }
 
