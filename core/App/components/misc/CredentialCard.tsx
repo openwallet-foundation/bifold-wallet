@@ -1,12 +1,12 @@
 import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
-// import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   // ImageBackground,
   // ImageSourcePropType,
   StyleSheet,
-  // Text,
+  Text,
   View,
   ViewStyle,
   // Image,
@@ -21,7 +21,7 @@ import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
-// import { luminanceForHexColour } from '../../utils/luminance'
+import { luminanceForHexColour } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
@@ -30,9 +30,8 @@ interface CredentialCardProps {
   style?: ViewStyle
 }
 
-// const paddingVertical = 10
-// const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
+const padding = 10
 const borderRadius = 15
 // const borderPadding = 8
 const { width } = Dimensions.get('window')
@@ -85,25 +84,24 @@ interface BundlePair {
 }
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
-  // const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { i18n } = useTranslation()
+  const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
   const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
-  // const lang = getCurrentLanguage()
-  // const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
+  const metaLayer = bundles?.bundle1?.getMetaOverlay(i18n.language) ?? bundles?.bundle2?.getMetaOverlay(i18n.language)
   const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
 
   const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
   const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined
 
-  // const credentialTextColor = (hex?: string) => {
-  //   const midpoint = 255 / 2
-  //   if ((luminanceForHexColour(hex ?? '') ?? 0) >= midpoint) {
-  //     return ColorPallet.grayscale.darkGrey
-  //   }
-  //   return ColorPallet.grayscale.white
-  // }
+  const credentialTextColor = (hex?: string) => {
+    const midpoint = 255 / 2
+    if ((luminanceForHexColour(hex ?? '') ?? 0) >= midpoint) {
+      return ColorPallet.grayscale.darkGrey
+    }
+    return ColorPallet.grayscale.white
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -116,7 +114,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       flexDirection: 'row',
     },
     secondaryBodyContainer: {
-      flexGrow: 1,
+      flex: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.24)',
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
@@ -138,7 +136,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     //   backgroundColor: overlay?.header?.backgroundColor ?? transparent,
     // },
     primaryBodyContainer: {
-      flexGrow: 6,
+      flex: 6,
     },
     statusContainer: {
       alignItems: 'center',
@@ -169,8 +167,32 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     })
   }, [])
 
+  const renderCredentialCardPrimaryBody = () => {
+    return (
+      <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
+        {overlay?.header?.hideIssuer ? null : (
+          <Text
+            testID={testIdWithKey('CredentialIssuer')}
+            style={[
+              TextTheme.label,
+              {
+                paddingVertical: padding,
+                paddingHorizontal: 2 * padding,
+                color:
+                  overlay?.header?.color ??
+                  credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
+              },
+            ]}
+          >
+            {metaLayer?.issuerName}
+          </Text>
+        )}
+      </View>
+    )
+  }
+
   const renderCredentialCardSecondaryBody = () => {
-    return <View style={styles.secondaryBodyContainer} />
+    return <View testID={testIdWithKey('CredentialCardSecondaryBody')} style={styles.secondaryBodyContainer} />
   }
 
   // const renderCredentialCardHeader = () => {
@@ -233,10 +255,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   //   )
   // }
 
-  const renderCredentialCardPrimaryBody = () => {
-    return <View style={styles.primaryBodyContainer} testID={testIdWithKey('CredentialCardBody')}></View>
-  }
-
   const renderCredentialCardStatus = (status?: CredentialStatus) => {
     const renderStatus = (status?: CredentialStatus) => {
       switch (status) {
@@ -269,7 +287,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       }
     }
 
-    return <View style={styles.statusContainer}>{renderStatus(status)}</View>
+    return (
+      <View testID={testIdWithKey('CredentialCardStatus')} style={styles.statusContainer}>
+        {renderStatus(status)}
+      </View>
+    )
   }
 
   const renderCredentialCard = (status?: CredentialStatus) => {
