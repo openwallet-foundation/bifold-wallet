@@ -1,6 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/core'
 
 import { DeclineType } from './decline'
+import { GenericFn } from './fn'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -115,6 +116,8 @@ export type NotificationStackParams = {
   [Screens.CommonDecline]: {
     declineType: DeclineType
     itemId: string
+    deleteView?: boolean
+    customClose?: GenericFn
   }
   [Screens.CustomNotification]: undefined
 }

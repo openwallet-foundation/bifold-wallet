@@ -1,5 +1,5 @@
 import { IndyPoolConfig } from '@aries-framework/core'
-import { createContext, useContext } from 'react'
+import { createContext, ReducerAction, useContext } from 'react'
 
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
@@ -9,11 +9,9 @@ import { OCABundleResolver } from '../types/oca'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
 
-import { GenericFn } from 'types/fn'
-
 interface NotificationConfiguration {
   component: React.FC
-  onCloseAction: GenericFn
+  onCloseAction: (dispatch?: React.Dispatch<ReducerAction<any>>) => void
   title: string
   description: string
   buttonTitle: string
