@@ -272,7 +272,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     return <View style={styles.statusContainer}>{renderStatus(status)}</View>
   }
 
-  // const renderCredentialCard = (revoked = false) => {
   const renderCredentialCard = (status?: CredentialStatus) => {
     return (
       <View style={styles.cardContainer}>
