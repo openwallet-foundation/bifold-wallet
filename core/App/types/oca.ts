@@ -20,6 +20,8 @@ export enum OverlayType {
   CARD_LAYOUT_10 = 'spec/overlays/card_layout/1.0',
   FORMAT_10 = 'spec/overlays/format/1.0',
   ENCODING_10 = 'spec/overlays/character_encoding/1.0',
+  // 2.0 Overlay Types
+  CARD_LAYOUT_20 = 'spec/overlays/card_layout/2.0',
 }
 
 export interface Bundle {
@@ -71,6 +73,20 @@ export interface CardLayoutOverlay extends BaseOverlay {
   imageSource?: string
   header?: OverlayHeader
   footer?: OverlayFooter
+}
+
+export interface CardLayoutOverlay_2_0 extends BaseOverlay {
+  logo?: {
+    src: string
+  }
+  primaryBackgroundColor?: string
+  secondaryBackgroundColor?: string
+  primaryAttribute?: {
+    name: string
+  }
+  secondaryAttribute?: {
+    name: string
+  }
 }
 export interface OverlayHeader {
   color?: string

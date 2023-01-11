@@ -130,6 +130,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
         return
       }
     }
+    // TODO: Refactor
     OCABundle.resolve(credential).then(async (bundle) => {
       if (bundle !== undefined) {
         setBundles({ bundle1: bundle, bundle2: undefined })
