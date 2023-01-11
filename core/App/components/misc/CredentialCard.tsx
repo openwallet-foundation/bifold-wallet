@@ -2,7 +2,6 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Dimensions,
   // ImageBackground,
   // ImageSourcePropType,
   StyleSheet,
@@ -32,7 +31,7 @@ interface CredentialCardProps {
 const transparent = 'rgba(0,0,0,0)'
 const padding = 10
 const borderRadius = 15
-const { width } = Dimensions.get('window')
+const flexWidth = 24
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -61,8 +60,6 @@ const { width } = Dimensions.get('window')
 
   Note: The small logo MUST be provided as 1x1 (height/width) ratio.
  */
-const cardHeight = width / 2 // a card height is half of the screen width
-// const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
 
 // const toImageSource = (source: unknown): ImageSourcePropType => {
 //   if (typeof source === 'string') {
@@ -96,7 +93,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const styles = StyleSheet.create({
     container: {
       backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
-      height: cardHeight,
       borderRadius: borderRadius,
     },
     cardContainer: {
@@ -113,7 +109,22 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       flex: 6,
     },
     statusContainer: {
-      alignItems: 'center',
+      backgroundColor: transparent,
+      borderTopRightRadius: borderRadius,
+      borderBottomLeftRadius: borderRadius,
+      padding,
+      margin: -0.5 * padding,
+    },
+    logoContainer: {
+      backgroundColor: 'white',
+      borderRadius,
+      left: 0.5 * flexWidth + padding,
+      top: 0.5 * flexWidth,
+      padding,
+    },
+    flexContainer: {
+      width: flexWidth,
+      height: flexWidth,
     },
   })
 
@@ -135,6 +146,30 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     resolveBundle().then()
   }, [])
 
+  const renderCredentialCardLogo = () => {
+    return (
+      <View style={styles.logoContainer}>
+        <View style={styles.flexContainer}>
+          {cardLayoutOverlay?.logo?.src ? null : (
+            <Text
+              style={[
+                TextTheme.normal,
+                {
+                  fontSize: 24,
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                  top: -0.5 * padding,
+                },
+              ]}
+            >
+              A
+            </Text>
+          )}
+        </View>
+      </View>
+    )
+  }
+
   const renderCredentialCardPrimaryBody = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
@@ -146,6 +181,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               paddingVertical: padding,
               paddingHorizontal: 2 * padding,
               paddingBottom: 0.25 * padding,
+              paddingLeft: 4 * padding,
               color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
             },
           ]}
@@ -160,6 +196,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               paddingVertical: padding,
               paddingHorizontal: 2 * padding,
               paddingTop: 0.25 * padding,
+              paddingLeft: 4 * padding,
               color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
             },
           ]}
@@ -172,7 +209,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   }
 
   const renderCredentialCardSecondaryBody = () => {
-    return <View testID={testIdWithKey('CredentialCardSecondaryBody')} style={styles.secondaryBodyContainer} />
+    return (
+      <View testID={testIdWithKey('CredentialCardSecondaryBody')} style={styles.secondaryBodyContainer}>
+        {renderCredentialCardLogo()}
+      </View>
+    )
   }
 
   const renderCredentialCardStatus = (status?: CredentialStatus) => {
@@ -181,27 +222,20 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
         case CredentialStatus.REVOKED:
           return (
             <View
-              style={{
-                backgroundColor: ColorPallet.notification.error,
-                borderTopRightRadius: borderRadius,
-                borderBottomLeftRadius: borderRadius,
-                padding: 10,
-              }}
+              style={[
+                styles.statusContainer,
+                {
+                  backgroundColor: ColorPallet.notification.error,
+                },
+              ]}
             >
               <Icon size={24} style={{ color: ColorPallet.semantic.error }} name="error" />
             </View>
           )
         default:
           return (
-            <View
-              style={{
-                backgroundColor: transparent,
-                borderTopRightRadius: borderRadius,
-                borderBottomLeftRadius: borderRadius,
-                padding: 10,
-              }}
-            >
-              <View style={{ width: 24, height: 24 }} />
+            <View style={[styles.statusContainer]}>
+              <View style={styles.flexContainer}></View>
             </View>
           )
       }
