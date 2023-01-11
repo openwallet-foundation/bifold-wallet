@@ -108,11 +108,11 @@ export interface OverlayFooter {
 
 export interface OCACredentialBundle {
   getCaptureBase(): CaptureBaseOverlay
-  getOverlay<F extends BaseOverlay>(type: string, language?: string): F | undefined
+  getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined
   getLabelOverlay(language: string): LabelOverlay | undefined
   getFormatOverlay(): FormatOverlay | undefined
   getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined
-  getCardLayoutOverlay(type: CardOverlayType): CardLayoutOverlay | undefined
+  getCardLayoutOverlay<T extends BaseOverlay>(type: CardOverlayType): T | undefined
   getMetaOverlay(language: string): MetaOverlay | undefined
 }
 
@@ -131,8 +131,8 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
     this.bundle = bundle
   }
 
-  public getCardLayoutOverlay(type: CardOverlayType): CardLayoutOverlay | undefined {
-    return this.getOverlay<CardLayoutOverlay>(type)
+  public getCardLayoutOverlay<T extends BaseOverlay>(type: CardOverlayType): T | undefined {
+    return this.getOverlay<T>(type)
   }
 
   public getMetaOverlay(language: string): MetaOverlay | undefined {
@@ -159,16 +159,16 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
     return this.getOverlay<CharacterEncodingOverlay>(OverlayType.ENCODING_10)
   }
 
-  public getOverlay<F extends BaseOverlay>(type: string, language?: string): F | undefined {
+  public getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined {
     if (type === OverlayType.BASE_10) {
-      return (this.bundle as Bundle).capture_base as unknown as F
+      return (this.bundle as Bundle).capture_base as unknown as T
     }
     if (language !== undefined) {
       return (this.bundle as Bundle).overlays.find(
         (item) => item.type === type.toString() && (item as BaseL10nOverlay).language === language
-      ) as F
+      ) as T
     }
-    return (this.bundle as Bundle).overlays.find((item) => item.type === type.toString()) as F
+    return (this.bundle as Bundle).overlays.find((item) => item.type === type.toString()) as T
   }
 }
 
@@ -201,10 +201,10 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
       language: 'en',
       issuerName: credential?.connectionId ?? '',
     }
-    const defaultCardLayoutLayer: CardLayoutOverlay = {
+    const defaultCardLayoutLayer: CardLayoutOverlay_2_0 = {
       capture_base: '',
-      type: OverlayType.CARD_LAYOUT_10,
-      backgroundColor: hashToRGBA(hashCode(defaultMetaOverlay?.name ?? '')),
+      type: OverlayType.CARD_LAYOUT_20,
+      primaryBackgroundColor: hashToRGBA(hashCode(defaultMetaOverlay?.name ?? '')),
     }
     const bundle: Bundle = {
       capture_base: { capture_base: '', type: OverlayType.BASE_10 },

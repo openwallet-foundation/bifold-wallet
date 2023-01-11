@@ -19,7 +19,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardOverlayType, OCACredentialBundle } from '../../types/oca'
+import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../../types/oca'
 import { luminanceForHexColor } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -78,7 +78,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
   const metaOverlay = bundle?.getMetaOverlay(i18n.language)
-  const cardLayoutOverlay = bundle?.getCardLayoutOverlay(CardOverlayType.CARD_LAYOUT_20)
+  const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
   const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
 
   const credentialTextColor = (hex?: string) => {
@@ -91,7 +91,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: cardLayoutOverlay?.imageSource ? transparent : cardLayoutOverlay?.backgroundColor,
+      backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
       height: cardHeight,
       borderRadius: borderRadius,
     },
@@ -140,24 +140,20 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCardPrimaryBody = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        {cardLayoutOverlay?.header?.hideIssuer ? null : (
-          <Text
-            testID={testIdWithKey('CredentialIssuer')}
-            style={[
-              TextTheme.labelSubtitle,
-              {
-                paddingVertical: padding,
-                paddingHorizontal: 2 * padding,
-                paddingBottom: 0.25 * padding,
-                color:
-                  cardLayoutOverlay?.header?.color ??
-                  credentialTextColor(cardLayoutOverlay?.header?.backgroundColor || cardLayoutOverlay?.backgroundColor),
-              },
-            ]}
-          >
-            {metaOverlay?.issuerName}
-          </Text>
-        )}
+        <Text
+          testID={testIdWithKey('CredentialIssuer')}
+          style={[
+            TextTheme.labelSubtitle,
+            {
+              paddingVertical: padding,
+              paddingHorizontal: 2 * padding,
+              paddingBottom: 0.25 * padding,
+              color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
+            },
+          ]}
+        >
+          {metaOverlay?.issuerName}
+        </Text>
         <Text
           testID={testIdWithKey('CredentialName')}
           style={[
@@ -166,9 +162,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               paddingVertical: padding,
               paddingHorizontal: 2 * padding,
               paddingTop: 0.25 * padding,
-              color:
-                cardLayoutOverlay?.header?.color ??
-                credentialTextColor(cardLayoutOverlay?.header?.backgroundColor || cardLayoutOverlay?.backgroundColor),
+              color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
             },
           ]}
           maxFontSizeMultiplier={1}
