@@ -88,6 +88,7 @@ export interface CardLayoutOverlay_2_0 extends BaseOverlay {
     name: string
   }
 }
+
 export interface OverlayHeader {
   color?: string
   backgroundColor?: string
@@ -109,6 +110,7 @@ export interface OCACredentialBundle {
   getCardLayoutOverlay(): CardLayoutOverlay | undefined
   getMetaOverlay(language: string): MetaOverlay | undefined
 }
+
 export interface OCABundleResolver {
   getCredentialPresentationFields(credential: CredentialExchangeRecord, language: string): Promise<Field[]>
   loadDefaultBundles(): OCABundleResolver
@@ -116,18 +118,23 @@ export interface OCABundleResolver {
   resolve(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined>
   resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined>
 }
+
 export class DefaultOCACredentialBundle implements OCACredentialBundle {
   private bundle: Bundle
+
   public constructor(bundle: Bundle) {
     this.bundle = bundle
   }
+
   public getCardLayoutOverlay(): CardLayoutOverlay | undefined {
     const layout = this.getOverlay<CardLayoutOverlay>(OverlayType.CARD_LAYOUT_10)
     return layout
   }
+
   public getMetaOverlay(language: string): MetaOverlay | undefined {
     return this.getOverlay<MetaOverlay>(OverlayType.META_10, language)
   }
+
   public getCaptureBase(): CaptureBaseOverlay {
     const overlay = this.getOverlay<CaptureBaseOverlay>(OverlayType.BASE_10)
     if (overlay === undefined) {
@@ -135,15 +142,19 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
     }
     return overlay
   }
+
   public getLabelOverlay(language: string): LabelOverlay | undefined {
     return this.getOverlay<LabelOverlay>(OverlayType.LABEL_10, language)
   }
+
   public getFormatOverlay(): FormatOverlay | undefined {
     return this.getOverlay<FormatOverlay>(OverlayType.FORMAT_10)
   }
+
   public getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined {
     return this.getOverlay<CharacterEncodingOverlay>(OverlayType.ENCODING_10)
   }
+
   public getOverlay<F extends BaseOverlay>(type: string, language?: string): F | undefined {
     if (type === OverlayType.BASE_10) {
       return (this.bundle as Bundle).capture_base as unknown as F
@@ -159,6 +170,7 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
 
 export class DefaultOCABundleResolver implements OCABundleResolver {
   private bundles: Bundles = {}
+
   public resolve(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined> {
     const credentialDefinitionId = credential.metadata.get(
       CredentialMetadataKeys.IndyCredential
@@ -176,6 +188,7 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
     }
     return Promise.resolve(undefined)
   }
+
   public resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined> {
     const defaultMetaOverlay: MetaOverlay = {
       capture_base: '',
@@ -195,14 +208,17 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
     }
     return Promise.resolve(new DefaultOCACredentialBundle(bundle))
   }
+
   public loadBundles(bundles: Bundles): OCABundleResolver {
     Object.assign(this.bundles, bundles)
     return this
   }
+
   public loadDefaultBundles(): OCABundleResolver {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     return this.loadBundles(require('../assets/oca-bundles.json'))
   }
+
   public async getCredentialPresentationFields(
     credential: CredentialExchangeRecord,
     language: string
