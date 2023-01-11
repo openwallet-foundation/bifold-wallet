@@ -71,24 +71,15 @@ const cardHeight = width / 2 // a card height is half of the screen width
 //   return source as ImageSourcePropType
 // }
 
-interface BundlePair {
-  bundle1?: OCACredentialBundle
-  bundle2?: OCACredentialBundle
-}
-
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
-  const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
-  const metaLayer = bundles?.bundle1?.getMetaOverlay(i18n.language) ?? bundles?.bundle2?.getMetaOverlay(i18n.language)
-  const overlay =
-    bundles?.bundle1?.getCardLayoutOverlay(CardOverlayType.CARD_LAYOUT_20) ??
-    bundles?.bundle2?.getCardLayoutOverlay(CardOverlayType.CARD_LAYOUT_20)
-
+  const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
+  const metaOverlay = bundle?.getMetaOverlay(i18n.language)
+  const cardLayoutOverlay = bundle?.getCardLayoutOverlay(CardOverlayType.CARD_LAYOUT_20)
   const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
-  const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined
 
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
@@ -100,7 +91,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: overlay?.imageSource ? transparent : overlay?.backgroundColor,
+      backgroundColor: cardLayoutOverlay?.imageSource ? transparent : cardLayoutOverlay?.backgroundColor,
       height: cardHeight,
       borderRadius: borderRadius,
     },
@@ -132,22 +123,24 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
         return
       }
     }
-    // TODO: Refactor
-    OCABundle.resolve(credential).then(async (bundle) => {
-      if (bundle !== undefined) {
-        setBundles({ bundle1: bundle, bundle2: undefined })
+
+    const resolveBundle = async () => {
+      const bundle = await OCABundle.resolve(credential)
+      if (bundle) {
+        setBundle(bundle)
       } else {
-        await OCABundle.resolveDefaultBundle(credential).then((defaultBundle) => {
-          setBundles({ bundle1: undefined, bundle2: defaultBundle })
-        })
+        const defaultBundle = await OCABundle.resolveDefaultBundle(credential)
+        setBundle(defaultBundle)
       }
-    })
+    }
+
+    resolveBundle().then()
   }, [])
 
   const renderCredentialCardPrimaryBody = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        {overlay?.header?.hideIssuer ? null : (
+        {cardLayoutOverlay?.header?.hideIssuer ? null : (
           <Text
             testID={testIdWithKey('CredentialIssuer')}
             style={[
@@ -157,12 +150,12 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
                 paddingHorizontal: 2 * padding,
                 paddingBottom: 0.25 * padding,
                 color:
-                  overlay?.header?.color ??
-                  credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
+                  cardLayoutOverlay?.header?.color ??
+                  credentialTextColor(cardLayoutOverlay?.header?.backgroundColor || cardLayoutOverlay?.backgroundColor),
               },
             ]}
           >
-            {metaLayer?.issuerName}
+            {metaOverlay?.issuerName}
           </Text>
         )}
         <Text
@@ -174,13 +167,13 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               paddingHorizontal: 2 * padding,
               paddingTop: 0.25 * padding,
               color:
-                overlay?.header?.color ??
-                credentialTextColor(overlay?.header?.backgroundColor || overlay?.backgroundColor),
+                cardLayoutOverlay?.header?.color ??
+                credentialTextColor(cardLayoutOverlay?.header?.backgroundColor || cardLayoutOverlay?.backgroundColor),
             },
           ]}
           maxFontSizeMultiplier={1}
         >
-          {metaLayer?.name}
+          {metaOverlay?.name}
         </Text>
       </View>
     )
@@ -246,11 +239,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {bundleLoaded === true
+      {bundle
         ? // <View testID={testIdWithKey('CredentialCard')}>
-          //   {overlay?.imageSource ? (
+          //   {cardLayoutOverlay?.imageSource ? (
           //     <ImageBackground
-          //       source={toImageSource(overlay?.imageSource)}
+          //       source={toImageSource(cardLayoutOverlay?.imageSource)}
           //       style={styles.flexGrow}
           //       imageStyle={{ borderRadius }}
           //     >
