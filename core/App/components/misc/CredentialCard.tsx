@@ -34,37 +34,32 @@ const padding = 10
 const borderRadius = 15
 const { width } = Dimensions.get('window')
 
-/**
- * A card is defined as a 4x8 (height/rows x width/columns) grid.
- | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
- | 2 |   |   |   |   |   |   |   |
- | 3 |   |   |   |   |   |   |   |
- | 4 |   |   |   |   |   |   |   |
+/*
+  A card is defined as a nx8 (height/rows x width/columns) grid.
+  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+  | 2 |   |   |   |   |   |   |   |
+  | 3 |   |   |   |   |   |   |   |
+  | 4 |   |   |   |   |   |   |   |
+  ...
  
-The card width is the full screen width, and the card height is half of the screen width
+  The card width is the full screen width.
 
-Variation 1:
-  Header: Small Logo (1x1) + Issuer Name (1x3) + Credential Name (1x4)
-  Body: Reserved for Future Use (2x4)
-  Footer: Issued or Expired Date (1x4)
+  Secondary Body (1): Small Logo (1x1) -> L (shifted right by 50%)
+  Primary Body   (2): Issuer Name (1x6)
+                      Credential Name (1x6)
+                      Primary Attribute 1 (1x6)
+                      Primary Attribute 2 (1x6)
+  Status         (3):  Icon (1x1) -> S
 
-  | L | Issuer    | Cred Name     |
-  |             Body              |
-  |             Body              |
-  | Issued/Expired Date           |
+   (1)            (2)           (3)
+  | L | Issuer Name            | S |
+  |   | Credential Name        |   |
+  |   |                        |   |
+  |   | Primary Attribute 1    |   |
+  |   | Primary Attribute 2    |   |
+  ...
 
- Variation 2:
-  Header: Large Logo (1x4) + Credential Name (1x4)
-  Body: Reserved for Future Use (2x4)
-  Footer: Issued or Expired Date (1x4)
-
-  | Logo          | Cred Name     |
-  |             Body              |
-  |             Body              |
-  | Issued/Expired Date           |
-
-
-Note: The small logo MUST be provided as 1x1 (height/width) ratio, while the large logo MUST be provided as 1x4 (height/width) ratio
+  Note: The small logo MUST be provided as 1x1 (height/width) ratio.
  */
 const cardHeight = width / 2 // a card height is half of the screen width
 // const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
