@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
+import { CredentialExchangeRecord } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -81,6 +81,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
   const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
 
+  const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
+    return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
+  }
+
   const credentialTextColor = (hex?: string) => {
     const midpoint = 255 / 2
     if ((luminanceForHexColor(hex ?? '') ?? 0) >= midpoint) {
@@ -114,14 +118,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   })
 
   useEffect(() => {
-    if (!credential) {
+    if (!isValidIndyCredential(credential)) {
       return
-    }
-    if (credential.state !== CredentialState.OfferReceived) {
-      const indyCredentialFormat = credential.credentials.find((c) => c.credentialRecordType === 'indy')
-      if (!indyCredentialFormat) {
-        return
-      }
     }
 
     const resolveBundle = async () => {
