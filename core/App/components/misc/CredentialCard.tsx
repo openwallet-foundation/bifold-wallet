@@ -19,7 +19,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { OCACredentialBundle } from '../../types/oca'
+import { CardOverlayType, OCACredentialBundle } from '../../types/oca'
 import { luminanceForHexColor } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -83,7 +83,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
   const metaLayer = bundles?.bundle1?.getMetaOverlay(i18n.language) ?? bundles?.bundle2?.getMetaOverlay(i18n.language)
-  const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
+  const overlay =
+    bundles?.bundle1?.getCardLayoutOverlay(CardOverlayType.CARD_LAYOUT_20) ??
+    bundles?.bundle2?.getCardLayoutOverlay(CardOverlayType.CARD_LAYOUT_20)
 
   const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
   const bundleLoaded = bundles?.bundle1 !== undefined || bundles?.bundle2 !== undefined

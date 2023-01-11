@@ -13,16 +13,21 @@ export enum BaseType {
   DATEINT = 'DateInt',
 }
 
-export enum OverlayType {
+export enum BaseOverlayType {
   BASE_10 = 'spec/capture_base/1.0',
   META_10 = 'spec/overlays/meta/1.0',
   LABEL_10 = 'spec/overlays/label/1.0',
-  CARD_LAYOUT_10 = 'spec/overlays/card_layout/1.0',
   FORMAT_10 = 'spec/overlays/format/1.0',
   ENCODING_10 = 'spec/overlays/character_encoding/1.0',
-  // 2.0 Overlay Types
+}
+
+export enum CardOverlayType {
+  CARD_LAYOUT_10 = 'spec/overlays/card_layout/1.0',
   CARD_LAYOUT_20 = 'spec/overlays/card_layout/2.0',
 }
+
+export const OverlayType = { ...BaseOverlayType, ...CardOverlayType }
+export type OverlayType = BaseOverlayType | CardOverlayType
 
 export interface Bundle {
   capture_base: CaptureBaseOverlay
@@ -107,7 +112,7 @@ export interface OCACredentialBundle {
   getLabelOverlay(language: string): LabelOverlay | undefined
   getFormatOverlay(): FormatOverlay | undefined
   getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined
-  getCardLayoutOverlay(): CardLayoutOverlay | undefined
+  getCardLayoutOverlay(type: CardOverlayType): CardLayoutOverlay | undefined
   getMetaOverlay(language: string): MetaOverlay | undefined
 }
 
@@ -126,9 +131,8 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
     this.bundle = bundle
   }
 
-  public getCardLayoutOverlay(): CardLayoutOverlay | undefined {
-    const layout = this.getOverlay<CardLayoutOverlay>(OverlayType.CARD_LAYOUT_10)
-    return layout
+  public getCardLayoutOverlay(type: CardOverlayType): CardLayoutOverlay | undefined {
+    return this.getOverlay<CardLayoutOverlay>(type)
   }
 
   public getMetaOverlay(language: string): MetaOverlay | undefined {
