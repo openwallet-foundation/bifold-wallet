@@ -84,6 +84,12 @@ export interface CardLayoutOverlay_2_0 extends BaseOverlay {
   logo?: {
     src: string
   }
+  backgroundImage?: {
+    src: string
+  }
+  backgroundImageSlice?: {
+    src: string
+  }
   primaryBackgroundColor?: string
   secondaryBackgroundColor?: string
   primaryAttribute?: {

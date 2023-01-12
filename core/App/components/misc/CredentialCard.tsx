@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
-  // ImageBackground,
-  // ImageSourcePropType,
+  Image,
+  ImageBackground,
+  ImageSourcePropType,
   StyleSheet,
   Text,
   View,
   ViewStyle,
-  // Image,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -31,7 +31,7 @@ interface CredentialCardProps {
 
 const transparent = 'rgba(0,0,0,0)'
 const padding = 10
-const borderRadius = 15
+const borderRadius = 10
 const flexWidth = 24
 const { width } = Dimensions.get('window')
 
@@ -63,12 +63,12 @@ const { width } = Dimensions.get('window')
   Note: The small logo MUST be provided as 1x1 (height/width) ratio.
  */
 
-// const toImageSource = (source: unknown): ImageSourcePropType => {
-//   if (typeof source === 'string') {
-//     return { uri: source as string }
-//   }
-//   return source as ImageSourcePropType
-// }
+const toImageSource = (source: unknown): ImageSourcePropType => {
+  if (typeof source === 'string') {
+    return { uri: source as string }
+  }
+  return source as ImageSourcePropType
+}
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { i18n } = useTranslation()
@@ -119,8 +119,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       margin: -0.5 * padding,
     },
     logoContainer: {
-      backgroundColor: 'white',
-      borderRadius,
+      backgroundColor: '#ffffff',
+      borderRadius: 8,
       left: 0.5 * flexWidth + padding,
       top: 0.5 * flexWidth,
       padding,
@@ -153,12 +153,22 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     return (
       <View style={styles.logoContainer}>
         <View style={styles.flexContainer}>
-          {cardLayoutOverlay?.logo?.src ? null : (
+          {cardLayoutOverlay?.logo?.src ? (
+            <Image
+              source={toImageSource(cardLayoutOverlay?.logo.src)}
+              style={{
+                resizeMode: 'contain',
+                maxHeight: flexWidth + padding,
+                alignSelf: 'center',
+                top: -0.5 * padding,
+              }}
+            />
+          ) : (
             <Text
               style={[
                 TextTheme.normal,
                 {
-                  fontSize: 24,
+                  fontSize: flexWidth,
                   fontWeight: 'bold',
                   alignSelf: 'center',
                   top: -0.5 * padding,
@@ -215,7 +225,20 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCardSecondaryBody = () => {
     return (
       <View testID={testIdWithKey('CredentialCardSecondaryBody')} style={styles.secondaryBodyContainer}>
-        {renderCredentialCardLogo()}
+        {cardLayoutOverlay?.backgroundImageSlice?.src ? (
+          <ImageBackground
+            source={toImageSource(cardLayoutOverlay?.backgroundImageSlice.src)}
+            style={{ flexGrow: 1 }}
+            imageStyle={{
+              borderTopLeftRadius: borderRadius,
+              borderBottomLeftRadius: borderRadius,
+            }}
+          >
+            {renderCredentialCardLogo()}
+          </ImageBackground>
+        ) : (
+          renderCredentialCardLogo()
+        )}
       </View>
     )
   }
@@ -269,22 +292,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {bundle
-        ? // <View testID={testIdWithKey('CredentialCard')}>
-          //   {cardLayoutOverlay?.imageSource ? (
-          //     <ImageBackground
-          //       source={toImageSource(cardLayoutOverlay?.imageSource)}
-          //       style={styles.flexGrow}
-          //       imageStyle={{ borderRadius }}
-          //     >
-          //       {renderCredentialCard(isRevoked)}
-          //     </ImageBackground>
-          //   ) : (
-          //     renderCredentialCard(isRevoked)
-          //   )}
-          // </View>
-          renderCredentialCard(isRevoked ? CredentialStatus.REVOKED : undefined)
-        : null}
+      {bundle ? renderCredentialCard(isRevoked ? CredentialStatus.REVOKED : undefined) : null}
     </TouchableOpacity>
   )
 }
