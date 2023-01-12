@@ -2,6 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  Dimensions,
   // ImageBackground,
   // ImageSourcePropType,
   StyleSheet,
@@ -32,6 +33,7 @@ const transparent = 'rgba(0,0,0,0)'
 const padding = 10
 const borderRadius = 15
 const flexWidth = 24
+const { width } = Dimensions.get('window')
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -94,6 +96,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     container: {
       backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
+      minHeight: width / 4,
     },
     cardContainer: {
       flexGrow: 1,
@@ -159,10 +162,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
                   fontWeight: 'bold',
                   alignSelf: 'center',
                   top: -0.5 * padding,
+                  margin: -1,
                 },
               ]}
             >
-              A
+              {(metaOverlay?.issuerName || metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
             </Text>
           )}
         </View>
