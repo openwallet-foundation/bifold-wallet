@@ -1,7 +1,7 @@
 import {
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
-  ProofRecord,
+  ProofExchangeRecord,
   ProofState,
 } from '@aries-framework/core'
 import { useCredentialById, useProofById, useAgent } from '@aries-framework/react-hooks'
@@ -41,7 +41,7 @@ describe('common decline screen', () => {
 
   test('decline proof renders correctly', () => {
     // @ts-ignore
-    useProofById.mockReturnValueOnce(new ProofRecord(proof))
+    useProofById.mockReturnValueOnce(new ProofExchangeRecord(proof))
 
     const props = { params: { declineType: DeclineType.ProofRequest, itemId: 'b04060c8-902a-4f62-9390-7b8bb2204f13' } }
     const tree = render(<CommonDecline route={props as any} navigation={useNavigation()} />)
@@ -55,7 +55,7 @@ describe('common decline screen', () => {
 
   test('decline proof triggers AFJ', () => {
     // @ts-ignore
-    useProofById.mockReturnValueOnce(new ProofRecord(proof))
+    useProofById.mockReturnValueOnce(new ProofExchangeRecord(proof))
 
     const props = {
       params: { declineType: DeclineType.ProofRequest, itemId: 'b04060c8-902a-4f62-9390-7b8bb2204f13' },
@@ -70,7 +70,7 @@ describe('common decline screen', () => {
   })
 
   test('did decline proof renders correctly', async () => {
-    const rec = new ProofRecord(proof)
+    const rec = new ProofExchangeRecord(proof)
     rec.state = ProofState.Declined
 
     // @ts-ignore
@@ -87,7 +87,7 @@ describe('common decline screen', () => {
   })
 
   test('navigate home after decline proof', async () => {
-    const rec = new ProofRecord(proof)
+    const rec = new ProofExchangeRecord(proof)
     rec.state = ProofState.Declined
 
     // @ts-ignore

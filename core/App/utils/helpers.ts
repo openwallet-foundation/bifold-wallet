@@ -2,10 +2,12 @@ import {
   Agent,
   ConnectionRecord,
   CredentialExchangeRecord,
-  ProofRecord,
   RequestedAttribute,
   RequestedPredicate,
   RetrievedCredentials,
+  ProofExchangeRecord,
+  IndyCredentialInfo,
+  IndyRetrievedCredentialsFormat,
 } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
@@ -47,6 +49,7 @@ export function getCredentialConnectionLabel(credential?: CredentialExchangeReco
   if (!credential) {
     return ''
   }
+
   return credential?.connectionId
     ? useConnectionById(credential.connectionId)?.theirLabel
     : credential?.connectionId ?? ''
@@ -84,52 +87,69 @@ export const getOobDeepLink = async (url: string, agent: Agent | undefined): Pro
   return message
 }
 
-export const processProofAttributes = (proof: ProofRecord, credentials?: RetrievedCredentials): Attribute[] => {
+export const processProofAttributes = (
+  proof: ProofExchangeRecord,
+  credentials?: IndyRetrievedCredentialsFormat
+): Attribute[] => {
   const processedAttributes = [] as Attribute[]
 
   if (!credentials) {
     return processedAttributes
   }
 
-  const { requestedAttributes: retrievedCredentialAttributes } = credentials
-  const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
+  const { requestedAttributes } = credentials
 
-  requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
-    const firstCredential = firstValidCredential(retrievedCredentialAttributes[attributeName] || [])
-    const credentialAttributes = names?.length ? names : [name || attributeName]
-    credentialAttributes.forEach((attribute) => {
-      processedAttributes.push({
-        name: attribute,
-        value: firstCredential?.credentialInfo?.attributes[attribute] || null,
-        revoked: firstCredential?.revoked || false,
-        credentialId: firstCredential?.credentialId,
-      })
+  for (const attr of Object.keys(requestedAttributes)) {
+    const credential = (requestedAttributes[attr] ?? []).pop()
+    if (!credential) {
+      return processedAttributes
+    }
+
+    const { credentialId, revoked, credentialInfo } = credential
+    const [, attributeName] = attr.split('_')
+    const attributeValue = (credentialInfo as IndyCredentialInfo).attributes[attributeName]
+    processedAttributes.push({
+      credentialId,
+      revoked,
+      name: attributeName,
+      value: attributeValue,
     })
-  })
+  }
+
   return processedAttributes
 }
 
-export const processProofPredicates = (proof: ProofRecord, credentials?: RetrievedCredentials): Predicate[] => {
+export const processProofPredicates = (
+  proof: ProofExchangeRecord,
+  credentials?: IndyRetrievedCredentialsFormat
+): Predicate[] => {
   const processedPredicates = [] as Predicate[]
 
   if (!credentials) {
     return processedPredicates
   }
 
-  const { requestedPredicates: retrievedCredentialPredicates } = credentials
-  const { requestedPredicates: requestedProofPredicates } = proof.requestMessage?.indyProofRequest || {}
+  const { requestedPredicates } = credentials
 
-  requestedProofPredicates?.forEach(({ name, predicateType, predicateValue }, predicateName) => {
-    const firstCredential = firstValidCredential(retrievedCredentialPredicates[predicateName] || [])
-    const predicate = name || predicateName
+  for (const attr of Object.keys(requestedPredicates)) {
+    const credential = (requestedPredicates[attr] ?? []).pop()
+    if (!credential) {
+      return processedPredicates
+    }
+
+    const { credentialId, revoked, credentialInfo } = credential
+    const [, predicateName, predicateDataType, predicateKind] = attr.split('_')
+    const predicateValue = (credentialInfo as IndyCredentialInfo).attributes[`${predicateName}_${predicateDataType}`]
+
     processedPredicates.push({
-      name: predicate,
+      credentialId,
+      name: `${predicateName}_${predicateDataType}`,
+      revoked,
       pValue: predicateValue,
-      pType: predicateType,
-      revoked: firstCredential?.revoked || false,
-      credentialId: firstCredential?.credentialId,
+      pType: predicateKind,
     })
-  })
+  }
+
   return processedPredicates
 }
 
@@ -191,7 +211,8 @@ export const receiveMessageFromDeepLink = async (url: string, agent: Agent | und
  * @returns a connection record from parsing and receiving the invitation
  */
 export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
-  const invitation = await agent?.oob.parseInvitationShortUrl(uri)
+  const invitation = await agent?.oob.parseInvitation(uri)
+
   if (!invitation) {
     throw new Error('Could not parse invitation from URL')
   }
@@ -201,5 +222,6 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
   if (!connectionRecord?.id) {
     throw new Error('Connection does not have an ID')
   }
+
   return connectionRecord
 }
