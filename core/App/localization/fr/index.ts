@@ -61,7 +61,15 @@ const translation = {
         "Title1032": "Impossible de retirer le justificatif.",
         "Message1032": "Un problème est survenu lors du retrait du justificatif.",
         "Title1033": "Impossible de récupérer le justificatif.",
-        "Message1033": "Le justificatif est introuvable."
+        "Message1033": "Le justificatif est introuvable.",
+        "Title1034": "Unable to fetch proof request. (FR)",
+        "Message1034": "Proof request could not be found. (FR)",
+        "Title1035": "Unable to fetch credential offer. (FR)",
+        "Message1035": "Credential offer could not be found. (FR)",
+        "Title1036": "Unable to fetch wallet credentials (FR)",
+        "Message1036": "Wallet credentials could not be found (FR)",
+        "Title1037": "Unable to remove contact. (FR)",
+        "Message1037": "There was a problem while removing the contact. (FR)",
     },
     "StatusMessages": {
         "InitAgent": "Initialisation de l'agent ..."
@@ -160,7 +168,14 @@ const translation = {
     "ContactDetails": {
         "Created": "Créé",
         "ConnectionState": "État de la connexion",
-        "AContact": "Un contact"
+        "AContact": "Un contact",
+        "DateOfConnection": "Date of connection: {{ date }} (FR)",
+        "RemoveTitle": "Remove this contact (FR)",
+        "RemoveCaption": "To add credentials, the issuing organization needs to be a contact. (FR)",
+        "UnableToRemoveTitle": "Unable to remove contact (FR)",
+        "UnableToRemoveCaption": "Unable to remove because there are credentials issued by this contact in your wallet. Remove the credentials first then remove this contact. (FR)",
+        "GoToCredentials": "Go to Credentials (FR)",
+        "ContactRemoved": "Contact removed (FR)"
     },
     "Credentials": {
         "CredentialsNotFound": "Justificatifs non trouvés",
