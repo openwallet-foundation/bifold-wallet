@@ -2,6 +2,7 @@ import type { ConnectionRecord } from '@aries-framework/core'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -18,6 +19,8 @@ interface Props {
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { ListItems } = useTheme()
+  const { i18n } = useTranslation()
+
   const styles = StyleSheet.create({
     outerContainer: {
       ...ListItems.contactBackground,
@@ -42,6 +45,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       borderBottomRightRadius: 15,
     },
   })
+
   return (
     <TouchableOpacity
       onPress={() =>
@@ -53,7 +57,9 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       <View key={contact.id} style={styles.outerContainer}>
         <View style={styles.textContainer}>
           <Title style={ListItems.contactTitle}>{contact?.alias || contact?.theirLabel}</Title>
-          <Text style={ListItems.contactDate}>{contact.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}</Text>
+          <Text style={ListItems.contactDate}>
+            {contact.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
+          </Text>
         </View>
         <View style={styles.iconContainer}>
           <Icon name="message" size={32} color={ListItems.contactIcon.color} />

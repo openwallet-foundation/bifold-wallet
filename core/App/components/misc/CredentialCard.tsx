@@ -16,7 +16,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
-import { getCurrentLanguage } from '../../localization'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
 import { luminanceForHexColour } from '../../utils/luminance'
@@ -82,13 +81,12 @@ interface BundlePair {
 }
 
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
   const [bundles, setBundles] = useState<BundlePair | undefined>(undefined)
-  const lang = getCurrentLanguage()
-  const metaLayer = bundles?.bundle1?.getMetaOverlay(lang) ?? bundles?.bundle2?.getMetaOverlay(lang)
+  const metaLayer = bundles?.bundle1?.getMetaOverlay(i18n.language) ?? bundles?.bundle2?.getMetaOverlay(i18n.language)
   const overlay = bundles?.bundle1?.getCardLayoutOverlay() ?? bundles?.bundle2?.getCardLayoutOverlay()
 
   const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
@@ -260,7 +258,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             testID={testIdWithKey('CredentialIssued')}
             maxFontSizeMultiplier={1}
           >
-            {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
+            {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
           </Text>
         )}
       </View>

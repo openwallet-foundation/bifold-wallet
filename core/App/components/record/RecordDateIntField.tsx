@@ -13,7 +13,7 @@ interface RecordBinaryFieldProps {
 }
 
 const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const { ListItems } = useTheme()
   const [date, setDate] = useState<string | undefined>()
@@ -27,7 +27,7 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) 
       //NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
       const date = new Date(Number(year), Number(month) - 1, Number(day))
       if (!isNaN(date.getDate())) {
-        setDate(date.toLocaleDateString('en-CA', dateFormatOptions))
+        setDate(date.toLocaleDateString(i18n.language, dateFormatOptions))
         return
       }
     }

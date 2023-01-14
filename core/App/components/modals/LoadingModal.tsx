@@ -1,5 +1,6 @@
 import React from 'react'
-import { Dimensions, Modal, SafeAreaView, StyleSheet } from 'react-native'
+import { Dimensions, Modal, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
 import LoadingIndicator from '../animated/LoadingIndicator'

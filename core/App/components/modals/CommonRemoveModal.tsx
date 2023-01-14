@@ -6,25 +6,27 @@ import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Button, { ButtonType } from '../../components/buttons/Button'
-import FauxNavigationBar from '../../components/views/FauxNavigationBar'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
+import { RemoveType } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
+import Button, { ButtonType } from '../buttons/Button'
 import UnorderedList from '../misc/UnorderedList'
+import FauxNavigationBar from '../views/FauxNavigationBar'
 
-interface CommonDeleteModalProps {
+interface CommonRemoveModalProps {
+  removeType: RemoveType
   onSubmit?: GenericFn
   onCancel?: GenericFn
   visible?: boolean
 }
 
-interface DeleteProps {
+interface RemoveProps {
   title: string
   content: string[]
 }
 
-const Dropdown: React.FC<DeleteProps> = ({ title, content }) => {
+const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
   const { TextTheme, ColorPallet } = useTheme()
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
 
@@ -56,7 +58,11 @@ const Dropdown: React.FC<DeleteProps> = ({ title, content }) => {
   )
 }
 
-const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit, onCancel }) => {
+const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visible, onSubmit, onCancel }) => {
+  if (!removeType) {
+    throw new Error('removeType cannot be undefined')
+  }
+
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -81,29 +87,41 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
         style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}
       >
         <ScrollView style={[styles.container]}>
-          <View>
-            <View style={[{ marginBottom: 25 }]}>
-              <Text style={[TextTheme.title]}>{t('CredentialDetails.RemoveTitle')}</Text>
-            </View>
+          {removeType === RemoveType.Contact && (
             <View>
-              <Text style={[TextTheme.normal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+              <View style={[{ marginBottom: 25 }]}>
+                <Text style={[TextTheme.title]}>{t('ContactDetails.RemoveTitle')}</Text>
+              </View>
+              <View>
+                <Text style={[TextTheme.normal]}>{t('ContactDetails.RemoveCaption')}</Text>
+              </View>
             </View>
-            <View style={{ marginTop: 25 }}>
-              <Dropdown
-                title={t('CredentialDetails.YouWillNotLose')}
-                content={[
-                  t('CredentialDetails.YouWillNotLoseListItem1'),
-                  t('CredentialDetails.YouWillNotLoseListItem2'),
-                ]}
-              />
+          )}
+          {removeType === RemoveType.Credential && (
+            <View>
+              <View style={[{ marginBottom: 25 }]}>
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.RemoveTitle')}</Text>
+              </View>
+              <View>
+                <Text style={[TextTheme.normal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+              </View>
+              <View style={{ marginTop: 25 }}>
+                <Dropdown
+                  title={t('CredentialDetails.YouWillNotLose')}
+                  content={[
+                    t('CredentialDetails.YouWillNotLoseListItem1'),
+                    t('CredentialDetails.YouWillNotLoseListItem2'),
+                  ]}
+                />
+              </View>
+              <View style={{ marginTop: 25 }}>
+                <Dropdown
+                  title={t('CredentialDetails.HowToGetThisCredentialBack')}
+                  content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
+                />
+              </View>
             </View>
-            <View style={{ marginTop: 25 }}>
-              <Dropdown
-                title={t('CredentialDetails.HowToGetThisCredentialBack')}
-                content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
-              />
-            </View>
-          </View>
+          )}
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>
@@ -130,4 +148,4 @@ const CommonDeleteModal: React.FC<CommonDeleteModalProps> = ({ visible, onSubmit
   )
 }
 
-export default CommonDeleteModal
+export default CommonRemoveModal

@@ -6,8 +6,7 @@ exports[`displays loading screen renders correctly 1`] = `
   transparent={true}
   visible={true}
 >
-  <RCTSafeAreaView
-    emulateUnlessSupported={true}
+  <RNCSafeAreaView
     style={
       Array [
         Object {
@@ -64,6 +63,6 @@ exports[`displays loading screen renders correctly 1`] = `
         />
       </View>
     </View>
-  </RCTSafeAreaView>
+  </RNCSafeAreaView>
 </Modal>
 `;

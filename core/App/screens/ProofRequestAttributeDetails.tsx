@@ -27,7 +27,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
   const { proofId, attributeName } = route?.params
   const { agent } = useAgent()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [, dispatch] = useStore()
   const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
   const proof = useProofById(proofId)
@@ -137,7 +137,8 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
               </View>
             ) : (
               <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
-                {t('CredentialDetails.Issued')} {credential.createdAt.toLocaleDateString('en-CA', dateFormatOptions)}
+                {t('CredentialDetails.Issued')}{' '}
+                {credential.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
               </Text>
             )}
             <Text style={[ListItems.credentialTitle, { paddingTop: 16 }]} testID={testIdWithKey('AttributeValue')}>

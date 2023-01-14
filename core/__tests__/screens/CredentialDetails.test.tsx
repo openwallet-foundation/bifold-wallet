@@ -105,7 +105,7 @@ describe('displays a credential details screen', () => {
       const credentialName = await findByText('Unverified Person', { exact: false })
       const credentialIssuedAt = await findByText(
         `CredentialDetails.Issued: ${mock_testOpenVPCredentialRecord.createdAt.toLocaleDateString(
-          'en-CA',
+          'en',
           dateFormatOptions
         )}`,
         { exact: false }

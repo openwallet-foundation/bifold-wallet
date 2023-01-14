@@ -13,7 +13,7 @@ import RecordHeader from './RecordHeader'
 export interface RecordProps {
   header?: () => React.ReactElement | null
   footer?: () => React.ReactElement | null
-  fields: Array<Field>
+  fields: Field[]
   hideFieldValues?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
 }
