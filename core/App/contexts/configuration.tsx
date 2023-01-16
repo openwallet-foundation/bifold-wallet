@@ -35,7 +35,7 @@ export interface ConfigurationContext {
   indyLedgers: IndyPoolConfig[]
   settings: SettingSection[]
   customNotification: NotificationConfiguration
-  useNotifications: () => { total: number; notifications: any }
+  useCustomNotifications: () => { total: number; notifications: any }
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

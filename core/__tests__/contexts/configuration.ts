@@ -39,7 +39,7 @@ const configurationContext: ConfigurationContext = {
     buttonTitle: "",
     pageTitle:"",
   },
-  useNotifications
+  useCustomNotifications: useNotifications
 }
 
 export default configurationContext

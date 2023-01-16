@@ -15,8 +15,8 @@ import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
-  const { useNotifications } = useConfiguration()
-  const { total } = useNotifications()
+  const { useCustomNotifications } = useConfiguration()
+  const { total } = useCustomNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertConnectedNetwork } = useNetwork()

@@ -22,8 +22,8 @@ type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { agent } = useAgent()
-  const { useNotifications } = useConfiguration()
-  const { notifications } = useNotifications()
+  const { useCustomNotifications } = useConfiguration()
+  const { notifications } = useCustomNotifications()
   const { t } = useTranslation()
   const { homeContentView: HomeContentView } = useConfiguration()
   const [store, dispatch] = useStore()

@@ -77,9 +77,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     },
   })
   let onPress: GenericFn
-  let title,
-    body,
-    buttonTitle = ''
+  let title = ''
+  let body = ''
+  let buttonTitle = ''
 
   // eslint-disable-next-line no-case-declarations
   const { name, version } = parsedSchema(notification as CredentialRecord)
@@ -147,6 +147,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           screen: Screens.CommonDecline,
           params: {
             declineType: DeclineType.Custom,
+            itemId: notification.id,
             deleteView: true,
             customClose: () => {
               customNotification.onCloseAction(dispatch as any)

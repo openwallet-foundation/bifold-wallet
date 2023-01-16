@@ -38,5 +38,5 @@ export const defaultConfiguration: ConfigurationContext = {
     buttonTitle: '',
     pageTitle: '',
   },
-  useNotifications,
+  useCustomNotifications: useNotifications,
 }

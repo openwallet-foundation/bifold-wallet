@@ -6,8 +6,8 @@ import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useConfiguration } from '../contexts/configuration'
 
 const ListNotifications: React.FC = () => {
-  const { useNotifications } = useConfiguration()
-  const { notifications } = useNotifications()
+  const { useCustomNotifications } = useConfiguration()
+  const { notifications } = useCustomNotifications()
 
   const getNotificationType = (notification: any): NotificationType => {
     let retType = NotificationType.ProofRequest

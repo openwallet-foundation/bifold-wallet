@@ -29,7 +29,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
 
   const { declineType, itemId, deleteView, customClose } = route.params
 
-  if (!itemId && declineType !== DeclineType.Custom) {
+  if (!itemId) {
     throw new Error('itemId cannot be undefined')
   }
 
