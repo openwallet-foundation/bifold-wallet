@@ -330,9 +330,6 @@ export const ListItems = StyleSheet.create({
   credentialDetails: {
     ...TextTheme.caption,
   },
-  credentialDeleteBackground: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
   credentialOfferBackground: {
     backgroundColor: ColorPallet.brand.primaryBackground,
   },

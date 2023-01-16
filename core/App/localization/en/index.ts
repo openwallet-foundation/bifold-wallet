@@ -68,6 +68,8 @@ const translation = {
     "Message1035": "Credential offer could not be found.",
     "Title1036": "Unable to fetch wallet credentials",
     "Message1036": "Wallet credentials could not be found",
+    "Title1037": "Unable to remove contact.",
+    "Message1037": "There was a problem while removing the contact.",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
@@ -167,6 +169,13 @@ const translation = {
     "Created": "Created",
     "ConnectionState": "Connection State",
     "AContact": "A contact",
+    "DateOfConnection": "Date of connection: {{ date }}",
+    "RemoveTitle": "Remove this contact",
+    "RemoveCaption": "To add credentials, the issuing organization needs to be a contact.",
+    "UnableToRemoveTitle": "Unable to remove contact",
+    "UnableToRemoveCaption": "Unable to remove because there are credentials issued by this contact in your wallet. Remove the credentials first then remove this contact.",
+    "GoToCredentials": "Go to Credentials",
+    "ContactRemoved": "Contact removed"
   },
   "Credentials": {
     "CredentialsNotFound": "Credentials not found",
