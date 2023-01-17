@@ -4,10 +4,13 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useConfiguration } from '../../contexts/configuration'
+import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
+import { DeclineType } from '../../types/decline'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
@@ -20,6 +23,7 @@ export enum NotificationType {
   CredentialOffer = 'Offer',
   ProofRequest = 'Proof',
   Revocation = 'Revocation',
+  Custom = 'Custom',
 }
 
 interface NotificationListItemProps {
@@ -29,6 +33,8 @@ interface NotificationListItemProps {
 
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
+  const { customNotification } = useConfiguration()
+  const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
@@ -53,7 +59,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     },
     headerText: {
       ...TextTheme.normal,
-      flexShrink: 1,
+      flexGrow: 1,
       fontWeight: 'bold',
       alignSelf: 'center',
       color: ColorPallet.notification.infoText,
@@ -73,9 +79,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   let onPress: GenericFn
   let title = ''
   let body = ''
+  let buttonTitle = ''
 
   // eslint-disable-next-line no-case-declarations
   const { name, version } = parsedSchema(notification as CredentialRecord)
+  let onClose = () => {
+    return
+  }
 
   switch (notificationType) {
     case NotificationType.CredentialOffer:
@@ -84,6 +94,16 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           screen: Screens.CredentialOffer,
           params: { credentialId: notification.id },
         })
+      onClose = () => {
+        navigation.getParent()?.navigate(Stacks.NotificationStack, {
+          screen: Screens.CommonDecline,
+          params: {
+            declineType: DeclineType.CredentialOffer,
+            itemId: notification.id,
+            deleteView: true,
+          },
+        })
+      }
       title = t('CredentialOffer.NewCredentialOffer')
       body = `${name + (version ? ` v${version}` : '')}`
       break
@@ -94,6 +114,16 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         navigation
           .getParent()
           ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
+      onClose = () => {
+        navigation.getParent()?.navigate(Stacks.NotificationStack, {
+          screen: Screens.CommonDecline,
+          params: {
+            declineType: DeclineType.ProofRequest,
+            itemId: notification.id,
+            deleteView: true,
+          },
+        })
+      }
       break
     case NotificationType.Revocation:
       title = t('CredentialDetails.NewRevoked')
@@ -103,6 +133,28 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           screen: Screens.CredentialDetails,
           params: { credentialId: notification.id },
         })
+      break
+    case NotificationType.Custom:
+      title = t(customNotification.title as any)
+      body = t(customNotification.description as any)
+      buttonTitle = t(customNotification.buttonTitle as any)
+      onPress = () =>
+        navigation.getParent()?.navigate(Stacks.NotificationStack, {
+          screen: Screens.CustomNotification,
+        })
+      onClose = () => {
+        navigation.getParent()?.navigate(Stacks.NotificationStack, {
+          screen: Screens.CommonDecline,
+          params: {
+            declineType: DeclineType.Custom,
+            itemId: notification.id,
+            deleteView: true,
+            customClose: () => {
+              customNotification.onCloseAction(dispatch as any)
+            },
+          },
+        })
+      }
       break
     default:
       throw new Error('NotificationType was not set correctly.')
@@ -117,14 +169,23 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
           {title}
         </Text>
+        {[NotificationType.Custom, NotificationType.ProofRequest, NotificationType.CredentialOffer].includes(
+          notificationType
+        ) && (
+          <View>
+            <TouchableOpacity onPress={onClose}>
+              <Icon name={'close'} size={iconSize} color={ColorPallet.notification.infoIcon} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
           {body}
         </Text>
         <Button
-          title={t('Global.View')}
-          accessibilityLabel={t('Global.View')}
+          title={buttonTitle !== '' ? buttonTitle : t('Global.View')}
+          accessibilityLabel={buttonTitle !== '' ? buttonTitle : t('Global.View')}
           testID={testIdWithKey('View')}
           buttonType={ButtonType.Primary}
           onPress={onPress}

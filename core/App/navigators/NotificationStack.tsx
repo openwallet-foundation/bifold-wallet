@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import HeaderRightHome from '../components/buttons/HeaderRightHome'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import CommonDecline from '../screens/CommonDecline'
 import CredentialDetails from '../screens/CredentialDetails'
@@ -18,6 +19,7 @@ const NotificationStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = createDefaultStackOptions(theme)
+  const { customNotification } = useConfiguration()
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -40,6 +42,11 @@ const NotificationStack: React.FC = () => {
         name={Screens.ProofRequestAttributeDetails}
         component={ProofRequestAttributeDetails}
         options={{ title: t('Screens.ProofRequestAttributeDetails') }}
+      />
+      <Stack.Screen
+        name={Screens.CustomNotification}
+        component={customNotification.component}
+        options={{ title: t(customNotification.pageTitle as any) }}
       />
       <Stack.Screen
         name={Screens.CommonDecline}
