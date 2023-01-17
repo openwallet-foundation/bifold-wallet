@@ -98,6 +98,12 @@ export interface CardLayoutOverlay_2_0 extends BaseOverlay {
   secondaryAttribute?: {
     name: string
   }
+  issuedDateAttribute?: {
+    name: string
+  }
+  expiryDateAttribute?: {
+    name: string
+  }
 }
 
 export interface OverlayHeader {

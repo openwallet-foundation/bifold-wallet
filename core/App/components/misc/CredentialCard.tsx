@@ -1,4 +1,5 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
+import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -14,12 +15,12 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-// import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../../types/oca'
+import { Attribute, Field } from '../../types/record'
 import { luminanceForHexColor } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -33,7 +34,6 @@ const transparent = 'rgba(0,0,0,0)'
 const padding = 10
 const borderRadius = 10
 const flexWidth = 24
-const { width } = Dimensions.get('window')
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -76,6 +76,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const { OCABundle } = useConfiguration()
 
   const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
+  const [primaryField, setPrimaryField] = useState<Field | undefined>(undefined)
+  const [secondaryField, setSecondaryField] = useState<Field | undefined>(undefined)
+
   const metaOverlay = bundle?.getMetaOverlay(i18n.language)
   const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
   const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
@@ -96,7 +99,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     container: {
       backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
-      minHeight: width / 4,
     },
     cardContainer: {
       flexGrow: 1,
@@ -122,12 +124,18 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       backgroundColor: '#ffffff',
       borderRadius: 8,
       left: 0.5 * flexWidth + padding,
-      top: 0.5 * flexWidth,
+      top: 0.5 * flexWidth + padding,
       padding,
     },
     flexContainer: {
       width: flexWidth,
       height: flexWidth,
+    },
+    textContainer: {
+      paddingVertical: 0.5 * flexWidth + padding,
+      paddingHorizontal: 2 * padding,
+      paddingLeft: 4 * padding,
+      color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
     },
   })
 
@@ -146,8 +154,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       }
     }
 
-    resolveBundle().then()
-  }, [])
+    const resolvePresentationFields = async () => {
+      const fields = await OCABundle.getCredentialPresentationFields(credential, i18n.language)
+      setPrimaryField(fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name) || undefined)
+      setSecondaryField(fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name) || undefined)
+    }
+
+    Promise.all([resolveBundle(), resolvePresentationFields()]).then()
+  }, [credential])
 
   const renderCredentialCardLogo = () => {
     return (
@@ -191,12 +205,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
           testID={testIdWithKey('CredentialIssuer')}
           style={[
             TextTheme.labelSubtitle,
+            styles.textContainer,
             {
-              paddingVertical: padding,
-              paddingHorizontal: 2 * padding,
               paddingBottom: 0.25 * padding,
-              paddingLeft: 4 * padding,
-              color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
             },
           ]}
         >
@@ -206,18 +217,67 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
           testID={testIdWithKey('CredentialName')}
           style={[
             TextTheme.labelTitle,
+            styles.textContainer,
             {
-              paddingVertical: padding,
-              paddingHorizontal: 2 * padding,
               paddingTop: 0.25 * padding,
-              paddingLeft: 4 * padding,
-              color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
             },
           ]}
           maxFontSizeMultiplier={1}
         >
           {metaOverlay?.name}
         </Text>
+        {primaryField && (
+          <>
+            <Text
+              style={[
+                TextTheme.labelText,
+                styles.textContainer,
+                {
+                  fontStyle: 'normal',
+                  paddingVertical: 0,
+                },
+              ]}
+            >
+              {primaryField.label ?? startCase(primaryField.name || '')}
+            </Text>
+            <Text
+              style={[
+                styles.textContainer,
+                {
+                  paddingTop: 0,
+                },
+              ]}
+            >
+              {(primaryField as Attribute).value}
+            </Text>
+          </>
+        )}
+        {secondaryField && (
+          <>
+            <Text
+              style={[
+                TextTheme.labelText,
+                styles.textContainer,
+                {
+                  fontStyle: 'normal',
+                  paddingVertical: 0,
+                },
+              ]}
+            >
+              {secondaryField.label ?? startCase(secondaryField.name || '')}
+            </Text>
+            <Text
+              style={[
+                styles.textContainer,
+                {
+                  paddingTop: 0,
+                },
+              ]}
+            >
+              {(secondaryField as Attribute).value}
+            </Text>
+          </>
+        )}
       </View>
     )
   }
@@ -292,7 +352,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {bundle ? renderCredentialCard(isRevoked ? CredentialStatus.REVOKED : undefined) : null}
+      {bundle && renderCredentialCard(isRevoked ? CredentialStatus.REVOKED : undefined)}
     </TouchableOpacity>
   )
 }
