@@ -1,5 +1,5 @@
 import { IndyPoolConfig } from '@aries-framework/core'
-import { createContext, useContext } from 'react'
+import { createContext, ReducerAction, useContext } from 'react'
 
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
@@ -8,6 +8,15 @@ import { ScanProps } from '../screens/Scan'
 import { OCABundleResolver } from '../types/oca'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
+
+interface NotificationConfiguration {
+  component: React.FC
+  onCloseAction: (dispatch?: React.Dispatch<ReducerAction<any>>) => void
+  title: string
+  description: string
+  buttonTitle: string
+  pageTitle: string
+}
 
 export interface ConfigurationContext {
   pages: typeof OnboardingPages
@@ -25,6 +34,8 @@ export interface ConfigurationContext {
   PINSecurity: PINSecurityParams
   indyLedgers: IndyPoolConfig[]
   settings: SettingSection[]
+  customNotification: NotificationConfiguration
+  useCustomNotifications: () => { total: number; notifications: any }
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

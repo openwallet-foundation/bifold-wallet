@@ -29,7 +29,7 @@ const translation = {
     "Dismiss": "Dispensar",
     "ShowDetails": "Mostrar Detalhes",
     "Biometrics": "Biometria",
-    "On" : "Ligado",
+    "On": "Ligado",
     "Off": "Desligado",
   },
   "Language": {
@@ -128,8 +128,8 @@ const translation = {
   },
   "PINEnter": {
     "EnterPIN": "Digitar PIN",
-    "Unlock":"Destravar",
-    "Or":"Ou",
+    "Unlock": "Destravar",
+    "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
@@ -183,8 +183,8 @@ const translation = {
     "RemoveTitle": "Remover a credencial da sua carteira",
     "RemoveCaption": "Você perderá a habilidade de prover as informações desta credencial com essa carteira.",
     "CredentialNotFound": "Credencial não encontrada",
-    "YouWillNotLose": "Você NÃO perderá",    
-    "YouWillNotLoseListItem1": "Sua credencial dentro do sistema que lhe emitiu sua credencial.", 
+    "YouWillNotLose": "Você NÃO perderá",
+    "YouWillNotLoseListItem1": "Sua credencial dentro do sistema que lhe emitiu sua credencial.",
     "YouWillNotLoseListItem2": "A organização emissora como um Contato.",
     "HowToGetThisCredentialBack": "Como ter essa credencial de volta",
     "HowToGetThisCredentialBackListItem1": "Você terá que ir à organização que lhe emitiu essa credencial e requisita-la novamente.",
@@ -230,7 +230,7 @@ const translation = {
     "SettingsInstruction": "Você sempre pode remover contatos a qualquer momento em ",
     "PrivacyMessage": "O uso de suas credenciais nunca é compartilhado com seus contatos.",
     "PopupExit": "Entendi"
-},
+  },
   "CredentialOffer": {
     "CredentialOffer": "Oferta de Credencial",
     "ThisIsTakingLongerThanExpected": "Isso está demorando mais que o normal. Verifique novamente mais tarde sua nova credencial.",
@@ -332,7 +332,7 @@ const translation = {
     "ContactDetails": "Detalhes do Contato",
     "Biometry": "Biometria",
     "Developer": "Developer options",
-    "ChangePIN": "Alterar PIN"
+    "ChangePIN": "Alterar PIN",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
@@ -342,7 +342,7 @@ const translation = {
     "NoInternetConnectionTitle": "Sem conexão com a internet",
     "NoInternetConnectionMessage": "Não é possivel acessar serviços utilizando a Bifold ou receber credenciais até você voltar a estar online.\n\nFavor checkar sua conexão com a internet.",
     "LedgerConnectivityIssueTitle": "Wallet Services (pt-BR)",
-    "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services. (pt-BR)", 
+    "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services. (pt-BR)",
   }
 }
 

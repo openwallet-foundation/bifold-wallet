@@ -11,7 +11,6 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { useNotifications } from '../hooks/notifications'
 import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
 
@@ -23,7 +22,8 @@ type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { agent } = useAgent()
-  const { notifications } = useNotifications()
+  const { useCustomNotifications } = useConfiguration()
+  const { notifications } = useCustomNotifications()
   const { t } = useTranslation()
   const { homeContentView: HomeContentView } = useConfiguration()
   const [store, dispatch] = useStore()
@@ -97,6 +97,22 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     }
   }, [agent, store.deepLink.activeDeepLink, store.authentication.didAuthenticate])
 
+  const DisplayListItemType = (item: any): Element => {
+    let component: Element
+    if (item.type === 'CredentialRecord') {
+      let notificationType = NotificationType.CredentialOffer
+      if (item.revocationNotification) {
+        notificationType = NotificationType.Revocation
+      }
+      component = <NotificationListItem notificationType={notificationType} notification={item} />
+    } else if (item.type === 'CustomNotification') {
+      component = <NotificationListItem notificationType={NotificationType.Custom} notification={item} />
+    } else {
+      component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+    }
+    return component
+  }
+
   return (
     <>
       <ScrollView>
@@ -148,15 +164,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
                 marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
               }}
             >
-              {item.type === 'CredentialRecord' ? (
-                item.revocationNotification ? (
-                  <NotificationListItem notificationType={NotificationType.Revocation} notification={item} />
-                ) : (
-                  <NotificationListItem notificationType={NotificationType.CredentialOffer} notification={item} />
-                )
-              ) : (
-                <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-              )}
+              {DisplayListItemType(item)}
             </View>
           )}
         />

@@ -81,10 +81,10 @@ const translation = {
         "Attestation": "J'ai lu, je comprends et j'accepte les conditions."
     },
     "PrivacyPolicy": {
-    "Title": "Politique de confidentialité",
-    "CameraDisclosure":
-      "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
-  },
+        "Title": "Politique de confidentialité",
+        "CameraDisclosure":
+            "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
+    },
     "PINCreate": {
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
@@ -356,7 +356,7 @@ const translation = {
         "NoInternetConnectionTitle": "Aucune connexion Internet",
         "NoInternetConnectionMessage": "Vous ne pouvez pas accéder aux services à l'aide de Bifold ou recevoir des informations d'identification tant que vous n'êtes pas de nouveau en ligne.\n\nS'il vous plait, vérifiez votre connexion internet.",
         "LedgerConnectivityIssueTitle": "Wallet Services (FR)",
-        "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services. (FR)",    
+        "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services. (FR)",
     }
 }
 export default translation
