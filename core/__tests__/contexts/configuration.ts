@@ -1,6 +1,7 @@
 import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { DefaultOCABundleResolver } from '../../App/types/oca'
+import { useNotifications } from '../../App/hooks/notifications'
 
 const configurationContext: ConfigurationContext = {
   pages: () => [],
@@ -30,6 +31,15 @@ const configurationContext: ConfigurationContext = {
     },
     displayHelper: false,
   },
+  customNotification: {
+    component: () => null,
+    onCloseAction: () => null,
+    title: "",
+    description: "",
+    buttonTitle: "",
+    pageTitle:"",
+  },
+  useCustomNotifications: useNotifications
 }
 
 export default configurationContext

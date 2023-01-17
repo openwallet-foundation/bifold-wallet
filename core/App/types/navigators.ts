@@ -1,6 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/core'
 
 import { DeclineType } from './decline'
+import { GenericFn } from './fn'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -29,6 +30,7 @@ export enum Screens {
   UseBiometry = 'Use Biometry',
   RecreatePIN = 'Change PIN',
   Developer = 'Developer',
+  CustomNotification = 'Custom Notification',
 }
 
 export enum Stacks {
@@ -114,7 +116,10 @@ export type NotificationStackParams = {
   [Screens.CommonDecline]: {
     declineType: DeclineType
     itemId: string
+    deleteView?: boolean
+    customClose?: GenericFn
   }
+  [Screens.CustomNotification]: undefined
 }
 
 export type DeliveryStackParams = {
