@@ -2,16 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Dimensions,
-  Image,
-  ImageBackground,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native'
+import { Image, ImageBackground, ImageSourcePropType, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -81,7 +72,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const metaOverlay = bundle?.getMetaOverlay(i18n.language)
   const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
-  const [isRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
+  const [isRevoked, setIsRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
 
   const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
     return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
@@ -162,6 +153,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
     Promise.all([resolveBundle(), resolvePresentationFields()]).then()
   }, [credential])
+
+  useEffect(() => {
+    setIsRevoked(credential.revocationNotification !== undefined)
+  }, [credential.revocationNotification])
 
   const renderCredentialCardLogo = () => {
     return (
