@@ -29,7 +29,6 @@ import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
 import {
   Onboarding as StoreOnboardingState,
-  Privacy as PrivacyState,
   Preferences as PreferencesState,
   LoginAttempt as LoginAttemptState,
 } from '../types/state'
@@ -109,16 +108,6 @@ const Splash: React.FC = () => {
 
           dispatch({
             type: DispatchAction.PREFERENCES_UPDATED,
-            payload: [dataAsJSON],
-          })
-        }
-
-        const privacyData = await AsyncStorage.getItem(LocalStorageKeys.Privacy)
-        if (privacyData) {
-          const dataAsJSON = JSON.parse(privacyData) as PrivacyState
-
-          dispatch({
-            type: DispatchAction.PRIVACY_UPDATED,
             payload: [dataAsJSON],
           })
         }

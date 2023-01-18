@@ -28,9 +28,6 @@ export const defaultState: State = {
   lockout: {
     displayNotification: false,
   },
-  privacy: {
-    didShowCameraDisclosure: false,
-  },
   preferences: {
     developerModeEnabled: false,
     biometryPreferencesUpdated: false,
