@@ -2,7 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, ImageBackground, ImageSourcePropType, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -12,7 +12,7 @@ import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
-import { luminanceForHexColor } from '../../utils/luminance'
+import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardProps {
@@ -54,13 +54,6 @@ const flexWidth = 24
   Note: The small logo MUST be provided as 1x1 (height/width) ratio.
  */
 
-const toImageSource = (source: unknown): ImageSourcePropType => {
-  if (typeof source === 'string') {
-    return { uri: source as string }
-  }
-  return source as ImageSourcePropType
-}
-
 const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {}, onPress = undefined }) => {
   const { i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
@@ -73,18 +66,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const metaOverlay = bundle?.getMetaOverlay(i18n.language)
   const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
   const [isRevoked, setIsRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
-
-  const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
-    return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
-  }
-
-  const credentialTextColor = (hex?: string) => {
-    const midpoint = 255 / 2
-    if ((luminanceForHexColor(hex ?? '') ?? 0) >= midpoint) {
-      return ColorPallet.grayscale.darkGrey
-    }
-    return ColorPallet.grayscale.white
-  }
 
   const styles = StyleSheet.create({
     container: {
@@ -126,7 +107,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       paddingVertical: 0.5 * flexWidth + padding,
       paddingHorizontal: 2 * padding,
       paddingLeft: 4 * padding,
-      color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
+      color: credentialTextColor(ColorPallet, cardLayoutOverlay?.primaryBackgroundColor),
     },
   })
 
