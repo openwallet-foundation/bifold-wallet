@@ -4,7 +4,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native'
+import { Image, ImageBackground, ImageSourcePropType, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -90,7 +90,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     },
     secondaryHeaderContainer: {
       height: 1.5 * logoHeight,
-      backgroundColor: cardLayoutOverlay?.secondaryBackgroundColor || 'rgba(0, 0, 0, 0.24)',
+      backgroundColor:
+        (cardLayoutOverlay?.backgroundImage?.src ? 'rgba(0, 0, 0, 0)' : cardLayoutOverlay?.secondaryBackgroundColor) ||
+        'rgba(0, 0, 0, 0.24)',
     },
     primaryHeaderContainer: {
       paddingHorizontal,
@@ -271,7 +273,20 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const renderCredentialDetailSecondaryHeader = () => {
     return (
-      <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer}></View>
+      <>
+        {cardLayoutOverlay?.backgroundImage?.src ? (
+          <ImageBackground
+            source={toImageSource(cardLayoutOverlay?.backgroundImage.src)}
+            imageStyle={{
+              resizeMode: 'cover',
+            }}
+          >
+            <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer} />
+          </ImageBackground>
+        ) : (
+          <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer} />
+        )}
+      </>
     )
   }
 
