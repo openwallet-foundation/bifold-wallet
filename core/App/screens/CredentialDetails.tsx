@@ -4,12 +4,12 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
-import CredentialCard from '../components/misc/CredentialCard'
-import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
+// import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
+
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
@@ -21,11 +21,17 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../types/oca'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { getCredentialConnectionLabel } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
+
+const paddingHorizontal = 24
+const paddingVertical = 16
+const logoHeight = 80
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -33,18 +39,57 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   const { credentialId } = route?.params
+
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const [, dispatch] = useStore()
-  const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  const [revocationDate, setRevocationDate] = useState<string>('')
-  const [fields, setFields] = useState<Field[]>([])
-  const [isRevokedMessageHidden] = useState<boolean>(false)
-  const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
-  const credential = useCredentialById(credentialId)
-  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const { TextTheme, ColorPallet } = useTheme()
   const { OCABundle, record } = useConfiguration()
+
+  const [, dispatch] = useStore()
+  const [isRevoked, setIsRevoked] = useState<boolean>(false)
+  // const [revocationDate, setRevocationDate] = useState<string>('')
+  const [, setRevocationDate] = useState<string>('')
+  const [fields, setFields] = useState<Field[]>([])
+  // const [isRevokedMessageHidden] = useState<boolean>(false)
+  const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
+  const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
+
+  const credential = useCredentialById(credentialId)
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+
+  const metaOverlay = bundle?.getMetaOverlay(i18n.language)
+  const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
+
+  // TODO: Move this into a utility
+  const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
+    return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
+  }
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
+      display: 'flex',
+    },
+    secondaryHeaderContainer: {
+      height: 1.5 * logoHeight,
+      backgroundColor: 'rgba(0, 0, 0, 0.24)',
+    },
+    primaryHeaderContainer: {
+      paddingHorizontal,
+      paddingVertical,
+    },
+    statusContainer: {},
+    logoContainer: {
+      top: -1 * (0.5 * logoHeight + paddingVertical),
+      marginBottom: -1 * (0.5 * logoHeight + paddingVertical),
+      width: logoHeight,
+      height: logoHeight,
+      backgroundColor: '#ffffff',
+      borderRadius: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  })
 
   useEffect(() => {
     if (!agent) {
@@ -83,21 +128,32 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [])
 
   useEffect(() => {
-    if (!credential) {
+    if (!(credential && isValidIndyCredential(credential))) {
       return
     }
-    const indyCredentialFormat = credential.credentials.find((c) => c.credentialRecordType === 'indy')
-    if (!indyCredentialFormat) {
-      return
-    }
+
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
     if (isRevoked && credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
       setRevocationDate(date.toLocaleDateString(i18n.language, dateFormatOptions))
     }
-    OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
+
+    const resolveBundle = async () => {
+      const bundle = await OCABundle.resolve(credential)
+      if (bundle) {
+        setBundle(bundle)
+      } else {
+        const defaultBundle = await OCABundle.resolveDefaultBundle(credential)
+        setBundle(defaultBundle)
+      }
+    }
+
+    const resolvePresentationFields = async () => {
+      const fields = await OCABundle.getCredentialPresentationFields(credential, i18n.language)
       setFields(fields)
-    )
+    }
+
+    Promise.all([resolveBundle(), resolvePresentationFields()]).then()
   }, [credential])
 
   useEffect(() => {
@@ -146,10 +202,55 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const callSubmitRemove = useCallback(() => handleSubmitRemove(), [])
   const callCancelRemove = useCallback(() => handleCancelRemove(), [])
 
+  const renderCredentialCardLogo = () => {
+    return (
+      <View style={styles.logoContainer}>
+        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight }]}>
+          {(metaOverlay?.issuerName || metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
+        </Text>
+      </View>
+    )
+  }
+
+  const renderCredentialDetailPrimaryHeader = () => {
+    return (
+      <View testID={testIdWithKey('CredentialDetailsPrimaryHeader')} style={styles.primaryHeaderContainer}>
+        <View style={{ flexDirection: 'row', paddingBottom: paddingVertical }}>
+          {renderCredentialCardLogo()}
+          <Text
+            testID={testIdWithKey('CredentialIssuer')}
+            style={[
+              TextTheme.labelSubtitle,
+              {
+                flexShrink: 1,
+                paddingLeft: paddingVertical,
+              },
+            ]}
+            numberOfLines={1}
+          >
+            {metaOverlay?.issuerName}
+          </Text>
+        </View>
+        <Text testID={testIdWithKey('CredentialName')} style={[TextTheme.labelTitle]}>
+          {metaOverlay?.name}
+        </Text>
+      </View>
+    )
+  }
+
+  const renderCredentialDetailSecondaryHeader = () => {
+    return (
+      <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer}></View>
+    )
+  }
+
   const header = () => {
     return (
-      <>
-        {isRevoked && !isRevokedMessageHidden ? (
+      <View style={styles.container}>
+        {renderCredentialDetailSecondaryHeader()}
+        {renderCredentialDetailPrimaryHeader()}
+        {/* TODO: Update revocation message */}
+        {/* {isRevoked && !isRevokedMessageHidden ? (
           <View style={{ marginHorizontal: 15, marginTop: 16 }}>
             {credential && (
               <InfoBox
@@ -163,9 +264,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               />
             )}
           </View>
-        ) : null}
-        {credential && <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginTop: 16 }} />}
-      </>
+        ) : null} */}
+      </View>
     )
   }
 
@@ -176,9 +276,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View
             style={{
               backgroundColor: ColorPallet.brand.secondaryBackground,
-              marginTop: 16,
-              paddingHorizontal: 25,
-              paddingVertical: 16,
+              marginTop: paddingVertical,
+              paddingHorizontal,
+              paddingVertical,
             }}
           >
             <View>
