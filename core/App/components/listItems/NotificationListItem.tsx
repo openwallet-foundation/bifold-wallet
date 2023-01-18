@@ -23,7 +23,7 @@ const iconSize = 30
 
 export enum NotificationType {
   CredentialOffer = 'Offer',
-  ProofRequest = 'Proof',
+  ProofRequest = 'ProofRecord',
   Revocation = 'Revocation',
   Custom = 'Custom',
 }
