@@ -72,7 +72,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     },
     secondaryHeaderContainer: {
       height: 1.5 * logoHeight,
-      backgroundColor: 'rgba(0, 0, 0, 0.24)',
+      backgroundColor: cardLayoutOverlay?.secondaryBackgroundColor || 'rgba(0, 0, 0, 0.24)',
     },
     primaryHeaderContainer: {
       paddingHorizontal,
