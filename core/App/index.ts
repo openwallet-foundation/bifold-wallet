@@ -56,7 +56,6 @@ export type { WalletSecret } from './types/security'
 export type { ReducerAction } from './contexts/reducers/store'
 export type {
   State,
-  Privacy as PrivacyState,
   Onboarding as OnboardingState,
   LoginAttempt as LoginAttemptState,
   Preferences as PreferencesState,

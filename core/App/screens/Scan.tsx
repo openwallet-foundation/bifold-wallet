@@ -2,25 +2,29 @@ import type { BarCodeReadEvent } from 'react-native-camera'
 
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
+import { check, Permission, PERMISSIONS, request, RESULTS } from 'react-native-permissions'
+import Toast from 'react-native-toast-message'
 
 import QRScanner from '../components/misc/QRScanner'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
+import CameraDisclosureModal from '../components/modals/CameraDisclosureModal'
+import LoadingModal from '../components/modals/LoadingModal'
+import { ToastType } from '../components/toast/BaseToast'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
+import { PermissionContract } from '../types/permissions'
 import { connectFromInvitation, receiveMessageFromUrlRedirect } from '../utils/helpers'
-
-import CameraDisclosure from './CameraDisclosure'
 
 export type ScanProps = StackScreenProps<ConnectStackParams>
 
 const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [loading, setLoading] = useState<boolean>(true)
+  const [showDisclosureModal, setShowDisclosureModal] = useState<boolean>(true)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
-  const [state, dispatch] = useStore()
 
   const handleInvitation = async (uri: string): Promise<void> => {
     try {
@@ -54,17 +58,58 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
     }
   }
 
-  const didDismissCameraDisclosure = () => {
-    dispatch({ type: DispatchAction.DID_SHOW_CAMERA_DISCLOSURE, payload: [] })
+  const permissionFlow = async (method: PermissionContract, permission: Permission): Promise<boolean> => {
+    try {
+      const permissionResult = await method(permission)
+      if (permissionResult === RESULTS.GRANTED) {
+        setShowDisclosureModal(false)
+        return true
+      }
+    } catch (error: unknown) {
+      Toast.show({
+        type: ToastType.Error,
+        text1: t('Global.Failure'),
+        text2: (error as Error)?.message || t('Error.Unknown'),
+        visibilityTime: 2000,
+        position: 'bottom',
+      })
+    }
+
+    return false
   }
 
-  return (
-    <>
-      {(!state.privacy.didShowCameraDisclosure && (
-        <CameraDisclosure didDismissCameraDisclosure={didDismissCameraDisclosure} />
-      )) || <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />}
-    </>
-  )
+  const requestCameraUse = async (): Promise<boolean> => {
+    if (Platform.OS === 'android') {
+      return await permissionFlow(request, PERMISSIONS.ANDROID.CAMERA)
+    } else if (Platform.OS === 'ios') {
+      return await permissionFlow(request, PERMISSIONS.IOS.CAMERA)
+    }
+
+    return false
+  }
+
+  useEffect(() => {
+    const asyncEffect = async () => {
+      if (Platform.OS === 'android') {
+        await permissionFlow(check, PERMISSIONS.ANDROID.CAMERA)
+      } else if (Platform.OS === 'ios') {
+        await permissionFlow(check, PERMISSIONS.IOS.CAMERA)
+      }
+      setLoading(false)
+    }
+
+    asyncEffect()
+  }, [])
+
+  if (loading) {
+    return <LoadingModal />
+  }
+
+  if (showDisclosureModal) {
+    return <CameraDisclosureModal requestCameraUse={requestCameraUse} />
+  }
+
+  return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
 }
 
 export default Scan

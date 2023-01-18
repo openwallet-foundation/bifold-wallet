@@ -23,10 +23,6 @@ export interface LoginAttempt {
   loginAttempts: number
 }
 
-export interface Privacy {
-  didShowCameraDisclosure: boolean
-}
-
 export interface Authentication {
   didAuthenticate: boolean
 }
@@ -38,7 +34,6 @@ export interface DeepLink {
 export interface State {
   onboarding: Onboarding
   authentication: Authentication
-  privacy: Privacy
   lockout: Lockout
   loginAttempt: LoginAttempt
   preferences: Preferences

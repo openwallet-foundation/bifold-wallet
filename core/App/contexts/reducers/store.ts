@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
 import {
-  Privacy as PrivacyState,
   Preferences as PreferencesState,
   Onboarding as OnboardingState,
   Authentication as AuthenticationState,
@@ -30,10 +29,6 @@ enum LockoutDispatchAction {
 enum LoginAttemptDispatchAction {
   ATTEMPT_UPDATED = 'loginAttempt/loginAttemptUpdated',
 }
-enum PrivacyDispatchAction {
-  DID_SHOW_CAMERA_DISCLOSURE = 'privacy/didShowCameraDisclosure',
-  PRIVACY_UPDATED = 'privacy/privacyStateLoaded',
-}
 
 enum PreferencesDispatchAction {
   ENABLE_DEVELOPER_MODE = 'preferences/enableDeveloperMode',
@@ -53,7 +48,6 @@ enum DeepLinkDispatchAction {
 export type DispatchAction =
   | OnboardingDispatchAction
   | ErrorDispatchAction
-  | PrivacyDispatchAction
   | LoginAttemptDispatchAction
   | LockoutDispatchAction
   | PreferencesDispatchAction
@@ -63,7 +57,6 @@ export type DispatchAction =
 export const DispatchAction = {
   ...OnboardingDispatchAction,
   ...ErrorDispatchAction,
-  ...PrivacyDispatchAction,
   ...LoginAttemptDispatchAction,
   ...LockoutDispatchAction,
   ...PreferencesDispatchAction,
@@ -123,23 +116,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return {
         ...state,
         preferences,
-      }
-    }
-    case PrivacyDispatchAction.DID_SHOW_CAMERA_DISCLOSURE: {
-      const newState = {
-        ...state,
-        ...{ privacy: { didShowCameraDisclosure: true } },
-      }
-
-      AsyncStorage.setItem(LocalStorageKeys.Privacy, JSON.stringify(newState.privacy))
-
-      return newState
-    }
-    case PrivacyDispatchAction.PRIVACY_UPDATED: {
-      const privacy: PrivacyState = (action?.payload || []).pop()
-      return {
-        ...state,
-        privacy,
       }
     }
     case LoginAttemptDispatchAction.ATTEMPT_UPDATED: {

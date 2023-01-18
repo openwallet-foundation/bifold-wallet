@@ -8,6 +8,7 @@ const translation = {
     "Confirm": "Confirmar",
     "Accept": "Aceitar",
     "Reject": "Rejeitar",
+    "NotNow": "Not now (PT-BR)",
     "Share": "Compartilhar",
     "Decline": "Recusar",
     "Back": "Voltar",
@@ -79,9 +80,12 @@ const translation = {
     "IAgree": "Eu Concordo",
     "Attestation": "Eu li, entendo e aceito os termos e condições.",
   },
-  "PrivacyPolicy": {
-    "Title": "Política de Privacidade",
+  "CameraDisclosure": {
+    "AllowCameraUse": "Allow camera use (PT-BR)",
     "CameraDisclosure": "A câmera é usada para escanear QR Codes para processamento imediato no dispositivo. Nenhuma informação sobre as imagens é armazenada, usada para análise, ou compartilhada.",
+    "ToContinueUsing": "To continue using the Aries Bifold scan feature, please allow camera permissions. (PT-BR)",
+    "Allow": "Allow (PT-BR)",
+    "OpenSettings": "Open settings (PT-BR)",
   },
   "PINCreate": {
     "Message": {

@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Scan Screen Renders correctly 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <RNCSafeAreaView
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#000000",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "minHeight": 1334,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+      testID="com.ariesbifold:id/LoadingActivityIndicator"
+    >
+      <Image
+        source={
+          Object {
+            "default": "",
+          }
+        }
+        style={
+          Object {
+            "height": "33%",
+            "width": "33%",
+          }
+        }
+        testID="com.ariesbifold:id/LoadingActivityIndicatorImage"
+      />
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "position": "absolute",
+            "transform": Array [
+              Object {
+                "rotate": "0deg",
+              },
+            ],
+          }
+        }
+      >
+        <
+          fill="#FFFFFF"
+          height={200}
+          width={200}
+        />
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;
