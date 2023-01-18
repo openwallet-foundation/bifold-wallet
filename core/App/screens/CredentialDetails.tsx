@@ -24,8 +24,8 @@ import { CredentialStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../types/oca'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
+import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
-import { luminanceForHexColor } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -61,28 +61,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const metaOverlay = bundle?.getMetaOverlay(i18n.language)
   const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
 
-  /** TODO: Move these into a utility */
-  const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
-    return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
-  }
-
-  const credentialTextColor = (hex?: string) => {
-    const midpoint = 255 / 2
-    if ((luminanceForHexColor(hex ?? '') ?? 0) >= midpoint) {
-      return ColorPallet.grayscale.darkGrey
-    }
-    return ColorPallet.grayscale.white
-  }
-
-  const toImageSource = (source: unknown): ImageSourcePropType => {
-    if (typeof source === 'string') {
-      return { uri: source as string }
-    }
-    return source as ImageSourcePropType
-  }
-
-  /** */
-
   const styles = StyleSheet.create({
     container: {
       backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
@@ -110,7 +88,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       alignItems: 'center',
     },
     textContainer: {
-      color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
+      color: credentialTextColor(ColorPallet, cardLayoutOverlay?.primaryBackgroundColor),
       flexShrink: 1,
     },
   })
