@@ -4,7 +4,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -25,6 +25,7 @@ import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { getCredentialConnectionLabel } from '../utils/helpers'
+import { luminanceForHexColor } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -60,10 +61,27 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const metaOverlay = bundle?.getMetaOverlay(i18n.language)
   const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
 
-  // TODO: Move this into a utility
+  /** TODO: Move these into a utility */
   const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
     return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
   }
+
+  const credentialTextColor = (hex?: string) => {
+    const midpoint = 255 / 2
+    if ((luminanceForHexColor(hex ?? '') ?? 0) >= midpoint) {
+      return ColorPallet.grayscale.darkGrey
+    }
+    return ColorPallet.grayscale.white
+  }
+
+  const toImageSource = (source: unknown): ImageSourcePropType => {
+    if (typeof source === 'string') {
+      return { uri: source as string }
+    }
+    return source as ImageSourcePropType
+  }
+
+  /** */
 
   const styles = StyleSheet.create({
     container: {
@@ -88,6 +106,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    textContainer: {
+      color: credentialTextColor(cardLayoutOverlay?.primaryBackgroundColor),
+      flexShrink: 1,
     },
   })
 
@@ -205,9 +227,18 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const renderCredentialCardLogo = () => {
     return (
       <View style={styles.logoContainer}>
-        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight }]}>
-          {(metaOverlay?.issuerName || metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
-        </Text>
+        {cardLayoutOverlay?.logo?.src ? (
+          <Image
+            source={toImageSource(cardLayoutOverlay?.logo.src)}
+            style={{
+              resizeMode: 'center',
+            }}
+          />
+        ) : (
+          <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight }]}>
+            {(metaOverlay?.issuerName || metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
+          </Text>
+        )}
       </View>
     )
   }
@@ -221,8 +252,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             testID={testIdWithKey('CredentialIssuer')}
             style={[
               TextTheme.labelSubtitle,
+              styles.textContainer,
               {
-                flexShrink: 1,
                 paddingLeft: paddingVertical,
               },
             ]}
@@ -231,7 +262,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             {metaOverlay?.issuerName}
           </Text>
         </View>
-        <Text testID={testIdWithKey('CredentialName')} style={[TextTheme.labelTitle]}>
+        <Text testID={testIdWithKey('CredentialName')} style={[TextTheme.labelTitle, styles.textContainer]}>
           {metaOverlay?.name}
         </Text>
       </View>
