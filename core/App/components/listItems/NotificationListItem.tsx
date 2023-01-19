@@ -1,4 +1,4 @@
-import type { CredentialExchangeRecord as CredentialRecord, ProofExchangeRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
 
 import { V1RequestPresentationMessage } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
@@ -30,7 +30,7 @@ export enum NotificationType {
 
 interface NotificationListItemProps {
   notificationType: NotificationType
-  notification: CredentialRecord | ProofExchangeRecord
+  notification: CredentialExchangeRecord | ProofExchangeRecord
 }
 
 type DisplayDetails = {
@@ -90,7 +90,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       alignSelf: 'center',
     },
   })
-  const { name, version } = parsedSchema(notification as CredentialRecord)
+  const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
   let onPress: GenericFn = () => {
     return
   }
