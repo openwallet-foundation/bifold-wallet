@@ -23,7 +23,6 @@ export enum BaseOverlayType {
 
 export enum CardOverlayType {
   CARD_LAYOUT_10 = 'spec/overlays/card_layout/1.0',
-  CARD_LAYOUT_20 = 'spec/overlays/card_layout/2.0',
 }
 
 export const OverlayType = { ...BaseOverlayType, ...CardOverlayType }
@@ -74,13 +73,6 @@ export interface MetaOverlay extends BaseL10nOverlay {
 }
 
 export interface CardLayoutOverlay extends BaseOverlay {
-  backgroundColor?: string
-  imageSource?: string
-  header?: OverlayHeader
-  footer?: OverlayFooter
-}
-
-export interface CardLayoutOverlay_2_0 extends BaseOverlay {
   logo?: {
     src: string
   }
@@ -213,9 +205,9 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
       language: 'en',
       issuerName: credential?.connectionId ?? '',
     }
-    const defaultCardLayoutLayer: CardLayoutOverlay_2_0 = {
+    const defaultCardLayoutLayer: CardLayoutOverlay = {
       capture_base: '',
-      type: OverlayType.CARD_LAYOUT_20,
+      type: OverlayType.CARD_LAYOUT_10,
       primaryBackgroundColor: hashToRGBA(hashCode(defaultMetaOverlay?.name ?? '')),
     }
     const bundle: Bundle = {
