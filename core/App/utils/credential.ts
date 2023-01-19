@@ -1,17 +1,14 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { ImageSourcePropType } from 'react-native'
 
-import { Theme } from '../theme'
-
-type ColorPallet = Theme['ColorPallet']
-
 import { luminanceForHexColor } from './luminance'
 
 export const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
   return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
 }
 
-export const credentialTextColor = (ColorPallet: ColorPallet, hex?: string) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const credentialTextColor = (ColorPallet: any, hex?: string) => {
   const midpoint = 255 / 2
   if ((luminanceForHexColor(hex ?? '') ?? 0) >= midpoint) {
     return ColorPallet.grayscale.darkGrey

@@ -10,7 +10,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../../types/oca'
+import { CardLayoutOverlay, CardOverlayType, OCACredentialBundle } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
@@ -67,8 +67,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const metaOverlay = bundle?.getMetaOverlay(i18n.language) || defaultBundle?.getMetaOverlay(i18n.language)
   const cardLayoutOverlay =
-    bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20) ||
-    defaultBundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
+    bundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10) ||
+    defaultBundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10)
 
   const styles = StyleSheet.create({
     container: {
