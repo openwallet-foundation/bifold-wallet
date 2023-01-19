@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { dateFormatOptions } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
+import { formatTime } from '../../utils/helpers'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -19,7 +19,7 @@ interface Props {
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { ListItems } = useTheme()
-  const { i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const styles = StyleSheet.create({
     outerContainer: {
@@ -57,9 +57,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       <View key={contact.id} style={styles.outerContainer}>
         <View style={styles.textContainer}>
           <Title style={ListItems.contactTitle}>{contact?.alias || contact?.theirLabel}</Title>
-          <Text style={ListItems.contactDate}>
-            {contact.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
-          </Text>
+          <Text style={ListItems.contactDate}>{formatTime(contact.createdAt, t)}</Text>
         </View>
         <View style={styles.iconContainer}>
           <Icon name="message" size={32} color={ListItems.contactIcon.color} />

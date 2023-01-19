@@ -9,6 +9,8 @@ import {
 } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
+import { TFunction } from 'i18next'
+import moment from 'moment'
 import { parseUrl } from 'query-string'
 
 import { Attribute, Predicate } from '../types/record'
@@ -26,6 +28,51 @@ export function hashCode(s: string): number {
 export function hashToRGBA(i: number) {
   const colour = (i & 0x00ffffff).toString(16).toUpperCase()
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
+}
+
+export function formatTime(time: Date, translate: TFunction, params?: { long?: boolean; format?: string }): string {
+  const getMonthKey = 'MMMM'
+  const momentTime = moment(time)
+  const monthKey = momentTime.format(getMonthKey)
+  const customMonthFormatRe = /M+/
+  const long = params?.long
+  const format = params?.format
+
+  let formatString = translate('Date.ShortFormat')
+  if (format) {
+    formatString = format
+  } else {
+    if (long) {
+      formatString = translate('Date.LongFormat')
+    }
+
+    // if translation fails
+    if (formatString === 'Date.ShortFormat' || formatString === 'Date.LongFormat') {
+      formatString = 'MMM D, YYYY'
+    }
+  }
+  const customMonthFormat = formatString.match(customMonthFormatRe)?.[0]
+
+  let formattedTime = momentTime.format(formatString)
+
+  if (customMonthFormat) {
+    let monthReplacement = ''
+    const monthReplacementKey = momentTime.format(customMonthFormat)
+    if (customMonthFormat.length === 3) {
+      monthReplacement = translate(`Date.MonthShort.${monthKey}`)
+    } else if (customMonthFormat.length > 3) {
+      monthReplacement = translate(`Date.MonthLong.${monthKey}`)
+    }
+    // if translation doesn't work
+    if (monthReplacement === `Date.MonthLong.${monthKey}` || monthReplacement === `Date.MonthShort.${monthKey}`) {
+      monthReplacement = monthReplacementKey
+    }
+
+    if (monthReplacement) {
+      formattedTime = formattedTime.replace(monthReplacementKey, monthReplacement)
+    }
+  }
+  return formattedTime
 }
 
 // DEPRECATED
