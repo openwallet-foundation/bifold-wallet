@@ -104,7 +104,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential?.revocationNotification) {
       credential.metadata.set(CredentialMetadata.customMetadata, { revoked_seen: true })
       agent?.credentials.update(credential) // returns a promise
-      // credService?.update(credential)
     }
   }, [isRevoked])
 

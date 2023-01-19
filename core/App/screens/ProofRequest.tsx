@@ -152,13 +152,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           return
         }
 
-        // const fields: Fields = {
-        //   ...retrievedCredentials.proofFormats.indy?.requestedAttributes,
-        //   ...retrievedCredentials.proofFormats.indy?.requestedPredicates,
-        // }
-
-        // flatten(Object.values(fields))
-
         const attributes = processProofAttributes(proof, retrievedCredentials.proofFormats.indy)
         const predicates = processProofPredicates(proof, retrievedCredentials.proofFormats.indy)
 
