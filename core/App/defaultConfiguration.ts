@@ -5,6 +5,7 @@ import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
 import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
+import { useNotifications } from './hooks/notifications'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
 import Scan from './screens/Scan'
@@ -29,4 +30,13 @@ export const defaultConfiguration: ConfigurationContext = {
   PINSecurity: { rules: PINRules, displayHelper: false },
   indyLedgers: defaultIndyLedgers,
   settings: [],
+  customNotification: {
+    component: () => null,
+    onCloseAction: () => null,
+    title: '',
+    description: '',
+    buttonTitle: '',
+    pageTitle: '',
+  },
+  useCustomNotifications: useNotifications,
 }
