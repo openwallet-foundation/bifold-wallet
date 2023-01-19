@@ -143,7 +143,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the credential offer
    * When the holder is taken to the credential offer screen/flow
    */
-  test('touch notification triggers navigation correctly', async () => {
+  test('touch notification triggers navigation correctly I', async () => {
     const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
@@ -172,7 +172,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the proof request
    * When the holder is taken to the proof request screen/flow
    */
-  test('touch notification triggers navigation correctly', async () => {
+  test('touch notification triggers navigation correctly II', async () => {
     const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />

@@ -33,6 +33,7 @@ const translation = {
         "Biometrics": "Biométrie",
         "On": "Activé",
         "Off": "Désactivé",
+        "Close": "Close (FR)",
     },
     "Language": {
         "English": "Anglais",

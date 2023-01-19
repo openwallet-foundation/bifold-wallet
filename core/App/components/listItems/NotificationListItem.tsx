@@ -97,7 +97,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   let onClose: GenericFn = () => {
     return
   }
-  // eslint-disable-next-line no-case-declarations
 
   const detailsForNotificationType = async (notificationType: NotificationType): Promise<DisplayDetails> => {
     return new Promise((resolve) => {
@@ -148,11 +147,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   const setActionForNotificationType = (notificationType: NotificationType): void => {
     switch (notificationType) {
       case NotificationType.CredentialOffer:
-        onPress = () =>
+        onPress = () => {
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
             screen: Screens.CredentialOffer,
             params: { credentialId: notification.id },
           })
+        }
         onClose = () => {
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
             screen: Screens.CommonDecline,
@@ -211,8 +211,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     }
   }
 
+  setActionForNotificationType(notificationType)
+
   useEffect(() => {
-    setActionForNotificationType(notificationType)
     detailsForNotificationType(notificationType).then((details) => {
       setDetails(details)
     })
@@ -231,7 +232,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           notificationType
         ) && (
           <View>
-            <TouchableOpacity onPress={onClose}>
+            <TouchableOpacity
+              accessibilityLabel={t('Global.Close')}
+              testID={testIdWithKey(`Close${notificationType}`)}
+              onPress={onClose}
+            >
               <Icon name={'close'} size={iconSize} color={ColorPallet.notification.infoIcon} />
             </TouchableOpacity>
           </View>
