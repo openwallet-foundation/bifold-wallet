@@ -8,8 +8,8 @@ const unitOfTime = 10
 
 // Polyfill `requestAnimationFrame` so that it simulates a
 // new animation frame every `unitOfTime`.
-global.requestAnimationFrame = (fn) => {
-  return setTimeout(fn, unitOfTime)
+global.requestAnimationFrame = (callback: (time: number) => void): number => {
+  return setTimeout(callback as unknown as () => void, unitOfTime) as unknown as number
 }
 
 const advanceToNextFrame = () => {
