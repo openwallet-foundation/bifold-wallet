@@ -99,7 +99,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
           return
         }
 
-        const attributes = processProofAttributes(proof, retrievedCredentials.proofFormats.indy)
+        const attributes = processProofAttributes(retrievedCredentials.proofFormats.indy)
         setProcessedProofAttributes(attributes)
         setLoading(false)
       })

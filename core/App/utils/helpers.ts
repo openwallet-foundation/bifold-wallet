@@ -5,7 +5,6 @@ import {
   RequestedAttribute,
   RequestedPredicate,
   RetrievedCredentials,
-  ProofExchangeRecord,
   IndyCredentialInfo,
   IndyRetrievedCredentialsFormat,
 } from '@aries-framework/core'
@@ -30,14 +29,18 @@ export function hashToRGBA(i: number) {
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
 }
 
-// DEPRECATED
+/**
+ * @deprecated The function should not be used
+ */
 export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
   if (connectionId) {
     return useConnectionById(connectionId)
   }
 }
 
-// DEPRECATED
+/**
+ * @deprecated The function should not be used
+ */
 export function getConnectionName(connection: ConnectionRecord | void): string | void {
   if (!connection) {
     return
@@ -87,10 +90,22 @@ export const getOobDeepLink = async (url: string, agent: Agent | undefined): Pro
   return message
 }
 
-export const processProofAttributes = (
-  proof: ProofExchangeRecord,
-  credentials?: IndyRetrievedCredentialsFormat
-): Attribute[] => {
+/**
+ * A sorting function for the Array `sort()` function
+ * @param a First retrieved credential
+ * @param b Second retrieved credential
+ */
+export const credentialSortFn = (a: any, b: any) => {
+  if (a.revoked && !b.revoked) {
+    return 1
+  } else if (!a.revoked && b.revoked) {
+    return -1
+  } else {
+    return b.timestamp - a.timestamp
+  }
+}
+
+export const processProofAttributes = (credentials?: IndyRetrievedCredentialsFormat): Attribute[] => {
   const processedAttributes = [] as Attribute[]
 
   if (!credentials) {
@@ -100,7 +115,7 @@ export const processProofAttributes = (
   const { requestedAttributes } = credentials
 
   for (const attr of Object.keys(requestedAttributes)) {
-    const credential = (requestedAttributes[attr] ?? []).pop()
+    const credential = (requestedAttributes[attr] ?? []).sort(credentialSortFn).pop()
     if (!credential) {
       return processedAttributes
     }
@@ -119,10 +134,7 @@ export const processProofAttributes = (
   return processedAttributes
 }
 
-export const processProofPredicates = (
-  proof: ProofExchangeRecord,
-  credentials?: IndyRetrievedCredentialsFormat
-): Predicate[] => {
+export const processProofPredicates = (credentials?: IndyRetrievedCredentialsFormat): Predicate[] => {
   const processedPredicates = [] as Predicate[]
 
   if (!credentials) {
@@ -132,7 +144,7 @@ export const processProofPredicates = (
   const { requestedPredicates } = credentials
 
   for (const attr of Object.keys(requestedPredicates)) {
-    const credential = (requestedPredicates[attr] ?? []).pop()
+    const credential = (requestedPredicates[attr] ?? []).sort(credentialSortFn).pop()
     if (!credential) {
       return processedPredicates
     }
@@ -153,6 +165,9 @@ export const processProofPredicates = (
   return processedPredicates
 }
 
+/**
+ * @deprecated The function should not be used
+ */
 export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials): RetrievedCredentials => {
   const requestedAttributes = Object.values(credentials?.requestedAttributes).pop()
   const requestedPredicates = Object.values(credentials?.requestedPredicates).pop()

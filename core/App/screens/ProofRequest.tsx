@@ -152,8 +152,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           return
         }
 
-        const attributes = processProofAttributes(proof, retrievedCredentials.proofFormats.indy)
-        const predicates = processProofPredicates(proof, retrievedCredentials.proofFormats.indy)
+        const attributes = processProofAttributes(retrievedCredentials.proofFormats.indy)
+        const predicates = processProofPredicates(retrievedCredentials.proofFormats.indy)
 
         setRetrievedCredentials(retrievedCredentials as unknown as RetrievedCredentials)
         setAttributes(attributes)
