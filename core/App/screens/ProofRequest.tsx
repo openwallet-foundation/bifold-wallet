@@ -5,6 +5,8 @@ import {
   RequestedAttribute,
   RequestedPredicate,
   RetrievedCredentials,
+  GetFormatDataReturn,
+  FormatRequestedCredentialReturn,
 } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
@@ -125,8 +127,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       return
     }
     setLoading(true)
-    const retrieveCredentialsForProof = async (proof: ProofExchangeRecord) => {
+    const retrieveCredentialsForProof = async (
+      proof: ProofExchangeRecord
+    ): Promise<{ format: GetFormatDataReturn; credentials: FormatRequestedCredentialReturn }> => {
       try {
+        const format = await agent.proofs.getFormatData(proof.id)
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
           proofRecordId: proof.id,
           config: {
@@ -142,7 +147,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
 
-        return credentials
+        if (!format) {
+          throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+        }
+
+        return { format, credentials }
       } catch (error: unknown) {
         dispatch({
           type: DispatchAction.ERROR_ADDED,
@@ -152,15 +161,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     retrieveCredentialsForProof(proof)
-      .then((retrievedCredentials) => {
-        if (!retrievedCredentials) {
+      .then(({ format, credentials }) => {
+        if (!credentials || !format) {
           return
         }
 
-        const attributes = processProofAttributes(retrievedCredentials.proofFormats.indy)
-        const predicates = processProofPredicates(retrievedCredentials.proofFormats.indy)
+        const attributes = processProofAttributes(format, credentials.proofFormats.indy)
+        const predicates = processProofPredicates(format, credentials.proofFormats.indy)
 
-        setRetrievedCredentials(retrievedCredentials as unknown as RetrievedCredentials)
+        setRetrievedCredentials(credentials as unknown as RetrievedCredentials)
         setAttributes(attributes)
         setPredicates(predicates)
         setLoading(false)

@@ -105,60 +105,60 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-export const processProofAttributes = (credentials?: IndyRetrievedCredentialsFormat): Attribute[] => {
+//TODO:(jl) Better type than "any" for format?
+export const processProofAttributes = (format?: any, credentials?: IndyRetrievedCredentialsFormat): Attribute[] => {
   const processedAttributes = [] as Attribute[]
 
-  if (!credentials) {
+  if (!format || !credentials) {
     return processedAttributes
   }
 
   const { requestedAttributes } = credentials
 
-  for (const attr of Object.keys(requestedAttributes)) {
-    const credential = (requestedAttributes[attr] ?? []).sort(credentialSortFn).shift()
+  for (const key of Object.keys(requestedAttributes)) {
+    const credential = (requestedAttributes[key] ?? []).sort(credentialSortFn).shift()
     if (!credential) {
       return processedAttributes
     }
 
     const { credentialId, revoked, credentialInfo } = credential
-    const [, attributeName] = attr.split('_')
-    const attributeValue = (credentialInfo as IndyCredentialInfo).attributes[attributeName]
+    const name = format.request.indy['requested_attributes'][key]['name']
+    const value = (credentialInfo as IndyCredentialInfo).attributes[name]
     processedAttributes.push({
       credentialId,
       revoked,
-      name: attributeName,
-      value: attributeValue,
+      name,
+      value,
     })
   }
 
   return processedAttributes
 }
 
-export const processProofPredicates = (credentials?: IndyRetrievedCredentialsFormat): Predicate[] => {
+export const processProofPredicates = (format?: any, credentials?: IndyRetrievedCredentialsFormat): Predicate[] => {
   const processedPredicates = [] as Predicate[]
 
-  if (!credentials) {
+  if (!format || !credentials) {
     return processedPredicates
   }
 
   const { requestedPredicates } = credentials
 
-  for (const attr of Object.keys(requestedPredicates)) {
-    const credential = (requestedPredicates[attr] ?? []).sort(credentialSortFn).shift()
+  for (const key of Object.keys(requestedPredicates)) {
+    const credential = (requestedPredicates[key] ?? []).sort(credentialSortFn).shift()
     if (!credential) {
       return processedPredicates
     }
 
-    const { credentialId, revoked, credentialInfo } = credential
-    const [, predicateName, predicateDataType, predicateKind] = attr.split('_')
-    const predicateValue = (credentialInfo as IndyCredentialInfo).attributes[`${predicateName}_${predicateDataType}`]
+    const { credentialId, revoked } = credential
+    const { name, p_type: pType, p_value: pValue } = format.request.indy['requested_predicates'][key]
 
     processedPredicates.push({
       credentialId,
-      name: `${predicateName}_${predicateDataType}`,
+      name,
       revoked,
-      pValue: predicateValue,
-      pType: predicateKind,
+      pValue,
+      pType,
     })
   }
 
