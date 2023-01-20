@@ -85,7 +85,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }, [credential])
 
   useEffect(() => {
-    if ((timerDidFire || credentialDeliveryStatus !== DeliveryStatus.Pending) && !visible) {
+    if (timerDidFire || credentialDeliveryStatus !== DeliveryStatus.Pending || !visible) {
       return
     }
 
