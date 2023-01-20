@@ -5,8 +5,6 @@ import {
   RequestedAttribute,
   RequestedPredicate,
   RetrievedCredentials,
-  GetFormatDataReturn,
-  FormatRequestedCredentialReturn,
 } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
@@ -129,7 +127,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     setLoading(true)
     const retrieveCredentialsForProof = async (
       proof: ProofExchangeRecord
-    ): Promise<{ format: GetFormatDataReturn; credentials: FormatRequestedCredentialReturn }> => {
+      // @ts-ignore
+    ): Promise<{ format: any; credentials: any }> => {
       try {
         const format = await agent.proofs.getFormatData(proof.id)
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
