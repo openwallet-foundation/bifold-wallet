@@ -115,7 +115,7 @@ export const processProofAttributes = (credentials?: IndyRetrievedCredentialsFor
   const { requestedAttributes } = credentials
 
   for (const attr of Object.keys(requestedAttributes)) {
-    const credential = (requestedAttributes[attr] ?? []).sort(credentialSortFn).pop()
+    const credential = (requestedAttributes[attr] ?? []).sort(credentialSortFn).shift()
     if (!credential) {
       return processedAttributes
     }
@@ -144,7 +144,7 @@ export const processProofPredicates = (credentials?: IndyRetrievedCredentialsFor
   const { requestedPredicates } = credentials
 
   for (const attr of Object.keys(requestedPredicates)) {
-    const credential = (requestedPredicates[attr] ?? []).sort(credentialSortFn).pop()
+    const credential = (requestedPredicates[attr] ?? []).sort(credentialSortFn).shift()
     if (!credential) {
       return processedPredicates
     }

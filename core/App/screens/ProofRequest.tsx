@@ -130,9 +130,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
           proofRecordId: proof.id,
           config: {
+            // Setting `filterByNonRevocationRequirements` to `false` returns all
+            // credentials even if they are revokable (and revoked). We need this to
+            // be able to show why a proof cannot be satisfied. Otherwise we can only
+            // show failure.
             filterByNonRevocationRequirements: false,
           },
         })
+
         if (!credentials) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
