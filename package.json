@@ -14,6 +14,10 @@
       "app"
     ]
   },
+  "engines": {
+    "node": ">=16.15.0 <18.0.0",
+    "yarn": "^3.3.1"
+  },
   "resolutions": {
     "@types/react": "17.0.2",
     "@types/react-dom": "17.0.2",
@@ -25,10 +29,10 @@
   "scripts": {
     "ci:core": "cd core && npm ci",
     "ci:app": "cd app && npm ci",
-    "ci:all": "run-s ci:core ci:app",
+    "ci:all": "",
     "test": "cd core && npm test",
-    "build:core": "cd core && npm run prepack",
-    "build:app": "cd app && npm run prepack --if-present",
+    "build:core": "yarn workspace aries-bifold run prepack",
+    "build:app": "",
     "build:all": "run-s build:core build:app",
     "prepare": "run-s ci:all build:all",
     "lint:core": "cd core && npm run lint --if-present",
