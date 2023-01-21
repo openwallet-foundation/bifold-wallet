@@ -6,6 +6,7 @@ import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
 import ContactDetails from '../screens/ContactDetails'
 import ListContacts from '../screens/ListContacts'
+import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
@@ -24,6 +25,7 @@ const ContactStack: React.FC = () => {
         options={{ title: t('Screens.ContactDetails') }}
       />
       <Stack.Screen name={Screens.Chat} component={Chat} />
+      <Stack.Screen name={Screens.WhatAreContacts} component={WhatAreContacts} options={{ title: '' }} />
     </Stack.Navigator>
   )
 }

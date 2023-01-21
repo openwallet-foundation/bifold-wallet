@@ -168,6 +168,16 @@ const translation = {
     "GoToCredentials": "Ir para Credenciais.",
     "ContactRemoved": "Contato removido"
   },
+  "WhatAreContacts": {
+    "Title": "What are Contacts? (PT-BR)",
+    "Preamble": "Adding organizations as a Contact will allow you to: (PT-BR)",
+    "ListItemCredentialUpdates": "Get updates to credentials issued by this organization (PT-BR)",
+    "ListItemNewCredentials": "Get offered new credentials (PT-BR)",
+    "ListItemProofRequest": "Fast-track proof requests (PT-BR)",
+    "RemoveContacts": "You can always remove Contacts at any time from your (PT-BR)",
+    "ContactsLink": "Contacts list (PT-BR)",
+    "ContactSharing": "Use of your credentials is never shared with your Contacts. (PT-BR)"
+  },
   "Credentials": {
     "CredentialsNotFound": "Credenciais não encontradas",
     "CredentialDetails": "Detalhes da Credencial",

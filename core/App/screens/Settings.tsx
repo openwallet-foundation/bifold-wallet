@@ -108,7 +108,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           title: t('Settings.WhatAreContacts'),
           accessibilityLabel: t('Settings.WhatAreContacts'),
           testID: testIdWithKey('WhatAreContacts'),
-          onPress: () => null,
+          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.WhatAreContacts }),
           value: undefined,
         },
       ],
