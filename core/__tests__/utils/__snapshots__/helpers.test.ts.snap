@@ -1,71 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Helpers Sorts credentials for auto select 1`] = `
-Object {
-  "requestedAttributes": Object {
-    "79d9300d-d103-48aa-9294-826b17cf2220": Array [
-      Object {
-        "credentialId": "4e91a381-7ed6-4ea7-8011-39a11cbd0c18",
-        "credentialInfo": Object {
-          "attrs": Object {
-            "Given Name": "Francis",
-            "Member Status": "Practising",
-            "Member Status Code": "PRAC",
-            "PPID": "MC12349",
-            "Surname": "Goodrangsy",
-          },
-          "cred_def_id": "AuJrigKQGRLJajKAebTgWu:3:CL:209526:default",
-          "cred_rev_id": "11",
-          "referent": "4e91a381-7ed6-4ea7-8011-39a11cbd0c18",
-          "rev_reg_id": "AuJrigKQGRLJajKAebTgWu:4:AuJrigKQGRLJajKAebTgWu:3:CL:209526:default:CL_ACCUM:7aa88d5c-e1e8-488c-a0a5-63aee1b0ae66",
-          "schema_id": "AuJrigKQGRLJajKAebTgWu:2:Member Card:1.5.1",
-        },
-        "revealed": true,
-        "revoked": false,
-        "timestamp": 1654889164,
+exports[`Helpers Sorts retrieved credentials by revocation 1`] = `
+Array [
+  Object {
+    "credentialId": "4e91a381-7ed6-4ea7-8011-39a11cbd0c18",
+    "credentialInfo": Object {
+      "attrs": Object {
+        "Given Name": "Francis",
+        "Member Status": "Practising",
+        "Member Status Code": "PRAC",
+        "PPID": "MC12349",
+        "Surname": "Goodrangsy",
       },
-      Object {
-        "credentialId": "d1092422-08d0-448f-8ea0-fd7f33018277",
-        "credentialInfo": Object {
-          "attrs": Object {
-            "Given Name": "Francis",
-            "Member Status": "Practising",
-            "Member Status Code": "PRAC",
-            "PPID": "MC12349",
-            "Surname": "Goodrangsy",
-          },
-          "cred_def_id": "AuJrigKQGRLJajKAebTgWu:3:CL:209526:default",
-          "cred_rev_id": "9",
-          "referent": "d1092422-08d0-448f-8ea0-fd7f33018277",
-          "rev_reg_id": "AuJrigKQGRLJajKAebTgWu:4:AuJrigKQGRLJajKAebTgWu:3:CL:209526:default:CL_ACCUM:7aa88d5c-e1e8-488c-a0a5-63aee1b0ae66",
-          "schema_id": "AuJrigKQGRLJajKAebTgWu:2:Member Card:1.5.1",
-        },
-        "revealed": true,
-        "revoked": true,
-        "timestamp": 1654889165,
-      },
-      Object {
-        "credentialId": "8fb6c834-76e8-46ac-9c75-6a5e984e6c6a",
-        "credentialInfo": Object {
-          "attrs": Object {
-            "Given Name": "Francis",
-            "Member Status": "Practising",
-            "Member Status Code": "PRAC",
-            "PPID": "MC12349",
-            "Surname": "Goodrangsy",
-          },
-          "cred_def_id": "AuJrigKQGRLJajKAebTgWu:3:CL:209526:default",
-          "cred_rev_id": "10",
-          "referent": "8fb6c834-76e8-46ac-9c75-6a5e984e6c6a",
-          "rev_reg_id": "AuJrigKQGRLJajKAebTgWu:4:AuJrigKQGRLJajKAebTgWu:3:CL:209526:default:CL_ACCUM:7aa88d5c-e1e8-488c-a0a5-63aee1b0ae66",
-          "schema_id": "AuJrigKQGRLJajKAebTgWu:2:Member Card:1.5.1",
-        },
-        "revealed": true,
-        "revoked": true,
-        "timestamp": 1654889163,
-      },
-    ],
+      "cred_def_id": "AuJrigKQGRLJajKAebTgWu:3:CL:209526:default",
+      "cred_rev_id": "11",
+      "referent": "4e91a381-7ed6-4ea7-8011-39a11cbd0c18",
+      "rev_reg_id": "AuJrigKQGRLJajKAebTgWu:4:AuJrigKQGRLJajKAebTgWu:3:CL:209526:default:CL_ACCUM:7aa88d5c-e1e8-488c-a0a5-63aee1b0ae66",
+      "schema_id": "AuJrigKQGRLJajKAebTgWu:2:Member Card:1.5.1",
+    },
+    "revealed": true,
+    "revoked": false,
+    "timestamp": 1654889164,
   },
-  "requestedPredicates": Object {},
-}
+  Object {
+    "credentialId": "d1092422-08d0-448f-8ea0-fd7f33018277",
+    "credentialInfo": Object {
+      "attrs": Object {
+        "Given Name": "Francis",
+        "Member Status": "Practising",
+        "Member Status Code": "PRAC",
+        "PPID": "MC12349",
+        "Surname": "Goodrangsy",
+      },
+      "cred_def_id": "AuJrigKQGRLJajKAebTgWu:3:CL:209526:default",
+      "cred_rev_id": "9",
+      "referent": "d1092422-08d0-448f-8ea0-fd7f33018277",
+      "rev_reg_id": "AuJrigKQGRLJajKAebTgWu:4:AuJrigKQGRLJajKAebTgWu:3:CL:209526:default:CL_ACCUM:7aa88d5c-e1e8-488c-a0a5-63aee1b0ae66",
+      "schema_id": "AuJrigKQGRLJajKAebTgWu:2:Member Card:1.5.1",
+    },
+    "revealed": true,
+    "revoked": true,
+    "timestamp": 1654889165,
+  },
+  Object {
+    "credentialId": "8fb6c834-76e8-46ac-9c75-6a5e984e6c6a",
+    "credentialInfo": Object {
+      "attrs": Object {
+        "Given Name": "Francis",
+        "Member Status": "Practising",
+        "Member Status Code": "PRAC",
+        "PPID": "MC12349",
+        "Surname": "Goodrangsy",
+      },
+      "cred_def_id": "AuJrigKQGRLJajKAebTgWu:3:CL:209526:default",
+      "cred_rev_id": "10",
+      "referent": "8fb6c834-76e8-46ac-9c75-6a5e984e6c6a",
+      "rev_reg_id": "AuJrigKQGRLJajKAebTgWu:4:AuJrigKQGRLJajKAebTgWu:3:CL:209526:default:CL_ACCUM:7aa88d5c-e1e8-488c-a0a5-63aee1b0ae66",
+      "schema_id": "AuJrigKQGRLJajKAebTgWu:2:Member Card:1.5.1",
+    },
+    "revealed": true,
+    "revoked": true,
+    "timestamp": 1654889163,
+  },
+]
 `;

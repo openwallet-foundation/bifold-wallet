@@ -1,4 +1,4 @@
-import { ProofRecord, RetrievedCredentials } from '@aries-framework/core'
+import { ProofExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
@@ -15,6 +15,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
+import { Attribute } from '../types/record'
 import { connectionRecordFromId, getConnectionName, parsedSchema, processProofAttributes } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -29,11 +30,11 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const [, dispatch] = useStore()
-  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
+  const [processedProofAttributes, setProcessedProofAttributes] = useState<Attribute[]>([])
   const proof = useProofById(proofId)
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
-  const [loading, setLoading] = React.useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -70,12 +71,19 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   }
 
   useEffect(() => {
-    const retrieveCredentialsForProof = async (proof: ProofRecord) => {
+    const retrieveCredentialsForProof = async (proof: ProofExchangeRecord) => {
       try {
-        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest(proof.id)
+        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
+          proofRecordId: proof.id,
+          config: {
+            filterByNonRevocationRequirements: false,
+          },
+        })
+
         if (!credentials) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
+
         return credentials
       } catch (error: unknown) {
         dispatch({
@@ -86,8 +94,13 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
     }
 
     retrieveCredentialsForProof(proof)
-      .then((credentials) => {
-        setRetrievedCredentials(credentials)
+      .then((retrievedCredentials) => {
+        if (!retrievedCredentials) {
+          return
+        }
+
+        const attributes = processProofAttributes(retrievedCredentials.proofFormats.indy)
+        setProcessedProofAttributes(attributes)
         setLoading(false)
       })
       .catch((err: unknown) => {
@@ -101,8 +114,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
   const { records: credentials } = useCredentials()
   const connection = connectionRecordFromId(proof.connectionId)
-  const attributes = processProofAttributes(proof, retrievedCredentials)
-  const matchingAttribute = attributes.find((a) => a.name === attributeName)
+  const matchingAttribute = processedProofAttributes.find((a) => a.name === attributeName)
   const matchingCredentials = credentials.filter(
     (credential) => !!credential.credentials.find((c) => c.credentialRecordId === matchingAttribute?.credentialId)
   )
