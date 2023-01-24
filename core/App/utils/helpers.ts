@@ -2,10 +2,11 @@ import {
   Agent,
   ConnectionRecord,
   CredentialExchangeRecord,
-  ProofRecord,
   RequestedAttribute,
   RequestedPredicate,
   RetrievedCredentials,
+  IndyCredentialInfo,
+  IndyRetrievedCredentialsFormat,
 } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
@@ -28,14 +29,18 @@ export function hashToRGBA(i: number) {
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
 }
 
-// DEPRECATED
+/**
+ * @deprecated The function should not be used
+ */
 export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
   if (connectionId) {
     return useConnectionById(connectionId)
   }
 }
 
-// DEPRECATED
+/**
+ * @deprecated The function should not be used
+ */
 export function getConnectionName(connection: ConnectionRecord | void): string | void {
   if (!connection) {
     return
@@ -47,6 +52,7 @@ export function getCredentialConnectionLabel(credential?: CredentialExchangeReco
   if (!credential) {
     return ''
   }
+
   return credential?.connectionId
     ? useConnectionById(credential.connectionId)?.theirLabel
     : credential?.connectionId ?? ''
@@ -84,55 +90,84 @@ export const getOobDeepLink = async (url: string, agent: Agent | undefined): Pro
   return message
 }
 
-export const processProofAttributes = (proof: ProofRecord, credentials?: RetrievedCredentials): Attribute[] => {
+/**
+ * A sorting function for the Array `sort()` function
+ * @param a First retrieved credential
+ * @param b Second retrieved credential
+ */
+export const credentialSortFn = (a: any, b: any) => {
+  if (a.revoked && !b.revoked) {
+    return 1
+  } else if (!a.revoked && b.revoked) {
+    return -1
+  } else {
+    return b.timestamp - a.timestamp
+  }
+}
+
+//TODO:(jl) Better type than "any" for format?
+export const processProofAttributes = (format?: any, credentials?: IndyRetrievedCredentialsFormat): Attribute[] => {
   const processedAttributes = [] as Attribute[]
 
-  if (!credentials) {
+  if (!format || !credentials) {
     return processedAttributes
   }
 
-  const { requestedAttributes: retrievedCredentialAttributes } = credentials
-  const { requestedAttributes: requestedProofAttributes } = proof.requestMessage?.indyProofRequest || {}
+  const { requestedAttributes } = credentials
 
-  requestedProofAttributes?.forEach(({ name, names }, attributeName) => {
-    const firstCredential = firstValidCredential(retrievedCredentialAttributes[attributeName] || [])
-    const credentialAttributes = names?.length ? names : [name || attributeName]
-    credentialAttributes.forEach((attribute) => {
-      processedAttributes.push({
-        name: attribute,
-        value: firstCredential?.credentialInfo?.attributes[attribute] || null,
-        revoked: firstCredential?.revoked || false,
-        credentialId: firstCredential?.credentialId,
-      })
+  for (const key of Object.keys(requestedAttributes)) {
+    const credential = (requestedAttributes[key] ?? []).sort(credentialSortFn).shift()
+    if (!credential) {
+      return processedAttributes
+    }
+
+    const { credentialId, revoked, credentialInfo } = credential
+    const name = format.request.indy['requested_attributes'][key]['name']
+    const value = (credentialInfo as IndyCredentialInfo).attributes[name]
+    processedAttributes.push({
+      credentialId,
+      revoked,
+      name,
+      value,
     })
-  })
+  }
+
   return processedAttributes
 }
 
-export const processProofPredicates = (proof: ProofRecord, credentials?: RetrievedCredentials): Predicate[] => {
+export const processProofPredicates = (format?: any, credentials?: IndyRetrievedCredentialsFormat): Predicate[] => {
   const processedPredicates = [] as Predicate[]
 
-  if (!credentials) {
+  if (!format || !credentials) {
     return processedPredicates
   }
 
-  const { requestedPredicates: retrievedCredentialPredicates } = credentials
-  const { requestedPredicates: requestedProofPredicates } = proof.requestMessage?.indyProofRequest || {}
+  const { requestedPredicates } = credentials
 
-  requestedProofPredicates?.forEach(({ name, predicateType, predicateValue }, predicateName) => {
-    const firstCredential = firstValidCredential(retrievedCredentialPredicates[predicateName] || [])
-    const predicate = name || predicateName
+  for (const key of Object.keys(requestedPredicates)) {
+    const credential = (requestedPredicates[key] ?? []).sort(credentialSortFn).shift()
+    if (!credential) {
+      return processedPredicates
+    }
+
+    const { credentialId, revoked } = credential
+    const { name, p_type: pType, p_value: pValue } = format.request.indy['requested_predicates'][key]
+
     processedPredicates.push({
-      name: predicate,
-      pValue: predicateValue,
-      pType: predicateType,
-      revoked: firstCredential?.revoked || false,
-      credentialId: firstCredential?.credentialId,
+      credentialId,
+      name,
+      revoked,
+      pValue,
+      pType,
     })
-  })
+  }
+
   return processedPredicates
 }
 
+/**
+ * @deprecated The function should not be used
+ */
 export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials): RetrievedCredentials => {
   const requestedAttributes = Object.values(credentials?.requestedAttributes).pop()
   const requestedPredicates = Object.values(credentials?.requestedPredicates).pop()
@@ -191,7 +226,8 @@ export const receiveMessageFromDeepLink = async (url: string, agent: Agent | und
  * @returns a connection record from parsing and receiving the invitation
  */
 export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
-  const invitation = await agent?.oob.parseInvitationShortUrl(uri)
+  const invitation = await agent?.oob.parseInvitation(uri)
+
   if (!invitation) {
     throw new Error('Could not parse invitation from URL')
   }
@@ -201,5 +237,6 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
   if (!connectionRecord?.id) {
     throw new Error('Connection does not have an ID')
   }
+
   return connectionRecord
 }
