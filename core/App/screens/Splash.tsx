@@ -153,8 +153,8 @@ const Splash: React.FC = () => {
           return
         }
 
-        const newAgent = new Agent(
-          {
+        const options = {
+          config: {
             label: 'Aries Bifold',
             mediatorConnectionsInvite: Config.MEDIATOR_URL,
             mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
@@ -166,8 +166,10 @@ const Splash: React.FC = () => {
             connectToIndyLedgersOnStartup: true,
             autoUpdateStorageOnStartup: true,
           },
-          agentDependencies
-        )
+          dependencies: agentDependencies,
+        }
+
+        const newAgent = new Agent(options)
         const wsTransport = new WsOutboundTransport()
         const httpTransport = new HttpOutboundTransport()
 

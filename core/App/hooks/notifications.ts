@@ -1,7 +1,7 @@
 import {
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
-  ProofRecord,
+  ProofExchangeRecord,
   ProofState,
 } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
@@ -10,7 +10,7 @@ import { CredentialMetadata, customMetadata } from '../types/metadata'
 
 interface Notifications {
   total: number
-  notifications: Array<CredentialRecord | ProofRecord>
+  notifications: Array<CredentialRecord | ProofExchangeRecord>
 }
 
 export const useNotifications = (): Notifications => {

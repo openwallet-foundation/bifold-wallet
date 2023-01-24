@@ -23,10 +23,9 @@ import Toast from "react-native-toast-message";
 initLanguages(translationResources);
 
 const App = () => {
-  
   useMemo(() => {
     initStoredLanguage().then();
-  }, [])
+  }, []);
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our

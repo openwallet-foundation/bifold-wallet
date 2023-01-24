@@ -1,7 +1,7 @@
 name: Code Quality
 
 env:
-  cacheId: "4" # increment to expire the cache
+  cacheId: "6" # increment to expire the cache
 
 on:
   pull_request:

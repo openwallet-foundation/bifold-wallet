@@ -1,21 +1,18 @@
 import {
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
-  ProofRecord,
+  ProofExchangeRecord,
   ProofState,
 } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { fireEvent, render } from '@testing-library/react-native'
+import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { FlatList } from 'react-native'
-import { create } from 'react-test-renderer'
 
 // eslint-disable-next-line import/no-named-as-default
-import Button from '../../App/components/buttons/Button'
-import NotificationListItem, { NotificationType } from '../../App/components/listItems/NotificationListItem'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import Home from '../../App/screens/Home'
+import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 
 jest.mock('@react-navigation/core', () => {
@@ -69,10 +66,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
       protocolVersion: 'v1',
     }),
   ]
-  const testProofRecords: ProofRecord[] = [
-    new ProofRecord({
+  const testProofRecords: ProofExchangeRecord[] = [
+    new ProofExchangeRecord({
       threadId: '2',
       state: ProofState.RequestReceived,
+      protocolVersion: 'v1',
     }),
   ]
 
@@ -114,7 +112,9 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     expect(seeAllButton).toBeTruthy()
 
-    fireEvent(seeAllButton, 'press')
+    act(() => {
+      fireEvent(seeAllButton, 'press')
+    })
 
     expect(navigation.navigate).toBeCalledWith('Notifications')
   })
@@ -125,16 +125,16 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the issuer sends a credential offer
    * Then the credential offer will arrive in the form of a notification in the home screen
    */
-  test('notifications are displayed', () => {
-    const tree = create(
+  test('notifications are displayed', async () => {
+    const { findAllByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    const root = tree.root
-    const flatListInstance = root.findByType(FlatList)
 
-    expect(flatListInstance.findAllByType(NotificationListItem)).toHaveLength(2)
+    const flatListInstance = await findAllByTestId(testIdWithKey('NotificationListItem'))
+
+    expect(flatListInstance).toHaveLength(2)
   })
 
   /**
@@ -143,23 +143,21 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the credential offer
    * When the holder is taken to the credential offer screen/flow
    */
-  test('touch notification triggers navigation correctly', async () => {
-    const tree = create(
+  test('touch notification triggers navigation correctly I', async () => {
+    const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    const root = tree.root
-    const notifications = root.findAllByType(NotificationListItem)
-    const credentialOffer = notifications.find(
-      (notification) => !!(notification.props.notificationType === NotificationType.CredentialOffer)
-    )
-    const button = credentialOffer?.findByType(Button)
+
+    const button = await findByTestId(testIdWithKey('ViewOffer'))
     const navigation = useNavigation()
 
     expect(button).toBeDefined()
 
-    button?.props.onPress()
+    act(() => {
+      fireEvent(button, 'press')
+    })
 
     expect(navigation.navigate).toHaveBeenCalledTimes(1)
     expect(navigation.navigate).toHaveBeenCalledWith('Notifications Stack', {
@@ -174,23 +172,21 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the proof request
    * When the holder is taken to the proof request screen/flow
    */
-  test('touch notification triggers navigation correctly', async () => {
-    const tree = create(
+  test('touch notification triggers navigation correctly II', async () => {
+    const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    const root = tree.root
-    const notifications = root.findAllByType(NotificationListItem)
-    const proofRequest = notifications.find(
-      (notification) => !!(notification.props.notificationType === NotificationType.ProofRequest)
-    )
-    const button = proofRequest?.findByType(Button)
+
+    const button = await findByTestId(testIdWithKey('ViewProofRecord'))
     const navigation = useNavigation()
 
     expect(button).toBeDefined()
 
-    button?.props.onPress()
+    act(() => {
+      fireEvent(button, 'press')
+    })
 
     expect(navigation.navigate).toHaveBeenCalledTimes(1)
     expect(navigation.navigate).toHaveBeenCalledWith('Notifications Stack', {
