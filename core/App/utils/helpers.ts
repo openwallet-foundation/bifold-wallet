@@ -37,6 +37,7 @@ export function formatTime(time: Date, translate: TFunction, params?: { long?: b
   const customMonthFormatRe = /M+/
   const long = params?.long
   const format = params?.format
+  const shortDateFormatMaskLength = 3
 
   let formatString = translate('Date.ShortFormat')
   if (format) {
@@ -58,9 +59,11 @@ export function formatTime(time: Date, translate: TFunction, params?: { long?: b
   if (customMonthFormat) {
     let monthReplacement = ''
     const monthReplacementKey = momentTime.format(customMonthFormat)
-    if (customMonthFormat.length === 3) {
+    if (customMonthFormat.length === shortDateFormatMaskLength) {
+      // then we know we're dealing with a short date format: 'MMM'
       monthReplacement = translate(`Date.MonthShort.${monthKey}`)
-    } else if (customMonthFormat.length > 3) {
+    } else if (customMonthFormat.length > shortDateFormatMaskLength) {
+      // then we know we're working with a long date format: 'MMMM'
       monthReplacement = translate(`Date.MonthLong.${monthKey}`)
     }
     // if translation doesn't work
