@@ -33,6 +33,7 @@ const translation = {
         "Biometrics": "Biométrie",
         "On": "Activé",
         "Off": "Désactivé",
+        "Close": "Close (FR)",
     },
     "Date": {
         "ShortFormat": "D MMM YYYY",

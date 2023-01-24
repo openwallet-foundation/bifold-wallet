@@ -8,7 +8,7 @@ import { hiddenFieldValue } from '../../App/constants'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 import configurationContext from '../contexts/configuration'
-import { useTranslation } from '../../__mocks__/react-i18next'
+import { formatTime } from '../../App/utils/helpers'
 
 const buildCredentialExchangeRecord = () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({

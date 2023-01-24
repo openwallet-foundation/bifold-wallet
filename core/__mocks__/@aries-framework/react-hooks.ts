@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CredentialExchangeRecord, GetFormatDataReturn, IndyCredentialFormat, ProofRecord } from '@aries-framework/core'
+import {
+  CredentialExchangeRecord,
+  GetFormatDataReturn,
+  IndyCredentialFormat,
+  ProofExchangeRecord,
+} from '@aries-framework/core'
 
 const useCredentials = jest.fn().mockReturnValue({ credentials: [] } as any)
 const useCredentialByState = jest.fn().mockReturnValue([] as CredentialExchangeRecord[])
-const useProofByState = jest.fn().mockReturnValue([] as ProofRecord[])
+const useProofByState = jest.fn().mockReturnValue([] as ProofExchangeRecord[])
 const mockCredentialModule = {
   acceptOffer: jest.fn(),
   declineOffer: jest.fn(),
