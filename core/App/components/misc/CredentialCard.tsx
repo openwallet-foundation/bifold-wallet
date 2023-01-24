@@ -10,7 +10,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay, CardOverlayType, OCACredentialBundle } from '../../types/oca'
+import { CardLayoutOverlay, CardOverlayType, MetaOverlay, OCACredentialBundle } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
@@ -59,20 +59,25 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundle } = useConfiguration()
 
-  const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
-  const [defaultBundle, setDefaultBundle] = useState<OCACredentialBundle | undefined>(undefined)
-  const [primaryField, setPrimaryField] = useState<Field | undefined>(undefined)
-  const [secondaryField, setSecondaryField] = useState<Field | undefined>(undefined)
   const [isRevoked, setIsRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
 
-  const metaOverlay = bundle?.getMetaOverlay(i18n.language) || defaultBundle?.getMetaOverlay(i18n.language)
-  const cardLayoutOverlay =
-    bundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10) ||
-    defaultBundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10)
+  const [overlay, setOverlay] = useState<{
+    bundle: OCACredentialBundle | undefined
+    primaryField: Field | undefined
+    secondaryField: Field | undefined
+    metaOverlay: MetaOverlay | undefined
+    cardLayoutOverlay: CardLayoutOverlay | undefined
+  }>({
+    bundle: undefined,
+    primaryField: undefined,
+    secondaryField: undefined,
+    metaOverlay: undefined,
+    cardLayoutOverlay: undefined,
+  })
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
+      backgroundColor: overlay.cardLayoutOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
     },
     cardContainer: {
@@ -84,9 +89,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
       backgroundColor:
-        (cardLayoutOverlay?.backgroundImageSlice?.src
+        (overlay.cardLayoutOverlay?.backgroundImageSlice?.src
           ? 'rgba(0, 0, 0, 0)'
-          : cardLayoutOverlay?.secondaryBackgroundColor) || 'rgba(0, 0, 0, 0.24)',
+          : overlay.cardLayoutOverlay?.secondaryBackgroundColor) || 'rgba(0, 0, 0, 0.24)',
     },
     primaryBodyContainer: {
       flex: 6,
@@ -112,7 +117,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       alignItems: 'center',
     },
     textContainer: {
-      color: credentialTextColor(ColorPallet, cardLayoutOverlay?.primaryBackgroundColor),
+      color: credentialTextColor(ColorPallet, overlay.cardLayoutOverlay?.primaryBackgroundColor),
       flexShrink: 1,
     },
   })
@@ -134,10 +139,18 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     }
 
     Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      setBundle(bundle)
-      setDefaultBundle(defaultBundle)
-      setPrimaryField(fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name) || undefined)
-      setSecondaryField(fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name) || undefined)
+      const overlayBundle = bundle || defaultBundle
+      const metaOverlay = overlayBundle?.getMetaOverlay(i18n.language)
+      const cardLayoutOverlay = overlayBundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10)
+
+      setOverlay({
+        ...overlay,
+        bundle: overlayBundle,
+        primaryField: fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name) || undefined,
+        secondaryField: fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name) || undefined,
+        metaOverlay,
+        cardLayoutOverlay,
+      })
     })
   }, [credential])
 
@@ -148,9 +161,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCardLogo = () => {
     return (
       <View style={styles.logoContainer}>
-        {cardLayoutOverlay?.logo?.src ? (
+        {overlay.cardLayoutOverlay?.logo?.src ? (
           <Image
-            source={toImageSource(cardLayoutOverlay?.logo.src)}
+            source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
             style={{
               maxHeight: logoHeight,
               resizeMode: 'center',
@@ -167,7 +180,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               },
             ]}
           >
-            {(metaOverlay?.issuerName || metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
+            {(overlay.metaOverlay?.issuerName || overlay.metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
           </Text>
         )}
       </View>
@@ -228,7 +241,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               ]}
               numberOfLines={1}
             >
-              {metaOverlay?.issuerName}
+              {overlay.metaOverlay?.issuerName}
             </Text>
             <Text
               testID={testIdWithKey('CredentialName')}
@@ -241,20 +254,20 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               ]}
               numberOfLines={1}
             >
-              {metaOverlay?.name}
+              {overlay.metaOverlay?.name}
             </Text>
           </View>
         </View>
-        {primaryField && (
+        {overlay.primaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(primaryField.label ?? startCase(primaryField.name || ''))}
-            {renderAttributeValue((primaryField as Attribute).value)}
+            {renderAttributeLabel(overlay.primaryField.label ?? startCase(overlay.primaryField.name || ''))}
+            {renderAttributeValue((overlay.primaryField as Attribute).value)}
           </View>
         )}
-        {secondaryField && (
+        {overlay.secondaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(secondaryField.label ?? startCase(secondaryField.name || ''))}
-            {renderAttributeValue((secondaryField as Attribute).value)}
+            {renderAttributeLabel(overlay.secondaryField.label ?? startCase(overlay.secondaryField.name || ''))}
+            {renderAttributeValue((overlay.secondaryField as Attribute).value)}
           </View>
         )}
       </View>
@@ -264,9 +277,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const renderCredentialCardSecondaryBody = () => {
     return (
       <View testID={testIdWithKey('CredentialCardSecondaryBody')} style={styles.secondaryBodyContainer}>
-        {cardLayoutOverlay?.backgroundImageSlice?.src ? (
+        {overlay.cardLayoutOverlay?.backgroundImageSlice?.src ? (
           <ImageBackground
-            source={toImageSource(cardLayoutOverlay?.backgroundImageSlice.src)}
+            source={toImageSource(overlay.cardLayoutOverlay?.backgroundImageSlice.src)}
             style={{ flexGrow: 1 }}
             imageStyle={{
               resizeMode: 'cover',
@@ -319,7 +332,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     )
   }
 
-  return bundle || defaultBundle ? (
+  return overlay.bundle ? (
     <TouchableOpacity
       disabled={typeof onPress === 'undefined' ? true : false}
       onPress={onPress}

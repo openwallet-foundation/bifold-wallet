@@ -19,6 +19,7 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
+import { OCACredentialBundle } from '../types/oca'
 import { Field } from '../types/record'
 import { isValidIndyCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
@@ -37,18 +38,22 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
+  const { ListItems, ColorPallet } = useTheme()
+  const { assertConnectedNetwork } = useNetwork()
+  const { OCABundle } = useConfiguration()
+
   const [, dispatch] = useStore()
+  const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
+
+  const [overlay, setOverlay] = useState<{
+    bundle: OCACredentialBundle | undefined
+    presentationFields: Field[]
+  }>({ bundle: undefined, presentationFields: [] })
+
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
-  const [fields, setFields] = useState<Field[]>([])
-  // This syntax is required for the jest mocks to work
-  // eslint-disable-next-line import/no-named-as-default-member
-  const [loading, setLoading] = React.useState<boolean>(true)
-  const { assertConnectedNetwork } = useNetwork()
-  const { ListItems, ColorPallet } = useTheme()
-  const { OCABundle } = useConfiguration()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -134,7 +139,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
       .then(({ fields }) => {
-        setFields(fields)
+        setOverlay({ ...overlay, presentationFields: fields })
         setLoading(false)
       })
   }, [credential])
@@ -217,7 +222,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record fields={fields} header={header} footer={footer} />
+      <Record fields={overlay.presentationFields} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
     </SafeAreaView>
   )
