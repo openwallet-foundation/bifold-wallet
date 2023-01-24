@@ -35,6 +35,38 @@ const translation = {
     "Close": "Close (PB)",
 
   },
+  "Date": {
+    "ShortFormat": "D MMM YYYY",
+    "LongFormat": "D MMMM YYYY, HH:mm:ss",
+    "MonthLong": {
+      "January": "janeiro",
+      "February": "fevereiro",
+      "March": "março",
+      "April": "abril",
+      "May": "maio",
+      "June": "junho",
+      "July": "julho",
+      "August": "agosto",
+      "September": "setembro",
+      "October": "outubro",
+      "November": "novembro",
+      "December": "dezembro",
+    },
+    "MonthShort": {
+      "January": "jan",
+      "February": "fev",
+      "March": "março",
+      "April": "abril",
+      "May": "maio",
+      "June": "junho",
+      "July": "julho",
+      "August": "agosto",
+      "September": "set",
+      "October": "out",
+      "November": "nov",
+      "December": "dez",
+    }
+  },
   "Language": {
     "English": "Inglês",
     "French": "Francês",

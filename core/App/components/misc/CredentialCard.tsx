@@ -13,11 +13,11 @@ import {
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { OCACredentialBundle } from '../../types/oca'
+import { formatTime } from '../../utils/helpers'
 import { luminanceForHexColour } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -262,7 +262,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             testID={testIdWithKey('CredentialIssued')}
             maxFontSizeMultiplier={1}
           >
-            {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
+            {t('CredentialDetails.Issued')}: {formatTime(credential.createdAt)}
           </Text>
         )}
       </View>

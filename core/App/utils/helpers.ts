@@ -10,8 +10,10 @@ import {
 } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
+import moment from 'moment'
 import { parseUrl } from 'query-string'
 
+import { i18n } from '../localization/index'
 import { Attribute, Predicate } from '../types/record'
 
 export { parsedCredDefName } from './cred-def'
@@ -27,6 +29,54 @@ export function hashCode(s: string): number {
 export function hashToRGBA(i: number) {
   const colour = (i & 0x00ffffff).toString(16).toUpperCase()
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
+}
+
+export function formatTime(time: Date, params?: { long?: boolean; format?: string }): string {
+  const getMonthKey = 'MMMM'
+  const momentTime = moment(time)
+  const monthKey = momentTime.format(getMonthKey)
+  const customMonthFormatRe = /M+/
+  const long = params?.long
+  const format = params?.format
+  const shortDateFormatMaskLength = 3
+
+  let formatString = i18n.t('Date.ShortFormat')
+  if (format) {
+    formatString = format
+  } else {
+    if (long) {
+      formatString = i18n.t('Date.LongFormat')
+    }
+
+    // if translation fails
+    if (formatString === 'Date.ShortFormat' || formatString === 'Date.LongFormat' || formatString === undefined) {
+      formatString = 'MMM D, YYYY'
+    }
+  }
+  const customMonthFormat = formatString?.match(customMonthFormatRe)?.[0]
+
+  let formattedTime = momentTime.format(formatString)
+
+  if (customMonthFormat) {
+    let monthReplacement = ''
+    const monthReplacementKey = momentTime.format(customMonthFormat)
+    if (customMonthFormat.length === shortDateFormatMaskLength) {
+      // then we know we're dealing with a short date format: 'MMM'
+      monthReplacement = i18n.t(`Date.MonthShort.${monthKey}`)
+    } else if (customMonthFormat.length > shortDateFormatMaskLength) {
+      // then we know we're working with a long date format: 'MMMM'
+      monthReplacement = i18n.t(`Date.MonthLong.${monthKey}`)
+    }
+    // if translation doesn't work
+    if (monthReplacement === `Date.MonthLong.${monthKey}` || monthReplacement === `Date.MonthShort.${monthKey}`) {
+      monthReplacement = monthReplacementKey
+    }
+
+    if (monthReplacement) {
+      formattedTime = formattedTime.replace(monthReplacementKey, monthReplacement)
+    }
+  }
+  return formattedTime
 }
 
 /**
