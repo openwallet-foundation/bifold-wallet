@@ -1,10 +1,14 @@
-import { CredentialExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'
 
 export const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
-  return credential && credential.credentials.find((c) => c.credentialRecordType === 'indy')
+  return (
+    credential &&
+    (credential.state === CredentialState.OfferReceived ||
+      credential.credentials.find((c) => c.credentialRecordType === 'indy'))
+  )
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

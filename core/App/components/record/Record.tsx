@@ -36,9 +36,11 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
       paddingVertical: 2,
     },
   })
+
   const resetShown = (): void => {
     setShown(fields.map(() => false))
   }
+
   useEffect(() => {
     resetShown()
   }, [])

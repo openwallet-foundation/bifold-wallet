@@ -1,8 +1,10 @@
-import type { CredentialExchangeRecord as CredentialRecord, ProofRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
 
+import { V1RequestPresentationMessage } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -21,14 +23,20 @@ const iconSize = 30
 
 export enum NotificationType {
   CredentialOffer = 'Offer',
-  ProofRequest = 'Proof',
+  ProofRequest = 'ProofRecord',
   Revocation = 'Revocation',
   Custom = 'Custom',
 }
 
 interface NotificationListItemProps {
   notificationType: NotificationType
-  notification: CredentialRecord | ProofRecord
+  notification: CredentialExchangeRecord | ProofExchangeRecord
+}
+
+type DisplayDetails = {
+  body: string | undefined
+  title: string | undefined
+  buttonTitle: string | undefined
 }
 
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
@@ -37,6 +45,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
+  const { agent } = useAgent()
+  const [details, setDetails] = useState<DisplayDetails>({
+    title: undefined,
+    body: undefined,
+    buttonTitle: undefined,
+  })
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.notification.info,
@@ -76,104 +90,153 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       alignSelf: 'center',
     },
   })
-  let onPress: GenericFn
-  let title = ''
-  let body = ''
-  let buttonTitle = ''
-
-  // eslint-disable-next-line no-case-declarations
-  const { name, version } = parsedSchema(notification as CredentialRecord)
-  let onClose = () => {
+  const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
+  let onPress: GenericFn = () => {
+    return
+  }
+  let onClose: GenericFn = () => {
     return
   }
 
-  switch (notificationType) {
-    case NotificationType.CredentialOffer:
-      onPress = () =>
-        navigation.getParent()?.navigate(Stacks.NotificationStack, {
-          screen: Screens.CredentialOffer,
-          params: { credentialId: notification.id },
-        })
-      onClose = () => {
-        navigation.getParent()?.navigate(Stacks.NotificationStack, {
-          screen: Screens.CommonDecline,
-          params: {
-            declineType: DeclineType.CredentialOffer,
-            itemId: notification.id,
-            deleteView: true,
-          },
-        })
+  const detailsForNotificationType = async (notificationType: NotificationType): Promise<DisplayDetails> => {
+    return new Promise((resolve) => {
+      switch (notificationType) {
+        case NotificationType.CredentialOffer:
+          resolve({
+            title: t('CredentialOffer.NewCredentialOffer'),
+            body: `${name + (version ? ` v${version}` : '')}`,
+            buttonTitle: undefined,
+          })
+          break
+        case NotificationType.ProofRequest: {
+          const proofId = (notification as ProofExchangeRecord).id
+          agent?.proofs.findRequestMessage(proofId).then((message) => {
+            if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
+              resolve({
+                title: t('ProofRequest.NewProofRequest'),
+                body: message.indyProofRequest.name,
+                buttonTitle: undefined,
+              })
+            } else {
+              //TODO:(jl) Should we have a default message or stick with an empty string?
+              resolve({ title: t('ProofRequest.NewProofRequest'), body: '', buttonTitle: undefined })
+            }
+          })
+          break
+        }
+        case NotificationType.Revocation:
+          resolve({
+            title: t('CredentialDetails.NewRevoked'),
+            body: `${name + (version ? ` v${version}` : '')}`,
+            buttonTitle: undefined,
+          })
+          break
+        case NotificationType.Custom:
+          resolve({
+            title: t(customNotification.title as any),
+            body: t(customNotification.description as any),
+            buttonTitle: t(customNotification.buttonTitle as any),
+          })
+          break
+        default:
+          throw new Error('NotificationType was not set correctly.')
       }
-      title = t('CredentialOffer.NewCredentialOffer')
-      body = `${name + (version ? ` v${version}` : '')}`
-      break
-    case NotificationType.ProofRequest:
-      title = t('ProofRequest.NewProofRequest')
-      body = (notification as ProofRecord).requestMessage?.indyProofRequest?.name || ''
-      onPress = () =>
-        navigation
-          .getParent()
-          ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
-      onClose = () => {
-        navigation.getParent()?.navigate(Stacks.NotificationStack, {
-          screen: Screens.CommonDecline,
-          params: {
-            declineType: DeclineType.ProofRequest,
-            itemId: notification.id,
-            deleteView: true,
-          },
-        })
-      }
-      break
-    case NotificationType.Revocation:
-      title = t('CredentialDetails.NewRevoked')
-      body = `${name + (version ? ` v${version}` : '')}`
-      onPress = () =>
-        navigation.getParent()?.navigate(Stacks.NotificationStack, {
-          screen: Screens.CredentialDetails,
-          params: { credentialId: notification.id },
-        })
-      break
-    case NotificationType.Custom:
-      title = t(customNotification.title as any)
-      body = t(customNotification.description as any)
-      buttonTitle = t(customNotification.buttonTitle as any)
-      onPress = () =>
-        navigation.getParent()?.navigate(Stacks.NotificationStack, {
-          screen: Screens.CustomNotification,
-        })
-      onClose = () => {
-        navigation.getParent()?.navigate(Stacks.NotificationStack, {
-          screen: Screens.CommonDecline,
-          params: {
-            declineType: DeclineType.Custom,
-            itemId: notification.id,
-            deleteView: true,
-            customClose: () => {
-              customNotification.onCloseAction(dispatch as any)
-            },
-          },
-        })
-      }
-      break
-    default:
-      throw new Error('NotificationType was not set correctly.')
+    })
   }
 
+  const setActionForNotificationType = (notificationType: NotificationType): void => {
+    switch (notificationType) {
+      case NotificationType.CredentialOffer:
+        onPress = () => {
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.CredentialOffer,
+            params: { credentialId: notification.id },
+          })
+        }
+        onClose = () => {
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.CommonDecline,
+            params: {
+              declineType: DeclineType.CredentialOffer,
+              itemId: notification.id,
+              deleteView: true,
+            },
+          })
+        }
+        break
+      case NotificationType.ProofRequest:
+        onPress = () =>
+          navigation
+            .getParent()
+            ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
+        onClose = () => {
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.CommonDecline,
+            params: {
+              declineType: DeclineType.ProofRequest,
+              itemId: notification.id,
+              deleteView: true,
+            },
+          })
+        }
+        break
+      case NotificationType.Revocation:
+        onPress = () =>
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.CredentialDetails,
+            params: { credentialId: notification.id },
+          })
+        break
+      case NotificationType.Custom:
+        onPress = () =>
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.CustomNotification,
+          })
+        onClose = () => {
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.CommonDecline,
+            params: {
+              declineType: DeclineType.Custom,
+              itemId: notification.id,
+              deleteView: true,
+              customClose: () => {
+                customNotification.onCloseAction(dispatch as any)
+              },
+            },
+          })
+        }
+        break
+      default:
+        throw new Error('NotificationType was not set correctly.')
+    }
+  }
+
+  setActionForNotificationType(notificationType)
+
+  useEffect(() => {
+    detailsForNotificationType(notificationType).then((details) => {
+      setDetails(details)
+    })
+  }, [notificationType])
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID={testIdWithKey('NotificationListItem')}>
       <View style={styles.headerContainer}>
         <View style={[styles.icon]}>
           <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
         </View>
         <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-          {title}
+          {details.title}
         </Text>
         {[NotificationType.Custom, NotificationType.ProofRequest, NotificationType.CredentialOffer].includes(
           notificationType
         ) && (
           <View>
-            <TouchableOpacity onPress={onClose}>
+            <TouchableOpacity
+              accessibilityLabel={t('Global.Close')}
+              testID={testIdWithKey(`Close${notificationType}`)}
+              onPress={onClose}
+            >
               <Icon name={'close'} size={iconSize} color={ColorPallet.notification.infoIcon} />
             </TouchableOpacity>
           </View>
@@ -181,12 +244,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-          {body}
+          {details.body}
         </Text>
         <Button
-          title={buttonTitle !== '' ? buttonTitle : t('Global.View')}
-          accessibilityLabel={buttonTitle !== '' ? buttonTitle : t('Global.View')}
-          testID={testIdWithKey('View')}
+          title={details.buttonTitle ?? t('Global.View')}
+          accessibilityLabel={details.buttonTitle ?? t('Global.View')}
+          testID={testIdWithKey(`View${notificationType}`)}
           buttonType={ButtonType.Primary}
           onPress={onPress}
         />

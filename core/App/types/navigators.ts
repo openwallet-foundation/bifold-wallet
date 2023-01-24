@@ -22,6 +22,7 @@ export enum Screens {
   Language = 'Language',
   Contacts = 'Contacts',
   ContactDetails = 'Contact Details',
+  WhatAreContacts = 'What Are Contacts',
   Chat = 'Chat',
   Connection = 'Connection',
   OnTheWay = 'On The Way',
@@ -78,6 +79,7 @@ export type ContactStackParams = {
   [Screens.Contacts]: undefined
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
+  [Screens.WhatAreContacts]: undefined
 }
 
 export type CredentialStackParams = {
