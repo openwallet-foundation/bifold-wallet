@@ -118,7 +118,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   })
 
   useEffect(() => {
-    if (!isValidIndyCredential(credential)) {
+    if (!(credential && isValidIndyCredential(credential))) {
       return
     }
 
