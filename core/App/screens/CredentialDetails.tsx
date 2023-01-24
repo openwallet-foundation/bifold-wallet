@@ -92,7 +92,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
     if (isRevoked && credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
-      setRevocationDate(formatTime(date, t))
+      setRevocationDate(formatTime(date))
     }
     OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
       setFields(fields)
@@ -188,7 +188,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               <Text>
                 <Text style={[TextTheme.title]}>{t('CredentialDetails.Issued')}:</Text>{' '}
                 <Text style={[TextTheme.normal]}>
-                  {credential?.createdAt !== undefined && formatTime(credential?.createdAt, t, { long: true })}
+                  {credential?.createdAt !== undefined && formatTime(credential?.createdAt, { long: true })}
                 </Text>
               </Text>
             </View>

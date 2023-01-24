@@ -3,7 +3,6 @@ import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { formatTime } from '../../App/utils/helpers'
 
 import { hiddenFieldValue } from '../../App/constants'
 import { ConfigurationContext } from '../../App/contexts/configuration'
@@ -103,10 +102,9 @@ describe('displays a credential details screen', () => {
           ></CredentialDetails>
         </ConfigurationContext.Provider>
       )
-      const { t } = useTranslation()
       const credentialName = await findByText('Unverified Person', { exact: false })
       const credentialIssuedAt = await findByText(
-        `CredentialDetails.Issued: ${formatTime(mock_testOpenVPCredentialRecord.createdAt, t)}`,
+        `CredentialDetails.Issued: ${formatTime(mock_testOpenVPCredentialRecord.createdAt)}`,
         { exact: false }
       )
 

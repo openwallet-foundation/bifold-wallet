@@ -154,7 +154,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           {
             name: connection?.alias || connection?.theirLabel,
             value: t('ContactDetails.DateOfConnection', {
-              date: connection?.createdAt !== undefined ? formatTime(connection.createdAt, t) : '',
+              date: connection?.createdAt !== undefined ? formatTime(connection.createdAt) : '',
             }),
           },
         ] as Attribute[],

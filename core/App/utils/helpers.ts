@@ -9,10 +9,10 @@ import {
 } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
-import { TFunction } from 'i18next'
 import moment from 'moment'
 import { parseUrl } from 'query-string'
 
+import { i18n } from '../localization/index'
 import { Attribute, Predicate } from '../types/record'
 
 export { parsedCredDefName } from './cred-def'
@@ -30,7 +30,7 @@ export function hashToRGBA(i: number) {
   return '#' + '00000'.substring(0, 6 - colour.length) + colour
 }
 
-export function formatTime(time: Date, translate: TFunction, params?: { long?: boolean; format?: string }): string {
+export function formatTime(time: Date, params?: { long?: boolean; format?: string }): string {
   const getMonthKey = 'MMMM'
   const momentTime = moment(time)
   const monthKey = momentTime.format(getMonthKey)
@@ -39,12 +39,12 @@ export function formatTime(time: Date, translate: TFunction, params?: { long?: b
   const format = params?.format
   const shortDateFormatMaskLength = 3
 
-  let formatString = translate('Date.ShortFormat')
+  let formatString = i18n.t('Date.ShortFormat')
   if (format) {
     formatString = format
   } else {
     if (long) {
-      formatString = translate('Date.LongFormat')
+      formatString = i18n.t('Date.LongFormat')
     }
 
     // if translation fails
@@ -61,10 +61,10 @@ export function formatTime(time: Date, translate: TFunction, params?: { long?: b
     const monthReplacementKey = momentTime.format(customMonthFormat)
     if (customMonthFormat.length === shortDateFormatMaskLength) {
       // then we know we're dealing with a short date format: 'MMM'
-      monthReplacement = translate(`Date.MonthShort.${monthKey}`)
+      monthReplacement = i18n.t(`Date.MonthShort.${monthKey}`)
     } else if (customMonthFormat.length > shortDateFormatMaskLength) {
       // then we know we're working with a long date format: 'MMMM'
-      monthReplacement = translate(`Date.MonthLong.${monthKey}`)
+      monthReplacement = i18n.t(`Date.MonthLong.${monthKey}`)
     }
     // if translation doesn't work
     if (monthReplacement === `Date.MonthLong.${monthKey}` || monthReplacement === `Date.MonthShort.${monthKey}`) {
