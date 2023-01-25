@@ -1,16 +1,16 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, ImageBackground, ImageSourcePropType, StyleSheet, Text, View } from 'react-native'
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
 // import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
+import Record from '../components/record/Record'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
 import { dateFormatOptions } from '../constants'
@@ -21,7 +21,7 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay_2_0, CardOverlayType, OCACredentialBundle } from '../types/oca'
+import { CardLayoutOverlay, CardOverlayType, MetaOverlay, OCACredentialBundle } from '../types/oca'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
@@ -44,33 +44,41 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
-  const { OCABundle, record } = useConfiguration()
+  const { OCABundle } = useConfiguration()
 
   const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   // const [revocationDate, setRevocationDate] = useState<string>('')
   const [, setRevocationDate] = useState<string>('')
-  const [fields, setFields] = useState<Field[]>([])
-  // const [isRevokedMessageHidden] = useState<boolean>(false)
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
-  const [bundle, setBundle] = useState<OCACredentialBundle | undefined>(undefined)
+  // const [isRevokedMessageHidden] = useState<boolean>(false)
+
+  const [overlay, setOverlay] = useState<{
+    bundle: OCACredentialBundle | undefined
+    presentationFields: Field[]
+    metaOverlay: MetaOverlay | undefined
+    cardLayoutOverlay: CardLayoutOverlay | undefined
+  }>({
+    bundle: undefined,
+    presentationFields: [],
+    metaOverlay: undefined,
+    cardLayoutOverlay: undefined,
+  })
 
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
-  const metaOverlay = bundle?.getMetaOverlay(i18n.language)
-  const cardLayoutOverlay = bundle?.getCardLayoutOverlay<CardLayoutOverlay_2_0>(CardOverlayType.CARD_LAYOUT_20)
-
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: cardLayoutOverlay?.primaryBackgroundColor,
+      backgroundColor: overlay.cardLayoutOverlay?.primaryBackgroundColor,
       display: 'flex',
     },
     secondaryHeaderContainer: {
       height: 1.5 * logoHeight,
       backgroundColor:
-        (cardLayoutOverlay?.backgroundImage?.src ? 'rgba(0, 0, 0, 0)' : cardLayoutOverlay?.secondaryBackgroundColor) ||
-        'rgba(0, 0, 0, 0.24)',
+        (overlay.cardLayoutOverlay?.backgroundImage?.src
+          ? 'rgba(0, 0, 0, 0)'
+          : overlay.cardLayoutOverlay?.secondaryBackgroundColor) || 'rgba(0, 0, 0, 0.24)',
     },
     primaryHeaderContainer: {
       paddingHorizontal,
@@ -88,7 +96,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       alignItems: 'center',
     },
     textContainer: {
-      color: credentialTextColor(ColorPallet, cardLayoutOverlay?.primaryBackgroundColor),
+      color: credentialTextColor(ColorPallet, overlay.cardLayoutOverlay?.primaryBackgroundColor),
       flexShrink: 1,
     },
   })
@@ -142,26 +150,28 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
     const resolveBundle = async () => {
       const bundle = await OCABundle.resolve(credential)
-      if (bundle) {
-        setBundle(bundle)
-      } else {
-        const defaultBundle = await OCABundle.resolveDefaultBundle(credential)
-        setBundle(defaultBundle)
-      }
+      const defaultBundle = await OCABundle.resolveDefaultBundle(credential)
+      return { bundle, defaultBundle }
     }
 
     const resolvePresentationFields = async () => {
       const fields = await OCABundle.getCredentialPresentationFields(credential, i18n.language)
-      setFields(fields)
+      return { fields }
     }
 
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then()
+    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
+      const overlayBundle = bundle || defaultBundle
+      const metaOverlay = overlayBundle?.getMetaOverlay(i18n.language)
+      const cardLayoutOverlay = overlayBundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10)
+
+      setOverlay({ ...overlay, bundle: overlayBundle, presentationFields: fields, metaOverlay, cardLayoutOverlay })
+    })
   }, [credential])
 
   useEffect(() => {
     if (credential?.revocationNotification) {
       credential.metadata.set(CredentialMetadata.customMetadata, { revoked_seen: true })
-      agent?.credentials.update(credential) // returns a promise
+      agent?.credentials.update(credential)
     }
   }, [isRevoked])
 
@@ -206,16 +216,16 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const renderCredentialCardLogo = () => {
     return (
       <View style={styles.logoContainer}>
-        {cardLayoutOverlay?.logo?.src ? (
+        {overlay.cardLayoutOverlay?.logo?.src ? (
           <Image
-            source={toImageSource(cardLayoutOverlay?.logo.src)}
+            source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
             style={{
               resizeMode: 'center',
             }}
           />
         ) : (
           <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight }]}>
-            {(metaOverlay?.issuerName || metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
+            {(overlay.metaOverlay?.issuerName || overlay.metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
           </Text>
         )}
       </View>
@@ -230,19 +240,30 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <Text
             testID={testIdWithKey('CredentialIssuer')}
             style={[
-              TextTheme.labelSubtitle,
+              TextTheme.label,
               styles.textContainer,
               {
                 paddingLeft: paddingVertical,
+                lineHeight: 19,
+                opacity: 0.8,
               },
             ]}
             numberOfLines={1}
           >
-            {metaOverlay?.issuerName}
+            {overlay.metaOverlay?.issuerName}
           </Text>
         </View>
-        <Text testID={testIdWithKey('CredentialName')} style={[TextTheme.labelTitle, styles.textContainer]}>
-          {metaOverlay?.name}
+        <Text
+          testID={testIdWithKey('CredentialName')}
+          style={[
+            TextTheme.normal,
+            styles.textContainer,
+            {
+              lineHeight: 24,
+            },
+          ]}
+        >
+          {overlay.metaOverlay?.name}
         </Text>
       </View>
     )
@@ -251,9 +272,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const renderCredentialDetailSecondaryHeader = () => {
     return (
       <>
-        {cardLayoutOverlay?.backgroundImage?.src ? (
+        {overlay.cardLayoutOverlay?.backgroundImage?.src ? (
           <ImageBackground
-            source={toImageSource(cardLayoutOverlay?.backgroundImage.src)}
+            source={toImageSource(overlay.cardLayoutOverlay?.backgroundImage.src)}
             imageStyle={{
               resizeMode: 'cover',
             }}
@@ -319,12 +340,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      {record({
-        header,
-        footer,
-        fields,
-        hideFieldValues: true,
-      })}
+      <Record fields={overlay.presentationFields} hideFieldValues header={header} footer={footer} />
       <CommonRemoveModal
         removeType={RemoveType.Credential}
         visible={isRemoveModalDisplayed}
