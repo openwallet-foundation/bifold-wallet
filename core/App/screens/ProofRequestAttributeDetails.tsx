@@ -154,7 +154,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
               </View>
             ) : (
               <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
-                {t('CredentialDetails.Issued')} {formatTime(credential.createdAt)}
+                {t('CredentialDetails.Issued') + ' '} {formatTime(credential.createdAt)}
               </Text>
             )}
             <Text style={[ListItems.credentialTitle, { paddingTop: 16 }]} testID={testIdWithKey('AttributeValue')}>
