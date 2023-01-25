@@ -7,8 +7,7 @@ import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
-// import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
-
+import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
 import RecordRemove from '../components/record/RecordRemove'
@@ -48,10 +47,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  // const [revocationDate, setRevocationDate] = useState<string>('')
-  const [, setRevocationDate] = useState<string>('')
+  const [revocationDate, setRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
-  // const [isRevokedMessageHidden] = useState<boolean>(false)
+  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
 
   const [overlay, setOverlay] = useState<{
     bundle: OCACredentialBundle | undefined
@@ -209,9 +207,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setIsRemoveModalDisplayed(false)
   }
 
+  const handleDismissRevokedMessage = () => {
+    setIsRevokedMessageHidden(true)
+  }
+
   const callOnRemove = useCallback(() => handleOnRemove(), [])
   const callSubmitRemove = useCallback(() => handleSubmitRemove(), [])
   const callCancelRemove = useCallback(() => handleCancelRemove(), [])
+  const callDismissRevokedMessage = useCallback(() => handleDismissRevokedMessage(), [])
 
   const renderCredentialCardLogo = () => {
     return (
@@ -293,22 +296,23 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       <View style={styles.container}>
         {renderCredentialDetailSecondaryHeader()}
         {renderCredentialDetailPrimaryHeader()}
-        {/* TODO: Update revocation message */}
-        {/* {isRevoked && !isRevokedMessageHidden ? (
-          <View style={{ marginHorizontal: 15, marginTop: 16 }}>
+        {isRevoked && !isRevokedMessageHidden ? (
+          <View style={{ padding: paddingVertical, paddingTop: 0 }}>
             {credential && (
               <InfoBox
-                notificationType={InfoBoxType.Warn}
-                title={t('CredentialDetails.CredentialRevokedMessageTitle') + ' ' + revocationDate}
+                notificationType={InfoBoxType.Error}
+                title={t('CredentialDetails.CredentialRevokedMessageTitle')}
                 description={
                   credential?.revocationNotification?.comment
                     ? credential.revocationNotification.comment
                     : t('CredentialDetails.CredentialRevokedMessageBody')
                 }
+                onCallToActionLabel={t('Global.Dismiss')}
+                onCallToActionPressed={callDismissRevokedMessage}
               />
             )}
           </View>
-        ) : null} */}
+        ) : null}
       </View>
     )
   }
@@ -319,18 +323,32 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         {credentialConnectionLabel ? (
           <View
             style={{
-              backgroundColor: ColorPallet.brand.secondaryBackground,
+              backgroundColor: isRevoked ? ColorPallet.notification.error : ColorPallet.brand.secondaryBackground,
               marginTop: paddingVertical,
               paddingHorizontal,
               paddingVertical,
             }}
           >
-            <View>
+            <>
               <Text>
-                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')}</Text>{' '}
-                <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
+                <Text style={[TextTheme.title, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+                  {t('CredentialDetails.IssuedBy') + ' '}
+                </Text>
+                <Text style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+                  {credentialConnectionLabel}
+                </Text>
               </Text>
-            </View>
+              {isRevoked ? (
+                <Text>
+                  <Text style={[TextTheme.title, { color: ColorPallet.notification.errorText }]}>
+                    {t('CredentialDetails.Revoked') + ': '}
+                  </Text>
+                  <Text style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}>
+                    {revocationDate}
+                  </Text>
+                </Text>
+              ) : null}
+            </>
           </View>
         ) : null}
         <RecordRemove onRemove={callOnRemove} />
