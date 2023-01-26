@@ -181,7 +181,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           >
             <View>
               <Text>
-                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')+ ' '}</Text>
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy') + ' '}</Text>
                 <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
               </Text>
               <Text>
