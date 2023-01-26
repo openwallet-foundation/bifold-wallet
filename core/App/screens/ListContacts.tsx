@@ -15,7 +15,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { records } = useConnections()
   // Filter out mediator agents
   const connections = records.filter((r) => {
-    const type = (r.getTag('connectionType') || []) as [string]
+    const type = (r.getTag('connectionTypes') || []) as [string]
     return !type?.includes(ConnectionType.Mediator)
   })
   const { ColorPallet } = useTheme()
