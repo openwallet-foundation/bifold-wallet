@@ -6,23 +6,23 @@ import { hashCode, hashToRGBA } from '../utils/helpers'
 import { Attribute, Field } from './record'
 
 export enum BaseType {
-  BINARY = 'Binary',
-  TEXT = 'Text',
-  DATETIME = 'DateTime',
-  NUMERIC = 'Numeric',
-  DATEINT = 'DateInt',
+  Binary = 'Binary',
+  Text = 'Text',
+  DateTime = 'DateTime',
+  Numeric = 'Numeric',
+  DateInt = 'DateInt',
 }
 
 export enum BaseOverlayType {
-  BASE_10 = 'spec/capture_base/1.0',
-  META_10 = 'spec/overlays/meta/1.0',
-  LABEL_10 = 'spec/overlays/label/1.0',
-  FORMAT_10 = 'spec/overlays/format/1.0',
-  ENCODING_10 = 'spec/overlays/character_encoding/1.0',
+  Base10 = 'spec/capture_base/1.0',
+  Meta10 = 'spec/overlays/meta/1.0',
+  Label10 = 'spec/overlays/label/1.0',
+  Format10 = 'spec/overlays/format/1.0',
+  CharacterEncoding10 = 'spec/overlays/character_encoding/1.0',
 }
 
 export enum CardOverlayType {
-  CARD_LAYOUT_10 = 'spec/overlays/card_layout/1.0',
+  CardLayout10 = 'spec/overlays/card_layout/1.0',
 }
 
 export const OverlayType = { ...BaseOverlayType, ...CardOverlayType }
@@ -140,11 +140,11 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
   }
 
   public getMetaOverlay(language: string): MetaOverlay | undefined {
-    return this.getOverlay<MetaOverlay>(OverlayType.META_10, language)
+    return this.getOverlay<MetaOverlay>(OverlayType.Meta10, language)
   }
 
   public getCaptureBase(): CaptureBaseOverlay {
-    const overlay = this.getOverlay<CaptureBaseOverlay>(OverlayType.BASE_10)
+    const overlay = this.getOverlay<CaptureBaseOverlay>(OverlayType.Base10)
     if (overlay === undefined) {
       throw new Error('Expected Capture Base to be defined')
     }
@@ -152,19 +152,19 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
   }
 
   public getLabelOverlay(language: string): LabelOverlay | undefined {
-    return this.getOverlay<LabelOverlay>(OverlayType.LABEL_10, language)
+    return this.getOverlay<LabelOverlay>(OverlayType.Label10, language)
   }
 
   public getFormatOverlay(): FormatOverlay | undefined {
-    return this.getOverlay<FormatOverlay>(OverlayType.FORMAT_10)
+    return this.getOverlay<FormatOverlay>(OverlayType.Format10)
   }
 
   public getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined {
-    return this.getOverlay<CharacterEncodingOverlay>(OverlayType.ENCODING_10)
+    return this.getOverlay<CharacterEncodingOverlay>(OverlayType.CharacterEncoding10)
   }
 
   public getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined {
-    if (type === OverlayType.BASE_10) {
+    if (type === OverlayType.Base10) {
       return (this.bundle as Bundle).capture_base as unknown as T
     }
     if (language !== undefined) {
@@ -200,18 +200,18 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
   public resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined> {
     const defaultMetaOverlay: MetaOverlay = {
       capture_base: '',
-      type: OverlayType.META_10,
+      type: OverlayType.Meta10,
       name: parsedCredDefName(credential),
       language: 'en',
       issuerName: credential?.connectionId ?? '',
     }
     const defaultCardLayoutLayer: CardLayoutOverlay = {
       capture_base: '',
-      type: OverlayType.CARD_LAYOUT_10,
+      type: OverlayType.CardLayout10,
       primaryBackgroundColor: hashToRGBA(hashCode(defaultMetaOverlay?.name ?? '')),
     }
     const bundle: Bundle = {
-      capture_base: { capture_base: '', type: OverlayType.BASE_10 },
+      capture_base: { capture_base: '', type: OverlayType.Base10 },
       overlays: [defaultMetaOverlay, defaultCardLayoutLayer],
     }
     return Promise.resolve(new DefaultOCACredentialBundle(bundle))
