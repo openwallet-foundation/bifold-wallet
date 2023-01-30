@@ -10,7 +10,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay, CardOverlayType, MetaOverlay, OCACredentialBundle } from '../../types/oca'
+import { CardLayoutOverlay11, CardOverlayType, MetaOverlay, OCACredentialBundle } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
@@ -66,7 +66,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     primaryField: Field | undefined
     secondaryField: Field | undefined
     metaOverlay: MetaOverlay | undefined
-    cardLayoutOverlay: CardLayoutOverlay | undefined
+    cardLayoutOverlay: CardLayoutOverlay11 | undefined
   }>({
     bundle: undefined,
     primaryField: undefined,
@@ -141,7 +141,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
       const overlayBundle = bundle || defaultBundle
       const metaOverlay = overlayBundle?.getMetaOverlay(i18n.language)
-      const cardLayoutOverlay = overlayBundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10)
+      const cardLayoutOverlay = overlayBundle?.getCardLayoutOverlay<CardLayoutOverlay11>(CardOverlayType.CardLayout11)
 
       setOverlay({
         ...overlay,
