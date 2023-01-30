@@ -23,7 +23,7 @@ export const defaultConfiguration: ConfigurationContext = {
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: EmptyList,
-  OCABundle: new oca.DefaultOCABundleResolver(require('../assets/oca-bundles.json')),
+  OCABundle: new oca.DefaultOCABundleResolver(require('./assets/oca-bundles.json')),
   scan: Scan,
   useBiometry: UseBiometry,
   record: Record,
