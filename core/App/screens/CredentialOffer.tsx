@@ -19,8 +19,7 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { OCABundle } from '../types/oca'
-import { Field } from '../types/record'
+import { CredentialOverlay } from '../types/oca'
 import { isValidIndyCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
@@ -47,10 +46,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
 
-  const [overlay, setOverlay] = useState<{
-    bundle: OCABundle | undefined
-    presentationFields: Field[]
-  }>({ bundle: undefined, presentationFields: [] })
+  const [overlay, setOverlay] = useState<CredentialOverlay>({ presentationFields: [] })
 
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)

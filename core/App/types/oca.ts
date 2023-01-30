@@ -74,8 +74,16 @@ export interface MetaOverlay extends BaseL10nOverlay {
 export interface CardLayoutOverlay10 extends BaseOverlay {
   backgroundColor?: string
   imageSource?: string
-  header?: OverlayHeader
-  footer?: OverlayFooter
+  header?: {
+    color?: string
+    backgroundColor?: string
+    imageSource?: string
+    hideIssuer?: boolean
+  }
+  footer?: {
+    color?: string
+    backgroundColor?: string
+  }
 }
 
 export interface CardLayoutOverlay11 extends BaseOverlay {
@@ -104,16 +112,11 @@ export interface CardLayoutOverlay11 extends BaseOverlay {
   }
 }
 
-export interface OverlayHeader {
-  color?: string
-  backgroundColor?: string
-  imageSource?: string
-  hideIssuer?: boolean
-}
-
-export interface OverlayFooter {
-  color?: string
-  backgroundColor?: string
+export interface CredentialOverlay<T> {
+  bundle?: OCABundle
+  presentationFields?: Field[]
+  metaOverlay?: MetaOverlay
+  cardLayoutOverlay?: T
 }
 
 export interface OCABundle {

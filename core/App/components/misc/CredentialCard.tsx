@@ -10,8 +10,8 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay11, CardOverlayType, MetaOverlay, OCABundle } from '../../types/oca'
-import { Attribute, Field } from '../../types/record'
+import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../../types/oca'
+import { Attribute } from '../../types/record'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -61,19 +61,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
   const [isRevoked, setIsRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
 
-  const [overlay, setOverlay] = useState<{
-    bundle: OCABundle | undefined
-    primaryField: Field | undefined
-    secondaryField: Field | undefined
-    metaOverlay: MetaOverlay | undefined
-    cardLayoutOverlay: CardLayoutOverlay11 | undefined
-  }>({
-    bundle: undefined,
-    primaryField: undefined,
-    secondaryField: undefined,
-    metaOverlay: undefined,
-    cardLayoutOverlay: undefined,
-  })
+  const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({})
+
+  const primaryField = overlay?.presentationFields?.find(
+    (field) => field.name === overlay?.cardLayoutOverlay?.primaryAttribute?.name
+  )
+  const secondaryField = overlay?.presentationFields?.find(
+    (field) => field.name === overlay?.cardLayoutOverlay?.secondaryAttribute?.name
+  )
 
   const styles = StyleSheet.create({
     container: {
@@ -149,8 +144,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       setOverlay({
         ...overlay,
         bundle: overlayBundle,
-        primaryField: fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name),
-        secondaryField: fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name),
+        presentationFields: fields,
         metaOverlay,
         cardLayoutOverlay,
       })
@@ -261,16 +255,16 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
             </Text>
           </View>
         </View>
-        {overlay.primaryField && (
+        {primaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(overlay.primaryField.label ?? startCase(overlay.primaryField.name ?? ''))}
-            {renderAttributeValue((overlay.primaryField as Attribute).value)}
+            {renderAttributeLabel(primaryField.label ?? startCase(primaryField.name ?? ''))}
+            {renderAttributeValue((primaryField as Attribute).value)}
           </View>
         )}
-        {overlay.secondaryField && (
+        {secondaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(overlay.secondaryField.label ?? startCase(overlay.secondaryField.name ?? ''))}
-            {renderAttributeValue((overlay.secondaryField as Attribute).value)}
+            {renderAttributeLabel(secondaryField.label ?? startCase(secondaryField.name ?? ''))}
+            {renderAttributeValue((secondaryField as Attribute).value)}
           </View>
         )}
       </View>
