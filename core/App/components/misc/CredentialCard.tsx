@@ -91,7 +91,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       backgroundColor:
         (overlay.cardLayoutOverlay?.backgroundImageSlice?.src
           ? 'rgba(0, 0, 0, 0)'
-          : overlay.cardLayoutOverlay?.secondaryBackgroundColor) || 'rgba(0, 0, 0, 0.24)',
+          : overlay.cardLayoutOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
     },
     primaryBodyContainer: {
       flex: 6,
@@ -139,15 +139,15 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     }
 
     Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle || defaultBundle
+      const overlayBundle = bundle ?? defaultBundle
       const metaOverlay = overlayBundle?.getMetaOverlay(i18n.language)
       const cardLayoutOverlay = overlayBundle?.getCardLayoutOverlay<CardLayoutOverlay11>(CardOverlayType.CardLayout11)
 
       setOverlay({
         ...overlay,
         bundle: overlayBundle,
-        primaryField: fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name) || undefined,
-        secondaryField: fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name) || undefined,
+        primaryField: fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name) ?? undefined,
+        secondaryField: fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name) ?? undefined,
         metaOverlay,
         cardLayoutOverlay,
       })
@@ -180,7 +180,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
               },
             ]}
           >
-            {(overlay.metaOverlay?.issuerName || overlay.metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
+            {(overlay.metaOverlay?.issuerName ?? overlay.metaOverlay?.name ?? 'C')?.charAt(0).toUpperCase()}
           </Text>
         )}
       </View>
@@ -260,13 +260,13 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
         </View>
         {overlay.primaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(overlay.primaryField.label ?? startCase(overlay.primaryField.name || ''))}
+            {renderAttributeLabel(overlay.primaryField.label ?? startCase(overlay.primaryField.name ?? ''))}
             {renderAttributeValue((overlay.primaryField as Attribute).value)}
           </View>
         )}
         {overlay.secondaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(overlay.secondaryField.label ?? startCase(overlay.secondaryField.name || ''))}
+            {renderAttributeLabel(overlay.secondaryField.label ?? startCase(overlay.secondaryField.name ?? ''))}
             {renderAttributeValue((overlay.secondaryField as Attribute).value)}
           </View>
         )}
