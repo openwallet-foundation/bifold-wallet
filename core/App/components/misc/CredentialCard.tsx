@@ -223,7 +223,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     )
   }
 
-  const renderCredentialCardPrimaryBody = () => {
+  const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View style={{ flexDirection: 'row' }}>
@@ -274,7 +274,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     )
   }
 
-  const renderCredentialCardSecondaryBody = () => {
+  const CredentialCardSecondaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardSecondaryBody')} style={styles.secondaryBodyContainer}>
         {overlay.cardLayoutOverlay?.backgroundImageSlice?.src ? (
@@ -294,7 +294,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     )
   }
 
-  const renderCredentialCardStatus = (status?: CredentialStatus) => {
+  const CredentialCardStatus: React.FC<{ status?: CredentialStatus }> = ({ status }) => {
     const renderStatus = (status?: CredentialStatus) => {
       switch (status) {
         case CredentialStatus.REVOKED:
@@ -322,12 +322,12 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     )
   }
 
-  const renderCredentialCard = (status?: CredentialStatus) => {
+  const CredentialCard: React.FC<{ status?: CredentialStatus }> = ({ status }) => {
     return (
       <View style={styles.cardContainer}>
-        {renderCredentialCardSecondaryBody()}
-        {renderCredentialCardPrimaryBody()}
-        {renderCredentialCardStatus(status)}
+        <CredentialCardSecondaryBody />
+        <CredentialCardPrimaryBody />
+        <CredentialCardStatus status={status} />
       </View>
     )
   }
@@ -339,7 +339,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      {renderCredentialCard(isRevoked ? CredentialStatus.REVOKED : undefined)}
+      <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
     </TouchableOpacity>
   ) : null
 }
