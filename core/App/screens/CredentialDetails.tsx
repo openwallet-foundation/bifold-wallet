@@ -95,7 +95,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       const date = new Date(credential.revocationNotification.revocationDate)
       setRevocationDate(date.toLocaleDateString(i18n.language, dateFormatOptions))
     }
-    OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
+    OCABundle.presentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
       setFields(fields)
     )
   }, [credential])

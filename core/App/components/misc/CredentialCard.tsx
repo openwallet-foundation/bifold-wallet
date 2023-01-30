@@ -10,7 +10,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay11, CardOverlayType, MetaOverlay, OCACredentialBundle } from '../../types/oca'
+import { CardLayoutOverlay11, CardOverlayType, MetaOverlay, OCABundle } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
@@ -62,7 +62,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   const [isRevoked, setIsRevoked] = useState<boolean>(credential.revocationNotification !== undefined)
 
   const [overlay, setOverlay] = useState<{
-    bundle: OCACredentialBundle | undefined
+    bundle: OCABundle | undefined
     primaryField: Field | undefined
     secondaryField: Field | undefined
     metaOverlay: MetaOverlay | undefined
@@ -128,26 +128,29 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     }
 
     const resolveBundle = async () => {
-      const bundle = await OCABundle.resolve(credential)
+      const bundle = await OCABundle.resolve(credential, {
+        language: i18n.language,
+        cardOverlayType: CardOverlayType.CardLayout11,
+      })
       const defaultBundle = await OCABundle.resolveDefaultBundle(credential)
       return { bundle, defaultBundle }
     }
 
     const resolvePresentationFields = async () => {
-      const fields = await OCABundle.getCredentialPresentationFields(credential, i18n.language)
+      const fields = await OCABundle.presentationFields(credential, i18n.language)
       return { fields }
     }
 
     Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
       const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.getMetaOverlay(i18n.language)
-      const cardLayoutOverlay = overlayBundle?.getCardLayoutOverlay<CardLayoutOverlay11>(CardOverlayType.CardLayout11)
+      const metaOverlay = overlayBundle?.metaOverlay
+      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay as CardLayoutOverlay11
 
       setOverlay({
         ...overlay,
         bundle: overlayBundle,
-        primaryField: fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name) ?? undefined,
-        secondaryField: fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name) ?? undefined,
+        primaryField: fields.find((field) => field.name === cardLayoutOverlay?.primaryAttribute?.name),
+        secondaryField: fields.find((field) => field.name === cardLayoutOverlay?.secondaryAttribute?.name),
         metaOverlay,
         cardLayoutOverlay,
       })

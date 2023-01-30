@@ -19,7 +19,7 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { OCACredentialBundle } from '../types/oca'
+import { OCABundle } from '../types/oca'
 import { Field } from '../types/record'
 import { isValidIndyCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
@@ -48,7 +48,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
 
   const [overlay, setOverlay] = useState<{
-    bundle: OCACredentialBundle | undefined
+    bundle: OCABundle | undefined
     presentationFields: Field[]
   }>({ bundle: undefined, presentationFields: [] })
 
@@ -125,7 +125,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
 
     const resolvePresentationFields = async () => {
-      const fields = await OCABundle.getCredentialPresentationFields(credential, i18n.language)
+      const fields = await OCABundle.presentationFields(credential, i18n.language)
       return { fields }
     }
 
