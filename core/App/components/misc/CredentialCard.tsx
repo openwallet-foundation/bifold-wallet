@@ -155,7 +155,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     setIsRevoked(credential.revocationNotification !== undefined)
   }, [credential.revocationNotification])
 
-  const renderCredentialCardLogo = () => {
+  const CredentialCardLogo: React.FC = () => {
     return (
       <View style={styles.logoContainer}>
         {overlay.cardLayoutOverlay?.logo?.src ? (
@@ -184,7 +184,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     )
   }
 
-  const renderAttributeLabel = (label: string) => {
+  const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
     return (
       <Text
         style={[
@@ -202,7 +202,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     )
   }
 
-  const renderAttributeValue = (value: string | number | null) => {
+  const AttributeValue: React.FC<{ value: string | number | null }> = ({ value }) => {
     return (
       <Text
         style={[
@@ -224,7 +224,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View style={{ flexDirection: 'row' }}>
-          {renderCredentialCardLogo()}
+          <CredentialCardLogo />
           <View style={{ marginLeft: -1 * padding, margin: -1 }}>
             <Text
               testID={testIdWithKey('CredentialIssuer')}
@@ -257,14 +257,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
         </View>
         {primaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(primaryField.label ?? startCase(primaryField.name ?? ''))}
-            {renderAttributeValue((primaryField as Attribute).value)}
+            <AttributeLabel label={primaryField.label ?? startCase(primaryField.name ?? '')} />
+            <AttributeValue value={(primaryField as Attribute).value} />
           </View>
         )}
         {secondaryField && (
           <View style={{ paddingTop: padding }}>
-            {renderAttributeLabel(secondaryField.label ?? startCase(secondaryField.name ?? ''))}
-            {renderAttributeValue((secondaryField as Attribute).value)}
+            <AttributeLabel label={secondaryField.label ?? startCase(secondaryField.name ?? '')} />
+            <AttributeValue value={(secondaryField as Attribute).value} />
           </View>
         )}
       </View>
@@ -292,7 +292,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
   }
 
   const CredentialCardStatus: React.FC<{ status?: CredentialStatus }> = ({ status }) => {
-    const renderStatus = (status?: CredentialStatus) => {
+    const Status: React.FC<{ status?: CredentialStatus }> = ({ status }) => {
       switch (status) {
         case CredentialStatus.REVOKED:
           return (
@@ -314,7 +314,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ credential, style = {},
 
     return (
       <View testID={testIdWithKey('CredentialCardStatus')} style={styles.statusContainer}>
-        {renderStatus(status)}
+        <Status status={status} />
       </View>
     )
   }
