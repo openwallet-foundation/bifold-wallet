@@ -1,7 +1,7 @@
 import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
-import { DefaultOCABundleResolver } from '../../App/types/oca'
+import { OCABundleResolver } from '../../App/types/oca'
 
 const configurationContext: ConfigurationContext = {
   pages: () => [],
@@ -11,7 +11,7 @@ const configurationContext: ConfigurationContext = {
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: () => null,
-  OCABundle: new DefaultOCABundleResolver(require('../../App/assets/oca-bundles.json')),
+  OCABundleResolver: new OCABundleResolver(require('../../App/assets/oca-bundles.json')),
   useBiometry: () => null,
   record: Record,
   settings: [],

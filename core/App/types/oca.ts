@@ -119,7 +119,7 @@ export interface CredentialOverlay<T> {
   cardLayoutOverlay?: T
 }
 
-export interface OCABundle {
+export interface DefaultOCABundle {
   get captureBase(): CaptureBaseOverlay
   get metaOverlay(): MetaOverlay | undefined
   get labelOverlay(): LabelOverlay | undefined
@@ -133,19 +133,22 @@ export interface OCABundleOptions {
   cardOverlayType?: CardOverlayType
 }
 
-export interface OCABundleResolver {
-  resolve(credential: CredentialExchangeRecord, options?: OCABundleOptions): Promise<OCABundle | undefined>
-  resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCABundle | undefined>
+export interface DefaultOCABundleResolver {
+  resolve(credential: CredentialExchangeRecord, language: string): Promise<OCABundle | undefined>
+  resolveDefaultBundle(credential: CredentialExchangeRecord, language: string): Promise<OCABundle | undefined>
   presentationFields(credential: CredentialExchangeRecord, language: string): Promise<Field[]>
 }
 
-export class DefaultOCABundle implements OCABundle {
+export class OCABundle implements DefaultOCABundle {
   private bundle: Bundle
   private options: OCABundleOptions
 
   public constructor(bundle: Bundle, options?: OCABundleOptions) {
     this.bundle = bundle
-    this.options = options || {}
+    this.options = {
+      cardOverlayType: options?.cardOverlayType ?? CardOverlayType.CardLayout11,
+      language: options?.language ?? 'en',
+    }
   }
 
   public get captureBase(): CaptureBaseOverlay {
@@ -189,39 +192,55 @@ export class DefaultOCABundle implements OCABundle {
   }
 }
 
-export class DefaultOCABundleResolver implements OCABundleResolver {
+export class OCABundleResolver implements DefaultOCABundleResolver {
   private bundles: Record<string, Bundle>
+  private options: OCABundleOptions
 
-  public constructor(bundles: Record<string, Bundle> = {}) {
+  public constructor(bundles: Record<string, Bundle> = {}, options?: OCABundleOptions) {
     this.bundles = bundles
+    this.options = {
+      cardOverlayType: options?.cardOverlayType ?? CardOverlayType.CardLayout11,
+      language: options?.language ?? 'en',
+    }
   }
 
-  public resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCABundle | undefined> {
-    const defaultOptions: OCABundleOptions = { language: 'en', cardOverlayType: CardOverlayType.CardLayout11 }
+  public get cardOverlayType() {
+    return this.options.cardOverlayType ?? CardOverlayType.CardLayout11
+  }
 
-    const defaultMetaOverlay: MetaOverlay = {
+  public resolveDefaultBundle(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
+    const metaOverlay: MetaOverlay = {
       capture_base: '',
       type: OverlayType.Meta10,
       name: parsedCredDefName(credential),
       issuerName: credential?.connectionId ?? '',
-      language: defaultOptions.language ?? 'en',
+      language: language ?? this.options?.language,
     }
 
-    const defaultCardLayoutOverlay: CardLayoutOverlay11 = {
+    const cardLayoutOverlay10: CardLayoutOverlay10 = {
+      capture_base: '',
+      type: OverlayType.CardLayout10,
+      backgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
+    }
+
+    const cardLayoutOverlay11: CardLayoutOverlay11 = {
       capture_base: '',
       type: OverlayType.CardLayout11,
-      primaryBackgroundColor: hashToRGBA(hashCode(defaultMetaOverlay?.name ?? '')),
+      primaryBackgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
     }
 
-    const defaultBundle: Bundle = {
+    const bundle: Bundle = {
       capture_base: { capture_base: '', type: OverlayType.Base10 },
-      overlays: [defaultMetaOverlay, defaultCardLayoutOverlay],
+      overlays: [
+        metaOverlay,
+        this.cardOverlayType === CardOverlayType.CardLayout10 ? cardLayoutOverlay10 : cardLayoutOverlay11,
+      ],
     }
 
-    return Promise.resolve(new DefaultOCABundle(defaultBundle, defaultOptions))
+    return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
   }
 
-  public resolve(credential: CredentialExchangeRecord, options: OCABundleOptions): Promise<OCABundle | undefined> {
+  public resolve(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
     const credentialDefinitionId = credential.metadata.get(
       CredentialMetadataKeys.IndyCredential
     )?.credentialDefinitionId
@@ -234,14 +253,14 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
         if (typeof bundle === 'string') {
           bundle = this.bundles[bundle]
         }
-        return Promise.resolve(new DefaultOCABundle(bundle, options))
+        return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
       }
     }
     return Promise.resolve(undefined)
   }
 
-  public async presentationFields(credential: CredentialExchangeRecord, language: string): Promise<Field[]> {
-    const bundle = await this.resolve(credential, { language })
+  public async presentationFields(credential: CredentialExchangeRecord, language = 'en'): Promise<Field[]> {
+    const bundle = await this.resolve(credential, language ?? this.options.language)
     const fields: Field[] = []
 
     if (bundle?.captureBase?.attributes) {
