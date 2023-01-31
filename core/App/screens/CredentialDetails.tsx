@@ -20,7 +20,7 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay, CardOverlayType, MetaOverlay, OCACredentialBundle } from '../types/oca'
+import { CardLayoutOverlay11, MetaOverlay, OCABundle } from '../types/oca'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
@@ -43,7 +43,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
-  const { OCABundle } = useConfiguration()
+  const { OCABundleResolver } = useConfiguration()
 
   const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
@@ -52,10 +52,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
 
   const [overlay, setOverlay] = useState<{
-    bundle: OCACredentialBundle | undefined
+    bundle: OCABundle | undefined
     presentationFields: Field[]
     metaOverlay: MetaOverlay | undefined
-    cardLayoutOverlay: CardLayoutOverlay | undefined
+    cardLayoutOverlay: CardLayoutOverlay11 | undefined
   }>({
     bundle: undefined,
     presentationFields: [],
@@ -147,20 +147,20 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     const resolveBundle = async () => {
-      const bundle = await OCABundle.resolve(credential)
-      const defaultBundle = await OCABundle.resolveDefaultBundle(credential)
+      const bundle = await OCABundleResolver.resolve(credential)
+      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential)
       return { bundle, defaultBundle }
     }
 
     const resolvePresentationFields = async () => {
-      const fields = await OCABundle.getCredentialPresentationFields(credential, i18n.language)
+      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
       return { fields }
     }
 
     Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
       const overlayBundle = bundle || defaultBundle
-      const metaOverlay = overlayBundle?.getMetaOverlay(i18n.language)
-      const cardLayoutOverlay = overlayBundle?.getCardLayoutOverlay<CardLayoutOverlay>(CardOverlayType.CARD_LAYOUT_10)
+      const metaOverlay = overlayBundle?.metaOverlay
+      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay
 
       setOverlay({ ...overlay, bundle: overlayBundle, presentationFields: fields, metaOverlay, cardLayoutOverlay })
     })

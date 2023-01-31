@@ -19,7 +19,7 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { OCACredentialBundle } from '../types/oca'
+import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
 import { Field } from '../types/record'
 import { isValidIndyCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
@@ -40,17 +40,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { t, i18n } = useTranslation()
   const { ListItems, ColorPallet } = useTheme()
   const { assertConnectedNetwork } = useNetwork()
-  const { OCABundle } = useConfiguration()
+  const { OCABundleResolver } = useConfiguration()
 
   const [, dispatch] = useStore()
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
 
-  const [overlay, setOverlay] = useState<{
-    bundle: OCACredentialBundle | undefined
-    presentationFields: Field[]
-  }>({ bundle: undefined, presentationFields: [] })
+  const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({ presentationFields: [] })
 
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
@@ -125,7 +122,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
 
     const resolvePresentationFields = async () => {
-      const fields = await OCABundle.getCredentialPresentationFields(credential, i18n.language)
+      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
       return { fields }
     }
 
@@ -222,7 +219,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record fields={overlay.presentationFields} header={header} footer={footer} />
+      <Record fields={overlay.presentationFields as Field[]} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
     </SafeAreaView>
   )

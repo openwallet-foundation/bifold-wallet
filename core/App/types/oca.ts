@@ -6,23 +6,24 @@ import { hashCode, hashToRGBA } from '../utils/helpers'
 import { Attribute, Field } from './record'
 
 export enum BaseType {
-  BINARY = 'Binary',
-  TEXT = 'Text',
-  DATETIME = 'DateTime',
-  NUMERIC = 'Numeric',
-  DATEINT = 'DateInt',
+  Binary = 'Binary',
+  Text = 'Text',
+  DateTime = 'DateTime',
+  Numeric = 'Numeric',
+  DateInt = 'DateInt',
 }
 
 export enum BaseOverlayType {
-  BASE_10 = 'spec/capture_base/1.0',
-  META_10 = 'spec/overlays/meta/1.0',
-  LABEL_10 = 'spec/overlays/label/1.0',
-  FORMAT_10 = 'spec/overlays/format/1.0',
-  ENCODING_10 = 'spec/overlays/character_encoding/1.0',
+  Base10 = 'spec/capture_base/1.0',
+  Meta10 = 'spec/overlays/meta/1.0',
+  Label10 = 'spec/overlays/label/1.0',
+  Format10 = 'spec/overlays/format/1.0',
+  CharacterEncoding10 = 'spec/overlays/character_encoding/1.0',
 }
 
 export enum CardOverlayType {
-  CARD_LAYOUT_10 = 'spec/overlays/card_layout/1.0',
+  CardLayout10 = 'spec/overlays/card_layout/1.0',
+  CardLayout11 = 'spec/overlays/card_layout/1.1',
 }
 
 export const OverlayType = { ...BaseOverlayType, ...CardOverlayType }
@@ -33,9 +34,7 @@ export interface Bundle {
   overlays: BaseOverlay[]
 }
 
-export interface Bundles {
-  [key: string]: Bundle | string
-}
+export type Bundles = Record<string, Bundle>
 
 export interface BaseOverlay {
   type: string
@@ -72,7 +71,22 @@ export interface MetaOverlay extends BaseL10nOverlay {
   issuerName?: string
 }
 
-export interface CardLayoutOverlay extends BaseOverlay {
+export interface CardLayoutOverlay10 extends BaseOverlay {
+  backgroundColor?: string
+  imageSource?: string
+  header?: {
+    color?: string
+    backgroundColor?: string
+    imageSource?: string
+    hideIssuer?: boolean
+  }
+  footer?: {
+    color?: string
+    backgroundColor?: string
+  }
+}
+
+export interface CardLayoutOverlay11 extends BaseOverlay {
   logo?: {
     src: string
   }
@@ -98,73 +112,75 @@ export interface CardLayoutOverlay extends BaseOverlay {
   }
 }
 
-export interface OverlayHeader {
-  color?: string
-  backgroundColor?: string
-  imageSource?: string
-  hideIssuer?: boolean
+export interface CredentialOverlay<T> {
+  bundle?: OCABundle
+  presentationFields?: Field[]
+  metaOverlay?: MetaOverlay
+  cardLayoutOverlay?: T
 }
 
-export interface OverlayFooter {
-  color?: string
-  backgroundColor?: string
+export interface DefaultOCABundle {
+  get captureBase(): CaptureBaseOverlay
+  get metaOverlay(): MetaOverlay | undefined
+  get labelOverlay(): LabelOverlay | undefined
+  get formatOverlay(): FormatOverlay | undefined
+  get characterEncodingOverlay(): CharacterEncodingOverlay | undefined
+  get cardLayoutOverlay(): CardLayoutOverlay10 | CardLayoutOverlay11 | undefined
 }
 
-export interface OCACredentialBundle {
-  getCaptureBase(): CaptureBaseOverlay
-  getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined
-  getLabelOverlay(language: string): LabelOverlay | undefined
-  getFormatOverlay(): FormatOverlay | undefined
-  getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined
-  getCardLayoutOverlay<T extends BaseOverlay>(type: CardOverlayType): T | undefined
-  getMetaOverlay(language: string): MetaOverlay | undefined
+export interface OCABundleResolverOptions {
+  language?: string
+  cardOverlayType?: CardOverlayType
 }
 
-export interface OCABundleResolver {
-  getCredentialPresentationFields(credential: CredentialExchangeRecord, language: string): Promise<Field[]>
-  loadDefaultBundles(): OCABundleResolver
-  loadBundles(bundles: Bundles): OCABundleResolver
-  resolve(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined>
-  resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined>
+export interface DefaultOCABundleResolver {
+  resolve(credential: CredentialExchangeRecord, language: string): Promise<OCABundle | undefined>
+  resolveDefaultBundle(credential: CredentialExchangeRecord, language: string): Promise<OCABundle | undefined>
+  presentationFields(credential: CredentialExchangeRecord, language: string): Promise<Field[]>
 }
 
-export class DefaultOCACredentialBundle implements OCACredentialBundle {
+export class OCABundle implements DefaultOCABundle {
   private bundle: Bundle
+  private options: OCABundleResolverOptions
 
-  public constructor(bundle: Bundle) {
+  public constructor(bundle: Bundle, options?: OCABundleResolverOptions) {
     this.bundle = bundle
+    this.options = {
+      cardOverlayType: options?.cardOverlayType ?? CardOverlayType.CardLayout11,
+      language: options?.language ?? 'en',
+    }
   }
 
-  public getCardLayoutOverlay<T extends BaseOverlay>(type: CardOverlayType): T | undefined {
-    return this.getOverlay<T>(type)
-  }
-
-  public getMetaOverlay(language: string): MetaOverlay | undefined {
-    return this.getOverlay<MetaOverlay>(OverlayType.META_10, language)
-  }
-
-  public getCaptureBase(): CaptureBaseOverlay {
-    const overlay = this.getOverlay<CaptureBaseOverlay>(OverlayType.BASE_10)
-    if (overlay === undefined) {
-      throw new Error('Expected Capture Base to be defined')
+  public get captureBase(): CaptureBaseOverlay {
+    const overlay = this.getOverlay<CaptureBaseOverlay>(OverlayType.Base10)
+    if (!overlay) {
+      throw new Error('Capture Base must be defined')
     }
     return overlay
   }
 
-  public getLabelOverlay(language: string): LabelOverlay | undefined {
-    return this.getOverlay<LabelOverlay>(OverlayType.LABEL_10, language)
+  public get metaOverlay(): MetaOverlay | undefined {
+    return this.getOverlay<MetaOverlay>(OverlayType.Meta10, this.options.language)
   }
 
-  public getFormatOverlay(): FormatOverlay | undefined {
-    return this.getOverlay<FormatOverlay>(OverlayType.FORMAT_10)
+  public get labelOverlay(): LabelOverlay | undefined {
+    return this.getOverlay<LabelOverlay>(OverlayType.Label10, this.options.language)
   }
 
-  public getCharacterEncodingOverlay(): CharacterEncodingOverlay | undefined {
-    return this.getOverlay<CharacterEncodingOverlay>(OverlayType.ENCODING_10)
+  public get formatOverlay(): FormatOverlay | undefined {
+    return this.getOverlay<FormatOverlay>(OverlayType.Format10)
   }
 
-  public getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined {
-    if (type === OverlayType.BASE_10) {
+  public get characterEncodingOverlay(): CharacterEncodingOverlay | undefined {
+    return this.getOverlay<CharacterEncodingOverlay>(OverlayType.CharacterEncoding10)
+  }
+
+  public get cardLayoutOverlay(): CardLayoutOverlay10 | CardLayoutOverlay11 | undefined {
+    return this.getOverlay(this.options?.cardOverlayType || CardOverlayType.CardLayout11)
+  }
+
+  private getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined {
+    if (type === OverlayType.Base10) {
       return (this.bundle as Bundle).capture_base as unknown as T
     }
     if (language !== undefined) {
@@ -176,14 +192,60 @@ export class DefaultOCACredentialBundle implements OCACredentialBundle {
   }
 }
 
-export class DefaultOCABundleResolver implements OCABundleResolver {
-  private bundles: Bundles = {}
+export class OCABundleResolver implements DefaultOCABundleResolver {
+  private bundles: Record<string, Bundle>
+  private options: OCABundleResolverOptions
 
-  public resolve(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined> {
+  public constructor(bundles: Record<string, Bundle> = {}, options?: OCABundleResolverOptions) {
+    this.bundles = bundles
+    this.options = {
+      cardOverlayType: options?.cardOverlayType ?? CardOverlayType.CardLayout11,
+      language: options?.language ?? 'en',
+    }
+  }
+
+  public get cardOverlayType() {
+    return this.options.cardOverlayType ?? CardOverlayType.CardLayout11
+  }
+
+  public resolveDefaultBundle(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
+    const metaOverlay: MetaOverlay = {
+      capture_base: '',
+      type: OverlayType.Meta10,
+      name: parsedCredDefName(credential),
+      issuerName: credential?.connectionId ?? '',
+      language: language ?? this.options?.language,
+    }
+
+    const cardLayoutOverlay10: CardLayoutOverlay10 = {
+      capture_base: '',
+      type: OverlayType.CardLayout10,
+      backgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
+    }
+
+    const cardLayoutOverlay11: CardLayoutOverlay11 = {
+      capture_base: '',
+      type: OverlayType.CardLayout11,
+      primaryBackgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
+    }
+
+    const bundle: Bundle = {
+      capture_base: { capture_base: '', type: OverlayType.Base10 },
+      overlays: [
+        metaOverlay,
+        this.cardOverlayType === CardOverlayType.CardLayout10 ? cardLayoutOverlay10 : cardLayoutOverlay11,
+      ],
+    }
+
+    return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
+  }
+
+  public resolve(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
     const credentialDefinitionId = credential.metadata.get(
       CredentialMetadataKeys.IndyCredential
     )?.credentialDefinitionId
     const schemaId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
+
     for (const item of [credentialDefinitionId, schemaId]) {
       if (item && this.bundles[item] !== undefined) {
         let bundle = this.bundles[item]
@@ -191,92 +253,47 @@ export class DefaultOCABundleResolver implements OCABundleResolver {
         if (typeof bundle === 'string') {
           bundle = this.bundles[bundle]
         }
-        return Promise.resolve(new DefaultOCACredentialBundle(bundle as Bundle))
+        return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
       }
     }
     return Promise.resolve(undefined)
   }
 
-  public resolveDefaultBundle(credential: CredentialExchangeRecord): Promise<OCACredentialBundle | undefined> {
-    const defaultMetaOverlay: MetaOverlay = {
-      capture_base: '',
-      type: OverlayType.META_10,
-      name: parsedCredDefName(credential),
-      language: 'en',
-      issuerName: credential?.connectionId ?? '',
-    }
-    const defaultCardLayoutLayer: CardLayoutOverlay = {
-      capture_base: '',
-      type: OverlayType.CARD_LAYOUT_10,
-      primaryBackgroundColor: hashToRGBA(hashCode(defaultMetaOverlay?.name ?? '')),
-    }
-    const bundle: Bundle = {
-      capture_base: { capture_base: '', type: OverlayType.BASE_10 },
-      overlays: [defaultMetaOverlay, defaultCardLayoutLayer],
-    }
-    return Promise.resolve(new DefaultOCACredentialBundle(bundle))
-  }
+  public async presentationFields(credential: CredentialExchangeRecord, language = 'en'): Promise<Field[]> {
+    const bundle = await this.resolve(credential, language ?? this.options.language)
+    const fields: Field[] = []
 
-  public loadBundles(bundles: Bundles): OCABundleResolver {
-    Object.assign(this.bundles, bundles)
-    return this
-  }
-
-  public loadDefaultBundles(): OCABundleResolver {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return this.loadBundles(require('../assets/oca-bundles.json'))
-  }
-
-  public async getCredentialPresentationFields(
-    credential: CredentialExchangeRecord,
-    language: string
-  ): Promise<Array<Field>> {
-    const bundle = await this.resolve(credential)
-    const baseOverlay = bundle?.getCaptureBase()
-    const labelOverlay = bundle?.getLabelOverlay(language)
-    const formatOverlay = bundle?.getFormatOverlay()
-    const characterEncodingOverlay = bundle?.getCharacterEncodingOverlay()
-    const _fields: Array<Field> = []
-    if (baseOverlay && baseOverlay.attributes) {
-      for (const key in baseOverlay?.attributes) {
-        if (Object.prototype.hasOwnProperty.call(baseOverlay?.attributes, key)) {
-          const _sourceField = credential?.credentialAttributes?.find((item) => item.name === key)
-          if (_sourceField) {
-            const _field: Field = {
-              name: _sourceField.name,
-              value: _sourceField.value,
-              mimeType: _sourceField.mimeType,
-            } as Attribute
-            if (labelOverlay?.attr_labels[key]) {
-              _field.label = labelOverlay?.attr_labels[key]
-            }
-            _field.format = formatOverlay?.attr_formats[key]
-            _field.type = baseOverlay?.attributes[key]
-            _field.encoding = characterEncodingOverlay?.attr_character_encoding[key]
-
-            _fields.push(_field)
+    if (bundle?.captureBase?.attributes) {
+      for (const key in bundle?.captureBase?.attributes) {
+        if (bundle?.captureBase?.attributes[key]) {
+          const sourceAttribute = credential?.credentialAttributes?.find((item) => item.name === key)
+          if (sourceAttribute) {
+            const field: Field = this.processField(sourceAttribute, key, bundle)
+            fields.push(field)
           }
         }
       }
-    } else {
-      if (credential.credentialAttributes) {
-        for (const _sourceField of credential.credentialAttributes) {
-          const _field: Field = {
-            name: _sourceField.name,
-            value: _sourceField.value,
-            mimeType: _sourceField.mimeType,
-          } as Attribute
-          if (labelOverlay?.attr_labels[_sourceField.name]) {
-            _field.label = labelOverlay?.attr_labels[_sourceField.name]
-          }
-          _field.format = formatOverlay?.attr_formats[_sourceField.name]
-          _field.type = baseOverlay?.attributes?.[_sourceField.name]
-          _field.encoding = characterEncodingOverlay?.attr_character_encoding[_sourceField.name]
-
-          _fields.push(_field)
-        }
+    } else if (credential.credentialAttributes) {
+      for (const sourceAttribute of credential.credentialAttributes) {
+        const field: Field = this.processField(sourceAttribute, sourceAttribute.name, bundle)
+        fields.push(field)
       }
     }
-    return _fields
+
+    return fields
+  }
+
+  private processField(source: Attribute, key: string, bundle?: OCABundle) {
+    const { name, value, mimeType } = source
+    const field: Attribute | Field = {
+      name,
+      value,
+      mimeType,
+      label: bundle?.labelOverlay?.attr_labels[key],
+      format: bundle?.formatOverlay?.attr_formats[key],
+      type: bundle?.captureBase?.attributes?.[key],
+      encoding: bundle?.characterEncodingOverlay?.attr_character_encoding[key],
+    }
+    return field
   }
 }
