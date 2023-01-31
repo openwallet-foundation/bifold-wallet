@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Modal, Switch, StatusBar, Platform, ScrollView } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  Switch,
+  StatusBar,
+  Platform,
+  ScrollView,
+  TouchableWithoutFeedback,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Biometrics from '../assets/img/biometrics.svg'
@@ -148,16 +158,17 @@ const UseBiometry: React.FC = () => {
             <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <Switch
-              accessibilityLabel={t('Biometry.Toggle')}
-              testID={testIdWithKey('ToggleBiometrics')}
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={biometryEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-              onValueChange={toggleSwitch}
-              value={biometryEnabled}
-              disabled={!biometryAvailable}
-            />
+            <TouchableWithoutFeedback accessibilityLabel={t('Biometry.Toggle')} accessibilityRole={'switch'}>
+              <Switch
+                testID={testIdWithKey('ToggleBiometrics')}
+                trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+                thumbColor={biometryEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+                ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+                onValueChange={toggleSwitch}
+                value={biometryEnabled}
+                disabled={!biometryAvailable}
+              />
+            </TouchableWithoutFeedback>
           </View>
         </View>
       </ScrollView>
