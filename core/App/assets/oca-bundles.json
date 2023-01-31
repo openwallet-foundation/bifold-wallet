@@ -1,6 +1,6 @@
 {
   "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card": {
-    "capture_base": {
+    "captureBase": {
       "attributes": {
         "student_first_name": "Text",
         "student_last_name": "Text"
@@ -8,36 +8,36 @@
     },
     "overlays": [
       {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
         "type": "spec/overlays/meta/1.0",
         "language": "en",
         "name": "Student"
       },
       {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
         "type": "spec/overlays/meta/1.0",
         "language": "fr",
         "name": "Étudiant"
       },
       {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
         "type": "spec/overlays/label/1.0",
         "language": "en",
-        "attr_labels": {
+        "attributeLabels": {
           "student_first_name": "First Name",
           "student_last_name": "Last Name"
         }
       },
       {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
         "type": "spec/overlays/label/1.0",
         "language": "fr",
-        "attr_labels": {
+        "attributeLabels": {
           "student_last_name": "nom de famille"
         }
       },
       {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
         "type": "spec/overlays/card_layout/1.0",
         "language": "en",
         "backgroundColor": "#FFFFFF",
