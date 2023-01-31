@@ -128,7 +128,7 @@ export interface DefaultOCABundle {
   get cardLayoutOverlay(): CardLayoutOverlay10 | CardLayoutOverlay11 | undefined
 }
 
-export interface OCABundleOptions {
+export interface OCABundleResolverOptions {
   language?: string
   cardOverlayType?: CardOverlayType
 }
@@ -141,9 +141,9 @@ export interface DefaultOCABundleResolver {
 
 export class OCABundle implements DefaultOCABundle {
   private bundle: Bundle
-  private options: OCABundleOptions
+  private options: OCABundleResolverOptions
 
-  public constructor(bundle: Bundle, options?: OCABundleOptions) {
+  public constructor(bundle: Bundle, options?: OCABundleResolverOptions) {
     this.bundle = bundle
     this.options = {
       cardOverlayType: options?.cardOverlayType ?? CardOverlayType.CardLayout11,
@@ -194,9 +194,9 @@ export class OCABundle implements DefaultOCABundle {
 
 export class OCABundleResolver implements DefaultOCABundleResolver {
   private bundles: Record<string, Bundle>
-  private options: OCABundleOptions
+  private options: OCABundleResolverOptions
 
-  public constructor(bundles: Record<string, Bundle> = {}, options?: OCABundleOptions) {
+  public constructor(bundles: Record<string, Bundle> = {}, options?: OCABundleResolverOptions) {
     this.bundles = bundles
     this.options = {
       cardOverlayType: options?.cardOverlayType ?? CardOverlayType.CardLayout11,
