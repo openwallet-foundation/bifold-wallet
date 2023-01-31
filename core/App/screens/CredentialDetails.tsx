@@ -1,5 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
+import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,6 +8,7 @@ import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
+import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
@@ -20,7 +22,7 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay11, MetaOverlay, OCABundle } from '../types/oca'
+import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../types/oca'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
@@ -51,12 +53,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
 
-  const [overlay, setOverlay] = useState<{
-    bundle: OCABundle | undefined
-    presentationFields: Field[]
-    metaOverlay: MetaOverlay | undefined
-    cardLayoutOverlay: CardLayoutOverlay11 | undefined
-  }>({
+  const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({
     bundle: undefined,
     presentationFields: [],
     metaOverlay: undefined,
@@ -76,7 +73,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       backgroundColor:
         (overlay.cardLayoutOverlay?.backgroundImage?.src
           ? 'rgba(0, 0, 0, 0)'
-          : overlay.cardLayoutOverlay?.secondaryBackgroundColor) || 'rgba(0, 0, 0, 0.24)',
+          : overlay.cardLayoutOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
     },
     primaryHeaderContainer: {
       paddingHorizontal,
@@ -158,7 +155,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle || defaultBundle
+      const overlayBundle = bundle ?? defaultBundle
       const metaOverlay = overlayBundle?.metaOverlay
       const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay
 
@@ -216,7 +213,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const callCancelRemove = useCallback(() => handleCancelRemove(), [])
   const callDismissRevokedMessage = useCallback(() => handleDismissRevokedMessage(), [])
 
-  const renderCredentialCardLogo = () => {
+  const CredentialCardLogo: React.FC = () => {
     return (
       <View style={styles.logoContainer}>
         {overlay.cardLayoutOverlay?.logo?.src ? (
@@ -228,18 +225,18 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           />
         ) : (
           <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight }]}>
-            {(overlay.metaOverlay?.issuerName || overlay.metaOverlay?.name || 'C')?.charAt(0).toUpperCase()}
+            {(overlay.metaOverlay?.issuerName ?? overlay.metaOverlay?.name ?? 'C')?.charAt(0).toUpperCase()}
           </Text>
         )}
       </View>
     )
   }
 
-  const renderCredentialDetailPrimaryHeader = () => {
+  const CredentialDetailPrimaryHeader: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialDetailsPrimaryHeader')} style={styles.primaryHeaderContainer}>
         <View style={{ flexDirection: 'row', paddingBottom: paddingVertical }}>
-          {renderCredentialCardLogo()}
+          <CredentialCardLogo />
           <Text
             testID={testIdWithKey('CredentialIssuer')}
             style={[
@@ -272,7 +269,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     )
   }
 
-  const renderCredentialDetailSecondaryHeader = () => {
+  const CredentialDetailSecondaryHeader: React.FC = () => {
     return (
       <>
         {overlay.cardLayoutOverlay?.backgroundImage?.src ? (
@@ -291,26 +288,39 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     )
   }
 
-  const header = () => {
+  const CredentialRevocationMessage: React.FC<{ credential: CredentialExchangeRecord }> = ({ credential }) => {
     return (
+      <InfoBox
+        notificationType={InfoBoxType.Error}
+        title={t('CredentialDetails.CredentialRevokedMessageTitle') + ' ' + revocationDate}
+        description={
+          credential?.revocationNotification?.comment
+            ? credential.revocationNotification.comment
+            : t('CredentialDetails.CredentialRevokedMessageBody')
+        }
+        onCallToActionLabel={t('Global.Dismiss')}
+        onCallToActionPressed={callDismissRevokedMessage}
+      />
+    )
+  }
+
+  const header = () => {
+    return OCABundleResolver.cardOverlayType === CardOverlayType.CardLayout10 ? (
+      <View>
+        {isRevoked && !isRevokedMessageHidden ? (
+          <View style={{ padding: paddingVertical, paddingBottom: 0 }}>
+            {credential && <CredentialRevocationMessage credential={credential} />}
+          </View>
+        ) : null}
+        {credential && <CredentialCard credential={credential} style={{ margin: 16 }} />}
+      </View>
+    ) : (
       <View style={styles.container}>
-        {renderCredentialDetailSecondaryHeader()}
-        {renderCredentialDetailPrimaryHeader()}
+        <CredentialDetailSecondaryHeader />
+        <CredentialDetailPrimaryHeader />
         {isRevoked && !isRevokedMessageHidden ? (
           <View style={{ padding: paddingVertical, paddingTop: 0 }}>
-            {credential && (
-              <InfoBox
-                notificationType={InfoBoxType.Error}
-                title={t('CredentialDetails.CredentialRevokedMessageTitle')}
-                description={
-                  credential?.revocationNotification?.comment
-                    ? credential.revocationNotification.comment
-                    : t('CredentialDetails.CredentialRevokedMessageBody')
-                }
-                onCallToActionLabel={t('Global.Dismiss')}
-                onCallToActionPressed={callDismissRevokedMessage}
-              />
-            )}
+            {credential && <CredentialRevocationMessage credential={credential} />}
           </View>
         ) : null}
       </View>
@@ -358,7 +368,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      <Record fields={overlay.presentationFields} hideFieldValues header={header} footer={footer} />
+      <Record fields={overlay.presentationFields as Field[]} hideFieldValues header={header} footer={footer} />
       <CommonRemoveModal
         removeType={RemoveType.Credential}
         visible={isRemoveModalDisplayed}
