@@ -6,8 +6,12 @@ import {
   RequestedPredicate,
   RetrievedCredentials,
   IndyCredentialInfo,
-  IndyRetrievedCredentialsFormat,
+  IndyProofFormat,
 } from '@aries-framework/core'
+import {
+  FormatDataMessagePayload,
+  FormatRetrievedCredentialOptions,
+} from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
 import { parseUrl } from 'query-string'
@@ -105,53 +109,67 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-//TODO:(jl) Better type than "any" for format?
-export const processProofAttributes = (format?: any, credentials?: IndyRetrievedCredentialsFormat): Attribute[] => {
+export const processProofAttributes = (
+  request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+): Attribute[] => {
   const processedAttributes = [] as Attribute[]
 
-  if (!format || !credentials) {
+  if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
     return processedAttributes
   }
 
-  const { requestedAttributes } = credentials
+  const requestedProofAttributes = request.indy.requested_attributes
+  const retrievedCredentialAttributes = credentials.proofFormats.indy.requestedAttributes
 
-  for (const key of Object.keys(requestedAttributes)) {
-    const credential = (requestedAttributes[key] ?? []).sort(credentialSortFn).shift()
+  for (const key of Object.keys(retrievedCredentialAttributes)) {
+    // The shift operation modifies the original input array, therefore make a copy
+    const credential = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn).shift()
+
     if (!credential) {
       return processedAttributes
     }
 
     const { credentialId, revoked, credentialInfo } = credential
-    const name = format.request.indy['requested_attributes'][key]['name']
-    const value = (credentialInfo as IndyCredentialInfo).attributes[name]
-    processedAttributes.push({
-      credentialId,
-      revoked,
-      name,
-      value,
-    })
+    const { name, names } = requestedProofAttributes[key]
+
+    for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
+      const attributeValue = (credentialInfo as IndyCredentialInfo).attributes[attributeName]
+      processedAttributes.push({
+        credentialId,
+        revoked,
+        name: attributeName,
+        value: attributeValue,
+      })
+    }
   }
 
   return processedAttributes
 }
 
-export const processProofPredicates = (format?: any, credentials?: IndyRetrievedCredentialsFormat): Predicate[] => {
+export const processProofPredicates = (
+  request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+): Predicate[] => {
   const processedPredicates = [] as Predicate[]
 
-  if (!format || !credentials) {
+  if (!(request?.indy?.requested_predicates && credentials?.proofFormats?.indy?.requestedPredicates)) {
     return processedPredicates
   }
 
-  const { requestedPredicates } = credentials
+  const requestedProofPredicates = request.indy.requested_predicates
+  const retrievedCredentialPredicates = credentials.proofFormats.indy.requestedPredicates
 
-  for (const key of Object.keys(requestedPredicates)) {
-    const credential = (requestedPredicates[key] ?? []).sort(credentialSortFn).shift()
+  for (const key of Object.keys(requestedProofPredicates)) {
+    // The shift operation modifies the original input array, therefore make a copy
+    const credential = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn).shift()
+
     if (!credential) {
       return processedPredicates
     }
 
     const { credentialId, revoked } = credential
-    const { name, p_type: pType, p_value: pValue } = format.request.indy['requested_predicates'][key]
+    const { name, p_type: pType, p_value: pValue } = requestedProofPredicates[key]
 
     processedPredicates.push({
       credentialId,
