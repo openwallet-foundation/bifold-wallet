@@ -108,6 +108,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 11
+          cache: 'gradle'
 
       - name: Setup Android SDK
         working-directory: ./app/android
@@ -138,6 +139,6 @@ jobs:
           node -v && yarn -v && yarn install --immutable && \
           git status
 
-      - name: Android Debug Build
+      - name: Android Release Build
         working-directory: ./app/android
-        run: ./gradlew bundleRelease
+        run: ./gradlew --no-daemon bundleRelease
