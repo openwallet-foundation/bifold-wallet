@@ -1,6 +1,5 @@
 import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
-import { act } from 'react-test-renderer'
 
 import { AuthContext } from '../../App/contexts/auth'
 import UseBiometry from '../../App/screens/UseBiometry'
