@@ -45,7 +45,8 @@ function mulberry32(a: number) {
 export function hashToRGBA(hash: number) {
   let color = '#'
   for (let i = 0; i < 3; i++) {
-    color += ('0' + Math.floor((mulberry32(hash + i) * Math.pow(16, 2)) / 2).toString(16)).slice(-2)
+    // tack on a two-char hexidecimal value from the lower half of the color spectrum for r, g, b
+    color += ('0' + Math.floor((mulberry32(hash + i) * 256) / 2).toString(16)).slice(-2)
   }
 
   return color
