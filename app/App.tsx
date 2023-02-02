@@ -1,5 +1,6 @@
 import {
   AgentProvider,
+  CommonUtilProvider,
   AuthProvider,
   ConfigurationProvider,
   NetworkProvider,
@@ -38,20 +39,22 @@ const App = () => {
       <AgentProvider>
         <ThemeProvider value={theme}>
           <ConfigurationProvider value={defaultConfiguration}>
-            <AuthProvider>
-              <NetworkProvider>
-                <StatusBar
-                  hidden={false}
-                  barStyle="light-content"
-                  backgroundColor={theme.ColorPallet.brand.primary}
-                  translucent={false}
-                />
-                <NetInfo />
-                <ErrorModal />
-                <RootStack />
-                <Toast topOffset={15} config={toastConfig} />
-              </NetworkProvider>
-            </AuthProvider>
+            <CommonUtilProvider>
+              <AuthProvider>
+                <NetworkProvider>
+                  <StatusBar
+                    hidden={false}
+                    barStyle="light-content"
+                    backgroundColor={theme.ColorPallet.brand.primary}
+                    translucent={false}
+                  />
+                  <NetInfo />
+                  <ErrorModal />
+                  <RootStack />
+                  <Toast topOffset={15} config={toastConfig} />
+                </NetworkProvider>
+              </AuthProvider>
+            </CommonUtilProvider>
           </ConfigurationProvider>
         </ThemeProvider>
       </AgentProvider>

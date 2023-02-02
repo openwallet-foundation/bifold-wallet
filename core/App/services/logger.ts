@@ -71,9 +71,12 @@ export class AppConsoleLogger {
 
     // Log, with or without data
     if (data) {
-      console[consoleLevel](`${prefix}: ${message}`, JSON.stringify(data, replaceError, 2))
+      console[consoleLevel](
+        `${prefix}: ${new Date().toISOString()} - ${message}`,
+        JSON.stringify(data, replaceError, 2)
+      )
     } else {
-      console[consoleLevel](`${prefix}: ${message}`)
+      console[consoleLevel](`${prefix}:  ${new Date().toISOString()} - ${message}`)
     }
   }
 
