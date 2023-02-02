@@ -28,9 +28,27 @@ export function hashCode(s: string): number {
   return s.split('').reduce((hash, char) => char.charCodeAt(0) + ((hash << 5) - hash), 0)
 }
 
-export function hashToRGBA(i: number) {
-  const colour = (i & 0x00ffffff).toString(16).toUpperCase()
-  return '#' + '00000'.substring(0, 6 - colour.length) + colour
+/**
+ * seeded random number generator between 0-1
+ * Adapted from https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
+ */
+function mulberry32(a: number) {
+  let t = (a += 0x6d2b79f5)
+  t = Math.imul(t ^ (t >>> 15), t | 1)
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+}
+
+/**
+ * Adapted from https://helderesteves.com/generating-random-colors-js/#Generating_random_dark_colors
+ */
+export function hashToRGBA(hash: number) {
+  let color = '#'
+  for (let i = 0; i < 3; i++) {
+    color += ('0' + Math.floor((mulberry32(hash + i) * Math.pow(16, 2)) / 2).toString(16)).slice(-2)
+  }
+
+  return color
 }
 
 /**
