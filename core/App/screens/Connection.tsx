@@ -1,3 +1,4 @@
+import { DidExchangeState } from '@aries-framework/core'
 import { useConnectionById, useAgent } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -75,7 +76,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     // FIX:(jl) There may be a better way to fetch queued messages.
     // Under investigation.
-    if (connection && connection.state === 'completed') {
+    if (connection && connection.state === DidExchangeState.Completed) {
       agent?.mediationRecipient.initiateMessagePickup()
     }
   }, [connection])
