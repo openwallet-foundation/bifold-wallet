@@ -10,6 +10,7 @@ import * as components from './components'
 import LoadingIndicator from './components/animated/LoadingIndicator'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
+import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import Record from './components/record/Record'
@@ -19,6 +20,7 @@ import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
+import { CommonUtilProvider } from './contexts/commons'
 import { NetworkProvider } from './contexts/network'
 import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
@@ -65,6 +67,7 @@ export {
   LoadingIndicator,
   indyLedgers,
   Agent,
+  CommonUtilProvider,
   AgentProvider,
   AuthProvider,
   NetworkProvider,
@@ -73,6 +76,8 @@ export {
   CheckBoxRow,
   ErrorModal,
   InfoTextBox,
+  InfoBox,
+  InfoBoxType,
   ToastType,
   toastConfig,
   RootStack,

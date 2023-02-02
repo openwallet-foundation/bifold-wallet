@@ -171,14 +171,14 @@ const translation = {
     "ContactRemoved": "Contato removido"
   },
   "WhatAreContacts": {
-    "Title": "What are Contacts? (PT-BR)",
-    "Preamble": "Adding organizations as a Contact will allow you to: (PT-BR)",
-    "ListItemCredentialUpdates": "Get updates to credentials issued by this organization (PT-BR)",
-    "ListItemNewCredentials": "Get offered new credentials (PT-BR)",
-    "ListItemProofRequest": "Fast-track proof requests (PT-BR)",
-    "RemoveContacts": "You can always remove Contacts at any time from your (PT-BR)",
-    "ContactsLink": "Contacts list (PT-BR)",
-    "ContactSharing": "Use of your credentials is never shared with your Contacts. (PT-BR)"
+    "Title": "O que são Contatos?",
+    "Preamble": "Adicionar organizações como um Contato irá possibilitar que você:",
+    "ListItemCredentialUpdates": "Receba atualizações de credenciais emitidas por esta organização.",
+    "ListItemNewCredentials": "Receba ofertas de novas credenciais.",
+    "ListItemProofRequest": "Acompanhe requisições de prova.",
+    "RemoveContacts": "Você sempre pode remover Contatos a qualquer momento de sua",
+    "ContactsLink": "Lista de Contatos",
+    "ContactSharing": "O uso de suas credenciais nunca é compartilhado com seus Contatos.",
   },
   "Credentials": {
     "CredentialsNotFound": "Credenciais não encontradas",
