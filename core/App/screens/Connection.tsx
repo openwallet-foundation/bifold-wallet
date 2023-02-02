@@ -1,3 +1,5 @@
+import { DidExchangeState } from '@aries-framework/core'
+import { useConnectionById, useAgent } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -17,7 +19,18 @@ const connectionTimerDelay = 10000 // in ms
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
+  if (!navigation || !route) {
+    throw new Error('Connection route props were not set properly')
+  }
+
   const { connectionId, threadId } = route.params
+
+  if (!connectionId) {
+    throw new Error('connectionId route prams was not set properly')
+  }
+
+  const connection = useConnectionById(connectionId)
+  const { agent } = useAgent()
   const { t } = useTranslation()
   const [state, setState] = useState<{
     isVisible: boolean
@@ -59,6 +72,14 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       marginTop: 20,
     },
   })
+
+  useEffect(() => {
+    // FIX:(jl) There may be a better way to fetch queued messages.
+    // Under investigation.
+    if (connection && connection.state === DidExchangeState.Completed) {
+      agent?.mediationRecipient.initiateMessagePickup()
+    }
+  }, [connection])
 
   const setModalVisible = (value: boolean) => {
     setState((prev) => ({ ...prev, isVisible: value }))
