@@ -20,7 +20,7 @@ import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
-import { CommonUtilProvider, appLog } from './contexts/commons'
+import { CommonUtilProvider } from './contexts/commons'
 import { NetworkProvider } from './contexts/network'
 import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
@@ -94,5 +94,4 @@ export {
   types,
   components,
   contexts,
-  appLog,
 }
