@@ -20,6 +20,7 @@ import toastConfig from './components/toast/ToastConfig'
 import HomeContentView from './components/views/HomeContentView'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
+import { CommonUtilProvider } from './contexts/commons'
 import { NetworkProvider } from './contexts/network'
 import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
@@ -66,6 +67,7 @@ export {
   LoadingIndicator,
   indyLedgers,
   Agent,
+  CommonUtilProvider,
   AgentProvider,
   AuthProvider,
   NetworkProvider,
