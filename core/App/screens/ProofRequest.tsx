@@ -1,11 +1,16 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import {
+  IndyProofFormat,
+  IndyRetrievedCredentialsFormat,
   ProofExchangeRecord,
   RequestedAttribute,
   RequestedPredicate,
-  RetrievedCredentials,
 } from '@aries-framework/core'
+import {
+  FormatRetrievedCredentialOptions,
+  GetFormatDataReturn,
+} from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -42,20 +47,22 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { proofId } = route?.params
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [, dispatch] = useStore()
-  const [pendingModalVisible, setPendingModalVisible] = useState(false)
-  const [retrievedCredentials, setRetrievedCredentials] = useState<RetrievedCredentials>()
-  const [attributes, setAttributes] = useState<Attribute[]>([])
-  const [predicates, setPredicates] = useState<Predicate[]>([])
+  const { assertConnectedNetwork } = useNetwork()
+
   const proof = useProofById(proofId)
   const proofConnectionLabel = proof?.connectionId
     ? useConnectionById(proof.connectionId)?.theirLabel
     : proof?.connectionId ?? ''
-  // This syntax is required for the jest mocks to work
-  // eslint-disable-next-line import/no-named-as-default-member
+
+  const [, dispatch] = useStore()
+  const [pendingModalVisible, setPendingModalVisible] = useState(false)
+  const [retrievedCredentials, setRetrievedCredentials] = useState<IndyRetrievedCredentialsFormat>()
+  const [attributes, setAttributes] = useState<Attribute[]>([])
+  const [predicates, setPredicates] = useState<Predicate[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const { assertConnectedNetwork } = useNetwork()
+
   const { ColorPallet, ListItems, TextTheme } = useTheme()
+
   const styles = StyleSheet.create({
     headerTextContainer: {
       paddingHorizontal: 25,
@@ -125,10 +132,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       return
     }
     setLoading(true)
+
     const retrieveCredentialsForProof = async (
       proof: ProofExchangeRecord
-      // @ts-ignore
-    ): Promise<{ format: any; credentials: any }> => {
+    ): Promise<
+      | {
+          format: GetFormatDataReturn<[IndyProofFormat]>
+          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+        }
+      | undefined
+    > => {
       try {
         const format = await agent.proofs.getFormatData(proof.id)
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
@@ -160,15 +173,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     retrieveCredentialsForProof(proof)
+      .then((retrieved) => retrieved ?? { format: undefined, credentials: undefined })
       .then(({ format, credentials }) => {
-        if (!credentials || !format) {
+        if (!(format && credentials)) {
           return
         }
 
-        const attributes = processProofAttributes(format, credentials.proofFormats.indy)
-        const predicates = processProofPredicates(format, credentials.proofFormats.indy)
+        const attributes = processProofAttributes(format.request, credentials)
+        const predicates = processProofPredicates(format.request, credentials)
 
-        setRetrievedCredentials(credentials as unknown as RetrievedCredentials)
+        setRetrievedCredentials(credentials.proofFormats.indy)
         setAttributes(attributes)
         setPredicates(predicates)
         setLoading(false)

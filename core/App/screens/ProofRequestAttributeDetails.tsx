@@ -1,4 +1,8 @@
-import { ProofExchangeRecord } from '@aries-framework/core'
+import { IndyProofFormat, ProofExchangeRecord } from '@aries-framework/core'
+import {
+  FormatRetrievedCredentialOptions,
+  GetFormatDataReturn,
+} from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
@@ -29,12 +33,13 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   const { proofId, attributeName } = route?.params
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const [, dispatch] = useStore()
-  const [processedProofAttributes, setProcessedProofAttributes] = useState<Attribute[]>([])
+
   const proof = useProofById(proofId)
-  // This syntax is required for the jest mocks to work
-  // eslint-disable-next-line import/no-named-as-default-member
+
+  const [, dispatch] = useStore()
+  const [attributes, setAttributes] = useState<Attribute[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -71,11 +76,24 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   }
 
   useEffect(() => {
-    const retrieveCredentialsForProof = async (proof: ProofExchangeRecord) => {
+    const retrieveCredentialsForProof = async (
+      proof: ProofExchangeRecord
+    ): Promise<
+      | {
+          format: GetFormatDataReturn<[IndyProofFormat]>
+          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+        }
+      | undefined
+    > => {
       try {
+        const format = await agent.proofs.getFormatData(proof.id)
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
           proofRecordId: proof.id,
           config: {
+            // Setting `filterByNonRevocationRequirements` to `false` returns all
+            // credentials even if they are revokable (and revoked). We need this to
+            // be able to show why a proof cannot be satisfied. Otherwise we can only
+            // show failure.
             filterByNonRevocationRequirements: false,
           },
         })
@@ -84,7 +102,11 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
 
-        return credentials
+        if (!format) {
+          throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+        }
+
+        return { format, credentials }
       } catch (error: unknown) {
         dispatch({
           type: DispatchAction.ERROR_ADDED,
@@ -94,13 +116,15 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
     }
 
     retrieveCredentialsForProof(proof)
-      .then((retrievedCredentials) => {
-        if (!retrievedCredentials) {
+      .then((retrieved) => retrieved ?? { format: undefined, credentials: undefined })
+      .then(({ format, credentials }) => {
+        if (!(format && credentials)) {
           return
         }
 
-        const attributes = processProofAttributes(retrievedCredentials.proofFormats.indy)
-        setProcessedProofAttributes(attributes)
+        const attributes = processProofAttributes(format.request, credentials)
+
+        setAttributes(attributes)
         setLoading(false)
       })
       .catch((err: unknown) => {
@@ -114,7 +138,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
   const { records: credentials } = useCredentials()
   const connection = connectionRecordFromId(proof.connectionId)
-  const matchingAttribute = processedProofAttributes.find((a) => a.name === attributeName)
+  const matchingAttribute = attributes.find((a) => a.name === attributeName)
   const matchingCredentials = credentials.filter(
     (credential) => !!credential.credentials.find((c) => c.credentialRecordId === matchingAttribute?.credentialId)
   )
