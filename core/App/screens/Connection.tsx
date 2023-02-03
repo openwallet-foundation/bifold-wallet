@@ -24,12 +24,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   const { connectionId, threadId } = route.params
-
-  if (!connectionId) {
-    throw new Error('connectionId route prams was not set properly')
-  }
-
-  const connection = useConnectionById(connectionId)
+  const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { agent } = useAgent()
   const { t } = useTranslation()
   const [state, setState] = useState<{
