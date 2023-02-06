@@ -26,6 +26,7 @@ const TabStack: React.FC = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
       <Tab.Navigator
         screenOptions={{
+          unmountOnBlur: true,
           tabBarStyle: {
             ...TabTheme.tabBarStyle,
           },
