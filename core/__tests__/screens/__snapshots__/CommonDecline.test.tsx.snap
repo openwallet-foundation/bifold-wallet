@@ -135,7 +135,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
             accessible={true}
             style={
               Object {
-                "backgroundColor": "#15C477",
+                "backgroundColor": "#781e4b",
                 "borderRadius": 15,
                 "height": 375,
                 "opacity": 1,
@@ -191,7 +191,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                           "fontWeight": "bold",
                         },
                         Object {
-                          "color": "#313132",
+                          "color": "#FFFFFF",
                           "flex": 4,
                           "paddingHorizontal": 5,
                           "textAlignVertical": "center",
@@ -214,7 +214,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                           "fontWeight": "bold",
                         },
                         Object {
-                          "color": "#313132",
+                          "color": "#FFFFFF",
                           "flex": 4,
                           "paddingHorizontal": 5,
                           "textAlign": "right",
@@ -259,7 +259,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#313132",
+                        "color": "#FFFFFF",
                       },
                     ]
                   }
