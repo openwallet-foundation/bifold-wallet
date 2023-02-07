@@ -13,7 +13,6 @@ import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
 import FauxNavigationBar from '../components/views/FauxNavigationBar'
-import { dateFormatOptions } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -22,6 +21,7 @@ import { BifoldError } from '../types/error'
 import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
 import { RemoveType } from '../types/remove'
+import { formatTime } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
@@ -29,7 +29,7 @@ type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactD
 const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const { connectionId } = route?.params
   const { agent } = useAgent()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [, dispatch] = useStore()
   const navigation = useNavigation<StackNavigationProp<ContactStackParams>>()
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
@@ -154,7 +154,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           {
             name: connection?.alias || connection?.theirLabel,
             value: t('ContactDetails.DateOfConnection', {
-              date: connection?.createdAt.toLocaleString(i18n.language, dateFormatOptions),
+              date: connection?.createdAt ? formatTime(connection.createdAt) : '',
             }),
           },
         ] as Attribute[],

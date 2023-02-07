@@ -13,7 +13,6 @@ import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
-import { dateFormatOptions } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -23,7 +22,7 @@ import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
-import { getCredentialConnectionLabel } from '../utils/helpers'
+import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
@@ -93,7 +92,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
     if (isRevoked && credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
-      setRevocationDate(date.toLocaleDateString(i18n.language, dateFormatOptions))
+      setRevocationDate(formatTime(date))
     }
     OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
       setFields(fields)
@@ -182,8 +181,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           >
             <View>
               <Text>
-                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')}</Text>{' '}
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy') + ' '}</Text>
                 <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
+              </Text>
+              <Text>
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.Issued') + ': '}</Text>
+                <Text style={[TextTheme.normal]}>
+                  {credential?.createdAt && formatTime(credential?.createdAt, { long: true })}
+                </Text>
               </Text>
             </View>
           </View>
