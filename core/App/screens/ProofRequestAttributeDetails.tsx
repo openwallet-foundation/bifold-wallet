@@ -13,14 +13,19 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
-import { dateFormatOptions } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute } from '../types/record'
-import { connectionRecordFromId, getConnectionName, parsedSchema, processProofAttributes } from '../utils/helpers'
+import {
+  connectionRecordFromId,
+  getConnectionName,
+  parsedSchema,
+  processProofAttributes,
+  formatTime,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<NotificationStackParams, Screens.ProofRequestAttributeDetails>
@@ -32,7 +37,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
   const { proofId, attributeName } = route?.params
   const { agent } = useAgent()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const proof = useProofById(proofId)
 
@@ -173,8 +178,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
               </View>
             ) : (
               <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
-                {t('CredentialDetails.Issued')}{' '}
-                {credential.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
+                {t('CredentialDetails.Issued') + ' '} {formatTime(credential.createdAt)}
               </Text>
             )}
             <Text style={[ListItems.credentialTitle, { paddingTop: 16 }]} testID={testIdWithKey('AttributeValue')}>

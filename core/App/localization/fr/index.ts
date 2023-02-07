@@ -35,6 +35,38 @@ const translation = {
         "Off": "Désactivé",
         "Close": "Close (FR)",
     },
+    "Date": {
+        "ShortFormat": "D MMM YYYY",
+        "LongFormat": "D MMMM YYYY, HH:mm:ss",
+        "MonthLong": {
+            "January": "janvier",
+            "February": "février",
+            "March": "mars",
+            "April": "avril",
+            "May": "mai",
+            "June": "juin",
+            "July": "juillet",
+            "August": "aout",
+            "September": "septembre",
+            "October": "octobre",
+            "November": "novembre",
+            "December": "décembre",
+        },
+        "MonthShort": {
+            "January": "janv",
+            "February": "févr",
+            "March": "mars",
+            "April": "avril",
+            "May": "mai",
+            "June": "juin",
+            "July": "juil",
+            "August": "août",
+            "September": "sept",
+            "October": "oct",
+            "November": "nov",
+            "December": "déc",
+        }
+    },
     "Language": {
         "English": "Anglais",
         "French": "Français",
@@ -190,7 +222,7 @@ const translation = {
         "RemoveContacts": "You can always remove Contacts at any time from your (FR)",
         "ContactsLink": "Contacts list (FR)",
         "ContactSharing": "Use of your credentials is never shared with your Contacts. (FR)"
-      },
+    },
     "Credentials": {
         "CredentialsNotFound": "Justificatifs non trouvés",
         "CredentialDetails": "Détails des justificatifs",

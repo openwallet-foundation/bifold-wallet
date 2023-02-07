@@ -52,12 +52,6 @@ export const attemptLockoutThresholdRules = {
 
 export const walletId = 'walletId'
 
-export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric' } = {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-}
-
 export const minPINLength = 6
 
 export const PINRules: PINValidationRules = {

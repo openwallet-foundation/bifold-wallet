@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
 
-import { dateFormatOptions, dateIntFormat, hiddenFieldValue } from '../../constants'
+import { dateIntFormat, hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { Attribute, Field } from '../../types/record'
+import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 interface RecordBinaryFieldProps {
@@ -13,7 +14,7 @@ interface RecordBinaryFieldProps {
 }
 
 const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const { ListItems } = useTheme()
   const [date, setDate] = useState<string | undefined>()
@@ -27,7 +28,7 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) 
       //NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
       const date = new Date(Number(year), Number(month) - 1, Number(day))
       if (!isNaN(date.getDate())) {
-        setDate(date.toLocaleDateString(i18n.language, dateFormatOptions))
+        setDate(formatTime(date))
         return
       }
     }
