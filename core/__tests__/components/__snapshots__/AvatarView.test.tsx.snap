@@ -15,7 +15,7 @@ exports[`AvatarView Component Renders correctly 1`] = `
         "width": 64,
       },
       Object {
-        "borderColor": "#CFA8C3",
+        "borderColor": "#060741",
       },
       undefined,
     ]
