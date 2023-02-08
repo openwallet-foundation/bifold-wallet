@@ -9,7 +9,7 @@
 | Jason C. Leach     | jleach            |      |
 | Sam Curren         | TelegramSam       |      |
 | Clécio Varjão      | cvarjao           |      |
-| Akiff Manji        | amanji            |
+| Akiff Manji        | amanji            |      |
 | Karim Stekelenburg | karimStekelenburg |      |
 | Timo Glastra       | TimoGlastra       |      |
 | James Ebert        | JamesKEbert       |      |
