@@ -24,8 +24,7 @@
 
 Bifold within the Hyperledger Aries community welcomes contributions.
 
-Contributors may progress to become a maintainer. To become a
-maintainer the following steps occur, roughly in order.
+Contributors may progress to become a maintainer. To become a maintainer the following steps occur, roughly in order.
 
 - 5 **significant** changes have been authored by the proposed maintainer and
   accepted.
