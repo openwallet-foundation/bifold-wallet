@@ -4,29 +4,25 @@
 
 <!-- Please keep this sorted alphabetically by github -->
 
+| Name           | Github      | LFID |
+| -------------- | ----------- | ---- |
+| Akiff Manji    | amanji      |      |
+| Clécio Varjão  | cvarjao     |      |
+| James Ebert    | JamesKEbert |      |
+| Jason C. Leach | jleach      |      |
+| Ryan Koch      | ryanindicio |      |
+
+## Emeritus Maintainers
+
 | Name               | Github            | LFID |
 | ------------------ | ----------------- | ---- |
-| Akiff Manji        | amanji            |      |
-| Clécio Varjão      | cvarjao           |      |
-| James Ebert        | JamesKEbert       |      |
-| Jason C. Leach     | jleach            |      |
 | Karim Stekelenburg | karimStekelenburg |      |
 | Sam Curren         | TelegramSam       |      |
 | Timo Glastra       | TimoGlastra       |      |
 
-## Emeritus Maintainers
-
-| Name | Github | LFID |
-| ---- | ------ | ---- |
-|      |        |      |
-
 ## Becoming a Maintainer
 
-Bifold within the Hyperledger Aries
-community welcomes contributions. All contributors to the Bifold
-project agree to the [Community License Specification
-v1.0](/Community_Specification_License-v1.md) under which the group
-operates.
+Bifold within the Hyperledger Aries community welcomes contributions.
 
 Contributors may progress to become a maintainer. To become a
 maintainer the following steps occur, roughly in order.
