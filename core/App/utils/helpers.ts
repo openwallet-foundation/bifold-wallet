@@ -16,7 +16,7 @@ import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
 import { parseUrl } from 'query-string'
 
-import { Attribute, GroupedAttributes, GroupedPredicates, Predicate } from '../types/record'
+import { GroupedAttributes, GroupedPredicates } from '../types/record'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
@@ -111,8 +111,7 @@ export const credentialSortFn = (a: any, b: any) => {
 
 export const processProofAttributes = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
-  proofConnectionLabel?: string
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
 ): { [key: string]: GroupedAttributes } => {
   const processedAttributes = {} as { [key: string]: GroupedAttributes }
 
@@ -141,11 +140,11 @@ export const processProofAttributes = (
           schemaId: credential?.credentialInfo?.schemaId,
           credDefId: credential?.credentialInfo?.credentialDefinitionId,
           credName,
-          attributes: []
+          attributes: [],
         }
       }
 
-      let attributeValue = "" //(credentialInfo as IndyCredentialInfo).attributes[attributeName]
+      let attributeValue = '' //(credentialInfo as IndyCredentialInfo).attributes[attributeName]
       if (credential) {
         attributeValue = (credential.credentialInfo as IndyCredentialInfo).attributes[attributeName]
       }
@@ -156,14 +155,12 @@ export const processProofAttributes = (
       })
     }
   }
-  console.log(JSON.stringify(request))
   return processedAttributes
 }
 
 export const processProofPredicates = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
-  proofConnectionLabel?: string
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
 ): { [key: string]: GroupedPredicates } => {
   const processedPredicates = {} as { [key: string]: GroupedPredicates }
 
@@ -187,7 +184,7 @@ export const processProofPredicates = (
         schemaId,
         credDefId: credentialDefinitionId,
         credName: credName,
-        predicates: []
+        predicates: [],
       }
     }
 
@@ -199,7 +196,6 @@ export const processProofPredicates = (
       pType,
     })
   }
-  console.log(JSON.stringify(request))
   return processedPredicates
 }
 

@@ -237,7 +237,11 @@ export class OCABundleResolver implements OCABundleResolverType {
     return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
   }
 
-  public resolveDefaultBundleByCredDef(credDefId?: string, credName?: string, language = 'en'): Promise<OCABundle | undefined> {
+  public resolveDefaultBundleByCredDef(
+    credDefId?: string,
+    credName?: string,
+    language = 'en'
+  ): Promise<OCABundle | undefined> {
     const metaOverlay: MetaOverlay = {
       captureBase: '',
       type: OverlayType.Meta10,
@@ -276,7 +280,11 @@ export class OCABundleResolver implements OCABundleResolverType {
     return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
   }
 
-  public resolveByCredDefOrSchema(credDefId?: string, schemaId?: string, language = 'en'): Promise<OCABundle | undefined> {
+  public resolveByCredDefOrSchema(
+    credDefId?: string,
+    schemaId?: string,
+    language = 'en'
+  ): Promise<OCABundle | undefined> {
     for (const item of [credDefId, schemaId]) {
       if (item && this.bundles[item] !== undefined) {
         let bundle = this.bundles[item]

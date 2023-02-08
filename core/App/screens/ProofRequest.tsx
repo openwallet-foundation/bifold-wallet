@@ -1,7 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import {
-  CredentialExchangeRecord,
   IndyProofFormat,
   IndyRetrievedCredentialsFormat,
   ProofExchangeRecord,
@@ -12,18 +11,17 @@ import {
   FormatRetrievedCredentialOptions,
   GetFormatDataReturn,
 } from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
-import { useAgent, useConnectionById, useProofById, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native'
+import { View, StyleSheet, Text, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
-import Record from '../components/record/Record'
-import RecordField from '../components/record/RecordField'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -31,14 +29,11 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { Attribute, GroupedAttributes, GroupedPredicates, GroupedProof, Predicate } from '../types/record'
+import { GroupedProof } from '../types/record'
 import { processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
-import { useConfiguration } from '../contexts/configuration'
-import { CredentialCard } from '../components/misc'
-import { ScrollView } from 'react-native-gesture-handler'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 type Fields = Record<string, RequestedAttribute[] | RequestedPredicate[]>
@@ -61,8 +56,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [, dispatch] = useStore()
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<IndyRetrievedCredentialsFormat>()
-  const [attributes, setAttributes] = useState<GroupedAttributes[]>([])
-  const [predicates, setPredicates] = useState<GroupedPredicates[]>([])
   const [proofItems, setProofItems] = useState<GroupedProof[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -70,15 +63,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const styles = StyleSheet.create({
     pageContainer: {
-      flex: 1
+      flex: 1,
     },
     pageContent: {
       marginHorizontal: 20,
       flexGrow: 1,
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     pageFooter: {
-      marginBottom: 15
+      marginBottom: 15,
     },
     headerTextContainer: {
       paddingVertical: 16,
@@ -104,7 +97,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       color: ColorPallet.brand.link,
       textDecorationLine: 'underline',
     },
-    cardLoading: { backgroundColor: ColorPallet.brand.secondaryBackground, flex: 1, flexGrow: 1, marginVertical: 35, borderRadius: 15, paddingHorizontal: 10 }
+    cardLoading: {
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+      flex: 1,
+      flexGrow: 1,
+      marginVertical: 35,
+      borderRadius: 15,
+      paddingHorizontal: 10,
+    },
   })
 
   useEffect(() => {
@@ -153,9 +153,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       proof: ProofExchangeRecord
     ): Promise<
       | {
-        format: GetFormatDataReturn<[IndyProofFormat]>
-        credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-      }
+          format: GetFormatDataReturn<[IndyProofFormat]>
+          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+        }
       | undefined
     > => {
       try {
@@ -195,8 +195,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           return
         }
 
-        const attributes = processProofAttributes(format.request, credentials, proofConnectionLabel)
-        const predicates = processProofPredicates(format.request, credentials, proofConnectionLabel)
+        const attributes = processProofAttributes(format.request, credentials)
+        const predicates = processProofPredicates(format.request, credentials)
 
         setRetrievedCredentials(credentials.proofFormats.indy)
         const groupedProof = Object.values({ ...attributes, ...predicates })
@@ -219,7 +219,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     // TODO:(jl) Need to test with partial match? Maybe `.some` would work?
-    return typeof retrievedCredentials !== 'undefined' && (credName ? fields[credName]?.length > 0 : Object.values(fields).every((c) => c.length > 0))
+    return (
+      typeof retrievedCredentials !== 'undefined' &&
+      (credName ? fields[credName]?.length > 0 : Object.values(fields).every((c) => c.length > 0))
+    )
   }
 
   const handleAcceptPress = async () => {
@@ -271,27 +274,33 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const proofPageHeader = () => {
     return (
       <View>
-        {loading ? <View style={styles.cardLoading}><RecordLoading /></View> : <View style={styles.headerTextContainer}>
-          {!hasAvailableCredentials() ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon
-                style={{ marginLeft: -2, marginRight: 10 }}
-                name="highlight-off"
-                color={ListItems.proofIcon.color}
-                size={ListItems.proofIcon.fontSize}
-              />
+        {loading ? (
+          <View style={styles.cardLoading}>
+            <RecordLoading />
+          </View>
+        ) : (
+          <View style={styles.headerTextContainer}>
+            {!hasAvailableCredentials() ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon
+                  style={{ marginLeft: -2, marginRight: 10 }}
+                  name="highlight-off"
+                  color={ListItems.proofIcon.color}
+                  size={ListItems.proofIcon.fontSize}
+                />
+                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                  <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                  {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                </Text>
+              </View>
+            ) : (
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                 <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                {t('ProofRequest.IsRequestingYouToShare')}:
               </Text>
-            </View>
-          ) : (
-            <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-              <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-              {t('ProofRequest.IsRequestingYouToShare')}:
-            </Text>
-          )}
-        </View>}
+            )}
+          </View>
+        )}
       </View>
     )
   }
@@ -326,13 +335,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.pageContainer}>
       <View style={styles.pageContent}>
-        <FlatList data={proofItems} ListHeaderComponent={proofPageHeader} ListFooterComponent={proofPageFooter} renderItem={({ item }) => {
-          return (
-            <View style={{ marginTop: 10 }}>
-              <CredentialCard credDefId={item.credDefId} schemaId={item.schemaId} proofAttributes={item.attributes} proofPredicates={item.predicates} credName={item.credName} existsInWallet={hasAvailableCredentials(item.credName)} proof></CredentialCard>
-            </View>
-          )
-        }} />
+        <FlatList
+          data={proofItems}
+          ListHeaderComponent={proofPageHeader}
+          ListFooterComponent={proofPageFooter}
+          renderItem={({ item }) => {
+            return (
+              <View style={{ marginTop: 10 }}>
+                <CredentialCard
+                  credDefId={item.credDefId}
+                  schemaId={item.schemaId}
+                  proofAttributes={item.attributes}
+                  proofPredicates={item.predicates}
+                  credName={item.credName}
+                  existsInWallet={hasAvailableCredentials(item.credName)}
+                  proof
+                ></CredentialCard>
+              </View>
+            )
+          }}
+        />
       </View>
       <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
     </SafeAreaView>

@@ -2,7 +2,6 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
 import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import CommonDecline from '../screens/CommonDecline'
@@ -10,7 +9,6 @@ import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
 import { DeliveryStackParams, Screens } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 

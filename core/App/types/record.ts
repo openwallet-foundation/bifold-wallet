@@ -34,4 +34,4 @@ export interface GroupedPredicates {
   predicates?: Predicate[]
 }
 
-export interface GroupedProof extends GroupedAttributes, GroupedPredicates { }
+export interface GroupedProof extends GroupedAttributes, GroupedPredicates {}
