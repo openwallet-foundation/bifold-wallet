@@ -6,13 +6,13 @@
 
 | Name               | Github            | LFID |
 | ------------------ | ----------------- | ---- |
-| Jason C. Leach     | jleach            |      |
-| Sam Curren         | TelegramSam       |      |
-| Clécio Varjão      | cvarjao           |      |
 | Akiff Manji        | amanji            |      |
-| Karim Stekelenburg | karimStekelenburg |      |
-| Timo Glastra       | TimoGlastra       |      |
+| Clécio Varjão      | cvarjao           |      |
 | James Ebert        | JamesKEbert       |      |
+| Jason C. Leach     | jleach            |      |
+| Karim Stekelenburg | karimStekelenburg |      |
+| Sam Curren         | TelegramSam       |      |
+| Timo Glastra       | TimoGlastra       |      |
 
 ## Emeritus Maintainers
 
