@@ -16,7 +16,7 @@ import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
 import { parseUrl } from 'query-string'
 
-import { Attribute, Predicate } from '../types/record'
+import { Attribute, GroupedAttributes, GroupedPredicates, Predicate } from '../types/record'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
@@ -111,12 +111,13 @@ export const credentialSortFn = (a: any, b: any) => {
 
 export const processProofAttributes = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-): Attribute[] => {
-  const processedAttributes = [] as Attribute[]
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  proofConnectionLabel?: string
+): { [key: string]: GroupedAttributes } => {
+  const processedAttributes = {} as { [key: string]: GroupedAttributes }
 
   if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
-    return processedAttributes
+    return {}
   }
 
   const requestedProofAttributes = request.indy.requested_attributes
@@ -126,35 +127,48 @@ export const processProofAttributes = (
     // The shift operation modifies the original input array, therefore make a copy
     const credential = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn).shift()
 
-    if (!credential) {
-      return processedAttributes
+    const credName = key
+    let revoked = false
+    if (credential) {
+      revoked = credential.revoked as boolean
     }
-
-    const { credentialId, revoked, credentialInfo } = credential
     const { name, names } = requestedProofAttributes[key]
 
     for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
-      const attributeValue = (credentialInfo as IndyCredentialInfo).attributes[attributeName]
-      processedAttributes.push({
-        credentialId,
+      if (!processedAttributes[credName]) {
+        // init processedAttributes object
+        processedAttributes[credName] = {
+          schemaId: credential?.credentialInfo?.schemaId,
+          credDefId: credential?.credentialInfo?.credentialDefinitionId,
+          credName,
+          attributes: []
+        }
+      }
+
+      let attributeValue = "" //(credentialInfo as IndyCredentialInfo).attributes[attributeName]
+      if (credential) {
+        attributeValue = (credential.credentialInfo as IndyCredentialInfo).attributes[attributeName]
+      }
+      processedAttributes[credName].attributes?.push({
         revoked,
         name: attributeName,
         value: attributeValue,
       })
     }
   }
-
+  console.log(JSON.stringify(request))
   return processedAttributes
 }
 
 export const processProofPredicates = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-): Predicate[] => {
-  const processedPredicates = [] as Predicate[]
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  proofConnectionLabel?: string
+): { [key: string]: GroupedPredicates } => {
+  const processedPredicates = {} as { [key: string]: GroupedPredicates }
 
   if (!(request?.indy?.requested_predicates && credentials?.proofFormats?.indy?.requestedPredicates)) {
-    return processedPredicates
+    return {}
   }
 
   const requestedProofPredicates = request.indy.requested_predicates
@@ -163,15 +177,21 @@ export const processProofPredicates = (
   for (const key of Object.keys(requestedProofPredicates)) {
     // The shift operation modifies the original input array, therefore make a copy
     const credential = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn).shift()
-
-    if (!credential) {
-      return processedPredicates
-    }
-
-    const { credentialId, revoked } = credential
+    const { credentialId, revoked, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
     const { name, p_type: pType, p_value: pValue } = requestedProofPredicates[key]
 
-    processedPredicates.push({
+    const credName = key
+
+    if (!processedPredicates[credName]) {
+      processedPredicates[credName] = {
+        schemaId,
+        credDefId: credentialDefinitionId,
+        credName: credName,
+        predicates: []
+      }
+    }
+
+    processedPredicates[credName].predicates?.push({
       credentialId,
       name,
       revoked,
@@ -179,7 +199,7 @@ export const processProofPredicates = (
       pType,
     })
   }
-
+  console.log(JSON.stringify(request))
   return processedPredicates
 }
 

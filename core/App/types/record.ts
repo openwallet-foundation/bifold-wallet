@@ -17,3 +17,21 @@ export interface Predicate extends Field {
   pValue: string | number | null
   pType: string
 }
+
+export interface GroupedAttributes {
+  credDefId?: string
+  schemaId?: string
+  issuerName: string
+  credName: string
+  attributes?: Attribute[]
+}
+
+export interface GroupedPredicates {
+  credDefId?: string
+  schemaId?: string
+  issuerName: string
+  credName: string
+  predicates?: Predicate[]
+}
+
+export interface GroupedProof extends GroupedAttributes, GroupedPredicates { }
