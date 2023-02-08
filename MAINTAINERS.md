@@ -4,13 +4,15 @@
 
 <!-- Please keep this sorted alphabetically by github -->
 
-| Name          | Github      | LFID |
-| ------------- | ----------- | ---- |
-| Akiff Manji   | amanji      |      |
-| Clecio Varjao | cvarjao     |      |
-| James Ebert   | JamesKEbert |      |
-| Jason Leach   | jleach      |      |
-| Ryan Koch     | ryanindicio |      |
+| Name               | Github            | LFID |
+| ------------------ | ----------------- | ---- |
+| Jason C. Leach     | jleach            |      |
+| Sam Curren         | TelegramSam       |      |
+| Clécio Varjão      | cvarjao           |      |
+| Akiff Manji        | amanji            |
+| Karim Stekelenburg | karimStekelenburg |      |
+| Timo Glastra       | TimoGlastra       |      |
+| James Ebert        | JamesKEbert       |      |
 
 ## Emeritus Maintainers
 
