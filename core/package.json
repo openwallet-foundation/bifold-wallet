@@ -133,6 +133,7 @@
     "lodash.startcase": "^4.4.0",
     "metro-react-native-babel-preset": "^0.66.2",
     "mockdate": "^3.0.5",
+    "moment": "^2.29.4",
     "node-notifier": "^10.0.1",
     "patch-package": "^6.4.4",
     "prettier": "^2.1.2",
