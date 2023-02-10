@@ -66,9 +66,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       flex: 1,
     },
     pageContent: {
-      marginHorizontal: 20,
       flexGrow: 1,
       justifyContent: 'space-between',
+    },
+    pageMargin: {
+      marginHorizontal: 20
     },
     pageFooter: {
       marginBottom: 15,
@@ -153,9 +155,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       proof: ProofExchangeRecord
     ): Promise<
       | {
-          format: GetFormatDataReturn<[IndyProofFormat]>
-          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-        }
+        format: GetFormatDataReturn<[IndyProofFormat]>
+        credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+      }
       | undefined
     > => {
       try {
@@ -273,7 +275,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const proofPageHeader = () => {
     return (
-      <View>
+      <View style={styles.pageMargin}>
         {loading ? (
           <View style={styles.cardLoading}>
             <RecordLoading />
@@ -307,7 +309,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const proofPageFooter = () => {
     return (
-      <View style={styles.pageFooter}>
+      <View style={[styles.pageFooter, styles.pageMargin]}>
         {!loading && proofConnectionLabel ? <ConnectionAlert connectionID={proofConnectionLabel} /> : null}
         <View style={styles.footerButton}>
           <Button

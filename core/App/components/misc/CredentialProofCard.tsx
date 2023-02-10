@@ -74,9 +74,10 @@ const CredentialProofCard: React.FC<CredentialProofCardProps> = ({
       borderRadius: borderRadius,
     },
     cardContainer: {
+      marginHorizontal:20,
       flexGrow: 1,
       flexDirection: 'row',
-      elevation: 5,
+      elevation: 5
     },
     secondaryBodyContainer: {
       width: logoHeight,
@@ -365,7 +366,7 @@ const CredentialProofCard: React.FC<CredentialProofCardProps> = ({
 
   const CredentialCard: React.FC<{ status?: CredentialStatus }> = ({ status }) => {
     return (
-      <View style={styles.cardContainer}>
+      <View style={[styles.cardContainer, styles.container]}>
         <CredentialCardSecondaryBody />
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
