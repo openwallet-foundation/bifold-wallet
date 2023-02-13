@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
+import { StatusBar, Keyboard, StyleSheet, Text, Image, View, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ButtonLoading from '../components/animated/ButtonLoading'
@@ -28,6 +28,18 @@ interface PINEnterProps {
 export enum PINEntryUsage {
   PINCheck,
   WalletUnlock,
+}
+
+const DismissKeyboardView: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView>
+        <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={{ height: '100%' }}>
+          {children}
+        </ScrollView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
+  )
 }
 
 const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock }) => {
@@ -244,7 +256,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   }
 
   return (
-    <SafeAreaView>
+    <DismissKeyboardView>
       <StatusBar barStyle={StatusBarStyles.Light} />
       <View style={[style.container]}>
         <Image
@@ -348,7 +360,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           onCallToActionPressed={clearAlertModal}
         />
       )}
-    </SafeAreaView>
+    </DismissKeyboardView>
   )
 }
 
