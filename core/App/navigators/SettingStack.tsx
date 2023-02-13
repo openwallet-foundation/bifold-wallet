@@ -1,9 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { DeviceEventEmitter } from 'react-native'
 
 import { useConfiguration } from '../contexts/configuration'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import Language from '../screens/Language'
 import Onboarding from '../screens/Onboarding'
@@ -20,12 +20,16 @@ import { createDefaultStackOptions } from './defaultStackOptions'
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
   const theme = useTheme()
-  const [store] = useStore()
+  const [biometryUpdatePending, setBiometryUpdatePending] = useState<boolean>(false)
   const { t } = useTranslation()
   const { pages, terms, developer } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
+
+  DeviceEventEmitter.addListener('BIOMETRY_UPDATE', (value: boolean) => {
+    setBiometryUpdatePending(value)
+  })
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -44,7 +48,7 @@ const SettingStack: React.FC = () => {
         component={UseBiometry}
         options={{
           title: t('Screens.Biometry'),
-          headerLeft: store.preferences.biometryPreferencesUpdated ? () => null : undefined,
+          headerLeft: biometryUpdatePending ? () => null : undefined,
           headerBackTestID: testIdWithKey('Back'),
         }}
       />
