@@ -4,35 +4,29 @@
 
 <!-- Please keep this sorted alphabetically by github -->
 
+| Name           | Github      | LFID |
+| -------------- | ----------- | ---- |
+| Akiff Manji    | amanji      |      |
+| Clécio Varjão  | cvarjao     |      |
+| James Ebert    | JamesKEbert |      |
+| Jason C. Leach | jleach      |      |
+| Ryan Koch      | ryankoch13  |      |
+
+## Emeritus Maintainers
+
 | Name               | Github            | LFID |
 | ------------------ | ----------------- | ---- |
-| Akiff Manji        | amanji            |      |
-| Clécio Varjão      | cvarjao           |      |
-| James Ebert        | JamesKEbert       |      |
-| Jason C. Leach     | jleach            |      |
 | Karim Stekelenburg | karimStekelenburg |      |
 | Sam Curren         | TelegramSam       |      |
 | Timo Glastra       | TimoGlastra       |      |
 
-## Emeritus Maintainers
-
-| Name | Github | LFID |
-| ---- | ------ | ---- |
-|      |        |      |
-
 ## Becoming a Maintainer
 
-Bifold within the Hyperledger Aries
-community welcomes contributions. All contributors to the Bifold
-project agree to the [Community License Specification
-v1.0](/Community_Specification_License-v1.md) under which the group
-operates.
+Bifold within the Hyperledger Aries community welcomes contributions.
 
-Contributors may progress to become a maintainer. To become a
-maintainer the following steps occur, roughly in order.
+Contributors may progress to become a maintainer. To become a maintainer the following steps occur, roughly in order.
 
-- 5 **significant** changes have been authored by the proposed maintainer and
-  accepted.
+- 5 **significant** changes have been authored by the proposed maintainer and accepted.
 - The proposed maintainer has the sponsorship of at least one other maintainer.
   - This sponsoring maintainer will create a PR modifying the list of
     maintainers.
@@ -57,24 +51,17 @@ maintainer the following steps occur, roughly in order.
 
 ## Removing Maintainers
 
-Being a maintainer is not a status symbol or a title to be maintained
-indefinitely. It will occasionally be necessary and appropriate to move a
+Being a maintainer is not a status symbol or a title to be maintained indefinitely. It will occasionally be necessary and appropriate to move a
 maintainer to emeritus status. This can occur in the following situations:
 
 - Resignation of a maintainer.
 - Violation of the [Hyperledger Code of
   Conduct](https://wiki.hyperledger.org/display/HYP/Hyperledger+Code+of+Conduct) warranting removal.
 - **Inactivity**.
-  - A general measure of inactivity will be no commits or code review comments
-    for one reporting quarter, although this will not be strictly enforced if
-    the maintainer expresses a reasonable intent to continue contributing.
-  - Reasonable exceptions to inactivity will be granted for known long term
-    leave such as parental leave and medical leave.
+  - A general measure of inactivity will be no commits or code review comments for one reporting quarter, although this will not be strictly enforced if the maintainer expresses a reasonable intent to continue contributing.
+  - Reasonable exceptions to inactivity will be granted for known long term leave such as parental leave and medical leave.
 - Other unspecified circumstances.
 
-Like adding a maintainer the record and governance process for moving a
-maintainer to emeritus status is recorded in the github PR making that change.
+Like adding a maintainer the record and governance process for moving a maintainer to emeritus status is recorded in the github PR making that change.
 
-Returning to active status from emeritus status uses the same steps as adding a
-new maintainer. Note that the emeritus maintainer already has the 5 required
-significant changes as there is no contribution time horizon for those.
+Returning to active status from emeritus status uses the same steps as adding a new maintainer. Note that the emeritus maintainer already has the 5 required significant changes as there is no contribution time horizon for those.
