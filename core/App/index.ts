@@ -48,6 +48,7 @@ export { Screens, Stacks } from './types/navigators'
 export { createStyles } from './screens/OnboardingPages'
 export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { BifoldError } from './types/error'
+export { EventTypes } from './constants'
 
 export type { Theme } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'

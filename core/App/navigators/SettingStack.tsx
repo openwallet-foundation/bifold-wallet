@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import Language from '../screens/Language'
@@ -27,7 +28,7 @@ const SettingStack: React.FC = () => {
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
 
-  DeviceEventEmitter.addListener('BIOMETRY_UPDATE', (value: boolean) => {
+  DeviceEventEmitter.addListener(EventTypes.BIOMETRY_UPDATE, (value: boolean) => {
     setBiometryUpdatePending(value)
   })
 
