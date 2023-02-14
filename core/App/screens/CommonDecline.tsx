@@ -3,7 +3,7 @@ import { useAgent, useCredentialById, useProofById } from '@aries-framework/reac
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StatusBar, StyleSheet, Text, View, DeviceEventEmitter } from 'react-native'
 import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 
 import CredentialDeclined from '../assets/img/credential-declined.svg'
@@ -12,8 +12,7 @@ import ProofRequestDeclined from '../assets/img/proof-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
+import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
@@ -40,7 +39,6 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const credential = useCredentialById(itemId)
   const proof = useProofById(itemId)
-  const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const [didDecline, setDidDecline] = useState<boolean>(false)
@@ -107,10 +105,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
         1025
       )
 
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 

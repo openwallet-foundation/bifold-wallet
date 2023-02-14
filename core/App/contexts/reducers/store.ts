@@ -17,11 +17,6 @@ enum OnboardingDispatchAction {
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
 }
 
-enum ErrorDispatchAction {
-  ERROR_ADDED = 'error/errorAdded',
-  ERROR_REMOVED = 'error/errorRemoved',
-}
-
 enum LockoutDispatchAction {
   LOCKOUT_UPDATED = 'lockout/lockoutUpdated',
 }
@@ -33,7 +28,6 @@ enum LoginAttemptDispatchAction {
 enum PreferencesDispatchAction {
   ENABLE_DEVELOPER_MODE = 'preferences/enableDeveloperMode',
   USE_BIOMETRY = 'preferences/useBiometry',
-  BIOMETRY_PREFERENCES_UPDATED = 'preferences/biometryPreferencesUpdated',
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
 }
 
@@ -47,7 +41,6 @@ enum DeepLinkDispatchAction {
 
 export type DispatchAction =
   | OnboardingDispatchAction
-  | ErrorDispatchAction
   | LoginAttemptDispatchAction
   | LockoutDispatchAction
   | PreferencesDispatchAction
@@ -56,7 +49,6 @@ export type DispatchAction =
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
-  ...ErrorDispatchAction,
   ...LoginAttemptDispatchAction,
   ...LockoutDispatchAction,
   ...PreferencesDispatchAction,
@@ -102,14 +94,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
-    }
-    case PreferencesDispatchAction.BIOMETRY_PREFERENCES_UPDATED: {
-      const updatePending = (action?.payload ?? []).pop() ?? false
-      const preferences = { ...state.preferences, biometryPreferencesUpdated: updatePending }
-      return {
-        ...state,
-        preferences,
-      }
     }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
@@ -185,19 +169,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...{ authentication: payload },
       }
       return newState
-    }
-    case ErrorDispatchAction.ERROR_ADDED: {
-      const { error } = (action?.payload || []).pop()
-      return {
-        ...state,
-        error,
-      }
-    }
-    case ErrorDispatchAction.ERROR_REMOVED: {
-      return {
-        ...state,
-        error: null,
-      }
     }
     case DeepLinkDispatchAction.ACTIVE_DEEP_LINK: {
       const value = (action?.payload || []).pop()

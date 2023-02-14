@@ -3,17 +3,16 @@ import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import CredentialCard from '../components/misc/CredentialCard'
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
@@ -35,7 +34,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const [, dispatch] = useStore()
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const credential = useCredentialById(credentialId)
@@ -64,37 +62,19 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   useEffect(() => {
     if (!agent) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1035'),
-              t('Error.Message1035'),
-              t('CredentialOffer.CredentialNotFound'),
-              1035
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1035'), t('Error.Message1035'), t('CredentialOffer.CredentialNotFound'), 1035)
+      )
     }
   }, [])
 
   useEffect(() => {
     if (!credential) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1035'),
-              t('Error.Message1035'),
-              t('CredentialOffer.CredentialNotFound'),
-              1035
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1035'), t('Error.Message1035'), t('CredentialOffer.CredentialNotFound'), 1035)
+      )
     }
   }, [])
 
@@ -128,10 +108,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     } catch (err: unknown) {
       setButtonsVisible(true)
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error).message, 1024)
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 

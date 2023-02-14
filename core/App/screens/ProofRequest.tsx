@@ -14,7 +14,7 @@ import {
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -23,9 +23,8 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
+import { EventTypes } from '../constants'
 import { useNetwork } from '../contexts/network'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
@@ -54,7 +53,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     ? useConnectionById(proof.connectionId)?.theirLabel
     : proof?.connectionId ?? ''
 
-  const [, dispatch] = useStore()
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<IndyRetrievedCredentialsFormat>()
   const [attributes, setAttributes] = useState<Attribute[]>([])
@@ -93,37 +91,19 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (!agent) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1034'),
-              t('Error.Message1034'),
-              t('ProofRequest.ProofRequestNotFound'),
-              1034
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1034'), t('Error.Message1034'), t('ProofRequest.ProofRequestNotFound'), 1034)
+      )
     }
   }, [])
 
   useEffect(() => {
     if (!proof) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1034'),
-              t('Error.Message1034'),
-              t('ProofRequest.ProofRequestNotFound'),
-              1034
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1034'), t('Error.Message1034'), t('ProofRequest.ProofRequestNotFound'), 1034)
+      )
     }
   }, [])
 
@@ -165,10 +145,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
         return { format, credentials }
       } catch (error: unknown) {
-        dispatch({
-          type: DispatchAction.ERROR_ADDED,
-          payload: [{ error }],
-        })
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
 
@@ -189,10 +166,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1026'), t('Error.Message1026'), (err as Error).message, 1026)
-        dispatch({
-          type: DispatchAction.ERROR_ADDED,
-          payload: [{ error }],
-        })
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [])
 
@@ -238,10 +212,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       setPendingModalVisible(false)
 
       const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error).message, 1027)
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 

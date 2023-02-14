@@ -24,6 +24,11 @@ export enum KeychainServices {
   Key = 'secret.wallet.key',
 }
 
+export enum EventTypes {
+  ERROR_ADDED = 'ErrorAdded',
+  ERROR_REMOVED = 'ErrorRemoved',
+}
+
 export const second = 1000
 export const minute = 60000
 export const hour = 3600000

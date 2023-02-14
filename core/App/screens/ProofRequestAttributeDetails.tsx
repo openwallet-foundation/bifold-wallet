@@ -8,13 +8,12 @@ import { StackScreenProps } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
+import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
@@ -41,7 +40,6 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
   const proof = useProofById(proofId)
 
-  const [, dispatch] = useStore()
   const [attributes, setAttributes] = useState<Attribute[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -113,10 +111,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
         return { format, credentials }
       } catch (error: unknown) {
-        dispatch({
-          type: DispatchAction.ERROR_ADDED,
-          payload: [{ error }],
-        })
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
 
@@ -134,10 +129,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
       })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1029'), t('Error.Message1029'), (err as Error).message, 1029)
-        dispatch({
-          type: DispatchAction.ERROR_ADDED,
-          payload: [{ error }],
-        })
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [])
 

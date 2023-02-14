@@ -36,7 +36,6 @@ export const defaultState: State = {
   deepLink: {
     activeDeepLink: '',
   },
-  error: null,
   loading: false,
 }
 

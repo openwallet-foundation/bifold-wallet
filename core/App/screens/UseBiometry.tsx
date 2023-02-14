@@ -10,6 +10,7 @@ import {
   Platform,
   ScrollView,
   TouchableWithoutFeedback,
+  DeviceEventEmitter,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -100,10 +101,7 @@ const UseBiometry: React.FC = () => {
     // to first authenticate before this action is accepted
     if (screenUsage === UseBiometryUsage.ToggleOnOff) {
       setCanSeeCheckPIN(true)
-      dispatch({
-        type: DispatchAction.BIOMETRY_PREFERENCES_UPDATED,
-        payload: [true],
-      })
+      DeviceEventEmitter.emit('BIOMETRY_UPDATE', true)
       return
     }
 
@@ -114,10 +112,7 @@ const UseBiometry: React.FC = () => {
     // If successfully authenticated the toggle may proceed.
     if (status) {
       setBiometryEnabled((previousState) => !previousState)
-      dispatch({
-        type: DispatchAction.BIOMETRY_PREFERENCES_UPDATED,
-        payload: [false],
-      })
+      DeviceEventEmitter.emit('BIOMETRY_UPDATE', false)
     }
 
     setCanSeeCheckPIN(false)
