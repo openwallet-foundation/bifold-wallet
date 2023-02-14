@@ -17,34 +17,19 @@ jobs:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.15.0"
-
-        # GitHub recommends not caching node_modules but rather
-        # .npm because it can break across Node versions and
-        #  won't work with npm ci.
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ env.cacheId }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ env.cacheId }}-
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: Install dependencies
-        run: |
-          npm version && npm ci
+        run: yarn install --immutable
 
       - name: Check style
         run: |
-          npm run prettier
+          yarn run prettier
 
       - name: LINTing
         run: |
-          npm run lint
+          yarn run lint
   test:
     runs-on: ubuntu-latest
     name: Testing
@@ -52,27 +37,12 @@ jobs:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.15.0"
-
-        # GitHub recommends not caching node_modules but rather
-        # .npm because it can break across Node versions and
-        #  won't work with npm ci.
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ env.cacheId }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ env.cacheId }}-
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: Install dependencies
-        run: |
-          npm version && npm ci
+        run: yarn install --immutable
 
       - name: Automated testing
         run: |
-          npm run test
+          yarn run test
