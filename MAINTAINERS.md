@@ -10,7 +10,7 @@
 | Clécio Varjão  | cvarjao     |      |
 | James Ebert    | JamesKEbert |      |
 | Jason C. Leach | jleach      |      |
-| Ryan Koch      | ryanindicio |      |
+| Ryan Koch      | ryankoch13  |      |
 
 ## Emeritus Maintainers
 
