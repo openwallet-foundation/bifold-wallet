@@ -133,11 +133,12 @@ exports[`common decline screen decline offer renders correctly 1`] = `
         >
           <View
             accessible={true}
+            collapsable={false}
+            nativeID="animatedComponent"
             style={
               Object {
                 "backgroundColor": "#781e4b",
-                "borderRadius": 15,
-                "height": 375,
+                "borderRadius": 10,
                 "opacity": 1,
               }
             }
@@ -145,130 +146,156 @@ exports[`common decline screen decline offer renders correctly 1`] = `
             <View
               style={
                 Object {
+                  "flexDirection": "row",
                   "flexGrow": 1,
                 }
               }
-              testID="com.ariesbifold:id/CredentialCard"
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "backgroundColor": "rgba(0,0,0,0)",
-                      "borderTopLeftRadius": 15,
-                      "borderTopRightRadius": 15,
-                      "flexDirection": "column",
-                      "height": 101.75,
-                    },
-                  ]
+                  Object {
+                    "backgroundColor": "rgba(0, 0, 0, 0.24)",
+                    "borderBottomLeftRadius": 10,
+                    "borderTopLeftRadius": 10,
+                    "width": 40,
+                  }
                 }
+                testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+              />
+              <View
+                style={
+                  Object {
+                    "flex": 6,
+                    "padding": 16,
+                  }
+                }
+                testID="com.ariesbifold:id/CredentialCardPrimaryBody"
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "backgroundColor": "rgba(0,0,0,0)",
-                        "flexDirection": "row",
-                        "height": 93.75,
-                        "marginBottom": 8,
-                        "marginLeft": 8,
-                        "marginRight": 8,
-                        "marginTop": 8,
-                      },
-                    ]
+                    Object {
+                      "flexDirection": "row",
+                    }
                   }
-                  testID="com.ariesbifold:id/CredentialCardHeader"
                 >
-                  <Text
-                    ellipsizeMode="tail"
-                    maxFontSizeMultiplier={1}
-                    numberOfLines={1}
+                  <View
                     style={
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 14,
-                          "fontWeight": "bold",
-                        },
-                        Object {
-                          "color": "#FFFFFF",
-                          "flex": 4,
-                          "paddingHorizontal": 5,
-                          "textAlignVertical": "center",
-                        },
-                      ]
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#ffffff",
+                        "borderRadius": 8,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "left": -36,
+                        "top": 1,
+                        "width": 40,
+                      }
                     }
-                    testID="com.ariesbifold:id/CredentialIssuer"
                   >
-                    d7e7f641-e0cc-46bc-908a-f351e2486b03
-                  </Text>
-                  <Text
-                    ellipsizeMode="tail"
-                    maxFontSizeMultiplier={1}
-                    numberOfLines={1}
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "alignSelf": "center",
+                            "fontSize": 20,
+                            "fontWeight": "bold",
+                          },
+                        ]
+                      }
+                    >
+                      D
+                    </Text>
+                  </View>
+                  <View
                     style={
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 14,
-                          "fontWeight": "bold",
-                        },
-                        Object {
-                          "color": "#FFFFFF",
-                          "flex": 4,
-                          "paddingHorizontal": 5,
-                          "textAlign": "right",
-                          "textAlignVertical": "center",
-                        },
-                      ]
+                      Object {
+                        "margin": -1,
+                        "marginLeft": -16,
+                      }
                     }
-                    testID="com.ariesbifold:id/CredentialName"
                   >
-                    Credential
-                  </Text>
+                    <Text
+                      numberOfLines={1}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 14,
+                            "fontWeight": "bold",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "flexShrink": 1,
+                          },
+                          Object {
+                            "lineHeight": 19,
+                            "opacity": 0.8,
+                          },
+                        ]
+                      }
+                      testID="com.ariesbifold:id/CredentialIssuer"
+                    >
+                      d7e7f641-e0cc-46bc-908a-f351e2486b03
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "flexShrink": 1,
+                          },
+                          Object {
+                            "lineHeight": 24,
+                          },
+                        ]
+                      }
+                      testID="com.ariesbifold:id/CredentialName"
+                    >
+                      Credential
+                    </Text>
+                  </View>
                 </View>
               </View>
               <View
                 style={
                   Object {
-                    "flexGrow": 1,
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(0, 0, 0, 0)",
+                    "borderBottomLeftRadius": 10,
+                    "borderTopRightRadius": 10,
+                    "height": 40,
+                    "justifyContent": "center",
+                    "width": 40,
                   }
                 }
-                testID="com.ariesbifold:id/CredentialCardBody"
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "rgba(0,0,0,0)",
-                    "borderBottomLeftRadius": 15,
-                    "borderBottomRightRadius": 15,
-                    "flexDirection": "row",
-                    "paddingHorizontal": 10,
-                    "paddingVertical": 10,
-                  }
-                }
-                testID="com.ariesbifold:id/CredentialCardFooter"
+                testID="com.ariesbifold:id/CredentialCardStatus"
               >
-                <Text
-                  maxFontSizeMultiplier={1}
+                <View
                   style={
                     Array [
                       Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 14,
-                        "fontWeight": "normal",
-                      },
-                      Object {
-                        "color": "#FFFFFF",
+                        "alignItems": "center",
+                        "backgroundColor": "rgba(0, 0, 0, 0)",
+                        "borderBottomLeftRadius": 10,
+                        "borderTopRightRadius": 10,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "width": 40,
                       },
                     ]
                   }
-                  testID="com.ariesbifold:id/CredentialIssued"
-                >
-                  CredentialDetails.Issued
-                  : 
-                  Feb 22, 2022
-                </Text>
+                />
               </View>
             </View>
           </View>

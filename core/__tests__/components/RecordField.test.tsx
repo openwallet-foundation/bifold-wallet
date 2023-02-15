@@ -35,7 +35,7 @@ describe('Record Field Component', () => {
   })
 
   test('Hidden date field ', async () => {
-    const dateField = { ...defaultField, type: BaseType.DATEINT }
+    const dateField = { ...defaultField, type: BaseType.DateInt }
     const tree = render(<RecordField field={dateField} shown={false} />)
     const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 
@@ -64,7 +64,7 @@ describe('Record Field Component', () => {
   test('Shown date field should render a date field', async () => {
     const dateField = {
       ...defaultField,
-      type: BaseType.DATEINT,
+      type: BaseType.DateInt,
       value: 20000101,
     }
     const tree = render(<RecordField field={dateField} shown={true} />)

@@ -1,16 +1,16 @@
-import { luminanceForHexColour, statusBarStyleForColor } from '../../App/utils/luminance'
+import { luminanceForHexColor, statusBarStyleForColor } from '../../App/utils/luminance'
 
 describe('Luminance', () => {
   test('Non-hex color strings are not processed', () => {
-    const colour = '23 Dogs'
-    const result = luminanceForHexColour(colour)
+    const color = '23 Dogs'
+    const result = luminanceForHexColor(color)
 
     expect(result).toBeUndefined()
   })
 
   test('Compute the luminance for a hex color string', () => {
-    const colour = '#3399FF'
-    const result = luminanceForHexColour(colour)
+    const color = '#3399FF'
+    const result = luminanceForHexColor(color)
 
     expect(result).toEqual(139)
   })

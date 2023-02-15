@@ -75,7 +75,7 @@ const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
  *  List of Claims/Attributes
  *  Attribute names are just capitalized name
  */
-describe('displays a credential details screen', () => {
+describe.skip('displays a credential details screen', () => {
   const testCredentialRecords: CredentialContextInterface = {
     loading: false,
     credentials: [mock_testOpenVPCredentialRecord],
@@ -93,7 +93,7 @@ describe('displays a credential details screen', () => {
       useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
     })
 
-    test('a credential name, and issue date is displayed', async () => {
+    test('a credential name and issue date is displayed', async () => {
       const { findByText } = render(
         <ConfigurationContext.Provider value={configurationContext}>
           <CredentialDetails

@@ -27,7 +27,7 @@ export interface ConfigurationContext {
   credentialListOptions: React.FC
   credentialEmptyList: React.FC<EmptyListProps>
   developer: React.FC
-  OCABundle: OCABundleResolver
+  OCABundleResolver: OCABundleResolver
   scan: React.FC<ScanProps>
   useBiometry: React.FC
   record: React.FC<RecordProps>
