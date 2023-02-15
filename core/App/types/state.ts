@@ -1,5 +1,3 @@
-import { BifoldError } from './error'
-
 export interface Onboarding {
   didCompleteTutorial: boolean
   didAgreeToTerms: boolean
@@ -37,7 +35,6 @@ export interface State {
   lockout: Lockout
   loginAttempt: LoginAttempt
   preferences: Preferences
-  error: BifoldError | null
   deepLink: DeepLink
   loading: boolean
 }

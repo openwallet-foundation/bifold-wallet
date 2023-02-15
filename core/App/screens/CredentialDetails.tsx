@@ -4,7 +4,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -14,10 +14,8 @@ import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
-import { dateFormatOptions } from '../constants'
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
@@ -26,7 +24,7 @@ import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../type
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
-import { getCredentialConnectionLabel } from '../utils/helpers'
+import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -47,7 +45,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { TextTheme, ColorPallet } = useTheme()
   const { OCABundleResolver } = useConfiguration()
 
-  const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
@@ -98,37 +95,19 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   useEffect(() => {
     if (!agent) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+      )
     }
   }, [])
 
   useEffect(() => {
     if (!credential) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+      )
     }
   }, [])
 
@@ -140,7 +119,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
     if (isRevoked && credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
-      setRevocationDate(date.toLocaleDateString(i18n.language, dateFormatOptions))
+      setRevocationDate(formatTime(date))
     }
 
     const resolveBundle = async () => {
@@ -193,10 +172,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
 
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 

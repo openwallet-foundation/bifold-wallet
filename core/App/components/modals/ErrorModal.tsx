@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Modal, StyleSheet, StatusBar } from 'react-native'
+import { Dimensions, Modal, StyleSheet, StatusBar, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { useStore } from '../../contexts/store'
+import { EventTypes } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
@@ -13,7 +13,7 @@ const { height } = Dimensions.get('window')
 const ErrorModal: React.FC = () => {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const [state] = useStore()
+  const [error, setError] = useState<BifoldError>()
   const onDismissModalTouched = () => {
     setModalVisible(false)
   }
@@ -28,15 +28,17 @@ const ErrorModal: React.FC = () => {
     },
   })
 
-  useEffect(() => {
-    if (state.error && state.error.title && state.error.message) {
+  DeviceEventEmitter.addListener(EventTypes.ERROR_ADDED, (err: BifoldError) => {
+    if (err.title && err.message) {
+      setError(err)
       setModalVisible(true)
-
-      return
     }
+  })
 
+  DeviceEventEmitter.addListener(EventTypes.ERROR_REMOVED, () => {
+    setError(undefined)
     setModalVisible(false)
-  }, [state])
+  })
 
   const formattedMessageForError = (err: BifoldError | null): string | undefined => {
     if (!err) {
@@ -52,9 +54,9 @@ const ErrorModal: React.FC = () => {
       <SafeAreaView style={[styles.container]}>
         <InfoBox
           notificationType={InfoBoxType.Error}
-          title={state.error ? state.error.title : t('Error.Unknown')}
-          description={state.error ? state.error.description : t('Error.Problem')}
-          message={formattedMessageForError(state.error)}
+          title={error ? error.title : t('Error.Unknown')}
+          description={error ? error.description : t('Error.Problem')}
+          message={formattedMessageForError(error ?? null)}
           onCallToActionPressed={onDismissModalTouched}
         />
       </SafeAreaView>
