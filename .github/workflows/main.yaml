@@ -19,28 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure node
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.15.0"
-          registry-url: "https://registry.npmjs.org"
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: Configure ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
-
-        # GitHub recommends not caching node_modules but rather
-        # .npm because it can break across Node versions and
-        #  won't work with npm ci.
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ env.cacheId }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ env.cacheId }}-
 
       - name: Cache pod dependencies
         id: pod-cache
@@ -66,11 +51,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
 
-      - name: Install react native dependencies
+      - name: Install React Native Dependencies
         run: |
-          npm version && npm ci && \
-          git status && \
-          cd ./app && npm ci
+          yarn install --immutable && \
+          git status
 
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
@@ -105,62 +89,56 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compile-sdk: [30]
-        build-tools: [30.0.2]
+        compile-sdk: [31]
+        build-tools: [31.0.0]
         sdk-tools: [4333796]
     steps:
       - uses: actions/checkout@v1
 
-      - name: Configure node
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.15.0"
-          registry-url: "https://registry.npmjs.org"
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: setup ubuntu
         run: |
           sudo apt-get --quiet update --yes
           sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
 
-      - name: setup JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Setup JDK
+        uses: actions/setup-java@v2
         with:
-          java-version: 1.8
+          distribution: 'zulu'
+          java-version: 11
+          cache: 'gradle'
 
-      - name: download Android SDK
+      - name: Setup Android SDK
         working-directory: ./app/android
         run: |
-          wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${{ matrix.sdk-tools }}.zip
-          unzip -d android-sdk-linux android-sdk.zip
+          set -x
           sudo mkdir -p /root/.android
           sudo touch /root/.android/repositories.cfg
-          echo y | android-sdk-linux/tools/bin/sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
-          echo y | android-sdk-linux/tools/bin/sdkmanager "platform-tools" >/dev/null
-          echo y | android-sdk-linux/tools/bin/sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
-          export ANDROID_HOME=$PWD/android-sdk-linux
-          export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
+          export ANDROID_HOME=$PWD/android-sdk
+          mkdir -p $ANDROID_HOME/cmdline-tools
+          wget --quiet --output-document=commandlinetools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          unzip -d $ANDROID_HOME/cmdline-tools commandlinetools-linux.zip
+          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+          find $ANDROID_HOME -name sdkmanager
+          
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+          echo y | sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
+          echo y | sdkmanager "platform-tools" >/dev/null
+          echo y | sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
+          find $ANDROID_HOME -type f -executable -print
+          
           chmod +x ./gradlew
           set +o pipefail
-          yes | android-sdk-linux/tools/bin/sdkmanager --licenses
+          yes | sdkmanager --licenses
           set -o pipefail
 
-        # GitHub recommends not caching node_modules but rather
-        # .npm because it can break across Node versions and
-        #  won't work with npm ci.
-      - name: Cache node modules
-        uses: actions/cache@v1
-        id: npm-cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ env.cacheId }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ env.cacheId }}-
-
-      - name: Install dependencies
+      - name: Install React Native Dependencies
         run: |
-          npm version && npm ci &&
-          cd ./app && npm ci
+          node -v && yarn -v && yarn install --immutable && \
+          git status
 
-      - name: Android Debug Build
+      - name: Android Release Build
         working-directory: ./app/android
-        run: ./gradlew bundleRelease
+        run: ./gradlew --no-daemon bundleRelease

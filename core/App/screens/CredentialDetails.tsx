@@ -4,7 +4,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { DeviceEventEmitter, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -13,9 +13,8 @@ import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
@@ -34,7 +33,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { credentialId } = route?.params
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [fields, setFields] = useState<Field[]>([])
@@ -47,37 +45,19 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   useEffect(() => {
     if (!agent) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+      )
     }
   }, [])
 
   useEffect(() => {
     if (!credential) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+      )
     }
   }, [])
 
@@ -129,10 +109,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
 
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 
