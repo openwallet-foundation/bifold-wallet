@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -13,15 +13,14 @@ import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
 import FauxNavigationBar from '../components/views/FauxNavigationBar'
-import { dateFormatOptions } from '../constants'
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
 import { RemoveType } from '../types/remove'
+import { formatTime } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
@@ -29,8 +28,7 @@ type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactD
 const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const { connectionId } = route?.params
   const { agent } = useAgent()
-  const { t, i18n } = useTranslation()
-  const [, dispatch] = useStore()
+  const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<ContactStackParams>>()
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const [isCredentialsRemoveModalDisplayed, setIsCredentialsRemoveModalDisplayed] = useState<boolean>(false)
@@ -79,10 +77,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1037'), t('Error.Message1037'), (err as Error).message, 1025)
 
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 
@@ -154,7 +149,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           {
             name: connection?.alias || connection?.theirLabel,
             value: t('ContactDetails.DateOfConnection', {
-              date: connection?.createdAt.toLocaleString(i18n.language, dateFormatOptions),
+              date: connection?.createdAt ? formatTime(connection.createdAt) : '',
             }),
           },
         ] as Attribute[],

@@ -1,22 +1,30 @@
-import { ProofExchangeRecord } from '@aries-framework/core'
+import { IndyProofFormat, ProofExchangeRecord } from '@aries-framework/core'
+import {
+  FormatRetrievedCredentialOptions,
+  GetFormatDataReturn,
+} from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
-import { dateFormatOptions } from '../constants'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
+import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute } from '../types/record'
-import { connectionRecordFromId, getConnectionName, parsedSchema, processProofAttributes } from '../utils/helpers'
+import {
+  connectionRecordFromId,
+  getConnectionName,
+  parsedSchema,
+  processProofAttributes,
+  formatTime,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestAttributeDetailsProps = StackScreenProps<NotificationStackParams, Screens.ProofRequestAttributeDetails>
@@ -28,13 +36,13 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
 
   const { proofId, attributeName } = route?.params
   const { agent } = useAgent()
-  const { t, i18n } = useTranslation()
-  const [, dispatch] = useStore()
-  const [processedProofAttributes, setProcessedProofAttributes] = useState<Attribute[]>([])
+  const { t } = useTranslation()
+
   const proof = useProofById(proofId)
-  // This syntax is required for the jest mocks to work
-  // eslint-disable-next-line import/no-named-as-default-member
+
+  const [attributes, setAttributes] = useState<Attribute[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -71,11 +79,24 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   }
 
   useEffect(() => {
-    const retrieveCredentialsForProof = async (proof: ProofExchangeRecord) => {
+    const retrieveCredentialsForProof = async (
+      proof: ProofExchangeRecord
+    ): Promise<
+      | {
+          format: GetFormatDataReturn<[IndyProofFormat]>
+          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+        }
+      | undefined
+    > => {
       try {
+        const format = await agent.proofs.getFormatData(proof.id)
         const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
           proofRecordId: proof.id,
           config: {
+            // Setting `filterByNonRevocationRequirements` to `false` returns all
+            // credentials even if they are revokable (and revoked). We need this to
+            // be able to show why a proof cannot be satisfied. Otherwise we can only
+            // show failure.
             filterByNonRevocationRequirements: false,
           },
         })
@@ -84,37 +105,37 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
 
-        return credentials
+        if (!format) {
+          throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+        }
+
+        return { format, credentials }
       } catch (error: unknown) {
-        dispatch({
-          type: DispatchAction.ERROR_ADDED,
-          payload: [{ error }],
-        })
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
 
     retrieveCredentialsForProof(proof)
-      .then((retrievedCredentials) => {
-        if (!retrievedCredentials) {
+      .then((retrieved) => retrieved ?? { format: undefined, credentials: undefined })
+      .then(({ format, credentials }) => {
+        if (!(format && credentials)) {
           return
         }
 
-        const attributes = processProofAttributes(retrievedCredentials.proofFormats.indy)
-        setProcessedProofAttributes(attributes)
+        const attributes = processProofAttributes(format.request, credentials)
+
+        setAttributes(attributes)
         setLoading(false)
       })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1029'), t('Error.Message1029'), (err as Error).message, 1029)
-        dispatch({
-          type: DispatchAction.ERROR_ADDED,
-          payload: [{ error }],
-        })
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [])
 
   const { records: credentials } = useCredentials()
   const connection = connectionRecordFromId(proof.connectionId)
-  const matchingAttribute = processedProofAttributes.find((a) => a.name === attributeName)
+  const matchingAttribute = attributes.find((a) => a.name === attributeName)
   const matchingCredentials = credentials.filter(
     (credential) => !!credential.credentials.find((c) => c.credentialRecordId === matchingAttribute?.credentialId)
   )
@@ -149,8 +170,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
               </View>
             ) : (
               <Text style={ListItems.recordAttributeText} testID={testIdWithKey('Issued')}>
-                {t('CredentialDetails.Issued')}{' '}
-                {credential.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
+                {t('CredentialDetails.Issued') + ' '} {formatTime(credential.createdAt)}
               </Text>
             )}
             <Text style={[ListItems.credentialTitle, { paddingTop: 16 }]} testID={testIdWithKey('AttributeValue')}>

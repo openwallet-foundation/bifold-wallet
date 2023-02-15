@@ -4,7 +4,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { DeviceEventEmitter, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -13,17 +13,15 @@ import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
-import { dateFormatOptions } from '../constants'
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
-import { getCredentialConnectionLabel } from '../utils/helpers'
+import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
@@ -35,7 +33,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { credentialId } = route?.params
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const [, dispatch] = useStore()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [fields, setFields] = useState<Field[]>([])
@@ -48,37 +45,19 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   useEffect(() => {
     if (!agent) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+      )
     }
   }, [])
 
   useEffect(() => {
     if (!credential) {
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [
-          {
-            error: new BifoldError(
-              t('Error.Title1033'),
-              t('Error.Message1033'),
-              t('CredentialDetails.CredentialNotFound'),
-              1033
-            ),
-          },
-        ],
-      })
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+      )
     }
   }, [])
 
@@ -93,7 +72,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
     if (isRevoked && credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
-      setRevocationDate(date.toLocaleDateString(i18n.language, dateFormatOptions))
+      setRevocationDate(formatTime(date))
     }
     OCABundleResolver.presentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
       setFields(fields)
@@ -130,10 +109,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
 
-      dispatch({
-        type: DispatchAction.ERROR_ADDED,
-        payload: [{ error }],
-      })
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 
@@ -182,8 +158,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           >
             <View>
               <Text>
-                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy')}</Text>{' '}
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.IssuedBy') + ' '}</Text>
                 <Text style={[TextTheme.normal]}>{credentialConnectionLabel}</Text>
+              </Text>
+              <Text>
+                <Text style={[TextTheme.title]}>{t('CredentialDetails.Issued') + ': '}</Text>
+                <Text style={[TextTheme.normal]}>
+                  {credential?.createdAt && formatTime(credential?.createdAt, { long: true })}
+                </Text>
               </Text>
             </View>
           </View>
