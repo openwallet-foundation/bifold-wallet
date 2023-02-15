@@ -25,6 +25,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
 
   const styles = StyleSheet.create({
     linkContainer: {
+      ...ListItems.recordContainer,
       flexDirection: 'row',
       justifyContent: 'flex-end',
       paddingHorizontal: 25,
