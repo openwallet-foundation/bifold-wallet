@@ -21,7 +21,6 @@ export interface Predicate extends Field {
 export interface GroupedAttributes {
   credDefId?: string
   schemaId?: string
-  issuerName: string
   credName: string
   attributes?: Attribute[]
 }
@@ -29,7 +28,6 @@ export interface GroupedAttributes {
 export interface GroupedPredicates {
   credDefId?: string
   schemaId?: string
-  issuerName: string
   credName: string
   predicates?: Predicate[]
 }
