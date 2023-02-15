@@ -1,5 +1,6 @@
 import defaultIndyLedgers from '../configs/ledgers/indy'
 
+import bundle = require('./assets/oca-bundles.json')
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
@@ -23,7 +24,9 @@ export const defaultConfiguration: ConfigurationContext = {
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: EmptyList,
-  OCABundle: new oca.DefaultOCABundleResolver().loadDefaultBundles(),
+  OCABundleResolver: new oca.OCABundleResolver(bundle as unknown as Record<string, oca.Bundle>, {
+    cardOverlayType: oca.CardOverlayType.CardLayout11,
+  }),
   scan: Scan,
   useBiometry: UseBiometry,
   record: Record,

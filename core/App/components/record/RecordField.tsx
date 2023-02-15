@@ -68,7 +68,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
   const displayAttribute = (field: Field) => {
     if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
       return <RecordBinaryField attributeValue={(field as Attribute).value as string} shown={shown} />
-    } else if (field.type == BaseType.DATEINT) {
+    } else if (field.type == BaseType.DateInt) {
       return <RecordDateIntField field={field} shown={shown} />
     } else {
       return (

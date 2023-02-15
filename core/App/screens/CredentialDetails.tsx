@@ -41,7 +41,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const { TextTheme, ColorPallet } = useTheme()
-  const { OCABundle, record } = useConfiguration()
+  const { OCABundleResolver, record } = useConfiguration()
 
   useEffect(() => {
     if (!agent) {
@@ -74,7 +74,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       const date = new Date(credential.revocationNotification.revocationDate)
       setRevocationDate(formatTime(date))
     }
-    OCABundle.getCredentialPresentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
+    OCABundleResolver.presentationFields(credential as CredentialExchangeRecord, i18n.language).then((fields) =>
       setFields(fields)
     )
   }, [credential])
