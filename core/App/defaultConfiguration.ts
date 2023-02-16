@@ -1,6 +1,6 @@
 import defaultIndyLedgers from '../configs/ledgers/indy'
 
-import bundle = require('./assets/oca-bundles.json')
+import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'

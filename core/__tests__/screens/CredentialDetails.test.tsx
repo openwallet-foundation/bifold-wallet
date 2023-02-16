@@ -105,7 +105,7 @@ describe.skip('displays a credential details screen', () => {
 
       const credentialName = await findByText('Unverified Person', { exact: false })
       const credentialIssuedAt = await findByText(
-        `CredentialDetails.Issued: ${formatTime(mock_testOpenVPCredentialRecord.createdAt, {format:"MMM D, YYYY"})}`,
+        `CredentialDetails.Issued: ${formatTime(mock_testOpenVPCredentialRecord.createdAt, { format: 'MMM D, YYYY' })}`,
         { exact: false }
       )
 
