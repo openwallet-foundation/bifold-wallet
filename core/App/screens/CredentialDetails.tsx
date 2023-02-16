@@ -163,13 +163,12 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       if (!(agent && credential)) {
         return
       }
-      // console.log(JSON.stringify(credential))
       await agent.credentials.deleteById(credential.id)
-      // Toast.show({
-      //   type: ToastType.Success,
-      //   text1: t('CredentialDetails.CredentialRemoved'),
-      // })
-      // goBackToListCredentials()
+      Toast.show({
+        type: ToastType.Success,
+        text1: t('CredentialDetails.CredentialRemoved'),
+      })
+      goBackToListCredentials()
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
 

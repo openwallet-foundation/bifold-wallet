@@ -17,8 +17,8 @@ import { Buffer } from 'buffer'
 import moment from 'moment'
 import { parseUrl } from 'query-string'
 
-import { GroupedAttributes, GroupedPredicates } from '../types/record'
 import { i18n } from '../localization/index'
+import { GroupedAttributes, GroupedPredicates } from '../types/record'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'

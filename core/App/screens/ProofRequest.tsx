@@ -14,7 +14,7 @@ import {
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity, DeviceEventEmitter, FlatList } from 'react-native'
+import { View, StyleSheet, Text, DeviceEventEmitter, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -68,7 +68,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       justifyContent: 'space-between',
     },
     pageMargin: {
-      marginHorizontal: 20
+      marginHorizontal: 20,
     },
     pageFooter: {
       marginBottom: 15,
@@ -135,9 +135,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       proof: ProofExchangeRecord
     ): Promise<
       | {
-        format: GetFormatDataReturn<[IndyProofFormat]>
-        credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-      }
+          format: GetFormatDataReturn<[IndyProofFormat]>
+          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+        }
       | undefined
     > => {
       try {

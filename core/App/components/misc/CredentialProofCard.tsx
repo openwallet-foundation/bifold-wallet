@@ -74,10 +74,10 @@ const CredentialProofCard: React.FC<CredentialProofCardProps> = ({
       borderRadius: borderRadius,
     },
     cardContainer: {
-      marginHorizontal:20,
+      marginHorizontal: 20,
       flexGrow: 1,
       flexDirection: 'row',
-      elevation: 5
+      elevation: 5,
     },
     secondaryBodyContainer: {
       width: logoHeight,
