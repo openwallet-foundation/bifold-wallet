@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, ImageBackground, StyleSheet, Text, View, ViewStyle, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { dateFormatOptions } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay10, CredentialOverlay } from '../../types/oca'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard10Props {
@@ -252,7 +252,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
             testID={testIdWithKey('CredentialIssued')}
             maxFontSizeMultiplier={1}
           >
-            {t('CredentialDetails.Issued')}: {credential.createdAt.toLocaleDateString(i18n.language, dateFormatOptions)}
+            {t('CredentialDetails.Issued')}: {formatTime(credential.createdAt)}
           </Text>
         )}
       </View>
