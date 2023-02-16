@@ -169,6 +169,7 @@ const CredentialProofCard: React.FC<CredentialProofCardProps> = ({
             style={[
               TextTheme.normal,
               {
+                color: ColorPallet.grayscale.black,
                 fontSize: 0.5 * logoHeight,
                 fontWeight: 'bold',
                 alignSelf: 'center',

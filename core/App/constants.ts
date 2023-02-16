@@ -24,6 +24,12 @@ export enum KeychainServices {
   Key = 'secret.wallet.key',
 }
 
+export enum EventTypes {
+  ERROR_ADDED = 'ErrorAdded',
+  ERROR_REMOVED = 'ErrorRemoved',
+  BIOMETRY_UPDATE = 'BiometryUpdate',
+}
+
 export const second = 1000
 export const minute = 60000
 export const hour = 3600000
@@ -51,12 +57,6 @@ export const attemptLockoutThresholdRules = {
 }
 
 export const walletId = 'walletId'
-
-export const dateFormatOptions: { year: 'numeric'; month: 'short'; day: 'numeric' } = {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-}
 
 export const minPINLength = 6
 
