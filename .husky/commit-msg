@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# echo "Heloo"
-npx commitlint --edit $1
+# echo "Hello"
+# npx commitlint --edit $1
