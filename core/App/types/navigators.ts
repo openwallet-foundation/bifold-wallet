@@ -17,7 +17,6 @@ export enum Screens {
   Notifications = 'Notifications',
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
-  ProofRequestAttributeDetails = 'Proof Request Attribute Details',
   Settings = 'Settings',
   Language = 'Language',
   Contacts = 'Contacts',
@@ -111,10 +110,6 @@ export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.ProofRequestAttributeDetails]: {
-    proofId: string
-    attributeName: string | null
-  }
   [Screens.CommonDecline]: {
     declineType: DeclineType
     itemId: string
@@ -128,10 +123,6 @@ export type DeliveryStackParams = {
   [Screens.Connection]: { connectionId?: string; threadId?: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.ProofRequestAttributeDetails]: {
-    proofId: string
-    attributeName: string | null
-  }
   [Screens.CommonDecline]: {
     declineType: DeclineType
     itemId: string
