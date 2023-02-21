@@ -173,10 +173,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         if (!(format && credentials)) {
           return
         }
-        console.log(JSON.stringify(credentials))
-        agent.credentials.getById('3c2ef004-1ddd-4645-b979-1fe9dd754398').then(cred => {
-          console.log(JSON.stringify(cred))
-        })
         const attributes = processProofAttributes(format.request, credentials)
         const predicates = processProofPredicates(format.request, credentials)
 

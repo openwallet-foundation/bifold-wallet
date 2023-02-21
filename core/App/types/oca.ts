@@ -239,7 +239,7 @@ export class OCABundleResolver implements OCABundleResolverType {
 
   public resolveDefaultBundleByCredDefOrSchema(
     credDefId?: string,
-    schemaId?:string,
+    schemaId?: string,
     credName?: string,
     language = 'en'
   ): Promise<OCABundle | undefined> {

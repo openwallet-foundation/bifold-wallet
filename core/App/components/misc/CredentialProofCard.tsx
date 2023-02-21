@@ -135,7 +135,12 @@ const CredentialProofCard: React.FC<CredentialProofCardProps> = ({
   useEffect(() => {
     const resolveBundle = async () => {
       const bundle = await OCABundleResolver.resolveByCredDefOrSchema(credDefId, schemaId, i18n.language)
-      const defaultBundle = await OCABundleResolver.resolveDefaultBundleByCredDefOrSchema(credDefId, schemaId, credName, i18n.language)
+      const defaultBundle = await OCABundleResolver.resolveDefaultBundleByCredDefOrSchema(
+        credDefId,
+        schemaId,
+        credName,
+        i18n.language
+      )
       return { bundle, defaultBundle }
     }
 
