@@ -1,6 +1,6 @@
 import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framework/core'
 
-import { parsedCredDefFromId, parsedCredDefName } from '../utils/cred-def'
+import { parsedCredDefFromId } from '../utils/cred-def'
 import { hashCode, hashToRGBA } from '../utils/helpers'
 
 import { Attribute, Field } from './record'
@@ -205,49 +205,18 @@ export class OCABundleResolver implements OCABundleResolverType {
     return this.options.cardOverlayType ?? CardOverlayType.CardLayout11
   }
 
-  public resolveDefaultBundle(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
-    const metaOverlay: MetaOverlay = {
-      captureBase: '',
-      type: OverlayType.Meta10,
-      name: parsedCredDefName(credential),
-      issuerName: credential?.connectionId ?? '',
-      language: language ?? this.options?.language,
-    }
-
-    const cardLayoutOverlay10: CardLayoutOverlay10 = {
-      captureBase: '',
-      type: OverlayType.CardLayout10,
-      backgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
-    }
-
-    const cardLayoutOverlay11: CardLayoutOverlay11 = {
-      captureBase: '',
-      type: OverlayType.CardLayout11,
-      primaryBackgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
-    }
-
-    const bundle: Bundle = {
-      captureBase: { captureBase: '', type: OverlayType.Base10 },
-      overlays: [
-        metaOverlay,
-        this.cardOverlayType === CardOverlayType.CardLayout10 ? cardLayoutOverlay10 : cardLayoutOverlay11,
-      ],
-    }
-
-    return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
-  }
-
-  public resolveDefaultBundleByCredDefOrSchema(
+  private getDefaultBundle(
     credDefId?: string,
     schemaId?: string,
     credName?: string,
+    credConnectionId?: string,
     language = 'en'
-  ): Promise<OCABundle | undefined> {
+  ) {
     const metaOverlay: MetaOverlay = {
       captureBase: '',
       type: OverlayType.Meta10,
       name: credName ?? parsedCredDefFromId(credDefId, schemaId),
-      issuerName: '',
+      issuerName: credConnectionId ?? '',
       language: language ?? this.options?.language,
     }
 
@@ -279,6 +248,23 @@ export class OCABundleResolver implements OCABundleResolverType {
     }
 
     return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
+  }
+
+  public resolveDefaultBundle(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
+    const credentialDefinitionId = credential.metadata.get(
+      CredentialMetadataKeys.IndyCredential
+    )?.credentialDefinitionId
+    const schemaId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
+    return this.getDefaultBundle(credentialDefinitionId, schemaId, undefined, credential.connectionId, language)
+  }
+
+  public resolveDefaultBundleByCredDefOrSchema(
+    credDefId?: string,
+    schemaId?: string,
+    credName?: string,
+    language = 'en'
+  ): Promise<OCABundle | undefined> {
+    return this.getDefaultBundle(credDefId, schemaId, credName, undefined, language)
   }
 
   public resolveByCredDefOrSchema(

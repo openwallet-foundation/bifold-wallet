@@ -135,9 +135,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       proof: ProofExchangeRecord
     ): Promise<
       | {
-        format: GetFormatDataReturn<[IndyProofFormat]>
-        credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-      }
+          format: GetFormatDataReturn<[IndyProofFormat]>
+          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+        }
       | undefined
     > => {
       try {
@@ -268,7 +268,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             ) : (
               <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                 <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                {t('ProofRequest.IsRequestingYouToShare')}:
+                <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
+                <Text style={[TextTheme.title]}>{` ${proofItems.length} `}</Text>
+                <Text>{proofItems.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
               </Text>
             )}
           </View>
@@ -313,7 +315,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           ListFooterComponent={proofPageFooter}
           renderItem={({ item }) => {
             return (
-              <View style={{ marginTop: 10 }}>
+              <View style={{ marginTop: 10, marginHorizontal: 20 }}>
                 <CredentialCard
                   credDefId={item.credDefId}
                   schemaId={item.schemaId}

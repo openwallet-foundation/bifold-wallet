@@ -214,7 +214,6 @@ export const processProofAttributes = (
     }
     const { name, names } = requestedProofAttributes[key]
 
-    console.log(JSON.stringify(request))
     for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
       if (!processedAttributes[credName]) {
         // init processedAttributes object

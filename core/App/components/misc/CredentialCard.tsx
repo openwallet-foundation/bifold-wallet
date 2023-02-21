@@ -3,13 +3,13 @@ import React from 'react'
 import { ViewStyle } from 'react-native'
 
 import { useConfiguration } from '../../contexts/configuration'
+import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { CardOverlayType } from '../../types/oca'
 import { Attribute, Predicate } from '../../types/record'
 
 import CredentialCard10 from './CredentialCard10'
 import CredentialCard11 from './CredentialCard11'
-import CredentialProofCard from './CredentialProofCard'
 
 interface CredentialCardProps {
   credential?: CredentialExchangeRecord
@@ -38,17 +38,19 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
   const { OCABundleResolver } = useConfiguration()
+  const { ColorPallet } = useTheme()
   const getCredOverlayType = (type: CardOverlayType) => {
     if (proof) {
       return (
-        <CredentialProofCard
+        <CredentialCard11
+          proofItems={[...(proofAttributes ?? []), ...(proofPredicates ?? [])]}
+          style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
+          error={!existsInWallet}
+          credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
-          proofAttributes={proofAttributes ?? []}
-          proofPredicates={proofPredicates ?? []}
-          credName={credName ?? ''}
-          existsInWallet={existsInWallet}
-        />
+          elevated
+        ></CredentialCard11>
       )
     } else if (type === CardOverlayType.CardLayout10) {
       return <CredentialCard10 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
