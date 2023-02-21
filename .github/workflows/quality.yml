@@ -17,11 +17,15 @@ jobs:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v2
 
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.15.0"
+          cache: "yarn"
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          yarn install --immutable
 
       - name: Check style
         run: |
@@ -37,11 +41,15 @@ jobs:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v2
 
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.15.0"
+          cache: "yarn"
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          yarn install --immutable
 
       - name: Automated testing
         run: |
