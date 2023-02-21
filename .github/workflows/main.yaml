@@ -19,8 +19,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      - name: Configure node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.15.0"
+          registry-url: "https://registry.npmjs.org"
+          cache: "yarn"
 
       - name: Configure ruby
         uses: ruby/setup-ruby@v1
@@ -95,8 +99,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      - name: Configure node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.15.0"
+          registry-url: "https://registry.npmjs.org"
+          cache: "yarn"
 
       - name: setup ubuntu
         run: |
@@ -106,9 +114,9 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:
-          distribution: 'zulu'
+          distribution: "zulu"
           java-version: 11
-          cache: 'gradle'
+          cache: "gradle"
 
       - name: Setup Android SDK
         working-directory: ./app/android
@@ -122,13 +130,13 @@ jobs:
           unzip -d $ANDROID_HOME/cmdline-tools commandlinetools-linux.zip
           mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
           find $ANDROID_HOME -name sdkmanager
-          
+
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           echo y | sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
           echo y | sdkmanager "platform-tools" >/dev/null
           echo y | sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
           find $ANDROID_HOME -type f -executable -print
-          
+
           chmod +x ./gradlew
           set +o pipefail
           yes | sdkmanager --licenses
