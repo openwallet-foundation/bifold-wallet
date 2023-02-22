@@ -68,7 +68,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
     title: '',
     message: '',
   })
-
+  const iconSize = 24
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
   const { t } = useTranslation()
@@ -168,9 +168,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
               return (
                 <View style={{ flexDirection: 'row' }} key={index}>
                   {validation.isInvalid ? (
-                    <Icon name="clear" size={24} color={ColorPallet.notification.errorIcon} />
+                    <Icon name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
                   ) : (
-                    <Icon name="check" size={24} color={ColorPallet.notification.success} />
+                    <Icon name="check" size={iconSize} color={ColorPallet.notification.success} />
                   )}
                   <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
                     {t(`PINCreate.Helper.${validation.errorName}`)}
