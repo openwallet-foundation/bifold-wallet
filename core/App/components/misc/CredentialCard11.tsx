@@ -110,6 +110,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
       height: logoHeight,
       backgroundColor: '#ffffff',
       borderRadius: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     textContainer: {
       color: credentialTextColor(ColorPallet, overlay.cardLayoutOverlay?.primaryBackgroundColor),
@@ -159,7 +161,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
           <Image
             source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
             style={{
-              resizeMode: 'center',
+              resizeMode: 'contain',
               width: logoHeight,
               height: logoHeight,
             }}
