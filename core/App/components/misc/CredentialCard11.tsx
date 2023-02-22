@@ -86,9 +86,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     (field) => field.name === overlay?.cardLayoutOverlay?.secondaryAttribute?.name
   )
 
-  const secondaryBackgroundColor = proofItems?.length
-    ? overlay.cardLayoutOverlay?.primaryBackgroundColor
-    : overlay.cardLayoutOverlay?.secondaryBackgroundColor
+  const getSecondaryBackgroundColor = () => {
+    if (proofItems) {
+      return overlay.cardLayoutOverlay?.primaryBackgroundColor
+    } else {
+      return overlay.cardLayoutOverlay?.backgroundImageSlice?.src
+        ? 'rgba(0, 0, 0, 0)'
+        : overlay.cardLayoutOverlay?.secondaryBackgroundColor
+    }
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -103,9 +109,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor:
-        (overlay.cardLayoutOverlay?.backgroundImageSlice?.src ? 'rgba(0, 0, 0, 0)' : secondaryBackgroundColor) ??
-        'rgba(0, 0, 0, 0.24)',
+      backgroundColor: getSecondaryBackgroundColor() ?? 'rgba(0, 0, 0, 0.24)',
     },
     primaryBodyContainer: {
       flex: 6,
@@ -142,7 +146,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       paddingVertical: 4,
     },
     textContainer: {
-      color: proofItems?.length
+      color: proofItems
         ? TextTheme.normal.color
         : credentialTextColor(ColorPallet, overlay.cardLayoutOverlay?.primaryBackgroundColor),
       flexShrink: 1,
@@ -414,7 +418,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           },
         ]}
       >
-        {overlay.cardLayoutOverlay?.backgroundImageSlice?.src ? (
+        {overlay.cardLayoutOverlay?.backgroundImageSlice?.src && !proofItems ? (
           <ImageBackground
             source={toImageSource(overlay.cardLayoutOverlay?.backgroundImageSlice.src)}
             style={{ flexGrow: 1 }}
