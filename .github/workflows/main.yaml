@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Configure node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "16.15.0"
           registry-url: "https://registry.npmjs.org"
@@ -100,7 +100,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Configure node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "16.15.0"
           registry-url: "https://registry.npmjs.org"
