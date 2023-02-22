@@ -1,8 +1,5 @@
 name: Code Quality
 
-env:
-  cacheId: "6" # increment to expire the cache
-
 on:
   pull_request:
     branches: [main]
@@ -17,11 +14,8 @@ jobs:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16.15.0"
-          cache: "yarn"
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: Install dependencies
         run: |
@@ -41,11 +35,8 @@ jobs:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16.15.0"
-          cache: "yarn"
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: Install dependencies
         run: |

@@ -19,12 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16.15.0"
-          registry-url: "https://registry.npmjs.org"
-          cache: "yarn"
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: Configure ruby
         uses: ruby/setup-ruby@v1
@@ -99,12 +95,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Configure node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16.15.0"
-          registry-url: "https://registry.npmjs.org"
-          cache: "yarn"
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
 
       - name: setup ubuntu
         run: |
