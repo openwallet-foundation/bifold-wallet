@@ -78,8 +78,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     },
     statusContainer: {},
     logoContainer: {
-      top: -1 * (0.5 * logoHeight + paddingVertical),
-      marginBottom: -1 * (0.5 * logoHeight + paddingVertical),
+      top: -0.5 * logoHeight,
+      left: paddingHorizontal,
+      marginBottom: -1 * logoHeight,
       width: logoHeight,
       height: logoHeight,
       backgroundColor: '#ffffff',
@@ -196,7 +197,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <Image
             source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
             style={{
-              resizeMode: 'center',
+              resizeMode: 'contain',
+              width: logoHeight,
+              height: logoHeight,
             }}
           />
         ) : (
@@ -211,15 +214,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const CredentialDetailPrimaryHeader: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialDetailsPrimaryHeader')} style={styles.primaryHeaderContainer}>
-        <View style={{ flexDirection: 'row', paddingBottom: paddingVertical }}>
-          <CredentialCardLogo />
+        <View>
           <Text
             testID={testIdWithKey('CredentialIssuer')}
             style={[
               TextTheme.label,
               styles.textContainer,
               {
-                paddingLeft: paddingVertical,
+                paddingLeft: logoHeight + paddingVertical,
+                paddingBottom: paddingVertical,
                 lineHeight: 19,
                 opacity: 0.8,
               },
@@ -228,19 +231,19 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           >
             {overlay.metaOverlay?.issuerName}
           </Text>
+          <Text
+            testID={testIdWithKey('CredentialName')}
+            style={[
+              TextTheme.normal,
+              styles.textContainer,
+              {
+                lineHeight: 24,
+              },
+            ]}
+          >
+            {overlay.metaOverlay?.name}
+          </Text>
         </View>
-        <Text
-          testID={testIdWithKey('CredentialName')}
-          style={[
-            TextTheme.normal,
-            styles.textContainer,
-            {
-              lineHeight: 24,
-            },
-          ]}
-        >
-          {overlay.metaOverlay?.name}
-        </Text>
       </View>
     )
   }
@@ -293,6 +296,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     ) : (
       <View style={styles.container}>
         <CredentialDetailSecondaryHeader />
+        <CredentialCardLogo />
         <CredentialDetailPrimaryHeader />
         {isRevoked && !isRevokedMessageHidden ? (
           <View style={{ padding: paddingVertical, paddingTop: 0 }}>

@@ -2,7 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -21,9 +21,11 @@ interface CredentialCard11Props {
   style?: ViewStyle
 }
 
+const { width } = Dimensions.get('screen')
+
 const borderRadius = 10
-const padding = 16
-const logoHeight = 40
+const padding = width * 0.05
+const logoHeight = width * 0.12
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -76,8 +78,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
       borderRadius: borderRadius,
     },
     cardContainer: {
-      flexGrow: 1,
       flexDirection: 'row',
+      minHeight: 0.33 * width,
     },
     secondaryBodyContainer: {
       width: logoHeight,
@@ -89,7 +91,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
           : overlay.cardLayoutOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
     },
     primaryBodyContainer: {
-      flex: 6,
+      flexGrow: 1,
       padding,
     },
     statusContainer: {
@@ -102,10 +104,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
       alignItems: 'center',
     },
     logoContainer: {
-      top: 1,
-      left: -1 * (0.5 * logoHeight + padding),
-      height: logoHeight,
+      top: padding,
+      left: -1 * logoHeight + padding,
       width: logoHeight,
+      height: logoHeight,
       backgroundColor: '#ffffff',
       borderRadius: 8,
       justifyContent: 'center',
@@ -159,8 +161,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
           <Image
             source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
             style={{
-              maxHeight: logoHeight,
-              resizeMode: 'center',
+              resizeMode: 'contain',
+              width: logoHeight,
+              height: logoHeight,
             }}
           />
         ) : (
@@ -190,7 +193,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
           {
             lineHeight: 19,
             opacity: 0.8,
-            marginLeft: 24,
           },
         ]}
       >
@@ -208,7 +210,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
           {
             lineHeight: 24,
             fontWeight: 'bold',
-            marginLeft: 24,
           },
         ]}
       >
@@ -220,9 +221,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        <View style={{ flexDirection: 'row' }}>
-          <CredentialCardLogo />
-          <View style={{ marginLeft: -1 * padding, margin: -1 }}>
+        <View style={{ marginLeft: -1 * logoHeight + padding, margin: -1 }}>
+          <View>
             <Text
               testID={testIdWithKey('CredentialIssuer')}
               style={[
@@ -243,6 +243,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
                 TextTheme.normal,
                 styles.textContainer,
                 {
+                  fontWeight: 'bold',
                   lineHeight: 24,
                 },
               ]}
@@ -253,13 +254,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
           </View>
         </View>
         {primaryField && (
-          <View style={{ paddingTop: padding }}>
+          <View style={{ paddingTop: 0.5 * padding, marginLeft: -1 * logoHeight + padding }}>
             <AttributeLabel label={primaryField.label ?? startCase(primaryField.name ?? '')} />
             <AttributeValue value={(primaryField as Attribute).value} />
           </View>
         )}
         {secondaryField && (
-          <View style={{ paddingTop: padding }}>
+          <View style={{ paddingTop: 0.5 * padding, marginLeft: -1 * logoHeight + padding }}>
             <AttributeLabel label={secondaryField.label ?? startCase(secondaryField.name ?? '')} />
             <AttributeValue value={(secondaryField as Attribute).value} />
           </View>
@@ -276,7 +277,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
             source={toImageSource(overlay.cardLayoutOverlay?.backgroundImageSlice.src)}
             style={{ flexGrow: 1 }}
             imageStyle={{
-              resizeMode: 'cover',
               borderTopLeftRadius: borderRadius,
               borderBottomLeftRadius: borderRadius,
             }}
@@ -301,7 +301,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
                 },
               ]}
             >
-              <Icon size={24} style={{ color: ColorPallet.semantic.error }} name="error" />
+              <Icon size={0.7 * logoHeight} style={{ color: ColorPallet.semantic.error }} name="error" />
             </View>
           )
         default:
@@ -320,6 +320,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
     return (
       <View style={styles.cardContainer}>
         <CredentialCardSecondaryBody />
+        <CredentialCardLogo />
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
       </View>
@@ -333,7 +334,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
+      <View testID={testIdWithKey('CredentialCard')}>
+        <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
+      </View>
     </TouchableOpacity>
   ) : null
 }
