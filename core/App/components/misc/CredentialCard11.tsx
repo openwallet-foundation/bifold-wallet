@@ -2,7 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { FlatList, Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -27,9 +27,11 @@ interface CredentialCard11Props {
   schemaId?: string
 }
 
+const { width } = Dimensions.get('screen')
+
 const borderRadius = 10
-const padding = 16
-const logoHeight = 40
+const padding = width * 0.05
+const logoHeight = width * 0.12
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -102,8 +104,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       borderRadius: borderRadius,
     },
     cardContainer: {
-      flexGrow: 1,
       flexDirection: 'row',
+      minHeight: 0.33 * width,
     },
     secondaryBodyContainer: {
       width: logoHeight,
@@ -112,7 +114,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       backgroundColor: getSecondaryBackgroundColor() ?? 'rgba(0, 0, 0, 0.24)',
     },
     primaryBodyContainer: {
-      flex: 6,
+      flexGrow: 1,
       padding,
     },
     statusContainer: {
@@ -125,10 +127,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       alignItems: 'center',
     },
     logoContainer: {
-      top: 1,
-      left: -1 * (0.5 * logoHeight + padding),
-      height: logoHeight,
+      top: padding,
+      left: -1 * logoHeight + padding,
       width: logoHeight,
+      height: logoHeight,
       backgroundColor: '#ffffff',
       borderRadius: 8,
       justifyContent: 'center',
@@ -212,8 +214,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           <Image
             source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
             style={{
-              maxHeight: logoHeight,
-              resizeMode: 'center',
+              resizeMode: 'contain',
+              width: logoHeight,
+              height: logoHeight,
             }}
           />
         ) : (
@@ -247,7 +250,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           {
             lineHeight: 19,
             opacity: 0.8,
-            marginLeft: 24,
           },
         ]}
       >
@@ -265,7 +267,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           {
             lineHeight: 24,
             fontWeight: 'bold',
-            marginLeft: 24,
           },
         ]}
       >
@@ -339,66 +340,62 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        <View style={{ flexDirection: 'row' }}>
-          <CredentialCardLogo />
-          <View style={{ marginLeft: -1 * padding, margin: -1 }}>
-            <View>
-              {overlay.metaOverlay?.issuerName !== '' && (
-                <Text
-                  testID={testIdWithKey('CredentialIssuer')}
-                  style={[
-                    TextTheme.label,
-                    styles.textContainer,
-                    {
-                      lineHeight: 19,
-                      opacity: 0.8,
-                    },
-                  ]}
-                  numberOfLines={1}
-                >
-                  {overlay.metaOverlay?.issuerName}
-                </Text>
-              )}
-              <Text
-                testID={testIdWithKey('CredentialName')}
-                style={[
-                  TextTheme.normal,
-                  styles.textContainer,
-                  {
-                    lineHeight: 24,
-                  },
-                ]}
-                numberOfLines={1}
-              >
-                {overlay.metaOverlay?.name}
+        <View style={{ marginLeft: -1 * logoHeight + padding, margin: -1 }}>
+          <View>
+            <Text
+              testID={testIdWithKey('CredentialIssuer')}
+              style={[
+                TextTheme.label,
+                styles.textContainer,
+                {
+                  lineHeight: 19,
+                  opacity: 0.8,
+                },
+              ]}
+              numberOfLines={1}
+            >
+              {overlay.metaOverlay?.issuerName}
+            </Text>
+            <Text
+              testID={testIdWithKey('CredentialName')}
+              style={[
+                TextTheme.normal,
+                styles.textContainer,
+                {
+                  fontWeight: 'bold',
+                  lineHeight: 24,
+                },
+              ]}
+              numberOfLines={1}
+            >
+              {overlay.metaOverlay?.name}
+            </Text>
+          </View>
+          {error && (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon style={[styles.errorIcon]} name="close" size={30} />
+
+              <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+                {t('ProofRequest.NotAvailableInYourWallet')}
               </Text>
             </View>
-            {error && (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon style={[styles.errorIcon]} name="close" size={30} />
-
-                <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-                  {t('ProofRequest.NotAvailableInYourWallet')}
-                </Text>
-              </View>
-            )}
-            <FlatList
-              data={proofItems}
-              scrollEnabled={false}
-              renderItem={({ item }) => {
-                return renderCardAttribute(item as Attribute & Predicate)
-              }}
-            />
-          </View>
+          )}
+          <FlatList
+            data={proofItems}
+            scrollEnabled={false}
+            renderItem={({ item }) => {
+              return renderCardAttribute(item as Attribute & Predicate)
+            }}
+          />
         </View>
         {primaryField && (
-          <View style={{ paddingTop: padding }}>
+          <View style={{ paddingTop: 0.5 * padding, marginLeft: -1 * logoHeight + padding }}>
             <AttributeLabel label={primaryField.label ?? startCase(primaryField.name ?? '')} />
             <AttributeValue value={(primaryField as Attribute).value} />
           </View>
         )}
         {secondaryField && (
-          <View style={{ paddingTop: padding }}>
+          <View style={{ paddingTop: 0.5 * padding, marginLeft: -1 * logoHeight + padding }}>
             <AttributeLabel label={secondaryField.label ?? startCase(secondaryField.name ?? '')} />
             <AttributeValue value={(secondaryField as Attribute).value} />
           </View>
@@ -423,7 +420,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             source={toImageSource(overlay.cardLayoutOverlay?.backgroundImageSlice.src)}
             style={{ flexGrow: 1 }}
             imageStyle={{
-              resizeMode: 'cover',
               borderTopLeftRadius: borderRadius,
               borderBottomLeftRadius: borderRadius,
             }}
@@ -448,7 +444,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 },
               ]}
             >
-              <Icon size={24} style={{ color: ColorPallet.semantic.error }} name="error" />
+              <Icon size={0.7 * logoHeight} style={{ color: ColorPallet.semantic.error }} name="error" />
             </View>
           )
         default:
@@ -467,6 +463,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       <View style={styles.cardContainer}>
         <CredentialCardSecondaryBody />
+        <CredentialCardLogo />
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
       </View>
@@ -477,9 +474,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       <TouchableOpacity
         disabled={typeof onPress === 'undefined' ? true : false}
         onPress={onPress}
+        style={[styles.container, style]}
         testID={testIdWithKey('ShowCredentialDetails')}
       >
-        <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
+        <View testID={testIdWithKey('CredentialCard')}>
+          <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
+        </View>
       </TouchableOpacity>
     </View>
   ) : null

@@ -151,93 +151,91 @@ exports[`common decline screen decline offer renders correctly 1`] = `
               nativeID="animatedComponent"
               style={
                 Object {
+                  "backgroundColor": "#781e4b",
+                  "borderRadius": 10,
                   "opacity": 1,
                 }
               }
             >
               <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                    "flexGrow": 1,
-                  }
-                }
+                testID="com.ariesbifold:id/CredentialCard"
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "backgroundColor": "rgba(0, 0, 0, 0.24)",
-                        "borderBottomLeftRadius": 10,
-                        "borderTopLeftRadius": 10,
-                        "width": 40,
-                      },
-                      Object {
-                        "backgroundColor": "rgba(0, 0, 0, 0.24)",
-                      },
-                    ]
-                  }
-                  testID="com.ariesbifold:id/CredentialCardSecondaryBody"
-                />
-                <View
-                  style={
                     Object {
-                      "flex": 6,
-                      "padding": 16,
+                      "flexDirection": "row",
+                      "minHeight": 247.5,
                     }
                   }
-                  testID="com.ariesbifold:id/CredentialCardPrimaryBody"
                 >
                   <View
                     style={
-                      Object {
-                        "flexDirection": "row",
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "rgba(0, 0, 0, 0.24)",
+                          "borderBottomLeftRadius": 10,
+                          "borderTopLeftRadius": 10,
+                          "width": 90,
+                        },
+                        Object {
+                          "backgroundColor": "rgba(0, 0, 0, 0.24)",
+                        },
+                      ]
+                    }
+                    testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+                  />
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#ffffff",
+                          "borderRadius": 8,
+                          "height": 90,
+                          "justifyContent": "center",
+                          "left": -52.5,
+                          "top": 37.5,
+                          "width": 90,
+                        },
+                        Object {
+                          "elevation": 0,
+                        },
+                      ]
                     }
                   >
-                    <View
+                    <Text
                       style={
                         Array [
                           Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#ffffff",
-                            "borderRadius": 8,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "left": -36,
-                            "top": 1,
-                            "width": 40,
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
                           },
                           Object {
-                            "elevation": 0,
+                            "alignSelf": "center",
+                            "fontSize": 45,
+                            "fontWeight": "bold",
                           },
                         ]
                       }
                     >
-                      <Text
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "alignSelf": "center",
-                              "fontSize": 20,
-                              "fontWeight": "bold",
-                            },
-                          ]
-                        }
-                      >
-                        C
-                      </Text>
-                    </View>
+                      C
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "flexGrow": 1,
+                        "padding": 37.5,
+                      }
+                    }
+                    testID="com.ariesbifold:id/CredentialCardPrimaryBody"
+                  >
                     <View
                       style={
                         Object {
                           "margin": -1,
-                          "marginLeft": -16,
+                          "marginLeft": -52.5,
                         }
                       }
                     >
@@ -279,6 +277,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                                 "flexShrink": 1,
                               },
                               Object {
+                                "fontWeight": "bold",
                                 "lineHeight": 24,
                               },
                             ]
@@ -310,36 +309,36 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                       </RCTScrollView>
                     </View>
                   </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "rgba(0, 0, 0, 0)",
-                      "borderBottomLeftRadius": 10,
-                      "borderTopRightRadius": 10,
-                      "height": 40,
-                      "justifyContent": "center",
-                      "width": 40,
-                    }
-                  }
-                  testID="com.ariesbifold:id/CredentialCardStatus"
-                >
                   <View
                     style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "rgba(0, 0, 0, 0)",
-                          "borderBottomLeftRadius": 10,
-                          "borderTopRightRadius": 10,
-                          "height": 40,
-                          "justifyContent": "center",
-                          "width": 40,
-                        },
-                      ]
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "rgba(0, 0, 0, 0)",
+                        "borderBottomLeftRadius": 10,
+                        "borderTopRightRadius": 10,
+                        "height": 90,
+                        "justifyContent": "center",
+                        "width": 90,
+                      }
                     }
-                  />
+                    testID="com.ariesbifold:id/CredentialCardStatus"
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "rgba(0, 0, 0, 0)",
+                            "borderBottomLeftRadius": 10,
+                            "borderTopRightRadius": 10,
+                            "height": 90,
+                            "justifyContent": "center",
+                            "width": 90,
+                          },
+                        ]
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
