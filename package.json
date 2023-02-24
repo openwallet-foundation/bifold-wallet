@@ -1,21 +1,23 @@
 {
   "name": "aries-bifold",
-  "private": false,
+  "private": true,
   "license": "Apache-2.0",
   "workspaces": [
-    "packages/*"
+    "packages/oca",
+    "packages/core"
   ],
   "repository": {
     "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
     "type": "git"
   },
   "scripts": {
-    "prettier": "run-s prettier:core"
+    "prettier": "yarn run prettier"
   },
   "devDependencies": {
+    "prettier": "^2.8.4"
   },
   "engines": {
     "node": ">=16.15.0 <18.0.0",
-    "yarn": "^3.3.1"
+    "yarn": "^1.22.19"
   }
 }
