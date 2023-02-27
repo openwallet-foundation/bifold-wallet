@@ -214,9 +214,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           <Image
             source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
             style={{
-              resizeMode: 'contain',
+              resizeMode: 'cover',
               width: logoHeight,
               height: logoHeight,
+              borderRadius: 8,
             }}
           />
         ) : (
