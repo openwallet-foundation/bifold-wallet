@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Modal, StyleSheet, StatusBar, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -28,17 +28,24 @@ const ErrorModal: React.FC = () => {
     },
   })
 
-  DeviceEventEmitter.addListener(EventTypes.ERROR_ADDED, (err: BifoldError) => {
-    if (err.title && err.message) {
-      setError(err)
-      setModalVisible(true)
-    }
-  })
+  useEffect(() => {
+    const errorAddedHandle = DeviceEventEmitter.addListener(EventTypes.ERROR_ADDED, (err: BifoldError) => {
+      if (err.title && err.message) {
+        setError(err)
+        setModalVisible(true)
+      }
+    })
 
-  DeviceEventEmitter.addListener(EventTypes.ERROR_REMOVED, () => {
-    setError(undefined)
-    setModalVisible(false)
-  })
+    const errorRemovedHandle = DeviceEventEmitter.addListener(EventTypes.ERROR_REMOVED, () => {
+      setError(undefined)
+      setModalVisible(false)
+    })
+
+    return () => {
+      errorAddedHandle.remove()
+      errorRemovedHandle.remove()
+    }
+  }, [])
 
   const formattedMessageForError = (err: BifoldError | null): string | undefined => {
     if (!err) {

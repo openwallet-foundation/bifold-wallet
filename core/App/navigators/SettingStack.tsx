@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
@@ -28,9 +28,15 @@ const SettingStack: React.FC = () => {
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
 
-  DeviceEventEmitter.addListener(EventTypes.BIOMETRY_UPDATE, (value: boolean) => {
-    setBiometryUpdatePending(value)
-  })
+  useEffect(() => {
+    const handleBiometry = DeviceEventEmitter.addListener(EventTypes.BIOMETRY_UPDATE, (value: boolean) => {
+      setBiometryUpdatePending(value)
+    })
+
+    return () => {
+      handleBiometry.remove()
+    }
+  }, [])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
