@@ -9,6 +9,7 @@
 | Akiff Manji    | amanji      |      |
 | Clécio Varjão  | cvarjao     |      |
 | James Ebert    | JamesKEbert |      |
+| Jean-Christophe Drouin | jcdrouin21  |      |
 | Jason C. Leach | jleach      |      |
 | Ryan Koch      | ryankoch13  |      |
 
