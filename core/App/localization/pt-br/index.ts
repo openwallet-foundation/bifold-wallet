@@ -171,7 +171,9 @@ const translation = {
     "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
-    "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira."
+    "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira.",
+    "BiometricsError": "Biometrics were not successful.",
+    "BiometricsErrorEnterPIN": "Please enter your wallet PIN."
   },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
