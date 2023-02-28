@@ -173,6 +173,8 @@ const translation = {
     "RepeatPIN": "Please try your PIN again.",
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
+    "BiometricsError": "Biometrics were not successful.",
+    "BiometricsErrorEnterPIN": "Please enter your wallet PIN.",
     "LoggedOut": "You're logged out",
     "LoggedOutDescription": "To protect your information, you're logged out of your wallet if you have not used it for 5 minutes.",
     "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",

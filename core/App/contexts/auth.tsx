@@ -1,7 +1,9 @@
 import { agentDependencies } from '@aries-framework/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { DeviceEventEmitter } from 'react-native'
 
+import { EventTypes } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import {
@@ -38,11 +40,17 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
-    if (walletSecret) {
+    if (walletSecret && walletSecret.key) {
       return walletSecret
     }
 
-    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
+    const { secret, err } = await loadWalletSecret(
+      t('Biometry.UnlockPromptTitle'),
+      t('Biometry.UnlockPromptDescription')
+    )
+
+    DeviceEventEmitter.emit(EventTypes.BIOMETRY_ERROR, err !== undefined)
+
     if (!secret) {
       return
     }

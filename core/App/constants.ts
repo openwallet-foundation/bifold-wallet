@@ -28,6 +28,7 @@ export enum EventTypes {
   ERROR_ADDED = 'ErrorAdded',
   ERROR_REMOVED = 'ErrorRemoved',
   BIOMETRY_UPDATE = 'BiometryUpdate',
+  BIOMETRY_ERROR = 'BiometryError',
 }
 
 export const second = 1000
