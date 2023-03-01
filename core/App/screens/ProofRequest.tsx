@@ -14,7 +14,7 @@ import {
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, DeviceEventEmitter, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -30,7 +30,8 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute, Predicate } from '../types/record'
-import { processProofAttributes, processProofPredicates } from '../utils/helpers'
+import { toImageSource } from '../utils/credential'
+import { getConnectionImageUrl, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -65,6 +66,22 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     headerTextContainer: {
       paddingHorizontal: 25,
       paddingVertical: 16,
+    },
+    connectionImageContainer: {
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+      width: 90,
+      height: 90,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 45,
+      marginTop: 15,
+      borderColor: ColorPallet.grayscale.lightGrey,
+      borderWidth: 3,
+      alignSelf: 'center',
+    },
+    connectionImage: {
+      width: 55,
+      height: 55,
     },
     headerText: {
       ...ListItems.recordAttributeText,
@@ -223,32 +240,41 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     })
   }
 
+  const connectionImage = getConnectionImageUrl(proof?.connectionId ?? '')
+
   return (
     <>
       <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
         <Record
           header={() => (
-            <View style={styles.headerTextContainer}>
-              {!hasAvailableCredentials() ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Icon
-                    style={{ marginLeft: -2, marginRight: 10 }}
-                    name="highlight-off"
-                    color={ListItems.proofIcon.color}
-                    size={ListItems.proofIcon.fontSize}
-                  />
+            <>
+              {connectionImage && (
+                <View style={styles.connectionImageContainer}>
+                  <Image style={styles.connectionImage} source={toImageSource(connectionImage)} />
+                </View>
+              )}
+              <View style={styles.headerTextContainer}>
+                {!hasAvailableCredentials() ? (
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon
+                      style={{ marginLeft: -2, marginRight: 10 }}
+                      name="highlight-off"
+                      color={ListItems.proofIcon.color}
+                      size={ListItems.proofIcon.fontSize}
+                    />
+                    <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                      <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                      {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                    </Text>
+                  </View>
+                ) : (
                   <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                    {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                    {t('ProofRequest.IsRequestingYouToShare')}:
                   </Text>
-                </View>
-              ) : (
-                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                  {t('ProofRequest.IsRequestingYouToShare')}:
-                </Text>
-              )}
-            </View>
+                )}
+              </View>
+            </>
           )}
           footer={() => (
             <View

@@ -3,7 +3,7 @@ import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, DeviceEventEmitter } from 'react-native'
+import { StyleSheet, View, Text, DeviceEventEmitter, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
@@ -20,8 +20,8 @@ import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
 import { Field } from '../types/record'
-import { isValidIndyCredential } from '../utils/credential'
-import { getCredentialConnectionLabel } from '../utils/helpers'
+import { isValidIndyCredential, toImageSource } from '../utils/credential'
+import { getConnectionImageUrl, getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -54,6 +54,22 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     headerTextContainer: {
       paddingHorizontal: 25,
       paddingVertical: 16,
+    },
+    connectionImageContainer: {
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+      width: 90,
+      height: 90,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 45,
+      marginTop: 15,
+      borderColor: ColorPallet.grayscale.lightGrey,
+      borderWidth: 3,
+      alignSelf: 'center',
+    },
+    connectionImage: {
+      width: 55,
+      height: 55,
     },
     headerText: {
       ...ListItems.recordAttributeLabel,
@@ -143,8 +159,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   const header = () => {
+    const imageUrl = getConnectionImageUrl(credential?.connectionId ?? '')
     return (
       <>
+        {imageUrl && (
+          <View style={styles.connectionImageContainer}>
+            <Image style={styles.connectionImage} source={toImageSource(imageUrl)} />
+          </View>
+        )}
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
