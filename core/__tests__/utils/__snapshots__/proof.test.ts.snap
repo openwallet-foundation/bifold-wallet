@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
+Object {
+  "resolvedPredicates": Array [
+    Object {
+      "name": "age",
+      "predicateType": ">=",
+      "predicateValue": 1,
+    },
+  ],
+  "sharedAttribute": Array [
+    Object {
+      "name": "date",
+      "value": "1/1/1",
+    },
+  ],
+  "sharedAttributeGroups": Array [
+    Array [
+      Object {
+        "name": "first_name",
+        "value": "Aries",
+      },
+      Object {
+        "name": "second_name",
+        "value": "Bifold",
+      },
+    ],
+  ],
+  "unresolvedAttributeGroups": Array [],
+  "unresolvedAttributes": Array [],
+  "unresolvedPredicates": Array [],
+}
+`;
