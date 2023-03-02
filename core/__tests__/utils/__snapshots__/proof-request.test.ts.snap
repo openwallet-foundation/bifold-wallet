@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
+Object {
+  "indy": Object {
+    "name": "Full name",
+    "nonce": 1677766511505,
+    "requestedAttributes": Array [
+      Object {
+        "name": "given_names",
+      },
+      Object {
+        "name": "family_name",
+      },
+    ],
+    "requestedPredicates": Array [],
+    "version": "0.0.1",
+  },
+}
+`;
+
+exports[`Helpers Build indy proof request from template containing two requested attributes and predicate 1`] = `
+Object {
+  "indy": Object {
+    "name": "19and Full name",
+    "nonce": 1677766511505,
+    "requestedAttributes": Array [
+      Object {
+        "name": "given_names",
+      },
+      Object {
+        "name": "family_name",
+      },
+    ],
+    "requestedPredicates": Array [
+      Object {
+        "name": "age",
+        "predicateType": ">=",
+        "predicateValue": 19,
+      },
+    ],
+    "version": "0.0.1",
+  },
+}
+`;
+
+exports[`Helpers Build indy proof request from template containing attributes group 1`] = `
+Object {
+  "indy": Object {
+    "name": "Practising lawyer",
+    "nonce": 1677766511505,
+    "requestedAttributes": Array [
+      Object {
+        "names": Array [
+          "given_names",
+          "family_name",
+          "ppid",
+          "practicing_status",
+        ],
+      },
+    ],
+    "requestedPredicates": Array [],
+    "version": "0.0.1",
+  },
+}
+`;
