@@ -15,7 +15,85 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aries-framework/core@npm:0.3.3":
+"@aries-framework/anoncreds@npm:0.4.0-alpha.54+1bda3f07, @aries-framework/anoncreds@npm:^0.4.0-alpha.54":
+  version: 0.4.0-alpha.54
+  resolution: "@aries-framework/anoncreds@npm:0.4.0-alpha.54"
+  dependencies:
+    "@aries-framework/core": 0.4.0-alpha.54+1bda3f07
+    bn.js: ^5.2.1
+    class-transformer: 0.5.1
+    class-validator: 0.13.1
+  checksum: eff55044fd2e0b86e4d94570ac0eb7db9bf43cc3f86f3cb933b764f5399af6a8c6841d9c3932c4a8b10aa9f14fe78336fc0c326fee7fe9fdfd1502d1349e662e
+  languageName: node
+  linkType: hard
+
+"@aries-framework/core@npm:0.2.5":
+  version: 0.2.5
+  resolution: "@aries-framework/core@npm:0.2.5"
+  dependencies:
+    "@multiformats/base-x": ^4.0.1
+    "@stablelib/ed25519": ^1.0.2
+    "@stablelib/sha256": ^1.0.1
+    "@types/indy-sdk": ^1.16.19
+    "@types/node-fetch": ^2.5.10
+    "@types/ws": ^7.4.6
+    abort-controller: ^3.0.0
+    bn.js: ^5.2.0
+    borc: ^3.0.0
+    buffer: ^6.0.3
+    class-transformer: 0.5.1
+    class-validator: 0.13.1
+    did-resolver: ^3.1.3
+    lru_map: ^0.4.1
+    luxon: ^1.27.0
+    make-error: ^1.3.6
+    object-inspect: ^1.10.3
+    query-string: ^7.0.1
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.2.0
+    tsyringe: ^4.5.0
+    uuid: ^8.3.2
+    varint: ^6.0.0
+    web-did-resolver: ^2.0.8
+  checksum: 103ac70bd40dd186f9e5771ac691d6d5b4fd7adc43ed253034fd2a789d2c063a484ceee0b5f37e2b4446320ded97c5db82c006c1b3cd2a7f6b5eb486a01316f4
+  languageName: node
+  linkType: hard
+
+"@aries-framework/core@npm:0.4.0-alpha.54+1bda3f07, @aries-framework/core@npm:^0.4.0-alpha.54":
+  version: 0.4.0-alpha.54
+  resolution: "@aries-framework/core@npm:0.4.0-alpha.54"
+  dependencies:
+    "@digitalcredentials/jsonld": ^5.2.1
+    "@digitalcredentials/jsonld-signatures": ^9.3.1
+    "@digitalcredentials/vc": ^1.1.2
+    "@multiformats/base-x": ^4.0.1
+    "@stablelib/ed25519": ^1.0.2
+    "@stablelib/random": ^1.0.1
+    "@stablelib/sha256": ^1.0.1
+    "@types/node-fetch": ^2.5.10
+    "@types/ws": ^7.4.6
+    abort-controller: ^3.0.0
+    borc: ^3.0.0
+    buffer: ^6.0.3
+    class-transformer: 0.5.1
+    class-validator: 0.13.1
+    did-resolver: ^3.1.3
+    lru_map: ^0.4.1
+    luxon: ^1.27.0
+    make-error: ^1.3.6
+    object-inspect: ^1.10.3
+    query-string: ^7.0.1
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.2.0
+    tsyringe: ^4.7.0
+    uuid: ^8.3.2
+    varint: ^6.0.0
+    web-did-resolver: ^2.0.8
+  checksum: 5a6c963f515ee6ff3fec56a13b116b646eb6f35210f27938efeb040c271423164b7f299e27d28045e79ca53db3fa1b66b9c2665b0c8ba303c592620051a89490
+  languageName: node
+  linkType: hard
+
+"@aries-framework/core@npm:^0.3.3":
   version: 0.3.3
   resolution: "@aries-framework/core@npm:0.3.3"
   dependencies:
@@ -48,6 +126,22 @@ __metadata:
     varint: ^6.0.0
     web-did-resolver: ^2.0.8
   checksum: e2976651753d51e0cc3ed2c4866978a8c420b3f8f3e39a107a4682e934743acc15b1c33966d4d6a9f172ccbed338a0914d97348bb4df70440fac6e116a45ae84
+  languageName: node
+  linkType: hard
+
+"@aries-framework/indy-sdk@npm:^0.4.0-alpha.54":
+  version: 0.4.0-alpha.54
+  resolution: "@aries-framework/indy-sdk@npm:0.4.0-alpha.54"
+  dependencies:
+    "@aries-framework/anoncreds": 0.4.0-alpha.54+1bda3f07
+    "@aries-framework/core": 0.4.0-alpha.54+1bda3f07
+    "@stablelib/ed25519": ^1.0.3
+    "@types/indy-sdk": 1.16.26
+    class-transformer: ^0.5.1
+    class-validator: ^0.14.0
+    rxjs: ^7.2.0
+    tsyringe: ^4.7.0
+  checksum: dbc60ad34637a8487c747f3432cf979b1ea926982e39f2a9864a548a36fea0f748f24dd8f3171bce925edec4f469ffe399b45a9e48a0c551275c54686af5f863
   languageName: node
   linkType: hard
 
@@ -90,18 +184,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aries-framework/react-native@npm:^0.3.2":
-  version: 0.3.3
-  resolution: "@aries-framework/react-native@npm:0.3.3"
+"@aries-framework/react-native@npm:^0.4.0-alpha.54":
+  version: 0.4.0-alpha.54
+  resolution: "@aries-framework/react-native@npm:0.4.0-alpha.54"
   dependencies:
-    "@aries-framework/core": 0.3.3
+    "@aries-framework/core": 0.4.0-alpha.54+1bda3f07
     "@azure/core-asynciterator-polyfill": ^1.0.0
+    "@types/react-native": ^0.64.10
     events: ^3.3.0
   peerDependencies:
-    indy-sdk-react-native: ^0.3.0
     react-native-fs: ^2.18.0
     react-native-get-random-values: ^1.7.0
-  checksum: 5404ffbc6cb9fe7911a970d5e735df24a7cd0ecefd6c8c551b2550d7f5a538fe10dd526970e0161c3e5fa972f8fcf8945d3946bf58e2ac870818fe8fd4166051
+  checksum: 8cebbddd57e21ee11c97ffdd9f41cfccebcbfb60ab5520d34b222ae2d4eac93e545c1303aabb421673d24c0b66ac5e85fc501004612f56023426afb0e1054cad
   languageName: node
   linkType: hard
 
@@ -3041,7 +3135,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stablelib/ed25519@npm:^1.0.2":
+"@stablelib/ed25519@npm:^1.0.2, @stablelib/ed25519@npm:^1.0.3":
   version: 1.0.3
   resolution: "@stablelib/ed25519@npm:1.0.3"
   dependencies:
@@ -3351,6 +3445,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/indy-sdk-react-native@npm:@types/indy-sdk@1.16.24, @types/indy-sdk@npm:1.16.24":
+  version: 1.16.24
+  resolution: "@types/indy-sdk@npm:1.16.24"
+  dependencies:
+    buffer: ^6.0.0
+  checksum: ebce16b7df317ca649d08ff7cafdf0f0578122633519dc7a4244ded1f8581cca1d5bb0d9c946e8cf53d9270569d07b1123ffe81f790b6667ea6e100e12267bb9
+  languageName: node
+  linkType: hard
+
 "@types/indy-sdk-react-native@npm:@types/indy-sdk@^1.16.18":
   version: 1.16.25
   resolution: "@types/indy-sdk@npm:1.16.25"
@@ -3360,12 +3463,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/indy-sdk@npm:1.16.24":
-  version: 1.16.24
-  resolution: "@types/indy-sdk@npm:1.16.24"
+"@types/indy-sdk@npm:1.16.26, @types/indy-sdk@npm:^1.16.19":
+  version: 1.16.26
+  resolution: "@types/indy-sdk@npm:1.16.26"
   dependencies:
     buffer: ^6.0.0
-  checksum: ebce16b7df317ca649d08ff7cafdf0f0578122633519dc7a4244ded1f8581cca1d5bb0d9c946e8cf53d9270569d07b1123ffe81f790b6667ea6e100e12267bb9
+  checksum: 4dbef9ac800149606dc1b10e5701c2264c27486c60012b21590d0893a3353468c74c08e8a908de1b2124b72e3863e9e34454c602ee694d375239e0310e81a909
   languageName: node
   linkType: hard
 
@@ -3539,6 +3642,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-native@npm:^0.64.10":
+  version: 0.64.31
+  resolution: "@types/react-native@npm:0.64.31"
+  dependencies:
+    "@types/react": ^17
+  checksum: 8d0af3d677c538d189679e03ddf1f1db3100bd65967a49d0ff397f7c46cb2099726f822293d9ba00ec70d6059dff274022c6e21d111732a747900ba859c9369a
+  languageName: node
+  linkType: hard
+
 "@types/react-native@npm:^0.70":
   version: 0.70.10
   resolution: "@types/react-native@npm:0.70.10"
@@ -3574,7 +3686,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/validator@npm:^13.1.3":
+"@types/validator@npm:^13.1.3, @types/validator@npm:^13.7.10":
   version: 13.7.12
   resolution: "@types/validator@npm:13.7.12"
   checksum: 98fc9cb0e0af31a8cf7f3234dbd8391a937b1596cdfea16f21f4228f46d70eea2ebc1128ff6c4041ec7db2d94f093eeb441e66ce1eb9902157b6c44d01066fe2
@@ -4109,9 +4221,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aries-bifold-app@workspace:app"
   dependencies:
-    "@aries-framework/core": ^0.3.3
+    "@aries-framework/anoncreds": ^0.4.0-alpha.54
+    "@aries-framework/core": ^0.4.0-alpha.54
+    "@aries-framework/indy-sdk": ^0.4.0-alpha.54
     "@aries-framework/react-hooks": ^0.4.0
-    "@aries-framework/react-native": ^0.3.2
+    "@aries-framework/react-native": ^0.4.0-alpha.54
     "@babel/core": 7.15.5
     "@babel/runtime": 7.15.4
     "@formatjs/intl-datetimeformat": 4.2.4
@@ -4130,6 +4244,7 @@ __metadata:
     "@react-navigation/devtools": ^6.0.8
     "@react-navigation/native": 6.0.6
     "@react-navigation/stack": 6.0.11
+    "@types/indy-sdk-react-native": "npm:@types/indy-sdk@1.16.24"
     "@types/lodash.flatten": ^4.4.6
     "@types/lodash.merge": ^4.6.6
     "@types/lodash.startcase": ^4.4.6
@@ -4139,7 +4254,7 @@ __metadata:
     axios: 0.21.4
     babel-plugin-module-resolver: 5.0.0
     i18next: 21.4.0
-    indy-sdk-react-native: ^0.2.2
+    indy-sdk-react-native: ^0.3.1
     lodash.flatten: ^4.4.0
     lodash.startcase: 4.4.0
     metro-react-native-babel-preset: 0.66.2
@@ -4290,9 +4405,11 @@ __metadata:
     typescript: 4.4.3
     uuid: ^8.1.0
   peerDependencies:
-    "@aries-framework/core": ^0.3.3
+    "@aries-framework/anoncreds": ^0.4.0-alpha.54
+    "@aries-framework/core": ^0.4.0-alpha.54
+    "@aries-framework/indy-sdk": ^0.4.0-alpha.54
     "@aries-framework/react-hooks": ^0.4.0
-    "@aries-framework/react-native": ^0.3.2
+    "@aries-framework/react-native": ^0.4.0-alpha.54
     "@formatjs/intl-datetimeformat": ^4.2.3
     "@formatjs/intl-displaynames": ^5.2.3
     "@formatjs/intl-getcanonicallocales": ^1.7.3
@@ -4311,7 +4428,7 @@ __metadata:
     "@react-navigation/stack": ^6.0.11
     axios: ^0.21.0
     i18next: ^21.4.0
-    indy-sdk-react-native: ^0.2.2
+    indy-sdk-react-native: ^0.3.1
     lodash.flatten: ^4.4.0
     lodash.startcase: ^4.4.0
     moment: ^2.29.4
@@ -4857,7 +4974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^5.2.0":
+"bn.js@npm:^5.2.0, bn.js@npm:^5.2.1":
   version: 5.2.1
   resolution: "bn.js@npm:5.2.1"
   checksum: 3dd8c8d38055fedfa95c1d5fc3c99f8dd547b36287b37768db0abab3c239711f88ff58d18d155dd8ad902b0b0cee973747b7ae20ea12a09473272b0201c9edd3
@@ -5218,7 +5335,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-transformer@npm:0.5.1":
+"class-transformer@npm:0.5.1, class-transformer@npm:^0.5.1":
   version: 0.5.1
   resolution: "class-transformer@npm:0.5.1"
   checksum: f191c8b4cc4239990f5efdd790cabdd852c243ed66248e39f6616a349c910c6eed2d9fd1fbf7ee6ea89f69b4f1d0b493b27347fe0cd0ae26b47c3745a805b6d3
@@ -5245,6 +5362,17 @@ __metadata:
     libphonenumber-js: ^1.9.7
     validator: ^13.5.2
   checksum: 1d77f869792e83baef67d18220baf1e1a413a43efbd454ed359e0da691462e6d7d869e73de3ce5bb4a67206084338e5e4323e9e54dd8bc967c6fadb4e9ac44c2
+  languageName: node
+  linkType: hard
+
+"class-validator@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "class-validator@npm:0.14.0"
+  dependencies:
+    "@types/validator": ^13.7.10
+    libphonenumber-js: ^1.10.14
+    validator: ^13.7.0
+  checksum: f62e4a0ad24cee68f4b2bc70d32b96de90cb598f96bde362b4dbf4234151af8eb6ae225458312a38fc49fa3959844cf61c60e731a8205e9a570454cff8de2710
   languageName: node
   linkType: hard
 
@@ -8248,6 +8376,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"indy-sdk-react-native@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "indy-sdk-react-native@npm:0.3.1"
+  dependencies:
+    buffer: ^6.0.2
+  peerDependencies:
+    react: ">= 16"
+    react-native: ">=0.59.0-rc.0 <1.0.x"
+  checksum: ba7c72771b0f3a90953a26ccd49db3bd3934e324d44af857c5105b0693d9940384126751c1d345a3c84c35622f25001d65316cbdacfd1be589ecc1785d13b112
+  languageName: node
+  linkType: hard
+
 "infer-owner@npm:^1.0.4":
   version: 1.0.4
   resolution: "infer-owner@npm:1.0.4"
@@ -10000,6 +10140,13 @@ __metadata:
     prelude-ls: ~1.1.2
     type-check: ~0.3.2
   checksum: 0d084a524231a8246bb10fec48cdbb35282099f6954838604f3c7fc66f2e16fa66fd9cc2f3f20a541a113c4dafdf181e822c887c8a319c9195444e6c64ac395e
+  languageName: node
+  linkType: hard
+
+"libphonenumber-js@npm:^1.10.14":
+  version: 1.10.21
+  resolution: "libphonenumber-js@npm:1.10.21"
+  checksum: 0ffac0db4552eb1d39f8da8ee57cba20b1ad76a268f0e633c2dfcfe7db97d498cc6631c1ec4c1fc608944b866509d5b8e5039af878debec00b3a526946edebac
   languageName: node
   linkType: hard
 
@@ -14678,7 +14825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsyringe@npm:^4.7.0":
+"tsyringe@npm:^4.5.0, tsyringe@npm:^4.7.0":
   version: 4.7.0
   resolution: "tsyringe@npm:4.7.0"
   dependencies:
@@ -15105,7 +15252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.5.2":
+"validator@npm:^13.5.2, validator@npm:^13.7.0":
   version: 13.9.0
   resolution: "validator@npm:13.9.0"
   checksum: e2c936f041f61faa42bafd17c6faddf939498666cd82e88d733621c286893730b008959f4cb12ab3e236148a4f3805c30b85e3dcf5e0efd8b0cbcd36c02bfc0c

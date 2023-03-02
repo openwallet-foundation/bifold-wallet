@@ -74,7 +74,9 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.9.0)
-  - indy-sdk-react-native (0.2.2):
+  - Indy (1.16.0)
+  - indy-sdk-react-native (0.3.1):
+    - Indy
     - React
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
@@ -313,16 +315,16 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.7.0):
     - React-Core
-  - react-native-netinfo (9.3.0):
+  - react-native-netinfo (9.3.7):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-tcp-socket (6.0.3):
+  - react-native-tcp-socket (6.0.6):
     - CocoaAsyncSocket
     - React-Core
-  - react-native-webview (11.22.4):
+  - react-native-webview (11.26.1):
     - React-Core
   - React-perflogger (0.66.5)
   - React-RCTActionSheet (0.66.5):
@@ -408,7 +410,7 @@ PODS:
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNReanimated (2.2.4):
+  - RNReanimated (2.14.4):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -416,7 +418,6 @@ PODS:
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
     - React-callinvoker
     - React-Core
     - React-Core/DevSupport
@@ -434,7 +435,6 @@ PODS:
     - React-RCTNetwork
     - React-RCTSettings
     - React-RCTText
-    - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
   - RNScreens (3.7.2):
@@ -442,7 +442,7 @@ PODS:
     - React-RCTImage
   - RNSVG (12.1.1):
     - React
-  - RNVectorIcons (8.1.0):
+  - RNVectorIcons (9.2.0):
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -532,6 +532,8 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
+  https://github.com/hyperledger/indy-sdk-react-native:
+    - Indy
   trunk:
     - CatCrypto
     - CocoaAsyncSocket
@@ -683,7 +685,8 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
-  indy-sdk-react-native: 52c3fdd11b673d11cdae5c28fa79a184084c6688
+  Indy: d9976ce47c0308bd1fea6f90e3ad3db59a3b49b9
+  indy-sdk-react-native: d98862d0fffa42cc427d5ceffb6589e7c7ce8c46
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
@@ -705,11 +708,11 @@ SPEC CHECKSUMS:
   react-native-encrypted-storage: e78d848ce0fb663c2ce306e37921d026809322e6
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
-  react-native-netinfo: 129bd99f607a2dc5bb096168f3e5c150fd1f1c95
+  react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-tcp-socket: bf814462aa7bb427f004976d3a8765153baffe81
-  react-native-webview: a1ed211d50a5047a4fe54e07140991e277cd66e6
+  react-native-tcp-socket: e724380c910c2e704816ec817ed28f1342246ff7
+  react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
   React-perflogger: 169fb34f60c5fd793b370002ee9c916eba9bc4ae
   React-RCTActionSheet: 2355539e02ad5cd4b1328682ab046487e1e1e920
   React-RCTAnimation: 150644a38c24d80f1f761859c10c727412303f57
@@ -731,13 +734,13 @@ SPEC CHECKSUMS:
   RNKeychain: f75b8c8b2f17d3b2aa1f25b4a0ac5b83d947ff8f
   RNLocalize: 74b82db20cc3895ccc25af992c644879bcec2815
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNReanimated: 65583befd5706cc9c86ae9a081786181ced37b93
+  RNReanimated: f066aa91ef8ef7b2a9baed4c15ec06f5e5fb5d11
   RNScreens: 0591543e343c7444ea1756b6265d81a4295922c9
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
-  RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
+  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Yoga: b316a990bb6d115afa1b436b5626ac7c61717d17
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 1e21ea8b3daeb0b9c9b6c654581ec3878c2417ae
+PODFILE CHECKSUM: a0519644fef5646ec3bec6a7ca220f0ad7768774
 
 COCOAPODS: 1.11.3
