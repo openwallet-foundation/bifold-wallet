@@ -1,5 +1,5 @@
 export interface IndyRequestedPredicate {
-  label: string
+  label?: string
   name: string
   predicateType: string
   predicateValue: number
@@ -9,7 +9,7 @@ export interface IndyRequestedPredicate {
 }
 
 export interface IndyRequestedAttribute {
-  label: string
+  label?: string
   name?: string
   names?: Array<string>
   restrictions?: Array<Record<string, unknown>>
@@ -23,8 +23,13 @@ export interface IndyProofRequestTemplatePayloadData {
   requestedPredicates?: Array<IndyRequestedPredicate>
 }
 
+export enum ProofRequestType {
+  Indy = 'indy',
+  DIF = 'dif',
+}
+
 export interface IndyProofRequestTemplatePayload {
-  kind: 'indy'
+  type: ProofRequestType.Indy
   data: Array<IndyProofRequestTemplatePayloadData>
 }
 
@@ -32,7 +37,7 @@ export interface IndyProofRequestTemplatePayload {
 export interface DifProofRequestTemplatePayloadData {}
 
 export interface DifProofRequestTemplatePayload {
-  kind: 'dif'
+  type: ProofRequestType.DIF
   data: Array<DifProofRequestTemplatePayloadData>
 }
 

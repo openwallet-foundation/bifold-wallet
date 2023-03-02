@@ -1,4 +1,4 @@
-import { ProofRequestTemplate } from './types/proof-reqeust-template'
+import { ProofRequestTemplate, ProofRequestType } from './types/proof-reqeust-template'
 import { PINValidationRules } from './types/security'
 
 export const defaultLanguage = 'en'
@@ -73,24 +73,22 @@ export const PINRules: PINValidationRules = {
   no_cross_pattern: false,
 }
 
-export const proofRequestTemplates: Array<ProofRequestTemplate> = [
+export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
   {
     id: '8a83675e-f864-4e5a-9c4d-9787f1034c04',
     title: 'Full name',
     details: 'Verify the full name of a person',
     version: '0.0.1',
     payload: {
-      kind: 'indy',
+      type: ProofRequestType.Indy,
       data: [
         {
           schema: 'Verified Person Schema',
           requestedAttributes: [
             {
-              label: 'Given Names',
               name: 'given_names',
             },
             {
-              label: 'Family Name',
               name: 'family_name',
             },
           ],
@@ -104,23 +102,20 @@ export const proofRequestTemplates: Array<ProofRequestTemplate> = [
     details: 'Verify if a person is 19 years end up and full name.',
     version: '0.0.1',
     payload: {
-      kind: 'indy',
+      type: ProofRequestType.Indy,
       data: [
         {
           schema: 'Verified Person Schema',
           requestedAttributes: [
             {
-              label: 'Given Names',
               name: 'given_names',
             },
             {
-              label: 'Family Name',
               name: 'family_name',
             },
           ],
           requestedPredicates: [
             {
-              label: 'Age',
               name: 'age',
               predicateType: '>=',
               predicateValue: 19,
@@ -136,13 +131,12 @@ export const proofRequestTemplates: Array<ProofRequestTemplate> = [
     details: 'Verify if a person is 19 years end up.',
     version: '0.0.1',
     payload: {
-      kind: 'indy',
+      type: ProofRequestType.Indy,
       data: [
         {
           schema: 'Verified Person Schema',
           requestedPredicates: [
             {
-              label: 'Age',
               name: 'age',
               predicateType: '>=',
               predicateValue: 19,
@@ -158,26 +152,13 @@ export const proofRequestTemplates: Array<ProofRequestTemplate> = [
     details: 'Verify if a person`is a practicing lawyer.',
     version: '0.0.1',
     payload: {
-      kind: 'indy',
+      type: ProofRequestType.Indy,
       data: [
         {
           schema: 'Practising Lawyer',
           requestedAttributes: [
             {
-              label: 'Given Names',
-              name: 'given_names',
-            },
-            {
-              label: 'Family Name',
-              name: 'family_name',
-            },
-            {
-              label: 'PPID',
-              name: 'ppid',
-            },
-            {
-              label: 'Practicing status',
-              name: 'practicing_status',
+              names: ['given_names', 'family_name', 'ppid', 'practicing_status'],
             },
           ],
         },
@@ -190,17 +171,15 @@ export const proofRequestTemplates: Array<ProofRequestTemplate> = [
     details: 'Verify if a person`is a practicing lawyer using two different credentials for extra assuarnce',
     version: '0.0.1',
     payload: {
-      kind: 'indy',
+      type: ProofRequestType.Indy,
       data: [
         {
           schema: 'Verified Person Schema',
           requestedAttributes: [
             {
-              label: 'Given Names',
               name: 'given_names',
             },
             {
-              label: 'Family Name',
               name: 'family_name',
             },
           ],
@@ -209,20 +188,7 @@ export const proofRequestTemplates: Array<ProofRequestTemplate> = [
           schema: 'Practising Lawyer',
           requestedAttributes: [
             {
-              label: 'Given Names',
-              name: 'given_names',
-            },
-            {
-              label: 'Family Name',
-              name: 'family_name',
-            },
-            {
-              label: 'PPID',
-              name: 'ppid',
-            },
-            {
-              label: 'Practicing status',
-              name: 'practicing_satus',
+              names: ['given_names', 'family_name', 'ppid', 'practicing_status'],
             },
           ],
         },
@@ -235,13 +201,12 @@ export const proofRequestTemplates: Array<ProofRequestTemplate> = [
     details: 'Verify if a person is over some years ends up.',
     version: '0.0.1',
     payload: {
-      kind: 'indy',
+      type: ProofRequestType.Indy,
       data: [
         {
           schema: 'Verified Person Schema',
           requestedPredicates: [
             {
-              label: 'Age',
               name: 'age',
               predicateType: '>=',
               predicateValue: 19,

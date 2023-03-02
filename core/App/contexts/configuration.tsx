@@ -6,6 +6,7 @@ import { RecordProps } from '../components/record/Record'
 import OnboardingPages from '../screens/OnboardingPages'
 import { ScanProps } from '../screens/Scan'
 import { OCABundleResolver } from '../types/oca'
+import { ProofRequestTemplate } from '../types/proof-reqeust-template'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
 
@@ -36,6 +37,7 @@ export interface ConfigurationContext {
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
+  proofRequestTemplates: Array<ProofRequestTemplate>
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
