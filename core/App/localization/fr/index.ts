@@ -395,6 +395,9 @@ const translation = {
         "Developer": "Developer options",
         "ChangePIN": "Changer NIP",
         "CommonDecline": "Refuser",
+        "ProofRequests": "Demandes de preuve",
+        "SendProofRequest": "Envoyer une demande de justificatif",
+        "ChooseProofRequest": "Choisissez une demande de justificatif",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
@@ -405,6 +408,10 @@ const translation = {
         "NoInternetConnectionMessage": "Vous ne pouvez pas accéder aux services à l'aide de Bifold ou recevoir des informations d'identification tant que vous n'êtes pas de nouveau en ligne.\n\nS'il vous plait, vérifiez votre connexion internet.",
         "LedgerConnectivityIssueTitle": "Wallet Services (FR)",
         "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services. (FR)",
+    },
+    "Verifier": {
+        "UseVerifierCapability": "Utiliser la fonctionnalité Verifier?",
+        "Toggle": "Basculer la capacité de vérification",
     }
 }
 export default translation
