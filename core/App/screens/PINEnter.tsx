@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
+import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusBar, Keyboard, StyleSheet, Text, Image, View } from 'react-native'
+import { StatusBar, Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter } from 'react-native'
 
 import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -9,7 +10,7 @@ import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
-import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules } from '../constants'
+import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules, EventTypes } from '../constants'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -36,6 +37,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [PIN, setPIN] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
+  const [biometricsErr, setBiometricsErr] = useState(false)
   const navigation = useNavigation()
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
@@ -62,6 +64,18 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
   })
 
+  // listen for biometrics error event
+  useEffect(() => {
+    const handle = DeviceEventEmitter.addListener(EventTypes.BIOMETRY_ERROR, (value?: boolean) => {
+      const newVal = value === undefined ? !biometricsErr : value
+      setBiometricsErr(newVal)
+    })
+
+    return () => {
+      handle.remove()
+    }
+  }, [])
+
   // This method is used to notify the app that the user is able to receive another lockout penalty
   const unMarkServedPenalty = () => {
     dispatch({
@@ -84,7 +98,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         { loginAttempts: store.loginAttempt.loginAttempts, lockoutDate: Date.now() + penalty, servedPenalty: false },
       ],
     })
-    navigation.navigate(Screens.AttemptLockout as never)
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: Screens.AttemptLockout }],
+      })
+    )
   }
 
   const getLockoutPenalty = (attempts: number): number | undefined => {
@@ -273,6 +292,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
               </Text>
               <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
                 {t('PINEnter.BiometricsChangedEnterPIN')}
+              </Text>
+            </>
+          ) : biometricsErr ? (
+            <>
+              <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>{t('PINEnter.BiometricsError')}</Text>
+              <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
+                {t('PINEnter.BiometricsErrorEnterPIN')}
               </Text>
             </>
           ) : (
