@@ -104,6 +104,8 @@ const translation = {
     "Message1036": "Não foram encontradas credenciais na carteira",
     "Title1037": "Não foi possível remover contato",
     "Message1037": "Ocorreu um problema ao remover o contato",
+    "Title1038": "Unable to generate QR code.",
+    "Message1038": "There was a problem while generating the QR code.",
   },
   "StatusMessages": {
     "InitAgent": "Iniciando agente .."
