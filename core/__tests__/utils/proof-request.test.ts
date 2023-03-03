@@ -1,5 +1,5 @@
 import { defaultProofRequestTemplates } from '../../App/constants'
-import { buildProofRequestFromTemplate } from '../../App/utils/proof-request'
+import { buildProofRequestDataByTemplate } from '../../App/utils/proof-request'
 import SpyInstance = jest.SpyInstance
 
 describe('Helpers', () => {
@@ -11,19 +11,19 @@ describe('Helpers', () => {
 
   test('Build indy proof request from template containing two requested attributes', async () => {
     const template = defaultProofRequestTemplates[0]
-    const proofRequest = buildProofRequestFromTemplate(template)
+    const proofRequest = buildProofRequestDataByTemplate(template)
     expect(proofRequest).toMatchSnapshot()
   })
 
   test('Build indy proof request from template containing two requested attributes and predicate', async () => {
     const template = defaultProofRequestTemplates[1]
-    const proofRequest = buildProofRequestFromTemplate(template)
+    const proofRequest = buildProofRequestDataByTemplate(template)
     expect(proofRequest).toMatchSnapshot()
   })
 
   test('Build indy proof request from template containing attributes group', async () => {
     const template = defaultProofRequestTemplates[3]
-    const proofRequest = buildProofRequestFromTemplate(template)
+    const proofRequest = buildProofRequestDataByTemplate(template)
     expect(proofRequest).toMatchSnapshot()
   })
 

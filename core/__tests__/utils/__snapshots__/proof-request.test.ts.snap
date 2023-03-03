@@ -1,19 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Helpers Build indy proof request from template containing attributes group 1`] = `
+Object {
+  "indy": Object {
+    "name": "Practising lawyer",
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => Object {
+        "names": Array [
+          "given_names",
+          "family_name",
+          "ppid",
+          "practicing_status",
+        ],
+      },
+    },
+    "requestedPredicates": Map {},
+    "version": "0.0.1",
+  },
+}
+`;
+
 exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
 Object {
   "indy": Object {
     "name": "Full name",
-    "nonce": 1677766511505,
-    "requestedAttributes": Array [
-      Object {
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => Object {
         "name": "given_names",
       },
-      Object {
+      "referent_1" => Object {
         "name": "family_name",
       },
-    ],
-    "requestedPredicates": Array [],
+    },
+    "requestedPredicates": Map {},
     "version": "0.0.1",
   },
 }
@@ -22,44 +43,23 @@ Object {
 exports[`Helpers Build indy proof request from template containing two requested attributes and predicate 1`] = `
 Object {
   "indy": Object {
-    "name": "19and Full name",
-    "nonce": 1677766511505,
-    "requestedAttributes": Array [
-      Object {
+    "name": "19+ and Full name",
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => Object {
         "name": "given_names",
       },
-      Object {
+      "referent_1" => Object {
         "name": "family_name",
       },
-    ],
-    "requestedPredicates": Array [
-      Object {
+    },
+    "requestedPredicates": Map {
+      "referent_2" => Object {
         "name": "age",
         "predicateType": ">=",
         "predicateValue": 19,
       },
-    ],
-    "version": "0.0.1",
-  },
-}
-`;
-
-exports[`Helpers Build indy proof request from template containing attributes group 1`] = `
-Object {
-  "indy": Object {
-    "name": "Practising lawyer",
-    "nonce": 1677766511505,
-    "requestedAttributes": Array [
-      Object {
-        "names": Array [
-          "given_names",
-          "family_name",
-          "ppid",
-          "practicing_status",
-        ],
-      },
-    ],
-    "requestedPredicates": Array [],
+    },
     "version": "0.0.1",
   },
 }
