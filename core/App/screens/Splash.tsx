@@ -11,6 +11,7 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
+import { CommonActions } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
@@ -117,20 +118,40 @@ const Splash: React.FC = () => {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
           dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
           if (onboardingComplete(onboardingState) && !attemptData?.lockoutDate) {
-            navigation.navigate(Screens.EnterPIN as never)
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: Screens.EnterPIN }],
+              })
+            )
             return
           } else if (onboardingComplete(onboardingState) && attemptData?.lockoutDate) {
             // return to lockout screen if lockout date is set
-            navigation.navigate(Screens.AttemptLockout as never)
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: Screens.AttemptLockout }],
+              })
+            )
             return
           } else {
             // If onboarding was interrupted we need to pickup from where we left off.
-            navigation.navigate(resumeOnboardingAt(onboardingState) as never)
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: resumeOnboardingAt(onboardingState) }],
+              })
+            )
           }
           return
         }
         // We have no onboarding state, starting from step zero.
-        navigation.navigate(Screens.Onboarding as never)
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: Screens.Onboarding }],
+          })
+        )
       } catch (error) {
         // TODO:(am add error handling here)
       }
@@ -178,7 +199,12 @@ const Splash: React.FC = () => {
 
         await newAgent.initialize()
         setAgent(newAgent)
-        navigation.navigate(Stacks.TabStack as never)
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: Stacks.TabStack }],
+          })
+        )
       } catch (e: unknown) {
         Toast.show({
           type: ToastType.Error,

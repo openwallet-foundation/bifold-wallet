@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/core'
+import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
@@ -110,7 +111,12 @@ const AttemptLockout: React.FC = () => {
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [{ loginAttempts: state.loginAttempt.loginAttempts, lockoutDate: undefined, servedPenalty: true }],
     })
-    navigation.navigate(Screens.EnterPIN as never)
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: Screens.EnterPIN }],
+      })
+    )
   }
 
   return (
