@@ -15,7 +15,7 @@ import {
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
 import moment from 'moment'
-import { parseUrl } from 'query-string'
+import { ParsedUrl, parseUrl } from 'query-string'
 
 import { i18n } from '../localization/index'
 import { ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
@@ -362,4 +362,30 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
   }
 
   return connectionRecord
+}
+
+/**
+ * Parse URL from provided string
+ * @param urlString string to parse
+ * @returns ParsedUur object if success or undefined
+ */
+export const getUrl = (urlString: string): ParsedUrl | undefined => {
+  try {
+    return parseUrl(urlString)
+  } catch (e) {
+    return undefined
+  }
+}
+
+/**
+ * Parse JSON from provided string
+ * @param jsonString string to parse
+ * @returns JSON object if success or undefined
+ */
+export const getJson = (jsonString: string): Record<string, unknown> | undefined => {
+  try {
+    return JSON.parse(jsonString)
+  } catch (e) {
+    return undefined
+  }
 }
