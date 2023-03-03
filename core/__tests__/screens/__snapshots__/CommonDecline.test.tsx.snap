@@ -288,6 +288,12 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                         </Text>
                       </View>
                       <RCTScrollView
+                        data={
+                          Array [
+                            undefined,
+                            undefined,
+                          ]
+                        }
                         getItem={[Function]}
                         getItemCount={[Function]}
                         keyExtractor={[Function]}
@@ -305,7 +311,16 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                         stickyHeaderIndices={Array []}
                         viewabilityConfigCallbackPairs={Array []}
                       >
-                        <View />
+                        <View>
+                          <View
+                            onLayout={[Function]}
+                            style={null}
+                          />
+                          <View
+                            onLayout={[Function]}
+                            style={null}
+                          />
+                        </View>
                       </RCTScrollView>
                     </View>
                   </View>

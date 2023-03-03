@@ -28,7 +28,7 @@ import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { GroupedProof } from '../types/record'
+import { ProofCredentialItems } from '../types/record'
 import { processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -54,7 +54,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<IndyRetrievedCredentialsFormat>()
-  const [proofItems, setProofItems] = useState<GroupedProof[]>([])
+  const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()

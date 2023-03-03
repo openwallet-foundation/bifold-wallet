@@ -18,7 +18,7 @@ import moment from 'moment'
 import { parseUrl } from 'query-string'
 
 import { i18n } from '../localization/index'
-import { GroupedAttributes, GroupedPredicates } from '../types/record'
+import { ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
@@ -193,8 +193,8 @@ export const credentialSortFn = (a: any, b: any) => {
 export const processProofAttributes = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
   credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-): { [key: string]: GroupedAttributes } => {
-  const processedAttributes = {} as { [key: string]: GroupedAttributes }
+): { [key: string]: ProofCredentialAttributes } => {
+  const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
   if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
     return {}
@@ -242,8 +242,8 @@ export const processProofAttributes = (
 export const processProofPredicates = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
   credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-): { [key: string]: GroupedPredicates } => {
-  const processedPredicates = {} as { [key: string]: GroupedPredicates }
+): { [key: string]: ProofCredentialPredicates } => {
+  const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
   if (!(request?.indy?.requested_predicates && credentials?.proofFormats?.indy?.requestedPredicates)) {
     return {}

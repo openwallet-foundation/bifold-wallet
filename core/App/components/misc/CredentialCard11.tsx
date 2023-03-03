@@ -278,63 +278,26 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const renderCardAttribute = (item: Attribute & Predicate) => {
     return (
-      <View style={{ marginTop: 15 }}>
-        {!(item?.value || item?.pValue) || item?.revoked ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon
-              style={{ paddingTop: 2, paddingHorizontal: 2 }}
-              name="close"
-              color={ListItems.proofError.color}
-              size={ListItems.recordAttributeText.fontSize}
-            />
-
-            <Text
-              style={[
-                TextTheme.label,
-                styles.headerText,
-                {
-                  lineHeight: 19,
-                  opacity: 0.8,
-                },
-              ]}
-              testID={testIdWithKey('RevokedOrNotAvailable')}
-              numberOfLines={1}
-            >
-              {item.label ?? startCase(item.name ?? '')}
-            </Text>
-          </View>
-        ) : (
-          <Text
-            style={[
-              TextTheme.label,
-              styles.headerText,
-              {
-                lineHeight: 19,
-                opacity: 0.8,
-              },
-            ]}
-            testID={testIdWithKey('AttributeLabel')}
-            numberOfLines={1}
-          >
-            {item.label ?? startCase(item.name ?? '')}
-          </Text>
-        )}
-        {!(item?.value || item?.pValue) || item?.revoked ? null : (
-          <Text
-            style={[
-              TextTheme.normal,
-              styles.valueText,
-              {
-                fontWeight: 'bold',
-                lineHeight: 24,
-              },
-            ]}
-            testID={testIdWithKey('AttributeValue')}
-          >
-            {item?.value || `${item?.pType} ${item?.pValue}`}
-          </Text>
-        )}
-      </View>
+      item && (
+        <View style={{ marginTop: 15 }}>
+          {!(item?.value || item?.pValue) || item?.revoked ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon
+                style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                name="close"
+                color={ListItems.proofError.color}
+                size={ListItems.recordAttributeText.fontSize}
+              />
+              <AttributeLabel label={item?.label ?? startCase(item?.name ?? '')} />
+            </View>
+          ) : (
+            <AttributeLabel label={item?.label ?? startCase(item?.name ?? '')} />
+          )}
+          {!(item?.value || item?.pValue) || item?.revoked ? null : (
+            <AttributeValue value={item?.value || `${item?.pType} ${item?.pValue}`} />
+          )}
+        </View>
+      )
     )
   }
 
@@ -382,25 +345,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </View>
           )}
           <FlatList
-            data={proofItems}
+            data={[...(proofItems ?? []), primaryField, secondaryField]}
             scrollEnabled={false}
             renderItem={({ item }) => {
               return renderCardAttribute(item as Attribute & Predicate)
             }}
           />
         </View>
-        {primaryField && (
-          <View style={{ paddingTop: 0.5 * padding, marginLeft: -1 * logoHeight + padding }}>
-            <AttributeLabel label={primaryField.label ?? startCase(primaryField.name ?? '')} />
-            <AttributeValue value={(primaryField as Attribute).value} />
-          </View>
-        )}
-        {secondaryField && (
-          <View style={{ paddingTop: 0.5 * padding, marginLeft: -1 * logoHeight + padding }}>
-            <AttributeLabel label={secondaryField.label ?? startCase(secondaryField.name ?? '')} />
-            <AttributeValue value={(secondaryField as Attribute).value} />
-          </View>
-        )}
       </View>
     )
   }
@@ -412,7 +363,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor: !error ? styles.secondaryBodyContainer.backgroundColor : ColorPallet.notification.error,
+            backgroundColor: error ? ColorPallet.notification.error : styles.secondaryBodyContainer.backgroundColor,
           },
         ]}
       >

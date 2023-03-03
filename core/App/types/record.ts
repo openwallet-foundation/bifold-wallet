@@ -18,18 +18,18 @@ export interface Predicate extends Field {
   pType: string
 }
 
-export interface GroupedAttributes {
+export interface ProofCredentialAttributes {
   credDefId?: string
   schemaId?: string
   credName: string
   attributes?: Attribute[]
 }
 
-export interface GroupedPredicates {
+export interface ProofCredentialPredicates {
   credDefId?: string
   schemaId?: string
   credName: string
   predicates?: Predicate[]
 }
 
-export interface GroupedProof extends GroupedAttributes, GroupedPredicates {}
+export interface ProofCredentialItems extends ProofCredentialAttributes, ProofCredentialPredicates {}
