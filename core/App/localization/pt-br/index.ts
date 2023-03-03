@@ -386,6 +386,9 @@ const translation = {
     "Biometry": "Biometria",
     "Developer": "Developer options",
     "ChangePIN": "Alterar PIN",
+    "ProofRequests": "Solicitações de prova",
+    "SendProofRequest": "Envie um pedido de prova",
+    "ChooseProofRequest": "Escolha um pedido de prova",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
@@ -396,6 +399,10 @@ const translation = {
     "NoInternetConnectionMessage": "Não é possivel acessar serviços utilizando a Bifold ou receber credenciais até você voltar a estar online.\n\nFavor checkar sua conexão com a internet.",
     "LedgerConnectivityIssueTitle": "Serviços de Carteira",
     "LedgerConnectivityIssueMessage": "Um firewall pode estar te impedindo de conectar-se a serviços relacionados a carteira.",
+  },
+  "Verifier": {
+    "UseVerifierCapability": "Usar o recurso Verificador?",
+    "Toggle": "Alternar capacidade do verificador",
   }
 }
 

@@ -164,6 +164,27 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     }
   }
 
+  if (store.preferences.useVerifierCapability) {
+    settingsSections.splice(1, 0, {
+      header: {
+        icon: 'send',
+        title: t('Screens.ProofRequests'),
+      },
+      data: [
+        {
+          title: t('Screens.SendProofRequest'),
+          accessibilityLabel: t('Screens.ProofRequests'),
+          testID: testIdWithKey('ProofRequests'),
+          onPress: () =>
+            navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
+              screen: Screens.ProofRequests,
+              params: { navigation: navigation },
+            }),
+        },
+      ],
+    })
+  }
+
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
     <View style={[styles.section, styles.sectionHeader]}>
       <Icon name={icon} size={24} style={{ marginRight: 10, color: TextTheme.normal.color }} />

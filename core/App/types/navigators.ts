@@ -31,6 +31,7 @@ export enum Screens {
   RecreatePIN = 'Change PIN',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
+  ProofRequests = 'Proof Requests',
 }
 
 export enum Stacks {
@@ -40,6 +41,7 @@ export enum Stacks {
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
   ContactStack = 'Contacts Stack',
+  ProofRequestsStack = 'Proof Requests Stack',
   NotificationStack = 'Notifications Stack',
   ConnectionStack = 'Connection Stack',
 }
@@ -56,6 +58,7 @@ export type RootStackParams = {
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+  [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
 }
 
@@ -79,6 +82,10 @@ export type ContactStackParams = {
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
+}
+
+export type ProofRequestsStackParams = {
+  [Screens.ProofRequests]: undefined
 }
 
 export type CredentialStackParams = {

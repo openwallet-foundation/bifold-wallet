@@ -406,6 +406,9 @@ const translation = {
     "Developer": "Developer options",
     "ChangePIN": "Change PIN",
     "CommonDecline": "Decline",
+    "ProofRequests": "Proof requests",
+    "SendProofRequest": "Send a proof request",
+    "ChooseProofRequest": "Choose a proof request",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
@@ -416,6 +419,10 @@ const translation = {
     "NoInternetConnectionMessage": "You're unable to access services using Bifold or receive credentials until you're back online.\n\nPlease check your internet connection.",
     "LedgerConnectivityIssueTitle": "Wallet Services",
     "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services.",
+  },
+  "Verifier": {
+    "UseVerifierCapability": "Use Verifier capability?",
+    "Toggle": "Toggle Verifier capability",
   }
 }
 
