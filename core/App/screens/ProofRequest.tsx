@@ -14,13 +14,14 @@ import {
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity, DeviceEventEmitter, Image } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
+import ConnectionImage from '../components/misc/ConnectionImage'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
 import { EventTypes } from '../constants'
@@ -30,8 +31,7 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute, Predicate } from '../types/record'
-import { toImageSource } from '../utils/credential'
-import { getConnectionImageUrl, processProofAttributes, processProofPredicates } from '../utils/helpers'
+import { processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -66,22 +66,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     headerTextContainer: {
       paddingHorizontal: 25,
       paddingVertical: 16,
-    },
-    connectionImageContainer: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
-      width: 90,
-      height: 90,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 45,
-      marginTop: 15,
-      borderColor: ColorPallet.grayscale.lightGrey,
-      borderWidth: 3,
-      alignSelf: 'center',
-    },
-    connectionImage: {
-      width: 55,
-      height: 55,
     },
     headerText: {
       ...ListItems.recordAttributeText,
@@ -240,19 +224,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     })
   }
 
-  const connectionImage = getConnectionImageUrl(proof?.connectionId ?? '')
-
   return (
     <>
       <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
         <Record
           header={() => (
             <>
-              {connectionImage && (
-                <View style={styles.connectionImageContainer}>
-                  <Image style={styles.connectionImage} source={toImageSource(connectionImage)} />
-                </View>
-              )}
+              <ConnectionImage connectionId={proof?.connectionId} />
               <View style={styles.headerTextContainer}>
                 {!hasAvailableCredentials() ? (
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
