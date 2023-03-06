@@ -347,6 +347,7 @@ const translation = {
     "ConfirmDecline": "Yes, decline this proof request",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Proof",
+    "ZeroKnowledgeProof": "Zero-knowledge proof"
   },
   "Settings": {
     "Version": "Version",

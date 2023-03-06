@@ -340,6 +340,7 @@ const translation = {
         "InformationSentSuccessfully": "Informations envoyées avec succès",
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Decline Credential",
+        "ZeroKnowledgeProof": "Preuve zéro connaissance"
     },
     "Settings": {
         "Version": "Version",

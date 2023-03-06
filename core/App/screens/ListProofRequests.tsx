@@ -1,5 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -52,6 +53,7 @@ const iconSize = 35
 const iconName = 'chevron-right'
 
 const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => {
+  const { t } = useTranslation()
   const records = defaultProofRequestTemplates
   const hasPredicates = (record: ProofRequestTemplate): boolean => {
     const indyPayload = record.payload.type === ProofRequestType.Indy ? record.payload : null
@@ -69,7 +71,9 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => 
             <Text style={[style.proofText, style.proofDetails]} numberOfLines={2}>
               {record.details}
             </Text>
-            {hasPredicates(record) && <Text style={[style.proofText, style.proofCaption]}>Zero-knowledge proof</Text>}
+            {hasPredicates(record) && (
+              <Text style={[style.proofText, style.proofCaption]}>{t('ProofRequest.ZeroKnowledgeProof')}</Text>
+            )}
           </View>
           <View style={style.iconContainer}>
             <Icon style={style.icon} size={iconSize} name={iconName} />

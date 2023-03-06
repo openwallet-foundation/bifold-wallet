@@ -331,6 +331,7 @@ const translation = {
     "ConfirmDecline": "Sim, recusar esta requisição de prova",
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Recusar Prova",
+    "ZeroKnowledgeProof": "Prova de conhecimento Zero"
   },
   "Settings": {
     "Version": "Versão",
