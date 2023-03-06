@@ -1,10 +1,12 @@
+import { IndyRevocationInterval, PredicateType } from '@aries-framework/core'
+
 export interface IndyRequestedPredicate {
   label?: string
   name: string
-  predicateType: string
+  predicateType: PredicateType
   predicateValue: number
   restrictions?: Array<Record<string, unknown>>
-  nonRevoked?: boolean
+  nonRevoked?: IndyRevocationInterval
   parameterizable?: boolean
 }
 
@@ -14,7 +16,7 @@ export interface IndyRequestedAttribute {
   names?: Array<string>
   restrictions?: Array<Record<string, unknown>>
   revealed?: boolean
-  nonRevoked?: boolean
+  nonRevoked?: IndyRevocationInterval
 }
 
 export interface IndyProofRequestTemplatePayloadData {

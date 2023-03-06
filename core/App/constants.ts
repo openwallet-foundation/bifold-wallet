@@ -1,3 +1,5 @@
+import { PredicateType } from '@aries-framework/core'
+
 import { ProofRequestTemplate, ProofRequestType } from './types/proof-reqeust-template'
 import { PINValidationRules } from './types/security'
 
@@ -117,7 +119,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
           requestedPredicates: [
             {
               name: 'age',
-              predicateType: '>=',
+              predicateType: PredicateType.GreaterThanOrEqualTo,
               predicateValue: 19,
             },
           ],
@@ -138,7 +140,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
           requestedPredicates: [
             {
               name: 'age',
-              predicateType: '>=',
+              predicateType: PredicateType.GreaterThanOrEqualTo,
               predicateValue: 19,
             },
           ],
@@ -208,7 +210,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
           requestedPredicates: [
             {
               name: 'age',
-              predicateType: '>=',
+              predicateType: PredicateType.GreaterThanOrEqualTo,
               predicateValue: 19,
               parameterizable: true,
             },

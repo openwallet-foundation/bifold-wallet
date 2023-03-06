@@ -34,6 +34,8 @@ export enum Screens {
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofRequests = 'Proof Requests',
+  ProofRequesting = 'ProofRequesting',
+  ProofDetails = 'ProofDetails',
 }
 
 export enum Stacks {
@@ -88,6 +90,8 @@ export type ContactStackParams = {
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: undefined
+  [Screens.ProofRequesting]: { templateId: string }
+  [Screens.ProofDetails]: { recordId: string }
   [Screens.ProofRequestFullName]: undefined
 }
 
