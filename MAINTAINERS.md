@@ -4,14 +4,15 @@
 
 <!-- Please keep this sorted alphabetically by github -->
 
-| Name           | Github      | LFID |
-| -------------- | ----------- | ---- |
-| Akiff Manji    | amanji      |      |
-| Clécio Varjão  | cvarjao     |      |
-| James Ebert    | JamesKEbert |      |
+| Name                   | Github      | LFID |
+| ---------------------- | ----------- | ---- |
+| Akiff Manji            | amanji      |      |
+| Clécio Varjão          | cvarjao     |      |
+| James Ebert            | JamesKEbert |      |
 | Jean-Christophe Drouin | jcdrouin21  |      |
-| Jason C. Leach | jleach      |      |
-| Ryan Koch      | ryankoch13  |      |
+| Jason C. Leach         | jleach      |      |
+| Wade King              | wadeking98  |      |
+| Ryan Koch              | ryankoch13  |      |
 
 ## Emeritus Maintainers
 
