@@ -33,6 +33,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
     },
     notifyTextContainer: {
       borderLeftColor: ColorPallet.brand.highlight,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
       borderLeftWidth: 10,
       flex: 1,
       paddingLeft: 10,
