@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { defaultProofRequestTemplates } from '../constants'
 import { ColorPallet } from '../theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { ProofRequestTemplate, ProofRequestType } from '../types/proof-reqeust-template'
+import { hasPredicates } from '../utils/proof-request'
 
 interface ListProofRequestsProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
@@ -55,15 +55,11 @@ const iconName = 'chevron-right'
 const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => {
   const { t } = useTranslation()
   const records = defaultProofRequestTemplates
-  const hasPredicates = (record: ProofRequestTemplate): boolean => {
-    const indyPayload = record.payload.type === ProofRequestType.Indy ? record.payload : null
-    if (!indyPayload) return false
-    return indyPayload.data.some((d) => d.requestedPredicates && d.requestedPredicates?.length > 0)
-  }
+
   return (
     <View style={style.container}>
       {records.map((record) => (
-        <TouchableOpacity style={style.proofButton} onPress={() => navigation.navigate(Screens.ProofRequestFullName)}>
+        <TouchableOpacity style={style.proofButton} onPress={() => navigation.navigate(Screens.ProofRequestDetails)}>
           <View style={style.textContainer}>
             <Text style={[style.proofText, style.proofTitle]} numberOfLines={1}>
               {record.title}
@@ -72,7 +68,7 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => 
               {record.details}
             </Text>
             {hasPredicates(record) && (
-              <Text style={[style.proofText, style.proofCaption]}>{t('ProofRequest.ZeroKnowledgeProof')}</Text>
+              <Text style={[style.proofText, style.proofCaption]}>{t('Verifier.ZeroKnowledgeProof')}</Text>
             )}
           </View>
           <View style={style.iconContainer}>

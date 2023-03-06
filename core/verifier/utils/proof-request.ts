@@ -125,3 +125,9 @@ export const sendProofRequest = async (
     proofRecord,
   }
 }
+
+export const hasPredicates = (record: ProofRequestTemplate): boolean => {
+  const indyPayload = record.payload.type === ProofRequestType.Indy ? record.payload : null
+  if (!indyPayload) return false
+  return indyPayload.data.some((d) => d.requestedPredicates && d.requestedPredicates?.length > 0)
+}
