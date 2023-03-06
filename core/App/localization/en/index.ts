@@ -397,6 +397,7 @@ const translation = {
     "Notifications": "Notifications",
     "CredentialOffer": "Credential Offer",
     "ProofRequest": "Proof Request",
+    "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",
     "Settings": "Settings",
     "Language": "Language",
@@ -424,6 +425,7 @@ const translation = {
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
     "Toggle": "Toggle Verifier capability",
+    "ZeroKnowledgeProof": "Zero-knowledge proof"
   }
 }
 

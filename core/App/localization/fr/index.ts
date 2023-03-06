@@ -399,6 +399,7 @@ const translation = {
         "ChangePIN": "Changer NIP",
         "CommonDecline": "Refuser",
         "ProofRequests": "Demandes de preuve",
+        "ProofRequestDetails": "Détails de la Demande d'Épreuve",
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
     },
@@ -415,6 +416,7 @@ const translation = {
     "Verifier": {
         "UseVerifierCapability": "Utiliser la fonctionnalité Verifier?",
         "Toggle": "Basculer la capacité de vérification",
+        "ZeroKnowledgeProof": "Preuve zéro connaissance"
     }
 }
 export default translation
