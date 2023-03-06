@@ -22,6 +22,7 @@ import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
+import ConnectionImage from '../components/misc/ConnectionImage'
 import { EventTypes } from '../constants'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
@@ -251,29 +252,32 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             <RecordLoading />
           </View>
         ) : (
-          <View style={styles.headerTextContainer}>
-            {!hasAvailableCredentials() ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon
-                  style={{ marginLeft: -2, marginRight: 10 }}
-                  name="highlight-off"
-                  color={ListItems.proofIcon.color}
-                  size={ListItems.proofIcon.fontSize}
-                />
+          <>
+            <ConnectionImage connectionId={proof?.connectionId} />
+            <View style={styles.headerTextContainer}>
+              {!hasAvailableCredentials() ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon
+                    style={{ marginLeft: -2, marginRight: 10 }}
+                    name="highlight-off"
+                    color={ListItems.proofIcon.color}
+                    size={ListItems.proofIcon.fontSize}
+                  />
+                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                    <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                    {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                  </Text>
+                </View>
+              ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                  {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                  <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
+                  <Text style={[TextTheme.title]}>{` ${proofItems.length} `}</Text>
+                  <Text>{proofItems.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
-              </View>
-            ) : (
-              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
-                <Text style={[TextTheme.title]}>{` ${proofItems.length} `}</Text>
-                <Text>{proofItems.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
-              </Text>
-            )}
-          </View>
+              )}
+            </View>
+          </>
         )}
       </View>
     )
@@ -307,7 +311,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={styles.pageContainer}>
+    <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <View style={styles.pageContent}>
         <FlatList
           data={proofItems}

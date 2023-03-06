@@ -143,6 +143,14 @@ export function getCredentialConnectionLabel(credential?: CredentialExchangeReco
     : credential?.connectionId ?? ''
 }
 
+export function getConnectionImageUrl(connectionId: string) {
+  const connection = useConnectionById(connectionId)
+  if (!connection) {
+    return undefined
+  }
+  return connection.imageUrl ?? undefined
+}
+
 export function firstValidCredential(
   fields: RequestedAttribute[] | RequestedPredicate[],
   revoked = true
