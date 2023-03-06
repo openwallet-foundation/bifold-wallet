@@ -377,6 +377,7 @@ const translation = {
     "Notifications": "Notificações",
     "CredentialOffer": "Oferta de Credencial",
     "ProofRequest": "Requisição de Prova",
+    "ProofRequestFullName": "Pedido De Comprovação Nome Completo",
     "ProofRequestAttributeDetails": "Atributos de Requisição de Prova",
     "Settings": "Configurações",
     "Language": "Idioma",

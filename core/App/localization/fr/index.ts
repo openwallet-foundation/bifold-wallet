@@ -399,6 +399,7 @@ const translation = {
         "ChangePIN": "Changer NIP",
         "CommonDecline": "Refuser",
         "ProofRequests": "Demandes de preuve",
+        "ProofRequestFullName": "Demande de Preuve Nom Complet",
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
     },
