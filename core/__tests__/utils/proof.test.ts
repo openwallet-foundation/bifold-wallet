@@ -1,4 +1,4 @@
-import { parseIndyProof } from '../../App/utils/proof'
+import { groupSharedProofDataByCredential, parseIndyProof } from '../../App/utils/proof'
 
 const proof_request = {
   name: 'proof-request',
@@ -10,6 +10,9 @@ const proof_request = {
     },
     attribute_2: {
       name: 'date',
+    },
+    attribute_3: {
+      name: 'passport_no',
     },
   },
   requested_predicates: {
@@ -33,6 +36,11 @@ const proof = {
       attribute_2: {
         sub_proof_index: 0,
         raw: '1/1/1',
+        encoded: '',
+      },
+      attribute_3: {
+        sub_proof_index: 1,
+        raw: '123123',
         encoded: '',
       },
     },
@@ -59,12 +67,26 @@ const proof = {
       },
     },
   },
-  identifiers: [],
+  identifiers: [
+    {
+      schema_id: '7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0',
+      cred_def_id: '7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest',
+    },
+    {
+      schema_id: '7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0',
+      cred_def_id: '7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest',
+    },
+  ],
 }
 
 describe('Helpers', () => {
   test('Build indy proof request from template containing two requested attributes', async () => {
     const proofRequest = parseIndyProof(proof_request, proof)
     expect(proofRequest).toMatchSnapshot()
+  })
+  test('Group shared proof data by credential', async () => {
+    const data = parseIndyProof(proof_request, proof)
+    const groupedData = groupSharedProofDataByCredential(data)
+    expect(groupedData).toMatchSnapshot()
   })
 })

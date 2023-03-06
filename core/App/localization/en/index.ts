@@ -104,8 +104,6 @@ const translation = {
     "Message1036": "Wallet credentials could not be found",
     "Title1037": "Unable to remove contact.",
     "Message1037": "There was a problem while removing the contact.",
-    "Title1038": "Unable to generate QR code.",
-    "Message1038": "There was a problem while generating the QR code.",
   },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
@@ -375,6 +373,9 @@ const translation = {
     "PermissionToUseCamera": "Permission to use camera",
     "WeNeedYourPermissionToUseYourCamera": "We need your permission to use your camera",
     "Ok": "Ok",
+  },
+  "QRRender": {
+    "GenerationError": "Unable to generate QR code",
   },
   "Record": {
     "Hide": "Hide",

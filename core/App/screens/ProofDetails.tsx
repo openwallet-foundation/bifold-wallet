@@ -6,7 +6,7 @@ import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { ParsedIndyProof, parseIndyProof } from '../utils/proof'
+import { GroupedSharedProofData, groupSharedProofDataByCredential, parseIndyProof } from '../utils/proof'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
@@ -23,12 +23,13 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route }) => {
     throw new Error('Unable to fetch agent from AFJ')
   }
 
-  const [proofData, setProofData] = useState<ParsedIndyProof | undefined>(undefined)
+  const [proofData, setProofData] = useState<GroupedSharedProofData | undefined>(undefined)
 
   useEffect(() => {
     agent.proofs.getFormatData(recordId).then((data) => {
       if (data.request?.indy && data.presentation?.indy) {
-        setProofData(parseIndyProof(data.request.indy, data.presentation.indy))
+        const proofData = parseIndyProof(data.request.indy, data.presentation.indy)
+        setProofData(groupSharedProofDataByCredential(proofData))
       } else {
         throw new Error('Unsupported proof data!')
       }

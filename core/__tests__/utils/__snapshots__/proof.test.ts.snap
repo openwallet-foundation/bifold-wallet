@@ -1,9 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
-Object {
+ParsedIndyProof {
   "resolvedPredicates": Array [
     Object {
+      "identifiers": Object {
+        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+        "revocationRegistryId": undefined,
+        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+        "timestamp": undefined,
+      },
       "name": "age",
       "predicateType": ">=",
       "predicateValue": 1,
@@ -11,24 +17,116 @@ Object {
   ],
   "sharedAttribute": Array [
     Object {
+      "identifiers": Object {
+        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+        "revocationRegistryId": undefined,
+        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+        "timestamp": undefined,
+      },
       "name": "date",
       "value": "1/1/1",
     },
+    Object {
+      "identifiers": Object {
+        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
+        "revocationRegistryId": undefined,
+        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
+        "timestamp": undefined,
+      },
+      "name": "passport_no",
+      "value": "123123",
+    },
   ],
   "sharedAttributeGroups": Array [
-    Array [
-      Object {
-        "name": "first_name",
-        "value": "Aries",
+    Object {
+      "attributes": Array [
+        Object {
+          "name": "first_name",
+          "value": "Aries",
+        },
+        Object {
+          "name": "second_name",
+          "value": "Bifold",
+        },
+      ],
+      "identifiers": Object {
+        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+        "revocationRegistryId": undefined,
+        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+        "timestamp": undefined,
       },
-      Object {
-        "name": "second_name",
-        "value": "Bifold",
-      },
-    ],
+    },
   ],
   "unresolvedAttributeGroups": Array [],
   "unresolvedAttributes": Array [],
   "unresolvedPredicates": Array [],
+}
+`;
+
+exports[`Helpers Group shared proof data by credential 1`] = `
+Object {
+  "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0": CredentialSharedProofData {
+    "resolvedPredicates": Array [
+      Object {
+        "identifiers": Object {
+          "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+          "revocationRegistryId": undefined,
+          "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+          "timestamp": undefined,
+        },
+        "name": "age",
+        "predicateType": ">=",
+        "predicateValue": 1,
+      },
+    ],
+    "sharedAttribute": Array [
+      Object {
+        "identifiers": Object {
+          "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+          "revocationRegistryId": undefined,
+          "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+          "timestamp": undefined,
+        },
+        "name": "date",
+        "value": "1/1/1",
+      },
+    ],
+    "sharedAttributeGroups": Array [
+      Object {
+        "attributes": Array [
+          Object {
+            "name": "first_name",
+            "value": "Aries",
+          },
+          Object {
+            "name": "second_name",
+            "value": "Bifold",
+          },
+        ],
+        "identifiers": Object {
+          "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+          "revocationRegistryId": undefined,
+          "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+          "timestamp": undefined,
+        },
+      },
+    ],
+  },
+  "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0": CredentialSharedProofData {
+    "resolvedPredicates": Array [],
+    "sharedAttribute": Array [
+      Object {
+        "identifiers": Object {
+          "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
+          "revocationRegistryId": undefined,
+          "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
+          "timestamp": undefined,
+        },
+        "name": "passport_no",
+        "value": "123123",
+      },
+    ],
+    "sharedAttributeGroups": Array [],
+  },
 }
 `;
