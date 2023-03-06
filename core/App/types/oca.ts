@@ -1,10 +1,10 @@
-import { CredentialExchangeRecord, CredentialMetadataKeys, CredentialPreviewAttribute } from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framework/core'
+import startCase from 'lodash.startcase'
 
-import { parsedCredDefName, parsedCredDefNameFromCredential } from '../utils/cred-def'
+import { parseCredDefFromId } from '../utils/cred-def'
 import { hashCode, hashToRGBA } from '../utils/helpers'
-import { buildFieldsFromIndyCredential } from '../utils/oca'
 
-import { Field } from './record'
+import { Attribute, Field } from './record'
 
 export enum BaseType {
   Binary = 'Binary',
@@ -127,33 +127,14 @@ export interface OCABundleType {
 }
 
 export interface OCABundleResolverType {
-  resolve(
-    credential?: CredentialExchangeRecord,
-    language?: string,
-    identifiers?: Identifiers
-  ): Promise<OCABundle | undefined>
-  resolveDefaultBundle(
-    credential?: CredentialExchangeRecord,
-    language?: string,
-    identifiers?: Identifiers
-  ): Promise<OCABundle | undefined>
-  presentationFields(
-    credential?: CredentialExchangeRecord,
-    language?: string,
-    attributes?: Array<CredentialPreviewAttribute>,
-    identifiers?: Identifiers
-  ): Promise<Field[]>
+  resolve(credential: CredentialExchangeRecord, language: string): Promise<OCABundle | undefined>
+  resolveDefaultBundle(credential: CredentialExchangeRecord, language: string): Promise<OCABundle | undefined>
+  presentationFields(credential: CredentialExchangeRecord, language: string): Promise<Field[]>
 }
 
 export interface OCABundleResolverOptions {
   language?: string
   cardOverlayType?: CardOverlayType
-}
-
-export interface Identifiers {
-  schemaId?: string
-  credentialDefinitionId?: string
-  templateId?: string
 }
 
 export class OCABundle implements OCABundleType {
@@ -225,47 +206,41 @@ export class OCABundleResolver implements OCABundleResolverType {
     return this.options.cardOverlayType ?? CardOverlayType.CardLayout11
   }
 
-  // TODO: We should abstract OCA bundler resolver from credential object
-  public resolveDefaultBundle(
-    credential?: CredentialExchangeRecord,
-    language = 'en',
-    identifiers?: Identifiers
-  ): Promise<OCABundle | undefined> {
-    let metaOverlay: MetaOverlay | undefined = undefined
-
-    if (credential) {
-      metaOverlay = {
-        captureBase: '',
-        type: OverlayType.Meta10,
-        name: parsedCredDefNameFromCredential(credential),
-        issuerName: credential?.connectionId ?? '',
-        language: language ?? this.options?.language,
-      }
+  private getDefaultBundle(params: {
+    credDefId?: string
+    schemaId?: string
+    credName?: string
+    credConnectionId?: string
+    language?: string
+  }) {
+    if (!params.language) {
+      params.language = 'en'
     }
-    if (identifiers && identifiers.credentialDefinitionId && identifiers.schemaId) {
-      metaOverlay = {
-        captureBase: '',
-        type: OverlayType.Meta10,
-        name: parsedCredDefName(identifiers.credentialDefinitionId, identifiers.schemaId),
-        issuerName: undefined,
-        language: language ?? this.options?.language,
-      }
+    const metaOverlay: MetaOverlay = {
+      captureBase: '',
+      type: OverlayType.Meta10,
+      name: startCase(params.credName ?? parseCredDefFromId(params.credDefId, params.schemaId)),
+      issuerName: params.credConnectionId ?? '',
+      language: params.language ?? this.options?.language,
     }
 
-    if (!metaOverlay) {
-      return Promise.resolve(undefined)
+    let colorHash = 'default'
+    if (metaOverlay?.name) {
+      colorHash = metaOverlay.name
+    } else if (metaOverlay?.issuerName) {
+      colorHash = metaOverlay.issuerName
     }
 
     const cardLayoutOverlay10: CardLayoutOverlay10 = {
       captureBase: '',
       type: OverlayType.CardLayout10,
-      backgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
+      backgroundColor: hashToRGBA(hashCode(colorHash)),
     }
 
     const cardLayoutOverlay11: CardLayoutOverlay11 = {
       captureBase: '',
       type: OverlayType.CardLayout11,
-      primaryBackgroundColor: hashToRGBA(hashCode(metaOverlay?.name ?? '')),
+      primaryBackgroundColor: hashToRGBA(hashCode(colorHash)),
     }
 
     const bundle: Bundle = {
@@ -276,29 +251,39 @@ export class OCABundleResolver implements OCABundleResolverType {
       ],
     }
 
-    return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
+    return Promise.resolve(
+      new OCABundle(bundle, { ...this.options, language: params.language ?? this.options.language })
+    )
   }
 
-  public resolve(
-    credential?: CredentialExchangeRecord,
-    language = 'en',
-    identifiers?: Identifiers
+  public resolveDefaultBundle(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
+    const credentialDefinitionId = credential.metadata.get(
+      CredentialMetadataKeys.IndyCredential
+    )?.credentialDefinitionId
+    const schemaId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
+    return this.getDefaultBundle({
+      credDefId: credentialDefinitionId,
+      schemaId,
+      credConnectionId: credential.connectionId,
+      language,
+    })
+  }
+
+  public resolveDefaultBundleByCredDefOrSchema(
+    credDefId?: string,
+    schemaId?: string,
+    credName?: string,
+    language = 'en'
   ): Promise<OCABundle | undefined> {
-    let credentialDefinitionId: string | undefined = undefined
-    let schemaId: string | undefined = undefined
-    let templateId: string | undefined = undefined
+    return this.getDefaultBundle({ credDefId, schemaId, credName, language })
+  }
 
-    if (credential) {
-      credentialDefinitionId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
-      schemaId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
-    }
-    if (identifiers) {
-      credentialDefinitionId = identifiers?.credentialDefinitionId
-      schemaId = identifiers?.schemaId
-      templateId = identifiers?.templateId
-    }
-
-    for (const item of [credentialDefinitionId, schemaId, templateId]) {
+  public resolveByCredDefOrSchema(
+    credDefId?: string,
+    schemaId?: string,
+    language = 'en'
+  ): Promise<OCABundle | undefined> {
+    for (const item of [credDefId, schemaId]) {
       if (item && this.bundles[item] !== undefined) {
         let bundle = this.bundles[item]
         // if it is a string, it is a reference/alias to another one bundle
@@ -311,49 +296,50 @@ export class OCABundleResolver implements OCABundleResolverType {
     return Promise.resolve(undefined)
   }
 
-  public async presentationFields(
-    credential?: CredentialExchangeRecord,
-    language = 'en',
-    attributes?: Array<Field>,
-    identifiers?: Identifiers
-  ): Promise<Field[]> {
-    const bundle = await this.resolve(credential, language ?? this.options.language, identifiers)
+  public resolve(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
+    const credentialDefinitionId = credential.metadata.get(
+      CredentialMetadataKeys.IndyCredential
+    )?.credentialDefinitionId
+    const schemaId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
 
-    const presentationFields = credential ? buildFieldsFromIndyCredential(credential) : attributes || []
+    return this.resolveByCredDefOrSchema(credentialDefinitionId, schemaId, language)
+  }
+
+  public async presentationFields(credential: CredentialExchangeRecord, language = 'en'): Promise<Field[]> {
+    const bundle = await this.resolve(credential, language ?? this.options.language)
+    const fields: Field[] = []
 
     if (bundle?.captureBase?.attributes) {
-      for (let i = 0; i < presentationFields.length; i++) {
-        const presentationField = presentationFields[i]
-        const key = presentationField.name || ''
-        if (bundle.captureBase.attributes[key]) {
-          presentationField.label = bundle?.labelOverlay?.attributeLabels[key]
-          presentationField.format = bundle?.formatOverlay?.attributeFormats[key]
-          presentationField.type = bundle?.captureBase?.attributes?.[key]
-          presentationField.encoding = bundle?.characterEncodingOverlay?.attributeCharacterEncoding[key]
+      for (const key in bundle?.captureBase?.attributes) {
+        if (bundle?.captureBase?.attributes[key]) {
+          const sourceAttribute = credential?.credentialAttributes?.find((item) => item.name === key)
+          if (sourceAttribute) {
+            const field: Field = this.processField(sourceAttribute, key, bundle)
+            fields.push(field)
+          }
         }
+      }
+    } else if (credential.credentialAttributes) {
+      for (const sourceAttribute of credential.credentialAttributes) {
+        const field: Field = this.processField(sourceAttribute, sourceAttribute.name, bundle)
+        fields.push(field)
       }
     }
 
-    return presentationFields
+    return fields
   }
-}
 
-export const resolveBundle = async (
-  resolver: OCABundleResolver,
-  credential?: CredentialExchangeRecord,
-  language = 'en',
-  attributes?: Array<Field>,
-  identifiers?: Identifiers
-) => {
-  const [bundle, defaultBundle, fields] = await Promise.all([
-    resolver.resolve(credential, language, identifiers),
-    resolver.resolveDefaultBundle(credential, language, identifiers),
-    resolver.presentationFields(credential, language, attributes, identifiers),
-  ])
-
-  const overlayBundle = bundle ?? defaultBundle
-  const metaOverlay = overlayBundle?.metaOverlay
-  const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay
-
-  return { bundle: overlayBundle, presentationFields: fields, metaOverlay, cardLayoutOverlay }
+  private processField(source: Attribute, key: string, bundle?: OCABundle) {
+    const { name, value, mimeType } = source
+    const field: Attribute | Field = {
+      name,
+      value,
+      mimeType,
+      label: bundle?.labelOverlay?.attributeLabels[key],
+      format: bundle?.formatOverlay?.attributeFormats[key],
+      type: bundle?.captureBase?.attributes?.[key],
+      encoding: bundle?.characterEncodingOverlay?.attributeCharacterEncoding[key],
+    }
+    return field
+  }
 }

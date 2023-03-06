@@ -19,7 +19,8 @@ interface CredentialCardProps {
   onPress?: GenericFn
   style?: ViewStyle
   proof?: boolean
-  displayItems?: (Attribute | Predicate)[]
+  proofAttributes?: Attribute[]
+  proofPredicates?: Predicate[]
   existsInWallet?: boolean
 }
 
@@ -28,7 +29,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   credDefId,
   schemaId,
   proof,
-  displayItems,
+  proofAttributes,
+  proofPredicates,
   credName,
   existsInWallet,
   style = {},
@@ -41,35 +43,19 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     if (proof) {
       return (
         <CredentialCard11
-          displayItems={displayItems}
+          proofItems={[...(proofAttributes ?? []), ...(proofPredicates ?? [])]}
           style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
           error={!existsInWallet}
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
-          proof
           elevated
         ></CredentialCard11>
       )
-    }
-
-    if (credential) {
-      if (type === CardOverlayType.CardLayout10) {
-        return <CredentialCard10 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
-      } else {
-        return <CredentialCard11 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
-      }
+    } else if (type === CardOverlayType.CardLayout10) {
+      return <CredentialCard10 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
     } else {
-      return (
-        <CredentialCard11
-          credDefId={credDefId}
-          schemaId={schemaId}
-          credName={credName}
-          displayItems={displayItems}
-          style={style}
-          onPress={onPress}
-        />
-      )
+      return <CredentialCard11 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
     }
   }
   return getCredOverlayType(OCABundleResolver.cardOverlayType)

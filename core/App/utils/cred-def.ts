@@ -1,8 +1,8 @@
 import { CredentialMetadataKeys, CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 
-import { parsedSchema, parseSchema } from './schema'
+import { credentialSchema, parseSchemaFromId } from './schema'
 
-function parseCredDefName(credDefId?: string): string {
+export function parseCredDefFromId(credDefId?: string, schemaId?: string): string {
   let name = 'Credential'
   if (credDefId) {
     const credDefRegex = /[^:]+/g
@@ -14,6 +14,9 @@ function parseCredDefName(credDefId?: string): string {
         .join(' ')
     }
   }
+  if (name.toLocaleLowerCase() === 'default' || name.toLowerCase() === 'credential') {
+    name = parseSchemaFromId(schemaId).name
+  }
   return name
 }
 
@@ -21,20 +24,6 @@ function credentialDefinition(credential: CredentialRecord): string | undefined 
   return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
 }
 
-export function parsedCredDefNameFromCredential(credential: CredentialRecord): string {
-  let credDefName = parseCredDefName(credentialDefinition(credential))
-  // if credDef name is `default` or `credential` use schema name instead
-  if (credDefName.toLocaleLowerCase() === 'default' || credDefName.toLowerCase() === 'credential') {
-    credDefName = parsedSchema(credential).name
-  }
-  return credDefName
-}
-
-export function parsedCredDefName(credentialDefinitionId: string, schemaId: string): string {
-  let credDefName = parseCredDefName(credentialDefinitionId)
-  // if credDef name is `default` or `credential` use schema name instead
-  if (credDefName.toLocaleLowerCase() === 'default' || credDefName.toLowerCase() === 'credential') {
-    credDefName = parseSchema(schemaId).name
-  }
-  return credDefName
+export function parsedCredDefName(credential: CredentialRecord): string {
+  return parseCredDefFromId(credentialDefinition(credential), credentialSchema(credential))
 }

@@ -17,9 +17,6 @@ export enum Screens {
   Notifications = 'Notifications',
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
-  ProofRequestDetails = 'Proof Request Details',
-  ProofRequestUsageHistory = 'Proof Request Usage History',
-  ProofRequestAttributeDetails = 'Proof Request Attribute Details',
   Settings = 'Settings',
   Language = 'Language',
   Contacts = 'Contacts',
@@ -34,10 +31,6 @@ export enum Screens {
   RecreatePIN = 'Change PIN',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
-  ProofRequests = 'Proof Requests',
-  ProofRequesting = 'Proof Requesting',
-  ProofDetails = 'Proof Details',
-  ConnectionInvitation = 'Connection Invitation',
 }
 
 export enum Stacks {
@@ -47,7 +40,6 @@ export enum Stacks {
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
   ContactStack = 'Contacts Stack',
-  ProofRequestsStack = 'Proof Requests Stack',
   NotificationStack = 'Notifications Stack',
   ConnectionStack = 'Connection Stack',
 }
@@ -64,7 +56,6 @@ export type RootStackParams = {
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
-  [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
 }
 
@@ -84,21 +75,10 @@ export type AuthenticateStackParams = {
 }
 
 export type ContactStackParams = {
-  [Screens.ConnectionInvitation]: undefined
   [Screens.Contacts]: undefined
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
-  [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
-}
-
-export type ProofRequestsStackParams = {
-  [Screens.ProofRequests]: { connectionId?: string }
-  [Screens.ProofRequesting]: { templateId: string }
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
-  [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
-  [Screens.ProofRequestUsageHistory]: { templateId: string }
 }
 
 export type CredentialStackParams = {
@@ -130,10 +110,6 @@ export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.ProofRequestAttributeDetails]: {
-    proofId: string
-    attributeName: string | null
-  }
   [Screens.CommonDecline]: {
     declineType: DeclineType
     itemId: string
@@ -141,17 +117,12 @@ export type NotificationStackParams = {
     customClose?: GenericFn
   }
   [Screens.CustomNotification]: undefined
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
 }
 
 export type DeliveryStackParams = {
   [Screens.Connection]: { connectionId?: string; threadId?: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.ProofRequestAttributeDetails]: {
-    proofId: string
-    attributeName: string | null
-  }
   [Screens.CommonDecline]: {
     declineType: DeclineType
     itemId: string
