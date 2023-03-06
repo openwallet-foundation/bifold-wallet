@@ -355,6 +355,9 @@ const translation = {
     "WeNeedYourPermissionToUseYourCamera": "Precisamos de sua permissão para usar sua câmera",
     "Ok": "Ok",
   },
+  "QRRender": {
+    "GenerationError": "Não foi possível gerar o código QR",
+  },
   "Record": {
     "Hide": "Esconder",
     "Show": "Mostrar",
