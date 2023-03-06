@@ -592,8 +592,8 @@ export const Assets = {
     logoSecondary: {
       src: require('./assets/img/logo-large.png'),
       aspectRatio: 1,
-      height: 120,
-      width: 120,
+      height: '33%',
+      width: '33%',
       resizeMode: 'contain',
     },
   },
