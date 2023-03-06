@@ -122,183 +122,243 @@ exports[`common decline screen decline offer renders correctly 1`] = `
           }
         }
       >
-        <RNGestureHandlerButton
-          collapsable={false}
-          onGestureEvent={[Function]}
-          onGestureHandlerEvent={[Function]}
-          onGestureHandlerStateChange={[Function]}
-          onHandlerStateChange={[Function]}
-          rippleColor={0}
-          testID="com.ariesbifold:id/ShowCredentialDetails"
-        >
-          <View
-            accessible={true}
-            collapsable={false}
-            nativeID="animatedComponent"
-            style={
+        <View
+          style={
+            Array [
               Object {
                 "backgroundColor": "#781e4b",
                 "borderRadius": 10,
-                "opacity": 1,
-              }
-            }
+              },
+              Object {},
+              Object {
+                "elevation": 0,
+              },
+            ]
+          }
+        >
+          <RNGestureHandlerButton
+            collapsable={false}
+            onGestureEvent={[Function]}
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            onHandlerStateChange={[Function]}
+            rippleColor={0}
+            testID="com.ariesbifold:id/ShowCredentialDetails"
           >
             <View
-              testID="com.ariesbifold:id/CredentialCard"
+              accessible={true}
+              collapsable={false}
+              nativeID="animatedComponent"
+              style={
+                Object {
+                  "backgroundColor": "#781e4b",
+                  "borderRadius": 10,
+                  "opacity": 1,
+                }
+              }
             >
               <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                    "minHeight": 247.5,
-                  }
-                }
+                testID="com.ariesbifold:id/CredentialCard"
               >
                 <View
                   style={
                     Object {
-                      "backgroundColor": "rgba(0, 0, 0, 0.24)",
-                      "borderBottomLeftRadius": 10,
-                      "borderTopLeftRadius": 10,
-                      "width": 90,
+                      "flexDirection": "row",
+                      "minHeight": 247.5,
                     }
                   }
-                  testID="com.ariesbifold:id/CredentialCardSecondaryBody"
-                />
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "#ffffff",
-                      "borderRadius": 8,
-                      "height": 90,
-                      "justifyContent": "center",
-                      "left": -52.5,
-                      "top": 37.5,
-                      "width": 90,
-                    }
-                  }
-                >
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 18,
-                          "fontWeight": "normal",
-                        },
-                        Object {
-                          "alignSelf": "center",
-                          "fontSize": 45,
-                          "fontWeight": "bold",
-                        },
-                      ]
-                    }
-                  >
-                    D
-                  </Text>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "flexGrow": 1,
-                      "padding": 37.5,
-                    }
-                  }
-                  testID="com.ariesbifold:id/CredentialCardPrimaryBody"
                 >
                   <View
                     style={
-                      Object {
-                        "margin": -1,
-                        "marginLeft": -52.5,
-                      }
+                      Array [
+                        Object {
+                          "backgroundColor": "rgba(0, 0, 0, 0.24)",
+                          "borderBottomLeftRadius": 10,
+                          "borderTopLeftRadius": 10,
+                          "width": 90,
+                        },
+                        Object {
+                          "backgroundColor": "rgba(0, 0, 0, 0.24)",
+                        },
+                      ]
                     }
-                  >
-                    <View>
-                      <Text
-                        numberOfLines={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 14,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "flexShrink": 1,
-                            },
-                            Object {
-                              "lineHeight": 19,
-                              "opacity": 0.8,
-                            },
-                          ]
-                        }
-                        testID="com.ariesbifold:id/CredentialIssuer"
-                      >
-                        d7e7f641-e0cc-46bc-908a-f351e2486b03
-                      </Text>
-                      <Text
-                        numberOfLines={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 18,
-                              "fontWeight": "normal",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "flexShrink": 1,
-                            },
-                            Object {
-                              "fontWeight": "bold",
-                              "lineHeight": 24,
-                            },
-                          ]
-                        }
-                        testID="com.ariesbifold:id/CredentialName"
-                      >
-                        Credential
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "rgba(0, 0, 0, 0)",
-                      "borderBottomLeftRadius": 10,
-                      "borderTopRightRadius": 10,
-                      "height": 90,
-                      "justifyContent": "center",
-                      "width": 90,
-                    }
-                  }
-                  testID="com.ariesbifold:id/CredentialCardStatus"
-                >
+                    testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+                  />
                   <View
                     style={
                       Array [
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "rgba(0, 0, 0, 0)",
-                          "borderBottomLeftRadius": 10,
-                          "borderTopRightRadius": 10,
+                          "backgroundColor": "#ffffff",
+                          "borderRadius": 8,
                           "height": 90,
                           "justifyContent": "center",
+                          "left": -52.5,
+                          "top": 37.5,
                           "width": 90,
+                        },
+                        Object {
+                          "elevation": 0,
                         },
                       ]
                     }
-                  />
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "alignSelf": "center",
+                            "fontSize": 45,
+                            "fontWeight": "bold",
+                          },
+                        ]
+                      }
+                    >
+                      C
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "flexGrow": 1,
+                        "padding": 37.5,
+                      }
+                    }
+                    testID="com.ariesbifold:id/CredentialCardPrimaryBody"
+                  >
+                    <View
+                      style={
+                        Object {
+                          "margin": -1,
+                          "marginLeft": -52.5,
+                        }
+                      }
+                    >
+                      <View>
+                        <Text
+                          numberOfLines={1}
+                          style={
+                            Array [
+                              Object {
+                                "color": "#FFFFFF",
+                                "fontSize": 14,
+                                "fontWeight": "bold",
+                              },
+                              Object {
+                                "color": "#FFFFFF",
+                                "flexShrink": 1,
+                              },
+                              Object {
+                                "lineHeight": 19,
+                                "opacity": 0.8,
+                              },
+                            ]
+                          }
+                          testID="com.ariesbifold:id/CredentialIssuer"
+                        >
+                          d7e7f641-e0cc-46bc-908a-f351e2486b03
+                        </Text>
+                        <Text
+                          numberOfLines={1}
+                          style={
+                            Array [
+                              Object {
+                                "color": "#FFFFFF",
+                                "fontSize": 18,
+                                "fontWeight": "normal",
+                              },
+                              Object {
+                                "color": "#FFFFFF",
+                                "flexShrink": 1,
+                              },
+                              Object {
+                                "fontWeight": "bold",
+                                "lineHeight": 24,
+                              },
+                            ]
+                          }
+                          testID="com.ariesbifold:id/CredentialName"
+                        >
+                          Credential
+                        </Text>
+                      </View>
+                      <RCTScrollView
+                        data={
+                          Array [
+                            undefined,
+                            undefined,
+                          ]
+                        }
+                        getItem={[Function]}
+                        getItemCount={[Function]}
+                        keyExtractor={[Function]}
+                        onContentSizeChange={[Function]}
+                        onLayout={[Function]}
+                        onMomentumScrollBegin={[Function]}
+                        onMomentumScrollEnd={[Function]}
+                        onScroll={[Function]}
+                        onScrollBeginDrag={[Function]}
+                        onScrollEndDrag={[Function]}
+                        removeClippedSubviews={false}
+                        renderItem={[Function]}
+                        scrollEnabled={false}
+                        scrollEventThrottle={50}
+                        stickyHeaderIndices={Array []}
+                        viewabilityConfigCallbackPairs={Array []}
+                      >
+                        <View>
+                          <View
+                            onLayout={[Function]}
+                            style={null}
+                          />
+                          <View
+                            onLayout={[Function]}
+                            style={null}
+                          />
+                        </View>
+                      </RCTScrollView>
+                    </View>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "rgba(0, 0, 0, 0)",
+                        "borderBottomLeftRadius": 10,
+                        "borderTopRightRadius": 10,
+                        "height": 90,
+                        "justifyContent": "center",
+                        "width": 90,
+                      }
+                    }
+                    testID="com.ariesbifold:id/CredentialCardStatus"
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "rgba(0, 0, 0, 0)",
+                            "borderBottomLeftRadius": 10,
+                            "borderTopRightRadius": 10,
+                            "height": 90,
+                            "justifyContent": "center",
+                            "width": 90,
+                          },
+                        ]
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-        </RNGestureHandlerButton>
+          </RNGestureHandlerButton>
+        </View>
       </View>
     </View>
   </RCTScrollView>
