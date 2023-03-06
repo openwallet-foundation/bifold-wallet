@@ -5,9 +5,9 @@ import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
 import QRRenderer from '../components/misc/QRRenderer'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { createConnectionlessProofRequestInvitation } from '../utils/proof-request'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 

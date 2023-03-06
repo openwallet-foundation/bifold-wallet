@@ -1,4 +1,4 @@
-import { ProofIdentifier } from '@aries-framework/core'
+import { Agent, ProofIdentifier } from '@aries-framework/core'
 import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
 
 export interface MissingAttribute {
@@ -175,4 +175,15 @@ export const groupSharedProofDataByCredential = (data: ParsedIndyProof): Grouped
     result[item.identifiers.schemaId]?.resolvedPredicates.push(item)
   }
   return result
+}
+
+/*
+ * Retrieve proof details from AFJ record
+ * */
+export const getProofData = async (agent: Agent, recordId: string): Promise<ParsedIndyProof | undefined> => {
+  const data = await agent.proofs.getFormatData(recordId)
+  if (data.request?.indy && data.presentation?.indy) {
+    return parseIndyProof(data.request.indy, data.presentation.indy)
+  }
+  return undefined
 }
