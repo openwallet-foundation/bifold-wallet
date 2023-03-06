@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { getProofData, GroupedSharedProofData, groupSharedProofDataByCredential } from '../../verifier/utils/proof'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { GroupedSharedProofData, groupSharedProofDataByCredential, parseIndyProof } from '../utils/proof'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
@@ -26,13 +26,11 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route }) => {
   const [proofData, setProofData] = useState<GroupedSharedProofData | undefined>(undefined)
 
   useEffect(() => {
-    agent.proofs.getFormatData(recordId).then((data) => {
-      if (data.request?.indy && data.presentation?.indy) {
-        const proofData = parseIndyProof(data.request.indy, data.presentation.indy)
-        setProofData(groupSharedProofDataByCredential(proofData))
-      } else {
+    getProofData(agent, recordId).then((data) => {
+      if (!data) {
         throw new Error('Unsupported proof data!')
       }
+      setProofData(groupSharedProofDataByCredential(data))
     })
   }, [agent, recordId])
 

@@ -1,6 +1,9 @@
-import { defaultProofRequestTemplates } from '../../App/constants'
-import { buildProofRequestDataForTemplate, buildProofRequestDataForTemplateId } from '../../App/utils/proof-request'
+import {
+  buildProofRequestDataForTemplate,
+  buildProofRequestDataForTemplateId,
+} from '../../verifier/utils/proof-request'
 import SpyInstance = jest.SpyInstance
+import { defaultProofRequestTemplates } from '../../verifier/constants'
 
 describe('Helpers', () => {
   let spy: SpyInstance
