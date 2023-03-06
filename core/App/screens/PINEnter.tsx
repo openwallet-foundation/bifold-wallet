@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core'
-import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -112,12 +111,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         { loginAttempts: store.loginAttempt.loginAttempts, lockoutDate: Date.now() + penalty, servedPenalty: false },
       ],
     })
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: Screens.AttemptLockout }],
-      })
-    )
+    navigation.navigate(Screens.AttemptLockout as never)
   }
 
   const getLockoutPenalty = (attempts: number): number | undefined => {

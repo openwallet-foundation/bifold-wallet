@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core'
-import { CommonActions } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -103,12 +102,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
       })
 
       // TODO: Navigate back if in settings
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.UseBiometry }],
-        })
-      )
+      navigation.navigate(Screens.UseBiometry)
     } catch (e) {
       // TODO:(jl)
     }
