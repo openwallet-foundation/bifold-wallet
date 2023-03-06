@@ -334,7 +334,6 @@ const translation = {
     "ConfirmDecline": "Sim, recusar esta requisição de prova",
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Recusar Prova",
-    "ZeroKnowledgeProof": "Prova de conhecimento Zero"
   },
   "Settings": {
     "Version": "Versão",
@@ -381,7 +380,7 @@ const translation = {
     "Notifications": "Notificações",
     "CredentialOffer": "Oferta de Credencial",
     "ProofRequest": "Requisição de Prova",
-    "ProofRequestFullName": "Pedido De Comprovação Nome Completo",
+    "ProofRequestDetails": "Detalhes Da Solicitação De Comprovação",
     "ProofRequestAttributeDetails": "Atributos de Requisição de Prova",
     "Settings": "Configurações",
     "Language": "Idioma",
@@ -408,6 +407,7 @@ const translation = {
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
     "Toggle": "Alternar capacidade do verificador",
+    "ZeroKnowledgeProof": "Prova de conhecimento Zero"
   }
 }
 

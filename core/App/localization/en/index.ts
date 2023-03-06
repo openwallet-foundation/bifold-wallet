@@ -349,7 +349,6 @@ const translation = {
     "ConfirmDecline": "Yes, decline this proof request",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Proof",
-    "ZeroKnowledgeProof": "Zero-knowledge proof"
   },
   "Settings": {
     "Version": "Version",
@@ -400,7 +399,7 @@ const translation = {
     "Notifications": "Notifications",
     "CredentialOffer": "Credential Offer",
     "ProofRequest": "Proof Request",
-    "ProofRequestFullName": "Proof Request Full Name",
+    "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",
     "Settings": "Settings",
     "Language": "Language",
@@ -428,6 +427,7 @@ const translation = {
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
     "Toggle": "Toggle Verifier capability",
+    "ZeroKnowledgeProof": "Zero-knowledge proof"
   }
 }
 
