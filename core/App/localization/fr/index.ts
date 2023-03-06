@@ -340,7 +340,6 @@ const translation = {
         "InformationSentSuccessfully": "Informations envoyées avec succès",
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Decline Credential",
-        "ZeroKnowledgeProof": "Preuve zéro connaissance"
     },
     "Settings": {
         "Version": "Version",
@@ -400,7 +399,7 @@ const translation = {
         "ChangePIN": "Changer NIP",
         "CommonDecline": "Refuser",
         "ProofRequests": "Demandes de preuve",
-        "ProofRequestFullName": "Demande de Preuve Nom Complet",
+        "ProofRequestDetails": "Détails de la Demande d'Épreuve",
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
     },
@@ -417,6 +416,7 @@ const translation = {
     "Verifier": {
         "UseVerifierCapability": "Utiliser la fonctionnalité Verifier?",
         "Toggle": "Basculer la capacité de vérification",
+        "ZeroKnowledgeProof": "Preuve zéro connaissance"
     }
 }
 export default translation
