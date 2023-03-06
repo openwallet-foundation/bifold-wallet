@@ -10,9 +10,9 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay11, CredentialOverlay, OCABundle } from '../../types/oca'
+import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute, Field, Predicate } from '../../types/record'
-import { credentialTextColor, toImageSource } from '../../utils/credential'
+import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard11Props {
@@ -164,19 +164,17 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   useEffect(() => {
     const resolveBundle = async () => {
-      let bundle: OCABundle | undefined
-      let defaultBundle: OCABundle | undefined
-      if (credential) {
+      let bundle = await OCABundleResolver.resolveByCredDefOrSchema(credDefId, schemaId, i18n.language)
+      let defaultBundle = await OCABundleResolver.resolveDefaultBundleByCredDefOrSchema(
+        credDefId,
+        schemaId,
+        credName,
+        i18n.language
+      )
+
+      if (credential && isValidIndyCredential(credential)) {
         bundle = await OCABundleResolver.resolve(credential, i18n.language)
         defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language)
-      } else {
-        bundle = await OCABundleResolver.resolveByCredDefOrSchema(credDefId, schemaId, i18n.language)
-        defaultBundle = await OCABundleResolver.resolveDefaultBundleByCredDefOrSchema(
-          credDefId,
-          schemaId,
-          credName,
-          i18n.language
-        )
       }
       return { bundle, defaultBundle }
     }
