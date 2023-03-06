@@ -21,6 +21,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
+import ConnectionImage from '../components/misc/ConnectionImage'
 import Record from '../components/record/Record'
 import RecordField from '../components/record/RecordField'
 import { EventTypes } from '../constants'
@@ -228,27 +229,30 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
         <Record
           header={() => (
-            <View style={styles.headerTextContainer}>
-              {!hasAvailableCredentials() ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Icon
-                    style={{ marginLeft: -2, marginRight: 10 }}
-                    name="highlight-off"
-                    color={ListItems.proofIcon.color}
-                    size={ListItems.proofIcon.fontSize}
-                  />
+            <>
+              <ConnectionImage connectionId={proof?.connectionId} />
+              <View style={styles.headerTextContainer}>
+                {!hasAvailableCredentials() ? (
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon
+                      style={{ marginLeft: -2, marginRight: 10 }}
+                      name="highlight-off"
+                      color={ListItems.proofIcon.color}
+                      size={ListItems.proofIcon.fontSize}
+                    />
+                    <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                      <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                      {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                    </Text>
+                  </View>
+                ) : (
                   <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                    {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
+                    {t('ProofRequest.IsRequestingYouToShare')}:
                   </Text>
-                </View>
-              ) : (
-                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                  {t('ProofRequest.IsRequestingYouToShare')}:
-                </Text>
-              )}
-            </View>
+                )}
+              </View>
+            </>
           )}
           footer={() => (
             <View

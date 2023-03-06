@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
+import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
@@ -145,6 +146,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const header = () => {
     return (
       <>
+        <ConnectionImage connectionId={credential?.connectionId} />
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
