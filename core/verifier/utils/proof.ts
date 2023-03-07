@@ -35,7 +35,7 @@ export interface UnresolvedPredicate {
 }
 
 export class ParsedIndyProof {
-  public sharedAttribute: Array<SharedAttribute>
+  public sharedAttributes: Array<SharedAttribute>
   public sharedAttributeGroups: Array<SharedAttributesGroup>
   public resolvedPredicates: Array<ResolvedPredicate>
   public unresolvedAttributes: Array<MissingAttribute>
@@ -43,7 +43,7 @@ export class ParsedIndyProof {
   public unresolvedPredicates: Array<UnresolvedPredicate>
 
   public constructor() {
-    this.sharedAttribute = []
+    this.sharedAttributes = []
     this.sharedAttributeGroups = []
     this.resolvedPredicates = []
     this.unresolvedAttributes = []
@@ -85,7 +85,7 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
       const shared = proof.requested_proof.revealed_attrs[referent]
       if (shared) {
         const identifiers = getProofIdentifiers(proof, shared.sub_proof_index)
-        result.sharedAttribute.push({
+        result.sharedAttributes.push({
           name: requested_attribute.name,
           value: shared.raw,
           identifiers,
@@ -138,12 +138,12 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
 }
 
 export class CredentialSharedProofData {
-  public sharedAttribute: Array<SharedAttribute>
+  public sharedAttributes: Array<SharedAttribute>
   public sharedAttributeGroups: Array<SharedAttributesGroup>
   public resolvedPredicates: Array<ResolvedPredicate>
 
   public constructor() {
-    this.sharedAttribute = []
+    this.sharedAttributes = []
     this.sharedAttributeGroups = []
     this.resolvedPredicates = []
   }
@@ -156,11 +156,11 @@ export type GroupedSharedProofData = Record<string, CredentialSharedProofData>
  * */
 export const groupSharedProofDataByCredential = (data: ParsedIndyProof): GroupedSharedProofData => {
   const result: GroupedSharedProofData = {}
-  for (const item of data.sharedAttribute) {
+  for (const item of data.sharedAttributes) {
     if (!result[item.identifiers.schemaId]) {
       result[item.identifiers.schemaId] = new CredentialSharedProofData()
     }
-    result[item.identifiers.schemaId]?.sharedAttribute.push(item)
+    result[item.identifiers.schemaId]?.sharedAttributes.push(item)
   }
   for (const item of data.sharedAttributeGroups) {
     if (!result[item.identifiers.schemaId]) {

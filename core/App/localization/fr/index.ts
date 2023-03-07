@@ -419,6 +419,12 @@ const translation = {
         "ProcessingProof": "Juste un moment...",
         "ZeroKnowledgeProof": "Preuve zéro connaissance",
         "GenerateNewQR": "Générer un nouveau code QR",
+        "ScanQR": "Scannez ce QR Code",
+        "ScanQRComment": "avec votre portefeuille numérique pour recevoir une demande de justificatif.",
+        "InformationReceived": "Information reçue",
+        "ProofVerificationFailed": "La vérification de la preuve a échoué",
+        "ViewDetails": "Voir les détails",
+        "HideDetails": "Cacher les détails",
     }
 }
 export default translation
