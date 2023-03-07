@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { defaultProofRequestTemplates } from '../constants'
+import { defaultProofRequestTemplates } from '../../verifier/constants'
+import { hasPredicates } from '../../verifier/utils/proof-request'
 import { ColorPallet } from '../theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { hasPredicates } from '../utils/proof-request'
 
 interface ListProofRequestsProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
