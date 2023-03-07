@@ -17,6 +17,7 @@ export enum Screens {
   Notifications = 'Notifications',
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
+  ProofRequestDetails = 'Proof Request Details',
   ProofRequestAttributeDetails = 'Proof Request Attribute Details',
   Settings = 'Settings',
   Language = 'Language',
@@ -91,6 +92,7 @@ export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: undefined
   [Screens.ProofRequesting]: { templateId: string }
   [Screens.ProofDetails]: { recordId: string }
+  [Screens.ProofRequestDetails]: undefined
 }
 
 export type CredentialStackParams = {

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
 import ProofDetails from '../screens/ProofDetails'
+import ProofRequestDetails from '../screens/ProofRequestDetails'
 import ProofRequesting from '../screens/ProofRequesting'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 
@@ -17,6 +18,13 @@ const ProofRequestStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
+      <Stack.Screen
+        name={Screens.ProofRequestDetails}
+        component={ProofRequestDetails}
+        options={() => ({
+          title: t('Screens.ProofRequestDetails'),
+        })}
+      />
       <Stack.Screen
         name={Screens.ProofRequests}
         component={ListProofRequests}
