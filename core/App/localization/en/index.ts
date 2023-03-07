@@ -425,7 +425,9 @@ const translation = {
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
     "Toggle": "Toggle Verifier capability",
-    "ZeroKnowledgeProof": "Zero-knowledge proof"
+    "ProcessingProof": "Just a moment...",
+    "ZeroKnowledgeProof": "Zero-knowledge proof",
+    "GenerateNewQR": "Generate new QR Code",
   }
 }
 

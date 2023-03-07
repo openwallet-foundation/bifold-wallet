@@ -416,7 +416,9 @@ const translation = {
     "Verifier": {
         "UseVerifierCapability": "Utiliser la fonctionnalité Verifier?",
         "Toggle": "Basculer la capacité de vérification",
-        "ZeroKnowledgeProof": "Preuve zéro connaissance"
+        "ProcessingProof": "Juste un moment...",
+        "ZeroKnowledgeProof": "Preuve zéro connaissance",
+        "GenerateNewQR": "Générer un nouveau code QR",
     }
 }
 export default translation
