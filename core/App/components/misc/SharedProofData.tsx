@@ -8,18 +8,49 @@ import {
   GroupedSharedProofData,
   groupSharedProofDataByCredential,
 } from '../../../verifier/utils/proof'
+import { useTheme } from '../../contexts/theme'
 
 interface SharedProofDataProps {
   recordId: string
 }
 
-const styles = StyleSheet.create({
-  content: {
-    display: 'flex',
-  },
-})
-
 const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedProofDataProps) => {
+  const { ColorPallet } = useTheme()
+
+  const styles = StyleSheet.create({
+    sharedDataCard: {
+      flexGrow: 1,
+      flexDirection: 'row',
+      borderRadius: 10,
+      marginTop: 20,
+      backgroundColor: ColorPallet.grayscale.white,
+    },
+    cardColor: {
+      borderTopLeftRadius: 10,
+      borderBottomLeftRadius: 10,
+      width: 50,
+      backgroundColor: ColorPallet.brand.primary,
+    },
+    cardAttributes: {
+      paddingTop: 20,
+      paddingBottom: 10,
+    },
+    attributeContainer: {
+      marginBottom: 10,
+      paddingHorizontal: 20,
+    },
+    attributeName: {
+      fontSize: 16,
+      fontWeight: 'normal',
+      color: ColorPallet.grayscale.black,
+    },
+    attributeValue: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: ColorPallet.grayscale.black,
+    },
+  })
+
   const { agent } = useAgent()
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
@@ -39,21 +70,21 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
   const renderSharedAttributes = (record: CredentialSharedProofData) => {
     return record.sharedAttributes.map((attribute) => {
       return (
-        <View>
-          <Text>{attribute.name}</Text>
-          <Text>{attribute.value}</Text>
+        <View style={styles.attributeContainer}>
+          <Text style={styles.attributeName}>{attribute.name}</Text>
+          <Text style={styles.attributeValue}>{attribute.value}</Text>
         </View>
       )
     })
   }
 
   const renderSharedAttributeGroups = (record: CredentialSharedProofData) => {
-    return record.sharedAttributeGroups.map((attribute) => {
-      attribute.attributes.map((attribute) => {
+    return record.sharedAttributeGroups.flatMap((attribute) => {
+      return attribute.attributes.map((attribute) => {
         return (
-          <View>
-            <Text>{attribute.name}</Text>
-            <Text>{attribute.value}</Text>
+          <View style={styles.attributeContainer}>
+            <Text style={styles.attributeName}>{attribute.name}</Text>
+            <Text style={styles.attributeValue}>{attribute.value}</Text>
           </View>
         )
       })
@@ -63,22 +94,25 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
   const renderResolvedPredicates = (record: CredentialSharedProofData) => {
     return record.resolvedPredicates.map((attribute) => {
       return (
-        <View>
-          <Text>{attribute.name}</Text>
-          <Text>{`${attribute.predicateType} ${attribute?.predicateValue}`}</Text>
+        <View style={styles.attributeContainer}>
+          <Text style={styles.attributeName}>{attribute.name}</Text>
+          <Text style={styles.attributeValue}>{`${attribute.predicateType} ${attribute?.predicateValue}`}</Text>
         </View>
       )
     })
   }
 
   return (
-    <View style={styles.content}>
+    <View style={{ flexGrow: 1 }}>
       {proofData &&
-        Object.entries(proofData).map(([_, data]) => (
-          <View style={{ margin: 10 }}>
-            {renderSharedAttributes(data)}
-            {renderSharedAttributeGroups(data)}
-            {renderResolvedPredicates(data)}
+        Object.entries(proofData).map(([schema, data]) => (
+          <View key={schema} style={styles.sharedDataCard}>
+            <View style={styles.cardColor} />
+            <View style={styles.cardAttributes}>
+              {renderSharedAttributes(data)}
+              {renderSharedAttributeGroups(data)}
+              {renderResolvedPredicates(data)}
+            </View>
           </View>
         ))}
     </View>
