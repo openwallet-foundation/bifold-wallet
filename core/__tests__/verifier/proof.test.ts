@@ -1,4 +1,5 @@
 import { groupSharedProofDataByCredential, parseIndyProof } from '../../verifier/utils/proof'
+import { IndyProof } from 'indy-sdk-react-native'
 
 const proof_request = {
   name: 'proof-request',
@@ -24,7 +25,7 @@ const proof_request = {
   },
 }
 
-const proof = {
+const proof: IndyProof = {
   proof: {
     proofs: [],
     aggregated_proof: {
@@ -61,7 +62,8 @@ const proof = {
     },
     self_attested_attrs: {},
     unrevealed_attrs: {},
-    requested_predicates: {
+    // @ts-ignore
+    predicates: {
       predicate_1: {
         sub_proof_index: 0,
       },

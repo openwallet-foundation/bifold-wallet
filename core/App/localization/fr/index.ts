@@ -422,6 +422,7 @@ const translation = {
         "ScanQR": "Scannez ce QR Code",
         "ScanQRComment": "avec votre portefeuille numérique pour recevoir une demande de justificatif.",
         "InformationReceived": "Information reçue",
+        "InformationReceivedDetails": "partagé les informations suivantes.",
         "ProofVerificationFailed": "La vérification de la preuve a échoué",
         "ViewDetails": "Voir les détails",
         "HideDetails": "Cacher les détails",

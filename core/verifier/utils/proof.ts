@@ -116,7 +116,8 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
   }
 
   for (const [referent, requestedPredicate] of Object.entries(request.requested_predicates)) {
-    const shared = proof.requested_proof.requested_predicates[referent]
+    // @ts-ignore Mistake in AFJ type definition
+    const shared = proof.requested_proof.predicates[referent]
     if (shared) {
       const identifiers = getProofIdentifiers(proof, shared.sub_proof_index)
       result.resolvedPredicates.push({
