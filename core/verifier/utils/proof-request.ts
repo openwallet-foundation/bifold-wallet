@@ -126,8 +126,15 @@ export const sendProofRequest = async (
   }
 }
 
+/*
+ * Check if the Proof Request template contains at least one predicate
+ * */
 export const hasPredicates = (record: ProofRequestTemplate): boolean => {
-  const indyPayload = record.payload.type === ProofRequestType.Indy ? record.payload : null
-  if (!indyPayload) return false
-  return indyPayload.data.some((d) => d.requestedPredicates && d.requestedPredicates?.length > 0)
+  if (record.payload.type === ProofRequestType.Indy) {
+    return record.payload.data.some((d) => d.requestedPredicates && d.requestedPredicates?.length > 0)
+  }
+  if (record.payload.type === ProofRequestType.DIF) {
+    return false
+  }
+  return false
 }

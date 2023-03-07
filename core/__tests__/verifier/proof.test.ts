@@ -1,4 +1,4 @@
-import { groupSharedProofDataByCredential, parseIndyProof } from '../../App/utils/proof'
+import { groupSharedProofDataByCredential, parseIndyProof } from '../../verifier/utils/proof'
 
 const proof_request = {
   name: 'proof-request',

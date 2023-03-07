@@ -30,7 +30,13 @@ const ProofRequestStack: React.FC = () => {
         component={ListProofRequests}
         options={{ title: t('Screens.ChooseProofRequest') }}
       />
-      <Stack.Screen name={Screens.ProofRequesting} component={ProofRequesting} />
+      <Stack.Screen
+        name={Screens.ProofRequesting}
+        component={ProofRequesting}
+        options={() => ({
+          title: '',
+        })}
+      />
       <Stack.Screen name={Screens.ProofDetails} component={ProofDetails} />
     </Stack.Navigator>
   )

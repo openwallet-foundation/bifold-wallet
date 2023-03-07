@@ -404,7 +404,9 @@ const translation = {
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
     "Toggle": "Alternar capacidade do verificador",
-    "ZeroKnowledgeProof": "Prova de conhecimento Zero"
+    "ProcessingProof": "Um momento...",
+    "ZeroKnowledgeProof": "Prova de conhecimento Zero",
+    "GenerateNewQR": "Gerar novo código QR",
   }
 }
 
