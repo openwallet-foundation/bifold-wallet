@@ -374,6 +374,9 @@ const translation = {
     "WeNeedYourPermissionToUseYourCamera": "We need your permission to use your camera",
     "Ok": "Ok",
   },
+  "QRRender": {
+    "GenerationError": "Unable to generate QR code",
+  },
   "Record": {
     "Hide": "Hide",
     "Show": "Show",
@@ -394,6 +397,7 @@ const translation = {
     "Notifications": "Notifications",
     "CredentialOffer": "Credential Offer",
     "ProofRequest": "Proof Request",
+    "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",
     "Settings": "Settings",
     "Language": "Language",
@@ -404,6 +408,9 @@ const translation = {
     "Developer": "Developer options",
     "ChangePIN": "Change PIN",
     "CommonDecline": "Decline",
+    "ProofRequests": "Proof requests",
+    "SendProofRequest": "Send a proof request",
+    "ChooseProofRequest": "Choose a proof request",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
@@ -417,6 +424,13 @@ const translation = {
   },
   "Chat": {
     "OpenItem": "Open",
+  },
+  "Verifier": {
+    "UseVerifierCapability": "Use Verifier capability?",
+    "Toggle": "Toggle Verifier capability",
+    "ProcessingProof": "Just a moment...",
+    "ZeroKnowledgeProof": "Zero-knowledge proof",
+    "GenerateNewQR": "Generate new QR Code",
   },
 }
 

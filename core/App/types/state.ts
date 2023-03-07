@@ -9,6 +9,7 @@ export interface Preferences {
   useBiometry: boolean
   biometryPreferencesUpdated: boolean
   developerModeEnabled: boolean
+  useVerifierCapability?: boolean
 }
 
 export interface Lockout {

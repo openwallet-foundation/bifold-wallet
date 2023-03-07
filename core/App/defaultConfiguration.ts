@@ -4,7 +4,7 @@ import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
-import { PINRules } from './constants'
+import { defaultProofRequestTemplates, PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
 import Developer from './screens/Developer'
@@ -42,4 +42,5 @@ export const defaultConfiguration: ConfigurationContext = {
     pageTitle: '',
   },
   useCustomNotifications: useNotifications,
+  proofRequestTemplates: defaultProofRequestTemplates,
 }

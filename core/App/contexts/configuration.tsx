@@ -1,6 +1,7 @@
 import { IndyPoolConfig } from '@aries-framework/core'
 import { createContext, ReducerAction, useContext } from 'react'
 
+import { ProofRequestTemplate } from '../../verifier/types/proof-reqeust-template'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import OnboardingPages from '../screens/OnboardingPages'
@@ -36,6 +37,7 @@ export interface ConfigurationContext {
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
+  proofRequestTemplates: Array<ProofRequestTemplate>
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

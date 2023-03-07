@@ -355,6 +355,9 @@ const translation = {
     "WeNeedYourPermissionToUseYourCamera": "Precisamos de sua permissão para usar sua câmera",
     "Ok": "Ok",
   },
+  "QRRender": {
+    "GenerationError": "Não foi possível gerar o código QR",
+  },
   "Record": {
     "Hide": "Esconder",
     "Show": "Mostrar",
@@ -374,6 +377,7 @@ const translation = {
     "Notifications": "Notificações",
     "CredentialOffer": "Oferta de Credencial",
     "ProofRequest": "Requisição de Prova",
+    "ProofRequestDetails": "Detalhes Da Solicitação De Comprovação",
     "ProofRequestAttributeDetails": "Atributos de Requisição de Prova",
     "Settings": "Configurações",
     "Language": "Idioma",
@@ -383,6 +387,9 @@ const translation = {
     "Biometry": "Biometria",
     "Developer": "Developer options",
     "ChangePIN": "Alterar PIN",
+    "ProofRequests": "Solicitações de prova",
+    "SendProofRequest": "Envie um pedido de prova",
+    "ChooseProofRequest": "Escolha um pedido de prova",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
@@ -393,6 +400,13 @@ const translation = {
     "NoInternetConnectionMessage": "Não é possivel acessar serviços utilizando a Bifold ou receber credenciais até você voltar a estar online.\n\nFavor checkar sua conexão com a internet.",
     "LedgerConnectivityIssueTitle": "Serviços de Carteira",
     "LedgerConnectivityIssueMessage": "Um firewall pode estar te impedindo de conectar-se a serviços relacionados a carteira.",
+  },
+  "Verifier": {
+    "UseVerifierCapability": "Usar o recurso Verificador?",
+    "Toggle": "Alternar capacidade do verificador",
+    "ProcessingProof": "Um momento...",
+    "ZeroKnowledgeProof": "Prova de conhecimento Zero",
+    "GenerateNewQR": "Gerar novo código QR",
   }
 }
 
