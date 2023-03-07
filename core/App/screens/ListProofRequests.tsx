@@ -61,7 +61,7 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => 
       {records.map((record) => (
         <TouchableOpacity
           style={style.proofButton}
-          onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: record.id })}
+          onPress={() => navigation.navigate(Screens.ProofRequesting, { templateId: record.id })}
         >
           <View style={style.textContainer}>
             <Text style={[style.proofText, style.proofTitle]} numberOfLines={1}>
