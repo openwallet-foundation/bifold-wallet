@@ -1,4 +1,4 @@
-import { groupSharedProofDataByCredential, parseIndyProof } from '../../verifier/utils/proof'
+import { groupSharedProofDataByCredential, parseIndyProof } from '../../utils/proof'
 import { IndyProof } from 'indy-sdk-react-native'
 
 const proof_request = {
