@@ -51,5 +51,57 @@
         }
       }
     ]
+  },
+  "YXCtXE4YhVjULgj5hrk4ML:3:CL:111555:default": {
+    "captureBase": {
+      "attributes": {
+        "given_names": "Text",
+        "family_name": "Text"
+      }
+    },
+    "overlays": [
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "en",
+        "name": "Unverified Person"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "fr",
+        "name": "Personne non vérifiée"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/label/1.0",
+        "language": "en",
+        "attributeLabels": {
+          "given_names": "Given Names",
+          "family_name": "Family Name"
+        }
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/label/1.0",
+        "language": "fr",
+        "attributeLabels": {
+          "given_names": "Prénoms",
+          "family_name": "Nom de famille"
+        }
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/card_layout/1.1",
+        "language": "en",
+        "primaryBackgroundColor": "#591d1d",
+        "header": {
+          "color": "#591d1d"
+        },
+        "footer": {
+          "color": "#591d1d"
+        }
+      }
+    ]
   }
 }
