@@ -399,6 +399,26 @@ export const ListItems = StyleSheet.create({
   emptyList: {
     ...TextTheme.normal,
   },
+  requestTemplateBackground: {
+    backgroundColor: ColorPallet.grayscale.white,
+  },
+  requestTemplateIconColor: {
+    color: ColorPallet.notification.infoText,
+  },
+  requestTemplateTitle: {
+    color: ColorPallet.grayscale.black,
+    fontWeight: 'bold',
+  },
+  requestTemplateDetails: {
+    color: ColorPallet.grayscale.black,
+    fontWeight: 'normal',
+  },
+  requestTemplateZkpLabel: {
+    color: ColorPallet.grayscale.mediumGrey,
+  },
+  requestTemplateIcon: {
+    color: ColorPallet.grayscale.black,
+  },
 })
 
 export const TabTheme = {

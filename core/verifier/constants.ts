@@ -20,16 +20,6 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
             {
               name: 'family_name',
             },
-            {
-              names: ['issued', 'country'],
-            },
-          ],
-          requestedPredicates: [
-            {
-              name: 'age',
-              predicateType: PredicateType.GreaterThanOrEqualTo,
-              predicateValue: 17,
-            },
           ],
         },
       ],
