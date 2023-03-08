@@ -125,7 +125,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
     },
   },
   {
-    id: '18183e86-4528-4d10-80f8-aa5c7cbbbfe7',
+    id: 'ecf18605-81d0-4073-ac3e-b79dcf4cc97a',
     title: 'Over some years of age',
     details: 'Verify if a person is over some years ends up.',
     version: '0.0.1',

@@ -1,6 +1,6 @@
 import { CredentialMetadataKeys, CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 
-export function parseSchemaFromId(schemaId?: string): { name: string; version: string } {
+export function parseSchema(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'
   let version = ''
   if (schemaId) {
@@ -22,5 +22,5 @@ export function credentialSchema(credential: CredentialRecord): string | undefin
 }
 
 export function parsedSchema(credential: CredentialRecord): { name: string; version: string } {
-  return parseSchemaFromId(credentialSchema(credential))
+  return parseSchema(credentialSchema(credential))
 }
