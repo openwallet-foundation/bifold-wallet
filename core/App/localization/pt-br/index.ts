@@ -230,6 +230,7 @@ const translation = {
     "Revoked": "Revogada",
     "CredentialRevokedMessageTitle": "Esta credencial está revogada",
     "CredentialRevokedMessageBody": "Esta credencial não funcionará mais para algumas requisições de prova. Voce precisará atualizar a credencial com o emissor.",
+    "NewRevoked": "Credential revoked (PT-BR)",
     "RemoveTitle": "Remover a credencial da sua carteira",
     "RemoveCaption": "Você perderá a habilidade de prover as informações desta credencial com essa carteira.",
     "CredentialNotFound": "Credencial não encontrada",
