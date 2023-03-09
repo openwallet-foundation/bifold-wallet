@@ -427,6 +427,11 @@ const translation = {
     "CredentialRequestSent": "sent a credential request",
     "CredentialDeclined": "declined a credential offer",
     "CredentialReceived": "received a credential",
+    "ProofRequestSent": "sent a proof request",
+    "ProofPresentationReceived": "received proof information",
+    "ProofRequestReceived": "received a proof request",
+    "ProofRequestRejected": "rejected a proof request",
+    "ProofRequestSatisfied": "shared proof information",
   },
 }
 
