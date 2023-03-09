@@ -1,3 +1,4 @@
+import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import {
   useAgent,
   useConnectionById,
@@ -9,17 +10,15 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
-import { renderBubble, renderInputToolbar, renderComposer, renderSend } from '../components/chat'
-import { renderActions } from '../components/chat/ChatActions'
 import { renderInputToolbar, renderComposer, renderSend } from '../components/chat'
+import { renderActions } from '../components/chat/ChatActions'
 import { ChatMessage } from '../components/chat/ChatMessage'
 import InfoIcon from '../components/misc/InfoIcon'
+import Text from '../components/texts/Text'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens, Stacks } from '../types/navigators'
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
-import Text from '../components/texts/Text'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -130,8 +129,6 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       params: { navigation: navigation, connectionId },
     })
   }
-
-  const { ChatTheme: theme } = useTheme()
 
   const actions = useMemo(() => {
     return store.preferences.useVerifierCapability
