@@ -150,8 +150,9 @@ export interface OCABundleResolverOptions {
 }
 
 export interface Identifiers {
-  schemaId: string
-  credentialDefinitionId: string
+  schemaId?: string
+  credentialDefinitionId?: string
+  templateId?: string
 }
 
 export class OCABundle implements OCABundleType {
@@ -223,6 +224,7 @@ export class OCABundleResolver implements OCABundleResolverType {
     return this.options.cardOverlayType ?? CardOverlayType.CardLayout11
   }
 
+  // TODO: We should abstract OCA bundler resolver from credential object
   public resolveDefaultBundle(
     credential?: CredentialExchangeRecord,
     language = 'en',
@@ -239,7 +241,7 @@ export class OCABundleResolver implements OCABundleResolverType {
         language: language ?? this.options?.language,
       }
     }
-    if (identifiers) {
+    if (identifiers && identifiers.credentialDefinitionId && identifiers.schemaId) {
       metaOverlay = {
         captureBase: '',
         type: OverlayType.Meta10,
@@ -283,6 +285,7 @@ export class OCABundleResolver implements OCABundleResolverType {
   ): Promise<OCABundle | undefined> {
     let credentialDefinitionId: string | undefined = undefined
     let schemaId: string | undefined = undefined
+    let templateId: string | undefined = undefined
 
     if (credential) {
       credentialDefinitionId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
@@ -291,9 +294,10 @@ export class OCABundleResolver implements OCABundleResolverType {
     if (identifiers) {
       credentialDefinitionId = identifiers?.credentialDefinitionId
       schemaId = identifiers?.schemaId
+      templateId = identifiers?.templateId
     }
 
-    for (const item of [credentialDefinitionId, schemaId]) {
+    for (const item of [credentialDefinitionId, schemaId, templateId]) {
       if (item && this.bundles[item] !== undefined) {
         let bundle = this.bundles[item]
         // if it is a string, it is a reference/alias to another one bundle
@@ -317,14 +321,8 @@ export class OCABundleResolver implements OCABundleResolverType {
 
     const attrs = credential?.credentialAttributes || attributes
 
-    console.log('bundle?.')
-    console.log(bundle)
-
     if (bundle?.captureBase?.attributes) {
       for (const key in bundle?.captureBase?.attributes) {
-        console.log('key')
-        console.log(key)
-
         if (bundle?.captureBase?.attributes[key]) {
           const sourceAttribute = attrs?.find((item) => item.name === key)
           if (sourceAttribute) {

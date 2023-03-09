@@ -45,8 +45,8 @@ export interface DifProofRequestTemplatePayload {
 
 export interface ProofRequestTemplate {
   id: string
-  title: string
-  details: string
+  name: string
+  description: string
   version: string
   payload: IndyProofRequestTemplatePayload | DifProofRequestTemplatePayload
 }

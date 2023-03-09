@@ -1,26 +1,30 @@
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { defaultProofRequestTemplates } from '../../verifier/constants'
+import { ProofRequestTemplate } from '../../verifier/types/proof-reqeust-template'
 import { hasPredicates } from '../../verifier/utils/proof-request'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
+import { CardLayoutOverlay11, CredentialOverlay, MetaOverlay, OverlayType } from '../types/oca'
+import { parsedCredDefName } from '../utils/cred-def'
 
-interface ListProofRequestsProps {
+interface ProofRequestsCardProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
+  template: ProofRequestTemplate
 }
 
-const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => {
+const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, template }) => {
   const { t } = useTranslation()
+  const { i18n } = useTranslation()
   const { ListItems } = useTheme()
+  const { OCABundleResolver } = useConfiguration()
 
   const style = StyleSheet.create({
-    container: {
-      margin: 24,
-    },
     recordButton: {
       ...ListItems.requestTemplateBackground,
       flexDirection: 'row',
@@ -52,25 +56,56 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => 
     },
   })
 
+  const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
+
+  useEffect(() => {
+    OCABundleResolver.resolve(undefined, i18n.language, { templateId: template.id }).then((bundle) => {
+      const metaOverlay = bundle?.metaOverlay || {
+        captureBase: '',
+        type: OverlayType.Meta10,
+        name: template.name,
+        description: template.description,
+        language: i18n.language,
+      }
+      setMeta(metaOverlay)
+    })
+  }, [template])
+
+  return meta ? (
+    <TouchableOpacity style={style.recordButton} onPress={() => navigation.navigate(Screens.ProofRequestDetails)}>
+      <View style={style.textContainer}>
+        <Text style={style.templateTitle} numberOfLines={1}>
+          {meta.name}
+        </Text>
+        <Text style={style.templateDetails} numberOfLines={2}>
+          {meta.description}
+        </Text>
+        {hasPredicates(template) && <Text style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</Text>}
+      </View>
+      <View style={style.iconContainer}>
+        <Icon style={style.icon} name={'chevron-right'} />
+      </View>
+    </TouchableOpacity>
+  ) : null
+}
+
+interface ListProofRequestsProps {
+  navigation: StackNavigationProp<ProofRequestsStackParams>
+}
+
+const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => {
+  const style = StyleSheet.create({
+    container: {
+      margin: 24,
+    },
+  })
+
   const records = defaultProofRequestTemplates
 
   return (
     <View style={style.container}>
       {records.map((record) => (
-        <TouchableOpacity style={style.recordButton} onPress={() => navigation.navigate(Screens.ProofRequestDetails)}>
-          <View style={style.textContainer}>
-            <Text style={style.templateTitle} numberOfLines={1}>
-              {record.title}
-            </Text>
-            <Text style={style.templateDetails} numberOfLines={2}>
-              {record.details}
-            </Text>
-            {hasPredicates(record) && <Text style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</Text>}
-          </View>
-          <View style={style.iconContainer}>
-            <Icon style={style.icon} name={'chevron-right'} />
-          </View>
-        </TouchableOpacity>
+        <ProofRequestsCard template={record} navigation={navigation} />
       ))}
     </View>
   )

@@ -150,16 +150,14 @@ export class CredentialSharedProofData {
   }
 }
 
-export type GroupedSharedProofData = Map<string, { data: CredentialSharedProofData; identifiers: ProofIdentifier }>
+export type GroupedSharedProofDataItem = { data: CredentialSharedProofData; identifiers: ProofIdentifier }
+export type GroupedSharedProofData = Map<string, GroupedSharedProofDataItem>
 
 /*
  * Group parsed indy proof data ( returned from `parseIndyProof`) by credential definition id
  * */
 export const groupSharedProofDataByCredential = (data: ParsedIndyProof): GroupedSharedProofData => {
-  const result: GroupedSharedProofData = new Map<
-    string,
-    { data: CredentialSharedProofData; identifiers: ProofIdentifier }
-  >()
+  const result: GroupedSharedProofData = new Map<string, GroupedSharedProofDataItem>()
   for (const item of data.sharedAttributes) {
     if (!result.has(item.identifiers.credentialDefinitionId)) {
       result.set(item.identifiers.credentialDefinitionId, {

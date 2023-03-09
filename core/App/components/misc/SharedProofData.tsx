@@ -1,13 +1,21 @@
 import { useAgent } from '@aries-framework/react-hooks'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 
-import { getProofData, groupSharedProofDataByCredential, mergeAttributes } from '../../../verifier/utils/proof'
+import {
+  getProofData,
+  GroupedSharedProofData,
+  GroupedSharedProofDataItem,
+  groupSharedProofDataByCredential,
+  mergeAttributes,
+} from '../../../verifier/utils/proof'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CardLayoutOverlay11, CredentialOverlay, resolveBundle } from '../../types/oca'
 import { toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
+import { AttributeValue } from '../record/RecordField'
 
 interface SharedProofDataProps {
   recordId: string
@@ -18,14 +26,12 @@ const logoHeight = width * 0.12
 const padding = width * 0.05
 const borderRadius = 10
 
-const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedProofDataProps) => {
+const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ sharedData }) => {
   const { ColorPallet, TextTheme } = useTheme()
+  const { OCABundleResolver } = useConfiguration()
+  const { i18n } = useTranslation()
 
   const styles = StyleSheet.create({
-    container: {
-      backgroundColor: ColorPallet.grayscale.white,
-      borderRadius: borderRadius,
-    },
     cardContainer: {
       flexDirection: 'row',
       minHeight: 0.33 * width,
@@ -44,6 +50,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
+      elevation: 5,
     },
     cardAttributes: {
       paddingTop: 20,
@@ -64,45 +71,25 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
     },
   })
 
-  const { agent } = useAgent()
-  const { OCABundleResolver } = useConfiguration()
-
-  if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
-  }
-
-  const [overlay, setOverlay] = useState<Array<CredentialOverlay<CardLayoutOverlay11>>>([])
-
-  const prepareData = useCallback(async () => {
-    const data = await getProofData(agent, recordId)
-    if (!data) return
-
-    const items: Array<CredentialOverlay<CardLayoutOverlay11>> = []
-    const groupedData = groupSharedProofDataByCredential(data)
-    for (const sharedData of groupedData.values()) {
-      const attributes = mergeAttributes(sharedData.data)
-      const bundle = await resolveBundle(OCABundleResolver, undefined, undefined, attributes, sharedData.identifiers)
-      items.push(bundle)
-    }
-    setOverlay(items)
-  }, [agent, recordId])
+  const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11> | undefined>(undefined)
 
   useEffect(() => {
-    prepareData()
-  }, [agent, recordId])
+    const attributes = mergeAttributes(sharedData.data)
+    resolveBundle(OCABundleResolver, undefined, i18n.language, attributes, sharedData.identifiers).then((bundle) => {
+      setOverlay(bundle)
+    })
+  }, [sharedData])
 
   const CardBody: React.FC<{ overlay: CredentialOverlay<CardLayoutOverlay11> }> = ({ overlay }) => {
     return (
-      <>
-        <View style={styles.cardAttributes}>
-          {overlay.presentationFields?.map((field) => (
-            <View key={field.name} style={styles.attributeContainer}>
-              <Text style={styles.attributeName}>{field.label || field.name}</Text>
-              <Text style={styles.attributeValue}>{field.value}</Text>
-            </View>
-          ))}
-        </View>
-      </>
+      <View style={styles.cardAttributes}>
+        {overlay.presentationFields?.map((field) => (
+          <View key={field.name} style={styles.attributeContainer}>
+            <Text style={styles.attributeName}>{field.label || field.name}</Text>
+            <AttributeValue style={styles.attributeValue} field={field} shown={true} />
+          </View>
+        ))}
+      </View>
     )
   }
 
@@ -117,8 +104,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
 
   const CardLogo: React.FC<{ overlay: CredentialOverlay<CardLayoutOverlay11> }> = ({ overlay }) => {
     return (
-      // @ts-ignore
-      <View style={styles.logoContainer} elevation={5}>
+      <View style={styles.logoContainer}>
         {overlay.cardLayoutOverlay?.logo?.src ? (
           <Image
             source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
@@ -148,21 +134,47 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
     )
   }
 
-  const SharedData: React.FC = () => {
-    return (
-      <>
-        {overlay.map((overlay) => (
-          <View key={overlay.metaOverlay?.name} style={[styles.container, styles.cardContainer]}>
-            <CardColor overlay={overlay} />
-            <CardLogo overlay={overlay} />
-            <CardBody overlay={overlay} />
-          </View>
-        ))}
-      </>
-    )
+  return overlay ? (
+    <View key={sharedData.identifiers.credentialDefinitionId} style={styles.cardContainer}>
+      <CardColor overlay={overlay} />
+      <CardLogo overlay={overlay} />
+      <CardBody overlay={overlay} />
+    </View>
+  ) : null
+}
+
+const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedProofDataProps) => {
+  const { agent } = useAgent()
+  const { ColorPallet } = useTheme()
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.grayscale.white,
+      borderRadius: borderRadius,
+    },
+  })
+
+  if (!agent) {
+    throw new Error('Unable to fetch agent from AFJ')
   }
 
-  return overlay.length ? <SharedData /> : null
+  const [sharedData, setSharedData] = useState<GroupedSharedProofData | undefined>(undefined)
+
+  useEffect(() => {
+    getProofData(agent, recordId).then((data) => {
+      if (data) {
+        setSharedData(groupSharedProofDataByCredential(data))
+      }
+    })
+  }, [agent, recordId])
+
+  return sharedData && sharedData.size ? (
+    <View style={styles.container}>
+      {Array.from(sharedData.values()).map((item) => (
+        <SharedDataCard sharedData={item} />
+      ))}
+    </View>
+  ) : null
 }
 
 export default SharedProofData
