@@ -427,6 +427,7 @@ const translation = {
         "ViewDetails": "Voir les détails",
         "HideDetails": "Cacher les détails",
         "UseProofRequest": "Use this proof request",
+        "SendProofRequest": "Envoyer une demande de preuve",
     }
 }
 export default translation

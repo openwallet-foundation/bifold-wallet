@@ -15,12 +15,10 @@ import { MetaOverlay, OverlayType } from '../types/oca'
 interface ProofRequestsCardProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
   template: ProofRequestTemplate
+  connectionId?: string
 }
 
-const iconSize = 35
-const iconName = 'chevron-right'
-
-const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, template }) => {
+const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, template, connectionId }) => {
   const { t } = useTranslation()
   const { i18n } = useTranslation()
   const { ListItems } = useTheme()
@@ -73,12 +71,10 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
     })
   }, [template])
 
-  if (!meta) return null
-
-  return (
+  return meta ? (
     <TouchableOpacity
       style={style.recordButton}
-      onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id })}
+      onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id, connectionId })}
     >
       <View style={style.textContainer}>
         <Text style={style.templateTitle} numberOfLines={1}>
@@ -90,17 +86,18 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
         {hasPredicates(template) && <Text style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</Text>}
       </View>
       <View style={style.iconContainer}>
-        <Icon style={style.icon} size={iconSize} name={iconName} />
+        <Icon style={style.icon} name={'chevron-right'} />
       </View>
     </TouchableOpacity>
-  )
+  ) : null
 }
 
 interface ListProofRequestsProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
+  connectionId?: string
 }
 
-const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => {
+const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, connectionId }) => {
   const style = StyleSheet.create({
     container: {
       margin: 24,
@@ -112,7 +109,7 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => 
   return (
     <View style={style.container}>
       {records.map((record) => (
-        <ProofRequestsCard template={record} navigation={navigation} />
+        <ProofRequestsCard template={record} connectionId={connectionId} navigation={navigation} />
       ))}
     </View>
   )
