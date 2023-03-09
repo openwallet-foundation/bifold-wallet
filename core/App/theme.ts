@@ -482,6 +482,14 @@ export const SettingsTheme = {
 }
 
 export const ChatTheme = {
+  containerStyle: {
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    alignSelf: 'flex-end',
+  },
   leftBubble: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
     borderRadius: 4,
@@ -543,13 +551,21 @@ export const ChatTheme = {
     paddingLeft: 16,
     paddingRight: 16,
     marginTop: 16,
-    marginLeft: 16,
-    marginRight: 16,
   },
   openButtonTextStyle: {
     fontSize: TextTheme.normal.fontSize,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  documentIconContainer: {
+    backgroundColor: ColorPallet.brand.primary,
+    alignSelf: 'flex-start',
+    padding: 4,
+    borderRadius: 4,
+    marginBottom: 8,
+  },
+  documentIcon: {
+    color: ColorPallet.grayscale.white,
   },
 }
 

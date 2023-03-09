@@ -19,6 +19,7 @@ import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens, Stacks } from '../types/navigators'
+import {useNavigation} from "@react-navigation/core";
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -60,34 +61,57 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
     })
   }, [connection])
 
-  const getCredentialText = useCallback(
-    (record: any) => {
+  const getCredentialTextUser = useCallback(
+    (record) => {
+      return t('Chat.UserYou')
+    },
+    [t]
+  )
+
+  const getCredentialTextAction = useCallback(
+    (record) => {
       switch (record.state) {
         // assuming only Holder states are supported here
         case CredentialState.ProposalSent:
-          return (
-            <Text style={theme.leftText}>
-              You <Text style={theme.leftTextHighlighted}>sent a credential proposal</Text>
-            </Text>
-          )
+          return t('Chat.CredentialProposalSent')
         case CredentialState.OfferReceived:
-          return <Text>You received a credential offer</Text>
+          return t('Chat.CredentialOfferReceived')
         case CredentialState.RequestSent:
-          return <Text>You sent a credential request</Text>
+          return t('Chat.CredentialRequestSent')
         case CredentialState.Declined:
-          return <Text>You declined a credential offer</Text>
+          return t('Chat.CredentialDeclined')
         case CredentialState.CredentialReceived:
         case CredentialState.Done:
-          return (
-            <Text style={theme.leftText}>
-              You <Text style={theme.leftTextHighlighted}>received a credential</Text>
-            </Text>
-          )
+          return t('Chat.CredentialReceived')
         default:
-          return <Text> </Text>
+          return ''
       }
     },
-    [theme]
+    [t]
+  )
+
+  const getCredentialText = useCallback(
+    (record: any) => {
+      const userName = getCredentialTextUser(record)
+      const action = getCredentialTextAction(record)
+
+      if (action.length === 0) return ''
+
+      return `${userName} ${action}`
+    },
+    [getCredentialTextUser, getCredentialTextAction]
+  )
+
+  const getCredentialTextView = useCallback(
+    (record: any) => {
+      return (
+        <Text style={theme.leftText}>
+          {getCredentialTextUser(record)}{' '}
+          <Text style={theme.leftTextHighlighted}>{getCredentialTextAction(record)}</Text>
+        </Text>
+      )
+    },
+    [theme, getCredentialTextAction, getCredentialTextUser]
   )
 
   useEffect(() => {
@@ -107,12 +131,12 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       ...credentials.map((cred: any) => {
         return {
           _id: cred.id,
-          text: 'a' as any,
-          renderText: () => getCredentialText(cred),
+          text: getCredentialText(cred),
+          renderText: () => getCredentialTextView(cred),
           record: cred,
           createdAt: cred.createdAt,
           type: cred.type,
-          user: { _id: 'receiver' as any },
+          user: { _id: 'receiver' },
         }
       })
     )
@@ -147,7 +171,12 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         <ChatMessage
           messageProps={props}
           onActionButtonTap={(message) => {
-            /* open proof request/credential */
+            if (message.record instanceof CredentialExchangeRecord) {
+              navigation.getParent()?.navigate(Stacks.ContactStack, {
+                screen: Screens.CredentialDetails,
+                params: { credentialId: message.record.id },
+              })
+            }
           }}
         />
       )}

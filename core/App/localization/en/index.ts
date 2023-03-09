@@ -1,4 +1,8 @@
 // prettier-ignore
+import Text from "../../components/texts/Text";
+import {CredentialState} from "@aries-framework/core";
+import React from "react";
+
 const translation = {
   "Global": {
     "Enter": "Enter",
@@ -417,6 +421,12 @@ const translation = {
   },
   "Chat": {
     "OpenItem": "Open",
+    "UserYou": "You",
+    "CredentialProposalSent": "sent a credential proposal",
+    "CredentialOfferReceived": "received a credential offer",
+    "CredentialRequestSent": "sent a credential request",
+    "CredentialDeclined": "declined a credential offer",
+    "CredentialReceived": "received a credential",
   },
 }
 
