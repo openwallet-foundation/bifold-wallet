@@ -11,9 +11,10 @@ import { testIdWithKey } from '../../utils/testable'
 interface RecordBinaryFieldProps {
   field: Field
   shown?: boolean
+  style?: any
 }
 
-const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) => {
+const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown, style }) => {
   const { t } = useTranslation()
 
   const { ListItems } = useTheme()
@@ -48,7 +49,7 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown }) 
   })
 
   return (
-    <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
+    <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
       {shown ? date : hiddenFieldValue}
     </Text>
   )

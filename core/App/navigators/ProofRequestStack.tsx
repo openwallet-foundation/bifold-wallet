@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
 import ProofDetails from '../screens/ProofDetails'
@@ -37,7 +38,14 @@ const ProofRequestStack: React.FC = () => {
           title: '',
         })}
       />
-      <Stack.Screen name={Screens.ProofDetails} component={ProofDetails} />
+      <Stack.Screen
+        name={Screens.ProofDetails}
+        component={ProofDetails}
+        options={() => ({
+          title: '',
+          headerRight: () => <HeaderRightHome />,
+        })}
+      />
     </Stack.Navigator>
   )
 }

@@ -43,7 +43,7 @@ export const buildProofRequestDataForTemplate = (template: ProofRequestTemplate)
     })
     return {
       indy: {
-        name: template.title,
+        name: template.name,
         version: template.version,
         nonce: Date.now().toString(),
         requestedAttributes,
