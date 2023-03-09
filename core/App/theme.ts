@@ -484,23 +484,38 @@ export const SettingsTheme = {
 export const ChatTheme = {
   leftBubble: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
-    borderRadius: 20,
-    padding: 4,
-    marginLeft: -4,
+    borderRadius: 4,
+    padding: 16,
+    marginLeft: 16,
   },
   rightBubble: {
-    backgroundColor: ColorPallet.brand.primary,
-    borderRadius: 20,
-    padding: 4,
-    marginRight: 4,
+    backgroundColor: ColorPallet.brand.primaryDisabled,
+    borderRadius: 4,
+    padding: 16,
+    marginRight: 16,
+  },
+  timeStyle: {
+    color: ColorPallet.grayscale.lightGrey,
+    fontSize: 12,
+    marginTop: 8,
   },
   leftText: {
     color: ColorPallet.brand.secondary,
     fontSize: TextTheme.normal.fontSize,
   },
+  leftTextHighlighted: {
+    color: ColorPallet.brand.secondary,
+    fontSize: TextTheme.normal.fontSize,
+    fontWeight: 'bold',
+  },
   rightText: {
     color: ColorPallet.brand.secondary,
     fontSize: TextTheme.normal.fontSize,
+  },
+  rightTextHighlighted: {
+    color: ColorPallet.brand.secondary,
+    fontSize: TextTheme.normal.fontSize,
+    fontWeight: 'bold',
   },
   inputToolbar: {
     backgroundColor: ColorPallet.brand.secondary,
@@ -520,6 +535,22 @@ export const ChatTheme = {
   },
   sendEnabled: ColorPallet.brand.primary,
   sendDisabled: ColorPallet.brand.primaryDisabled,
+  openButtonStyle: {
+    borderRadius: 32,
+    backgroundColor: ColorPallet.brand.primary,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginTop: 16,
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  openButtonTextStyle: {
+    fontSize: TextTheme.normal.fontSize,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 }
 
 export const OnboardingTheme = {

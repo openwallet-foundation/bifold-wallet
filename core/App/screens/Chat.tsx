@@ -5,7 +5,7 @@ import {
   useCredentials,
 } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
@@ -15,7 +15,8 @@ import InfoIcon from '../components/misc/InfoIcon'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens } from '../types/navigators'
-import {CredentialExchangeRecord, CredentialState} from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
+import Text from '../components/texts/Text'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -42,6 +43,8 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
 
   const [messages, setMessages] = useState<any>([])
 
+  const { ChatTheme: theme } = useTheme()
+
   useMemo(() => {
     assertConnectedNetwork()
   }, [])
@@ -54,28 +57,42 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
     })
   }, [connection])
 
-  const getCredentialMessage = (record: any) => {
-    switch (record.state) {
-      // assuming only Holder states are supported here
-      case CredentialState.ProposalSent:
-        return 'You sent a credential proposal'
-      case CredentialState.OfferReceived:
-        return 'You received a credential offer'
-      case CredentialState.RequestSent:
-        return 'You sent a credential request'
-      case CredentialState.Declined:
-        return 'You declined a credential offer'
-      case CredentialState.CredentialReceived:
-      case CredentialState.Done:
-        return 'You received a credential'
-    }
-  }
+  const getCredentialText = useCallback(
+    (record: any) => {
+      switch (record.state) {
+        // assuming only Holder states are supported here
+        case CredentialState.ProposalSent:
+          return (
+            <Text style={theme.leftText}>
+              You <Text style={theme.leftTextHighlighted}>sent a credential proposal</Text>
+            </Text>
+          )
+        case CredentialState.OfferReceived:
+          return <Text>You received a credential offer</Text>
+        case CredentialState.RequestSent:
+          return <Text>You sent a credential request</Text>
+        case CredentialState.Declined:
+          return <Text>You declined a credential offer</Text>
+        case CredentialState.CredentialReceived:
+        case CredentialState.Done:
+          return (
+            <Text style={theme.leftText}>
+              You <Text style={theme.leftTextHighlighted}>received a credential</Text>
+            </Text>
+          )
+        default:
+          return <Text> </Text>
+      }
+    },
+    [theme]
+  )
 
   useEffect(() => {
     const transformedMessages = basicMessages.map((m: any) => {
       return {
         _id: m.id,
         text: m.content,
+        renderText: () => <Text style={theme.leftText}>{m.content}</Text>,
         record: m,
         createdAt: m.createdAt,
         type: m.type,
@@ -87,7 +104,8 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       ...credentials.map((cred: any) => {
         return {
           _id: cred.id,
-          text: getCredentialMessage(cred) as any,
+          text: 'a' as any,
+          renderText: () => getCredentialText(cred),
           record: cred,
           createdAt: cred.createdAt,
           type: cred.type,
@@ -101,8 +119,6 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const onSend = async (messages: IMessage[]) => {
     await agent?.basicMessages.sendMessage(connectionId, messages[0].text)
   }
-
-  const { ChatTheme: theme } = useTheme()
 
   return (
     <GiftedChat
