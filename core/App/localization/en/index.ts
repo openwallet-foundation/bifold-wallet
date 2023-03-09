@@ -436,7 +436,8 @@ const translation = {
     "ViewDetails": "View details",
     "HideDetails": "Hide details",
     "UseProofRequest": "Use this proof request",
-    "SendProofRequest": "Send a Proof Request",
+    "SendThisProofRequest": "Send this proof request",
+    "SendProofRequest": "Send a Proof Request"
   }
 }
 

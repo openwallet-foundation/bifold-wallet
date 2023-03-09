@@ -415,7 +415,8 @@ const translation = {
     "ViewDetails": "Ver detalhes",
     "HideDetails": "Detalhes ocultos",
     "UseProofRequest": "Envie d'une sollicitation de compromis",
-    "SendProofRequest": "Envie uma Solicitação de Comprovante",
+    "SendThisProofRequest": "Envie esta solicitação de prova",
+    "SendProofRequest": "Envie uma Solicitação de Comprovante"
   }
 }
 

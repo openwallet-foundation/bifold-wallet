@@ -167,7 +167,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const useProofRequest = useCallback(async () => {
     if (connectionId) {
-      await sendProofRequest(agent, templateId, connectionId)
+      sendProofRequest(agent, templateId, connectionId)
       navigation.getParent()?.navigate(Screens.Chat, { connectionId })
     } else {
       navigation.navigate(Screens.ProofRequesting, { templateId })
@@ -185,9 +185,9 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       ))}
       <View style={style.footerButton}>
         <Button
-          title={t('Verifier.UseProofRequest')}
-          accessibilityLabel={t('Verifier.UseProofRequest')}
-          testID={testIdWithKey('UseProofRequest')}
+          title={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
+          accessibilityLabel={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
+          testID={connectionId ? testIdWithKey('SendThisProofRequest') : testIdWithKey('UseProofRequest')}
           buttonType={ButtonType.Primary}
           onPress={() => useProofRequest()}
         />
