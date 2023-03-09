@@ -10,6 +10,7 @@ import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
+import CredentialDetails from "../screens/CredentialDetails";
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
@@ -26,6 +27,11 @@ const ContactStack: React.FC = () => {
       />
       <Stack.Screen name={Screens.Chat} component={Chat} />
       <Stack.Screen name={Screens.WhatAreContacts} component={WhatAreContacts} options={{ title: '' }} />
+      <Stack.Screen
+        name={Screens.CredentialDetails}
+        component={CredentialDetails}
+        options={{ title: t('Screens.CredentialDetails') }}
+      />
     </Stack.Navigator>
   )
 }
