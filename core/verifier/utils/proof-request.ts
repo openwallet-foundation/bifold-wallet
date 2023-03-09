@@ -1,7 +1,14 @@
-import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@aries-framework/core'
+import {
+  Agent,
+  AgentMessage,
+  AutoAcceptProof,
+  CredentialPreviewAttribute,
+  ProofExchangeRecord,
+} from '@aries-framework/core'
 
 import { defaultProofRequestTemplates } from '../constants'
 import {
+  IndyProofRequestTemplatePayloadData,
   IndyRequestedAttribute,
   IndyRequestedPredicate,
   ProofRequestTemplate,
@@ -137,4 +144,28 @@ export const hasPredicates = (record: ProofRequestTemplate): boolean => {
     return false
   }
   return false
+}
+
+export const mapRequestAttributesToCredentialPreview = (data: IndyProofRequestTemplatePayloadData) => {
+  const attributes = []
+  if (data.requestedAttributes) {
+    for (const item of data.requestedAttributes) {
+      if (item.name) {
+        attributes.push(new CredentialPreviewAttribute({ name: item.name, value: '' }))
+      }
+      if (item.names) {
+        for (const attribute of item.names) {
+          attributes.push(new CredentialPreviewAttribute({ name: attribute, value: '' }))
+        }
+      }
+    }
+  }
+  if (data.requestedPredicates) {
+    for (const item of data.requestedPredicates) {
+      attributes.push(
+        new CredentialPreviewAttribute({ name: item.name, value: `${item.predicateType} ${item.predicateValue}` })
+      )
+    }
+  }
+  return attributes
 }

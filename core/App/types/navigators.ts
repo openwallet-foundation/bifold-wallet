@@ -91,7 +91,7 @@ export type ContactStackParams = {
 }
 
 export type ProofRequestsStackParams = {
-  [Screens.ProofRequests]: undefined
+  [Screens.ProofRequests]: { connectionId?: string }
   [Screens.ProofRequesting]: { templateId: string }
   [Screens.ProofDetails]: { recordId: string }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }

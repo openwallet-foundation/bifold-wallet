@@ -453,7 +453,9 @@ const translation = {
     "ProofVerificationFailed": "Proof verification failed",
     "ViewDetails": "View details",
     "HideDetails": "Hide details",
-    "SendProofRequest": "Send a Proof Request",
+    "UseProofRequest": "Use this proof request",
+    "SendThisProofRequest": "Send this proof request",
+    "SendProofRequest": "Send a Proof Request"
   }
 }
 

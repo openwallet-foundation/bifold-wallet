@@ -1,4 +1,4 @@
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -92,17 +92,16 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   ) : null
 }
 
-interface ListProofRequestsProps {
-  navigation: StackNavigationProp<ProofRequestsStackParams>
-  connectionId?: string
-}
+type ListProofRequestsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequests>
 
-const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, connectionId }) => {
+const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route }) => {
   const style = StyleSheet.create({
     container: {
       margin: 24,
     },
   })
+
+  const { connectionId } = route?.params
 
   const records = defaultProofRequestTemplates
 

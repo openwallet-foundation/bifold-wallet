@@ -20,16 +20,16 @@ const ProofRequestStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
+        name={Screens.ProofRequests}
+        component={ListProofRequests}
+        options={{ title: t('Screens.ChooseProofRequest') }}
+      />
+      <Stack.Screen
         name={Screens.ProofRequestDetails}
         component={ProofRequestDetails}
         options={() => ({
           title: t('Screens.ProofRequestDetails'),
         })}
-      />
-      <Stack.Screen
-        name={Screens.ProofRequests}
-        component={ListProofRequests}
-        options={{ title: t('Screens.ChooseProofRequest') }}
       />
       <Stack.Screen
         name={Screens.ProofRequesting}
