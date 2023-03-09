@@ -407,6 +407,14 @@ const translation = {
     "ProcessingProof": "Um momento...",
     "ZeroKnowledgeProof": "Prova de conhecimento Zero",
     "GenerateNewQR": "Gerar novo código QR",
+    "ScanQR": "Escaneie este código QR",
+    "ScanQRComment": "com sua carteira digital para receber um pedido de comprovante.",
+    "InformationReceived": "Informação recebida",
+    "InformationReceivedDetails": "compartilhou as seguintes informações.",
+    "ProofVerificationFailed": "A verificação da prova falhou",
+    "ViewDetails": "Ver detalhes",
+    "HideDetails": "Detalhes ocultos",
+    "SendProofRequest": "Envie uma Solicitação de Comprovante",
   }
 }
 

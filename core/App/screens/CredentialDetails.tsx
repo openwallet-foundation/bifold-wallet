@@ -20,7 +20,7 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../types/oca'
+import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay, resolveBundle } from '../types/oca'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
@@ -123,23 +123,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       setRevocationDate(formatTime(date))
     }
 
-    const resolveBundle = async () => {
-      const bundle = await OCABundleResolver.resolve(credential)
-      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential)
-      return { bundle, defaultBundle }
-    }
-
-    const resolvePresentationFields = async () => {
-      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
-      return { fields }
-    }
-
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.metaOverlay
-      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay
-
-      setOverlay({ ...overlay, bundle: overlayBundle, presentationFields: fields, metaOverlay, cardLayoutOverlay })
+    resolveBundle(OCABundleResolver, credential, i18n.language).then((bundle) => {
+      setOverlay({ ...overlay, ...bundle })
     })
   }, [credential])
 

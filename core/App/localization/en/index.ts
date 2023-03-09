@@ -431,7 +431,15 @@ const translation = {
     "ProcessingProof": "Just a moment...",
     "ZeroKnowledgeProof": "Zero-knowledge proof",
     "GenerateNewQR": "Generate new QR Code",
-  },
+    "ScanQR": "Scan this QR Code",
+    "ScanQRComment": "with your digital wallet to receive a proof request.",
+    "InformationReceived": "Information received",
+    "InformationReceivedDetails": "shared the following information.",
+    "ProofVerificationFailed": "Proof verification failed",
+    "ViewDetails": "View details",
+    "HideDetails": "Hide details",
+    "SendProofRequest": "Send a Proof Request",
+  }
 }
 
 export default translation

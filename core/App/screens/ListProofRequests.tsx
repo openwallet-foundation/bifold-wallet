@@ -1,80 +1,115 @@
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { defaultProofRequestTemplates } from '../../verifier/constants'
+import { ProofRequestTemplate } from '../../verifier/types/proof-reqeust-template'
 import { hasPredicates } from '../../verifier/utils/proof-request'
-import { ColorPallet } from '../theme'
+import { useConfiguration } from '../contexts/configuration'
+import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
+import { MetaOverlay, OverlayType } from '../types/oca'
+
+interface ProofRequestsCardProps {
+  navigation: StackNavigationProp<ProofRequestsStackParams>
+  template: ProofRequestTemplate
+  connectionId?: string
+}
+
+const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, template, connectionId }) => {
+  const { t } = useTranslation()
+  const { i18n } = useTranslation()
+  const { ListItems } = useTheme()
+  const { OCABundleResolver } = useConfiguration()
+
+  const style = StyleSheet.create({
+    recordButton: {
+      ...ListItems.requestTemplateBackground,
+      flexDirection: 'row',
+      borderRadius: 8,
+      padding: 12,
+      marginBottom: 10,
+    },
+    textContainer: {
+      flex: 1,
+    },
+    templateTitle: {
+      ...ListItems.requestTemplateTitle,
+      marginBottom: 6,
+    },
+    templateDetails: {
+      ...ListItems.requestTemplateDetails,
+      marginBottom: 4,
+    },
+    templateZkpLabel: {
+      ...ListItems.requestTemplateZkpLabel,
+      fontSize: 11,
+    },
+    iconContainer: {
+      alignSelf: 'center',
+    },
+    icon: {
+      ...ListItems.requestTemplateIcon,
+      fontSize: 36,
+    },
+  })
+
+  const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
+
+  useEffect(() => {
+    OCABundleResolver.resolve(undefined, i18n.language, { templateId: template.id }).then((bundle) => {
+      const metaOverlay = bundle?.metaOverlay || {
+        captureBase: '',
+        type: OverlayType.Meta10,
+        name: template.name,
+        description: template.description,
+        language: i18n.language,
+      }
+      setMeta(metaOverlay)
+    })
+  }, [template])
+
+  return meta ? (
+    <TouchableOpacity
+      style={style.recordButton}
+      onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id, connectionId })}
+    >
+      <View style={style.textContainer}>
+        <Text style={style.templateTitle} numberOfLines={1}>
+          {meta.name}
+        </Text>
+        <Text style={style.templateDetails} numberOfLines={2}>
+          {meta.description}
+        </Text>
+        {hasPredicates(template) && <Text style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</Text>}
+      </View>
+      <View style={style.iconContainer}>
+        <Icon style={style.icon} name={'chevron-right'} />
+      </View>
+    </TouchableOpacity>
+  ) : null
+}
 
 interface ListProofRequestsProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
+  connectionId?: string
 }
 
-const style = StyleSheet.create({
-  container: {
-    margin: 24,
-  },
-  proofButton: {
-    flexDirection: 'row',
-    borderRadius: 8,
-    padding: 12,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  proofTitle: {
-    fontWeight: 'bold',
-    marginBottom: 6,
-  },
-  proofCaption: {
-    color: ColorPallet.grayscale.mediumGrey,
-    fontSize: 11,
-  },
-  proofText: {
-    color: ColorPallet.grayscale.black,
-  },
-  proofDetails: {
-    marginBottom: 4,
-  },
-  iconContainer: {
-    alignSelf: 'center',
-  },
-  icon: {
-    color: ColorPallet.grayscale.black,
-  },
-})
+const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, connectionId }) => {
+  const style = StyleSheet.create({
+    container: {
+      margin: 24,
+    },
+  })
 
-const iconSize = 35
-const iconName = 'chevron-right'
-
-const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => {
-  const { t } = useTranslation()
   const records = defaultProofRequestTemplates
 
   return (
     <View style={style.container}>
       {records.map((record) => (
-        <TouchableOpacity style={style.proofButton} onPress={() => navigation.navigate(Screens.ProofRequestDetails)}>
-          <View style={style.textContainer}>
-            <Text style={[style.proofText, style.proofTitle]} numberOfLines={1}>
-              {record.title}
-            </Text>
-            <Text style={[style.proofText, style.proofDetails]} numberOfLines={2}>
-              {record.details}
-            </Text>
-            {hasPredicates(record) && (
-              <Text style={[style.proofText, style.proofCaption]}>{t('Verifier.ZeroKnowledgeProof')}</Text>
-            )}
-          </View>
-          <View style={style.iconContainer}>
-            <Icon style={style.icon} size={iconSize} name={iconName} />
-          </View>
-        </TouchableOpacity>
+        <ProofRequestsCard template={record} connectionId={connectionId} navigation={navigation} />
       ))}
     </View>
   )
