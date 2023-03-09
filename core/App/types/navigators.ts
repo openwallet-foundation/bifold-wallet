@@ -92,7 +92,7 @@ export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: undefined
   [Screens.ProofRequesting]: { templateId: string }
   [Screens.ProofDetails]: { recordId: string }
-  [Screens.ProofRequestDetails]: undefined
+  [Screens.ProofRequestDetails]: { templateId: string }
 }
 
 export type CredentialStackParams = {
