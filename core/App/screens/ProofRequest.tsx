@@ -323,8 +323,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <CredentialCard
                   credDefId={item.credDefId}
                   schemaId={item.schemaId}
-                  proofAttributes={item.attributes}
-                  proofPredicates={item.predicates}
+                  displayItems={[...(item.attributes ?? []), ...(item.predicates ?? [])]}
                   credName={item.credName}
                   existsInWallet={hasAvailableCredentials(item.credName)}
                   proof
