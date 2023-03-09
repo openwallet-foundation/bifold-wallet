@@ -18,6 +18,7 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
+import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -58,6 +59,40 @@ const RootStack: React.FC = () => {
       })
     }
   }
+
+  // handle deeplink events
+  useEffect(() => {
+    async function handleDeepLink(deepLink: string) {
+      try {
+        // Try connection based
+        const connectionRecord = await connectFromInvitation(deepLink, agent)
+        navigation.navigate(Stacks.ConnectionStack as any, {
+          screen: Screens.Connection,
+          params: { connectionId: connectionRecord.id },
+        })
+      } catch {
+        try {
+          // Try connectionless here
+          const message = await getOobDeepLink(deepLink, agent)
+          navigation.navigate(Stacks.ConnectionStack as any, {
+            screen: Screens.Connection,
+            params: { threadId: message['@id'] },
+          })
+        } catch (error) {
+          // TODO:(am add error handling here)
+        }
+      }
+
+      // set deeplink as inactive
+      dispatch({
+        type: DispatchAction.ACTIVE_DEEP_LINK,
+        payload: [undefined],
+      })
+    }
+    if (agent && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
+      handleDeepLink(state.deepLink.activeDeepLink)
+    }
+  }, [agent, state.deepLink.activeDeepLink, state.authentication.didAuthenticate])
 
   useEffect(() => {
     AppState.addEventListener('change', (nextAppState) => {

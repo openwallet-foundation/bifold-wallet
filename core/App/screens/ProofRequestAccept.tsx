@@ -9,7 +9,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import SendingProof from '../components/animated/SendingProof'
 import SentProof from '../components/animated/SentProof'
 import Button, { ButtonType } from '../components/buttons/Button'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
@@ -24,7 +23,6 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   const { t } = useTranslation()
   const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
   const proof = useProofById(proofId)
-  const [store] = useStore()
   const navigation = useNavigation()
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -72,13 +70,6 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
       setProofDeliveryStatus(proof.state)
     }
   }, [proof])
-
-  useEffect(() => {
-    if (store.deepLink.activeDeepLink) {
-      //navigate back to home to handle deepLink
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-    }
-  }, [store.deepLink.activeDeepLink])
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
