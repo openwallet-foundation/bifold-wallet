@@ -10,6 +10,7 @@ import * as components from './components'
 import LoadingIndicator from './components/animated/LoadingIndicator'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
+import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
@@ -75,6 +76,7 @@ export {
   Button,
   ButtonType,
   CheckBoxRow,
+  CredentialCard,
   ErrorModal,
   InfoTextBox,
   InfoBox,
