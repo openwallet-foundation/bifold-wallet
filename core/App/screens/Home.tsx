@@ -1,20 +1,14 @@
-import { ProofState } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
-import { isPresentationReceived } from '../../verifier/utils/proof'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useConfiguration } from '../contexts/configuration'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { HomeStackParams, Screens, Stacks } from '../types/navigators'
-import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
+import { HomeStackParams, Screens } from '../types/navigators'
 
 const { width } = Dimensions.get('window')
 const offset = 25
@@ -23,12 +17,10 @@ const offsetPadding = 5
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const { agent } = useAgent()
   const { useCustomNotifications } = useConfiguration()
   const { notifications } = useCustomNotifications()
   const { t } = useTranslation()
   const { homeContentView: HomeContentView } = useConfiguration()
-  const [store, dispatch] = useStore()
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const { HomeTheme } = useTheme()
@@ -62,44 +54,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     },
   })
 
-  useEffect(() => {
-    async function handleDeepLink(deepLink: string) {
-      let success = false
-      try {
-        // Try connection based
-        const connectionRecord = await connectFromInvitation(deepLink, agent)
-        navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-          screen: Screens.Connection,
-          params: { connectionId: connectionRecord.id },
-        })
-        success = true
-      } catch {
-        try {
-          // Try connectionless here
-          const message = await getOobDeepLink(deepLink, agent)
-          navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-            screen: Screens.Connection,
-            params: { threadId: message['@id'] },
-          })
-          success = true
-        } catch (error) {
-          // TODO:(am add error handling here)
-        }
-      }
-      if (success) {
-        //reset deepLink if succeeds
-        dispatch({
-          type: DispatchAction.ACTIVE_DEEP_LINK,
-          payload: [undefined],
-        })
-      }
-    }
-
-    if (agent && store.deepLink.activeDeepLink) {
-      handleDeepLink(store.deepLink.activeDeepLink)
-    }
-  }, [agent, store.deepLink.activeDeepLink, store.authentication.didAuthenticate])
-
   const DisplayListItemType = (item: any): Element => {
     let component: Element
     if (item.type === 'CredentialRecord') {
@@ -108,12 +62,10 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
         notificationType = NotificationType.Revocation
       }
       component = <NotificationListItem notificationType={notificationType} notification={item} />
-    } else if (item.type === 'ProofRecord' && item.state === ProofState.RequestReceived) {
-      component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-    } else if (item.type === 'ProofRecord' && isPresentationReceived(item)) {
-      component = <NotificationListItem notificationType={NotificationType.Proof} notification={item} />
-    } else {
+    } else if (item.type === 'CustomNotification') {
       component = <NotificationListItem notificationType={NotificationType.Custom} notification={item} />
+    } else {
+      component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
     }
     return component
   }
