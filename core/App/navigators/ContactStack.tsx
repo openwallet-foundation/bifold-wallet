@@ -11,6 +11,7 @@ import { ContactStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 import CredentialDetails from "../screens/CredentialDetails";
+import ProofRequestDetails from "../screens/ProofRequestDetails";
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
@@ -31,6 +32,13 @@ const ContactStack: React.FC = () => {
         name={Screens.CredentialDetails}
         component={CredentialDetails}
         options={{ title: t('Screens.CredentialDetails') }}
+      />
+      <Stack.Screen
+        name={Screens.ProofRequestDetails}
+        component={ProofRequestDetails}
+        options={() => ({
+          title: t('Screens.ProofRequestDetails'),
+        })}
       />
     </Stack.Navigator>
   )

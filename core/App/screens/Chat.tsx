@@ -1,9 +1,9 @@
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
+import {CredentialExchangeRecord, CredentialState, ProofExchangeRecord, ProofState} from '@aries-framework/core'
 import {
   useAgent,
   useConnectionById,
   useBasicMessagesByConnectionId,
-  useCredentials,
+  useCredentials, useProofs,
 } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
@@ -36,6 +36,14 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
     )
   }
 
+  const useProofsByConnectionId = (connectionId: string): ProofExchangeRecord[] => {
+    const { records: proofs } = useProofs()
+    return useMemo(
+      () => proofs.filter((proof: ProofExchangeRecord) => proof.connectionId === connectionId),
+      [proofs, connectionId]
+    )
+  }
+
   const { connectionId } = route.params
   const [store] = useStore()
   const { t } = useTranslation()
@@ -43,6 +51,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const connection = useConnectionById(connectionId)
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const credentials = useCredentialsByConnectionId(connectionId)
+  const proofs = useProofsByConnectionId(connectionId)
   const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
 
   const [messages, setMessages] = useState<any>([])
@@ -60,6 +69,60 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       headerRight: () => <InfoIcon connectionId={connection?.id} />,
     })
   }, [connection])
+
+  const getProofTextUser = useCallback(
+    (record) => {
+      return t('Chat.UserYou')
+    },
+    [t]
+  )
+
+  const getProofTextAction = useCallback(
+    (record) => {
+      switch (record.state) {
+        case ProofState.RequestSent:
+        case ProofState.ProposalReceived:
+          return t('Chat.ProofRequestSent')
+        case ProofState.PresentationReceived:
+          return t('Chat.ProofPresentationReceived')
+        case ProofState.RequestReceived:
+          return record.role === 'sender' ? t('Chat.ProofRequestSent') : t('Chat.ProofRequestReceived')
+        case ProofState.ProposalSent:
+        case ProofState.PresentationSent:
+          return t('Chat.ProofRequestSatisfied')
+        case ProofState.Declined:
+          return t('Chat.ProofRequestRejected')
+        case ProofState.Done:
+          return record.role === 'sender' ? t('Chat.ProofPresentationReceived') : t('Chat.ProofRequestSatisfied')
+        default:
+          return ''
+      }
+    },
+    [t]
+  )
+
+  const getProofText = useCallback(
+    (record: any) => {
+      const userName = getProofTextUser(record)
+      const action = getProofTextAction(record)
+
+      if (action.length === 0) return ''
+
+      return `${userName} ${action}`
+    },
+    [getProofTextUser, getProofTextAction]
+  )
+
+  const getProofTextView = useCallback(
+    (record: any) => {
+      return (
+        <Text style={theme.leftText}>
+          {getProofTextUser(record)} <Text style={theme.leftTextHighlighted}>{getProofTextAction(record)}</Text>
+        </Text>
+      )
+    },
+    [theme, getProofTextAction, getProofTextUser]
+  )
 
   const getCredentialTextUser = useCallback(
     (record) => {
@@ -140,6 +203,20 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         }
       })
     )
+
+    transformedMessages.push(
+      ...proofs.map((proof: any) => {
+        return {
+          _id: proof.id,
+          text: getProofText(proof),
+          renderText: () => getProofTextView(proof),
+          record: proof,
+          createdAt: proof.createdAt,
+          type: proof.type,
+          user: { _id: 'receiver' },
+        }
+      })
+    )
     setMessages(transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt))
   }, [basicMessages, credentials])
 
@@ -175,6 +252,11 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
               navigation.getParent()?.navigate(Stacks.ContactStack, {
                 screen: Screens.CredentialDetails,
                 params: { credentialId: message.record.id },
+              })
+            } else if (message.record instanceof ProofExchangeRecord) {
+              navigation.getParent()?.navigate(Stacks.ContactStack, {
+                screen: Screens.ProofDetails,
+                params: { templateId: message.record.id, connectionId: connectionId },
               })
             }
           }}
