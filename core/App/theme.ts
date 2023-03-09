@@ -540,6 +540,8 @@ export const ChatTheme = {
   },
   sendEnabled: ColorPallet.brand.primary,
   sendDisabled: ColorPallet.brand.primaryDisabled,
+  options: ColorPallet.brand.primary,
+  optionsText: ColorPallet.grayscale.black,
 }
 
 export const OnboardingTheme = {

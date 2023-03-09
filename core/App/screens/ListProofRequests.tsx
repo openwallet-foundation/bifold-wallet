@@ -10,15 +10,15 @@ import { hasPredicates } from '../../verifier/utils/proof-request'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay11, CredentialOverlay, MetaOverlay, OverlayType } from '../types/oca'
-import { parsedCredDefName } from '../utils/cred-def'
+import { MetaOverlay, OverlayType } from '../types/oca'
 
 interface ProofRequestsCardProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
   template: ProofRequestTemplate
+  connectionId?: string
 }
 
-const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, template }) => {
+const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, template, connectionId }) => {
   const { t } = useTranslation()
   const { i18n } = useTranslation()
   const { ListItems } = useTheme()
@@ -72,7 +72,10 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   }, [template])
 
   return meta ? (
-    <TouchableOpacity style={style.recordButton} onPress={() => navigation.navigate(Screens.ProofRequestDetails)}>
+    <TouchableOpacity
+      style={style.recordButton}
+      onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id, connectionId })}
+    >
       <View style={style.textContainer}>
         <Text style={style.templateTitle} numberOfLines={1}>
           {meta.name}
@@ -91,9 +94,10 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
 
 interface ListProofRequestsProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
+  connectionId?: string
 }
 
-const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => {
+const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, connectionId }) => {
   const style = StyleSheet.create({
     container: {
       margin: 24,
@@ -105,7 +109,7 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation }) => 
   return (
     <View style={style.container}>
       {records.map((record) => (
-        <ProofRequestsCard template={record} navigation={navigation} />
+        <ProofRequestsCard template={record} connectionId={connectionId} navigation={navigation} />
       ))}
     </View>
   )
