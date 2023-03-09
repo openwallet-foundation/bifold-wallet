@@ -417,7 +417,7 @@ const translation = {
     "ProofVerificationFailed": "A verificação da prova falhou",
     "ViewDetails": "Ver detalhes",
     "HideDetails": "Detalhes ocultos",
-    "UseProofRequest": "Use this proof request",
+    "SendProofRequest": "Envie uma Solicitação de Comprovante",
   }
 }
 

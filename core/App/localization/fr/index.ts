@@ -429,7 +429,7 @@ const translation = {
         "ProofVerificationFailed": "La vérification de la preuve a échoué",
         "ViewDetails": "Voir les détails",
         "HideDetails": "Cacher les détails",
-        "UseProofRequest": "Use this proof request",
+        "SendProofRequest": "Envoyer une demande de preuve",
     }
 }
 export default translation
