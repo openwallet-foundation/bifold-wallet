@@ -10,7 +10,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
+import { CardLayoutOverlay11, CredentialOverlay, resolveBundle } from '../../types/oca'
 import { Attribute } from '../../types/record'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
@@ -34,10 +34,10 @@ const logoHeight = width * 0.12
   | 3 |   |   |   |   |   |   |   |
   | 4 |   |   |   |   |   |   |   |
   ...
- 
+
   The card width is the full screen width.
 
-  Secondary Body (1): 
+  Secondary Body (1):
   Primary Body   (2): Small Logo (1x1) -> L (shifted left by 50%)
                       Issuer Name (1x6)
                       Credential Name (1x6)
@@ -124,29 +124,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
       return
     }
 
-    const resolveBundle = async () => {
-      const bundle = await OCABundleResolver.resolve(credential, i18n.language)
-      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language)
-      return { bundle, defaultBundle }
-    }
-
-    const resolvePresentationFields = async () => {
-      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
-      return { fields }
-    }
-
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.metaOverlay
-      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay as CardLayoutOverlay11
-
-      setOverlay({
-        ...overlay,
-        bundle: overlayBundle,
-        presentationFields: fields,
-        metaOverlay,
-        cardLayoutOverlay,
-      })
+    resolveBundle(OCABundleResolver, credential, i18n.language).then((bundle) => {
+      setOverlay({ ...overlay, ...bundle })
     })
   }, [credential])
 

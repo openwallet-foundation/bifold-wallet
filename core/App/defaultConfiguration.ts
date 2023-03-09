@@ -1,10 +1,11 @@
 import defaultIndyLedgers from '../configs/ledgers/indy'
+import { defaultProofRequestTemplates } from '../verifier/constants'
 
 import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeContentView from './components/views/HomeContentView'
-import { defaultProofRequestTemplates, PINRules } from './constants'
+import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
 import Developer from './screens/Developer'

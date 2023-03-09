@@ -20,7 +20,7 @@ import { ParsedUrl, parseUrl } from 'query-string'
 import { i18n } from '../localization/index'
 import { Attribute, Predicate } from '../types/record'
 
-export { parsedCredDefName } from './cred-def'
+export { parsedCredDefNameFromCredential } from './cred-def'
 export { parsedSchema } from './schema'
 
 /**

@@ -1,4 +1,4 @@
-import { Agent, ProofIdentifier } from '@aries-framework/core'
+import { Agent, CredentialPreviewAttribute, ProofIdentifier } from '@aries-framework/core'
 import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
 
 export interface MissingAttribute {
@@ -35,7 +35,7 @@ export interface UnresolvedPredicate {
 }
 
 export class ParsedIndyProof {
-  public sharedAttribute: Array<SharedAttribute>
+  public sharedAttributes: Array<SharedAttribute>
   public sharedAttributeGroups: Array<SharedAttributesGroup>
   public resolvedPredicates: Array<ResolvedPredicate>
   public unresolvedAttributes: Array<MissingAttribute>
@@ -43,7 +43,7 @@ export class ParsedIndyProof {
   public unresolvedPredicates: Array<UnresolvedPredicate>
 
   public constructor() {
-    this.sharedAttribute = []
+    this.sharedAttributes = []
     this.sharedAttributeGroups = []
     this.resolvedPredicates = []
     this.unresolvedAttributes = []
@@ -85,7 +85,7 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
       const shared = proof.requested_proof.revealed_attrs[referent]
       if (shared) {
         const identifiers = getProofIdentifiers(proof, shared.sub_proof_index)
-        result.sharedAttribute.push({
+        result.sharedAttributes.push({
           name: requested_attribute.name,
           value: shared.raw,
           identifiers,
@@ -116,7 +116,8 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
   }
 
   for (const [referent, requestedPredicate] of Object.entries(request.requested_predicates)) {
-    const shared = proof.requested_proof.requested_predicates[referent]
+    // @ts-ignore Mistake in AFJ type definition
+    const shared = proof.requested_proof.predicates[referent]
     if (shared) {
       const identifiers = getProofIdentifiers(proof, shared.sub_proof_index)
       result.resolvedPredicates.push({
@@ -138,43 +139,75 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
 }
 
 export class CredentialSharedProofData {
-  public sharedAttribute: Array<SharedAttribute>
+  public sharedAttributes: Array<SharedAttribute>
   public sharedAttributeGroups: Array<SharedAttributesGroup>
   public resolvedPredicates: Array<ResolvedPredicate>
 
   public constructor() {
-    this.sharedAttribute = []
+    this.sharedAttributes = []
     this.sharedAttributeGroups = []
     this.resolvedPredicates = []
   }
 }
 
-export type GroupedSharedProofData = Record<string, CredentialSharedProofData>
+export type GroupedSharedProofDataItem = { data: CredentialSharedProofData; identifiers: ProofIdentifier }
+export type GroupedSharedProofData = Map<string, GroupedSharedProofDataItem>
 
 /*
- * Group parsed indy proof data ( returned from `parseIndyProof`) by schema
+ * Group parsed indy proof data ( returned from `parseIndyProof`) by credential definition id
  * */
 export const groupSharedProofDataByCredential = (data: ParsedIndyProof): GroupedSharedProofData => {
-  const result: GroupedSharedProofData = {}
-  for (const item of data.sharedAttribute) {
-    if (!result[item.identifiers.schemaId]) {
-      result[item.identifiers.schemaId] = new CredentialSharedProofData()
+  const result: GroupedSharedProofData = new Map<string, GroupedSharedProofDataItem>()
+  for (const item of data.sharedAttributes) {
+    if (!result.has(item.identifiers.credentialDefinitionId)) {
+      result.set(item.identifiers.credentialDefinitionId, {
+        data: new CredentialSharedProofData(),
+        identifiers: item.identifiers,
+      })
     }
-    result[item.identifiers.schemaId]?.sharedAttribute.push(item)
+    result.get(item.identifiers.credentialDefinitionId)?.data.sharedAttributes.push(item)
   }
   for (const item of data.sharedAttributeGroups) {
-    if (!result[item.identifiers.schemaId]) {
-      result[item.identifiers.schemaId] = new CredentialSharedProofData()
+    if (!result.has(item.identifiers.credentialDefinitionId)) {
+      result.set(item.identifiers.credentialDefinitionId, {
+        data: new CredentialSharedProofData(),
+        identifiers: item.identifiers,
+      })
     }
-    result[item.identifiers.schemaId]?.sharedAttributeGroups.push(item)
+    result.get(item.identifiers.credentialDefinitionId)?.data.sharedAttributeGroups.push(item)
   }
   for (const item of data.resolvedPredicates) {
-    if (!result[item.identifiers.schemaId]) {
-      result[item.identifiers.schemaId] = new CredentialSharedProofData()
+    if (!result.has(item.identifiers.credentialDefinitionId)) {
+      result.set(item.identifiers.credentialDefinitionId, {
+        data: new CredentialSharedProofData(),
+        identifiers: item.identifiers,
+      })
     }
-    result[item.identifiers.schemaId]?.resolvedPredicates.push(item)
+    result.get(item.identifiers.credentialDefinitionId)?.data.resolvedPredicates.push(item)
   }
   return result
+}
+
+/*
+ * Marge and map shared attributes and predicates into single credential preview attributes list
+ * */
+export const mergeAttributes = (data: CredentialSharedProofData): Array<CredentialPreviewAttribute> => {
+  const sharedAttributes = data.sharedAttributes.map(
+    (attribute) => new CredentialPreviewAttribute({ name: attribute.name, value: attribute.value })
+  )
+  const sharedAttributeGroups = data.sharedAttributeGroups.flatMap((sharedAttributeGroup) => {
+    return sharedAttributeGroup.attributes.map(
+      (attribute) => new CredentialPreviewAttribute({ name: attribute.name, value: attribute.value })
+    )
+  })
+  const resolvedPredicates = data.resolvedPredicates.map(
+    (predicate) =>
+      new CredentialPreviewAttribute({
+        name: predicate.name,
+        value: `${predicate.predicateType} ${predicate.predicateValue}`,
+      })
+  )
+  return [...sharedAttributes, ...sharedAttributeGroups, ...resolvedPredicates]
 }
 
 /*

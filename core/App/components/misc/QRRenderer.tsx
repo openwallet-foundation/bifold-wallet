@@ -1,32 +1,30 @@
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle, Text } from 'react-native'
+import { StyleSheet, View, ViewStyle, Text, Dimensions } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 
 import { useTheme } from '../../contexts/theme'
 
 interface QRRendererProps {
   value: string
+  size?: number
   style?: ViewStyle
   onError?: () => void
 }
 
-const qrCodeSize = 390
+const windowDimensions = Dimensions.get('window')
 
-const QRRenderer: React.FC<QRRendererProps> = ({ value, onError }) => {
+const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
+      flexGrow: 1,
+      marginVertical: 20,
       backgroundColor: 'white',
-      padding: 10,
-      flex: 1,
     },
-    errorMessageContainer: {
-      justifyContent: 'center',
-    },
-    errorMessageText: {
+    errorMessage: {
       color: ColorPallet.semantic.error,
       textAlign: 'center',
     },
@@ -41,10 +39,12 @@ const QRRenderer: React.FC<QRRendererProps> = ({ value, onError }) => {
     }
   }, [onError])
 
+  const qrSize = size || windowDimensions.width - 80
+
   return (
     <View style={styles.container}>
-      <QRCode value={value} size={qrCodeSize} onError={handleQRCodeGenerationError} />
-      {isInvalidQR && <Text style={styles.errorMessageText}>{t('QRRender.GenerationError')}</Text>}
+      {<QRCode value={value} size={qrSize} onError={handleQRCodeGenerationError} />}
+      {isInvalidQR && <Text style={styles.errorMessage}>{t('QRRender.GenerationError')}</Text>}
     </View>
   )
 }
