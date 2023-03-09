@@ -1,3 +1,4 @@
+import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import {
   useAgent,
   useConnectionById,
@@ -10,13 +11,14 @@ import { useTranslation } from 'react-i18next'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
 import { renderInputToolbar, renderComposer, renderSend } from '../components/chat'
+import { renderActions } from '../components/chat/ChatActions'
 import { ChatMessage } from '../components/chat/ChatMessage'
 import InfoIcon from '../components/misc/InfoIcon'
-import { useNetwork } from '../contexts/network'
-import { useTheme } from '../contexts/theme'
-import { ContactStackParams, Screens } from '../types/navigators'
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import Text from '../components/texts/Text'
+import { useNetwork } from '../contexts/network'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
+import { ContactStackParams, Screens, Stacks } from '../types/navigators'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -34,6 +36,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   }
 
   const { connectionId } = route.params
+  const [store] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
   const connection = useConnectionById(connectionId)
@@ -120,6 +123,21 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
     await agent?.basicMessages.sendMessage(connectionId, messages[0].text)
   }
 
+  const onSendRequest = async () => {
+    navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
+      screen: Screens.ProofRequests,
+      params: { navigation: navigation, connectionId },
+    })
+  }
+
+  const actions = useMemo(() => {
+    return store.preferences.useVerifierCapability
+      ? {
+          [t('Verifier.SendProofRequest')]: () => onSendRequest(),
+        }
+      : undefined
+  }, [t, onSendRequest])
+
   return (
     <GiftedChat
       messages={messages}
@@ -141,6 +159,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       user={{
         _id: 'sender',
       }}
+      renderActions={(props) => renderActions(props, theme, actions)}
     />
   )
 }
