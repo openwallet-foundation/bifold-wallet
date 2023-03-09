@@ -154,7 +154,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           </Text>
         </View>
         {!loading && credential && (
-          <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+          <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
+            <CredentialCard credential={credential} />
+          </View>
         )}
       </>
     )
