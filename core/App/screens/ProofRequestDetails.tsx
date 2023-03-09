@@ -63,10 +63,10 @@ const ProofRequestDetails: React.FC = () => {
     <View style={style.container}>
       <View style={style.header}>
         <Text style={[style.text, style.title]} numberOfLines={1}>
-          {currentTemplate.title}
+          {currentTemplate.name}
         </Text>
         <Text style={style.text} numberOfLines={3}>
-          {currentTemplate.details}
+          {currentTemplate.description}
         </Text>
       </View>
       <View style={{ marginBottom: 16 }}>

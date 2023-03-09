@@ -10,13 +10,15 @@ import { hasPredicates } from '../../verifier/utils/proof-request'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay11, CredentialOverlay, MetaOverlay, OverlayType } from '../types/oca'
-import { parsedCredDefName } from '../utils/cred-def'
+import { MetaOverlay, OverlayType } from '../types/oca'
 
 interface ProofRequestsCardProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
   template: ProofRequestTemplate
 }
+
+const iconSize = 35
+const iconName = 'chevron-right'
 
 const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, template }) => {
   const { t } = useTranslation()
@@ -71,8 +73,13 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
     })
   }, [template])
 
-  return meta ? (
-    <TouchableOpacity style={style.recordButton} onPress={() => navigation.navigate(Screens.ProofRequestDetails)}>
+  if (!meta) return null
+
+  return (
+    <TouchableOpacity
+      style={style.recordButton}
+      onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id })}
+    >
       <View style={style.textContainer}>
         <Text style={style.templateTitle} numberOfLines={1}>
           {meta.name}
@@ -83,10 +90,10 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
         {hasPredicates(template) && <Text style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</Text>}
       </View>
       <View style={style.iconContainer}>
-        <Icon style={style.icon} name={'chevron-right'} />
+        <Icon style={style.icon} size={iconSize} name={iconName} />
       </View>
     </TouchableOpacity>
-  ) : null
+  )
 }
 
 interface ListProofRequestsProps {
