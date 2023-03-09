@@ -19,12 +19,13 @@ interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
-  proofItems?: (Attribute | Predicate)[]
+  displayItems?: (Attribute | Predicate)[]
   error?: boolean
   elevated?: boolean
   credName?: string
   credDefId?: string
   schemaId?: string
+  proof?: boolean
 }
 
 const { width } = Dimensions.get('screen')
@@ -65,13 +66,14 @@ const logoHeight = width * 0.12
 const CredentialCard11: React.FC<CredentialCard11Props> = ({
   credential,
   style = {},
-  proofItems,
+  displayItems,
   onPress = undefined,
   error = false,
   elevated = false,
   credName,
   credDefId,
   schemaId,
+  proof,
 }) => {
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
@@ -89,7 +91,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   )
 
   const getSecondaryBackgroundColor = () => {
-    if (proofItems) {
+    if (proof) {
       return overlay.cardLayoutOverlay?.primaryBackgroundColor
     } else {
       return overlay.cardLayoutOverlay?.backgroundImageSlice?.src
@@ -148,7 +150,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       paddingVertical: 4,
     },
     textContainer: {
-      color: proofItems
+      color: proof
         ? TextTheme.normal.color
         : credentialTextColor(ColorPallet, overlay.cardLayoutOverlay?.primaryBackgroundColor),
       flexShrink: 1,
@@ -343,7 +345,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </View>
           )}
           <FlatList
-            data={[...(proofItems ?? []), primaryField, secondaryField]}
+            data={[...(displayItems ?? []), primaryField, secondaryField]}
             scrollEnabled={false}
             renderItem={({ item }) => {
               return renderCardAttribute(item as Attribute & Predicate)
@@ -365,7 +367,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           },
         ]}
       >
-        {overlay.cardLayoutOverlay?.backgroundImageSlice?.src && !proofItems ? (
+        {overlay.cardLayoutOverlay?.backgroundImageSlice?.src && !displayItems ? (
           <ImageBackground
             source={toImageSource(overlay.cardLayoutOverlay?.backgroundImageSlice.src)}
             style={{ flexGrow: 1 }}
