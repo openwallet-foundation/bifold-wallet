@@ -241,6 +241,7 @@ const translation = {
         "Revoked": "Révoqué",
         "CredentialRevokedMessageTitle": "Ce justificatif est révoqué",
         "CredentialRevokedMessageBody": "Ce justificatif peut ne plus fonctionner pour certaines demandes de preuve. Vous devrez mettre à jour le justificatif avec l'émetteur.",
+        "NewRevoked": "Credential revoked (FR)",
         "RemoveTitle": "Retirer le justificatif du portefeuille",
         "RemoveCaption": "Vous allez perdre la capacité d'utiliser ce portefeuille afin de prouver l'information se trouvant sur ce justificatif.",
         "CredentialNotFound": "Justificatif non trouvé",

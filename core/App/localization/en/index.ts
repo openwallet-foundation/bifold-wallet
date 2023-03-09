@@ -242,7 +242,7 @@ const translation = {
     "Revoked": "Revoked",
     "CredentialRevokedMessageTitle": "This credential is revoked",
     "CredentialRevokedMessageBody": "This credential may no longer work for some proof requests. You will need to update the credential with the issuer.",
-    "NewRevoked": "Credential Was Revoked",
+    "NewRevoked": "Credential revoked",
     "RemoveTitle": "Remove credential from your wallet",
     "RemoveCaption": "You will lose your ability to prove the information on this credential with this Wallet.",
     "CredentialNotFound": "Credential not found",
