@@ -87,7 +87,7 @@ export type ContactStackParams = {
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
+  [Screens.ProofDetails]: { recordId: string }
 }
 
 export type ProofRequestsStackParams = {

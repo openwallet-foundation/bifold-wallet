@@ -86,14 +86,14 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         case ProofState.PresentationReceived:
           return t('Chat.ProofPresentationReceived')
         case ProofState.RequestReceived:
-          return record.role === 'sender' ? t('Chat.ProofRequestSent') : t('Chat.ProofRequestReceived')
+          return t('Chat.ProofRequestReceived')
         case ProofState.ProposalSent:
         case ProofState.PresentationSent:
           return t('Chat.ProofRequestSatisfied')
         case ProofState.Declined:
           return t('Chat.ProofRequestRejected')
         case ProofState.Done:
-          return record.role === 'sender' ? t('Chat.ProofPresentationReceived') : t('Chat.ProofRequestSatisfied')
+          return record.isVerified ? t('Chat.ProofPresentationReceived') : t('Chat.ProofRequestSatisfied')
         default:
           return ''
       }
@@ -106,7 +106,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       const userName = getProofTextUser(record)
       const action = getProofTextAction(record)
 
-      if (action.length === 0) return ''
+      if (!action || action.length === 0) return ''
 
       return `${userName} ${action}`
     },
@@ -218,7 +218,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       })
     )
     setMessages(transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt))
-  }, [basicMessages, credentials])
+  }, [basicMessages, credentials, proofs])
 
   const onSend = async (messages: IMessage[]) => {
     await agent?.basicMessages.sendMessage(connectionId, messages[0].text)
@@ -256,7 +256,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
             } else if (message.record instanceof ProofExchangeRecord) {
               navigation.getParent()?.navigate(Stacks.ContactStack, {
                 screen: Screens.ProofDetails,
-                params: { templateId: message.record.id, connectionId: connectionId },
+                params: { recordId: message.record.id },
               })
             }
           }}

@@ -26,6 +26,25 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
     },
   },
   {
+    id: 'BC:5:Email:0.0.1:indy',
+    name: 'Email',
+    description: 'Verify the email of a person',
+    version: '0.0.1',
+    payload: {
+      type: ProofRequestType.Indy,
+      data: [
+        {
+          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1',
+          requestedAttributes: [
+            {
+              name: 'email',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     id: 'BC:5:19+AndFullName:0.0.1:indy',
     name: '19+ and Full name',
     description: 'Verify if a person is 19 years end up and full name.',

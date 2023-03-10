@@ -52,7 +52,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ onActionButtonTap, mes
   const recordOpenable = useMemo(
     () =>
       (message.record instanceof CredentialExchangeRecord && message.record.state === CredentialState.Done) ||
-      (message.record instanceof ProofExchangeRecord && message.record.state === ProofState.Done),
+      (message.record instanceof ProofExchangeRecord && message.record.state === ProofState.Done && message.record.isVerified),
     [message]
   )
 

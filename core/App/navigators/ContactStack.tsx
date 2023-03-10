@@ -12,6 +12,8 @@ import { ContactStackParams, Screens } from '../types/navigators'
 import { createDefaultStackOptions } from './defaultStackOptions'
 import CredentialDetails from "../screens/CredentialDetails";
 import ProofRequestDetails from "../screens/ProofRequestDetails";
+import ProofDetails from "../screens/ProofDetails";
+import HeaderRightHome from "../components/buttons/HeaderRightHome";
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
@@ -34,10 +36,11 @@ const ContactStack: React.FC = () => {
         options={{ title: t('Screens.CredentialDetails') }}
       />
       <Stack.Screen
-        name={Screens.ProofRequestDetails}
-        component={ProofRequestDetails}
+        name={Screens.ProofDetails}
+        component={ProofDetails}
         options={() => ({
-          title: t('Screens.ProofRequestDetails'),
+          title: '',
+          headerRight: () => <HeaderRightHome />,
         })}
       />
     </Stack.Navigator>
