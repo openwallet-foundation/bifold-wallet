@@ -435,7 +435,10 @@ const translation = {
     "ProofVerificationFailed": "Proof verification failed",
     "ViewDetails": "View details",
     "HideDetails": "Hide details",
+    "UseProofRequest": "Use this proof request",
+    "SendThisProofRequest": "Send this proof request",
     "SendProofRequest": "Send a Proof Request",
+    "EmptyList": "Your wallet is empty. Your proof request templates will be added here.",
   }
 }
 

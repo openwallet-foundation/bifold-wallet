@@ -1,7 +1,7 @@
 import { useAgent } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native'
 
 import {
   getProofData,
@@ -83,12 +83,18 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   const CardBody: React.FC<{ overlay: CredentialOverlay<CardLayoutOverlay11> }> = ({ overlay }) => {
     return (
       <View style={styles.cardAttributes}>
-        {overlay.presentationFields?.map((field) => (
-          <View key={field.name} style={styles.attributeContainer}>
-            <Text style={styles.attributeName}>{field.label || field.name}</Text>
-            <AttributeValue style={styles.attributeValue} field={field} shown={true} />
-          </View>
-        ))}
+        <FlatList
+          data={overlay.presentationFields}
+          keyExtractor={(records, index) => records.name || index.toString()}
+          renderItem={({ item }) => {
+            return (
+              <View key={item.name} style={styles.attributeContainer}>
+                <Text style={styles.attributeName}>{item.label || item.name}</Text>
+                <AttributeValue style={styles.attributeValue} field={item} shown={true} />
+              </View>
+            )
+          }}
+        />
       </View>
     )
   }
@@ -170,9 +176,11 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
 
   return sharedData && sharedData.size ? (
     <View style={styles.container}>
-      {Array.from(sharedData.values()).map((item) => (
-        <SharedDataCard sharedData={item} />
-      ))}
+      <FlatList
+        data={Array.from(sharedData.values())}
+        keyExtractor={(record) => record.identifiers.credentialDefinitionId}
+        renderItem={({ item }) => <SharedDataCard sharedData={item} />}
+      />
     </View>
   ) : null
 }

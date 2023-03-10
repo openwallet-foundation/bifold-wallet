@@ -426,7 +426,10 @@ const translation = {
         "ProofVerificationFailed": "La vérification de la preuve a échoué",
         "ViewDetails": "Voir les détails",
         "HideDetails": "Cacher les détails",
+        "UseProofRequest": "Utilisez cette demande de preuve",
+        "SendThisProofRequest": "Envoyer cette demande de justificatif",
         "SendProofRequest": "Envoyer une demande de preuve",
+        "EmptyList": "Sua carteira está vazia. Seus modelos de solicitação de prova serão adicionados aqui.",
     }
 }
 export default translation

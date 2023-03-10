@@ -414,7 +414,10 @@ const translation = {
     "ProofVerificationFailed": "A verificação da prova falhou",
     "ViewDetails": "Ver detalhes",
     "HideDetails": "Detalhes ocultos",
+    "UseProofRequest": "Envie d'une sollicitation de compromis",
+    "SendThisProofRequest": "Envie esta solicitação de prova",
     "SendProofRequest": "Envie uma Solicitação de Comprovante",
+    "EmptyList": "Sua carteira está vazia. Seus modelos de solicitação de prova serão adicionados aqui.",
   }
 }
 

@@ -51,5 +51,140 @@
         }
       }
     ]
+  },
+  "YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0": {
+    "captureBase": {
+      "attributes": {
+        "given_names": "Text",
+        "family_name": "Text",
+        "age": "Text"
+      }
+    },
+    "overlays": [
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "en",
+        "name": "Unverified Person"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "fr",
+        "name": "Personne non vérifiée"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/label/1.0",
+        "language": "en",
+        "attributeLabels": {
+          "given_names": "Given Names",
+          "family_name": "Family Name",
+          "age": "Age"
+        }
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/label/1.0",
+        "language": "fr",
+        "attributeLabels": {
+          "given_names": "Prénoms",
+          "family_name": "Nom de famille",
+          "age": "Âge"
+        }
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/card_layout/1.1",
+        "language": "en",
+        "primaryBackgroundColor": "#591d1d",
+        "header": {
+          "color": "#591d1d"
+        },
+        "footer": {
+          "color": "#591d1d"
+        }
+      }
+    ]
+  },
+  "Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1": {
+    "captureBase": {
+      "attributes": {
+        "given_names": "Text",
+        "age": "Text",
+        "family_name": "Text"
+      }
+    },
+    "overlays": [
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "en",
+        "name": "Verified Person"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "fr",
+        "name": "Schéma de personne"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/label/1.0",
+        "language": "en",
+        "attributeLabels": {
+          "given_names": "Given Names",
+          "family_name": "Family Name",
+          "age": "Age"
+        }
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/label/1.0",
+        "language": "fr",
+        "attributeLabels": {
+          "given_names": "Prénoms",
+          "family_name": "Nom de famille",
+          "age": "Âge"
+        }
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/card_layout/1.1",
+        "language": "en",
+        "primaryBackgroundColor": "#591d1d",
+        "header": {
+          "color": "#591d1d"
+        },
+        "footer": {
+          "color": "#591d1d"
+        }
+      }
+    ]
+  },
+  "BC:5:FullName:0.0.1:indy": {
+    "captureBase": {
+      "attributes": {
+        "given_names": "Text",
+        "family_name": "Text"
+      }
+    },
+    "overlays": [
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "en",
+        "name": "Full name",
+        "description": "Verify the full name of a person"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "fr",
+        "name": "Nom et prénom",
+        "description": "Vérifier le nom complet d'une personne"
+      }
+    ]
   }
+
 }
