@@ -45,9 +45,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
     headerContainer: {
       alignItems: 'center',
-      paddingHorizontal: 25,
-      paddingVertical: 16,
-      marginTop: 20,
+      padding: 16,
+      marginVertical: 20,
       marginHorizontal: 30,
       textAlign: 'center',
     },
@@ -59,18 +58,28 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
     secondaryHeaderText: {
       fontWeight: 'normal',
-      fontSize: 16,
+      fontSize: 20,
       textAlign: 'center',
       marginTop: 8,
       color: ColorPallet.grayscale.black,
+    },
+    interopText: {
+      alignSelf: 'center',
+      marginBottom: -20,
+      paddingHorizontal: 10,
+      backgroundColor: ColorPallet.grayscale.white,
+      zIndex: 100,
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: 22,
+      color: ColorPallet.brand.primary,
     },
     qrContainer: {
       width: qrContainerSize,
       height: qrContainerSize,
       alignItems: 'center',
       justifyContent: 'center',
-      margin: 10,
-      marginTop: 30,
+      marginHorizontal: 10,
       borderColor: ColorPallet.brand.primary,
       borderWidth: 10,
       borderRadius: 40,
@@ -118,6 +127,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
         <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>
       </View>
+      <Text style={styles.interopText}>AIP 2.0</Text>
       <View style={styles.qrContainer}>
         {generatingRequest && <LoadingIndicator />}
         {message && <QRRenderer value={message} size={qrSize} />}
