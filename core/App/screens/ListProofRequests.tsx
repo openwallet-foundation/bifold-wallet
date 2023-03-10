@@ -1,12 +1,14 @@
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { defaultProofRequestTemplates } from '../../verifier/constants'
 import { ProofRequestTemplate } from '../../verifier/types/proof-reqeust-template'
 import { hasPredicates } from '../../verifier/utils/proof-request'
+import EmptyList from '../components/misc/EmptyList'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
@@ -25,7 +27,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   const { OCABundleResolver } = useConfiguration()
 
   const style = StyleSheet.create({
-    recordButton: {
+    card: {
       ...ListItems.requestTemplateBackground,
       flexDirection: 'row',
       borderRadius: 8,
@@ -37,15 +39,17 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
     },
     templateTitle: {
       ...ListItems.requestTemplateTitle,
-      marginBottom: 6,
+      fontSize: 16,
+      marginBottom: 4,
     },
     templateDetails: {
       ...ListItems.requestTemplateDetails,
+      fontSize: 16,
       marginBottom: 4,
     },
     templateZkpLabel: {
       ...ListItems.requestTemplateZkpLabel,
-      fontSize: 11,
+      fontSize: 12,
     },
     iconContainer: {
       alignSelf: 'center',
@@ -73,8 +77,8 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
 
   return meta ? (
     <TouchableOpacity
-      style={style.recordButton}
-      onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id, connectionId })}
+      style={style.card}
+      onPress={() => navigation.navigate(Screens.ProofDetails, { templateId: template.id, connectionId })}
     >
       <View style={style.textContainer}>
         <Text style={style.templateTitle} numberOfLines={1}>
@@ -95,9 +99,14 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
 type ListProofRequestsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequests>
 
 const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route }) => {
+  const { t } = useTranslation()
+  const { ColorPallet } = useTheme()
+
   const style = StyleSheet.create({
     container: {
+      flexGrow: 1,
       margin: 24,
+      elevation: 5,
     },
   })
 
@@ -106,11 +115,17 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
   const records = defaultProofRequestTemplates
 
   return (
-    <View style={style.container}>
-      {records.map((record) => (
-        <ProofRequestsCard template={record} connectionId={connectionId} navigation={navigation} />
-      ))}
-    </View>
+    <SafeAreaView style={style.container} edges={['left', 'right']}>
+      <FlatList
+        style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        data={records}
+        keyExtractor={(records) => records.id}
+        renderItem={({ item }) => {
+          return <ProofRequestsCard template={item} connectionId={connectionId} navigation={navigation} />
+        }}
+        ListEmptyComponent={() => <EmptyList message={t('Verifier.EmptyList')} />}
+      />
+    </SafeAreaView>
   )
 }
 

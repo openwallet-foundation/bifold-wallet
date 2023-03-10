@@ -437,7 +437,8 @@ const translation = {
     "HideDetails": "Hide details",
     "UseProofRequest": "Use this proof request",
     "SendThisProofRequest": "Send this proof request",
-    "SendProofRequest": "Send a Proof Request"
+    "SendProofRequest": "Send a Proof Request",
+    "EmptyList": "Your wallet is empty. Your proof request templates will be added here.",
   }
 }
 
