@@ -78,7 +78,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   return meta ? (
     <TouchableOpacity
       style={style.card}
-      onPress={() => navigation.navigate(Screens.ProofDetails, { templateId: template.id, connectionId })}
+      onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id, connectionId })}
     >
       <View style={style.textContainer}>
         <Text style={style.templateTitle} numberOfLines={1}>
