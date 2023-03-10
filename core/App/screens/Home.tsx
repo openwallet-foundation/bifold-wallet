@@ -7,7 +7,6 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
-import ProofRequestTutorialModal from '../components/modals/ProofRequestTutorialModal'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -117,7 +116,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   return (
     <>
       <ScrollView>
-        <ProofRequestTutorialModal visible={true} />
         <View style={styles.rowContainer}>
           <Text style={[HomeTheme.notificationsHeader, styles.header]}>
             {t('Home.Notifications')}
