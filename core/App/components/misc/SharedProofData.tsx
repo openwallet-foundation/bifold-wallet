@@ -8,12 +8,13 @@ import {
   GroupedSharedProofData,
   GroupedSharedProofDataItem,
   groupSharedProofDataByCredential,
-  mergeAttributes,
 } from '../../../verifier/utils/proof'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CardLayoutOverlay11, CredentialOverlay, resolveBundle } from '../../types/oca'
+import { Attribute, Field, Predicate } from '../../types/record'
 import { toImageSource } from '../../utils/credential'
+import { buildFieldsFromSharedIndyProof } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 import { AttributeValue } from '../record/RecordField'
 
@@ -74,11 +75,25 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11> | undefined>(undefined)
 
   useEffect(() => {
-    const attributes = mergeAttributes(sharedData.data)
+    const attributes = buildFieldsFromSharedIndyProof(sharedData.data)
     resolveBundle(OCABundleResolver, undefined, i18n.language, attributes, sharedData.identifiers).then((bundle) => {
       setOverlay(bundle)
     })
   }, [sharedData])
+
+  const CardField: React.FC<{ item: Field }> = ({ item }) => {
+    return (
+      <View key={item.name} style={styles.attributeContainer}>
+        <Text style={styles.attributeName}>{item.label || item.name}</Text>
+        {item instanceof Attribute && <AttributeValue style={styles.attributeValue} field={item} shown={true} />}
+        {item instanceof Predicate && (
+          <Text style={styles.attributeValue}>
+            {item.pType} {item.pValue}
+          </Text>
+        )}
+      </View>
+    )
+  }
 
   const CardBody: React.FC<{ overlay: CredentialOverlay<CardLayoutOverlay11> }> = ({ overlay }) => {
     return (
@@ -86,14 +101,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
         <FlatList
           data={overlay.presentationFields}
           keyExtractor={(records, index) => records.name || index.toString()}
-          renderItem={({ item }) => {
-            return (
-              <View key={item.name} style={styles.attributeContainer}>
-                <Text style={styles.attributeName}>{item.label || item.name}</Text>
-                <AttributeValue style={styles.attributeValue} field={item} shown={true} />
-              </View>
-            )
-          }}
+          renderItem={({ item }) => <CardField item={item} />}
         />
       </View>
     )

@@ -1,4 +1,4 @@
-import { Agent, CredentialPreviewAttribute, ProofIdentifier } from '@aries-framework/core'
+import { Agent, ProofIdentifier } from '@aries-framework/core'
 import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
 
 export interface MissingAttribute {
@@ -186,28 +186,6 @@ export const groupSharedProofDataByCredential = (data: ParsedIndyProof): Grouped
     result.get(item.identifiers.credentialDefinitionId)?.data.resolvedPredicates.push(item)
   }
   return result
-}
-
-/*
- * Marge and map shared attributes and predicates into single credential preview attributes list
- * */
-export const mergeAttributes = (data: CredentialSharedProofData): Array<CredentialPreviewAttribute> => {
-  const sharedAttributes = data.sharedAttributes.map(
-    (attribute) => new CredentialPreviewAttribute({ name: attribute.name, value: attribute.value })
-  )
-  const sharedAttributeGroups = data.sharedAttributeGroups.flatMap((sharedAttributeGroup) => {
-    return sharedAttributeGroup.attributes.map(
-      (attribute) => new CredentialPreviewAttribute({ name: attribute.name, value: attribute.value })
-    )
-  })
-  const resolvedPredicates = data.resolvedPredicates.map(
-    (predicate) =>
-      new CredentialPreviewAttribute({
-        name: predicate.name,
-        value: `${predicate.predicateType} ${predicate.predicateValue}`,
-      })
-  )
-  return [...sharedAttributes, ...sharedAttributeGroups, ...resolvedPredicates]
 }
 
 /*

@@ -2,21 +2,18 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { IndyProofRequestTemplatePayloadData, ProofRequestType } from '../../verifier/types/proof-reqeust-template'
-import {
-  getProofRequestTemplate,
-  mapRequestAttributesToCredentialPreview,
-  sendProofRequest,
-} from '../../verifier/utils/proof-request'
+import { getProofRequestTemplate, sendProofRequest } from '../../verifier/utils/proof-request'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
-import { Attribute, Field } from '../types/record'
+import { Attribute, Field, Predicate } from '../types/record'
+import { buildFieldsFromIndyProofRequestTemplate } from '../utils/oca'
 import { parseSchema } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
 
@@ -24,9 +21,70 @@ type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Scree
 
 interface ProofRequestAttributesCardParams {
   data: IndyProofRequestTemplatePayloadData
+  onChangeValue: (schema: string, name: string, value: string) => void
 }
 
-const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = ({ data }) => {
+const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
+  const { ListItems } = useTheme()
+
+  const style = StyleSheet.create({
+    attributeTitle: {
+      ...ListItems.requestTemplateTitle,
+      fontWeight: 'bold',
+      fontSize: 18,
+      paddingVertical: 8,
+      marginRight: 8,
+    },
+  })
+
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <Text style={style.attributeTitle}>{item.label || item.name}</Text>
+      <Text style={style.attributeTitle}>{item.value}</Text>
+    </View>
+  )
+}
+
+const PredicateItem: React.FC<{
+  item: Predicate
+  onChangeValue: (name: string, value: string) => void
+}> = ({ item, onChangeValue }) => {
+  const { ListItems, ColorPallet } = useTheme()
+
+  const style = StyleSheet.create({
+    attributeTitle: {
+      ...ListItems.requestTemplateTitle,
+      fontWeight: 'bold',
+      fontSize: 18,
+      paddingVertical: 8,
+      marginRight: 8,
+    },
+    input: {
+      textAlign: 'center',
+      borderBottomColor: ColorPallet.grayscale.black,
+      borderBottomWidth: 1,
+    },
+  })
+
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <Text style={style.attributeTitle}>{item.label || item.name}</Text>
+      <Text style={style.attributeTitle}>{item.pType}</Text>
+      {item.parameterizable && (
+        <TextInput
+          keyboardType="number-pad"
+          style={[style.attributeTitle, style.input]}
+          onChangeText={(value) => onChangeValue(item.name || '', value)}
+        >
+          {item.pValue}
+        </TextInput>
+      )}
+      {!item.parameterizable && <Text style={style.attributeTitle}>{item.pValue}</Text>}
+    </View>
+  )
+}
+
+const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = ({ data, onChangeValue }) => {
   const { ListItems, ColorPallet } = useTheme()
   const { i18n } = useTranslation()
   const { OCABundleResolver } = useConfiguration()
@@ -48,12 +106,6 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
     },
     attributesList: {
       paddingLeft: 14,
-    },
-    attributeTitle: {
-      ...ListItems.requestTemplateTitle,
-      fontWeight: 'bold',
-      fontSize: 18,
-      paddingVertical: 8,
     },
     attributesDelimiter: {
       width: '100%',
@@ -78,7 +130,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
   }, [data.schema])
 
   useEffect(() => {
-    const attributes = mapRequestAttributesToCredentialPreview(data)
+    const attributes = buildFieldsFromIndyProofRequestTemplate(data)
     OCABundleResolver.presentationFields(undefined, i18n.language, attributes, { schemaId: data.schema }).then(
       (fields) => {
         setAttributes(fields)
@@ -99,10 +151,18 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
         keyExtractor={(record, index) => record.name || index.toString()}
         renderItem={({ item, index }) => {
           return (
-            <>
-              <Text style={style.attributeTitle}>{`${item.label || item.name} ${(item as Attribute).value}`}</Text>
+            <View>
+              {item instanceof Attribute && <AttributeItem item={item as Attribute} />}
+              {item instanceof Predicate && (
+                <PredicateItem
+                  item={item as Predicate}
+                  onChangeValue={(name, value) => {
+                    onChangeValue(data.schema, name, value)
+                  }}
+                />
+              )}
               {index + 1 !== countAttributes && <AttributeDelimiter />}
-            </>
+            </View>
           )
         }}
       />
@@ -151,6 +211,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
   const [attributes, setAttributes] = useState<Array<IndyProofRequestTemplatePayloadData> | undefined>(undefined)
+  const [customPredicateValues, setCustomPredicateValues] = useState<Record<string, Record<string, number>>>({})
 
   useEffect(() => {
     const template = getProofRequestTemplate(templateId)
@@ -173,27 +234,39 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const useProofRequest = useCallback(async () => {
     if (connectionId) {
-      sendProofRequest(agent, templateId, connectionId)
+      // Send to specific contact and redirect to the chat with him
+      sendProofRequest(agent, templateId, connectionId, customPredicateValues)
       navigation.getParent()?.navigate(Screens.Chat, { connectionId })
     } else {
-      navigation.navigate(Screens.ProofRequesting, { templateId })
+      // Else redirect to the screen with connectionless request
+      navigation.navigate(Screens.ProofRequesting, { templateId, predicateValues: customPredicateValues })
     }
-  }, [agent, templateId, connectionId])
+  }, [agent, templateId, connectionId, customPredicateValues])
 
-  return (
-    <SafeAreaView style={style.container} edges={['left', 'right']}>
-      <ScrollView>
-        <View style={style.header}>
-          <Text style={style.title}>{meta?.name}</Text>
-          <Text style={style.description}>{meta?.description}</Text>
-        </View>
-        <FlatList
-          style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-          data={attributes}
-          keyExtractor={(records) => records.schema}
-          renderItem={({ item }) => <ProofRequestAttributesCard data={item} />}
-        />
-      </ScrollView>
+  const onChangeValue = useCallback(
+    (schema: string, name: string, value: string) => {
+      setCustomPredicateValues((prev) => ({
+        ...prev,
+        [schema]: {
+          ...(prev[schema] || {}),
+          [name]: parseInt(value),
+        },
+      }))
+    },
+    [setCustomPredicateValues]
+  )
+
+  const Header: React.FC = () => {
+    return (
+      <View style={style.header}>
+        <Text style={style.title}>{meta?.name}</Text>
+        <Text style={style.description}>{meta?.description}</Text>
+      </View>
+    )
+  }
+
+  const Footer: React.FC = () => {
+    return (
       <View style={style.footerButton}>
         <Button
           title={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
@@ -203,6 +276,21 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
           onPress={() => useProofRequest()}
         />
       </View>
+    )
+  }
+
+  return (
+    <SafeAreaView style={style.container} edges={['left', 'right']}>
+      <FlatList
+        ListHeaderComponent={Header}
+        ListFooterComponent={Footer}
+        style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        data={attributes}
+        keyExtractor={(records) => records.schema}
+        renderItem={({ item }) => <ProofRequestAttributesCard data={item} onChangeValue={onChangeValue} />}
+        ListFooterComponentStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
+        contentContainerStyle={{ flexGrow: 1 }}
+      />
     </SafeAreaView>
   )
 }

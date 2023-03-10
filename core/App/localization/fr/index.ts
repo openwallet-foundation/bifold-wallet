@@ -418,6 +418,7 @@ const translation = {
         "Toggle": "Basculer la capacité de vérification",
         "ProcessingProof": "Juste un moment...",
         "ZeroKnowledgeProof": "Preuve zéro connaissance",
+        "Parameterizable": "Paramétrable",
         "GenerateNewQR": "Générer un nouveau code QR",
         "ScanQR": "Scannez ce QR Code",
         "ScanQRComment": "avec votre portefeuille numérique pour recevoir une demande de justificatif.",

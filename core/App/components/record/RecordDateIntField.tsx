@@ -4,12 +4,12 @@ import { StyleSheet, Text } from 'react-native'
 
 import { dateIntFormat, hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { Attribute, Field } from '../../types/record'
+import { Attribute } from '../../types/record'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 interface RecordBinaryFieldProps {
-  field: Field
+  field: Attribute
   shown?: boolean
   style?: any
 }
@@ -21,7 +21,7 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown, st
   const [date, setDate] = useState<string | undefined>()
 
   useEffect(() => {
-    const dateint = (field as Attribute).value as string
+    const dateint = field.value as string
     if (dateint.length === dateIntFormat.length) {
       const year = dateint.substring(0, 4)
       const month = dateint.substring(4, 6)

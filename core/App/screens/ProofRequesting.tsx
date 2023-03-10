@@ -27,10 +27,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     throw new Error('ProofRequesting route prams were not set properly')
   }
 
-  const { templateId } = route?.params
+  const { templateId, predicateValues } = route?.params
 
   const { agent } = useAgent()
-
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
   }
@@ -101,7 +100,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     try {
       setMessage(undefined)
       setGeneratingRequest(true)
-      const result = await createConnectionlessProofRequestInvitation(agent, templateId)
+      const result = await createConnectionlessProofRequestInvitation(agent, templateId, predicateValues)
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
@@ -109,11 +108,11 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     } finally {
       setGeneratingRequest(false)
     }
-  }, [agent, templateId])
+  }, [agent, templateId, predicateValues])
 
   useEffect(() => {
     createProofRequest()
-  }, [createProofRequest])
+  }, [])
 
   useEffect(() => {
     if (record && (record.state === ProofState.PresentationReceived || record.state === ProofState.Done)) {
