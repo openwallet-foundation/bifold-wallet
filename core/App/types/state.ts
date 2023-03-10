@@ -3,6 +3,7 @@ export interface Onboarding {
   didAgreeToTerms: boolean
   didCreatePIN: boolean
   didConsiderBiometry: boolean
+  didCompleteQRCodeTutorial: boolean
 }
 
 export interface Preferences {
