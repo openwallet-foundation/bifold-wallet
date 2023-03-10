@@ -90,7 +90,7 @@ export type ContactStackParams = {
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }
-  [Screens.ProofRequesting]: { templateId: string }
+  [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
   [Screens.ProofDetails]: { recordId: string }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
 }

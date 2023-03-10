@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { defaultProofRequestTemplates } from '../../verifier/constants'
 import { ProofRequestTemplate } from '../../verifier/types/proof-reqeust-template'
-import { hasPredicates } from '../../verifier/utils/proof-request'
+import { hasPredicates, isParameterizable } from '../../verifier/utils/proof-request'
 import EmptyList from '../components/misc/EmptyList'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
@@ -88,6 +88,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
           {meta.description}
         </Text>
         {hasPredicates(template) && <Text style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</Text>}
+        {isParameterizable(template) && <Text style={style.templateZkpLabel}>{t('Verifier.Parameterizable')}</Text>}
       </View>
       <View style={style.iconContainer}>
         <Icon style={style.icon} name={'chevron-right'} />
