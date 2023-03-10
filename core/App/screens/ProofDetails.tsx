@@ -2,6 +2,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useProofById } from '@aries-framework/react-hooks'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
@@ -18,11 +19,11 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
-const collapsedHeight = 160
+const collapsedHeight = 120
 
 interface VerifiedProofProps {
   record: ProofExchangeRecord
-  navigation: any
+  navigation: StackNavigationProp<ProofRequestsStackParams>
 }
 
 interface UnverifiedProofProps {
@@ -38,7 +39,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
       flexGrow: 1,
       backgroundColor: ColorPallet.semantic.success,
       paddingHorizontal: 30,
-      paddingVertical: 20,
+      paddingVertical: 30,
     },
     headerTitleContainer: {
       flexDirection: 'row',
@@ -46,13 +47,14 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
       alignItems: 'center',
     },
     headerTitle: {
-      marginLeft: 8,
+      marginLeft: 10,
       color: ColorPallet.grayscale.white,
       fontSize: 34,
       fontWeight: 'bold',
     },
     headerDetails: {
       color: ColorPallet.grayscale.white,
+      marginVertical: 10,
       fontSize: 18,
     },
     content: {

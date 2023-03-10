@@ -2,7 +2,8 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { IndyProofRequestTemplatePayloadData, ProofRequestType } from '../../verifier/types/proof-reqeust-template'
 import {
@@ -39,19 +40,19 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
       borderLeftColor: ColorPallet.brand.primary,
       marginBottom: 16,
     },
-    list: {
-      paddingLeft: 14,
-    },
     schemaTitle: {
       ...ListItems.requestTemplateTitle,
       fontWeight: 'bold',
       fontSize: 20,
       paddingVertical: 8,
     },
+    attributesList: {
+      paddingLeft: 14,
+    },
     attributeTitle: {
       ...ListItems.requestTemplateTitle,
       fontWeight: 'bold',
-      fontSize: 16,
+      fontSize: 18,
       paddingVertical: 8,
     },
     attributesDelimiter: {
@@ -92,14 +93,19 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
   return (
     <View style={[style.credentialCard]}>
       <Text style={style.schemaTitle}>{meta?.name}</Text>
-      <View style={style.list}>
-        {attributes?.map((attr, attrIndex) => (
-          <>
-            <Text style={style.attributeTitle}>{`${attr.label || attr.name} ${(attr as Attribute).value}`}</Text>
-            {attrIndex + 1 !== countAttributes && <AttributeDelimiter />}
-          </>
-        ))}
-      </View>
+      <FlatList
+        style={style.attributesList}
+        data={attributes}
+        keyExtractor={(record, index) => record.name || index.toString()}
+        renderItem={({ item, index }) => {
+          return (
+            <>
+              <Text style={style.attributeTitle}>{`${item.label || item.name} ${(item as Attribute).value}`}</Text>
+              {index + 1 !== countAttributes && <AttributeDelimiter />}
+            </>
+          )
+        }}
+      />
     </View>
   )
 }
@@ -122,8 +128,8 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       padding: 16,
     },
     header: {
-      marginVertical: 12,
-      marginBottom: 24,
+      marginTop: 12,
+      marginBottom: 36,
     },
     title: {
       color: TextTheme.title.color,
@@ -175,14 +181,19 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   }, [agent, templateId, connectionId])
 
   return (
-    <View style={style.container}>
-      <View style={style.header}>
-        <Text style={style.title}>{meta?.name}</Text>
-        <Text style={style.description}>{meta?.description}</Text>
-      </View>
-      {attributes?.map((item) => (
-        <ProofRequestAttributesCard data={item} />
-      ))}
+    <SafeAreaView style={style.container} edges={['left', 'right']}>
+      <ScrollView>
+        <View style={style.header}>
+          <Text style={style.title}>{meta?.name}</Text>
+          <Text style={style.description}>{meta?.description}</Text>
+        </View>
+        <FlatList
+          style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+          data={attributes}
+          keyExtractor={(records) => records.schema}
+          renderItem={({ item }) => <ProofRequestAttributesCard data={item} />}
+        />
+      </ScrollView>
       <View style={style.footerButton}>
         <Button
           title={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
@@ -192,7 +203,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
           onPress={() => useProofRequest()}
         />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
