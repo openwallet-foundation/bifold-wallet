@@ -1,4 +1,3 @@
-import * as indySdk from 'indy-sdk-react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -85,10 +84,12 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     const hash = await hashPIN(PIN, secret.salt)
+    // eslint-disable-next-line no-console
+    console.log('TODO: fix the openWallet call to indySdk', hash)
 
     try {
       // FIXME: this will break with Askar. This doesn't feel like a good approach to do this
-      await indySdk.openWallet({ id: secret.id }, { key: hash })
+      // await indySdk.openWallet({ id: secret.id }, { key: hash })
       // need full secret in volatile memory in case user wants to fall back to using PIN
       const fullSecret = await secretForPIN(PIN, secret.salt)
       setWalletSecret(fullSecret)

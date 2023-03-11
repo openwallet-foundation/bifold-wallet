@@ -24,7 +24,11 @@
     "@react-navigation/core": "6.1.0",
     "@react-navigation/native": "6.0.6",
     "@react-navigation/stack": "6.0.11",
-    "@types/node": "16.9.6"
+    "@types/node": "16.9.6",
+    "@hyperledger/aries-askar-react-native": "file:./hyperledger-aries-askar-react-native-v0.1.0-dev.4.tgz",
+    "@hyperledger/aries-askar-shared": "file:./hyperledger-aries-askar-shared-v0.1.0-dev.4.tgz",
+    "@hyperledger/anoncreds-react-native": "file:./hyperledger-anoncreds-react-native-v0.1.0-dev.9.tgz",
+    "@hyperledger/anoncreds-shared": "file:./hyperledger-anoncreds-shared-v0.1.0-dev.9.tgz"
   },
   "scripts": {
     "ci:core": "cd core && npm ci",
