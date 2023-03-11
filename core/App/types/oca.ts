@@ -1,4 +1,6 @@
-import { CredentialExchangeRecord, CredentialMetadataKeys } from '@aries-framework/core'
+// TODO: export this from @aries-framework/anoncreds
+import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
+import { CredentialExchangeRecord } from '@aries-framework/core'
 
 import { parsedCredDefName } from '../utils/cred-def'
 import { hashCode, hashToRGBA } from '../utils/helpers'
@@ -238,10 +240,8 @@ export class OCABundleResolver implements OCABundleResolverType {
   }
 
   public resolve(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
-    const credentialDefinitionId = credential.metadata.get(
-      CredentialMetadataKeys.IndyCredential
-    )?.credentialDefinitionId
-    const schemaId = credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId
+    const credentialDefinitionId = credential.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId
+    const schemaId = credential.metadata.get(AnonCredsCredentialMetadataKey)?.schemaId
 
     for (const item of [credentialDefinitionId, schemaId]) {
       if (item && this.bundles[item] !== undefined) {

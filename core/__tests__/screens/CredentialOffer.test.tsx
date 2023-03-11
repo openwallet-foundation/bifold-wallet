@@ -37,7 +37,7 @@ const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
 const connectionRecord = new ConnectionRecord(connection)
 const credentialRecord = new CredentialExchangeRecord(credential)
 credentialRecord.credentials.push({
-  credentialRecordType: 'indy',
+  credentialRecordType: 'anoncreds',
   credentialRecordId: '',
 })
 // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`

@@ -107,7 +107,7 @@ describe('common decline screen', () => {
   test('decline offer renders correctly', async () => {
     const rec = new CredentialRecord(credential)
     rec.credentials.push({
-      credentialRecordType: 'indy',
+      credentialRecordType: 'anoncreds',
       credentialRecordId: '',
     })
     // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`

@@ -23,7 +23,7 @@ import { CredentialStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../types/oca'
 import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
+import { credentialTextColor, isValidAnonCredsCredential, toImageSource } from '../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -113,7 +113,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [])
 
   useEffect(() => {
-    if (!(credential && isValidIndyCredential(credential))) {
+    if (!(credential && isValidAnonCredsCredential(credential))) {
       return
     }
 

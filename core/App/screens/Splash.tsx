@@ -32,6 +32,7 @@ import {
   Preferences as PreferencesState,
   LoginAttempt as LoginAttemptState,
 } from '../types/state'
+import { getAgentModules } from '../utils/agent'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
@@ -153,23 +154,19 @@ const Splash: React.FC = () => {
           return
         }
 
-        const options = {
+        const newAgent = new Agent({
           config: {
             label: 'Aries Bifold',
-            mediatorConnectionsInvite: Config.MEDIATOR_URL,
-            mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
             walletConfig: { id: credentials.id, key: credentials.key },
-            autoAcceptConnections: true,
-            autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
             logger: new ConsoleLogger(LogLevel.trace),
-            indyLedgers,
-            connectToIndyLedgersOnStartup: true,
             autoUpdateStorageOnStartup: true,
           },
           dependencies: agentDependencies,
-        }
-
-        const newAgent = new Agent(options)
+          modules: getAgentModules({
+            indyNetworks: indyLedgers,
+            mediatorInvitationUrl: Config.MEDIATOR_URL,
+          }),
+        })
         const wsTransport = new WsOutboundTransport()
         const httpTransport = new HttpOutboundTransport()
 

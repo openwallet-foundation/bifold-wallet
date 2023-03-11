@@ -1,9 +1,5 @@
-import { IndyProofFormat, ProofExchangeRecord } from '@aries-framework/core'
-import {
-  FormatRetrievedCredentialOptions,
-  GetFormatDataReturn,
-} from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
-import { useAgent, useCredentials, useProofById } from '@aries-framework/react-hooks'
+import { ProofExchangeRecord } from '@aries-framework/core'
+import { useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
@@ -18,6 +14,7 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { Attribute } from '../types/record'
+import { useAppAgent } from '../utils/agent'
 import {
   connectionRecordFromId,
   getConnectionName,
@@ -35,7 +32,7 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   }
 
   const { proofId, attributeName } = route?.params
-  const { agent } = useAgent()
+  const { agent } = useAppAgent()
   const { t } = useTranslation()
 
   const proof = useProofById(proofId)
@@ -79,25 +76,19 @@ const ProofRequestAttributeDetails: React.FC<ProofRequestAttributeDetailsProps> 
   }
 
   useEffect(() => {
-    const retrieveCredentialsForProof = async (
-      proof: ProofExchangeRecord
-    ): Promise<
-      | {
-          format: GetFormatDataReturn<[IndyProofFormat]>
-          credentials: FormatRetrievedCredentialOptions<[IndyProofFormat]>
-        }
-      | undefined
-    > => {
+    const retrieveCredentialsForProof = async (proof: ProofExchangeRecord) => {
       try {
         const format = await agent.proofs.getFormatData(proof.id)
-        const credentials = await agent.proofs.getRequestedCredentialsForProofRequest({
+        const credentials = await agent.proofs.getCredentialsForRequest({
           proofRecordId: proof.id,
-          config: {
-            // Setting `filterByNonRevocationRequirements` to `false` returns all
-            // credentials even if they are revokable (and revoked). We need this to
-            // be able to show why a proof cannot be satisfied. Otherwise we can only
-            // show failure.
-            filterByNonRevocationRequirements: false,
+          proofFormats: {
+            indy: {
+              // Setting `filterByNonRevocationRequirements` to `false` returns all
+              // credentials even if they are revokable (and revoked). We need this to
+              // be able to show why a proof cannot be satisfied. Otherwise we can only
+              // show failure.
+              filterByNonRevocationRequirements: false,
+            },
           },
         })
 

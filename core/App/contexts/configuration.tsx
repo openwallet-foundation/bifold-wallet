@@ -1,4 +1,4 @@
-import { IndyPoolConfig } from '@aries-framework/core'
+import { IndySdkPoolConfig } from '@aries-framework/indy-sdk'
 import { createContext, ReducerAction, useContext } from 'react'
 
 import { EmptyListProps } from '../components/misc/EmptyList'
@@ -32,7 +32,7 @@ export interface ConfigurationContext {
   useBiometry: React.FC
   record: React.FC<RecordProps>
   PINSecurity: PINSecurityParams
-  indyLedgers: IndyPoolConfig[]
+  indyLedgers: IndySdkPoolConfig[]
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }

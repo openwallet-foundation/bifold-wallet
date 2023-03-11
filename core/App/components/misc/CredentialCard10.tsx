@@ -8,7 +8,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay10, CredentialOverlay } from '../../types/oca'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import { credentialTextColor, isValidAnonCredsCredential, toImageSource } from '../../utils/credential'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -120,7 +120,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   })
 
   useEffect(() => {
-    if (!(credential && isValidIndyCredential(credential))) {
+    if (!(credential && isValidAnonCredsCredential(credential))) {
       return
     }
 

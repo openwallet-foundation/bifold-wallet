@@ -1,4 +1,4 @@
-import { agentDependencies } from '@aries-framework/react-native'
+import * as indySdk from 'indy-sdk-react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -87,7 +87,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     const hash = await hashPIN(PIN, secret.salt)
 
     try {
-      await agentDependencies.indy.openWallet({ id: secret.id }, { key: hash })
+      // FIXME: this will break with Askar. This doesn't feel like a good approach to do this
+      await indySdk.openWallet({ id: secret.id }, { key: hash })
       // need full secret in volatile memory in case user wants to fall back to using PIN
       const fullSecret = await secretForPIN(PIN, secret.salt)
       setWalletSecret(fullSecret)

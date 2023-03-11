@@ -1,6 +1,6 @@
 import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
 
-import { V1RequestPresentationMessage } from '@aries-framework/core'
+import { V1RequestPresentationMessage } from '@aries-framework/anoncreds'
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'

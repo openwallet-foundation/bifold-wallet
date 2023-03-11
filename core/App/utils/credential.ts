@@ -3,11 +3,11 @@ import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'
 
-export const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
+export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord) => {
   return (
     credential &&
     (credential.state === CredentialState.OfferReceived ||
-      credential.credentials.find((c) => c.credentialRecordType === 'indy'))
+      credential.credentials.find((c) => c.credentialRecordType === 'anoncreds'))
   )
 }
 

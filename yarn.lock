@@ -15,53 +15,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aries-framework/anoncreds@npm:0.4.0-alpha.54+1bda3f07, @aries-framework/anoncreds@npm:^0.4.0-alpha.54":
-  version: 0.4.0-alpha.54
-  resolution: "@aries-framework/anoncreds@npm:0.4.0-alpha.54"
+"@aries-framework/anoncreds@npm:0.4.0-alpha.71+a4204ef2, @aries-framework/anoncreds@npm:^0.4.0-alpha.71":
+  version: 0.4.0-alpha.71
+  resolution: "@aries-framework/anoncreds@npm:0.4.0-alpha.71"
   dependencies:
-    "@aries-framework/core": 0.4.0-alpha.54+1bda3f07
+    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
     bn.js: ^5.2.1
     class-transformer: 0.5.1
     class-validator: 0.13.1
-  checksum: eff55044fd2e0b86e4d94570ac0eb7db9bf43cc3f86f3cb933b764f5399af6a8c6841d9c3932c4a8b10aa9f14fe78336fc0c326fee7fe9fdfd1502d1349e662e
+  checksum: 1f9ea3147460c1d65cb4c00513b58fb8020da87b29d573218ed65fafe14b3208063c6573852b06ac5ba4b9fbbcc787e41c1c55da68bb9d4b4805363bef074fe5
   languageName: node
   linkType: hard
 
-"@aries-framework/core@npm:0.2.5":
-  version: 0.2.5
-  resolution: "@aries-framework/core@npm:0.2.5"
-  dependencies:
-    "@multiformats/base-x": ^4.0.1
-    "@stablelib/ed25519": ^1.0.2
-    "@stablelib/sha256": ^1.0.1
-    "@types/indy-sdk": ^1.16.19
-    "@types/node-fetch": ^2.5.10
-    "@types/ws": ^7.4.6
-    abort-controller: ^3.0.0
-    bn.js: ^5.2.0
-    borc: ^3.0.0
-    buffer: ^6.0.3
-    class-transformer: 0.5.1
-    class-validator: 0.13.1
-    did-resolver: ^3.1.3
-    lru_map: ^0.4.1
-    luxon: ^1.27.0
-    make-error: ^1.3.6
-    object-inspect: ^1.10.3
-    query-string: ^7.0.1
-    reflect-metadata: ^0.1.13
-    rxjs: ^7.2.0
-    tsyringe: ^4.5.0
-    uuid: ^8.3.2
-    varint: ^6.0.0
-    web-did-resolver: ^2.0.8
-  checksum: 103ac70bd40dd186f9e5771ac691d6d5b4fd7adc43ed253034fd2a789d2c063a484ceee0b5f37e2b4446320ded97c5db82c006c1b3cd2a7f6b5eb486a01316f4
-  languageName: node
-  linkType: hard
-
-"@aries-framework/core@npm:0.4.0-alpha.54+1bda3f07, @aries-framework/core@npm:^0.4.0-alpha.54":
-  version: 0.4.0-alpha.54
-  resolution: "@aries-framework/core@npm:0.4.0-alpha.54"
+"@aries-framework/core@npm:0.4.0-alpha.71+a4204ef2, @aries-framework/core@npm:^0.4.0-alpha.71":
+  version: 0.4.0-alpha.71
+  resolution: "@aries-framework/core@npm:0.4.0-alpha.71"
   dependencies:
     "@digitalcredentials/jsonld": ^5.2.1
     "@digitalcredentials/jsonld-signatures": ^9.3.1
@@ -89,71 +57,23 @@ __metadata:
     uuid: ^8.3.2
     varint: ^6.0.0
     web-did-resolver: ^2.0.8
-  checksum: 5a6c963f515ee6ff3fec56a13b116b646eb6f35210f27938efeb040c271423164b7f299e27d28045e79ca53db3fa1b66b9c2665b0c8ba303c592620051a89490
+  checksum: d74659e54b36cd5f6c4ec19d91203f3e1173e7deb51a5f09ef2d247cef6d0989fad02a6f61eca0a4cf752085d53a92b2faec701e36ee91c859c6d79c0ad7c19f
   languageName: node
   linkType: hard
 
-"@aries-framework/core@npm:^0.3.3":
-  version: 0.3.3
-  resolution: "@aries-framework/core@npm:0.3.3"
+"@aries-framework/indy-sdk@npm:^0.4.0-alpha.71":
+  version: 0.4.0-alpha.71
+  resolution: "@aries-framework/indy-sdk@npm:0.4.0-alpha.71"
   dependencies:
-    "@digitalcredentials/jsonld": ^5.2.1
-    "@digitalcredentials/jsonld-signatures": ^9.3.1
-    "@digitalcredentials/vc": ^1.1.2
-    "@multiformats/base-x": ^4.0.1
-    "@stablelib/ed25519": ^1.0.2
-    "@stablelib/random": ^1.0.1
-    "@stablelib/sha256": ^1.0.1
-    "@types/indy-sdk": 1.16.24
-    "@types/node-fetch": ^2.5.10
-    "@types/ws": ^7.4.6
-    abort-controller: ^3.0.0
-    bn.js: ^5.2.0
-    borc: ^3.0.0
-    buffer: ^6.0.3
-    class-transformer: 0.5.1
-    class-validator: 0.13.1
-    did-resolver: ^3.1.3
-    lru_map: ^0.4.1
-    luxon: ^1.27.0
-    make-error: ^1.3.6
-    object-inspect: ^1.10.3
-    query-string: ^7.0.1
-    reflect-metadata: ^0.1.13
-    rxjs: ^7.2.0
-    tsyringe: ^4.7.0
-    uuid: ^8.3.2
-    varint: ^6.0.0
-    web-did-resolver: ^2.0.8
-  checksum: e2976651753d51e0cc3ed2c4866978a8c420b3f8f3e39a107a4682e934743acc15b1c33966d4d6a9f172ccbed338a0914d97348bb4df70440fac6e116a45ae84
-  languageName: node
-  linkType: hard
-
-"@aries-framework/indy-sdk@npm:^0.4.0-alpha.54":
-  version: 0.4.0-alpha.54
-  resolution: "@aries-framework/indy-sdk@npm:0.4.0-alpha.54"
-  dependencies:
-    "@aries-framework/anoncreds": 0.4.0-alpha.54+1bda3f07
-    "@aries-framework/core": 0.4.0-alpha.54+1bda3f07
+    "@aries-framework/anoncreds": 0.4.0-alpha.71+a4204ef2
+    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
     "@stablelib/ed25519": ^1.0.3
     "@types/indy-sdk": 1.16.26
     class-transformer: ^0.5.1
     class-validator: ^0.14.0
     rxjs: ^7.2.0
     tsyringe: ^4.7.0
-  checksum: dbc60ad34637a8487c747f3432cf979b1ea926982e39f2a9864a548a36fea0f748f24dd8f3171bce925edec4f469ffe399b45a9e48a0c551275c54686af5f863
-  languageName: node
-  linkType: hard
-
-"@aries-framework/react-hooks@npm:^0.3.0":
-  version: 0.3.1
-  resolution: "@aries-framework/react-hooks@npm:0.3.1"
-  dependencies:
-    rxjs: ^7.2.0
-  peerDependencies:
-    "@aries-framework/core": ^0.2.0
-    react: ">=17.0.0 <19.0.0"
-  checksum: cbeb6db769655782e8d0a102022667271d653f8eab6b8594178c9fd18d33a5cfece255371987fe097dadc2d26d1cde2e133f6f742fccb516e35f218d52bce286
+  checksum: bf25e1e9df95b908c00cb052c802f0d6cf89e9604a4fc12fc9b04d8db350dbe4f798457f2e57c67f2ad6bf371a58ff1b66758743786c26fd70c4c22faf5e6959
   languageName: node
   linkType: hard
 
@@ -169,33 +89,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aries-framework/react-native@npm:^0.2.5":
-  version: 0.2.5
-  resolution: "@aries-framework/react-native@npm:0.2.5"
+"@aries-framework/react-native@npm:^0.4.0-alpha.71":
+  version: 0.4.0-alpha.71
+  resolution: "@aries-framework/react-native@npm:0.4.0-alpha.71"
   dependencies:
-    "@aries-framework/core": 0.2.5
-    "@azure/core-asynciterator-polyfill": ^1.0.0
-    events: ^3.3.0
-  peerDependencies:
-    indy-sdk-react-native: ^0.2.2
-    react-native-fs: ^2.18.0
-    react-native-get-random-values: ^1.7.0
-  checksum: 2781c6ec48f2833203d42348e2d3beb897f841548d765091c25e7343d434fe69b20eb1fb48b8b3c206ca98afb7df2c050396f322c5a422cc20dab89b097f08ee
-  languageName: node
-  linkType: hard
-
-"@aries-framework/react-native@npm:^0.4.0-alpha.54":
-  version: 0.4.0-alpha.54
-  resolution: "@aries-framework/react-native@npm:0.4.0-alpha.54"
-  dependencies:
-    "@aries-framework/core": 0.4.0-alpha.54+1bda3f07
+    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
     "@azure/core-asynciterator-polyfill": ^1.0.0
     "@types/react-native": ^0.64.10
     events: ^3.3.0
   peerDependencies:
     react-native-fs: ^2.18.0
     react-native-get-random-values: ^1.7.0
-  checksum: 8cebbddd57e21ee11c97ffdd9f41cfccebcbfb60ab5520d34b222ae2d4eac93e545c1303aabb421673d24c0b66ac5e85fc501004612f56023426afb0e1054cad
+  checksum: 957c07a0e7e1f80ba7169b995af8499512f5da57fd129b765f6c8370f38a2aa8f72e601fd9fc48268c99924271490ae9da452d2daed0789cc3729278b7c4f2f9
   languageName: node
   linkType: hard
 
@@ -3445,25 +3350,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/indy-sdk-react-native@npm:@types/indy-sdk@1.16.24, @types/indy-sdk@npm:1.16.24":
-  version: 1.16.24
-  resolution: "@types/indy-sdk@npm:1.16.24"
-  dependencies:
-    buffer: ^6.0.0
-  checksum: ebce16b7df317ca649d08ff7cafdf0f0578122633519dc7a4244ded1f8581cca1d5bb0d9c946e8cf53d9270569d07b1123ffe81f790b6667ea6e100e12267bb9
-  languageName: node
-  linkType: hard
-
-"@types/indy-sdk-react-native@npm:@types/indy-sdk@^1.16.18":
-  version: 1.16.25
-  resolution: "@types/indy-sdk@npm:1.16.25"
-  dependencies:
-    buffer: ^6.0.0
-  checksum: 930ac8c0ad3eb3232bdf4dd040816ea52cc95ce494df06973a85951b912606530da3d4122e3e5be1852685240ac4e2bd2962c204d243f475c3eac2e52ca13fb3
-  languageName: node
-  linkType: hard
-
-"@types/indy-sdk@npm:1.16.26, @types/indy-sdk@npm:^1.16.19":
+"@types/indy-sdk-react-native@npm:@types/indy-sdk@1.16.26, @types/indy-sdk-react-native@npm:@types/indy-sdk@^1.16.26, @types/indy-sdk@npm:1.16.26":
   version: 1.16.26
   resolution: "@types/indy-sdk@npm:1.16.26"
   dependencies:
@@ -4221,11 +4108,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aries-bifold-app@workspace:app"
   dependencies:
-    "@aries-framework/anoncreds": ^0.4.0-alpha.54
-    "@aries-framework/core": ^0.4.0-alpha.54
-    "@aries-framework/indy-sdk": ^0.4.0-alpha.54
+    "@aries-framework/anoncreds": ^0.4.0-alpha.71
+    "@aries-framework/core": ^0.4.0-alpha.71
+    "@aries-framework/indy-sdk": ^0.4.0-alpha.71
     "@aries-framework/react-hooks": ^0.4.0
-    "@aries-framework/react-native": ^0.4.0-alpha.54
+    "@aries-framework/react-native": ^0.4.0-alpha.71
     "@babel/core": 7.15.5
     "@babel/runtime": 7.15.4
     "@formatjs/intl-datetimeformat": 4.2.4
@@ -4244,7 +4131,7 @@ __metadata:
     "@react-navigation/devtools": ^6.0.8
     "@react-navigation/native": 6.0.6
     "@react-navigation/stack": 6.0.11
-    "@types/indy-sdk-react-native": "npm:@types/indy-sdk@1.16.24"
+    "@types/indy-sdk-react-native": "npm:@types/indy-sdk@1.16.26"
     "@types/lodash.flatten": ^4.4.6
     "@types/lodash.merge": ^4.6.6
     "@types/lodash.startcase": ^4.4.6
@@ -4309,9 +4196,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aries-bifold@workspace:core"
   dependencies:
-    "@aries-framework/core": ^0.3.3
-    "@aries-framework/react-hooks": ^0.3.0
-    "@aries-framework/react-native": ^0.2.5
+    "@aries-framework/anoncreds": ^0.4.0-alpha.71
+    "@aries-framework/core": ^0.4.0-alpha.71
+    "@aries-framework/indy-sdk": ^0.4.0-alpha.71
+    "@aries-framework/react-hooks": ^0.4.0
+    "@aries-framework/react-native": ^0.4.0-alpha.71
     "@babel/core": ^7.12.9
     "@babel/runtime": ^7.12.5
     "@commitlint/cli": ^11.0.0
@@ -4335,7 +4224,7 @@ __metadata:
     "@team-griffin/install-self-peers": ^1.1.1
     "@testing-library/jest-native": ^4.0.13
     "@testing-library/react-native": ^9.0.0
-    "@types/indy-sdk-react-native": "npm:@types/indy-sdk@^1.16.18"
+    "@types/indy-sdk-react-native": "npm:@types/indy-sdk@^1.16.26"
     "@types/jest": ^27.4.0
     "@types/lodash.flatten": ^4.4.6
     "@types/lodash.startcase": ^4.4.6
@@ -4405,11 +4294,11 @@ __metadata:
     typescript: 4.4.3
     uuid: ^8.1.0
   peerDependencies:
-    "@aries-framework/anoncreds": ^0.4.0-alpha.54
-    "@aries-framework/core": ^0.4.0-alpha.54
-    "@aries-framework/indy-sdk": ^0.4.0-alpha.54
+    "@aries-framework/anoncreds": ^0.4.0-alpha.71
+    "@aries-framework/core": ^0.4.0-alpha.71
+    "@aries-framework/indy-sdk": ^0.4.0-alpha.71
     "@aries-framework/react-hooks": ^0.4.0
-    "@aries-framework/react-native": ^0.4.0-alpha.54
+    "@aries-framework/react-native": ^0.4.0-alpha.71
     "@formatjs/intl-datetimeformat": ^4.2.3
     "@formatjs/intl-displaynames": ^5.2.3
     "@formatjs/intl-getcanonicallocales": ^1.7.3
@@ -4974,7 +4863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^5.2.0, bn.js@npm:^5.2.1":
+"bn.js@npm:^5.2.1":
   version: 5.2.1
   resolution: "bn.js@npm:5.2.1"
   checksum: 3dd8c8d38055fedfa95c1d5fc3c99f8dd547b36287b37768db0abab3c239711f88ff58d18d155dd8ad902b0b0cee973747b7ae20ea12a09473272b0201c9edd3
@@ -14825,7 +14714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsyringe@npm:^4.5.0, tsyringe@npm:^4.7.0":
+"tsyringe@npm:^4.7.0":
   version: 4.7.0
   resolution: "tsyringe@npm:4.7.0"
   dependencies:

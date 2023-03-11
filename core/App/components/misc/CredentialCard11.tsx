@@ -12,7 +12,7 @@ import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute } from '../../types/record'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import { credentialTextColor, isValidAnonCredsCredential, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard11Props {
@@ -120,7 +120,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({ credential, style =
   })
 
   useEffect(() => {
-    if (!(credential && isValidIndyCredential(credential))) {
+    if (!(credential && isValidAnonCredsCredential(credential))) {
       return
     }
 
