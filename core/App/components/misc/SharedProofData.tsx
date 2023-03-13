@@ -35,6 +35,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
 
   const styles = StyleSheet.create({
     container: {
+      marginBottom: 20,
       backgroundColor: ColorPallet.grayscale.white,
       borderRadius: borderRadius,
     },
