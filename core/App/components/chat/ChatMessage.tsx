@@ -1,66 +1,58 @@
-import {
-  BasicMessageRecord,
-  CredentialExchangeRecord,
-  CredentialState,
-  ProofExchangeRecord,
-  ProofState,
-} from '@aries-framework/core'
-import React, {useMemo} from 'react'
-import {useTranslation} from 'react-i18next'
-import {TouchableOpacity, View} from 'react-native'
-import {Bubble, IMessage, Message} from 'react-native-gifted-chat'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { TouchableOpacity, View } from 'react-native'
+import { Bubble, IMessage, Message } from 'react-native-gifted-chat'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import {useTheme} from '../../contexts/theme'
+import { useTheme } from '../../contexts/theme'
 import Text from '../texts/Text'
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
+export enum Role {
+  me = 'me',
+  their = 'their',
+}
 
 export interface ChatMessageProps {
-  onActionButtonTap: (message: ChatMessage) => void
+  onActionButtonTap: (message: IChatMessage) => void
   messageProps: React.ComponentProps<typeof Message>
 }
 
-export interface ChatMessage extends IMessage {
-  _id: string
-  text: string
+export interface IChatMessage extends IMessage {
   renderText: () => JSX.Element
-  record: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+  record: any
   createdAt: Date
-  type: string
-  user: { _id: string }
+  withDetails?: boolean
 }
 
-const renderTime = (props: any, theme: any) => (
-  <Text style={{ ...theme.timeStyle }}>
-    {new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' }).format(
-      props.currentMessage.createdAt
-    )}
-  </Text>
-)
+const MessageTime: React.FC<{ message: IChatMessage }> = ({ message }) => {
+  const { ChatTheme: theme } = useTheme()
+  return (
+    <Text style={{ ...theme.timeStyle }}>
+      {new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' }).format(message.createdAt)}
+    </Text>
+  )
+}
 
-const renderIcon = (props: any, theme: any) => (
-  <View style={{ ...theme.documentIconContainer }}>
-    <Icon name={'file-document-outline'} size={32} color={theme.documentIcon.color} />
-  </View>
-)
+const MessageIcon: React.FC = () => {
+  const { ChatTheme: theme } = useTheme()
+  return (
+    <View style={{ ...theme.documentIconContainer }}>
+      <Icon name={'file-document-outline'} size={32} color={theme.documentIcon.color} />
+    </View>
+  )
+}
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ onActionButtonTap, messageProps }) => {
   const { t } = useTranslation()
   const { ChatTheme: theme } = useTheme()
 
-  const message = useMemo(() => messageProps.currentMessage as ChatMessage, [messageProps])
-
-  const recordOpenable = useMemo(
-    () =>
-      (message.record instanceof CredentialExchangeRecord && message.record.state === CredentialState.Done) ||
-      (message.record instanceof ProofExchangeRecord && message.record.state === ProofState.Done && message.record.isVerified),
-    [message]
-  )
+  const message = useMemo(() => messageProps.currentMessage as IChatMessage, [messageProps])
 
   return (
     <View
       style={{
         flexDirection: 'row',
-        justifyContent: message.user._id === 'sender' ? 'flex-end' : 'flex-start',
+        justifyContent: message.user._id === Role.me ? 'flex-end' : 'flex-start',
       }}
     >
       <View
@@ -88,10 +80,10 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ onActionButtonTap, mes
             left: { ...theme.leftText },
             right: { ...theme.rightText },
           }}
-          renderTime={(timeProps: any) => renderTime(timeProps, theme)}
-          renderCustomView={() => (recordOpenable ? renderIcon(messageProps, theme) : null)}
+          renderTime={() => <MessageTime message={message} />}
+          renderCustomView={() => (message.withDetails ? <MessageIcon /> : null)}
         />
-        {recordOpenable && (
+        {message.withDetails && (
           <TouchableOpacity
             onPress={() => onActionButtonTap(message)}
             style={{

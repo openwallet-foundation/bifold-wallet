@@ -15,6 +15,7 @@ import { useTheme } from '../../contexts/theme'
 import { CardLayoutOverlay11, CredentialOverlay, resolveBundle } from '../../types/oca'
 import { toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
+import LoadingIndicator from '../animated/LoadingIndicator'
 import { AttributeValue } from '../record/RecordField'
 
 interface SharedProofDataProps {
@@ -158,15 +159,24 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
     throw new Error('Unable to fetch agent from AFJ')
   }
 
+  const [loading, setLoading] = useState<boolean>(true)
   const [sharedData, setSharedData] = useState<GroupedSharedProofData | undefined>(undefined)
 
   useEffect(() => {
-    getProofData(agent, recordId).then((data) => {
-      if (data) {
-        setSharedData(groupSharedProofDataByCredential(data))
-      }
-    })
+    getProofData(agent, recordId)
+      .then((data) => {
+        if (data) {
+          setSharedData(groupSharedProofDataByCredential(data))
+        }
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [agent, recordId])
+
+  if (loading) {
+    return <LoadingIndicator />
+  }
 
   return sharedData && sharedData.size ? (
     <View style={styles.container}>
