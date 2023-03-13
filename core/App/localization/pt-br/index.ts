@@ -420,6 +420,7 @@ const translation = {
     "Toggle": "Alternar capacidade do verificador",
     "ProcessingProof": "Um momento...",
     "ZeroKnowledgeProof": "Prova de conhecimento Zero",
+    "Parameterizable": "Parametrizável",
     "GenerateNewQR": "Gerar novo código QR",
     "ScanQR": "Escaneie este código QR",
     "ScanQRComment": "com sua carteira digital para receber um pedido de comprovante.",

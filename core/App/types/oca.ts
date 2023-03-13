@@ -2,8 +2,9 @@ import { CredentialExchangeRecord, CredentialMetadataKeys, CredentialPreviewAttr
 
 import { parsedCredDefName, parsedCredDefNameFromCredential } from '../utils/cred-def'
 import { hashCode, hashToRGBA } from '../utils/helpers'
+import { buildFieldsFromIndyCredential } from '../utils/oca'
 
-import { Attribute, Field } from './record'
+import { Field } from './record'
 
 export enum BaseType {
   Binary = 'Binary',
@@ -313,46 +314,27 @@ export class OCABundleResolver implements OCABundleResolverType {
   public async presentationFields(
     credential?: CredentialExchangeRecord,
     language = 'en',
-    attributes?: Array<CredentialPreviewAttribute>,
+    attributes?: Array<Field>,
     identifiers?: Identifiers
   ): Promise<Field[]> {
     const bundle = await this.resolve(credential, language ?? this.options.language, identifiers)
-    const fields: Field[] = []
 
-    const attrs = credential?.credentialAttributes || attributes
+    const presentationFields = credential ? buildFieldsFromIndyCredential(credential) : attributes || []
 
     if (bundle?.captureBase?.attributes) {
-      for (const key in bundle?.captureBase?.attributes) {
-        if (bundle?.captureBase?.attributes[key]) {
-          const sourceAttribute = attrs?.find((item) => item.name === key)
-          if (sourceAttribute) {
-            const field: Field = this.processField(sourceAttribute, key, bundle)
-            fields.push(field)
-          }
+      for (let i = 0; i < presentationFields.length; i++) {
+        const presentationField = presentationFields[i]
+        const key = presentationField.name || ''
+        if (bundle.captureBase.attributes[key]) {
+          presentationField.label = bundle?.labelOverlay?.attributeLabels[key]
+          presentationField.format = bundle?.formatOverlay?.attributeFormats[key]
+          presentationField.type = bundle?.captureBase?.attributes?.[key]
+          presentationField.encoding = bundle?.characterEncodingOverlay?.attributeCharacterEncoding[key]
         }
       }
-    } else if (attrs) {
-      for (const sourceAttribute of attrs) {
-        const field: Field = this.processField(sourceAttribute, sourceAttribute.name, bundle)
-        fields.push(field)
-      }
     }
 
-    return fields
-  }
-
-  private processField(source: Attribute, key: string, bundle?: OCABundle) {
-    const { name, value, mimeType } = source
-    const field: Attribute | Field = {
-      name,
-      value,
-      mimeType,
-      label: bundle?.labelOverlay?.attributeLabels[key],
-      format: bundle?.formatOverlay?.attributeFormats[key],
-      type: bundle?.captureBase?.attributes?.[key],
-      encoding: bundle?.characterEncodingOverlay?.attributeCharacterEncoding[key],
-    }
-    return field
+    return presentationFields
   }
 }
 
@@ -360,7 +342,7 @@ export const resolveBundle = async (
   resolver: OCABundleResolver,
   credential?: CredentialExchangeRecord,
   language = 'en',
-  attributes?: Array<CredentialPreviewAttribute>,
+  attributes?: Array<Field>,
   identifiers?: Identifiers
 ) => {
   const [bundle, defaultBundle, fields] = await Promise.all([

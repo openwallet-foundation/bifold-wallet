@@ -39,7 +39,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     header: {
       backgroundColor: ColorPallet.semantic.success,
       paddingHorizontal: 30,
-      paddingVertical: 30,
+      paddingVertical: 20,
     },
     headerTitleContainer: {
       flexDirection: 'row',
@@ -58,6 +58,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
       fontSize: 18,
     },
     content: {
+      flexGrow: 1,
       marginHorizontal: 30,
       marginTop: 10,
     },

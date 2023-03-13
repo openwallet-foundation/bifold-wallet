@@ -441,6 +441,7 @@ const translation = {
     "Toggle": "Toggle Verifier capability",
     "ProcessingProof": "Just a moment...",
     "ZeroKnowledgeProof": "Zero-knowledge proof",
+    "Parameterizable": "Parameterizable",
     "GenerateNewQR": "Generate new QR Code",
     "ScanQR": "Scan this QR Code",
     "ScanQRComment": "with your digital wallet to receive a proof request.",
