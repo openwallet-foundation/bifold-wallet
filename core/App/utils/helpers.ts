@@ -20,6 +20,8 @@ import { parseUrl } from 'query-string'
 import { i18n } from '../localization/index'
 import { ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
 
+import { parseCredDefFromId } from './cred-def'
+
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
 
@@ -203,7 +205,6 @@ export const processProofAttributes = (
   credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
-
   if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
     return {}
   }
@@ -215,7 +216,7 @@ export const processProofAttributes = (
     // The shift operation modifies the original input array, therefore make a copy
     const credential = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn).shift()
 
-    const credName = key
+    let credName = key
     let revoked = false
     if (credential) {
       revoked = credential.revoked as boolean
@@ -224,6 +225,11 @@ export const processProofAttributes = (
 
     for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
       if (!processedAttributes[credName]) {
+        credName =
+          parseCredDefFromId(
+            credential?.credentialInfo?.credentialDefinitionId,
+            credential?.credentialInfo?.schemaId
+          ) ?? credName
         // init processedAttributes object
         processedAttributes[credName] = {
           schemaId: credential?.credentialInfo?.schemaId,
@@ -266,9 +272,12 @@ export const processProofPredicates = (
     const { credentialId, revoked, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
     const { name, p_type: pType, p_value: pValue } = requestedProofPredicates[key]
 
-    const credName = key
+    let credName = key
 
     if (!processedPredicates[credName]) {
+      credName =
+        parseCredDefFromId(credential?.credentialInfo?.credentialDefinitionId, credential?.credentialInfo?.schemaId) ??
+        credName
       processedPredicates[credName] = {
         schemaId,
         credDefId: credentialDefinitionId,
