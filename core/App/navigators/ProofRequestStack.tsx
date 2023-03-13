@@ -28,7 +28,7 @@ const ProofRequestStack: React.FC = () => {
         name={Screens.ProofRequestDetails}
         component={ProofRequestDetails}
         options={() => ({
-          title: t('Screens.ProofRequestDetails'),
+          title: '',
         })}
       />
       <Stack.Screen

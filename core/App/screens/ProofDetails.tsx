@@ -19,7 +19,7 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
-const collapsedHeight = 160
+const collapsedHeight = 120
 
 interface VerifiedProofProps {
   record: ProofExchangeRecord
@@ -39,7 +39,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     header: {
       backgroundColor: ColorPallet.semantic.success,
       paddingHorizontal: 30,
-      paddingVertical: 20,
+      paddingVertical: 30,
     },
     headerTitleContainer: {
       flexDirection: 'row',
@@ -47,13 +47,14 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
       alignItems: 'center',
     },
     headerTitle: {
-      marginHorizontal: 8,
+      marginHorizontal: 10,
       color: ColorPallet.grayscale.white,
       fontSize: 34,
       fontWeight: 'bold',
     },
     headerDetails: {
       color: ColorPallet.grayscale.white,
+      marginVertical: 10,
       fontSize: 18,
     },
     content: {

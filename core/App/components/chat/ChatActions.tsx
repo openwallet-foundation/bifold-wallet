@@ -12,10 +12,6 @@ export const renderActions = (props: any, theme: any, actions?: Record<string, (
         marginBottom: 6,
         marginLeft: 20,
       }}
-      wrapperStyle={{
-        width: 180,
-        height: 180,
-      }}
       icon={() => <Icon name={'plus-box-outline'} size={40} color={theme.options} />}
       options={actions}
       optionTintColor={theme.optionsText}
