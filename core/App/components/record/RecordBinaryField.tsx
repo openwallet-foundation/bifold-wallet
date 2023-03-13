@@ -8,7 +8,7 @@ import { testIdWithKey } from '../../utils/testable'
 interface RecordBinaryFieldProps {
   attributeValue: string
   shown?: boolean
-  style?: any
+  style?: Record<string, unknown>
 }
 
 const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, shown, style }) => {

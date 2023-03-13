@@ -11,7 +11,7 @@ import { testIdWithKey } from '../../utils/testable'
 interface RecordBinaryFieldProps {
   field: Attribute
   shown?: boolean
-  style?: any
+  style?: Record<string, unknown>
 }
 
 const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown, style }) => {
