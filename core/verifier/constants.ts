@@ -12,32 +12,13 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1',
+          schema: 'YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0',
           requestedAttributes: [
             {
               name: 'given_names',
             },
             {
               name: 'family_name',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'BC:5:Email:0.0.1:indy',
-    name: 'Email',
-    description: 'Verify the email of a person',
-    version: '0.0.1',
-    payload: {
-      type: ProofRequestType.Indy,
-      data: [
-        {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1',
-          requestedAttributes: [
-            {
-              name: 'email',
             },
           ],
         },
@@ -53,7 +34,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1',
+          schema: 'YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0',
           requestedAttributes: [
             {
               name: 'given_names',
@@ -62,6 +43,9 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
               name: 'family_name',
             },
           ],
+        },
+        {
+          schema: '7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0',
           requestedPredicates: [
             {
               name: 'age',
@@ -82,7 +66,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1',
+          schema: '7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0',
           requestedPredicates: [
             {
               name: 'age',
@@ -116,13 +100,13 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
   {
     id: 'BC:5:PractisingLawyerAndFullName:0.0.1:indy',
     name: 'Practising lawyer and full name',
-    description: 'Verify if a person`is a practicing lawyer using two different credentials for extra assuarnce',
+    description: 'Verify if a person`is a practicing lawyer using two different credentials for extra assurance',
     version: '0.0.1',
     payload: {
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1',
+          schema: 'YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0',
           requestedAttributes: [
             {
               name: 'given_names',
@@ -152,7 +136,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Verified Person:0.0.1',
+          schema: '7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0',
           requestedPredicates: [
             {
               name: 'age',
