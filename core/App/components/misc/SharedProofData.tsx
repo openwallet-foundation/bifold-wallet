@@ -34,6 +34,10 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   const { i18n } = useTranslation()
 
   const styles = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.grayscale.white,
+      borderRadius: borderRadius,
+    },
     cardContainer: {
       flexDirection: 'row',
       minHeight: 0.33 * width,
@@ -150,22 +154,25 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   }
 
   return overlay ? (
-    <View key={sharedData.identifiers.credentialDefinitionId} style={styles.cardContainer}>
-      <CardColor overlay={overlay} />
-      <CardLogo overlay={overlay} />
-      <CardBody overlay={overlay} />
+    <View style={styles.container}>
+      <View key={sharedData.identifiers.credentialDefinitionId} style={styles.cardContainer}>
+        <CardColor overlay={overlay} />
+        <CardLogo overlay={overlay} />
+        <CardBody overlay={overlay} />
+      </View>
     </View>
   ) : null
 }
 
 const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedProofDataProps) => {
   const { agent } = useAgent()
-  const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.grayscale.white,
-      borderRadius: borderRadius,
+      flexGrow: 1,
+    },
+    loaderContainer: {
+      marginTop: 80,
     },
   })
 
@@ -188,19 +195,22 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
       })
   }, [agent, recordId])
 
-  if (loading) {
-    return <LoadingIndicator />
-  }
-
-  return sharedData && sharedData.size ? (
+  return (
     <View style={styles.container}>
-      <FlatList
-        data={Array.from(sharedData.values())}
-        keyExtractor={(record) => record.identifiers.credentialDefinitionId}
-        renderItem={({ item }) => <SharedDataCard sharedData={item} />}
-      />
+      {loading && (
+        <View style={styles.loaderContainer}>
+          <LoadingIndicator />
+        </View>
+      )}
+      {!loading && sharedData?.size && (
+        <FlatList
+          data={Array.from(sharedData.values())}
+          keyExtractor={(record) => record.identifiers.credentialDefinitionId}
+          renderItem={({ item }) => <SharedDataCard sharedData={item} />}
+        />
+      )}
     </View>
-  ) : null
+  )
 }
 
 export default SharedProofData
