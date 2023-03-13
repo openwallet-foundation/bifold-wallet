@@ -15,7 +15,10 @@ interface Notifications {
 
 export const useNotifications = (): Notifications => {
   const offers = useCredentialByState(CredentialState.OfferReceived)
-  const proofs = useProofByState(ProofState.RequestReceived)
+  const proofsRequested = useProofByState(ProofState.RequestReceived)
+  const proofsDone = useProofByState(ProofState.Done).filter((proof: ProofExchangeRecord) => {
+    return proof.isVerified
+  })
   const revoked = useCredentialByState(CredentialState.Done).filter((cred: CredentialRecord) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const metadata = cred!.metadata.get(CredentialMetadata.customMetadata) as customMetadata
@@ -24,7 +27,7 @@ export const useNotifications = (): Notifications => {
     }
   })
 
-  const notifications = [...offers, ...proofs, ...revoked].sort(
+  const notifications = [...offers, ...proofsRequested, ...proofsDone, ...proofsDone, ...revoked].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   )
 

@@ -139,6 +139,7 @@ export type NotificationStackParams = {
     customClose?: GenericFn
   }
   [Screens.CustomNotification]: undefined
+  [Screens.ProofDetails]: { recordId: string }
 }
 
 export type DeliveryStackParams = {
