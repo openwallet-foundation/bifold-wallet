@@ -26,9 +26,9 @@ export const validEncoding = 'base64'
 export const validFormat = new RegExp('^image/(jpeg|png|jpg)')
 
 interface AttributeValueParams {
-  field: Attribute
-  style?: any
+  field: Field
   shown?: boolean
+  style?: Record<string, unknown>
 }
 
 export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, shown }) => {
@@ -40,13 +40,13 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
   })
 
   if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
-    return <RecordBinaryField attributeValue={field.value as string} style={style} />
+    return <RecordBinaryField attributeValue={(field as Attribute).value as string} style={style} />
   } else if (field.type == BaseType.DateInt) {
     return <RecordDateIntField field={field} style={style} />
   } else {
     return (
       <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
-        {shown ? field.value : hiddenFieldValue}
+        {shown ? (field as Attribute).value : hiddenFieldValue}
       </Text>
     )
   }

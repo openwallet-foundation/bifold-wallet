@@ -2,18 +2,17 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
 import ContactDetails from '../screens/ContactDetails'
+import CredentialDetails from '../screens/CredentialDetails'
 import ListContacts from '../screens/ListContacts'
+import ProofDetails from '../screens/ProofDetails'
 import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
-import CredentialDetails from "../screens/CredentialDetails";
-import ProofRequestDetails from "../screens/ProofRequestDetails";
-import ProofDetails from "../screens/ProofDetails";
-import HeaderRightHome from "../components/buttons/HeaderRightHome";
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()

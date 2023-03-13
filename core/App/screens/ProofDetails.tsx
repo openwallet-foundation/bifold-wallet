@@ -19,27 +19,27 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
-const collapsedHeight = 120
+const collapsedHeight = 160
 
 interface VerifiedProofProps {
   record: ProofExchangeRecord
-  navigation: StackNavigationProp<ProofRequestsStackParams>
+  navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
+  isHistory?: boolean
 }
 
 interface UnverifiedProofProps {
   record: ProofExchangeRecord
 }
 
-const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: VerifiedProofProps) => {
+const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHistory }: VerifiedProofProps) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
     header: {
-      flexGrow: 1,
       backgroundColor: ColorPallet.semantic.success,
       paddingHorizontal: 30,
-      paddingVertical: 30,
+      paddingVertical: 20,
     },
     headerTitleContainer: {
       flexDirection: 'row',
@@ -47,29 +47,28 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
       alignItems: 'center',
     },
     headerTitle: {
-      marginLeft: 10,
+      marginHorizontal: 8,
       color: ColorPallet.grayscale.white,
       fontSize: 34,
       fontWeight: 'bold',
     },
     headerDetails: {
       color: ColorPallet.grayscale.white,
-      marginVertical: 10,
       fontSize: 18,
     },
     content: {
-      paddingHorizontal: 30,
+      marginHorizontal: 30,
       marginTop: 10,
     },
     footer: {
-      paddingHorizontal: 30,
+      marginHorizontal: 30,
     },
     footerButton: {
       marginTop: 10,
     },
   })
 
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(!isHistory)
 
   return (
     <View>
@@ -85,31 +84,33 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
           <SharedProofData recordId={record.id} />
         </View>
       </Collapsible>
-      <View style={styles.footer}>
-        <View style={styles.footerButton}>
-          <Button
-            title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
-            accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
-            testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}
-            buttonType={ButtonType.Primary}
-            onPress={() => setIsCollapsed(!isCollapsed)}
-          />
+      {!isHistory && (
+        <View style={styles.footer}>
+          <View style={styles.footerButton}>
+            <Button
+              title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
+              accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
+              testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}
+              buttonType={ButtonType.Primary}
+              onPress={() => setIsCollapsed(!isCollapsed)}
+            />
+          </View>
+          <View style={styles.footerButton}>
+            <Button
+              title={t('Verifier.GenerateNewQR')}
+              accessibilityLabel={t('Verifier.GenerateNewQR')}
+              testID={testIdWithKey('GenerateNewQR')}
+              buttonType={ButtonType.Secondary}
+              onPress={() => {
+                navigation?.getParent()?.navigate(Stacks.ProofRequestsStack, {
+                  screen: Screens.ProofRequests,
+                  params: { navigation },
+                })
+              }}
+            />
+          </View>
         </View>
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Verifier.GenerateNewQR')}
-            accessibilityLabel={t('Verifier.GenerateNewQR')}
-            testID={testIdWithKey('GenerateNewQR')}
-            buttonType={ButtonType.Secondary}
-            onPress={() => {
-              navigation?.getParent()?.navigate(Stacks.ProofRequestsStack, {
-                screen: Screens.ProofRequests,
-                params: { navigation },
-              })
-            }}
-          />
-        </View>
-      </View>
+      )}
     </View>
   )
 }
@@ -120,17 +121,18 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = () => {
 
   const styles = StyleSheet.create({
     header: {
-      display: 'flex',
-      backgroundColor: ColorPallet.notification.success,
+      flexGrow: 1,
+      backgroundColor: ColorPallet.semantic.error,
+      paddingHorizontal: 30,
+      paddingVertical: 20,
     },
     headerTitleContainer: {
-      flexGrow: 1,
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
     headerTitle: {
-      marginLeft: 8,
+      marginHorizontal: 8,
       color: ColorPallet.grayscale.white,
       fontSize: 34,
       fontWeight: 'bold',
@@ -138,10 +140,12 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = () => {
   })
 
   return (
-    <View style={styles.header}>
-      <View style={styles.headerTitleContainer}>
-        <Icon name="error" size={45} color={ColorPallet.notification.errorIcon} />
-        <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
+    <View>
+      <View style={styles.header}>
+        <View style={styles.headerTitleContainer}>
+          <CheckInCircle {...{ height: 45, width: 45 }} />
+          <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
+        </View>
       </View>
     </View>
   )
@@ -152,13 +156,13 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     throw new Error('ProofRequesting route prams were not set properly')
   }
 
-  const { recordId } = route?.params
+  const { recordId, isHistory } = route?.params
 
   const record: ProofExchangeRecord = useProofById(recordId)
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      {record.isVerified && <VerifiedProof record={record} navigation={navigation} />}
+      {record.isVerified && <VerifiedProof record={record} navigation={navigation} isHistory={isHistory} />}
       {!record.isVerified && <UnverifiedProof record={record} />}
     </SafeAreaView>
   )
