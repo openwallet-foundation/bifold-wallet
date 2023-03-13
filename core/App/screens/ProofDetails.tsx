@@ -1,19 +1,19 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord } from '@aries-framework/core'
-import { useProofById } from '@aries-framework/react-hooks'
+import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import CheckInCircle from '../assets/img/check-in-circle.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useTheme } from '../contexts/theme'
+import { ProofMetadata } from '../types/metadata'
 import { ProofRequestsStackParams, Screens, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -160,6 +160,12 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { recordId, isHistory } = route?.params
 
   const record: ProofExchangeRecord = useProofById(recordId)
+  const { agent } = useAgent()
+
+  useEffect(() => {
+    record.metadata.set(ProofMetadata.customMetadata, { details_seen: true })
+    agent?.proofs.update(record)
+  }, [agent, record])
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
