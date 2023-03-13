@@ -57,6 +57,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
       fontSize: 18,
     },
     content: {
+      flexGrow: 1,
       marginHorizontal: 30,
       marginTop: 10,
     },

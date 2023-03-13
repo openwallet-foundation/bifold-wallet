@@ -56,7 +56,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
   field,
   hideFieldValue = false,
   hideBottomBorder = false,
-  shown = hideFieldValue ? false : true,
+  shown = !hideFieldValue,
   onToggleViewPressed = () => undefined,
   fieldLabel = null,
   fieldValue = null,
@@ -104,7 +104,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
         ) : (
           <>
             <View style={styles.valueText}>
-              <AttributeValue field={field} shown={shown} />
+              <AttributeValue field={field as Attribute} shown={shown} />
             </View>
             {hideFieldValue ? (
               <TouchableOpacity
@@ -121,7 +121,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
           </>
         )}
       </View>
-      {<View style={[styles.border, hideBottomBorder && { borderBottomWidth: 0 }]}></View>}
+      {<View style={[styles.border, hideBottomBorder && { borderBottomWidth: 0 }]} />}
     </View>
   )
 }
