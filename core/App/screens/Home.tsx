@@ -1,8 +1,9 @@
+import { ProofState } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
+import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
@@ -92,6 +93,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
         })
       }
     }
+
     if (agent && store.deepLink.activeDeepLink) {
       handleDeepLink(store.deepLink.activeDeepLink)
     }
@@ -105,10 +107,12 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
         notificationType = NotificationType.Revocation
       }
       component = <NotificationListItem notificationType={notificationType} notification={item} />
-    } else if (item.type === 'CustomNotification') {
-      component = <NotificationListItem notificationType={NotificationType.Custom} notification={item} />
-    } else {
+    } else if (item.type === 'ProofRecord' && item.state === ProofState.RequestReceived) {
       component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+    } else if (item.type === 'ProofRecord' && item.state === ProofState.Done) {
+      component = <NotificationListItem notificationType={NotificationType.ProofRequestDone} notification={item} />
+    } else {
+      component = <NotificationListItem notificationType={NotificationType.Custom} notification={item} />
     }
     return component
   }

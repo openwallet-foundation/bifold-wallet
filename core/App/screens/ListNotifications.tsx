@@ -1,3 +1,4 @@
+import { ProofState } from '@aries-framework/core'
 import React from 'react'
 import { FlatList, View } from 'react-native'
 
@@ -15,6 +16,8 @@ const ListNotifications: React.FC = () => {
       retType = NotificationType.CredentialOffer
     } else if (notification.type === 'CustomNotification') {
       retType = NotificationType.Custom
+    } else if (notification.type === 'ProofRecord' && notification.state === ProofState.Done) {
+      retType = NotificationType.ProofRequestDone
     }
     return retType
   }

@@ -16,6 +16,7 @@ import { DeclineType } from '../../types/decline'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
+import { indyProofName } from '../../utils/proof'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
@@ -24,6 +25,7 @@ const iconSize = 30
 export enum NotificationType {
   CredentialOffer = 'Offer',
   ProofRequest = 'ProofRecord',
+  ProofRequestDone = 'ProofRecordDone',
   Revocation = 'Revocation',
   Custom = 'Custom',
 }
@@ -108,22 +110,24 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
             buttonTitle: undefined,
           })
           break
-        case NotificationType.ProofRequest: {
-          const proofId = (notification as ProofExchangeRecord).id
-          agent?.proofs.findRequestMessage(proofId).then((message) => {
-            if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
-              resolve({
-                title: t('ProofRequest.NewProofRequest'),
-                body: message.indyProofRequest.name,
-                buttonTitle: undefined,
-              })
-            } else {
-              //TODO:(jl) Should we have a default message or stick with an empty string?
-              resolve({ title: t('ProofRequest.NewProofRequest'), body: '', buttonTitle: undefined })
-            }
+        case NotificationType.ProofRequest:
+          indyProofName(agent, (notification as ProofExchangeRecord).id).then((indyName) => {
+            resolve({
+              title: t('ProofRequest.NewProofRequest'),
+              body: indyName,
+              buttonTitle: undefined,
+            })
           })
           break
-        }
+        case NotificationType.ProofRequestDone:
+          indyProofName(agent, (notification as ProofExchangeRecord).id).then((indyName) => {
+            resolve({
+              title: t('ProofRequest.ProofRequestCompleted'),
+              body: indyName,
+              buttonTitle: undefined,
+            })
+          })
+          break
         case NotificationType.Revocation:
           resolve({
             title: t('CredentialDetails.NewRevoked'),
@@ -179,6 +183,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
             },
           })
         }
+        break
+      case NotificationType.ProofRequestDone:
+        onPress = () =>
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.ProofDetails,
+            params: { recordId: notification.id },
+          })
         break
       case NotificationType.Revocation:
         onPress = () =>
