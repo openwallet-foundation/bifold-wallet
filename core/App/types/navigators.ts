@@ -86,12 +86,14 @@ export type ContactStackParams = {
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
+  [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.ProofDetails]: { recordId: string }
 }
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }
   [Screens.ProofRequesting]: { templateId: string }
-  [Screens.ProofDetails]: { recordId: string }
+  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
 }
 

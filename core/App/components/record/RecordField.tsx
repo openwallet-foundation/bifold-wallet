@@ -27,8 +27,8 @@ export const validFormat = new RegExp('^image/(jpeg|png|jpg)')
 
 interface AttributeValueParams {
   field: Field
-  style?: any
   shown?: boolean
+  style?: Record<string, unknown>
 }
 
 export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, shown }) => {
