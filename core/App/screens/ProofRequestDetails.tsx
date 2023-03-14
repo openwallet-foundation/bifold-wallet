@@ -6,7 +6,7 @@ import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { IndyProofRequestTemplatePayloadData, ProofRequestType } from '../../verifier/types/proof-reqeust-template'
-import { getProofRequestTemplate, sendProofRequest } from '../../verifier/utils/proof-request'
+import { getProofRequestTemplate, sendProofRequest, setTemplateReference } from '../../verifier/utils/proof-request'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
@@ -235,13 +235,22 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const useProofRequest = useCallback(async () => {
     if (connectionId) {
       // Send to specific contact and redirect to the chat with him
-      sendProofRequest(agent, templateId, connectionId, customPredicateValues)
+      sendProofRequest(agent, templateId, connectionId, customPredicateValues).then((result) => {
+        if (result?.proofRecord) {
+          setTemplateReference(agent, result.proofRecord, templateId)
+        }
+      })
+
       navigation.getParent()?.navigate(Screens.Chat, { connectionId })
     } else {
       // Else redirect to the screen with connectionless request
       navigation.navigate(Screens.ProofRequesting, { templateId, predicateValues: customPredicateValues })
     }
   }, [agent, templateId, connectionId, customPredicateValues])
+
+  const showTemplateUsageHistory = useCallback(async () => {
+    navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })
+  }, [navigation, templateId])
 
   const onChangeValue = useCallback(
     (schema: string, name: string, value: string) => {
@@ -267,14 +276,25 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const Footer: React.FC = () => {
     return (
-      <View style={style.footerButton}>
-        <Button
-          title={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
-          accessibilityLabel={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
-          testID={connectionId ? testIdWithKey('SendThisProofRequest') : testIdWithKey('UseProofRequest')}
-          buttonType={ButtonType.Primary}
-          onPress={() => useProofRequest()}
-        />
+      <View>
+        <View style={style.footerButton}>
+          <Button
+            title={t('Verifier.ShowTemplateUsageHistory')}
+            accessibilityLabel={t('Verifier.ShowTemplateUsageHistory')}
+            testID={testIdWithKey('ShowTemplateUsageHistory')}
+            buttonType={ButtonType.Secondary}
+            onPress={() => showTemplateUsageHistory()}
+          />
+        </View>
+        <View style={style.footerButton}>
+          <Button
+            title={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
+            accessibilityLabel={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
+            testID={connectionId ? testIdWithKey('SendThisProofRequest') : testIdWithKey('UseProofRequest')}
+            buttonType={ButtonType.Primary}
+            onPress={() => useProofRequest()}
+          />
+        </View>
       </View>
     )
   }

@@ -455,6 +455,14 @@ const translation = {
     "SendThisProofRequest": "Send this proof request",
     "SendProofRequest": "Send a Proof Request",
     "EmptyList": "Your wallet is empty. Your proof request templates will be added here.",
+    "ShowTemplateUsageHistory": "Show usage history",
+    "RequestSent": "Presentation request sent",
+    "PresentationDeclined": "Presentation request declined",
+    "PresentationReceived": "Presentation received",
+    "PresentationFailed": "Presentation failed",
+    "PresentationFrom": "From",
+    "PresentationState": "State",
+    "ConnectionlessPresentation": "Connectionless",
   }
 }
 

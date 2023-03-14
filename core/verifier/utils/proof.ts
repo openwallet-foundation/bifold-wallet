@@ -1,4 +1,4 @@
-import { Agent, ProofIdentifier } from '@aries-framework/core'
+import { Agent, ProofExchangeRecord, ProofIdentifier, ProofState } from '@aries-framework/core'
 import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
 
 export interface MissingAttribute {
@@ -197,4 +197,11 @@ export const getProofData = async (agent: Agent, recordId: string): Promise<Pars
     return parseIndyProof(data.request.indy, data.presentation.indy)
   }
   return undefined
+}
+
+/*
+ * Check if a presentation received
+ * */
+export const isPresentationReceived = (record: ProofExchangeRecord) => {
+  return record.state === ProofState.PresentationReceived || record.state === ProofState.Done
 }

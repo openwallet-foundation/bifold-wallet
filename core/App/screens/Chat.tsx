@@ -10,8 +10,10 @@ import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@ar
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Text } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
+import { isPresentationReceived } from '../../verifier/utils/proof'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
@@ -157,8 +159,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       return {
         _id: record.id,
         text: record.content,
-        renderText: () => <ChatEvent actionLabel={record.content} />,
-        record: record,
+        renderEvent: () => <Text style={[theme.leftText, theme.leftTextHighlighted]}>{record.content}</Text>,
         createdAt: record.updatedAt || record.createdAt,
         type: record.type,
         user: { _id: role },
@@ -173,12 +174,17 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         return {
           _id: record.id,
           text: actionLabel,
-          renderText: () => <ChatEvent userLabel={userLabel} actionLabel={actionLabel} />,
-          record: record,
+          renderEvent: () => <ChatEvent userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
           withDetails: record.state === CredentialState.Done,
+          onDetails: () => {
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.CredentialDetails,
+              params: { credentialId: record.id },
+            })
+          },
         }
       })
     )
@@ -191,14 +197,17 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         return {
           _id: record.id,
           text: actionLabel,
-          renderText: () => <ChatEvent userLabel={userLabel} actionLabel={actionLabel} />,
-          record: record,
+          renderEvent: () => <ChatEvent userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          withDetails:
-            (record.state === ProofState.Done || record.state === ProofState.PresentationReceived) &&
-            record.isVerified !== undefined,
+          withDetails: isPresentationReceived(record) && record.isVerified !== undefined,
+          onDetails: () => {
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.ProofDetails,
+              params: { recordId: record.id, isHistory: true },
+            })
+          },
         }
       })
     )
@@ -227,29 +236,12 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       : undefined
   }, [t, store.preferences.useVerifierCapability, onSendRequest])
 
-  const onEventDetails = useCallback(
-    (message: IChatMessage) => {
-      if (message.record instanceof CredentialExchangeRecord) {
-        navigation.getParent()?.navigate(Stacks.ContactStack, {
-          screen: Screens.CredentialDetails,
-          params: { credentialId: message.record.id },
-        })
-      } else if (message.record instanceof ProofExchangeRecord) {
-        navigation.getParent()?.navigate(Stacks.ContactStack, {
-          screen: Screens.ProofDetails,
-          params: { recordId: message.record.id, isHistory: true },
-        })
-      }
-    },
-    [navigation]
-  )
-
   return (
     <GiftedChat
       messages={messages}
       showAvatarForEveryMessage={true}
       renderAvatar={() => null}
-      renderMessage={(props) => <ChatMessage messageProps={props} onActionButtonTap={onEventDetails} />}
+      renderMessage={(props) => <ChatMessage messageProps={props} />}
       renderInputToolbar={(props) => renderInputToolbar(props, theme)}
       renderSend={(props) => renderSend(props, theme)}
       renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}

@@ -1,6 +1,7 @@
 import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@aries-framework/core'
 
 import { defaultProofRequestTemplates } from '../constants'
+import { ProofMetadata } from '../types/metadata'
 import {
   IndyRequestedAttribute,
   IndyRequestedPredicate,
@@ -164,4 +165,12 @@ export const isParameterizable = (record: ProofRequestTemplate): boolean => {
     return false
   }
   return false
+}
+
+/*
+ * Add template reference to Proof Exchange record
+ * */
+export const setTemplateReference = async (agent: Agent, record: ProofExchangeRecord, templateId: string) => {
+  record.metadata.set(ProofMetadata.customMetadata, { proof_request_template_id: templateId })
+  return agent.proofs.update(record)
 }
