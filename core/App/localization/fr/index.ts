@@ -389,6 +389,7 @@ const translation = {
         "CredentialOffer": "Offre de justificatif",
         "ProofRequest": "Demande de preuve",
         "ProofRequestAttributeDetails": "Détails des attributs de la demande de preuve",
+        "ProofDetails": "Détails de la preuve",
         "Settings": "Paramètres",
         "Language": "Langue",
         "Contacts": "Contacts",

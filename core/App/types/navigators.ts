@@ -35,8 +35,8 @@ export enum Screens {
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofRequests = 'Proof Requests',
-  ProofRequesting = 'ProofRequesting',
-  ProofDetails = 'ProofDetails',
+  ProofRequesting = 'Proof Requesting',
+  ProofDetails = 'Proof Details',
 }
 
 export enum Stacks {

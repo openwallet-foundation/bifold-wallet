@@ -83,7 +83,7 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
   const presentationReceived = useMemo(() => isPresentationReceived(record), [record])
 
   const onDetails = useCallback(() => {
-    navigation.navigate(Screens.ProofDetails, { recordId: record.id })
+    navigation.navigate(Screens.ProofDetails, { recordId: record.id, isHistory: true })
   }, [navigation, record])
 
   return (

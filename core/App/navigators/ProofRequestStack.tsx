@@ -52,6 +52,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestUsageHistory}
         options={() => ({
           title: '',
+          headerRight: () => <HeaderRightHome />,
         })}
       />
     </Stack.Navigator>

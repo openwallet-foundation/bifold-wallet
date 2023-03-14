@@ -379,6 +379,7 @@ const translation = {
     "ProofRequest": "Requisição de Prova",
     "ProofRequestDetails": "Detalhes Da Solicitação De Comprovação",
     "ProofRequestAttributeDetails": "Atributos de Requisição de Prova",
+    "ProofDetails": "Detalhes da prova",
     "Settings": "Configurações",
     "Language": "Idioma",
     "Contacts": "Contatos",
