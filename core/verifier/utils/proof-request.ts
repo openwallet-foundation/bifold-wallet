@@ -2,13 +2,14 @@ import {
   Agent,
   AgentMessage,
   AutoAcceptProof,
-  CredentialPreviewAttribute,
   ProofExchangeRecord,
+  ProofRequest,
+  V1RequestPresentationMessage,
 } from '@aries-framework/core'
 
 import { defaultProofRequestTemplates } from '../constants'
+import { ProofMetadata } from '../types/metadata'
 import {
-  IndyProofRequestTemplatePayloadData,
   IndyRequestedAttribute,
   IndyRequestedPredicate,
   ProofRequestTemplate,
@@ -17,6 +18,18 @@ import {
 
 const protocolVersion = 'v1'
 const domain = 'http://aries-mobile-agent.com'
+
+/*
+ * Find Proof Request message in the storage by the given id
+ * */
+export const findProofRequestMessage = async (agent: Agent, id: string): Promise<ProofRequest | undefined> => {
+  const message = await agent.proofs.findRequestMessage(id)
+  if (message && message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
+    return message.indyProofRequest
+  } else {
+    return undefined
+  }
+}
 
 /*
  * Find Proof Request template for provided id
@@ -28,7 +41,10 @@ export const getProofRequestTemplate = (id: string): ProofRequestTemplate | unde
 /*
  * Build Proof Request data from for provided template
  * */
-export const buildProofRequestDataForTemplate = (template: ProofRequestTemplate) => {
+export const buildProofRequestDataForTemplate = (
+  template: ProofRequestTemplate,
+  customValues?: Record<string, Record<string, number>>
+) => {
   if (template.payload.type === ProofRequestType.Indy) {
     const requestedAttributes: Map<string, IndyRequestedAttribute> = new Map()
     const requestedPredicates: Map<string, IndyRequestedPredicate> = new Map()
@@ -43,7 +59,13 @@ export const buildProofRequestDataForTemplate = (template: ProofRequestTemplate)
       }
       if (data.requestedPredicates?.length) {
         data.requestedPredicates.forEach((requestedPredicate) => {
-          requestedPredicates.set(`referent_${index}`, requestedPredicate)
+          const customValue =
+            customValues && customValues[data.schema] ? customValues[data.schema][requestedPredicate.name] : undefined
+          if (requestedPredicate.parameterizable && customValue) {
+            requestedPredicates.set(`referent_${index}`, { ...requestedPredicate, predicateValue: customValue })
+          } else {
+            requestedPredicates.set(`referent_${index}`, requestedPredicate)
+          }
           index++
         })
       }
@@ -63,12 +85,15 @@ export const buildProofRequestDataForTemplate = (template: ProofRequestTemplate)
   }
 }
 
-export const buildProofRequestDataForTemplateId = (templateId: string) => {
+export const buildProofRequestDataForTemplateId = (
+  templateId: string,
+  customPredicateValues?: Record<string, Record<string, number>>
+) => {
   const template = getProofRequestTemplate(templateId)
   if (!template) {
     return undefined
   }
-  return buildProofRequestDataForTemplate(template)
+  return buildProofRequestDataForTemplate(template, customPredicateValues)
 }
 
 export interface CreateProofRequestInvitationResult {
@@ -83,9 +108,10 @@ export interface CreateProofRequestInvitationResult {
  * */
 export const createConnectionlessProofRequestInvitation = async (
   agent: Agent,
-  templateId: string
+  templateId: string,
+  customPredicateValues?: Record<string, Record<string, number>>
 ): Promise<CreateProofRequestInvitationResult | undefined> => {
-  const proofFormats = buildProofRequestDataForTemplateId(templateId)
+  const proofFormats = buildProofRequestDataForTemplateId(templateId, customPredicateValues)
   if (!proofFormats) {
     return undefined
   }
@@ -117,9 +143,10 @@ export interface SendProofRequestResult {
 export const sendProofRequest = async (
   agent: Agent,
   templateId: string,
-  connectionId: string
+  connectionId: string,
+  customPredicateValues?: Record<string, Record<string, number>>
 ): Promise<SendProofRequestResult | undefined> => {
-  const proofFormats = buildProofRequestDataForTemplateId(templateId)
+  const proofFormats = buildProofRequestDataForTemplateId(templateId, customPredicateValues)
   if (!proofFormats) {
     return undefined
   }
@@ -146,26 +173,15 @@ export const hasPredicates = (record: ProofRequestTemplate): boolean => {
   return false
 }
 
-export const mapRequestAttributesToCredentialPreview = (data: IndyProofRequestTemplatePayloadData) => {
-  const attributes = []
-  if (data.requestedAttributes) {
-    for (const item of data.requestedAttributes) {
-      if (item.name) {
-        attributes.push(new CredentialPreviewAttribute({ name: item.name, value: '' }))
-      }
-      if (item.names) {
-        for (const attribute of item.names) {
-          attributes.push(new CredentialPreviewAttribute({ name: attribute, value: '' }))
-        }
-      }
-    }
+/*
+ * Check if the Proof Request template contains parameterizable predicates
+ * */
+export const isParameterizable = (record: ProofRequestTemplate): boolean => {
+  if (record.payload.type === ProofRequestType.Indy) {
+    return record.payload.data.some((d) => d.requestedPredicates?.some((predicate) => predicate.parameterizable))
   }
-  if (data.requestedPredicates) {
-    for (const item of data.requestedPredicates) {
-      attributes.push(
-        new CredentialPreviewAttribute({ name: item.name, value: `${item.predicateType} ${item.predicateValue}` })
-      )
-    }
+  if (record.payload.type === ProofRequestType.DIF) {
+    return false
   }
-  return attributes
+  return false
 }

@@ -1,5 +1,7 @@
-import { Agent, CredentialPreviewAttribute, ProofIdentifier } from '@aries-framework/core'
+import { Agent, ProofExchangeRecord, ProofIdentifier, ProofState } from '@aries-framework/core'
 import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
+
+import { ProofMetadata } from '../types/metadata'
 
 export interface MissingAttribute {
   name: string
@@ -189,28 +191,6 @@ export const groupSharedProofDataByCredential = (data: ParsedIndyProof): Grouped
 }
 
 /*
- * Marge and map shared attributes and predicates into single credential preview attributes list
- * */
-export const mergeAttributes = (data: CredentialSharedProofData): Array<CredentialPreviewAttribute> => {
-  const sharedAttributes = data.sharedAttributes.map(
-    (attribute) => new CredentialPreviewAttribute({ name: attribute.name, value: attribute.value })
-  )
-  const sharedAttributeGroups = data.sharedAttributeGroups.flatMap((sharedAttributeGroup) => {
-    return sharedAttributeGroup.attributes.map(
-      (attribute) => new CredentialPreviewAttribute({ name: attribute.name, value: attribute.value })
-    )
-  })
-  const resolvedPredicates = data.resolvedPredicates.map(
-    (predicate) =>
-      new CredentialPreviewAttribute({
-        name: predicate.name,
-        value: `${predicate.predicateType} ${predicate.predicateValue}`,
-      })
-  )
-  return [...sharedAttributes, ...sharedAttributeGroups, ...resolvedPredicates]
-}
-
-/*
  * Retrieve proof details from AFJ record
  * */
 export const getProofData = async (agent: Agent, recordId: string): Promise<ParsedIndyProof | undefined> => {
@@ -219,4 +199,30 @@ export const getProofData = async (agent: Agent, recordId: string): Promise<Pars
     return parseIndyProof(data.request.indy, data.presentation.indy)
   }
   return undefined
+}
+
+/*
+ * Check if a presentation received
+ * */
+export const isPresentationReceived = (record: ProofExchangeRecord) => {
+  return record.state === ProofState.PresentationReceived || record.state === ProofState.Done
+}
+
+/*
+ * Mark Proof record as viewed
+ * */
+export const markAsViewed = async (agent: Agent, record: ProofExchangeRecord) => {
+  record.metadata.set(ProofMetadata.customMetadata, { ...record.metadata.data.customMetadata, details_seen: true })
+  return agent.proofs.update(record)
+}
+
+/*
+ * Add template reference to Proof Exchange record
+ * */
+export const setTemplateReference = async (agent: Agent, record: ProofExchangeRecord, templateId: string) => {
+  record.metadata.set(ProofMetadata.customMetadata, {
+    ...record.metadata.data.customMetadata,
+    proof_request_template_id: templateId,
+  })
+  return agent.proofs.update(record)
 }

@@ -21,7 +21,6 @@ import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay, resolveBundle } from '../types/oca'
-import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
@@ -334,7 +333,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      <Record fields={overlay.presentationFields as Field[]} hideFieldValues header={header} footer={footer} />
+      <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
       <CommonRemoveModal
         removeType={RemoveType.Credential}
         visible={isRemoveModalDisplayed}

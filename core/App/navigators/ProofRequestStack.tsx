@@ -7,6 +7,7 @@ import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
 import ProofDetails from '../screens/ProofDetails'
 import ProofRequestDetails from '../screens/ProofRequestDetails'
+import ProofRequestUsageHistory from '../screens/ProofRequestUsageHistory'
 import ProofRequesting from '../screens/ProofRequesting'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 
@@ -41,6 +42,14 @@ const ProofRequestStack: React.FC = () => {
       <Stack.Screen
         name={Screens.ProofDetails}
         component={ProofDetails}
+        options={() => ({
+          title: '',
+          headerRight: () => <HeaderRightHome />,
+        })}
+      />
+      <Stack.Screen
+        name={Screens.ProofRequestUsageHistory}
+        component={ProofRequestUsageHistory}
         options={() => ({
           title: '',
           headerRight: () => <HeaderRightHome />,
