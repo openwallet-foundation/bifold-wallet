@@ -88,7 +88,7 @@ export type ContactStackParams = {
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.ProofDetails]: { recordId: string }
+  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
 }
 
 export type ProofRequestsStackParams = {
@@ -139,7 +139,7 @@ export type NotificationStackParams = {
     customClose?: GenericFn
   }
   [Screens.CustomNotification]: undefined
-  [Screens.ProofDetails]: { recordId: string }
+  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
 }
 
 export type DeliveryStackParams = {

@@ -1,7 +1,7 @@
-import { ProofState } from '@aries-framework/core'
 import React from 'react'
 import { FlatList, View } from 'react-native'
 
+import { isPresentationReceived } from '../../verifier/utils/proof'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useConfiguration } from '../contexts/configuration'
@@ -14,10 +14,14 @@ const ListNotifications: React.FC = () => {
     let retType = NotificationType.ProofRequest
     if (notification.type === 'CredentialRecord') {
       retType = NotificationType.CredentialOffer
+    } else if (notification.type === 'ProofRecord') {
+      if (isPresentationReceived(notification)) {
+        retType = NotificationType.Proof
+      } else {
+        retType = NotificationType.ProofRequest
+      }
     } else if (notification.type === 'CustomNotification') {
       retType = NotificationType.Custom
-    } else if (notification.type === 'ProofRecord' && notification.state === ProofState.Done) {
-      retType = NotificationType.ProofRequestDone
     }
     return retType
   }

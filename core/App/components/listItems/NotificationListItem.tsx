@@ -1,6 +1,5 @@
 import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
 
-import { V1RequestPresentationMessage } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -9,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { findProofRequestMessage } from '../../../verifier/utils/proof-request'
 import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
@@ -16,7 +16,6 @@ import { DeclineType } from '../../types/decline'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
-import { indyProofName } from '../../utils/proof'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
@@ -25,7 +24,7 @@ const iconSize = 30
 export enum NotificationType {
   CredentialOffer = 'Offer',
   ProofRequest = 'ProofRecord',
-  ProofRequestDone = 'ProofRecordDone',
+  Proof = 'Proof',
   Revocation = 'Revocation',
   Custom = 'Custom',
 }
@@ -110,24 +109,30 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
             buttonTitle: undefined,
           })
           break
-        case NotificationType.ProofRequest:
-          indyProofName(agent, (notification as ProofExchangeRecord).id).then((indyName) => {
-            resolve({
-              title: t('ProofRequest.NewProofRequest'),
-              body: indyName,
-              buttonTitle: undefined,
+        case NotificationType.ProofRequest: {
+          if (agent) {
+            findProofRequestMessage(agent, (notification as ProofExchangeRecord).id).then((proofRequest) => {
+              resolve({
+                title: t('ProofRequest.NewProofRequest'),
+                body: proofRequest?.name || '',
+                buttonTitle: undefined,
+              })
             })
-          })
+          }
           break
-        case NotificationType.ProofRequestDone:
-          indyProofName(agent, (notification as ProofExchangeRecord).id).then((indyName) => {
-            resolve({
-              title: t('ProofRequest.ProofRequestCompleted'),
-              body: indyName,
-              buttonTitle: undefined,
+        }
+        case NotificationType.Proof: {
+          if (agent) {
+            findProofRequestMessage(agent, (notification as ProofExchangeRecord).id).then((proofRequest) => {
+              resolve({
+                title: t('ProofRequest.NewProof'),
+                body: proofRequest?.name || '',
+                buttonTitle: undefined,
+              })
             })
-          })
+          }
           break
+        }
         case NotificationType.Revocation:
           resolve({
             title: t('CredentialDetails.NewRevoked'),
@@ -184,11 +189,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           })
         }
         break
-      case NotificationType.ProofRequestDone:
+      case NotificationType.Proof:
         onPress = () =>
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
             screen: Screens.ProofDetails,
-            params: { recordId: notification.id },
+            params: { recordId: notification.id, isHistory: true },
           })
         break
       case NotificationType.Revocation:

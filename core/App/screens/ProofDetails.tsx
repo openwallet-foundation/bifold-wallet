@@ -9,11 +9,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { markAsViewed } from '../../verifier/utils/proof'
 import CheckInCircle from '../assets/img/check-in-circle.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useTheme } from '../contexts/theme'
-import { ProofMetadata } from '../types/metadata'
 import { ProofRequestsStackParams, Screens, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -163,8 +163,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { agent } = useAgent()
 
   useEffect(() => {
-    record.metadata.set(ProofMetadata.customMetadata, { details_seen: true })
-    agent?.proofs.update(record)
+    if (agent) markAsViewed(agent, record)
   }, [agent, record])
 
   return (
