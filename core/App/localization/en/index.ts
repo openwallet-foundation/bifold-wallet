@@ -399,6 +399,7 @@ const translation = {
     "ProofRequest": "Proof Request",
     "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",
+    "ProofDetails": "Proof Details",
     "Settings": "Settings",
     "Language": "Language",
     "Contacts": "Contacts",

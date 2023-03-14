@@ -47,7 +47,7 @@ const NotificationStack: React.FC = () => {
       <Stack.Screen
         name={Screens.ProofDetails}
         component={ProofDetails}
-        options={{ title: t('Screens.ProofRequestDetails') }}
+        options={{ title: t('Screens.ProofDetails') }}
       />
       <Stack.Screen
         name={Screens.CustomNotification}

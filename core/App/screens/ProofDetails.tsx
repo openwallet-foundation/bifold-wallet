@@ -164,7 +164,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   useEffect(() => {
     if (agent) markAsViewed(agent, record)
-  }, [agent, record])
+  }, [])
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>

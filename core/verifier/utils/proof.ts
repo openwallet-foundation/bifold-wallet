@@ -212,6 +212,17 @@ export const isPresentationReceived = (record: ProofExchangeRecord) => {
  * Mark Proof record as viewed
  * */
 export const markAsViewed = async (agent: Agent, record: ProofExchangeRecord) => {
-  record.metadata.set(ProofMetadata.customMetadata, { details_seen: true })
+  record.metadata.set(ProofMetadata.customMetadata, { ...record.metadata.data.customMetadata, details_seen: true })
+  return agent.proofs.update(record)
+}
+
+/*
+ * Add template reference to Proof Exchange record
+ * */
+export const setTemplateReference = async (agent: Agent, record: ProofExchangeRecord, templateId: string) => {
+  record.metadata.set(ProofMetadata.customMetadata, {
+    ...record.metadata.data.customMetadata,
+    proof_request_template_id: templateId,
+  })
   return agent.proofs.update(record)
 }

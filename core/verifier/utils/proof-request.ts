@@ -185,11 +185,3 @@ export const isParameterizable = (record: ProofRequestTemplate): boolean => {
   }
   return false
 }
-
-/*
- * Add template reference to Proof Exchange record
- * */
-export const setTemplateReference = async (agent: Agent, record: ProofExchangeRecord, templateId: string) => {
-  record.metadata.set(ProofMetadata.customMetadata, { proof_request_template_id: templateId })
-  return agent.proofs.update(record)
-}
