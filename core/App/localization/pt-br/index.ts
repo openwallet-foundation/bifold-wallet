@@ -433,6 +433,14 @@ const translation = {
     "SendThisProofRequest": "Envie esta solicitação de prova",
     "SendProofRequest": "Envie uma Solicitação de Comprovante",
     "EmptyList": "Sua carteira está vazia. Seus modelos de solicitação de prova serão adicionados aqui.",
+    "ShowTemplateUsageHistory": "Mostrar histórico de uso",
+    "RequestSent": "Pedido de apresentação enviado",
+    "PresentationDeclined": "Pedido de apresentação recusado",
+    "PresentationReceived": "Apresentação recebida",
+    "PresentationFailed": "Falha na apresentação",
+    "PresentationFrom": "De",
+    "PresentationState": "Estada",
+    "ConnectionlessPresentation": "Sem conexão",
   }
 }
 

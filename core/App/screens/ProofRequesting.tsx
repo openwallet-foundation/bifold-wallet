@@ -1,13 +1,13 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { ProofState } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
+import { isPresentationReceived } from '../../verifier/utils/proof'
+import { createConnectionlessProofRequestInvitation, setTemplateReference } from '../../verifier/utils/proof-request'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
@@ -90,23 +90,22 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
   })
 
-  const [generatingRequest, setGeneratingRequest] = useState(true)
+  const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
-
-  const record = recordId ? useProofById(recordId) : undefined
 
   const createProofRequest = useCallback(async () => {
     try {
       setMessage(undefined)
-      setGeneratingRequest(true)
+      setGenerating(true)
       const result = await createConnectionlessProofRequestInvitation(agent, templateId, predicateValues)
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
+        setTemplateReference(agent, result.proofRecord, templateId)
       }
     } finally {
-      setGeneratingRequest(false)
+      setGenerating(false)
     }
   }, [agent, templateId, predicateValues])
 
@@ -114,8 +113,10 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     createProofRequest()
   }, [])
 
+  const record = useProofById(recordId || '')
+
   useEffect(() => {
-    if (record && (record.state === ProofState.PresentationReceived || record.state === ProofState.Done)) {
+    if (record && isPresentationReceived(record)) {
       navigation.navigate(Screens.ProofDetails, { recordId: record.id })
     }
   }, [record])
@@ -128,7 +129,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       </View>
       <Text style={styles.interopText}>AIP 2.0</Text>
       <View style={styles.qrContainer}>
-        {generatingRequest && <LoadingIndicator />}
+        {generating && <LoadingIndicator />}
         {message && <QRRenderer value={message} size={qrSize} />}
       </View>
       <View style={styles.footerButton}>
@@ -138,7 +139,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           testID={testIdWithKey('GenerateNewQR')}
           buttonType={ButtonType.Primary}
           onPress={() => createProofRequest()}
-          disabled={generatingRequest}
+          disabled={generating}
         />
       </View>
     </SafeAreaView>
