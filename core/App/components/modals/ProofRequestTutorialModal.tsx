@@ -1,10 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { FlatList, Image, Modal, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Animated,
+  FlatList,
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { DispatchAction } from '../../contexts/reducers/store'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
+import { Pagination } from '../misc/Pagination'
 
 interface ProofRequestTutorialModalProps {
   visible: boolean
@@ -25,6 +36,7 @@ const useStyles = () => {
       backgroundColor: ColorPallet.brand.modalSecondaryBackground,
       borderRadius: borderRadius,
     },
+    carouselViewContainer: { flex: 1, padding: 24 },
     headerContainer: {
       marginBottom: 16,
     },
@@ -47,12 +59,61 @@ const useStyles = () => {
       position: 'absolute',
       top: 8,
       right: 8,
-      backgroundColor: ColorPallet.brand.modalSecondaryBackground,
+      zIndex: 1,
     },
     closeButtonIcon: {
       color: ColorPallet.grayscale.white,
     },
+    carouselPaginationContainer: {
+      paddingHorizontal: 24,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    carouselButtonText: {
+      color: ColorPallet.brand.primary,
+    },
+    carouselButton: {
+      padding: 16,
+      flexBasis: '30%',
+      alignItems: 'center',
+    },
+    carouselButtonTextDisabled: {
+      color: 'transparent',
+    },
   })
+}
+
+const usePaginationStyles = () => {
+  const { ColorPallet } = useTheme()
+
+  return {
+    pagerContainer: {
+      flexShrink: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    pagerDot: {
+      borderColor: ColorPallet.brand.primary,
+      borderWidth: 1,
+      borderStyle: 'solid',
+    },
+    pagerDotActive: {
+      color: ColorPallet.brand.primary,
+    },
+    pagerDotInactive: {
+      color: ColorPallet.brand.secondary,
+    },
+    pagerPosition: {
+      position: 'relative',
+      top: 0,
+    },
+    pagerNavigationButton: {
+      color: ColorPallet.brand.primary,
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+  }
 }
 
 const closeIconSize = 35
@@ -65,10 +126,11 @@ const SlideContainer: React.FC = ({ children }) => {
   return <View style={{ width, flexDirection: 'row' }}>{children}</View>
 }
 
-const FirstCarouselView = () => {
+// It is temporary view, the content for slides will be clarified later.
+const CarouselViewPlaceholder = () => {
   const style = useStyles()
   return (
-    <View style={{ flex: 1, padding: 24 }}>
+    <View style={style.carouselViewContainer}>
       <View style={style.headerContainer}>
         <View style={style.titleContainer}>
           <Text style={style.titleText}>Show this QR code to the other person</Text>
@@ -92,18 +154,24 @@ interface SlideListItem {
 const ProofRequestTutorialModal: React.FC<ProofRequestTutorialModalProps> = ({ visible }) => {
   const [, dispatch] = useStore()
   const style = useStyles()
+  const paginationStyle = usePaginationStyles()
+  const scrollX = useRef(new Animated.Value(0)).current
   const [modalVisible, setModalVisible] = useState<boolean>(true)
   const [currentIndex, setCurrentIndex] = useState(0)
   const flatListRef = useRef<FlatList<SlideListItem> | null>()
   const slides: SlideListItem[] = useMemo(
     () => [
       {
-        name: 'first',
-        component: <FirstCarouselView />,
+        name: 'firstStep',
+        component: <CarouselViewPlaceholder />,
       },
       {
-        name: 'second',
-        component: <FirstCarouselView />,
+        name: 'secondStep',
+        component: <CarouselViewPlaceholder />,
+      },
+      {
+        name: 'thirdStep',
+        component: <CarouselViewPlaceholder />,
       },
     ],
     []
@@ -117,22 +185,34 @@ const ProofRequestTutorialModal: React.FC<ProofRequestTutorialModalProps> = ({ v
     dispatch({ type: DispatchAction.DID_COMPLETE_QR_CODE_TUTORIAL })
   }
 
+  const viewabilityConfigRef = useRef({
+    viewAreaCoveragePercentThreshold: 80,
+  })
+
   const onViewRef = useRef(({ changed }: { changed: any }) => {
     if (changed[0].isViewable) {
       setCurrentIndex(changed[0].index)
     }
   })
 
-  const scrollToIndex = (index: number) => {
-    flatListRef.current?.scrollToIndex({ animated: true, index })
-  }
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      flatListRef.current?.scrollToIndex({ animated: true, index })
+    },
+    [flatListRef]
+  )
 
-  const onNext = () => scrollToIndex(currentIndex + 1)
-  const onSkip = () => completeTutorial()
+  const activateNextStep = useCallback(() => scrollToIndex(currentIndex + 1), [currentIndex])
+
+  const isLastStepActive = useMemo(() => currentIndex === slides.length - 1, [currentIndex, slides])
 
   const renderItems: React.FC<{ item: SlideListItem }> = ({ item }) => {
     return <SlideContainer>{item.component}</SlideContainer>
   }
+
+  const onScroll = Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
+    useNativeDriver: false,
+  })
 
   useEffect(() => {
     if (visible !== undefined) {
@@ -145,7 +225,7 @@ const ProofRequestTutorialModal: React.FC<ProofRequestTutorialModalProps> = ({ v
       <View style={style.centeredView}>
         <View style={style.modalView}>
           <View style={style.closeButton}>
-            <TouchableOpacity style={style.closeButton} onPress={() => completeTutorial()}>
+            <TouchableOpacity style={style.closeButton} onPress={() => close()}>
               <Icon name={closeIconName} size={closeIconSize} style={style.closeButtonIcon} />
             </TouchableOpacity>
           </View>
@@ -156,25 +236,34 @@ const ProofRequestTutorialModal: React.FC<ProofRequestTutorialModalProps> = ({ v
             pagingEnabled
             horizontal
             showsHorizontalScrollIndicator={false}
+            onScroll={onScroll}
+            viewabilityConfig={viewabilityConfigRef.current}
             onViewableItemsChanged={onViewRef.current}
             ref={(ref) => {
               flatListRef.current = ref
             }}
           />
-          <View
-            style={{
-              paddingHorizontal: 24,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <TouchableOpacity onPress={() => onSkip()} style={{ padding: 16 }}>
-              <Text style={{ color: '#fff' }}>Skip</Text>
+          <View style={style.carouselPaginationContainer}>
+            <TouchableOpacity onPress={() => completeTutorial()} style={style.carouselButton}>
+              <Text style={style.carouselButtonText}>Skip</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => onNext()} style={{ padding: 16 }}>
-              <Text style={{ color: '#fff' }}>Next</Text>
-            </TouchableOpacity>
+            <Pagination
+              pages={slides}
+              activeIndex={currentIndex}
+              scrollX={scrollX}
+              next={() => activateNextStep()}
+              previous={() => completeTutorial()}
+              style={paginationStyle}
+            />
+            {isLastStepActive ? (
+              <TouchableOpacity onPress={() => completeTutorial()} style={style.carouselButton}>
+                <Text style={style.carouselButtonText}>Complete</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => activateNextStep()} style={style.carouselButton}>
+                <Text style={style.carouselButtonText}>Next</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
