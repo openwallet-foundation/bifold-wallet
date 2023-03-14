@@ -1,4 +1,11 @@
-import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@aries-framework/core'
+import {
+  Agent,
+  AgentMessage,
+  AutoAcceptProof,
+  ProofExchangeRecord,
+  ProofRequest,
+  V1RequestPresentationMessage,
+} from '@aries-framework/core'
 
 import { defaultProofRequestTemplates } from '../constants'
 import {
@@ -10,6 +17,18 @@ import {
 
 const protocolVersion = 'v1'
 const domain = 'http://aries-mobile-agent.com'
+
+/*
+ * Find Proof Request message in the storage by the given id
+ * */
+export const findProofRequestMessage = async (agent: Agent, id: string): Promise<ProofRequest | undefined> => {
+  const message = await agent.proofs.findRequestMessage(id)
+  if (message && message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
+    return message.indyProofRequest
+  } else {
+    return undefined
+  }
+}
 
 /*
  * Find Proof Request template for provided id
