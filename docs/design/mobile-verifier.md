@@ -4,15 +4,16 @@ This document contains a proposed design of adding verifier functionality to Ari
 
 ## Availability
 
-For Aries Bifold the Mobile Verifier functionality will be hidden under Developer mode by default.
-Also, by default, there will not be any templates set. It's the application's responsibility to define default templates if needed.
+By default, the Mobile Verifier functionality will be hidden under Developer mode.\
+Also, by default, there will not be any templates set in Aries Bifold.\
+It's the application's responsibility to define the set of proof request templates available by default if needed.
 
 > Changes in Aries Bifold
 
 ## Proof Request Templates location
 
-For the initial implementation, it's enough to have just a static collection of possible templates.
-In the future, we want to be able to add the ability to create new templates / add templates from a source/edit / delete/parametrize templates.
+For the initial implementation, it's enough to have just a static collection of possible templates (the format will be provided below).
+In the future, we want to be able to add the ability to create new templates / add templates from a source, edit, delete, parametrize templates.
 * How to store templates' collection?
     * Option 1: - temporary solution just to start UI development
         * Create: Define a constant variable in the mobile application
@@ -54,7 +55,7 @@ interface IndyProofRequestTemplatePayload {
     kind: 'indy'
     data: [
         {
-            schema: string, // For UI
+            schema: string, // It's convinient to group reqeusted information by the credential schema
             requestedAttributes?: [
                 {
                     name?: string,
@@ -95,12 +96,12 @@ interface ProofRequestTemplate {
 }
 ```
 
-* Option 2: Define template structure closely to the format of AFJ Proof API. We need to extract schema from `restrictions` and we need always group attributes/predicates by schema for each render?
+* Option 2: Define template structure closely to the format of AFJ Proof API. In this case, we will need to extract schema from `restrictions`.
  ```typescript
 interface IndyProofRequestTemplatePayload {
     kind: 'indy'
-    requestedAttributes?: any
-    requestedPredicates?: any
+    requestedAttributes?: any // all requested attributes
+    requestedPredicates?: any // all requested predicates
 }
 
 interface DifProofRequestTemplatePayload {
@@ -130,7 +131,7 @@ const tempalte = {
         kind: 'indy',
         data: [
             {
-                schema: 'Verified Person Schema',
+                schema: 'YXCtXE4YhVjULgj5hrk4ML:2:verified_person:0.1.0',
                 requestedAttributes: [
                     {
                         "name": "given_names",
@@ -154,13 +155,13 @@ const tempalte = {
 
 > Place of changes depends on the previous point 
 
-
 ## Proof Request parametrization
 
-We want to have an ability parametrize the proof request temple - for instance, change the value for a predicate.
+We want to have an ability parametrize some proof request temples - for instance, change the value for a predicate. 
 
-In order to achieve this we need to add some flag (for instance `parameterizable`) identifying that the predicate value can be changed.
+In order to achieve this we need to add some optional flag (for instance `parameterizable`) identifying that the predicate value can be changed.
 So the template will contain some default values for predicates but if the flag set as `true` corresponding predicate value can be changed by the user.
+Some predicates still can be predefined.
 
 ```typescript
 interface IndyRequestedPredicate {
@@ -173,7 +174,7 @@ interface IndyRequestedPredicate {
 }
 ```
 
-> Issue: As template name (Schema) may include value from predicate (like `19+ and Full name`) we either need use more generic titles or replace value in predicate (breaks )
+> Issue: Template title must not include predicate value and be mo generic 
 
 ## Proof Request Generation
 
@@ -226,6 +227,8 @@ We will need to update Aries Bifold Scanner to handle raw json messages -> pass 
 * In order to show the processing loader we need to new intermediate state `ProcessingPresentation` which will be raised by AFJ at the beginning of the Proof handler.  
 * Very likely the state will be changed from `ProcessingPresentation` to `PresentationReceived` very quickly making UI flash. In this case, do we need to add some delay on the loader view?
 
+> Issue: Created AFJ [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1379)
+
 > Changes in Aries Framework JavaScript
 > Changes in Aries Bifold
 
@@ -243,7 +246,9 @@ We will need to update Aries Bifold Scanner to handle raw json messages -> pass 
         data: <record>
       }
       ```
-* Some events will also contain `Open` button tapping which a User will able ti see the details of the event.
+* Some events will also contain `Open` button tapping which a User will be able ti see the details of the event.
+
+> Issue: Right now we are able to show only the latest event for a protocol instance (for instance `PROOF_RECEIVED` but not `PROOF_REQUESTED`). In order to show all event properly we need to do changes in Aries Framework JavaScript (see corresponding [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1380)).
 
 > Changes in Aries Bifold
 
@@ -251,6 +256,8 @@ We will need to update Aries Bifold Scanner to handle raw json messages -> pass 
 
 * In order to get the list of proofs received for a specific template we need to have an association between AFJ `ProofRecord` and `Template` records. It means that we need to add an optional `templateId` field to AFJ `ProofRecord` record.
 * After that, we will be able to query the history of proofs for a specific template.
+
+> Issue: Right now, we can use custom metadata of `ProofRecord`. But there is no efficient method to query records with specific metadata filter. We have to query all records and filer them on mobile side.
 
 > Changes in Aries Bifold
 
@@ -263,8 +270,8 @@ If yes - we will need to wrap the request message into an app deep link and shar
 
 ## Proof Request multilingual labels 
 
-We can define localization for attributes/predicates from predefined templates.
-But How to do it for dynamically added templates in the future? - TBD
+We can use OCA approach for resolving dynamic labels as it is done for credentials.
+Using that application can provide information for predefined templates.
 
 > Changes in Aries Bifold
 
