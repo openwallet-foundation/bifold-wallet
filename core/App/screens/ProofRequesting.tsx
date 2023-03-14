@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { isPresentationReceived, setTemplateReference } from '../../verifier/utils/proof'
+import { isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
 import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -102,7 +102,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
-        setTemplateReference(agent, result.proofRecord, templateId)
+        linkProofWithTemplate(agent, result.proofRecord, templateId)
       }
     } finally {
       setGenerating(false)

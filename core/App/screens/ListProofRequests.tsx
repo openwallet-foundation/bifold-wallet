@@ -13,6 +13,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
+import { testIdWithKey } from '../utils/testable'
 
 interface ProofRequestsCardProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
@@ -79,6 +80,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
     <TouchableOpacity
       style={style.card}
       onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id, connectionId })}
+      testID={testIdWithKey('ProofRequestsCard')}
     >
       <View style={style.textContainer}>
         <Text style={style.templateTitle} numberOfLines={1}>

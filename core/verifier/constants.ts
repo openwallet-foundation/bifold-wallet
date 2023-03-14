@@ -150,3 +150,6 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
     },
   },
 ]
+
+export const protocolVersion = 'v1'
+export const domain = 'http://aries-mobile-agent.com'

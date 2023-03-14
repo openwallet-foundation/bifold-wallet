@@ -14,7 +14,7 @@ export interface FieldParams {
 }
 
 export interface AttributeParams extends FieldParams {
-  value?: string | number | null
+  value: string | number | null
   revealed?: boolean
 }
 
@@ -51,7 +51,7 @@ export class Field {
 }
 
 export class Attribute extends Field {
-  public value?: string | number | null
+  public value: string | number | null
   public revealed?: boolean
 
   public constructor(params: AttributeParams) {
