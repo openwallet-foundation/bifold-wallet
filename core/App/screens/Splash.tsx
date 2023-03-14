@@ -1,6 +1,7 @@
 import {
   Agent,
   AutoAcceptCredential,
+  AutoAcceptProof,
   ConsoleLogger,
   HttpOutboundTransport,
   LogLevel,
@@ -161,6 +162,7 @@ const Splash: React.FC = () => {
             walletConfig: { id: credentials.id, key: credentials.key },
             autoAcceptConnections: true,
             autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
+            autoAcceptProofs: AutoAcceptProof.ContentApproved,
             logger: new ConsoleLogger(LogLevel.trace),
             indyLedgers,
             connectToIndyLedgersOnStartup: true,

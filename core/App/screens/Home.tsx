@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
+import { isPresentationReceived } from '../../verifier/utils/proof'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useConfiguration } from '../contexts/configuration'
@@ -109,8 +110,8 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       component = <NotificationListItem notificationType={notificationType} notification={item} />
     } else if (item.type === 'ProofRecord' && item.state === ProofState.RequestReceived) {
       component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-    } else if (item.type === 'ProofRecord' && item.state === ProofState.Done) {
-      component = <NotificationListItem notificationType={NotificationType.ProofRequestDone} notification={item} />
+    } else if (item.type === 'ProofRecord' && isPresentationReceived(item)) {
+      component = <NotificationListItem notificationType={NotificationType.Proof} notification={item} />
     } else {
       component = <NotificationListItem notificationType={NotificationType.Custom} notification={item} />
     }

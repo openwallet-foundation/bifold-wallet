@@ -6,7 +6,8 @@ import {
 } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 
-import { CredentialMetadata, customMetadata, ProofCustomMetadata, ProofMetadata } from '../types/metadata'
+import { ProofCustomMetadata, ProofMetadata } from '../../verifier/types/metadata'
+import { CredentialMetadata, customMetadata } from '../types/metadata'
 
 interface Notifications {
   total: number
@@ -16,12 +17,14 @@ interface Notifications {
 export const useNotifications = (): Notifications => {
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofsRequested = useProofByState(ProofState.RequestReceived)
-  const proofsDone = useProofByState(ProofState.Done).filter((proof: ProofExchangeRecord) => {
-    if (!proof.isVerified) return false
+  const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived]).filter(
+    (proof: ProofExchangeRecord) => {
+      if (proof.isVerified === undefined) return false
 
-    const metadata = proof.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
-    return !metadata?.details_seen
-  })
+      const metadata = proof.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
+      return !metadata?.details_seen
+    }
+  )
   const revoked = useCredentialByState(CredentialState.Done).filter((cred: CredentialRecord) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const metadata = cred!.metadata.get(CredentialMetadata.customMetadata) as customMetadata
