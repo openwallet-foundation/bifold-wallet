@@ -6,7 +6,7 @@ import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { IndyProofRequestTemplatePayloadData, ProofRequestType } from '../../verifier/types/proof-reqeust-template'
-import { setTemplateReference } from '../../verifier/utils/proof'
+import { linkProofWithTemplate } from '../../verifier/utils/proof'
 import { getProofRequestTemplate, sendProofRequest } from '../../verifier/utils/proof-request'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useConfiguration } from '../contexts/configuration'
@@ -238,7 +238,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       // Send to specific contact and redirect to the chat with him
       sendProofRequest(agent, templateId, connectionId, customPredicateValues).then((result) => {
         if (result?.proofRecord) {
-          setTemplateReference(agent, result.proofRecord, templateId)
+          linkProofWithTemplate(agent, result.proofRecord, templateId)
         }
       })
 

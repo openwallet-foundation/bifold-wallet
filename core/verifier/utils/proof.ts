@@ -2,62 +2,17 @@ import { Agent, ProofExchangeRecord, ProofIdentifier, ProofState } from '@aries-
 import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
 
 import { ProofMetadata } from '../types/metadata'
-
-export interface MissingAttribute {
-  name: string
-}
-
-export interface SharedAttribute {
-  name: string
-  value: string
-  identifiers: ProofIdentifier
-}
-
-export interface SharedGroupedAttribute {
-  name: string
-  value: string
-}
-
-export interface SharedAttributesGroup {
-  attributes: Array<SharedGroupedAttribute>
-  identifiers: ProofIdentifier
-}
-
-export interface ResolvedPredicate {
-  name: string
-  predicateType: string
-  predicateValue: number
-  identifiers: ProofIdentifier
-}
-
-export interface UnresolvedPredicate {
-  name: string
-  predicateType: string
-  predicateValue: number
-}
-
-export class ParsedIndyProof {
-  public sharedAttributes: Array<SharedAttribute>
-  public sharedAttributeGroups: Array<SharedAttributesGroup>
-  public resolvedPredicates: Array<ResolvedPredicate>
-  public unresolvedAttributes: Array<MissingAttribute>
-  public unresolvedAttributeGroups: Array<Array<MissingAttribute>>
-  public unresolvedPredicates: Array<UnresolvedPredicate>
-
-  public constructor() {
-    this.sharedAttributes = []
-    this.sharedAttributeGroups = []
-    this.resolvedPredicates = []
-    this.unresolvedAttributes = []
-    this.unresolvedAttributeGroups = []
-    this.unresolvedPredicates = []
-  }
-}
+import {
+  CredentialSharedProofData,
+  GroupedSharedProofData,
+  GroupedSharedProofDataItem,
+  ParsedIndyProof,
+} from '../types/proof'
 
 /*
  * Extract identifiers from indy proof
  * */
-const getProofIdentifiers = (proof: IndyProof, proofIndex: number): ProofIdentifier => {
+export const getProofIdentifiers = (proof: IndyProof, proofIndex: number): ProofIdentifier => {
   const identifiers = proof.identifiers[proofIndex]
   if (!identifiers) {
     throw new Error('Invalid indy proof data')
@@ -140,21 +95,6 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
   return result
 }
 
-export class CredentialSharedProofData {
-  public sharedAttributes: Array<SharedAttribute>
-  public sharedAttributeGroups: Array<SharedAttributesGroup>
-  public resolvedPredicates: Array<ResolvedPredicate>
-
-  public constructor() {
-    this.sharedAttributes = []
-    this.sharedAttributeGroups = []
-    this.resolvedPredicates = []
-  }
-}
-
-export type GroupedSharedProofDataItem = { data: CredentialSharedProofData; identifiers: ProofIdentifier }
-export type GroupedSharedProofData = Map<string, GroupedSharedProofDataItem>
-
 /*
  * Group parsed indy proof data ( returned from `parseIndyProof`) by credential definition id
  * */
@@ -211,7 +151,7 @@ export const isPresentationReceived = (record: ProofExchangeRecord) => {
 /*
  * Mark Proof record as viewed
  * */
-export const markAsViewed = async (agent: Agent, record: ProofExchangeRecord) => {
+export const markProofAsViewed = async (agent: Agent, record: ProofExchangeRecord) => {
   record.metadata.set(ProofMetadata.customMetadata, { ...record.metadata.data.customMetadata, details_seen: true })
   return agent.proofs.update(record)
 }
@@ -219,7 +159,7 @@ export const markAsViewed = async (agent: Agent, record: ProofExchangeRecord) =>
 /*
  * Add template reference to Proof Exchange record
  * */
-export const setTemplateReference = async (agent: Agent, record: ProofExchangeRecord, templateId: string) => {
+export const linkProofWithTemplate = async (agent: Agent, record: ProofExchangeRecord, templateId: string) => {
   record.metadata.set(ProofMetadata.customMetadata, {
     ...record.metadata.data.customMetadata,
     proof_request_template_id: templateId,

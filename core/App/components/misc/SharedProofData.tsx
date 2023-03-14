@@ -3,12 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native'
 
-import {
-  getProofData,
-  GroupedSharedProofData,
-  GroupedSharedProofDataItem,
-  groupSharedProofDataByCredential,
-} from '../../../verifier/utils/proof'
+import { GroupedSharedProofData, GroupedSharedProofDataItem } from '../../../verifier/types/proof'
+import { getProofData, groupSharedProofDataByCredential } from '../../../verifier/utils/proof'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CardLayoutOverlay11, CredentialOverlay, resolveBundle } from '../../types/oca'
