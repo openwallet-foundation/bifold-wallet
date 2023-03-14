@@ -8,6 +8,7 @@ import {
 } from '@aries-framework/core'
 
 import { defaultProofRequestTemplates } from '../constants'
+import { ProofMetadata } from '../types/metadata'
 import {
   IndyRequestedAttribute,
   IndyRequestedPredicate,

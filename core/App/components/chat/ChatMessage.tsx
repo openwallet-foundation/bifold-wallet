@@ -13,15 +13,14 @@ export enum Role {
 }
 
 export interface ChatMessageProps {
-  onActionButtonTap: (message: IChatMessage) => void
   messageProps: React.ComponentProps<typeof Message>
 }
 
 export interface IChatMessage extends IMessage {
-  renderText: () => JSX.Element
-  record: any
+  renderEvent: () => JSX.Element
   createdAt: Date
   withDetails?: boolean
+  onDetails?: () => void
 }
 
 const MessageTime: React.FC<{ message: IChatMessage }> = ({ message }) => {
@@ -42,7 +41,7 @@ const MessageIcon: React.FC = () => {
   )
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ onActionButtonTap, messageProps }) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
   const { t } = useTranslation()
   const { ChatTheme: theme } = useTheme()
 
@@ -63,7 +62,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ onActionButtonTap, mes
         <Bubble
           {...messageProps}
           renderUsernameOnMessage={false}
-          renderMessageText={() => message.renderText()}
+          renderMessageText={() => message.renderEvent()}
           containerStyle={{
             left: {
               margin: 0,
@@ -85,7 +84,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ onActionButtonTap, mes
         />
         {message.withDetails && (
           <TouchableOpacity
-            onPress={() => onActionButtonTap(message)}
+            onPress={() => {
+              if (message.onDetails) message.onDetails()
+            }}
             style={{
               ...theme.openButtonStyle,
             }}

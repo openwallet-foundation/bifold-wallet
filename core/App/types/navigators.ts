@@ -18,6 +18,7 @@ export enum Screens {
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
+  ProofRequestUsageHistory = 'Proof Request Usage History',
   ProofRequestAttributeDetails = 'Proof Request Attribute Details',
   Settings = 'Settings',
   Language = 'Language',
@@ -34,8 +35,8 @@ export enum Screens {
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofRequests = 'Proof Requests',
-  ProofRequesting = 'ProofRequesting',
-  ProofDetails = 'ProofDetails',
+  ProofRequesting = 'Proof Requesting',
+  ProofDetails = 'Proof Details',
 }
 
 export enum Stacks {
@@ -95,6 +96,7 @@ export type ProofRequestsStackParams = {
   [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
+  [Screens.ProofRequestUsageHistory]: { templateId: string }
 }
 
 export type CredentialStackParams = {

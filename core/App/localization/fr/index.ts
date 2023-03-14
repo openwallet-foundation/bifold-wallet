@@ -389,6 +389,7 @@ const translation = {
         "CredentialOffer": "Offre de justificatif",
         "ProofRequest": "Demande de preuve",
         "ProofRequestAttributeDetails": "Détails des attributs de la demande de preuve",
+        "ProofDetails": "Détails de la preuve",
         "Settings": "Paramètres",
         "Language": "Langue",
         "Contacts": "Contacts",
@@ -445,6 +446,14 @@ const translation = {
         "SendThisProofRequest": "Envoyer cette demande de justificatif",
         "SendProofRequest": "Envoyer une demande de preuve",
         "EmptyList": "Sua carteira está vazia. Seus modelos de solicitação de prova serão adicionados aqui.",
+        "ShowTemplateUsageHistory": "Afficher l'historique d'utilisation",
+        "RequestSent": "Demande de présentation envoyée",
+        "PresentationDeclined": "Demande de présentation refusée",
+        "PresentationReceived": "Présentation reçue",
+        "PresentationFailed": "La présentation a échoué",
+        "PresentationFrom": "Depuis",
+        "PresentationState": "État",
+        "ConnectionlessPresentation": "Sans connexion",
     }
 }
 export default translation
