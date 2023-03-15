@@ -1,4 +1,9 @@
-import { buildProofRequestDataForTemplate, buildProofRequestDataForTemplateId } from '../../utils/proof-request'
+import {
+  buildProofRequestDataForTemplate,
+  buildProofRequestDataForTemplateId,
+  hasPredicates,
+  isParameterizable,
+} from '../../utils/proof-request'
 import SpyInstance = jest.SpyInstance
 import { defaultProofRequestTemplates } from '../../constants'
 
@@ -31,6 +36,16 @@ describe('Helpers', () => {
     const templateId = defaultProofRequestTemplates[0].id
     const proofRequest = buildProofRequestDataForTemplateId(templateId)
     expect(proofRequest).toMatchSnapshot()
+  })
+
+  test('Check if proof has predicates', async () => {
+    expect(hasPredicates(defaultProofRequestTemplates[0])).toBeFalsy()
+    expect(hasPredicates(defaultProofRequestTemplates[1])).toBeTruthy()
+  })
+
+  test('Check if proof parameterizable', async () => {
+    expect(isParameterizable(defaultProofRequestTemplates[0])).toBeFalsy()
+    expect(isParameterizable(defaultProofRequestTemplates[5])).toBeTruthy()
   })
 
   afterAll(() => {

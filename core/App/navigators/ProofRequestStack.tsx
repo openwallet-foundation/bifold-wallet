@@ -2,13 +2,16 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
 import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
 import ProofDetails from '../screens/ProofDetails'
 import ProofRequestDetails from '../screens/ProofRequestDetails'
+import ProofRequestUsageHistory from '../screens/ProofRequestUsageHistory'
 import ProofRequesting from '../screens/ProofRequesting'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -34,13 +37,41 @@ const ProofRequestStack: React.FC = () => {
       <Stack.Screen
         name={Screens.ProofRequesting}
         component={ProofRequesting}
-        options={() => ({
+        options={({ navigation }) => ({
           title: '',
+          headerLeft: () => (
+            <HeaderLeftBack
+              title=""
+              icon="arrow-left"
+              size={26}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => navigation.navigate(Screens.ProofRequests, {})}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name={Screens.ProofDetails}
         component={ProofDetails}
+        options={({ navigation }) => ({
+          title: '',
+          headerLeft: () => (
+            <HeaderLeftBack
+              title=""
+              icon="arrow-left"
+              size={26}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => navigation.navigate(Screens.ProofRequests, {})}
+            />
+          ),
+          headerRight: () => <HeaderRightHome />,
+        })}
+      />
+      <Stack.Screen
+        name={Screens.ProofRequestUsageHistory}
+        component={ProofRequestUsageHistory}
         options={() => ({
           title: '',
           headerRight: () => <HeaderRightHome />,

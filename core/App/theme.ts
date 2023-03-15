@@ -419,6 +419,9 @@ export const ListItems = StyleSheet.create({
   requestTemplateIcon: {
     color: ColorPallet.grayscale.black,
   },
+  requestTemplateDate: {
+    color: ColorPallet.grayscale.mediumGrey,
+  },
 })
 
 export const TabTheme = {

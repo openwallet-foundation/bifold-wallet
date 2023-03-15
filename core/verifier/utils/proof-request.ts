@@ -1,6 +1,13 @@
-import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@aries-framework/core'
+import {
+  Agent,
+  AgentMessage,
+  AutoAcceptProof,
+  ProofExchangeRecord,
+  ProofRequest,
+  V1RequestPresentationMessage,
+} from '@aries-framework/core'
 
-import { defaultProofRequestTemplates } from '../constants'
+import { defaultProofRequestTemplates, domain, protocolVersion } from '../constants'
 import {
   IndyRequestedAttribute,
   IndyRequestedPredicate,
@@ -8,8 +15,17 @@ import {
   ProofRequestType,
 } from '../types/proof-reqeust-template'
 
-const protocolVersion = 'v1'
-const domain = 'http://aries-mobile-agent.com'
+/*
+ * Find Proof Request message in the storage by the given id
+ * */
+export const findProofRequestMessage = async (agent: Agent, id: string): Promise<ProofRequest | undefined> => {
+  const message = await agent.proofs.findRequestMessage(id)
+  if (message && message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
+    return message.indyProofRequest
+  } else {
+    return undefined
+  }
+}
 
 /*
  * Find Proof Request template for provided id
@@ -19,7 +35,7 @@ export const getProofRequestTemplate = (id: string): ProofRequestTemplate | unde
 }
 
 /*
- * Build Proof Request data from for provided template
+ * Build Proof Request data for provided template
  * */
 export const buildProofRequestDataForTemplate = (
   template: ProofRequestTemplate,
@@ -65,6 +81,9 @@ export const buildProofRequestDataForTemplate = (
   }
 }
 
+/*
+ * Build Proof Request data for provided template id
+ * */
 export const buildProofRequestDataForTemplateId = (
   templateId: string,
   customPredicateValues?: Record<string, Record<string, number>>

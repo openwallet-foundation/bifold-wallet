@@ -340,7 +340,7 @@ const translation = {
     "Details": "Details",
     "SendingTheInformationSecurely": "Sending the information securely",
     "InformationSentSuccessfully": "Information sent successfully",
-    "ProofRequestCompleted": "Information received",
+    "NewProof": "New Proof",
     "ProofRequestDeclined": "Proof request declined",
     "ConfirmDeclinedTitle": "Are you sure you want to decline this proof request?",
     "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
@@ -399,6 +399,7 @@ const translation = {
     "ProofRequest": "Proof Request",
     "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",
+    "ProofDetails": "Proof Details",
     "Settings": "Settings",
     "Language": "Language",
     "Contacts": "Contacts",
@@ -455,6 +456,16 @@ const translation = {
     "SendThisProofRequest": "Send this proof request",
     "SendProofRequest": "Send a Proof Request",
     "EmptyList": "Your wallet is empty. Your proof request templates will be added here.",
+    "ShowTemplateUsageHistory": "Show usage history",
+    "RequestSent": "Presentation request sent",
+    "PresentationDeclined": "Presentation request declined",
+    "PresentationReceived": "Presentation received",
+    "PresentationFailed": "Presentation failed",
+    "PresentationFrom": "From",
+    "PresentationState": "State",
+    "ConnectionlessPresentation": "Connectionless",
+    'TutorialStep1Title': 'Show this QR code to the other person',
+    'TutorialStep1Description': 'You will connect with the other person. They will receive a proof request.'
   }
 }
 

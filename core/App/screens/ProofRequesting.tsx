@@ -1,16 +1,19 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { ProofState } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
 import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
+import ProofRequestTutorialModal from '../components/modals/ProofRequestTutorialModal'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -93,27 +96,29 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
   })
 
-  const [generatingRequest, setGeneratingRequest] = useState(true)
+  const [store] = useStore()
+
+  const [showQRCodeTutorialModal, setShowQRCodeTutorialModal] = useState(false)
+  const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [invitationUrl, setInitationUrl] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
 
-  const record = recordId ? useProofById(recordId) : undefined
-
   const createProofRequest = useCallback(async () => {
     try {
       setMessage(undefined)
-      setGeneratingRequest(true)
+      setGenerating(true)
       const result = await createConnectionlessProofRequestInvitation(agent, templateId, predicateValues)
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
         setInitationUrl(result.invitationUrl)
+        linkProofWithTemplate(agent, result.proofRecord, templateId)
       }
     } finally {
-      setGeneratingRequest(false)
+      setGenerating(false)
     }
-  }, [agent, templateId, predicateValues])
+  }, [])
 
   const shareLink = useCallback(() => {
     if (invitationUrl && invitationUrl.trim().length > 0) {
@@ -124,25 +129,34 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }
   }, [invitationUrl])
 
-  useEffect(() => {
-    createProofRequest()
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      createProofRequest()
+    }, [])
+  )
+
+  const record = useProofById(recordId || '')
 
   useEffect(() => {
-    if (record && (record.state === ProofState.PresentationReceived || record.state === ProofState.Done)) {
+    if (record && isPresentationReceived(record)) {
       navigation.navigate(Screens.ProofDetails, { recordId: record.id })
     }
   }, [record])
 
+  useEffect(() => {
+    setShowQRCodeTutorialModal(!store.onboarding.didCompleteQRCodeTutorial)
+  }, [store.onboarding.didCompleteQRCodeTutorial])
+
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
+      <ProofRequestTutorialModal visible={showQRCodeTutorialModal} />
       <View style={styles.headerContainer}>
         <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
         <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>
       </View>
       <Text style={styles.interopText}>AIP 2.0</Text>
       <View style={styles.qrContainer}>
-        {generatingRequest && <LoadingIndicator />}
+        {generating && <LoadingIndicator />}
         {message && <QRRenderer value={message} size={qrSize} />}
       </View>
       <View style={styles.footerButtonsContainer}>
@@ -152,7 +166,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           testID={testIdWithKey('GenerateNewQR')}
           buttonType={ButtonType.Primary}
           onPress={() => createProofRequest()}
-          disabled={generatingRequest}
+          disabled={generating}
         />
         <View style={styles.footerSecondaryButton}>
           <Button
