@@ -36,12 +36,22 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
           "requestedAttributes": Array [
             Object {
               "name": "given_names",
+              "restrictions": Array [
+                Object {
+                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                },
+              ],
             },
             Object {
               "name": "family_name",
+              "restrictions": Array [
+                Object {
+                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                },
+              ],
             },
           ],
-          "schema": "YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0",
+          "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
         },
       ]
     }
@@ -130,7 +140,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               }
             }
           >
-            Unverified Person
+            Verified Person
           </Text>
           <View
             data={
@@ -143,7 +153,11 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                   "mimeType": undefined,
                   "name": "given_names",
                   "nonRevoked": undefined,
-                  "restrictions": undefined,
+                  "restrictions": Array [
+                    Object {
+                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                    },
+                  ],
                   "revealed": undefined,
                   "revoked": undefined,
                   "type": "Text",
@@ -157,7 +171,11 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                   "mimeType": undefined,
                   "name": "family_name",
                   "nonRevoked": undefined,
-                  "restrictions": undefined,
+                  "restrictions": Array [
+                    Object {
+                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                    },
+                  ],
                   "revealed": undefined,
                   "revoked": undefined,
                   "type": "Text",
