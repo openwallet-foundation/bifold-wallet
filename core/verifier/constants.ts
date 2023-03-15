@@ -12,13 +12,15 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
           requestedAttributes: [
             {
               name: 'given_names',
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
             },
             {
               name: 'family_name',
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
             },
           ],
         },
@@ -34,23 +36,19 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
           requestedAttributes: [
             {
-              name: 'given_names',
-            },
-            {
-              name: 'family_name',
+              names: ['given_names', 'family_name'],
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
             },
           ],
-        },
-        {
-          schema: '7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0',
           requestedPredicates: [
             {
-              name: 'age',
+              name: 'birthdate_dateint',
               predicateType: PredicateType.GreaterThanOrEqualTo,
-              predicateValue: 19,
+              predicateValue: 18,
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
             },
           ],
         },
@@ -66,12 +64,13 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: '7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
           requestedPredicates: [
             {
-              name: 'age',
+              name: 'birthdate_dateint',
               predicateType: PredicateType.GreaterThanOrEqualTo,
-              predicateValue: 19,
+              predicateValue: 18,
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
             },
           ],
         },
@@ -87,10 +86,11 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Practising Lawyer:0.0.1',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1',
           requestedAttributes: [
             {
-              names: ['given_names', 'family_name', 'ppid', 'practicing_status'],
+              names: ['Given Name', 'Surname', 'PPID', 'Member Status'],
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1' }],
             },
           ],
         },
@@ -106,21 +106,20 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
           requestedAttributes: [
             {
-              name: 'given_names',
-            },
-            {
-              name: 'family_name',
+              names: ['given_names', 'family_name'],
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
             },
           ],
         },
         {
-          schema: 'Trx3R1frdEzbn34Sp1jyX:2:Practising Lawyer:0.0.1',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1',
           requestedAttributes: [
             {
-              names: ['given_names', 'family_name', 'ppid', 'practicing_status'],
+              names: ['Given Name', 'Surname', 'PPID', 'Member Status'],
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1' }],
             },
           ],
         },
@@ -136,13 +135,14 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: '7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
           requestedPredicates: [
             {
-              name: 'age',
+              name: 'birthdate_dateint',
               predicateType: PredicateType.GreaterThanOrEqualTo,
-              predicateValue: 19,
+              predicateValue: 18,
               parameterizable: true,
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
             },
           ],
         },
