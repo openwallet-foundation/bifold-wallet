@@ -8,6 +8,7 @@ import { NetworkProvider } from '../../App/contexts/network'
 import configurationContext from '../contexts/configuration'
 import ListProofRequests from '../../App/screens/ListProofRequests'
 import { defaultProofRequestTemplates } from '../../verifier/constants'
+import ProofRequestDetails from '../../App/screens/ProofRequestDetails'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -22,29 +23,27 @@ jest.mock('react-native-localize', () => {})
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
+const navigation = useNavigation()
+
 describe('ListProofRequests Component', () => {
-  test('Renders correctly', async () => {
-    const tree = render(
+  const renderView = (params?: {}) => {
+    return render(
       <ConfigurationContext.Provider value={configurationContext}>
         <NetworkProvider>
-          <ListProofRequests navigation={useNavigation()} route={{ params: {} } as any} />
+          <ListProofRequests navigation={navigation as any} route={{ params: params || {} } as any} />
         </NetworkProvider>
       </ConfigurationContext.Provider>
     )
+  }
 
+  test('Renders correctly', async () => {
+    const tree = renderView()
     await act(async () => null)
-
     expect(tree).toMatchSnapshot()
   })
 
   test('Schema names are human readable', async () => {
-    const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkProvider>
-          <ListProofRequests navigation={useNavigation()} route={{ params: {} } as any} />
-        </NetworkProvider>
-      </ConfigurationContext.Provider>
-    )
+    const tree = renderView()
 
     const fullName = await tree.findByText('19+ and Full name', { exact: false })
     const overYearsOfAge = await tree.findByText(' 19 years of age', { exact: false })
@@ -54,15 +53,7 @@ describe('ListProofRequests Component', () => {
   })
 
   test('Pressing on a request template takes the user to a proof request template detail screen', async () => {
-    const navigation = useNavigation()
-
-    const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkProvider>
-          <ListProofRequests navigation={useNavigation()} route={{ params: {} } as any} />
-        </NetworkProvider>
-      </ConfigurationContext.Provider>
-    )
+    const tree = renderView()
 
     await act(async () => {
       const templateItemInstances = await tree.findAllByText('19+ and Full name', { exact: false })

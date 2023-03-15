@@ -34,24 +34,24 @@ describe('ProofRequestDetails Component', () => {
     jest.clearAllMocks()
   })
 
-  const renderView = (navigation: any, params: { templateId: string; connectionId?: string }) => {
+  const renderView = (params: { templateId: string; connectionId?: string }) => {
     return render(
       <ConfigurationContext.Provider value={configurationContext}>
         <NetworkProvider>
-          <ProofRequestDetails navigation={navigation} route={{ params: params } as any} />
+          <ProofRequestDetails navigation={navigation as any} route={{ params: params } as any} />
         </NetworkProvider>
       </ConfigurationContext.Provider>
     )
   }
 
   test('Renders correctly', async () => {
-    const tree = renderView(navigation, { templateId })
+    const tree = renderView({ templateId })
     await act(async () => null)
     expect(tree).toMatchSnapshot()
   })
 
   test('Schema and attributes are human readable', async () => {
-    const tree = renderView(navigation, { templateId })
+    const tree = renderView({ templateId })
 
     const schema = await tree.findAllByText('Full Name', { exact: false })
     const credential = await tree.findByText('Unverified Person', { exact: false })
@@ -65,7 +65,7 @@ describe('ProofRequestDetails Component', () => {
   })
 
   test('Renders correctly when not pass connection id and pressing on a use proof request takes the user to a proof requesting screen', async () => {
-    const tree = renderView(navigation, { templateId })
+    const tree = renderView({ templateId })
 
     await act(async () => {
       const useButton = tree.getByTestId(testIdWithKey('UseProofRequest'))
@@ -80,7 +80,7 @@ describe('ProofRequestDetails Component', () => {
   })
 
   test('Renders correctly when pass connection id and pressing on a send proof request takes the user to a chat', async () => {
-    const tree = renderView(navigation, { templateId, connectionId })
+    const tree = renderView({ templateId, connectionId })
 
     await act(async () => {
       const useButton = tree.getByTestId(testIdWithKey('SendThisProofRequest'))
