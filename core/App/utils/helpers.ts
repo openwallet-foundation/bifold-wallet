@@ -14,11 +14,14 @@ import {
 } from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
+import { WalletQuery } from 'indy-sdk-react-native'
 import moment from 'moment'
 import { parseUrl } from 'query-string'
 
 import { i18n } from '../localization/index'
 import { ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
+
+import { parseCredDefFromId } from './cred-def'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
@@ -198,6 +201,22 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
+const credNameFromRestriction = (queries?: WalletQuery[]): string => {
+  let schema_name = ''
+  let cred_def_id = ''
+  let schema_id = ''
+  queries?.forEach((query) => {
+    schema_name = (query?.schema_name as string) ?? schema_name
+    cred_def_id = (query?.cred_def_id as string) ?? cred_def_id
+    schema_id = (query?.schema_id as string) ?? schema_id
+  })
+  if (schema_name && (schema_name.toLowerCase() !== 'default' || schema_name.toLowerCase() !== 'credential')) {
+    return schema_name
+  } else {
+    return parseCredDefFromId(cred_def_id, schema_id)
+  }
+}
+
 export const processProofAttributes = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
   credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
@@ -214,8 +233,9 @@ export const processProofAttributes = (
   for (const key of Object.keys(retrievedCredentialAttributes)) {
     // The shift operation modifies the original input array, therefore make a copy
     const credential = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn).shift()
+    const credNameRestriction = credNameFromRestriction(requestedProofAttributes[key]?.restrictions)
 
-    const credName = key
+    const credName = credNameRestriction ?? key
     let revoked = false
     if (credential) {
       revoked = credential.revoked as boolean
@@ -266,7 +286,9 @@ export const processProofPredicates = (
     const { credentialId, revoked, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
     const { name, p_type: pType, p_value: pValue } = requestedProofPredicates[key]
 
-    const credName = key
+    const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)
+
+    const credName = credNameRestriction ?? key
 
     if (!processedPredicates[credName]) {
       processedPredicates[credName] = {
