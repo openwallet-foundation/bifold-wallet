@@ -4,10 +4,10 @@ import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Dimensions } from 'react-native'
+import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { isPresentationReceived, setTemplateReference } from '../../verifier/utils/proof'
+import { isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
 import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -86,10 +86,13 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       borderWidth: 10,
       borderRadius: 40,
     },
-    footerButton: {
+    footerButtonsContainer: {
       marginTop: 'auto',
       margin: 20,
       marginBottom: 10,
+    },
+    footerSecondaryButton: {
+      marginTop: 16,
     },
   })
 
@@ -98,6 +101,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const [showQRCodeTutorialModal, setShowQRCodeTutorialModal] = useState(false)
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
+  const [invitationUrl, setInitationUrl] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
 
   const createProofRequest = useCallback(async () => {
@@ -108,12 +112,22 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
-        setTemplateReference(agent, result.proofRecord, templateId)
+        setInitationUrl(result.invitationUrl)
+        linkProofWithTemplate(agent, result.proofRecord, templateId)
       }
     } finally {
       setGenerating(false)
     }
   }, [])
+
+  const shareLink = useCallback(() => {
+    if (invitationUrl && invitationUrl.trim().length > 0) {
+      Share.share({
+        title: t('ProofRequest.ProofRequest'),
+        message: invitationUrl,
+      })
+    }
+  }, [invitationUrl])
 
   useFocusEffect(
     useCallback(() => {
@@ -145,7 +159,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         {generating && <LoadingIndicator />}
         {message && <QRRenderer value={message} size={qrSize} />}
       </View>
-      <View style={styles.footerButton}>
+      <View style={styles.footerButtonsContainer}>
         <Button
           title={t('Verifier.GenerateNewQR')}
           accessibilityLabel={t('Verifier.GenerateNewQR')}
@@ -154,6 +168,16 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           onPress={() => createProofRequest()}
           disabled={generating}
         />
+        <View style={styles.footerSecondaryButton}>
+          <Button
+            title={t('Verifier.ShareLink')}
+            accessibilityLabel={t('Verifier.ShareLink')}
+            testID={testIdWithKey('ShareLink')}
+            buttonType={ButtonType.Secondary}
+            onPress={() => shareLink()}
+            disabled={generating}
+          />
+        </View>
       </View>
     </SafeAreaView>
   )
