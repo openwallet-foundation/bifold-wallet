@@ -4,7 +4,7 @@ import { ProofState } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Dimensions } from 'react-native'
+import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
@@ -83,15 +83,19 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       borderWidth: 10,
       borderRadius: 40,
     },
-    footerButton: {
+    footerButtonsContainer: {
       marginTop: 'auto',
       margin: 20,
       marginBottom: 10,
+    },
+    footerSecondaryButton: {
+      marginTop: 16,
     },
   })
 
   const [generatingRequest, setGeneratingRequest] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
+  const [invitationUrl, setInitationUrl] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
 
   const record = recordId ? useProofById(recordId) : undefined
@@ -104,11 +108,21 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
+        setInitationUrl(result.invitationUrl)
       }
     } finally {
       setGeneratingRequest(false)
     }
   }, [agent, templateId, predicateValues])
+
+  const shareLink = useCallback(() => {
+    if (invitationUrl && invitationUrl.trim().length > 0) {
+      Share.share({
+        title: t('ProofRequest.ProofRequest'),
+        message: invitationUrl,
+      })
+    }
+  }, [invitationUrl])
 
   useEffect(() => {
     createProofRequest()
@@ -131,7 +145,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         {generatingRequest && <LoadingIndicator />}
         {message && <QRRenderer value={message} size={qrSize} />}
       </View>
-      <View style={styles.footerButton}>
+      <View style={styles.footerButtonsContainer}>
         <Button
           title={t('Verifier.GenerateNewQR')}
           accessibilityLabel={t('Verifier.GenerateNewQR')}
@@ -140,6 +154,16 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           onPress={() => createProofRequest()}
           disabled={generatingRequest}
         />
+        <View style={styles.footerSecondaryButton}>
+          <Button
+            title={t('Verifier.ShareLink')}
+            accessibilityLabel={t('Verifier.ShareLink')}
+            testID={testIdWithKey('ShareLink')}
+            buttonType={ButtonType.Secondary}
+            onPress={() => shareLink()}
+            disabled={generatingRequest}
+          />
+        </View>
       </View>
     </SafeAreaView>
   )
