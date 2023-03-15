@@ -1,17 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  Animated,
-  FlatList,
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { Animated, Dimensions, FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import ScanShare from '../../assets/img/scan-share.svg'
 import { DispatchAction } from '../../contexts/reducers/store'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
@@ -21,11 +13,17 @@ interface ProofRequestTutorialModalProps {
   visible: boolean
 }
 
+const closeIconSize = 35
+const closeIconName = 'close'
+
+const { width: windowWidth } = Dimensions.get('window')
+const width = windowWidth - 12 * 2
+
 const useStyles = () => {
   const { ColorPallet, TextTheme, borderRadius } = useTheme()
 
   return StyleSheet.create({
-    centeredView: {
+    container: {
       flex: 1,
       paddingLeft: 12,
       paddingRight: 12,
@@ -33,32 +31,38 @@ const useStyles = () => {
     },
     modalView: {
       position: 'relative',
-      backgroundColor: ColorPallet.brand.modalSecondaryBackground,
-      borderRadius: borderRadius,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+      borderRadius,
+    },
+    itemContainer: {
+      width,
+      flexDirection: 'row',
     },
     carouselViewContainer: { flex: 1, padding: 24 },
-    headerContainer: {
-      marginBottom: 16,
-    },
     titleContainer: {
       marginBottom: 16,
-      marginRight: 16,
+      marginRight: 30,
     },
     titleText: {
       ...TextTheme.headingThree,
+      color: ColorPallet.grayscale.white,
+    },
+    descriptionContainer: {
+      marginVertical: 8,
     },
     description: {
       ...TextTheme.normal,
+      color: ColorPallet.grayscale.white,
     },
-    image: {
+    imageContainer: {
       width: '100%',
       height: 200,
       marginBottom: 16,
     },
     closeButton: {
       position: 'absolute',
-      top: 8,
-      right: 8,
+      top: 16,
+      right: 16,
       zIndex: 1,
     },
     closeButtonIcon: {
@@ -71,7 +75,7 @@ const useStyles = () => {
       justifyContent: 'space-between',
     },
     carouselButtonText: {
-      color: ColorPallet.brand.primary,
+      color: ColorPallet.grayscale.white,
     },
     carouselButton: {
       padding: 16,
@@ -109,38 +113,29 @@ const usePaginationStyles = () => {
       top: 0,
     },
     pagerNavigationButton: {
-      color: ColorPallet.brand.primary,
+      color: ColorPallet.grayscale.white,
       fontSize: 18,
       fontWeight: 'bold',
     },
   }
 }
 
-const closeIconSize = 35
-const closeIconName = 'close'
-
-const SlideContainer: React.FC = ({ children }) => {
-  const { width: windowWidth } = useWindowDimensions()
-  const width = useMemo(() => windowWidth - 12 * 2, [windowWidth])
-
-  return <View style={{ width, flexDirection: 'row' }}>{children}</View>
-}
-
 // It is temporary view, the content for slides will be clarified later.
 const CarouselViewPlaceholder = () => {
+  const { t } = useTranslation()
+  const { ColorPallet } = useTheme()
   const style = useStyles()
+
   return (
     <View style={style.carouselViewContainer}>
-      <View style={style.headerContainer}>
-        <View style={style.titleContainer}>
-          <Text style={style.titleText}>Show this QR code to the other person</Text>
-        </View>
+      <View style={style.titleContainer}>
+        <Text style={style.titleText}>{t('Verifier.TutorialStep1Title')}</Text>
       </View>
-      <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={style.image} />
-      <View>
-        <Text style={style.description} numberOfLines={3}>
-          You will connect with the other person. They will receive a proof request.
-        </Text>
+      <View style={style.imageContainer}>
+        <ScanShare stroke={ColorPallet.grayscale.white} />
+      </View>
+      <View style={style.descriptionContainer}>
+        <Text style={style.description}>{t('Verifier.TutorialStep1Description')}</Text>
       </View>
     </View>
   )
@@ -207,7 +202,7 @@ const ProofRequestTutorialModal: React.FC<ProofRequestTutorialModalProps> = ({ v
   const isLastStepActive = useMemo(() => currentIndex === slides.length - 1, [currentIndex, slides])
 
   const renderItems: React.FC<{ item: SlideListItem }> = ({ item }) => {
-    return <SlideContainer>{item.component}</SlideContainer>
+    return <View style={style.itemContainer}>{item.component}</View>
   }
 
   const onScroll = Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
@@ -222,13 +217,11 @@ const ProofRequestTutorialModal: React.FC<ProofRequestTutorialModalProps> = ({ v
 
   return (
     <Modal visible={modalVisible} transparent={true} onRequestClose={() => close()}>
-      <View style={style.centeredView}>
+      <View style={style.container}>
         <View style={style.modalView}>
-          <View style={style.closeButton}>
-            <TouchableOpacity style={style.closeButton} onPress={() => close()}>
-              <Icon name={closeIconName} size={closeIconSize} style={style.closeButtonIcon} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={style.closeButton} onPress={() => close()}>
+            <Icon name={closeIconName} size={closeIconSize} style={style.closeButtonIcon} />
+          </TouchableOpacity>
           <FlatList
             data={slides}
             renderItem={renderItems}

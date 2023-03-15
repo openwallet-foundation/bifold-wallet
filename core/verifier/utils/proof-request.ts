@@ -7,13 +7,16 @@ import {
   V1RequestPresentationMessage,
 } from '@aries-framework/core'
 
-import { defaultProofRequestTemplates, domain, protocolVersion } from '../constants'
+import { defaultProofRequestTemplates } from '../constants'
 import {
   IndyRequestedAttribute,
   IndyRequestedPredicate,
   ProofRequestTemplate,
   ProofRequestType,
 } from '../types/proof-reqeust-template'
+
+const protocolVersion = 'v1'
+const domain = 'http://aries-mobile-agent.com'
 
 /*
  * Find Proof Request message in the storage by the given id
@@ -35,7 +38,7 @@ export const getProofRequestTemplate = (id: string): ProofRequestTemplate | unde
 }
 
 /*
- * Build Proof Request data for provided template
+ * Build Proof Request data from for provided template
  * */
 export const buildProofRequestDataForTemplate = (
   template: ProofRequestTemplate,
@@ -81,9 +84,6 @@ export const buildProofRequestDataForTemplate = (
   }
 }
 
-/*
- * Build Proof Request data for provided template id
- * */
 export const buildProofRequestDataForTemplateId = (
   templateId: string,
   customPredicateValues?: Record<string, Record<string, number>>
