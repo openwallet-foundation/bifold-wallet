@@ -95,7 +95,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const [store] = useStore()
 
   const [showQRCodeTutorialModal, setShowQRCodeTutorialModal] = useState(false)
-  const [generatingRequest, setGeneratingRequest] = useState(true)
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
