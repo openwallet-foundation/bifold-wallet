@@ -1,6 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
@@ -112,11 +113,13 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     } finally {
       setGenerating(false)
     }
-  }, [agent, templateId, predicateValues])
-
-  useEffect(() => {
-    createProofRequest()
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      createProofRequest()
+    }, [])
+  )
 
   const record = useProofById(recordId || '')
 
