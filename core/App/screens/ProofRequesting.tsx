@@ -175,7 +175,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
             testID={testIdWithKey('ShareLink')}
             buttonType={ButtonType.Secondary}
             onPress={() => shareLink()}
-            disabled={generatingRequest}
+            disabled={generating}
           />
         </View>
       </View>
