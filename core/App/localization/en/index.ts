@@ -443,6 +443,7 @@ const translation = {
     "ZeroKnowledgeProof": "Zero-knowledge proof",
     "Parameterizable": "Parameterizable",
     "GenerateNewQR": "Generate new QR Code",
+    "ShareLink": "Share link",
     "ScanQR": "Scan this QR Code",
     "ScanQRComment": "with your digital wallet to receive a proof request.",
     "InformationReceived": "Information received",
