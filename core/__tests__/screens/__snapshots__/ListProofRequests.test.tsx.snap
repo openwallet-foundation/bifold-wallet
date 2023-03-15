@@ -30,12 +30,22 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                 "requestedAttributes": Array [
                   Object {
                     "name": "given_names",
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      },
+                    ],
                   },
                   Object {
                     "name": "family_name",
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      },
+                    ],
                   },
                 ],
-                "schema": "YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
               },
             ],
             "type": "indy",
@@ -51,23 +61,30 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
               Object {
                 "requestedAttributes": Array [
                   Object {
-                    "name": "given_names",
-                  },
-                  Object {
-                    "name": "family_name",
+                    "names": Array [
+                      "given_names",
+                      "family_name",
+                    ],
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      },
+                    ],
                   },
                 ],
-                "schema": "YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0",
-              },
-              Object {
                 "requestedPredicates": Array [
                   Object {
-                    "name": "age",
+                    "name": "birthdate_dateint",
                     "predicateType": ">=",
-                    "predicateValue": 19,
+                    "predicateValue": 18,
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      },
+                    ],
                   },
                 ],
-                "schema": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
               },
             ],
             "type": "indy",
@@ -83,12 +100,17 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
               Object {
                 "requestedPredicates": Array [
                   Object {
-                    "name": "age",
+                    "name": "birthdate_dateint",
                     "predicateType": ">=",
-                    "predicateValue": 19,
+                    "predicateValue": 18,
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      },
+                    ],
                   },
                 ],
-                "schema": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
               },
             ],
             "type": "indy",
@@ -105,14 +127,19 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                 "requestedAttributes": Array [
                   Object {
                     "names": Array [
-                      "given_names",
-                      "family_name",
-                      "ppid",
-                      "practicing_status",
+                      "Given Name",
+                      "Surname",
+                      "PPID",
+                      "Member Status",
+                    ],
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
+                      },
                     ],
                   },
                 ],
-                "schema": "Trx3R1frdEzbn34Sp1jyX:2:Practising Lawyer:0.0.1",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
               },
             ],
             "type": "indy",
@@ -128,26 +155,36 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
               Object {
                 "requestedAttributes": Array [
                   Object {
-                    "name": "given_names",
-                  },
-                  Object {
-                    "name": "family_name",
+                    "names": Array [
+                      "given_names",
+                      "family_name",
+                    ],
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      },
+                    ],
                   },
                 ],
-                "schema": "YXCtXE4YhVjULgj5hrk4ML:2:unverified_person:0.1.0",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
               },
               Object {
                 "requestedAttributes": Array [
                   Object {
                     "names": Array [
-                      "given_names",
-                      "family_name",
-                      "ppid",
-                      "practicing_status",
+                      "Given Name",
+                      "Surname",
+                      "PPID",
+                      "Member Status",
+                    ],
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
+                      },
                     ],
                   },
                 ],
-                "schema": "Trx3R1frdEzbn34Sp1jyX:2:Practising Lawyer:0.0.1",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
               },
             ],
             "type": "indy",
@@ -163,13 +200,18 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
               Object {
                 "requestedPredicates": Array [
                   Object {
-                    "name": "age",
+                    "name": "birthdate_dateint",
                     "parameterizable": true,
                     "predicateType": ">=",
-                    "predicateValue": 19,
+                    "predicateValue": 18,
+                    "restrictions": Array [
+                      Object {
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      },
+                    ],
                   },
                 ],
-                "schema": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College4091c115-ff01-4fc8-8a36-b5666a2b4e68:1.0.0",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
               },
             ],
             "type": "indy",
