@@ -11,6 +11,8 @@ import { createConnectionlessProofRequestInvitation } from '../../verifier/utils
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
+import ProofRequestTutorialModal from '../components/modals/ProofRequestTutorialModal'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -90,6 +92,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
   })
 
+  const [store] = useStore()
+
+  const [showQRCodeTutorialModal, setShowQRCodeTutorialModal] = useState(false)
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
@@ -121,8 +126,13 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }
   }, [record])
 
+  useEffect(() => {
+    setShowQRCodeTutorialModal(!store.onboarding.didCompleteQRCodeTutorial)
+  }, [store.onboarding.didCompleteQRCodeTutorial])
+
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
+      <ProofRequestTutorialModal visible={showQRCodeTutorialModal} />
       <View style={styles.headerContainer}>
         <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
         <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>

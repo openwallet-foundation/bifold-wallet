@@ -15,6 +15,7 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_COMPLETE_QR_CODE_TUTORIAL = 'onboarding/didCompleteQRCodeTutorial',
 }
 
 enum LockoutDispatchAction {
@@ -145,6 +146,18 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const onboarding = {
         ...state.onboarding,
         didCompleteTutorial: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_COMPLETE_QR_CODE_TUTORIAL: {
+      const onboarding = {
+        ...state.onboarding,
+        didCompleteQRCodeTutorial: true,
       }
       const newState = {
         ...state,
