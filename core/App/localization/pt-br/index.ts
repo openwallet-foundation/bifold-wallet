@@ -442,6 +442,8 @@ const translation = {
     "PresentationFrom": "De",
     "PresentationState": "Estada",
     "ConnectionlessPresentation": "Sem conexão",
+    'TutorialStep1Title': 'Mostrar este código QR para a outra pessoa',
+    'TutorialStep1Description': 'Você se conectará com a outra pessoa. Eles receberão uma solicitação de prova.'
   }
 }
 
