@@ -318,6 +318,7 @@ const translation = {
     "ConfirmDecline": "Yes, decline this credential",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Credential",
+    "Declined": "Declined",
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",
@@ -347,6 +348,7 @@ const translation = {
     "ConfirmDecline": "Yes, decline this proof request",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Proof",
+    "Declined": "Declined",
   },
   "Settings": {
     "Version": "Version",
@@ -435,6 +437,7 @@ const translation = {
     "ProofPresentationReceived": "has sent you information",
     "ProofRequestReceived": "received a proof request",
     "ProofRequestRejected": "rejected a proof request",
+    "ProofRequestRejectReceived": "rejected a proof request",
     "ProofRequestSatisfied": "shared information",
   },
   "Verifier": {
@@ -461,6 +464,7 @@ const translation = {
     "PresentationDeclined": "Presentation request declined",
     "PresentationReceived": "Presentation received",
     "PresentationFailed": "Presentation failed",
+    "ProofRequestRejected": "Presentation request rejected",
     "PresentationFrom": "From",
     "PresentationState": "State",
     "ConnectionlessPresentation": "Connectionless",

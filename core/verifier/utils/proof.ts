@@ -149,6 +149,13 @@ export const isPresentationReceived = (record: ProofExchangeRecord) => {
 }
 
 /*
+ * Check if a presentation failed
+ * */
+export const isPresentationFailed = (record: ProofExchangeRecord) => {
+  return record.state === ProofState.Abandoned
+}
+
+/*
  * Mark Proof record as viewed
  * */
 export const markProofAsViewed = async (agent: Agent, record: ProofExchangeRecord) => {
