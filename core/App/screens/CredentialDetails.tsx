@@ -309,7 +309,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
                 <Text style={[TextTheme.title, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
                   {t('CredentialDetails.IssuedBy') + ' '}
                 </Text>
-                <Text style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+                <Text
+                  style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}
+                  testID={testIdWithKey('IssuerName')}
+                >
                   {credentialConnectionLabel}
                 </Text>
               </Text>
@@ -318,7 +321,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
                   <Text style={[TextTheme.title, { color: ColorPallet.notification.errorText }]}>
                     {t('CredentialDetails.Revoked') + ': '}
                   </Text>
-                  <Text style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}>
+                  <Text
+                    style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}
+                    testID={testIdWithKey('RevokedDate')}
+                  >
                     {revocationDate}
                   </Text>
                 </Text>

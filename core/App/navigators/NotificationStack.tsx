@@ -10,7 +10,6 @@ import CredentialDetails from '../screens/CredentialDetails'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofDetails from '../screens/ProofDetails'
 import ProofRequest from '../screens/ProofRequest'
-import ProofRequestAttributeDetails from '../screens/ProofRequestAttributeDetails'
 import { NotificationStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
@@ -38,11 +37,6 @@ const NotificationStack: React.FC = () => {
         name={Screens.ProofRequest}
         component={ProofRequest}
         options={{ title: t('Screens.ProofRequest') }}
-      />
-      <Stack.Screen
-        name={Screens.ProofRequestAttributeDetails}
-        component={ProofRequestAttributeDetails}
-        options={{ title: t('Screens.ProofRequestAttributeDetails') }}
       />
       <Stack.Screen
         name={Screens.ProofDetails}
