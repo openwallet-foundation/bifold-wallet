@@ -28,6 +28,7 @@ const getPresentationStateLabel = (record: ProofExchangeRecord) => {
     case ProofState.PresentationReceived:
       return 'Verifier.PresentationReceived'
     case ProofState.Declined:
+    case ProofState.Abandoned:
       return 'Verifier.ProofRequestRejected'
     case ProofState.Done:
       return record.isVerified ? 'Verifier.PresentationReceived' : 'Verifier.PresentationFailed'

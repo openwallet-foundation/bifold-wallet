@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
+import { isPresentationFailed, isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
 import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -137,7 +137,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const record = useProofById(recordId || '')
 
   useEffect(() => {
-    if (record && isPresentationReceived(record)) {
+    if (record && (isPresentationReceived(record) || isPresentationFailed(record))) {
       navigation.navigate(Screens.ProofDetails, { recordId: record.id })
     }
   }, [record])
