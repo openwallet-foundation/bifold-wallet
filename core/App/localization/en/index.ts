@@ -318,6 +318,7 @@ const translation = {
     "ConfirmDecline": "Yes, decline this credential",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Credential",
+    "Declined": "Declined",
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",
@@ -347,6 +348,7 @@ const translation = {
     "ConfirmDecline": "Yes, decline this proof request",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Proof",
+    "Declined": "Declined",
   },
   "Settings": {
     "Version": "Version",
@@ -435,6 +437,7 @@ const translation = {
     "ProofPresentationReceived": "has sent you information",
     "ProofRequestReceived": "received a proof request",
     "ProofRequestRejected": "rejected a proof request",
+    "ProofRequestRejectReceived": "rejected a proof request",
     "ProofRequestSatisfied": "shared information",
   },
   "Verifier": {
@@ -444,6 +447,7 @@ const translation = {
     "ZeroKnowledgeProof": "Zero-knowledge proof",
     "Parameterizable": "Parameterizable",
     "GenerateNewQR": "Generate new QR Code",
+    "ShareLink": "Share link",
     "ScanQR": "Scan this QR Code",
     "ScanQRComment": "with your digital wallet to receive a proof request.",
     "InformationReceived": "Information received",
@@ -460,9 +464,12 @@ const translation = {
     "PresentationDeclined": "Presentation request declined",
     "PresentationReceived": "Presentation received",
     "PresentationFailed": "Presentation failed",
+    "ProofRequestRejected": "Presentation request rejected",
     "PresentationFrom": "From",
     "PresentationState": "State",
     "ConnectionlessPresentation": "Connectionless",
+    'TutorialStep1Title': 'Show this QR code to the other person',
+    'TutorialStep1Description': 'You will connect with the other person. They will receive a proof request.'
   }
 }
 

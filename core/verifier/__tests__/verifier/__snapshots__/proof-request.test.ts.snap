@@ -8,10 +8,15 @@ Object {
     "requestedAttributes": Map {
       "referent_0" => Object {
         "names": Array [
-          "given_names",
-          "family_name",
-          "ppid",
-          "practicing_status",
+          "Given Name",
+          "Surname",
+          "PPID",
+          "Member Status",
+        ],
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
+          },
         ],
       },
     },
@@ -29,9 +34,19 @@ Object {
     "requestedAttributes": Map {
       "referent_0" => Object {
         "name": "given_names",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          },
+        ],
       },
       "referent_1" => Object {
         "name": "family_name",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          },
+        ],
       },
     },
     "requestedPredicates": Map {},
@@ -47,17 +62,27 @@ Object {
     "nonce": "1677766511505",
     "requestedAttributes": Map {
       "referent_0" => Object {
-        "name": "given_names",
-      },
-      "referent_1" => Object {
-        "name": "family_name",
+        "names": Array [
+          "given_names",
+          "family_name",
+        ],
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          },
+        ],
       },
     },
     "requestedPredicates": Map {
-      "referent_2" => Object {
-        "name": "age",
+      "referent_1" => Object {
+        "name": "birthdate_dateint",
         "predicateType": ">=",
-        "predicateValue": 19,
+        "predicateValue": 18,
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          },
+        ],
       },
     },
     "version": "0.0.1",
@@ -73,9 +98,19 @@ Object {
     "requestedAttributes": Map {
       "referent_0" => Object {
         "name": "given_names",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          },
+        ],
       },
       "referent_1" => Object {
         "name": "family_name",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          },
+        ],
       },
     },
     "requestedPredicates": Map {},

@@ -90,11 +90,13 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
 
       if (agent && credential) {
         await agent.credentials.declineOffer(credential.id)
+        agent?.credentials.sendProblemReport({ credentialRecordId: proof.id, message: t('CredentialOffer.Declined') })
         return
       }
 
       if (agent && proof) {
         await agent.proofs.declineRequest(proof.id)
+        agent?.proofs.sendProblemReport(proof.id, t('ProofRequest.Declined')) // currently, fails for connectionless case
         return
       }
     } catch (err: unknown) {

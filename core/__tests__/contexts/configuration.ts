@@ -2,6 +2,7 @@ import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
 import { OCABundleResolver } from '../../App/types/oca'
+import { defaultProofRequestTemplates } from '../../verifier/constants'
 
 const configurationContext: ConfigurationContext = {
   pages: () => [],
@@ -40,6 +41,7 @@ const configurationContext: ConfigurationContext = {
     pageTitle: '',
   },
   useCustomNotifications: useNotifications,
+  proofRequestTemplates: defaultProofRequestTemplates,
 }
 
 export default configurationContext

@@ -86,6 +86,8 @@ const getProofEventRole = (record: ProofExchangeRecord) => {
       return Role.me
     case ProofState.Declined:
       return Role.me
+    case ProofState.Abandoned:
+      return Role.their
     case ProofState.Done:
       return record.isVerified !== undefined ? Role.their : Role.me
     default:
@@ -107,6 +109,8 @@ const getProofEventLabel = (record: ProofExchangeRecord) => {
       return 'Chat.ProofRequestSatisfied'
     case ProofState.Declined:
       return 'Chat.ProofRequestRejected'
+    case ProofState.Abandoned:
+      return 'Chat.ProofRequestRejectReceived'
     case ProofState.Done:
       return record.isVerified !== undefined ? 'Chat.ProofPresentationReceived' : 'Chat.ProofRequestSatisfied'
     default:

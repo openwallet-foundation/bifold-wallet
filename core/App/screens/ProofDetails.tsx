@@ -1,21 +1,23 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { ProofExchangeRecord } from '@aries-framework/core'
+import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { SvgXml } from 'react-native-svg'
 
-import { markAsViewed } from '../../verifier/utils/proof'
+import { ProofCustomMetadata, ProofMetadata } from '../../verifier/types/metadata'
+import { markProofAsViewed } from '../../verifier/utils/proof'
 import CheckInCircle from '../assets/img/check-in-circle.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useTheme } from '../contexts/theme'
-import { ProofRequestsStackParams, Screens, Stacks } from '../types/navigators'
+import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
@@ -88,6 +90,15 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
 
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!isHistory)
 
+  const onGenerateNew = useCallback(() => {
+    const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
+    if (metadata.proof_request_template_id) {
+      navigation.navigate(Screens.ProofRequesting, { templateId: metadata.proof_request_template_id })
+    } else {
+      navigation.navigate(Screens.ProofRequests, {})
+    }
+  }, [navigation])
+
   return (
     <View>
       <View style={styles.header}>
@@ -129,12 +140,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
               accessibilityLabel={t('Verifier.GenerateNewQR')}
               testID={testIdWithKey('GenerateNewQR')}
               buttonType={ButtonType.Secondary}
-              onPress={() => {
-                navigation?.getParent()?.navigate(Stacks.ProofRequestsStack, {
-                  screen: Screens.ProofRequests,
-                  params: { navigation },
-                })
-              }}
+              onPress={onGenerateNew}
             />
           </View>
         </View>
@@ -143,7 +149,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
   )
 }
 
-const UnverifiedProof: React.FC<UnverifiedProofProps> = () => {
+const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record }) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 
@@ -165,14 +171,24 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = () => {
       fontSize: 34,
       fontWeight: 'bold',
     },
+    headerDetails: {
+      color: ColorPallet.grayscale.white,
+      marginVertical: 10,
+      fontSize: 18,
+    },
   })
 
   return (
     <View>
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
-          <CheckInCircle {...{ height: 45, width: 45 }} />
-          <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
+          <Icon name="bookmark-remove" size={45} color={'white'} />
+          {record.state === ProofState.Abandoned && (
+            <Text style={styles.headerTitle}>{t('Verifier.PresentationDeclined')}</Text>
+          )}
+          {record.isVerified === false && (
+            <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
+          )}
         </View>
       </View>
     </View>
@@ -190,7 +206,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { agent } = useAgent()
 
   useEffect(() => {
-    if (agent) markAsViewed(agent, record)
+    if (agent) markProofAsViewed(agent, record)
   }, [])
 
   return (

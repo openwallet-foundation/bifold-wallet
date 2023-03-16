@@ -318,6 +318,7 @@ const translation = {
         "ConfirmDeclinedMessage": "Afin de recevoir à nouveau ce justificatif, vous devrez présenter une nouvelle demande auprès de l'émetteur.",
         "AbortDecline": "Non, revenir en arrière",
         "DeclineTitle": "Refuser le justificatif",
+        "Declined": "Diminué",
     },
     "ProofRequest": {
         "ProofRequest": "Demande de preuve",
@@ -340,6 +341,7 @@ const translation = {
         "InformationSentSuccessfully": "Informations envoyées avec succès",
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Decline Credential",
+        "Declined": "Diminué",
     },
     "Settings": {
         "Version": "Version",
@@ -426,6 +428,7 @@ const translation = {
         "ProofPresentationReceived": "vous a envoyé des informations",
         "ProofRequestReceived": "reçu une demande de justificatif",
         "ProofRequestRejected": "rejeté une demande de justificatif",
+        "ProofRequestRejectReceived": "a rejeté une demande de justificatif",
         "ProofRequestSatisfied": "informations partagées",
     },
     "Verifier": {
@@ -435,6 +438,7 @@ const translation = {
         "ZeroKnowledgeProof": "Preuve zéro connaissance",
         "Parameterizable": "Paramétrable",
         "GenerateNewQR": "Générer un nouveau code QR",
+        "ShareLink": "Lien de partage",
         "ScanQR": "Scannez ce QR Code",
         "ScanQRComment": "avec votre portefeuille numérique pour recevoir une demande de justificatif.",
         "InformationReceived": "Information reçue",
@@ -451,9 +455,12 @@ const translation = {
         "PresentationDeclined": "Demande de présentation refusée",
         "PresentationReceived": "Présentation reçue",
         "PresentationFailed": "La présentation a échoué",
+        "ProofRequestRejected": "Demande de présentation rejetée",
         "PresentationFrom": "Depuis",
         "PresentationState": "État",
         "ConnectionlessPresentation": "Sans connexion",
+        'TutorialStep1Title': 'Montrez ce code QR à l\'autre personne',
+        'TutorialStep1Description': 'Vous vous connecterez avec l\'autre personne. Ils recevront une demande de justificatif.'
     }
 }
 export default translation
