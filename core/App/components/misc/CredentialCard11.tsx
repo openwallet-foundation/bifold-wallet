@@ -165,7 +165,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   })
 
   useEffect(() => {
-    resolveBundle(OCABundleResolver, credential, i18n.language).then((bundle) => {
+    resolveBundle(OCABundleResolver, credential, i18n.language, undefined, {
+      credentialDefinitionId: credDefId,
+      schemaId: schemaId,
+    }).then((bundle) => {
       setOverlay({ ...overlay, ...bundle })
     })
   }, [credential])
