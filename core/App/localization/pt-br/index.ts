@@ -302,6 +302,7 @@ const translation = {
     "ConfirmDecline": "Sim, recusar esta credencial",
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Recusar Credencial",
+    "Declined": "Recusado",
   },
   "ProofRequest": {
     "ProofRequest": "Requisição de Prova",
@@ -331,6 +332,7 @@ const translation = {
     "ConfirmDecline": "Sim, recusar esta requisição de prova",
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Recusar Prova",
+    "Declined": "Recusado",
   },
   "Settings": {
     "Version": "Versão",
@@ -414,6 +416,7 @@ const translation = {
     "ProofPresentationReceived": "te enviou informações",
     "ProofRequestReceived": "recebeu uma solicitação de prova",
     "ProofRequestRejected": "rejeitou uma solicitação de prova",
+    "ProofRequestRejectReceived": "rejeitou um pedido de prova",
     "ProofRequestSatisfied": "informações compartilhadas",
   },
   "Verifier": {
@@ -440,6 +443,7 @@ const translation = {
     "PresentationDeclined": "Pedido de apresentação recusado",
     "PresentationReceived": "Apresentação recebida",
     "PresentationFailed": "Falha na apresentação",
+    "ProofRequestRejected": "Pedido de apresentação rejeitado",
     "PresentationFrom": "De",
     "PresentationState": "Estada",
     "ConnectionlessPresentation": "Sem conexão",
