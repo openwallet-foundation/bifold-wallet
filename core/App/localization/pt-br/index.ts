@@ -396,6 +396,7 @@ const translation = {
     "ProofRequests": "Solicitações de prova",
     "SendProofRequest": "Envie um pedido de prova",
     "ChooseProofRequest": "Escolha um pedido de prova",
+    "ProofRequestUsageHistory": "Proof Request Usage History",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",

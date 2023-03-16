@@ -414,6 +414,7 @@ const translation = {
     "ProofRequests": "Proof requests",
     "SendProofRequest": "Send a proof request",
     "ChooseProofRequest": "Choose a proof request",
+    "ProofRequestUsageHistory": "Proof Request Usage History",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
