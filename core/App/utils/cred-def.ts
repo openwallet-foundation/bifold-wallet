@@ -1,6 +1,6 @@
 import { CredentialMetadataKeys, CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 
-import { parseSchema, parseSchemaFromId, credentialSchema } from './schema'
+import { parseSchemaFromId, credentialSchema } from './schema'
 
 export function parseCredDefFromId(credDefId?: string, schemaId?: string): string {
   let name = 'Credential'
@@ -29,10 +29,5 @@ export function parsedCredDefNameFromCredential(credential: CredentialRecord): s
 }
 
 export function parsedCredDefName(credentialDefinitionId: string, schemaId: string): string {
-  let credDefName = parseCredDefName(credentialDefinitionId)
-  // if credDef name is `default` or `credential` use schema name instead
-  if (credDefName.toLocaleLowerCase() === 'default' || credDefName.toLowerCase() === 'credential') {
-    credDefName = parseSchema(schemaId).name
-  }
-  return credDefName
+  return parseCredDefFromId(credentialDefinitionId, schemaId)
 }

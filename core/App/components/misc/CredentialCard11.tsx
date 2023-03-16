@@ -165,41 +165,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   })
 
   useEffect(() => {
-    const resolveBundle = async () => {
-      let bundle = await OCABundleResolver.resolveByCredDefOrSchema(credDefId, schemaId, i18n.language)
-      let defaultBundle = await OCABundleResolver.resolveDefaultBundleByCredDefOrSchema(
-        credDefId,
-        schemaId,
-        credName,
-        i18n.language
-      )
-
-      if (credential && isValidIndyCredential(credential)) {
-        bundle = await OCABundleResolver.resolve(credential, i18n.language)
-        defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language)
-      }
-      return { bundle, defaultBundle }
-    }
-
-    const resolvePresentationFields = async () => {
-      let fields: Field[] = []
-      if (credential) {
-        fields = await OCABundleResolver.presentationFields(credential, i18n.language)
-      }
-      return { fields }
-    }
-
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.metaOverlay
-      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay as CardLayoutOverlay11
-      setOverlay({
-        ...overlay,
-        bundle: overlayBundle,
-        presentationFields: fields,
-        metaOverlay,
-        cardLayoutOverlay,
-      })
+    resolveBundle(OCABundleResolver, credential, i18n.language).then((bundle) => {
+      setOverlay({ ...overlay, ...bundle })
     })
   }, [credential])
 
