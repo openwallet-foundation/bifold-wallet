@@ -23,7 +23,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
     itemSeparator: {
       backgroundColor: ColorPallet.brand.primaryBackground,
       height: 1,
-      marginHorizontal: 25,
+      marginHorizontal: 16,
     },
   })
   const { records } = useConnections()
