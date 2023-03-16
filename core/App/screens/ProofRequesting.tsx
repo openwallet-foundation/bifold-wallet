@@ -86,13 +86,12 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       borderWidth: 10,
       borderRadius: 40,
     },
-    footerButtonsContainer: {
+    buttonContainer: {
       marginTop: 'auto',
-      margin: 20,
-      marginBottom: 10,
+      marginHorizontal: 20,
     },
-    footerSecondaryButton: {
-      marginTop: 16,
+    footerButton: {
+      marginBottom: 10,
     },
   })
 
@@ -159,22 +158,24 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         {generating && <LoadingIndicator />}
         {message && <QRRenderer value={message} size={qrSize} />}
       </View>
-      <View style={styles.footerButtonsContainer}>
-        <Button
-          title={t('Verifier.GenerateNewQR')}
-          accessibilityLabel={t('Verifier.GenerateNewQR')}
-          testID={testIdWithKey('GenerateNewQR')}
-          buttonType={ButtonType.Primary}
-          onPress={() => createProofRequest()}
-          disabled={generating}
-        />
-        <View style={styles.footerSecondaryButton}>
+      <View style={styles.buttonContainer}>
+        <View style={styles.footerButton}>
           <Button
             title={t('Verifier.ShareLink')}
             accessibilityLabel={t('Verifier.ShareLink')}
             testID={testIdWithKey('ShareLink')}
             buttonType={ButtonType.Secondary}
             onPress={() => shareLink()}
+            disabled={generating}
+          />
+        </View>
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Verifier.GenerateNewQR')}
+            accessibilityLabel={t('Verifier.GenerateNewQR')}
+            testID={testIdWithKey('GenerateNewQR')}
+            buttonType={ButtonType.Primary}
+            onPress={() => createProofRequest()}
             disabled={generating}
           />
         </View>
