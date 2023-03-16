@@ -59,7 +59,8 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
   }, [contact])
 
-  const contactLabelAbbr = useMemo(() => contact.theirLabel?.charAt(0).toUpperCase(), [contact])
+  const contactLabel = useMemo(() => contact.alias || contact.theirLabel, [contact])
+  const contactLabelAbbr = useMemo(() => contactLabel?.charAt(0).toUpperCase(), [contact])
 
   return (
     <TouchableOpacity onPress={() => navigateToContact()}>
@@ -74,7 +75,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
           )}
         </View>
         <View style={styles.contactNameContainer}>
-          <Text style={styles.contactNameText}>{contact.theirLabel}</Text>
+          <Text style={styles.contactNameText}>{contactLabel}</Text>
         </View>
         <View style={styles.timeContainer}>
           <Text>{formatTime(contact.createdAt)}</Text>
