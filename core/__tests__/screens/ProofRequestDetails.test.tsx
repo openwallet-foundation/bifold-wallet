@@ -54,7 +54,7 @@ describe('ProofRequestDetails Component', () => {
     const tree = renderView({ templateId })
 
     const schema = await tree.findAllByText('Full Name', { exact: false })
-    const credential = await tree.findByText('Unverified Person', { exact: false })
+    const credential = await tree.findByText('Verified Person', { exact: false })
     const givenNames = await tree.findByText('Given Names', { exact: false })
     const familyName = await tree.findByText('Family Name', { exact: false })
 

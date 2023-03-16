@@ -435,6 +435,7 @@ const translation = {
         "ZeroKnowledgeProof": "Preuve zéro connaissance",
         "Parameterizable": "Paramétrable",
         "GenerateNewQR": "Générer un nouveau code QR",
+        "ShareLink": "Lien de partage",
         "ScanQR": "Scannez ce QR Code",
         "ScanQRComment": "avec votre portefeuille numérique pour recevoir une demande de justificatif.",
         "InformationReceived": "Information reçue",

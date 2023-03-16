@@ -423,6 +423,7 @@ const translation = {
     "ZeroKnowledgeProof": "Prova de conhecimento Zero",
     "Parameterizable": "Parametrizável",
     "GenerateNewQR": "Gerar novo código QR",
+    "ShareLink": "Compartilhar link",
     "ScanQR": "Escaneie este código QR",
     "ScanQRComment": "com sua carteira digital para receber um pedido de comprovante.",
     "InformationReceived": "Informação recebida",
