@@ -174,6 +174,16 @@ const Splash: React.FC = () => {
         newAgent.registerOutboundTransport(httpTransport)
 
         await newAgent.initialize()
+
+        // NOTE: I'm not sure what the best place is to create the link secret. When we
+        // accept the first offer? When we initialize the agent?
+        const linkSecretIds = await newAgent.modules.anoncreds.getLinkSecretIds()
+        if (linkSecretIds.length === 0) {
+          await newAgent.modules.anoncreds.createLinkSecret({
+            setAsDefault: true,
+          })
+        }
+
         setAgent(newAgent)
         navigation.navigate(Stacks.TabStack as never)
       } catch (e: unknown) {

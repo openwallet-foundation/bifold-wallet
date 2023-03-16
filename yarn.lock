@@ -15,51 +15,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aries-framework/anoncreds-rs@npm:^0.4.0-alpha.71":
-  version: 0.4.0-alpha.71
-  resolution: "@aries-framework/anoncreds-rs@npm:0.4.0-alpha.71"
+"@aries-framework/anoncreds-rs@npm:^0.4.0-alpha.74":
+  version: 0.4.0-alpha.74
+  resolution: "@aries-framework/anoncreds-rs@npm:0.4.0-alpha.74"
   dependencies:
-    "@aries-framework/anoncreds": 0.4.0-alpha.71+a4204ef2
-    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
+    "@aries-framework/anoncreds": 0.4.0-alpha.74+0351eec5
+    "@aries-framework/core": 0.4.0-alpha.74+0351eec5
     "@hyperledger/anoncreds-shared": ^0.1.0-dev.9
     class-transformer: ^0.5.1
     class-validator: ^0.14.0
     rxjs: ^7.2.0
     tsyringe: ^4.7.0
-  checksum: 18ccd2e32574e5eb1e3178a5a97265e0f9f8782492a1815f82e197dc26b002cc6bbcc8a90729321e2bcbdfebff8e27bd44a08e84ae4b2099bf830573c3b025f2
+  checksum: ea05cac42f0df7938b0c2ab29ae3b39113af18fc494cea61f3f0003eecdfca47018014e8249079ae20504cc242eda2957240e9c011c2e067cb9ffe1091897db3
   languageName: node
   linkType: hard
 
-"@aries-framework/anoncreds@npm:0.4.0-alpha.71+a4204ef2, @aries-framework/anoncreds@npm:^0.4.0-alpha.71":
-  version: 0.4.0-alpha.71
-  resolution: "@aries-framework/anoncreds@npm:0.4.0-alpha.71"
+"@aries-framework/anoncreds@npm:0.4.0-alpha.74+0351eec5, @aries-framework/anoncreds@npm:^0.4.0-alpha.74":
+  version: 0.4.0-alpha.74
+  resolution: "@aries-framework/anoncreds@npm:0.4.0-alpha.74"
   dependencies:
-    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
+    "@aries-framework/core": 0.4.0-alpha.74+0351eec5
     bn.js: ^5.2.1
     class-transformer: 0.5.1
     class-validator: 0.13.1
-  checksum: 1f9ea3147460c1d65cb4c00513b58fb8020da87b29d573218ed65fafe14b3208063c6573852b06ac5ba4b9fbbcc787e41c1c55da68bb9d4b4805363bef074fe5
+  checksum: cd49c8b232077532494ebd74236a658ebeeeea514975c48575fffeb76db8bc94e7b1d4654a4fe4bba7052957b8f6e7db011250564cc02b73876310e9fa4e1bc2
   languageName: node
   linkType: hard
 
-"@aries-framework/askar@npm:^0.4.0-alpha.71":
-  version: 0.4.0-alpha.71
-  resolution: "@aries-framework/askar@npm:0.4.0-alpha.71"
+"@aries-framework/askar@npm:^0.4.0-alpha.74":
+  version: 0.4.0-alpha.74
+  resolution: "@aries-framework/askar@npm:0.4.0-alpha.74"
   dependencies:
-    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
+    "@aries-framework/core": 0.4.0-alpha.74+0351eec5
     "@hyperledger/aries-askar-shared": ^0.1.0-dev.4
     bn.js: ^5.2.1
     class-transformer: ^0.5.1
     class-validator: ^0.14.0
     rxjs: ^7.2.0
     tsyringe: ^4.7.0
-  checksum: be3c87185004bb41e23832c588dfb860033548325a796761f9391672ceb83042417c88760f51ac0a3dfc93b76ffa005ea91538105e5183780b4cb9c97571dcf8
+  checksum: 5424a90197c08f6248cd60a7303935061b7caae25c040a0bb3061760909e6761a993f4d5b555c87c5e5df0465b698c202d477c895d42ca5ea5b2cdcba5dea4d1
   languageName: node
   linkType: hard
 
-"@aries-framework/core@npm:0.4.0-alpha.71+a4204ef2, @aries-framework/core@npm:^0.4.0-alpha.71":
-  version: 0.4.0-alpha.71
-  resolution: "@aries-framework/core@npm:0.4.0-alpha.71"
+"@aries-framework/core@npm:0.4.0-alpha.74+0351eec5, @aries-framework/core@npm:^0.4.0-alpha.74":
+  version: 0.4.0-alpha.74
+  resolution: "@aries-framework/core@npm:0.4.0-alpha.74"
   dependencies:
     "@digitalcredentials/jsonld": ^5.2.1
     "@digitalcredentials/jsonld-signatures": ^9.3.1
@@ -87,18 +87,18 @@ __metadata:
     uuid: ^8.3.2
     varint: ^6.0.0
     web-did-resolver: ^2.0.8
-  checksum: d74659e54b36cd5f6c4ec19d91203f3e1173e7deb51a5f09ef2d247cef6d0989fad02a6f61eca0a4cf752085d53a92b2faec701e36ee91c859c6d79c0ad7c19f
+  checksum: 2e558fd3f63e21a6cc075e73df422cae2a6076a21628a0cdfc4fbe6ee5e11f7bb2762358554adb6950dacf051a9eea895b29182b3048c99401edcedf89395a36
   languageName: node
   linkType: hard
 
-"@aries-framework/indy-vdr@npm:^0.4.0-alpha.71":
-  version: 0.4.0-alpha.71
-  resolution: "@aries-framework/indy-vdr@npm:0.4.0-alpha.71"
+"@aries-framework/indy-vdr@npm:^0.4.0-alpha.74":
+  version: 0.4.0-alpha.74
+  resolution: "@aries-framework/indy-vdr@npm:0.4.0-alpha.74"
   dependencies:
-    "@aries-framework/anoncreds": 0.4.0-alpha.71+a4204ef2
-    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
+    "@aries-framework/anoncreds": 0.4.0-alpha.74+0351eec5
+    "@aries-framework/core": 0.4.0-alpha.74+0351eec5
     "@hyperledger/indy-vdr-shared": ^0.1.0-dev.10
-  checksum: 79267dd8080a537cee3bf3f55e210fdfe28027f3c1fe2c0af241c50f486042c016f9024010638440089c9e007a5a65c1fb69a1cac0e46b22e9a197175ebd9122
+  checksum: 94c6e367a1faa0d9c8d61c7b5c822ebd32d1a7a4e5a88712f62fb60e175862a76bb7d4a435368742483ea52c268881c3e8afa93ce489781e472a723eecb85c36
   languageName: node
   linkType: hard
 
@@ -114,18 +114,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aries-framework/react-native@npm:^0.4.0-alpha.71":
-  version: 0.4.0-alpha.71
-  resolution: "@aries-framework/react-native@npm:0.4.0-alpha.71"
+"@aries-framework/react-native@npm:^0.4.0-alpha.74":
+  version: 0.4.0-alpha.74
+  resolution: "@aries-framework/react-native@npm:0.4.0-alpha.74"
   dependencies:
-    "@aries-framework/core": 0.4.0-alpha.71+a4204ef2
+    "@aries-framework/core": 0.4.0-alpha.74+0351eec5
     "@azure/core-asynciterator-polyfill": ^1.0.0
     "@types/react-native": ^0.64.10
     events: ^3.3.0
   peerDependencies:
     react-native-fs: ^2.18.0
     react-native-get-random-values: ^1.7.0
-  checksum: 957c07a0e7e1f80ba7169b995af8499512f5da57fd129b765f6c8370f38a2aa8f72e601fd9fc48268c99924271490ae9da452d2daed0789cc3729278b7c4f2f9
+  checksum: 0ba1b8af6517e687c1fee2df77054ca2d9619d24e1ab69211bcfbba94fe8bd420a191e374b9c104b746e193b1c592fe8fe9188a20e9eb46e386cd996ad0eaf83
   languageName: node
   linkType: hard
 
@@ -2244,45 +2244,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-react-native@file:./hyperledger-anoncreds-react-native-v0.1.0-dev.9.tgz::locator=bifold-main%40workspace%3A.":
-  version: 0.1.0-dev.9
-  resolution: "@hyperledger/anoncreds-react-native@file:./hyperledger-anoncreds-react-native-v0.1.0-dev.9.tgz::locator=bifold-main%40workspace%3A."
+"@hyperledger/anoncreds-react-native@npm:^0.1.0-dev.10, @hyperledger/anoncreds-react-native@npm:^0.1.0-dev.9":
+  version: 0.1.0-dev.10
+  resolution: "@hyperledger/anoncreds-react-native@npm:0.1.0-dev.10"
   dependencies:
-    "@hyperledger/anoncreds-shared": 0.1.0-dev.9
+    "@hyperledger/anoncreds-shared": 0.1.0-dev.10
     "@mapbox/node-pre-gyp": ^1.0.10
   peerDependencies:
     react: ">= 16"
     react-native: ">= 0.66.0"
-  checksum: 38fb68e2089e77ba0642f53f8945418114f4b84f87d8461d48f9ddeafe51280cb84712869803e4a2d8eba56f7bb83c7214ef915163982dba2b077d853c3ba292
+  checksum: f88a4a6de8fda975f3360e308a31b874adea41e3c177c9dab30de681d8f39fda2c2a303fd41673c26c09ed3acf1d15d1a051a37fb33983f35b3304b72fb1be15
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-shared@file:./hyperledger-anoncreds-shared-v0.1.0-dev.9.tgz::locator=bifold-main%40workspace%3A.":
-  version: 0.1.0-dev.9
-  resolution: "@hyperledger/anoncreds-shared@file:./hyperledger-anoncreds-shared-v0.1.0-dev.9.tgz::locator=bifold-main%40workspace%3A."
-  checksum: e0a08f4ce02e61205583f1cad2a1a17666debe15ff280cd238ee83de1a6de2f7e95e3013adbb5ab3e2d80ba57606e6695a8195f6aca5f5a1382927acb6ae70af
+"@hyperledger/anoncreds-shared@npm:0.1.0-dev.10, @hyperledger/anoncreds-shared@npm:^0.1.0-dev.9":
+  version: 0.1.0-dev.10
+  resolution: "@hyperledger/anoncreds-shared@npm:0.1.0-dev.10"
+  checksum: 71566597573038575cbfbbf8552151147b72bfa91acfc9e3e14dcf7c0b3a2cf0ff58d58aa0a8d0fec36b7d1f297172a33ace7e246833ee5d6dd616608ac78da3
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-askar-react-native@file:./hyperledger-aries-askar-react-native-v0.1.0-dev.4.tgz::locator=bifold-main%40workspace%3A.":
-  version: 0.1.0-dev.4
-  resolution: "@hyperledger/aries-askar-react-native@file:./hyperledger-aries-askar-react-native-v0.1.0-dev.4.tgz::locator=bifold-main%40workspace%3A."
+"@hyperledger/aries-askar-react-native@npm:^0.1.0-dev.4, @hyperledger/aries-askar-react-native@npm:^0.1.0-dev.5":
+  version: 0.1.0-dev.5
+  resolution: "@hyperledger/aries-askar-react-native@npm:0.1.0-dev.5"
   dependencies:
-    "@hyperledger/aries-askar-shared": 0.1.0-dev.4
+    "@hyperledger/aries-askar-shared": 0.1.0-dev.5
     "@mapbox/node-pre-gyp": ^1.0.10
   peerDependencies:
     react: ">= 16"
     react-native: ">= 0.66.0"
-  checksum: 61f19fbd0e19607fdcf5c5c4bc4bd2deb2f198cfb7e97c7daa86b3f05d58208c6145d998ef5c502d35fe0e60425f59247f58892e3e98e3a45102deb0a91d4463
+  checksum: 530727fce7b1156e22755b3f86346e846fb29f5a4e50cc89e860678ed61cc606649ed82f58dd16a88f77f5f53edc35d60ca1186d5710fcfbf105f049271cf1e2
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-askar-shared@file:./hyperledger-aries-askar-shared-v0.1.0-dev.4.tgz::locator=bifold-main%40workspace%3A.":
-  version: 0.1.0-dev.4
-  resolution: "@hyperledger/aries-askar-shared@file:./hyperledger-aries-askar-shared-v0.1.0-dev.4.tgz::locator=bifold-main%40workspace%3A."
+"@hyperledger/aries-askar-shared@npm:0.1.0-dev.5, @hyperledger/aries-askar-shared@npm:^0.1.0-dev.4":
+  version: 0.1.0-dev.5
+  resolution: "@hyperledger/aries-askar-shared@npm:0.1.0-dev.5"
   dependencies:
     fast-text-encoding: ^1.0.3
-  checksum: fea63e9a80e8133934168c94a4b67e5b288c04c403948738c8d1393fb8d935218d60d6fef3b9b38ce81539db789f2cb18bae59200a4fdccdd3673c5a972e12f6
+  checksum: bfe4350310445cd14c9a871b10d4b47e9434c844e87f164a4348cddd929efb68a40f843e2fddb5452fe0897aa2d6ae24b9d16639a22c1cb188317239d698efed
   languageName: node
   linkType: hard
 
@@ -4215,13 +4215,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aries-bifold-app@workspace:app"
   dependencies:
-    "@aries-framework/anoncreds": ^0.4.0-alpha.71
-    "@aries-framework/anoncreds-rs": ^0.4.0-alpha.71
-    "@aries-framework/askar": ^0.4.0-alpha.71
-    "@aries-framework/core": ^0.4.0-alpha.71
-    "@aries-framework/indy-vdr": ^0.4.0-alpha.71
+    "@aries-framework/anoncreds": ^0.4.0-alpha.74
+    "@aries-framework/anoncreds-rs": ^0.4.0-alpha.74
+    "@aries-framework/askar": ^0.4.0-alpha.74
+    "@aries-framework/core": ^0.4.0-alpha.74
+    "@aries-framework/indy-vdr": ^0.4.0-alpha.74
     "@aries-framework/react-hooks": ^0.4.0
-    "@aries-framework/react-native": ^0.4.0-alpha.71
+    "@aries-framework/react-native": ^0.4.0-alpha.74
     "@babel/core": 7.15.5
     "@babel/runtime": 7.15.4
     "@formatjs/intl-datetimeformat": 4.2.4
@@ -4232,8 +4232,8 @@ __metadata:
     "@formatjs/intl-numberformat": 7.2.4
     "@formatjs/intl-pluralrules": 4.1.4
     "@formatjs/intl-relativetimeformat": 9.3.1
-    "@hyperledger/anoncreds-react-native": ^0.1.0-dev.9
-    "@hyperledger/aries-askar-react-native": ^0.1.0-dev.4
+    "@hyperledger/anoncreds-react-native": ^0.1.0-dev.10
+    "@hyperledger/aries-askar-react-native": ^0.1.0-dev.5
     "@hyperledger/indy-vdr-react-native": ^0.1.0-dev.10
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/masked-view": 0.1.11
@@ -4306,13 +4306,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aries-bifold@workspace:core"
   dependencies:
-    "@aries-framework/anoncreds": ^0.4.0-alpha.71
-    "@aries-framework/anoncreds-rs": ^0.4.0-alpha.71
-    "@aries-framework/askar": ^0.4.0-alpha.71
-    "@aries-framework/core": ^0.4.0-alpha.71
-    "@aries-framework/indy-vdr": ^0.4.0-alpha.71
+    "@aries-framework/anoncreds": ^0.4.0-alpha.74
+    "@aries-framework/anoncreds-rs": ^0.4.0-alpha.74
+    "@aries-framework/askar": ^0.4.0-alpha.74
+    "@aries-framework/core": ^0.4.0-alpha.74
+    "@aries-framework/indy-vdr": ^0.4.0-alpha.74
     "@aries-framework/react-hooks": ^0.4.0
-    "@aries-framework/react-native": ^0.4.0-alpha.71
+    "@aries-framework/react-native": ^0.4.0-alpha.74
     "@babel/core": ^7.12.9
     "@babel/runtime": ^7.12.5
     "@commitlint/cli": ^11.0.0
@@ -4407,13 +4407,13 @@ __metadata:
     typescript: 4.4.3
     uuid: ^8.1.0
   peerDependencies:
-    "@aries-framework/anoncreds": ^0.4.0-alpha.71
-    "@aries-framework/anoncreds-rs": ^0.4.0-alpha.71
-    "@aries-framework/askar": ^0.4.0-alpha.71
-    "@aries-framework/core": ^0.4.0-alpha.71
-    "@aries-framework/indy-vdr": ^0.4.0-alpha.71
+    "@aries-framework/anoncreds": ^0.4.0-alpha.74
+    "@aries-framework/anoncreds-rs": ^0.4.0-alpha.74
+    "@aries-framework/askar": ^0.4.0-alpha.74
+    "@aries-framework/core": ^0.4.0-alpha.74
+    "@aries-framework/indy-vdr": ^0.4.0-alpha.74
     "@aries-framework/react-hooks": ^0.4.0
-    "@aries-framework/react-native": ^0.4.0-alpha.71
+    "@aries-framework/react-native": ^0.4.0-alpha.74
     "@formatjs/intl-datetimeformat": ^4.2.3
     "@formatjs/intl-displaynames": ^5.2.3
     "@formatjs/intl-getcanonicallocales": ^1.7.3

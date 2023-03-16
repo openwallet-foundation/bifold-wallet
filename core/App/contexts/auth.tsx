@@ -1,3 +1,6 @@
+import { AskarWallet } from '@aries-framework/askar'
+import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@aries-framework/core'
+import { agentDependencies } from '@aries-framework/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -88,9 +91,20 @@ export const AuthProvider: React.FC = ({ children }) => {
     console.log('TODO: fix the openWallet call to indySdk', hash)
 
     try {
-      // FIXME: this will break with Askar. This doesn't feel like a good approach to do this
-      // await indySdk.openWallet({ id: secret.id }, { key: hash })
-      // need full secret in volatile memory in case user wants to fall back to using PIN
+      // NOTE: a custom wallet is used to check if the wallet key is correct. This is different from the wallet used in the rest of the app.
+      // We create an AskarWallet instance and open the wallet with the given secret.
+      const askarWallet = new AskarWallet(
+        new ConsoleLogger(LogLevel.off),
+        new agentDependencies.FileSystem(),
+        new SigningProviderRegistry([])
+      )
+      await askarWallet.open({
+        id: secret.id,
+        key: hash,
+      })
+
+      await askarWallet.close()
+
       const fullSecret = await secretForPIN(PIN, secret.salt)
       setWalletSecret(fullSecret)
       return true
