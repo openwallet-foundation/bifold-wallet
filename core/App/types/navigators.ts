@@ -37,6 +37,7 @@ export enum Screens {
   ProofRequests = 'Proof Requests',
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
+  ConnectionInvitation = 'Connection Invitation',
 }
 
 export enum Stacks {
@@ -83,6 +84,7 @@ export type AuthenticateStackParams = {
 }
 
 export type ContactStackParams = {
+  [Screens.ConnectionInvitation]: undefined
   [Screens.Contacts]: undefined
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }

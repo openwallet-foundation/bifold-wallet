@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Text, TouchableWithoutFeedback, Switch } from 'react-native'
+import { View, Text, TouchableWithoutFeedback, Switch, StyleSheet } from 'react-native'
 
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -12,8 +12,35 @@ const Developer: React.FC = () => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const [useVerifierCapability, setUseVerifierCapability] = useState(!!store.preferences.useVerifierCapability)
+  const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
+    !!store.preferences.useConnectionInviterCapability
+  )
 
-  const toggleSwitch = () => {
+  const styles = StyleSheet.create({
+    container: {
+      marginTop: 50,
+      marginHorizontal: 20,
+      borderColor: ColorPallet.brand.primary,
+      borderWidth: 1,
+      borderRadius: 3,
+    },
+    settingContainer: {
+      flexDirection: 'row',
+      marginVertical: 10,
+      marginHorizontal: 10,
+    },
+    settingLabelText: {
+      ...TextTheme.normal,
+      marginRight: 10,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    settingSwitchContainer: {
+      justifyContent: 'center',
+    },
+  })
+
+  const toggleVerifierCapabilitySwitch = () => {
     dispatch({
       type: DispatchAction.USE_VERIFIER_CAPABILITY,
       payload: [!useVerifierCapability],
@@ -21,41 +48,52 @@ const Developer: React.FC = () => {
     setUseVerifierCapability((previousState) => !previousState)
   }
 
+  const toggleConnectionInviterCapabilitySwitch = () => {
+    dispatch({
+      type: DispatchAction.USE_CONNECTION_INVITER_CAPABILITY,
+      payload: [!useConnectionInviterCapability],
+    })
+    setConnectionInviterCapability((previousState) => !previousState)
+  }
+
   return (
-    <View
-      style={{
-        marginTop: 50,
-        marginHorizontal: 20,
-        borderColor: ColorPallet.brand.primary,
-        borderWidth: 1,
-        borderRadius: 3,
-      }}
-    >
+    <View style={styles.container}>
       <Text style={[TextTheme.normal, { margin: 10 }]}>
         Place content here you would like to make available to developers when developer mode is enabled.
       </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginVertical: 10,
-          marginHorizontal: 10,
-        }}
-      >
-        <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
-          <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Verifier.UseVerifierCapability')}</Text>
-        </View>
-        <View style={{ justifyContent: 'center' }}>
-          <TouchableWithoutFeedback accessibilityLabel={t('Verifier.Toggle')} accessibilityRole={'switch'}>
-            <Switch
-              testID={testIdWithKey('ToggleVerifierCapability')}
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-              onValueChange={toggleSwitch}
-              value={useVerifierCapability}
-            />
-          </TouchableWithoutFeedback>
-        </View>
+      <View style={styles.settingContainer}>
+        <Text style={styles.settingLabelText}>{t('Verifier.UseVerifierCapability')}</Text>
+        <TouchableWithoutFeedback
+          style={styles.settingSwitchContainer}
+          accessibilityLabel={t('Verifier.Toggle')}
+          accessibilityRole={'switch'}
+        >
+          <Switch
+            testID={testIdWithKey('ToggleVerifierCapability')}
+            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+            thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+            onValueChange={toggleVerifierCapabilitySwitch}
+            value={useVerifierCapability}
+          />
+        </TouchableWithoutFeedback>
+      </View>
+      <View style={styles.settingContainer}>
+        <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
+        <TouchableWithoutFeedback
+          style={styles.settingSwitchContainer}
+          accessibilityLabel={t('Connection.Toggle')}
+          accessibilityRole={'switch'}
+        >
+          <Switch
+            testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
+            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+            thumbColor={useConnectionInviterCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+            onValueChange={toggleConnectionInviterCapabilitySwitch}
+            value={useConnectionInviterCapability}
+          />
+        </TouchableWithoutFeedback>
       </View>
     </View>
   )

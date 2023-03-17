@@ -281,7 +281,14 @@ const translation = {
   },
   "Connection": {
     "JustAMoment": "Just a moment while we make a secure connection...",
-    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
+    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
+    "ConnectionInvitation": "Connection Invitation",
+    "ScanQR": "Scan this QR Code",
+    "ScanQRComment": "with your digital wallet to make a connection.",
+    "MakingConnection": "Making connection...",
+    "ConnectionCompleted": "Connection completed!",
+    "Toggle": "Toggle connection inviter capability",
+    "UseConnectionInviterCapability": "Use connection inviter capability?",
   },
   "ConnectionAlert": {
     "AddedContacts": "Added to Contacts",
@@ -415,6 +422,8 @@ const translation = {
     "SendProofRequest": "Send a proof request",
     "ChooseProofRequest": "Choose a proof request",
     "ProofRequestUsageHistory": "Proof Request Usage History",
+    "ConnectionInvitation": "Connection Invitation",
+    "CreateConnectionInvitation": "Create a connection invitation",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

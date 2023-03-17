@@ -11,6 +11,7 @@ export interface Preferences {
   biometryPreferencesUpdated: boolean
   developerModeEnabled: boolean
   useVerifierCapability?: boolean
+  useConnectionInviterCapability?: boolean
 }
 
 export interface Lockout {
