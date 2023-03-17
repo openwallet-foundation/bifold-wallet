@@ -1,3 +1,8 @@
+// NOTE: We need to import these to be able to use the AskarWallet in this file.
+import '@hyperledger/aries-askar-react-native'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'reflect-metadata'
+
 import { AskarWallet } from '@aries-framework/askar'
 import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@aries-framework/core'
 import { agentDependencies } from '@aries-framework/react-native'
@@ -109,6 +114,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       setWalletSecret(fullSecret)
       return true
     } catch (e) {
+      console.log('eeeee', e)
       return false
     }
   }
