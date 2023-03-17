@@ -22,6 +22,7 @@ const HomeContentView: React.FC<HomeContentViewProps> = ({ children }) => {
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: offset,
+      paddingBottom: offset * 3,
     },
 
     messageContainer: {
