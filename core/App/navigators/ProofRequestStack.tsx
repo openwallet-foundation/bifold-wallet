@@ -54,7 +54,7 @@ const ProofRequestStack: React.FC = () => {
       <Stack.Screen
         name={Screens.ProofDetails}
         component={ProofDetails}
-        options={({ navigation }) => ({
+        options={({ navigation, route }) => ({
           title: '',
           headerLeft: () => (
             <HeaderLeftBack
@@ -63,7 +63,13 @@ const ProofRequestStack: React.FC = () => {
               size={26}
               accessibilityLabel={t('Global.Back')}
               testID={testIdWithKey('BackButton')}
-              onPress={() => navigation.navigate(Screens.ProofRequests, {})}
+              onPress={() => {
+                if (route.params.isHistory) {
+                  navigation.goBack()
+                } else {
+                  navigation.navigate(Screens.ProofRequests, {})
+                }
+              }}
             />
           ),
           headerRight: () => <HeaderRightHome />,
@@ -73,7 +79,7 @@ const ProofRequestStack: React.FC = () => {
         name={Screens.ProofRequestUsageHistory}
         component={ProofRequestUsageHistory}
         options={() => ({
-          title: '',
+          title: t('Screens.ProofRequestUsageHistory'),
           headerRight: () => <HeaderRightHome />,
         })}
       />

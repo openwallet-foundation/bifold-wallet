@@ -279,7 +279,14 @@ const translation = {
     },
     "Connection": {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
-        "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre."
+        "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
+        "ConnectionInvitation": "Invitation de connexion",
+        "ScanQR": "Scannez ce QR Code",
+        "ScanQRComment": "avec votre portefeuille numérique pour établir une connexion.",
+        "MakingConnection": "Faire le lien...",
+        "ConnectionCompleted": "Connexion terminée !",
+        "Toggle": "Basculer la capacité d'invitation à la connexion",
+        "UseConnectionInviterCapability": "Utiliser la fonction d'invitation à la connexion ?",
     },
     "ConnectionAlert": {
         "AddedContacts": "Ajouté aux contacts",
@@ -405,6 +412,9 @@ const translation = {
         "ProofRequestDetails": "Détails de la Demande d'Épreuve",
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
+        "ProofRequestUsageHistory": "Proof Request Usage History",
+        "ConnectionInvitation": "Invitation de connexion",
+        "CreateConnectionInvitation": "Créer une invitation de connexion",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
