@@ -3,7 +3,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 // import Collapsible from 'react-native-collapsible'
@@ -53,6 +53,9 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
   const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
     header: {
       backgroundColor: ColorPallet.semantic.success,
       paddingHorizontal: 30,
@@ -81,6 +84,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     },
     footer: {
       marginHorizontal: 30,
+      marginVertical: 20,
     },
     footerButton: {
       marginTop: 10,
@@ -100,7 +104,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
   }, [navigation])
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
           <CheckInCircle {...{ height: 45, width: 45 }} />
@@ -139,7 +143,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
               title={t('Verifier.GenerateNewQR')}
               accessibilityLabel={t('Verifier.GenerateNewQR')}
               testID={testIdWithKey('GenerateNewQR')}
-              buttonType={ButtonType.Secondary}
+              buttonType={ButtonType.Primary}
               onPress={onGenerateNew}
             />
           </View>
