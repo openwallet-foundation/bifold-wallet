@@ -182,7 +182,12 @@ const UseBiometry: React.FC = () => {
           </Button>
         )}
       </View>
-      <Modal visible={canSeeCheckPIN} transparent={true} animationType={'slide'}>
+      <Modal
+        style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        visible={canSeeCheckPIN}
+        transparent={false}
+        animationType={'slide'}
+      >
         <PINEnter usage={PINEntryUsage.PINCheck} setAuthenticated={onAuthenticationComplete} />
       </Modal>
     </SafeAreaView>
