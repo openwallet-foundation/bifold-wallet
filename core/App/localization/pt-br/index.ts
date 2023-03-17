@@ -265,7 +265,14 @@ const translation = {
   },
   "Connection": {
     "JustAMoment": "Aguarde um momento enquanto fazemos uma conexão segura...",
-    "TakingTooLong": "Isto está demorando mais que o normal. Você pode retornar para a home ou continuar esperando."
+    "TakingTooLong": "Isto está demorando mais que o normal. Você pode retornar para a home ou continuar esperando.",
+    "ConnectionInvitation": "Convite de conexão",
+    "ScanQR": "Escaneie este código QR",
+    "ScanQRComment": "com sua carteira digital para fazer uma conexão.",
+    "MakingConnection": "Fazendo conexão...",
+    "ConnectionCompleted": "Conexão concluída!",
+    "Toggle": "Alternar capacidade de convite de conexão",
+    "UseConnectionInviterCapability": "Usar o recurso de convite de conexão?",
   },
   "ConnectionAlert": {
     "AddedContacts": "Adicionado aos Contatos",
@@ -394,6 +401,8 @@ const translation = {
     "SendProofRequest": "Envie um pedido de prova",
     "ChooseProofRequest": "Escolha um pedido de prova",
     "ProofRequestUsageHistory": "Proof Request Usage History",
+    "ConnectionInvitation": "Convite de conexão",
+    "CreateConnectionInvitation": "Criar um convite de conexão",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
