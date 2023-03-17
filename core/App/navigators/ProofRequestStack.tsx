@@ -7,6 +7,7 @@ import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
 import ProofDetails from '../screens/ProofDetails'
+import ProofDetailsHistory from '../screens/ProofDetailsHistory'
 import ProofRequestDetails from '../screens/ProofRequestDetails'
 import ProofRequestUsageHistory from '../screens/ProofRequestUsageHistory'
 import ProofRequesting from '../screens/ProofRequesting'
@@ -73,6 +74,25 @@ const ProofRequestStack: React.FC = () => {
             />
           ),
           headerRight: () => <HeaderRightHome />,
+        })}
+      />
+      <Stack.Screen
+        name={Screens.ProofDetailsHistory}
+        component={ProofDetailsHistory}
+        options={({ navigation }) => ({
+          title: '',
+          headerLeft: () => (
+            <HeaderLeftBack
+              title=""
+              icon="arrow-left"
+              size={26}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => {
+                navigation.goBack()
+              }}
+            />
+          ),
         })}
       />
       <Stack.Screen

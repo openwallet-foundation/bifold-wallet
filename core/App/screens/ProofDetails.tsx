@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -93,6 +93,8 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
   })
 
   // const [isCollapsed, setIsCollapsed] = useState<boolean>(!isHistory)
+  const connection = useConnectionById(record.connectionId || '')
+  const connectionLabel = connection ? connection?.alias || connection?.theirLabel : ''
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
@@ -103,15 +105,23 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     }
   }, [navigation])
 
+  useEffect(() => {
+    if (!connection) return
+    navigation.setOptions({ title: connectionLabel }) //
+  }, [connection])
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerTitleContainer}>
-          <CheckInCircle {...{ height: 45, width: 45 }} />
-          <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
+      {!isHistory && (
+        <View style={styles.header}>
+          <View style={styles.headerTitleContainer}>
+            <CheckInCircle {...{ height: 45, width: 45 }} />
+            <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
+          </View>
+          <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
         </View>
-        <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
-      </View>
+      )}
+
       {/*<Collapsible*/}
       {/*  collapsed={isCollapsed}*/}
       {/*  collapsedHeight={collapsedHeight}*/}
@@ -205,7 +215,6 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   }
 
   const { recordId, isHistory } = route?.params
-
   const record: ProofExchangeRecord = useProofById(recordId)
   const { agent } = useAgent()
 
