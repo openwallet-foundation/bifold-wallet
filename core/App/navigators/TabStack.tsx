@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -21,6 +21,9 @@ const TabStack: React.FC = () => {
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertConnectedNetwork } = useNetwork()
   const { ColorPallet, TabTheme } = useTheme()
+  const { fontScale } = useWindowDimensions()
+
+  const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
@@ -44,16 +47,17 @@ const TabStack: React.FC = () => {
             ),
             tabBarBadge: total || undefined,
             tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
-            tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  ...TabTheme.tabBarTextStyle,
-                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                }}
-              >
-                {t('TabStack.Home')}
-              </Text>
-            ),
+            tabBarLabel: ({ focused }) =>
+              showLabels && (
+                <Text
+                  style={{
+                    ...TabTheme.tabBarTextStyle,
+                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                  }}
+                >
+                  {t('TabStack.Home')}
+                </Text>
+              ),
             tabBarAccessibilityLabel: `${t('TabStack.Home')} (${
               total === 1 ? t('Home.OneNotification') : t('Home.CountNotifications', { count: total || 0 })
             })`,
@@ -105,16 +109,17 @@ const TabStack: React.FC = () => {
             tabBarIcon: ({ color, focused }) => (
               <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
             ),
-            tabBarLabel: ({ focused }) => (
-              <Text
-                style={{
-                  ...TabTheme.tabBarTextStyle,
-                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                }}
-              >
-                {t('TabStack.Credentials')}
-              </Text>
-            ),
+            tabBarLabel: ({ focused }) =>
+              showLabels && (
+                <Text
+                  style={{
+                    ...TabTheme.tabBarTextStyle,
+                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                  }}
+                >
+                  {t('TabStack.Credentials')}
+                </Text>
+              ),
             tabBarAccessibilityLabel: t('TabStack.Credentials'),
             tabBarTestID: testIdWithKey(t('TabStack.Credentials')),
           }}
