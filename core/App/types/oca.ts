@@ -305,7 +305,7 @@ export class OCABundleResolver implements OCABundleResolverType {
       }
     }
 
-    if (identifier && identifier.credentialDefinitionId && identifier.schemaId) {
+    if (identifier && (identifier.credentialDefinitionId || identifier.schemaId)) {
       finalIdentifiers = identifier
     }
 
@@ -371,7 +371,7 @@ export class OCABundleResolver implements OCABundleResolverType {
       }
     }
 
-    if (identifiers && identifiers.credentialDefinitionId && identifiers.schemaId) {
+    if (identifiers && (identifiers.credentialDefinitionId || identifiers.schemaId)) {
       finalIdentifiers = identifiers
     }
 
