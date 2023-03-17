@@ -19,7 +19,7 @@ const HeaderTitle: React.FC<Props> = ({ children }) => {
     },
   })
   return (
-    <Text adjustsFontSizeToFit style={styles.title}>
+    <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>
       {children}
     </Text>
   )
