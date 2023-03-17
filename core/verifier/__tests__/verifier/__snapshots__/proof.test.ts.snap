@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
+exports[`Helpers Parse indy proof 1`] = `
 ParsedIndyProof {
   "resolvedPredicates": Array [
     Object {
@@ -144,5 +144,14 @@ Map {
       "timestamp": undefined,
     },
   },
+}
+`;
+
+exports[`Helpers Get proof identifiers 1`] = `
+Object {
+  "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+  "revocationRegistryId": undefined,
+  "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+  "timestamp": undefined,
 }
 `;

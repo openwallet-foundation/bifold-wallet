@@ -1,4 +1,4 @@
-import { groupSharedProofDataByCredential, parseIndyProof } from '../../utils/proof'
+import { getProofIdentifiers, groupSharedProofDataByCredential, parseIndyProof } from '../../utils/proof'
 import { IndyProof } from 'indy-sdk-react-native'
 
 const proof_request = {
@@ -82,13 +82,19 @@ const proof: IndyProof = {
 }
 
 describe('Helpers', () => {
-  test('Build indy proof request from template containing two requested attributes', async () => {
+  test('Parse indy proof', async () => {
     const proofRequest = parseIndyProof(proof_request, proof)
     expect(proofRequest).toMatchSnapshot()
   })
+
   test('Group shared proof data by credential', async () => {
     const data = parseIndyProof(proof_request, proof)
     const groupedData = groupSharedProofDataByCredential(data)
     expect(groupedData).toMatchSnapshot()
+  })
+
+  test('Get proof identifiers', async () => {
+    const identifiers = getProofIdentifiers(proof, 0)
+    expect(identifiers).toMatchSnapshot()
   })
 })

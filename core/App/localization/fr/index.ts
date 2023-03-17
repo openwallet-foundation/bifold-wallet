@@ -279,7 +279,14 @@ const translation = {
     },
     "Connection": {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
-        "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre."
+        "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
+        "ConnectionInvitation": "Invitation de connexion",
+        "ScanQR": "Scannez ce QR Code",
+        "ScanQRComment": "avec votre portefeuille numérique pour établir une connexion.",
+        "MakingConnection": "Faire le lien...",
+        "ConnectionCompleted": "Connexion terminée !",
+        "Toggle": "Basculer la capacité d'invitation à la connexion",
+        "UseConnectionInviterCapability": "Utiliser la fonction d'invitation à la connexion ?",
     },
     "ConnectionAlert": {
         "AddedContacts": "Ajouté aux contacts",
@@ -318,6 +325,7 @@ const translation = {
         "ConfirmDeclinedMessage": "Afin de recevoir à nouveau ce justificatif, vous devrez présenter une nouvelle demande auprès de l'émetteur.",
         "AbortDecline": "Non, revenir en arrière",
         "DeclineTitle": "Refuser le justificatif",
+        "Declined": "Diminué",
     },
     "ProofRequest": {
         "ProofRequest": "Demande de preuve",
@@ -341,6 +349,7 @@ const translation = {
         "InformationSentSuccessfully": "Informations envoyées avec succès",
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Decline Credential",
+        "Declined": "Diminué",
     },
     "Settings": {
         "Version": "Version",
@@ -404,6 +413,9 @@ const translation = {
         "ProofRequestDetails": "Détails de la Demande d'Épreuve",
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
+        "ProofRequestUsageHistory": "Proof Request Usage History",
+        "ConnectionInvitation": "Invitation de connexion",
+        "CreateConnectionInvitation": "Créer une invitation de connexion",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
@@ -427,6 +439,7 @@ const translation = {
         "ProofPresentationReceived": "vous a envoyé des informations",
         "ProofRequestReceived": "reçu une demande de justificatif",
         "ProofRequestRejected": "rejeté une demande de justificatif",
+        "ProofRequestRejectReceived": "a rejeté une demande de justificatif",
         "ProofRequestSatisfied": "informations partagées",
     },
     "Verifier": {
@@ -436,6 +449,7 @@ const translation = {
         "ZeroKnowledgeProof": "Preuve zéro connaissance",
         "Parameterizable": "Paramétrable",
         "GenerateNewQR": "Générer un nouveau code QR",
+        "ShareLink": "Lien de partage",
         "ScanQR": "Scannez ce QR Code",
         "ScanQRComment": "avec votre portefeuille numérique pour recevoir une demande de justificatif.",
         "InformationReceived": "Information reçue",
@@ -452,9 +466,12 @@ const translation = {
         "PresentationDeclined": "Demande de présentation refusée",
         "PresentationReceived": "Présentation reçue",
         "PresentationFailed": "La présentation a échoué",
+        "ProofRequestRejected": "Demande de présentation rejetée",
         "PresentationFrom": "Depuis",
         "PresentationState": "État",
         "ConnectionlessPresentation": "Sans connexion",
+        'TutorialStep1Title': 'Montrez ce code QR à l\'autre personne',
+        'TutorialStep1Description': 'Vous vous connecterez avec l\'autre personne. Ils recevront une demande de justificatif.'
     }
 }
 export default translation

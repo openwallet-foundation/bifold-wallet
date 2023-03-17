@@ -281,7 +281,14 @@ const translation = {
   },
   "Connection": {
     "JustAMoment": "Just a moment while we make a secure connection...",
-    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting."
+    "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
+    "ConnectionInvitation": "Connection Invitation",
+    "ScanQR": "Scan this QR Code",
+    "ScanQRComment": "with your digital wallet to make a connection.",
+    "MakingConnection": "Making connection...",
+    "ConnectionCompleted": "Connection completed!",
+    "Toggle": "Toggle connection inviter capability",
+    "UseConnectionInviterCapability": "Use connection inviter capability?",
   },
   "ConnectionAlert": {
     "AddedContacts": "Added to Contacts",
@@ -318,6 +325,7 @@ const translation = {
     "ConfirmDecline": "Yes, decline this credential",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Credential",
+    "Declined": "Declined",
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",
@@ -348,6 +356,7 @@ const translation = {
     "ConfirmDecline": "Yes, decline this proof request",
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Proof",
+    "Declined": "Declined",
   },
   "Settings": {
     "Version": "Version",
@@ -413,6 +422,9 @@ const translation = {
     "ProofRequests": "Proof requests",
     "SendProofRequest": "Send a proof request",
     "ChooseProofRequest": "Choose a proof request",
+    "ProofRequestUsageHistory": "Proof Request Usage History",
+    "ConnectionInvitation": "Connection Invitation",
+    "CreateConnectionInvitation": "Create a connection invitation",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
@@ -436,6 +448,7 @@ const translation = {
     "ProofPresentationReceived": "has sent you information",
     "ProofRequestReceived": "received a proof request",
     "ProofRequestRejected": "rejected a proof request",
+    "ProofRequestRejectReceived": "rejected a proof request",
     "ProofRequestSatisfied": "shared information",
   },
   "Verifier": {
@@ -445,6 +458,7 @@ const translation = {
     "ZeroKnowledgeProof": "Zero-knowledge proof",
     "Parameterizable": "Parameterizable",
     "GenerateNewQR": "Generate new QR Code",
+    "ShareLink": "Share link",
     "ScanQR": "Scan this QR Code",
     "ScanQRComment": "with your digital wallet to receive a proof request.",
     "InformationReceived": "Information received",
@@ -461,9 +475,12 @@ const translation = {
     "PresentationDeclined": "Presentation request declined",
     "PresentationReceived": "Presentation received",
     "PresentationFailed": "Presentation failed",
+    "ProofRequestRejected": "Presentation request rejected",
     "PresentationFrom": "From",
     "PresentationState": "State",
     "ConnectionlessPresentation": "Connectionless",
+    'TutorialStep1Title': 'Show this QR code to the other person',
+    'TutorialStep1Description': 'You will connect with the other person. They will receive a proof request.'
   }
 }
 

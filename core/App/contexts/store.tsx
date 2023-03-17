@@ -17,6 +17,7 @@ export const defaultState: State = {
     didCompleteTutorial: false,
     didCreatePIN: false,
     didConsiderBiometry: false,
+    didCompleteQRCodeTutorial: false,
   },
   authentication: {
     didAuthenticate: false,
@@ -33,6 +34,7 @@ export const defaultState: State = {
     biometryPreferencesUpdated: false,
     useBiometry: false,
     useVerifierCapability: false,
+    useConnectionInviterCapability: false,
   },
   deepLink: {
     activeDeepLink: '',

@@ -15,6 +15,7 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_COMPLETE_QR_CODE_TUTORIAL = 'onboarding/didCompleteQRCodeTutorial',
 }
 
 enum LockoutDispatchAction {
@@ -30,6 +31,7 @@ enum PreferencesDispatchAction {
   USE_BIOMETRY = 'preferences/useBiometry',
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
+  USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
 }
 
 enum AuthenticationDispatchAction {
@@ -111,6 +113,21 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       return newState
     }
+    case PreferencesDispatchAction.USE_CONNECTION_INVITER_CAPABILITY: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        useConnectionInviterCapability: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
       return {
@@ -145,6 +162,18 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const onboarding = {
         ...state.onboarding,
         didCompleteTutorial: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_COMPLETE_QR_CODE_TUTORIAL: {
+      const onboarding = {
+        ...state.onboarding,
+        didCompleteQRCodeTutorial: true,
       }
       const newState = {
         ...state,
