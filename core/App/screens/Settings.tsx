@@ -1,7 +1,15 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SectionList, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import {
+  ScrollView,
+  SectionList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -39,14 +47,15 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     section: {
       backgroundColor: SettingsTheme.groupBackground,
-      paddingHorizontal: 25,
       paddingVertical: 24,
+      flexGrow: 1,
     },
     sectionHeader: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingBottom: 0,
       marginBottom: -11,
+      paddingHorizontal: 25,
     },
     sectionSeparator: {
       marginBottom: 10,
@@ -55,6 +64,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+      flexGrow: 1,
+      paddingHorizontal: 25,
     },
     itemSeparator: {
       borderBottomWidth: 1,
@@ -167,7 +178,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     testID?: string
     onPress?: GenericFn
   }> = ({ title, value, accessibilityLabel, testID, onPress }) => (
-    <View style={[styles.section]}>
+    <ScrollView horizontal style={styles.section} contentContainerStyle={{ flexGrow: 1 }}>
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={accessibilityLabel}
@@ -175,55 +186,53 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         style={styles.sectionRow}
         onPress={onPress}
       >
-        <Text style={[TextTheme.headingFour, { fontWeight: 'normal' }]}>{title}</Text>
+        <Text style={[TextTheme.headingFour, { fontWeight: 'normal', marginRight: 14 }]}>{title}</Text>
         <Text style={[TextTheme.headingFour, { fontWeight: 'normal', color: ColorPallet.brand.link }]}>{value}</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   )
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']}>
-      <View style={styles.container}>
-        <SectionList
-          renderItem={({ item: { title, value, accessibilityLabel, testID, onPress } }) => (
-            <SectionRow
-              title={title}
-              accessibilityLabel={accessibilityLabel}
-              testID={testID ?? 'NoTestIdFound'}
-              value={value}
-              onPress={onPress}
-            />
-          )}
-          renderSectionHeader={({
-            section: {
-              header: { title, icon },
-            },
-          }) => <SectionHeader icon={icon} title={title} />}
-          ItemSeparatorComponent={() => (
-            <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-              <View style={[styles.itemSeparator]}></View>
-            </View>
-          )}
-          SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
-          ListFooterComponent={() => (
-            <View style={styles.footer}>
-              <TouchableWithoutFeedback
-                onPress={incrementDeveloperMenuCounter}
-                disabled={store.preferences.developerModeEnabled}
-              >
-                <View>
-                  <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
-                    {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
-                  </Text>
-                  <Assets.svg.logo {...styles.logo} />
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          )}
-          sections={settingsSections}
-          stickySectionHeadersEnabled={false}
-        ></SectionList>
-      </View>
+    <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
+      <SectionList
+        renderItem={({ item: { title, value, accessibilityLabel, testID, onPress } }) => (
+          <SectionRow
+            title={title}
+            accessibilityLabel={accessibilityLabel}
+            testID={testID ?? 'NoTestIdFound'}
+            value={value}
+            onPress={onPress}
+          />
+        )}
+        renderSectionHeader={({
+          section: {
+            header: { title, icon },
+          },
+        }) => <SectionHeader icon={icon} title={title} />}
+        ItemSeparatorComponent={() => (
+          <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
+            <View style={[styles.itemSeparator]}></View>
+          </View>
+        )}
+        SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
+        ListFooterComponent={() => (
+          <View style={styles.footer}>
+            <TouchableWithoutFeedback
+              onPress={incrementDeveloperMenuCounter}
+              disabled={store.preferences.developerModeEnabled}
+            >
+              <View>
+                <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
+                  {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
+                </Text>
+                <Assets.svg.logo {...styles.logo} />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        )}
+        sections={settingsSections}
+        stickySectionHeadersEnabled={false}
+      ></SectionList>
     </SafeAreaView>
   )
 }
