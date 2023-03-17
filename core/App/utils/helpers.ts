@@ -17,6 +17,7 @@ import { Buffer } from 'buffer'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
 
+import { domain } from '../constants'
 import { i18n } from '../localization/index'
 import { Attribute, Predicate } from '../types/record'
 
@@ -338,6 +339,25 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
   }
 
   return connectionRecord
+}
+
+/**
+ * Create a new connection invitation
+ *
+ * @param agent an Agent instance
+ * @returns a connection record
+ */
+export const createConnectionInvitation = async (agent: Agent | undefined) => {
+  const record = await agent?.oob.createInvitation()
+  if (!record) {
+    throw new Error('Could not create new invitation')
+  }
+  const invitationUrl = record.outOfBandInvitation.toUrl({ domain })
+  return {
+    record,
+    invitation: record.outOfBandInvitation,
+    invitationUrl,
+  }
 }
 
 /**
