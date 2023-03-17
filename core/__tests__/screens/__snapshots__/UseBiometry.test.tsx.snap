@@ -226,7 +226,12 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
-    transparent={true}
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+    transparent={false}
     visible={false}
   >
     <RNCSafeAreaView
@@ -311,29 +316,26 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                 >
                   PINEnter.EnterPIN
                 </Text>
-                <View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "justifyContent": "space-between",
-                        },
-                      ]
-                    }
-                  >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "flex-end",
+                        "flexDirection": "row",
+                        "flexWrap": "wrap",
+                        "justifyContent": "space-between",
+                        "marginBottom": 24,
+                      },
+                    ]
+                  }
+                >
+                  <View>
                     <View
                       style={
-                        Array [
-                          Object {
-                            "flexDirection": "row",
-                            "justifyContent": "space-between",
-                          },
-                          Object {
-                            "marginBottom": 24,
-                          },
-                        ]
+                        Object {
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                        }
                       }
                     >
                       <View
@@ -580,47 +582,48 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                         value=""
                       />
                     </View>
-                    <View
-                      accessibilityLabel="PINCreate.Show"
-                      accessible={true}
-                      focusable={true}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        Object {
-                          "marginBottom": 32,
-                          "marginRight": 8,
-                          "opacity": 1,
-                        }
+                  </View>
+                  <View
+                    accessibilityLabel="PINCreate.Show"
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "marginLeft": "auto",
+                        "marginRight": "auto",
+                        "marginVertical": 10,
+                        "opacity": 1,
                       }
-                      testID="com.ariesbifold:id/Show"
+                    }
+                    testID="com.ariesbifold:id/Show"
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 30,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
                     >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 30,
-                            },
-                            undefined,
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                      >
-                        
-                      </Text>
-                    </View>
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -908,7 +911,12 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
-    transparent={true}
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+    transparent={false}
     visible={false}
   >
     <RNCSafeAreaView
@@ -993,29 +1001,26 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                 >
                   PINEnter.EnterPIN
                 </Text>
-                <View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "justifyContent": "space-between",
-                        },
-                      ]
-                    }
-                  >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "flex-end",
+                        "flexDirection": "row",
+                        "flexWrap": "wrap",
+                        "justifyContent": "space-between",
+                        "marginBottom": 24,
+                      },
+                    ]
+                  }
+                >
+                  <View>
                     <View
                       style={
-                        Array [
-                          Object {
-                            "flexDirection": "row",
-                            "justifyContent": "space-between",
-                          },
-                          Object {
-                            "marginBottom": 24,
-                          },
-                        ]
+                        Object {
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                        }
                       }
                     >
                       <View
@@ -1262,49 +1267,50 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                         value=""
                       />
                     </View>
-                    <View
-                      accessibilityLabel="PINCreate.Show"
-                      accessible={true}
-                      collapsable={false}
-                      focusable={true}
-                      nativeID="animatedComponent"
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        Object {
-                          "marginBottom": 32,
-                          "marginRight": 8,
-                          "opacity": 1,
-                        }
+                  </View>
+                  <View
+                    accessibilityLabel="PINCreate.Show"
+                    accessible={true}
+                    collapsable={false}
+                    focusable={true}
+                    nativeID="animatedComponent"
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "marginLeft": "auto",
+                        "marginRight": "auto",
+                        "marginVertical": 10,
+                        "opacity": 1,
                       }
-                      testID="com.ariesbifold:id/Show"
+                    }
+                    testID="com.ariesbifold:id/Show"
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 30,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
                     >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 30,
-                            },
-                            undefined,
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                      >
-                        
-                      </Text>
-                    </View>
+                      
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -1648,7 +1654,12 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
-    transparent={true}
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+    transparent={false}
     visible={false}
   >
     <RNCSafeAreaView
@@ -1733,29 +1744,26 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                 >
                   PINEnter.EnterPIN
                 </Text>
-                <View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "justifyContent": "space-between",
-                        },
-                      ]
-                    }
-                  >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "flex-end",
+                        "flexDirection": "row",
+                        "flexWrap": "wrap",
+                        "justifyContent": "space-between",
+                        "marginBottom": 24,
+                      },
+                    ]
+                  }
+                >
+                  <View>
                     <View
                       style={
-                        Array [
-                          Object {
-                            "flexDirection": "row",
-                            "justifyContent": "space-between",
-                          },
-                          Object {
-                            "marginBottom": 24,
-                          },
-                        ]
+                        Object {
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                        }
                       }
                     >
                       <View
@@ -2002,47 +2010,48 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                         value=""
                       />
                     </View>
-                    <View
-                      accessibilityLabel="PINCreate.Show"
-                      accessible={true}
-                      focusable={true}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        Object {
-                          "marginBottom": 32,
-                          "marginRight": 8,
-                          "opacity": 1,
-                        }
+                  </View>
+                  <View
+                    accessibilityLabel="PINCreate.Show"
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "marginLeft": "auto",
+                        "marginRight": "auto",
+                        "marginVertical": 10,
+                        "opacity": 1,
                       }
-                      testID="com.ariesbifold:id/Show"
+                    }
+                    testID="com.ariesbifold:id/Show"
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 30,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
                     >
-                      <Text
-                        allowFontScaling={false}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 30,
-                            },
-                            undefined,
-                            Object {
-                              "fontFamily": "Material Icons",
-                              "fontStyle": "normal",
-                              "fontWeight": "normal",
-                            },
-                            Object {},
-                          ]
-                        }
-                      >
-                        
-                      </Text>
-                    </View>
+                      
+                    </Text>
                   </View>
                 </View>
               </View>

@@ -33,6 +33,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       alignItems: 'flex-start',
       justifyContent: 'space-between',
       padding: 15,
+      flex: 4,
     },
     iconContainer: {
       ...ListItems.contactIconBackground,
@@ -41,6 +42,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       padding: 20,
       borderTopRightRadius: 15,
       borderBottomRightRadius: 15,
+      flex: 1,
     },
   })
 

@@ -33,6 +33,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      flexWrap: 'wrap',
       paddingHorizontal: offset,
     },
     messageContainer: {
@@ -104,7 +105,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
               <NoNewUpdates />
               <View style={[styles.messageContainer]}>
-                <Text style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+                <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
                   {t('Home.Welcome')}
                 </Text>
               </View>
