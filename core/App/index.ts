@@ -10,6 +10,7 @@ import * as components from './components'
 import LoadingIndicator from './components/animated/LoadingIndicator'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
+import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
@@ -44,7 +45,7 @@ export { theme } from './theme'
 export { useAuth } from './contexts/auth'
 export { NavigationTheme } from './theme'
 export { testIdWithKey } from './utils/testable'
-export { Screens, Stacks } from './types/navigators'
+export { Screens, Stacks, TabStacks } from './types/navigators'
 export { createStyles } from './screens/OnboardingPages'
 export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { BifoldError } from './types/error'
@@ -75,6 +76,7 @@ export {
   Button,
   ButtonType,
   CheckBoxRow,
+  CredentialCard,
   ErrorModal,
   InfoTextBox,
   InfoBox,

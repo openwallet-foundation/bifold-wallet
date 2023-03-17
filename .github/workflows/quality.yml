@@ -1,8 +1,5 @@
 name: Code Quality
 
-env:
-  cacheId: "6" # increment to expire the cache
-
 on:
   pull_request:
     branches: [main]
@@ -21,7 +18,8 @@ jobs:
         uses: ./.github/actions/setup-node
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          yarn install --immutable
 
       - name: Check style
         run: |
@@ -41,7 +39,8 @@ jobs:
         uses: ./.github/actions/setup-node
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          yarn install --immutable
 
       - name: Automated testing
         run: |
