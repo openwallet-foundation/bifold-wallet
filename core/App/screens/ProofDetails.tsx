@@ -6,10 +6,10 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import Collapsible from 'react-native-collapsible'
+// import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
+// import { SvgXml } from 'react-native-svg'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { SvgXml } from 'react-native-svg'
 
 import { ProofCustomMetadata, ProofMetadata } from '../../verifier/types/metadata'
 import { markProofAsViewed } from '../../verifier/utils/proof'
@@ -22,8 +22,8 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
-const collapsedHeight = 120
-const collapsedDuration = 150
+// const collapsedHeight = 120
+// const collapsedDuration = 150
 
 interface VerifiedProofProps {
   record: ProofExchangeRecord
@@ -35,18 +35,18 @@ interface UnverifiedProofProps {
   record: ProofExchangeRecord
 }
 
-const gradientSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="200px" >
-  <defs>
-   <linearGradient id="lgrad" x1="50%" y1="0%" x2="50%" y2="100%" >
-    
-          <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:0.3" />
-          <stop offset="50%" style="stop-color:rgb(255,255,255);stop-opacity:0.5" />
-          <stop offset="80%" style="stop-color:rgb(255,255,255);stop-opacity:0.9" />
-
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="100%" height="100%" fill="url(#lgrad)"/>
-</svg>`
+// const gradientSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="200px" >
+//   <defs>
+//    <linearGradient id="lgrad" x1="50%" y1="0%" x2="50%" y2="100%" >
+//
+//           <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:0.3" />
+//           <stop offset="50%" style="stop-color:rgb(255,255,255);stop-opacity:0.5" />
+//           <stop offset="80%" style="stop-color:rgb(255,255,255);stop-opacity:0.9" />
+//
+//     </linearGradient>
+//   </defs>
+//   <rect x="0" y="0" width="100%" height="100%" fill="url(#lgrad)"/>
+// </svg>`
 
 const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHistory }: VerifiedProofProps) => {
   const { t } = useTranslation()
@@ -88,7 +88,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     gradientContainer: { position: 'absolute', top: 0, width: '100%', height: '100%' },
   })
 
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(!isHistory)
+  // const [isCollapsed, setIsCollapsed] = useState<boolean>(!isHistory)
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
@@ -108,32 +108,32 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
         </View>
         <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
       </View>
-      <Collapsible
-        collapsed={isCollapsed}
-        collapsedHeight={collapsedHeight}
-        enablePointerEvents={true}
-        duration={collapsedDuration}
-      >
-        <View style={[styles.content, { position: 'relative' }]}>
-          <SharedProofData recordId={record.id} />
-          {isCollapsed && (
-            <View style={styles.gradientContainer}>
-              <SvgXml xml={gradientSVG} width={'100%'} height={collapsedHeight} />
-            </View>
-          )}
-        </View>
-      </Collapsible>
+      {/*<Collapsible*/}
+      {/*  collapsed={isCollapsed}*/}
+      {/*  collapsedHeight={collapsedHeight}*/}
+      {/*  enablePointerEvents={true}*/}
+      {/*  duration={collapsedDuration}*/}
+      {/*>*/}
+      <View style={styles.content}>
+        <SharedProofData recordId={record.id} />
+        {/*{isCollapsed && (*/}
+        {/*  <View style={styles.gradientContainer}>*/}
+        {/*    <SvgXml xml={gradientSVG} width={'100%'} height={collapsedHeight} />*/}
+        {/*  </View>*/}
+        {/*)}*/}
+      </View>
+      {/*</Collapsible>*/}
       {!isHistory && (
         <View style={styles.footer}>
-          <View style={styles.footerButton}>
-            <Button
-              title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
-              accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
-              testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}
-              buttonType={ButtonType.Primary}
-              onPress={() => setIsCollapsed(!isCollapsed)}
-            />
-          </View>
+          {/*<View style={styles.footerButton}>*/}
+          {/*  <Button*/}
+          {/*    title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
+          {/*    accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
+          {/*    testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}*/}
+          {/*    buttonType={ButtonType.Primary}*/}
+          {/*    onPress={() => setIsCollapsed(!isCollapsed)}*/}
+          {/*  />*/}
+          {/*</View>*/}
           <View style={styles.footerButton}>
             <Button
               title={t('Verifier.GenerateNewQR')}
