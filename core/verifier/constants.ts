@@ -4,23 +4,23 @@ import { ProofRequestTemplate, ProofRequestType } from './types/proof-reqeust-te
 
 export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
   {
-    id: 'BC:5:FullName:0.0.1:indy',
-    name: 'Full name',
-    description: 'Verify the full name of a person',
+    id: 'Aries:5:StudentFullName:0.0.1:indy',
+    name: 'Student full name',
+    description: 'Verify the full name of a student',
     version: '0.0.1',
     payload: {
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
           requestedAttributes: [
             {
-              name: 'given_names',
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
+              name: 'student_first_name',
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card' }],
             },
             {
-              name: 'family_name',
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
+              name: 'student_last_name',
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card' }],
             },
           ],
         },
@@ -28,121 +28,27 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
     },
   },
   {
-    id: 'BC:5:19+AndFullName:0.0.1:indy',
-    name: '19+ and Full name',
-    description: 'Verify if a person is 19 years end up and full name.',
+    id: 'Aries:5:StudentFullNameAndExpirationDate:0.0.1:indy',
+    name: 'Student full name and expiration date',
+    description: 'Verify that full name of a student and that he/she has a not expired student card.',
     version: '0.0.1',
     payload: {
       type: ProofRequestType.Indy,
       data: [
         {
-          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
+          schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
           requestedAttributes: [
             {
-              names: ['given_names', 'family_name'],
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
+              names: ['student_first_name', 'student_last_name'],
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card' }],
             },
           ],
           requestedPredicates: [
             {
-              name: 'birthdate_dateint',
+              name: 'expiry_date',
               predicateType: PredicateType.GreaterThanOrEqualTo,
-              predicateValue: 18,
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'BC:5:Over19YearsOfAge:0.0.1:indy',
-    name: 'Over 19 years of age',
-    description: 'Verify if a person is 19 years end up.',
-    version: '0.0.1',
-    payload: {
-      type: ProofRequestType.Indy,
-      data: [
-        {
-          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
-          requestedPredicates: [
-            {
-              name: 'birthdate_dateint',
-              predicateType: PredicateType.GreaterThanOrEqualTo,
-              predicateValue: 18,
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'BC:5:PractisingLawyer:0.0.1:indy',
-    name: 'Practising lawyer',
-    description: 'Verify if a person`is a practicing lawyer.',
-    version: '0.0.1',
-    payload: {
-      type: ProofRequestType.Indy,
-      data: [
-        {
-          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1',
-          requestedAttributes: [
-            {
-              names: ['Given Name', 'Surname', 'PPID', 'Member Status'],
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1' }],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'BC:5:PractisingLawyerAndFullName:0.0.1:indy',
-    name: 'Practising lawyer and full name',
-    description: 'Verify if a person`is a practicing lawyer using two different credentials for extra assurance',
-    version: '0.0.1',
-    payload: {
-      type: ProofRequestType.Indy,
-      data: [
-        {
-          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
-          requestedAttributes: [
-            {
-              names: ['given_names', 'family_name'],
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
-            },
-          ],
-        },
-        {
-          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1',
-          requestedAttributes: [
-            {
-              names: ['Given Name', 'Surname', 'PPID', 'Member Status'],
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1' }],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'BC:5:OverSomeYearsOfAge:0.0.1:indy',
-    name: 'Over some years of age',
-    description: 'Verify if a person is over some years ends up.',
-    version: '0.0.1',
-    payload: {
-      type: ProofRequestType.Indy,
-      data: [
-        {
-          schema: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0',
-          requestedPredicates: [
-            {
-              name: 'birthdate_dateint',
-              predicateType: PredicateType.GreaterThanOrEqualTo,
-              predicateValue: 18,
-              parameterizable: true,
-              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:2:Person:1.0' }],
+              predicateValue: 20240101,
+              restrictions: [{ schema_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card' }],
             },
           ],
         },

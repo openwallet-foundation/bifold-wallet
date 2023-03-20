@@ -52,19 +52,11 @@
       }
     ]
   },
-  "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0": {
+  "Aries:5:StudentFullName:0.0.1:indy": {
     "captureBase": {
       "attributes": {
-        "given_names": "Text",
-        "family_name": "Text",
-        "picture": "Text",
-        "country": "Text",
-        "expiry_date_dateint": "Text",
-        "birthdate_dateint": "Text",
-        "street_address": "Text",
-        "postal_code": "Text",
-        "locality": "Text",
-        "region": "Text"
+        "student_first_name": "Text",
+        "student_last_name": "Text"
       }
     },
     "overlays": [
@@ -72,83 +64,15 @@
         "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
         "type": "spec/overlays/meta/1.0",
         "language": "en",
-        "name": "Verified Person"
+        "name": "Student full name",
+        "description": "Verify the full name of a student"
       },
       {
         "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
         "type": "spec/overlays/meta/1.0",
         "language": "fr",
-        "name": "Personne vérifiée"
-      },
-      {
-        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/label/1.0",
-        "language": "en",
-        "attributeLabels": {
-          "given_names": "Given Names",
-          "family_name": "Family Name",
-          "picture": "Picture",
-          "country": "Country",
-          "expiry_date_dateint": "Issued",
-          "birthdate_dateint": "Birthdate",
-          "street_address": "Street Address",
-          "postal_code": "Postal Code",
-          "locality": "Locality",
-          "region": "Region"
-        }
-      },
-      {
-        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/label/1.0",
-        "language": "fr",
-        "attributeLabels": {
-          "given_names": "Prénoms",
-          "family_name": "Nom de famille",
-          "picture": "Image",
-          "country": "Pays",
-          "expiry_date_dateint": "Publié",
-          "birthdate_dateint": "Date de naissance",
-          "street_address": "Adresse de la rue",
-          "postal_code": "Code Postal",
-          "locality": "Localité",
-          "region": "Région"
-        }
-      },
-      {
-        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/card_layout/1.1",
-        "language": "en",
-        "primaryBackgroundColor": "#591d1d",
-        "header": {
-          "color": "#591d1d"
-        },
-        "footer": {
-          "color": "#591d1d"
-        }
-      }
-    ]
-  },
-  "BC:5:FullName:0.0.1:indy": {
-    "captureBase": {
-      "attributes": {
-        "given_names": "Text",
-        "family_name": "Text"
-      }
-    },
-    "overlays": [
-      {
-        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "en",
-        "name": "Full name",
-        "description": "Verify the full name of a person"
-      },
-      {
-        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "fr",
-        "name": "Nom et prénom",
-        "description": "Vérifier le nom complet d'une personne"
+        "name": "Nom complet de l'étudiant",
+        "description": "Vérifier le nom complet d'un étudiant"
       }
     ]
   }
