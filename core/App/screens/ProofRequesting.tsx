@@ -163,7 +163,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [invitationUrl, setInitationUrl] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
-  const [processing, setProcessing] = useState(false)
+  const [processing] = useState(false)
 
   const createProofRequest = useCallback(async () => {
     try {
