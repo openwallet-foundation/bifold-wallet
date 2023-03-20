@@ -53,13 +53,13 @@ describe('ProofRequestDetails Component', () => {
   test('Schema and attributes are human readable', async () => {
     const tree = renderView({ templateId })
 
-    const schema = await tree.findAllByText('Full Name', { exact: false })
-    const credential = await tree.findByText('Verified Person', { exact: false })
-    const givenNames = await tree.findByText('Given Names', { exact: false })
-    const familyName = await tree.findByText('Family Name', { exact: false })
+    const schema = await tree.findByText('Student full name', { exact: false })
+    const credential = await tree.findAllByText('Student', { exact: false })
+    const givenNames = await tree.findByText('First Name', { exact: false })
+    const familyName = await tree.findByText('Last Name', { exact: false })
 
-    expect(schema.length).toBe(2)
-    expect(credential).not.toBe(null)
+    expect(schema).not.toBe(null)
+    expect(credential.length).toBe(3)
     expect(givenNames).not.toBe(null)
     expect(familyName).not.toBe(null)
   })

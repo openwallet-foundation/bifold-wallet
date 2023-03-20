@@ -35,23 +35,23 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
         Object {
           "requestedAttributes": Array [
             Object {
-              "name": "given_names",
+              "name": "student_first_name",
               "restrictions": Array [
                 Object {
-                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                 },
               ],
             },
             Object {
-              "name": "family_name",
+              "name": "student_last_name",
               "restrictions": Array [
                 Object {
-                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                 },
               ],
             },
           ],
-          "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          "schema": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
         },
       ]
     }
@@ -97,7 +97,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               }
             }
           >
-            Full name
+            Student full name
           </Text>
           <Text
             style={
@@ -108,7 +108,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               }
             }
           >
-            Verify the full name of a person
+            Verify the full name of a student
           </Text>
         </View>
       </View>
@@ -140,7 +140,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               }
             }
           >
-            Verified Person
+            Student
           </Text>
           <View
             data={
@@ -149,13 +149,13 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                   "credentialId": undefined,
                   "encoding": undefined,
                   "format": undefined,
-                  "label": "Given Names",
+                  "label": "First Name",
                   "mimeType": undefined,
-                  "name": "given_names",
+                  "name": "student_first_name",
                   "nonRevoked": undefined,
                   "restrictions": Array [
                     Object {
-                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                     },
                   ],
                   "revealed": undefined,
@@ -167,13 +167,13 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                   "credentialId": undefined,
                   "encoding": undefined,
                   "format": undefined,
-                  "label": "Family Name",
+                  "label": "Last Name",
                   "mimeType": undefined,
-                  "name": "family_name",
+                  "name": "student_last_name",
                   "nonRevoked": undefined,
                   "restrictions": Array [
                     Object {
-                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                     },
                   ],
                   "revealed": undefined,
@@ -227,7 +227,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                       }
                     }
                   >
-                    Given Names
+                    First Name
                   </Text>
                   <Text
                     style={
@@ -275,7 +275,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                       }
                     }
                   >
-                    Family Name
+                    Last Name
                   </Text>
                   <Text
                     style={

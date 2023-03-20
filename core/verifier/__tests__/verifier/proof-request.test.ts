@@ -26,12 +26,6 @@ describe('Helpers', () => {
     expect(proofRequest).toMatchSnapshot()
   })
 
-  test('Build indy proof request from template containing attributes group', async () => {
-    const template = defaultProofRequestTemplates[3]
-    const proofRequest = buildProofRequestDataForTemplate(template)
-    expect(proofRequest).toMatchSnapshot()
-  })
-
   test('Build indy proof request from template id', async () => {
     const templateId = defaultProofRequestTemplates[0].id
     const proofRequest = buildProofRequestDataForTemplateId(templateId)
@@ -41,11 +35,6 @@ describe('Helpers', () => {
   test('Check if proof has predicates', async () => {
     expect(hasPredicates(defaultProofRequestTemplates[0])).toBeFalsy()
     expect(hasPredicates(defaultProofRequestTemplates[1])).toBeTruthy()
-  })
-
-  test('Check if proof parameterizable', async () => {
-    expect(isParameterizable(defaultProofRequestTemplates[0])).toBeFalsy()
-    expect(isParameterizable(defaultProofRequestTemplates[5])).toBeTruthy()
   })
 
   afterAll(() => {

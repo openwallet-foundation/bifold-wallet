@@ -41,30 +41,26 @@ describe('ListProofRequests Component', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Schema names are human readable', async () => {
+  test('Template names are human readable', async () => {
     const tree = renderView()
 
-    const fullName = await tree.findByText('19+ and Full name', { exact: false })
-    const overYearsOfAge = await tree.findByText(' 19 years of age', { exact: false })
+    const fullName = await tree.findByText('Student full name', { exact: true })
+    const fullNameAndExpirationDate = await tree.findByText('Student full name and expiration date', { exact: false })
 
     expect(fullName).not.toBe(null)
-    expect(overYearsOfAge).not.toBe(null)
+    expect(fullNameAndExpirationDate).not.toBe(null)
   })
 
   test('Pressing on a request template takes the user to a proof request template detail screen', async () => {
     const tree = renderView()
 
     await act(async () => {
-      const templateItemInstances = await tree.findAllByText('19+ and Full name', { exact: false })
-
-      expect(templateItemInstances.length).toBe(1)
-
-      const templateItemInstance = templateItemInstances[0]
+      const templateItemInstance = await tree.findByText('Student full name', { exact: true })
 
       fireEvent(templateItemInstance, 'press')
 
       expect(navigation.navigate).toBeCalledWith('Proof Request Details', {
-        templateId: defaultProofRequestTemplates[1].id,
+        templateId: defaultProofRequestTemplates[0].id,
       })
     })
   })

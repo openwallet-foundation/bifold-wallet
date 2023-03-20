@@ -1,50 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Helpers Build indy proof request from template containing attributes group 1`] = `
-Object {
-  "indy": Object {
-    "name": "Practising lawyer",
-    "nonce": "1677766511505",
-    "requestedAttributes": Map {
-      "referent_0" => Object {
-        "names": Array [
-          "Given Name",
-          "Surname",
-          "PPID",
-          "Member Status",
-        ],
-        "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
-          },
-        ],
-      },
-    },
-    "requestedPredicates": Map {},
-    "version": "0.0.1",
-  },
-}
-`;
-
 exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
 Object {
   "indy": Object {
-    "name": "Full name",
+    "name": "Student full name",
     "nonce": "1677766511505",
     "requestedAttributes": Map {
       "referent_0" => Object {
-        "name": "given_names",
+        "name": "student_first_name",
         "restrictions": Array [
           Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
           },
         ],
       },
       "referent_1" => Object {
-        "name": "family_name",
+        "name": "student_last_name",
         "restrictions": Array [
           Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
           },
         ],
       },
@@ -58,29 +32,29 @@ Object {
 exports[`Helpers Build indy proof request from template containing two requested attributes and predicate 1`] = `
 Object {
   "indy": Object {
-    "name": "19+ and Full name",
+    "name": "Student full name and expiration date",
     "nonce": "1677766511505",
     "requestedAttributes": Map {
       "referent_0" => Object {
         "names": Array [
-          "given_names",
-          "family_name",
+          "student_first_name",
+          "student_last_name",
         ],
         "restrictions": Array [
           Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
           },
         ],
       },
     },
     "requestedPredicates": Map {
       "referent_1" => Object {
-        "name": "birthdate_dateint",
+        "name": "expiry_date",
         "predicateType": ">=",
-        "predicateValue": 18,
+        "predicateValue": 20240101,
         "restrictions": Array [
           Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
           },
         ],
       },
@@ -93,22 +67,22 @@ Object {
 exports[`Helpers Build indy proof request from template id 1`] = `
 Object {
   "indy": Object {
-    "name": "Full name",
+    "name": "Student full name",
     "nonce": "1677766511505",
     "requestedAttributes": Map {
       "referent_0" => Object {
-        "name": "given_names",
+        "name": "student_first_name",
         "restrictions": Array [
           Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
           },
         ],
       },
       "referent_1" => Object {
-        "name": "family_name",
+        "name": "student_last_name",
         "restrictions": Array [
           Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
           },
         ],
       },

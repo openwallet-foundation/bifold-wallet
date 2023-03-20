@@ -21,31 +21,31 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
     data={
       Array [
         Object {
-          "description": "Verify the full name of a person",
-          "id": "BC:5:FullName:0.0.1:indy",
-          "name": "Full name",
+          "description": "Verify the full name of a student",
+          "id": "Aries:5:StudentFullName:0.0.1:indy",
+          "name": "Student full name",
           "payload": Object {
             "data": Array [
               Object {
                 "requestedAttributes": Array [
                   Object {
-                    "name": "given_names",
+                    "name": "student_first_name",
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                       },
                     ],
                   },
                   Object {
-                    "name": "family_name",
+                    "name": "student_last_name",
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                       },
                     ],
                   },
                 ],
-                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
               },
             ],
             "type": "indy",
@@ -53,165 +53,38 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
           "version": "0.0.1",
         },
         Object {
-          "description": "Verify if a person is 19 years end up and full name.",
-          "id": "BC:5:19+AndFullName:0.0.1:indy",
-          "name": "19+ and Full name",
+          "description": "Verify that full name of a student and that he/she has a not expired student card.",
+          "id": "Aries:5:StudentFullNameAndExpirationDate:0.0.1:indy",
+          "name": "Student full name and expiration date",
           "payload": Object {
             "data": Array [
               Object {
                 "requestedAttributes": Array [
                   Object {
                     "names": Array [
-                      "given_names",
-                      "family_name",
+                      "student_first_name",
+                      "student_last_name",
                     ],
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                       },
                     ],
                   },
                 ],
                 "requestedPredicates": Array [
                   Object {
-                    "name": "birthdate_dateint",
+                    "name": "expiry_date",
                     "predicateType": ">=",
-                    "predicateValue": 18,
+                    "predicateValue": 20240101,
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
                       },
                     ],
                   },
                 ],
-                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
-              },
-            ],
-            "type": "indy",
-          },
-          "version": "0.0.1",
-        },
-        Object {
-          "description": "Verify if a person is 19 years end up.",
-          "id": "BC:5:Over19YearsOfAge:0.0.1:indy",
-          "name": "Over 19 years of age",
-          "payload": Object {
-            "data": Array [
-              Object {
-                "requestedPredicates": Array [
-                  Object {
-                    "name": "birthdate_dateint",
-                    "predicateType": ">=",
-                    "predicateValue": 18,
-                    "restrictions": Array [
-                      Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
-                      },
-                    ],
-                  },
-                ],
-                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
-              },
-            ],
-            "type": "indy",
-          },
-          "version": "0.0.1",
-        },
-        Object {
-          "description": "Verify if a person\`is a practicing lawyer.",
-          "id": "BC:5:PractisingLawyer:0.0.1:indy",
-          "name": "Practising lawyer",
-          "payload": Object {
-            "data": Array [
-              Object {
-                "requestedAttributes": Array [
-                  Object {
-                    "names": Array [
-                      "Given Name",
-                      "Surname",
-                      "PPID",
-                      "Member Status",
-                    ],
-                    "restrictions": Array [
-                      Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
-                      },
-                    ],
-                  },
-                ],
-                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
-              },
-            ],
-            "type": "indy",
-          },
-          "version": "0.0.1",
-        },
-        Object {
-          "description": "Verify if a person\`is a practicing lawyer using two different credentials for extra assurance",
-          "id": "BC:5:PractisingLawyerAndFullName:0.0.1:indy",
-          "name": "Practising lawyer and full name",
-          "payload": Object {
-            "data": Array [
-              Object {
-                "requestedAttributes": Array [
-                  Object {
-                    "names": Array [
-                      "given_names",
-                      "family_name",
-                    ],
-                    "restrictions": Array [
-                      Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
-                      },
-                    ],
-                  },
-                ],
-                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
-              },
-              Object {
-                "requestedAttributes": Array [
-                  Object {
-                    "names": Array [
-                      "Given Name",
-                      "Surname",
-                      "PPID",
-                      "Member Status",
-                    ],
-                    "restrictions": Array [
-                      Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
-                      },
-                    ],
-                  },
-                ],
-                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
-              },
-            ],
-            "type": "indy",
-          },
-          "version": "0.0.1",
-        },
-        Object {
-          "description": "Verify if a person is over some years ends up.",
-          "id": "BC:5:OverSomeYearsOfAge:0.0.1:indy",
-          "name": "Over some years of age",
-          "payload": Object {
-            "data": Array [
-              Object {
-                "requestedPredicates": Array [
-                  Object {
-                    "name": "birthdate_dateint",
-                    "parameterizable": true,
-                    "predicateType": ">=",
-                    "predicateValue": 18,
-                    "restrictions": Array [
-                      Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
-                      },
-                    ],
-                  },
-                ],
-                "schema": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+                "schema": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
               },
             ],
             "type": "indy",
@@ -288,7 +161,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                 }
               }
             >
-              Full name
+              Student full name
             </Text>
             <Text
               numberOfLines={2}
@@ -301,7 +174,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                 }
               }
             >
-              Verify the full name of a person
+              Verify the full name of a student
             </Text>
           </View>
           <View
@@ -383,7 +256,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                 }
               }
             >
-              19+ and Full name
+              Student full name and expiration date
             </Text>
             <Text
               numberOfLines={2}
@@ -396,7 +269,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                 }
               }
             >
-              Verify if a person is 19 years end up and full name.
+              Verify that full name of a student and that he/she has a not expired student card.
             </Text>
             <Text
               style={
@@ -407,416 +280,6 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
               }
             >
               Verifier.ZeroKnowledgeProof
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "alignSelf": "center",
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 12,
-                  },
-                  Object {
-                    "color": "#000000",
-                    "fontSize": 36,
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderRadius": 8,
-              "flexDirection": "row",
-              "marginBottom": 10,
-              "opacity": 1,
-              "padding": 12,
-            }
-          }
-          testID="com.ariesbifold:id/ProofRequestsCard"
-        >
-          <View
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Over 19 years of age
-            </Text>
-            <Text
-              numberOfLines={2}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Verify if a person is 19 years end up.
-            </Text>
-            <Text
-              style={
-                Object {
-                  "color": "#606060",
-                  "fontSize": 12,
-                }
-              }
-            >
-              Verifier.ZeroKnowledgeProof
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "alignSelf": "center",
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 12,
-                  },
-                  Object {
-                    "color": "#000000",
-                    "fontSize": 36,
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderRadius": 8,
-              "flexDirection": "row",
-              "marginBottom": 10,
-              "opacity": 1,
-              "padding": 12,
-            }
-          }
-          testID="com.ariesbifold:id/ProofRequestsCard"
-        >
-          <View
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Practising lawyer
-            </Text>
-            <Text
-              numberOfLines={2}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Verify if a person\`is a practicing lawyer.
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "alignSelf": "center",
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 12,
-                  },
-                  Object {
-                    "color": "#000000",
-                    "fontSize": 36,
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderRadius": 8,
-              "flexDirection": "row",
-              "marginBottom": 10,
-              "opacity": 1,
-              "padding": 12,
-            }
-          }
-          testID="com.ariesbifold:id/ProofRequestsCard"
-        >
-          <View
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Practising lawyer and full name
-            </Text>
-            <Text
-              numberOfLines={2}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Verify if a person\`is a practicing lawyer using two different credentials for extra assurance
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "alignSelf": "center",
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 12,
-                  },
-                  Object {
-                    "color": "#000000",
-                    "fontSize": 36,
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderRadius": 8,
-              "flexDirection": "row",
-              "marginBottom": 10,
-              "opacity": 1,
-              "padding": 12,
-            }
-          }
-          testID="com.ariesbifold:id/ProofRequestsCard"
-        >
-          <View
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Over some years of age
-            </Text>
-            <Text
-              numberOfLines={2}
-              style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "marginBottom": 4,
-                }
-              }
-            >
-              Verify if a person is over some years ends up.
-            </Text>
-            <Text
-              style={
-                Object {
-                  "color": "#606060",
-                  "fontSize": 12,
-                }
-              }
-            >
-              Verifier.ZeroKnowledgeProof
-            </Text>
-            <Text
-              style={
-                Object {
-                  "color": "#606060",
-                  "fontSize": 12,
-                }
-              }
-            >
-              Verifier.Parameterizable
             </Text>
           </View>
           <View
