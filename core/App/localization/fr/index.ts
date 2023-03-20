@@ -349,7 +349,8 @@ const translation = {
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Decline Credential",
         "Declined": "Diminué",
-        "ShareFollowingInformation": "partage les informations suivantes à partir des informations d'identification {{count}}."
+        "ShareFollowingInformation_one": "partage les informations suivantes à partir des informations d'identification {{count}}.",
+        "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}."
     },
     "Settings": {
         "Version": "Version",
