@@ -73,3 +73,19 @@ export class Predicate extends Field {
     this.parameterizable = params.parameterizable
   }
 }
+
+export interface ProofCredentialAttributes {
+  credDefId?: string
+  schemaId?: string
+  credName: string
+  attributes?: Attribute[]
+}
+
+export interface ProofCredentialPredicates {
+  credDefId?: string
+  schemaId?: string
+  credName: string
+  predicates?: Predicate[]
+}
+
+export interface ProofCredentialItems extends ProofCredentialAttributes, ProofCredentialPredicates {}
