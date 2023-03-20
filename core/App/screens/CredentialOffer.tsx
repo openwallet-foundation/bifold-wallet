@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
+import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
@@ -19,8 +20,9 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
-import { isValidIndyCredential } from '../utils/credential'
+import { getCredentialIdentifiers, isValidIndyCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
+import { buildFieldsFromIndyCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -101,7 +103,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
 
     const resolvePresentationFields = async () => {
-      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
+      const identifiers = getCredentialIdentifiers(credential)
+      const attributes = buildFieldsFromIndyCredential(credential)
+      const fields = await OCABundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
       return { fields }
     }
 
@@ -144,6 +148,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const header = () => {
     return (
       <>
+        <ConnectionImage connectionId={credential?.connectionId} />
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
@@ -151,7 +156,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
           </Text>
         </View>
         {!loading && credential && (
-          <CredentialCard credential={credential} style={{ marginHorizontal: 15, marginBottom: 16 }} />
+          <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
+            <CredentialCard credential={credential} />
+          </View>
         )}
       </>
     )

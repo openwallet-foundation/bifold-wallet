@@ -15,7 +15,7 @@ import { Screens, ProofRequestsStackParams } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { Attribute, Field, Predicate } from '../types/record'
 import { buildFieldsFromIndyProofRequestTemplate } from '../utils/oca'
-import { parseSchema } from '../utils/schema'
+import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestDetails>
@@ -119,11 +119,11 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
   const [attributes, setAttributes] = useState<Field[] | undefined>(undefined)
 
   useEffect(() => {
-    OCABundleResolver.resolve(undefined, i18n.language, { schemaId: data.schema }).then((bundle) => {
+    OCABundleResolver.resolve({ identifiers: { schemaId: data.schema }, language: i18n.language }).then((bundle) => {
       const metaOverlay = bundle?.metaOverlay || {
         captureBase: '',
         type: OverlayType.Meta10,
-        name: parseSchema(data.schema).name,
+        name: parseSchemaFromId(data.schema).name,
         language: i18n.language,
       }
       setMeta(metaOverlay)
@@ -132,11 +132,13 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
 
   useEffect(() => {
     const attributes = buildFieldsFromIndyProofRequestTemplate(data)
-    OCABundleResolver.presentationFields(undefined, i18n.language, attributes, { schemaId: data.schema }).then(
-      (fields) => {
-        setAttributes(fields)
-      }
-    )
+    OCABundleResolver.presentationFields({
+      identifiers: { schemaId: data.schema },
+      attributes,
+      language: i18n.language,
+    }).then((fields) => {
+      setAttributes(fields)
+    })
   }, [data.schema])
 
   const countAttributes = attributes?.length
@@ -220,7 +222,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
     const attributes = template.payload.type === ProofRequestType.Indy ? template.payload.data : []
 
-    OCABundleResolver.resolve(undefined, i18n.language, { templateId }).then((bundle) => {
+    OCABundleResolver.resolve({ identifiers: { templateId }, language: i18n.language }).then((bundle) => {
       const metaOverlay = bundle?.metaOverlay || {
         captureBase: '',
         type: OverlayType.Meta10,

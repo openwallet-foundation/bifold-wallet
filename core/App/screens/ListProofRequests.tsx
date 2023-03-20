@@ -64,7 +64,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
 
   useEffect(() => {
-    OCABundleResolver.resolve(undefined, i18n.language, { templateId: template.id }).then((bundle) => {
+    OCABundleResolver.resolve({ identifiers: { templateId: template.id }, language: i18n.language }).then((bundle) => {
       const metaOverlay = bundle?.metaOverlay || {
         captureBase: '',
         type: OverlayType.Meta10,

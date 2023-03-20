@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ViewStyle, Text, TextStyle, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { findProofRequestMessage } from '../../../verifier/utils/proof-request'
@@ -18,6 +18,7 @@ import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import { InfoBoxType } from '../misc/InfoBox'
 
 const iconSize = 30
 
@@ -35,9 +36,17 @@ interface NotificationListItemProps {
 }
 
 type DisplayDetails = {
+  type: InfoBoxType
   body: string | undefined
   title: string | undefined
   buttonTitle: string | undefined
+}
+
+type StyleConfig = {
+  containerStyle: ViewStyle
+  textStyle: TextStyle
+  iconColor: string
+  iconName: string
 }
 
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
@@ -48,14 +57,25 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
   const [details, setDetails] = useState<DisplayDetails>({
+    type: InfoBoxType.Info,
     title: undefined,
     body: undefined,
     buttonTitle: undefined,
   })
-  const styles = StyleSheet.create({
-    container: {
+  const [styleConfig, setStyleConfig] = useState<StyleConfig>({
+    containerStyle: {
       backgroundColor: ColorPallet.notification.info,
       borderColor: ColorPallet.notification.infoBorder,
+    },
+    textStyle: {
+      color: ColorPallet.notification.infoText,
+    },
+    iconColor: ColorPallet.notification.infoIcon,
+    iconName: 'info',
+  })
+
+  const styles = StyleSheet.create({
+    container: {
       borderRadius: 5,
       borderWidth: 1,
       padding: 10,
@@ -77,14 +97,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       flexGrow: 1,
       fontWeight: 'bold',
       alignSelf: 'center',
-      color: ColorPallet.notification.infoText,
     },
     bodyText: {
       ...TextTheme.normal,
       flexShrink: 1,
       marginVertical: 15,
       paddingBottom: 10,
-      color: ColorPallet.notification.infoText,
     },
     icon: {
       marginRight: 10,
@@ -104,6 +122,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       switch (notificationType) {
         case NotificationType.CredentialOffer:
           resolve({
+            type: InfoBoxType.Info,
             title: t('CredentialOffer.NewCredentialOffer'),
             body: `${name + (version ? ` v${version}` : '')}`,
             buttonTitle: undefined,
@@ -113,6 +132,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           if (agent) {
             findProofRequestMessage(agent, (notification as ProofExchangeRecord).id).then((proofRequest) => {
               resolve({
+                type: InfoBoxType.Info,
                 title: t('ProofRequest.NewProofRequest'),
                 body: proofRequest?.name || '',
                 buttonTitle: undefined,
@@ -125,6 +145,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           if (agent) {
             findProofRequestMessage(agent, (notification as ProofExchangeRecord).id).then((proofRequest) => {
               resolve({
+                type: InfoBoxType.Success,
                 title: t('ProofRequest.NewProof'),
                 body: proofRequest?.name || '',
                 buttonTitle: undefined,
@@ -135,6 +156,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         }
         case NotificationType.Revocation:
           resolve({
+            type: InfoBoxType.Error,
             title: t('CredentialDetails.NewRevoked'),
             body: `${name + (version ? ` v${version}` : '')}`,
             buttonTitle: undefined,
@@ -142,6 +164,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           break
         case NotificationType.Custom:
           resolve({
+            type: InfoBoxType.Info,
             title: t(customNotification.title as any),
             body: t(customNotification.description as any),
             buttonTitle: t(customNotification.buttonTitle as any),
@@ -235,13 +258,70 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     })
   }, [notificationType])
 
+  useEffect(() => {
+    switch (details.type) {
+      case InfoBoxType.Success:
+        setStyleConfig({
+          containerStyle: {
+            backgroundColor: ColorPallet.notification.success,
+            borderColor: ColorPallet.notification.successBorder,
+          },
+          textStyle: {
+            color: ColorPallet.notification.successText,
+          },
+          iconColor: ColorPallet.notification.successIcon,
+          iconName: 'check-circle',
+        })
+        break
+      case InfoBoxType.Warn:
+        setStyleConfig({
+          containerStyle: {
+            backgroundColor: ColorPallet.notification.warn,
+            borderColor: ColorPallet.notification.warnBorder,
+          },
+          textStyle: {
+            color: ColorPallet.notification.warnText,
+          },
+          iconColor: ColorPallet.notification.warnIcon,
+          iconName: 'warning',
+        })
+        break
+      case InfoBoxType.Error:
+        setStyleConfig({
+          containerStyle: {
+            backgroundColor: ColorPallet.notification.error,
+            borderColor: ColorPallet.notification.errorBorder,
+          },
+          textStyle: {
+            color: ColorPallet.notification.errorText,
+          },
+          iconColor: ColorPallet.notification.errorIcon,
+          iconName: 'error',
+        })
+        break
+      case InfoBoxType.Info:
+      default:
+        setStyleConfig({
+          containerStyle: {
+            backgroundColor: ColorPallet.notification.info,
+            borderColor: ColorPallet.notification.infoBorder,
+          },
+          textStyle: {
+            color: ColorPallet.notification.infoText,
+          },
+          iconColor: ColorPallet.notification.infoIcon,
+          iconName: 'info',
+        })
+    }
+  }, [details])
+
   return (
-    <View style={styles.container} testID={testIdWithKey('NotificationListItem')}>
+    <View style={[styles.container, styleConfig.containerStyle]} testID={testIdWithKey('NotificationListItem')}>
       <View style={styles.headerContainer}>
-        <View style={[styles.icon]}>
-          <Icon name={'info'} size={iconSize} color={ColorPallet.notification.infoIcon} />
+        <View style={styles.icon}>
+          <Icon name={styleConfig.iconName} size={iconSize} color={styleConfig.iconColor} />
         </View>
-        <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+        <Text style={[styles.headerText, styleConfig.textStyle]} testID={testIdWithKey('HeaderText')}>
           {details.title}
         </Text>
         {[NotificationType.Custom, NotificationType.ProofRequest, NotificationType.CredentialOffer].includes(
@@ -253,13 +333,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
               testID={testIdWithKey(`Close${notificationType}`)}
               onPress={onClose}
             >
-              <Icon name={'close'} size={iconSize} color={ColorPallet.notification.infoIcon} />
+              <Icon name={'close'} size={iconSize} color={styleConfig.iconColor} />
             </TouchableOpacity>
           </View>
         )}
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+        <Text style={[styles.bodyText, styleConfig.textStyle]} testID={testIdWithKey('BodyText')}>
           {details.body}
         </Text>
         <Button

@@ -20,10 +20,17 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay, resolveBundle } from '../types/oca'
+import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../types/oca'
 import { RemoveType } from '../types/remove'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  getCredentialMeta,
+  isValidIndyCredential,
+  toImageSource,
+} from '../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
+import { buildFieldsFromIndyCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -122,7 +129,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       setRevocationDate(formatTime(date))
     }
 
-    resolveBundle(OCABundleResolver, credential, i18n.language).then((bundle) => {
+    const params = {
+      identifiers: getCredentialIdentifiers(credential),
+      meta: getCredentialMeta(credential),
+      attributes: buildFieldsFromIndyCredential(credential),
+      language: i18n.language,
+    }
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
       setOverlay({ ...overlay, ...bundle })
     })
   }, [credential])
@@ -309,7 +322,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
                 <Text style={[TextTheme.title, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
                   {t('CredentialDetails.IssuedBy') + ' '}
                 </Text>
-                <Text style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+                <Text
+                  style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}
+                  testID={testIdWithKey('IssuerName')}
+                >
                   {credentialConnectionLabel}
                 </Text>
               </Text>
@@ -318,7 +334,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
                   <Text style={[TextTheme.title, { color: ColorPallet.notification.errorText }]}>
                     {t('CredentialDetails.Revoked') + ': '}
                   </Text>
-                  <Text style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}>
+                  <Text
+                    style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}
+                    testID={testIdWithKey('RevokedDate')}
+                  >
                     {revocationDate}
                   </Text>
                 </Text>
