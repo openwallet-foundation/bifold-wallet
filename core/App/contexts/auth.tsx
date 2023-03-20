@@ -92,9 +92,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     const hash = await hashPIN(PIN, secret.salt)
-    // eslint-disable-next-line no-console
-    console.log('TODO: fix the openWallet call to indySdk', hash)
-
     try {
       // NOTE: a custom wallet is used to check if the wallet key is correct. This is different from the wallet used in the rest of the app.
       // We create an AskarWallet instance and open the wallet with the given secret.
@@ -114,7 +111,6 @@ export const AuthProvider: React.FC = ({ children }) => {
       setWalletSecret(fullSecret)
       return true
     } catch (e) {
-      console.log('eeeee', e)
       return false
     }
   }

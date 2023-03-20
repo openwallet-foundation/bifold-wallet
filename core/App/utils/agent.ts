@@ -1,8 +1,3 @@
-// Temp until fixed in AFJ
-import '@hyperledger/aries-askar-react-native'
-import '@hyperledger/anoncreds-react-native'
-import '@hyperledger/indy-vdr-react-native'
-
 import {
   AnonCredsModule,
   LegacyIndyCredentialFormatService,
@@ -25,6 +20,9 @@ import {
 } from '@aries-framework/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
 import { useAgent } from '@aries-framework/react-hooks'
+import { anoncreds } from '@hyperledger/anoncreds-react-native'
+import { ariesAskar } from '@hyperledger/aries-askar-react-native'
+import { indyVdr } from '@hyperledger/indy-vdr-react-native'
 
 interface GetAgentModulesOptions {
   indyNetworks: IndyVdrPoolConfig[]
@@ -37,12 +35,17 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
   const indyProofFormat = new LegacyIndyProofFormatService()
 
   return {
-    askar: new AskarModule(),
-    anoncredsRs: new AnonCredsRsModule(),
+    askar: new AskarModule({
+      ariesAskar,
+    }),
+    anoncredsRs: new AnonCredsRsModule({
+      anoncreds,
+    }),
     anoncreds: new AnonCredsModule({
       registries: [new IndyVdrAnonCredsRegistry()],
     }),
     indyVdr: new IndyVdrModule({
+      indyVdr,
       networks: indyNetworks as [IndyVdrPoolConfig],
     }),
     connections: new ConnectionsModule({

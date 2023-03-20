@@ -1,12 +1,5 @@
-import {
-  Agent,
-  AutoAcceptCredential,
-  ConsoleLogger,
-  HttpOutboundTransport,
-  LogLevel,
-  MediatorPickupStrategy,
-  WsOutboundTransport,
-} from '@aries-framework/core'
+import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
+import { IndySdkToAskarMigrationUpdater } from '@aries-framework/indy-sdk-to-askar-migration'
 import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -14,8 +7,9 @@ import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
+import * as RNFS from 'react-native-fs'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -32,12 +26,15 @@ import {
   Onboarding as StoreOnboardingState,
   Preferences as PreferencesState,
   LoginAttempt as LoginAttemptState,
+  Migration as MigrationState,
 } from '../types/state'
 import { getAgentModules } from '../utils/agent'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
 }
+
+const didMigrateToAskar = (state: MigrationState) => state.didMigrateToAskar
 
 const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
   if (state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && !state.didConsiderBiometry) {
@@ -104,12 +101,21 @@ const Splash: React.FC = () => {
         const attemptData = await loadAuthAttempts()
 
         const preferencesData = await AsyncStorage.getItem(LocalStorageKeys.Preferences)
-
         if (preferencesData) {
           const dataAsJSON = JSON.parse(preferencesData) as PreferencesState
 
           dispatch({
             type: DispatchAction.PREFERENCES_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
+        const migrationData = await AsyncStorage.getItem(LocalStorageKeys.Migration)
+        if (migrationData) {
+          const dataAsJSON = JSON.parse(migrationData) as MigrationState
+
+          dispatch({
+            type: DispatchAction.MIGRATION_UPDATED,
             payload: [dataAsJSON],
           })
         }
@@ -194,10 +200,31 @@ const Splash: React.FC = () => {
         newAgent.registerOutboundTransport(wsTransport)
         newAgent.registerOutboundTransport(httpTransport)
 
+        // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
+        if (!didMigrateToAskar(store.migration)) {
+          newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
+          const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
+          const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db`
+          const updater = await IndySdkToAskarMigrationUpdater.initialize({
+            dbPath,
+            agent: newAgent,
+            // We want to keep the backup file in case anything goes wrong. this will allow us to release patches and still update the original indy-sdk
+            // in a future version we could manually add a check to remove the old file from storage.
+            deleteOnFinish: false,
+          })
+          await updater.update()
+
+          newAgent.config.logger.debug('Succesfully finished updating agent to Aries Askar')
+          // Store that we migrated to askar.
+          dispatch({
+            type: DispatchAction.DID_MIGRATE_TO_ASKAR,
+          })
+        }
+
         await newAgent.initialize()
 
-        // NOTE: I'm not sure what the best place is to create the link secret. When we
-        // accept the first offer? When we initialize the agent?
+        // If we don't have any link secrets yet, we will create a default link secret that will be used
+        // for all anoncreds credential requests.
         const linkSecretIds = await newAgent.modules.anoncreds.getLinkSecretIds()
         if (linkSecretIds.length === 0) {
           await newAgent.modules.anoncreds.createLinkSecret({

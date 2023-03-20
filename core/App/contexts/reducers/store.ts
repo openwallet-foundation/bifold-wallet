@@ -7,6 +7,7 @@ import {
   Authentication as AuthenticationState,
   Lockout as LockoutState,
   LoginAttempt as LoginAttemptState,
+  Migration as MigrationState,
   State,
 } from '../../types/state'
 
@@ -15,6 +16,11 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+}
+
+enum MigrationDispatchAction {
+  DID_MIGRATE_TO_ASKAR = 'migration/didMigrateToAskar',
+  MIGRATION_UPDATED = 'migration/migrationStateLoaded',
 }
 
 enum LockoutDispatchAction {
@@ -46,6 +52,7 @@ export type DispatchAction =
   | PreferencesDispatchAction
   | AuthenticationDispatchAction
   | DeepLinkDispatchAction
+  | MigrationDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -54,6 +61,7 @@ export const DispatchAction = {
   ...PreferencesDispatchAction,
   ...AuthenticationDispatchAction,
   ...DeepLinkDispatchAction,
+  ...MigrationDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -154,12 +162,41 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state.onboarding,
         didCreatePIN: true,
       }
+      // If the pin is created with this version (that includes Askar), we
+      // we can assume that a wallet using Indy SDK was never created. This
+      // allows us to skip the migration step. For wallets initialized using
+      // the indy sdk this won't be called, so the migration will be performed
+      const migration: MigrationState = {
+        ...state.migration,
+        didMigrateToAskar: true,
+      }
       const newState = {
         ...state,
         onboarding,
+        migration,
       }
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
       return newState
+    }
+    case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {
+      const migration: MigrationState = {
+        ...state.migration,
+        didMigrateToAskar: true,
+      }
+      const newState = {
+        ...state,
+        migration,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      return newState
+    }
+    case MigrationDispatchAction.MIGRATION_UPDATED: {
+      const migration: MigrationState = (action?.payload || []).pop()
+      return {
+        ...state,
+        migration,
+      }
     }
     case AuthenticationDispatchAction.DID_AUTHENTICATE: {
       const value: AuthenticationState = (action?.payload || []).pop()
