@@ -24,6 +24,9 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
+jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
+jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
+jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 

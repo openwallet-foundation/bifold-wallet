@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import 'reflect-metadata'
 import 'react-native-gesture-handler/jestSetup'
 import mockRNLocalize from 'react-native-localize/mock'
 

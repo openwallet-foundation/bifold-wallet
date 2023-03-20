@@ -15,7 +15,7 @@ const mockCredentialModule = {
     ),
 }
 const mockProofModule = {
-  getRequestedCredentialsForProofRequest: jest.fn(),
+  getCredentialsForRequest: jest.fn(),
   acceptRequest: jest.fn(),
   declineRequest: jest.fn(),
 }
