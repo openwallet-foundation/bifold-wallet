@@ -7,7 +7,7 @@ import { GroupedSharedProofData, GroupedSharedProofDataItem } from '../../../ver
 import { getProofData, groupSharedProofDataByCredential } from '../../../verifier/utils/proof'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
-import { CardLayoutOverlay11, CredentialOverlay, resolveBundle } from '../../types/oca'
+import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute, Field, Predicate } from '../../types/record'
 import { toImageSource } from '../../utils/credential'
 import { buildFieldsFromSharedIndyProof } from '../../utils/oca'
@@ -78,7 +78,12 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
 
   useEffect(() => {
     const attributes = buildFieldsFromSharedIndyProof(sharedData.data)
-    resolveBundle(OCABundleResolver, undefined, i18n.language, attributes, sharedData.identifiers).then((bundle) => {
+    const params = {
+      identifiers: sharedData.identifiers,
+      language: i18n.language,
+      attributes,
+    }
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
       setOverlay(bundle)
     })
   }, [sharedData])

@@ -8,7 +8,6 @@ import { NetworkProvider } from '../../App/contexts/network'
 import configurationContext from '../contexts/configuration'
 import ListProofRequests from '../../App/screens/ListProofRequests'
 import { defaultProofRequestTemplates } from '../../verifier/constants'
-import ProofRequestDetails from '../../App/screens/ProofRequestDetails'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
