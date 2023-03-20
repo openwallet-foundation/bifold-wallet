@@ -35,14 +35,12 @@ jobs:
           key: ${{ runner.os }}-pods-${{ env.cacheId }}-${{ hashFiles('**/Podfile.lock ') }}
           restore-keys: |
             ${{ runner.os }}-pods-${{ env.cacheId }}-
-
       # Watch for changes to the `App` and `iOS` paths, use
       # git for cache keys.
       - name: Generate cache key
         run: |
           echo $(git rev-parse HEAD:core/App) > ./dd-cache-key.txt
           echo $(git rev-parse HEAD:app/ios) >> ./dd-cache-key.txt
-
       - name: Cache derived data
         uses: actions/cache@v1
         with:
@@ -50,12 +48,10 @@ jobs:
           key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
           restore-keys: |
             ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
-
       - name: Install React Native Dependencies
         run: |
           yarn install --immutable && \
           git status
-
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./app/ios
@@ -64,7 +60,6 @@ jobs:
           pod install && \
           git status && \
           git diff Podfile.lock
-
       - name: Run debug build
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./app/ios
@@ -77,14 +72,12 @@ jobs:
           build \
           CODE_SIGNING_ALLOWED=NO \
           CODE_SIGNING_REQUIRED=NO
-
       # This is a 1G file that adds little to speeding up
       # the build but does impact cache size.
       - name: Cleanup large artifacts
         working-directory: ./app/ios
         run: |
           rm -rf build/Build/Products/Debug-iphoneos/AriesBifold.app
-
   build-android:
     runs-on: ubuntu-latest
     strategy:
@@ -102,13 +95,12 @@ jobs:
         run: |
           sudo apt-get --quiet update --yes
           sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:
-          distribution: 'zulu'
+          distribution: "zulu"
           java-version: 11
-          cache: 'gradle'
+          cache: "gradle"
 
       - name: Setup Android SDK
         working-directory: ./app/android
@@ -122,23 +114,19 @@ jobs:
           unzip -d $ANDROID_HOME/cmdline-tools commandlinetools-linux.zip
           mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
           find $ANDROID_HOME -name sdkmanager
-          
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           echo y | sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
           echo y | sdkmanager "platform-tools" >/dev/null
           echo y | sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
           find $ANDROID_HOME -type f -executable -print
-          
           chmod +x ./gradlew
           set +o pipefail
           yes | sdkmanager --licenses
           set -o pipefail
-
       - name: Install React Native Dependencies
         run: |
           node -v && yarn -v && yarn install --immutable && \
           git status
-
       - name: Android Release Build
         working-directory: ./app/android
         run: ./gradlew --no-daemon bundleRelease

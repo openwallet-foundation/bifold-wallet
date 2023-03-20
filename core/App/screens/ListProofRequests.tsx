@@ -115,13 +115,14 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
 
   const { connectionId } = route?.params
 
-  const records = defaultProofRequestTemplates
+  const configuration = useConfiguration()
+  const proofRequestTemplates = configuration.proofRequestTemplates || []
 
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-        data={records}
+        data={proofRequestTemplates}
         keyExtractor={(records) => records.id}
         renderItem={({ item }) => {
           return <ProofRequestsCard template={item} connectionId={connectionId} navigation={navigation} />
