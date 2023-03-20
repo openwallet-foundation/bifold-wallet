@@ -17,6 +17,7 @@ import { AttributeValue } from '../record/RecordField'
 
 interface SharedProofDataProps {
   recordId: string
+  onSharedProofDataLoad: (sharedProofData: GroupedSharedProofDataItem[]) => void
 }
 
 const { width } = Dimensions.get('screen')
@@ -161,7 +162,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   ) : null
 }
 
-const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedProofDataProps) => {
+const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedProofDataLoad }: SharedProofDataProps) => {
   const { agent } = useAgent()
 
   const styles = StyleSheet.create({
@@ -184,7 +185,9 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId }: SharedPro
     getProofData(agent, recordId)
       .then((data) => {
         if (data) {
-          setSharedData(groupSharedProofDataByCredential(data))
+          const groupedSharedProofData = groupSharedProofDataByCredential(data)
+          setSharedData(groupedSharedProofData)
+          onSharedProofDataLoad(Array.from(groupedSharedProofData.values()))
         }
       })
       .finally(() => {

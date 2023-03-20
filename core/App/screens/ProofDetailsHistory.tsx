@@ -3,11 +3,12 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { GroupedSharedProofDataItem } from '../../verifier/types/proof'
 import { markProofAsViewed } from '../../verifier/utils/proof'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useTheme } from '../contexts/theme'
@@ -21,7 +22,6 @@ interface ProofDetailsHistoryProps {
 }
 
 const connectionLessLabel = 'Anonymous'
-const fakeCredentialsCount = 2
 
 const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation }) => {
   const { t } = useTranslation()
@@ -50,6 +50,12 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
     [connection]
   )
 
+  const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
+
+  function onSharedProofDataLoad(data: GroupedSharedProofDataItem[]) {
+    setSharedProofDataItems(data)
+  }
+
   useEffect(() => {
     navigation.setOptions({ title: connectionLabel }) //
   }, [connectionLabel])
@@ -57,13 +63,15 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>
-            <Text style={styles.label}>{connectionLabel}</Text>{' '}
-            {t('ProofRequest.ShareFollowingInformation', { count: fakeCredentialsCount })}
-          </Text>
-        </View>
-        <SharedProofData recordId={record.id} />
+        {sharedProofDataItems.length > 0 && (
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.descriptionText}>
+              <Text style={styles.label}>{connectionLabel}</Text>{' '}
+              {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
+            </Text>
+          </View>
+        )}
+        <SharedProofData recordId={record.id} onSharedProofDataLoad={onSharedProofDataLoad} />
       </View>
     </View>
   )
