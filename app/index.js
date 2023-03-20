@@ -21,7 +21,6 @@ import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
 
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
-import { useFlipper } from '@react-navigation/devtools';
 import { NavigationTheme } from 'aries-bifold'
 import React from 'react'
 import { AppRegistry, LogBox } from 'react-native'
@@ -37,8 +36,6 @@ LogBox.ignoreAllLogs()
 
 const Base = () => {
   const navigationRef = useNavigationContainerRef()
-
-  useFlipper(navigationRef)
 
   return (
     <NavigationContainer ref={navigationRef} theme={navigationTheme}>
