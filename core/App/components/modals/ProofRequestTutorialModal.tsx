@@ -160,14 +160,6 @@ const ProofRequestTutorialModal: React.FC<ProofRequestTutorialModalProps> = ({ v
         name: 'firstStep',
         component: <CarouselViewPlaceholder />,
       },
-      {
-        name: 'secondStep',
-        component: <CarouselViewPlaceholder />,
-      },
-      {
-        name: 'thirdStep',
-        component: <CarouselViewPlaceholder />,
-      },
     ],
     []
   )

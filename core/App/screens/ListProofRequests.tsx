@@ -5,7 +5,6 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { defaultProofRequestTemplates } from '../../verifier/constants'
 import { ProofRequestTemplate } from '../../verifier/types/proof-reqeust-template'
 import { hasPredicates, isParameterizable } from '../../verifier/utils/proof-request'
 import EmptyList from '../components/misc/EmptyList'
