@@ -55,20 +55,6 @@ const ProofDeliveryStatusView: React.FC<{ status: ProofState }> = ({ status }) =
           </View>
         </>
       )
-    // TODO need add to AFJ
-    case ProofState.Processing:
-      return (
-        <>
-          <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
-              {t('ProofRequest.RequestProcessing')}
-            </Text>
-          </View>
-          <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-            <SendingProof />
-          </View>
-        </>
-      )
     case ProofState.PresentationSent:
     case ProofState.Done:
       return (
