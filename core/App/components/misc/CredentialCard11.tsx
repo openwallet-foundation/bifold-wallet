@@ -10,9 +10,9 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay11, CredentialOverlay, resolveBundle } from '../../types/oca'
-import { Attribute, Field, Predicate } from '../../types/record'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
+import { Attribute, Predicate } from '../../types/record'
+import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard11Props {
@@ -165,11 +165,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   })
 
   useEffect(() => {
-    resolveBundle(OCABundleResolver, credential, i18n.language, undefined, {
-      credentialDefinitionId: credDefId,
-      schemaId: schemaId,
-    }).then((bundle) => {
-      setOverlay({ ...overlay, ...bundle })
+    const params = {
+      identifiers: credential ? getCredentialIdentifiers(credential) : { schemaId, credentialDefinitionId: credDefId },
+      meta: {
+        credName: credName,
+        credConnectionId: credential?.connectionId,
+      },
+      language: i18n.language,
+    }
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
+      setOverlay({
+        ...overlay,
+        ...bundle,
+        cardLayoutOverlay: bundle.cardLayoutOverlay as CardLayoutOverlay11,
+      })
     })
   }, [credential])
 
