@@ -310,6 +310,7 @@ const translation = {
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Recusar Credencial",
     "Declined": "Recusado",
+    "ShareFollowingInformation": "está compartilhando as seguintes informações de credenciais {{count}}."
   },
   "ProofRequest": {
     "ProofRequest": "Requisição de Prova",

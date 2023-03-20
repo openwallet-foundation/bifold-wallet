@@ -3,12 +3,14 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { markProofAsViewed } from '../../verifier/utils/proof'
 import SharedProofData from '../components/misc/SharedProofData'
+import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetailsHistory>
@@ -18,7 +20,12 @@ interface ProofDetailsHistoryProps {
   navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetailsHistory>
 }
 
+const connectionLessLabel = 'Anonymous'
+const fakeCredentialsCount = 2
+
 const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation }) => {
+  const { t } = useTranslation()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -28,23 +35,32 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
       marginHorizontal: 30,
       marginTop: 10,
     },
+    descriptionContainer: { marginVertical: 20 },
+    descriptionText: {
+      color: ColorPallet.grayscale.white,
+    },
+    label: {
+      fontWeight: 'bold',
+    },
   })
 
   const connection = record.connectionId ? useConnectionById(record.connectionId) : undefined
-  const connectionLabel = connection ? connection?.alias || connection?.theirLabel : ''
+  const connectionLabel = useMemo(
+    () => (connection ? connection?.alias || connection?.theirLabel : connectionLessLabel),
+    [connection]
+  )
 
   useEffect(() => {
-    if (!connection) return
     navigation.setOptions({ title: connectionLabel }) //
-  }, [connection])
+  }, [connectionLabel])
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <View style={{ marginVertical: 20 }}>
-          <Text style={{ color: 'white' }}>
-            <Text style={{ fontWeight: 'bold' }}>{connectionLabel}</Text> is sharing the following information from 2
-            credentials.
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionText}>
+            <Text style={styles.label}>{connectionLabel}</Text>{' '}
+            {t('ProofRequest.ShareFollowingInformation', { count: fakeCredentialsCount })}
           </Text>
         </View>
         <SharedProofData recordId={record.id} />

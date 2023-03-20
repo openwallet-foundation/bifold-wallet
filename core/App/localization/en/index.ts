@@ -356,6 +356,7 @@ const translation = {
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Proof",
     "Declined": "Declined",
+    "ShareFollowingInformation": "is sharing the following information from {{count}} credentials."
   },
   "Settings": {
     "Version": "Version",
