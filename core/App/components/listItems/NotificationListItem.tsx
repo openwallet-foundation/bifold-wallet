@@ -193,7 +193,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         onPress = () =>
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
             screen: Screens.ProofDetails,
-            params: { recordId: notification.id, isHistory: true },
+            params: { recordId: notification.id },
           })
         break
       case NotificationType.Revocation:
