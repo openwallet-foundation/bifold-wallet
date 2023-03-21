@@ -525,7 +525,12 @@ export const ChatTheme = {
     padding: 16,
     marginRight: 16,
   },
-  timeStyle: {
+  timeStyleLeft: {
+    color: ColorPallet.grayscale.lightGrey,
+    fontSize: 12,
+    marginTop: 8,
+  },
+  timeStyleRight: {
     color: ColorPallet.grayscale.lightGrey,
     fontSize: 12,
     marginTop: 8,
