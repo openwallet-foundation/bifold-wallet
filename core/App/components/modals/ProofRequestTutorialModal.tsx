@@ -20,7 +20,7 @@ const { width: windowWidth } = Dimensions.get('window')
 const width = windowWidth - 12 * 2
 
 const useStyles = () => {
-  const { TextTheme, ProofRequestTutorialTheme, borderRadius } = useTheme()
+  const { TextTheme, DialogTheme, borderRadius } = useTheme()
 
   return StyleSheet.create({
     container: {
@@ -30,7 +30,7 @@ const useStyles = () => {
       justifyContent: 'center',
     },
     modalView: {
-      ...ProofRequestTutorialTheme.modalView,
+      ...DialogTheme.modalView,
       position: 'relative',
       borderRadius,
     },
@@ -45,14 +45,14 @@ const useStyles = () => {
     },
     titleText: {
       ...TextTheme.headingThree,
-      ...ProofRequestTutorialTheme.titleText,
+      ...DialogTheme.titleText,
     },
     descriptionContainer: {
       marginVertical: 8,
     },
     description: {
       ...TextTheme.normal,
-      ...ProofRequestTutorialTheme.description,
+      ...DialogTheme.description,
     },
     imageContainer: {
       width: '100%',
@@ -66,7 +66,7 @@ const useStyles = () => {
       zIndex: 1,
     },
     closeButtonIcon: {
-      ...ProofRequestTutorialTheme.closeButtonIcon,
+      ...DialogTheme.closeButtonIcon,
     },
     carouselPaginationContainer: {
       paddingHorizontal: 24,
@@ -75,7 +75,7 @@ const useStyles = () => {
       justifyContent: 'space-between',
     },
     carouselButtonText: {
-      ...ProofRequestTutorialTheme.carouselButtonText,
+      ...DialogTheme.carouselButtonText,
     },
     carouselButton: {
       padding: 16,
