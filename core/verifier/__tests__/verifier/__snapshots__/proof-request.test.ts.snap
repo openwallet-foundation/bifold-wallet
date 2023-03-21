@@ -6,16 +6,24 @@ Object {
     "name": "Practising lawyer",
     "nonce": "1677766511505",
     "requestedAttributes": Map {
-      "referent_0" => Object {
+      "referent_0" => ProofAttributeInfo {
+        "name": undefined,
         "names": Array [
           "Given Name",
           "Surname",
           "PPID",
           "Member Status",
         ],
+        "nonRevoked": undefined,
         "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
+          AttributeFilter {
+            "attributeValue": undefined,
+            "credentialDefinitionId": undefined,
+            "issuerDid": undefined,
+            "schemaId": "XUxBrVSALWHLeycAUhrNr9:2:Member Card:1.5.1",
+            "schemaIssuerDid": undefined,
+            "schemaName": undefined,
+            "schemaVersion": undefined,
           },
         ],
       },
@@ -32,19 +40,35 @@ Object {
     "name": "Full name",
     "nonce": "1677766511505",
     "requestedAttributes": Map {
-      "referent_0" => Object {
+      "referent_0" => ProofAttributeInfo {
         "name": "given_names",
+        "names": undefined,
+        "nonRevoked": undefined,
         "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          AttributeFilter {
+            "attributeValue": undefined,
+            "credentialDefinitionId": undefined,
+            "issuerDid": undefined,
+            "schemaId": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schemaIssuerDid": undefined,
+            "schemaName": undefined,
+            "schemaVersion": undefined,
           },
         ],
       },
-      "referent_1" => Object {
+      "referent_1" => ProofAttributeInfo {
         "name": "family_name",
+        "names": undefined,
+        "nonRevoked": undefined,
         "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          AttributeFilter {
+            "attributeValue": undefined,
+            "credentialDefinitionId": undefined,
+            "issuerDid": undefined,
+            "schemaId": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schemaIssuerDid": undefined,
+            "schemaName": undefined,
+            "schemaVersion": undefined,
           },
         ],
       },
@@ -61,26 +85,41 @@ Object {
     "name": "19+ and Full name",
     "nonce": "1677766511505",
     "requestedAttributes": Map {
-      "referent_0" => Object {
+      "referent_0" => ProofAttributeInfo {
+        "name": undefined,
         "names": Array [
           "given_names",
           "family_name",
         ],
+        "nonRevoked": undefined,
         "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          AttributeFilter {
+            "attributeValue": undefined,
+            "credentialDefinitionId": undefined,
+            "issuerDid": undefined,
+            "schemaId": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schemaIssuerDid": undefined,
+            "schemaName": undefined,
+            "schemaVersion": undefined,
           },
         ],
       },
     },
     "requestedPredicates": Map {
-      "referent_1" => Object {
+      "referent_1" => ProofPredicateInfo {
         "name": "birthdate_dateint",
+        "nonRevoked": undefined,
         "predicateType": ">=",
         "predicateValue": 18,
         "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          AttributeFilter {
+            "attributeValue": undefined,
+            "credentialDefinitionId": undefined,
+            "issuerDid": undefined,
+            "schemaId": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schemaIssuerDid": undefined,
+            "schemaName": undefined,
+            "schemaVersion": undefined,
           },
         ],
       },
@@ -96,19 +135,35 @@ Object {
     "name": "Full name",
     "nonce": "1677766511505",
     "requestedAttributes": Map {
-      "referent_0" => Object {
+      "referent_0" => ProofAttributeInfo {
         "name": "given_names",
+        "names": undefined,
+        "nonRevoked": undefined,
         "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          AttributeFilter {
+            "attributeValue": undefined,
+            "credentialDefinitionId": undefined,
+            "issuerDid": undefined,
+            "schemaId": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schemaIssuerDid": undefined,
+            "schemaName": undefined,
+            "schemaVersion": undefined,
           },
         ],
       },
-      "referent_1" => Object {
+      "referent_1" => ProofAttributeInfo {
         "name": "family_name",
+        "names": undefined,
+        "nonRevoked": undefined,
         "restrictions": Array [
-          Object {
-            "schema_id": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+          AttributeFilter {
+            "attributeValue": undefined,
+            "credentialDefinitionId": undefined,
+            "issuerDid": undefined,
+            "schemaId": "XUxBrVSALWHLeycAUhrNr9:2:Person:1.0",
+            "schemaIssuerDid": undefined,
+            "schemaName": undefined,
+            "schemaVersion": undefined,
           },
         ],
       },
