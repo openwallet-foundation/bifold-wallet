@@ -48,7 +48,7 @@ interface UnverifiedProofProps {
 //   <rect x="0" y="0" width="100%" height="100%" fill="url(#lgrad)"/>
 // </svg>`
 
-const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHistory }: VerifiedProofProps) => {
+const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: VerifiedProofProps) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 
@@ -112,15 +112,13 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
 
   return (
     <View style={styles.container}>
-      {!isHistory && (
-        <View style={styles.header}>
-          <View style={styles.headerTitleContainer}>
-            <CheckInCircle {...{ height: 45, width: 45 }} />
-            <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
-          </View>
-          <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
+      <View style={styles.header}>
+        <View style={styles.headerTitleContainer}>
+          <CheckInCircle {...{ height: 45, width: 45 }} />
+          <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
         </View>
-      )}
+        <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
+      </View>
 
       {/*<Collapsible*/}
       {/*  collapsed={isCollapsed}*/}
@@ -137,28 +135,26 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
         {/*)}*/}
       </View>
       {/*</Collapsible>*/}
-      {!isHistory && (
-        <View style={styles.footer}>
-          {/*<View style={styles.footerButton}>*/}
-          {/*  <Button*/}
-          {/*    title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
-          {/*    accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
-          {/*    testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}*/}
-          {/*    buttonType={ButtonType.Primary}*/}
-          {/*    onPress={() => setIsCollapsed(!isCollapsed)}*/}
-          {/*  />*/}
-          {/*</View>*/}
-          <View style={styles.footerButton}>
-            <Button
-              title={t('Verifier.GenerateNewQR')}
-              accessibilityLabel={t('Verifier.GenerateNewQR')}
-              testID={testIdWithKey('GenerateNewQR')}
-              buttonType={ButtonType.Primary}
-              onPress={onGenerateNew}
-            />
-          </View>
+      <View style={styles.footer}>
+        {/*<View style={styles.footerButton}>*/}
+        {/*  <Button*/}
+        {/*    title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
+        {/*    accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
+        {/*    testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}*/}
+        {/*    buttonType={ButtonType.Primary}*/}
+        {/*    onPress={() => setIsCollapsed(!isCollapsed)}*/}
+        {/*  />*/}
+        {/*</View>*/}
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Verifier.GenerateNewQR')}
+            accessibilityLabel={t('Verifier.GenerateNewQR')}
+            testID={testIdWithKey('GenerateNewQR')}
+            buttonType={ButtonType.Primary}
+            onPress={onGenerateNew}
+          />
         </View>
-      )}
+      </View>
     </View>
   )
 }

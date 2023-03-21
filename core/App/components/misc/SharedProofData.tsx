@@ -17,7 +17,7 @@ import { AttributeValue } from '../record/RecordField'
 
 interface SharedProofDataProps {
   recordId: string
-  onSharedProofDataLoad: (sharedProofData: GroupedSharedProofDataItem[]) => void
+  onSharedProofDataLoad?: (sharedProofData: GroupedSharedProofDataItem[]) => void
 }
 
 const { width } = Dimensions.get('screen')
@@ -187,6 +187,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedPro
         if (data) {
           const groupedSharedProofData = groupSharedProofDataByCredential(data)
           setSharedData(groupedSharedProofData)
+          if (!onSharedProofDataLoad) return
           onSharedProofDataLoad(Array.from(groupedSharedProofData.values()))
         }
       })
