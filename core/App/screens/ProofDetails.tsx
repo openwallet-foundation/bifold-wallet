@@ -1,13 +1,14 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import Collapsible from 'react-native-collapsible'
+// import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
+// import { SvgXml } from 'react-native-svg'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { ProofCustomMetadata, ProofMetadata } from '../../verifier/types/metadata'
@@ -21,7 +22,8 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
-const collapsedHeight = 160
+// const collapsedHeight = 120
+// const collapsedDuration = 150
 
 interface VerifiedProofProps {
   record: ProofExchangeRecord
@@ -33,11 +35,27 @@ interface UnverifiedProofProps {
   record: ProofExchangeRecord
 }
 
-const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHistory }: VerifiedProofProps) => {
+// const gradientSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="200px" >
+//   <defs>
+//    <linearGradient id="lgrad" x1="50%" y1="0%" x2="50%" y2="100%" >
+//
+//           <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:0.3" />
+//           <stop offset="50%" style="stop-color:rgb(255,255,255);stop-opacity:0.5" />
+//           <stop offset="80%" style="stop-color:rgb(255,255,255);stop-opacity:0.9" />
+//
+//     </linearGradient>
+//   </defs>
+//   <rect x="0" y="0" width="100%" height="100%" fill="url(#lgrad)"/>
+// </svg>`
+
+const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: VerifiedProofProps) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
     header: {
       backgroundColor: ColorPallet.semantic.success,
       paddingHorizontal: 30,
@@ -49,13 +67,14 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
       alignItems: 'center',
     },
     headerTitle: {
-      marginHorizontal: 8,
+      marginHorizontal: 10,
       color: ColorPallet.grayscale.white,
       fontSize: 34,
       fontWeight: 'bold',
     },
     headerDetails: {
       color: ColorPallet.grayscale.white,
+      marginVertical: 10,
       fontSize: 18,
     },
     content: {
@@ -65,13 +84,17 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     },
     footer: {
       marginHorizontal: 30,
+      marginVertical: 20,
     },
     footerButton: {
       marginTop: 10,
     },
+    gradientContainer: { position: 'absolute', top: 0, width: '100%', height: '100%' },
   })
 
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(!isHistory)
+  // const [isCollapsed, setIsCollapsed] = useState<boolean>(!isHistory)
+  const connection = useConnectionById(record.connectionId || '')
+  const connectionLabel = connection ? connection?.alias || connection?.theirLabel : ''
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
@@ -82,8 +105,13 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     }
   }, [navigation])
 
+  useEffect(() => {
+    if (!connection) return
+    navigation.setOptions({ title: connectionLabel }) //
+  }, [connection])
+
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
           <CheckInCircle {...{ height: 45, width: 45 }} />
@@ -91,33 +119,42 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
         </View>
         <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
       </View>
-      <Collapsible collapsed={isCollapsed} collapsedHeight={collapsedHeight} enablePointerEvents={true}>
-        <View style={styles.content}>
-          <SharedProofData recordId={record.id} />
+
+      {/*<Collapsible*/}
+      {/*  collapsed={isCollapsed}*/}
+      {/*  collapsedHeight={collapsedHeight}*/}
+      {/*  enablePointerEvents={true}*/}
+      {/*  duration={collapsedDuration}*/}
+      {/*>*/}
+      <View style={styles.content}>
+        <SharedProofData recordId={record.id} />
+        {/*{isCollapsed && (*/}
+        {/*  <View style={styles.gradientContainer}>*/}
+        {/*    <SvgXml xml={gradientSVG} width={'100%'} height={collapsedHeight} />*/}
+        {/*  </View>*/}
+        {/*)}*/}
+      </View>
+      {/*</Collapsible>*/}
+      <View style={styles.footer}>
+        {/*<View style={styles.footerButton}>*/}
+        {/*  <Button*/}
+        {/*    title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
+        {/*    accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}*/}
+        {/*    testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}*/}
+        {/*    buttonType={ButtonType.Primary}*/}
+        {/*    onPress={() => setIsCollapsed(!isCollapsed)}*/}
+        {/*  />*/}
+        {/*</View>*/}
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Verifier.GenerateNewQR')}
+            accessibilityLabel={t('Verifier.GenerateNewQR')}
+            testID={testIdWithKey('GenerateNewQR')}
+            buttonType={ButtonType.Primary}
+            onPress={onGenerateNew}
+          />
         </View>
-      </Collapsible>
-      {!isHistory && (
-        <View style={styles.footer}>
-          <View style={styles.footerButton}>
-            <Button
-              title={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
-              accessibilityLabel={isCollapsed ? t('Verifier.ViewDetails') : t('Verifier.HideDetails')}
-              testID={isCollapsed ? testIdWithKey('ViewDetails') : testIdWithKey('HideDetails')}
-              buttonType={ButtonType.Primary}
-              onPress={() => setIsCollapsed(!isCollapsed)}
-            />
-          </View>
-          <View style={styles.footerButton}>
-            <Button
-              title={t('Verifier.GenerateNewQR')}
-              accessibilityLabel={t('Verifier.GenerateNewQR')}
-              testID={testIdWithKey('GenerateNewQR')}
-              buttonType={ButtonType.Secondary}
-              onPress={onGenerateNew}
-            />
-          </View>
-        </View>
-      )}
+      </View>
     </View>
   )
 }
@@ -174,7 +211,6 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   }
 
   const { recordId, isHistory } = route?.params
-
   const record: ProofExchangeRecord = useProofById(recordId)
   const { agent } = useAgent()
 

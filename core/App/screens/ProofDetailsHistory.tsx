@@ -26,9 +26,6 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
   const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-    },
-    content: {
       flexGrow: 1,
       marginHorizontal: 30,
       marginTop: 10,
@@ -50,7 +47,7 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
 
   const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
 
-  function onSharedProofDataLoad(data: GroupedSharedProofDataItem[]) {
+  const onSharedProofDataLoad = (data: GroupedSharedProofDataItem[]) => {
     setSharedProofDataItems(data)
   }
 
@@ -60,17 +57,15 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        {sharedProofDataItems.length > 0 && (
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.descriptionText}>
-              <Text style={styles.label}>{connectionLabel}</Text>{' '}
-              {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
-            </Text>
-          </View>
-        )}
-        <SharedProofData recordId={record.id} onSharedProofDataLoad={onSharedProofDataLoad} />
-      </View>
+      {sharedProofDataItems.length > 0 && (
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionText}>
+            <Text style={styles.label}>{connectionLabel}</Text>{' '}
+            {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
+          </Text>
+        </View>
+      )}
+      <SharedProofData recordId={record.id} onSharedProofDataLoad={onSharedProofDataLoad} />
     </View>
   )
 }
