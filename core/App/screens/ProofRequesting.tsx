@@ -1,6 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,12 +11,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { isPresentationFailed, isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
 import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
+import SendingProof from '../components/animated/SendingProof'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
 import ProofRequestTutorialModal from '../components/modals/ProofRequestTutorialModal'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { ProofRequestsStackParams, Screens } from '../types/navigators'
+import { ProofRequestsStackParams, Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
@@ -24,6 +26,63 @@ const windowDimensions = Dimensions.get('window')
 
 const qrContainerSize = windowDimensions.width - 20
 const qrSize = qrContainerSize - 60
+
+const ProcessingView: React.FC = () => {
+  const navigation = useNavigation()
+  const { t } = useTranslation()
+  const { TextTheme, ColorPallet } = useTheme()
+  const styles = StyleSheet.create({
+    container: {
+      flexGrow: 1,
+      backgroundColor: ColorPallet.grayscale.white,
+      paddingVertical: 20,
+    },
+    messageContainer: {
+      alignItems: 'center',
+    },
+    messageText: {
+      fontWeight: 'normal',
+      textAlign: 'center',
+      marginTop: 30,
+      color: ColorPallet.grayscale.black,
+    },
+    controlsContainer: {
+      marginTop: 'auto',
+      margin: 20,
+    },
+    loaderContainer: {
+      marginTop: 20,
+    },
+  })
+
+  const onBackToHomeTouched = () => {
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
+  return (
+    <SafeAreaView style={styles.container} edges={['left', 'right']}>
+      <View style={{ flex: 1, justifyContent: 'space-between' }}>
+        <View style={styles.messageContainer}>
+          <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
+            {t('ProofRequest.RequestProcessing')}
+          </Text>
+        </View>
+        <View style={[styles.loaderContainer]}>
+          <SendingProof />
+        </View>
+        <View style={[styles.controlsContainer]}>
+          <Button
+            title={t('Loading.BackToHome')}
+            accessibilityLabel={t('Loading.BackToHome')}
+            testID={testIdWithKey('BackToHome')}
+            onPress={() => onBackToHomeTouched()}
+            buttonType={ButtonType.Secondary}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
+  )
+}
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
   if (!route?.params) {
@@ -102,6 +161,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [invitationUrl, setInitationUrl] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
+  const [processing] = useState(false)
 
   const createProofRequest = useCallback(async () => {
     try {
@@ -145,6 +205,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   useEffect(() => {
     setShowQRCodeTutorialModal(!store.onboarding.didCompleteQRCodeTutorial)
   }, [store.onboarding.didCompleteQRCodeTutorial])
+
+  if (processing) return <ProcessingView />
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
