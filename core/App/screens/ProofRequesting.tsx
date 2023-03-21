@@ -70,16 +70,14 @@ const ProcessingView: React.FC = () => {
         <View style={[styles.loaderContainer]}>
           <SendingProof />
         </View>
-        <View>
-          <View style={[styles.controlsContainer]}>
-            <Button
-              title={t('Loading.BackToHome')}
-              accessibilityLabel={t('Loading.BackToHome')}
-              testID={testIdWithKey('BackToHome')}
-              onPress={() => onBackToHomeTouched()}
-              buttonType={ButtonType.Secondary}
-            />
-          </View>
+        <View style={[styles.controlsContainer]}>
+          <Button
+            title={t('Loading.BackToHome')}
+            accessibilityLabel={t('Loading.BackToHome')}
+            testID={testIdWithKey('BackToHome')}
+            onPress={() => onBackToHomeTouched()}
+            buttonType={ButtonType.Secondary}
+          />
         </View>
       </View>
     </SafeAreaView>
