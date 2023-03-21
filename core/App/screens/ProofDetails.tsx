@@ -28,7 +28,6 @@ type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.Proo
 interface VerifiedProofProps {
   record: ProofExchangeRecord
   navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
-  isHistory?: boolean
 }
 
 interface UnverifiedProofProps {
@@ -210,7 +209,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     throw new Error('ProofRequesting route prams were not set properly')
   }
 
-  const { recordId, isHistory } = route?.params
+  const { recordId } = route?.params
   const record: ProofExchangeRecord = useProofById(recordId)
   const { agent } = useAgent()
 
@@ -220,7 +219,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      {record.isVerified && <VerifiedProof record={record} navigation={navigation} isHistory={isHistory} />}
+      {record.isVerified && <VerifiedProof record={record} navigation={navigation} />}
       {!record.isVerified && <UnverifiedProof record={record} />}
     </SafeAreaView>
   )
