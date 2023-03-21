@@ -151,7 +151,6 @@
     "react-native-confirmation-code-field": "^7.3.0",
     "react-native-device-info": "^8.4.9",
     "react-native-encrypted-storage": "^4.0.2",
-    "react-native-flipper": "^0.154.0",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-random-values": "^1.7.0",
