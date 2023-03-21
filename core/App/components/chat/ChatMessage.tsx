@@ -17,7 +17,7 @@ export interface ChatMessageProps {
 }
 
 export interface IChatMessage extends IMessage {
-  renderEvent: () => JSX.Element
+  renderEvent: (isMe: boolean) => JSX.Element
   createdAt: Date
   withDetails?: boolean
   onDetails?: () => void
@@ -62,7 +62,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
         <Bubble
           {...messageProps}
           renderUsernameOnMessage={false}
-          renderMessageText={() => message.renderEvent()}
+          renderMessageText={() => message.renderEvent(message.user._id === Role.me)}
           containerStyle={{
             left: {
               margin: 0,
