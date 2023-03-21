@@ -21,8 +21,6 @@ interface ProofDetailsHistoryProps {
   navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetailsHistory>
 }
 
-const connectionLessLabel = 'Anonymous'
-
 const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation }) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
@@ -46,7 +44,7 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
 
   const connection = record.connectionId ? useConnectionById(record.connectionId) : undefined
   const connectionLabel = useMemo(
-    () => (connection ? connection?.alias || connection?.theirLabel : connectionLessLabel),
+    () => (connection ? connection?.alias || connection?.theirLabel : t('Verifier.ConnectionLessLabel')),
     [connection]
   )
 
