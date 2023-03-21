@@ -3,7 +3,7 @@ import { useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, Platform, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Platform, Modal, StatusBar, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import SendingProof from '../components/animated/SendingProof'
@@ -19,11 +19,19 @@ export interface ProofRequestAcceptProps {
   proofId: string
 }
 
-const ProofDeliveryStatusView: React.FC<{ status: ProofState }> = ({ status }) => {
+const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofId }) => {
   const { t } = useTranslation()
-  const { TextTheme } = useTheme()
+  const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
+  const proof = useProofById(proofId)
+  const navigation = useNavigation()
+  const { ColorPallet, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
+    container: {
+      height: '100%',
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      padding: 20,
+    },
     image: {
       marginTop: 20,
     },
@@ -34,58 +42,6 @@ const ProofDeliveryStatusView: React.FC<{ status: ProofState }> = ({ status }) =
       fontWeight: 'normal',
       textAlign: 'center',
       marginTop: 30,
-    },
-    delayMessageText: {
-      textAlign: 'center',
-      marginTop: 20,
-    },
-  })
-
-  switch (status) {
-    case ProofState.RequestReceived:
-      return (
-        <>
-          <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
-              {t('ProofRequest.SendingTheInformationSecurely')}
-            </Text>
-          </View>
-          <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-            <SendingProof />
-          </View>
-        </>
-      )
-    case ProofState.PresentationSent:
-    case ProofState.Done:
-      return (
-        <>
-          <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
-              {t('ProofRequest.InformationSentSuccessfully')}
-            </Text>
-          </View>
-          <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-            <SentProof />
-          </View>
-        </>
-      )
-    default:
-      return null
-  }
-}
-
-const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofId }) => {
-  const { t } = useTranslation()
-  const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
-  const proof = useProofById(proofId)
-  const navigation = useNavigation()
-  const { ColorPallet } = useTheme()
-
-  const styles = StyleSheet.create({
-    container: {
-      height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
-      padding: 20,
     },
     controlsContainer: {
       marginTop: 'auto',
@@ -124,7 +80,26 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
       />
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.primaryBackground }}>
         <ScrollView style={[styles.container]}>
-          <ProofDeliveryStatusView status={proof.state} />
+          <View style={[styles.messageContainer]}>
+            {proofDeliveryStatus === ProofState.RequestReceived && (
+              <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
+                {t('ProofRequest.SendingTheInformationSecurely')}
+              </Text>
+            )}
+
+            {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+              <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
+                {t('ProofRequest.InformationSentSuccessfully')}
+              </Text>
+            )}
+          </View>
+
+          <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
+            {proofDeliveryStatus === ProofState.RequestReceived && <SendingProof />}
+            {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+              <SentProof />
+            )}
+          </View>
         </ScrollView>
 
         <View style={[styles.controlsContainer]}>
