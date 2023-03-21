@@ -167,7 +167,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         const attributes = processProofAttributes(format.request, credentials)
         const predicates = processProofPredicates(format.request, credentials)
 
-        setRetrievedCredentials(credentials.proofFormats.indy)
+        setRetrievedCredentials(credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy)
         const groupedProof = Object.values({ ...attributes, ...predicates })
         setProofItems(groupedProof)
         setLoading(false)

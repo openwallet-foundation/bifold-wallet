@@ -95,10 +95,17 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       const { ...formatData } = await agent?.credentials.getFormatData(credential.id)
       const { offer, offerAttributes } = formatData
 
-      credential.metadata.add(AnonCredsCredentialMetadataKey, {
-        schemaId: offer?.indy?.schema_id,
-        credentialDefinitionId: offer?.indy?.cred_def_id,
-      })
+      if (offer?.indy) {
+        credential.metadata.add(AnonCredsCredentialMetadataKey, {
+          schemaId: offer?.indy?.schema_id,
+          credentialDefinitionId: offer?.indy?.cred_def_id,
+        })
+      } else if (offer?.anoncreds) {
+        credential.metadata.add(AnonCredsCredentialMetadataKey, {
+          schemaId: offer?.anoncreds?.schema_id,
+          credentialDefinitionId: offer?.anoncreds?.cred_def_id,
+        })
+      }
 
       if (offerAttributes) {
         credential.credentialAttributes = [...offerAttributes.map((item) => new CredentialPreviewAttribute(item))]

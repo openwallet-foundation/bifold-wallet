@@ -1,5 +1,7 @@
 import {
   AnonCredsCredentialsForProofRequest,
+  AnonCredsProofFormat,
+  AnonCredsProofFormatService,
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
   LegacyIndyProofFormat,
@@ -197,17 +199,18 @@ export const credentialSortFn = (a: any, b: any) => {
 }
 
 export const processProofAttributes = (
-  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat], 'request'> | undefined,
-  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService]>
+  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
+  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
-  if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.attributes)) {
+  const requestedProofAttributes = request?.indy?.requested_attributes ?? request?.anoncreds?.requested_attributes
+  const retrievedCredentialAttributes =
+    credentials?.proofFormats?.indy?.attributes ?? credentials?.proofFormats?.anoncreds?.attributes
+
+  if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
-
-  const requestedProofAttributes = request.indy.requested_attributes
-  const retrievedCredentialAttributes = credentials.proofFormats.indy.attributes
 
   for (const key of Object.keys(retrievedCredentialAttributes)) {
     // The shift operation modifies the original input array, therefore make a copy
@@ -246,17 +249,18 @@ export const processProofAttributes = (
 }
 
 export const processProofPredicates = (
-  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat], 'request'> | undefined,
-  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService]>
+  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
+  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
-  if (!(request?.indy?.requested_predicates && credentials?.proofFormats?.indy?.predicates)) {
+  const requestedProofPredicates = request?.anoncreds?.requested_predicates ?? request?.indy?.requested_predicates
+  const retrievedCredentialPredicates =
+    credentials?.proofFormats?.anoncreds?.predicates ?? credentials?.proofFormats?.indy?.predicates
+
+  if (!requestedProofPredicates || !retrievedCredentialPredicates) {
     return {}
   }
-
-  const requestedProofPredicates = request.indy.requested_predicates
-  const retrievedCredentialPredicates = credentials.proofFormats.indy.predicates
 
   for (const key of Object.keys(requestedProofPredicates)) {
     // The shift operation modifies the original input array, therefore make a copy

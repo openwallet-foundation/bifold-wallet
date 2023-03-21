@@ -4,6 +4,8 @@ import {
   LegacyIndyProofFormatService,
   V1CredentialProtocol,
   V1ProofProtocol,
+  AnonCredsCredentialFormatService,
+  AnonCredsProofFormatService,
 } from '@aries-framework/anoncreds'
 import { AnonCredsRsModule } from '@aries-framework/anoncreds-rs'
 import { AskarModule } from '@aries-framework/askar'
@@ -56,7 +58,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
       credentialProtocols: [
         new V1CredentialProtocol({ indyCredentialFormat }),
         new V2CredentialProtocol({
-          credentialFormats: [indyCredentialFormat],
+          credentialFormats: [indyCredentialFormat, new AnonCredsCredentialFormatService()],
         }),
       ],
     }),
@@ -64,7 +66,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
       proofProtocols: [
         new V1ProofProtocol({ indyProofFormat }),
         new V2ProofProtocol({
-          proofFormats: [indyProofFormat],
+          proofFormats: [indyProofFormat, new AnonCredsProofFormatService()],
         }),
       ],
     }),
