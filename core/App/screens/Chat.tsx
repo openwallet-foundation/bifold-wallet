@@ -163,9 +163,13 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       return {
         _id: record.id,
         text: record.content,
-        renderEvent: (isMe) => (
+        renderEvent: () => (
           <Text
-            style={isMe ? [theme.rightText, theme.rightTextHighlighted] : [theme.leftText, theme.leftTextHighlighted]}
+            style={
+              role === Role.me
+                ? [theme.rightText, theme.rightTextHighlighted]
+                : [theme.leftText, theme.leftTextHighlighted]
+            }
           >
             {record.content}
           </Text>
@@ -184,14 +188,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         return {
           _id: record.id,
           text: actionLabel,
-          renderEvent: (isMe: boolean) => (
-            <ChatEvent
-              userTextStyle={isMe ? theme.rightText : theme.leftText}
-              actionTextStyle={isMe ? theme.rightTextHighlighted : theme.leftTextHighlighted}
-              userLabel={userLabel}
-              actionLabel={actionLabel}
-            />
-          ),
+          renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
@@ -214,14 +211,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         return {
           _id: record.id,
           text: actionLabel,
-          renderEvent: (isMe: boolean) => (
-            <ChatEvent
-              userTextStyle={isMe ? theme.rightText : theme.leftText}
-              actionTextStyle={isMe ? theme.rightTextHighlighted : theme.leftTextHighlighted}
-              userLabel={userLabel}
-              actionLabel={actionLabel}
-            />
-          ),
+          renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
