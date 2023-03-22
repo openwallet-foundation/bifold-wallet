@@ -240,52 +240,70 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                       }
                     >
                       <View>
-                        <Text
-                          numberOfLines={1}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 14,
-                                "fontWeight": "bold",
-                              },
-                              Object {
-                                "color": "#FFFFFF",
-                                "flexShrink": 1,
-                              },
-                              Object {
-                                "lineHeight": 19,
-                                "opacity": 0.8,
-                              },
-                            ]
+                            Object {
+                              "flexDirection": "row",
+                            }
                           }
-                          testID="com.ariesbifold:id/CredentialIssuer"
                         >
-                          d7e7f641-e0cc-46bc-908a-f351e2486b03
-                        </Text>
-                        <Text
-                          numberOfLines={1}
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 14,
+                                  "fontWeight": "bold",
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "flexShrink": 1,
+                                },
+                                Object {
+                                  "flex": 1,
+                                  "flexWrap": "wrap",
+                                  "lineHeight": 19,
+                                  "opacity": 0.8,
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/CredentialIssuer"
+                          >
+                            d7e7f641-e0cc-46bc-908a-f351e2486b03
+                          </Text>
+                        </View>
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 18,
-                                "fontWeight": "normal",
-                              },
-                              Object {
-                                "color": "#FFFFFF",
-                                "flexShrink": 1,
-                              },
-                              Object {
-                                "fontWeight": "bold",
-                                "lineHeight": 24,
-                              },
-                            ]
+                            Object {
+                              "flexDirection": "row",
+                            }
                           }
-                          testID="com.ariesbifold:id/CredentialName"
                         >
-                          Credential
-                        </Text>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 18,
+                                  "fontWeight": "normal",
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "flexShrink": 1,
+                                },
+                                Object {
+                                  "flex": 1,
+                                  "flexWrap": "wrap",
+                                  "fontWeight": "bold",
+                                  "lineHeight": 24,
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/CredentialName"
+                          >
+                            Credential
+                          </Text>
+                        </View>
                       </View>
                       <RCTScrollView
                         data={
