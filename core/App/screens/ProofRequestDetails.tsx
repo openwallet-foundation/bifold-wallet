@@ -9,6 +9,7 @@ import { IndyProofRequestTemplatePayloadData, ProofRequestType } from '../../ver
 import { linkProofWithTemplate } from '../../verifier/utils/proof'
 import { getProofRequestTemplate, sendProofRequest } from '../../verifier/utils/proof-request'
 import Button, { ButtonType } from '../components/buttons/Button'
+import AlertModal from '../components/modals/AlertModal'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
@@ -50,6 +51,11 @@ const PredicateItem: React.FC<{
   item: Predicate
   onChangeValue: (name: string, value: string) => void
 }> = ({ item, onChangeValue }) => {
+  const [validationModalState, setValidationModalState] = useState({
+    title: `Invalid ${item.label || item.name}`,
+    message: 'Must be an integer.',
+    visible: false,
+  })
   const { ListItems, ColorPallet } = useTheme()
 
   const style = StyleSheet.create({
@@ -67,21 +73,39 @@ const PredicateItem: React.FC<{
     },
   })
 
+  const validateInput = (value: string) => {
+    const onlyNumberRegex = /^\d+$/
+    const isValid = onlyNumberRegex.test(value)
+    if (!isValid) {
+      setValidationModalState({ ...validationModalState, visible: true })
+    }
+  }
+
   return (
-    <View style={{ flexDirection: 'row' }}>
-      <Text style={style.attributeTitle}>{item.label || item.name}</Text>
-      <Text style={style.attributeTitle}>{item.pType}</Text>
-      {item.parameterizable && (
-        <TextInput
-          keyboardType="number-pad"
-          style={[style.attributeTitle, style.input]}
-          onChangeText={(value) => onChangeValue(item.name || '', value)}
-        >
-          {item.pValue}
-        </TextInput>
+    <>
+      {validationModalState.visible && (
+        <AlertModal
+          title={validationModalState.title}
+          message={validationModalState.message}
+          submit={() => setValidationModalState({ ...validationModalState, visible: false })}
+        />
       )}
-      {!item.parameterizable && <Text style={style.attributeTitle}>{item.pValue}</Text>}
-    </View>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={style.attributeTitle}>{item.label || item.name}</Text>
+        <Text style={style.attributeTitle}>{item.pType}</Text>
+        {item.parameterizable && (
+          <TextInput
+            keyboardType="number-pad"
+            style={[style.attributeTitle, style.input]}
+            onEndEditing={(e) => validateInput(e.nativeEvent.text)}
+            onChangeText={(value) => onChangeValue(item.name || '', value)}
+          >
+            {item.pValue}
+          </TextInput>
+        )}
+        {!item.parameterizable && <Text style={style.attributeTitle}>{item.pValue}</Text>}
+      </View>
+    </>
   )
 }
 
