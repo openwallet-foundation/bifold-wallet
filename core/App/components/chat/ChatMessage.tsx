@@ -26,7 +26,7 @@ export interface IChatMessage extends IMessage {
 const MessageTime: React.FC<{ message: IChatMessage }> = ({ message }) => {
   const { ChatTheme: theme } = useTheme()
   return (
-    <Text style={{ ...theme.timeStyle }}>
+    <Text style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
       {new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' }).format(message.createdAt)}
     </Text>
   )

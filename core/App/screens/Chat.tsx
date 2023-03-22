@@ -163,7 +163,17 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       return {
         _id: record.id,
         text: record.content,
-        renderEvent: () => <Text style={[theme.leftText, theme.leftTextHighlighted]}>{record.content}</Text>,
+        renderEvent: () => (
+          <Text
+            style={
+              role === Role.me
+                ? [theme.rightText, theme.rightTextHighlighted]
+                : [theme.leftText, theme.leftTextHighlighted]
+            }
+          >
+            {record.content}
+          </Text>
+        ),
         createdAt: record.updatedAt || record.createdAt,
         type: record.type,
         user: { _id: role },
@@ -178,7 +188,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         return {
           _id: record.id,
           text: actionLabel,
-          renderEvent: () => <ChatEvent userLabel={userLabel} actionLabel={actionLabel} />,
+          renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
@@ -201,7 +211,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         return {
           _id: record.id,
           text: actionLabel,
-          renderEvent: () => <ChatEvent userLabel={userLabel} actionLabel={actionLabel} />,
+          renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },

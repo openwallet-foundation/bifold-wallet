@@ -525,7 +525,12 @@ export const ChatTheme = {
     padding: 16,
     marginRight: 16,
   },
-  timeStyle: {
+  timeStyleLeft: {
+    color: ColorPallet.grayscale.lightGrey,
+    fontSize: 12,
+    marginTop: 8,
+  },
+  timeStyleRight: {
     color: ColorPallet.grayscale.lightGrey,
     fontSize: 12,
     marginTop: 8,
@@ -629,6 +634,24 @@ export const OnboardingTheme = {
   },
 }
 
+export const DialogTheme = {
+  modalView: {
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+  },
+  titleText: {
+    color: ColorPallet.grayscale.white,
+  },
+  description: {
+    color: ColorPallet.grayscale.white,
+  },
+  closeButtonIcon: {
+    color: ColorPallet.grayscale.white,
+  },
+  carouselButtonText: {
+    color: ColorPallet.grayscale.white,
+  },
+}
+
 const LoadingTheme = {
   backgroundColor: ColorPallet.brand.primaryBackground,
 }
@@ -683,6 +706,7 @@ export interface Theme {
   SettingsTheme: any
   ChatTheme: any
   OnboardingTheme: any
+  DialogTheme: any
   LoadingTheme: any
   PINInputTheme: any
   heavyOpacity: any
@@ -703,6 +727,7 @@ export const theme: Theme = {
   SettingsTheme,
   ChatTheme,
   OnboardingTheme,
+  DialogTheme,
   LoadingTheme,
   PINInputTheme,
   heavyOpacity,
