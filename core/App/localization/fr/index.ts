@@ -353,6 +353,8 @@ const translation = {
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Decline Credential",
         "Declined": "Diminué",
+        "ShareFollowingInformation_one": "partage les informations suivantes à partir des informations d'identification {{count}}.",
+        "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}."
     },
     "Settings": {
         "Version": "Version",
@@ -474,7 +476,8 @@ const translation = {
         "PresentationState": "État",
         "ConnectionlessPresentation": "Sans connexion",
         'TutorialStep1Title': 'Montrez ce code QR à l\'autre personne',
-        'TutorialStep1Description': 'Vous vous connecterez avec l\'autre personne. Ils recevront une demande de justificatif.'
+        'TutorialStep1Description': 'Vous vous connecterez avec l\'autre personne. Ils recevront une demande de justificatif.',
+        "ConnectionLessLabel": "Anonyme"
     }
 }
 export default translation

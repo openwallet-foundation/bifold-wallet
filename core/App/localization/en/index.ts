@@ -359,6 +359,8 @@ const translation = {
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline Proof",
     "Declined": "Declined",
+    "ShareFollowingInformation_one": "is sharing the following information from {{count}} credential.",
+    "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials."
   },
   "Settings": {
     "Version": "Version",
@@ -482,7 +484,8 @@ const translation = {
     "PresentationState": "State",
     "ConnectionlessPresentation": "Connectionless",
     'TutorialStep1Title': 'Show this QR code to the other person',
-    'TutorialStep1Description': 'You will connect with the other person. They will receive a proof request.'
+    'TutorialStep1Description': 'You will connect with the other person. They will receive a proof request.',
+    "ConnectionLessLabel": "Anonymous"
   }
 }
 

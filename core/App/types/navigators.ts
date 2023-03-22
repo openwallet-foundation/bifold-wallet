@@ -36,6 +36,7 @@ export enum Screens {
   ProofRequests = 'Proof Requests',
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
+  ProofDetailsHistory = 'Proof Details History',
   ConnectionInvitation = 'Connection Invitation',
 }
 
@@ -89,13 +90,15 @@ export type ContactStackParams = {
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofDetails]: { recordId: string }
+  [Screens.ProofDetailsHistory]: { recordId: string }
 }
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }
   [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofDetails]: { recordId: string }
+  [Screens.ProofDetailsHistory]: { recordId: string }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
   [Screens.ProofRequestUsageHistory]: { templateId: string }
 }
@@ -136,7 +139,7 @@ export type NotificationStackParams = {
     customClose?: GenericFn
   }
   [Screens.CustomNotification]: undefined
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofDetails]: { recordId: string }
 }
 
 export type DeliveryStackParams = {
