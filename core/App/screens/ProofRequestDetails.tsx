@@ -52,8 +52,8 @@ const PredicateItem: React.FC<{
   onChangeValue: (name: string, value: string) => void
 }> = ({ item, onChangeValue }) => {
   const [validationModalState, setValidationModalState] = useState({
-    title: `Invalid ${item.label || item.name}`,
-    message: 'Must be an integer.',
+    title: `Invalid value for '${item.label || item.name}'`,
+    message: 'Must be a number.',
     visible: false,
   })
   const { ListItems, ColorPallet } = useTheme()
@@ -82,30 +82,21 @@ const PredicateItem: React.FC<{
   }
 
   return (
-    <>
-      {validationModalState.visible && (
-        <AlertModal
-          title={validationModalState.title}
-          message={validationModalState.message}
-          submit={() => setValidationModalState({ ...validationModalState, visible: false })}
-        />
+    <View style={{ flexDirection: 'row' }}>
+      <Text style={style.attributeTitle}>{item.label || item.name}</Text>
+      <Text style={style.attributeTitle}>{item.pType}</Text>
+      {item.parameterizable && (
+        <TextInput
+          keyboardType="number-pad"
+          style={[style.attributeTitle, style.input]}
+          onEndEditing={(e) => validateInput(e.nativeEvent.text)}
+          onChangeText={(value) => onChangeValue(item.name || '', value)}
+        >
+          {item.pValue}
+        </TextInput>
       )}
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={style.attributeTitle}>{item.label || item.name}</Text>
-        <Text style={style.attributeTitle}>{item.pType}</Text>
-        {item.parameterizable && (
-          <TextInput
-            keyboardType="number-pad"
-            style={[style.attributeTitle, style.input]}
-            onEndEditing={(e) => validateInput(e.nativeEvent.text)}
-            onChangeText={(value) => onChangeValue(item.name || '', value)}
-          >
-            {item.pValue}
-          </TextInput>
-        )}
-        {!item.parameterizable && <Text style={style.attributeTitle}>{item.pValue}</Text>}
-      </View>
-    </>
+      {!item.parameterizable && <Text style={style.attributeTitle}>{item.pValue}</Text>}
+    </View>
   )
 }
 
@@ -239,6 +230,8 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
   const [attributes, setAttributes] = useState<Array<IndyProofRequestTemplatePayloadData> | undefined>(undefined)
   const [customPredicateValues, setCustomPredicateValues] = useState<Record<string, Record<string, number>>>({})
+  const [predicatesValidationState, setPredicatesValidationState] = useState<{ [name: string]: boolean }>({})
+  const [validationModalState, setValidationModalState] = useState({ visible: false, title: '', message: '' })
 
   useEffect(() => {
     const template = getProofRequestTemplate(templateId)
@@ -279,8 +272,15 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })
   }, [navigation, templateId])
 
+  const validatePredicate = (name: string, value: string) => {
+    const onlyNumberRegex = /^\d+$/
+    const isValid = onlyNumberRegex.test(value)
+    setPredicatesValidationState({ ...predicatesValidationState, [name]: isValid })
+  }
+
   const onChangeValue = useCallback(
     (schema: string, name: string, value: string) => {
+      validatePredicate(name, value)
       setCustomPredicateValues((prev) => ({
         ...prev,
         [schema]: {
@@ -291,6 +291,26 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     },
     [setCustomPredicateValues]
   )
+
+  const validateCustomPredicateValues = useCallback(() => {
+    const invalidPredicates = Object.entries(predicatesValidationState)
+      .filter(([, isValid]) => !isValid)
+      .map(([name]) => name)
+    const isValid = invalidPredicates.length === 0
+
+    if (!isValid) {
+      const title = 'Invalid values'
+      const message = `${invalidPredicates.join(', ')} must be a number.`
+      setValidationModalState({ ...validationModalState, title, message, visible: true })
+    }
+    return isValid
+  }, [predicatesValidationState])
+
+  const onUseProofRequestPress = useCallback(async () => {
+    const isValid = validateCustomPredicateValues()
+    if (!isValid) return
+    await useProofRequest()
+  }, [validateCustomPredicateValues])
 
   const Header: React.FC = () => {
     return (
@@ -319,7 +339,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
             accessibilityLabel={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
             testID={connectionId ? testIdWithKey('SendThisProofRequest') : testIdWithKey('UseProofRequest')}
             buttonType={ButtonType.Primary}
-            onPress={() => useProofRequest()}
+            onPress={() => onUseProofRequestPress()}
           />
         </View>
       </View>
@@ -328,6 +348,13 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>
+      {validationModalState.visible && (
+        <AlertModal
+          title={validationModalState.title}
+          message={validationModalState.message}
+          submit={() => setValidationModalState({ ...validationModalState, visible: false })}
+        />
+      )}
       <FlatList
         ListHeaderComponent={Header}
         ListFooterComponent={Footer}
