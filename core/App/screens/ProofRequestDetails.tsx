@@ -275,7 +275,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
         },
       }))
     },
-    [setCustomPredicateValues]
+    [setCustomPredicateValues, validatePredicate]
   )
 
   const validateCustomPredicateValues = useCallback(() => {
@@ -285,6 +285,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     const isValid = invalidPredicates.length === 0
 
     if (!isValid) {
+      // TODO use translations here
       const title = 'Invalid values'
       const message = `${invalidPredicates.join(', ')} must be a number.`
       setValidationModalState({ ...validationModalState, title, message, visible: true })
@@ -296,7 +297,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     const isValid = validateCustomPredicateValues()
     if (!isValid) return
     await useProofRequest()
-  }, [validateCustomPredicateValues])
+  }, [validateCustomPredicateValues, useProofRequest])
 
   const Header: React.FC = () => {
     return (
