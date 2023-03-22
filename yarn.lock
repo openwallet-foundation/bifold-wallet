@@ -4158,7 +4158,6 @@ __metadata:
     react-native-confirmation-code-field: ^7.3.0
     react-native-device-info: 8.4.9
     react-native-encrypted-storage: 4.0.2
-    react-native-flipper: ^0.154.0
     react-native-fs: 2.18.0
     react-native-gesture-handler: 1.10.3
     react-native-get-random-values: 1.7.0
@@ -4266,7 +4265,6 @@ __metadata:
     react-native-confirmation-code-field: ^7.3.0
     react-native-device-info: ^8.4.9
     react-native-encrypted-storage: ^4.0.2
-    react-native-flipper: ^0.154.0
     react-native-fs: ^2.16.6
     react-native-gesture-handler: ^1.10.3
     react-native-get-random-values: ^1.7.0
@@ -12501,16 +12499,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 9d2999c58559f1e4f66d1baf2c3edeff96cf42027900850d94c6bbea24ac9715047ce69bf6e8a73b68aff4508cf35dd88ac494ad5905933286ef3b75cd123e30
-  languageName: node
-  linkType: hard
-
-"react-native-flipper@npm:^0.154.0":
-  version: 0.154.0
-  resolution: "react-native-flipper@npm:0.154.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0
-    react-native: ">0.62.0"
-  checksum: 70c73fbde7d0151a682ba10dcf9e9223674a1f04ffeff62b9ed394a07475f74eb583de8080665a0311ebb4f961687f9b6edcf1e75c92e6252d3a5e7963dfa312
   languageName: node
   linkType: hard
 
