@@ -51,11 +51,6 @@ const PredicateItem: React.FC<{
   item: Predicate
   onChangeValue: (name: string, value: string) => void
 }> = ({ item, onChangeValue }) => {
-  const [validationModalState, setValidationModalState] = useState({
-    title: `Invalid value for '${item.label || item.name}'`,
-    message: 'Must be a number.',
-    visible: false,
-  })
   const { ListItems, ColorPallet } = useTheme()
 
   const style = StyleSheet.create({
@@ -73,14 +68,6 @@ const PredicateItem: React.FC<{
     },
   })
 
-  const validateInput = (value: string) => {
-    const onlyNumberRegex = /^\d+$/
-    const isValid = onlyNumberRegex.test(value)
-    if (!isValid) {
-      setValidationModalState({ ...validationModalState, visible: true })
-    }
-  }
-
   return (
     <View style={{ flexDirection: 'row' }}>
       <Text style={style.attributeTitle}>{item.label || item.name}</Text>
@@ -89,7 +76,6 @@ const PredicateItem: React.FC<{
         <TextInput
           keyboardType="number-pad"
           style={[style.attributeTitle, style.input]}
-          onEndEditing={(e) => validateInput(e.nativeEvent.text)}
           onChangeText={(value) => onChangeValue(item.name || '', value)}
         >
           {item.pValue}
