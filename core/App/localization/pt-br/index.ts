@@ -316,6 +316,7 @@ const translation = {
   },
   "ProofRequest": {
     "ProofRequest": "Requisição de Prova",
+    "RequestProcessing": "Só um momento...",
     "OfferDelay": "Atrasar oferta",
     "RejectThisProof?": "Rejeitar esta Requisição de Prova?",
     "DeclineThisProof?": "Recusar esta Requisição de Prova?",
@@ -464,6 +465,8 @@ const translation = {
     "ConnectionlessPresentation": "Sem conexão",
     'TutorialStep1Title': 'Mostrar este código QR para a outra pessoa',
     'TutorialStep1Description': 'Você se conectará com a outra pessoa. Eles receberão uma solicitação de prova.',
+    "InvalidPredicateValueTitle": "Valor inválido para {{ predicate }}",
+    "InvalidPredicateValueDetails": "Deve ser um número",
     "ConnectionLessLabel": "Anônimo"
   }
 }
