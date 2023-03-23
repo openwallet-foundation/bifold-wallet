@@ -222,7 +222,6 @@ export const processProofAttributes = (
   credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
-
   if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
     return {}
   }
@@ -235,7 +234,13 @@ export const processProofAttributes = (
     const credential = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn).shift()
     const credNameRestriction = credNameFromRestriction(requestedProofAttributes[key]?.restrictions)
 
-    const credName = credNameRestriction ?? key
+    let credName = credNameRestriction ?? key
+    if (credential?.credentialInfo?.credentialDefinitionId || credential?.credentialInfo?.schemaId) {
+      credName = parseCredDefFromId(
+        credential?.credentialInfo?.credentialDefinitionId,
+        credential?.credentialInfo?.schemaId
+      )
+    }
     let revoked = false
     if (credential) {
       revoked = credential.revoked as boolean
@@ -288,7 +293,13 @@ export const processProofPredicates = (
 
     const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)
 
-    const credName = credNameRestriction ?? key
+    let credName = credNameRestriction ?? key
+    if (credential?.credentialInfo?.credentialDefinitionId || credential?.credentialInfo?.schemaId) {
+      credName = parseCredDefFromId(
+        credential?.credentialInfo?.credentialDefinitionId,
+        credential?.credentialInfo?.schemaId
+      )
+    }
 
     if (!processedPredicates[credName]) {
       processedPredicates[credName] = {
