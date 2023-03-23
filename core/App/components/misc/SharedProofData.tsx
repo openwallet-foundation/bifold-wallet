@@ -208,13 +208,11 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedPro
           <LoadingIndicator />
         </View>
       )}
-      {!loading && sharedData?.size && (
-        <FlatList
-          data={Array.from(sharedData.values())}
-          keyExtractor={(record) => record.identifiers.credentialDefinitionId}
-          renderItem={({ item }) => <SharedDataCard sharedData={item} />}
-        />
-      )}
+      {!loading &&
+        sharedData?.size &&
+        Array.from(sharedData.values()).map((item) => (
+          <SharedDataCard sharedData={item} key={item.identifiers.credentialDefinitionId} />
+        ))}
     </View>
   )
 }

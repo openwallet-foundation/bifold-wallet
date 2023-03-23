@@ -103,18 +103,18 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
         <View style={styles.content}>
           <SharedProofData recordId={record.id} />
         </View>
-      </ScrollView>
-      <View style={styles.footer}>
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Verifier.GenerateNewQR')}
-            accessibilityLabel={t('Verifier.GenerateNewQR')}
-            testID={testIdWithKey('GenerateNewQR')}
-            buttonType={ButtonType.Primary}
-            onPress={onGenerateNew}
-          />
+        <View style={styles.footer}>
+          <View style={styles.footerButton}>
+            <Button
+              title={t('Verifier.GenerateNewQR')}
+              accessibilityLabel={t('Verifier.GenerateNewQR')}
+              testID={testIdWithKey('GenerateNewQR')}
+              buttonType={ButtonType.Primary}
+              onPress={onGenerateNew}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   )
 }
