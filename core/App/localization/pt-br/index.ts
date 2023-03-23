@@ -311,6 +311,8 @@ const translation = {
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Recusar Credencial",
     "Declined": "Recusado",
+    "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
+    "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}."
   },
   "ProofRequest": {
     "ProofRequest": "Requisição de Prova",
@@ -465,6 +467,7 @@ const translation = {
     'TutorialStep1Description': 'Você se conectará com a outra pessoa. Eles receberão uma solicitação de prova.',
     "InvalidPredicateValueTitle": "Valor inválido para {{ predicate }}",
     "InvalidPredicateValueDetails": "Deve ser um número",
+    "ConnectionLessLabel": "Anônimo"
   }
 }
 

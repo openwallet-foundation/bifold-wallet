@@ -353,6 +353,8 @@ const translation = {
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Decline Credential",
         "Declined": "Diminué",
+        "ShareFollowingInformation_one": "partage les informations suivantes à partir des informations d'identification {{count}}.",
+        "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}."
     },
     "Settings": {
         "Version": "Version",
@@ -477,6 +479,7 @@ const translation = {
         'TutorialStep1Description': 'Vous vous connecterez avec l\'autre personne. Ils recevront une demande de justificatif.',
         "InvalidPredicateValueTitle": "Valeur invalide pour {{ predicate }}",
         "InvalidPredicateValueDetails": "Doit être un nombre",
+        "ConnectionLessLabel": "Anonyme"
     }
 }
 export default translation
