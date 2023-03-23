@@ -73,7 +73,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
   })
 
   const connection = useConnectionById(record.connectionId || '')
-  const connectionLabel = connection ? connection?.alias || connection?.theirLabel : ''
+  const connectionLabel = connection ? connection?.alias || connection?.theirLabel : t('Verifier.ConnectionLessLabel')
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
@@ -96,7 +96,9 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
           <CheckInCircle {...{ height: 45, width: 45 }} />
           <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
         </View>
-        <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
+        <Text style={styles.headerDetails}>
+          {connectionLabel} {t('Verifier.InformationReceivedDetails')}
+        </Text>
       </View>
 
       <ScrollView>
