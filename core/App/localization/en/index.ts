@@ -485,6 +485,8 @@ const translation = {
     "ConnectionlessPresentation": "Connectionless",
     'TutorialStep1Title': 'Show this QR code to the other person',
     'TutorialStep1Description': 'You will connect with the other person. They will receive a proof request.',
+    "InvalidPredicateValueTitle": "Invalid value for {{ predicate }}",
+    "InvalidPredicateValueDetails": "Must be a number",
     "ConnectionLessLabel": "Anonymous"
   }
 }

@@ -9,6 +9,7 @@ import { IndyProofRequestTemplatePayloadData, ProofRequestType } from '../../ver
 import { linkProofWithTemplate } from '../../verifier/utils/proof'
 import { getProofRequestTemplate, sendProofRequest } from '../../verifier/utils/proof-request'
 import Button, { ButtonType } from '../components/buttons/Button'
+import AlertModal from '../components/modals/AlertModal'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
@@ -22,7 +23,7 @@ type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Scree
 
 interface ProofRequestAttributesCardParams {
   data: IndyProofRequestTemplatePayloadData
-  onChangeValue: (schema: string, name: string, value: string) => void
+  onChangeValue: (schema: string, label: string, name: string, value: string) => void
 }
 
 const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
@@ -73,7 +74,7 @@ const PredicateItem: React.FC<{
       <Text style={style.attributeTitle}>{item.pType}</Text>
       {item.parameterizable && (
         <TextInput
-          keyboardType="number-pad"
+          keyboardType="numeric"
           style={[style.attributeTitle, style.input]}
           onChangeText={(value) => onChangeValue(item.name || '', value)}
         >
@@ -160,7 +161,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
                 <PredicateItem
                   item={item as Predicate}
                   onChangeValue={(name, value) => {
-                    onChangeValue(data.schema, name, value)
+                    onChangeValue(data.schema, item.label || name, name, value)
                   }}
                 />
               )}
@@ -215,6 +216,9 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
   const [attributes, setAttributes] = useState<Array<IndyProofRequestTemplatePayloadData> | undefined>(undefined)
   const [customPredicateValues, setCustomPredicateValues] = useState<Record<string, Record<string, number>>>({})
+  const [invalidPredicate, setInvalidPredicate] = useState<
+    { visible: boolean; predicate: string | undefined } | undefined
+  >(undefined)
 
   useEffect(() => {
     const template = getProofRequestTemplate(templateId)
@@ -235,7 +239,32 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     })
   }, [templateId])
 
+  const onlyNumberRegex = /^\d+$/
+
+  const onChangeValue = useCallback(
+    (schema: string, label: string, name: string, value: string) => {
+      if (!onlyNumberRegex.test(value)) {
+        setInvalidPredicate({ visible: true, predicate: label })
+        return
+      }
+      setInvalidPredicate(undefined)
+      setCustomPredicateValues((prev) => ({
+        ...prev,
+        [schema]: {
+          ...(prev[schema] || {}),
+          [name]: parseInt(value),
+        },
+      }))
+    },
+    [setCustomPredicateValues, setInvalidPredicate]
+  )
+
   const useProofRequest = useCallback(async () => {
+    if (invalidPredicate) {
+      setInvalidPredicate({ visible: true, predicate: invalidPredicate.predicate })
+      return
+    }
+
     if (connectionId) {
       // Send to specific contact and redirect to the chat with him
       sendProofRequest(agent, templateId, connectionId, customPredicateValues).then((result) => {
@@ -249,24 +278,11 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       // Else redirect to the screen with connectionless request
       navigation.navigate(Screens.ProofRequesting, { templateId, predicateValues: customPredicateValues })
     }
-  }, [agent, templateId, connectionId, customPredicateValues])
+  }, [agent, templateId, connectionId, customPredicateValues, invalidPredicate])
 
   const showTemplateUsageHistory = useCallback(async () => {
     navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })
   }, [navigation, templateId])
-
-  const onChangeValue = useCallback(
-    (schema: string, name: string, value: string) => {
-      setCustomPredicateValues((prev) => ({
-        ...prev,
-        [schema]: {
-          ...(prev[schema] || {}),
-          [name]: parseInt(value),
-        },
-      }))
-    },
-    [setCustomPredicateValues]
-  )
 
   const Header: React.FC = () => {
     return (
@@ -304,6 +320,13 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>
+      {invalidPredicate?.visible && (
+        <AlertModal
+          title={t('Verifier.InvalidPredicateValueTitle', { predicate: invalidPredicate.predicate })}
+          message={t('Verifier.InvalidPredicateValueDetails')}
+          submit={() => setInvalidPredicate({ visible: false, predicate: invalidPredicate.predicate })}
+        />
+      )}
       <FlatList
         ListHeaderComponent={Header}
         ListFooterComponent={Footer}
