@@ -39,7 +39,7 @@ const getPresentationStateLabel = (record: ProofExchangeRecord) => {
 
 const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordProps> = ({ record, navigation }) => {
   const { t } = useTranslation()
-  const { ListItems } = useTheme()
+  const { ListItems, ColorPallet } = useTheme()
 
   const connection = record.connectionId ? useConnectionById(record.connectionId) : undefined
 
@@ -59,6 +59,9 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
     cardRow: {
       flexDirection: 'row',
       marginVertical: 2,
+    },
+    valueLabel: {
+      color: ColorPallet.grayscale.black,
     },
     valueText: {
       ...ListItems.requestTemplateTitle,
@@ -91,11 +94,11 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
     <TouchableOpacity style={style.card} onPress={onDetails} disabled={!presentationReceived}>
       <View style={style.leftContainer}>
         <View style={style.cardRow}>
-          <Text>{t('Verifier.PresentationFrom')}:</Text>
+          <Text style={style.valueLabel}>{t('Verifier.PresentationFrom')}:</Text>
           <Text style={style.valueText}>{connection?.theirLabel || t('Verifier.ConnectionlessPresentation')}</Text>
         </View>
         <View style={style.cardRow}>
-          <Text>{t('Verifier.PresentationState')}:</Text>
+          <Text style={style.valueLabel}>{t('Verifier.PresentationState')}:</Text>
           <Text style={style.valueText}>{t(getPresentationStateLabel(record) as any)}</Text>
         </View>
       </View>
