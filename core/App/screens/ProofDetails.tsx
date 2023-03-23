@@ -5,7 +5,7 @@ import { useAgent, useConnectionById, useProofById } from '@aries-framework/reac
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -99,9 +99,11 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
         <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
       </View>
 
-      <View style={styles.content}>
-        <SharedProofData recordId={record.id} />
-      </View>
+      <ScrollView>
+        <View style={styles.content}>
+          <SharedProofData recordId={record.id} />
+        </View>
+      </ScrollView>
       <View style={styles.footer}>
         <View style={styles.footerButton}>
           <Button

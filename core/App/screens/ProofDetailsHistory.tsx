@@ -5,7 +5,7 @@ import { useAgent, useConnectionById, useProofById } from '@aries-framework/reac
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { GroupedSharedProofDataItem } from '../../verifier/types/proof'
@@ -56,17 +56,19 @@ const VerifiedProof: React.FC<ProofDetailsHistoryProps> = ({ record, navigation 
   }, [connectionLabel])
 
   return (
-    <View style={styles.container}>
-      {sharedProofDataItems.length > 0 && (
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>
-            <Text style={styles.label}>{connectionLabel}</Text>{' '}
-            {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
-          </Text>
-        </View>
-      )}
-      <SharedProofData recordId={record.id} onSharedProofDataLoad={onSharedProofDataLoad} />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {sharedProofDataItems.length > 0 && (
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.descriptionText}>
+              <Text style={styles.label}>{connectionLabel}</Text>{' '}
+              {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
+            </Text>
+          </View>
+        )}
+        <SharedProofData recordId={record.id} onSharedProofDataLoad={onSharedProofDataLoad} />
+      </View>
+    </ScrollView>
   )
 }
 
