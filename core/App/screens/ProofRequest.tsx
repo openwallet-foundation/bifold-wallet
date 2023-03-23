@@ -12,6 +12,7 @@ import {
   GetFormatDataReturn,
 } from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import startCase from 'lodash.startcase'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Text, DeviceEventEmitter, FlatList } from 'react-native'
@@ -30,6 +31,7 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
+import { parseCredDefFromId } from '../utils/cred-def'
 import { processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -194,11 +196,21 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       ...retrievedCredentials?.requestedPredicates,
     }
 
-    // TODO:(jl) Need to test with partial match? Maybe `.some` would work?
-    return (
-      typeof retrievedCredentials !== 'undefined' &&
-      (credName ? fields[credName]?.length > 0 : Object.values(fields).every((c) => c.length > 0))
-    )
+    if (credName) {
+      let credFound = false
+      Object.keys(fields).forEach((proofKey) => {
+        const credNamesInAttrs = fields[proofKey].map((attr) =>
+          parseCredDefFromId(attr.credentialInfo?.credentialDefinitionId, attr.credentialInfo?.schemaId)
+        )
+        if (credNamesInAttrs.includes(startCase(credName))) {
+          credFound = true
+          return
+        }
+      })
+      return credFound
+    }
+
+    return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
 
   const handleAcceptPress = async () => {
