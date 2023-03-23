@@ -11,7 +11,8 @@
     "type": "git"
   },
   "scripts": {
-    "prettier": "yarn run prettier"
+    "prettier": "run-s prettier",
+    "test": "npm test"
   },
   "devDependencies": {
     "prettier": "^2.8.4"
