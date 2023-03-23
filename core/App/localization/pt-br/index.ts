@@ -462,7 +462,9 @@ const translation = {
     "PresentationState": "Estada",
     "ConnectionlessPresentation": "Sem conexão",
     'TutorialStep1Title': 'Mostrar este código QR para a outra pessoa',
-    'TutorialStep1Description': 'Você se conectará com a outra pessoa. Eles receberão uma solicitação de prova.'
+    'TutorialStep1Description': 'Você se conectará com a outra pessoa. Eles receberão uma solicitação de prova.',
+    "InvalidPredicateValueTitle": "Valor inválido para {{ predicate }}",
+    "InvalidPredicateValueDetails": "Deve ser um número",
   }
 }
 

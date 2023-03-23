@@ -23,7 +23,7 @@ type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Scree
 
 interface ProofRequestAttributesCardParams {
   data: IndyProofRequestTemplatePayloadData
-  onChangeValue: (schema: string, name: string, value: string) => void
+  onChangeValue: (schema: string, label: string, name: string, value: string) => void
 }
 
 const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
@@ -74,7 +74,7 @@ const PredicateItem: React.FC<{
       <Text style={style.attributeTitle}>{item.pType}</Text>
       {item.parameterizable && (
         <TextInput
-          keyboardType="number-pad"
+          keyboardType="numeric"
           style={[style.attributeTitle, style.input]}
           onChangeText={(value) => onChangeValue(item.name || '', value)}
         >
@@ -161,7 +161,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
                 <PredicateItem
                   item={item as Predicate}
                   onChangeValue={(name, value) => {
-                    onChangeValue(data.schema, name, value)
+                    onChangeValue(data.schema, item.label || name, name, value)
                   }}
                 />
               )}
@@ -216,8 +216,9 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
   const [attributes, setAttributes] = useState<Array<IndyProofRequestTemplatePayloadData> | undefined>(undefined)
   const [customPredicateValues, setCustomPredicateValues] = useState<Record<string, Record<string, number>>>({})
-  const [predicatesValidationState, setPredicatesValidationState] = useState<{ [name: string]: boolean }>({})
-  const [validationModalState, setValidationModalState] = useState({ visible: false, title: '', message: '' })
+  const [invalidPredicate, setInvalidPredicate] = useState<
+    { visible: boolean; predicate: string | undefined } | undefined
+  >(undefined)
 
   useEffect(() => {
     const template = getProofRequestTemplate(templateId)
@@ -238,7 +239,32 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     })
   }, [templateId])
 
+  const onlyNumberRegex = /^\d+$/
+
+  const onChangeValue = useCallback(
+    (schema: string, label: string, name: string, value: string) => {
+      if (!onlyNumberRegex.test(value)) {
+        setInvalidPredicate({ visible: true, predicate: label })
+        return
+      }
+      setInvalidPredicate(undefined)
+      setCustomPredicateValues((prev) => ({
+        ...prev,
+        [schema]: {
+          ...(prev[schema] || {}),
+          [name]: parseInt(value),
+        },
+      }))
+    },
+    [setCustomPredicateValues, setInvalidPredicate]
+  )
+
   const useProofRequest = useCallback(async () => {
+    if (invalidPredicate) {
+      setInvalidPredicate({ visible: true, predicate: invalidPredicate.predicate })
+      return
+    }
+
     if (connectionId) {
       // Send to specific contact and redirect to the chat with him
       sendProofRequest(agent, templateId, connectionId, customPredicateValues).then((result) => {
@@ -252,52 +278,11 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       // Else redirect to the screen with connectionless request
       navigation.navigate(Screens.ProofRequesting, { templateId, predicateValues: customPredicateValues })
     }
-  }, [agent, templateId, connectionId, customPredicateValues])
+  }, [agent, templateId, connectionId, customPredicateValues, invalidPredicate])
 
   const showTemplateUsageHistory = useCallback(async () => {
     navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })
   }, [navigation, templateId])
-
-  const validatePredicate = (name: string, value: string) => {
-    const onlyNumberRegex = /^\d+$/
-    const isValid = onlyNumberRegex.test(value)
-    setPredicatesValidationState({ ...predicatesValidationState, [name]: isValid })
-  }
-
-  const onChangeValue = useCallback(
-    (schema: string, name: string, value: string) => {
-      validatePredicate(name, value)
-      setCustomPredicateValues((prev) => ({
-        ...prev,
-        [schema]: {
-          ...(prev[schema] || {}),
-          [name]: parseInt(value),
-        },
-      }))
-    },
-    [setCustomPredicateValues, validatePredicate]
-  )
-
-  const validateCustomPredicateValues = useCallback(() => {
-    const invalidPredicates = Object.entries(predicatesValidationState)
-      .filter(([, isValid]) => !isValid)
-      .map(([name]) => name)
-    const isValid = invalidPredicates.length === 0
-
-    if (!isValid) {
-      // TODO use translations here
-      const title = 'Invalid values'
-      const message = `${invalidPredicates.join(', ')} must be a number.`
-      setValidationModalState({ ...validationModalState, title, message, visible: true })
-    }
-    return isValid
-  }, [predicatesValidationState])
-
-  const onUseProofRequestPress = useCallback(async () => {
-    const isValid = validateCustomPredicateValues()
-    if (!isValid) return
-    await useProofRequest()
-  }, [validateCustomPredicateValues, useProofRequest])
 
   const Header: React.FC = () => {
     return (
@@ -326,7 +311,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
             accessibilityLabel={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
             testID={connectionId ? testIdWithKey('SendThisProofRequest') : testIdWithKey('UseProofRequest')}
             buttonType={ButtonType.Primary}
-            onPress={() => onUseProofRequestPress()}
+            onPress={() => useProofRequest()}
           />
         </View>
       </View>
@@ -335,11 +320,11 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>
-      {validationModalState.visible && (
+      {invalidPredicate?.visible && (
         <AlertModal
-          title={validationModalState.title}
-          message={validationModalState.message}
-          submit={() => setValidationModalState({ ...validationModalState, visible: false })}
+          title={t('Verifier.InvalidPredicateValueTitle', { predicate: invalidPredicate.predicate })}
+          message={t('Verifier.InvalidPredicateValueDetails')}
+          submit={() => setInvalidPredicate({ visible: false, predicate: invalidPredicate.predicate })}
         />
       )}
       <FlatList
