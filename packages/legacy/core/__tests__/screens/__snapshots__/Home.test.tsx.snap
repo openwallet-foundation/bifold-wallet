@@ -12,6 +12,7 @@ exports[`displays a home screen renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
+          "flexWrap": "wrap",
           "justifyContent": "space-between",
           "paddingHorizontal": 25,
         }
@@ -153,6 +154,7 @@ exports[`displays a home screen renders correctly 1`] = `
             }
           >
             <Text
+              adjustsFontSizeToFit={true}
               style={
                 Array [
                   Object {

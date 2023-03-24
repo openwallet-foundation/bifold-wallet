@@ -34,9 +34,8 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<HTMLInputElement | 
       codeField: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-      },
-      codeFieldRoot: {
+        alignItems: 'flex-end',
+        flexWrap: 'wrap',
         marginBottom: 24,
       },
       cell: {
@@ -61,9 +60,9 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<HTMLInputElement | 
     })
 
     return (
-      <View>
-        {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
-        <View style={[style.codeField]}>
+      <View style={[style.codeField]}>
+        <View>
+          {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
           <CodeField
             {...props}
             testID={testID}
@@ -77,7 +76,6 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<HTMLInputElement | 
             cellCount={minPINLength}
             keyboardType="numeric"
             textContentType="password"
-            rootStyle={style.codeFieldRoot}
             renderCell={({ index, symbol, isFocused }) => {
               let child = ''
               if (symbol) {
@@ -98,15 +96,15 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<HTMLInputElement | 
             autoFocus={autoFocus}
             ref={ref}
           />
-          <TouchableOpacity
-            accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
-            testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
-            onPress={() => setShowPIN(!showPIN)}
-            style={[{ marginRight: 8, marginBottom: 32 }]}
-          >
-            <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30}></Icon>
-          </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
+          testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
+          onPress={() => setShowPIN(!showPIN)}
+          style={[{ marginLeft: 'auto', marginRight: 'auto', marginVertical: 10 }]}
+        >
+          <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30}></Icon>
+        </TouchableOpacity>
       </View>
     )
   }
