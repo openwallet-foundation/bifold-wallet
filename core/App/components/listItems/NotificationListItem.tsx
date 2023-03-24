@@ -27,6 +27,7 @@ export enum NotificationType {
   ProofRequest = 'ProofRecord',
   Revocation = 'Revocation',
   Custom = 'Custom',
+  Proof = 'Proof',
 }
 
 interface NotificationListItemProps {
