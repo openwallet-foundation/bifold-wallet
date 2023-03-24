@@ -7,8 +7,8 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "app/ios/**"
-      - "app/android/**"
+      - "packages/legacy/app/ios/**"
+      - "packages/legacy/app/android/**"
       - "**/package-lock.json"
   push:
     branches: [main]

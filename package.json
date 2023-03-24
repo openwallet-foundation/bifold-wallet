@@ -12,7 +12,7 @@
   },
   "scripts": {
     "prettier": "run-s prettier",
-    "test": "npm test"
+    "test": "cd packages/legacy/core && npm test"
   },
   "devDependencies": {
     "prettier": "^2.8.4"
