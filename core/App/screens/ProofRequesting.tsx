@@ -1,5 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
+import { ProofExchangeRecord } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
@@ -14,8 +15,6 @@ import LoadingIndicator from '../components/animated/LoadingIndicator'
 import SendingProof from '../components/animated/SendingProof'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
-import ProofRequestTutorialModal from '../components/modals/ProofRequestTutorialModal'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -27,6 +26,8 @@ const windowDimensions = Dimensions.get('window')
 const qrContainerSize = windowDimensions.width - 20
 const qrSize = qrContainerSize - 60
 
+// Remove ignore rule once related logic will be enabled
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ProcessingView: React.FC = () => {
   const navigation = useNavigation()
   const { t } = useTranslation()
@@ -154,14 +155,10 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
   })
 
-  const [store] = useStore()
-
-  const [showQRCodeTutorialModal, setShowQRCodeTutorialModal] = useState(false)
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [invitationUrl, setInitationUrl] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
-  const [processing] = useState(false)
 
   const createProofRequest = useCallback(async () => {
     try {
@@ -194,7 +191,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }, [])
   )
 
-  const record = useProofById(recordId || '')
+  const record: ProofExchangeRecord | undefined = useProofById(recordId || '')
 
   useEffect(() => {
     if (record && (isPresentationReceived(record) || isPresentationFailed(record))) {
@@ -202,15 +199,11 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }
   }, [record])
 
-  useEffect(() => {
-    setShowQRCodeTutorialModal(!store.onboarding.didCompleteQRCodeTutorial)
-  }, [store.onboarding.didCompleteQRCodeTutorial])
-
-  if (processing) return <ProcessingView />
+  // uncomment once processing state for proof record will be added in AFJ
+  // if (record?.state === ProofState.PresentationProcessing) return <ProcessingView />
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
-      <ProofRequestTutorialModal visible={showQRCodeTutorialModal} />
       <View style={styles.headerContainer}>
         <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
         <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>

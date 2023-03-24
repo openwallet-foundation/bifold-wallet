@@ -17,7 +17,6 @@ export const defaultState: State = {
     didCompleteTutorial: false,
     didCreatePIN: false,
     didConsiderBiometry: false,
-    didCompleteQRCodeTutorial: false,
   },
   authentication: {
     didAuthenticate: false,
