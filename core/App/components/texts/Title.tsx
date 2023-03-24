@@ -15,7 +15,11 @@ const Title: React.FC<Props> = ({ children, style }) => {
       ...TextTheme.title,
     },
   })
-  return <Text style={[styles.title, style]}>{children}</Text>
+  return (
+    <Text adjustsFontSizeToFit style={[styles.title, style]}>
+      {children}
+    </Text>
+  )
 }
 
 export default Title

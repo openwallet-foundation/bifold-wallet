@@ -171,7 +171,9 @@ const translation = {
     "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
-    "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira."
+    "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira.",
+    "BiometricsError": "Biometrics were not successful.",
+    "BiometricsErrorEnterPIN": "Please enter your wallet PIN."
   },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
@@ -228,6 +230,7 @@ const translation = {
     "Revoked": "Revogada",
     "CredentialRevokedMessageTitle": "Esta credencial está revogada",
     "CredentialRevokedMessageBody": "Esta credencial não funcionará mais para algumas requisições de prova. Voce precisará atualizar a credencial com o emissor.",
+    "NewRevoked": "Credential revoked (PT-BR)",
     "RemoveTitle": "Remover a credencial da sua carteira",
     "RemoveCaption": "Você perderá a habilidade de prover as informações desta credencial com essa carteira.",
     "CredentialNotFound": "Credencial não encontrada",
@@ -317,7 +320,9 @@ const translation = {
     "NotAvailableInYourWallet": "Não disponível em sua carteira",
     "IsRequesting": "está requisitando",
     "IsRequestingSomethingYouDontHaveAvailable": "está requisitando algo que você não tem disponível",
-    "IsRequestingYouToShare": "está requisitando que você compartilhe",
+    "IsRequestingYouToShare": "is requesting the following information from",
+    "Credential": "credential.",
+    "Credentials": "credentials.",
     "WhichYouCanProvideFrom": "que você pode prover de",
     "Details": "Detalhes",
     "SendingTheInformationSecurely": "Enviando a informação de forma segura",

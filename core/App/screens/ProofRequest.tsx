@@ -12,24 +12,26 @@ import {
   GetFormatDataReturn,
 } from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import startCase from 'lodash.startcase'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, TouchableOpacity, DeviceEventEmitter } from 'react-native'
+import { View, StyleSheet, Text, DeviceEventEmitter, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
-import Record from '../components/record/Record'
-import RecordField from '../components/record/RecordField'
+import ConnectionImage from '../components/misc/ConnectionImage'
 import { EventTypes } from '../constants'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
-import { Attribute, Predicate } from '../types/record'
+import { ProofCredentialItems } from '../types/record'
+import { parseCredDefFromId } from '../utils/cred-def'
 import { processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -55,15 +57,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<IndyRetrievedCredentialsFormat>()
-  const [attributes, setAttributes] = useState<Attribute[]>([])
-  const [predicates, setPredicates] = useState<Predicate[]>([])
+  const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
+    pageContainer: {
+      flex: 1,
+    },
+    pageContent: {
+      flexGrow: 1,
+      justifyContent: 'space-between',
+    },
+    pageMargin: {
+      marginHorizontal: 20,
+    },
+    pageFooter: {
+      marginBottom: 15,
+    },
     headerTextContainer: {
-      paddingHorizontal: 25,
       paddingVertical: 16,
     },
     headerText: {
@@ -86,6 +99,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       ...ListItems.recordAttributeText,
       color: ColorPallet.brand.link,
       textDecorationLine: 'underline',
+    },
+    cardLoading: {
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+      flex: 1,
+      flexGrow: 1,
+      marginVertical: 35,
+      borderRadius: 15,
+      paddingHorizontal: 10,
     },
   })
 
@@ -155,13 +176,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         if (!(format && credentials)) {
           return
         }
-
         const attributes = processProofAttributes(format.request, credentials)
         const predicates = processProofPredicates(format.request, credentials)
 
         setRetrievedCredentials(credentials.proofFormats.indy)
-        setAttributes(attributes)
-        setPredicates(predicates)
+        const groupedProof = Object.values({ ...attributes, ...predicates })
+        setProofItems(groupedProof)
         setLoading(false)
       })
       .catch((err: unknown) => {
@@ -170,14 +190,27 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       })
   }, [])
 
-  const hasAvailableCredentials = (): boolean => {
+  const hasAvailableCredentials = (credName?: string): boolean => {
     const fields: Fields = {
       ...retrievedCredentials?.requestedAttributes,
       ...retrievedCredentials?.requestedPredicates,
     }
 
-    // TODO:(jl) Need to test with partial match? Maybe `.some` would work?
-    return typeof retrievedCredentials !== 'undefined' && Object.values(fields).every((c) => c.length > 0)
+    if (credName) {
+      let credFound = false
+      Object.keys(fields).forEach((proofKey) => {
+        const credNamesInAttrs = fields[proofKey].map((attr) =>
+          parseCredDefFromId(attr.credentialInfo?.credentialDefinitionId, attr.credentialInfo?.schemaId)
+        )
+        if (credNamesInAttrs.includes(startCase(credName))) {
+          credFound = true
+          return
+        }
+      })
+      return credFound
+    }
+
+    return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
 
   const handleAcceptPress = async () => {
@@ -223,11 +256,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     })
   }
 
-  return (
-    <>
-      <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-        <Record
-          header={() => (
+  const proofPageHeader = () => {
+    return (
+      <View style={styles.pageMargin}>
+        {loading ? (
+          <View style={styles.cardLoading}>
+            <RecordLoading />
+          </View>
+        ) : (
+          <>
+            <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
               {!hasAvailableCredentials() ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -245,99 +283,70 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
               ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                  {t('ProofRequest.IsRequestingYouToShare')}:
+                  <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
+                  <Text style={[TextTheme.title]}>{` ${proofItems.length} `}</Text>
+                  <Text>{proofItems.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
               )}
             </View>
-          )}
-          footer={() => (
-            <View
-              style={{
-                paddingHorizontal: 25,
-                paddingVertical: 16,
-                paddingBottom: 26,
-                backgroundColor: ColorPallet.brand.secondaryBackground,
-              }}
-            >
-              {loading ? <RecordLoading /> : null}
-              {proofConnectionLabel ? <ConnectionAlert connectionID={proofConnectionLabel} /> : null}
-              <View style={styles.footerButton}>
-                <Button
-                  title={t('Global.Share')}
-                  accessibilityLabel={t('Global.Share')}
-                  testID={testIdWithKey('Share')}
-                  buttonType={ButtonType.Primary}
-                  onPress={handleAcceptPress}
-                  disabled={!hasAvailableCredentials()}
-                />
-              </View>
-              <View style={styles.footerButton}>
-                <Button
-                  title={t('Global.Decline')}
-                  accessibilityLabel={t('Global.Decline')}
-                  testID={testIdWithKey('Decline')}
-                  buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
-                  onPress={handleDeclinePress}
-                />
-              </View>
-            </View>
-          )}
-          fields={[...attributes, ...predicates]}
-          field={(field, index, fields) => {
-            return (
-              <RecordField
-                field={field}
-                fieldValue={(field) => (
-                  <>
-                    {(!(field as Attribute)?.value && !(field as Predicate)?.pValue) || field?.revoked ? (
-                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Icon
-                          style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                          name="close"
-                          color={ListItems.proofError.color}
-                          size={ListItems.recordAttributeText.fontSize}
-                        />
+          </>
+        )}
+      </View>
+    )
+  }
 
-                        <Text
-                          style={[ListItems.recordAttributeText, { color: ListItems.proofError.color }]}
-                          testID={testIdWithKey('RevokedOrNotAvailable')}
-                        >
-                          {field?.revoked ? t('CredentialDetails.Revoked') : t('ProofRequest.NotAvailableInYourWallet')}
-                        </Text>
-                      </View>
-                    ) : (
-                      <Text style={ListItems.recordAttributeText} testID={testIdWithKey('AttributeValue')}>
-                        {(field as Attribute)?.value ||
-                          `${(field as Predicate)?.pType} ${(field as Predicate)?.pValue}`}
-                      </Text>
-                    )}
-                    {(field as Attribute)?.value ? (
-                      <TouchableOpacity
-                        accessible={true}
-                        accessibilityLabel={t('ProofRequest.Details')}
-                        testID={testIdWithKey('Details')}
-                        activeOpacity={1}
-                        onPress={() =>
-                          navigation.navigate(Screens.ProofRequestAttributeDetails, {
-                            proofId,
-                            attributeName: (field as Attribute).name,
-                          })
-                        }
-                        style={styles.link}
-                      >
-                        <Text style={styles.detailsButton}>{t('ProofRequest.Details')}</Text>
-                      </TouchableOpacity>
-                    ) : null}
-                  </>
-                )}
-                hideBottomBorder={index === fields.length - 1}
-              />
+  const proofPageFooter = () => {
+    return (
+      <View style={[styles.pageFooter, styles.pageMargin]}>
+        {!loading && proofConnectionLabel ? <ConnectionAlert connectionID={proofConnectionLabel} /> : null}
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Global.Share')}
+            accessibilityLabel={t('Global.Share')}
+            testID={testIdWithKey('Share')}
+            buttonType={ButtonType.Primary}
+            onPress={handleAcceptPress}
+            disabled={!hasAvailableCredentials()}
+          />
+        </View>
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Global.Decline')}
+            accessibilityLabel={t('Global.Decline')}
+            testID={testIdWithKey('Decline')}
+            buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
+            onPress={handleDeclinePress}
+          />
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
+      <View style={styles.pageContent}>
+        <FlatList
+          data={proofItems}
+          ListHeaderComponent={proofPageHeader}
+          ListFooterComponent={proofPageFooter}
+          renderItem={({ item }) => {
+            return (
+              <View style={{ marginTop: 10, marginHorizontal: 20 }}>
+                <CredentialCard
+                  credDefId={item.credDefId}
+                  schemaId={item.schemaId}
+                  displayItems={[...(item.attributes ?? []), ...(item.predicates ?? [])]}
+                  credName={item.credName}
+                  existsInWallet={hasAvailableCredentials(item.credName)}
+                  proof
+                ></CredentialCard>
+              </View>
             )
           }}
         />
-      </SafeAreaView>
+      </View>
       <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
-    </>
+    </SafeAreaView>
   )
 }
 

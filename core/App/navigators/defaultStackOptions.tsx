@@ -1,6 +1,9 @@
+import React from 'react'
+
+import HeaderTitle from '../components/texts/HeaderTitle'
 import { Theme } from '../theme'
 
-export function createDefaultStackOptions({ ColorPallet, TextTheme }: Theme) {
+export function createDefaultStackOptions({ ColorPallet }: Theme) {
   return {
     headerTintColor: ColorPallet.grayscale.white,
     headerShown: true,
@@ -13,10 +16,7 @@ export function createDefaultStackOptions({ ColorPallet, TextTheme }: Theme) {
       shadowOpacity: 0.15,
       borderBottomWidth: 0,
     },
-    headerTitleStyle: {
-      ...TextTheme.title,
-      color: ColorPallet.grayscale.white,
-    },
     headerTitleAlign: 'center' as 'center' | 'left',
+    headerTitle: (props: { children: React.ReactNode }) => <HeaderTitle {...props} />,
   }
 }

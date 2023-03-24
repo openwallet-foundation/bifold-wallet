@@ -118,11 +118,21 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
   return JSON.parse(result.password) as WalletKey
 }
 
-export const loadWalletSecret = async (title?: string, description?: string): Promise<WalletSecret | undefined> => {
-  const salt = await loadWalletSalt()
-  const key = await loadWalletKey(title, description)
+export const loadWalletSecret = async (
+  title?: string,
+  description?: string
+): Promise<{ secret: WalletSecret | undefined; err: string }> => {
+  let salt: WalletSalt | undefined
+  let key: WalletKey | undefined
+  let err = ''
+  try {
+    salt = await loadWalletSalt()
+    key = await loadWalletKey(title, description)
+  } catch (e: any) {
+    err = e?.message ?? e
+  }
 
-  return { ...salt, ...key } as WalletSecret
+  return { secret: { ...salt, ...key } as WalletSecret, err }
 }
 
 export const isBiometricsActive = async (): Promise<boolean> => {
