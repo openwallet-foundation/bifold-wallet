@@ -1,5 +1,5 @@
 {
-  "name": "aries-bifold",
+  "name": "aries-bifold-legacy",
   "version": "0.0.1",
   "scripts": {
     "style-check": "npm run prettier -- --check",

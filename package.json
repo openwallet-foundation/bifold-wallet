@@ -4,7 +4,8 @@
   "license": "Apache-2.0",
   "workspaces": [
     "packages/oca",
-    "packages/core"
+    "packages/core",
+    "packages/legacy"
   ],
   "repository": {
     "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
@@ -19,6 +20,6 @@
   },
   "engines": {
     "node": ">=16.15.0 <18.0.0",
-    "yarn": "^1.22.19"
+    "yarn": "^3.3.1"
   }
 }
