@@ -10,6 +10,7 @@ on:
       - "app/ios/**"
       - "app/android/**"
       - "**/package-lock.json"
+    types: [opened, synchronize, reopened, labeled]
   push:
     branches: [main]
 
