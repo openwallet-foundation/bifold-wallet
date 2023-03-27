@@ -109,7 +109,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
 
   if (isHistory) {
     return (
-      <ScrollView style={{ flexGrow: 1 }}>
+      <ScrollView style={{ flexGrow: 1 }} testID={testIdWithKey('HistoryView')}>
         <View style={styles.container}>
           {sharedProofDataItems.length > 0 && (
             <View style={styles.descriptionContainer}>
@@ -188,7 +188,7 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record }) => {
   })
 
   return (
-    <View>
+    <View testID={testIdWithKey('UnverifiedProofView')}>
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
           <Icon name="bookmark-remove" size={45} color={'white'} />
