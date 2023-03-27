@@ -3,13 +3,14 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { ProofCustomMetadata, ProofMetadata } from '../../verifier/types/metadata'
+import { GroupedSharedProofDataItem } from '../../verifier/types/proof'
 import { markProofAsViewed } from '../../verifier/utils/proof'
 import CheckInCircle from '../assets/img/check-in-circle.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -22,6 +23,7 @@ type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.Proo
 
 interface VerifiedProofProps {
   record: ProofExchangeRecord
+  isHistory?: boolean
   navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
 }
 
@@ -29,13 +31,13 @@ interface UnverifiedProofProps {
   record: ProofExchangeRecord
 }
 
-const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: VerifiedProofProps) => {
+const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHistory }: VerifiedProofProps) => {
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      flexGrow: 1,
     },
     header: {
       backgroundColor: ColorPallet.semantic.success,
@@ -58,22 +60,38 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
       marginVertical: 10,
       fontSize: 18,
     },
+    descriptionContainer: {
+      marginHorizontal: 30,
+      marginVertical: 30,
+    },
+    descriptionText: {
+      fontSize: 18,
+      color: TextTheme.normal.color,
+    },
+    label: {
+      fontWeight: 'bold',
+    },
     content: {
       flexGrow: 1,
       marginHorizontal: 30,
       marginTop: 10,
     },
-    footer: {
-      marginHorizontal: 30,
-      marginVertical: 20,
-    },
     footerButton: {
-      marginTop: 10,
+      margin: 20,
     },
   })
 
   const connection = useConnectionById(record.connectionId || '')
-  const connectionLabel = connection ? connection?.alias || connection?.theirLabel : t('Verifier.ConnectionLessLabel')
+  const connectionLabel = useMemo(
+    () => (connection ? connection?.alias || connection?.theirLabel : t('Verifier.ConnectionLessLabel')),
+    [connection]
+  )
+
+  const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
+
+  const onSharedProofDataLoad = (data: GroupedSharedProofDataItem[]) => {
+    setSharedProofDataItems(data)
+  }
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
@@ -85,39 +103,58 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation }: Ver
   }, [navigation])
 
   useEffect(() => {
-    if (!connection) return
+    if (!connection || !isHistory) return
     navigation.setOptions({ title: connectionLabel })
   }, [connection])
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerTitleContainer}>
-          <CheckInCircle {...{ height: 45, width: 45 }} />
-          <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
-        </View>
-        <Text style={styles.headerDetails}>
-          {connectionLabel} {t('Verifier.InformationReceivedDetails')}
-        </Text>
-      </View>
-
-      <ScrollView>
-        <View style={styles.content}>
-          <SharedProofData recordId={record.id} />
-        </View>
-        <View style={styles.footer}>
-          <View style={styles.footerButton}>
-            <Button
-              title={t('Verifier.GenerateNewQR')}
-              accessibilityLabel={t('Verifier.GenerateNewQR')}
-              testID={testIdWithKey('GenerateNewQR')}
-              buttonType={ButtonType.Primary}
-              onPress={onGenerateNew}
-            />
+  if (isHistory) {
+    return (
+      <ScrollView style={{ flexGrow: 1 }}>
+        <View style={styles.container}>
+          {sharedProofDataItems.length > 0 && (
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.descriptionText}>
+                <Text style={styles.label}>{connectionLabel}</Text>{' '}
+                {sharedProofDataItems?.length > 1
+                  ? t('ProofRequest.ShareFollowingInformation_other', { count: sharedProofDataItems.length })
+                  : t('ProofRequest.ShareFollowingInformation_one', { count: sharedProofDataItems.length })}
+              </Text>
+            </View>
+          )}
+          <View style={styles.content}>
+            <SharedProofData recordId={record.id} onSharedProofDataLoad={onSharedProofDataLoad} />
           </View>
         </View>
       </ScrollView>
-    </View>
+    )
+  }
+
+  return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.headerTitleContainer}>
+            <CheckInCircle {...{ height: 45, width: 45 }} />
+            <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
+          </View>
+          <Text style={styles.headerDetails}>
+            {connectionLabel} {t('Verifier.InformationReceivedDetails')}
+          </Text>
+        </View>
+        <View style={styles.content}>
+          <SharedProofData recordId={record.id} />
+        </View>
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Verifier.GenerateNewQR')}
+            accessibilityLabel={t('Verifier.GenerateNewQR')}
+            testID={testIdWithKey('GenerateNewQR')}
+            buttonType={ButtonType.Primary}
+            onPress={onGenerateNew}
+          />
+        </View>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -172,7 +209,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     throw new Error('ProofRequesting route prams were not set properly')
   }
 
-  const { recordId } = route?.params
+  const { recordId, isHistory } = route?.params
   const record: ProofExchangeRecord = useProofById(recordId)
   const { agent } = useAgent()
 
@@ -182,7 +219,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      {record.isVerified && <VerifiedProof record={record} navigation={navigation} />}
+      {record.isVerified && <VerifiedProof record={record} isHistory={isHistory} navigation={navigation} />}
       {!record.isVerified && <UnverifiedProof record={record} />}
     </SafeAreaView>
   )

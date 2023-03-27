@@ -173,6 +173,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedPro
       flexGrow: 1,
     },
     loaderContainer: {
+      height: 200,
       marginTop: 80,
     },
   })
