@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "gradle": "./android/gradlew --project-dir=./android --no-daemon",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "postinstall": "patch-package"

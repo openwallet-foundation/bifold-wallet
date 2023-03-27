@@ -1,11 +1,12 @@
 {
-  "name": "aries-bifold",
+  "name": "aries-bifold-root",
   "private": true,
   "license": "Apache-2.0",
   "workspaces": [
     "packages/oca",
     "packages/core",
-    "packages/legacy"
+    "packages/legacy/core",
+    "packages/legacy/app"
   ],
   "repository": {
     "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
@@ -21,5 +22,14 @@
   "engines": {
     "node": ">=16.15.0 <18.0.0",
     "yarn": "^3.3.1"
+  },
+  "resolutions": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
+    "@react-navigation/core": "6.1.0",
+    "@react-navigation/native": "6.0.6",
+    "@react-navigation/stack": "6.0.11",
+    "@types/node": "16.9.6",
+    "@aries-framework/core": "0.3.3"
   }
 }
