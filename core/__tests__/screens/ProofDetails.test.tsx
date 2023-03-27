@@ -9,7 +9,7 @@ import { useProofById } from "@aries-framework/react-hooks";
 import mockRNCNetInfo from "@react-native-community/netinfo/jest/netinfo-mock";
 import { useNavigation } from "@react-navigation/core";
 import "@testing-library/jest-native/extend-expect";
-import { cleanup, fireEvent, render } from "@testing-library/react-native";
+import { act, cleanup, fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 
 import { testIdWithKey } from "../../App/utils/testable";
@@ -80,10 +80,18 @@ describe("displays a proof details screen", () => {
     });
 
     test("Renders correctly", async () => {
+      const tree = render(
+        <ProofDetails navigation={useNavigation()}
+                      route={{ params: { recordId: "", isHistory: true } } as any} />);
+      await act(async () => null)
+      expect(tree).toMatchSnapshot()
+    });
+
+    test("Renders history view correctly", async () => {
       const { getByTestId } = render(
         <ProofDetails navigation={useNavigation()}
                       route={{ params: { recordId: "", isHistory: true } } as any} />);
-      const historyView= await getByTestId(testIdWithKey("HistoryView"));
+      const historyView = await getByTestId(testIdWithKey("HistoryView"));
       expect(historyView).not.toBeNull();
     });
   });
@@ -104,7 +112,7 @@ describe("displays a proof details screen", () => {
       useProofById.mockReturnValue(testVerifiedProofRequest);
     });
 
-    test("Renders correctly", async () => {
+    test("Renders generate new qr code view correctly", async () => {
       const navigation = useNavigation();
       const { getByTestId } = render(
         <ProofDetails navigation={useNavigation()}
@@ -112,7 +120,7 @@ describe("displays a proof details screen", () => {
       const generateQRCodeButton = await getByTestId(testIdWithKey("GenerateNewQR"));
       expect(generateQRCodeButton).not.toBeNull();
       fireEvent(generateQRCodeButton, "press")
-      expect(navigation.navigate).toBeCalled()
+      expect(navigation.navigate).toBeCalledWith("Proof Requests", {})
     });
   });
   describe("with a unverified proof record details", () => {
@@ -132,7 +140,7 @@ describe("displays a proof details screen", () => {
       useProofById.mockReturnValue(testUnverifiedProofRequest);
     });
 
-    test("Renders correctly", async () => {
+    test("Renders unverified proof view correctly", async () => {
       const { getByTestId } = render(
         <ProofDetails navigation={useNavigation()}
                       route={{ params: { recordId: "" } } as any} />);
