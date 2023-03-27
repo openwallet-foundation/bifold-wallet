@@ -23,8 +23,6 @@
     "prepublishOnly": "yarn run build",
     "test": "jest"
   },
-  "dependencies": {
-  },
   "devDependencies": {
     "@types/ws": "^7.4.6",
     "typescript": "~4.9.4"
