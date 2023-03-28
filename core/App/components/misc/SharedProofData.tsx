@@ -198,7 +198,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedPro
       .finally(() => {
         setLoading(false)
       })
-  }, [agent, recordId])
+  }, [recordId])
 
   return (
     <View style={styles.container}>

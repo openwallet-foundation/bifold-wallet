@@ -2,8 +2,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
-import { useFocusEffect } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/core'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
@@ -99,6 +98,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
 
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
+  const isFocused = useIsFocused()
 
   const styles = StyleSheet.create({
     container: {
@@ -185,11 +185,11 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }
   }, [invitationUrl])
 
-  useFocusEffect(
-    useCallback(() => {
+  useEffect(() => {
+    if (isFocused) {
       createProofRequest()
-    }, [])
-  )
+    }
+  }, [isFocused])
 
   const record: ProofExchangeRecord | undefined = useProofById(recordId || '')
 
