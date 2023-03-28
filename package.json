@@ -14,10 +14,19 @@
   },
   "scripts": {
     "prettier": "run-s prettier",
-    "test": "cd packages/legacy/core && npm test"
+    "test": "cd packages/legacy/core && npm test",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --color ."
   },
   "devDependencies": {
-    "prettier": "^2.8.4"
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.14.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.8.4",
+    "typescript": "4.4.3"
   },
   "engines": {
     "node": ">=16.15.0 <18.0.0",
