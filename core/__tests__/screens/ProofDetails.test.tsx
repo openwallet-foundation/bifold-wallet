@@ -79,20 +79,20 @@ describe("displays a proof details screen", () => {
       useProofById.mockReturnValue(testVerifiedProofRequest);
     });
 
-    test("Renders correctly", async () => {
-      const tree = render(
-        <ProofDetails navigation={useNavigation()}
-                      route={{ params: { recordId: "", isHistory: true } } as any} />);
-      await act(async () => null)
-      expect(tree).toMatchSnapshot()
-    });
-
-    test("Renders history view correctly", async () => {
+    test("History view should be rendered correctly", async () => {
       const { getByTestId } = render(
         <ProofDetails navigation={useNavigation()}
                       route={{ params: { recordId: "", isHistory: true } } as any} />);
       const historyView = await getByTestId(testIdWithKey("HistoryView"));
       expect(historyView).not.toBeNull();
+    });
+
+    test("History view should not be rendered", async () => {
+      const { queryByTestId } = render(
+        <ProofDetails navigation={useNavigation()}
+                      route={{ params: { recordId: "", isHistory: false } } as any} />);
+      const historyView = await queryByTestId(testIdWithKey("HistoryView"));
+      expect(historyView).toBeNull();
     });
   });
 
@@ -112,7 +112,7 @@ describe("displays a proof details screen", () => {
       useProofById.mockReturnValue(testVerifiedProofRequest);
     });
 
-    test("Renders generate new qr code view correctly", async () => {
+    test("Generate new QR code button should navigate correctly", async () => {
       const navigation = useNavigation();
       const { getByTestId } = render(
         <ProofDetails navigation={useNavigation()}
@@ -140,7 +140,7 @@ describe("displays a proof details screen", () => {
       useProofById.mockReturnValue(testUnverifiedProofRequest);
     });
 
-    test("Renders unverified proof view correctly", async () => {
+    test("Unverified proof view should be rendered correctly", async () => {
       const { getByTestId } = render(
         <ProofDetails navigation={useNavigation()}
                       route={{ params: { recordId: "" } } as any} />);
