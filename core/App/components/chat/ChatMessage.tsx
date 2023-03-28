@@ -16,14 +16,14 @@ export interface ChatMessageProps {
   messageProps: React.ComponentProps<typeof Message>
 }
 
-export interface IChatMessage extends IMessage {
+export interface ExtendedChatMessage extends IMessage {
   renderEvent: () => JSX.Element
   createdAt: Date
   withDetails?: boolean
   onDetails?: () => void
 }
 
-const MessageTime: React.FC<{ message: IChatMessage }> = ({ message }) => {
+const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) => {
   const { ChatTheme: theme } = useTheme()
   return (
     <Text style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
@@ -45,7 +45,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
   const { t } = useTranslation()
   const { ChatTheme: theme } = useTheme()
 
-  const message = useMemo(() => messageProps.currentMessage as IChatMessage, [messageProps])
+  const message = useMemo(() => messageProps.currentMessage as ExtendedChatMessage, [messageProps])
 
   return (
     <View

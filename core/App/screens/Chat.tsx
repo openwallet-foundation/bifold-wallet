@@ -17,7 +17,7 @@ import { isPresentationReceived } from '../../verifier/utils/proof'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
-import { ChatMessage, IChatMessage, Role } from '../components/chat/ChatMessage'
+import { ChatMessage, ExtendedChatMessage, Role } from '../components/chat/ChatMessage'
 import InfoIcon from '../components/misc/InfoIcon'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
@@ -141,7 +141,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
 
   const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
 
-  const [messages, setMessages] = useState<Array<IChatMessage>>([])
+  const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
 
   const { ChatTheme: theme } = useTheme()
 
@@ -158,7 +158,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   }, [connection])
 
   useEffect(() => {
-    const transformedMessages: Array<IChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
+    const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
       const role = getMessageEventRole(record)
       return {
         _id: record.id,
