@@ -124,7 +124,7 @@ const getMessageEventRole = (record: BasicMessageRecord) => {
 
 const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   if (!route?.params) {
-    throw new Error('Chat route prams were not set properly')
+    throw new Error('Chat route params were not set properly')
   }
 
   const { connectionId } = route.params
