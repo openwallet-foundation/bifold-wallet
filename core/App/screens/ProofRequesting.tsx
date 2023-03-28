@@ -3,9 +3,10 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Share, StyleSheet, Text, View } from 'react-native'
+import { BackHandler, Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { isPresentationFailed, isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
@@ -190,6 +191,19 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       createProofRequest()
     }
   }, [isFocused])
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate(Screens.ProofRequests, {})
+        return true
+      }
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress)
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
+    }, [])
+  )
 
   const record: ProofExchangeRecord | undefined = useProofById(recordId || '')
 

@@ -2,10 +2,11 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -216,6 +217,23 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   useEffect(() => {
     if (agent) markProofAsViewed(agent, record)
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (route.params.isHistory) {
+          navigation.goBack()
+        } else {
+          navigation.navigate(Screens.ProofRequests, {})
+        }
+        return true
+      }
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress)
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
+    }, [])
+  )
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
