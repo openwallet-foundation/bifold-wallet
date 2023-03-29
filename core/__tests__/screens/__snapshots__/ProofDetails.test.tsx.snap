@@ -435,7 +435,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
               Verifier.ConnectionLessLabel
             </Text>
              
-            ProofRequest.ShareFollowingInformation_one
+            ProofRequest.ShareFollowingInformation
           </Text>
         </View>
         <View
