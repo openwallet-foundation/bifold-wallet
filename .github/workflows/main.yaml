@@ -7,8 +7,8 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "app/ios/**"
-      - "app/android/**"
+      - "packages/legacy/app/ios/**"
+      - "packages/legacy/app/android/**"
       - "**/package-lock.json"
   push:
     branches: [main]
@@ -31,7 +31,7 @@ jobs:
         id: pod-cache
         uses: actions/cache@v1
         with:
-          path: app/ios/Pods
+          path: packages/legacy/app/ios/Pods
           key: ${{ runner.os }}-pods-${{ env.cacheId }}-${{ hashFiles('**/Podfile.lock ') }}
           restore-keys: |
             ${{ runner.os }}-pods-${{ env.cacheId }}-
@@ -40,13 +40,13 @@ jobs:
       # git for cache keys.
       - name: Generate cache key
         run: |
-          echo $(git rev-parse HEAD:core/App) > ./dd-cache-key.txt
-          echo $(git rev-parse HEAD:app/ios) >> ./dd-cache-key.txt
+          echo $(git rev-parse HEAD:packages/legacy/core/App) > ./dd-cache-key.txt
+          echo $(git rev-parse HEAD:packages/legacy/app/ios) >> ./dd-cache-key.txt
 
       - name: Cache derived data
         uses: actions/cache@v1
         with:
-          path: app/ios/xbuild/Build
+          path: packages/legacy/app/ios/xbuild/Build
           key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
           restore-keys: |
             ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
@@ -58,7 +58,7 @@ jobs:
 
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
-        working-directory: ./app/ios
+        working-directory: ./packages/legacy/app/ios
         run: |
           gem install cocoapods && \
           pod install && \
@@ -67,7 +67,7 @@ jobs:
 
       - name: Run debug build
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
-        working-directory: ./app/ios
+        working-directory: ./packages/legacy/app/ios
         run: |
           xcodebuild \
           -workspace AriesBifold.xcworkspace \
@@ -81,7 +81,7 @@ jobs:
       # This is a 1G file that adds little to speeding up
       # the build but does impact cache size.
       - name: Cleanup large artifacts
-        working-directory: ./app/ios
+        working-directory: ./packages/legacy/app/ios
         run: |
           rm -rf build/Build/Products/Debug-iphoneos/AriesBifold.app
 
@@ -111,7 +111,7 @@ jobs:
           cache: "gradle"
 
       - name: Setup Android SDK
-        working-directory: ./app/android
+        working-directory: ./packages/legacy/app/android
         run: |
           set -x
           sudo mkdir -p /root/.android
@@ -140,5 +140,5 @@ jobs:
           git status
 
       - name: Android Release Build
-        working-directory: ./app/android
+        working-directory: ./packages/legacy/app/android
         run: ./gradlew --no-daemon bundleRelease

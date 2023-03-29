@@ -21,6 +21,11 @@ jobs:
         run: |
           yarn install --immutable
 
+      - name: Bundle Legacy Core
+        run: |
+          cd packages/legacy/core && \
+          yarn run prepack
+
       - name: Check style
         run: |
           yarn run prettier
