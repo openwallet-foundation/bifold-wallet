@@ -418,7 +418,7 @@ const translation = {
         "ProofRequestDetails": "Détails de la Demande d'Épreuve",
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
-        "ProofRequestUsageHistory": "Proof Request Usage History",
+        "ProofRequestUsageHistory": "Historique d'utilisation",
         "ConnectionInvitation": "Invitation de connexion",
         "CreateConnectionInvitation": "Créer une invitation de connexion",
     },

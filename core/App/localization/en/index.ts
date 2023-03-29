@@ -426,7 +426,7 @@ const translation = {
     "ProofRequests": "Proof requests",
     "SendProofRequest": "Send a proof request",
     "ChooseProofRequest": "Choose a proof request",
-    "ProofRequestUsageHistory": "Proof Request Usage History",
+    "ProofRequestUsageHistory": "Usage History",
     "ConnectionInvitation": "Connection Invitation",
     "CreateConnectionInvitation": "Create a connection invitation",
   },
