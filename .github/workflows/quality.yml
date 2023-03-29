@@ -22,7 +22,7 @@ jobs:
           yarn install --immutable
 
       - name: Bundle Legacy Core
-        run |
+        run: |
           yarn run prepack
 
       - name: Check style
