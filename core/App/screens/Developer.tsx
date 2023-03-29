@@ -28,11 +28,13 @@ const Developer: React.FC = () => {
       flexDirection: 'row',
       marginVertical: 10,
       marginHorizontal: 10,
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     settingLabelText: {
       ...TextTheme.normal,
       marginRight: 10,
-      textAlign: 'center',
+      textAlign: 'left',
       fontWeight: 'bold',
     },
     settingSwitchContainer: {
@@ -62,7 +64,9 @@ const Developer: React.FC = () => {
         Place content here you would like to make available to developers when developer mode is enabled.
       </Text>
       <View style={styles.settingContainer}>
-        <Text style={styles.settingLabelText}>{t('Verifier.UseVerifierCapability')}</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.settingLabelText}>{t('Verifier.UseVerifierCapability')}</Text>
+        </View>
         <TouchableWithoutFeedback
           style={styles.settingSwitchContainer}
           accessibilityLabel={t('Verifier.Toggle')}
@@ -79,7 +83,9 @@ const Developer: React.FC = () => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.settingContainer}>
-        <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
+        </View>
         <TouchableWithoutFeedback
           style={styles.settingSwitchContainer}
           accessibilityLabel={t('Connection.Toggle')}
