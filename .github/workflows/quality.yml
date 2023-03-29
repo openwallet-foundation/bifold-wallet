@@ -23,6 +23,7 @@ jobs:
 
       - name: Bundle Legacy Core
         run: |
+          cd packages/legacy/core && \
           yarn run prepack
 
       - name: Check style
