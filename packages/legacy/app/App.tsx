@@ -15,24 +15,25 @@ import {
   RootStack,
   NetInfo,
   defaultConfiguration,
-} from "aries-bifold";
-import React, { useEffect, useMemo } from "react";
-import { StatusBar } from "react-native";
-import SplashScreen from "react-native-splash-screen";
-import Toast from "react-native-toast-message";
+} from 'aries-bifold'
+import * as React from 'react'
+import { useEffect, useMemo } from 'react'
+import { StatusBar } from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
+import Toast from 'react-native-toast-message'
 
-initLanguages(translationResources);
+initLanguages(translationResources)
 
 const App = () => {
   useMemo(() => {
-    initStoredLanguage().then();
-  }, []);
+    initStoredLanguage().then()
+  }, [])
 
   useEffect(() => {
     // Hide the native splash / loading screen so that our
     // RN version can be displayed.
-    SplashScreen.hide();
-  }, []);
+    SplashScreen.hide()
+  }, [])
 
   return (
     <StoreProvider>
@@ -59,7 +60,7 @@ const App = () => {
         </ThemeProvider>
       </AgentProvider>
     </StoreProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App
