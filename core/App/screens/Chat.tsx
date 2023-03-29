@@ -246,6 +246,11 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
     return store.preferences.useVerifierCapability
       ? {
           [t('Verifier.SendProofRequest')]: () => onSendRequest(),
+          // if we localize Cancel, it will not be recognized as a "Cancel" button by the Chat library and on ios
+          // tapping outside the action sheet will not close it
+          ['Cancel']: () => {
+            /* do nothing */
+          },
         }
       : undefined
   }, [t, store.preferences.useVerifierCapability, onSendRequest])
