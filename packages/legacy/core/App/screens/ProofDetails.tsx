@@ -116,9 +116,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
             <View style={styles.descriptionContainer}>
               <Text style={styles.descriptionText}>
                 <Text style={styles.label}>{connectionLabel}</Text>{' '}
-                {sharedProofDataItems?.length > 1
-                  ? t('ProofRequest.ShareFollowingInformation_other', { count: sharedProofDataItems.length })
-                  : t('ProofRequest.ShareFollowingInformation_one', { count: sharedProofDataItems.length })}
+                {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
               </Text>
             </View>
           )}

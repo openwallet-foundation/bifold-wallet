@@ -144,6 +144,73 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
       }
     >
       <View
+        accessibilityLabel="Verifier.GenerateNewQR"
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "rgba(53, 130, 63, 0.35)",
+            "borderRadius": 4,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/GenerateNewQR"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Verifier.GenerateNewQR
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    >
+      <View
         accessibilityLabel="Verifier.ShareLink"
         accessibilityState={
           Object {
@@ -200,73 +267,6 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
             }
           >
             Verifier.ShareLink
-          </Text>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "marginBottom": 10,
-        }
-      }
-    >
-      <View
-        accessibilityLabel="Verifier.GenerateNewQR"
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        nativeID="animatedComponent"
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "backgroundColor": "rgba(53, 130, 63, 0.35)",
-            "borderRadius": 4,
-            "opacity": 1,
-            "padding": 16,
-          }
-        }
-        testID="com.ariesbifold:id/GenerateNewQR"
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Verifier.GenerateNewQR
           </Text>
         </View>
       </View>
@@ -419,6 +419,73 @@ exports[`ProofRequesting Component renders correctly 1`] = `
       }
     >
       <View
+        accessibilityLabel="Verifier.GenerateNewQR"
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "rgba(53, 130, 63, 0.35)",
+            "borderRadius": 4,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/GenerateNewQR"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Verifier.GenerateNewQR
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    >
+      <View
         accessibilityLabel="Verifier.ShareLink"
         accessibilityState={
           Object {
@@ -475,73 +542,6 @@ exports[`ProofRequesting Component renders correctly 1`] = `
             }
           >
             Verifier.ShareLink
-          </Text>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "marginBottom": 10,
-        }
-      }
-    >
-      <View
-        accessibilityLabel="Verifier.GenerateNewQR"
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        nativeID="animatedComponent"
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "backgroundColor": "rgba(53, 130, 63, 0.35)",
-            "borderRadius": 4,
-            "opacity": 1,
-            "padding": 16,
-          }
-        }
-        testID="com.ariesbifold:id/GenerateNewQR"
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Verifier.GenerateNewQR
           </Text>
         </View>
       </View>
@@ -738,6 +738,66 @@ exports[`ProofRequesting Component renders correctly 2`] = `
       }
     >
       <View
+        accessibilityLabel="Verifier.GenerateNewQR"
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#42803E",
+            "borderRadius": 4,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/GenerateNewQR"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+              ]
+            }
+          >
+            Verifier.GenerateNewQR
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    >
+      <View
         accessibilityLabel="Verifier.ShareLink"
         accessibilityState={
           Object {
@@ -787,66 +847,6 @@ exports[`ProofRequesting Component renders correctly 2`] = `
             }
           >
             Verifier.ShareLink
-          </Text>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "marginBottom": 10,
-        }
-      }
-    >
-      <View
-        accessibilityLabel="Verifier.GenerateNewQR"
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "backgroundColor": "#42803E",
-            "borderRadius": 4,
-            "opacity": 1,
-            "padding": 16,
-          }
-        }
-        testID="com.ariesbifold:id/GenerateNewQR"
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-              ]
-            }
-          >
-            Verifier.GenerateNewQR
           </Text>
         </View>
       </View>

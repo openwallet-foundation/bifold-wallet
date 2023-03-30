@@ -298,20 +298,20 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       <View>
         <View style={style.footerButton}>
           <Button
-            title={t('Verifier.ShowTemplateUsageHistory')}
-            accessibilityLabel={t('Verifier.ShowTemplateUsageHistory')}
-            testID={testIdWithKey('ShowTemplateUsageHistory')}
-            buttonType={ButtonType.Secondary}
-            onPress={() => showTemplateUsageHistory()}
-          />
-        </View>
-        <View style={style.footerButton}>
-          <Button
             title={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
             accessibilityLabel={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
             testID={connectionId ? testIdWithKey('SendThisProofRequest') : testIdWithKey('UseProofRequest')}
             buttonType={ButtonType.Primary}
             onPress={() => useProofRequest()}
+          />
+        </View>
+        <View style={style.footerButton}>
+          <Button
+            title={t('Verifier.ShowTemplateUsageHistory')}
+            accessibilityLabel={t('Verifier.ShowTemplateUsageHistory')}
+            testID={testIdWithKey('ShowTemplateUsageHistory')}
+            buttonType={ButtonType.Secondary}
+            onPress={() => showTemplateUsageHistory()}
           />
         </View>
       </View>

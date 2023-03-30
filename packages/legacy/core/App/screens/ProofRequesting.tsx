@@ -230,21 +230,21 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       <View style={styles.buttonContainer}>
         <View style={styles.footerButton}>
           <Button
-            title={t('Verifier.ShareLink')}
-            accessibilityLabel={t('Verifier.ShareLink')}
-            testID={testIdWithKey('ShareLink')}
-            buttonType={ButtonType.Secondary}
-            onPress={() => shareLink()}
-            disabled={generating}
-          />
-        </View>
-        <View style={styles.footerButton}>
-          <Button
             title={t('Verifier.GenerateNewQR')}
             accessibilityLabel={t('Verifier.GenerateNewQR')}
             testID={testIdWithKey('GenerateNewQR')}
             buttonType={ButtonType.Primary}
             onPress={() => createProofRequest()}
+            disabled={generating}
+          />
+        </View>
+        <View style={styles.footerButton}>
+          <Button
+            title={t('Verifier.ShareLink')}
+            accessibilityLabel={t('Verifier.ShareLink')}
+            testID={testIdWithKey('ShareLink')}
+            buttonType={ButtonType.Secondary}
+            onPress={() => shareLink()}
             disabled={generating}
           />
         </View>

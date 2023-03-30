@@ -320,6 +320,69 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
             }
           >
             <View
+              accessibilityLabel="Verifier.UseProofRequest"
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#42803E",
+                  "borderRadius": 4,
+                  "opacity": 1,
+                  "padding": 16,
+                }
+              }
+              testID="com.ariesbifold:id/UseProofRequest"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Verifier.UseProofRequest
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "marginBottom": 10,
+                "marginTop": "auto",
+              }
+            }
+          >
+            <View
               accessibilityLabel="Verifier.ShowTemplateUsageHistory"
               accessibilityState={
                 Object {
@@ -371,69 +434,6 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                   }
                 >
                   Verifier.ShowTemplateUsageHistory
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Object {
-                "marginBottom": 10,
-                "marginTop": "auto",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="Verifier.UseProofRequest"
-              accessibilityState={
-                Object {
-                  "disabled": false,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              nativeID="animatedComponent"
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "opacity": 1,
-                  "padding": 16,
-                }
-              }
-              testID="com.ariesbifold:id/UseProofRequest"
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Verifier.UseProofRequest
                 </Text>
               </View>
             </View>
