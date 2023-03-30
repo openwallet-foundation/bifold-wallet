@@ -306,34 +306,40 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View style={{ marginLeft: -1 * logoHeight + padding, margin: -1 }}>
           <View>
-            <Text
-              testID={testIdWithKey('CredentialIssuer')}
-              style={[
-                TextTheme.label,
-                styles.textContainer,
-                {
-                  lineHeight: 19,
-                  opacity: 0.8,
-                },
-              ]}
-              numberOfLines={1}
-            >
-              {overlay.metaOverlay?.issuerName}
-            </Text>
-            <Text
-              testID={testIdWithKey('CredentialName')}
-              style={[
-                TextTheme.normal,
-                styles.textContainer,
-                {
-                  fontWeight: 'bold',
-                  lineHeight: 24,
-                },
-              ]}
-              numberOfLines={1}
-            >
-              {overlay.metaOverlay?.name}
-            </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                testID={testIdWithKey('CredentialIssuer')}
+                style={[
+                  TextTheme.label,
+                  styles.textContainer,
+                  {
+                    lineHeight: 19,
+                    opacity: 0.8,
+                    flex: 1,
+                    flexWrap: 'wrap',
+                  },
+                ]}
+              >
+                {overlay.metaOverlay?.issuerName}
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                testID={testIdWithKey('CredentialName')}
+                style={[
+                  TextTheme.normal,
+                  styles.textContainer,
+                  {
+                    fontWeight: 'bold',
+                    lineHeight: 24,
+                    flex: 1,
+                    flexWrap: 'wrap',
+                  },
+                ]}
+              >
+                {overlay.metaOverlay?.name}
+              </Text>
+            </View>
           </View>
           {error && (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

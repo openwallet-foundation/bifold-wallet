@@ -7,9 +7,10 @@ import {
 } from '@aries-framework/anoncreds'
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
-import React, { useState, useMemo, useEffect } from 'react'
+import startCase from 'lodash.startcase'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, DeviceEventEmitter, FlatList } from 'react-native'
+import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -26,6 +27,7 @@ import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { useAppAgent } from '../utils/agent'
+import { parseCredDefFromId } from '../utils/cred-def'
 import { processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -184,11 +186,21 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       ...retrievedCredentials?.predicates,
     }
 
-    // TODO:(jl) Need to test with partial match? Maybe `.some` would work?
-    return (
-      typeof retrievedCredentials !== 'undefined' &&
-      (credName ? fields[credName]?.length > 0 : Object.values(fields).every((c) => c.length > 0))
-    )
+    if (credName) {
+      let credFound = false
+      Object.keys(fields).forEach((proofKey) => {
+        const credNamesInAttrs = fields[proofKey].map((attr) =>
+          parseCredDefFromId(attr.credentialInfo?.credentialDefinitionId, attr.credentialInfo?.schemaId)
+        )
+        if (credNamesInAttrs.includes(startCase(credName))) {
+          credFound = true
+          return
+        }
+      })
+      return credFound
+    }
+
+    return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
 
   const handleAcceptPress = async () => {
