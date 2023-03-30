@@ -14,7 +14,7 @@
   "scripts": {
     "clean": "lerna run clean",
     "build": "lerna run build",
-    "publish": "lerna publish --loglevel=verbose --canary --dist-tag alpha",
+    "publish": "lerna publish --loglevel=verbose --canary --dist-tag alpha --force-publish --exact",
     "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
     "test": "cd packages/legacy/core && npm test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --color ."
