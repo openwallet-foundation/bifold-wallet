@@ -14,7 +14,7 @@ import { Screens, TabStacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
-const connectionTimerDelay = 5000 // in ms
+const connectionTimerDelay = 10000 // in ms
 
 enum DeliveryStatus {
   Pending,
