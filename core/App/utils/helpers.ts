@@ -20,7 +20,7 @@ import { ParsedUrl, parseUrl } from 'query-string'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
-import { ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
+import { Attribute, Predicate, ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 import { parseCredDefFromId } from './cred-def'
@@ -264,11 +264,13 @@ export const processProofAttributes = (
       if (credential) {
         attributeValue = (credential.credentialInfo as IndyCredentialInfo).attributes[attributeName]
       }
-      processedAttributes[credName].attributes?.push({
-        revoked,
-        name: attributeName,
-        value: attributeValue,
-      })
+      processedAttributes[credName].attributes?.push(
+        new Attribute({
+          revoked,
+          name: attributeName,
+          value: attributeValue,
+        })
+      )
     }
   }
   return processedAttributes
@@ -312,15 +314,33 @@ export const processProofPredicates = (
       }
     }
 
-    processedPredicates[credName].predicates?.push({
-      credentialId,
-      name,
-      revoked,
-      pValue,
-      pType,
-    })
+    processedPredicates[credName].predicates?.push(
+      new Predicate({
+        credentialId,
+        name,
+        revoked,
+        pValue,
+        pType,
+      })
+    )
   }
   return processedPredicates
+}
+
+export const mergeAttributesAndPredicates = (
+  attributes: { [key: string]: ProofCredentialAttributes },
+  predicates: { [key: string]: ProofCredentialPredicates }
+) => {
+  const merged = { ...attributes }
+  for (const [key, predicate] of Object.entries(predicates)) {
+    const existingEntry = merged[key]
+    if (existingEntry) {
+      merged[key] = { ...existingEntry, ...predicate }
+    } else {
+      merged[key] = predicate
+    }
+  }
+  return merged
 }
 
 /**
