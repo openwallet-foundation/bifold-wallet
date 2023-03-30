@@ -20,9 +20,16 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --immutable
+
+      - name: Bundle Legacy Core
+        run: |
+          cd packages/legacy/core && \
+          yarn run prepack
+
       - name: Check style
         run: |
           yarn run prettier
+
       - name: LINTing
         run: |
           yarn run lint
@@ -39,6 +46,7 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --immutable
+
       - name: Automated testing
         run: |
           yarn run test

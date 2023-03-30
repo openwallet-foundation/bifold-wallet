@@ -1,18 +1,33 @@
 {
-  "name": "bifold-main",
-  "version": "0.0.1",
-  "description": "Aries Mobile Agent React Native is an open source Aries mobile agent app. This is a project that has been created to focus the community's efforts towards a central open source project. Various different organizations and people have expressed interest in a open source community project to help focus efforts to help prevent duplication of work between projects. Aries Bifold is also intended to help get complex or specific use-case projects started faster by cloning and having a basis of an Aries agent.",
-  "main": "entry.js",
+  "name": "aries-bifold-root",
   "private": true,
-  "directories": {
-    "doc": "docs",
-    "lib": "lib"
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/oca",
+    "packages/core",
+    "packages/legacy",
+    "packages/legacy/core",
+    "packages/legacy/app"
+  ],
+  "repository": {
+    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
+    "type": "git"
   },
-  "workspaces": {
-    "packages": [
-      "core",
-      "app"
-    ]
+  "scripts": {
+    "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
+    "test": "cd packages/legacy/core && npm test",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --color ."
+  },
+  "devDependencies": {
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.14.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.8.4",
+    "typescript": "4.4.3"
   },
   "engines": {
     "node": ">=16.15.0 <18.0.0",
@@ -26,32 +41,5 @@
     "@react-navigation/stack": "6.0.11",
     "@types/node": "16.9.6",
     "@aries-framework/core": "0.3.3"
-  },
-  "scripts": {
-    "ci:core": "cd core && npm ci",
-    "ci:app": "cd app && npm ci",
-    "ci:all": "",
-    "test": "cd core && npm test",
-    "build:core": "yarn workspace aries-bifold run prepack",
-    "build:app": "",
-    "build:all": "run-s build:core build:app",
-    "prepare": "run-s ci:all build:all",
-    "lint:core": "cd core && npm run lint --if-present",
-    "lint": "run-s lint:core",
-    "prettier:core": "cd core && npm run prettier --if-present",
-    "prettier": "run-s prettier:core",
-    "start": "cd app && npm run start",
-    "android": "cd app && npm run android",
-    "ios": "cd app && npm run ios",
-    "pre-commit-lint:core": "cd core && npm run pre-commit-lint",
-    "pre-commit-lint": "run-s pre-commit-lint:core",
-    "typecheck:core": "cd core && npm run typecheck",
-    "typecheck": "run-s typecheck:core"
-  },
-  "author": "",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "npm-run-all": "^4.1.5"
-  },
-  "packageManager": "yarn@3.3.1"
+  }
 }
