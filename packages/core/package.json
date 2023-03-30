@@ -2,7 +2,7 @@
   "name": "@aries-bifold/core",
   "main": "build/index",
   "types": "build/index",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "files": [
     "build",
     "android",

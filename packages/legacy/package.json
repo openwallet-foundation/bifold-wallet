@@ -1,6 +1,6 @@
 {
   "name": "aries-bifold-legacy",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Aries Mobile Agent React Native is an open source Aries mobile agent app. This is a project that has been created to focus the community's efforts towards a central open source project. Various different organizations and people have expressed interest in a open source community project to help focus efforts to help prevent duplication of work between projects. Aries Bifold is also intended to help get complex or specific use-case projects started faster by cloning and having a basis of an Aries agent.",
   "main": "entry.js",
   "private": true,
@@ -8,24 +8,18 @@
     "doc": "docs",
     "lib": "lib"
   },
-  "workspaces": {
-    "packages": [
-      "core",
-      "app"
-    ]
-  },
   "engines": {
     "node": ">=16.15.0 <18.0.0",
     "yarn": "^3.3.1"
   },
   "resolutions": {
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2",
+    "@aries-framework/core": "0.3.3",
     "@react-navigation/core": "6.1.0",
     "@react-navigation/native": "6.0.6",
     "@react-navigation/stack": "6.0.11",
     "@types/node": "16.9.6",
-    "@aries-framework/core": "0.3.3"
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
   },
   "scripts": {
     "ci:core": "cd core && npm ci",
