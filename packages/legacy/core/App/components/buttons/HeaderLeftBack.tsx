@@ -31,7 +31,6 @@ const HeaderLeftBack: React.FC<HeaderLeftBackProps> = ({
     touchableArea: {},
     title: {
       ...TextTheme.normal,
-      color: ColorPallet.grayscale.white,
       marginLeft: -4,
     },
   })
@@ -46,7 +45,7 @@ const HeaderLeftBack: React.FC<HeaderLeftBackProps> = ({
       disabled={disabled}
     >
       <View style={style.container}>
-        <Icon name="chevron-left" size={defaultIconSize} color={'white'} />
+        <Icon name="chevron-left" size={defaultIconSize} color={ColorPallet.brand.headerIcon} />
         <Text style={[style.title]}>{title}</Text>
       </View>
     </TouchableOpacity>

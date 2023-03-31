@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
@@ -40,11 +40,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
+  const { ConnectionLoading } = useAnimatedComponents()
   const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord } = state
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       padding: 20,
     },
     image: {
@@ -151,10 +152,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         setModalVisible(false)
       }}
     >
-      <SafeAreaView>
+      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+            <Text
+              style={[TextTheme.modalHeadingThree, styles.messageText]}
+              testID={testIdWithKey('CredentialOnTheWay')}
+            >
               {t('Connection.JustAMoment')}
             </Text>
           </View>
@@ -164,7 +168,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           </View>
 
           {shouldShowDelayMessage && (
-            <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+            <Text style={[TextTheme.modalNormal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
               {t('Connection.TakingTooLong')}
             </Text>
           )}
@@ -175,7 +179,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
             accessibilityLabel={t('Loading.BackToHome')}
             testID={testIdWithKey('BackToHome')}
             onPress={onDismissModalTouched}
-            buttonType={ButtonType.Secondary}
+            buttonType={ButtonType.ModalSecondary}
           />
         </View>
       </SafeAreaView>

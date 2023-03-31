@@ -9,16 +9,19 @@ exports[`common decline screen decline offer renders correctly 1`] = `
       "bottom",
     ]
   }
+  style={
+    Object {
+      "backgroundColor": "#000000",
+    }
+  }
 >
   <RCTScrollView
     style={
-      Array [
-        Object {
-          "backgroundColor": "#000000",
-          "height": "100%",
-          "padding": 20,
-        },
-      ]
+      Object {
+        "backgroundColor": "#000000",
+        "height": "100%",
+        "padding": 20,
+      }
     }
   >
     <View>
@@ -528,16 +531,19 @@ exports[`common decline screen decline proof renders correctly 1`] = `
       "bottom",
     ]
   }
+  style={
+    Object {
+      "backgroundColor": "#000000",
+    }
+  }
 >
   <RCTScrollView
     style={
-      Array [
-        Object {
-          "backgroundColor": "#000000",
-          "height": "100%",
-          "padding": 20,
-        },
-      ]
+      Object {
+        "backgroundColor": "#000000",
+        "height": "100%",
+        "padding": 20,
+      }
     }
   >
     <View>
@@ -785,6 +791,11 @@ exports[`common decline screen did decline offer renders correctly 1`] = `
       "top",
     ]
   }
+  style={
+    Object {
+      "backgroundColor": "#000000",
+    }
+  }
 >
   <RCTScrollView
     style={
@@ -793,6 +804,9 @@ exports[`common decline screen did decline offer renders correctly 1`] = `
           "backgroundColor": "#000000",
           "height": "100%",
           "padding": 20,
+        },
+        Object {
+          "backgroundColor": "#000000",
         },
       ]
     }
@@ -918,6 +932,11 @@ exports[`common decline screen did decline proof renders correctly 1`] = `
       "top",
     ]
   }
+  style={
+    Object {
+      "backgroundColor": "#000000",
+    }
+  }
 >
   <RCTScrollView
     style={
@@ -926,6 +945,9 @@ exports[`common decline screen did decline proof renders correctly 1`] = `
           "backgroundColor": "#000000",
           "height": "100%",
           "padding": 20,
+        },
+        Object {
+          "backgroundColor": "#000000",
         },
       ]
     }

@@ -7,7 +7,6 @@ import AgentProvider from '@aries-framework/react-hooks'
 import indyLedgers from '../configs/ledgers/indy'
 
 import * as components from './components'
-import LoadingIndicator from './components/animated/LoadingIndicator'
 import Button, { ButtonType } from './components/buttons/Button'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import CredentialCard from './components/misc/CredentialCard'
@@ -40,7 +39,9 @@ export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } fr
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
 
 export { ThemeProvider, useTheme } from './contexts/theme'
+export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
 export { ColorPallet } from './theme'
+export { animatedComponents } from './animated-components'
 export { theme } from './theme'
 export { useAuth } from './contexts/auth'
 export { NavigationTheme } from './theme'
@@ -51,6 +52,7 @@ export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 
+export type { AnimatedComponents } from './animated-components'
 export type { Theme } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
 export type { GenericFn } from './types/fn'
@@ -66,7 +68,6 @@ export type {
 } from './types/state'
 
 export {
-  LoadingIndicator,
   indyLedgers,
   Agent,
   CommonUtilProvider,
