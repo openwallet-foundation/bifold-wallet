@@ -2,6 +2,10 @@
 
 Aries Mobile Agent React Native is an open source Aries mobile agent app. This is a project that has been created to focus the community's efforts towards a central open source project. Various different organizations and people have expressed interest in a open source community project to help focus efforts to help prevent duplication of work between projects. Aries Bifold is also intended to help get complex or specific use-case projects started faster by cloning and having a basis of an Aries agent.
 
+## Component Effort
+
+This repo is going through some adjustments to accomlish the community's goals around component based architectures. Details may be found [here](/docs/components/readme.md).
+
 ## Code
 
 This project utilizes [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript) and [indy-sdk-react-native](https://github.com/hyperledger/indy-sdk-react-native).
