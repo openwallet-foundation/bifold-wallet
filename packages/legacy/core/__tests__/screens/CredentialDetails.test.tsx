@@ -7,8 +7,8 @@ import React from 'react'
 import { hiddenFieldValue } from '../../App/constants'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialDetails from '../../App/screens/CredentialDetails'
-import configurationContext from '../contexts/configuration'
 import { formatTime } from '../../App/utils/helpers'
+import configurationContext from '../contexts/configuration'
 
 const buildCredentialExchangeRecord = () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
