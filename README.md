@@ -4,7 +4,7 @@ Aries Mobile Agent React Native is an open source Aries mobile agent app. This i
 
 ## Code
 
-This project utilizes [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript) and [indy-sdk-react-native](https://github.com/hyperledger/indy-sdk-react-native).
+This project utilizes [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript).
 
 ## Community
 

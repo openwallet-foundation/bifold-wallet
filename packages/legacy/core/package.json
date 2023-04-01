@@ -21,13 +21,13 @@
     "prepare": "install-self-peers -- --ignore-scripts"
   },
   "peerDependencies": {
-    "@aries-framework/anoncreds": "^0.4.0-alpha.81",
-    "@aries-framework/anoncreds-rs": "^0.4.0-alpha.81",
-    "@aries-framework/askar": "^0.4.0-alpha.81",
-    "@aries-framework/core": "^0.4.0-alpha.81",
-    "@aries-framework/indy-vdr": "^0.4.0-alpha.81",
+    "@aries-framework/anoncreds": "^0.4.0-alpha.93",
+    "@aries-framework/anoncreds-rs": "^0.4.0-alpha.93",
+    "@aries-framework/askar": "^0.4.0-alpha.93",
+    "@aries-framework/core": "^0.4.0-alpha.93",
+    "@aries-framework/indy-vdr": "^0.4.0-alpha.93",
     "@aries-framework/react-hooks": "^0.4.0",
-    "@aries-framework/react-native": "^0.4.0-alpha.81",
+    "@aries-framework/react-native": "^0.4.0-alpha.93",
     "@formatjs/intl-datetimeformat": "^4.2.3",
     "@formatjs/intl-displaynames": "^5.2.3",
     "@formatjs/intl-getcanonicallocales": "^1.7.3",
@@ -85,13 +85,13 @@
     "uuid": "^8.1.0"
   },
   "devDependencies": {
-    "@aries-framework/anoncreds": "^0.4.0-alpha.81",
-    "@aries-framework/anoncreds-rs": "^0.4.0-alpha.81",
-    "@aries-framework/askar": "^0.4.0-alpha.81",
-    "@aries-framework/core": "^0.4.0-alpha.81",
-    "@aries-framework/indy-vdr": "^0.4.0-alpha.81",
+    "@aries-framework/anoncreds": "^0.4.0-alpha.93",
+    "@aries-framework/anoncreds-rs": "^0.4.0-alpha.93",
+    "@aries-framework/askar": "^0.4.0-alpha.93",
+    "@aries-framework/core": "^0.4.0-alpha.93",
+    "@aries-framework/indy-vdr": "^0.4.0-alpha.93",
     "@aries-framework/react-hooks": "^0.4.0",
-    "@aries-framework/react-native": "^0.4.0-alpha.81",
+    "@aries-framework/react-native": "^0.4.0-alpha.93",
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@commitlint/cli": "^11.0.0",
@@ -212,6 +212,6 @@
     "hoistingLimits": "workspaces"
   },
   "dependencies": {
-    "@aries-framework/indy-sdk-to-askar-migration": "alpha"
+    "@aries-framework/indy-sdk-to-askar-migration": "0.4.0-alpha.93"
   }
 }
