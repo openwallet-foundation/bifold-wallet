@@ -2284,23 +2284,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-react-native@npm:^0.1.0-dev.13":
+"@hyperledger/anoncreds-react-native@file:./hyperledger-anoncreds-react-native-v0.1.0-dev.13.tgz::locator=aries-bifold-root%40workspace%3A.":
   version: 0.1.0-dev.13
-  resolution: "@hyperledger/anoncreds-react-native@npm:0.1.0-dev.13"
+  resolution: "@hyperledger/anoncreds-react-native@file:./hyperledger-anoncreds-react-native-v0.1.0-dev.13.tgz::locator=aries-bifold-root%40workspace%3A."
   dependencies:
     "@hyperledger/anoncreds-shared": 0.1.0-dev.13
     "@mapbox/node-pre-gyp": ^1.0.10
   peerDependencies:
     react: ">= 16"
     react-native: ">= 0.66.0"
-  checksum: ee4d52df80ccfdc337f113217e3e0150bd2ef507289f576cd83c503f18081a0027774b805a567f8b6ecff35e62aef079208fc95c0fe3969b6f83731e8f593da6
+  checksum: 38bbb87f72edb52e1b51a9dab6c16c8c589e8454aaad7d9da3222128ca84f5cf384adeb4f72ba594dc93aab4296a8f0ba08def8c980a2cbfe31430d03f2bd7c1
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-shared@npm:0.1.0-dev.13, @hyperledger/anoncreds-shared@npm:^0.1.0-dev.13":
+"@hyperledger/anoncreds-shared@file:./hyperledger-anoncreds-shared-v0.1.0-dev.13.tgz::locator=aries-bifold-root%40workspace%3A.":
   version: 0.1.0-dev.13
-  resolution: "@hyperledger/anoncreds-shared@npm:0.1.0-dev.13"
-  checksum: 6ba705add35fc75197dd17d0fd54bb13e27b22de091bf8c4d0acc2e3ec5d24de88507b16b086485901bbfb38b19c202d6a4189e846147929846dca25513ef809
+  resolution: "@hyperledger/anoncreds-shared@file:./hyperledger-anoncreds-shared-v0.1.0-dev.13.tgz::locator=aries-bifold-root%40workspace%3A."
+  checksum: b87c0f5b051a1a4726d62a2c777723d72f88652646879fe8dafeb4a8ac4fe8fb2cc51371ff2918d11e6b5b4eacb98adb1f31dfad4723e38931c545e6461dc764
   languageName: node
   linkType: hard
 
@@ -4345,7 +4345,8 @@ __metadata:
     "@formatjs/intl-numberformat": 7.2.4
     "@formatjs/intl-pluralrules": 4.1.4
     "@formatjs/intl-relativetimeformat": 9.3.1
-    "@hyperledger/anoncreds-react-native": ^0.1.0-dev.13
+    "@hyperledger/anoncreds-react-native": "file:./hyperledger-anoncreds-react-native-v0.1.0-dev.13.tgz"
+    "@hyperledger/anoncreds-shared": "file:./hyperledger-anoncreds-shared-v0.1.0-dev.13.tgz"
     "@hyperledger/aries-askar-react-native": ^0.1.0-dev.7
     "@hyperledger/indy-vdr-react-native": ^0.1.0-dev.13
     "@react-native-async-storage/async-storage": 1.15.11
@@ -4462,7 +4463,8 @@ __metadata:
     "@formatjs/intl-numberformat": ^7.2.3
     "@formatjs/intl-pluralrules": ^4.1.3
     "@formatjs/intl-relativetimeformat": ^9.2.3
-    "@hyperledger/anoncreds-react-native": ^0.1.0-dev.13
+    "@hyperledger/anoncreds-react-native": "file:../../../hyperledger-anoncreds-react-native-v0.1.0-dev.13.tgz"
+    "@hyperledger/anoncreds-shared": "file:../../../hyperledger-anoncreds-shared-v0.1.0-dev.13.tgz"
     "@hyperledger/aries-askar-react-native": ^0.1.0-dev.7
     "@hyperledger/indy-vdr-react-native": ^0.1.0-dev.13
     "@react-native-async-storage/async-storage": ^1.12.1
@@ -4559,7 +4561,8 @@ __metadata:
     "@formatjs/intl-numberformat": ^7.2.3
     "@formatjs/intl-pluralrules": ^4.1.3
     "@formatjs/intl-relativetimeformat": ^9.2.3
-    "@hyperledger/anoncreds-react-native": ^0.1.0-dev.13
+    "@hyperledger/anoncreds-react-native": "*"
+    "@hyperledger/anoncreds-shared": "*"
     "@hyperledger/aries-askar-react-native": ^0.1.0-dev.7
     "@hyperledger/indy-vdr-react-native": ^0.1.0-dev.13
     "@react-native-async-storage/async-storage": ^1.12.1

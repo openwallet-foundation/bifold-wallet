@@ -16,7 +16,7 @@ import {
   CredentialsModule,
   MediatorPickupStrategy,
   ProofsModule,
-  RecipientModule,
+  MediationRecipientModule,
   V2CredentialProtocol,
   V2ProofProtocol,
 } from '@aries-framework/core'
@@ -70,7 +70,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
         }),
       ],
     }),
-    mediationRecipient: new RecipientModule({
+    mediationRecipient: new MediationRecipientModule({
       mediatorInvitationUrl: mediatorInvitationUrl,
       mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
     }),
