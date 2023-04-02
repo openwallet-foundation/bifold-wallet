@@ -9,16 +9,18 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-const connectionTimerDelay = 10000 // in ms
-
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
+  const { connectionTimerDelay } = useConfiguration()
+  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+
   if (!navigation || !route) {
     throw new Error('Connection route props were not set properly')
   }
@@ -32,15 +34,17 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     notificationRecord?: any
     isInitialized: boolean
     shouldShowDelayMessage: boolean
+    connectionIsActive: boolean
   }>({
     isVisible: true,
     isInitialized: false,
     shouldShowDelayMessage: false,
+    connectionIsActive: false,
   })
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
-  const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord } = state
+  const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord, connectionIsActive } = state
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -72,6 +76,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     // FIX:(jl) There may be a better way to fetch queued messages.
     // Under investigation.
     if (connection && connection.state === DidExchangeState.Completed) {
+      setState((prev) => ({ ...prev, connectionIsActive: true }))
       agent?.mediationRecipient.initiateMessagePickup()
     }
   }, [connection])
@@ -85,6 +90,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const setShouldShowDelayMessage = (value: boolean) => {
     setState((prev) => ({ ...prev, shouldShowDelayMessage: value }))
   }
+  useEffect(() => {
+    if (shouldShowDelayMessage && connectionIsActive && !notificationRecord) {
+      setShouldShowDelayMessage(false)
+      setModalVisible(false)
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    }
+  }, [shouldShowDelayMessage])
   const abortTimer = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current)
@@ -101,7 +113,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       timerRef.current = setTimeout(() => {
         setShouldShowDelayMessage(true)
         timerRef.current = null
-      }, connectionTimerDelay)
+      }, connTimerDelay)
       setIsInitialized(true)
     }
   }
@@ -163,7 +175,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
             <ConnectionLoading />
           </View>
 
-          {shouldShowDelayMessage && (
+          {shouldShowDelayMessage && !connectionIsActive && (
             <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
               {t('Connection.TakingTooLong')}
             </Text>

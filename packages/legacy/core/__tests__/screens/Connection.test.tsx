@@ -3,6 +3,8 @@ import { NavigationContext } from '@react-navigation/native'
 import { render, waitFor, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
+import { ConfigurationContext } from '../../App/contexts/configuration'
+import configurationContext from '../contexts/configuration'
 import ConnectionModal from '../../App/screens/Connection'
 import { testIdWithKey } from '../../App/utils/testable'
 import navigationContext from '../contexts/navigation'
@@ -16,9 +18,11 @@ const props = { params: { connectionId: '123' } }
 describe('ConnectionModal Component', () => {
   test('Renders correctly', async () => {
     const element = (
-      <NavigationContext.Provider value={navigationContext}>
-        <ConnectionModal navigation={navigationContext} route={props as any} />
-      </NavigationContext.Provider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <NavigationContext.Provider value={navigationContext}>
+          <ConnectionModal navigation={navigationContext} route={props as any} />
+        </NavigationContext.Provider>
+      </ConfigurationContext.Provider>
     )
     const tree = render(element)
 
@@ -27,9 +31,11 @@ describe('ConnectionModal Component', () => {
 
   test('Updates after delay', async () => {
     const element = (
-      <NavigationContext.Provider value={navigationContext}>
-        <ConnectionModal navigation={navigationContext} route={props as any} />
-      </NavigationContext.Provider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <NavigationContext.Provider value={navigationContext}>
+          <ConnectionModal navigation={navigationContext} route={props as any} />
+        </NavigationContext.Provider>
+      </ConfigurationContext.Provider>
     )
     const tree = render(element)
 
@@ -42,9 +48,11 @@ describe('ConnectionModal Component', () => {
 
   test('Dismiss on demand', async () => {
     const element = (
-      <NavigationContext.Provider value={navigationContext}>
-        <ConnectionModal navigation={navigationContext} route={props as any} />
-      </NavigationContext.Provider>
+      <ConfigurationContext.Provider value={configurationContext}>
+        <NavigationContext.Provider value={navigationContext}>
+          <ConnectionModal navigation={navigationContext} route={props as any} />
+        </NavigationContext.Provider>
+      </ConfigurationContext.Provider>
     )
     const tree = render(element)
 
