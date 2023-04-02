@@ -214,7 +214,7 @@ const Splash: React.FC = () => {
           })
           await updater.update()
 
-          newAgent.config.logger.debug('Succesfully finished updating agent to Aries Askar')
+          newAgent.config.logger.debug('Successfully finished updating agent to Aries Askar')
           // Store that we migrated to askar.
           dispatch({
             type: DispatchAction.DID_MIGRATE_TO_ASKAR,
