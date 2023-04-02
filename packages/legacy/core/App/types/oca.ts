@@ -221,7 +221,7 @@ export class OCABundleResolver implements OCABundleResolverType {
       captureBase: '',
       type: OverlayType.Meta10,
       name: startCase(params.credName ?? parseCredDefFromId(params.credDefId, params.schemaId)),
-      issuerName: (params.alias || params.credConnectionId) ?? 'Unknown',
+      issuerName: params.alias || params.credConnectionId || 'Unknown Contact',
       language: params.language ?? this.options?.language,
     }
 
