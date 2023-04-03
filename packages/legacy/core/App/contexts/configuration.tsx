@@ -37,6 +37,7 @@ export interface ConfigurationContext {
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
+  connectionTimerDelay?: number
   proofRequestTemplates?: Array<ProofRequestTemplate>
 }
 
