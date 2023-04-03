@@ -7,7 +7,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
   visible={true}
 >
   <View
-    accessible={true}
+    accessible={false}
     collapsable={false}
     focusable={true}
     nativeID="animatedComponent"
@@ -38,7 +38,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
       }
     >
       <View
-        accessible={true}
+        accessible={false}
         focusable={false}
         onClick={[Function]}
         onResponderGrant={[Function]}
@@ -264,7 +264,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
   visible={true}
 >
   <View
-    accessible={true}
+    accessible={false}
     collapsable={false}
     focusable={true}
     nativeID="animatedComponent"
@@ -295,7 +295,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
       }
     >
       <View
-        accessible={true}
+        accessible={false}
         focusable={false}
         onClick={[Function]}
         onResponderGrant={[Function]}

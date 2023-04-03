@@ -430,6 +430,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   return overlay.bundle ? (
     <View style={[styles.container, style, { elevation: elevated ? 5 : 0 }]}>
       <TouchableOpacity
+        accessible={false}
+        accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
         disabled={typeof onPress === 'undefined' ? true : false}
         onPress={onPress}
         style={[styles.container, style]}

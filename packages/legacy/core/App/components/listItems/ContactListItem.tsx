@@ -2,12 +2,14 @@ import type { ConnectionRecord } from '@aries-framework/core'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
 import { formatTime } from '../../utils/helpers'
+import { testIdWithKey } from '../../utils/testable'
 import Text from '../texts/Text'
 import Title from '../texts/Title'
 
@@ -18,6 +20,7 @@ interface Props {
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { ListItems } = useTheme()
+  const { t } = useTranslation()
 
   const styles = StyleSheet.create({
     outerContainer: {
@@ -53,6 +56,8 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
           .getParent()
           ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
       }
+      testID={testIdWithKey('Contact')}
+      accessibilityLabel={t('ContactDetails.AContact')}
     >
       <View key={contact.id} style={styles.outerContainer}>
         <View style={styles.textContainer}>

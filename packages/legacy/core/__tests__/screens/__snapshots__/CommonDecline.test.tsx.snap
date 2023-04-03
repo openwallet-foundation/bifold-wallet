@@ -146,7 +146,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
             testID="com.ariesbifold:id/ShowCredentialDetails"
           >
             <View
-              accessible={true}
+              accessible={false}
               collapsable={false}
               nativeID="animatedComponent"
               style={
