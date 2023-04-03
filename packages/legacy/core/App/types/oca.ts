@@ -212,6 +212,7 @@ export class OCABundleResolver implements OCABundleResolverType {
     credName?: string
     credConnectionId?: string
     language?: string
+    alias?: string
   }) {
     if (!params.language) {
       params.language = 'en'
@@ -220,7 +221,7 @@ export class OCABundleResolver implements OCABundleResolverType {
       captureBase: '',
       type: OverlayType.Meta10,
       name: startCase(params.credName ?? parseCredDefFromId(params.credDefId, params.schemaId)),
-      issuerName: params.credConnectionId ?? '',
+      issuerName: params.alias || params.credConnectionId || 'Unknown Contact',
       language: params.language ?? this.options?.language,
     }
 
@@ -256,7 +257,11 @@ export class OCABundleResolver implements OCABundleResolverType {
     )
   }
 
-  public resolveDefaultBundle(credential: CredentialExchangeRecord, language = 'en'): Promise<OCABundle | undefined> {
+  public resolveDefaultBundle(
+    credential: CredentialExchangeRecord,
+    language = 'en',
+    alias?: string
+  ): Promise<OCABundle | undefined> {
     const credentialDefinitionId = credential.metadata.get(
       CredentialMetadataKeys.IndyCredential
     )?.credentialDefinitionId
@@ -266,6 +271,7 @@ export class OCABundleResolver implements OCABundleResolverType {
       schemaId,
       credConnectionId: credential.connectionId,
       language,
+      alias,
     })
   }
 
@@ -273,9 +279,10 @@ export class OCABundleResolver implements OCABundleResolverType {
     credDefId?: string,
     schemaId?: string,
     credName?: string,
-    language = 'en'
+    language = 'en',
+    alias?: string
   ): Promise<OCABundle | undefined> {
-    return this.getDefaultBundle({ credDefId, schemaId, credName, language })
+    return this.getDefaultBundle({ credDefId, schemaId, credName, language, alias })
   }
 
   public resolveByCredDefOrSchema(
