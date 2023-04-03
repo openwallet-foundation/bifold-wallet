@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, View } from 'react-native'
 
-import { isPresentationReceived } from '../../verifier/utils/proof'
+import { isPresentationReceived } from '../../verifier'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import { useConfiguration } from '../contexts/configuration'

@@ -6,7 +6,7 @@ import {
 } from '@aries-framework/core'
 import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 
-import { ProofCustomMetadata, ProofMetadata } from '../../verifier/types/metadata'
+import { ProofCustomMetadata, ProofMetadata } from '../../verifier'
 import { CredentialMetadata, customMetadata } from '../types/metadata'
 
 interface Notifications {

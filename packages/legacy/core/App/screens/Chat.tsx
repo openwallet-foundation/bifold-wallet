@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
-import { isPresentationReceived } from '../../verifier/utils/proof'
+import { isPresentationReceived } from '../../verifier'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'

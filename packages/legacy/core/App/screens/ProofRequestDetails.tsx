@@ -5,9 +5,13 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { IndyProofRequestTemplatePayloadData, ProofRequestType } from '../../verifier/types/proof-reqeust-template'
-import { linkProofWithTemplate } from '../../verifier/utils/proof'
-import { getProofRequestTemplate, sendProofRequest } from '../../verifier/utils/proof-request'
+import {
+  IndyProofRequestTemplatePayloadData,
+  ProofRequestType,
+  linkProofWithTemplate,
+  getProofRequestTemplate,
+  sendProofRequest,
+} from '../../verifier'
 import Button, { ButtonType } from '../components/buttons/Button'
 import AlertModal from '../components/modals/AlertModal'
 import { useConfiguration } from '../contexts/configuration'

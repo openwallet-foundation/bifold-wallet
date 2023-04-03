@@ -9,8 +9,12 @@ import { useTranslation } from 'react-i18next'
 import { BackHandler, Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { isPresentationFailed, isPresentationReceived, linkProofWithTemplate } from '../../verifier/utils/proof'
-import { createConnectionlessProofRequestInvitation } from '../../verifier/utils/proof-request'
+import {
+  isPresentationFailed,
+  isPresentationReceived,
+  linkProofWithTemplate,
+  createConnectionlessProofRequestInvitation,
+} from '../../verifier'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import SendingProof from '../components/animated/SendingProof'
 import Button, { ButtonType } from '../components/buttons/Button'

@@ -1,7 +1,7 @@
 import { IndyPoolConfig } from '@aries-framework/core'
 import { createContext, ReducerAction, useContext } from 'react'
 
-import { ProofRequestTemplate } from '../../verifier/types/proof-reqeust-template'
+import { ProofRequestTemplate } from '../../verifier'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import OnboardingPages from '../screens/OnboardingPages'

@@ -1,7 +1,6 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 
-import { CredentialSharedProofData } from '../../verifier/types/proof'
-import { IndyProofRequestTemplatePayloadData } from '../../verifier/types/proof-reqeust-template'
+import { CredentialSharedProofData, IndyProofRequestTemplatePayloadData } from '../../verifier'
 import { Attribute, Field, Predicate } from '../types/record'
 
 export const buildFieldsFromIndyCredential = (credential: CredentialExchangeRecord): Array<Field> => {
