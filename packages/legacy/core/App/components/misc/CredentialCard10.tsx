@@ -271,6 +271,8 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
 
   return (
     <TouchableOpacity
+      accessible={false}
+      accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
       disabled={typeof onPress === 'undefined' ? true : false}
       onPress={onPress}
       style={[styles.container, style]}
