@@ -118,15 +118,10 @@ export interface CredentialOverlay<T> {
 
 export interface OCABundleType {
   get captureBase(): CaptureBaseOverlay
-
   get metaOverlay(): MetaOverlay | undefined
-
   get labelOverlay(): LabelOverlay | undefined
-
   get formatOverlay(): FormatOverlay | undefined
-
   get characterEncodingOverlay(): CharacterEncodingOverlay | undefined
-
   get cardLayoutOverlay(): CardLayoutOverlay10 | CardLayoutOverlay11 | undefined
 }
 
@@ -258,7 +253,7 @@ export class OCABundleResolver implements OCABundleResolverType {
         params.meta?.credName ??
           parseCredDefFromId(params.identifiers?.credentialDefinitionId, params.identifiers?.schemaId)
       ),
-      issuerName: params.meta?.credConnectionId ?? '',
+      issuerName: params.meta?.alias || params.meta?.credConnectionId || 'Unknown Contact',
       language: params.language ?? this.options?.language,
     }
 

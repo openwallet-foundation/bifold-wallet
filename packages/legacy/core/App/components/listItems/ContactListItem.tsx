@@ -68,8 +68,8 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   return (
     <TouchableOpacity
       onPress={navigateToContact}
-      testID={testIdWithKey('OpenContact')}
-      accessibilityLabel={t('Connection.OpenContact')}
+      testID={testIdWithKey('Contact')}
+      accessibilityLabel={t('ContactDetails.AContact')}
     >
       <View style={styles.container}>
         <View style={styles.avatarContainer}>
