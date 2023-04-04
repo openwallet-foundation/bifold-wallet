@@ -1,5 +1,4 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { useConnectionById } from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, ImageBackground, StyleSheet, Text, View, ViewStyle, Image } from 'react-native'
@@ -10,7 +9,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay10, CredentialOverlay } from '../../types/oca'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
-import { formatTime } from '../../utils/helpers'
+import { formatTime, getCredentialConnectionLabel } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard10Props {
@@ -69,11 +68,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay10>>({})
 
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
-  let alias = ''
-  if (credential.connectionId !== undefined) {
-    const connection = useConnectionById(credential.connectionId)
-    alias = connection?.alias || connection?.theirLabel || ''
-  }
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
   const styles = StyleSheet.create({
     container: {
@@ -132,7 +127,11 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
 
     const resolveBundle = async () => {
       const bundle = await OCABundleResolver.resolve(credential, i18n.language)
-      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language, alias)
+      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(
+        credential,
+        i18n.language,
+        credentialConnectionLabel
+      )
       return { bundle, defaultBundle }
     }
 
