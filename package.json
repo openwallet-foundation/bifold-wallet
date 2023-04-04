@@ -39,10 +39,6 @@
     "@react-navigation/core": "6.1.0",
     "@react-navigation/native": "6.0.6",
     "@react-navigation/stack": "6.0.11",
-    "@types/node": "16.9.6",
-    "@hyperledger/indy-vdr-shared": "0.1.0-dev.13",
-    "@hyperledger/aries-askar-shared": "0.1.0-dev.7",
-    "@hyperledger/anoncreds-shared": "file:./hyperledger-anoncreds-shared-v0.1.0-dev.13.tgz",
-    "@hyperledger/anoncreds-react-native": "file:./hyperledger-anoncreds-react-native-v0.1.0-dev.13.tgz"
+    "@types/node": "16.9.6"
   }
 }

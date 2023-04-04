@@ -1,9 +1,9 @@
 PODS:
-  - anoncreds (0.1.0-dev.13):
+  - anoncreds (0.1.0-dev.14):
     - React
     - React-callinvoker
     - React-Core
-  - aries-askar (0.1.0-dev.7):
+  - aries-askar (0.1.0-dev.8):
     - React
     - React-callinvoker
     - React-Core
@@ -579,8 +579,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  anoncreds: db89fe70443f638d0c20d6fe64158539c93d3b5e
-  aries-askar: a8f7089f256b625a8bda4e601dcc8087e254a75e
+  anoncreds: a27700deb515fb1e6ab54dfa5cc8dd76b5453637
+  aries-askar: 6577076b42606696c4a54e1815ba65428234101e
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99

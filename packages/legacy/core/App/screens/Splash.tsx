@@ -1,7 +1,15 @@
-import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
+import {
+  Agent,
+  ConsoleLogger,
+  HttpOutboundTransport,
+  KeyDerivationMethod,
+  LogLevel,
+  WsOutboundTransport,
+} from '@aries-framework/core'
 import { IndySdkToAskarMigrationUpdater } from '@aries-framework/indy-sdk-to-askar-migration'
 import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
+import { ReactNativeFileSystem } from '@aries-framework/react-native/build/ReactNativeFileSystem'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
@@ -29,6 +37,7 @@ import {
   Migration as MigrationState,
 } from '../types/state'
 import { getAgentModules } from '../utils/agent'
+import navigation from '../../__tests__/contexts/navigation'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
@@ -176,6 +185,8 @@ const Splash: React.FC = () => {
       try {
         const credentials = await getWalletCredentials()
 
+        const fs = new ReactNativeFileSystem()
+
         if (!credentials?.id || !credentials.key) {
           // Cannot find wallet id/secret
           return
@@ -184,7 +195,13 @@ const Splash: React.FC = () => {
         const newAgent = new Agent({
           config: {
             label: 'Aries Bifold',
-            walletConfig: { id: credentials.id, key: credentials.key },
+            walletConfig: {
+              id: credentials.id,
+              // FIXME: this key is for the wallet backup that will be downloaded
+              key: 'd85dc2997f0533c4221d63ac5ea9ebb149355d9acddc41dc5612230dcedb38e6', // credentials.key,
+              // FIXME: remove when new version of @aries-framework/askar is released which sets the proper default
+              keyDerivationMethod: KeyDerivationMethod.Argon2IMod,
+            },
             logger: new ConsoleLogger(LogLevel.trace),
             autoUpdateStorageOnStartup: true,
           },
@@ -201,16 +218,22 @@ const Splash: React.FC = () => {
         newAgent.registerOutboundTransport(httpTransport)
 
         // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
-        if (!didMigrateToAskar(store.migration)) {
-          newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
+        // FIXME: this is to always run the backup path, even for new wallets.
+        if (true) {
+          // if (!didMigrateToAskar(store.migration)) {
+          // The backup file is kept in case anything goes wrong. this will allow us to release patches and still update the
+          // original indy-sdk database in a future version we could manually add a check to remove the old file from storage.
           const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
           const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db`
+
+          newAgent.config.logger.info('Download file')
+          await fs.downloadToFile('https://github.com/TimoGlastra/migration-test/raw/main/rn-db.db', dbPath)
+
+          newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
+
           const updater = await IndySdkToAskarMigrationUpdater.initialize({
             dbPath,
             agent: newAgent,
-            // We want to keep the backup file in case anything goes wrong. this will allow us to release patches and still update the original indy-sdk
-            // in a future version we could manually add a check to remove the old file from storage.
-            deleteOnFinish: false,
           })
           await updater.update()
 
