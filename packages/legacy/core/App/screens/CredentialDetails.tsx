@@ -87,6 +87,12 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 0.3,
     },
     textContainer: {
       color: credentialTextColor(ColorPallet, overlay.cardLayoutOverlay?.primaryBackgroundColor),
@@ -204,7 +210,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             }}
           />
         ) : (
-          <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight }]}>
+          <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>
             {(overlay.metaOverlay?.issuerName ?? overlay.metaOverlay?.name ?? 'C')?.charAt(0).toUpperCase()}
           </Text>
         )}
