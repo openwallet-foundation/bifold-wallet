@@ -18,7 +18,7 @@ import { testIdWithKey } from '../utils/testable'
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { connectionTimerDelay } = useConfiguration()
+  const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
 
   if (!navigation || !route) {
@@ -91,7 +91,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     setState((prev) => ({ ...prev, shouldShowDelayMessage: value }))
   }
   useEffect(() => {
-    if (shouldShowDelayMessage && connectionIsActive && !notificationRecord) {
+    if (autoRedirectConnectionToHome && shouldShowDelayMessage && connectionIsActive && !notificationRecord) {
       setShouldShowDelayMessage(false)
       setModalVisible(false)
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
@@ -175,7 +175,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
             <ConnectionLoading />
           </View>
 
-          {shouldShowDelayMessage && !connectionIsActive && (
+          {shouldShowDelayMessage && (
             <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
               {t('Connection.TakingTooLong')}
             </Text>
