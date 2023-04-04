@@ -211,7 +211,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           />
         ) : (
           <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>
-            {(overlay.metaOverlay?.issuerName ?? overlay.metaOverlay?.name ?? 'C')?.charAt(0).toUpperCase()}
+            {(overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuerName ?? 'C')?.charAt(0).toUpperCase()}
           </Text>
         )}
       </View>
