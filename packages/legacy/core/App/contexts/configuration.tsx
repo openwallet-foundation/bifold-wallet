@@ -37,6 +37,7 @@ export interface ConfigurationContext {
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
   connectionTimerDelay?: number
+  autoRedirectConnectionToHome?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
