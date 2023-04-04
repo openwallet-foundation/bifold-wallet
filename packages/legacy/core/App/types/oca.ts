@@ -160,6 +160,7 @@ export interface Identifiers {
 }
 
 export interface Meta {
+  alias?: string
   credName?: string
   credConnectionId?: string
 }
