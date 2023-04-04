@@ -28,17 +28,13 @@ import { ContactStackParams, Screens, Stacks } from '../types/navigators'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
-const getUserLabel = (role: Role, theirLabel: string) => {
-  return role === Role.me ? 'Chat.UserYou' : theirLabel
-}
-
 const getCredentialEventRole = (record: CredentialExchangeRecord) => {
   switch (record.state) {
     // assuming only Holder states are supported here
     case CredentialState.ProposalSent:
       return Role.me
     case CredentialState.OfferReceived:
-      return Role.their
+      return Role.them
     case CredentialState.RequestSent:
       return Role.me
     case CredentialState.Declined:
@@ -78,7 +74,7 @@ const getProofEventRole = (record: ProofExchangeRecord) => {
     case ProofState.ProposalReceived:
       return Role.me
     case ProofState.PresentationReceived:
-      return Role.their
+      return Role.them
     case ProofState.RequestReceived:
       return Role.me
     case ProofState.ProposalSent:
@@ -87,9 +83,9 @@ const getProofEventRole = (record: ProofExchangeRecord) => {
     case ProofState.Declined:
       return Role.me
     case ProofState.Abandoned:
-      return Role.their
+      return Role.them
     case ProofState.Done:
-      return record.isVerified !== undefined ? Role.their : Role.me
+      return record.isVerified !== undefined ? Role.them : Role.me
     default:
       return Role.me
   }
@@ -119,7 +115,7 @@ const getProofEventLabel = (record: ProofExchangeRecord) => {
 }
 
 const getMessageEventRole = (record: BasicMessageRecord) => {
-  return record.role === BasicMessageRole.Sender ? Role.me : Role.their
+  return record.role === BasicMessageRole.Sender ? Role.me : Role.them
 }
 
 const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
@@ -183,8 +179,8 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
     transformedMessages.push(
       ...credentials.map((record: CredentialExchangeRecord) => {
         const role = getCredentialEventRole(record)
-        const userLabel = getUserLabel(role, theirLabel)
-        const actionLabel = getCredentialEventLabel(record)
+        const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
+        const actionLabel = t(getCredentialEventLabel(record) as any)
         return {
           _id: record.id,
           text: actionLabel,
@@ -206,8 +202,8 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
     transformedMessages.push(
       ...proofs.map((record: ProofExchangeRecord) => {
         const role = getProofEventRole(record)
-        const userLabel = getUserLabel(role, theirLabel)
-        const actionLabel = getProofEventLabel(record)
+        const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
+        const actionLabel = t(getProofEventLabel(record) as any)
         return {
           _id: record.id,
           text: actionLabel,

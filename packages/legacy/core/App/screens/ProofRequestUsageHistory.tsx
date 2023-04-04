@@ -12,6 +12,7 @@ import EmptyList from '../components/misc/EmptyList'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { formatTime } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestUsageHistoryProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestUsageHistory>
 
@@ -90,7 +91,13 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
   }, [navigation, record])
 
   return (
-    <TouchableOpacity style={style.card} onPress={onDetails} disabled={!presentationReceived}>
+    <TouchableOpacity
+      style={style.card}
+      onPress={onDetails}
+      disabled={!presentationReceived}
+      accessibilityLabel={t('Screens.ProofDetails')}
+      testID={testIdWithKey('ProofDetails')}
+    >
       <View style={style.leftContainer}>
         <View style={style.cardRow}>
           <Text style={style.valueLabel}>{t('Verifier.PresentationFrom')}:</Text>

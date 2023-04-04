@@ -2,11 +2,13 @@ import type { ConnectionRecord } from '@aries-framework/core'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import { formatTime } from '../../utils/helpers'
+import { testIdWithKey } from '../../utils/testable'
 import Text from '../texts/Text'
 
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
+  const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
@@ -63,7 +66,11 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const contactLabelAbbr = useMemo(() => contactLabel?.charAt(0).toUpperCase(), [contact])
 
   return (
-    <TouchableOpacity onPress={() => navigateToContact()}>
+    <TouchableOpacity
+      onPress={navigateToContact}
+      testID={testIdWithKey('OpenContact')}
+      accessibilityLabel={t('Connection.OpenContact')}
+    >
       <View style={styles.container}>
         <View style={styles.avatarContainer}>
           {contact.imageUrl ? (

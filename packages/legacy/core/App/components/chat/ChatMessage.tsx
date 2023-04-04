@@ -5,11 +5,13 @@ import { Bubble, IMessage, Message } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useTheme } from '../../contexts/theme'
+import { formatTime } from '../../utils/helpers'
+import { testIdWithKey } from '../../utils/testable'
 import Text from '../texts/Text'
 
 export enum Role {
   me = 'me',
-  their = 'their',
+  them = 'them',
 }
 
 export interface ChatMessageProps {
@@ -27,7 +29,7 @@ const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) =>
   const { ChatTheme: theme } = useTheme()
   return (
     <Text style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
-      {new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' }).format(message.createdAt)}
+      {formatTime(message.createdAt)}
     </Text>
   )
 }
@@ -84,6 +86,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
         />
         {message.withDetails && (
           <TouchableOpacity
+            accessibilityLabel={t('Chat.OpenItem')}
+            testID={testIdWithKey('OpenItem')}
             onPress={() => {
               if (message.onDetails) message.onDetails()
             }}

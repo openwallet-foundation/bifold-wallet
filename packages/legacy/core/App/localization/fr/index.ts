@@ -288,6 +288,7 @@ const translation = {
         "ConnectionCompleted": "Connexion terminée !",
         "Toggle": "Basculer la capacité d'invitation à la connexion",
         "UseConnectionInviterCapability": "Utiliser la fonction d'invitation à la connexion ?",
+        "OpenContact": "Contact ouvert",
     },
     "ConnectionAlert": {
         "AddedContacts": "Ajouté aux contacts",

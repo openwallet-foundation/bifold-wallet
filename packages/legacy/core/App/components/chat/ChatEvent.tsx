@@ -1,5 +1,4 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
@@ -13,19 +12,18 @@ interface ChatEventProps {
 }
 
 export const ChatEvent: React.FC<ChatEventProps> = ({ userLabel, actionLabel, role }) => {
-  const { t } = useTranslation()
   const { ChatTheme } = useTheme()
 
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       {userLabel && (
         <Text style={[role === Role.me ? ChatTheme.rightText : ChatTheme.leftText, { marginRight: 4 }]}>
-          {t(userLabel as any)}
+          {userLabel}
         </Text>
       )}
       {actionLabel && (
         <Text style={[role === Role.me ? ChatTheme.rightTextHighlighted : ChatTheme.leftTextHighlighted]}>
-          {t(actionLabel as any)}
+          {actionLabel}
         </Text>
       )}
     </View>

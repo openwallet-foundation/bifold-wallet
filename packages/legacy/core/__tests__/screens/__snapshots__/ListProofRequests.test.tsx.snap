@@ -120,6 +120,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
         style={null}
       >
         <View
+          accessibilityLabel="Screens.ProofRequestDetails"
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -215,6 +216,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
         style={null}
       >
         <View
+          accessibilityLabel="Screens.ProofRequestDetails"
           accessible={true}
           collapsable={false}
           focusable={true}

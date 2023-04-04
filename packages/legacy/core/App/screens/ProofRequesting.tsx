@@ -2,7 +2,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
-import { useIsFocused, useNavigation } from '@react-navigation/core'
+import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,11 +16,10 @@ import {
   createConnectionlessProofRequestInvitation,
 } from '../../verifier'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
-import SendingProof from '../components/animated/SendingProof'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
 import { useTheme } from '../contexts/theme'
-import { ProofRequestsStackParams, Screens, TabStacks } from '../types/navigators'
+import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
@@ -29,65 +28,6 @@ const windowDimensions = Dimensions.get('window')
 
 const qrContainerSize = windowDimensions.width - 20
 const qrSize = qrContainerSize - 60
-
-// Remove ignore rule once related logic will be enabled
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const ProcessingView: React.FC = () => {
-  const navigation = useNavigation()
-  const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
-  const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1,
-      backgroundColor: ColorPallet.grayscale.white,
-      paddingVertical: 20,
-    },
-    messageContainer: {
-      alignItems: 'center',
-    },
-    messageText: {
-      fontWeight: 'normal',
-      textAlign: 'center',
-      marginTop: 30,
-      color: ColorPallet.grayscale.black,
-    },
-    controlsContainer: {
-      marginTop: 'auto',
-      margin: 20,
-    },
-    loaderContainer: {
-      marginTop: 20,
-    },
-  })
-
-  const onBackToHomeTouched = () => {
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
-
-  return (
-    <SafeAreaView style={styles.container} edges={['left', 'right']}>
-      <View style={{ flex: 1, justifyContent: 'space-between' }}>
-        <View style={styles.messageContainer}>
-          <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
-            {t('ProofRequest.RequestProcessing')}
-          </Text>
-        </View>
-        <View style={[styles.loaderContainer]}>
-          <SendingProof />
-        </View>
-        <View style={[styles.controlsContainer]}>
-          <Button
-            title={t('Loading.BackToHome')}
-            accessibilityLabel={t('Loading.BackToHome')}
-            testID={testIdWithKey('BackToHome')}
-            onPress={() => onBackToHomeTouched()}
-            buttonType={ButtonType.Secondary}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
-  )
-}
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
   if (!route?.params) {
@@ -216,9 +156,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       navigation.navigate(Screens.ProofDetails, { recordId: record.id })
     }
   }, [record])
-
-  // uncomment once processing state for proof record will be added in AFJ
-  // if (record?.state === ProofState.PresentationProcessing) return <ProcessingView />
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>

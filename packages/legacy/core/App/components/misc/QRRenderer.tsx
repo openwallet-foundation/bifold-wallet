@@ -40,7 +40,7 @@ const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
     }
   }, [onError])
 
-  const qrSize = size || windowDimensions.width - 80
+  const qrSize = size ?? windowDimensions.width - 80
 
   return (
     <View style={styles.container} testID={testIdWithKey('QRRenderer')}>

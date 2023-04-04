@@ -289,6 +289,7 @@ const translation = {
     "ConnectionCompleted": "Connection completed!",
     "Toggle": "Toggle connection inviter capability",
     "UseConnectionInviterCapability": "Use connection inviter capability?",
+    "OpenContact": "Open Contact",
   },
   "ConnectionAlert": {
     "AddedContacts": "Added to Contacts",

@@ -41,15 +41,15 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
 
   if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
     return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
-  } else if (field.type == BaseType.DateInt) {
-    return <RecordDateIntField field={field} style={style} shown={shown} />
-  } else {
-    return (
-      <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
-        {shown ? field.value : hiddenFieldValue}
-      </Text>
-    )
   }
+  if (field.type == BaseType.DateInt) {
+    return <RecordDateIntField field={field} style={style} shown={shown} />
+  }
+  return (
+    <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
+      {shown ? field.value : hiddenFieldValue}
+    </Text>
+  )
 }
 
 const RecordField: React.FC<RecordFieldProps> = ({
