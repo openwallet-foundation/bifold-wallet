@@ -1,5 +1,4 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { useConnectionById } from '@aries-framework/react-hooks'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +13,7 @@ import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute, Field, Predicate } from '../../types/record'
 import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import { getCredentialConnectionLabel } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard11Props {
@@ -81,11 +81,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const { OCABundleResolver } = useConfiguration()
 
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
-  let alias = ''
-  if (credential?.connectionId !== undefined) {
-    const connection = useConnectionById(credential.connectionId)
-    alias = connection?.alias || connection?.theirLabel || ''
-  }
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({})
 
@@ -178,12 +174,16 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         schemaId,
         credName,
         i18n.language,
-        alias
+        credentialConnectionLabel
       )
 
       if (credential && isValidIndyCredential(credential)) {
         bundle = await OCABundleResolver.resolve(credential, i18n.language)
-        defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language, alias)
+        defaultBundle = await OCABundleResolver.resolveDefaultBundle(
+          credential,
+          i18n.language,
+          credentialConnectionLabel
+        )
       }
       return { bundle, defaultBundle }
     }
