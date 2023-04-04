@@ -141,9 +141,12 @@ export function getCredentialConnectionLabel(credential?: CredentialExchangeReco
     return ''
   }
 
-  return credential?.connectionId
-    ? useConnectionById(credential.connectionId)?.theirLabel
-    : credential?.connectionId ?? ''
+  if (credential.connectionId) {
+    const connection = useConnectionById(credential.connectionId)
+    return connection?.alias || connection?.theirLabel || credential.connectionId
+  }
+
+  return 'Unknown Contact'
 }
 
 export function getConnectionImageUrl(connectionId: string) {
