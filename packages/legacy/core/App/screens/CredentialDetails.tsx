@@ -136,7 +136,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         i18n.language,
         credentialConnectionLabel
       )
-      
+
       return { bundle, defaultBundle }
     }
 
