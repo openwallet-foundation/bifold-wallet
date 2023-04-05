@@ -20,9 +20,9 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
-import { Field } from '../types/record'
-import { isValidIndyCredential } from '../utils/credential'
+import { getCredentialIdentifiers, isValidIndyCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
+import { buildFieldsFromIndyCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -103,7 +103,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
 
     const resolvePresentationFields = async () => {
-      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
+      const identifiers = getCredentialIdentifiers(credential)
+      const attributes = buildFieldsFromIndyCredential(credential)
+      const fields = await OCABundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
       return { fields }
     }
 
@@ -200,7 +202,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record fields={overlay.presentationFields as Field[]} header={header} footer={footer} />
+      <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
     </SafeAreaView>
   )

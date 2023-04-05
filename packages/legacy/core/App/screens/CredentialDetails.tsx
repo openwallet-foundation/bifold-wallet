@@ -21,10 +21,15 @@ import { BifoldError } from '../types/error'
 import { CredentialMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../types/oca'
-import { Field } from '../types/record'
 import { RemoveType } from '../types/remove'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../utils/credential'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  isValidIndyCredential,
+  toImageSource,
+} from '../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
+import { buildFieldsFromIndyCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -123,27 +128,17 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       setRevocationDate(formatTime(date))
     }
 
-    const resolveBundle = async () => {
-      const bundle = await OCABundleResolver.resolve(credential)
-      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(
-        credential,
-        i18n.language,
-        credentialConnectionLabel
-      )
-      return { bundle, defaultBundle }
+    const params = {
+      identifiers: getCredentialIdentifiers(credential),
+      meta: {
+        alias: credentialConnectionLabel,
+        credConnectionId: credential.connectionId,
+      },
+      attributes: buildFieldsFromIndyCredential(credential),
+      language: i18n.language,
     }
-
-    const resolvePresentationFields = async () => {
-      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
-      return { fields }
-    }
-
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.metaOverlay
-      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay
-
-      setOverlay({ ...overlay, bundle: overlayBundle, presentationFields: fields, metaOverlay, cardLayoutOverlay })
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
+      setOverlay({ ...overlay, ...bundle })
     })
   }, [credential])
 
@@ -353,7 +348,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      <Record fields={overlay.presentationFields as Field[]} hideFieldValues header={header} footer={footer} />
+      <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
       <CommonRemoveModal
         removeType={RemoveType.Credential}
         visible={isRemoveModalDisplayed}

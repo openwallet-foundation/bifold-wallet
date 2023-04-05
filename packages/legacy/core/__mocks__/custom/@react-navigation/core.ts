@@ -18,4 +18,8 @@ const useNavigation = () => {
   return navigation
 }
 
-export { useNavigation }
+const useIsFocused = () => {
+  return true
+}
+
+export { useNavigation, useIsFocused }

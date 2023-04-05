@@ -15,7 +15,7 @@ import { ToastType } from '../components/toast/BaseToast'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
 import { PermissionContract } from '../types/permissions'
-import { connectFromInvitation, receiveMessageFromUrlRedirect } from '../utils/helpers'
+import { connectFromInvitation, getJson, getUrl, receiveMessageFromUrlRedirect } from '../utils/helpers'
 
 export type ScanProps = StackScreenProps<ConnectStackParams>
 
@@ -26,20 +26,36 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
   const [showDisclosureModal, setShowDisclosureModal] = useState<boolean>(true)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
 
-  const handleInvitation = async (uri: string): Promise<void> => {
+  const handleInvitation = async (value: string): Promise<void> => {
     try {
-      const connectionRecord = await connectFromInvitation(uri, agent)
+      const connectionRecord = await connectFromInvitation(value, agent)
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { connectionId: connectionRecord.id },
       })
     } catch (err: unknown) {
       try {
-        const message = await receiveMessageFromUrlRedirect(uri, agent)
-        navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-          screen: Screens.Connection,
-          params: { threadId: message['@id'] },
-        })
+        // if scanned value is json -> pass into AFJ as is
+        const json = getJson(value)
+        if (json) {
+          await agent?.receiveMessage(json)
+          navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+            screen: Screens.Connection,
+            params: { threadId: json['@id'] },
+          })
+          return
+        }
+
+        // if scanned value is url -> receive message from it
+        const url = getUrl(value)
+        if (url) {
+          const message = await receiveMessageFromUrlRedirect(value, agent)
+          navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+            screen: Screens.Connection,
+            params: { threadId: message['@id'] },
+          })
+          return
+        }
       } catch (err: unknown) {
         const error = new BifoldError(t('Error.Title1031'), t('Error.Message1031'), (err as Error).message, 1031)
         throw error
