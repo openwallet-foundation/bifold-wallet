@@ -131,7 +131,12 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
     const resolveBundle = async () => {
       const bundle = await OCABundleResolver.resolve(credential, i18n.language)
-      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language)
+      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(
+        credential,
+        i18n.language,
+        credentialConnectionLabel
+      )
+      
       return { bundle, defaultBundle }
     }
 
