@@ -25,7 +25,6 @@ import { RemoveType } from '../types/remove'
 import {
   credentialTextColor,
   getCredentialIdentifiers,
-  getCredentialMeta,
   isValidIndyCredential,
   toImageSource,
 } from '../utils/credential'
@@ -132,8 +131,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     const params = {
       identifiers: getCredentialIdentifiers(credential),
       meta: {
-        ...getCredentialMeta(credential),
-        credentialConnectionLabel
+        alias: credentialConnectionLabel,
+        credConnectionId: credential.connectionId,
       },
       attributes: buildFieldsFromIndyCredential(credential),
       language: i18n.language,

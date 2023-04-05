@@ -33,10 +33,3 @@ export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) =
     schemaId: credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId,
   }
 }
-
-export const getCredentialMeta = (credential: CredentialExchangeRecord) => {
-  return {
-    credName: undefined,
-    credConnectionId: credential.connectionId,
-  }
-}

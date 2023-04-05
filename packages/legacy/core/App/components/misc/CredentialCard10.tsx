@@ -8,8 +8,14 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay10, CredentialOverlay } from '../../types/oca'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  isValidIndyCredential,
+  toImageSource,
+} from '../../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../../utils/helpers'
+import { buildFieldsFromIndyCredential } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard10Props {
@@ -130,7 +136,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       attributes: buildFieldsFromIndyCredential(credential),
       meta: {
         credConnectionId: credential?.connectionId,
-        credentialConnectionLabel,
+        alias: credentialConnectionLabel,
       },
       language: i18n.language,
     }
