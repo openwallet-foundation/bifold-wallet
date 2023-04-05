@@ -38,6 +38,7 @@ export interface ConfigurationContext {
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
   connectionTimerDelay?: number
+  autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: Array<ProofRequestTemplate>
 }
 

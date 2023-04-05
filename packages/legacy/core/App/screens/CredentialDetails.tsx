@@ -131,7 +131,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
     const params = {
       identifiers: getCredentialIdentifiers(credential),
-      meta: getCredentialMeta(credential),
+      meta: {
+        ...getCredentialMeta(credential),
+        credentialConnectionLabel
+      },
       attributes: buildFieldsFromIndyCredential(credential),
       language: i18n.language,
     }
