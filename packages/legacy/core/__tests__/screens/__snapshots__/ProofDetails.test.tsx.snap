@@ -1,0 +1,603 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProofDetails Component renders correctly with an unverified proof Unverified proof view should be rendered correctly 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <View
+    testID="com.ariesbifold:id/UnverifiedProofView"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#D8292F",
+          "flexGrow": 1,
+          "paddingHorizontal": 30,
+          "paddingVertical": 20,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "flex-start",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 45,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          󰃆
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 34,
+              "fontWeight": "bold",
+              "marginHorizontal": 8,
+            }
+          }
+        >
+          Verifier.ProofVerificationFailed
+        </Text>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;
+
+exports[`ProofDetails Component with a verified proof record renders correctly when history is false 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+    testID="com.ariesbifold:id/ProofDetailsView"
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "#2E8540",
+              "paddingHorizontal": 30,
+              "paddingVertical": 20,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "flex-start",
+              }
+            }
+          >
+            <
+              height={45}
+              width={45}
+            />
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 34,
+                  "fontWeight": "bold",
+                  "marginHorizontal": 10,
+                }
+              }
+            >
+              Verifier.InformationReceived
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "marginVertical": 10,
+              }
+            }
+          >
+            Verifier.ConnectionLessLabel
+             
+            Verifier.InformationReceivedDetails
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "flexGrow": 1,
+              "marginHorizontal": 30,
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": 10,
+                  "marginBottom": 20,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                    "minHeight": 247.5,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#5f0f7b",
+                      },
+                      Object {
+                        "borderBottomLeftRadius": 10,
+                        "borderTopLeftRadius": 10,
+                        "width": 90,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/CardColor"
+                />
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#FFFFFF",
+                      "borderRadius": 8,
+                      "elevation": 5,
+                      "height": 90,
+                      "justifyContent": "center",
+                      "left": -52.5,
+                      "top": 37.5,
+                      "width": 90,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "alignSelf": "center",
+                          "color": "#000000",
+                          "fontSize": 45,
+                          "fontWeight": "bold",
+                        },
+                      ]
+                    }
+                  >
+                    U
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "paddingBottom": 10,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "marginBottom": 10,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 16,
+                          "fontWeight": "normal",
+                        }
+                      }
+                    >
+                      first_name
+                    </Text>
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                        }
+                      }
+                      testID="com.ariesbifold:id/AttributeValue"
+                    >
+                      Aries
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "marginBottom": 10,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 16,
+                          "fontWeight": "normal",
+                        }
+                      }
+                    >
+                      second_name
+                    </Text>
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                        }
+                      }
+                      testID="com.ariesbifold:id/AttributeValue"
+                    >
+                      Bifold
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "margin": 20,
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Verifier.GenerateNewQR"
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            nativeID="animatedComponent"
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/GenerateNewQR"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                  ]
+                }
+              >
+                Verifier.GenerateNewQR
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
+
+exports[`ProofDetails Component with a verified proof record renders correctly when history is true 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <RCTScrollView
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+    testID="com.ariesbifold:id/ProofDetailsHistoryView"
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "marginHorizontal": 30,
+              "marginVertical": 30,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Verifier.ConnectionLessLabel
+            </Text>
+             
+            ProofRequest.ShareFollowingInformation
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "flexGrow": 1,
+              "marginHorizontal": 30,
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": 10,
+                  "marginBottom": 20,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                    "minHeight": 247.5,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#5f0f7b",
+                      },
+                      Object {
+                        "borderBottomLeftRadius": 10,
+                        "borderTopLeftRadius": 10,
+                        "width": 90,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/CardColor"
+                />
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#FFFFFF",
+                      "borderRadius": 8,
+                      "elevation": 5,
+                      "height": 90,
+                      "justifyContent": "center",
+                      "left": -52.5,
+                      "top": 37.5,
+                      "width": 90,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "alignSelf": "center",
+                          "color": "#000000",
+                          "fontSize": 45,
+                          "fontWeight": "bold",
+                        },
+                      ]
+                    }
+                  >
+                    U
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "paddingBottom": 10,
+                      "paddingTop": 20,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "marginBottom": 10,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 16,
+                          "fontWeight": "normal",
+                        }
+                      }
+                    >
+                      first_name
+                    </Text>
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                        }
+                      }
+                      testID="com.ariesbifold:id/AttributeValue"
+                    >
+                      Aries
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "marginBottom": 10,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 16,
+                          "fontWeight": "normal",
+                        }
+                      }
+                    >
+                      second_name
+                    </Text>
+                    <Text
+                      style={
+                        Object {
+                          "color": "#000000",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                        }
+                      }
+                      testID="com.ariesbifold:id/AttributeValue"
+                    >
+                      Bifold
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;

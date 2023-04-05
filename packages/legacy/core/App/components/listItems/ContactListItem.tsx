@@ -1,71 +1,91 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
-import { Screens, SettingStackParams, Stacks } from '../../types/navigators'
+import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Text from '../texts/Text'
-import Title from '../texts/Title'
 
 interface Props {
   contact: ConnectionRecord
-  navigation: StackNavigationProp<SettingStackParams, Screens.Settings>
+  navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
 }
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
-  const { ListItems } = useTheme()
   const { t } = useTranslation()
+  const { TextTheme, ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
-    outerContainer: {
-      ...ListItems.contactBackground,
-      marginTop: 15,
-      marginHorizontal: 15,
-      borderRadius: 15,
+    container: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      padding: 16,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
     },
-    textContainer: {
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'space-between',
-      padding: 15,
-      flex: 4,
-    },
-    iconContainer: {
-      ...ListItems.contactIconBackground,
-      justifyContent: 'center',
+    avatarContainer: {
       alignItems: 'center',
-      padding: 20,
-      borderTopRightRadius: 15,
-      borderBottomRightRadius: 15,
+      justifyContent: 'center',
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      borderColor: ColorPallet.brand.secondary,
+      borderWidth: 1,
+      marginRight: 16,
+    },
+    avatarPlaceholder: {
+      ...TextTheme.headingFour,
+      textAlign: 'center',
+    },
+    avatarImage: {
+      width: 30,
+      height: 30,
+    },
+    contactNameContainer: {
       flex: 1,
+      paddingVertical: 4,
+    },
+    contactNameText: {
+      ...TextTheme.labelTitle,
+    },
+    timeContainer: {
+      paddingVertical: 4,
     },
   })
 
+  const navigateToContact = useCallback(() => {
+    navigation
+      .getParent()
+      ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
+  }, [contact])
+
+  const contactLabel = useMemo(() => contact.alias || contact.theirLabel, [contact])
+  const contactLabelAbbr = useMemo(() => contactLabel?.charAt(0).toUpperCase(), [contact])
+
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation
-          .getParent()
-          ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
-      }
+      onPress={navigateToContact}
       testID={testIdWithKey('Contact')}
       accessibilityLabel={t('ContactDetails.AContact')}
     >
-      <View key={contact.id} style={styles.outerContainer}>
-        <View style={styles.textContainer}>
-          <Title style={ListItems.contactTitle}>{contact?.alias || contact?.theirLabel}</Title>
-          <Text style={ListItems.contactDate}>{formatTime(contact.createdAt)}</Text>
+      <View style={styles.container}>
+        <View style={styles.avatarContainer}>
+          {contact.imageUrl ? (
+            <View>
+              <Image style={styles.avatarImage} source={{ uri: contact.imageUrl }} />
+            </View>
+          ) : (
+            <Text style={styles.avatarPlaceholder}>{contactLabelAbbr}</Text>
+          )}
         </View>
-        <View style={styles.iconContainer}>
-          <Icon name="message" size={32} color={ListItems.contactIcon.color} />
+        <View style={styles.contactNameContainer}>
+          <Text style={styles.contactNameText}>{contactLabel}</Text>
+        </View>
+        <View style={styles.timeContainer}>
+          <Text>{formatTime(contact.createdAt)}</Text>
         </View>
       </View>
     </TouchableOpacity>

@@ -27,6 +27,7 @@ export enum NotificationType {
   ProofRequest = 'ProofRecord',
   Revocation = 'Revocation',
   Custom = 'Custom',
+  Proof = 'Proof',
 }
 
 interface NotificationListItemProps {
@@ -207,6 +208,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
             },
           })
         }
+        break
+      case NotificationType.Proof:
+        onPress = () =>
+          navigation.getParent()?.navigate(Stacks.NotificationStack, {
+            screen: Screens.ProofDetails,
+            params: { recordId: notification.id, isHistory: true },
+          })
         break
       case NotificationType.Revocation:
         onPress = () =>

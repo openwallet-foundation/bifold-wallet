@@ -28,6 +28,7 @@ const useAgent = () => ({
 const useCredentialById = jest.fn()
 const useProofById = jest.fn()
 const useConnectionById = jest.fn()
+const useConnections = jest.fn()
 
 export {
   useAgent,
@@ -37,4 +38,5 @@ export {
   useCredentialByState,
   useProofById,
   useProofByState,
+  useConnections,
 }

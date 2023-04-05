@@ -51,5 +51,29 @@
         }
       }
     ]
+  },
+  "Aries:5:StudentFullName:0.0.1:indy": {
+    "captureBase": {
+      "attributes": {
+        "student_first_name": "Text",
+        "student_last_name": "Text"
+      }
+    },
+    "overlays": [
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "en",
+        "name": "Student full name",
+        "description": "Verify the full name of a student"
+      },
+      {
+        "captureBase": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
+        "type": "spec/overlays/meta/1.0",
+        "language": "fr",
+        "name": "Nom complet de l'étudiant",
+        "description": "Vérifier le nom complet d'un étudiant"
+      }
+    ]
   }
 }

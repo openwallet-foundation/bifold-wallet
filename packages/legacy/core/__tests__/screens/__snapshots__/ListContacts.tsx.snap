@@ -1,0 +1,314 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListContacts Component Renders correctly 1`] = `
+<View>
+  <RCTScrollView
+    ItemSeparatorComponent={[Function]}
+    ListEmptyComponent={[Function]}
+    data={
+      Array [
+        Object {
+          "_tags": Object {},
+          "alias": undefined,
+          "autoAcceptConnection": undefined,
+          "connectionTypes": Array [],
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "did": "9gtPKWtaUKxJir5YG2VPxX",
+          "errorMessage": undefined,
+          "id": "1",
+          "imageUrl": undefined,
+          "invitationDid": undefined,
+          "mediatorId": undefined,
+          "metadata": Object {},
+          "outOfBandId": undefined,
+          "protocol": undefined,
+          "role": "responder",
+          "state": "completed",
+          "theirDid": "2SBuq9fpLT8qUiQKr2RgBe",
+          "theirLabel": "Faber",
+          "threadId": "1",
+        },
+        Object {
+          "_tags": Object {},
+          "alias": undefined,
+          "autoAcceptConnection": undefined,
+          "connectionTypes": Array [],
+          "createdAt": "2020-01-01T00:00:00.000Z",
+          "did": "2SBuq9fpLT8qUiQKr2RgBe",
+          "errorMessage": undefined,
+          "id": "2",
+          "imageUrl": undefined,
+          "invitationDid": undefined,
+          "mediatorId": undefined,
+          "metadata": Object {},
+          "outOfBandId": undefined,
+          "protocol": undefined,
+          "role": "requester",
+          "state": "completed",
+          "theirDid": "9gtPKWtaUKxJir5YG2VPxX",
+          "theirLabel": "Bob",
+          "threadId": "1",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "backgroundColor": "#313132",
+      }
+    }
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityLabel="ContactDetails.AContact"
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Contact"
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "#313132",
+                "flexDirection": "row",
+                "padding": 16,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderColor": "#FFFFFFFF",
+                  "borderRadius": 25,
+                  "borderWidth": 1,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginRight": 16,
+                  "width": 50,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 21,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                  ]
+                }
+              >
+                F
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "paddingVertical": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 16,
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                Faber
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "paddingVertical": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                Jan 1, 2020
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "height": 1,
+              "marginHorizontal": 16,
+            }
+          }
+        />
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityLabel="ContactDetails.AContact"
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Contact"
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "#313132",
+                "flexDirection": "row",
+                "padding": 16,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderColor": "#FFFFFFFF",
+                  "borderRadius": 25,
+                  "borderWidth": 1,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginRight": 16,
+                  "width": 50,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 21,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                  ]
+                }
+              >
+                B
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "paddingVertical": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 16,
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                Bob
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "paddingVertical": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                Jan 1, 2020
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

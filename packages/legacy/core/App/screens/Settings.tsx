@@ -164,6 +164,48 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     }
   }
 
+  if (store.preferences.useVerifierCapability) {
+    settingsSections.splice(1, 0, {
+      header: {
+        icon: 'send',
+        title: t('Screens.ProofRequests'),
+      },
+      data: [
+        {
+          title: t('Screens.SendProofRequest'),
+          accessibilityLabel: t('Screens.ProofRequests'),
+          testID: testIdWithKey('ProofRequests'),
+          onPress: () =>
+            navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
+              screen: Screens.ProofRequests,
+              params: { navigation: navigation },
+            }),
+        },
+      ],
+    })
+  }
+
+  if (store.preferences.useConnectionInviterCapability) {
+    settingsSections.splice(2, 0, {
+      header: {
+        icon: 'send',
+        title: t('Screens.ConnectionInvitation'),
+      },
+      data: [
+        {
+          title: t('Screens.CreateConnectionInvitation'),
+          accessibilityLabel: t('Screens.CreateConnectionInvitation'),
+          testID: testIdWithKey('CreateConnectionInvitation'),
+          onPress: () =>
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.ConnectionInvitation,
+              params: { navigation: navigation },
+            }),
+        },
+      ],
+    })
+  }
+
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
     <View style={[styles.section, styles.sectionHeader]}>
       <Icon name={icon} size={24} style={{ marginRight: 10, color: TextTheme.normal.color }} />

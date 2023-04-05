@@ -8,14 +8,18 @@ const defaultIconSize = 38
 
 interface HeaderLeftBackProps {
   title: string
+  icon?: string
   testID?: string
   accessibilityLabel?: string
+  size?: number
   onPress: () => void
   disabled?: boolean
 }
 
 const HeaderLeftBack: React.FC<HeaderLeftBackProps> = ({
   title,
+  icon,
+  size,
   testID,
   accessibilityLabel,
   onPress,
@@ -28,7 +32,9 @@ const HeaderLeftBack: React.FC<HeaderLeftBackProps> = ({
       flexDirection: 'row',
       alignItems: 'center',
     },
-    touchableArea: {},
+    touchableArea: {
+      marginLeft: 10,
+    },
     title: {
       ...TextTheme.normal,
       color: ColorPallet.grayscale.white,
@@ -46,7 +52,7 @@ const HeaderLeftBack: React.FC<HeaderLeftBackProps> = ({
       disabled={disabled}
     >
       <View style={style.container}>
-        <Icon name="chevron-left" size={defaultIconSize} color={'white'} />
+        <Icon name={icon || 'chevron-left'} size={size || defaultIconSize} color={'white'} />
         <Text style={[style.title]}>{title}</Text>
       </View>
     </TouchableOpacity>

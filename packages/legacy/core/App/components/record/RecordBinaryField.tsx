@@ -8,9 +8,10 @@ import { testIdWithKey } from '../../utils/testable'
 interface RecordBinaryFieldProps {
   attributeValue: string
   shown?: boolean
+  style?: Record<string, unknown>
 }
 
-const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, shown }) => {
+const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, shown, style }) => {
   const { ListItems } = useTheme()
 
   const styles = StyleSheet.create({
@@ -30,7 +31,7 @@ const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, s
       {shown ? (
         <Image style={styles.image} source={{ uri: attributeValue }} />
       ) : (
-        <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
+        <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
           {hiddenFieldValue}
         </Text>
       )}

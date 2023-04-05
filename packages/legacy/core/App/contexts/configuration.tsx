@@ -1,6 +1,7 @@
 import { IndyPoolConfig } from '@aries-framework/core'
 import { createContext, ReducerAction, useContext } from 'react'
 
+import { ProofRequestTemplate } from '../../verifier'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import OnboardingPages from '../screens/OnboardingPages'
@@ -38,6 +39,7 @@ export interface ConfigurationContext {
   useCustomNotifications: () => { total: number; notifications: any }
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
+  proofRequestTemplates?: Array<ProofRequestTemplate>
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

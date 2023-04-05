@@ -11,8 +11,8 @@ import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
-import { Attribute, Field, Predicate } from '../../types/record'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import { Attribute, Predicate } from '../../types/record'
+import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { getCredentialConnectionLabel } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -42,10 +42,10 @@ const logoHeight = width * 0.12
   | 3 |   |   |   |   |   |   |   |
   | 4 |   |   |   |   |   |   |   |
   ...
- 
+
   The card width is the full screen width.
 
-  Secondary Body (1): 
+  Secondary Body (1):
   Primary Body   (2): Small Logo (1x1) -> L (shifted left by 50%)
                       Issuer Name (1x6)
                       Credential Name (1x6)
@@ -167,45 +167,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   })
 
   useEffect(() => {
-    const resolveBundle = async () => {
-      let bundle = await OCABundleResolver.resolveByCredDefOrSchema(credDefId, schemaId, i18n.language)
-      let defaultBundle = await OCABundleResolver.resolveDefaultBundleByCredDefOrSchema(
-        credDefId,
-        schemaId,
-        credName,
-        i18n.language,
-        credentialConnectionLabel
-      )
-
-      if (credential && isValidIndyCredential(credential)) {
-        bundle = await OCABundleResolver.resolve(credential, i18n.language)
-        defaultBundle = await OCABundleResolver.resolveDefaultBundle(
-          credential,
-          i18n.language,
-          credentialConnectionLabel
-        )
-      }
-      return { bundle, defaultBundle }
+    const params = {
+      identifiers: credential ? getCredentialIdentifiers(credential) : { schemaId, credentialDefinitionId: credDefId },
+      meta: {
+        credName: credName,
+        credConnectionId: credential?.connectionId,
+        alias: credentialConnectionLabel,
+      },
+      language: i18n.language,
     }
-
-    const resolvePresentationFields = async () => {
-      let fields: Field[] = []
-      if (credential) {
-        fields = await OCABundleResolver.presentationFields(credential, i18n.language)
-      }
-      return { fields }
-    }
-
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.metaOverlay
-      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay as CardLayoutOverlay11
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
       setOverlay({
         ...overlay,
-        bundle: overlayBundle,
-        presentationFields: fields,
-        metaOverlay,
-        cardLayoutOverlay,
+        ...bundle,
+        cardLayoutOverlay: bundle.cardLayoutOverlay as CardLayoutOverlay11,
       })
     })
   }, [credential])

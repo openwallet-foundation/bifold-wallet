@@ -22,7 +22,7 @@
   },
   "peerDependencies": {
     "@aries-framework/core": "^0.3.3",
-    "@aries-framework/react-hooks": "^0.4.0",
+    "@aries-framework/react-hooks": "^0.4.2",
     "@aries-framework/react-native": "^0.3.2",
     "@formatjs/intl-datetimeformat": "^4.2.3",
     "@formatjs/intl-displaynames": "^5.2.3",

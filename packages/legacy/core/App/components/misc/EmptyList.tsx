@@ -12,10 +12,10 @@ export interface EmptyListProps {
 
 const EmptyList: React.FC<EmptyListProps> = ({ message }) => {
   const { t } = useTranslation()
-  const { ListItems } = useTheme()
+  const { ListItems, ColorPallet } = useTheme()
 
   return (
-    <View style={{ marginTop: 100, height: '100%' }}>
+    <View style={{ paddingTop: 100, height: '100%', backgroundColor: ColorPallet.brand.primaryBackground }}>
       <EmptyWallet fill={ListItems.emptyList.color} height={100} />
       <Text style={[ListItems.emptyList, { textAlign: 'center' }]} testID={testIdWithKey('NoneYet')}>
         {message || t('Global.NoneYet!')}
