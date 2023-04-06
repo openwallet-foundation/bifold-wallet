@@ -32,7 +32,7 @@ import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { parseCredDefFromId } from '../utils/cred-def'
-import { processProofAttributes, processProofPredicates } from '../utils/helpers'
+import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -178,9 +178,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }
         const attributes = processProofAttributes(format.request, credentials)
         const predicates = processProofPredicates(format.request, credentials)
-
         setRetrievedCredentials(credentials.proofFormats.indy)
-        const groupedProof = Object.values({ ...attributes, ...predicates })
+
+        const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
         setProofItems(groupedProof)
         setLoading(false)
       })

@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
+Object {
+  "indy": Object {
+    "name": "Student full name",
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => Object {
+        "name": "student_first_name",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+          },
+        ],
+      },
+      "referent_1" => Object {
+        "name": "student_last_name",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+          },
+        ],
+      },
+    },
+    "requestedPredicates": Map {},
+    "version": "0.0.1",
+  },
+}
+`;
+
+exports[`Helpers Build indy proof request from template containing two requested attributes and predicate 1`] = `
+Object {
+  "indy": Object {
+    "name": "Student full name and expiration date",
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => Object {
+        "names": Array [
+          "student_first_name",
+          "student_last_name",
+        ],
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+          },
+        ],
+      },
+    },
+    "requestedPredicates": Map {
+      "referent_1" => Object {
+        "name": "expiry_date",
+        "predicateType": ">=",
+        "predicateValue": 20240101,
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+          },
+        ],
+      },
+    },
+    "version": "0.0.1",
+  },
+}
+`;
+
+exports[`Helpers Build indy proof request from template id 1`] = `
+Object {
+  "indy": Object {
+    "name": "Student full name",
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => Object {
+        "name": "student_first_name",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+          },
+        ],
+      },
+      "referent_1" => Object {
+        "name": "student_last_name",
+        "restrictions": Array [
+          Object {
+            "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+          },
+        ],
+      },
+    },
+    "requestedPredicates": Map {},
+    "version": "0.0.1",
+  },
+}
+`;
