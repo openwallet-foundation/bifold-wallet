@@ -7,7 +7,6 @@ import {
   V1RequestPresentationMessage,
 } from '@aries-framework/core'
 
-import { defaultProofRequestTemplates } from '../constants'
 import {
   IndyRequestedAttribute,
   IndyRequestedPredicate,
@@ -28,13 +27,6 @@ export const findProofRequestMessage = async (agent: Agent, id: string): Promise
   } else {
     return undefined
   }
-}
-
-/*
- * Find Proof Request template for provided id
- * */
-export const getProofRequestTemplate = (id: string): ProofRequestTemplate | undefined => {
-  return defaultProofRequestTemplates.find((template) => template.id === id)
 }
 
 /*
@@ -84,17 +76,6 @@ export const buildProofRequestDataForTemplate = (
   }
 }
 
-export const buildProofRequestDataForTemplateId = (
-  templateId: string,
-  customPredicateValues?: Record<string, Record<string, number>>
-) => {
-  const template = getProofRequestTemplate(templateId)
-  if (!template) {
-    return undefined
-  }
-  return buildProofRequestDataForTemplate(template, customPredicateValues)
-}
-
 export interface CreateProofRequestInvitationResult {
   request: AgentMessage
   proofRecord: ProofExchangeRecord
@@ -107,10 +88,10 @@ export interface CreateProofRequestInvitationResult {
  * */
 export const createConnectionlessProofRequestInvitation = async (
   agent: Agent,
-  templateId: string,
+  template: ProofRequestTemplate,
   customPredicateValues?: Record<string, Record<string, number>>
 ): Promise<CreateProofRequestInvitationResult | undefined> => {
-  const proofFormats = buildProofRequestDataForTemplateId(templateId, customPredicateValues)
+  const proofFormats = buildProofRequestDataForTemplate(template, customPredicateValues)
   if (!proofFormats) {
     return undefined
   }
@@ -141,11 +122,11 @@ export interface SendProofRequestResult {
  * */
 export const sendProofRequest = async (
   agent: Agent,
-  templateId: string,
+  template: ProofRequestTemplate,
   connectionId: string,
   customPredicateValues?: Record<string, Record<string, number>>
 ): Promise<SendProofRequestResult | undefined> => {
-  const proofFormats = buildProofRequestDataForTemplateId(templateId, customPredicateValues)
+  const proofFormats = buildProofRequestDataForTemplate(template, customPredicateValues)
   if (!proofFormats) {
     return undefined
   }
