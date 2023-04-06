@@ -29,6 +29,8 @@ enum PreferencesDispatchAction {
   ENABLE_DEVELOPER_MODE = 'preferences/enableDeveloperMode',
   USE_BIOMETRY = 'preferences/useBiometry',
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
+  USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
+  USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
 }
 
 enum AuthenticationDispatchAction {
@@ -91,6 +93,36 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
 
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
+    case PreferencesDispatchAction.USE_VERIFIER_CAPABILITY: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        useVerifierCapability: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
+    case PreferencesDispatchAction.USE_CONNECTION_INVITER_CAPABILITY: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        useConnectionInviterCapability: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
       AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState

@@ -66,6 +66,7 @@ export type {
   LoginAttempt as LoginAttemptState,
   Preferences as PreferencesState,
 } from './types/state'
+export * from '../verifier'
 
 export {
   indyLedgers,

@@ -17,6 +17,8 @@ export enum Screens {
   Notifications = 'Notifications',
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
+  ProofRequestDetails = 'Proof Request Details',
+  ProofRequestUsageHistory = 'Proof Request Usage History',
   Settings = 'Settings',
   Language = 'Language',
   Contacts = 'Contacts',
@@ -31,6 +33,10 @@ export enum Screens {
   RecreatePIN = 'Change PIN',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
+  ProofRequests = 'Proof Requests',
+  ProofRequesting = 'Proof Requesting',
+  ProofDetails = 'Proof Details',
+  ConnectionInvitation = 'Connection Invitation',
 }
 
 export enum Stacks {
@@ -40,6 +46,7 @@ export enum Stacks {
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
   ContactStack = 'Contacts Stack',
+  ProofRequestsStack = 'Proof Requests Stack',
   NotificationStack = 'Notifications Stack',
   ConnectionStack = 'Connection Stack',
 }
@@ -56,6 +63,7 @@ export type RootStackParams = {
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
+  [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
 }
 
@@ -75,10 +83,21 @@ export type AuthenticateStackParams = {
 }
 
 export type ContactStackParams = {
+  [Screens.ConnectionInvitation]: undefined
   [Screens.Contacts]: undefined
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
+  [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+}
+
+export type ProofRequestsStackParams = {
+  [Screens.ProofRequests]: { connectionId?: string }
+  [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
+  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
+  [Screens.ProofRequestUsageHistory]: { templateId: string }
 }
 
 export type CredentialStackParams = {
@@ -117,6 +136,7 @@ export type NotificationStackParams = {
     customClose?: GenericFn
   }
   [Screens.CustomNotification]: undefined
+  [Screens.ProofDetails]: { recordId: string }
 }
 
 export type DeliveryStackParams = {

@@ -32,6 +32,8 @@ export const defaultState: State = {
     developerModeEnabled: false,
     biometryPreferencesUpdated: false,
     useBiometry: false,
+    useVerifierCapability: false,
+    useConnectionInviterCapability: false,
   },
   deepLink: {
     activeDeepLink: '',
