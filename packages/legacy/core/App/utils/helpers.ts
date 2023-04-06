@@ -219,7 +219,8 @@ const credNameFromRestriction = (queries?: WalletQuery[]): string => {
 
 export const processProofAttributes = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
   if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
@@ -242,8 +243,12 @@ export const processProofAttributes = (
       )
     }
     let revoked = false
+    let credExchangeRecord = undefined
     if (credential) {
-      revoked = credential.revoked as boolean
+      credExchangeRecord = credentialRecords?.filter(
+        (record) => record.credentials[0]?.credentialRecordId === credential.credentialId
+      )[0]
+      revoked = credExchangeRecord?.revocationNotification !== undefined
     }
     const { name, names } = requestedProofAttributes[key]
 
@@ -251,6 +256,7 @@ export const processProofAttributes = (
       if (!processedAttributes[credName]) {
         // init processedAttributes object
         processedAttributes[credName] = {
+          credExchangeRecord,
           schemaId: credential?.credentialInfo?.schemaId,
           credDefId: credential?.credentialInfo?.credentialDefinitionId,
           credName,
@@ -274,7 +280,8 @@ export const processProofAttributes = (
 
 export const processProofPredicates = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
@@ -288,7 +295,16 @@ export const processProofPredicates = (
   for (const key of Object.keys(requestedProofPredicates)) {
     // The shift operation modifies the original input array, therefore make a copy
     const credential = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn).shift()
-    const { credentialId, revoked, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
+    let credExchangeRecord = undefined
+    if (credential) {
+      credExchangeRecord = credentialRecords?.filter(
+        (record) => record.credentials[0]?.credentialRecordId === credential.credentialId
+      )[0]
+    }
+    const { credentialId, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
+    const revoked =
+      credentialRecords?.filter((record) => record.credentials[0]?.credentialRecordId === credentialId)[0]
+        ?.revocationNotification !== undefined
     const { name, p_type: pType, p_value: pValue } = requestedProofPredicates[key]
 
     const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)
@@ -303,6 +319,7 @@ export const processProofPredicates = (
 
     if (!processedPredicates[credName]) {
       processedPredicates[credName] = {
+        credExchangeRecord,
         schemaId,
         credDefId: credentialDefinitionId,
         credName: credName,
