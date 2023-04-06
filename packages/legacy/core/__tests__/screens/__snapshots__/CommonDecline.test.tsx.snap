@@ -194,6 +194,12 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                           "height": 90,
                           "justifyContent": "center",
                           "left": -52.5,
+                          "shadowColor": "#000",
+                          "shadowOffset": Object {
+                            "height": 1,
+                            "width": 1,
+                          },
+                          "shadowOpacity": 0.3,
                           "top": 37.5,
                           "width": 90,
                         },
@@ -213,6 +219,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                           },
                           Object {
                             "alignSelf": "center",
+                            "color": "#000",
                             "fontSize": 45,
                             "fontWeight": "bold",
                           },
