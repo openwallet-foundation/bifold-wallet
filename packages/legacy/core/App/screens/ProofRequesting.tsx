@@ -19,6 +19,7 @@ import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
 import { useTheme } from '../contexts/theme'
+import { useTemplate } from '../hooks/proof-request-templates'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -102,18 +103,23 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
 
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
-  const [invitationUrl, setInitationUrl] = useState<string | undefined>(undefined)
+  const [invitationUrl, setInvitationUrl] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
+
+  const template = useTemplate(templateId)
+  if (!template) {
+    throw new Error('Unable to find proof request template')
+  }
 
   const createProofRequest = useCallback(async () => {
     try {
       setMessage(undefined)
       setGenerating(true)
-      const result = await createConnectionlessProofRequestInvitation(agent, templateId, predicateValues)
+      const result = await createConnectionlessProofRequestInvitation(agent, template, predicateValues)
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
-        setInitationUrl(result.invitationUrl)
+        setInvitationUrl(result.invitationUrl)
         linkProofWithTemplate(agent, result.proofRecord, templateId)
       }
     } finally {

@@ -9,13 +9,13 @@ import {
   IndyProofRequestTemplatePayloadData,
   ProofRequestType,
   linkProofWithTemplate,
-  getProofRequestTemplate,
   sendProofRequest,
 } from '../../verifier'
 import Button, { ButtonType } from '../components/buttons/Button'
 import AlertModal from '../components/modals/AlertModal'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import { useTemplate } from '../hooks/proof-request-templates'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { Attribute, Field, Predicate } from '../types/record'
@@ -224,10 +224,12 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     { visible: boolean; predicate: string | undefined } | undefined
   >(undefined)
 
-  useEffect(() => {
-    const template = getProofRequestTemplate(templateId)
-    if (!template) return
+  const template = useTemplate(templateId)
+  if (!template) {
+    throw new Error('Unable to find proof request template')
+  }
 
+  useEffect(() => {
     const attributes = template.payload.type === ProofRequestType.Indy ? template.payload.data : []
 
     OCABundleResolver.resolve({ identifiers: { templateId }, language: i18n.language }).then((bundle) => {
@@ -271,7 +273,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
     if (connectionId) {
       // Send to specific contact and redirect to the chat with him
-      sendProofRequest(agent, templateId, connectionId, customPredicateValues).then((result) => {
+      sendProofRequest(agent, template, connectionId, customPredicateValues).then((result) => {
         if (result?.proofRecord) {
           linkProofWithTemplate(agent, result.proofRecord, templateId)
         }

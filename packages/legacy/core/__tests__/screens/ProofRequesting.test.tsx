@@ -7,6 +7,7 @@ import { defaultProofRequestTemplates } from '../../verifier/constants'
 import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
 import * as proofRequestUtils from '../../verifier/utils/proof-request'
+import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
 import {
   INDY_PROOF_REQUEST_ATTACHMENT_ID,
   OutOfBandInvitation,
@@ -31,7 +32,8 @@ jest.mock('react-native-device-info', () => () => jest.fn())
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
-const templateId = defaultProofRequestTemplates[0].id
+const template = defaultProofRequestTemplates[0]
+const templateId = template.id
 
 const proof_request = {
   name: 'proof-request',
@@ -85,6 +87,7 @@ describe('ProofRequesting Component', () => {
     jest.clearAllMocks()
 
     jest.spyOn(proofRequestUtils, 'createConnectionlessProofRequestInvitation').mockReturnValue(Promise.resolve(data))
+    jest.spyOn(proofRequestTemplatesHooks, 'useTemplate').mockReturnValue(template)
   })
 
   const renderView = (params?: { templateId: string; predicateValues: any }) => {

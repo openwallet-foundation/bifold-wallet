@@ -9,6 +9,7 @@ import { ProofRequestTemplate, hasPredicates, isParameterizable } from '../../ve
 import EmptyList from '../components/misc/EmptyList'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import { useTemplates } from '../hooks/proof-request-templates'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { testIdWithKey } from '../utils/testable'
@@ -114,8 +115,7 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
 
   const { connectionId } = route?.params
 
-  const configuration = useConfiguration()
-  const proofRequestTemplates = configuration.proofRequestTemplates || []
+  const proofRequestTemplates = useTemplates()
 
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>

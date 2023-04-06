@@ -36,9 +36,7 @@ export {
 export type { CreateProofRequestInvitationResult, SendProofRequestResult } from './utils/proof-request'
 export {
   findProofRequestMessage,
-  getProofRequestTemplate,
   buildProofRequestDataForTemplate,
-  buildProofRequestDataForTemplateId,
   createConnectionlessProofRequestInvitation,
   sendProofRequest,
   hasPredicates,
