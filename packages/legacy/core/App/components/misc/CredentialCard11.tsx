@@ -139,6 +139,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 0.3,
     },
     headerText: {
       ...TextTheme.labelSubtitle,
@@ -210,6 +216,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 fontSize: 0.5 * logoHeight,
                 fontWeight: 'bold',
                 alignSelf: 'center',
+                color: '#000',
               },
             ]}
           >
