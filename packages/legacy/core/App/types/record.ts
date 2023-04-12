@@ -1,4 +1,4 @@
-import { IndyRevocationInterval } from '@aries-framework/core'
+import { IndyRevocationInterval, CredentialExchangeRecord } from '@aries-framework/core'
 
 export interface FieldParams {
   name: string | null
@@ -75,6 +75,7 @@ export class Predicate extends Field {
 }
 
 export interface ProofCredentialAttributes {
+  credExchangeRecord?: CredentialExchangeRecord
   credDefId?: string
   schemaId?: string
   credName: string
@@ -82,6 +83,7 @@ export interface ProofCredentialAttributes {
 }
 
 export interface ProofCredentialPredicates {
+  credExchangeRecord?: CredentialExchangeRecord
   credDefId?: string
   schemaId?: string
   credName: string
