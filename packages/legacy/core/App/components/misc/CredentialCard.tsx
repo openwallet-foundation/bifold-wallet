@@ -47,6 +47,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
+          credential={credential}
           proof
           elevated
         ></CredentialCard11>
