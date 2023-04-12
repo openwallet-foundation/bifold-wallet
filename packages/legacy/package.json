@@ -31,7 +31,7 @@
     "ci:core": "cd core && npm ci",
     "ci:app": "cd app && npm ci",
     "ci:all": "",
-    "test": "cd core && npm test",
+    "test": "cd core && TZ=GMT yarn test",
     "build:core": "yarn workspace aries-bifold run prepack",
     "build:app": "",
     "build:all": "run-s build:core build:app",
