@@ -8,7 +8,8 @@
     "gradle": "./android/gradlew --project-dir=./android --no-daemon",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "test": "echo 'nothing to do'"
   },
   "dependencies": {
     "@aries-framework/core": "^0.3.3",
