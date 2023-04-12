@@ -1,0 +1,30 @@
+{
+  "name": "@aries-bifold/oca",
+  "main": "build/index",
+  "types": "build/index",
+  "version": "0.0.1",
+  "files": [
+    "build"
+  ],
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native/tree/main/packages/oca",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
+    "directory": "packages/oca"
+  },
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf ./build",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "yarn run build",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/ws": "^7.4.6",
+    "typescript": "~4.9.4"
+  }
+}

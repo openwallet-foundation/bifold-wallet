@@ -1,20 +1,19 @@
 # Mobile Verifier 
 
-This document contains a proposed design of adding verifier functionality to Aries Mobile Agent.
+This document reflects the implementation design of the verifier capability available in Aries Mobile Agent.
 
 ## Availability
 
-By default, the Mobile Verifier functionality will be hidden under Developer mode.\
-Also, by default, there will not be any templates set in Aries Bifold.\
-It's the application's responsibility to define the set of proof request templates available by default if needed.
+By default, the Mobile Verifier functionality is hidden. In order to enable user needs to go into app Developer settings and toggle the corresponding button.
 
-> Changes in Aries Bifold
+Also, by default, there are two predefined templates set in Aries Bifold (`Student full name` and `Student full name and expiration date`) for testing purpose.
+On the application configuration level the set of proof request templates can be override if needed.
 
 ## Proof Request Templates location
 
-**Current implementation** - application defines a static collection of possible templates (the format will be provided below)
+**Current implementation** - application defines a static collection of possible templates.
 
-** Future improvement** - have an ability to create new templates or add templates from a source, edit, delete, parametrize templates.
+** Future possible improvement** - have an ability to create new templates or add templates from a source, edit, delete, parametrize templates.
 * How to store templates' collection?
     * Option 1: - store templates in the application storage
         * Create: 
@@ -35,10 +34,7 @@ It's the application's responsibility to define the set of proof request templat
 
 ## Proof Request Template Structure
 
-> Question: Do we want to support only `indy` proof format or `v2 DIF Presentation exchange` as well?
-> Question: Do we want the template define the proof format type (`indy` or `dif`) or the same template can be used for both format types? Should  a user be able to select type of the request?
-
-**Current implementation** - only `indy` proof format is fully supported but the type definition for Proof Request Template data structure supports definition of `DIF` format.  
+**Current implementation** - only `indy` proof request format is fully supported but the type definition for the Proof Request Template already includes the stub definition for `DIF` format.
 
 Proof Request Template format approach: Define template structure closely to UI - Group requesting data by credential schema
  ```typescript
@@ -122,11 +118,10 @@ const tempalte = {
 
 ## Proof Request parametrization
 
-We want to have an ability parametrize some proof request temples - for instance, change the value for a predicate. 
+There is an ability to parametrize some proof request temples - for instance, change the value for a predicate. 
 
-In order to achieve this we need to add some optional flag (for instance `parameterizable`) identifying that the predicate value can be changed.
-So the template will contain some default values for predicates but if the flag set as `true` corresponding predicate value can be changed by the user.
-Some predicates still can be predefined.
+In order to achieve this we added optional flag (for instance `parameterizable`) identifying that the predicate value can be changed.
+So that the template will contain some default values for predicates but if the flag is set as `true` the corresponding predicate value can be changed by the user.
 
 ```typescript
 interface IndyRequestedPredicate {
@@ -173,12 +168,14 @@ Instead, we have to use two legacy approaches to cover our cases:
 The generated Proof Request link can be too big to put into QR, so we need to have a service for URL shortening as explained [here](https://github.com/hyperledger/aries-rfcs/tree/main/features/0434-outofband#url-shortening).
 
 Right now we do not have such service available. \
-In order to work around this issue at the first step, we can put JSON messages directly into QR codes.\
+In order to work around this issue at the first step, we can put JSON messages directly into QR codes.
+
 Limitations:
 * QR codes will be quite complex and difficult to read 
-* There will be a limitation regarding the number of attributes that can be used in a Proof Request.
+* There will be a limitation regarding the number of attributes that can be used in a Proof Request. Currently, testing showed that we can generate a request containing 10 attributes for each of them set a restriction by schema id. \
+  > Hint: for indy proof request instead of defining multiple attributes restricted by the same schema you can use `names` filed in the proof request attribute data structure.
 
-We will need to update Aries Bifold Scanner to handle raw json messages -> pass them to AFJ message receiver.
+Aries Bifold Scanner updated to handle raw json messages -> pass them to AFJ message receiver.
 
 ## Proof processing state
 
@@ -214,7 +211,7 @@ We will need to update Aries Bifold Scanner to handle raw json messages -> pass 
 
 * In order to get the list of proofs received for a specific template we need to have an association between AFJ `ProofRecord` and `Template` records. It means that we need to add an optional `templateId` field to AFJ `ProofRecord` record.
 * After that, we will be able to query the history of proofs for a specific template.
-* For the current solution we used custom metadata of `ProofRecord`. But there is no efficient method to query records with specific metadata filter. So we have to query all records and filer them on mobile side.
+* For the current solution we used custom metadata of `ProofRecord` record. But there is no efficient method to query records with specific metadata filter. So we have to query all records and filer them on mobile side.
 
 ## Share Proof Request via link
 
