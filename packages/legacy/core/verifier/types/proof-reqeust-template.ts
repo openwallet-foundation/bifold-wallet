@@ -5,7 +5,7 @@ export interface IndyRequestedPredicate {
   name: string
   predicateType: PredicateType
   predicateValue: number
-  restrictions?: Array<Record<string, unknown>>
+  restrictions?: Array<Record<string, string>>
   nonRevoked?: IndyRevocationInterval
   parameterizable?: boolean
 }
@@ -14,7 +14,7 @@ export interface IndyRequestedAttribute {
   label?: string
   name?: string
   names?: Array<string>
-  restrictions?: Array<Record<string, unknown>>
+  restrictions?: Array<Record<string, string>>
   revealed?: boolean
   nonRevoked?: IndyRevocationInterval
 }
