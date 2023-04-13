@@ -104,6 +104,8 @@ const translation = {
         "Message1036": "Wallet credentials could not be found (FR)",
         "Title1037": "Unable to remove contact. (FR)",
         "Message1037": "There was a problem while removing the contact. (FR)",
+        "Title1038": "Impossible de générer une demande de justificatif",
+        "Message1038": "Un problème est survenu lors de la génération d'une demande de preuve.",
     },
     "StatusMessages": {
         "InitAgent": "Initialisation de l'agent ..."

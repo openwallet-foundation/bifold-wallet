@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BackHandler, Dimensions, Share, StyleSheet, Text, View } from 'react-native'
+import { BackHandler, DeviceEventEmitter, Dimensions, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -18,8 +18,10 @@ import {
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
+import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
 import { useTemplate } from '../hooks/proof-request-templates'
+import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -122,6 +124,10 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         setInvitationUrl(result.invitationUrl)
         linkProofWithTemplate(agent, result.proofRecord, templateId)
       }
+    } catch (e) {
+      const error = new BifoldError(t('Error.Title1038'), t('Error.Message1038'), (e as Error).message, 1038)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+      navigation.goBack()
     } finally {
       setGenerating(false)
     }
