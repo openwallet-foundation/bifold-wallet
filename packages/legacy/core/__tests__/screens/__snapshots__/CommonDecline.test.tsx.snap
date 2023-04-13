@@ -151,7 +151,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
               nativeID="animatedComponent"
               style={
                 Object {
-                  "backgroundColor": "#781e4b",
+                  "backgroundColor": undefined,
                   "borderRadius": 10,
                   "opacity": 1,
                 }
