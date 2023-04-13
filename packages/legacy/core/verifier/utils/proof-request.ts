@@ -1,18 +1,16 @@
 import {
   Agent,
   AgentMessage,
+  AttributeFilter,
   AutoAcceptProof,
+  ProofAttributeInfo,
   ProofExchangeRecord,
+  ProofPredicateInfo,
   ProofRequest,
   V1RequestPresentationMessage,
 } from '@aries-framework/core'
 
-import {
-  IndyRequestedAttribute,
-  IndyRequestedPredicate,
-  ProofRequestTemplate,
-  ProofRequestType,
-} from '../types/proof-reqeust-template'
+import { ProofRequestTemplate, ProofRequestType } from '../types/proof-reqeust-template'
 
 const protocolVersion = 'v1'
 const domain = 'http://aries-mobile-agent.com'
@@ -32,19 +30,30 @@ export const findProofRequestMessage = async (agent: Agent, id: string): Promise
 /*
  * Build Proof Request data from for provided template
  * */
+/*
+ * Build Proof Request data for provided template
+ * */
 export const buildProofRequestDataForTemplate = (
   template: ProofRequestTemplate,
   customValues?: Record<string, Record<string, number>>
 ) => {
   if (template.payload.type === ProofRequestType.Indy) {
-    const requestedAttributes: Map<string, IndyRequestedAttribute> = new Map()
-    const requestedPredicates: Map<string, IndyRequestedPredicate> = new Map()
+    const requestedAttributes: Map<string, ProofAttributeInfo> = new Map()
+    const requestedPredicates: Map<string, ProofPredicateInfo> = new Map()
     let index = 0
 
     template.payload.data.forEach((data) => {
       if (data.requestedAttributes?.length) {
         data.requestedAttributes.forEach((requestedAttribute) => {
-          requestedAttributes.set(`referent_${index}`, requestedAttribute)
+          const attribute = new ProofAttributeInfo({
+            name: requestedAttribute.name,
+            names: requestedAttribute.names,
+            nonRevoked: requestedAttribute.nonRevoked,
+            restrictions: requestedAttribute.restrictions?.map(
+              (restriction) => new AttributeFilter({ schemaId: restriction.schema_id })
+            ),
+          })
+          requestedAttributes.set(`referent_${index}`, attribute)
           index++
         })
       }
@@ -52,11 +61,19 @@ export const buildProofRequestDataForTemplate = (
         data.requestedPredicates.forEach((requestedPredicate) => {
           const customValue =
             customValues && customValues[data.schema] ? customValues[data.schema][requestedPredicate.name] : undefined
-          if (requestedPredicate.parameterizable && customValue) {
-            requestedPredicates.set(`referent_${index}`, { ...requestedPredicate, predicateValue: customValue })
-          } else {
-            requestedPredicates.set(`referent_${index}`, requestedPredicate)
-          }
+
+          const predicate = new ProofPredicateInfo({
+            name: requestedPredicate.name,
+            predicateValue:
+              requestedPredicate.parameterizable && customValue ? customValue : requestedPredicate.predicateValue,
+            predicateType: requestedPredicate.predicateType,
+            nonRevoked: requestedPredicate.nonRevoked,
+            restrictions: requestedPredicate.restrictions?.map(
+              (restriction) => new AttributeFilter({ schemaId: restriction.schema_id })
+            ),
+          })
+
+          requestedPredicates.set(`referent_${index}`, predicate)
           index++
         })
       }
