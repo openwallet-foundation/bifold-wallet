@@ -3,7 +3,7 @@ import { useAgent, useCredentialById, useProofById } from '@aries-framework/reac
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StatusBar, StyleSheet, Text, View, DeviceEventEmitter } from 'react-native'
+import { ScrollView, StatusBar, StyleSheet, Text, View, DeviceEventEmitter, FlatList } from 'react-native'
 import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 
 import CredentialDeclined from '../assets/img/credential-declined.svg'
@@ -90,7 +90,10 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
 
       if (agent && credential) {
         await agent.credentials.declineOffer(credential.id)
-        agent?.credentials.sendProblemReport({ credentialRecordId: proof.id, message: t('CredentialOffer.Declined') })
+        agent?.credentials.sendProblemReport({
+          credentialRecordId: credential.id,
+          message: t('CredentialOffer.Declined'),
+        })
         return
       }
 
@@ -173,26 +176,34 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
           <>
             {!didDecline && (
               <>
-                <ScrollView style={[styles.container]}>
-                  <InfoBox
-                    notificationType={InfoBoxType.Warn}
-                    title={
-                      declineType === DeclineType.ProofRequest
-                        ? t('ProofRequest.ConfirmDeclinedTitle')
-                        : t('CredentialOffer.ConfirmDeclinedTitle')
-                    }
-                    description={
-                      declineType === DeclineType.ProofRequest
-                        ? t('ProofRequest.ConfirmDeclinedMessage')
-                        : t('CredentialOffer.ConfirmDeclinedMessage')
-                    }
-                  />
-                  {credential && (
-                    <View style={{ marginTop: 20 }}>
-                      <CredentialCard credential={credential} />
-                    </View>
-                  )}
-                </ScrollView>
+                <FlatList
+                  data={[credential]}
+                  style={[styles.container]}
+                  renderItem={() => {
+                    return (
+                      <View>
+                        <InfoBox
+                          notificationType={InfoBoxType.Warn}
+                          title={
+                            declineType === DeclineType.ProofRequest
+                              ? t('ProofRequest.ConfirmDeclinedTitle')
+                              : t('CredentialOffer.ConfirmDeclinedTitle')
+                          }
+                          description={
+                            declineType === DeclineType.ProofRequest
+                              ? t('ProofRequest.ConfirmDeclinedMessage')
+                              : t('CredentialOffer.ConfirmDeclinedMessage')
+                          }
+                        />
+                        {credential && (
+                          <View style={{ marginTop: 20 }}>
+                            <CredentialCard credential={credential} />
+                          </View>
+                        )}
+                      </View>
+                    )
+                  }}
+                />
 
                 <View style={{ marginTop: 'auto', margin: 20 }}>
                   <View style={{ paddingTop: 10 }}>
