@@ -179,6 +179,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   useEffect(() => {
     const params = {
       identifiers: credential ? getCredentialIdentifiers(credential) : { schemaId, credentialDefinitionId: credDefId },
+      attributes: proof ? [] : credential?.credentialAttributes,
       meta: {
         credName: credName,
         credConnectionId: credential?.connectionId,
