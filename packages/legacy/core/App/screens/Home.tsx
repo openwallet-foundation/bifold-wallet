@@ -1,13 +1,16 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
+import AppGuideModal from '../components/modals/AppGuideModal'
+import { AttachTourStep } from '../components/tour/AttachTourStep'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
 
 const { width } = Dimensions.get('window')
@@ -24,6 +27,8 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const { HomeTheme } = useTheme()
+  const { start } = useTour()
+  const [showTourPopup, setShowTourPopup] = useState(false)
 
   const styles = StyleSheet.create({
     container: {
@@ -71,10 +76,36 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     return component
   }
 
+  useEffect(() => {
+    const shouldShowTourPopup = true
+    if (shouldShowTourPopup) {
+      setShowTourPopup(true)
+    }
+  }, [])
+
+  const onCTAPressed = () => {
+    setShowTourPopup(false)
+    start()
+  }
+  const onDismissPressed = () => {
+    setShowTourPopup(false)
+  }
+
   return (
-    <>
-      <ScrollView>
-        <View style={styles.rowContainer}>
+    <ScrollView>
+      {showTourPopup && (
+        <AppGuideModal
+          title={t('Tour.GuideTitle')}
+          description={t('Tour.WouldYouLike')}
+          onCallToActionPressed={onCTAPressed}
+          onCallToActionLabel={t('Tour.UseAppGuides')}
+          onSecondCallToActionPressed={onDismissPressed}
+          onSecondCallToActionLabel={t('Tour.DoNotUseAppGuides')}
+          onDismissPressed={onDismissPressed}
+        />
+      )}
+      <View style={styles.rowContainer}>
+        <View>
           <Text style={[HomeTheme.notificationsHeader, styles.header]}>
             {t('Home.Notifications')}
             {notifications?.length ? ` (${notifications.length})` : ''}
@@ -89,46 +120,50 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             </TouchableOpacity>
           ) : null}
         </View>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          scrollEnabled={notifications?.length > 0 ? true : false}
-          snapToOffsets={[
-            0,
-            ...Array(notifications?.length)
-              .fill(0)
-              .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
-              .slice(1),
-          ]}
-          decelerationRate="fast"
-          ListEmptyComponent={() => (
-            <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
-              <NoNewUpdates />
-              <View style={[styles.messageContainer]}>
-                <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-                  {t('Home.Welcome')}
-                </Text>
+      </View>
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        scrollEnabled={notifications?.length > 0 ? true : false}
+        snapToOffsets={[
+          0,
+          ...Array(notifications?.length)
+            .fill(0)
+            .map((n: number, i: number) => i * (width - 2 * (offset - offsetPadding)))
+            .slice(1),
+        ]}
+        decelerationRate="fast"
+        ListEmptyComponent={() => (
+          <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
+            <AttachTourStep index={1}>
+              <View>
+                <NoNewUpdates />
               </View>
+            </AttachTourStep>
+            <View style={[styles.messageContainer]}>
+              <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+                {t('Home.Welcome')}
+              </Text>
             </View>
-          )}
-          data={notifications}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item, index }) => (
-            <View
-              accessible={true}
-              style={{
-                width: width - 2 * offset,
-                marginLeft: !index ? offset : offsetPadding,
-                marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
-              }}
-            >
-              {DisplayListItemType(item)}
-            </View>
-          )}
-        />
-        <HomeContentView />
-      </ScrollView>
-    </>
+          </View>
+        )}
+        data={notifications}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item, index }) => (
+          <View
+            accessible={true}
+            style={{
+              width: width - 2 * offset,
+              marginLeft: !index ? offset : offsetPadding,
+              marginRight: index === notifications?.length - 1 ? offset : offsetPadding,
+            }}
+          >
+            {DisplayListItemType(item)}
+          </View>
+        )}
+      />
+      <HomeContentView />
+    </ScrollView>
   )
 }
 
