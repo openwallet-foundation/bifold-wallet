@@ -17,6 +17,7 @@ const HomeContentView: React.FC<HomeContentViewProps> = ({ children }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
+
   const { HomeTheme } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
@@ -59,9 +60,16 @@ const HomeContentView: React.FC<HomeContentViewProps> = ({ children }) => {
     }
 
     return (
-      <View style={[styles.messageContainer]}>
-        <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
-      </View>
+      <>
+        <View style={[styles.messageContainer]}>
+          <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+            {t('Home.Welcome')}
+          </Text>
+        </View>
+        <View style={[styles.messageContainer]}>
+          <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
+        </View>
+      </>
     )
   }
 
