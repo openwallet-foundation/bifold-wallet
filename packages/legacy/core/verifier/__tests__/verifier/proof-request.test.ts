@@ -1,6 +1,7 @@
-import { buildProofRequestDataForTemplate, hasPredicates } from '../../utils/proof-request'
-import SpyInstance = jest.SpyInstance
 import { defaultProofRequestTemplates } from '../../constants'
+import { buildProofRequestDataForTemplate, hasPredicates } from '../../utils/proof-request'
+
+import SpyInstance = jest.SpyInstance
 
 describe('Helpers', () => {
   let spy: SpyInstance
