@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
+import { useNotifications } from '../../hooks/notifications'
 
 const offset = 25
 
@@ -17,7 +18,7 @@ const HomeContentView: React.FC<HomeContentViewProps> = ({ children }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-
+  const notifications = useNotifications()
   const { HomeTheme } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
@@ -61,11 +62,13 @@ const HomeContentView: React.FC<HomeContentViewProps> = ({ children }) => {
 
     return (
       <>
-        <View style={[styles.messageContainer]}>
-          <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-            {t('Home.Welcome')}
-          </Text>
-        </View>
+        {notifications.total === 0 && (
+          <View style={[styles.messageContainer]}>
+            <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+              {t('Home.Welcome')}
+            </Text>
+          </View>
+        )}
         <View style={[styles.messageContainer]}>
           <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
         </View>
