@@ -141,37 +141,6 @@ exports[`displays a home screen renders correctly 1`] = `
               </Text>
             </View>
           </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "marginHorizontal": 25,
-                  "marginTop": 35,
-                },
-              ]
-            }
-          >
-            <Text
-              adjustsFontSizeToFit={true}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 38,
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "marginBottom": 20,
-                    "marginTop": 25,
-                  },
-                ]
-              }
-            >
-              Home.Welcome
-            </Text>
-          </View>
         </View>
       </View>
     </RCTScrollView>
