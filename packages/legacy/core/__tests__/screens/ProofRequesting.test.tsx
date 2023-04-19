@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { defaultProofRequestTemplates } from '../../verifier/constants'
+import { defaultProofRequestTemplates } from '../../verifier'
 import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
 import * as proofRequestUtils from '../../verifier/utils/proof-request'

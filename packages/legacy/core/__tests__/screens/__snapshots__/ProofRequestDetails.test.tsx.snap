@@ -38,7 +38,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               "name": "student_first_name",
               "restrictions": Array [
                 Object {
-                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                  "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                 },
               ],
             },
@@ -46,7 +46,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               "name": "student_last_name",
               "restrictions": Array [
                 Object {
-                  "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                  "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                 },
               ],
             },
@@ -155,7 +155,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                   "nonRevoked": undefined,
                   "restrictions": Array [
                     Object {
-                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                      "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                     },
                   ],
                   "revealed": undefined,
@@ -173,7 +173,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                   "nonRevoked": undefined,
                   "restrictions": Array [
                     Object {
-                      "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                      "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                     },
                   ],
                   "revealed": undefined,
