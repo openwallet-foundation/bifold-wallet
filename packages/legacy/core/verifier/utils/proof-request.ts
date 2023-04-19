@@ -50,7 +50,15 @@ export const buildProofRequestDataForTemplate = (
             names: requestedAttribute.names,
             nonRevoked: requestedAttribute.nonRevoked,
             restrictions: requestedAttribute.restrictions?.map(
-              (restriction) => new AttributeFilter({ schemaId: restriction.schema_id })
+              (restriction) =>
+                new AttributeFilter({
+                  schemaId: restriction.schema_id,
+                  schemaIssuerDid: restriction.schema_issuer_did,
+                  schemaName: restriction.schema_name,
+                  schemaVersion: restriction.schema_version,
+                  issuerDid: restriction.issuer_did,
+                  credentialDefinitionId: restriction.cred_def_id,
+                })
             ),
           })
           requestedAttributes.set(`referent_${index}`, attribute)
@@ -69,7 +77,15 @@ export const buildProofRequestDataForTemplate = (
             predicateType: requestedPredicate.predicateType,
             nonRevoked: requestedPredicate.nonRevoked,
             restrictions: requestedPredicate.restrictions?.map(
-              (restriction) => new AttributeFilter({ schemaId: restriction.schema_id })
+              (restriction) =>
+                new AttributeFilter({
+                  schemaId: restriction.schema_id,
+                  schemaIssuerDid: restriction.schema_issuer_did,
+                  schemaName: restriction.schema_name,
+                  schemaVersion: restriction.schema_version,
+                  issuerDid: restriction.issuer_did,
+                  credentialDefinitionId: restriction.cred_def_id,
+                })
             ),
           })
 
