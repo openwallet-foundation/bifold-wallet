@@ -1,14 +1,19 @@
 import { CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+import { useCredentialByState, useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View } from 'react-native'
+import { FlatList, View, DeviceEventEmitter } from 'react-native'
+import Toast from 'react-native-toast-message'
 
 import CredentialCard from '../components/misc/CredentialCard'
+import { ToastType } from '../components/toast/BaseToast'
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { CredentialStackParams, Screens } from '../types/navigators'
 
 const ListCredentials: React.FC = () => {
@@ -18,8 +23,37 @@ const ListCredentials: React.FC = () => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
+  const { agent } = useAgent()
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
   const { ColorPallet } = useTheme()
+  const [credentialToRemove, setCredentialToRemove] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    const handle = DeviceEventEmitter.addListener('FooDelete', (value?: string) => {
+      setCredentialToRemove(value)
+    })
+
+    return () => {
+      handle.remove()
+    }
+  }, [])
+
+  useFocusEffect(() => {
+    if (credentialToRemove && agent) {
+      agent.credentials
+        .deleteById(credentialToRemove)
+        .then(() => {
+          Toast.show({
+            type: ToastType.Success,
+            text1: t('CredentialDetails.CredentialRemoved'),
+          })
+        })
+        .catch((err: unknown) => {
+          const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
+          DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        })
+    }
+  })
 
   return (
     <View>

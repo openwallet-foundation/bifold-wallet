@@ -6,14 +6,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Toast from 'react-native-toast-message'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
 import RecordRemove from '../components/record/RecordRemove'
-import { ToastType } from '../components/toast/BaseToast'
 import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
@@ -44,24 +42,20 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   const { credentialId } = route?.params
-
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const { OCABundleResolver } = useConfiguration()
-
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
-
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({
     bundle: undefined,
     presentationFields: [],
     metaOverlay: undefined,
     cardLayoutOverlay: undefined,
   })
-
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
@@ -155,11 +149,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
   }, [isRevoked])
 
-  const goBackToListCredentials = () => {
-    navigation.pop()
-    navigation.navigate(Screens.Credentials)
-  }
-
   const handleOnRemove = () => {
     setIsRemoveModalDisplayed(true)
   }
@@ -169,12 +158,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       if (!(agent && credential)) {
         return
       }
-      await agent.credentials.deleteById(credential.id)
-      Toast.show({
-        type: ToastType.Success,
-        text1: t('CredentialDetails.CredentialRemoved'),
-      })
-      goBackToListCredentials()
+
+      DeviceEventEmitter.emit('FooDelete', credential.id)
+
+      navigation.pop()
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
 
