@@ -209,7 +209,6 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
                   }}
                 />
 
-
                 <View style={{ marginTop: 'auto', margin: 20 }}>
                   <View style={{ paddingTop: 10 }}>
                     <Button
