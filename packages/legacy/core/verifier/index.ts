@@ -42,4 +42,4 @@ export {
   hasPredicates,
   isParameterizable,
 } from './utils/proof-request'
-export { defaultProofRequestTemplates } from './constants'
+export { defaultProofRequestTemplates } from './request-templates'
