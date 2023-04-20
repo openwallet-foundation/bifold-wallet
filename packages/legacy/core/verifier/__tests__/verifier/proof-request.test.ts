@@ -3,7 +3,7 @@ import {
   hasPredicates
 } from '../../utils/proof-request'
 import SpyInstance = jest.SpyInstance
-import { defaultProofRequestTemplates } from '../../constants'
+import { defaultProofRequestTemplates } from "../../request-templates";
 
 describe('Helpers', () => {
   let spy: SpyInstance

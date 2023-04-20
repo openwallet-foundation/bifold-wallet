@@ -21,6 +21,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   const { notifications } = useCustomNotifications()
   const { t } = useTranslation()
   const { homeContentView: HomeContentView } = useConfiguration()
+
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
   const { HomeTheme } = useTheme()
@@ -104,11 +105,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           ListEmptyComponent={() => (
             <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
               <NoNewUpdates />
-              <View style={[styles.messageContainer]}>
-                <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-                  {t('Home.Welcome')}
-                </Text>
-              </View>
             </View>
           )}
           data={notifications}
