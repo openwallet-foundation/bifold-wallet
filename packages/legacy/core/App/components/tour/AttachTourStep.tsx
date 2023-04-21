@@ -39,7 +39,7 @@ export interface AttachTourStepProps<T> {
  * @param props the component props
  * @returns an AttachTourStep React element
  */
-export function AttachTourStep<T>({ children, fill = true, index }: AttachTourStepProps<T>): ReactElement {
+export function AttachTourStep<T>({ children, fill = false, index }: AttachTourStepProps<T>): ReactElement {
   const { current, changeSpot } = useContext(TourContext)
 
   const childRef = useRef<View>(null)
@@ -52,22 +52,17 @@ export function AttachTourStep<T>({ children, fill = true, index }: AttachTourSt
     }
   }, [changeSpot, current, index])
 
-  if (typeof children.type === 'function') {
-    const { style, ...rest } = children.props
-    const childStyle = style ?? {}
-
-    return (
-      <View
-        testID={testIdWithKey('AttachTourStep')}
-        ref={childRef}
-        style={{ alignSelf: fill ? 'stretch' : 'flex-start', ...childStyle }}
-        collapsable={false}
-        focusable={false}
-      >
-        {cloneElement(children, rest, children.props.children)}
-      </View>
-    )
-  }
-
-  return cloneElement(children, { ...children.props, ref: childRef }, children.props?.children)
+  const { style, ...rest } = children.props
+  const childStyle = style ?? {}
+  return (
+    <View
+      testID={testIdWithKey('AttachTourStep')}
+      ref={childRef}
+      style={{ alignSelf: fill ? 'stretch' : 'center', ...childStyle }}
+      collapsable={false}
+      focusable={false}
+    >
+      {cloneElement(children, rest, children.props?.children)}
+    </View>
+  )
 }

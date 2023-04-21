@@ -437,7 +437,7 @@ export const TabTheme = {
   },
   tabBarContainerStyle: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   tabBarActiveTintColor: ColorPallet.brand.primary,
@@ -450,7 +450,14 @@ export const TabTheme = {
   tabBarButtonIconStyle: {
     color: ColorPallet.notification.infoText,
   },
-  focusTabIconStyle: {},
+  focusTabIconStyle: {
+    height: 60,
+    width: 60,
+    backgroundColor: ColorPallet.brand.primary,
+    borderRadius: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   focusTabActiveTintColor: {
     backgroundColor: ColorPallet.brand.secondary,
   },

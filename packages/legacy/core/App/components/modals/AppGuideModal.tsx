@@ -49,22 +49,22 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
       borderColor: ColorPallet.notification.infoBorder,
       borderRadius: 5,
       borderWidth: 1,
-      padding: 10,
+      padding: 20,
       width: width - 50,
     },
     headerContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingHorizontal: 5,
-      paddingTop: 5,
     },
     headerTextContainer: {
-      flexGrow: 1,
+      flex: 1,
+      flexWrap: 'wrap',
     },
     headerText: {
-      ...TextTheme.normal,
+      ...TextTheme.headingThree,
       fontWeight: 'bold',
       alignSelf: 'flex-start',
+      flexWrap: 'wrap',
       color: ColorPallet.notification.infoText,
     },
     bodyText: {
@@ -74,7 +74,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
       color: ColorPallet.notification.infoText,
     },
     dismissIcon: {
-      alignSelf: 'flex-end',
+      alignSelf: 'center',
     },
   })
 
@@ -90,7 +90,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
                     {title}
                   </Text>
                 </View>
-                <View style={[styles.dismissIcon]} testID={testIdWithKey('Dismiss')}>
+                <View style={styles.dismissIcon} testID={testIdWithKey('Dismiss')}>
                   <TouchableOpacity onPress={onDismissPressed}>
                     <Icon name={dismissIconName} size={iconSize} color={iconColor} />
                   </TouchableOpacity>

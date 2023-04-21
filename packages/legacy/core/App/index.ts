@@ -19,6 +19,7 @@ import InfoTextBox from './components/texts/InfoTextBox'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import { AttachTourStep } from './components/tour/AttachTourStep'
+import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { TourBox } from './components/tour/TourBox'
 import HomeContentView from './components/views/HomeContentView'
 import * as contexts from './contexts'
@@ -68,6 +69,7 @@ export type {
   Onboarding as OnboardingState,
   LoginAttempt as LoginAttemptState,
   Preferences as PreferencesState,
+  Tours as ToursState,
 } from './types/state'
 export * from '../verifier'
 
@@ -83,6 +85,7 @@ export {
   useTour,
   AttachTourStep,
   TourBox,
+  homeTourSteps,
   Button,
   ButtonType,
   CheckBoxRow,

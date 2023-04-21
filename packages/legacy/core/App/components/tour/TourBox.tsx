@@ -2,31 +2,23 @@ import React, { ReactElement, ReactNode, useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { tourMargin } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { RenderProps, useTour } from '../../contexts/tour/tour-context'
+import { RenderProps } from '../../contexts/tour/tour-context'
 import { testIdWithKey } from '../../utils/testable'
 
 export interface TourBoxProps extends RenderProps {
-  /**
-   * The TourBox content.
-   */
   children?: ReactNode
-  /**
-   * Should hide the LeftButton button.
-   */
   hideLeft?: boolean
-  /**
-   * Should hide the Right button.
-   */
   hideRight?: boolean
   /**
    * Text for the left button
    */
-  leftText?: boolean
+  leftText?: string
   /**
    * Text for the right button
    */
-  rightText?: boolean
+  rightText?: string
   /**
    * Callback for when the left button is pressed.
    */
@@ -35,23 +27,19 @@ export interface TourBoxProps extends RenderProps {
    * Callback for when the right button is pressed.
    */
   onRight?: () => void
-  /**
-   * TourBox title text.
-   */
   title?: string
 }
 
 /**
  * A built-in TourBox component which can be used as a tooltip container for
- * each step. While it's highly customizable, it's not required and can be
+ * each step. While it's somewhat customizable, it's not required and can be
  * replaced by your own component.
  *
  * @param props the component props
  * @returns A TourBox React element
  */
 export function TourBox(props: TourBoxProps): ReactElement {
-  const { leftText = 'Back', rightText = 'Next', title, hideLeft, hideRight, onLeft, onRight, children } = props
-  const { stop } = useTour()
+  const { leftText = 'Back', rightText = 'Next', title, hideLeft, hideRight, onLeft, onRight, children, stop } = props
   const { TextTheme, ColorPallet } = useTheme()
   const { width } = useWindowDimensions()
   const iconSize = 30
@@ -65,19 +53,18 @@ export function TourBox(props: TourBoxProps): ReactElement {
       borderRadius: 5,
       borderWidth: 1,
       padding: 20,
-      width: width - 50,
+      width: width - tourMargin * 2,
       margin: 'auto',
     },
     headerContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingTop: 5,
     },
     headerTextContainer: {
       flexGrow: 1,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...TextTheme.headingThree,
       fontWeight: 'bold',
       alignSelf: 'flex-start',
       color: ColorPallet.notification.infoText,
@@ -86,14 +73,16 @@ export function TourBox(props: TourBoxProps): ReactElement {
       alignSelf: 'flex-end',
     },
     body: {
-      marginBottom: 16,
+      flex: 1,
+      marginVertical: 16,
     },
     footerContainer: {
       flexDirection: 'row',
       justifyContent: 'space-around',
     },
     navText: {
-      color: ColorPallet.notification.infoIcon,
+      ...TextTheme.normal,
+      color: ColorPallet.brand.primary,
       fontWeight: 'bold',
     },
   })

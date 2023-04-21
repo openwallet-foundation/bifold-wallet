@@ -1,17 +1,14 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import { Animated } from 'react-native'
+import { Animated, Easing } from 'react-native'
 import { Rect } from 'react-native-svg'
 
 import { TourContext } from '../../contexts/tour/tour-context'
 
-interface SpotCutoutProps {
-  useNativeDriver: boolean
-}
-
 const AnimatedRectangle = Animated.createAnimatedComponent(Rect)
 
-export const SpotCutout = ({ useNativeDriver }: SpotCutoutProps) => {
+export const SpotCutout = () => {
   const { spot } = useContext(TourContext)
+  const spotPadding = 20
 
   const start = useRef(new Animated.ValueXY({ x: 0, y: 0 }))
   const width = useRef(new Animated.Value(0))
@@ -19,35 +16,36 @@ export const SpotCutout = ({ useNativeDriver }: SpotCutoutProps) => {
 
   useEffect(() => {
     const { height: spotHeight, width: spotWidth, x, y } = spot
-    const w = spotWidth + 20
-    const h = spotHeight + 20
-    const paddedX = x - 10
-    const paddedY = y - 10
+    const w = spotWidth + spotPadding
+    const h = spotHeight + spotPadding
+    const paddedX = x - spotPadding / 2
+    const paddedY = y - spotPadding / 2
 
     const transition = (): Animated.CompositeAnimation => {
-      return Animated.sequence([
-        Animated.parallel([
-          Animated.timing(start.current, {
-            duration: 10,
-            toValue: { x: paddedX, y: paddedY },
-            useNativeDriver,
-          }),
-          Animated.timing(width.current, {
-            duration: 10,
-            toValue: w,
-            useNativeDriver,
-          }),
-          Animated.timing(height.current, {
-            duration: 10,
-            toValue: h,
-            useNativeDriver,
-          }),
-        ]),
+      return Animated.parallel([
+        Animated.timing(start.current, {
+          duration: 500,
+          easing: Easing.out(Easing.exp),
+          toValue: { x: paddedX, y: paddedY },
+          useNativeDriver: false,
+        }),
+        Animated.timing(width.current, {
+          duration: 500,
+          easing: Easing.out(Easing.exp),
+          toValue: w,
+          useNativeDriver: false,
+        }),
+        Animated.timing(height.current, {
+          duration: 500,
+          easing: Easing.out(Easing.exp),
+          toValue: h,
+          useNativeDriver: false,
+        }),
       ])
     }
 
     transition().start()
-  }, [spot, useNativeDriver])
+  }, [spot.height, spot.width, spot.x, spot.y])
 
   if ([spot.height, spot.width].every((value) => value <= 0)) {
     return null

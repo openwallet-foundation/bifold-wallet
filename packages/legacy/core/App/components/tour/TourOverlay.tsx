@@ -1,16 +1,8 @@
-import React, { useCallback, useContext, useMemo, useRef, useState, useEffect } from 'react'
-import {
-  Animated,
-  ColorValue,
-  LayoutRectangle,
-  Modal,
-  Platform,
-  View,
-  ViewStyle,
-  useWindowDimensions,
-} from 'react-native'
+import React, { useCallback, useContext, useRef, useState, useEffect } from 'react'
+import { ColorValue, LayoutRectangle, Modal, View, ViewStyle, useWindowDimensions } from 'react-native'
 import { Defs, Mask, Rect, Svg } from 'react-native-svg'
 
+import { tourMargin } from '../../constants'
 import { BackdropPressBehavior, OSConfig, TourContext, TourStep } from '../../contexts/tour/tour-context'
 import { Optional } from '../../types/tour'
 import { testIdWithKey } from '../../utils/testable'
@@ -29,26 +21,13 @@ interface TourOverlayProps {
 
 export const TourOverlay = (props: TourOverlayProps) => {
   const { width: windowWidth, height: windowHeight } = useWindowDimensions()
-  const { color, current, nativeDriver, onBackdropPress, backdropOpacity, spot, tourStep } = props
+  const { color, current, onBackdropPress, backdropOpacity, spot, tourStep } = props
 
   const { goTo, next, previous, start, stop } = useContext(TourContext)
 
-  const [toolipStyle, setTooltipStyle] = useState<ViewStyle>({})
+  const [tooltipStyle, setTooltipStyle] = useState<ViewStyle>({})
 
   const tooltipRef = useRef<View>(null)
-  const tooltipOpacity = useRef(new Animated.Value(1))
-
-  const useNativeDriver = useMemo(() => {
-    const driverConfig: OSConfig<boolean> =
-      typeof nativeDriver === 'boolean' ? { android: nativeDriver, ios: nativeDriver, web: nativeDriver } : nativeDriver
-
-    return Platform.select({
-      android: driverConfig.android,
-      default: false,
-      ios: driverConfig.ios,
-      web: driverConfig.web,
-    })
-  }, [nativeDriver])
 
   const handleBackdropPress = useCallback((): void => {
     const handler = tourStep.onBackdropPress ?? onBackdropPress
@@ -68,19 +47,21 @@ export const TourOverlay = (props: TourOverlayProps) => {
   }, [tourStep, onBackdropPress, current, goTo, next, previous, start, stop])
 
   useEffect(() => {
-    const gapBetweenSpotAndTooltip = 20
+    const gapBetweenSpotAndTooltip = 50
     // if spot is in the lower half of the screen
     if (spot.y >= windowHeight / 2) {
+      const bottom = windowHeight - spot.y + gapBetweenSpotAndTooltip
       setTooltipStyle({
-        left: 25,
-        right: 25,
-        bottom: windowHeight - spot.y + gapBetweenSpotAndTooltip + spot.height,
+        left: tourMargin,
+        right: tourMargin,
+        bottom,
       })
     } else {
+      const top = spot.y + gapBetweenSpotAndTooltip + spot.height
       setTooltipStyle({
-        left: 25,
-        right: 25,
-        top: spot.y + gapBetweenSpotAndTooltip + spot.height,
+        left: tourMargin,
+        right: tourMargin,
+        top,
       })
     }
   }, [spot.height, spot.width, spot.x, spot.y])
@@ -100,20 +81,20 @@ export const TourOverlay = (props: TourOverlayProps) => {
           <Defs>
             <Mask id="mask" x={0} y={0} height="100%" width="100%">
               <Rect height="100%" width="100%" fill="#fff" />
-              <SpotCutout useNativeDriver={useNativeDriver} />
+              <SpotCutout />
             </Mask>
           </Defs>
 
           <Rect height="100%" width="100%" fill={color} mask="url(#mask)" opacity={backdropOpacity} />
         </Svg>
 
-        <Animated.View
+        <View
           ref={tooltipRef}
           testID={testIdWithKey('SpotTooltip')}
-          style={{ ...toolipStyle, opacity: tooltipOpacity.current, position: 'absolute' }}
+          style={{ ...tooltipStyle, opacity: 1, position: 'absolute' }}
         >
           {current !== undefined && <tourStep.render current={current} next={next} previous={previous} stop={stop} />}
-        </Animated.View>
+        </View>
       </View>
     </Modal>
   )

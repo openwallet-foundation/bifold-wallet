@@ -44,7 +44,7 @@ const TabStack: React.FC = () => {
           component={HomeStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <View style={[TabTheme.tabBarContainerStyle, { justifyContent: showLabels ? 'flex-end' : 'center' }]}>
+              <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                 <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
                 {showLabels && (
                   <Text
@@ -78,30 +78,20 @@ const TabStack: React.FC = () => {
                   width: 90,
                 }}
               >
-                <AttachTourStep index={0}>
+                <AttachTourStep index={0} fill>
                   <View
                     style={{
                       position: 'absolute',
                       bottom: 0,
-                      left: 0,
-                      right: 0,
+                      width: 90,
+                      minHeight: 90,
+                      flexGrow: 1,
+                      margin: 'auto',
                       justifyContent: 'flex-end',
                       alignItems: 'center',
                     }}
                   >
-                    <View
-                      style={[
-                        TabTheme.focusTabIconStyle,
-                        {
-                          height: 60,
-                          width: 60,
-                          backgroundColor: ColorPallet.brand.primary,
-                          borderRadius: 60,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        },
-                      ]}
-                    >
+                    <View style={{ ...TabTheme.focusTabIconStyle }}>
                       <Icon
                         name="qrcode-scan"
                         color={TabTheme.tabBarButtonIconStyle.color}
@@ -143,8 +133,8 @@ const TabStack: React.FC = () => {
           component={CredentialStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep index={2} fill>
-                <View style={[TabTheme.tabBarContainerStyle, { justifyContent: showLabels ? 'flex-end' : 'center' }]}>
+              <AttachTourStep index={2}>
+                <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
                   {showLabels && (
                     <Text
