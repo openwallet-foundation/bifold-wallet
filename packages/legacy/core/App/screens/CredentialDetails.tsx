@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { useAgent, useCredentialById } from '@aries-framework/react-hooks'
+import { useAgent } from '@aries-framework/react-hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
@@ -43,13 +43,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     throw new Error('CredentialDetails route prams were not set properly')
   }
 
-  const { credentialId } = route?.params
-
+  const { credential } = route?.params
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const { OCABundleResolver } = useConfiguration()
-
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
@@ -62,7 +60,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     cardLayoutOverlay: undefined,
   })
 
-  const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
   const styles = StyleSheet.create({
@@ -143,6 +140,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       attributes: buildFieldsFromIndyCredential(credential),
       language: i18n.language,
     }
+
     OCABundleResolver.resolveAllBundles(params).then((bundle) => {
       setOverlay({ ...overlay, ...bundle })
     })
@@ -155,11 +153,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
   }, [isRevoked])
 
-  const goBackToListCredentials = () => {
-    navigation.pop()
-    navigation.navigate(Screens.Credentials)
-  }
-
   const handleOnRemove = () => {
     setIsRemoveModalDisplayed(true)
   }
@@ -169,12 +162,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       if (!(agent && credential)) {
         return
       }
+
       await agent.credentials.deleteById(credential.id)
+
       Toast.show({
         type: ToastType.Success,
         text1: t('CredentialDetails.CredentialRemoved'),
       })
-      goBackToListCredentials()
+
+      navigation.pop()
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
 

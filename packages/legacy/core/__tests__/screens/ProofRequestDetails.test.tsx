@@ -6,7 +6,7 @@ import React from 'react'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import configurationContext from '../contexts/configuration'
-import { defaultProofRequestTemplates } from '../../verifier/constants'
+import { defaultProofRequestTemplates } from '../../verifier'
 import ProofRequestDetails from '../../App/screens/ProofRequestDetails'
 import { testIdWithKey } from '../../App'
 

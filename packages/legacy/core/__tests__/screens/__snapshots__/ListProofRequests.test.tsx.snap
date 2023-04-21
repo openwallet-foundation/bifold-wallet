@@ -32,7 +32,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                     "name": "student_first_name",
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                       },
                     ],
                   },
@@ -40,7 +40,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                     "name": "student_last_name",
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                       },
                     ],
                   },
@@ -67,7 +67,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                     ],
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                       },
                     ],
                   },
@@ -79,7 +79,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
                     "predicateValue": 20240101,
                     "restrictions": Array [
                       Object {
-                        "schema_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                       },
                     ],
                   },
