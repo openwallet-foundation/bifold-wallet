@@ -1,4 +1,4 @@
-import { defaultProofRequestTemplates } from '../../constants'
+import { defaultProofRequestTemplates } from '../../request-templates'
 import { buildProofRequestDataForTemplate, hasPredicates } from '../../utils/proof-request'
 
 import SpyInstance = jest.SpyInstance
