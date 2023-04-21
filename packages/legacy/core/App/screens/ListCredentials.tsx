@@ -38,7 +38,7 @@ const ListCredentials: React.FC = () => {
             >
               <CredentialCard
                 credential={credential}
-                onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
+                onPress={() => navigation.navigate(Screens.CredentialDetails, { credential })}
               />
             </View>
           )
