@@ -2,6 +2,7 @@ import {
   Agent,
   AgentMessage,
   AttributeFilter,
+  AttributeValue,
   AutoAcceptProof,
   ProofAttributeInfo,
   ProofExchangeRecord,
@@ -27,6 +28,33 @@ export const findProofRequestMessage = async (agent: Agent, id: string): Promise
   }
 }
 
+const convertCase: { [key: string]: keyof AttributeFilter | undefined } = {
+  schema_id: 'schemaId',
+  schema_issuer_did: 'schemaIssuerDid',
+  schema_name: 'schemaName',
+  schema_version: 'schemaVersion',
+  issuer_did: 'issuerDid',
+  cred_def_id: 'credentialDefinitionId',
+}
+
+const fromAnonCreds = (restriction: Record<string, string>): AttributeFilter => {
+  const restrictionObject = {} as AttributeFilter
+  Object.keys(restriction).forEach((anonKey) => {
+    if (anonKey.startsWith('attr::') && anonKey.endsWith('::value')) {
+      restrictionObject.attributeValue = new AttributeValue({
+        name: anonKey.split('::')[1],
+        value: restriction[anonKey],
+      })
+    } else {
+      const key = convertCase[anonKey]
+      if (key) {
+        restrictionObject[key] = restriction[anonKey] as any
+      }
+    }
+  })
+  return restrictionObject
+}
+
 /*
  * Build Proof Request data from for provided template
  * */
@@ -49,17 +77,7 @@ export const buildProofRequestDataForTemplate = (
             name: requestedAttribute.name,
             names: requestedAttribute.names,
             nonRevoked: requestedAttribute.nonRevoked,
-            restrictions: requestedAttribute.restrictions?.map(
-              (restriction) =>
-                new AttributeFilter({
-                  schemaId: restriction.schema_id,
-                  schemaIssuerDid: restriction.schema_issuer_did,
-                  schemaName: restriction.schema_name,
-                  schemaVersion: restriction.schema_version,
-                  issuerDid: restriction.issuer_did,
-                  credentialDefinitionId: restriction.cred_def_id,
-                })
-            ),
+            restrictions: requestedAttribute.restrictions?.map((restriction) => fromAnonCreds(restriction)),
           })
           requestedAttributes.set(`referent_${index}`, attribute)
           index++
@@ -76,17 +94,7 @@ export const buildProofRequestDataForTemplate = (
               requestedPredicate.parameterizable && customValue ? customValue : requestedPredicate.predicateValue,
             predicateType: requestedPredicate.predicateType,
             nonRevoked: requestedPredicate.nonRevoked,
-            restrictions: requestedPredicate.restrictions?.map(
-              (restriction) =>
-                new AttributeFilter({
-                  schemaId: restriction.schema_id,
-                  schemaIssuerDid: restriction.schema_issuer_did,
-                  schemaName: restriction.schema_name,
-                  schemaVersion: restriction.schema_version,
-                  issuerDid: restriction.issuer_did,
-                  credentialDefinitionId: restriction.cred_def_id,
-                })
-            ),
+            restrictions: requestedPredicate.restrictions?.map((restriction) => fromAnonCreds(restriction)),
           })
 
           requestedPredicates.set(`referent_${index}`, predicate)
