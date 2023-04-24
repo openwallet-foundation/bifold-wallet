@@ -33,6 +33,7 @@ import {
   Onboarding as StoreOnboardingState,
   Preferences as PreferencesState,
   LoginAttempt as LoginAttemptState,
+  Tours as ToursState,
 } from '../types/state'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
@@ -105,12 +106,21 @@ const Splash: React.FC = () => {
         const attemptData = await loadAuthAttempts()
 
         const preferencesData = await AsyncStorage.getItem(LocalStorageKeys.Preferences)
-
         if (preferencesData) {
           const dataAsJSON = JSON.parse(preferencesData) as PreferencesState
 
           dispatch({
             type: DispatchAction.PREFERENCES_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
+        const toursData = await AsyncStorage.getItem(LocalStorageKeys.Tours)
+        if (toursData) {
+          const dataAsJSON = JSON.parse(toursData) as ToursState
+
+          dispatch({
+            type: DispatchAction.TOUR_DATA_UPDATED,
             payload: [dataAsJSON],
           })
         }
