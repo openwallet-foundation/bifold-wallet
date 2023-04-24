@@ -220,7 +220,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         onPress = () =>
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
             screen: Screens.CredentialDetails,
-            params: { credentialId: notification.id },
+            params: { credential: notification },
           })
         break
       case NotificationType.Custom:
