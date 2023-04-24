@@ -80,7 +80,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const { OCABundleResolver } = useConfiguration()
-
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
@@ -248,6 +247,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             opacity: 0.8,
           },
         ]}
+        testID={testIdWithKey('AttributeName')}
       >
         {label}
       </Text>
@@ -265,6 +265,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             fontWeight: 'bold',
           },
         ]}
+        testID={testIdWithKey('AttributeValue')}
       >
         {value}
       </Text>
