@@ -40,6 +40,7 @@ export interface ConfigurationContext {
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: Array<ProofRequestTemplate>
+  enableTours?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
