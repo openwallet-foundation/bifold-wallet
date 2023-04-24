@@ -17,10 +17,12 @@ import { Buffer } from 'buffer'
 import { WalletQuery } from 'indy-sdk-react-native'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
+import { ReactNode } from 'react'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
 import { Attribute, Predicate, ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
+import { ChildFn } from '../types/tour'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 import { parseCredDefFromId } from './cred-def'
@@ -482,4 +484,15 @@ export const getJson = (jsonString: string): Record<string, unknown> | undefined
   } catch (e) {
     return undefined
   }
+}
+
+/**
+ * Typeguard to check if any React children is represented as a function
+ * instead of a Node. I,e., when it's a {@link ChildFn}.
+ *
+ * @param children any React children
+ * @returns true if the children is a function, false otherwise
+ */
+export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children is ChildFn<T> {
+  return typeof children === 'function'
 }

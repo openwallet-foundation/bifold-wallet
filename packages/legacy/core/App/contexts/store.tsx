@@ -35,6 +35,11 @@ export const defaultState: State = {
     useVerifierCapability: false,
     useConnectionInviterCapability: false,
   },
+  tours: {
+    seenToursPrompt: false,
+    enableTours: true,
+    seenHomeTour: false,
+  },
   deepLink: {
     activeDeepLink: '',
   },

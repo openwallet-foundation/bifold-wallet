@@ -17,6 +17,7 @@ export enum LocalStorageKeys {
   RevokedCredentials = 'RevokedCredentials',
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
   Preferences = 'PreferencesState',
+  Tours = 'ToursState',
 }
 
 export enum KeychainServices {
@@ -73,3 +74,5 @@ export const PINRules: PINValidationRules = {
 }
 
 export const domain = 'didcomm://invite'
+
+export const tourMargin = 25

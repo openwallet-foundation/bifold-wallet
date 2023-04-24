@@ -33,7 +33,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const { settings } = useConfiguration()
+  const { settings, enableTours } = useConfiguration()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
     { id: Locales.fr, value: t('Language.French') },
@@ -159,6 +159,22 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           accessibilityLabel: t('Settings.Developer'),
           testID: testIdWithKey('DeveloperOptions'),
           onPress: () => navigation.navigate(Screens.Developer),
+        },
+      ]
+    }
+  }
+
+  if (enableTours) {
+    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
+    if (section) {
+      section.data = [
+        ...section.data,
+        {
+          title: t('Settings.AppGuides'),
+          value: store.tours.enableTours ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Settings.AppGuides'),
+          testID: testIdWithKey('AppGuides'),
+          onPress: () => navigation.navigate(Screens.Tours),
         },
       ]
     }
