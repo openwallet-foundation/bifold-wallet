@@ -103,7 +103,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 <Button
                   title={onCallToActionLabel || t('Global.Okay')}
                   accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
-                  testID={testIdWithKey('Okay')}
+                  testID={testIdWithKey('Primary')}
                   buttonType={ButtonType.Primary}
                   onPress={onCallToActionPressed}
                 />
@@ -111,9 +111,9 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
             )}
             {onSecondCallToActionPressed && (
               <Button
-                title={onSecondCallToActionLabel || t('Global.Okay')}
-                accessibilityLabel={onSecondCallToActionLabel || t('Global.Okay')}
-                testID={testIdWithKey('Okay')}
+                title={onSecondCallToActionLabel || t('Global.Dismiss')}
+                accessibilityLabel={onSecondCallToActionLabel || t('Global.Dismiss')}
+                testID={testIdWithKey('Secondary')}
                 buttonType={ButtonType.Secondary}
                 onPress={onSecondCallToActionPressed}
               />
