@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { testIdWithKey } from 'utils/testable'
+import { testIdWithKey } from '../utils/testable'
 
 import { useTheme } from '../contexts/theme'
 import { Locales, storeLanguage } from '../localization'
