@@ -105,7 +105,7 @@ export interface TourCtx extends Tour {
   steps: TourStep[]
 }
 
-export const ZERO_SPOT: LayoutRectangle = {
+export const ORIGIN_SPOT: LayoutRectangle = {
   height: 0,
   width: 0,
   x: 0,
@@ -117,7 +117,7 @@ export const TourContext = createContext<TourCtx>({
   goTo: () => undefined,
   next: () => undefined,
   previous: () => undefined,
-  spot: ZERO_SPOT,
+  spot: ORIGIN_SPOT,
   start: () => undefined,
   steps: [],
   stop: () => undefined,

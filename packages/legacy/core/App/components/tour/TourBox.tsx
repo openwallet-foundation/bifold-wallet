@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -9,7 +10,13 @@ import { testIdWithKey } from '../../utils/testable'
 
 export interface TourBoxProps extends RenderProps {
   children?: ReactNode
+  /**
+   * Optionally hide the left button
+   */
   hideLeft?: boolean
+  /**
+   * Optionally hide the right button
+   */
   hideRight?: boolean
   /**
    * Text for the left button
@@ -39,7 +46,18 @@ export interface TourBoxProps extends RenderProps {
  * @returns A TourBox React element
  */
 export function TourBox(props: TourBoxProps): ReactElement {
-  const { leftText = 'Back', rightText = 'Next', title, hideLeft, hideRight, onLeft, onRight, children, stop } = props
+  const { t } = useTranslation()
+  const {
+    leftText = t('Tour.Back'),
+    rightText = t('Tour.Next'),
+    title,
+    hideLeft,
+    hideRight,
+    onLeft,
+    onRight,
+    children,
+    stop,
+  } = props
   const { TextTheme, ColorPallet } = useTheme()
   const { width } = useWindowDimensions()
   const iconSize = 30

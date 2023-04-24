@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, View, Text, Dimensions, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { Modal, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
@@ -80,51 +80,47 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
 
   return (
     <Modal transparent>
-      <TouchableOpacity onPress={onDismissPressed} accessible={false}>
-        <View style={styles.modalCenter}>
-          <TouchableWithoutFeedback accessible={false}>
-            <View style={styles.container}>
-              <View style={styles.headerContainer}>
-                <View style={styles.headerTextContainer}>
-                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                    {title}
-                  </Text>
-                </View>
-                <View style={styles.dismissIcon} testID={testIdWithKey('Dismiss')}>
-                  <TouchableOpacity onPress={onDismissPressed}>
-                    <Icon name={dismissIconName} size={iconSize} color={iconColor} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View>
-                <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-                  {description}
-                </Text>
-                {onCallToActionPressed && (
-                  <View style={{ width: '100%', marginBottom: 10 }}>
-                    <Button
-                      title={onCallToActionLabel || t('Global.Okay')}
-                      accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
-                      testID={testIdWithKey('Okay')}
-                      buttonType={ButtonType.Primary}
-                      onPress={onCallToActionPressed}
-                    />
-                  </View>
-                )}
-                {onSecondCallToActionPressed && (
-                  <Button
-                    title={onSecondCallToActionLabel || t('Global.Okay')}
-                    accessibilityLabel={onSecondCallToActionLabel || t('Global.Okay')}
-                    testID={testIdWithKey('Okay')}
-                    buttonType={ButtonType.Secondary}
-                    onPress={onSecondCallToActionPressed}
-                  />
-                )}
-              </View>
+      <View style={styles.modalCenter}>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                {title}
+              </Text>
             </View>
-          </TouchableWithoutFeedback>
+            <View style={styles.dismissIcon} testID={testIdWithKey('Dismiss')}>
+              <TouchableOpacity onPress={onDismissPressed}>
+                <Icon name={dismissIconName} size={iconSize} color={iconColor} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+              {description}
+            </Text>
+            {onCallToActionPressed && (
+              <View style={{ width: '100%', marginBottom: 10 }}>
+                <Button
+                  title={onCallToActionLabel || t('Global.Okay')}
+                  accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
+                  testID={testIdWithKey('Okay')}
+                  buttonType={ButtonType.Primary}
+                  onPress={onCallToActionPressed}
+                />
+              </View>
+            )}
+            {onSecondCallToActionPressed && (
+              <Button
+                title={onSecondCallToActionLabel || t('Global.Okay')}
+                accessibilityLabel={onSecondCallToActionLabel || t('Global.Okay')}
+                testID={testIdWithKey('Okay')}
+                buttonType={ButtonType.Secondary}
+                onPress={onSecondCallToActionPressed}
+              />
+            )}
+          </View>
         </View>
-      </TouchableOpacity>
+      </View>
     </Modal>
   )
 }

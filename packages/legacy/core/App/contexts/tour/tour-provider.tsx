@@ -5,7 +5,7 @@ import { TourOverlay } from '../../components/tour/TourOverlay'
 import { ChildFn } from '../../types/tour'
 import { isChildFunction } from '../../utils/helpers'
 
-import { BackdropPressBehavior, OSConfig, Tour, TourContext, TourCtx, TourStep, ZERO_SPOT } from './tour-context'
+import { BackdropPressBehavior, OSConfig, Tour, TourContext, TourCtx, TourStep, ORIGIN_SPOT } from './tour-context'
 
 export interface TourProviderProps {
   children: React.ReactNode | ChildFn<Tour>
@@ -59,7 +59,7 @@ export const TourProvider = forwardRef<Tour, TourProviderProps>((props, ref) => 
   } = props
 
   const [current, setCurrent] = useState<number>()
-  const [spot, setSpot] = useState(ZERO_SPOT)
+  const [spot, setSpot] = useState(ORIGIN_SPOT)
 
   const renderStep = useCallback(
     (index: number): void | Promise<void> => {
@@ -82,7 +82,7 @@ export const TourProvider = forwardRef<Tour, TourProviderProps>((props, ref) => 
 
   const stop = useCallback((): void => {
     setCurrent(undefined)
-    setSpot(ZERO_SPOT)
+    setSpot(ORIGIN_SPOT)
   }, [])
 
   const next = useCallback((): void => {

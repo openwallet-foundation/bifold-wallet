@@ -14,7 +14,7 @@ interface Option {
   bool: boolean
 }
 
-const Tours = () => {
+const Tours: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
