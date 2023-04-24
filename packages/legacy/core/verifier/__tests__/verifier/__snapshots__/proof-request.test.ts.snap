@@ -11,14 +11,8 @@ Object {
         "names": undefined,
         "nonRevoked": undefined,
         "restrictions": Array [
-          AttributeFilter {
-            "attributeValue": undefined,
+          Object {
             "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-            "issuerDid": undefined,
-            "schemaId": undefined,
-            "schemaIssuerDid": undefined,
-            "schemaName": undefined,
-            "schemaVersion": undefined,
           },
         ],
       },
@@ -27,14 +21,8 @@ Object {
         "names": undefined,
         "nonRevoked": undefined,
         "restrictions": Array [
-          AttributeFilter {
-            "attributeValue": undefined,
+          Object {
             "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-            "issuerDid": undefined,
-            "schemaId": undefined,
-            "schemaIssuerDid": undefined,
-            "schemaName": undefined,
-            "schemaVersion": undefined,
           },
         ],
       },
@@ -59,14 +47,8 @@ Object {
         ],
         "nonRevoked": undefined,
         "restrictions": Array [
-          AttributeFilter {
-            "attributeValue": undefined,
+          Object {
             "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-            "issuerDid": undefined,
-            "schemaId": undefined,
-            "schemaIssuerDid": undefined,
-            "schemaName": undefined,
-            "schemaVersion": undefined,
           },
         ],
       },
@@ -78,14 +60,8 @@ Object {
         "predicateType": ">=",
         "predicateValue": 20240101,
         "restrictions": Array [
-          AttributeFilter {
-            "attributeValue": undefined,
+          Object {
             "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-            "issuerDid": undefined,
-            "schemaId": undefined,
-            "schemaIssuerDid": undefined,
-            "schemaName": undefined,
-            "schemaVersion": undefined,
           },
         ],
       },

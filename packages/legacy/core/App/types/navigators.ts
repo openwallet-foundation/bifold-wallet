@@ -1,3 +1,4 @@
+import { CredentialExchangeRecord } from '@aries-framework/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 
 import { DeclineType } from './decline'
@@ -103,7 +104,7 @@ export type ProofRequestsStackParams = {
 
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
-  [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.CredentialDetails]: { credential: CredentialExchangeRecord }
 }
 
 export type HomeStackParams = {
