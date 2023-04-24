@@ -12,6 +12,7 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINRecreate from '../screens/PINRecreate'
 import Settings from '../screens/Settings'
+import Tours from '../screens/Tours'
 import UseBiometry from '../screens/UseBiometry'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -49,6 +50,11 @@ const SettingStack: React.FC = () => {
         name={Screens.Language}
         component={Language}
         options={{ title: t('Screens.Language'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.Tours}
+        component={Tours}
+        options={{ title: t('Screens.Tours'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.UseBiometry}

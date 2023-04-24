@@ -13,6 +13,12 @@ export interface Preferences {
   useConnectionInviterCapability?: boolean
 }
 
+export interface Tours {
+  seenToursPrompt: boolean
+  enableTours: boolean
+  seenHomeTour: boolean
+}
+
 export interface Lockout {
   displayNotification: boolean
 }
@@ -37,6 +43,7 @@ export interface State {
   lockout: Lockout
   loginAttempt: LoginAttempt
   preferences: Preferences
+  tours: Tours
   deepLink: DeepLink
   loading: boolean
 }

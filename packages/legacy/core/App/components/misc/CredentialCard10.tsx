@@ -70,9 +70,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()
-
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay10>>({})
-
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
