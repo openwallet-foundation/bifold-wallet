@@ -1,5 +1,7 @@
 import {
   AgentProvider,
+  TourProvider,
+  homeTourSteps,
   CommonUtilProvider,
   AuthProvider,
   ConfigurationProvider,
@@ -51,7 +53,9 @@ const App = () => {
                   />
                   <NetInfo />
                   <ErrorModal />
-                  <RootStack />
+                  <TourProvider steps={homeTourSteps} overlayColor={'gray'} overlayOpacity={0.7}>
+                    <RootStack />
+                  </TourProvider>
                   <Toast topOffset={15} config={toastConfig} />
                 </NetworkProvider>
               </AuthProvider>

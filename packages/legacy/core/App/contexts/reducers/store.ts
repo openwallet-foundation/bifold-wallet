@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { LocalStorageKeys } from '../../constants'
 import {
   Preferences as PreferencesState,
+  Tours as ToursState,
   Onboarding as OnboardingState,
   Authentication as AuthenticationState,
   Lockout as LockoutState,
@@ -33,6 +34,13 @@ enum PreferencesDispatchAction {
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
 }
 
+enum ToursDispatchAction {
+  TOUR_DATA_UPDATED = 'tours/tourDataUpdated',
+  UPDATE_SEEN_TOUR_PROMPT = 'tours/seenTourPrompt',
+  ENABLE_TOURS = 'tours/enableTours',
+  UPDATE_SEEN_HOME_TOUR = 'tours/seenHomeTour',
+}
+
 enum AuthenticationDispatchAction {
   DID_AUTHENTICATE = 'authentication/didAuthenticate',
 }
@@ -46,6 +54,7 @@ export type DispatchAction =
   | LoginAttemptDispatchAction
   | LockoutDispatchAction
   | PreferencesDispatchAction
+  | ToursDispatchAction
   | AuthenticationDispatchAction
   | DeepLinkDispatchAction
 
@@ -54,6 +63,7 @@ export const DispatchAction = {
   ...LoginAttemptDispatchAction,
   ...LockoutDispatchAction,
   ...PreferencesDispatchAction,
+  ...ToursDispatchAction,
   ...AuthenticationDispatchAction,
   ...DeepLinkDispatchAction,
 }
@@ -134,6 +144,73 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
     }
+    case ToursDispatchAction.UPDATE_SEEN_TOUR_PROMPT: {
+      const seenToursPrompt: ToursState = (action?.payload ?? []).pop() ?? false
+      const tours = {
+        ...state.tours,
+        seenToursPrompt,
+      }
+      const newState = {
+        ...state,
+        tours,
+      }
+
+      return newState
+    }
+    case ToursDispatchAction.TOUR_DATA_UPDATED: {
+      const tourData: ToursState = (action?.payload ?? []).pop() ?? {}
+      const tours = {
+        ...state.tours,
+        ...tourData,
+      }
+      const newState = {
+        ...state,
+        tours,
+      }
+
+      return newState
+    }
+    case ToursDispatchAction.ENABLE_TOURS: {
+      const enableTours = (action?.payload ?? []).pop() ?? false
+      const tours = {
+        ...state.tours,
+      }
+      if (enableTours) {
+        tours.enableTours = enableTours
+        tours.seenHomeTour = false
+      } else {
+        tours.enableTours = enableTours
+      }
+      const newState = {
+        ...state,
+        tours,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+
+      return newState
+    }
+    case ToursDispatchAction.UPDATE_SEEN_HOME_TOUR: {
+      const seenHomeTour = (action?.payload ?? []).pop() ?? false
+      const tours = {
+        ...state.tours,
+        seenHomeTour,
+      }
+
+      if (seenHomeTour) {
+        tours.enableTours = false
+      }
+
+      const newState = {
+        ...state,
+        tours,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+
+      return newState
+    }
+
     case LoginAttemptDispatchAction.ATTEMPT_UPDATED: {
       const loginAttempt: LoginAttemptState = (action?.payload || []).pop()
       const newState = {
