@@ -83,7 +83,12 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
   }
 
   useEffect(() => {
-    const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
+    const shouldShowTour =
+      store.preferences.developerModeEnabled &&
+      enableToursConfig &&
+      store.tours.enableTours &&
+      !store.tours.seenHomeTour
+
     if (shouldShowTour && screenIsFocused) {
       if (store.tours.seenToursPrompt) {
         dispatch({
