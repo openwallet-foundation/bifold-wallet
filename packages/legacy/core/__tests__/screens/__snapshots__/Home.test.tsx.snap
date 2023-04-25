@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays a home screen renders correctly 1`] = `
+<RCTScrollView
+  collapsable={false}
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
+>
+  <View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+          "justifyContent": "space-between",
+          "paddingHorizontal": 25,
+        }
+      }
+    >
+      <View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 26,
+                "fontWeight": "bold",
+              },
+              Object {
+                "marginBottom": 20,
+                "marginTop": 25,
+              },
+            ]
+          }
+        >
+          Home.Notifications
+          
+        </Text>
+      </View>
+    </View>
+    <RCTScrollView
+      ListEmptyComponent={[Function]}
+      data={Array []}
+      decelerationRate="fast"
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEnabled={false}
+      scrollEventThrottle={50}
+      showsHorizontalScrollIndicator={false}
+      snapToOffsets={
+        Array [
+          0,
+        ]
+      }
+      stickyHeaderIndices={Array []}
+      viewabilityConfigCallbackPairs={Array []}
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "marginHorizontal": 25,
+              "width": 700,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            focusable={false}
+            style={
+              Object {
+                "alignSelf": "stretch",
+              }
+            }
+            testID="com.ariesbifold:id/AttachTourStep"
+          >
+            <View>
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "#313132",
+                    "borderColor": "#0099FF",
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                    "padding": 10,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignSelf": "center",
+                        "marginRight": 10,
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#0099FF",
+                            "fontSize": 30,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ]
+                    }
+                    testID="com.ariesbifold:id/NoNewUpdates"
+                  >
+                    Home.NoNewUpdates
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</RCTScrollView>
+`;
