@@ -219,9 +219,13 @@ export class OCABundle implements OCABundleType {
       return (this.bundle as Bundle).captureBase as unknown as T
     }
     if (language !== undefined) {
-      return (this.bundle as Bundle).overlays.find(
+      // we want to return branding even if there isn't a bundle for a given language
+      const overlay = (this.bundle as Bundle).overlays.find(
         (item) => item.type === type.toString() && (item as BaseL10nOverlay).language === language
-      ) as T
+      ) as T | undefined
+      if (overlay) {
+        return overlay
+      }
     }
     return (this.bundle as Bundle).overlays.find((item) => item.type === type.toString()) as T
   }
