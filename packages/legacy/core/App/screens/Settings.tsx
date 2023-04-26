@@ -149,22 +149,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     ...(settings || []),
   ]
 
-  if (store.preferences.developerModeEnabled) {
-    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
-    if (section) {
-      section.data = [
-        ...section.data,
-        {
-          title: t('Settings.Developer'),
-          accessibilityLabel: t('Settings.Developer'),
-          testID: testIdWithKey('DeveloperOptions'),
-          onPress: () => navigation.navigate(Screens.Developer),
-        },
-      ]
-    }
-  }
-
-  if (enableTours) {
+  if (enableTours && store.preferences.developerModeEnabled) {
     const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
     if (section) {
       section.data = [
@@ -175,6 +160,21 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           accessibilityLabel: t('Settings.AppGuides'),
           testID: testIdWithKey('AppGuides'),
           onPress: () => navigation.navigate(Screens.Tours),
+        },
+      ]
+    }
+  }
+
+  if (store.preferences.developerModeEnabled) {
+    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
+    if (section) {
+      section.data = [
+        ...section.data,
+        {
+          title: t('Settings.Developer'),
+          accessibilityLabel: t('Settings.Developer'),
+          testID: testIdWithKey('DeveloperOptions'),
+          onPress: () => navigation.navigate(Screens.Developer),
         },
       ]
     }

@@ -327,9 +327,11 @@ export class OCABundleResolver implements OCABundleResolverType {
     language?: string
   }): Promise<Field[]> {
     const bundle = await this.resolve(params)
-    const presentationFields = [...params.attributes]
-
+    let presentationFields = [...params.attributes]
     if (bundle?.captureBase?.attributes) {
+      // if the oca brandaing has the attrbutes set, only display those attributes
+      const bundleFields = Object.keys(bundle.captureBase.attributes)
+      presentationFields = presentationFields.filter((item) => item.name && bundleFields.includes(item.name))
       for (let i = 0; i < presentationFields.length; i++) {
         const presentationField = presentationFields[i]
         const key = presentationField.name || ''
