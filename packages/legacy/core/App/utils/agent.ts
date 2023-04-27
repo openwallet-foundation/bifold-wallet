@@ -19,6 +19,7 @@ import {
   MediationRecipientModule,
   V2CredentialProtocol,
   V2ProofProtocol,
+  AutoAcceptProof,
 } from '@aries-framework/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
 import { useAgent } from '@aries-framework/react-hooks'
@@ -63,6 +64,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
       ],
     }),
     proofs: new ProofsModule({
+      autoAcceptProofs: AutoAcceptProof.ContentApproved,
       proofProtocols: [
         new V1ProofProtocol({ indyProofFormat }),
         new V2ProofProtocol({

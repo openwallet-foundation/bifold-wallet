@@ -2,10 +2,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import HeaderRightHome from '../components/buttons/HeaderRightHome'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
+import ConnectionInvitation from '../screens/ConnectionInvitation'
 import ContactDetails from '../screens/ContactDetails'
+import CredentialDetails from '../screens/CredentialDetails'
 import ListContacts from '../screens/ListContacts'
+import ProofDetails from '../screens/ProofDetails'
 import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
@@ -26,6 +30,27 @@ const ContactStack: React.FC = () => {
       />
       <Stack.Screen name={Screens.Chat} component={Chat} />
       <Stack.Screen name={Screens.WhatAreContacts} component={WhatAreContacts} options={{ title: '' }} />
+      <Stack.Screen
+        name={Screens.CredentialDetails}
+        component={CredentialDetails}
+        options={{ title: t('Screens.CredentialDetails') }}
+      />
+      <Stack.Screen
+        name={Screens.ProofDetails}
+        component={ProofDetails}
+        options={() => ({
+          title: '',
+          headerRight: () => <HeaderRightHome />,
+        })}
+      />
+      <Stack.Screen
+        name={Screens.ConnectionInvitation}
+        component={ConnectionInvitation}
+        options={() => ({
+          title: '',
+          headerRight: () => <HeaderRightHome />,
+        })}
+      />
     </Stack.Navigator>
   )
 }

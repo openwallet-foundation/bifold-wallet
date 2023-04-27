@@ -37,6 +37,13 @@ export const defaultState: State = {
     developerModeEnabled: false,
     biometryPreferencesUpdated: false,
     useBiometry: false,
+    useVerifierCapability: false,
+    useConnectionInviterCapability: false,
+  },
+  tours: {
+    seenToursPrompt: false,
+    enableTours: true,
+    seenHomeTour: false,
   },
   deepLink: {
     activeDeepLink: '',

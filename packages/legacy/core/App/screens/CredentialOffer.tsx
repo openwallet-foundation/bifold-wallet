@@ -5,7 +5,7 @@ import { useCredentialById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, DeviceEventEmitter } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
@@ -22,10 +22,10 @@ import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
-import { Field } from '../types/record'
 import { useAppAgent } from '../utils/agent'
-import { isValidAnonCredsCredential } from '../utils/credential'
+import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
+import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
@@ -94,16 +94,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     const updateCredentialPreview = async () => {
       const { ...formatData } = await agent?.credentials.getFormatData(credential.id)
       const { offer, offerAttributes } = formatData
+      const offerData = offer?.anoncreds ?? offer?.indy
 
-      if (offer?.indy) {
+      if (offerData) {
         credential.metadata.add(AnonCredsCredentialMetadataKey, {
-          schemaId: offer?.indy?.schema_id,
-          credentialDefinitionId: offer?.indy?.cred_def_id,
-        })
-      } else if (offer?.anoncreds) {
-        credential.metadata.add(AnonCredsCredentialMetadataKey, {
-          schemaId: offer?.anoncreds?.schema_id,
-          credentialDefinitionId: offer?.anoncreds?.cred_def_id,
+          schemaId: offerData.schema_id,
+          credentialDefinitionId: offerData.cred_def_id,
         })
       }
 
@@ -113,7 +109,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
 
     const resolvePresentationFields = async () => {
-      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
+      const identifiers = getCredentialIdentifiers(credential)
+      const attributes = buildFieldsFromAnonCredsCredential(credential)
+      const fields = await OCABundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
       return { fields }
     }
 
@@ -210,7 +208,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <Record fields={overlay.presentationFields as Field[]} header={header} footer={footer} />
+      <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
     </SafeAreaView>
   )

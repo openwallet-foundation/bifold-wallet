@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
+Object {
+  "indy": Object {
+    "name": "Student full name",
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => ProofAttributeInfo {
+        "name": "student_first_name",
+        "names": undefined,
+        "nonRevoked": undefined,
+        "restrictions": Array [
+          Object {
+            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+          },
+        ],
+      },
+      "referent_1" => ProofAttributeInfo {
+        "name": "student_last_name",
+        "names": undefined,
+        "nonRevoked": undefined,
+        "restrictions": Array [
+          Object {
+            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+          },
+        ],
+      },
+    },
+    "requestedPredicates": Map {},
+    "version": "0.0.1",
+  },
+}
+`;
+
+exports[`Helpers Build indy proof request from template containing two requested attributes and predicate 1`] = `
+Object {
+  "indy": Object {
+    "name": "Student full name and expiration date",
+    "nonce": "1677766511505",
+    "requestedAttributes": Map {
+      "referent_0" => ProofAttributeInfo {
+        "name": undefined,
+        "names": Array [
+          "student_first_name",
+          "student_last_name",
+        ],
+        "nonRevoked": undefined,
+        "restrictions": Array [
+          Object {
+            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+          },
+        ],
+      },
+    },
+    "requestedPredicates": Map {
+      "referent_1" => ProofPredicateInfo {
+        "name": "expiry_date",
+        "nonRevoked": undefined,
+        "predicateType": ">=",
+        "predicateValue": 20240101,
+        "restrictions": Array [
+          Object {
+            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+          },
+        ],
+      },
+    },
+    "version": "0.0.1",
+  },
+}
+`;

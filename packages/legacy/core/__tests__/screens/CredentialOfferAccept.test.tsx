@@ -5,8 +5,10 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
 import { testIdWithKey } from '../../App/utils/testable'
+import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
 
 jest.mock('@react-navigation/core', () => {
@@ -28,7 +30,11 @@ useCredentialById.mockReturnValue(credentialRecord)
 
 describe('displays a credential accept screen', () => {
   test('renders correctly', () => {
-    const tree = render(<CredentialOfferAccept visible={true} credentialId={credentialId} />)
+    const tree = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialOfferAccept visible={true} credentialId={credentialId} />
+      </ConfigurationContext.Provider>
+    )
 
     const doneButton = tree.queryByTestId('Done')
 
@@ -38,10 +44,14 @@ describe('displays a credential accept screen', () => {
   })
 
   test('transitions to taking too delay message', async () => {
-    const tree = render(<CredentialOfferAccept visible={true} credentialId={credentialId} />)
+    const tree = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialOfferAccept visible={true} credentialId={credentialId} />
+      </ConfigurationContext.Provider>
+    )
 
     await waitFor(() => {
-      timeTravel(10000)
+      timeTravel(11000)
     })
 
     const backToHomeButton = tree.getByTestId(testIdWithKey('BackToHome'))
@@ -55,7 +65,11 @@ describe('displays a credential accept screen', () => {
   test('transitions to offer accepted', () => {
     credentialRecord.state = CredentialState.CredentialReceived
 
-    const tree = render(<CredentialOfferAccept visible={true} credentialId={credentialId} />)
+    const tree = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <CredentialOfferAccept visible={true} credentialId={credentialId} />
+      </ConfigurationContext.Provider>
+    )
 
     const doneButton = tree.getByTestId(testIdWithKey('Done'))
     const backToHomeButton = tree.queryByTestId(testIdWithKey('BackToHome'))

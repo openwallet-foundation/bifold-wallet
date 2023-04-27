@@ -1,3 +1,5 @@
+// TODO: export this from @aries-framework/anoncreds
+import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
 import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import { ImageSourcePropType } from 'react-native'
 
@@ -25,4 +27,11 @@ export const toImageSource = (source: unknown): ImageSourcePropType => {
     return { uri: source as string }
   }
   return source as ImageSourcePropType
+}
+
+export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) => {
+  return {
+    credentialDefinitionId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId,
+    schemaId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.schemaId,
+  }
 }

@@ -1,15 +1,7 @@
-import {
-  Agent,
-  ConsoleLogger,
-  HttpOutboundTransport,
-  KeyDerivationMethod,
-  LogLevel,
-  WsOutboundTransport,
-} from '@aries-framework/core'
+import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
 import { IndySdkToAskarMigrationUpdater } from '@aries-framework/indy-sdk-to-askar-migration'
 import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
-import { ReactNativeFileSystem } from '@aries-framework/react-native/build/ReactNativeFileSystem'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
@@ -31,10 +23,11 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
 import {
-  Onboarding as StoreOnboardingState,
-  Preferences as PreferencesState,
   LoginAttempt as LoginAttemptState,
   Migration as MigrationState,
+  Preferences as PreferencesState,
+  Onboarding as StoreOnboardingState,
+  Tours as ToursState,
 } from '../types/state'
 import { getAgentModules } from '../utils/agent'
 
@@ -128,6 +121,16 @@ const Splash: React.FC = () => {
           })
         }
 
+        const toursData = await AsyncStorage.getItem(LocalStorageKeys.Tours)
+        if (toursData) {
+          const dataAsJSON = JSON.parse(toursData) as ToursState
+
+          dispatch({
+            type: DispatchAction.TOUR_DATA_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
         const data = await AsyncStorage.getItem(LocalStorageKeys.Onboarding)
         if (data) {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
@@ -184,8 +187,6 @@ const Splash: React.FC = () => {
       try {
         const credentials = await getWalletCredentials()
 
-        const fs = new ReactNativeFileSystem()
-
         if (!credentials?.id || !credentials.key) {
           // Cannot find wallet id/secret
           return
@@ -194,13 +195,7 @@ const Splash: React.FC = () => {
         const newAgent = new Agent({
           config: {
             label: 'Aries Bifold',
-            walletConfig: {
-              id: credentials.id,
-              // FIXME: this key is for the wallet backup that will be downloaded
-              key: 'd85dc2997f0533c4221d63ac5ea9ebb149355d9acddc41dc5612230dcedb38e6', // credentials.key,
-              // FIXME: remove when new version of @aries-framework/askar is released which sets the proper default
-              keyDerivationMethod: KeyDerivationMethod.Argon2IMod,
-            },
+            walletConfig: { id: credentials.id, key: credentials.key },
             logger: new ConsoleLogger(LogLevel.trace),
             autoUpdateStorageOnStartup: true,
           },

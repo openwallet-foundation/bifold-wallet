@@ -84,6 +84,7 @@ describe('displays a credentials list screen', () => {
           <ListCredentials />
         </ConfigurationContext.Provider>
       )
+
       await act(async () => {
         const credentialItemInstances = await findAllByText('Person', { exact: false })
 
@@ -94,7 +95,7 @@ describe('displays a credentials list screen', () => {
         fireEvent(credentialItemInstance, 'press')
 
         expect(navigation.navigate).toBeCalledWith('Credential Details', {
-          credentialId: testOpenVPCredentialRecord.id,
+          credential: testOpenVPCredentialRecord,
         })
       })
     })

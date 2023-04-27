@@ -13,6 +13,14 @@ export interface Preferences {
   useBiometry: boolean
   biometryPreferencesUpdated: boolean
   developerModeEnabled: boolean
+  useVerifierCapability?: boolean
+  useConnectionInviterCapability?: boolean
+}
+
+export interface Tours {
+  seenToursPrompt: boolean
+  enableTours: boolean
+  seenHomeTour: boolean
 }
 
 export interface Lockout {
@@ -39,6 +47,7 @@ export interface State {
   lockout: Lockout
   loginAttempt: LoginAttempt
   preferences: Preferences
+  tours: Tours
   deepLink: DeepLink
   migration: Migration
   loading: boolean

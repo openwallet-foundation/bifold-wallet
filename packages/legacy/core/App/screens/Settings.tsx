@@ -33,7 +33,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const { settings } = useConfiguration()
+  const { settings, enableTours } = useConfiguration()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
     { id: Locales.fr, value: t('Language.French') },
@@ -149,6 +149,22 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     ...(settings || []),
   ]
 
+  if (enableTours && store.preferences.developerModeEnabled) {
+    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
+    if (section) {
+      section.data = [
+        ...section.data,
+        {
+          title: t('Settings.AppGuides'),
+          value: store.tours.enableTours ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Settings.AppGuides'),
+          testID: testIdWithKey('AppGuides'),
+          onPress: () => navigation.navigate(Screens.Tours),
+        },
+      ]
+    }
+  }
+
   if (store.preferences.developerModeEnabled) {
     const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
     if (section) {
@@ -162,6 +178,48 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         },
       ]
     }
+  }
+
+  if (store.preferences.useVerifierCapability) {
+    settingsSections.splice(1, 0, {
+      header: {
+        icon: 'send',
+        title: t('Screens.ProofRequests'),
+      },
+      data: [
+        {
+          title: t('Screens.SendProofRequest'),
+          accessibilityLabel: t('Screens.ProofRequests'),
+          testID: testIdWithKey('ProofRequests'),
+          onPress: () =>
+            navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
+              screen: Screens.ProofRequests,
+              params: { navigation: navigation },
+            }),
+        },
+      ],
+    })
+  }
+
+  if (store.preferences.useConnectionInviterCapability) {
+    settingsSections.splice(2, 0, {
+      header: {
+        icon: 'send',
+        title: t('Screens.ConnectionInvitation'),
+      },
+      data: [
+        {
+          title: t('Screens.CreateConnectionInvitation'),
+          accessibilityLabel: t('Screens.CreateConnectionInvitation'),
+          testID: testIdWithKey('CreateConnectionInvitation'),
+          onPress: () =>
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.ConnectionInvitation,
+              params: { navigation: navigation },
+            }),
+        },
+      ],
+    })
   }
 
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
