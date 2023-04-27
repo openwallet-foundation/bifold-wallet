@@ -48,7 +48,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
           "credentials": Array [
             Object {
               "credentialRecordId": "",
-              "credentialRecordType": "indy",
+              "credentialRecordType": "anoncreds",
             },
           ],
           "errorMessage": undefined,

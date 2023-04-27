@@ -7,7 +7,7 @@ export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchang
   return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []
 }
 
-export const buildFieldsFromIndyProofRequestTemplate = (
+export const buildFieldsFromAnonCredsProofRequestTemplate = (
   data: AnonCredsProofRequestTemplatePayloadData
 ): Array<Field> => {
   const fields = []
@@ -37,7 +37,7 @@ export const buildFieldsFromIndyProofRequestTemplate = (
   return fields
 }
 
-export const buildFieldsFromSharedIndyProof = (data: CredentialSharedProofData): Array<Field> => {
+export const buildFieldsFromSharedAnonCredsProof = (data: CredentialSharedProofData): Array<Field> => {
   const fields = []
   for (const attribute of data.sharedAttributes) {
     fields.push(

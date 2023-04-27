@@ -98,7 +98,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
       }
 
       if (agent && proof) {
-        await agent.proofs.declineRequest(proof.id)
+        await agent.proofs.declineRequest({ proofRecordId: proof.id })
         agent?.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') }) // currently, fails for connectionless case
         return
       }

@@ -24,8 +24,7 @@
     "@react-navigation/core": "6.1.0",
     "@react-navigation/native": "6.0.6",
     "@react-navigation/stack": "6.0.11",
-    "@types/node": "16.9.6",
-    "@aries-framework/core": "0.3.3"
+    "@types/node": "16.9.6"
   },
   "scripts": {
     "ci:core": "cd core && npm ci",

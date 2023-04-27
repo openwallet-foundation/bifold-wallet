@@ -134,23 +134,36 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     const retrieveCredentialsForProof = async (proof: ProofExchangeRecord) => {
       try {
         const format = await agent.proofs.getFormatData(proof.id)
+        const hasAnonCreds = format.request?.anoncreds !== undefined
+        const hasIndy = format.request?.indy !== undefined
         const credentials = await agent.proofs.getCredentialsForRequest({
           proofRecordId: proof.id,
           proofFormats: {
-            indy: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: false,
-            },
-            anoncreds: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: false,
-            },
+            // FIXME: AFJ will try to use the format, even if the value is undefined (but the key is present)
+            // We should ignore the key, if the value is undefined. For now this is a workaround.
+            ...(hasIndy
+              ? {
+                  indy: {
+                    // Setting `filterByNonRevocationRequirements` to `false` returns all
+                    // credentials even if they are revokable (and revoked). We need this to
+                    // be able to show why a proof cannot be satisfied. Otherwise we can only
+                    // show failure.
+                    filterByNonRevocationRequirements: false,
+                  },
+                }
+              : {}),
+
+            ...(hasAnonCreds
+              ? {
+                  anoncreds: {
+                    // Setting `filterByNonRevocationRequirements` to `false` returns all
+                    // credentials even if they are revokable (and revoked). We need this to
+                    // be able to show why a proof cannot be satisfied. Otherwise we can only
+                    // show failure.
+                    filterByNonRevocationRequirements: false,
+                  },
+                }
+              : {}),
           },
         })
         if (!credentials) {
@@ -228,14 +241,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       if (!retrievedCredentials) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
+      const format = await agent.proofs.getFormatData(proof.id)
+
+      const formatToUse = format.request?.anoncreds ? 'anoncreds' : 'indy'
 
       const automaticRequestedCreds =
         retrievedCredentials &&
         (await agent.proofs.selectCredentialsForRequest({
           proofRecordId: proof.id,
           proofFormats: {
-            indy: {},
-            anoncreds: {},
+            [formatToUse]: {},
           },
         }))
 

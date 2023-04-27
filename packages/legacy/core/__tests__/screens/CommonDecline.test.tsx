@@ -66,7 +66,7 @@ describe('common decline screen', () => {
 
     fireEvent(confirmDeclineButton, 'press')
 
-    expect(agent?.proofs.declineRequest).toBeCalledWith('b04060c8-902a-4f62-9390-7b8bb2204f13')
+    expect(agent?.proofs.declineRequest).toBeCalledWith({ proofRecordId: 'b04060c8-902a-4f62-9390-7b8bb2204f13' })
   })
 
   test('did decline proof renders correctly', async () => {

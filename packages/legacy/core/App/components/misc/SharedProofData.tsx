@@ -14,7 +14,7 @@ import { useTheme } from '../../contexts/theme'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute, Field, Predicate } from '../../types/record'
 import { toImageSource } from '../../utils/credential'
-import { buildFieldsFromSharedIndyProof } from '../../utils/oca'
+import { buildFieldsFromSharedAnonCredsProof } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
 import { AttributeValue } from '../record/RecordField'
@@ -82,7 +82,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11> | undefined>(undefined)
 
   useEffect(() => {
-    const attributes = buildFieldsFromSharedIndyProof(sharedData.data)
+    const attributes = buildFieldsFromSharedAnonCredsProof(sharedData.data)
     const params = {
       identifiers: {
         credentialDefinitionId: sharedData.identifiers.cred_def_id,

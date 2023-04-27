@@ -72,7 +72,7 @@ export const buildProofRequestDataForTemplate = (
       }
     })
     return {
-      indy: {
+      anoncreds: {
         name: template.name,
         version: template.version,
         nonce: Date.now().toString(),

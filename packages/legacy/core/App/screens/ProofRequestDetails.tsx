@@ -19,7 +19,7 @@ import { useTemplate } from '../hooks/proof-request-templates'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { Attribute, Field, Predicate } from '../types/record'
-import { buildFieldsFromIndyProofRequestTemplate } from '../utils/oca'
+import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
 
@@ -136,7 +136,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
   }, [data.schema])
 
   useEffect(() => {
-    const attributes = buildFieldsFromIndyProofRequestTemplate(data)
+    const attributes = buildFieldsFromAnonCredsProofRequestTemplate(data)
     OCABundleResolver.presentationFields({
       identifiers: { schemaId: data.schema },
       attributes,
