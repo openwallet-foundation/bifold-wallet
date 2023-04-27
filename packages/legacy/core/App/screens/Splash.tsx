@@ -2,6 +2,7 @@ import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransp
 import { IndySdkToAskarMigrationUpdater } from '@aries-framework/indy-sdk-to-askar-migration'
 import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
+import { ReactNativeFileSystem } from '@aries-framework/react-native/build/ReactNativeFileSystem'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
@@ -195,7 +196,11 @@ const Splash: React.FC = () => {
         const newAgent = new Agent({
           config: {
             label: 'Aries Bifold',
-            walletConfig: { id: credentials.id, key: credentials.key },
+            walletConfig: {
+              id: 'walletId',
+              // FIXME: hardcoded to key from backup
+              key: '0f6f135d1e64b0f83171dc693c2245ecf5f4cad41d39e434fc7bcc45b5b80d90',
+            },
             logger: new ConsoleLogger(LogLevel.trace),
             autoUpdateStorageOnStartup: true,
           },
@@ -213,32 +218,36 @@ const Splash: React.FC = () => {
 
         // The backup file is kept in case anything goes wrong. this will allow us to release patches and still update the
         // original indy-sdk database in a future version we could manually add a check to remove the old file from storage.
-        const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
-        const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db`
-        const data = new FormData()
-        data.append('file', {
-          name: 'file',
-          // type: file.type,
-          uri: Platform.OS === 'ios' ? dbPath.replace('file://', '') : dbPath,
-        })
+        // const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
+        // const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db-wal`
+        // const data = new FormData()
+        // data.append('file', {
+        //   name: 'file',
+        //   // type: file.type,
+        //   uri: Platform.OS === 'ios' ? dbPath.replace('file://', '') : dbPath,
+        // })
 
-        const res = await fetch('https://c57efc903478.ngrok.app/upload', {
-          method: 'post',
-          body: data,
-          headers: {
-            'Content-Type': 'multipart/form-data; ',
-          },
-        })
-        console.log(await res.text())
+        // const res = await fetch('https://7f2d0ea8223b.ngrok.app/upload', {
+        //   method: 'post',
+        //   body: data,
+        //   headers: {
+        //     'Content-Type': 'multipart/form-data; ',
+        //   },
+        // })
+        // console.log(await res.text())
 
         // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
-        if (!didMigrateToAskar(store.migration)) {
+        const runAlways = true
+        if (runAlways) {
+          // if (!didMigrateToAskar(store.migration)) {
           newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
 
           // The backup file is kept in case anything goes wrong. this will allow us to release patches and still update the
           // original indy-sdk database in a future version we could manually add a check to remove the old file from storage.
           const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
           const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db`
+          const fs = new ReactNativeFileSystem()
+          await fs.downloadToFile('https://github.com/TimoGlastra/migration-test/raw/main/rn-db.db', dbPath)
 
           const updater = await IndySdkToAskarMigrationUpdater.initialize({
             dbPath,
