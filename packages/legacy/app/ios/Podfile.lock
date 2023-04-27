@@ -22,7 +22,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.9.0)
-  - indy-vdr (0.1.0-dev.13):
+  - indy-vdr (0.1.0-dev.14):
     - React
     - React-callinvoker
     - React-Core
@@ -590,7 +590,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
-  indy-vdr: e62385ca3ae45301a1c8817ae2a5ec6e4ac928a7
+  indy-vdr: fa3f671e9b7f41fc8ff47478e133f266c72cb24b
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Permission-Camera: e6d142d7d8b714afe0a83e5e6ae17eb949f1e3e9
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
