@@ -37,7 +37,6 @@ import {
   Migration as MigrationState,
 } from '../types/state'
 import { getAgentModules } from '../utils/agent'
-import navigation from '../../__tests__/contexts/navigation'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
@@ -218,18 +217,13 @@ const Splash: React.FC = () => {
         newAgent.registerOutboundTransport(httpTransport)
 
         // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
-        // FIXME: this is to always run the backup path, even for new wallets.
-        if (true) {
-          // if (!didMigrateToAskar(store.migration)) {
+        if (!didMigrateToAskar(store.migration)) {
+          newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
+
           // The backup file is kept in case anything goes wrong. this will allow us to release patches and still update the
           // original indy-sdk database in a future version we could manually add a check to remove the old file from storage.
           const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
           const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db`
-
-          newAgent.config.logger.info('Download file')
-          await fs.downloadToFile('https://github.com/TimoGlastra/migration-test/raw/main/rn-db.db', dbPath)
-
-          newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
 
           const updater = await IndySdkToAskarMigrationUpdater.initialize({
             dbPath,
