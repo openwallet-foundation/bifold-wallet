@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../contexts/theme'
 import { Locales, storeLanguage } from '../localization'
+import { testIdWithKey } from '../utils/testable'
 interface Language {
   id: Locales
   value: string
@@ -75,6 +76,7 @@ const Language = () => {
                 onPress={async () => await handleLanguageChange(language)}
                 isChecked={id === i18n.language}
                 disableBuiltInState
+                testID={testIdWithKey(id.toLocaleLowerCase())}
               />
             </View>
           )
