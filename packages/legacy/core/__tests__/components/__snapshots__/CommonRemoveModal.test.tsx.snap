@@ -233,6 +233,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                             "fontWeight": "normal",
                           },
                           Object {
+                            "color": "#FFFFFF",
                             "paddingLeft": 5,
                           },
                         ]
@@ -249,6 +250,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                             "fontWeight": "normal",
                           },
                           Object {
+                            "color": "#FFFFFF",
                             "paddingLeft": 5,
                           },
                         ]
@@ -277,6 +279,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                             "fontWeight": "normal",
                           },
                           Object {
+                            "color": "#FFFFFF",
                             "paddingLeft": 5,
                           },
                         ]
@@ -293,6 +296,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                             "fontWeight": "normal",
                           },
                           Object {
+                            "color": "#FFFFFF",
                             "paddingLeft": 5,
                           },
                         ]
@@ -421,6 +425,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                             "fontWeight": "normal",
                           },
                           Object {
+                            "color": "#FFFFFF",
                             "paddingLeft": 5,
                           },
                         ]
@@ -437,6 +442,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                             "fontWeight": "normal",
                           },
                           Object {
+                            "color": "#FFFFFF",
                             "paddingLeft": 5,
                           },
                         ]

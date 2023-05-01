@@ -7,6 +7,9 @@ export enum ButtonType {
   Critical,
   Primary,
   Secondary,
+  ModalCritical,
+  ModalPrimary,
+  ModalSecondary,
 }
 
 export interface ButtonProps {
@@ -23,9 +26,12 @@ const Button: React.FC<ButtonProps & React.RefAttributes<HTMLInputElement | unde
     const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const { Buttons, heavyOpacity } = useTheme()
     const buttonStyles = {
+      [ButtonType.Critical]: { color: Buttons.critical, text: Buttons.primaryText },
       [ButtonType.Primary]: { color: Buttons.primary, text: Buttons.primaryText },
       [ButtonType.Secondary]: { color: Buttons.secondary, text: Buttons.secondaryText },
-      [ButtonType.Critical]: { color: Buttons.critical, text: Buttons.primaryText },
+      [ButtonType.ModalCritical]: { color: Buttons.modalCritical, text: Buttons.primaryText },
+      [ButtonType.ModalPrimary]: { color: Buttons.modalPrimary, text: Buttons.modalPrimaryText },
+      [ButtonType.ModalSecondary]: { color: Buttons.modalSecondary, text: Buttons.modalSecondaryText },
     }
 
     return (
