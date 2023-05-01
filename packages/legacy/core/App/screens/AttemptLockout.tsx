@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import AppLockout from '../assets/img/app-lockout.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { second, minute, hour } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -21,7 +20,7 @@ interface Timer {
 }
 
 const AttemptLockout: React.FC = () => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, Assets } = useTheme()
   const { t } = useTranslation()
   const [state, dispatch] = useStore()
   const [time, setTime] = useState<Timer>()
@@ -121,7 +120,7 @@ const AttemptLockout: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <AppLockout style={styles.image} />
+      <Assets.svg.appLockout style={styles.image} />
       <View>
         <Text style={styles.title}>{t('AttemptLockout.Title')}</Text>
         <Text style={styles.description}>{t('AttemptLockout.Description')}</Text>

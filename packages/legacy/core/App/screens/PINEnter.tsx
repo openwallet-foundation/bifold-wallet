@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StatusBar, Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter } from 'react-native'
 
-import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
 import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules, EventTypes } from '../constants'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -42,6 +42,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ButtonLoading } = useAnimatedComponents()
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -60,6 +61,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     notifyText: {
       ...TextTheme.normal,
+      marginVertical: 5,
+    },
+    modalText: {
+      ...TextTheme.modalNormal,
       marginVertical: 5,
     },
   })
@@ -322,7 +327,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
             title={t('PINEnter.LoggedOut')}
             bodyContent={
               <View>
-                <Text style={style.notifyText}>{t('PINEnter.LoggedOutDescription')}</Text>
+                <Text style={style.modalText}>{t('PINEnter.LoggedOutDescription')}</Text>
               </View>
             }
             onCallToActionLabel={t('Global.Okay')}
@@ -374,9 +379,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           title={t('PINEnter.IncorrectPIN')}
           bodyContent={
             <View>
-              <Text style={style.notifyText}>{t('PINEnter.RepeatPIN')}</Text>
+              <Text style={style.modalText}>{t('PINEnter.RepeatPIN')}</Text>
               {displayLockoutWarning ? (
-                <Text style={style.notifyText}>{t('PINEnter.AttemptLockoutWarning')}</Text>
+                <Text style={style.modalText}>{t('PINEnter.AttemptLockoutWarning')}</Text>
               ) : null}
             </View>
           }

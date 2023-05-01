@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
 import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
@@ -39,6 +39,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { ListItems, ColorPallet } = useTheme()
+  const { RecordLoading } = useAnimatedComponents()
   const { assertConnectedNetwork } = useNetwork()
   const { OCABundleResolver } = useConfiguration()
 

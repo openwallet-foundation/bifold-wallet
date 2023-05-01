@@ -27,7 +27,7 @@ exports[`Header Right Home Component Renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "white",
+          "color": "#FFFFFF",
           "fontSize": 26,
         },
         undefined,

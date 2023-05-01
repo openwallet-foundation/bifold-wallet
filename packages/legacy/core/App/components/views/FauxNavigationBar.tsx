@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Platform } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -9,7 +9,7 @@ import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 
 const defaultIconSize = 24
-const defaultStatusAndNavbarHeight = 44
+const defaultStatusAndNavbarHeight = Platform.OS === 'ios' ? 44 : undefined
 
 interface FauxNavigationBarProps {
   title: string
@@ -33,7 +33,7 @@ const FauxNavigationBar: React.FC<FauxNavigationBarProps> = ({ title, onHomeTouc
     },
     label: {
       ...TextTheme.normal,
-      color: ColorPallet.grayscale.white,
+      color: ColorPallet.brand.headerText,
       fontSize: 17,
       fontWeight: 'bold',
       flexGrow: 1,
@@ -54,7 +54,7 @@ const FauxNavigationBar: React.FC<FauxNavigationBarProps> = ({ title, onHomeTouc
               testID={testIdWithKey('HomeButton')}
               onPress={onHomeTouched}
             >
-              <Icon name="home" size={defaultIconSize} color={'white'} />
+              <Icon name="home" size={defaultIconSize} color={ColorPallet.brand.headerIcon} />
             </TouchableOpacity>
           )}
         </View>

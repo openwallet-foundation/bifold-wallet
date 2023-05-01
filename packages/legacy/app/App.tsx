@@ -17,6 +17,8 @@ import {
   RootStack,
   NetInfo,
   defaultConfiguration,
+  animatedComponents,
+  AnimatedComponentsProvider,
 } from 'aries-bifold'
 import * as React from 'react'
 import { useEffect, useMemo } from 'react'
@@ -41,26 +43,28 @@ const App = () => {
     <StoreProvider>
       <AgentProvider>
         <ThemeProvider value={theme}>
-          <ConfigurationProvider value={defaultConfiguration}>
-            <CommonUtilProvider>
-              <AuthProvider>
-                <NetworkProvider>
-                  <StatusBar
-                    hidden={false}
-                    barStyle="light-content"
-                    backgroundColor={theme.ColorPallet.brand.primary}
-                    translucent={false}
-                  />
-                  <NetInfo />
-                  <ErrorModal />
-                  <TourProvider steps={homeTourSteps} overlayColor={'gray'} overlayOpacity={0.7}>
-                    <RootStack />
-                  </TourProvider>
-                  <Toast topOffset={15} config={toastConfig} />
-                </NetworkProvider>
-              </AuthProvider>
-            </CommonUtilProvider>
-          </ConfigurationProvider>
+          <AnimatedComponentsProvider value={animatedComponents}>
+            <ConfigurationProvider value={defaultConfiguration}>
+              <CommonUtilProvider>
+                <AuthProvider>
+                  <NetworkProvider>
+                    <StatusBar
+                      hidden={false}
+                      barStyle="light-content"
+                      backgroundColor={theme.ColorPallet.brand.primary}
+                      translucent={false}
+                    />
+                    <NetInfo />
+                    <ErrorModal />
+                    <TourProvider steps={homeTourSteps} overlayColor={'gray'} overlayOpacity={0.7}>
+                      <RootStack />
+                    </TourProvider>
+                    <Toast topOffset={15} config={toastConfig} />
+                  </NetworkProvider>
+                </AuthProvider>
+              </CommonUtilProvider>
+            </ConfigurationProvider>
+          </AnimatedComponentsProvider>
         </ThemeProvider>
       </AgentProvider>
     </StoreProvider>

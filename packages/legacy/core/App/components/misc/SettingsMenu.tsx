@@ -27,7 +27,7 @@ const SettingsMenu: React.FC = () => {
       style={styles.button}
       onPress={() => navigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })}
     >
-      <Icon name="menu" size={24} color={ColorPallet.grayscale.white}></Icon>
+      <Icon name="menu" size={24} color={ColorPallet.brand.headerIcon}></Icon>
     </TouchableOpacity>
   )
 }

@@ -18,7 +18,7 @@ interface ConnectionAlertProps {
 
 const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
   const { t } = useTranslation()
-  const { ListItems, ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const [infoCardVisible, setInfoCardVisible] = useState(false)
 
   const settingsNavigation = useNavigation<StackNavigationProp<RootStackParams>>()
@@ -42,7 +42,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
     },
     fakeLink: {
       ...TextTheme.normal,
-      ...ListItems.recordLink,
+      color: ColorPallet.notification.infoText,
       textDecorationLine: 'underline',
     },
     row: {
@@ -56,11 +56,15 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
       ...TextTheme.normal,
       marginVertical: 5,
     },
+    modalText: {
+      ...TextTheme.normal,
+      color: ColorPallet.notification.infoText,
+    },
     notifyTextList: {
       marginVertical: 6,
     },
     informationIcon: {
-      color: ColorPallet.brand.link,
+      color: ColorPallet.brand.icon,
       marginLeft: 10,
     },
   })
@@ -84,7 +88,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
           title={t('ConnectionAlert.WhatAreContacts')}
           bodyContent={
             <View>
-              <Text style={styles.notifyText}>{t('ConnectionAlert.PopupIntro')}</Text>
+              <Text style={styles.modalText}>{t('ConnectionAlert.PopupIntro')}</Text>
               <UnorderedList
                 UnorderedListItems={[
                   t('ConnectionAlert.PopupPoint1'),
@@ -92,14 +96,14 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
                   t('ConnectionAlert.PopupPoint3'),
                 ]}
               />
-              <Text style={styles.notifyText}>
+              <Text style={styles.modalText}>
                 {t('ConnectionAlert.SettingsInstruction')}
                 <Text style={styles.fakeLink} onPress={navigateToSettings}>
                   {t('ConnectionAlert.SettingsLink')}
                 </Text>
                 .
               </Text>
-              <Text style={styles.notifyText}>{t('ConnectionAlert.PrivacyMessage')}</Text>
+              <Text style={styles.modalText}>{t('ConnectionAlert.PrivacyMessage')}</Text>
             </View>
           }
           onCallToActionLabel={t('ConnectionAlert.PopupExit')}

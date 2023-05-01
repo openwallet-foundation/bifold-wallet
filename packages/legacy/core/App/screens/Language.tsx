@@ -67,8 +67,8 @@ const Language = () => {
               <Text style={[TextTheme.title]}>{value}</Text>
               <BouncyCheckbox
                 disableText
-                fillColor="#FFFFFFFF"
-                unfillColor="#FFFFFFFF"
+                fillColor={ColorPallet.brand.secondaryBackground}
+                unfillColor={ColorPallet.brand.secondaryBackground}
                 size={36}
                 innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
                 ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary}></Icon>}

@@ -8,7 +8,13 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
   transparent={true}
   visible={false}
 >
-  <RNCSafeAreaView>
+  <RNCSafeAreaView
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+  >
     <RCTScrollView
       style={
         Array [
@@ -174,7 +180,13 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
   transparent={true}
   visible={true}
 >
-  <RNCSafeAreaView>
+  <RNCSafeAreaView
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+  >
     <RCTScrollView
       style={
         Array [
@@ -344,7 +356,13 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
   transparent={true}
   visible={true}
 >
-  <RNCSafeAreaView>
+  <RNCSafeAreaView
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+  >
     <RCTScrollView
       style={
         Array [
