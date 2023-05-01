@@ -435,6 +435,11 @@ export const TabTheme = {
     borderTopWidth: 0,
     paddingBottom: 0,
   },
+  tabBarContainerStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   tabBarActiveTintColor: ColorPallet.brand.primary,
   tabBarInactiveTintColor: ColorPallet.notification.infoText,
   tabBarTextStyle: {
@@ -449,7 +454,6 @@ export const TabTheme = {
     height: 60,
     width: 60,
     backgroundColor: ColorPallet.brand.primary,
-    top: -20,
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',

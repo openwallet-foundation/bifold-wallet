@@ -41,6 +41,7 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
         <Text style={TextTheme.normal}>{t('WhatAreContacts.Preamble')}</Text>
         <FlatList
           style={{ marginTop: 15, flexGrow: 0 }}
+          scrollEnabled={false}
           data={[
             { key: t('WhatAreContacts.ListItemCredentialUpdates') },
             { key: t('WhatAreContacts.ListItemNewCredentials') },

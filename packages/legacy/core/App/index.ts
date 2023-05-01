@@ -18,11 +18,16 @@ import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
+import { AttachTourStep } from './components/tour/AttachTourStep'
+import { homeTourSteps } from './components/tour/HomeTourSteps'
+import { TourBox } from './components/tour/TourBox'
 import HomeContentView from './components/views/HomeContentView'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
 import { CommonUtilProvider } from './contexts/commons'
 import { NetworkProvider } from './contexts/network'
+import { useTour } from './contexts/tour/tour-context'
+import { TourProvider } from './contexts/tour/tour-provider'
 import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
@@ -53,6 +58,7 @@ export { EventTypes } from './constants'
 
 export type { Theme } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
+export type { TourStep } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
@@ -63,6 +69,7 @@ export type {
   Onboarding as OnboardingState,
   LoginAttempt as LoginAttemptState,
   Preferences as PreferencesState,
+  Tours as ToursState,
 } from './types/state'
 export * from '../verifier'
 
@@ -74,6 +81,11 @@ export {
   AgentProvider,
   AuthProvider,
   NetworkProvider,
+  TourProvider,
+  useTour,
+  AttachTourStep,
+  TourBox,
+  homeTourSteps,
   Button,
   ButtonType,
   CheckBoxRow,

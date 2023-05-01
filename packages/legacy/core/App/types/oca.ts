@@ -219,9 +219,13 @@ export class OCABundle implements OCABundleType {
       return (this.bundle as Bundle).captureBase as unknown as T
     }
     if (language !== undefined) {
-      return (this.bundle as Bundle).overlays.find(
+      // we want to return branding even if there isn't a bundle for a given language
+      const overlay = (this.bundle as Bundle).overlays.find(
         (item) => item.type === type.toString() && (item as BaseL10nOverlay).language === language
-      ) as T
+      ) as T | undefined
+      if (overlay) {
+        return overlay
+      }
     }
     return (this.bundle as Bundle).overlays.find((item) => item.type === type.toString()) as T
   }
@@ -323,9 +327,11 @@ export class OCABundleResolver implements OCABundleResolverType {
     language?: string
   }): Promise<Field[]> {
     const bundle = await this.resolve(params)
-    const presentationFields = [...params.attributes]
-
+    let presentationFields = [...params.attributes]
     if (bundle?.captureBase?.attributes) {
+      // if the oca brandaing has the attrbutes set, only display those attributes
+      const bundleFields = Object.keys(bundle.captureBase.attributes)
+      presentationFields = presentationFields.filter((item) => item.name && bundleFields.includes(item.name))
       for (let i = 0; i < presentationFields.length; i++) {
         const presentationField = presentationFields[i]
         const key = presentationField.name || ''

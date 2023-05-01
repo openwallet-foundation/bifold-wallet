@@ -5,6 +5,7 @@ import { Text, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { AttachTourStep } from '../components/tour/AttachTourStep'
 import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
@@ -43,21 +44,23 @@ const TabStack: React.FC = () => {
           component={HomeStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
+              <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
+                <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
+                {showLabels && (
+                  <Text
+                    style={{
+                      ...TabTheme.tabBarTextStyle,
+                      color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                    }}
+                  >
+                    {t('TabStack.Home')}
+                  </Text>
+                )}
+              </View>
             ),
+            tabBarShowLabel: false,
             tabBarBadge: total || undefined,
             tabBarBadgeStyle: { backgroundColor: ColorPallet.semantic.error },
-            tabBarLabel: ({ focused }) =>
-              showLabels && (
-                <Text
-                  style={{
-                    ...TabTheme.tabBarTextStyle,
-                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                  }}
-                >
-                  {t('TabStack.Home')}
-                </Text>
-              ),
             tabBarAccessibilityLabel: `${t('TabStack.Home')} (${
               total === 1 ? t('Home.OneNotification') : t('Home.CountNotifications', { count: total || 0 })
             })`,
@@ -67,26 +70,49 @@ const TabStack: React.FC = () => {
         <Tab.Screen
           name={TabStacks.ConnectStack}
           options={{
-            tabBarIcon: () => (
-              <View style={TabTheme.focusTabIconStyle}>
-                <Icon
-                  name="qrcode-scan"
-                  color={TabTheme.tabBarButtonIconStyle.color}
-                  size={32}
-                  style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
-                />
-              </View>
-            ),
-            tabBarLabel: ({ focused }) => (
-              <Text
+            tabBarIcon: ({ focused }) => (
+              <View
                 style={{
-                  ...TabTheme.tabBarTextStyle,
-                  color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                  position: 'relative',
+                  flex: 1,
+                  width: 90,
                 }}
               >
-                {t('TabStack.Scan')}
-              </Text>
+                <AttachTourStep index={0} fill>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      width: 90,
+                      minHeight: 90,
+                      flexGrow: 1,
+                      margin: 'auto',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <View style={{ ...TabTheme.focusTabIconStyle }}>
+                      <Icon
+                        name="qrcode-scan"
+                        color={TabTheme.tabBarButtonIconStyle.color}
+                        size={32}
+                        style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        ...TabTheme.tabBarTextStyle,
+                        color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                        marginTop: 5,
+                      }}
+                    >
+                      {t('TabStack.Scan')}
+                    </Text>
+                  </View>
+                </AttachTourStep>
+              </View>
             ),
+            tabBarShowLabel: false,
             tabBarAccessibilityLabel: t('TabStack.Scan'),
             tabBarTestID: testIdWithKey(t('TabStack.Scan')),
           }}
@@ -107,19 +133,23 @@ const TabStack: React.FC = () => {
           component={CredentialStack}
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+              <AttachTourStep index={2}>
+                <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
+                  <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+                  {showLabels && (
+                    <Text
+                      style={{
+                        ...TabTheme.tabBarTextStyle,
+                        color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                      }}
+                    >
+                      {t('TabStack.Credentials')}
+                    </Text>
+                  )}
+                </View>
+              </AttachTourStep>
             ),
-            tabBarLabel: ({ focused }) =>
-              showLabels && (
-                <Text
-                  style={{
-                    ...TabTheme.tabBarTextStyle,
-                    color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                  }}
-                >
-                  {t('TabStack.Credentials')}
-                </Text>
-              ),
+            tabBarShowLabel: false,
             tabBarAccessibilityLabel: t('TabStack.Credentials'),
             tabBarTestID: testIdWithKey(t('TabStack.Credentials')),
           }}
