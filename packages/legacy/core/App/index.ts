@@ -42,7 +42,7 @@ export { initLanguages, initStoredLanguage, translationResources } from './local
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
 export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
-
+export { Assets as ImageAssets } from './theme'
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
 export { ColorPallet } from './theme'
