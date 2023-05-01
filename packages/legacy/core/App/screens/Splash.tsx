@@ -20,9 +20,9 @@ import { Config } from 'react-native-config'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
-import LoadingIndicator from '../components/animated/LoadingIndicator'
 import { ToastType } from '../components/toast/BaseToast'
 import { LocalStorageKeys } from '../constants'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -69,6 +69,7 @@ const Splash: React.FC = () => {
   const navigation = useNavigation()
   const { getWalletCredentials } = useAuth()
   const { ColorPallet } = useTheme()
+  const { LoadingIndicator } = useAnimatedComponents()
   const styles = StyleSheet.create({
     container: {
       flex: 1,

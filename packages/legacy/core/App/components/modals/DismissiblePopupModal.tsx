@@ -117,7 +117,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                     title={onCallToActionLabel || t('Global.Okay')}
                     accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
                     testID={testIdWithKey('Okay')}
-                    buttonType={ButtonType.Primary}
+                    buttonType={ButtonType.ModalPrimary}
                     onPress={onCallToActionPressed}
                   />
                 )}

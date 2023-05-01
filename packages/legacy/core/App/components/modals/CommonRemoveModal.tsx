@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -11,7 +11,7 @@ import { GenericFn } from '../../types/fn'
 import { RemoveType } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
-import UnorderedList from '../misc/UnorderedList'
+import UnorderedListModal from '../misc/UnorderedListModal'
 import FauxNavigationBar from '../views/FauxNavigationBar'
 
 interface CommonRemoveModalProps {
@@ -44,14 +44,14 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
           },
         ]}
       >
-        <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{title}</Text>
-        <Icon name={isCollapsed ? 'expand-more' : 'expand-less'} size={24} color={TextTheme.normal.color} />
+        <Text style={[TextTheme.modalNormal, { fontWeight: 'bold' }]}>{title}</Text>
+        <Icon name={isCollapsed ? 'expand-more' : 'expand-less'} size={24} color={TextTheme.modalNormal.color} />
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed} enablePointerEvents={true}>
         <View
           style={[{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPallet.brand.modalSecondaryBackground }]}
         >
-          <UnorderedList UnorderedListItems={content} />
+          <UnorderedListModal UnorderedListItems={content} />
         </View>
       </Collapsible>
     </>
@@ -75,7 +75,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
     controlsContainer: {
       marginTop: 'auto',
       marginHorizontal: 20,
-      marginBottom: 108,
+      marginBottom: Platform.OS === 'ios' ? 108 : 20,
     },
   })
 
@@ -90,20 +90,20 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
           {removeType === RemoveType.Contact && (
             <View>
               <View style={[{ marginBottom: 25 }]}>
-                <Text style={[TextTheme.title]}>{t('ContactDetails.RemoveTitle')}</Text>
+                <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
               </View>
               <View>
-                <Text style={[TextTheme.normal]}>{t('ContactDetails.RemoveCaption')}</Text>
+                <Text style={[TextTheme.modalNormal]}>{t('ContactDetails.RemoveCaption')}</Text>
               </View>
             </View>
           )}
           {removeType === RemoveType.Credential && (
             <View>
               <View style={[{ marginBottom: 25 }]}>
-                <Text style={[TextTheme.title]}>{t('CredentialDetails.RemoveTitle')}</Text>
+                <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
               </View>
               <View>
-                <Text style={[TextTheme.normal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+                <Text style={[TextTheme.modalNormal]}>{t('CredentialDetails.RemoveCaption')}</Text>
               </View>
               <View style={{ marginTop: 25 }}>
                 <Dropdown
@@ -130,7 +130,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
               accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
               testID={testIdWithKey('ConfirmRemoveButton')}
               onPress={() => onSubmit && onSubmit()}
-              buttonType={ButtonType.Critical}
+              buttonType={ButtonType.ModalCritical}
             />
           </View>
           <View style={[{ paddingTop: 10 }]}>
@@ -139,7 +139,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
               accessibilityLabel={t('Global.Cancel')}
               testID={testIdWithKey('AbortRemoveButton')}
               onPress={() => onCancel && onCancel()}
-              buttonType={ButtonType.Secondary}
+              buttonType={ButtonType.ModalSecondary}
             />
           </View>
         </View>
