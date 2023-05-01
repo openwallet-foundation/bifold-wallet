@@ -1,5 +1,5 @@
 PODS:
-  - anoncreds (0.1.0-dev.14):
+  - anoncreds (0.1.0-dev.15):
     - React
     - React-callinvoker
     - React-Core
@@ -579,7 +579,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  anoncreds: a27700deb515fb1e6ab54dfa5cc8dd76b5453637
+  anoncreds: 00e86fd1f9dea12add1c8817da539a205ac69053
   aries-askar: 6577076b42606696c4a54e1815ba65428234101e
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
