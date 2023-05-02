@@ -198,7 +198,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
       {(!hideLeft || !hideRight) && (
         <View style={styles.footerContainer}>
           {!hideLeft && (
-            <TouchableOpacity testID={testIdWithKey('Left')} onPress={handleLeft} hitSlop={hitSlop}>
+            <TouchableOpacity testID={testIdWithKey('Back')} onPress={handleLeft} hitSlop={hitSlop}>
               <Text style={styles.navText}>{leftText}</Text>
             </TouchableOpacity>
           )}
@@ -212,7 +212,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
             )}
           </View>
           {!hideRight && (
-            <TouchableOpacity testID={testIdWithKey('Right')} onPress={handleRight} hitSlop={hitSlop}>
+            <TouchableOpacity testID={testIdWithKey('Next')} onPress={handleRight} hitSlop={hitSlop}>
               <Text style={styles.navText}>{rightText}</Text>
             </TouchableOpacity>
           )}
