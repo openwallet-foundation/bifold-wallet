@@ -59,11 +59,13 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
 }
 
 const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visible, onSubmit, onCancel }) => {
+  const { t } = useTranslation()
+
   if (!removeType) {
-    throw new Error('removeType cannot be undefined')
+    throw new Error(t('Error.RemoveType'))
   }
 
-  const { t } = useTranslation()
+  
   const { ColorPallet, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({

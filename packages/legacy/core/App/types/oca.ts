@@ -1,4 +1,5 @@
 import startCase from 'lodash.startcase'
+import { useTranslation } from 'react-i18next'
 
 import { parseCredDefFromId } from '../utils/cred-def'
 import { hashCode, hashToRGBA } from '../utils/helpers'
@@ -178,9 +179,10 @@ export class OCABundle implements OCABundleType {
   }
 
   public get captureBase(): CaptureBaseOverlay {
+    const { t } = useTranslation()
     const overlay = this.getOverlay<CaptureBaseOverlay>(OverlayType.Base10)
     if (!overlay) {
-      throw new Error('Capture Base must be defined')
+      throw new Error(t('Error.CaptureBase'))
     }
     return overlay
   }

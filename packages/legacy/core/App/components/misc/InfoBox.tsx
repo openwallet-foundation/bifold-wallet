@@ -161,7 +161,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       break
 
     default:
-      throw new Error('InfoTextBoxType needs to be set correctly')
+      throw new Error(t('Error.InfoTextBoxType'))
   }
 
   const onShowDetailsTouched = () => {

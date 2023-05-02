@@ -27,12 +27,13 @@ const qrContainerSize = windowDimensions.width - 20
 const qrSize = qrContainerSize - 60
 
 const ConnectionInvitation: React.FC<ConnectionInvitationProps> = ({ navigation }) => {
+  const { t } = useTranslation()
   const { agent } = useAgent()
   if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
+    throw new Error(t('Error.AFJ'))
   }
 
-  const { t } = useTranslation()
+  
   const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({

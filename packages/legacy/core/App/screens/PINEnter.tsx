@@ -237,7 +237,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     try {
       const credentials = await getWalletCredentials()
       if (!credentials) {
-        throw new Error('Problem')
+        throw new Error(t('Error.Message1039'))
       }
 
       const key = await hashPIN(PIN, credentials.salt)

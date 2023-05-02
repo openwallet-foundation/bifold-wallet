@@ -168,7 +168,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           })
           break
         default:
-          throw new Error('NotificationType was not set correctly.')
+          throw new Error(t('Error.NotificationType'))
       }
     })
   }
@@ -243,7 +243,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         }
         break
       default:
-        throw new Error('NotificationType was not set correctly.')
+        throw new Error(t('Error.NotificationType'))
     }
   }
 

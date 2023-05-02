@@ -1,5 +1,6 @@
 import { Agent, ProofExchangeRecord, ProofIdentifier, ProofState } from '@aries-framework/core'
 import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
+import { useTranslation } from 'react-i18next'
 
 import { ProofMetadata } from '../types/metadata'
 import {
@@ -13,9 +14,10 @@ import {
  * Extract identifiers from indy proof
  * */
 export const getProofIdentifiers = (proof: IndyProof, proofIndex: number): ProofIdentifier => {
+  const { t } = useTranslation()
   const identifiers = proof.identifiers[proofIndex]
   if (!identifiers) {
-    throw new Error('Invalid indy proof data')
+    throw new Error(t('Error.Identifiers'))
   }
   return {
     schemaId: identifiers.schema_id,

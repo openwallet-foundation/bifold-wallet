@@ -22,24 +22,26 @@ import { testIdWithKey } from '../utils/testable'
 type CommonDeclineProps = StackScreenProps<NotificationStackParams, Screens.CommonDecline>
 
 const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
+  const { t } = useTranslation()
+  
   if (!route?.params) {
-    throw new Error('CommonDecline route prams were not set properly')
+    throw new Error(t('Error.CommonDecline'))
   }
 
   const { declineType, itemId, deleteView, customClose } = route.params
 
   if (!itemId) {
-    throw new Error('itemId cannot be undefined')
+    throw new Error(t('Error.ItemId'))
   }
 
   if (!declineType) {
-    throw new Error('declineType cannot be undefined')
+    throw new Error(t('Error.DeclineType'))
   }
 
   const { agent } = useAgent()
   const credential = useCredentialById(itemId)
   const proof = useProofById(itemId)
-  const { t } = useTranslation()
+  
   const { ColorPallet, TextTheme } = useTheme()
   const [didDecline, setDidDecline] = useState<boolean>(false)
   const imageDisplayOptions = {
@@ -75,7 +77,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
     (declineType === DeclineType.ProofRequest && credential) ||
     (declineType === DeclineType.CredentialOffer && proof)
   ) {
-    throw new Error('Usage type and artifact do not match')
+    throw new Error(t('Error.UsageType'))
   }
 
   const onDoneTouched = () => {
@@ -152,13 +154,12 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
         <SafeAreaView>
           <ScrollView style={styles.container}>
             <DeleteNotification style={{ alignSelf: 'center' }} {...deleteImageDisplayOptions} />
-            <Text style={[TextTheme.headingTwo, { marginTop: 20 }]}>Delete this offer?</Text>
+            <Text style={[TextTheme.headingTwo, { marginTop: 20 }]}>{t('CredentialOffer.DeleteOfferTitle')}</Text>
             <Text style={[TextTheme.normal, { marginTop: 20 }]}>
-              Deleting this offer will remove the notification from your list.
+            {t('CredentialOffer.DeleteOfferMessage')}
             </Text>
             <Text style={[TextTheme.normal, { marginTop: 20 }]}>
-              Don't recognize the organization? Check your Contacts list. You only receive notifications from contacts
-              you've initiated
+            {t('CredentialOffer.DeleteOfferDescription')}
             </Text>
           </ScrollView>
           <View style={{ marginTop: 'auto', margin: 20 }}>
