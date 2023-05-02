@@ -118,7 +118,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor() ?? 'rgba(0, 0, 0, 0.24)',
+      backgroundColor: getSecondaryBackgroundColor() ?? 'rgb(0, 0, 0)',
     },
     primaryBodyContainer: {
       flexGrow: 1,
@@ -443,6 +443,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         testID={testIdWithKey('ShowCredentialDetails')}
       >
         <View testID={testIdWithKey('CredentialCard')}>
+          <View style={{position:"absolute", left:"-150%", width:"300%"}}>
+            <Text style={{ overflow: "hidden", borderRadius: 15, transform: [{ rotate: "-45deg" }] }}>{"test ".repeat(1500)}</Text>
+          </View>
           <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
         </View>
       </TouchableOpacity>
