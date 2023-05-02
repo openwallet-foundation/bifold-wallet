@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useCallback } from 'react'
+import React, { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -7,6 +7,11 @@ import { tourMargin } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { RenderProps } from '../../contexts/tour/tour-context'
 import { testIdWithKey } from '../../utils/testable'
+
+enum PaginationDotTypes {
+  Filled,
+  Unfilled,
+}
 
 export interface TourBoxProps extends RenderProps {
   children?: ReactNode
@@ -35,6 +40,14 @@ export interface TourBoxProps extends RenderProps {
    */
   onRight?: () => void
   title?: string
+  /**
+   * The 1-indexed step it is on
+   */
+  stepOn?: number
+  /**
+   * The 1-indexed number of steps in the current tour
+   */
+  stepsOutOf?: number
 }
 
 /**
@@ -57,12 +70,18 @@ export function TourBox(props: TourBoxProps): ReactElement {
     onRight,
     children,
     stop,
+    stepOn,
+    stepsOutOf,
   } = props
-  const { TextTheme, ColorPallet } = useTheme()
+  const { TextTheme, ColorPallet, OnboardingTheme } = useTheme()
   const { width } = useWindowDimensions()
   const iconSize = 30
   const dismissIconName = 'clear'
   const iconColor = ColorPallet.notification.infoIcon
+  const [paginationDots, setPaginationDots] = useState<PaginationDotTypes[]>([])
+  const [xPos, setXPos] = useState(0)
+  const swipeThreshold = 75
+  const hitSlop = { top: 20, bottom: 20, left: 50, right: 50 }
 
   const styles = StyleSheet.create({
     container: {
@@ -103,6 +122,25 @@ export function TourBox(props: TourBoxProps): ReactElement {
       color: ColorPallet.brand.primary,
       fontWeight: 'bold',
     },
+    pagerContainer: {
+      flexDirection: 'row',
+      alignSelf: 'center',
+    },
+    pagerDot: {
+      ...OnboardingTheme.pagerDot,
+      borderWidth: 1,
+      borderStyle: 'solid',
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      marginHorizontal: 5,
+    },
+    pagerDotActive: {
+      backgroundColor: OnboardingTheme.pagerDotActive.color,
+    },
+    pagerDotInactive: {
+      backgroundColor: 'transparent',
+    },
   })
 
   const handleLeft = useCallback((): void => {
@@ -113,8 +151,36 @@ export function TourBox(props: TourBoxProps): ReactElement {
     onRight?.()
   }, [onRight])
 
+  useEffect(() => {
+    const arr: PaginationDotTypes[] = []
+    if (typeof stepOn === 'number' && typeof stepsOutOf === 'number') {
+      for (let i = 1; i <= stepsOutOf; i++) {
+        if (i === stepOn) {
+          arr.push(PaginationDotTypes.Filled)
+        } else {
+          arr.push(PaginationDotTypes.Unfilled)
+        }
+      }
+    }
+
+    setPaginationDots(arr)
+  }, [])
+
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onTouchStart={(e) => setXPos(e.nativeEvent.pageX)}
+      onTouchEnd={(e) => {
+        // if swipe right
+        if (xPos - e.nativeEvent.pageX > swipeThreshold) {
+          handleRight()
+
+          // if swipe left
+        } else if (e.nativeEvent.pageX - xPos > swipeThreshold) {
+          handleLeft()
+        }
+      }}
+    >
       <View style={styles.headerContainer}>
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
@@ -132,12 +198,21 @@ export function TourBox(props: TourBoxProps): ReactElement {
       {(!hideLeft || !hideRight) && (
         <View style={styles.footerContainer}>
           {!hideLeft && (
-            <TouchableOpacity testID={testIdWithKey('Left')} onPress={handleLeft}>
+            <TouchableOpacity testID={testIdWithKey('Back')} onPress={handleLeft} hitSlop={hitSlop}>
               <Text style={styles.navText}>{leftText}</Text>
             </TouchableOpacity>
           )}
+          <View style={styles.pagerContainer}>
+            {paginationDots.map((dot, index) =>
+              dot === PaginationDotTypes.Filled ? (
+                <View key={index} style={[styles.pagerDot, styles.pagerDotActive]}></View>
+              ) : (
+                <View key={index} style={[styles.pagerDot, styles.pagerDotInactive]}></View>
+              )
+            )}
+          </View>
           {!hideRight && (
-            <TouchableOpacity testID={testIdWithKey('Right')} onPress={handleRight}>
+            <TouchableOpacity testID={testIdWithKey('Next')} onPress={handleRight} hitSlop={hitSlop}>
               <Text style={styles.navText}>{rightText}</Text>
             </TouchableOpacity>
           )}
