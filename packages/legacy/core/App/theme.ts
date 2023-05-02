@@ -1,10 +1,24 @@
 import { StyleSheet } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
+import Arrow from './assets/icons/large-arrow.svg'
+import AppLockout from './assets/img/app-lockout.svg'
+import Biometrics from './assets/img/biometrics.svg'
+import CredentialDeclined from './assets/img/credential-declined.svg'
+import DeleteNotification from './assets/img/delete-notification.svg'
+import EmptyWallet from './assets/img/empty-wallet.svg'
 import Logo from './assets/img/logo.svg'
+import ProofRequestDeclined from './assets/img/proof-declined.svg'
 
 interface SVGAssets {
+  appLockout: React.FC<SvgProps>
+  biometrics: React.FC<SvgProps>
+  credentialDeclined: React.FC<SvgProps>
+  deleteNotification: React.FC<SvgProps>
+  emptyWallet: React.FC<SvgProps>
   logo: React.FC<SvgProps>
+  proofRequestDeclined: React.FC<SvgProps>
+  arrow: React.FC<SvgProps>
 }
 
 interface FontAttributes {
@@ -48,6 +62,11 @@ interface TextTheme {
   labelText: FontAttributes
   caption: FontAttributes
   title: FontAttributes
+  headerTitle: FontAttributes
+  modalNormal: FontAttributes
+  modalTitle: FontAttributes
+  modalHeadingOne: FontAttributes
+  modalHeadingThree: FontAttributes
 }
 
 interface BrandColors {
@@ -56,11 +75,21 @@ interface BrandColors {
   secondary: string
   secondaryDisabled: string
   highlight: string
-  modalPrimaryBackground: string
-  modalSecondaryBackground: string
   primaryBackground: string
   secondaryBackground: string
+  modalPrimary: string
+  modalSecondary: string
+  modalPrimaryBackground: string
+  modalSecondaryBackground: string
   link: string
+  text: string
+  icon: string
+  headerText: string
+  headerIcon: string
+  buttonText: string
+  tabBarInactive: string
+  unorderedList: string
+  unorderedListModal: string
 }
 
 interface SemanticColors {
@@ -120,6 +149,15 @@ export const lightOpacity = 0.35
 export const zeroOpacity = 0.0
 export const borderWidth = 2
 
+const GrayscaleColors: GrayscaleColors = {
+  black: '#000000',
+  darkGrey: '#313132',
+  mediumGrey: '#606060',
+  lightGrey: '#D3D3D3',
+  veryLightGrey: '#F2F2F2',
+  white: '#FFFFFF',
+}
+
 const BrandColors: BrandColors = {
   primary: '#42803E',
   primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
@@ -128,9 +166,19 @@ const BrandColors: BrandColors = {
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
+  modalPrimary: '#42803E',
+  modalSecondary: '#FFFFFFFF',
   modalPrimaryBackground: '#000000',
   modalSecondaryBackground: '#313132',
-  link: '#FFFFFF',
+  unorderedList: GrayscaleColors.white,
+  unorderedListModal: GrayscaleColors.white,
+  link: GrayscaleColors.white,
+  text: GrayscaleColors.white,
+  icon: GrayscaleColors.white,
+  headerIcon: GrayscaleColors.white,
+  headerText: GrayscaleColors.white,
+  buttonText: GrayscaleColors.white,
+  tabBarInactive: GrayscaleColors.white,
 }
 
 const SemanticColors: SemanticColors = {
@@ -159,15 +207,6 @@ const NotificationColors: NotificationColors = {
   popupOverlay: `rgba(0, 0, 0, ${mediumOpacity})`,
 }
 
-const GrayscaleColors: GrayscaleColors = {
-  black: '#000000',
-  darkGrey: '#313132',
-  mediumGrey: '#606060',
-  lightGrey: '#D3D3D3',
-  veryLightGrey: '#F2F2F2',
-  white: '#FFFFFF',
-}
-
 export const ColorPallet: ColorPallet = {
   brand: BrandColors,
   semantic: SemanticColors,
@@ -179,58 +218,83 @@ export const TextTheme: TextTheme = {
   headingOne: {
     fontSize: 38,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   headingTwo: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   headingThree: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   headingFour: {
     fontSize: 21,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   normal: {
     fontSize: 18,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   label: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   labelTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   labelSubtitle: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   labelText: {
     fontSize: 10,
     fontWeight: 'normal',
     fontStyle: 'italic',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   caption: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: ColorPallet.notification.infoText,
+    color: ColorPallet.brand.text,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.headerText,
+  },
+  modalNormal: {
+    fontSize: 18,
+    fontWeight: 'normal',
+    color: ColorPallet.grayscale.white,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  modalHeadingOne: {
+    fontSize: 38,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  modalHeadingThree: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
   },
 }
 
@@ -273,7 +337,7 @@ export const Buttons = StyleSheet.create({
   critical: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: '#42803E',
+    backgroundColor: ColorPallet.brand.primary,
   },
   primary: {
     padding: 16,
@@ -287,14 +351,13 @@ export const Buttons = StyleSheet.create({
   },
   primaryText: {
     ...TextTheme.normal,
+    color: ColorPallet.brand.buttonText,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
     textAlign: 'center',
   },
   primaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
     textAlign: 'center',
   },
   secondary: {
@@ -321,6 +384,33 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  modalCritical: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: ColorPallet.brand.primary,
+  },
+  modalPrimary: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: ColorPallet.brand.modalPrimary,
+  },
+  modalPrimaryText: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalSecondary: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.modalPrimary,
+  },
+  modalSecondaryText: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.modalPrimary,
+    textAlign: 'center',
+  },
 })
 
 export const ListItems = StyleSheet.create({
@@ -334,10 +424,10 @@ export const ListItems = StyleSheet.create({
     ...TextTheme.caption,
   },
   credentialOfferBackground: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
+    backgroundColor: ColorPallet.brand.modalPrimaryBackground,
   },
   credentialOfferTitle: {
-    ...TextTheme.headingThree,
+    ...TextTheme.modalHeadingThree,
   },
   credentialOfferDetails: {
     ...TextTheme.normal,
@@ -353,10 +443,10 @@ export const ListItems = StyleSheet.create({
     color: ColorPallet.notification.infoText,
   },
   contactTitle: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   contactDate: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
     marginTop: 10,
   },
   contactIconBackground: {
@@ -441,14 +531,14 @@ export const TabTheme = {
     alignItems: 'center',
   },
   tabBarActiveTintColor: ColorPallet.brand.primary,
-  tabBarInactiveTintColor: ColorPallet.notification.infoText,
+  tabBarInactiveTintColor: ColorPallet.brand.tabBarInactive,
   tabBarTextStyle: {
     ...TextTheme.label,
     fontWeight: 'normal',
     paddingBottom: 5,
   },
   tabBarButtonIconStyle: {
-    color: ColorPallet.notification.infoText,
+    color: ColorPallet.brand.headerIcon,
   },
   focusTabIconStyle: {
     height: 60,
@@ -501,7 +591,7 @@ export const SettingsTheme = {
     marginBottom: 8,
   },
   groupBackground: ColorPallet.brand.secondaryBackground,
-  iconColor: ColorPallet.grayscale.white,
+  iconColor: TextTheme.normal.color,
   text: {
     ...TextTheme.caption,
     color: ColorPallet.grayscale.white,
@@ -624,14 +714,10 @@ export const OnboardingTheme = {
   },
   headerTintColor: ColorPallet.grayscale.white,
   headerText: {
-    color: ColorPallet.notification.infoText,
-    fontSize: 32,
-    fontWeight: 'bold',
+    ...TextTheme.headingTwo,
   },
   bodyText: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: ColorPallet.notification.infoText,
+    ...TextTheme.normal,
   },
   imageDisplayOptions: {
     fill: ColorPallet.notification.infoText,
@@ -657,28 +743,35 @@ export const DialogTheme = {
 }
 
 const LoadingTheme = {
-  backgroundColor: ColorPallet.brand.primaryBackground,
+  backgroundColor: ColorPallet.brand.modalPrimaryBackground,
 }
 
 const PINInputTheme = {
   cell: {
-    backgroundColor: ColorPallet.grayscale.darkGrey,
-    borderColor: ColorPallet.grayscale.darkGrey,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+    borderColor: ColorPallet.brand.secondaryBackground,
   },
   focussedCell: {
-    borderColor: ColorPallet.grayscale.lightGrey,
+    borderColor: ColorPallet.brand.headerIcon,
   },
   cellText: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   icon: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.headerIcon,
   },
 }
 
 export const Assets = {
   svg: {
+    appLockout: AppLockout,
+    biometrics: Biometrics,
+    credentialDeclined: CredentialDeclined,
+    deleteNotification: DeleteNotification,
+    emptyWallet: EmptyWallet,
     logo: Logo,
+    proofRequestDeclined: ProofRequestDeclined,
+    arrow: Arrow,
   },
   img: {
     logoPrimary: {

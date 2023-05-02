@@ -14,10 +14,9 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import Biometrics from '../assets/img/biometrics.svg'
-import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { EventTypes } from '../constants'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -40,7 +39,8 @@ const UseBiometry: React.FC = () => {
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ButtonLoading } = useAnimatedComponents()
   const screenUsage = store.onboarding.didConsiderBiometry
     ? UseBiometryUsage.ToggleOnOff
     : UseBiometryUsage.InitialSetup
@@ -126,7 +126,7 @@ const UseBiometry: React.FC = () => {
       />
       <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center' }}>
-          <Biometrics style={[styles.image]} />
+          <Assets.svg.biometrics style={[styles.image]} />
         </View>
         {biometryAvailable ? (
           <View>

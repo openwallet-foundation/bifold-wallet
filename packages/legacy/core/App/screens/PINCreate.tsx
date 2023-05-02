@@ -17,12 +17,12 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // eslint-disable-next-line import/no-named-as-default
-import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
 import { minPINLength } from '../constants'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -64,6 +64,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
   )
 
   const { ColorPallet, TextTheme } = useTheme()
+  const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>()
   const createPINButtonRef = useRef<TouchableOpacity>()
 
@@ -164,7 +165,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
                     {validation.isInvalid ? (
                       <Icon name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
                     ) : (
-                      <Icon name="check" size={iconSize} color={ColorPallet.notification.success} />
+                      <Icon name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
                     )}
                     <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
                       {t(`PINCreate.Helper.${validation.errorName}`)}

@@ -36,7 +36,7 @@ const InfoIcon: React.FC<InfoProps> = ({ connectionId }: any) => {
         })
       }
     >
-      <Icon name="information" size={24} color={ColorPallet.grayscale.white}></Icon>
+      <Icon name="information" size={24} color={ColorPallet.brand.headerIcon}></Icon>
     </TouchableOpacity>
   )
 }
