@@ -7,7 +7,13 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
   transparent={true}
   visible={true}
 >
-  <RNCSafeAreaView>
+  <RNCSafeAreaView
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+  >
     <RCTScrollView
       style={
         Array [

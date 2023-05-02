@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../contexts/theme'
 import { Locales, storeLanguage } from '../localization'
+import { testIdWithKey } from '../utils/testable'
 interface Language {
   id: Locales
   value: string
@@ -67,14 +68,15 @@ const Language = () => {
               <Text style={[TextTheme.title]}>{value}</Text>
               <BouncyCheckbox
                 disableText
-                fillColor="#FFFFFFFF"
-                unfillColor="#FFFFFFFF"
+                fillColor={ColorPallet.brand.secondaryBackground}
+                unfillColor={ColorPallet.brand.secondaryBackground}
                 size={36}
                 innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
                 ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary}></Icon>}
                 onPress={async () => await handleLanguageChange(language)}
                 isChecked={id === i18n.language}
                 disableBuiltInState
+                testID={testIdWithKey(id.toLocaleLowerCase())}
               />
             </View>
           )

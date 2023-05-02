@@ -43,7 +43,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   const [showDetails, setShowDetails] = useState<boolean>(false)
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.notification.info,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       borderColor: ColorPallet.notification.infoBorder,
       borderRadius: 5,
       borderWidth: 1,

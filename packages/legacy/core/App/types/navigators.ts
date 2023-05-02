@@ -1,3 +1,4 @@
+import { CredentialExchangeRecord } from '@aries-framework/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 
 import { DeclineType } from './decline'
@@ -21,6 +22,7 @@ export enum Screens {
   ProofRequestUsageHistory = 'Proof Request Usage History',
   Settings = 'Settings',
   Language = 'Language',
+  Tours = 'Tours',
   Contacts = 'Contacts',
   ContactDetails = 'Contact Details',
   WhatAreContacts = 'What Are Contacts',
@@ -102,7 +104,7 @@ export type ProofRequestsStackParams = {
 
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
-  [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.CredentialDetails]: { credential: CredentialExchangeRecord }
 }
 
 export type HomeStackParams = {
@@ -117,6 +119,7 @@ export type ConnectStackParams = {
 export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
+  [Screens.Tours]: undefined
   [Screens.UseBiometry]: undefined
   [Screens.CreatePIN]: undefined
   [Screens.RecreatePIN]: undefined

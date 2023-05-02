@@ -6,9 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { Platform, Modal, StatusBar, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import SendingProof from '../components/animated/SendingProof'
-import SentProof from '../components/animated/SentProof'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
@@ -25,11 +24,12 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   const proof = useProofById(proofId)
   const navigation = useNavigation()
   const { ColorPallet, TextTheme } = useTheme()
+  const { SendingProof, SentProof } = useAnimatedComponents()
 
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       padding: 20,
     },
     image: {
@@ -78,17 +78,23 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
           Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(styles.container.backgroundColor)
         }
       />
-      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.primaryBackground }}>
+      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
             {proofDeliveryStatus === ProofState.RequestReceived && (
-              <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SendingProofRequest')}>
+              <Text
+                style={[TextTheme.modalHeadingThree, styles.messageText]}
+                testID={testIdWithKey('SendingProofRequest')}
+              >
                 {t('ProofRequest.SendingTheInformationSecurely')}
               </Text>
             )}
 
             {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
-              <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('SentProofRequest')}>
+              <Text
+                style={[TextTheme.modalHeadingThree, styles.messageText]}
+                testID={testIdWithKey('SentProofRequest')}
+              >
                 {t('ProofRequest.InformationSentSuccessfully')}
               </Text>
             )}
@@ -109,7 +115,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
               accessibilityLabel={t('Loading.BackToHome')}
               testID={testIdWithKey('BackToHome')}
               onPress={onBackToHomeTouched}
-              buttonType={ButtonType.Secondary}
+              buttonType={ButtonType.ModalSecondary}
             />
           </View>
         </View>

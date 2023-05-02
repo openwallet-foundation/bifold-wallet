@@ -27,14 +27,14 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       padding: 20,
     },
     messageText: {
       marginTop: 30,
     },
     controlsContainer: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       marginTop: 'auto',
       margin: 20,
     },
@@ -78,13 +78,13 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
           onDismissPressed={onOpenSettingsDismissed}
         />
       )}
-      <SafeAreaView>
+      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={[styles.container]}>
-          <Text style={[TextTheme.headingOne]} testID={testIdWithKey('AllowCameraUse')}>
+          <Text style={[TextTheme.modalHeadingOne]} testID={testIdWithKey('AllowCameraUse')}>
             {t('CameraDisclosure.AllowCameraUse')}
           </Text>
-          <Text style={[TextTheme.normal, styles.messageText]}>{t('CameraDisclosure.CameraDisclosure')}</Text>
-          <Text style={[TextTheme.normal, styles.messageText]}>{t('CameraDisclosure.ToContinueUsing')}</Text>
+          <Text style={[TextTheme.modalNormal, styles.messageText]}>{t('CameraDisclosure.CameraDisclosure')}</Text>
+          <Text style={[TextTheme.modalNormal, styles.messageText]}>{t('CameraDisclosure.ToContinueUsing')}</Text>
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={styles.buttonContainer}>
@@ -93,7 +93,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
               accessibilityLabel={t('CameraDisclosure.Allow')}
               testID={testIdWithKey('Allow')}
               onPress={onAllowTouched}
-              buttonType={ButtonType.Primary}
+              buttonType={ButtonType.ModalPrimary}
               disabled={requestInProgress}
             />
           </View>
@@ -103,7 +103,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
               accessibilityLabel={t('Global.NotNow')}
               testID={testIdWithKey('NotNow')}
               onPress={onNotNowTouched}
-              buttonType={ButtonType.Secondary}
+              buttonType={ButtonType.ModalSecondary}
             />
           </View>
         </View>

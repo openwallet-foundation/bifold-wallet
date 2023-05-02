@@ -116,6 +116,22 @@ const translation = {
         "IAgree": "J'accepte",
         "Attestation": "J'ai lu, je comprends et j'accepte les conditions."
     },
+    "Tour": {
+        "GuideTitle": "Welcome to Aries Bifold (FR)",
+        "WouldYouLike": "Would you like some guidance on how to use Aries Bifold? (FR)",
+        "UseAppGuides": "Use app guides (FR)",
+        "DoNotUseAppGuides": "Don't use app guides (FR)",
+        "AddAndShare": "Add and share credentials (FR)",
+        "AddAndShareDescription": "To add and use credentials you scan a QR code displayed by the service provider. (FR)",
+        "Notifications": "Notifications (FR)",
+        "NotificationsDescription": "After you scan a QR code, the credential offer or proof request will appear here, as well as other notable events. (FR)",
+        "YourCredentials": "Your credentials (FR)",
+        "YourCredentialsDescription": "Your added digital credentials appear here. You can review credential details and add and delete credentials. (FR)",
+        "Skip": "Skip (FR)",
+        "Next": "Next (FR)",
+        "Back": "Back (FR)",
+        "Done": "Done (FR)",
+      },
     "CameraDisclosure": {
         "AllowCameraUse": "Allow camera use (FR)",
         "CameraDisclosure": "La caméra est utilisée pour scanner les codes QR pour un traitement immédiat sur l'appareil. Aucune information sur les images n'est stockée, utilisée à des fins d'analyse ou partagée.",
@@ -365,6 +381,7 @@ const translation = {
         "AppSettings": "Réglage de l'application",
         "AboutApp": "À propos de l'application",
         "Language": "Langue",
+        "AppGuides": "App guides (FR)",
         "Build": "Build",
         "WhatAreContacts": "Qu’est-ce qu’un contact?",
         "Developer": "Developer options"
@@ -410,6 +427,7 @@ const translation = {
         "ProofDetails": "Détails de la preuve",
         "Settings": "Paramètres",
         "Language": "Langue",
+        "Tours": "App guides (FR)",
         "Contacts": "Contacts",
         "Decline": "Refuser",
         "ContactDetails": "Informations du contact",

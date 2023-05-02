@@ -33,7 +33,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const { settings } = useConfiguration()
+  const { settings, enableTours } = useConfiguration()
   const languages = [
     { id: Locales.en, value: t('Language.English') },
     { id: Locales.fr, value: t('Language.French') },
@@ -149,6 +149,22 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     ...(settings || []),
   ]
 
+  if (enableTours && store.preferences.developerModeEnabled) {
+    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
+    if (section) {
+      section.data = [
+        ...section.data,
+        {
+          title: t('Settings.AppGuides'),
+          value: store.tours.enableTours ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Settings.AppGuides'),
+          testID: testIdWithKey('AppGuides'),
+          onPress: () => navigation.navigate(Screens.Tours),
+        },
+      ]
+    }
+  }
+
   if (store.preferences.developerModeEnabled) {
     const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
     if (section) {
@@ -208,7 +224,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
     <View style={[styles.section, styles.sectionHeader]}>
-      <Icon name={icon} size={24} style={{ marginRight: 10, color: TextTheme.normal.color }} />
+      <Icon name={icon} size={24} style={{ marginRight: 10, color: SettingsTheme.iconColor }} />
       <Text style={[TextTheme.headingThree, { flexShrink: 1 }]}>{title}</Text>
     </View>
   )
