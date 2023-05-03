@@ -98,7 +98,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
             </View>
           )}
           {removeType === RemoveType.Credential && (
-            <View>
+            <View style={{ marginBottom: 25 }}>
               <View style={[{ marginBottom: 25 }]}>
                 <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
               </View>

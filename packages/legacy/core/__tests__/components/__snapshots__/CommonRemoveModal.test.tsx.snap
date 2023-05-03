@@ -78,7 +78,13 @@ exports[`ErrorModal Component Renders correctly 1`] = `
       }
     >
       <View>
-        <View>
+        <View
+          style={
+            Object {
+              "marginBottom": 25,
+            }
+          }
+        >
           <View
             style={
               Array [
