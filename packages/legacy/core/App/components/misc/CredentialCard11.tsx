@@ -15,6 +15,7 @@ import { Attribute, Predicate } from '../../types/record'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { getCredentialConnectionLabel } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
+import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -118,7 +119,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor() ?? 'rgb(0, 0, 0)',
+      backgroundColor: getSecondaryBackgroundColor() ?? overlay.cardLayoutOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
       flexGrow: 1,
@@ -385,7 +386,16 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           >
             {null}
           </ImageBackground>
-        ) : null}
+        ) : !(error || proof || getSecondaryBackgroundColor()) && (<View style={[
+          {
+            position: "absolute",
+            width: logoHeight,
+            height: "100%",
+            borderTopLeftRadius: borderRadius,
+            borderBottomLeftRadius: borderRadius,
+            backgroundColor: "rgba(0,0,0,0.24)"
+          },
+        ]}></View>)}
       </View>
     )
   }
@@ -443,8 +453,25 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         testID={testIdWithKey('ShowCredentialDetails')}
       >
         <View testID={testIdWithKey('CredentialCard')}>
-          <View style={{position:"absolute", left:"-150%", width:"300%"}}>
-            <Text style={{ overflow: "hidden", borderRadius: 15, transform: [{ rotate: "-45deg" }] }}>{"test ".repeat(1500)}</Text>
+          <View style={[{ position: "absolute", borderRadius: borderRadius }]}>
+            <View style={{ aspectRatio: 1 }}>
+              <Svg preserveAspectRatio="xMaxYMid meet" width={"500"} height={"500"} viewBox="0 0 500 500">
+                {Array.from({ length: 50 }).map((_, i) => (<SvgText
+                  key={i}
+                  opacity={0.16}
+                  transform="rotate(-30)"
+                  fill="white"
+                  stroke="black"
+                  fontSize="20"
+                  fontWeight="bold"
+                  y={25 * i}
+                  textAnchor="middle"
+                >
+                  {"Demo ".repeat(50)}
+                </SvgText>))}
+
+              </Svg>
+            </View>
           </View>
           <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
         </View>
