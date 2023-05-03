@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import Svg, { Text as SvgText } from 'react-native-svg'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useConfiguration } from '../../contexts/configuration'
@@ -15,7 +16,6 @@ import { Attribute, Predicate } from '../../types/record'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { getCredentialConnectionLabel } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -31,7 +31,9 @@ interface CredentialCard11Props {
   proof?: boolean
 }
 
-const { width } = Dimensions.get('screen')
+const { width, height } = Dimensions.get('screen')
+const lineSpacing = 30
+const fontSize = 22
 
 const borderRadius = 10
 const padding = width * 0.05
@@ -386,16 +388,22 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           >
             {null}
           </ImageBackground>
-        ) : !(error || proof || getSecondaryBackgroundColor()) && (<View style={[
-          {
-            position: "absolute",
-            width: logoHeight,
-            height: "100%",
-            borderTopLeftRadius: borderRadius,
-            borderBottomLeftRadius: borderRadius,
-            backgroundColor: "rgba(0,0,0,0.24)"
-          },
-        ]}></View>)}
+        ) : (
+          !(error || proof || getSecondaryBackgroundColor()) && (
+            <View
+              style={[
+                {
+                  position: 'absolute',
+                  width: logoHeight,
+                  height: '100%',
+                  borderTopLeftRadius: borderRadius,
+                  borderBottomLeftRadius: borderRadius,
+                  backgroundColor: 'rgba(0,0,0,0.24)',
+                },
+              ]}
+            ></View>
+          )
+        )}
       </View>
     )
   }
@@ -453,26 +461,41 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         testID={testIdWithKey('ShowCredentialDetails')}
       >
         <View testID={testIdWithKey('CredentialCard')}>
-          <View style={[{ position: "absolute", borderRadius: borderRadius }]}>
-            <View style={{ aspectRatio: 1 }}>
-              <Svg preserveAspectRatio="xMaxYMid meet" width={"500"} height={"500"} viewBox="0 0 500 500">
-                {Array.from({ length: 50 }).map((_, i) => (<SvgText
-                  key={i}
-                  opacity={0.16}
-                  transform="rotate(-30)"
-                  fill="white"
-                  stroke="black"
-                  fontSize="20"
-                  fontWeight="bold"
-                  y={25 * i}
-                  textAnchor="middle"
+          {overlay.metaOverlay?.watermark && (
+            <View style={[{ position: 'absolute', borderRadius: borderRadius }]}>
+              <View style={{ aspectRatio: 1 }}>
+                <Svg
+                  preserveAspectRatio="xMaxYMid meet"
+                  width={width}
+                  height={height}
+                  viewBox={`0 0 ${width} ${height}`}
                 >
-                  {"Demo ".repeat(50)}
-                </SvgText>))}
-
-              </Svg>
+                  {Array.from({ length: Math.ceil(height / lineSpacing) }).map((_, i) => (
+                    <SvgText
+                      key={i}
+                      opacity={0.16}
+                      transform="rotate(-30)"
+                      fill="white"
+                      stroke="black"
+                      fontSize={fontSize}
+                      fontWeight="bold"
+                      y={lineSpacing * i}
+                      textAnchor="middle"
+                    >
+                      {overlay.metaOverlay?.watermark &&
+                        `${overlay.metaOverlay.watermark} `.repeat(
+                          Math.ceil(
+                            width /
+                              (Math.cos(30) *
+                                ((fontSize / 2) * (overlay.metaOverlay.watermark.length + 1)))
+                          )
+                        )}
+                    </SvgText>
+                  ))}
+                </Svg>
+              </View>
             </View>
-          </View>
+          )}
           <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
         </View>
       </TouchableOpacity>
