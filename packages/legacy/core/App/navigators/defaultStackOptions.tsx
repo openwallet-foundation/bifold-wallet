@@ -5,7 +5,7 @@ import { Theme } from '../theme'
 
 export function createDefaultStackOptions({ ColorPallet }: Theme) {
   return {
-    headerTintColor: ColorPallet.grayscale.white,
+    headerTintColor: ColorPallet.brand.headerIcon,
     headerShown: true,
     headerBackTitleVisible: false,
     headerStyle: {

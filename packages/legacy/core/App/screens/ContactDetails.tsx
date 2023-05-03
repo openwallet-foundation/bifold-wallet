@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, Modal, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -50,7 +50,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     controlsContainer: {
       marginTop: 'auto',
       marginHorizontal: 20,
-      marginBottom: 108,
+      marginBottom: Platform.OS === 'ios' ? 108 : 20,
     },
   })
 
@@ -110,10 +110,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           <ScrollView style={[styles.container]}>
             <View>
               <View style={[{ marginBottom: 25 }]}>
-                <Text style={[TextTheme.title]}>{t('ContactDetails.UnableToRemoveTitle')}</Text>
+                <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.UnableToRemoveTitle')}</Text>
               </View>
               <View>
-                <Text style={[TextTheme.normal]}>{t('ContactDetails.UnableToRemoveCaption')}</Text>
+                <Text style={[TextTheme.modalNormal]}>{t('ContactDetails.UnableToRemoveCaption')}</Text>
               </View>
             </View>
           </ScrollView>
@@ -124,7 +124,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
                 accessibilityLabel={t('ContactDetails.GoToCredentials')}
                 testID={testIdWithKey('GoToCredentialsButton')}
                 onPress={callGoToCredentials}
-                buttonType={ButtonType.Primary}
+                buttonType={ButtonType.ModalPrimary}
               />
             </View>
             <View style={[{ paddingTop: 10 }]}>
@@ -133,7 +133,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
                 accessibilityLabel={t('Global.Cancel')}
                 testID={testIdWithKey('AbortGoToCredentialsButton')}
                 onPress={callCancelUnableToRemove}
-                buttonType={ButtonType.Secondary}
+                buttonType={ButtonType.ModalSecondary}
               />
             </View>
           </View>

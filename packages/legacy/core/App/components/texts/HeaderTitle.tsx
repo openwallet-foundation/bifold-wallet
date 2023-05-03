@@ -10,13 +10,9 @@ interface Props {
 // this component is used to create a custom header title that doesn't become oversized
 // https://reactnavigation.org/docs/native-stack-navigator#headertitle
 const HeaderTitle: React.FC<Props> = ({ children }) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { TextTheme } = useTheme()
   const styles = StyleSheet.create({
-    title: {
-      ...TextTheme.title,
-      fontSize: 28,
-      color: ColorPallet.grayscale.white,
-    },
+    title: TextTheme.headerTitle,
   })
   return (
     <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>

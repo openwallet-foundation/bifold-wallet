@@ -6,9 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { ScrollView, StatusBar, StyleSheet, Text, View, DeviceEventEmitter, FlatList } from 'react-native'
 import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 
-import CredentialDeclined from '../assets/img/credential-declined.svg'
-import DeleteNotification from '../assets/img/delete-notification.svg'
-import ProofRequestDeclined from '../assets/img/proof-declined.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
@@ -42,7 +39,9 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
   const credential = useCredentialById(itemId)
   const proof = useProofById(itemId)
   
-  const { ColorPallet, TextTheme } = useTheme()
+  const { t } = useTranslation()
+  const { ColorPallet, TextTheme, Assets } = useTheme()
+
   const [didDecline, setDidDecline] = useState<boolean>(false)
   const imageDisplayOptions = {
     fill: ColorPallet.notification.infoText,
@@ -152,8 +151,8 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
     <>
       {deleteView ? (
         <SafeAreaView>
-          <ScrollView style={styles.container}>
-            <DeleteNotification style={{ alignSelf: 'center' }} {...deleteImageDisplayOptions} />
+          <ScrollView style={[{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }, styles.container]}>
+           <Assets.svg.deleteNotification style={{ alignSelf: 'center' }} {...deleteImageDisplayOptions} />
             <Text style={[TextTheme.headingTwo, { marginTop: 20 }]}>{t('CredentialOffer.DeleteOfferTitle')}</Text>
             <Text style={[TextTheme.normal, { marginTop: 20 }]}>
             {t('CredentialOffer.DeleteOfferMessage')}
@@ -172,7 +171,14 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
           </View>
         </SafeAreaView>
       ) : (
-        <SafeAreaView edges={['left', 'right', 'bottom'].concat(didDecline ? ['top'] : []) as Edge[]}>
+        <SafeAreaView
+          edges={['left', 'right', 'bottom'].concat(didDecline ? ['top'] : []) as Edge[]}
+          style={{
+            backgroundColor: didDecline
+              ? ColorPallet.brand.modalPrimaryBackground
+              : ColorPallet.brand.primaryBackground,
+          }}
+        >
           {didDecline && <StatusBar hidden={true} />}
           <>
             {!didDecline && (
@@ -247,10 +253,10 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
 
             {didDecline && (
               <>
-                <ScrollView style={[styles.container]}>
+                <ScrollView style={[styles.container, { backgroundColor: ColorPallet.brand.modalPrimaryBackground }]}>
                   <View style={[styles.messageContainer]}>
                     <Text
-                      style={[TextTheme.headingThree, styles.messageText]}
+                      style={[TextTheme.modalHeadingThree, styles.messageText]}
                       testID={testIdWithKey('RequestOrOfferDeclined')}
                     >
                       {declineType === DeclineType.ProofRequest
@@ -258,9 +264,9 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
                         : t('CredentialOffer.CredentialDeclined')}
                     </Text>
                     {declineType === DeclineType.ProofRequest ? (
-                      <ProofRequestDeclined style={[styles.image]} {...imageDisplayOptions} />
+                      <Assets.svg.proofRequestDeclined style={[styles.image]} {...imageDisplayOptions} />
                     ) : (
-                      <CredentialDeclined style={[styles.image]} {...imageDisplayOptions} />
+                      <Assets.svg.credentialDeclined style={[styles.image]} {...imageDisplayOptions} />
                     )}
                   </View>
                 </ScrollView>
@@ -271,7 +277,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
                     accessibilityLabel={t('Global.Done')}
                     testID={testIdWithKey('Done')}
                     onPress={onDoneTouched}
-                    buttonType={ButtonType.Primary}
+                    buttonType={ButtonType.ModalPrimary}
                   />
                 </View>
               </>
