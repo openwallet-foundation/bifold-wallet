@@ -58,7 +58,20 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 
 export type { AnimatedComponents } from './animated-components'
-export type { Theme } from './theme'
+export type {
+  ISVGAssets,
+  IFontAttributes,
+  IInputAttributes,
+  IInputs,
+  ITextTheme,
+  IBrandColors,
+  ISemanticColors,
+  INotificationColors,
+  IGrayscaleColors,
+  IColorPallet,
+  IAssets,
+  ITheme,
+} from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
 export type { TourStep } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'

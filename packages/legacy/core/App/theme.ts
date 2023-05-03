@@ -10,7 +10,7 @@ import EmptyWallet from './assets/img/empty-wallet.svg'
 import Logo from './assets/img/logo.svg'
 import ProofRequestDeclined from './assets/img/proof-declined.svg'
 
-interface SVGAssets {
+export interface ISVGAssets {
   appLockout: React.FC<SvgProps>
   biometrics: React.FC<SvgProps>
   credentialDeclined: React.FC<SvgProps>
@@ -21,7 +21,7 @@ interface SVGAssets {
   arrow: React.FC<SvgProps>
 }
 
-interface FontAttributes {
+export interface IFontAttributes {
   fontFamily?: string
   fontStyle?: 'normal' | 'italic'
   fontSize: number
@@ -29,7 +29,7 @@ interface FontAttributes {
   color: string
 }
 
-interface InputAttributes {
+export interface IInputAttributes {
   padding?: number
   borderRadius?: number
   fontSize?: number
@@ -39,41 +39,42 @@ interface InputAttributes {
   borderColor?: string
 }
 
-interface Inputs {
-  label: FontAttributes
-  textInput: InputAttributes
-  inputSelected: InputAttributes
-  singleSelect: InputAttributes
-  singleSelectText: FontAttributes
-  singleSelectIcon: InputAttributes
-  checkBoxColor: InputAttributes
-  checkBoxText: FontAttributes
+export interface IInputs {
+  label: IFontAttributes
+  textInput: IInputAttributes
+  inputSelected: IInputAttributes
+  singleSelect: IInputAttributes
+  singleSelectText: IFontAttributes
+  singleSelectIcon: IInputAttributes
+  checkBoxColor: IInputAttributes
+  checkBoxText: IFontAttributes
 }
 
-interface TextTheme {
-  headingOne: FontAttributes
-  headingTwo: FontAttributes
-  headingThree: FontAttributes
-  headingFour: FontAttributes
-  normal: FontAttributes
-  label: FontAttributes
-  labelTitle: FontAttributes
-  labelSubtitle: FontAttributes
-  labelText: FontAttributes
-  caption: FontAttributes
-  title: FontAttributes
-  headerTitle: FontAttributes
-  modalNormal: FontAttributes
-  modalTitle: FontAttributes
-  modalHeadingOne: FontAttributes
-  modalHeadingThree: FontAttributes
+export interface ITextTheme {
+  headingOne: IFontAttributes
+  headingTwo: IFontAttributes
+  headingThree: IFontAttributes
+  headingFour: IFontAttributes
+  normal: IFontAttributes
+  label: IFontAttributes
+  labelTitle: IFontAttributes
+  labelSubtitle: IFontAttributes
+  labelText: IFontAttributes
+  caption: IFontAttributes
+  title: IFontAttributes
+  headerTitle: IFontAttributes
+  modalNormal: IFontAttributes
+  modalTitle: IFontAttributes
+  modalHeadingOne: IFontAttributes
+  modalHeadingThree: IFontAttributes
 }
 
-interface BrandColors {
+export interface IBrandColors {
   primary: string
   primaryDisabled: string
   secondary: string
   secondaryDisabled: string
+  primaryLight: string
   highlight: string
   primaryBackground: string
   secondaryBackground: string
@@ -92,13 +93,13 @@ interface BrandColors {
   unorderedListModal: string
 }
 
-interface SemanticColors {
+export interface ISemanticColors {
   error: string
   success: string
   focus: string
 }
 
-interface NotificationColors {
+export interface INotificationColors {
   success: string
   successBorder: string
   successIcon: string
@@ -118,7 +119,7 @@ interface NotificationColors {
   popupOverlay: string
 }
 
-interface GrayscaleColors {
+export interface IGrayscaleColors {
   black: string
   darkGrey: string
   mediumGrey: string
@@ -127,15 +128,15 @@ interface GrayscaleColors {
   white: string
 }
 
-interface ColorPallet {
-  brand: BrandColors
-  semantic: SemanticColors
-  notification: NotificationColors
-  grayscale: GrayscaleColors
+export interface IColorPallet {
+  brand: IBrandColors
+  semantic: ISemanticColors
+  notification: INotificationColors
+  grayscale: IGrayscaleColors
 }
 
-interface Assets {
-  svg: SVGAssets
+export interface IAssets {
+  svg: ISVGAssets
   img: {
     logoPrimary: any
     logoSecondary: any
@@ -149,7 +150,7 @@ export const lightOpacity = 0.35
 export const zeroOpacity = 0.0
 export const borderWidth = 2
 
-const GrayscaleColors: GrayscaleColors = {
+const GrayscaleColors: IGrayscaleColors = {
   black: '#000000',
   darkGrey: '#313132',
   mediumGrey: '#606060',
@@ -158,11 +159,12 @@ const GrayscaleColors: GrayscaleColors = {
   white: '#FFFFFF',
 }
 
-const BrandColors: BrandColors = {
+const BrandColors: IBrandColors = {
   primary: '#42803E',
   primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
   secondary: '#FFFFFFFF',
   secondaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
+  primaryLight: `rgba(53, 130, 63, ${lightOpacity})`,
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
@@ -181,13 +183,13 @@ const BrandColors: BrandColors = {
   tabBarInactive: GrayscaleColors.white,
 }
 
-const SemanticColors: SemanticColors = {
+const SemanticColors: ISemanticColors = {
   error: '#D8292F',
   success: '#2E8540',
   focus: '#3399FF',
 }
 
-const NotificationColors: NotificationColors = {
+const NotificationColors: INotificationColors = {
   success: '#313132',
   successBorder: '#2E8540',
   successIcon: '#2E8540',
@@ -207,14 +209,14 @@ const NotificationColors: NotificationColors = {
   popupOverlay: `rgba(0, 0, 0, ${mediumOpacity})`,
 }
 
-export const ColorPallet: ColorPallet = {
+export const ColorPallet: IColorPallet = {
   brand: BrandColors,
   semantic: SemanticColors,
   notification: NotificationColors,
   grayscale: GrayscaleColors,
 }
 
-export const TextTheme: TextTheme = {
+export const TextTheme: ITextTheme = {
   headingOne: {
     fontSize: 38,
     fontWeight: 'bold',
@@ -298,7 +300,7 @@ export const TextTheme: TextTheme = {
   },
 }
 
-export const Inputs: Inputs = StyleSheet.create({
+export const Inputs: IInputs = StyleSheet.create({
   label: {
     ...TextTheme.label,
   },
@@ -614,7 +616,7 @@ export const ChatTheme = {
     marginLeft: 16,
   },
   rightBubble: {
-    backgroundColor: ColorPallet.brand.primaryDisabled,
+    backgroundColor: ColorPallet.brand.primaryLight,
     borderRadius: 4,
     padding: 16,
     marginRight: 16,
@@ -791,10 +793,10 @@ export const Assets = {
   },
 }
 
-export interface Theme {
-  ColorPallet: ColorPallet
-  TextTheme: TextTheme
-  Inputs: Inputs
+export interface ITheme {
+  ColorPallet: IColorPallet
+  TextTheme: ITextTheme
+  Inputs: IInputs
   Buttons: any
   ListItems: any
   TabTheme: any
@@ -809,10 +811,10 @@ export interface Theme {
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
-  Assets: Assets
+  Assets: IAssets
 }
 
-export const theme: Theme = {
+export const theme: ITheme = {
   ColorPallet,
   TextTheme,
   Inputs,
