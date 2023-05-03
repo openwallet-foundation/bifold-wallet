@@ -474,10 +474,10 @@ const translation = {
         "CreateConnectionInvitation": "Créer une invitation de connexion",
         "AttemptLockout": "Temporairement Verrouillé",
         "OnTheWay":'En chemin',
-        "Declined": 'Diminué',
+        "Declined": 'Décliné',
         "UseBiometry": 'Utiliser la biométrie',
         "RecreatePIN": 'Changer le NIP',
-        "CustomNotification": 'Avis personnalisé',
+        "CustomNotification": 'Notification personnalisée',
         "ProofRequesting": 'Demande de preuve',
     },
     "Loading": {
