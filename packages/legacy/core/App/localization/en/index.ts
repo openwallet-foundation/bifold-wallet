@@ -232,7 +232,13 @@ const translation = {
     "UnableToRemoveTitle": "Unable to remove contact",
     "UnableToRemoveCaption": "Unable to remove because there are credentials issued by this contact in your wallet. Remove the credentials first then remove this contact.",
     "GoToCredentials": "Go to Credentials",
-    "ContactRemoved": "Contact removed"
+    "ContactRemoved": "Contact removed",
+    "RemoveContactMessageTop": "By removing this contact you'll no longer be able to:",
+    "RemoveContactMessageBottom": "This Contact will not be notified that you removed them from your Contacts",
+    "RemoveContactsBulletPoint1": "Direct message this contact",
+    "RemoveContactsBulletPoint2": "Get offered new credentials from this Contact",
+    "RemoveContactsBulletPoint3": "Get notified of updates to your credentials issued by this Contact",
+    "RemoveContactsBulletPoint4": "Request for information from this Contact or they request information from you",
   },
   "WhatAreContacts": {
     "Title": "What are Contacts?",

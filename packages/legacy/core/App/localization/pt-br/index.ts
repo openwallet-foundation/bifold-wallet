@@ -220,7 +220,13 @@ const translation = {
     "UnableToRemoveTitle": "Não foi possível remover o contato.",
     "UnableToRemoveCaption": "Não foi possivel remover pois há credenciais emitidas por este contato em sua carteira. Remove essas credenciais antes e então remova este contato.",
     "GoToCredentials": "Ir para Credenciais.",
-    "ContactRemoved": "Contato removido"
+    "ContactRemoved": "Contato removido",
+    "RemoveContactMessageTop": "By removing this contact you'll no longer be able to: (PT-BR)",
+    "RemoveContactMessageBottom": "This Contact will not be notified that you removed them from your Contacts (PT-BR)",
+    "RemoveContactsBulletPoint1": "Direct message this contact (PT-BR)",
+    "RemoveContactsBulletPoint2": "Get offered new credentials from this Contact (PT-BR)",
+    "RemoveContactsBulletPoint3": "Get notified of updates to your credentials issued by this Contact (PT-BR)",
+    "RemoveContactsBulletPoint4": "Request for information from this Contact or they request information from you (PT-BR)",
   },
   "WhatAreContacts": {
     "Title": "O que são Contatos?",

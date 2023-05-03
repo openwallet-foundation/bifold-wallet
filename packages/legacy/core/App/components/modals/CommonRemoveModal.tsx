@@ -12,7 +12,6 @@ import { RemoveType } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import UnorderedListModal from '../misc/UnorderedListModal'
-import FauxNavigationBar from '../views/FauxNavigationBar'
 
 interface CommonRemoveModalProps {
   removeType: RemoveType
@@ -24,6 +23,11 @@ interface CommonRemoveModalProps {
 interface RemoveProps {
   title: string
   content: string[]
+}
+
+interface BulletPointProps {
+  text: string
+  textStyle: any
 }
 
 const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
@@ -58,6 +62,24 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
   )
 }
 
+const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
+  const styles = StyleSheet.create({
+    iconContainer: {
+      marginRight: 10,
+      marginVertical: 6,
+    },
+  })
+
+  return (
+    <View style={{ marginVertical: 10, flexDirection: 'row', alignItems: 'flex-start' }}>
+      <View style={styles.iconContainer}>
+        <Icon name={'circle'} size={9} />
+      </View>
+      <Text style={[textStyle, { flexShrink: 1 }]}>{text}</Text>
+    </View>
+  )
+}
+
 const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visible, onSubmit, onCancel }) => {
   if (!removeType) {
     throw new Error('removeType cannot be undefined')
@@ -77,14 +99,36 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
       marginHorizontal: 20,
       marginBottom: Platform.OS === 'ios' ? 108 : 20,
     },
+    headerView: {
+      alignItems: 'flex-end',
+      marginTop: 65,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      height: 55,
+      paddingTop: 10,
+      paddingRight: 20,
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+    },
+    bodyText: {
+      fontSize: 18,
+      fontWeight: '400',
+    },
   })
 
   return (
-    <Modal visible={visible} animationType="slide">
-      <FauxNavigationBar title={t('CredentialDetails.RemoveFromWallet')} />
+    <Modal style={{ backgroundColor: 'green' }} transparent={true} visible={visible} animationType="slide">
+      <View style={[styles.headerView]}>
+        <TouchableOpacity accessibilityLabel="Close" testID="Close" onPress={() => onCancel && onCancel()}>
+          <Icon name={'close'} size={42} color={TextTheme.modalNormal.color} />
+        </TouchableOpacity>
+      </View>
       <SafeAreaView
         edges={['left', 'right', 'bottom']}
-        style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}
+        style={[
+          {
+            backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+          },
+        ]}
       >
         <ScrollView style={[styles.container]}>
           {removeType === RemoveType.Contact && (
@@ -93,7 +137,14 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
                 <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
               </View>
               <View>
-                <Text style={[TextTheme.modalNormal]}>{t('ContactDetails.RemoveCaption')}</Text>
+                <Text style={[styles.bodyText]}>{t('ContactDetails.RemoveContactMessageTop')}</Text>
+                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint1')} textStyle={styles.bodyText} />
+                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint2')} textStyle={styles.bodyText} />
+                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint3')} textStyle={styles.bodyText} />
+                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint4')} textStyle={styles.bodyText} />
+                <Text style={[styles.bodyText, { marginTop: 10 }]}>
+                  {t('ContactDetails.RemoveContactMessageBottom')}
+                </Text>
               </View>
             </View>
           )}
@@ -126,8 +177,9 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>
             <Button
-              title={t('CredentialDetails.RemoveFromWallet')}
-              accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
+              title={'Remove Contact'}
+              // t('CredentialDetails.RemoveFromWallet')
+              accessibilityLabel={'Remove Contact'}
               testID={testIdWithKey('ConfirmRemoveButton')}
               onPress={() => onSubmit && onSubmit()}
               buttonType={ButtonType.ModalCritical}
