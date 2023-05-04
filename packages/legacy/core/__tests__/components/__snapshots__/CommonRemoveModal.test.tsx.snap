@@ -1,0 +1,604 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorModal Component Renders correctly 1`] = `
+<Modal
+  animationType="slide"
+  hardwareAccelerated={false}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "flexGrow": 1,
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "paddingBottom": 12,
+            "textAlign": "center",
+          }
+        }
+      >
+        CredentialDetails.RemoveFromWallet
+      </Text>
+    </View>
+  </View>
+  <RNCSafeAreaView
+    edges={
+      Array [
+        "left",
+        "right",
+        "bottom",
+      ]
+    }
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+  >
+    <RCTScrollView
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#000000",
+            "height": "100%",
+            "padding": 20,
+          },
+        ]
+      }
+    >
+      <View>
+        <View>
+          <View
+            style={
+              Array [
+                Object {
+                  "marginBottom": 25,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 20,
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              CredentialDetails.RemoveTitle
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                ]
+              }
+            >
+              CredentialDetails.RemoveCaption
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "marginTop": 25,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#313132",
+                  "borderRadius": 5,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "opacity": 1,
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                CredentialDetails.YouWillNotLose
+              </Text>
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+            <View
+              collapsable={false}
+              nativeID="animatedComponent"
+              pointerEvents="auto"
+              style={
+                Object {
+                  "height": 0,
+                  "overflow": "hidden",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                nativeID="animatedComponent"
+                onLayout={[Function]}
+                style={Object {}}
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderLeftColor": "#313132",
+                        "borderLeftWidth": 2,
+                        "marginTop": 10,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      CredentialDetails.YouWillNotLoseListItem1
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      CredentialDetails.YouWillNotLoseListItem2
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "marginTop": 25,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#313132",
+                  "borderRadius": 5,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "opacity": 1,
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                CredentialDetails.HowToGetThisCredentialBack
+              </Text>
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+            <View
+              collapsable={false}
+              nativeID="animatedComponent"
+              pointerEvents="auto"
+              style={
+                Object {
+                  "height": 0,
+                  "overflow": "hidden",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                nativeID="animatedComponent"
+                onLayout={[Function]}
+                style={Object {}}
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderLeftColor": "#313132",
+                        "borderLeftWidth": 2,
+                        "marginTop": 10,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "paddingLeft": 5,
+                          },
+                        ]
+                      }
+                    >
+                      CredentialDetails.HowToGetThisCredentialBackListItem1
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Array [
+          Object {
+            "marginBottom": 108,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "paddingTop": 10,
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityLabel="CredentialDetails.RemoveFromWallet"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/ConfirmRemoveButton"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              CredentialDetails.RemoveFromWallet
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "paddingTop": 10,
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityLabel="Global.Cancel"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "borderColor": "#42803E",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/AbortRemoveButton"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              Global.Cancel
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;

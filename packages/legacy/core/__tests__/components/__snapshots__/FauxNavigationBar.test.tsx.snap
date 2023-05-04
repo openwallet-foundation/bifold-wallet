@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Faux Navigation Bar Component Renders with home icon 1`] = `
+Array [
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  />,
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "flexGrow": 1,
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "paddingBottom": 12,
+            "textAlign": "center",
+          }
+        }
+      >
+        Hello
+      </Text>
+      <RNGestureHandlerButton
+        collapsable={false}
+        onGestureEvent={[Function]}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
+        onHandlerStateChange={[Function]}
+        rippleColor={0}
+        testID="com.ariesbifold:id/HomeButton"
+      >
+        <View
+          accessibilityLabel="Global.Home"
+          accessible={true}
+          collapsable={false}
+          nativeID="animatedComponent"
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 24,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰋜
+          </Text>
+        </View>
+      </RNGestureHandlerButton>
+    </View>
+  </View>,
+]
+`;
+
+exports[`Faux Navigation Bar Component Renders without home icon 1`] = `
+Array [
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  />,
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#42803E",
+        "flexDirection": "row",
+        "height": 44,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "flexGrow": 1,
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "paddingBottom": 12,
+            "textAlign": "center",
+          }
+        }
+      >
+        Hello
+      </Text>
+    </View>
+  </View>,
+]
+`;

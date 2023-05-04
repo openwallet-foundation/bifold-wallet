@@ -1,0 +1,216 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CameraDisclosureModal Component Renders correctly 1`] = `
+<Modal
+  animationType="slide"
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <RNCSafeAreaView
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+  >
+    <RCTScrollView
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#000000",
+            "height": "100%",
+            "padding": 20,
+          },
+        ]
+      }
+    >
+      <View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 38,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+          testID="com.ariesbifold:id/AllowCameraUse"
+        >
+          CameraDisclosure.AllowCameraUse
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginTop": 30,
+              },
+            ]
+          }
+        >
+          CameraDisclosure.CameraDisclosure
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginTop": 30,
+              },
+            ]
+          }
+        >
+          CameraDisclosure.ToContinueUsing
+        </Text>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#000000",
+            "margin": 20,
+            "marginTop": "auto",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="CameraDisclosure.Allow"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/Allow"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              CameraDisclosure.Allow
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.NotNow"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "borderColor": "#42803E",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/NotNow"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                ]
+              }
+            >
+              Global.NotNow
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;

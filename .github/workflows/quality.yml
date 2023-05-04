@@ -3,6 +3,7 @@ name: Code Quality
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, labeled]
   push:
     branches: [main]
 
@@ -20,6 +21,11 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --immutable
+
+      - name: Bundle Legacy Core
+        run: |
+          cd packages/legacy/core && \
+          yarn run prepack
 
       - name: Check style
         run: |

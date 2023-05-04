@@ -1,0 +1,323 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListProofRequests Component Renders correctly 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "elevation": 5,
+      "flexGrow": 1,
+      "margin": 24,
+    }
+  }
+>
+  <RCTScrollView
+    ListEmptyComponent={[Function]}
+    data={
+      Array [
+        Object {
+          "description": "Verify the full name of a student",
+          "id": "Aries:5:StudentFullName:0.0.1:indy",
+          "name": "Student full name",
+          "payload": Object {
+            "data": Array [
+              Object {
+                "requestedAttributes": Array [
+                  Object {
+                    "name": "student_first_name",
+                    "restrictions": Array [
+                      Object {
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+                      },
+                    ],
+                  },
+                  Object {
+                    "name": "student_last_name",
+                    "restrictions": Array [
+                      Object {
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+                      },
+                    ],
+                  },
+                ],
+                "schema": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+              },
+            ],
+            "type": "indy",
+          },
+          "version": "0.0.1",
+        },
+        Object {
+          "description": "Verify that full name of a student and that he/she has a not expired student card.",
+          "id": "Aries:5:StudentFullNameAndExpirationDate:0.0.1:indy",
+          "name": "Student full name and expiration date",
+          "payload": Object {
+            "data": Array [
+              Object {
+                "requestedAttributes": Array [
+                  Object {
+                    "names": Array [
+                      "student_first_name",
+                      "student_last_name",
+                    ],
+                    "restrictions": Array [
+                      Object {
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+                      },
+                    ],
+                  },
+                ],
+                "requestedPredicates": Array [
+                  Object {
+                    "name": "expiry_date",
+                    "predicateType": ">=",
+                    "predicateValue": 20240101,
+                    "restrictions": Array [
+                      Object {
+                        "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+                      },
+                    ],
+                  },
+                ],
+                "schema": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
+              },
+            ],
+            "type": "indy",
+          },
+          "version": "0.0.1",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityLabel="Screens.ProofRequestDetails"
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderRadius": 8,
+              "flexDirection": "row",
+              "marginBottom": 10,
+              "opacity": 1,
+              "padding": 12,
+            }
+          }
+          testID="com.ariesbifold:id/ProofRequestsCard"
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={1}
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "marginBottom": 4,
+                }
+              }
+            >
+              Student full name
+            </Text>
+            <Text
+              numberOfLines={2}
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 16,
+                  "fontWeight": "normal",
+                  "marginBottom": 4,
+                }
+              }
+            >
+              Verify the full name of a student
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignSelf": "center",
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 12,
+                  },
+                  Object {
+                    "color": "#000000",
+                    "fontSize": 36,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityLabel="Screens.ProofRequestDetails"
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderRadius": 8,
+              "flexDirection": "row",
+              "marginBottom": 10,
+              "opacity": 1,
+              "padding": 12,
+            }
+          }
+          testID="com.ariesbifold:id/ProofRequestsCard"
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={1}
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "marginBottom": 4,
+                }
+              }
+            >
+              Student full name and expiration date
+            </Text>
+            <Text
+              numberOfLines={2}
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 16,
+                  "fontWeight": "normal",
+                  "marginBottom": 4,
+                }
+              }
+            >
+              Verify that full name of a student and that he/she has a not expired student card.
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#606060",
+                  "fontSize": 12,
+                }
+              }
+            >
+              Verifier.ZeroKnowledgeProof
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignSelf": "center",
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 12,
+                  },
+                  Object {
+                    "color": "#000000",
+                    "fontSize": 36,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
