@@ -50,6 +50,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { OCABundleResolver } = useConfiguration()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
+  const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
 
@@ -129,6 +130,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
       setRevocationDate(formatTime(date))
+      setPreciseRevocationDate(formatTime(date, { long: true }))
     }
 
     const params = {
@@ -311,36 +313,51 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const footer = () => {
     return (
-      <View style={{ marginBottom: 30 }}>
+      <View style={{ marginBottom: 50 }}>
         {credentialConnectionLabel ? (
           <View
             style={{
-              backgroundColor: isRevoked ? ColorPallet.notification.error : ColorPallet.brand.secondaryBackground,
+              backgroundColor: ColorPallet.brand.secondaryBackground,
               marginTop: paddingVertical,
               paddingHorizontal,
               paddingVertical,
             }}
           >
-            <>
-              <Text testID={testIdWithKey('IssuerName')}>
-                <Text style={[TextTheme.title, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
-                  {t('CredentialDetails.IssuedBy') + ' '}
-                </Text>
-                <Text style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
-                  {credentialConnectionLabel}
-                </Text>
+            <Text testID={testIdWithKey('IssuerName')}>
+              <Text style={[TextTheme.title, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+                {t('CredentialDetails.IssuedBy') + ' '}
               </Text>
-              {isRevoked ? (
-                <Text testID={testIdWithKey('RevokedDate')}>
-                  <Text style={[TextTheme.title, { color: ColorPallet.notification.errorText }]}>
-                    {t('CredentialDetails.Revoked') + ': '}
-                  </Text>
-                  <Text style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}>
-                    {revocationDate}
-                  </Text>
-                </Text>
-              ) : null}
-            </>
+              <Text style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+                {credentialConnectionLabel}
+              </Text>
+            </Text>
+          </View>
+        ) : null}
+        {isRevoked ? (
+          <View
+            style={{
+              backgroundColor: ColorPallet.notification.error,
+              marginTop: paddingVertical,
+              paddingHorizontal,
+              paddingVertical,
+            }}
+          >
+            <Text testID={testIdWithKey('RevokedDate')}>
+              <Text style={[TextTheme.title, { color: ColorPallet.notification.errorText }]}>
+                {t('CredentialDetails.Revoked') + ': '}
+              </Text>
+              <Text style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}>
+                {preciseRevocationDate}
+              </Text>
+            </Text>
+            <Text
+              style={[TextTheme.normal, { color: ColorPallet.notification.errorText, marginTop: paddingVertical }]}
+              testID={testIdWithKey('RevocationMessage')}
+            >
+              {credential?.revocationNotification?.comment
+                ? credential.revocationNotification.comment
+                : t('CredentialDetails.CredentialRevokedMessageBody')}
+            </Text>
           </View>
         ) : null}
         <RecordRemove onRemove={callOnRemove} />
