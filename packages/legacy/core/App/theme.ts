@@ -65,6 +65,7 @@ interface TextTheme {
   headerTitle: FontAttributes
   modalNormal: FontAttributes
   modalTitle: FontAttributes
+  popupModalText: FontAttributes
   modalHeadingOne: FontAttributes
   modalHeadingThree: FontAttributes
 }
@@ -294,6 +295,11 @@ export const TextTheme: TextTheme = {
   modalHeadingThree: {
     fontSize: 26,
     fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  popupModalText: {
+    fontSize: 18,
+    fontWeight: 'normal',
     color: ColorPallet.grayscale.white,
   },
 }
