@@ -23,11 +23,11 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
+import CommonDeclineModal, { DeclineType } from '../components/modals/CommonDeclineModal'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
-import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
@@ -50,17 +50,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
   const { assertConnectedNetwork } = useNetwork()
   const fullCredentials = useCredentials().records
-
   const proof = useProofById(proofId)
   const proofConnectionLabel = proof?.connectionId
     ? useConnectionById(proof.connectionId)?.theirLabel
     : proof?.connectionId ?? ''
-
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<IndyRetrievedCredentialsFormat>()
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-
+  const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
 
@@ -134,6 +132,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     if (!(agent && proof)) {
       return
     }
+
     setLoading(true)
 
     const retrieveCredentialsForProof = async (
@@ -164,6 +163,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         if (!format) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
+
         return { format, credentials }
       } catch (error: unknown) {
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
@@ -200,6 +200,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [])
+
+  const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
   const hasAvailableCredentials = (credName?: string): boolean => {
     const fields: Fields = {
@@ -260,11 +262,20 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }
 
-  const handleDeclinePress = async () => {
-    navigation.navigate(Screens.CommonDecline, {
-      declineType: DeclineType.ProofRequest,
-      itemId: proofId,
-    })
+  const handleDeclineTouched = async () => {
+    try {
+      if (agent && proof) {
+        await agent.proofs.declineRequest(proof.id)
+        await agent.proofs.sendProblemReport(proof.id, t('ProofRequest.Declined')) // currently, fails for connectionless case
+      }
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
+
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+
+    toggleDeclineModalVisible()
+    navigation.goBack()
   }
 
   const proofPageHeader = () => {
@@ -326,7 +337,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             accessibilityLabel={t('Global.Decline')}
             testID={testIdWithKey('Decline')}
             buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
-            onPress={handleDeclinePress}
+            onPress={toggleDeclineModalVisible}
           />
         </View>
       </View>
@@ -358,6 +369,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         />
       </View>
       <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
+      <CommonDeclineModal
+        removeType={DeclineType.ProofRequest}
+        visible={declineModalVisible}
+        onSubmit={handleDeclineTouched}
+        onCancel={toggleDeclineModalVisible}
+      />
     </SafeAreaView>
   )
 }

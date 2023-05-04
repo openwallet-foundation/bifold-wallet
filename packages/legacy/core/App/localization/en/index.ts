@@ -349,8 +349,10 @@ const translation = {
     "ConfirmDeclinedMessage": "In order to receive the credential offer again, you will need to reapply with the issuer.",
     "ConfirmDecline": "Yes, decline this credential",
     "AbortDecline": "No, go back",
-    "DeclineTitle": "Decline Credential",
+    "DeclineTitle": "Decline credential offer?",
     "Declined": "Declined",
+    "DeclineBulletPoint1": "In order to receive the proof request again, you will need to restart the process with the service.",
+    "DeclineBulletPoint2": "Are you sure you want to decline this credential offer?",
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",
@@ -382,10 +384,13 @@ const translation = {
     "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
     "ConfirmDecline": "Yes, decline this proof request",
     "AbortDecline": "No, go back",
-    "DeclineTitle": "Decline Proof",
+    "DeclineTitle": "Decline proof request?",
     "Declined": "Declined",
     "ShareFollowingInformation_one": "is sharing the following information from {{count}} credential.",
-    "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials."
+    "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials.",
+    "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access.",
+    "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service.",
+    "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",  
   },
   "Settings": {
     "Version": "Version",

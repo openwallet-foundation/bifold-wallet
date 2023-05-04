@@ -334,10 +334,12 @@ const translation = {
     "ConfirmDeclinedMessage": "Para receber novamente a oferta de credencial, você precisara solicitar novamente ao emissor.",
     "ConfirmDecline": "Sim, recusar esta credencial",
     "AbortDecline": "Não, voltar",
-    "DeclineTitle": "Recusar Credencial",
+    "DeclineTitle": "Decline credential offer? (PB-BR)",
     "Declined": "Recusado",
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
-    "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}."
+    "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
+    "DeclineBulletPoint1": "In order to receive the proof request again, you will need to restart the process with the service. (PB-BR)",
+    "DeclineBulletPoint2": "Are you sure you want to decline this credential offer? (PB-BR)",
   },
   "ProofRequest": {
     "ProofRequest": "Requisição de Prova",
@@ -369,8 +371,11 @@ const translation = {
     "ConfirmDeclinedMessage": "Para receber a requisição de prova novamente, o requisitante terá de reenvia-la.",
     "ConfirmDecline": "Sim, recusar esta requisição de prova",
     "AbortDecline": "Não, voltar",
-    "DeclineTitle": "Recusar Prova",
+    "DeclineTitle": "Decline proof request? (PB-BR)",
     "Declined": "Recusado",
+    "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access. (PB-BR)",
+    "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service. (PB-BR)",
+    "DeclineBulletPoint3": "Are you sure you want to decline this proof request? (PB-BR)",  
   },
   "Settings": {
     "Version": "Versão",

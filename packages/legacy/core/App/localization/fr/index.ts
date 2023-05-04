@@ -350,8 +350,10 @@ const translation = {
         "ConfirmDeclinedTitle": "Êtes-vous sûr de vouloir refuser ce justificatif?",
         "ConfirmDeclinedMessage": "Afin de recevoir à nouveau ce justificatif, vous devrez présenter une nouvelle demande auprès de l'émetteur.",
         "AbortDecline": "Non, revenir en arrière",
-        "DeclineTitle": "Refuser le justificatif",
+        "DeclineTitle": "Decline credential offer? (FR)",
         "Declined": "Diminué",
+        "DeclineBulletPoint1": "In order to receive the proof request again, you will need to restart the process with the service. (FR)",
+        "DeclineBulletPoint2": "Are you sure you want to decline this credential offer? (FR)",
     },
     "ProofRequest": {
         "ProofRequest": "Demande de preuve",
@@ -376,10 +378,13 @@ const translation = {
         "SendingTheInformationSecurely": "Envoi sécurisé de l'information",
         "InformationSentSuccessfully": "Informations envoyées avec succès",
         "ProofRequestDeclined": "Demande de preuve refusée",
-        "DeclineTitle": "Decline Credential",
+        "DeclineTitle": "Decline proof request? (FR)",
         "Declined": "Diminué",
         "ShareFollowingInformation_one": "partage les informations suivantes à partir des informations d'identification {{count}}.",
-        "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}."
+        "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}.",
+        "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access. (FR)",
+        "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service. (FR)",
+        "DeclineBulletPoint3": "Are you sure you want to decline this proof request? (FR)",  
     },
     "Settings": {
         "Version": "Version",
