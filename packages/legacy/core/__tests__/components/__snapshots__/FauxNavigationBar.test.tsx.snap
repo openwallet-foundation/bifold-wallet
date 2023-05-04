@@ -71,7 +71,7 @@ Array [
             style={
               Array [
                 Object {
-                  "color": "white",
+                  "color": "#FFFFFF",
                   "fontSize": 24,
                 },
                 undefined,

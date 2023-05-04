@@ -4,7 +4,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
-import { Theme } from '../../theme'
+import { ITheme } from '../../theme'
 import { testIdWithKey } from '../../utils/testable'
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   onPress?: () => void
 }
 
-function createStyles({ ColorPallet }: Theme) {
+function createStyles({ ColorPallet }: ITheme) {
   return StyleSheet.create({
     container: {
       width: 48,

@@ -16,11 +16,15 @@ import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
 import { WalletQuery } from 'indy-sdk-react-native'
 import moment from 'moment'
-import { parseUrl } from 'query-string'
+import { ParsedUrl, parseUrl } from 'query-string'
+import { ReactNode } from 'react'
 
+import { domain } from '../constants'
 import { i18n } from '../localization/index'
-import { ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
+import { Attribute, Predicate, ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
+import { ChildFn } from '../types/tour'
 
+export { parsedCredDefNameFromCredential } from './cred-def'
 import { parseCredDefFromId } from './cred-def'
 
 export { parsedCredDefName } from './cred-def'
@@ -141,9 +145,12 @@ export function getCredentialConnectionLabel(credential?: CredentialExchangeReco
     return ''
   }
 
-  return credential?.connectionId
-    ? useConnectionById(credential.connectionId)?.theirLabel
-    : credential?.connectionId ?? ''
+  if (credential.connectionId) {
+    const connection = useConnectionById(credential.connectionId)
+    return connection?.alias || connection?.theirLabel || credential.connectionId
+  }
+
+  return 'Unknown Contact'
 }
 
 export function getConnectionImageUrl(connectionId: string) {
@@ -219,7 +226,8 @@ const credNameFromRestriction = (queries?: WalletQuery[]): string => {
 
 export const processProofAttributes = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
   if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
@@ -242,8 +250,12 @@ export const processProofAttributes = (
       )
     }
     let revoked = false
+    let credExchangeRecord = undefined
     if (credential) {
-      revoked = credential.revoked as boolean
+      credExchangeRecord = credentialRecords?.filter(
+        (record) => record.credentials[0]?.credentialRecordId === credential.credentialId
+      )[0]
+      revoked = credExchangeRecord?.revocationNotification !== undefined
     }
     const { name, names } = requestedProofAttributes[key]
 
@@ -251,6 +263,7 @@ export const processProofAttributes = (
       if (!processedAttributes[credName]) {
         // init processedAttributes object
         processedAttributes[credName] = {
+          credExchangeRecord,
           schemaId: credential?.credentialInfo?.schemaId,
           credDefId: credential?.credentialInfo?.credentialDefinitionId,
           credName,
@@ -262,11 +275,13 @@ export const processProofAttributes = (
       if (credential) {
         attributeValue = (credential.credentialInfo as IndyCredentialInfo).attributes[attributeName]
       }
-      processedAttributes[credName].attributes?.push({
-        revoked,
-        name: attributeName,
-        value: attributeValue,
-      })
+      processedAttributes[credName].attributes?.push(
+        new Attribute({
+          revoked,
+          name: attributeName,
+          value: attributeValue,
+        })
+      )
     }
   }
   return processedAttributes
@@ -274,7 +289,8 @@ export const processProofAttributes = (
 
 export const processProofPredicates = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>
+  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
@@ -288,7 +304,16 @@ export const processProofPredicates = (
   for (const key of Object.keys(requestedProofPredicates)) {
     // The shift operation modifies the original input array, therefore make a copy
     const credential = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn).shift()
-    const { credentialId, revoked, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
+    let credExchangeRecord = undefined
+    if (credential) {
+      credExchangeRecord = credentialRecords?.filter(
+        (record) => record.credentials[0]?.credentialRecordId === credential.credentialId
+      )[0]
+    }
+    const { credentialId, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
+    const revoked =
+      credentialRecords?.filter((record) => record.credentials[0]?.credentialRecordId === credentialId)[0]
+        ?.revocationNotification !== undefined
     const { name, p_type: pType, p_value: pValue } = requestedProofPredicates[key]
 
     const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)
@@ -303,6 +328,7 @@ export const processProofPredicates = (
 
     if (!processedPredicates[credName]) {
       processedPredicates[credName] = {
+        credExchangeRecord,
         schemaId,
         credDefId: credentialDefinitionId,
         credName: credName,
@@ -310,15 +336,33 @@ export const processProofPredicates = (
       }
     }
 
-    processedPredicates[credName].predicates?.push({
-      credentialId,
-      name,
-      revoked,
-      pValue,
-      pType,
-    })
+    processedPredicates[credName].predicates?.push(
+      new Predicate({
+        credentialId,
+        name,
+        revoked,
+        pValue,
+        pType,
+      })
+    )
   }
   return processedPredicates
+}
+
+export const mergeAttributesAndPredicates = (
+  attributes: { [key: string]: ProofCredentialAttributes },
+  predicates: { [key: string]: ProofCredentialPredicates }
+) => {
+  const merged = { ...attributes }
+  for (const [key, predicate] of Object.entries(predicates)) {
+    const existingEntry = merged[key]
+    if (existingEntry) {
+      merged[key] = { ...existingEntry, ...predicate }
+    } else {
+      merged[key] = predicate
+    }
+  }
+  return merged
 }
 
 /**
@@ -395,4 +439,60 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
   }
 
   return connectionRecord
+}
+
+/**
+ * Create a new connection invitation
+ *
+ * @param agent an Agent instance
+ * @returns a connection record
+ */
+export const createConnectionInvitation = async (agent: Agent | undefined) => {
+  const record = await agent?.oob.createInvitation()
+  if (!record) {
+    throw new Error('Could not create new invitation')
+  }
+  const invitationUrl = record.outOfBandInvitation.toUrl({ domain })
+  return {
+    record,
+    invitation: record.outOfBandInvitation,
+    invitationUrl,
+  }
+}
+
+/**
+ * Parse URL from provided string
+ * @param urlString string to parse
+ * @returns ParsedUur object if success or undefined
+ */
+export const getUrl = (urlString: string): ParsedUrl | undefined => {
+  try {
+    return parseUrl(urlString)
+  } catch (e) {
+    return undefined
+  }
+}
+
+/**
+ * Parse JSON from provided string
+ * @param jsonString string to parse
+ * @returns JSON object if success or undefined
+ */
+export const getJson = (jsonString: string): Record<string, unknown> | undefined => {
+  try {
+    return JSON.parse(jsonString)
+  } catch (e) {
+    return undefined
+  }
+}
+
+/**
+ * Typeguard to check if any React children is represented as a function
+ * instead of a Node. I,e., when it's a {@link ChildFn}.
+ *
+ * @param children any React children
+ * @returns true if the children is a function, false otherwise
+ */
+export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children is ChildFn<T> {
+  return typeof children === 'function'
 }

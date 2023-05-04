@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialMetadataKeys, CredentialState } from '@aries-framework/core'
 import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'
@@ -25,4 +25,11 @@ export const toImageSource = (source: unknown): ImageSourcePropType => {
     return { uri: source as string }
   }
   return source as ImageSourcePropType
+}
+
+export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) => {
+  return {
+    credentialDefinitionId: credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId,
+    schemaId: credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId,
+  }
 }

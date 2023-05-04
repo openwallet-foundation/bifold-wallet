@@ -11,7 +11,7 @@ import {
   FormatRetrievedCredentialOptions,
   GetFormatDataReturn,
 } from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
-import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import { useAgent, useConnectionById, useProofById, useCredentials } from '@aries-framework/react-hooks'
 import startCase from 'lodash.startcase'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,12 +19,12 @@ import { View, StyleSheet, Text, DeviceEventEmitter, FlatList } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import RecordLoading from '../components/animated/RecordLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import { EventTypes } from '../constants'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { DeclineType } from '../types/decline'
@@ -32,7 +32,7 @@ import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { parseCredDefFromId } from '../utils/cred-def'
-import { processProofAttributes, processProofPredicates } from '../utils/helpers'
+import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -49,6 +49,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
   const { assertConnectedNetwork } = useNetwork()
+  const fullCredentials = useCredentials().records
 
   const proof = useProofById(proofId)
   const proofConnectionLabel = proof?.connectionId
@@ -61,6 +62,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()
+  const { RecordLoading } = useAnimatedComponents()
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -155,7 +157,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             filterByNonRevocationRequirements: false,
           },
         })
-
         if (!credentials) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
@@ -163,7 +164,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         if (!format) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
-
         return { format, credentials }
       } catch (error: unknown) {
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
@@ -173,14 +173,25 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     retrieveCredentialsForProof(proof)
       .then((retrieved) => retrieved ?? { format: undefined, credentials: undefined })
       .then(({ format, credentials }) => {
-        if (!(format && credentials)) {
+        if (!(format && credentials && fullCredentials)) {
           return
         }
-        const attributes = processProofAttributes(format.request, credentials)
-        const predicates = processProofPredicates(format.request, credentials)
-
+        const reqCredIds = [
+          ...Object.keys(credentials.proofFormats.indy?.requestedAttributes ?? {}).map(
+            (key) => credentials.proofFormats.indy?.requestedAttributes[key][0]?.credentialId
+          ),
+          ...Object.keys(credentials.proofFormats.indy?.requestedPredicates ?? {}).map(
+            (key) => credentials.proofFormats.indy?.requestedPredicates[key][0]?.credentialId
+          ),
+        ]
+        const credentialRecords = fullCredentials.filter((record) =>
+          reqCredIds.includes(record.credentials[0]?.credentialRecordId)
+        )
+        const attributes = processProofAttributes(format.request, credentials, credentialRecords)
+        const predicates = processProofPredicates(format.request, credentials, credentialRecords)
         setRetrievedCredentials(credentials.proofFormats.indy)
-        const groupedProof = Object.values({ ...attributes, ...predicates })
+
+        const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
         setProofItems(groupedProof)
         setLoading(false)
       })
@@ -333,6 +344,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             return (
               <View style={{ marginTop: 10, marginHorizontal: 20 }}>
                 <CredentialCard
+                  credential={item.credExchangeRecord}
                   credDefId={item.credDefId}
                   schemaId={item.schemaId}
                   displayItems={[...(item.attributes ?? []), ...(item.predicates ?? [])]}

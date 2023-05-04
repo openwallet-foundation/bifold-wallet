@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react'
 
-import { theme, Theme } from '../theme'
+import { theme, ITheme } from '../theme'
 
-export const ThemeContext = createContext<Theme>(theme)
+export const ThemeContext = createContext<ITheme>(theme)
 
 export const ThemeProvider = ThemeContext.Provider
 

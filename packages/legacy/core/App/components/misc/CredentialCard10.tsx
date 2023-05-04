@@ -8,8 +8,14 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay10, CredentialOverlay } from '../../types/oca'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
-import { formatTime } from '../../utils/helpers'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  isValidIndyCredential,
+  toImageSource,
+} from '../../utils/credential'
+import { formatTime, getCredentialConnectionLabel } from '../../utils/helpers'
+import { buildFieldsFromIndyCredential } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCard10Props {
@@ -31,7 +37,7 @@ const { width } = Dimensions.get('window')
  | 2 |   |   |   |   |   |   |   |
  | 3 |   |   |   |   |   |   |   |
  | 4 |   |   |   |   |   |   |   |
- 
+
 The card width is the full screen width, and the card height is half of the screen width
 
 Variation 1:
@@ -64,10 +70,9 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()
-
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay10>>({})
-
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
   const styles = StyleSheet.create({
     container: {
@@ -124,28 +129,20 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       return
     }
 
-    const resolveBundle = async () => {
-      const bundle = await OCABundleResolver.resolve(credential, i18n.language)
-      const defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language)
-      return { bundle, defaultBundle }
+    const params = {
+      identifiers: getCredentialIdentifiers(credential),
+      attributes: buildFieldsFromIndyCredential(credential),
+      meta: {
+        credConnectionId: credential?.connectionId,
+        alias: credentialConnectionLabel,
+      },
+      language: i18n.language,
     }
-
-    const resolvePresentationFields = async () => {
-      const fields = await OCABundleResolver.presentationFields(credential, i18n.language)
-      return { fields }
-    }
-
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.metaOverlay
-      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay as CardLayoutOverlay10
-
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
       setOverlay({
         ...overlay,
-        bundle: overlayBundle,
-        presentationFields: fields,
-        metaOverlay,
-        cardLayoutOverlay,
+        ...bundle,
+        cardLayoutOverlay: bundle.cardLayoutOverlay as CardLayoutOverlay10,
       })
     })
   }, [])
@@ -271,6 +268,8 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
 
   return (
     <TouchableOpacity
+      accessible={false}
+      accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
       disabled={typeof onPress === 'undefined' ? true : false}
       onPress={onPress}
       style={[styles.container, style]}

@@ -89,9 +89,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
 
   return (
     <Modal transparent>
-      <TouchableOpacity onPress={onDismissPressed}>
+      <TouchableOpacity onPress={onDismissPressed} accessible={false}>
         <View style={styles.modalCenter}>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback accessible={false}>
             <View style={styles.container}>
               <View style={styles.headerContainer}>
                 <View style={[styles.infoIcon]}>
@@ -117,7 +117,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                     title={onCallToActionLabel || t('Global.Okay')}
                     accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
                     testID={testIdWithKey('Okay')}
-                    buttonType={ButtonType.Primary}
+                    buttonType={ButtonType.ModalPrimary}
                     onPress={onCallToActionPressed}
                   />
                 )}
