@@ -4,9 +4,10 @@ import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View }
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import CredentialDeclined from '../../assets/img/credential-declined.svg'
+import ProofDeclined from '../../assets/img/proof-declined.svg'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-// import { RemoveType } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
@@ -16,16 +17,20 @@ export enum DeclineType {
 }
 
 interface CommonDeclineModalProps {
-  removeType: DeclineType
+  declineType: DeclineType
   onSubmit?: GenericFn
   onCancel?: GenericFn
   visible?: boolean
 }
 
-const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ removeType, visible, onSubmit, onCancel }) => {
+const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ declineType, visible, onSubmit, onCancel }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
+  const imageDisplayOptions = {
+    height: 115,
+    width: 115,
+  }
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -54,6 +59,39 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ removeType, vis
     },
   })
 
+  const headerImageForType = (type: DeclineType) => {
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        {type === DeclineType.CredentialOffer && <ProofDeclined {...imageDisplayOptions} />}
+        {type === DeclineType.ProofRequest && <CredentialDeclined {...imageDisplayOptions} />}
+      </View>
+    )
+  }
+
+  const contentForType = (type: DeclineType) => {
+    if (type === DeclineType.CredentialOffer) {
+      return (
+        <View style={[{ marginBottom: 25 }]}>
+          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
+          <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
+          <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
+          <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
+        </View>
+      )
+    }
+
+    if (type === DeclineType.ProofRequest) {
+      return (
+        <View style={[{ marginBottom: 25 }]}>
+          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
+          <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
+          <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
+          <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
+        </View>
+      )
+    }
+  }
+
   return (
     <Modal transparent={true} visible={visible} animationType="slide">
       <View style={[styles.headerView]}>
@@ -70,25 +108,10 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ removeType, vis
         ]}
       >
         <ScrollView style={[styles.container]}>
-          {removeType === DeclineType.ProofRequest && (
-            <View>
-              <View style={[{ marginBottom: 25 }]}>
-                <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
-                <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
-                <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
-                <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
-              </View>
-            </View>
-          )}
-          {removeType === DeclineType.CredentialOffer && (
-            <View>
-              <View style={[{ marginBottom: 25 }]}>
-                <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.DeclineTitle')}</Text>
-                <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineBulletPoint1')}</Text>
-                <Text style={[styles.bodyText]}>{t('CredentialOffer.DeclineBulletPoint2')}</Text>
-              </View>
-            </View>
-          )}
+          <View>
+            {headerImageForType(declineType)}
+            {contentForType(declineType)}
+          </View>
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>

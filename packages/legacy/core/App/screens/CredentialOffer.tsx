@@ -217,7 +217,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
       <CommonDeclineModal
-        removeType={DeclineType.CredentialOffer}
+        declineType={DeclineType.CredentialOffer}
         visible={declineModalVisible}
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}

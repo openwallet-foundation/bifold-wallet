@@ -370,7 +370,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       </View>
       <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
       <CommonDeclineModal
-        removeType={DeclineType.ProofRequest}
+        declineType={DeclineType.ProofRequest}
         visible={declineModalVisible}
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}
