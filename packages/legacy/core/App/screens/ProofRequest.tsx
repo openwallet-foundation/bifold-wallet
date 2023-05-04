@@ -23,7 +23,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
-import CommonDeclineModal, { DeclineType } from '../components/modals/CommonDeclineModal'
+import CommonDeclineModal, { ModalUsage } from '../components/modals/CommonDeclineModal'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
@@ -370,7 +370,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       </View>
       <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
       <CommonDeclineModal
-        declineType={DeclineType.ProofRequest}
+        usage={ModalUsage.ProofRequestDecline}
         visible={declineModalVisible}
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}

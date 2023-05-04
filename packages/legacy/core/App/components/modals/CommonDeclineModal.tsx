@@ -11,19 +11,19 @@ import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
-export enum DeclineType {
-  CredentialOffer,
-  ProofRequest,
+export enum ModalUsage {
+  CredentialOfferDecline,
+  ProofRequestDecline,
 }
 
 interface CommonDeclineModalProps {
-  declineType: DeclineType
+  usage: ModalUsage
   onSubmit?: GenericFn
   onCancel?: GenericFn
   visible?: boolean
 }
 
-const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ declineType, visible, onSubmit, onCancel }) => {
+const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible, onSubmit, onCancel }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -59,28 +59,27 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ declineType, vi
     },
   })
 
-  const headerImageForType = (type: DeclineType) => {
+  const headerImageForType = (type: ModalUsage) => {
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        {type === DeclineType.CredentialOffer && <ProofDeclined {...imageDisplayOptions} />}
-        {type === DeclineType.ProofRequest && <CredentialDeclined {...imageDisplayOptions} />}
+        {type === ModalUsage.CredentialOfferDecline && <ProofDeclined {...imageDisplayOptions} />}
+        {type === ModalUsage.ProofRequestDecline && <CredentialDeclined {...imageDisplayOptions} />}
       </View>
     )
   }
 
-  const contentForType = (type: DeclineType) => {
-    if (type === DeclineType.CredentialOffer) {
+  const contentForType = (type: ModalUsage) => {
+    if (type === ModalUsage.CredentialOfferDecline) {
       return (
         <View style={[{ marginBottom: 25 }]}>
-          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
-          <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
-          <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
-          <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
+          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.DeclineTitle')}</Text>
+          <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineBulletPoint1')}</Text>
+          <Text style={[styles.bodyText]}>{t('CredentialOffer.DeclineBulletPoint2')}</Text>
         </View>
       )
     }
 
-    if (type === DeclineType.ProofRequest) {
+    if (type === ModalUsage.ProofRequestDecline) {
       return (
         <View style={[{ marginBottom: 25 }]}>
           <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
@@ -109,8 +108,8 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ declineType, vi
       >
         <ScrollView style={[styles.container]}>
           <View>
-            {headerImageForType(declineType)}
-            {contentForType(declineType)}
+            {headerImageForType(usage)}
+            {contentForType(usage)}
           </View>
         </ScrollView>
         <View style={[styles.controlsContainer]}>
