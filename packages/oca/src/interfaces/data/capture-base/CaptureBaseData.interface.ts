@@ -1,9 +1,9 @@
 export default interface ICaptureBaseData {
-  type: string;
-  classification: string;
+  type: string
+  classification: string
   attributes: {
-    [key: string]: string;
-  };
-  flagged_attributes: string[];
-  digest?: string;
+    [key: string]: string
+  }
+  flagged_attributes: string[]
+  digest?: string
 }

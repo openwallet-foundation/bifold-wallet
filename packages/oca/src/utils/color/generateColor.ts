@@ -1,8 +1,8 @@
-import hashCode from "./hashCode";
-import hashToRGBA from "./hashToRGBA";
+import hashCode from './hashCode'
+import hashToRGBA from './hashToRGBA'
 
 const generateColor = (seed: string) => {
-  return hashToRGBA(hashCode(seed));
-};
+  return hashToRGBA(hashCode(seed))
+}
 
-export default generateColor;
+export default generateColor

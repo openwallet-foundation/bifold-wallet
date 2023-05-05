@@ -5,9 +5,7 @@
  * @returns { number } numerical hash value
  */
 const hashCode = (s: string): number => {
-  return s
-    .split("")
-    .reduce((hash, char) => char.charCodeAt(0) + ((hash << 5) - hash), 0);
-};
+  return s.split('').reduce((hash, char) => char.charCodeAt(0) + ((hash << 5) - hash), 0)
+}
 
-export default hashCode;
+export default hashCode

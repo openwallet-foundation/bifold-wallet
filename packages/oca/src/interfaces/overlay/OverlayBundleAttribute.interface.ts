@@ -1,11 +1,11 @@
 export default interface IOverlayBundleAttribute {
-  name: string;
-  type: string;
+  name: string
+  type: string
   information?: {
-    [key: string]: string;
-  };
+    [key: string]: string
+  }
   label?: {
-    [key: string]: string;
-  };
-  format?: string;
+    [key: string]: string
+  }
+  format?: string
 }

@@ -1,24 +1,24 @@
-import { ICaptureBaseData } from "@interfaces/data";
+import { ICaptureBaseData } from '../../interfaces/data'
 
 export default class CaptureBase {
-  #flagged_attributes: string[];
+  #flagged_attributes: string[]
 
-  type: string;
-  classification: string;
+  type: string
+  classification: string
   attributes: {
-    [key: string]: string;
-  };
-  digest: string;
+    [key: string]: string
+  }
+  digest: string
 
   constructor(captureBase: ICaptureBaseData) {
-    this.type = captureBase.type;
-    this.classification = captureBase.classification;
-    this.attributes = captureBase.attributes;
-    this.#flagged_attributes = captureBase.flagged_attributes;
-    this.digest = captureBase.digest ?? "";
+    this.type = captureBase.type
+    this.classification = captureBase.classification
+    this.attributes = captureBase.attributes
+    this.#flagged_attributes = captureBase.flagged_attributes
+    this.digest = captureBase.digest ?? ''
   }
 
   get flaggedAttributes(): string[] {
-    return this.#flagged_attributes;
+    return this.#flagged_attributes
   }
 }

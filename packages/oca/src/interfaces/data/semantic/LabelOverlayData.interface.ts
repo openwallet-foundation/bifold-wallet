@@ -1,12 +1,12 @@
-import IBaseOverlayData from "../base/BaseOverlayData.interface";
+import IBaseOverlayData from '../base/BaseOverlayData.interface'
 
 export default interface ILabelOverlayData extends IBaseOverlayData {
-  language: string;
+  language: string
   attribute_labels: {
-    [key: string]: string;
-  };
-  attribute_categories: string[];
+    [key: string]: string
+  }
+  attribute_categories: string[]
   category_labels: {
-    [key: string]: string;
-  };
+    [key: string]: string
+  }
 }

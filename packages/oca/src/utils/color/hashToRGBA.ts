@@ -1,4 +1,4 @@
-import mulberry32 from "./mulberry32";
+import mulberry32 from './mulberry32'
 
 /**
  * Converts a numerical hash into a hexidecimal color string
@@ -7,19 +7,16 @@ import mulberry32 from "./mulberry32";
  * @returns { string } hexidecimal string eg. #32d3cc
  */
 const hashToRGBA = (hash: number) => {
-  let color = "#";
-  const colorRangeUpperBound = 256;
+  let color = '#'
+  const colorRangeUpperBound = 256
 
   // once for r, g, b
   for (let i = 0; i < 3; i++) {
     // append a pseudorandom two-char hexidecimal value from the lower half of the color spectrum (to limit to darker colors)
-    color += (
-      "0" +
-      Math.floor((mulberry32(hash + i) * colorRangeUpperBound) / 2).toString(16)
-    ).slice(-2);
+    color += ('0' + Math.floor((mulberry32(hash + i) * colorRangeUpperBound) / 2).toString(16)).slice(-2)
   }
 
-  return color;
-};
+  return color
+}
 
-export default hashToRGBA;
+export default hashToRGBA

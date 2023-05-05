@@ -2,7 +2,8 @@
   "name": "@aries-bifold/oca",
   "version": "1.0.0-alpha.0",
   "description": "",
-  "main": "build/index",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf ./build",
@@ -17,7 +18,13 @@
   },
   "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.4"
-  }
+  },
+  "eslintIgnore": [
+    "src"
+  ]
 }

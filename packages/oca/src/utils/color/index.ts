@@ -1,4 +1,4 @@
-import generateColor from "./generateColor";
-import { textColorForBackground } from "./textColorForBackground";
+import generateColor from './generateColor'
+import { textColorForBackground } from './textColorForBackground'
 
-export { generateColor, textColorForBackground };
+export { generateColor, textColorForBackground }

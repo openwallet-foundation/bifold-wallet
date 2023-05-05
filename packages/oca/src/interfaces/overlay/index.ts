@@ -1,4 +1,4 @@
-import IOverlayBundleAttribute from "./OverlayBundleAttribute.interface";
-import IOverlayBundleMetadata from "./OverlayBundleMetadata.interface";
+import IOverlayBundleAttribute from './OverlayBundleAttribute.interface'
+import IOverlayBundleMetadata from './OverlayBundleMetadata.interface'
 
-export { IOverlayBundleAttribute, IOverlayBundleMetadata };
+export { IOverlayBundleAttribute, IOverlayBundleMetadata }

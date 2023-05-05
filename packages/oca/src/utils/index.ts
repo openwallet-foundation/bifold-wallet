@@ -1,3 +1,3 @@
-import * as color from "@utils/color";
+import * as color from '../utils/color'
 
-export { color };
+export { color }
