@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { EventTypes } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
+import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import { GenericFn } from '../../types/fn'
@@ -53,6 +54,7 @@ type StyleConfig = {
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { customNotification } = useConfiguration()
+  const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
@@ -151,7 +153,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   }
 
   const declineCustomNotification = async () => {
-    // customNotification.onCloseAction(dispatch as any)
+    customNotification.onCloseAction(dispatch as any)
     toggleDeclineModalVisible()
   }
 
