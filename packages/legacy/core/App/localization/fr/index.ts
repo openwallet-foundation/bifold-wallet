@@ -352,8 +352,11 @@ const translation = {
         "AbortDecline": "Non, revenir en arrière",
         "DeclineTitle": "Decline credential offer? (FR)",
         "Declined": "Diminué",
-        "DeclineBulletPoint1": "In order to receive the proof request again, you will need to restart the process with the service. (FR)",
-        "DeclineBulletPoint2": "Are you sure you want to decline this credential offer? (FR)",
+        "DeclineParagraph1": "In order to receive the proof request again, you will need to restart the process with the service. (FR)",
+        "DeclineParagraph2": "Are you sure you want to decline this credential offer? (FR)",
+        "CustomOfferTitle": "Delete this offer? (FR)",
+        "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list. (FR)",
+        "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated. (FR)"
     },
     "ProofRequest": {
         "ProofRequest": "Demande de preuve",

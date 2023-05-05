@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import CredentialDeclined from '../../assets/img/credential-declined.svg'
+import CustomNotificationDecline from '../../assets/img/delete-notification.svg'
 import ProofDeclined from '../../assets/img/proof-declined.svg'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
@@ -14,6 +15,7 @@ import Button, { ButtonType } from '../buttons/Button'
 export enum ModalUsage {
   CredentialOfferDecline,
   ProofRequestDecline,
+  CustomNotificationDecline,
 }
 
 interface CommonDeclineModalProps {
@@ -64,6 +66,9 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         {type === ModalUsage.CredentialOfferDecline && <ProofDeclined {...imageDisplayOptions} />}
         {type === ModalUsage.ProofRequestDecline && <CredentialDeclined {...imageDisplayOptions} />}
+        {type === ModalUsage.CustomNotificationDecline && (
+          <CustomNotificationDecline style={{ marginBottom: 15 }} {...imageDisplayOptions} />
+        )}
       </View>
     )
   }
@@ -73,8 +78,8 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
       return (
         <View style={[{ marginBottom: 25 }]}>
           <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.DeclineTitle')}</Text>
-          <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineBulletPoint1')}</Text>
-          <Text style={[styles.bodyText]}>{t('CredentialOffer.DeclineBulletPoint2')}</Text>
+          <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
+          <Text style={[styles.bodyText]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
         </View>
       )
     }
@@ -86,6 +91,16 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
           <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
           <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
           <Text style={[styles.bodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
+        </View>
+      )
+    }
+
+    if (type === ModalUsage.CustomNotificationDecline) {
+      return (
+        <View style={[{ marginBottom: 25 }]}>
+          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
+          <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('CredentialOffer.CustomOfferParagraph1')}</Text>
+          <Text style={[styles.bodyText]}>{t('CredentialOffer.CustomOfferParagraph2')}</Text>
         </View>
       )
     }
@@ -107,10 +122,8 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
         ]}
       >
         <ScrollView style={[styles.container]}>
-          <View>
-            {headerImageForType(usage)}
-            {contentForType(usage)}
-          </View>
+          {headerImageForType(usage)}
+          {contentForType(usage)}
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>
