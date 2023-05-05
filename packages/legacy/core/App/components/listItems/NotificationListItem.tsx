@@ -11,9 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { EventTypes } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
-import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
-import { DeclineType } from '../../types/decline'
 import { BifoldError } from '../../types/error'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
@@ -55,7 +53,6 @@ type StyleConfig = {
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { customNotification } = useConfiguration()
-  const [, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
@@ -153,6 +150,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     toggleDeclineModalVisible()
   }
 
+  const declineCustomNotification = async () => {
+    // customNotification.onCloseAction(dispatch as any)
+    toggleDeclineModalVisible()
+  }
+
   const commonDeclineModal = () => {
     let usage: ModalUsage | undefined
     let onSubmit: GenericFn | undefined
@@ -163,6 +165,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     } else if (notificationType === NotificationType.CredentialOffer) {
       usage = ModalUsage.CredentialOfferDecline
       onSubmit = declineCredentialOffer
+    } else if (notificationType === NotificationType.Custom) {
+      usage = ModalUsage.CustomNotificationDecline
+      onSubmit = declineCustomNotification
     } else {
       usage = undefined
     }
@@ -270,19 +275,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
             screen: Screens.CustomNotification,
           })
-        onClose = () => {
-          navigation.getParent()?.navigate(Stacks.NotificationStack, {
-            screen: Screens.CommonDecline,
-            params: {
-              declineType: DeclineType.Custom,
-              itemId: notification.id,
-              deleteView: true,
-              customClose: () => {
-                customNotification.onCloseAction(dispatch as any)
-              },
-            },
-          })
-        }
+        onClose = toggleDeclineModalVisible
         break
       default:
         throw new Error('NotificationType was not set correctly.')
