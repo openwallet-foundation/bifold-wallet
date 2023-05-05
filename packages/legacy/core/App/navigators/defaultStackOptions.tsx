@@ -1,9 +1,9 @@
 import React from 'react'
 
 import HeaderTitle from '../components/texts/HeaderTitle'
-import { Theme } from '../theme'
+import { ITheme } from '../theme'
 
-export function createDefaultStackOptions({ ColorPallet }: Theme) {
+export function createDefaultStackOptions({ ColorPallet }: ITheme) {
   return {
     headerTintColor: ColorPallet.brand.headerIcon,
     headerShown: true,
