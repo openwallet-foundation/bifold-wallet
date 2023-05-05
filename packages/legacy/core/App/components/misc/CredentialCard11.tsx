@@ -38,7 +38,7 @@ interface Dimension {
   height: number
 }
 
-const { width, height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
 const lineSpacing = 30
 const fontSize = 22
 
@@ -455,7 +455,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
   return overlay.bundle ? (
-    <View onLayout={(event) => { setCardDimensions(event.nativeEvent.layout) }} style={[styles.container, style, { elevation: elevated ? 5 : 0 }]}>
+    <View
+      onLayout={(event) => {
+        setCardDimensions(event.nativeEvent.layout)
+      }}
+      style={[styles.container, style, { elevation: elevated ? 5 : 0 }]}
+    >
       <TouchableOpacity
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
@@ -478,7 +483,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   height={cardDimensions.height}
                   viewBox={`${cardDimensions.x} ${cardDimensions.y} ${cardDimensions.width} ${cardDimensions.height}`}
                 >
-                  {Array.from({ length: Math.ceil(height / lineSpacing) }).map((_, i) => (
+                  {Array.from({ length: Math.ceil((cardDimensions.height * 2) / lineSpacing) + 1 }).map((_, i) => (
                     <SvgText
                       key={i}
                       opacity={0.16}
@@ -493,9 +498,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                       {overlay.metaOverlay?.watermark &&
                         `${overlay.metaOverlay.watermark} `.repeat(
                           Math.ceil(
-                            width /
-                            (Math.cos(30) *
-                              ((fontSize / 2) * (overlay.metaOverlay.watermark.length + 1)))
+                            cardDimensions.width /
+                              (Math.cos(30) * ((fontSize / 2) * (overlay.metaOverlay.watermark.length + 1)))
                           )
                         )}
                     </SvgText>
