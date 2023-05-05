@@ -4,11 +4,6 @@ exports[`ErrorModal Component Renders correctly 1`] = `
 <Modal
   animationType="slide"
   hardwareAccelerated={false}
-  style={
-    Object {
-      "backgroundColor": "green",
-    }
-  }
   transparent={true}
   visible={true}
 >
@@ -499,7 +494,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
         }
       >
         <View
-          accessibilityLabel="Remove Contact"
+          accessibilityLabel="CredentialDetails.RemoveCredential"
           accessibilityState={
             Object {
               "disabled": false,
@@ -548,7 +543,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                 ]
               }
             >
-              Remove Contact
+              CredentialDetails.RemoveFromWallet
             </Text>
           </View>
         </View>
@@ -589,7 +584,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/AbortRemoveButton"
+          testID="com.ariesbifold:id/CancelRemoveButton"
         >
           <View
             style={
