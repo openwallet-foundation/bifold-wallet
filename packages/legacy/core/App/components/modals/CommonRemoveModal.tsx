@@ -115,8 +115,79 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
     },
   })
 
+  const titleForConfirmButton = (): string => {
+    if (removeType === RemoveType.Contact) {
+      return t('ContactDetails.RemoveContact')
+    }
+
+    if (removeType === RemoveType.Credential) {
+      return t('CredentialDetails.RemoveFromWallet')
+    }
+
+    return t('Global.Remove')
+  }
+
+  const titleForAccessibilityLabel = (): string => {
+    if (removeType === RemoveType.Contact) {
+      return t('ContactDetails.RemoveContact')
+    }
+
+    if (removeType === RemoveType.Credential) {
+      return t('CredentialDetails.RemoveCredential')
+    }
+
+    return t('Global.Remove')
+  }
+
+  const contentForType = (type: RemoveType) => {
+    if (type === RemoveType.Credential) {
+      return (
+        <View>
+          <View style={[{ marginBottom: 25 }]}>
+            <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
+          </View>
+          <View>
+            <Text style={[TextTheme.modalNormal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+          </View>
+          <View style={{ marginTop: 25 }}>
+            <Dropdown
+              title={t('CredentialDetails.YouWillNotLose')}
+              content={[t('CredentialDetails.YouWillNotLoseListItem1'), t('CredentialDetails.YouWillNotLoseListItem2')]}
+            />
+          </View>
+          <View style={{ marginTop: 25 }}>
+            <Dropdown
+              title={t('CredentialDetails.HowToGetThisCredentialBack')}
+              content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
+            />
+          </View>
+        </View>
+      )
+    }
+
+    if (type === RemoveType.Contact) {
+      return (
+        <View>
+          <View style={[{ marginBottom: 25 }]}>
+            <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
+          </View>
+          <View>
+            <Text style={[styles.bodyText]}>{t('ContactDetails.RemoveContactMessageTop')}</Text>
+            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint1')} textStyle={styles.bodyText} />
+            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint2')} textStyle={styles.bodyText} />
+            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint3')} textStyle={styles.bodyText} />
+            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint4')} textStyle={styles.bodyText} />
+            <Text style={[styles.bodyText, { marginTop: 10 }]}>{t('ContactDetails.RemoveContactMessageBottom')}</Text>
+          </View>
+        </View>
+      )
+    }
+
+    return null
+  }
+
   return (
-    <Modal style={{ backgroundColor: 'green' }} transparent={true} visible={visible} animationType="slide">
+    <Modal transparent={true} visible={visible} animationType="slide">
       <View style={[styles.headerView]}>
         <TouchableOpacity accessibilityLabel="Close" testID="Close" onPress={() => onCancel && onCancel()}>
           <Icon name={'close'} size={42} color={TextTheme.modalNormal.color} />
@@ -130,56 +201,12 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
           },
         ]}
       >
-        <ScrollView style={[styles.container]}>
-          {removeType === RemoveType.Contact && (
-            <View>
-              <View style={[{ marginBottom: 25 }]}>
-                <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
-              </View>
-              <View>
-                <Text style={[styles.bodyText]}>{t('ContactDetails.RemoveContactMessageTop')}</Text>
-                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint1')} textStyle={styles.bodyText} />
-                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint2')} textStyle={styles.bodyText} />
-                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint3')} textStyle={styles.bodyText} />
-                <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint4')} textStyle={styles.bodyText} />
-                <Text style={[styles.bodyText, { marginTop: 10 }]}>
-                  {t('ContactDetails.RemoveContactMessageBottom')}
-                </Text>
-              </View>
-            </View>
-          )}
-          {removeType === RemoveType.Credential && (
-            <View>
-              <View style={[{ marginBottom: 25 }]}>
-                <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
-              </View>
-              <View>
-                <Text style={[TextTheme.modalNormal]}>{t('CredentialDetails.RemoveCaption')}</Text>
-              </View>
-              <View style={{ marginTop: 25 }}>
-                <Dropdown
-                  title={t('CredentialDetails.YouWillNotLose')}
-                  content={[
-                    t('CredentialDetails.YouWillNotLoseListItem1'),
-                    t('CredentialDetails.YouWillNotLoseListItem2'),
-                  ]}
-                />
-              </View>
-              <View style={{ marginTop: 25 }}>
-                <Dropdown
-                  title={t('CredentialDetails.HowToGetThisCredentialBack')}
-                  content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
-                />
-              </View>
-            </View>
-          )}
-        </ScrollView>
+        <ScrollView style={[styles.container]}>{contentForType(removeType)}</ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>
             <Button
-              title={'Remove Contact'}
-              // t('CredentialDetails.RemoveFromWallet')
-              accessibilityLabel={'Remove Contact'}
+              title={titleForConfirmButton()}
+              accessibilityLabel={titleForAccessibilityLabel()}
               testID={testIdWithKey('ConfirmRemoveButton')}
               onPress={() => onSubmit && onSubmit()}
               buttonType={ButtonType.ModalCritical}
@@ -189,7 +216,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
             <Button
               title={t('Global.Cancel')}
               accessibilityLabel={t('Global.Cancel')}
-              testID={testIdWithKey('AbortRemoveButton')}
+              testID={testIdWithKey('CancelRemoveButton')}
               onPress={() => onCancel && onCancel()}
               buttonType={ButtonType.ModalSecondary}
             />

@@ -34,6 +34,7 @@ const translation = {
     "On": "On",
     "Off": "Off",
     "Close": "Close",
+    "Remove": "Remove",
   },
   "Date": {
     "ShortFormat": "MMM D, YYYY",
@@ -232,6 +233,7 @@ const translation = {
     "UnableToRemoveTitle": "Unable to remove contact",
     "UnableToRemoveCaption": "Unable to remove because there are credentials issued by this contact in your wallet. Remove the credentials first then remove this contact.",
     "GoToCredentials": "Go to Credentials",
+    "RemoveContact": "Remove Contact",
     "ContactRemoved": "Contact removed",
     "RemoveContactMessageTop": "By removing this contact you'll no longer be able to:",
     "RemoveContactMessageBottom": "This Contact will not be notified that you removed them from your Contacts",
@@ -276,7 +278,8 @@ const translation = {
     "HowToGetThisCredentialBack": "How to get this credential back",
     "HowToGetThisCredentialBackListItem1": "You will have to go to the organization that issued you this credential and request it again.",
     "CredentialRemoved": "Credential removed",
-    "IssuedBy": "Issued by:"
+    "IssuedBy": "Issued by:",
+    "RemoveCredential": "Remove Credential",
   },
   "Home": {
     "Welcome": "Welcome",

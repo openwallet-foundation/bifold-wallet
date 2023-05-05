@@ -33,7 +33,7 @@ const translation = {
     "On": "Ligado",
     "Off": "Desligado",
     "Close": "Close (PB)",
-
+    "Remove": "Remove (PB)",
   },
   "Date": {
     "ShortFormat": "D MMM YYYY",
@@ -220,6 +220,7 @@ const translation = {
     "UnableToRemoveTitle": "Não foi possível remover o contato.",
     "UnableToRemoveCaption": "Não foi possivel remover pois há credenciais emitidas por este contato em sua carteira. Remove essas credenciais antes e então remova este contato.",
     "GoToCredentials": "Ir para Credenciais.",
+    "RemoveContact": "Remove Contact (PT-BR)",
     "ContactRemoved": "Contato removido",
     "RemoveContactMessageTop": "By removing this contact you'll no longer be able to: (PT-BR)",
     "RemoveContactMessageBottom": "This Contact will not be notified that you removed them from your Contacts (PT-BR)",
@@ -264,7 +265,8 @@ const translation = {
     "HowToGetThisCredentialBack": "Como ter essa credencial de volta",
     "HowToGetThisCredentialBackListItem1": "Você terá que ir à organização que lhe emitiu essa credencial e requisita-la novamente.",
     "CredentialRemoved": "Credencial removida",
-    "IssuedBy": "Emitida por:"
+    "IssuedBy": "Emitida por:",
+    "RemoveCredential": "Remove Credential (PT-BR)",
   },
   "Home": {
     "Welcome": "Bem Vindo",
