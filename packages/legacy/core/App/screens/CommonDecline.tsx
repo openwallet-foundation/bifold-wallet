@@ -36,7 +36,6 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const credential = useCredentialById(itemId)
   const proof = useProofById(itemId)
-  
   const { t } = useTranslation()
   const { ColorPallet, TextTheme, Assets } = useTheme()
 
@@ -150,14 +149,10 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
       {deleteView ? (
         <SafeAreaView>
           <ScrollView style={[{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }, styles.container]}>
-           <Assets.svg.deleteNotification style={{ alignSelf: 'center' }} {...deleteImageDisplayOptions} />
+            <Assets.svg.deleteNotification style={{ alignSelf: 'center' }} {...deleteImageDisplayOptions} />
             <Text style={[TextTheme.headingTwo, { marginTop: 20 }]}>{t('CredentialOffer.DeleteOfferTitle')}</Text>
-            <Text style={[TextTheme.normal, { marginTop: 20 }]}>
-            {t('CredentialOffer.DeleteOfferMessage')}
-            </Text>
-            <Text style={[TextTheme.normal, { marginTop: 20 }]}>
-            {t('CredentialOffer.DeleteOfferDescription')}
-            </Text>
+            <Text style={[TextTheme.normal, { marginTop: 20 }]}>{t('CredentialOffer.DeleteOfferMessage')}</Text>
+            <Text style={[TextTheme.normal, { marginTop: 20 }]}>{t('CredentialOffer.DeleteOfferDescription')}</Text>
           </ScrollView>
           <View style={{ marginTop: 'auto', margin: 20 }}>
             <View>
