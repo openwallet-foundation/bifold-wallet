@@ -121,6 +121,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       backgroundColor: overlay.cardLayoutOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
     },
+    watermark:{
+      fontFamily:"ArialicHollow",
+      fontSize
+    },
     cardContainer: {
       flexDirection: 'row',
       minHeight: 0.33 * width,
@@ -477,7 +481,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           {overlay.metaOverlay?.watermark && (
             <View style={[{ position: 'absolute', borderRadius: borderRadius }]}>
               <View style={{ aspectRatio: 1 }}>
-                <Svg
+                {/* <Svg
                   preserveAspectRatio="xMaxYMid meet"
                   width={cardDimensions.width}
                   height={cardDimensions.height}
@@ -504,7 +508,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                         )}
                     </SvgText>
                   ))}
-                </Svg>
+                </Svg> */}
               </View>
             </View>
           )}
