@@ -30,15 +30,14 @@ import CredentialOfferAccept from './CredentialOfferAccept'
 type CredentialOfferProps = StackScreenProps<NotificationStackParams, Screens.CredentialOffer>
 
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
-  const { t, i18n } = useTranslation()
   if (!route?.params) {
-    throw new Error(t('Error.CredentialOffer'))
+    throw new Error('CredentialOffer route prams were not set properly')
   }
 
   const { credentialId } = route.params
 
   const { agent } = useAgent()
-  
+  const { t, i18n } = useTranslation()
   const { ListItems, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertConnectedNetwork } = useNetwork()

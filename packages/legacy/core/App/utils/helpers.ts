@@ -18,7 +18,6 @@ import { WalletQuery } from 'indy-sdk-react-native'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
 import { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
@@ -427,17 +426,16 @@ export const receiveMessageFromDeepLink = async (url: string, agent: Agent | und
  * @returns a connection record from parsing and receiving the invitation
  */
 export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
-  const { t } = useTranslation()
   const invitation = await agent?.oob.parseInvitation(uri)
 
   if (!invitation) {
-    throw new Error(t('Error.Invitation'))
+    throw new Error('Could not parse invitation from URL')
   }
 
   const record = await agent?.oob.receiveInvitation(invitation)
   const connectionRecord = record?.connectionRecord
   if (!connectionRecord?.id) {
-    throw new Error(t('Error.ConnexionRecord'))
+    throw new Error('Connection does not have an ID')
   }
 
   return connectionRecord
@@ -450,10 +448,9 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
  * @returns a connection record
  */
 export const createConnectionInvitation = async (agent: Agent | undefined) => {
-  const { t } = useTranslation()
   const record = await agent?.oob.createInvitation()
   if (!record) {
-    throw new Error(t('Error.Record'))
+    throw new Error('Could not create new invitation')
   }
   const invitationUrl = record.outOfBandInvitation.toUrl({ domain })
   return {

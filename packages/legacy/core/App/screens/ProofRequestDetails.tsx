@@ -186,7 +186,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const { agent } = useAgent()
   if (!agent) {
-    throw new Error(t('Error.AFJ'))
+    throw new Error('Unable to fetch proof from AFJ')
   }
 
   const style = StyleSheet.create({
@@ -226,7 +226,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const template = useTemplate(templateId)
   if (!template) {
-    throw new Error(t('Error.RequestTemplate'))
+    throw new Error('Unable to find proof request template')
   }
 
   useEffect(() => {

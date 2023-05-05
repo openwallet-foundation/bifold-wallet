@@ -20,15 +20,15 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const { t } = useTranslation()
 
   if (!navigation || !route) {
-    throw new Error(t('Error.Connection'))
+    throw new Error('Connection route props were not set properly')
   }
 
   const { connectionId, threadId } = route.params
   const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { agent } = useAgent()
+  const { t } = useTranslation()
   const [state, setState] = useState<{
     isVisible: boolean
     notificationRecord?: any
@@ -136,7 +136,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           navigation.navigate(Screens.ProofRequest, { proofId: notificationRecord.id })
           break
         default:
-          throw new Error(t('Error.Notification'))
+          throw new Error('Unhandled notification type')
       }
     }
   }, [notificationRecord])

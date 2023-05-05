@@ -183,7 +183,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedPro
   })
 
   if (!agent) {
-    throw new Error(t('Error.AFJ'))
+    throw new Error('Unable to fetch agent from AFJ')
   }
 
   const [loading, setLoading] = useState<boolean>(true)

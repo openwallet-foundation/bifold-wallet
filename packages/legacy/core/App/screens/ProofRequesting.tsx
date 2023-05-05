@@ -33,19 +33,18 @@ const qrContainerSize = windowDimensions.width - 20
 const qrSize = qrContainerSize - 60
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
-  const { t } = useTranslation()
   if (!route?.params) {
-    throw new Error(t('Error.ProofRequesting'))
+    throw new Error('ProofRequesting route prams were not set properly')
   }
 
   const { templateId, predicateValues } = route?.params
 
   const { agent } = useAgent()
   if (!agent) {
-    throw new Error(t('Error.AFJ'))
+    throw new Error('Unable to fetch agent from AFJ')
   }
 
-  
+  const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const isFocused = useIsFocused()
 
@@ -111,7 +110,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
 
   const template = useTemplate(templateId)
   if (!template) {
-    throw new Error(t('Error.RequestTemplate'))
+    throw new Error('Unable to find proof request template')
   }
 
   const createProofRequest = useCallback(async () => {

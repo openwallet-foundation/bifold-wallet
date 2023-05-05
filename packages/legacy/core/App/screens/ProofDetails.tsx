@@ -202,9 +202,8 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record }) => {
 }
 
 const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
-  const { t } = useTranslation()
   if (!route?.params) {
-    throw new Error(t('Error.ProofRequesting'))
+    throw new Error('ProofRequesting route prams were not set properly')
   }
 
   const { recordId, isHistory } = route?.params

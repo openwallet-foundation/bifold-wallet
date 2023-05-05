@@ -1,5 +1,4 @@
 import React, { createContext, useContext } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { AppConsoleLogger, LogLevel } from '../services/logger'
 
@@ -29,9 +28,8 @@ export const CommonUtilProvider: React.FC = ({ children }) => {
 
 export const useCommons = () => {
   const commonsContext = useContext(AppCommons)
-  const { t } = useTranslation()
   if (!commonsContext) {
-    throw new Error(t('Error.Commons'))
+    throw new Error('commonsContext must be used within a CommonUtilProvider')
   }
   return commonsContext
 }

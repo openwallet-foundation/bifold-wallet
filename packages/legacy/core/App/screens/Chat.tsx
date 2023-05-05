@@ -119,14 +119,13 @@ const getMessageEventRole = (record: BasicMessageRecord) => {
 }
 
 const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
-  const { t } = useTranslation()
   if (!route?.params) {
-    throw new Error(t('Error.Chat'))
+    throw new Error('Chat route params were not set properly')
   }
 
   const { connectionId } = route.params
   const [store] = useStore()
-  
+  const { t } = useTranslation()
   const { agent } = useAgent()
 
   const connection = useConnectionById(connectionId)

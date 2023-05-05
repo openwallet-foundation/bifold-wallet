@@ -54,7 +54,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   })
 
   if (!proof) {
-    throw new Error(t('Error.AFJ'))
+    throw new Error('Unable to fetch proof from AFJ')
   }
 
   const onBackToHomeTouched = () => {

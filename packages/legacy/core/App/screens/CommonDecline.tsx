@@ -19,20 +19,18 @@ import { testIdWithKey } from '../utils/testable'
 type CommonDeclineProps = StackScreenProps<NotificationStackParams, Screens.CommonDecline>
 
 const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
-  const { t } = useTranslation()
-  
   if (!route?.params) {
-    throw new Error(t('Error.CommonDecline'))
+    throw new Error('CommonDecline route prams were not set properly')
   }
 
   const { declineType, itemId, deleteView, customClose } = route.params
 
   if (!itemId) {
-    throw new Error(t('Error.ItemId'))
+    throw new Error('itemId cannot be undefined')
   }
 
   if (!declineType) {
-    throw new Error(t('Error.DeclineType'))
+    throw new Error('declineType cannot be undefined')
   }
 
   const { agent } = useAgent()
@@ -76,7 +74,7 @@ const CommonDecline: React.FC<CommonDeclineProps> = ({ navigation, route }) => {
     (declineType === DeclineType.ProofRequest && credential) ||
     (declineType === DeclineType.CredentialOffer && proof)
   ) {
-    throw new Error(t('Error.UsageType'))
+    throw new Error('Usage type and artifact do not match')
   }
 
   const onDoneTouched = () => {

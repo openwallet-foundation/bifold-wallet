@@ -41,14 +41,13 @@ type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.Proof
 type Fields = Record<string, RequestedAttribute[] | RequestedPredicate[]>
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
-  const { t } = useTranslation()
   if (!route?.params) {
-    throw new Error(t('Error.ProofRequest'))
+    throw new Error('ProofRequest route prams were not set properly')
   }
 
   const { proofId } = route?.params
   const { agent } = useAgent()
-  
+  const { t } = useTranslation()
   const { assertConnectedNetwork } = useNetwork()
   const fullCredentials = useCredentials().records
 

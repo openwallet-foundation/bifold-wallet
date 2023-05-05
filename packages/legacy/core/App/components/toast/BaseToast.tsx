@@ -1,5 +1,4 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { View, Text, useWindowDimensions, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -26,7 +25,6 @@ export enum ToastType {
 const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress = () => null }) => {
   const { TextTheme, borderRadius, borderWidth, ColorPallet } = useTheme()
   const { width } = useWindowDimensions()
-  const { t } = useTranslation()
   const iconSize = 24
   let iconName = ''
   let backgroundColor = ''
@@ -92,7 +90,7 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
       break
 
     default:
-      throw new Error(t('Error.ToastType'))
+      throw new Error('ToastType was not set correctly.')
   }
 
   return (

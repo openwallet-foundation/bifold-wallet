@@ -37,7 +37,7 @@ const HomeContentView: React.FC<HomeContentViewProps> = ({ children }) => {
 
   const displayMessage = (credentialCount: number) => {
     if (typeof credentialCount === 'undefined' && credentialCount >= 0) {
-      throw new Error(t('Error.HomeContent'))
+      throw new Error('Credential count cannot be undefined')
     }
 
     let credentialMsg

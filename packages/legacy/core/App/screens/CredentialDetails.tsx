@@ -39,14 +39,13 @@ const paddingVertical = 16
 const logoHeight = 80
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
-  const { t, i18n } = useTranslation()
   if (!route?.params) {
-    throw new Error(t('Error.CredentialDetails'))
+    throw new Error('CredentialDetails route prams were not set properly')
   }
 
   const { credential } = route?.params
   const { agent } = useAgent()
-  
+  const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const { OCABundleResolver } = useConfiguration()
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
