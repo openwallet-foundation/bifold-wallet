@@ -31,6 +31,13 @@ interface CredentialCard11Props {
   proof?: boolean
 }
 
+interface Dimension {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 const { width, height } = Dimensions.get('screen')
 const lineSpacing = 30
 const fontSize = 22
@@ -88,6 +95,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
     credential?.revocationNotification !== undefined && !!proof
   )
+  const [cardDimensions, setCardDimensions] = useState<Dimension>({ width: 0, height: 0, x: 0, y: 0 })
 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({})
 
@@ -447,7 +455,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
   return overlay.bundle ? (
-    <View style={[styles.container, style, { elevation: elevated ? 5 : 0 }]}>
+    <View onLayout={(event) => { setCardDimensions(event.nativeEvent.layout) }} style={[styles.container, style, { elevation: elevated ? 5 : 0 }]}>
       <TouchableOpacity
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
@@ -466,9 +474,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               <View style={{ aspectRatio: 1 }}>
                 <Svg
                   preserveAspectRatio="xMaxYMid meet"
-                  width={width}
-                  height={height}
-                  viewBox={`0 0 ${width} ${height}`}
+                  width={cardDimensions.width}
+                  height={cardDimensions.height}
+                  viewBox={`${cardDimensions.x} ${cardDimensions.y} ${cardDimensions.width} ${cardDimensions.height}`}
                 >
                   {Array.from({ length: Math.ceil(height / lineSpacing) }).map((_, i) => (
                     <SvgText
@@ -486,8 +494,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                         `${overlay.metaOverlay.watermark} `.repeat(
                           Math.ceil(
                             width /
-                              (Math.cos(30) *
-                                ((fontSize / 2) * (overlay.metaOverlay.watermark.length + 1)))
+                            (Math.cos(30) *
+                              ((fontSize / 2) * (overlay.metaOverlay.watermark.length + 1)))
                           )
                         )}
                     </SvgText>
