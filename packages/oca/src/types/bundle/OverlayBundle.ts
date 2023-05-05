@@ -1,15 +1,13 @@
 import { IBrandingOverlayData, IOverlayBundleData } from '../../interfaces/data'
-import {
-  BaseOverlay,
-  BrandingOverlay,
-  CaptureBase,
-  FormatOverlay,
-  InformationOverlay,
-  LabelOverlay,
-  MetaOverlay,
-  OverlayTypeMap,
-} from '..'
 import { IOverlayBundleAttribute, IOverlayBundleMetadata } from '../../interfaces/overlay'
+import OverlayTypeMap from '../OverlayTypeMap'
+import BaseOverlay from '../base/BaseOverlay'
+import BrandingOverlay from '../branding/BrandingOverlay'
+import CaptureBase from '../capture-base/CaptureBase'
+import FormatOverlay from '../semantic/FormatOverlay'
+import InformationOverlay from '../semantic/InformationOverlay'
+import LabelOverlay from '../semantic/LabelOverlay'
+import MetaOverlay from '../semantic/MetaOverlay'
 
 class OverlayBundle {
   credentialDefinitionId!: string

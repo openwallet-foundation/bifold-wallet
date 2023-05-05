@@ -1,5 +1,5 @@
 import { IFormatOverlayData } from '../../interfaces/data'
-import { BaseOverlay } from '..'
+import BaseOverlay from '../base/BaseOverlay'
 
 export default class FormatOverlay extends BaseOverlay {
   #attribute_formats: {

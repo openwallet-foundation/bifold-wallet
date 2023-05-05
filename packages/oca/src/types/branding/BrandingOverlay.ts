@@ -1,6 +1,6 @@
 import { IBrandingOverlayData } from '../../interfaces/data'
 import { generateColor } from '../../utils/color'
-import { BaseOverlay } from '..'
+import BaseOverlay from '../base/BaseOverlay'
 
 export default class BrandingOverlay extends BaseOverlay {
   #background_image: string

@@ -1,5 +1,5 @@
 import { IStandardOverlayData } from '../../interfaces/data'
-import { BaseOverlay } from '..'
+import BaseOverlay from '../base/BaseOverlay'
 
 export default class StandardOverlay extends BaseOverlay {
   #attr_standards: {

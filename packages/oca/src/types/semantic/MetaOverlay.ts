@@ -1,5 +1,5 @@
 import { IMetaOverlayData } from '../../interfaces/data'
-import { BaseOverlay } from '..'
+import BaseOverlay from '../base/BaseOverlay'
 
 export default class MetaOverlay extends BaseOverlay {
   #credential_help_text: string

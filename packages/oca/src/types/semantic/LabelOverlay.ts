@@ -1,5 +1,5 @@
 import { ILabelOverlayData } from '../../interfaces/data'
-import { BaseOverlay } from '..'
+import BaseOverlay from '../base/BaseOverlay'
 
 export default class LabelOverlay extends BaseOverlay {
   #attribute_labels: {

@@ -1,5 +1,5 @@
 import { ICharacterEncodingOverlayData } from '../../interfaces/data'
-import { BaseOverlay } from '..'
+import BaseOverlay from '../base/BaseOverlay'
 
 export default class CharacterEncodingOverlay extends BaseOverlay {
   #default_character_encoding: string

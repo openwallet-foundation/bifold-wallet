@@ -1,13 +1,11 @@
-import {
-  BaseOverlay,
-  BrandingOverlay,
-  CharacterEncodingOverlay,
-  LabelOverlay,
-  InformationOverlay,
-  FormatOverlay,
-  StandardOverlay,
-  MetaOverlay,
-} from '.'
+import BaseOverlay from './base/BaseOverlay'
+import BrandingOverlay from './branding/BrandingOverlay'
+import CharacterEncodingOverlay from './semantic/CharacterEncodingOverlay'
+import FormatOverlay from './semantic/FormatOverlay'
+import InformationOverlay from './semantic/InformationOverlay'
+import LabelOverlay from './semantic/LabelOverlay'
+import MetaOverlay from './semantic/MetaOverlay'
+import StandardOverlay from './semantic/StandardOverlay'
 
 const OverlayTypeMap: Map<string, typeof BaseOverlay | typeof BrandingOverlay> = new Map(
   Object.entries({
