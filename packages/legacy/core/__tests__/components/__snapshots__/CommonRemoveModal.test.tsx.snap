@@ -4,51 +4,69 @@ exports[`ErrorModal Component Renders correctly 1`] = `
 <Modal
   animationType="slide"
   hardwareAccelerated={false}
+  style={
+    Object {
+      "backgroundColor": "green",
+    }
+  }
+  transparent={true}
   visible={true}
 >
   <View
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#42803E",
-        "flexDirection": "row",
-        "height": 44,
-        "justifyContent": "center",
-      }
-    }
-  />
-  <View
-    style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#42803E",
-        "flexDirection": "row",
-        "height": 44,
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+          "height": 55,
+          "marginTop": 65,
+          "paddingRight": 20,
+          "paddingTop": 10,
+        },
+      ]
     }
   >
     <View
+      accessibilityLabel="Close"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "flexDirection": "row",
-          "justifyContent": "space-between",
+          "opacity": 1,
         }
       }
+      testID="Close"
     >
       <Text
+        allowFontScaling={false}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "flexGrow": 1,
-            "fontSize": 17,
-            "fontWeight": "bold",
-            "paddingBottom": 12,
-            "textAlign": "center",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 42,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
         }
       >
-        CredentialDetails.RemoveFromWallet
+        
       </Text>
     </View>
   </View>
@@ -61,9 +79,11 @@ exports[`ErrorModal Component Renders correctly 1`] = `
       ]
     }
     style={
-      Object {
-        "backgroundColor": "#000000",
-      }
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -93,7 +113,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "fontSize": 20,
+                    "fontSize": 24,
                     "fontWeight": "bold",
                   },
                 ]
@@ -479,7 +499,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
         }
       >
         <View
-          accessibilityLabel="CredentialDetails.RemoveFromWallet"
+          accessibilityLabel="Remove Contact"
           accessibilityState={
             Object {
               "disabled": false,
@@ -528,7 +548,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                 ]
               }
             >
-              CredentialDetails.RemoveFromWallet
+              Remove Contact
             </Text>
           </View>
         </View>
