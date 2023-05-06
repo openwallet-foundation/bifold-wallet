@@ -1,6 +1,6 @@
 import luminanceForHexColor from './luminanceForHexColor'
 
-export const textColorForBackground = (background: string) => {
+export const textColorForBackground = (background: string): string => {
   const spectrum = {
     black: '#000000',
     darkGrey: '#313132',

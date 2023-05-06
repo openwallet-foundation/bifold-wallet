@@ -1,7 +1,7 @@
 /**
  * Converts a hexidecimal color string into a luminance value
  * @param hex color string in hexidecimal format
- * @returns number between 0 and 255
+ * @returns { number | undefined } between 0 and 255
  */
 const luminanceForHexColor = (hex: string): number | undefined => {
   if (!/^#([A-Fa-f0-9]{6})$/.test(hex)) {
