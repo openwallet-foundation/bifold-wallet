@@ -1,5 +1,4 @@
 module.exports = {
-  root: true,
   env: {
     browser: true,
     es2021: true,
@@ -15,5 +14,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 'warn',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
   },
 }
