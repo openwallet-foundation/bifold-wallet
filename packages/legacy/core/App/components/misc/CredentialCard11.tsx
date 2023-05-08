@@ -30,7 +30,9 @@ interface CredentialCard11Props {
   proof?: boolean
 }
 
-const { width } = Dimensions.get('screen')
+const { width, height } = Dimensions.get('screen')
+
+const watermarkFontSize = 22
 
 const borderRadius = 10
 const padding = width * 0.05
@@ -118,7 +120,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor() ?? 'rgba(0, 0, 0, 0.24)',
+      backgroundColor: getSecondaryBackgroundColor() ?? overlay.cardLayoutOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
       flexGrow: 1,
@@ -172,6 +174,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     },
     errorIcon: {
       color: ListItems.proofError.color,
+    },
+    watermark: {
+      opacity: 0.16,
+      fontSize: watermarkFontSize,
+      transform: [{ rotate: '-30deg' }],
     },
   })
 
@@ -385,7 +392,22 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           >
             {null}
           </ImageBackground>
-        ) : null}
+        ) : (
+          !(error || proof || getSecondaryBackgroundColor()) && (
+            <View
+              style={[
+                {
+                  position: 'absolute',
+                  width: logoHeight,
+                  height: '100%',
+                  borderTopLeftRadius: borderRadius,
+                  borderBottomLeftRadius: borderRadius,
+                  backgroundColor: 'rgba(0,0,0,0.24)',
+                },
+              ]}
+            ></View>
+          )
+        )}
       </View>
     )
   }
@@ -429,7 +451,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
   return overlay.bundle ? (
-    <View style={[styles.container, style, { elevation: elevated ? 5 : 0 }]}>
+    <View style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}>
       <TouchableOpacity
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
@@ -443,6 +465,23 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         testID={testIdWithKey('ShowCredentialDetails')}
       >
         <View testID={testIdWithKey('CredentialCard')}>
+          {overlay.metaOverlay?.watermark && (
+            <View style={{ position: 'absolute', left: '-50%', top: '-50%', width: '200%', height: '200%' }}>
+              {Array.from({ length: Math.ceil((height * 2) / (watermarkFontSize + watermarkFontSize / 4)) + 1 }).map(
+                (_, i) => (
+                  <Text key={i} numberOfLines={1} style={styles.watermark}>
+                    {overlay.metaOverlay?.watermark &&
+                      `${overlay.metaOverlay.watermark} `.repeat(
+                        Math.ceil(
+                          width /
+                            (Math.cos(30) * ((watermarkFontSize / 2) * (overlay.metaOverlay.watermark.length + 1)))
+                        )
+                      )}
+                  </Text>
+                )
+              )}
+            </View>
+          )}
           <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
         </View>
       </TouchableOpacity>
