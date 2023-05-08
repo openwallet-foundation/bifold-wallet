@@ -65,6 +65,7 @@ export interface ITextTheme {
   headerTitle: IFontAttributes
   modalNormal: IFontAttributes
   modalTitle: IFontAttributes
+  popupModalText: IFontAttributes
   modalHeadingOne: IFontAttributes
   modalHeadingThree: IFontAttributes
 }
@@ -296,6 +297,11 @@ export const TextTheme: ITextTheme = {
   modalHeadingThree: {
     fontSize: 26,
     fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  popupModalText: {
+    fontSize: 18,
+    fontWeight: 'normal',
     color: ColorPallet.grayscale.white,
   },
 }
