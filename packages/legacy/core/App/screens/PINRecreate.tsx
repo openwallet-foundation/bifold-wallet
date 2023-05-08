@@ -34,7 +34,7 @@ const PINRecreate: React.FC = () => {
       padding: 20,
     },
     notifyText: {
-      ...TextTheme.normal,
+      ...TextTheme.popupModalText,
       marginVertical: 5,
     },
   })

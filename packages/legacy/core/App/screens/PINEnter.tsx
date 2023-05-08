@@ -64,7 +64,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       marginVertical: 5,
     },
     modalText: {
-      ...TextTheme.modalNormal,
+      ...TextTheme.popupModalText,
       marginVertical: 5,
     },
   })
