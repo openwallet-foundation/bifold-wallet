@@ -18,6 +18,8 @@ import { formatTime, getCredentialConnectionLabel } from '../../utils/helpers'
 import { buildFieldsFromIndyCredential } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 
+import CardWatermark from './CardWatermark'
+
 interface CredentialCard10Props {
   credential: CredentialExchangeRecord
   onPress?: GenericFn
@@ -29,7 +31,7 @@ const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 const borderPadding = 8
-const { width } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
 /**
  * A card is defined as a 4x8 (height/rows x width/columns) grid.
@@ -121,6 +123,11 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
     },
     flexGrow: {
       flexGrow: 1,
+    },
+    watermark: {
+      opacity: 0.16,
+      fontSize: 22,
+      transform: [{ rotate: '-30deg' }],
     },
   })
 
@@ -275,17 +282,35 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       style={[styles.container, style]}
       testID={testIdWithKey('ShowCredentialDetails')}
     >
-      <View style={styles.flexGrow} testID={testIdWithKey('CredentialCard')}>
+      <View style={[styles.flexGrow, { overflow: 'hidden' }]} testID={testIdWithKey('CredentialCard')}>
         {overlay?.cardLayoutOverlay?.imageSource ? (
           <ImageBackground
             source={toImageSource(overlay?.cardLayoutOverlay?.imageSource)}
             style={styles.flexGrow}
             imageStyle={{ borderRadius }}
           >
+            {overlay.metaOverlay?.watermark && (
+              <CardWatermark
+                width={width}
+                height={height}
+                style={styles.watermark}
+                watermark={overlay.metaOverlay?.watermark}
+              />
+            )}
             <CredentialCard revoked={isRevoked} />
           </ImageBackground>
         ) : (
-          <CredentialCard revoked={isRevoked} />
+          <>
+            {overlay.metaOverlay?.watermark && (
+              <CardWatermark
+                width={width}
+                height={height}
+                style={styles.watermark}
+                watermark={overlay.metaOverlay?.watermark}
+              />
+            )}
+            <CredentialCard revoked={isRevoked} />
+          </>
         )}
       </View>
     </TouchableOpacity>
