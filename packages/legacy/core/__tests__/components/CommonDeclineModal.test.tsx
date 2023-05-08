@@ -1,7 +1,8 @@
 import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
-import CommonDeclineModal, { ModalUsage } from '../../App/components/modals/CommonDeclineModal'
+import CommonDeclineModal from '../../App/components/modals/CommonDeclineModal'
+import { ModalUsage } from '../../App/types/remove'
 import { testIdWithKey } from '../../App/utils/testable'
 
 describe('CommonDeclineModal Component', () => {
