@@ -16,11 +16,12 @@ import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
+import { ModalUsage } from '../../types/remove'
 import { parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { InfoBoxType } from '../misc/InfoBox'
-import CommonDeclineModal, { ModalUsage } from '../modals/CommonDeclineModal'
+import CommonDeclineModal from '../modals/CommonDeclineModal'
 
 const iconSize = 30
 

@@ -8,13 +8,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { RemoveType } from '../../types/remove'
+import { ModalUsage } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import UnorderedListModal from '../misc/UnorderedListModal'
 
 interface CommonRemoveModalProps {
-  removeType: RemoveType
+  usage: ModalUsage
   onSubmit?: GenericFn
   onCancel?: GenericFn
   visible?: boolean
@@ -80,9 +80,9 @@ const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
   )
 }
 
-const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visible, onSubmit, onCancel }) => {
-  if (!removeType) {
-    throw new Error('removeType cannot be undefined')
+const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, onSubmit, onCancel }) => {
+  if (!usage) {
+    throw new Error('usage cannot be undefined')
   }
 
   const { t } = useTranslation()
@@ -116,11 +116,11 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
   })
 
   const titleForConfirmButton = (): string => {
-    if (removeType === RemoveType.Contact) {
+    if (usage === ModalUsage.ContactRemove) {
       return t('ContactDetails.RemoveContact')
     }
 
-    if (removeType === RemoveType.Credential) {
+    if (usage === ModalUsage.CredentialRemove) {
       return t('CredentialDetails.RemoveFromWallet')
     }
 
@@ -128,19 +128,19 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
   }
 
   const titleForAccessibilityLabel = (): string => {
-    if (removeType === RemoveType.Contact) {
+    if (usage === ModalUsage.ContactRemove) {
       return t('ContactDetails.RemoveContact')
     }
 
-    if (removeType === RemoveType.Credential) {
+    if (usage === ModalUsage.CredentialRemove) {
       return t('CredentialDetails.RemoveCredential')
     }
 
     return t('Global.Remove')
   }
 
-  const contentForType = (type: RemoveType) => {
-    if (type === RemoveType.Credential) {
+  const contentForType = (type: ModalUsage) => {
+    if (type === ModalUsage.CredentialRemove) {
       return (
         <View>
           <View style={[{ marginBottom: 25 }]}>
@@ -165,7 +165,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
       )
     }
 
-    if (type === RemoveType.Contact) {
+    if (type === ModalUsage.ContactRemove) {
       return (
         <View>
           <View style={[{ marginBottom: 25 }]}>
@@ -201,7 +201,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ removeType, visib
           },
         ]}
       >
-        <ScrollView style={[styles.container]}>{contentForType(removeType)}</ScrollView>
+        <ScrollView style={[styles.container]}>{contentForType(usage)}</ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>
             <Button

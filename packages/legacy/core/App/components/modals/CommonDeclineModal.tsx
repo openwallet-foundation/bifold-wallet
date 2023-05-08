@@ -9,14 +9,9 @@ import CustomNotificationDecline from '../../assets/img/delete-notification.svg'
 import ProofDeclined from '../../assets/img/proof-declined.svg'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
+import { ModalUsage } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
-
-export enum ModalUsage {
-  CredentialOfferDecline,
-  ProofRequestDecline,
-  CustomNotificationDecline,
-}
 
 interface CommonDeclineModalProps {
   usage: ModalUsage
@@ -26,6 +21,10 @@ interface CommonDeclineModalProps {
 }
 
 const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible, onSubmit, onCancel }) => {
+  if (!usage) {
+    throw new Error('usage cannot be undefined')
+  }
+
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -61,20 +60,20 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
     },
   })
 
-  const headerImageForType = (type: ModalUsage) => {
+  const headerImageForType = (usageType: ModalUsage) => {
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        {type === ModalUsage.CredentialOfferDecline && <ProofDeclined {...imageDisplayOptions} />}
-        {type === ModalUsage.ProofRequestDecline && <CredentialDeclined {...imageDisplayOptions} />}
-        {type === ModalUsage.CustomNotificationDecline && (
+        {usageType === ModalUsage.CredentialOfferDecline && <ProofDeclined {...imageDisplayOptions} />}
+        {usageType === ModalUsage.ProofRequestDecline && <CredentialDeclined {...imageDisplayOptions} />}
+        {usageType === ModalUsage.CustomNotificationDecline && (
           <CustomNotificationDecline style={{ marginBottom: 15 }} {...imageDisplayOptions} />
         )}
       </View>
     )
   }
 
-  const contentForType = (type: ModalUsage) => {
-    if (type === ModalUsage.CredentialOfferDecline) {
+  const contentForType = (usageType: ModalUsage) => {
+    if (usageType === ModalUsage.CredentialOfferDecline) {
       return (
         <View style={[{ marginBottom: 25 }]}>
           <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.DeclineTitle')}</Text>
@@ -84,7 +83,7 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
       )
     }
 
-    if (type === ModalUsage.ProofRequestDecline) {
+    if (usageType === ModalUsage.ProofRequestDecline) {
       return (
         <View style={[{ marginBottom: 25 }]}>
           <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
@@ -95,7 +94,7 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
       )
     }
 
-    if (type === ModalUsage.CustomNotificationDecline) {
+    if (usageType === ModalUsage.CustomNotificationDecline) {
       return (
         <View style={[{ marginBottom: 25 }]}>
           <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
