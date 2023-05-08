@@ -57,8 +57,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
       marginVertical: 5,
     },
     modalText: {
-      ...TextTheme.normal,
-      color: ColorPallet.notification.infoText,
+      ...TextTheme.popupModalText,
     },
     notifyTextList: {
       marginVertical: 6,
