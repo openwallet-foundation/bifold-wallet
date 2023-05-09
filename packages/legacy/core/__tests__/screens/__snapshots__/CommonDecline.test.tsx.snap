@@ -208,6 +208,7 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                   Object {},
                   Object {
                     "elevation": 0,
+                    "overflow": "hidden",
                   },
                 ]
               }
@@ -248,18 +249,33 @@ exports[`common decline screen decline offer renders correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "backgroundColor": "rgba(0, 0, 0, 0.24)",
+                              "backgroundColor": "#781e4b",
                               "borderBottomLeftRadius": 10,
                               "borderTopLeftRadius": 10,
                               "width": 90,
                             },
                             Object {
-                              "backgroundColor": "rgba(0, 0, 0, 0.24)",
+                              "backgroundColor": "#781e4b",
                             },
                           ]
                         }
                         testID="com.ariesbifold:id/CredentialCardSecondaryBody"
-                      />
+                      >
+                        <View
+                          style={
+                            Array [
+                              Object {
+                                "backgroundColor": "rgba(0,0,0,0.24)",
+                                "borderBottomLeftRadius": 10,
+                                "borderTopLeftRadius": 10,
+                                "height": "100%",
+                                "position": "absolute",
+                                "width": 90,
+                              },
+                            ]
+                          }
+                        />
+                      </View>
                       <View
                         style={
                           Array [

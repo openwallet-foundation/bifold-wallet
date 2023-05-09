@@ -66,6 +66,7 @@ export interface MetaOverlay extends BaseL10nOverlay {
   name: string
   description?: string
   issuerName?: string
+  watermark?: string
 }
 
 export interface CardLayoutOverlay10 extends BaseOverlay {
