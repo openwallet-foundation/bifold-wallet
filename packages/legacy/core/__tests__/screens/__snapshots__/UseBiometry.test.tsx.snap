@@ -318,56 +318,60 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                 </Text>
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "flex-end",
-                        "flexDirection": "row",
-                        "flexWrap": "wrap",
-                        "justifyContent": "space-between",
-                        "marginBottom": 24,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "flex-end",
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "flexWrap": "wrap",
+                      "justifyContent": "flex-start",
+                      "marginBottom": 24,
+                    }
                   }
                 >
-                  <View>
+                  <View
+                    style={
+                      Object {
+                        "flexGrow": 1,
+                      }
+                    }
+                  >
                     <View
                       style={
-                        Object {
-                          "flexDirection": "row",
-                          "justifyContent": "space-between",
-                        }
+                        Array [
+                          Object {
+                            "flexDirection": "row",
+                            "justifyContent": "space-between",
+                          },
+                          Object {
+                            "backgroundColor": "#313132",
+                            "borderRadius": 5,
+                            "justifyContent": "flex-start",
+                            "paddingHorizontal": 12,
+                            "paddingVertical": 4,
+                          },
+                        ]
                       }
                     >
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -376,33 +380,23 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -411,33 +405,23 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -446,33 +430,23 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -481,33 +455,23 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -516,33 +480,23 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -584,46 +538,53 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                     </View>
                   </View>
                   <View
-                    accessibilityLabel="PINCreate.Show"
-                    accessible={true}
-                    focusable={true}
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
                       Object {
-                        "marginLeft": "auto",
-                        "marginRight": "auto",
+                        "flexShrink": 1,
                         "marginVertical": 10,
-                        "opacity": 1,
+                        "paddingHorizontal": 10,
                       }
                     }
-                    testID="com.ariesbifold:id/Show"
                   >
-                    <Text
-                      allowFontScaling={false}
+                    <View
+                      accessibilityLabel="PINCreate.Show"
+                      accessible={true}
+                      focusable={true}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
                       style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 30,
-                          },
-                          undefined,
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
+                        Object {
+                          "opacity": 1,
+                        }
                       }
+                      testID="com.ariesbifold:id/Show"
                     >
-                      
-                    </Text>
+                      <Text
+                        allowFontScaling={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 30,
+                            },
+                            undefined,
+                            Object {
+                              "fontFamily": "Material Icons",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            Object {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -1003,56 +964,60 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                 </Text>
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "flex-end",
-                        "flexDirection": "row",
-                        "flexWrap": "wrap",
-                        "justifyContent": "space-between",
-                        "marginBottom": 24,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "flex-end",
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "flexWrap": "wrap",
+                      "justifyContent": "flex-start",
+                      "marginBottom": 24,
+                    }
                   }
                 >
-                  <View>
+                  <View
+                    style={
+                      Object {
+                        "flexGrow": 1,
+                      }
+                    }
+                  >
                     <View
                       style={
-                        Object {
-                          "flexDirection": "row",
-                          "justifyContent": "space-between",
-                        }
+                        Array [
+                          Object {
+                            "flexDirection": "row",
+                            "justifyContent": "space-between",
+                          },
+                          Object {
+                            "backgroundColor": "#313132",
+                            "borderRadius": 5,
+                            "justifyContent": "flex-start",
+                            "paddingHorizontal": 12,
+                            "paddingVertical": 4,
+                          },
+                        ]
                       }
                     >
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1061,33 +1026,23 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1096,33 +1051,23 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1131,33 +1076,23 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1166,33 +1101,23 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1201,33 +1126,23 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1269,48 +1184,55 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                     </View>
                   </View>
                   <View
-                    accessibilityLabel="PINCreate.Show"
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    nativeID="animatedComponent"
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
                       Object {
-                        "marginLeft": "auto",
-                        "marginRight": "auto",
+                        "flexShrink": 1,
                         "marginVertical": 10,
-                        "opacity": 1,
+                        "paddingHorizontal": 10,
                       }
                     }
-                    testID="com.ariesbifold:id/Show"
                   >
-                    <Text
-                      allowFontScaling={false}
+                    <View
+                      accessibilityLabel="PINCreate.Show"
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      nativeID="animatedComponent"
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
                       style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 30,
-                          },
-                          undefined,
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
+                        Object {
+                          "opacity": 1,
+                        }
                       }
+                      testID="com.ariesbifold:id/Show"
                     >
-                      
-                    </Text>
+                      <Text
+                        allowFontScaling={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 30,
+                            },
+                            undefined,
+                            Object {
+                              "fontFamily": "Material Icons",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            Object {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -1746,56 +1668,60 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                 </Text>
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "flex-end",
-                        "flexDirection": "row",
-                        "flexWrap": "wrap",
-                        "justifyContent": "space-between",
-                        "marginBottom": 24,
-                      },
-                    ]
+                    Object {
+                      "alignItems": "flex-end",
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "flexWrap": "wrap",
+                      "justifyContent": "flex-start",
+                      "marginBottom": 24,
+                    }
                   }
                 >
-                  <View>
+                  <View
+                    style={
+                      Object {
+                        "flexGrow": 1,
+                      }
+                    }
+                  >
                     <View
                       style={
-                        Object {
-                          "flexDirection": "row",
-                          "justifyContent": "space-between",
-                        }
+                        Array [
+                          Object {
+                            "flexDirection": "row",
+                            "justifyContent": "space-between",
+                          },
+                          Object {
+                            "backgroundColor": "#313132",
+                            "borderRadius": 5,
+                            "justifyContent": "flex-start",
+                            "paddingHorizontal": 12,
+                            "paddingVertical": 4,
+                          },
+                        ]
                       }
                     >
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1804,33 +1730,23 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1839,33 +1755,23 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1874,33 +1780,23 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1909,33 +1805,23 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -1944,33 +1830,23 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                       <View
                         onLayout={[Function]}
                         style={
-                          Array [
-                            Object {
-                              "backgroundColor": "#313132",
-                              "borderColor": "#313132",
-                              "borderRadius": 5,
-                              "borderWidth": 2,
-                              "height": 48,
-                              "marginRight": 8,
-                              "width": 40,
-                            },
-                            false,
-                          ]
+                          Object {
+                            "backgroundColor": "#313132",
+                            "height": 48,
+                            "paddingHorizontal": 2,
+                          }
                         }
                       >
                         <Text
                           maxFontSizeMultiplier={1}
                           style={
-                            Array [
-                              Object {
-                                "color": "#FFFFFF",
-                                "fontSize": 26,
-                                "fontWeight": "bold",
-                                "lineHeight": 42,
-                                "textAlign": "center",
-                                "textAlignVertical": "center",
-                              },
-                            ]
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           
@@ -2012,46 +1888,53 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                     </View>
                   </View>
                   <View
-                    accessibilityLabel="PINCreate.Show"
-                    accessible={true}
-                    focusable={true}
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
                       Object {
-                        "marginLeft": "auto",
-                        "marginRight": "auto",
+                        "flexShrink": 1,
                         "marginVertical": 10,
-                        "opacity": 1,
+                        "paddingHorizontal": 10,
                       }
                     }
-                    testID="com.ariesbifold:id/Show"
                   >
-                    <Text
-                      allowFontScaling={false}
+                    <View
+                      accessibilityLabel="PINCreate.Show"
+                      accessible={true}
+                      focusable={true}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
                       style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 30,
-                          },
-                          undefined,
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
+                        Object {
+                          "opacity": 1,
+                        }
                       }
+                      testID="com.ariesbifold:id/Show"
                     >
-                      
-                    </Text>
+                      <Text
+                        allowFontScaling={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 30,
+                            },
+                            undefined,
+                            Object {
+                              "fontFamily": "Material Icons",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            Object {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
