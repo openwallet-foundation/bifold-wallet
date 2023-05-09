@@ -33,7 +33,7 @@ const translation = {
     "On": "Ligado",
     "Off": "Desligado",
     "Close": "Close (PB)",
-
+    "Remove": "Remove (PB)",
   },
   "Date": {
     "ShortFormat": "D MMM YYYY",
@@ -220,7 +220,14 @@ const translation = {
     "UnableToRemoveTitle": "Não foi possível remover o contato.",
     "UnableToRemoveCaption": "Não foi possivel remover pois há credenciais emitidas por este contato em sua carteira. Remove essas credenciais antes e então remova este contato.",
     "GoToCredentials": "Ir para Credenciais.",
-    "ContactRemoved": "Contato removido"
+    "RemoveContact": "Remove Contact (PT-BR)",
+    "ContactRemoved": "Contato removido",
+    "RemoveContactMessageTop": "By removing this contact you'll no longer be able to: (PT-BR)",
+    "RemoveContactMessageBottom": "This Contact will not be notified that you removed them from your Contacts (PT-BR)",
+    "RemoveContactsBulletPoint1": "Direct message this contact (PT-BR)",
+    "RemoveContactsBulletPoint2": "Get offered new credentials from this Contact (PT-BR)",
+    "RemoveContactsBulletPoint3": "Get notified of updates to your credentials issued by this Contact (PT-BR)",
+    "RemoveContactsBulletPoint4": "Request for information from this Contact or they request information from you (PT-BR)",
   },
   "WhatAreContacts": {
     "Title": "O que são Contatos?",
@@ -258,7 +265,8 @@ const translation = {
     "HowToGetThisCredentialBack": "Como ter essa credencial de volta",
     "HowToGetThisCredentialBackListItem1": "Você terá que ir à organização que lhe emitiu essa credencial e requisita-la novamente.",
     "CredentialRemoved": "Credencial removida",
-    "IssuedBy": "Emitida por:"
+    "IssuedBy": "Emitida por:",
+    "RemoveCredential": "Remove Credential (PT-BR)",
   },
   "Home": {
     "Welcome": "Bem Vindo",
@@ -328,10 +336,15 @@ const translation = {
     "ConfirmDeclinedMessage": "Para receber novamente a oferta de credencial, você precisara solicitar novamente ao emissor.",
     "ConfirmDecline": "Sim, recusar esta credencial",
     "AbortDecline": "Não, voltar",
-    "DeclineTitle": "Recusar Credencial",
+    "DeclineTitle": "Decline credential offer? (PB-BR)",
     "Declined": "Recusado",
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
-    "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}."
+    "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
+    "DeclineParagraph1": "In order to receive the proof request again, you will need to restart the process with the service. (PB-BR)",
+    "DeclineParagraph2": "Are you sure you want to decline this credential offer? (PB-BR)",
+    "CustomOfferTitle": "Delete this offer? (PB-BR)",
+    "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list. (PB-BR)",
+    "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated. (PB-BR)"
   },
   "ProofRequest": {
     "ProofRequest": "Requisição de Prova",
@@ -363,8 +376,11 @@ const translation = {
     "ConfirmDeclinedMessage": "Para receber a requisição de prova novamente, o requisitante terá de reenvia-la.",
     "ConfirmDecline": "Sim, recusar esta requisição de prova",
     "AbortDecline": "Não, voltar",
-    "DeclineTitle": "Recusar Prova",
+    "DeclineTitle": "Decline proof request? (PB-BR)",
     "Declined": "Recusado",
+    "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access. (PB-BR)",
+    "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service. (PB-BR)",
+    "DeclineBulletPoint3": "Are you sure you want to decline this proof request? (PB-BR)",  
   },
   "Settings": {
     "Version": "Versão",

@@ -34,6 +34,7 @@ const translation = {
     "On": "On",
     "Off": "Off",
     "Close": "Close",
+    "Remove": "Remove",
   },
   "Date": {
     "ShortFormat": "MMM D, YYYY",
@@ -232,7 +233,14 @@ const translation = {
     "UnableToRemoveTitle": "Unable to remove contact",
     "UnableToRemoveCaption": "Unable to remove because there are credentials issued by this contact in your wallet. Remove the credentials first then remove this contact.",
     "GoToCredentials": "Go to Credentials",
-    "ContactRemoved": "Contact removed"
+    "RemoveContact": "Remove Contact",
+    "ContactRemoved": "Contact removed",
+    "RemoveContactMessageTop": "By removing this contact you'll no longer be able to:",
+    "RemoveContactMessageBottom": "This Contact will not be notified that you removed them from your Contacts",
+    "RemoveContactsBulletPoint1": "Direct message this contact",
+    "RemoveContactsBulletPoint2": "Get offered new credentials from this Contact",
+    "RemoveContactsBulletPoint3": "Get notified of updates to your credentials issued by this Contact",
+    "RemoveContactsBulletPoint4": "Request for information from this Contact or they request information from you",
   },
   "WhatAreContacts": {
     "Title": "What are Contacts?",
@@ -270,7 +278,8 @@ const translation = {
     "HowToGetThisCredentialBack": "How to get this credential back",
     "HowToGetThisCredentialBackListItem1": "You will have to go to the organization that issued you this credential and request it again.",
     "CredentialRemoved": "Credential removed",
-    "IssuedBy": "Issued by:"
+    "IssuedBy": "Issued by:",
+    "RemoveCredential": "Remove Credential",
   },
   "Home": {
     "Welcome": "Welcome",
@@ -343,8 +352,13 @@ const translation = {
     "ConfirmDeclinedMessage": "In order to receive the credential offer again, you will need to reapply with the issuer.",
     "ConfirmDecline": "Yes, decline this credential",
     "AbortDecline": "No, go back",
-    "DeclineTitle": "Decline Credential",
+    "DeclineTitle": "Decline credential offer?",
     "Declined": "Declined",
+    "DeclineParagraph1": "In order to receive the proof request again, you will need to restart the process with the service.",
+    "DeclineParagraph2": "Are you sure you want to decline this credential offer?",
+    "CustomOfferTitle": "Delete this offer?",
+    "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list.",
+    "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated."
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",
@@ -376,10 +390,13 @@ const translation = {
     "ConfirmDeclinedMessage": "In order to receive the proof request again, the requestor will need to resend it.",
     "ConfirmDecline": "Yes, decline this proof request",
     "AbortDecline": "No, go back",
-    "DeclineTitle": "Decline Proof",
+    "DeclineTitle": "Decline proof request?",
     "Declined": "Declined",
     "ShareFollowingInformation_one": "is sharing the following information from {{count}} credential.",
-    "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials."
+    "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials.",
+    "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access.",
+    "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service.",
+    "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",  
   },
   "Settings": {
     "Version": "Version",

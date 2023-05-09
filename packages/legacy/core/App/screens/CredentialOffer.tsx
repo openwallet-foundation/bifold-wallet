@@ -10,16 +10,17 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
+import CommonDeclineModal from '../components/modals/CommonDeclineModal'
 import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
-import { DeclineType } from '../types/decline'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
+import { ModalUsage } from '../types/remove'
 import { getCredentialIdentifiers, isValidIndyCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromIndyCredential } from '../utils/oca'
@@ -35,20 +36,17 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   const { credentialId } = route.params
-
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { ListItems, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertConnectedNetwork } = useNetwork()
   const { OCABundleResolver } = useConfiguration()
-
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-
+  const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({ presentationFields: [] })
-
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 
@@ -125,7 +123,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       })
   }, [credential])
 
-  const handleAcceptPress = async () => {
+  const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
+
+  const handleAcceptTouched = async () => {
     try {
       if (!(agent && credential && assertConnectedNetwork())) {
         return
@@ -139,11 +139,23 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
   }
 
-  const handleDeclinePress = async () => {
-    navigation.navigate(Screens.CommonDecline, {
-      declineType: DeclineType.CredentialOffer,
-      itemId: credentialId,
-    })
+  const handleDeclineTouched = async () => {
+    try {
+      if (agent && credential) {
+        await agent.credentials.declineOffer(credential.id)
+        await agent.credentials.sendProblemReport({
+          credentialRecordId: credential.id,
+          message: t('CredentialOffer.Declined'),
+        })
+      }
+
+      toggleDeclineModalVisible()
+      navigation.goBack()
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error).message, 1025)
+
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
   }
 
   const header = () => {
@@ -183,7 +195,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             accessibilityLabel={t('Global.Accept')}
             testID={testIdWithKey('AcceptCredentialOffer')}
             buttonType={ButtonType.Primary}
-            onPress={handleAcceptPress}
+            onPress={handleAcceptTouched}
             disabled={!buttonsVisible}
           />
         </View>
@@ -193,7 +205,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
             accessibilityLabel={t('Global.Decline')}
             testID={testIdWithKey('DeclineCredentialOffer')}
             buttonType={ButtonType.Secondary}
-            onPress={handleDeclinePress}
+            onPress={toggleDeclineModalVisible}
             disabled={!buttonsVisible}
           />
         </View>
@@ -205,6 +217,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
+      <CommonDeclineModal
+        usage={ModalUsage.CredentialOfferDecline}
+        visible={declineModalVisible}
+        onSubmit={handleDeclineTouched}
+        onCancel={toggleDeclineModalVisible}
+      />
     </SafeAreaView>
   )
 }

@@ -6,19 +6,22 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle, Text, TextStyle, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ViewStyle, Text, TextStyle, DeviceEventEmitter, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { EventTypes } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
-import { DeclineType } from '../../types/decline'
+import { BifoldError } from '../../types/error'
 import { GenericFn } from '../../types/fn'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
+import { ModalUsage } from '../../types/remove'
 import { parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { InfoBoxType } from '../misc/InfoBox'
+import CommonDeclineModal from '../modals/CommonDeclineModal'
 
 const iconSize = 30
 
@@ -56,6 +59,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
+  const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [details, setDetails] = useState<DisplayDetails>({
     type: InfoBoxType.Info,
     title: undefined,
@@ -73,6 +77,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     iconColor: ColorPallet.notification.infoIcon,
     iconName: 'info',
   })
+  const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
 
   const styles = StyleSheet.create({
     container: {
@@ -110,12 +115,74 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       alignSelf: 'center',
     },
   })
-  const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
+
   let onPress: GenericFn = () => {
     return
   }
   let onClose: GenericFn = () => {
     return
+  }
+
+  const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
+
+  const declineProofRequest = async () => {
+    try {
+      const proofId = (notification as ProofExchangeRecord).id
+      if (agent) {
+        await agent.proofs.declineRequest(proofId)
+      }
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+
+    toggleDeclineModalVisible()
+  }
+
+  const declineCredentialOffer = async () => {
+    try {
+      const credentialId = (notification as CredentialExchangeRecord).id
+      if (agent) {
+        await agent.credentials.declineOffer(credentialId)
+      }
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+
+    toggleDeclineModalVisible()
+  }
+
+  const declineCustomNotification = async () => {
+    customNotification.onCloseAction(dispatch as any)
+    toggleDeclineModalVisible()
+  }
+
+  const commonDeclineModal = () => {
+    let usage: ModalUsage | undefined
+    let onSubmit: GenericFn | undefined
+
+    if (notificationType === NotificationType.ProofRequest) {
+      usage = ModalUsage.ProofRequestDecline
+      onSubmit = declineProofRequest
+    } else if (notificationType === NotificationType.CredentialOffer) {
+      usage = ModalUsage.CredentialOfferDecline
+      onSubmit = declineCredentialOffer
+    } else if (notificationType === NotificationType.Custom) {
+      usage = ModalUsage.CustomNotificationDecline
+      onSubmit = declineCustomNotification
+    } else {
+      usage = undefined
+    }
+
+    return usage !== undefined && onSubmit !== undefined ? (
+      <CommonDeclineModal
+        usage={usage}
+        visible={declineModalVisible}
+        onSubmit={onSubmit}
+        onCancel={toggleDeclineModalVisible}
+      />
+    ) : null
   }
 
   const detailsForNotificationType = async (notificationType: NotificationType): Promise<DisplayDetails> => {
@@ -182,32 +249,15 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
             params: { credentialId: notification.id },
           })
         }
-        onClose = () => {
-          navigation.getParent()?.navigate(Stacks.NotificationStack, {
-            screen: Screens.CommonDecline,
-            params: {
-              declineType: DeclineType.CredentialOffer,
-              itemId: notification.id,
-              deleteView: true,
-            },
-          })
-        }
+        onClose = toggleDeclineModalVisible
         break
       case NotificationType.ProofRequest:
-        onPress = () =>
+        onPress = () => {
           navigation
             .getParent()
             ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
-        onClose = () => {
-          navigation.getParent()?.navigate(Stacks.NotificationStack, {
-            screen: Screens.CommonDecline,
-            params: {
-              declineType: DeclineType.ProofRequest,
-              itemId: notification.id,
-              deleteView: true,
-            },
-          })
         }
+        onClose = toggleDeclineModalVisible
         break
       case NotificationType.Proof:
         onPress = () =>
@@ -228,19 +278,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
             screen: Screens.CustomNotification,
           })
-        onClose = () => {
-          navigation.getParent()?.navigate(Stacks.NotificationStack, {
-            screen: Screens.CommonDecline,
-            params: {
-              declineType: DeclineType.Custom,
-              itemId: notification.id,
-              deleteView: true,
-              customClose: () => {
-                customNotification.onCloseAction(dispatch as any)
-              },
-            },
-          })
-        }
+        onClose = toggleDeclineModalVisible
         break
       default:
         throw new Error('NotificationType was not set correctly.')
@@ -347,6 +385,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           onPress={onPress}
         />
       </View>
+      {commonDeclineModal()}
     </View>
   )
 }
