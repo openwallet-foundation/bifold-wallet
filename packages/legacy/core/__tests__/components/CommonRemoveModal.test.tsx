@@ -1,12 +1,42 @@
-import { render } from '@testing-library/react-native'
+import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
 import CommonRemoveModal from '../../App/components/modals/CommonRemoveModal'
-import { RemoveType } from '../../App/types/remove'
+import { ModalUsage } from '../../App/types/remove'
+import { testIdWithKey } from '../../App/utils/testable'
 
-describe('ErrorModal Component', () => {
-  test('Renders correctly', async () => {
-    const tree = render(<CommonRemoveModal removeType={RemoveType.Credential} />)
+describe('CommonRemoveModal Component', () => {
+  test('Rerenders correctly when not visible', async () => {
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ContactRemove} />)
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Controls trigger callbacks', async () => {
+    const onSubmit = jest.fn()
+    const onCancel = jest.fn()
+    const tree = render(
+      <CommonRemoveModal onSubmit={onSubmit} onCancel={onCancel} visible={true} usage={ModalUsage.ContactRemove} />
+    )
+
+    const confirmButton = tree.getByTestId(testIdWithKey('ConfirmRemoveButton'))
+    const cancelDeclineButton = tree.getByTestId(testIdWithKey('CancelRemoveButton'))
+
+    fireEvent(confirmButton, 'press')
+    fireEvent(cancelDeclineButton, 'press')
+
+    expect(onSubmit).toBeCalledTimes(1)
+    expect(onCancel).toBeCalledTimes(1)
+  })
+
+  test('Remove contact renders correctly', async () => {
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ContactRemove} />)
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Remove credential renders correctly', async () => {
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.CredentialRemove} />)
 
     expect(tree).toMatchSnapshot()
   })

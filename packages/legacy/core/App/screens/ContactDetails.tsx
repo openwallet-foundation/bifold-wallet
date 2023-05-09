@@ -19,7 +19,7 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 import { Attribute } from '../types/record'
-import { RemoveType } from '../types/remove'
+import { ModalUsage } from '../types/remove'
 import { formatTime } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -156,7 +156,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         footer: () => <RecordRemove onRemove={callOnRemove} />,
       })}
       <CommonRemoveModal
-        removeType={RemoveType.Contact}
+        usage={ModalUsage.ContactRemove}
         visible={isRemoveModalDisplayed}
         onSubmit={callSubmitRemove}
         onCancel={callCancelRemove}

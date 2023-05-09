@@ -1,4 +1,7 @@
-export enum RemoveType {
-  Credential = 'Credential',
-  Contact = 'Contact',
+export enum ModalUsage {
+  CredentialRemove = 1,
+  ContactRemove,
+  CredentialOfferDecline,
+  ProofRequestDecline,
+  CustomNotificationDecline,
 }
