@@ -1,6 +1,6 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -106,6 +106,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         : overlay.cardLayoutOverlay?.secondaryBackgroundColor
     }
   }
+
+  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 });
 
   const styles = StyleSheet.create({
     container: {
@@ -451,7 +453,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
   return overlay.bundle ? (
-    <View style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}>
+    <View style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]} onLayout={(event)=>{setDimensions({cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width})}}>
       <TouchableOpacity
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
@@ -467,8 +469,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <View testID={testIdWithKey('CredentialCard')}>
           {overlay.metaOverlay?.watermark && (
             <CardWatermark
-              width={width}
-              height={height}
+              width={dimensions.cardWidth}
+              height={dimensions.cardHeight}
               style={styles.watermark}
               watermark={overlay.metaOverlay?.watermark}
             />
