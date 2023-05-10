@@ -65,8 +65,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated }) => {
 
   const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const PINTwoInputRef = useRef<TextInput>()
-  const createPINButtonRef = useRef<TouchableOpacity>()
+  const PINTwoInputRef = useRef<TextInput>(null)
+  const createPINButtonRef = useRef<TouchableOpacity>(null)
 
   const style = StyleSheet.create({
     screenContainer: {

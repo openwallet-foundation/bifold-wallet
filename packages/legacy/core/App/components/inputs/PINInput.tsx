@@ -19,7 +19,7 @@ interface PINInputProps {
 // TODO:(jl) Would be great if someone can figure out the proper type for
 // ref below.
 const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwardRef(
-  ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }, ref: React.Ref<TextInput>) => {
+  ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }, ref: React.Ref<TextInput> | null) => {
     // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const [PIN, setPIN] = useState('')
     const [showPIN, setShowPIN] = useState(false)
