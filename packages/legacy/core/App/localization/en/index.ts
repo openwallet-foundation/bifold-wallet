@@ -176,7 +176,7 @@ const translation = {
     "ReenterPINTitle": "Re-Enter PIN",
     "CreatePIN": "Create PIN",
     "RememberPIN": "Create a PIN to secure your wallet.",
-    "PINDisclaimer": "If you forget it, you will need to set up your wallet again and re-add your cards.",
+    "PINDisclaimer": "If you forget it, you may need to set up your wallet again and re-add your cards.",
     "Show": "Show PIN",
     "Hide": "Hide PIN",
     "ChangePIN": "Change PIN",
