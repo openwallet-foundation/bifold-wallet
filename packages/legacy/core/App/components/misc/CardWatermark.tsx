@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { StyleProp, Text, TextStyle, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
@@ -7,12 +7,12 @@ interface CardWatermarkProps {
   watermark: string
   height: number
   width: number
-  style?: any
+  style?: StyleProp<TextStyle>
 }
 
 const CardWatermark: React.FC<CardWatermarkProps> = ({ watermark, style, height, width }) => {
   const { TextTheme } = useTheme()
-  const fontSize = style?.fontSize ?? TextTheme.normal.fontSize
+  const fontSize = Number((style as React.CSSProperties)?.fontSize ?? TextTheme.normal.fontSize)
   return (
     <View style={{ position: 'absolute', left: '-50%', top: '-100%', width: '200%', height: '200%' }}>
       {Array.from({ length: Math.ceil((height * 2) / (fontSize + fontSize / 4) + 1) }).map((_, i) => (
