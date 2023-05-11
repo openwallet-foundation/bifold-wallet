@@ -355,7 +355,7 @@ const translation = {
         "AbortDecline": "Non, revenir en arrière",
         "DeclineTitle": "Decline credential offer? (FR)",
         "Declined": "Diminué",
-        "DeclineParagraph1": "In order to receive the proof request again, you will need to restart the process with the service. (FR)",
+        "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service. (FR)",
         "DeclineParagraph2": "Are you sure you want to decline this credential offer? (FR)",
         "CustomOfferTitle": "Delete this offer? (FR)",
         "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list. (FR)",

@@ -78,7 +78,7 @@ const CommonDeclineModal: React.FC<CommonDeclineModalProps> = ({ usage, visible,
         <View style={[{ marginBottom: 25 }]}>
           <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.DeclineTitle')}</Text>
           <Text style={[styles.bodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
-          <Text style={[styles.bodyText]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
+          <Text style={[styles.bodyText]}>{t('CredentialOffer.DeclineParagraph2')}</Text>
         </View>
       )
     }
