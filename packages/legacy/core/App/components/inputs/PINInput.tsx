@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { CodeField, Cursor, useClearByFocusCell } from 'react-native-confirmation-code-field'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -18,8 +18,8 @@ interface PINInputProps {
 
 // TODO:(jl) Would be great if someone can figure out the proper type for
 // ref below.
-const PINInput: React.FC<PINInputProps & React.RefAttributes<HTMLInputElement | undefined>> = forwardRef(
-  ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }, ref: any) => {
+const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwardRef(
+  ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }, ref: React.Ref<TextInput>) => {
     // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const [PIN, setPIN] = useState('')
     const [showPIN, setShowPIN] = useState(false)
