@@ -18,7 +18,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens } from '../types/navigators'
+import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
 import { ModalUsage } from '../types/remove'
 import { getCredentialIdentifiers, isValidIndyCredential } from '../utils/credential'
@@ -150,7 +150,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       }
 
       toggleDeclineModalVisible()
-      navigation.goBack()
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error).message, 1025)
 
