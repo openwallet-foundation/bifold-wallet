@@ -31,7 +31,7 @@ const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 const borderPadding = 8
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 /**
  * A card is defined as a 4x8 (height/rows x width/columns) grid.
@@ -292,7 +292,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
             {overlay.metaOverlay?.watermark && (
               <CardWatermark
                 width={width}
-                height={height}
+                height={cardHeight}
                 style={styles.watermark}
                 watermark={overlay.metaOverlay?.watermark}
               />
@@ -304,7 +304,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
             {overlay.metaOverlay?.watermark && (
               <CardWatermark
                 width={width}
-                height={height}
+                height={cardHeight}
                 style={styles.watermark}
                 watermark={overlay.metaOverlay?.watermark}
               />
