@@ -10,7 +10,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
-import CommonDeclineModal from '../components/modals/CommonDeclineModal'
+import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -217,7 +217,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
-      <CommonDeclineModal
+      <CommonRemoveModal
         usage={ModalUsage.CredentialOfferDecline}
         visible={declineModalVisible}
         onSubmit={handleDeclineTouched}

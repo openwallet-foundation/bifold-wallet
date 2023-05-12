@@ -21,7 +21,7 @@ import { parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { InfoBoxType } from '../misc/InfoBox'
-import CommonDeclineModal from '../modals/CommonDeclineModal'
+import CommonRemoveModal from '../modals/CommonRemoveModal'
 
 const iconSize = 30
 
@@ -158,7 +158,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     toggleDeclineModalVisible()
   }
 
-  const commonDeclineModal = () => {
+  const commonRemoveModal = () => {
     let usage: ModalUsage | undefined
     let onSubmit: GenericFn | undefined
 
@@ -176,7 +176,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     }
 
     return usage !== undefined && onSubmit !== undefined ? (
-      <CommonDeclineModal
+      <CommonRemoveModal
         usage={usage}
         visible={declineModalVisible}
         onSubmit={onSubmit}
@@ -385,7 +385,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
           onPress={onPress}
         />
       </View>
-      {commonDeclineModal()}
+      {commonRemoveModal()}
     </View>
   )
 }
