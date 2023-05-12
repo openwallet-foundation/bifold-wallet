@@ -66,14 +66,14 @@ jobs:
           git status && \
           git diff Podfile.lock
 
-      - name: Run debug build
+      - name: Run release build
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./packages/legacy/app/ios
         run: |
           xcodebuild \
           -workspace AriesBifold.xcworkspace \
           -scheme AriesBifold \
-          -configuration Debug \
+          -configuration Release \
           -derivedDataPath xbuild \
           build \
           CODE_SIGNING_ALLOWED=NO \

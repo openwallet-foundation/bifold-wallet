@@ -34,6 +34,7 @@ const translation = {
         "On": "Activé",
         "Off": "Désactivé",
         "Close": "Close (FR)",
+        "Remove": "Remove (FR)",
     },
     "Date": {
         "ShortFormat": "D MMM YYYY",
@@ -231,7 +232,14 @@ const translation = {
         "UnableToRemoveTitle": "Unable to remove contact (FR)",
         "UnableToRemoveCaption": "Unable to remove because there are credentials issued by this contact in your wallet. Remove the credentials first then remove this contact. (FR)",
         "GoToCredentials": "Go to Credentials (FR)",
-        "ContactRemoved": "Contact removed (FR)"
+        "RemoveContact": "Remove Contact (FR)",
+        "ContactRemoved": "Contact removed (FR)",
+        "RemoveContactMessageTop": "By removing this contact you'll no longer be able to: (FR)",
+        "RemoveContactMessageBottom": "This Contact will not be notified that you removed them from your Contacts (FR)",
+        "RemoveContactsBulletPoint1": "Direct message this contact (FR)",
+        "RemoveContactsBulletPoint2": "Get offered new credentials from this Contact (FR)",
+        "RemoveContactsBulletPoint3": "Get notified of updates to your credentials issued by this Contact (FR)",
+        "RemoveContactsBulletPoint4": "Request for information from this Contact or they request information from you (FR)",
     },
     "WhatAreContacts": {
         "Title": "What are Contacts? (FR)",
@@ -269,7 +277,8 @@ const translation = {
         "HowToGetThisCredentialBack": "Comment récupérer cet identifiant",
         "HowToGetThisCredentialBackListItem1": "Vous devrez vous rendre auprès de l'organisme qui vous a délivré ce justificatif et le redemander.",
         "CredentialRemoved": "Justificatif retiré",
-        "IssuedBy": "Émis par:"
+        "IssuedBy": "Émis par:",
+        "RemoveCredential": "Remove Credential (FR)",
     },
     "Home": {
         "Welcome": "Bienvenue",
@@ -344,8 +353,13 @@ const translation = {
         "ConfirmDeclinedTitle": "Êtes-vous sûr de vouloir refuser ce justificatif?",
         "ConfirmDeclinedMessage": "Afin de recevoir à nouveau ce justificatif, vous devrez présenter une nouvelle demande auprès de l'émetteur.",
         "AbortDecline": "Non, revenir en arrière",
-        "DeclineTitle": "Refuser le justificatif",
+        "DeclineTitle": "Decline credential offer? (FR)",
         "Declined": "Diminué",
+        "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service. (FR)",
+        "DeclineParagraph2": "Are you sure you want to decline this credential offer? (FR)",
+        "CustomOfferTitle": "Delete this offer? (FR)",
+        "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list. (FR)",
+        "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated. (FR)"
     },
     "ProofRequest": {
         "ProofRequest": "Demande de preuve",
@@ -370,10 +384,13 @@ const translation = {
         "SendingTheInformationSecurely": "Envoi sécurisé de l'information",
         "InformationSentSuccessfully": "Informations envoyées avec succès",
         "ProofRequestDeclined": "Demande de preuve refusée",
-        "DeclineTitle": "Decline Credential",
+        "DeclineTitle": "Decline proof request? (FR)",
         "Declined": "Diminué",
         "ShareFollowingInformation_one": "partage les informations suivantes à partir des informations d'identification {{count}}.",
-        "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}."
+        "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}.",
+        "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access. (FR)",
+        "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service. (FR)",
+        "DeclineBulletPoint3": "Are you sure you want to decline this proof request? (FR)",  
     },
     "Settings": {
         "Version": "Version",

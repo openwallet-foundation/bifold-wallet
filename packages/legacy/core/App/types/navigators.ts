@@ -1,9 +1,6 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 
-import { DeclineType } from './decline'
-import { GenericFn } from './fn'
-
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
   Splash = 'Splash',
@@ -30,7 +27,6 @@ export enum Screens {
   Connection = 'Connection',
   OnTheWay = 'On The Way',
   Declined = 'Declined',
-  CommonDecline = 'Common Decline',
   UseBiometry = 'Use Biometry',
   RecreatePIN = 'Change PIN',
   Developer = 'Developer',
@@ -132,12 +128,6 @@ export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.CommonDecline]: {
-    declineType: DeclineType
-    itemId: string
-    deleteView?: boolean
-    customClose?: GenericFn
-  }
   [Screens.CustomNotification]: undefined
   [Screens.ProofDetails]: { recordId: string }
 }
@@ -146,10 +136,6 @@ export type DeliveryStackParams = {
   [Screens.Connection]: { connectionId?: string; threadId?: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.CommonDecline]: {
-    declineType: DeclineType
-    itemId: string
-  }
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
 }
