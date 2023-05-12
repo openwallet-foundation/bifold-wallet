@@ -193,7 +193,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           onDetails: () => {
             navigation.getParent()?.navigate(Stacks.ContactStack, {
               screen: Screens.CredentialDetails,
-              params: { credentialId: record.id },
+              params: { credential: record },
             })
           },
         }

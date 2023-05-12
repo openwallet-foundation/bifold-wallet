@@ -160,7 +160,7 @@ exports[`CommonDeclineModal Component Credential offer decline renders correctly
               ]
             }
           >
-            CredentialOffer.DeclineParagraph1
+            CredentialOffer.DeclineParagraph2
           </Text>
         </View>
       </View>
@@ -1109,7 +1109,7 @@ exports[`CommonDeclineModal Component Rerenders correctly when not visible 1`] =
               ]
             }
           >
-            CredentialOffer.DeclineParagraph1
+            CredentialOffer.DeclineParagraph2
           </Text>
         </View>
       </View>

@@ -340,7 +340,7 @@ const translation = {
     "Declined": "Recusado",
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
-    "DeclineParagraph1": "In order to receive the proof request again, you will need to restart the process with the service. (PB-BR)",
+    "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service. (PB-BR)",
     "DeclineParagraph2": "Are you sure you want to decline this credential offer? (PB-BR)",
     "CustomOfferTitle": "Delete this offer? (PB-BR)",
     "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list. (PB-BR)",
