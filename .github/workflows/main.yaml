@@ -73,7 +73,7 @@ jobs:
           xcodebuild \
           -workspace AriesBifold.xcworkspace \
           -scheme AriesBifold \
-          -configuration Debug \
+          -configuration Release \
           -derivedDataPath xbuild \
           build \
           CODE_SIGNING_ALLOWED=NO \
