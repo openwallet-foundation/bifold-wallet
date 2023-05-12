@@ -1,6 +1,6 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -32,7 +32,7 @@ interface CredentialCard11Props {
   proof?: boolean
 }
 
-const { width, height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
 
 const borderRadius = 10
 const padding = width * 0.05
@@ -107,7 +107,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     }
   }
 
-  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 });
+  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const styles = StyleSheet.create({
     container: {
@@ -453,7 +453,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
   return overlay.bundle ? (
-    <View style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]} onLayout={(event)=>{setDimensions({cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width})}}>
+    <View
+      style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}
+      onLayout={(event) => {
+        setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
+      }}
+    >
       <TouchableOpacity
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
