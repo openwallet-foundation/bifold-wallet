@@ -6,6 +6,9 @@ import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import CredentialDeclined from '../../assets/img/credential-declined.svg'
+import CustomNotificationDecline from '../../assets/img/delete-notification.svg'
+import ProofDeclined from '../../assets/img/proof-declined.svg'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { ModalUsage } from '../../types/remove'
@@ -88,6 +91,11 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
+  const imageDisplayOptions = {
+    height: 115,
+    width: 115,
+  }
+
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -112,6 +120,11 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     bodyText: {
       fontSize: 18,
       fontWeight: '400',
+    },
+    declineBodyText: {
+      ...TextTheme.modalNormal,
+      fontSize: 24,
+      marginTop: 25,
     },
   })
 
@@ -139,7 +152,50 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     return t('Global.Remove')
   }
 
+  const headerImageForType = (usageType: ModalUsage) => {
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        {usageType === ModalUsage.CredentialOfferDecline && <ProofDeclined {...imageDisplayOptions} />}
+        {usageType === ModalUsage.ProofRequestDecline && <CredentialDeclined {...imageDisplayOptions} />}
+        {usageType === ModalUsage.CustomNotificationDecline && (
+          <CustomNotificationDecline style={{ marginBottom: 15 }} {...imageDisplayOptions} />
+        )}
+      </View>
+    )
+  }
+
   const contentForType = (type: ModalUsage) => {
+    if (type === ModalUsage.CredentialOfferDecline) {
+      return (
+        <View style={[{ marginBottom: 25 }]}>
+          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.DeclineTitle')}</Text>
+          <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
+          <Text style={[styles.declineBodyText]}>{t('CredentialOffer.DeclineParagraph2')}</Text>
+        </View>
+      )
+    }
+
+    if (type === ModalUsage.ProofRequestDecline) {
+      return (
+        <View style={[{ marginBottom: 25 }]}>
+          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
+          <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
+          <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
+          <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
+        </View>
+      )
+    }
+
+    if (type === ModalUsage.CustomNotificationDecline) {
+      return (
+        <View style={[{ marginBottom: 25 }]}>
+          <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
+          <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('CredentialOffer.CustomOfferParagraph1')}</Text>
+          <Text style={[styles.declineBodyText]}>{t('CredentialOffer.CustomOfferParagraph2')}</Text>
+        </View>
+      )
+    }
+
     if (type === ModalUsage.CredentialRemove) {
       return (
         <View>
@@ -201,7 +257,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
           },
         ]}
       >
-        <ScrollView style={[styles.container]}>{contentForType(usage)}</ScrollView>
+        <ScrollView style={[styles.container]}>
+          {headerImageForType(usage)}
+          {contentForType(usage)}
+        </ScrollView>
         <View style={[styles.controlsContainer]}>
           <View style={[{ paddingTop: 10 }]}>
             <Button
