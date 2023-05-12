@@ -21,6 +21,7 @@ exports[`Header Left Button Component Renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "marginLeft": 10,
       "opacity": 1,
     }
   }
@@ -39,7 +40,7 @@ exports[`Header Left Button Component Renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "white",
+            "color": "#FFFFFF",
             "fontSize": 38,
           },
           undefined,

@@ -7,18 +7,20 @@ import { useTranslation } from 'react-i18next'
 import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import ConnectionLoading from '../components/animated/ConnectionLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useAnimatedComponents } from '../contexts/animated-components'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-const connectionTimerDelay = 10000 // in ms
-
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
+  const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
+  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+
   if (!navigation || !route) {
     throw new Error('Connection route props were not set properly')
   }
@@ -32,19 +34,22 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     notificationRecord?: any
     isInitialized: boolean
     shouldShowDelayMessage: boolean
+    connectionIsActive: boolean
   }>({
     isVisible: true,
     isInitialized: false,
     shouldShowDelayMessage: false,
+    connectionIsActive: false,
   })
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
-  const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord } = state
+  const { ConnectionLoading } = useAnimatedComponents()
+  const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord, connectionIsActive } = state
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       padding: 20,
     },
     image: {
@@ -72,6 +77,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     // FIX:(jl) There may be a better way to fetch queued messages.
     // Under investigation.
     if (connection && connection.state === DidExchangeState.Completed) {
+      setState((prev) => ({ ...prev, connectionIsActive: true }))
       agent?.mediationRecipient.initiateMessagePickup()
     }
   }, [connection])
@@ -85,6 +91,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const setShouldShowDelayMessage = (value: boolean) => {
     setState((prev) => ({ ...prev, shouldShowDelayMessage: value }))
   }
+  useEffect(() => {
+    if (autoRedirectConnectionToHome && shouldShowDelayMessage && connectionIsActive && !notificationRecord) {
+      setShouldShowDelayMessage(false)
+      setModalVisible(false)
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    }
+  }, [shouldShowDelayMessage])
   const abortTimer = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current)
@@ -101,7 +114,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       timerRef.current = setTimeout(() => {
         setShouldShowDelayMessage(true)
         timerRef.current = null
-      }, connectionTimerDelay)
+      }, connTimerDelay)
       setIsInitialized(true)
     }
   }
@@ -151,10 +164,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         setModalVisible(false)
       }}
     >
-      <SafeAreaView>
+      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
-            <Text style={[TextTheme.headingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+            <Text
+              style={[TextTheme.modalHeadingThree, styles.messageText]}
+              testID={testIdWithKey('CredentialOnTheWay')}
+            >
               {t('Connection.JustAMoment')}
             </Text>
           </View>
@@ -164,7 +180,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           </View>
 
           {shouldShowDelayMessage && (
-            <Text style={[TextTheme.normal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+            <Text style={[TextTheme.modalNormal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
               {t('Connection.TakingTooLong')}
             </Text>
           )}
@@ -175,7 +191,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
             accessibilityLabel={t('Loading.BackToHome')}
             testID={testIdWithKey('BackToHome')}
             onPress={onDismissModalTouched}
-            buttonType={ButtonType.Secondary}
+            buttonType={ButtonType.ModalSecondary}
           />
         </View>
       </SafeAreaView>

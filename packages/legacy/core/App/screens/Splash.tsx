@@ -1,6 +1,7 @@
 import {
   Agent,
   AutoAcceptCredential,
+  AutoAcceptProof,
   ConsoleLogger,
   HttpOutboundTransport,
   LogLevel,
@@ -19,9 +20,9 @@ import { Config } from 'react-native-config'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
-import LoadingIndicator from '../components/animated/LoadingIndicator'
 import { ToastType } from '../components/toast/BaseToast'
 import { LocalStorageKeys } from '../constants'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -32,6 +33,7 @@ import {
   Onboarding as StoreOnboardingState,
   Preferences as PreferencesState,
   LoginAttempt as LoginAttemptState,
+  Tours as ToursState,
 } from '../types/state'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
@@ -67,6 +69,7 @@ const Splash: React.FC = () => {
   const navigation = useNavigation()
   const { getWalletCredentials } = useAuth()
   const { ColorPallet } = useTheme()
+  const { LoadingIndicator } = useAnimatedComponents()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -103,12 +106,21 @@ const Splash: React.FC = () => {
         const attemptData = await loadAuthAttempts()
 
         const preferencesData = await AsyncStorage.getItem(LocalStorageKeys.Preferences)
-
         if (preferencesData) {
           const dataAsJSON = JSON.parse(preferencesData) as PreferencesState
 
           dispatch({
             type: DispatchAction.PREFERENCES_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
+        const toursData = await AsyncStorage.getItem(LocalStorageKeys.Tours)
+        if (toursData) {
+          const dataAsJSON = JSON.parse(toursData) as ToursState
+
+          dispatch({
+            type: DispatchAction.TOUR_DATA_UPDATED,
             payload: [dataAsJSON],
           })
         }
@@ -182,6 +194,7 @@ const Splash: React.FC = () => {
             walletConfig: { id: credentials.id, key: credentials.key },
             autoAcceptConnections: true,
             autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
+            autoAcceptProofs: AutoAcceptProof.ContentApproved,
             logger: new ConsoleLogger(LogLevel.trace),
             indyLedgers,
             connectToIndyLedgersOnStartup: true,

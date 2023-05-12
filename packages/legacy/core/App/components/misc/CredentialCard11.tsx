@@ -11,15 +11,19 @@ import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
-import { Attribute, Field, Predicate } from '../../types/record'
-import { credentialTextColor, isValidIndyCredential, toImageSource } from '../../utils/credential'
+import { Attribute, Predicate } from '../../types/record'
+import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
+import { getCredentialConnectionLabel } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
+
+import CardWatermark from './CardWatermark'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
   displayItems?: (Attribute | Predicate)[]
+  revoked?: boolean
   error?: boolean
   elevated?: boolean
   credName?: string
@@ -28,7 +32,7 @@ interface CredentialCard11Props {
   proof?: boolean
 }
 
-const { width } = Dimensions.get('screen')
+const { width, height } = Dimensions.get('screen')
 
 const borderRadius = 10
 const padding = width * 0.05
@@ -41,10 +45,10 @@ const logoHeight = width * 0.12
   | 3 |   |   |   |   |   |   |   |
   | 4 |   |   |   |   |   |   |   |
   ...
- 
+
   The card width is the full screen width.
 
-  Secondary Body (1): 
+  Secondary Body (1):
   Primary Body   (2): Small Logo (1x1) -> L (shifted left by 50%)
                       Issuer Name (1x6)
                       Credential Name (1x6)
@@ -78,8 +82,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const { OCABundleResolver } = useConfiguration()
-
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
+  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+  const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
+    credential?.revocationNotification !== undefined && !!proof
+  )
 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({})
 
@@ -113,7 +120,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor() ?? 'rgba(0, 0, 0, 0.24)',
+      backgroundColor: getSecondaryBackgroundColor() ?? overlay.cardLayoutOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
       flexGrow: 1,
@@ -137,6 +144,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 0.3,
     },
     headerText: {
       ...TextTheme.labelSubtitle,
@@ -162,49 +175,36 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     errorIcon: {
       color: ListItems.proofError.color,
     },
+    watermark: {
+      opacity: 0.16,
+      fontSize: 22,
+      transform: [{ rotate: '-30deg' }],
+    },
   })
 
   useEffect(() => {
-    const resolveBundle = async () => {
-      let bundle = await OCABundleResolver.resolveByCredDefOrSchema(credDefId, schemaId, i18n.language)
-      let defaultBundle = await OCABundleResolver.resolveDefaultBundleByCredDefOrSchema(
-        credDefId,
-        schemaId,
-        credName,
-        i18n.language
-      )
-
-      if (credential && isValidIndyCredential(credential)) {
-        bundle = await OCABundleResolver.resolve(credential, i18n.language)
-        defaultBundle = await OCABundleResolver.resolveDefaultBundle(credential, i18n.language)
-      }
-      return { bundle, defaultBundle }
+    const params = {
+      identifiers: credential ? getCredentialIdentifiers(credential) : { schemaId, credentialDefinitionId: credDefId },
+      attributes: proof ? [] : credential?.credentialAttributes,
+      meta: {
+        credName: credName,
+        credConnectionId: credential?.connectionId,
+        alias: credentialConnectionLabel,
+      },
+      language: i18n.language,
     }
-
-    const resolvePresentationFields = async () => {
-      let fields: Field[] = []
-      if (credential) {
-        fields = await OCABundleResolver.presentationFields(credential, i18n.language)
-      }
-      return { fields }
-    }
-
-    Promise.all([resolveBundle(), resolvePresentationFields()]).then(([{ bundle, defaultBundle }, { fields }]) => {
-      const overlayBundle = bundle ?? defaultBundle
-      const metaOverlay = overlayBundle?.metaOverlay
-      const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay as CardLayoutOverlay11
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
       setOverlay({
         ...overlay,
-        bundle: overlayBundle,
-        presentationFields: fields,
-        metaOverlay,
-        cardLayoutOverlay,
+        ...bundle,
+        cardLayoutOverlay: bundle.cardLayoutOverlay as CardLayoutOverlay11,
       })
     })
   }, [credential])
 
   useEffect(() => {
-    setIsRevoked(credential?.revocationNotification !== undefined)
+    setIsRevoked(credential?.revocationNotification !== undefined && !proof)
+    setIsProofRevoked(credential?.revocationNotification !== undefined && !!proof)
   }, [credential?.revocationNotification])
 
   const CredentialCardLogo: React.FC = () => {
@@ -228,6 +228,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 fontSize: 0.5 * logoHeight,
                 fontWeight: 'bold',
                 alignSelf: 'center',
+                color: '#000',
               },
             ]}
           >
@@ -253,6 +254,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             opacity: 0.8,
           },
         ]}
+        testID={testIdWithKey('AttributeName')}
       >
         {label}
       </Text>
@@ -270,6 +272,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             fontWeight: 'bold',
           },
         ]}
+        testID={testIdWithKey('AttributeValue')}
       >
         {value}
       </Text>
@@ -280,7 +283,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       item && (
         <View style={{ marginTop: 15 }}>
-          {!(item?.value || item?.pValue) || item?.revoked ? (
+          {!(item?.value || item?.pValue) ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
@@ -293,7 +296,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           ) : (
             <AttributeLabel label={item?.label ?? startCase(item?.name ?? '')} />
           )}
-          {!(item?.value || item?.pValue) || item?.revoked ? null : (
+          {!(item?.value || item?.pValue) ? null : (
             <AttributeValue value={item?.value || `${item?.pType} ${item?.pValue}`} />
           )}
         </View>
@@ -306,23 +309,25 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View style={{ marginLeft: -1 * logoHeight + padding, margin: -1 }}>
           <View>
-            <View style={{ flexDirection: 'row' }}>
-              <Text
-                testID={testIdWithKey('CredentialIssuer')}
-                style={[
-                  TextTheme.label,
-                  styles.textContainer,
-                  {
-                    lineHeight: 19,
-                    opacity: 0.8,
-                    flex: 1,
-                    flexWrap: 'wrap',
-                  },
-                ]}
-              >
-                {overlay.metaOverlay?.issuerName}
-              </Text>
-            </View>
+            {!(overlay.metaOverlay?.issuerName === 'Unknown Contact' && proof) && (
+              <View style={{ flexDirection: 'row' }}>
+                <Text
+                  testID={testIdWithKey('CredentialIssuer')}
+                  style={[
+                    TextTheme.label,
+                    styles.textContainer,
+                    {
+                      lineHeight: 19,
+                      opacity: 0.8,
+                      flex: 1,
+                      flexWrap: 'wrap',
+                    },
+                  ]}
+                >
+                  {overlay.metaOverlay?.issuerName}
+                </Text>
+              </View>
+            )}
             <View style={{ flexDirection: 'row' }}>
               <Text
                 testID={testIdWithKey('CredentialName')}
@@ -341,12 +346,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               </Text>
             </View>
           </View>
-          {error && (
+          {(error || isProofRevoked) && (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon style={[styles.errorIcon]} name="close" size={30} />
 
               <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-                {t('ProofRequest.NotAvailableInYourWallet')}
+                {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
               </Text>
             </View>
           )}
@@ -369,7 +374,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor: error ? ColorPallet.notification.error : styles.secondaryBodyContainer.backgroundColor,
+            backgroundColor:
+              error || isProofRevoked
+                ? ColorPallet.notification.errorBorder
+                : styles.secondaryBodyContainer.backgroundColor,
           },
         ]}
       >
@@ -384,7 +392,22 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           >
             {null}
           </ImageBackground>
-        ) : null}
+        ) : (
+          !(error || proof || getSecondaryBackgroundColor()) && (
+            <View
+              style={[
+                {
+                  position: 'absolute',
+                  width: logoHeight,
+                  height: '100%',
+                  borderTopLeftRadius: borderRadius,
+                  borderBottomLeftRadius: borderRadius,
+                  backgroundColor: 'rgba(0,0,0,0.24)',
+                },
+              ]}
+            ></View>
+          )
+        )}
       </View>
     )
   }
@@ -428,14 +451,28 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
   return overlay.bundle ? (
-    <View style={[styles.container, style, { elevation: elevated ? 5 : 0 }]}>
+    <View style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}>
       <TouchableOpacity
+        accessible={false}
+        accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
         disabled={typeof onPress === 'undefined' ? true : false}
         onPress={onPress}
-        style={[styles.container, style]}
+        style={[
+          styles.container,
+          style,
+          { backgroundColor: isProofRevoked ? ColorPallet.notification.error : style.backgroundColor },
+        ]}
         testID={testIdWithKey('ShowCredentialDetails')}
       >
         <View testID={testIdWithKey('CredentialCard')}>
+          {overlay.metaOverlay?.watermark && (
+            <CardWatermark
+              width={width}
+              height={height}
+              style={styles.watermark}
+              watermark={overlay.metaOverlay?.watermark}
+            />
+          )}
           <CredentialCard status={isRevoked ? CredentialStatus.REVOKED : undefined} />
         </View>
       </TouchableOpacity>

@@ -6,15 +6,13 @@ import { useTranslation } from 'react-i18next'
 import { Platform, Modal, StatusBar, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import CredentialAdded from '../components/animated/CredentialAdded'
-import CredentialPending from '../components/animated/CredentialPending'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { useAnimatedComponents } from '../contexts/animated-components'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
-
-const connectionTimerDelay = 5000 // in ms
 
 enum DeliveryStatus {
   Pending,
@@ -36,6 +34,9 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const credential = useCredentialById(credentialId)
   const navigation = useNavigation()
   const { ListItems } = useTheme()
+  const { CredentialAdded, CredentialPending } = useAnimatedComponents()
+  const { connectionTimerDelay } = useConfiguration()
+  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
     container: {
       ...ListItems.credentialOfferBackground,
@@ -90,7 +91,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     const timer = setTimeout(() => {
       setShouldShowDelayMessage(true)
       setTimerDidFire(true)
-    }, connectionTimerDelay)
+    }, connTimerDelay)
 
     setTimer(timer)
 
@@ -151,7 +152,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
                 accessibilityLabel={t('Loading.BackToHome')}
                 testID={testIdWithKey('BackToHome')}
                 onPress={onBackToHomeTouched}
-                buttonType={ButtonType.Secondary}
+                buttonType={ButtonType.ModalSecondary}
               />
             </View>
           )}
@@ -163,7 +164,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
                 accessibilityLabel={t('Global.Done')}
                 testID={testIdWithKey('Done')}
                 onPress={onDoneTouched}
-                buttonType={ButtonType.Primary}
+                buttonType={ButtonType.ModalPrimary}
               />
             </View>
           )}

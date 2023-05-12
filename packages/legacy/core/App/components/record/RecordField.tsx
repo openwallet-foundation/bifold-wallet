@@ -22,14 +22,41 @@ interface RecordFieldProps {
   fieldValue?: (field: Field) => React.ReactElement | null
 }
 
-const validEncoding = 'base64'
-const validFormat = new RegExp('^image/(jpeg|png|jpg)')
+export const validEncoding = 'base64'
+export const validFormat = new RegExp('^image/(jpeg|png|jpg)')
+
+interface AttributeValueParams {
+  field: Attribute
+  shown?: boolean
+  style?: Record<string, unknown>
+}
+
+export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, shown }) => {
+  const { ListItems } = useTheme()
+  const styles = StyleSheet.create({
+    text: {
+      ...ListItems.recordAttributeText,
+    },
+  })
+
+  if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
+    return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
+  }
+  if (field.type == BaseType.DateInt) {
+    return <RecordDateIntField field={field} style={style} shown={shown} />
+  }
+  return (
+    <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
+      {shown ? field.value : hiddenFieldValue}
+    </Text>
+  )
+}
 
 const RecordField: React.FC<RecordFieldProps> = ({
   field,
   hideFieldValue = false,
   hideBottomBorder = false,
-  shown = hideFieldValue ? false : true,
+  shown = !hideFieldValue,
   onToggleViewPressed = () => undefined,
   fieldLabel = null,
   fieldValue = null,
@@ -51,9 +78,6 @@ const RecordField: React.FC<RecordFieldProps> = ({
       ...ListItems.recordLink,
       paddingVertical: 2,
     },
-    text: {
-      ...ListItems.recordAttributeText,
-    },
     valueContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -64,20 +88,6 @@ const RecordField: React.FC<RecordFieldProps> = ({
       paddingVertical: 4,
     },
   })
-
-  const displayAttribute = (field: Field) => {
-    if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
-      return <RecordBinaryField attributeValue={(field as Attribute).value as string} shown={shown} />
-    } else if (field.type == BaseType.DateInt) {
-      return <RecordDateIntField field={field} shown={shown} />
-    } else {
-      return (
-        <Text style={styles.text} testID={testIdWithKey('AttributeValue')}>
-          {shown ? (field as Attribute).value : hiddenFieldValue}
-        </Text>
-      )
-    }
-  }
 
   return (
     <View style={styles.container}>
@@ -93,7 +103,9 @@ const RecordField: React.FC<RecordFieldProps> = ({
           fieldValue(field)
         ) : (
           <>
-            <View style={styles.valueText}>{displayAttribute(field)}</View>
+            <View style={styles.valueText}>
+              <AttributeValue field={field as Attribute} shown={shown} />
+            </View>
             {hideFieldValue ? (
               <TouchableOpacity
                 accessible={true}
@@ -109,7 +121,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
           </>
         )}
       </View>
-      {<View style={[styles.border, hideBottomBorder && { borderBottomWidth: 0 }]}></View>}
+      {<View style={[styles.border, hideBottomBorder && { borderBottomWidth: 0 }]} />}
     </View>
   )
 }

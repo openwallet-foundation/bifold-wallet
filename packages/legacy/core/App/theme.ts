@@ -1,13 +1,27 @@
 import { StyleSheet } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
+import Arrow from './assets/icons/large-arrow.svg'
+import AppLockout from './assets/img/app-lockout.svg'
+import Biometrics from './assets/img/biometrics.svg'
+import CredentialDeclined from './assets/img/credential-declined.svg'
+import DeleteNotification from './assets/img/delete-notification.svg'
+import EmptyWallet from './assets/img/empty-wallet.svg'
 import Logo from './assets/img/logo.svg'
+import ProofRequestDeclined from './assets/img/proof-declined.svg'
 
-interface SVGAssets {
+export interface ISVGAssets {
+  appLockout: React.FC<SvgProps>
+  biometrics: React.FC<SvgProps>
+  credentialDeclined: React.FC<SvgProps>
+  deleteNotification: React.FC<SvgProps>
+  emptyWallet: React.FC<SvgProps>
   logo: React.FC<SvgProps>
+  proofRequestDeclined: React.FC<SvgProps>
+  arrow: React.FC<SvgProps>
 }
 
-interface FontAttributes {
+export interface IFontAttributes {
   fontFamily?: string
   fontStyle?: 'normal' | 'italic'
   fontSize: number
@@ -15,7 +29,7 @@ interface FontAttributes {
   color: string
 }
 
-interface InputAttributes {
+export interface IInputAttributes {
   padding?: number
   borderRadius?: number
   fontSize?: number
@@ -25,51 +39,68 @@ interface InputAttributes {
   borderColor?: string
 }
 
-interface Inputs {
-  label: FontAttributes
-  textInput: InputAttributes
-  inputSelected: InputAttributes
-  singleSelect: InputAttributes
-  singleSelectText: FontAttributes
-  singleSelectIcon: InputAttributes
-  checkBoxColor: InputAttributes
-  checkBoxText: FontAttributes
+export interface IInputs {
+  label: IFontAttributes
+  textInput: IInputAttributes
+  inputSelected: IInputAttributes
+  singleSelect: IInputAttributes
+  singleSelectText: IFontAttributes
+  singleSelectIcon: IInputAttributes
+  checkBoxColor: IInputAttributes
+  checkBoxText: IFontAttributes
 }
 
-interface TextTheme {
-  headingOne: FontAttributes
-  headingTwo: FontAttributes
-  headingThree: FontAttributes
-  headingFour: FontAttributes
-  normal: FontAttributes
-  label: FontAttributes
-  labelTitle: FontAttributes
-  labelSubtitle: FontAttributes
-  labelText: FontAttributes
-  caption: FontAttributes
-  title: FontAttributes
+export interface ITextTheme {
+  headingOne: IFontAttributes
+  headingTwo: IFontAttributes
+  headingThree: IFontAttributes
+  headingFour: IFontAttributes
+  normal: IFontAttributes
+  label: IFontAttributes
+  labelTitle: IFontAttributes
+  labelSubtitle: IFontAttributes
+  labelText: IFontAttributes
+  caption: IFontAttributes
+  title: IFontAttributes
+  headerTitle: IFontAttributes
+  modalNormal: IFontAttributes
+  modalTitle: IFontAttributes
+  popupModalText: IFontAttributes
+  modalHeadingOne: IFontAttributes
+  modalHeadingThree: IFontAttributes
 }
 
-interface BrandColors {
+export interface IBrandColors {
   primary: string
   primaryDisabled: string
   secondary: string
   secondaryDisabled: string
+  primaryLight: string
   highlight: string
-  modalPrimaryBackground: string
-  modalSecondaryBackground: string
   primaryBackground: string
   secondaryBackground: string
+  modalPrimary: string
+  modalSecondary: string
+  modalPrimaryBackground: string
+  modalSecondaryBackground: string
   link: string
+  text: string
+  icon: string
+  headerText: string
+  headerIcon: string
+  buttonText: string
+  tabBarInactive: string
+  unorderedList: string
+  unorderedListModal: string
 }
 
-interface SemanticColors {
+export interface ISemanticColors {
   error: string
   success: string
   focus: string
 }
 
-interface NotificationColors {
+export interface INotificationColors {
   success: string
   successBorder: string
   successIcon: string
@@ -89,7 +120,7 @@ interface NotificationColors {
   popupOverlay: string
 }
 
-interface GrayscaleColors {
+export interface IGrayscaleColors {
   black: string
   darkGrey: string
   mediumGrey: string
@@ -98,15 +129,15 @@ interface GrayscaleColors {
   white: string
 }
 
-interface ColorPallet {
-  brand: BrandColors
-  semantic: SemanticColors
-  notification: NotificationColors
-  grayscale: GrayscaleColors
+export interface IColorPallet {
+  brand: IBrandColors
+  semantic: ISemanticColors
+  notification: INotificationColors
+  grayscale: IGrayscaleColors
 }
 
-interface Assets {
-  svg: SVGAssets
+export interface IAssets {
+  svg: ISVGAssets
   img: {
     logoPrimary: any
     logoSecondary: any
@@ -120,26 +151,46 @@ export const lightOpacity = 0.35
 export const zeroOpacity = 0.0
 export const borderWidth = 2
 
-const BrandColors: BrandColors = {
+const GrayscaleColors: IGrayscaleColors = {
+  black: '#000000',
+  darkGrey: '#313132',
+  mediumGrey: '#606060',
+  lightGrey: '#D3D3D3',
+  veryLightGrey: '#F2F2F2',
+  white: '#FFFFFF',
+}
+
+const BrandColors: IBrandColors = {
   primary: '#42803E',
   primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
   secondary: '#FFFFFFFF',
   secondaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
+  primaryLight: `rgba(53, 130, 63, ${lightOpacity})`,
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
+  modalPrimary: '#42803E',
+  modalSecondary: '#FFFFFFFF',
   modalPrimaryBackground: '#000000',
   modalSecondaryBackground: '#313132',
-  link: '#FFFFFF',
+  unorderedList: GrayscaleColors.white,
+  unorderedListModal: GrayscaleColors.white,
+  link: GrayscaleColors.white,
+  text: GrayscaleColors.white,
+  icon: GrayscaleColors.white,
+  headerIcon: GrayscaleColors.white,
+  headerText: GrayscaleColors.white,
+  buttonText: GrayscaleColors.white,
+  tabBarInactive: GrayscaleColors.white,
 }
 
-const SemanticColors: SemanticColors = {
+const SemanticColors: ISemanticColors = {
   error: '#D8292F',
   success: '#2E8540',
   focus: '#3399FF',
 }
 
-const NotificationColors: NotificationColors = {
+const NotificationColors: INotificationColors = {
   success: '#313132',
   successBorder: '#2E8540',
   successIcon: '#2E8540',
@@ -159,82 +210,103 @@ const NotificationColors: NotificationColors = {
   popupOverlay: `rgba(0, 0, 0, ${mediumOpacity})`,
 }
 
-const GrayscaleColors: GrayscaleColors = {
-  black: '#000000',
-  darkGrey: '#313132',
-  mediumGrey: '#606060',
-  lightGrey: '#D3D3D3',
-  veryLightGrey: '#F2F2F2',
-  white: '#FFFFFF',
-}
-
-export const ColorPallet: ColorPallet = {
+export const ColorPallet: IColorPallet = {
   brand: BrandColors,
   semantic: SemanticColors,
   notification: NotificationColors,
   grayscale: GrayscaleColors,
 }
 
-export const TextTheme: TextTheme = {
+export const TextTheme: ITextTheme = {
   headingOne: {
     fontSize: 38,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   headingTwo: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   headingThree: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   headingFour: {
     fontSize: 21,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   normal: {
     fontSize: 18,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   label: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   labelTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   labelSubtitle: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   labelText: {
     fontSize: 10,
     fontWeight: 'normal',
     fontStyle: 'italic',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   caption: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: ColorPallet.notification.infoText,
+    color: ColorPallet.brand.text,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.headerText,
+  },
+  modalNormal: {
+    fontSize: 18,
+    fontWeight: 'normal',
+    color: ColorPallet.grayscale.white,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  modalHeadingOne: {
+    fontSize: 38,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  modalHeadingThree: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: ColorPallet.grayscale.white,
+  },
+  popupModalText: {
+    fontSize: 18,
+    fontWeight: 'normal',
+    color: ColorPallet.grayscale.white,
   },
 }
 
-export const Inputs: Inputs = StyleSheet.create({
+export const Inputs: IInputs = StyleSheet.create({
   label: {
     ...TextTheme.label,
   },
@@ -273,7 +345,7 @@ export const Buttons = StyleSheet.create({
   critical: {
     padding: 16,
     borderRadius: 4,
-    backgroundColor: '#42803E',
+    backgroundColor: ColorPallet.brand.primary,
   },
   primary: {
     padding: 16,
@@ -287,14 +359,13 @@ export const Buttons = StyleSheet.create({
   },
   primaryText: {
     ...TextTheme.normal,
+    color: ColorPallet.brand.buttonText,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
     textAlign: 'center',
   },
   primaryTextDisabled: {
     ...TextTheme.normal,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
     textAlign: 'center',
   },
   secondary: {
@@ -321,6 +392,33 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  modalCritical: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: ColorPallet.brand.primary,
+  },
+  modalPrimary: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: ColorPallet.brand.modalPrimary,
+  },
+  modalPrimaryText: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalSecondary: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.modalPrimary,
+  },
+  modalSecondaryText: {
+    ...TextTheme.normal,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.modalPrimary,
+    textAlign: 'center',
+  },
 })
 
 export const ListItems = StyleSheet.create({
@@ -334,10 +432,10 @@ export const ListItems = StyleSheet.create({
     ...TextTheme.caption,
   },
   credentialOfferBackground: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
+    backgroundColor: ColorPallet.brand.modalPrimaryBackground,
   },
   credentialOfferTitle: {
-    ...TextTheme.headingThree,
+    ...TextTheme.modalHeadingThree,
   },
   credentialOfferDetails: {
     ...TextTheme.normal,
@@ -353,10 +451,10 @@ export const ListItems = StyleSheet.create({
     color: ColorPallet.notification.infoText,
   },
   contactTitle: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   contactDate: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
     marginTop: 10,
   },
   contactIconBackground: {
@@ -399,6 +497,29 @@ export const ListItems = StyleSheet.create({
   emptyList: {
     ...TextTheme.normal,
   },
+  requestTemplateBackground: {
+    backgroundColor: ColorPallet.grayscale.white,
+  },
+  requestTemplateIconColor: {
+    color: ColorPallet.notification.infoText,
+  },
+  requestTemplateTitle: {
+    color: ColorPallet.grayscale.black,
+    fontWeight: 'bold',
+  },
+  requestTemplateDetails: {
+    color: ColorPallet.grayscale.black,
+    fontWeight: 'normal',
+  },
+  requestTemplateZkpLabel: {
+    color: ColorPallet.grayscale.mediumGrey,
+  },
+  requestTemplateIcon: {
+    color: ColorPallet.grayscale.black,
+  },
+  requestTemplateDate: {
+    color: ColorPallet.grayscale.mediumGrey,
+  },
 })
 
 export const TabTheme = {
@@ -412,21 +533,25 @@ export const TabTheme = {
     borderTopWidth: 0,
     paddingBottom: 0,
   },
+  tabBarContainerStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   tabBarActiveTintColor: ColorPallet.brand.primary,
-  tabBarInactiveTintColor: ColorPallet.notification.infoText,
+  tabBarInactiveTintColor: ColorPallet.brand.tabBarInactive,
   tabBarTextStyle: {
     ...TextTheme.label,
     fontWeight: 'normal',
     paddingBottom: 5,
   },
   tabBarButtonIconStyle: {
-    color: ColorPallet.notification.infoText,
+    color: ColorPallet.brand.headerIcon,
   },
   focusTabIconStyle: {
     height: 60,
     width: 60,
     backgroundColor: ColorPallet.brand.primary,
-    top: -20,
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
@@ -474,7 +599,7 @@ export const SettingsTheme = {
     marginBottom: 8,
   },
   groupBackground: ColorPallet.brand.secondaryBackground,
-  iconColor: ColorPallet.grayscale.white,
+  iconColor: TextTheme.normal.color,
   text: {
     ...TextTheme.caption,
     color: ColorPallet.grayscale.white,
@@ -482,25 +607,53 @@ export const SettingsTheme = {
 }
 
 export const ChatTheme = {
+  containerStyle: {
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    alignSelf: 'flex-end',
+  },
   leftBubble: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
-    borderRadius: 20,
-    padding: 4,
-    marginLeft: -4,
+    borderRadius: 4,
+    padding: 16,
+    marginLeft: 16,
   },
   rightBubble: {
-    backgroundColor: ColorPallet.brand.primary,
-    borderRadius: 20,
-    padding: 4,
-    marginRight: 4,
+    backgroundColor: ColorPallet.brand.primaryLight,
+    borderRadius: 4,
+    padding: 16,
+    marginRight: 16,
+  },
+  timeStyleLeft: {
+    color: ColorPallet.grayscale.lightGrey,
+    fontSize: 12,
+    marginTop: 8,
+  },
+  timeStyleRight: {
+    color: ColorPallet.grayscale.lightGrey,
+    fontSize: 12,
+    marginTop: 8,
   },
   leftText: {
     color: ColorPallet.brand.secondary,
     fontSize: TextTheme.normal.fontSize,
   },
+  leftTextHighlighted: {
+    color: ColorPallet.brand.secondary,
+    fontSize: TextTheme.normal.fontSize,
+    fontWeight: 'bold',
+  },
   rightText: {
     color: ColorPallet.brand.secondary,
     fontSize: TextTheme.normal.fontSize,
+  },
+  rightTextHighlighted: {
+    color: ColorPallet.brand.secondary,
+    fontSize: TextTheme.normal.fontSize,
+    fontWeight: 'bold',
   },
   inputToolbar: {
     backgroundColor: ColorPallet.brand.secondary,
@@ -520,6 +673,32 @@ export const ChatTheme = {
   },
   sendEnabled: ColorPallet.brand.primary,
   sendDisabled: ColorPallet.brand.primaryDisabled,
+  options: ColorPallet.brand.primary,
+  optionsText: ColorPallet.grayscale.black,
+  openButtonStyle: {
+    borderRadius: 32,
+    backgroundColor: ColorPallet.brand.primary,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginTop: 16,
+  },
+  openButtonTextStyle: {
+    fontSize: TextTheme.normal.fontSize,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  documentIconContainer: {
+    backgroundColor: ColorPallet.brand.primary,
+    alignSelf: 'flex-start',
+    padding: 4,
+    borderRadius: 4,
+    marginBottom: 8,
+  },
+  documentIcon: {
+    color: ColorPallet.grayscale.white,
+  },
 }
 
 export const OnboardingTheme = {
@@ -543,43 +722,64 @@ export const OnboardingTheme = {
   },
   headerTintColor: ColorPallet.grayscale.white,
   headerText: {
-    color: ColorPallet.notification.infoText,
-    fontSize: 32,
-    fontWeight: 'bold',
+    ...TextTheme.headingTwo,
   },
   bodyText: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: ColorPallet.notification.infoText,
+    ...TextTheme.normal,
   },
   imageDisplayOptions: {
     fill: ColorPallet.notification.infoText,
   },
 }
 
+export const DialogTheme = {
+  modalView: {
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+  },
+  titleText: {
+    color: ColorPallet.grayscale.white,
+  },
+  description: {
+    color: ColorPallet.grayscale.white,
+  },
+  closeButtonIcon: {
+    color: ColorPallet.grayscale.white,
+  },
+  carouselButtonText: {
+    color: ColorPallet.grayscale.white,
+  },
+}
+
 const LoadingTheme = {
-  backgroundColor: ColorPallet.brand.primaryBackground,
+  backgroundColor: ColorPallet.brand.modalPrimaryBackground,
 }
 
 const PINInputTheme = {
   cell: {
-    backgroundColor: ColorPallet.grayscale.darkGrey,
-    borderColor: ColorPallet.grayscale.darkGrey,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+    borderColor: ColorPallet.brand.secondaryBackground,
   },
   focussedCell: {
-    borderColor: ColorPallet.grayscale.lightGrey,
+    borderColor: ColorPallet.brand.headerIcon,
   },
   cellText: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.text,
   },
   icon: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.brand.headerIcon,
   },
 }
 
 export const Assets = {
   svg: {
+    appLockout: AppLockout,
+    biometrics: Biometrics,
+    credentialDeclined: CredentialDeclined,
+    deleteNotification: DeleteNotification,
+    emptyWallet: EmptyWallet,
     logo: Logo,
+    proofRequestDeclined: ProofRequestDeclined,
+    arrow: Arrow,
   },
   img: {
     logoPrimary: {
@@ -599,10 +799,10 @@ export const Assets = {
   },
 }
 
-export interface Theme {
-  ColorPallet: ColorPallet
-  TextTheme: TextTheme
-  Inputs: Inputs
+export interface ITheme {
+  ColorPallet: IColorPallet
+  TextTheme: ITextTheme
+  Inputs: IInputs
   Buttons: any
   ListItems: any
   TabTheme: any
@@ -611,15 +811,16 @@ export interface Theme {
   SettingsTheme: any
   ChatTheme: any
   OnboardingTheme: any
+  DialogTheme: any
   LoadingTheme: any
   PINInputTheme: any
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
-  Assets: Assets
+  Assets: IAssets
 }
 
-export const theme: Theme = {
+export const theme: ITheme = {
   ColorPallet,
   TextTheme,
   Inputs,
@@ -631,6 +832,7 @@ export const theme: Theme = {
   SettingsTheme,
   ChatTheme,
   OnboardingTheme,
+  DialogTheme,
   LoadingTheme,
   PINInputTheme,
   heavyOpacity,
