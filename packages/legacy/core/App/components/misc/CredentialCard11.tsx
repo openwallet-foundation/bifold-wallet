@@ -32,7 +32,7 @@ interface CredentialCard11Props {
   proof?: boolean
 }
 
-const { width, height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
 
 const borderRadius = 10
 const padding = width * 0.05
@@ -106,6 +106,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         : overlay.cardLayoutOverlay?.secondaryBackgroundColor
     }
   }
+
+  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const styles = StyleSheet.create({
     container: {
@@ -451,7 +453,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
   return overlay.bundle ? (
-    <View style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}>
+    <View
+      style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}
+      onLayout={(event) => {
+        setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
+      }}
+    >
       <TouchableOpacity
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
@@ -467,8 +474,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <View testID={testIdWithKey('CredentialCard')}>
           {overlay.metaOverlay?.watermark && (
             <CardWatermark
-              width={width}
-              height={height}
+              width={dimensions.cardWidth}
+              height={dimensions.cardHeight}
               style={styles.watermark}
               watermark={overlay.metaOverlay?.watermark}
             />
