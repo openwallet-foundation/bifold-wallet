@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
 })
 
 type InfoProps = {
-  connectionId: any
+  connectionId: string
 }
 
-const InfoIcon: React.FC<InfoProps> = ({ connectionId }: any) => {
+const InfoIcon: React.FC<InfoProps> = ({ connectionId }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { t } = useTranslation()
 
