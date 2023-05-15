@@ -150,7 +150,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       title: theirLabel,
       headerTitleAlign: 'center',
       headerTitleContainerStyle: { maxWidth: '65%' },
-      headerRight: () => <InfoIcon connectionId={connection?.id} />,
+      headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
     })
   }, [connection])
 
