@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BackHandler, DeviceEventEmitter, Dimensions, Share, StyleSheet, Text, View } from 'react-native'
+import { BackHandler, DeviceEventEmitter, Dimensions, ScrollView, Share, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -171,15 +171,17 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
-        <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>
-      </View>
-      <Text style={styles.interopText}>AIP 2.0</Text>
-      <View style={styles.qrContainer}>
-        {generating && <LoadingIndicator />}
-        {message && <QRRenderer value={message} size={qrSize} />}
-      </View>
+      <ScrollView>
+        <View style={styles.headerContainer}>
+          <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
+          <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>
+        </View>
+        <Text style={styles.interopText}>AIP 2.0</Text>
+        <View style={styles.qrContainer}>
+          {generating && <LoadingIndicator />}
+          {message && <QRRenderer value={message} size={qrSize} />}
+        </View>
+      </ScrollView>
       <View style={styles.buttonContainer}>
         <View style={styles.footerButton}>
           <Button
