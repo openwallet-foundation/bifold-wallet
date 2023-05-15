@@ -1,3 +1,4 @@
+import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
@@ -6,7 +7,7 @@ import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
 
 interface WhatAreContactsProps {
-  navigation: any
+  navigation: NavigationProp<ParamListBase>
 }
 
 const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
