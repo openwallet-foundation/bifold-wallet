@@ -5,7 +5,7 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CheckInCircle from '../assets/img/check-in-circle.svg'
@@ -106,50 +106,52 @@ const ConnectionInvitation: React.FC<ConnectionInvitationProps> = ({ navigation 
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.primaryHeaderText}>{t('Connection.ScanQR')}</Text>
-        <Text style={styles.secondaryHeaderText}>{t('Connection.ScanQRComment')}</Text>
-      </View>
-      {(!record || record?.state === DidExchangeState.InvitationSent) && (
-        <View style={{ flexGrow: 1 }}>
-          <View style={styles.qrContainer}>
-            {!invitation && <LoadingIndicator />}
-            {invitation && <QRRenderer value={invitation} size={qrSize} />}
-          </View>
+      <ScrollView>
+        <View style={styles.headerContainer}>
+          <Text style={styles.primaryHeaderText}>{t('Connection.ScanQR')}</Text>
+          <Text style={styles.secondaryHeaderText}>{t('Connection.ScanQRComment')}</Text>
         </View>
-      )}
-      {(record?.state === DidExchangeState.RequestReceived || record?.state === DidExchangeState.ResponseSent) && (
-        <View style={{ flexGrow: 1 }}>
-          <ConnectionLoading />
-          <Text style={styles.statusText}>{t('Connection.JustAMoment')}</Text>
-          <View style={styles.footerButton}>
-            <Button
-              title={t('Loading.BackToHome')}
-              accessibilityLabel={t('Loading.BackToHome')}
-              testID={testIdWithKey('BackToHome')}
-              buttonType={ButtonType.Secondary}
-              onPress={() => goHome()}
-            />
+        {(!record || record?.state === DidExchangeState.InvitationSent) && (
+          <View style={{ flexGrow: 1 }}>
+            <View style={styles.qrContainer}>
+              {!invitation && <LoadingIndicator />}
+              {invitation && <QRRenderer value={invitation} size={qrSize} />}
+            </View>
           </View>
-        </View>
-      )}
-      {record?.state === DidExchangeState.Completed && (
-        <View style={{ flexGrow: 1 }}>
-          <View style={{ marginVertical: 40 }}>
-            <CheckInCircle {...{ height: 80 }} />
+        )}
+        {(record?.state === DidExchangeState.RequestReceived || record?.state === DidExchangeState.ResponseSent) && (
+          <View style={{ flexGrow: 1 }}>
+            <ConnectionLoading />
+            <Text style={styles.statusText}>{t('Connection.JustAMoment')}</Text>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Loading.BackToHome')}
+                accessibilityLabel={t('Loading.BackToHome')}
+                testID={testIdWithKey('BackToHome')}
+                buttonType={ButtonType.Secondary}
+                onPress={() => goHome()}
+              />
+            </View>
           </View>
-          <Text style={styles.statusText}>{t('Connection.ConnectionCompleted')}</Text>
-          <View style={styles.footerButton}>
-            <Button
-              title={t('Global.Done')}
-              accessibilityLabel={t('Global.Done')}
-              testID={testIdWithKey('Done')}
-              buttonType={ButtonType.Primary}
-              onPress={() => goHome()}
-            />
+        )}
+        {record?.state === DidExchangeState.Completed && (
+          <View style={{ flexGrow: 1 }}>
+            <View style={{ marginVertical: 40 }}>
+              <CheckInCircle {...{ height: 80 }} />
+            </View>
+            <Text style={styles.statusText}>{t('Connection.ConnectionCompleted')}</Text>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Done')}
+                accessibilityLabel={t('Global.Done')}
+                testID={testIdWithKey('Done')}
+                buttonType={ButtonType.Primary}
+                onPress={() => goHome()}
+              />
+            </View>
           </View>
-        </View>
-      )}
+        )}
+      </ScrollView>
     </SafeAreaView>
   )
 }
