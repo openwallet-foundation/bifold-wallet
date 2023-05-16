@@ -9,7 +9,7 @@ import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
 import Developer from './screens/Developer'
-import OnboardingPages from './screens/OnboardingPages'
+import Onboarding from './screens/Onboarding'
 import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
@@ -17,7 +17,7 @@ import UseBiometry from './screens/UseBiometry'
 import * as oca from './types/oca'
 
 export const defaultConfiguration: ConfigurationContext = {
-  pages: OnboardingPages,
+  onboarding: Onboarding,
   splash: Splash,
   terms: Terms,
   developer: Developer,

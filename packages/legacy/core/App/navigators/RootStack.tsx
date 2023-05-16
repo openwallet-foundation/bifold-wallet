@@ -13,7 +13,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
-import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
@@ -42,7 +41,7 @@ const RootStack: React.FC = () => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash, useBiometry } = useConfiguration()
+  const { onboarding: Onboarding, terms, splash, useBiometry } = useConfiguration()
   useDeepLinks()
 
   const lockoutUser = async () => {
@@ -200,7 +199,7 @@ const RootStack: React.FC = () => {
               {...props}
               nextButtonText={t('Global.Next')}
               previousButtonText={t('Global.Back')}
-              pages={pages(onTutorialCompleted, OnboardingTheme)}
+              onTutorialCompleted={onTutorialCompleted}
               style={carousel}
             />
           )}

@@ -20,19 +20,215 @@ exports[`Onboarding Renders correctly 1`] = `
   <RCTScrollView
     data={
       Array [
-        <React.Fragment>
-          <Text
-            testID="bodyText"
+        <ScrollView
+          style={
+            Object {
+              "padding": 20,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
           >
-            Hello
-          </Text>
-        </React.Fragment>,
-        <React.Fragment>
-          <Text
-            testID="bodyText"
+            <
+              fill="#FFFFFF"
+              height={180}
+              width={180}
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "marginBottom": 20,
+              }
+            }
           >
-            World
-          </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 32,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontSize": 18,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/HeaderText"
+            >
+              Onboarding.Page1Title
+            </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "marginTop": 25,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/BodyText"
+            >
+              Onboarding.Page1Body
+            </Text>
+          </View>
+        </ScrollView>,
+        <ScrollView
+          style={
+            Object {
+              "padding": 20,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
+          >
+            <
+              fill="#FFFFFF"
+              height={180}
+              width={180}
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "marginBottom": 20,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 32,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontSize": 18,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/HeaderText"
+            >
+              Onboarding.Page2Title
+            </Text>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "marginTop": 25,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/BodyText"
+            >
+              Onboarding.Page2Body
+            </Text>
+          </View>
+        </ScrollView>,
+        <React.Fragment>
+          <ScrollView
+            style={
+              Object {
+                "padding": 20,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                }
+              }
+            >
+              <
+                fill="#FFFFFF"
+                height={180}
+                width={180}
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "marginBottom": 20,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 32,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontSize": 18,
+                    },
+                  ]
+                }
+                testID="com.ariesbifold:id/HeaderText"
+              >
+                Onboarding.Page3Title
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "flexShrink": 1,
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "marginTop": 25,
+                    },
+                  ]
+                }
+                testID="com.ariesbifold:id/BodyText"
+              >
+                Onboarding.Page3Body
+              </Text>
+            </View>
+          </ScrollView>
+          <View
+            style={
+              Object {
+                "margin": 20,
+                "marginTop": "auto",
+              }
+            }
+          >
+            <ForwardRef
+              accessibilityLabel="Global.GetStarted"
+              buttonType={1}
+              onPress={[Function]}
+              testID="com.ariesbifold:id/GetStarted"
+              title="Global.GetStarted"
+            />
+          </View>
         </React.Fragment>,
       ]
     }
@@ -102,11 +298,72 @@ exports[`Onboarding Renders correctly 1`] = `
             ]
           }
         >
-          <Text
-            testID="bodyText"
+          <RCTScrollView
+            style={
+              Object {
+                "padding": 20,
+              }
+            }
           >
-            Hello
-          </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <
+                  fill="#FFFFFF"
+                  height={180}
+                  width={180}
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginBottom": 20,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 32,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "fontSize": 18,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/HeaderText"
+                >
+                  Onboarding.Page1Title
+                </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "flexShrink": 1,
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "marginTop": 25,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/BodyText"
+                >
+                  Onboarding.Page1Body
+                </Text>
+              </View>
+            </View>
+          </RCTScrollView>
         </View>
       </View>
       <View
@@ -133,11 +390,227 @@ exports[`Onboarding Renders correctly 1`] = `
             ]
           }
         >
-          <Text
-            testID="bodyText"
+          <RCTScrollView
+            style={
+              Object {
+                "padding": 20,
+              }
+            }
           >
-            World
-          </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <
+                  fill="#FFFFFF"
+                  height={180}
+                  width={180}
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginBottom": 20,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 32,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "fontSize": 18,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/HeaderText"
+                >
+                  Onboarding.Page2Title
+                </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "flexShrink": 1,
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "marginTop": 25,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/BodyText"
+                >
+                  Onboarding.Page2Body
+                </Text>
+              </View>
+            </View>
+          </RCTScrollView>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "width": 750,
+              },
+              Object {
+                "backgroundColor": "#000000",
+                "flexDirection": "column",
+              },
+            ]
+          }
+        >
+          <RCTScrollView
+            style={
+              Object {
+                "padding": 20,
+              }
+            }
+          >
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <
+                  fill="#FFFFFF"
+                  height={180}
+                  width={180}
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginBottom": 20,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 32,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "fontSize": 18,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/HeaderText"
+                >
+                  Onboarding.Page3Title
+                </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "flexShrink": 1,
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "marginTop": 25,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/BodyText"
+                >
+                  Onboarding.Page3Body
+                </Text>
+              </View>
+            </View>
+          </RCTScrollView>
+          <View
+            style={
+              Object {
+                "margin": 20,
+                "marginTop": "auto",
+              }
+            }
+          >
+            <View
+              accessibilityLabel="Global.GetStarted"
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#42803E",
+                  "borderRadius": 4,
+                  "opacity": 1,
+                  "padding": 16,
+                }
+              }
+              testID="com.ariesbifold:id/GetStarted"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Global.GetStarted
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -212,6 +685,28 @@ exports[`Onboarding Renders correctly 1`] = `
         style={
           Object {
             "backgroundColor": "rgba(66, 128, 62, 1)",
+            "borderColor": "#42803E",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "height": 10,
+            "marginHorizontal": 5,
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+            "width": 10,
+          }
+        }
+      />
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "backgroundColor": "rgba(255, 255, 255, 1)",
             "borderColor": "#42803E",
             "borderRadius": 5,
             "borderStyle": "solid",

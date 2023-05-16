@@ -415,6 +415,14 @@ const translation = {
     "HideAll": "Esconder todos",
     "Hidden": "Escondido"
   },
+  "Onboarding": {
+    "Page1Title": "Lorem ipsum dolor sit amet (PT-BR)",
+    "Page1Body": "Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. (PT-BR)",
+    "Page2Title": "Excepteur sint occaecat (PT-BR)",
+    "Page2Body": "Mollis aliquam ut porttitor leo a diam sollicitudin tempor. (PT-BR)",
+    "Page3Title": "Ornare suspendisse sed nisi lacus (PT-BR)",
+    "Page3Body": "Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. (PT-BR)",
+  },
   "Screens": {
     "Splash": "Splash",
     "Onboarding": "Onboarding",

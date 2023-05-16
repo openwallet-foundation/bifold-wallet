@@ -7,7 +7,6 @@ import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import Language from '../screens/Language'
-import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINRecreate from '../screens/PINRecreate'
@@ -24,7 +23,7 @@ const SettingStack: React.FC = () => {
   const theme = useTheme()
   const [biometryUpdatePending, setBiometryUpdatePending] = useState<boolean>(false)
   const { t } = useTranslation()
-  const { pages, terms, developer } = useConfiguration()
+  const { onboarding: Onboarding, terms, developer } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
@@ -91,7 +90,7 @@ const SettingStack: React.FC = () => {
             {...props}
             nextButtonText={t('Global.Next')}
             previousButtonText={t('Global.Back')}
-            pages={pages(() => null, OnboardingTheme)}
+            onTutorialCompleted={() => null}
             style={carousel}
             disableSkip={true}
           />

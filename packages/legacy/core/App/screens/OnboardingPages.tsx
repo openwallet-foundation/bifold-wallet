@@ -1,16 +1,14 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { SvgProps } from 'react-native-svg'
 
 import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import SecureImage from '../assets/img/secure-image.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { GenericFn } from '../types/fn'
+import { OnboardingStyleSheet } from '../types/onboarding'
 import { testIdWithKey } from '../utils/testable'
-
-import { OnboardingStyleSheet } from './Onboarding'
 
 export const createCarouselStyle = (OnboardingTheme: any): OnboardingStyleSheet => {
   return StyleSheet.create({
@@ -83,7 +81,49 @@ const createImageDisplayOptions = (OnboardingTheme: any) => {
   }
 }
 
-const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
+const firstPage = (OnboardingTheme: any) => {
+  const { t } = useTranslation()
+  const styles = createStyles(OnboardingTheme)
+  const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
+  return (
+    <ScrollView style={{ padding: 20 }}>
+      <View style={{ alignItems: 'center' }}>
+        <CredentialList {...imageDisplayOptions} />
+      </View>
+      <View style={{ marginBottom: 20 }}>
+        <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+          {t('Onboarding.Page1Title')}
+        </Text>
+        <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
+          {t('Onboarding.Page1Body')}
+        </Text>
+      </View>
+    </ScrollView>
+  )
+}
+
+const secondPage = (OnboardingTheme: any) => {
+  const { t } = useTranslation()
+  const styles = createStyles(OnboardingTheme)
+  const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
+  return (
+    <ScrollView style={{ padding: 20 }}>
+      <View style={{ alignItems: 'center' }}>
+        <ScanShare {...imageDisplayOptions} />
+      </View>
+      <View style={{ marginBottom: 20 }}>
+        <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+          {t('Onboarding.Page2Title')}
+        </Text>
+        <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
+          {t('Onboarding.Page2Body')}
+        </Text>
+      </View>
+    </ScrollView>
+  )
+}
+
+const thirdPage = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
   const { t } = useTranslation()
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
@@ -95,11 +135,10 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
         </View>
         <View style={{ marginBottom: 20 }}>
           <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
-            Ornare suspendisse sed nisi lacus
+            {t('Onboarding.Page3Title')}
           </Text>
           <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
-            Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer
-            quis auctor elit sed.
+            {t('Onboarding.Page3Body')}
           </Text>
         </View>
       </ScrollView>
@@ -116,42 +155,8 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
   )
 }
 
-const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string }> = [
-  {
-    image: CredentialList,
-    title: 'Lorem ipsum dolor sit amet',
-    body: 'Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus.',
-  },
-  {
-    image: ScanShare,
-    title: 'Excepteur sint occaecat ',
-    body: 'Mollis aliquam ut porttitor leo a diam sollicitudin tempor.',
-  },
-]
-
-const createPageWith = (image: React.FC<SvgProps>, title: string, body: string, OnboardingTheme: any) => {
-  const styles = createStyles(OnboardingTheme)
-  const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
-  return (
-    <ScrollView style={{ padding: 20 }}>
-      <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
-      <View style={{ marginBottom: 20 }}>
-        <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
-          {title}
-        </Text>
-        <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
-          {body}
-        </Text>
-      </View>
-    </ScrollView>
-  )
-}
-
 const OnboardingPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any): Array<Element> => {
-  return [
-    ...guides.map((g) => createPageWith(g.image, g.title, g.body, OnboardingTheme)),
-    customPages(onTutorialCompleted, OnboardingTheme),
-  ]
+  return [firstPage(OnboardingTheme), secondPage(OnboardingTheme), thirdPage(onTutorialCompleted, OnboardingTheme)]
 }
 
 export default OnboardingPages

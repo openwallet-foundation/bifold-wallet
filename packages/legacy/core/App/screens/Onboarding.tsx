@@ -10,34 +10,28 @@ import HeaderRight from '../components/buttons/HeaderRightSkip'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
+import { GenericFn } from '../types/fn'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { OnboardingStyleSheet } from '../types/onboarding'
 import { testIdWithKey } from '../utils/testable'
+
+import OnboardingPages from './OnboardingPages'
 
 const { width } = Dimensions.get('window')
 
-export interface OnboardingStyleSheet {
-  container: Record<string, any>
-  carouselContainer: Record<string, any>
-  pagerContainer: Record<string, any>
-  pagerDot: Record<string, any>
-  pagerDotActive: Record<string, any>
-  pagerDotInactive: Record<string, any>
-  pagerPosition: Record<string, any>
-  pagerNavigationButton: Record<string, any>
-}
-
-interface OnboardingProps {
-  pages: Array<Element>
+export interface OnboardingProps {
   nextButtonText: string
   previousButtonText: string
+  onTutorialCompleted: GenericFn
   style: OnboardingStyleSheet
   disableSkip?: boolean
 }
 
 const Onboarding: React.FC<OnboardingProps> = ({
-  pages,
   nextButtonText,
   previousButtonText,
+  onTutorialCompleted,
   style,
   disableSkip = false,
 }) => {
@@ -47,6 +41,8 @@ const Onboarding: React.FC<OnboardingProps> = ({
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
+  const { OnboardingTheme } = useTheme()
+  const pages = OnboardingPages(onTutorialCompleted, OnboardingTheme)
 
   const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
     if (!viewableItems[0]) {

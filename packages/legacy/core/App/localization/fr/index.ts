@@ -427,6 +427,14 @@ const translation = {
         "Hidden": "Masqué",
         "InvalidDate": "Date invalide: ",
     },
+    "Onboarding": {
+        "Page1Title": "Lorem ipsum dolor sit amet (FR)",
+        "Page1Body": "Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. (FR)",
+        "Page2Title": "Excepteur sint occaecat (FR)",
+        "Page2Body": "Mollis aliquam ut porttitor leo a diam sollicitudin tempor. (FR)",
+        "Page3Title": "Ornare suspendisse sed nisi lacus (FR)",
+        "Page3Body": "Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. (FR)",
+    },
     "Screens": {
         "Splash": "Page de garde",
         "Onboarding": "Inscription",

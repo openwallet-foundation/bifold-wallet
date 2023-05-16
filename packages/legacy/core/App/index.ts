@@ -1,6 +1,3 @@
-/* eslint-disable import/no-cycle */
-import type { OnboardingStyleSheet } from './screens/Onboarding'
-
 import { Agent } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 
@@ -76,7 +73,7 @@ export type { ConfigurationContext } from './contexts/configuration'
 export type { TourStep } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams } from './types/navigators'
-export type { OnboardingStyleSheet }
+export type { OnboardingStyleSheet } from './types/onboarding'
 export type { WalletSecret } from './types/security'
 export type { ReducerAction } from './contexts/reducers/store'
 export type {

@@ -435,6 +435,14 @@ const translation = {
     "Hidden": "Hidden",
     "InvalidDate": "Invalid Date: "
   },
+  "Onboarding": {
+    "Page1Title": "Lorem ipsum dolor sit amet",
+    "Page1Body": "Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus.",
+    "Page2Title": "Excepteur sint occaecat",
+    "Page2Body": "Mollis aliquam ut porttitor leo a diam sollicitudin tempor.",
+    "Page3Title": "Ornare suspendisse sed nisi lacus",
+    "Page3Body": "Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed.",
+  },
   "Screens": {
     "Splash": "Splash",
     "Onboarding": "Onboarding",

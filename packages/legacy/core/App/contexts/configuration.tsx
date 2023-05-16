@@ -4,7 +4,7 @@ import { createContext, ReducerAction, useContext } from 'react'
 import { ProofRequestTemplate } from '../../verifier'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
-import OnboardingPages from '../screens/OnboardingPages'
+import { OnboardingProps } from '../screens/Onboarding'
 import { ScanProps } from '../screens/Scan'
 import { OCABundleResolver } from '../types/oca'
 import { PINSecurityParams } from '../types/security'
@@ -20,7 +20,7 @@ interface NotificationConfiguration {
 }
 
 export interface ConfigurationContext {
-  pages: typeof OnboardingPages
+  onboarding: React.FC<OnboardingProps>
   splash: React.FC
   terms: React.FC
   homeContentView: React.FC

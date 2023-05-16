@@ -5,7 +5,7 @@ import { OCABundleResolver } from '../../App/types/oca'
 import { defaultProofRequestTemplates } from '../../verifier'
 
 const configurationContext: ConfigurationContext = {
-  pages: () => [],
+  onboarding: () => null,
   terms: () => null,
   splash: () => null,
   homeContentView: () => null,
