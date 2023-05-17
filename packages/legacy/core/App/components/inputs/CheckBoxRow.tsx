@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 
 interface Props {
@@ -36,6 +37,7 @@ const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, check
         accessibilityLabel={accessibilityLabel}
         testID={testID}
         onPress={onPress}
+        hitSlop={hitSlop}
       >
         {checked ? (
           <Icon name={'check-box'} size={36} color={Inputs.checkBoxColor.color} />

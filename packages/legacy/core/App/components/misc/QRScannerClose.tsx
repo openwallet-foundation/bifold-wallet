@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -31,6 +32,7 @@ const CloseButton: React.FC<Props> = ({ onPress }) => {
         testID={testIdWithKey('ScanClose')}
         style={styles.button}
         onPress={onPress}
+        hitSlop={hitSlop}
       >
         <Icon name="close" size={24} color={ColorPallet.grayscale.white}></Icon>
       </TouchableOpacity>
