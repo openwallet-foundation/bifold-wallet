@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { CodeField, Cursor, useClearByFocusCell } from 'react-native-confirmation-code-field'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { minPINLength } from '../../constants'
+import { hitSlop, minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -110,6 +110,7 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
             accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
             testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
             onPress={() => setShowPIN(!showPIN)}
+            hitSlop={hitSlop}
           >
             <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30}></Icon>
           </TouchableOpacity>

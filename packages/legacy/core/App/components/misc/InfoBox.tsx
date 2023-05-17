@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
@@ -191,6 +192,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
             testID={testIdWithKey('ShowDetails')}
             style={{ marginVertical: 14 }}
             onPress={onShowDetailsTouched}
+            hitSlop={hitSlop}
           >
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.showDetailsText}>{t('Global.ShowDetails')} </Text>

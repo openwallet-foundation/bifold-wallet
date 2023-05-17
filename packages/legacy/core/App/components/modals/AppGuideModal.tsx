@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
@@ -88,8 +89,13 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 {title}
               </Text>
             </View>
-            <View style={styles.dismissIcon} testID={testIdWithKey('Dismiss')}>
-              <TouchableOpacity onPress={onDismissPressed}>
+            <View style={styles.dismissIcon}>
+              <TouchableOpacity
+                onPress={onDismissPressed}
+                testID={testIdWithKey('Dismiss')}
+                accessibilityLabel={t('Global.Dismiss')}
+                hitSlop={hitSlop}
+              >
                 <Icon name={dismissIconName} size={iconSize} color={iconColor} />
               </TouchableOpacity>
             </View>

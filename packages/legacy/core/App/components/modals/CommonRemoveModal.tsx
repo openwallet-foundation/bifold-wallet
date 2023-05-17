@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import CredentialDeclined from '../../assets/img/credential-declined.svg'
 import CustomNotificationDecline from '../../assets/img/delete-notification.svg'
 import ProofDeclined from '../../assets/img/proof-declined.svg'
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { ModalUsage } from '../../types/remove'
@@ -245,7 +246,12 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   return (
     <Modal transparent={true} visible={visible} animationType="slide">
       <View style={[styles.headerView]}>
-        <TouchableOpacity accessibilityLabel="Close" testID="Close" onPress={() => onCancel && onCancel()}>
+        <TouchableOpacity
+          accessibilityLabel={t('Global.Close')}
+          testID={testIdWithKey('Close')}
+          onPress={() => onCancel && onCancel()}
+          hitSlop={hitSlop}
+        >
           <Icon name={'close'} size={42} color={TextTheme.modalNormal.color} />
         </TouchableOpacity>
       </View>

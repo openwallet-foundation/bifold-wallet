@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
+import { hitSlop } from '../../constants'
 import { testIdWithKey } from '../../utils/testable'
 
 interface IPaginationStyleSheet {
@@ -58,6 +59,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         accessibilityLabel={t('Global.Back')}
         testID={testIdWithKey('Back')}
         onPress={previous}
+        hitSlop={hitSlop}
       >
         <Text
           style={[
@@ -83,6 +85,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         accessibilityLabel={t('Global.Next')}
         testID={testIdWithKey('Next')}
         onPress={next}
+        hitSlop={hitSlop}
       >
         <Text
           style={[

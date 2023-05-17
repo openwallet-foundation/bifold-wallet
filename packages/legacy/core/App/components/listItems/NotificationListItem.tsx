@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle, Text, TextStyle, DeviceEventEmitter, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { EventTypes } from '../../constants'
+import { EventTypes, hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
@@ -367,6 +367,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
               accessibilityLabel={t('Global.Close')}
               testID={testIdWithKey(`Close${notificationType}`)}
               onPress={onClose}
+              hitSlop={hitSlop}
             >
               <Icon name={'close'} size={iconSize} color={styleConfig.iconColor} />
             </TouchableOpacity>
