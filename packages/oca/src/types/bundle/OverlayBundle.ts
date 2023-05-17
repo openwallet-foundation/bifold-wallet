@@ -34,21 +34,27 @@ class OverlayBundle {
           return new OverlayClass(credentialDefinitionId, overlay as IBrandingOverlayData)
         })
     )
-    this.languages = this.processLanguages()
-    this.metadata = this.processMetadata()
-    this.attributes = this.processOverlayAttributes()
+    this.languages = this.#processLanguages()
+    this.metadata = this.#processMetadata()
+    this.attributes = this.#processOverlayAttributes()
   }
 
   get branding(): BrandingOverlay | undefined {
-    return this.overlaysForType<BrandingOverlay>('aries/overlays/branding/1.0')[0]
+    return this.#overlaysForType<BrandingOverlay>('aries/overlays/branding/1.0')[0]
   }
 
-  displayAttribute(attributeName: string): IOverlayBundleAttribute | undefined {
+  getAttribute(attributeName: string): IOverlayBundleAttribute | undefined {
     return this.attributes.find((attribute) => attribute.name === attributeName)
   }
 
-  private processMetadata(): IOverlayBundleMetadata {
-    const metadata: IOverlayBundleMetadata = {
+  #processMetadata(): IOverlayBundleMetadata {
+    const metadata: IOverlayBundleMetadata & {
+      credentialHelpText: Record<string, string>
+      credentialSupportUrl: Record<string, string>
+      issuer: Record<string, string>
+      issuerDescription: Record<string, string>
+      issuerUrl: Record<string, string>
+    } = {
       name: {},
       description: {},
       credentialHelpText: {},
@@ -57,7 +63,7 @@ class OverlayBundle {
       issuerDescription: {},
       issuerUrl: {},
     }
-    for (const overlay of this.overlaysForType<MetaOverlay>('spec/overlays/meta/1.0')) {
+    for (const overlay of this.#overlaysForType<MetaOverlay>('spec/overlays/meta/1.0')) {
       const language = overlay.language ?? 'en'
       const { name, description, credentialHelpText, credentialSupportUrl, issuer, issuerDescription, issuerUrl } =
         overlay
@@ -69,32 +75,27 @@ class OverlayBundle {
         metadata.description[language] = description
       }
       if (credentialHelpText) {
-        // @ts-ignore
         metadata.credentialHelpText[language] = credentialHelpText
       }
       if (credentialSupportUrl) {
-        // @ts-ignore
         metadata.credentialSupportUrl[language] = credentialSupportUrl
       }
       if (issuer) {
-        // @ts-ignore
         metadata.issuer[language] = issuer
       }
       if (issuerDescription) {
-        // @ts-ignore
         metadata.issuerDescription[language] = issuerDescription
       }
       if (issuerUrl) {
-        // @ts-ignore
         metadata.issuerUrl[language] = issuerUrl
       }
     }
     return metadata
   }
 
-  private processLanguages(): string[] {
+  #processLanguages(): string[] {
     const languages: string[] = []
-    for (const overlay of this.overlaysForType<MetaOverlay>('spec/overlays/meta/1.0')) {
+    for (const overlay of this.#overlaysForType<MetaOverlay>('spec/overlays/meta/1.0')) {
       const language = overlay.language
       if (language && !languages.includes(language)) {
         languages.push(language)
@@ -104,26 +105,24 @@ class OverlayBundle {
     return languages
   }
 
-  private processOverlayAttributes(): IOverlayBundleAttribute[] {
+  #processOverlayAttributes(): IOverlayBundleAttribute[] {
     const attributes: IOverlayBundleAttribute[] = []
     const attributeMap = new Map(Object.entries(this.captureBase.attributes))
     for (const [name, type] of attributeMap) {
       attributes.push({
         name,
         type,
-        information: this.processInformationForAttribute(name),
-        label: this.processLabelForAttribute(name),
-        format: this.processFormatForAttribute(name),
+        information: this.#processInformationForAttribute(name),
+        label: this.#processLabelForAttribute(name),
+        format: this.#processFormatForAttribute(name),
       })
     }
     return attributes
   }
 
-  private processInformationForAttribute(key: string): {
-    [key: string]: string
-  } {
-    const information: { [key: string]: string } = {}
-    for (const overlay of this.overlaysForType<InformationOverlay>('spec/overlays/information/1.0')) {
+  #processInformationForAttribute(key: string): Record<string, string> {
+    const information: Record<string, string> = {}
+    for (const overlay of this.#overlaysForType<InformationOverlay>('spec/overlays/information/1.0')) {
       if (overlay.attributeInformation?.[key]) {
         const language = overlay.language ?? 'en'
         information[language] = overlay.attributeInformation[key]
@@ -132,9 +131,9 @@ class OverlayBundle {
     return information
   }
 
-  private processLabelForAttribute(key: string): { [key: string]: string } {
-    const label: { [key: string]: string } = {}
-    for (const overlay of this.overlaysForType<LabelOverlay>('spec/overlays/label/1.0')) {
+  #processLabelForAttribute(key: string): Record<string, string> {
+    const label: Record<string, string> = {}
+    for (const overlay of this.#overlaysForType<LabelOverlay>('spec/overlays/label/1.0')) {
       if (overlay.attributeLabels?.[key]) {
         const language = overlay.language ?? 'en'
         label[language] = overlay.attributeLabels[key]
@@ -143,8 +142,8 @@ class OverlayBundle {
     return label
   }
 
-  private processFormatForAttribute(key: string): string | undefined {
-    for (const overlay of this.overlaysForType<FormatOverlay>('spec/overlays/format/1.0')) {
+  #processFormatForAttribute(key: string): string | undefined {
+    for (const overlay of this.#overlaysForType<FormatOverlay>('spec/overlays/format/1.0')) {
       if (overlay.attributeFormats?.[key]) {
         return overlay.attributeFormats[key]
       }
@@ -152,7 +151,7 @@ class OverlayBundle {
     return
   }
 
-  private overlaysForType<T>(type: string): T[] {
+  #overlaysForType<T>(type: string): T[] {
     return this.overlays.filter((overlay) => overlay.type === type) as T[]
   }
 }

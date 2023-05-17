@@ -5,9 +5,7 @@ export default class CaptureBase {
 
   type: string
   classification: string
-  attributes: {
-    [key: string]: string
-  }
+  attributes: Record<string, string>
   digest: string
 
   constructor(captureBase: ICaptureBaseData) {

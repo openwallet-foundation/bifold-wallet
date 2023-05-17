@@ -1,23 +1,9 @@
 export default interface IOverlayBundleMetadata {
-  name: {
-    [key: string]: string
-  }
-  description: {
-    [key: string]: string
-  }
-  credentialHelpText?: {
-    [key: string]: string
-  }
-  credentialSupportUrl?: {
-    [key: string]: string
-  }
-  issuer?: {
-    [key: string]: string
-  }
-  issuerDescription?: {
-    [key: string]: string
-  }
-  issuerUrl?: {
-    [key: string]: string
-  }
+  name: Record<string, string>
+  description: Record<string, string>
+  credentialHelpText?: Record<string, string>
+  credentialSupportUrl?: Record<string, string>
+  issuer?: Record<string, string>
+  issuerDescription?: Record<string, string>
+  issuerUrl?: Record<string, string>
 }

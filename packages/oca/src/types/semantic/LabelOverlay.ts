@@ -2,13 +2,9 @@ import { ILabelOverlayData } from '../../interfaces/data'
 import BaseOverlay from '../base/BaseOverlay'
 
 export default class LabelOverlay extends BaseOverlay {
-  #attribute_labels: {
-    [key: string]: string
-  }
+  #attribute_labels: Record<string, string>
   #attribute_categories: string[]
-  #category_labels: {
-    [key: string]: string
-  }
+  #category_labels: Record<string, string>
 
   language: string
 
@@ -20,7 +16,7 @@ export default class LabelOverlay extends BaseOverlay {
     this.#category_labels = overlay.category_labels
   }
 
-  get attributeLabels(): { [key: string]: string } {
+  get attributeLabels(): Record<string, string> {
     return this.#attribute_labels
   }
 
@@ -28,7 +24,7 @@ export default class LabelOverlay extends BaseOverlay {
     return this.#attribute_categories
   }
 
-  get categoryLabels(): { [key: string]: string } {
+  get categoryLabels(): Record<string, string> {
     return this.#category_labels
   }
 }

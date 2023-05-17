@@ -3,9 +3,7 @@ import BaseOverlay from '../base/BaseOverlay'
 
 export default class CharacterEncodingOverlay extends BaseOverlay {
   #default_character_encoding: string
-  #attr_character_encoding: {
-    [key: string]: string
-  }
+  #attr_character_encoding: Record<string, string>
 
   constructor(overlay: ICharacterEncodingOverlayData) {
     super(overlay)
@@ -17,7 +15,7 @@ export default class CharacterEncodingOverlay extends BaseOverlay {
     return this.#default_character_encoding
   }
 
-  get attributeCharacterEncoding(): { [key: string]: string } {
+  get attributeCharacterEncoding(): Record<string, string> {
     return this.#attr_character_encoding
   }
 }

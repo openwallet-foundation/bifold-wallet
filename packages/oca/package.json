@@ -23,5 +23,12 @@
     "eslint-import-resolver-typescript": "^2.5.0",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.4"
+  },
+  "resolutions": {
+    "@aries-framework/core": "0.3.3",
+    "aries-oca-explorer-vite": "portal:/workspaces/aries-oca-bundles/OCAExplorer"
+  },
+  "dependencies": {
+    "@aries-framework/core": "^0.3.3"
   }
 }
