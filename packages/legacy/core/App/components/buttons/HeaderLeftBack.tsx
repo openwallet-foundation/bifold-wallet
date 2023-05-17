@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 
 const defaultIconSize = 38
@@ -49,6 +50,7 @@ const HeaderLeftBack: React.FC<HeaderLeftBackProps> = ({
       onPress={onPress}
       style={[style.touchableArea]}
       disabled={disabled}
+      hitSlop={hitSlop}
     >
       <View style={style.container}>
         <Icon name={icon || 'chevron-left'} size={size || defaultIconSize} color={ColorPallet.brand.headerIcon} />

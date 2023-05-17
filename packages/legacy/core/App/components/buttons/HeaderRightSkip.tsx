@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 
 interface HeaderButtonProps {
@@ -40,6 +41,7 @@ const HeaderRight: React.FC<HeaderButtonProps> = ({ title, testID, accessibility
       onPress={onPress}
       style={[style.touchableArea]}
       disabled={disabled}
+      hitSlop={hitSlop}
     >
       <View style={style.container}>
         <Text style={[style.title]}>{title}</Text>

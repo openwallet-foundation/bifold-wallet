@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { hitSlop } from '../../constants'
 import { ColorPallet } from '../../theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
@@ -35,6 +36,7 @@ const InfoIcon: React.FC<InfoProps> = ({ connectionId }) => {
           params: { connectionId: connectionId },
         })
       }
+      hitSlop={hitSlop}
     >
       <Icon name="information" size={24} color={ColorPallet.brand.headerIcon}></Icon>
     </TouchableOpacity>
