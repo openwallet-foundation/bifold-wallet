@@ -16,6 +16,7 @@ class OverlayBundle {
   languages!: string[]
   metadata!: IOverlayBundleMetadata
   attributes!: IOverlayBundleAttribute[]
+  flaggedAttributes!: IOverlayBundleAttribute[]
 
   constructor(credentialDefinitionId: string, bundle: IOverlayBundleData) {
     this.credentialDefinitionId = credentialDefinitionId
@@ -37,14 +38,21 @@ class OverlayBundle {
     this.languages = this.#processLanguages()
     this.metadata = this.#processMetadata()
     this.attributes = this.#processOverlayAttributes()
+    this.flaggedAttributes = this.attributes.filter((attribute) =>
+      this.captureBase.flaggedAttributes.includes(attribute.name)
+    )
   }
 
   get branding(): BrandingOverlay | undefined {
     return this.#overlaysForType<BrandingOverlay>('aries/overlays/branding/1.0')[0]
   }
 
-  getAttribute(attributeName: string): IOverlayBundleAttribute | undefined {
-    return this.attributes.find((attribute) => attribute.name === attributeName)
+  getAttribute(name: string): IOverlayBundleAttribute | undefined {
+    return this.attributes.find((attribute) => attribute.name === name)
+  }
+
+  getFlaggedAttribute(name: string): IOverlayBundleAttribute | undefined {
+    return this.flaggedAttributes.find((attribute) => attribute.name === name)
   }
 
   #processMetadata(): IOverlayBundleMetadata {

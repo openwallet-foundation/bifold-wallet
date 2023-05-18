@@ -1,3 +1,1 @@
-import * as CredentialFormatter from './Credential'
-
-export { CredentialFormatter }
+export { CredentialFormatter } from './Credential'

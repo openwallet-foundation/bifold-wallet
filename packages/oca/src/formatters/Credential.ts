@@ -7,7 +7,56 @@ import {
 import { IOverlayBundleAttribute as OverlayBundleAttributeOptions } from '../interfaces/overlay'
 import { OverlayBundle } from '../types'
 
-class DisplayAttribute extends CredentialPreviewAttribute {
+export class LocalizedCredential {
+  #bundle!: OverlayBundle
+
+  issuer: string
+  name: string
+  attributes!: DisplayAttribute[]
+
+  constructor(bundle: OverlayBundle, record: CredentialExchangeRecord, language: string) {
+    if (!language) {
+      throw new Error('language is required')
+    }
+
+    this.#bundle = bundle
+
+    this.issuer = bundle.metadata.issuer?.[language]
+    this.name = bundle.metadata.name?.[language]
+
+    // If no record attributes are present then grab default attributes from the bundle
+    const credentialAttributes = record.credentialAttributes?.length
+      ? record.credentialAttributes
+      : bundle.attributes.map((attribute) => {
+          return new CredentialPreviewAttribute({ ...attribute, value: '' })
+        })
+
+    this.attributes =
+      credentialAttributes?.map((attribute) => {
+        const overlayOptions = bundle.getFlaggedAttribute(attribute.name) ?? { name: attribute.name, type: '' }
+        return new DisplayAttribute(attribute, overlayOptions, language)
+      }) ?? []
+  }
+
+  get primaryAttribute(): DisplayAttribute | undefined {
+    const name = this.#bundle.branding?.primaryAttribute
+    return this.getAttribute(name)
+  }
+
+  get secondaryAttribute(): DisplayAttribute | undefined {
+    const name = this.#bundle.branding?.secondaryAttribute
+    return this.getAttribute(name)
+  }
+
+  getAttribute(attributeName?: string): DisplayAttribute | undefined {
+    if (!attributeName) {
+      return undefined
+    }
+    return this.attributes.find((attribute) => attribute.name === attributeName)
+  }
+}
+
+export class DisplayAttribute extends CredentialPreviewAttribute {
   format: string | undefined
   information: string | undefined
   label: string | undefined
@@ -17,7 +66,6 @@ class DisplayAttribute extends CredentialPreviewAttribute {
     overlayOptions: OverlayBundleAttributeOptions,
     language: string
   ) {
-    if (!language) throw new Error('language is required')
     super(options)
 
     this.format = overlayOptions.format
@@ -30,21 +78,17 @@ class DisplayAttribute extends CredentialPreviewAttribute {
   }
 }
 
-export default class CredentialFormatter {
-  #attributes!: Record<string, DisplayAttribute[]>
+export class CredentialFormatter {
+  #credentials!: Record<string, LocalizedCredential>
 
   constructor(bundle: OverlayBundle, record: CredentialExchangeRecord) {
-    this.#attributes = bundle.languages.reduce((attributes, language) => {
-      attributes[language] =
-        record.credentialAttributes?.map((attribute) => {
-          const overlayOptions = bundle.getAttribute(attribute.name) ?? { name: attribute.name, type: '' }
-          return new DisplayAttribute(attribute, overlayOptions, language)
-        }) ?? []
-      return attributes
-    }, {} as Record<string, DisplayAttribute[]>)
+    this.#credentials = bundle.languages.reduce((credentials, language) => {
+      credentials[language] = new LocalizedCredential(bundle, record, language)
+      return credentials
+    }, {} as Record<string, LocalizedCredential>)
   }
 
-  localizedAttributes(language: string): DisplayAttribute[] {
-    return this.#attributes[language] ?? []
+  localizedCredential(language: string): LocalizedCredential | undefined {
+    return this.#credentials[language]
   }
 }

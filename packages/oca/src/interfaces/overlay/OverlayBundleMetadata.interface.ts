@@ -3,7 +3,7 @@ export default interface IOverlayBundleMetadata {
   description: Record<string, string>
   credentialHelpText?: Record<string, string>
   credentialSupportUrl?: Record<string, string>
-  issuer?: Record<string, string>
+  issuer: Record<string, string>
   issuerDescription?: Record<string, string>
   issuerUrl?: Record<string, string>
 }

@@ -28,7 +28,7 @@
     "@aries-framework/core": "0.3.3",
     "aries-oca-explorer-vite": "portal:/workspaces/aries-oca-bundles/OCAExplorer"
   },
-  "dependencies": {
-    "@aries-framework/core": "^0.3.3"
+  "peerDependencies": {
+    "@aries-framework/core": "*"
   }
 }
