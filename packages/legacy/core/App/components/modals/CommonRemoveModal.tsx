@@ -106,7 +106,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     controlsContainer: {
       marginTop: 'auto',
       marginHorizontal: 20,
-      marginBottom: Platform.OS === 'ios' ? 108 : 20,
+      marginBottom: Platform.OS === 'ios' ? 108 : 80,
     },
     headerView: {
       alignItems: 'flex-end',

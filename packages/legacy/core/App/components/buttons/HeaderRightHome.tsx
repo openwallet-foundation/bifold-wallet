@@ -9,7 +9,7 @@ import { useTheme } from '../../contexts/theme'
 import { Screens, TabStacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
-const defaultIconSize = 26
+const iconSize = 26
 
 const HeaderRightHome: React.FC = () => {
   const { t } = useTranslation()
@@ -17,7 +17,9 @@ const HeaderRightHome: React.FC = () => {
   const { ColorPallet } = useTheme()
   const style = StyleSheet.create({
     container: {
-      marginRight: 14,
+      marginRight: 15,
+      marginLeft: 0,
+      minWidth: iconSize,
     },
   })
 
@@ -31,7 +33,7 @@ const HeaderRightHome: React.FC = () => {
       }}
       hitSlop={hitSlop}
     >
-      <Icon name="home" size={defaultIconSize} color={ColorPallet.brand.headerIcon} />
+      <Icon name="home" size={iconSize} color={ColorPallet.brand.headerIcon} />
     </TouchableOpacity>
   )
 }
