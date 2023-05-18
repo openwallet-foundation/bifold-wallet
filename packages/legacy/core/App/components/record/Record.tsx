@@ -21,6 +21,7 @@ export interface RecordProps {
 const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
+  const [showAll, setShowAll] = useState<boolean>(false)
   const { ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -38,7 +39,12 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
   })
 
   const resetShown = (): void => {
-    setShown(fields.map(() => false))
+    setShown(fields.map(() => showAll))
+    setShowAll(!showAll)
+  }
+
+  const toggleShownState = (showState: boolean[]): void => {
+    if (showState.filter((x) => x === showAll).length > Math.floor(fields.length / 2)) setShowAll(!showAll)
   }
 
   useEffect(() => {
@@ -60,6 +66,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
               const newShowState = [...shown]
               newShowState[index] = !shown[index]
               setShown(newShowState)
+              toggleShownState(newShowState)
             }}
             shown={hideFieldValues ? !!shown[index] : true}
             hideBottomBorder={index === fields.length - 1}
@@ -80,7 +87,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
                   accessible={true}
                   accessibilityLabel={t('Record.HideAll')}
                 >
-                  <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
+                  <Text style={ListItems.recordLink}>{showAll ? t('Record.ShowAll') : t('Record.HideAll')}</Text>
                 </TouchableOpacity>
               </View>
             ) : null}
