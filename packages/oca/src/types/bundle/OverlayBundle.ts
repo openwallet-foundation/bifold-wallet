@@ -4,6 +4,7 @@ import OverlayTypeMap from '../OverlayTypeMap'
 import BaseOverlay from '../base/BaseOverlay'
 import BrandingOverlay from '../branding/BrandingOverlay'
 import CaptureBase from '../capture-base/CaptureBase'
+import CharacterEncodingOverlay from '../semantic/CharacterEncodingOverlay'
 import FormatOverlay from '../semantic/FormatOverlay'
 import InformationOverlay from '../semantic/InformationOverlay'
 import LabelOverlay from '../semantic/LabelOverlay'
@@ -123,6 +124,7 @@ class OverlayBundle {
         information: this.#processInformationForAttribute(name),
         label: this.#processLabelForAttribute(name),
         format: this.#processFormatForAttribute(name),
+        characterEncoding: this.#processCharacterEncodingForAttribute(name),
       })
     }
     return attributes
@@ -154,6 +156,15 @@ class OverlayBundle {
     for (const overlay of this.#overlaysForType<FormatOverlay>('spec/overlays/format/1.0')) {
       if (overlay.attributeFormats?.[key]) {
         return overlay.attributeFormats[key]
+      }
+    }
+    return
+  }
+
+  #processCharacterEncodingForAttribute(key: string): string | undefined {
+    for (const overlay of this.#overlaysForType<CharacterEncodingOverlay>('spec/overlays/character_encoding/1.0')) {
+      if (overlay.attributeCharacterEncoding?.[key]) {
+        return overlay.attributeCharacterEncoding[key]
       }
     }
     return

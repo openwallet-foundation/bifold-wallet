@@ -57,6 +57,7 @@ export class LocalizedCredential {
 }
 
 export class DisplayAttribute extends CredentialPreviewAttribute {
+  characterEncoding: string | undefined
   format: string | undefined
   information: string | undefined
   label: string | undefined
@@ -68,6 +69,7 @@ export class DisplayAttribute extends CredentialPreviewAttribute {
   ) {
     super(options)
 
+    this.characterEncoding = overlayOptions.characterEncoding
     this.format = overlayOptions.format
     this.information = overlayOptions.information?.[language]
     this.label = overlayOptions.label?.[language]

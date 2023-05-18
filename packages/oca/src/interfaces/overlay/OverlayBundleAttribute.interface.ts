@@ -4,4 +4,5 @@ export default interface IOverlayBundleAttribute {
   information?: Record<string, string>
   label?: Record<string, string>
   format?: string
+  characterEncoding?: string
 }
