@@ -9,6 +9,7 @@ import FormatOverlay from '../semantic/FormatOverlay'
 import InformationOverlay from '../semantic/InformationOverlay'
 import LabelOverlay from '../semantic/LabelOverlay'
 import MetaOverlay from '../semantic/MetaOverlay'
+import StandardOverlay from '../semantic/StandardOverlay'
 
 class OverlayBundle {
   credentialDefinitionId!: string
@@ -123,8 +124,9 @@ class OverlayBundle {
         type,
         information: this.#processInformationForAttribute(name),
         label: this.#processLabelForAttribute(name),
-        format: this.#processFormatForAttribute(name),
         characterEncoding: this.#processCharacterEncodingForAttribute(name),
+        standard: this.#processStandardForAttribute(name),
+        format: this.#processFormatForAttribute(name),
       })
     }
     return attributes
@@ -152,19 +154,28 @@ class OverlayBundle {
     return label
   }
 
-  #processFormatForAttribute(key: string): string | undefined {
-    for (const overlay of this.#overlaysForType<FormatOverlay>('spec/overlays/format/1.0')) {
-      if (overlay.attributeFormats?.[key]) {
-        return overlay.attributeFormats[key]
+  #processCharacterEncodingForAttribute(key: string): string | undefined {
+    for (const overlay of this.#overlaysForType<CharacterEncodingOverlay>('spec/overlays/character_encoding/1.0')) {
+      if (overlay.attributeCharacterEncoding?.[key]) {
+        return overlay.attributeCharacterEncoding[key]
       }
     }
     return
   }
 
-  #processCharacterEncodingForAttribute(key: string): string | undefined {
-    for (const overlay of this.#overlaysForType<CharacterEncodingOverlay>('spec/overlays/character_encoding/1.0')) {
-      if (overlay.attributeCharacterEncoding?.[key]) {
-        return overlay.attributeCharacterEncoding[key]
+  #processStandardForAttribute(key: string): string | undefined {
+    for (const overlay of this.#overlaysForType<StandardOverlay>('spec/overlays/standard/1.0')) {
+      if (overlay.attributeStandards?.[key]) {
+        return overlay.attributeStandards[key]
+      }
+    }
+    return
+  }
+
+  #processFormatForAttribute(key: string): string | undefined {
+    for (const overlay of this.#overlaysForType<FormatOverlay>('spec/overlays/format/1.0')) {
+      if (overlay.attributeFormats?.[key]) {
+        return overlay.attributeFormats[key]
       }
     }
     return

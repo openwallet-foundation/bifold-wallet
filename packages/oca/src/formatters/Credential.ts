@@ -32,10 +32,12 @@ export class LocalizedCredential {
         })
 
     this.attributes =
-      credentialAttributes?.map((attribute) => {
-        const overlayOptions = bundle.getFlaggedAttribute(attribute.name) ?? { name: attribute.name, type: '' }
-        return new DisplayAttribute(attribute, overlayOptions, language)
-      }) ?? []
+      credentialAttributes
+        ?.filter((attribute) => bundle.getFlaggedAttribute(attribute.name))
+        .map((attribute) => {
+          const overlayOptions = bundle.getAttribute(attribute.name) ?? { name: attribute.name, type: '' }
+          return new DisplayAttribute(attribute, overlayOptions, language)
+        }) ?? []
   }
 
   get primaryAttribute(): DisplayAttribute | undefined {
@@ -58,6 +60,7 @@ export class LocalizedCredential {
 
 export class DisplayAttribute extends CredentialPreviewAttribute {
   characterEncoding: string | undefined
+  standard: string | undefined
   format: string | undefined
   information: string | undefined
   label: string | undefined
@@ -70,6 +73,7 @@ export class DisplayAttribute extends CredentialPreviewAttribute {
     super(options)
 
     this.characterEncoding = overlayOptions.characterEncoding
+    this.standard = overlayOptions.standard
     this.format = overlayOptions.format
     this.information = overlayOptions.information?.[language]
     this.label = overlayOptions.label?.[language]

@@ -5,4 +5,5 @@ export default interface IOverlayBundleAttribute {
   label?: Record<string, string>
   format?: string
   characterEncoding?: string
+  standard?: string
 }
