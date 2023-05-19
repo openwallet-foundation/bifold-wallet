@@ -10,9 +10,13 @@ import { useTheme } from '../../contexts/theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
+const iconSize = 24
+
 const styles = StyleSheet.create({
   button: {
-    paddingHorizontal: 16,
+    marginRight: 0,
+    marginLeft: 15,
+    minWidth: iconSize,
   },
 })
 
@@ -29,7 +33,7 @@ const SettingsMenu: React.FC = () => {
       onPress={() => navigation.navigate(Stacks.SettingStack, { screen: Screens.Settings })}
       hitSlop={hitSlop}
     >
-      <Icon name="menu" size={24} color={ColorPallet.brand.headerIcon}></Icon>
+      <Icon name="menu" size={iconSize} color={ColorPallet.brand.headerIcon}></Icon>
     </TouchableOpacity>
   )
 }

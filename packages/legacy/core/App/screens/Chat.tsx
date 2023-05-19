@@ -127,18 +127,13 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const [store] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
-
   const connection = useConnectionById(connectionId)
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const credentials = useCredentialsByConnectionId(connectionId)
   const proofs = useProofsByConnectionId(connectionId)
-
   const theirLabel = useMemo(() => connection?.theirLabel || connection?.id || '', [connection])
-
   const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
-
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
-
   const { ChatTheme: theme } = useTheme()
 
   useMemo(() => {
@@ -148,8 +143,6 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   useEffect(() => {
     navigation.setOptions({
       title: theirLabel,
-      headerTitleAlign: 'center',
-      headerTitleContainerStyle: { maxWidth: '65%' },
       headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
     })
   }, [connection])
@@ -205,6 +198,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         const role = getProofEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getProofEventLabel(record) as any)
+
         return {
           _id: record.id,
           text: actionLabel,

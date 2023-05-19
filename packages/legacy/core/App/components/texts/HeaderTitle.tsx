@@ -12,10 +12,14 @@ interface Props {
 const HeaderTitle: React.FC<Props> = ({ children }) => {
   const { TextTheme } = useTheme()
   const styles = StyleSheet.create({
-    title: TextTheme.headerTitle,
+    title: {
+      ...TextTheme.headerTitle,
+      textAlign: 'center',
+    },
   })
+
   return (
-    <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>
+    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
       {children}
     </Text>
   )

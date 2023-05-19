@@ -25,7 +25,7 @@ const FauxNavigationBar: React.FC<FauxNavigationBarProps> = ({ title, onHomeTouc
       justifyContent: 'center',
       alignItems: 'flex-end',
       flexDirection: 'row',
-      backgroundColor: ColorPallet.brand.primary,
+      backgroundColor: 'ColorPallet.brand.primary',
       height: defaultStatusAndNavbarHeight,
     },
     content: {
