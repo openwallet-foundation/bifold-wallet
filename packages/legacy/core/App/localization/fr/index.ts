@@ -424,6 +424,7 @@ const translation = {
         "Hide": "Masquer",
         "Show": "Afficher",
         "HideAll": "Masquer tout",
+        "ShowAll": "Afficher tout",
         "Hidden": "Masqué",
         "InvalidDate": "Date invalide: ",
     },

@@ -413,6 +413,7 @@ const translation = {
     "Hide": "Esconder",
     "Show": "Mostrar",
     "HideAll": "Esconder todos",
+    "ShowAll": "Mostrar tudos",
     "Hidden": "Escondido"
   },
   "Screens": {
