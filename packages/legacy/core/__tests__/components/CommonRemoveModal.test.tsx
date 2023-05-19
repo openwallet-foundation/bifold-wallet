@@ -40,4 +40,22 @@ describe('CommonRemoveModal Component', () => {
 
     expect(tree).toMatchSnapshot()
   })
+
+  test('Credential offer decline renders correctly', async () => {
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.CredentialOfferDecline} />)
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Proof request decline renders correctly', async () => {
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ProofRequestDecline} />)
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Custom notification decline renders correctly', async () => {
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.CustomNotificationDecline} />)
+
+    expect(tree).toMatchSnapshot()
+  })
 })

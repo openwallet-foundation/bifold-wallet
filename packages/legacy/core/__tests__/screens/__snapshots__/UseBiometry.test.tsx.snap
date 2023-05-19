@@ -550,6 +550,14 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                       accessibilityLabel="PINCreate.Show"
                       accessible={true}
                       focusable={true}
+                      hitSlop={
+                        Object {
+                          "bottom": 44,
+                          "left": 44,
+                          "right": 44,
+                          "top": 44,
+                        }
+                      }
                       onClick={[Function]}
                       onResponderGrant={[Function]}
                       onResponderMove={[Function]}
@@ -1197,6 +1205,14 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                       accessible={true}
                       collapsable={false}
                       focusable={true}
+                      hitSlop={
+                        Object {
+                          "bottom": 44,
+                          "left": 44,
+                          "right": 44,
+                          "top": 44,
+                        }
+                      }
                       nativeID="animatedComponent"
                       onClick={[Function]}
                       onResponderGrant={[Function]}
@@ -1900,6 +1916,14 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                       accessibilityLabel="PINCreate.Show"
                       accessible={true}
                       focusable={true}
+                      hitSlop={
+                        Object {
+                          "bottom": 44,
+                          "left": 44,
+                          "right": 44,
+                          "top": 44,
+                        }
+                      }
                       onClick={[Function]}
                       onResponderGrant={[Function]}
                       onResponderMove={[Function]}

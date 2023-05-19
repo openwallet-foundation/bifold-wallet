@@ -432,6 +432,7 @@ const translation = {
     "Hide": "Hide",
     "Show": "Show",
     "HideAll": "Hide all",
+    "ShowAll": "Show all",
     "Hidden": "Hidden",
     "InvalidDate": "Invalid Date: "
   },
