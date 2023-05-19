@@ -1,7 +1,6 @@
-import { render } from '@testing-library/react-native'
+import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
-// eslint-disable-next-line import/no-named-as-default
 import HeaderButton, { ButtonLocation } from '../../App/components/buttons/HeaderButton'
 import { testIdWithKey } from '../../App/utils/testable'
 
@@ -12,9 +11,7 @@ describe('HeaderButton Component', () => {
         buttonLocation={ButtonLocation.Left}
         accessibilityLabel={'LeftButton'}
         testID={testIdWithKey('LeftButton')}
-        onPress={() => {
-          return
-        }}
+        onPress={jest.fn()}
         icon="information"
       />
     )
@@ -28,9 +25,7 @@ describe('HeaderButton Component', () => {
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={'RightButton'}
         testID={testIdWithKey('RightButton')}
-        onPress={() => {
-          return
-        }}
+        onPress={jest.fn()}
         icon="information"
       />
     )
@@ -44,14 +39,31 @@ describe('HeaderButton Component', () => {
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={'RightButton'}
         testID={testIdWithKey('RightButton')}
-        onPress={() => {
-          return
-        }}
+        onPress={jest.fn()}
         text="RightButton"
         icon="information"
       />
     )
 
     expect(tree).toMatchSnapshot()
+  })
+
+  test('Button onPress triggers on press', () => {
+    const callback = jest.fn()
+    const { getByTestId } = render(
+      <HeaderButton
+        buttonLocation={ButtonLocation.Left}
+        accessibilityLabel={'LeftButton'}
+        testID={testIdWithKey('LeftButton')}
+        onPress={callback}
+        icon="information"
+      />
+    )
+
+    const button = getByTestId(testIdWithKey('LeftButton'))
+
+    fireEvent(button, 'press')
+
+    expect(callback).toHaveBeenCalledTimes(1)
   })
 })
