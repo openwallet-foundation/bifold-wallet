@@ -1,4 +1,5 @@
 import { render, fireEvent } from '@testing-library/react-native'
+import React from 'react'
 
 import HeaderButton, { ButtonLocation } from '../../App/components/buttons/HeaderButton'
 import { testIdWithKey } from '../../App/utils/testable'
