@@ -2,9 +2,10 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import PopupModal from '../modals/PopupModal'
@@ -79,7 +80,14 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
     <View style={styles.notifyTextContainer}>
       <View style={styles.row}>
         <Text style={styles.notifyTitle}>{t('ConnectionAlert.AddedContacts')}</Text>
-        <Icon name={'information-outline'} size={30} style={styles.informationIcon} onPress={toggleInfoCard} />
+        <TouchableOpacity
+          testID={t('Global.Info')}
+          accessibilityLabel={t('Global.Info')}
+          onPress={toggleInfoCard}
+          hitSlop={hitSlop}
+        >
+          <Icon name={'information-outline'} size={30} style={styles.informationIcon} />
+        </TouchableOpacity>
       </View>
       {infoCardVisible && (
         <PopupModal
