@@ -37,6 +37,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@aries-bifold/oca@workspace:packages/oca"
   dependencies:
+    "@aries-framework/core": ^0.3.3
     "@typescript-eslint/parser": ^4.33.0
     eslint: ^7.14.0
     eslint-import-resolver-typescript: ^2.5.0

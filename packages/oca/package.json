@@ -25,10 +25,9 @@
     "typescript": "^5.0.4"
   },
   "resolutions": {
-    "@aries-framework/core": "0.3.3",
-    "aries-oca-explorer-vite": "portal:/workspaces/aries-oca-bundles/OCAExplorer"
+    "@aries-framework/core": "0.3.3"
   },
-  "peerDependencies": {
-    "@aries-framework/core": "*"
+  "dependencies": {
+    "@aries-framework/core": "^0.3.3"
   }
 }
