@@ -150,7 +150,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       title: theirLabel,
       headerTitleAlign: 'center',
       headerTitleContainerStyle: { maxWidth: '65%' },
-      headerRight: () => <InfoIcon connectionId={connection?.id} />,
+      headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
     })
   }, [connection])
 
@@ -193,7 +193,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           onDetails: () => {
             navigation.getParent()?.navigate(Stacks.ContactStack, {
               screen: Screens.CredentialDetails,
-              params: { credentialId: record.id },
+              params: { credential: record },
             })
           },
         }
