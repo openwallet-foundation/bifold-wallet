@@ -111,14 +111,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
             onPress={onSkipTouched}
             icon="chevron-right"
             text="Skip"
-          ></HeaderButton>
-
-          // <HeaderRight
-          //   title={t('Global.Skip')}
-          //   accessibilityLabel={t('Global.Skip')}
-          //   testID={testIdWithKey('Skip')}
-          //   onPress={onSkipTouched}
-          // />
+          />
         ),
       })
 
