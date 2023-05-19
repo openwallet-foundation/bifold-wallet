@@ -6,6 +6,14 @@ exports[`Header Right Home Component Renders correctly 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    Object {
+      "bottom": 44,
+      "left": 44,
+      "right": 44,
+      "top": 44,
+    }
+  }
   nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}

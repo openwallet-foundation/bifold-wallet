@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Platform } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
@@ -53,6 +54,7 @@ const FauxNavigationBar: React.FC<FauxNavigationBarProps> = ({ title, onHomeTouc
               accessibilityLabel={t('Global.Home')}
               testID={testIdWithKey('HomeButton')}
               onPress={onHomeTouched}
+              hitSlop={hitSlop}
             >
               <Icon name="home" size={defaultIconSize} color={ColorPallet.brand.headerIcon} />
             </TouchableOpacity>

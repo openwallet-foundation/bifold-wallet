@@ -129,12 +129,20 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                 },
               ]
             }
-            testID="com.ariesbifold:id/Dismiss"
           >
             <View
+              accessibilityLabel="Global.Dismiss"
               accessible={true}
               collapsable={false}
               focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 44,
+                  "left": 44,
+                  "right": 44,
+                  "top": 44,
+                }
+              }
               nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
@@ -148,6 +156,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                   "opacity": 1,
                 }
               }
+              testID="com.ariesbifold:id/Dismiss"
             >
               <Text
                 allowFontScaling={false}
@@ -386,12 +395,20 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                 },
               ]
             }
-            testID="com.ariesbifold:id/Dismiss"
           >
             <View
+              accessibilityLabel="Global.Dismiss"
               accessible={true}
               collapsable={false}
               focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 44,
+                  "left": 44,
+                  "right": 44,
+                  "top": 44,
+                }
+              }
               nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
@@ -405,6 +422,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                   "opacity": 1,
                 }
               }
+              testID="com.ariesbifold:id/Dismiss"
             >
               <Text
                 allowFontScaling={false}
