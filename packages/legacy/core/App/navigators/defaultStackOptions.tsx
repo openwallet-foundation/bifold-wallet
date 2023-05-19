@@ -9,9 +9,11 @@ export function createDefaultStackOptions({ ColorPallet }: ITheme) {
     headerShown: true,
     headerBackTitleVisible: false,
     headerTitleContainerStyle: {
+      flexShrink: 1,
       maxWidth: '72%',
-      minWidth: '72%',
-      width: '100%',
+      // minWidth: '72%',
+      // width: '100%',
+      backgroundColor: 'green',
     },
     headerStyle: {
       elevation: 0,
