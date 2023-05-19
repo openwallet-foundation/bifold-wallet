@@ -43,8 +43,10 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
     setShowAll(!showAll)
   }
 
-  const toggleShownState = (showState: boolean[]): void => {
-    if (showState.filter((x) => x === showAll).length > Math.floor(fields.length / 2)) setShowAll(!showAll)
+  const toggleShownState = (newShowStates: boolean[]): void => {
+    if (newShowStates.filter((shownState) => shownState === showAll).length > Math.floor(fields.length / 2)) {
+      setShowAll(!showAll)
+    }
   }
 
   useEffect(() => {
