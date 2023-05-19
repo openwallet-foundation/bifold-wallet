@@ -10,9 +10,13 @@ import { ColorPallet } from '../../theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
+const iconSize = 24
+
 const styles = StyleSheet.create({
   button: {
-    paddingHorizontal: 16,
+    marginRight: 10,
+    marginLeft: 0,
+    minWidth: iconSize,
   },
 })
 
@@ -38,7 +42,7 @@ const InfoIcon: React.FC<InfoProps> = ({ connectionId }) => {
       }
       hitSlop={hitSlop}
     >
-      <Icon name="information" size={24} color={ColorPallet.brand.headerIcon}></Icon>
+      <Icon name="information" size={iconSize} color={ColorPallet.brand.headerIcon}></Icon>
     </TouchableOpacity>
   )
 }

@@ -8,6 +8,11 @@ export function createDefaultStackOptions({ ColorPallet }: ITheme) {
     headerTintColor: ColorPallet.brand.headerIcon,
     headerShown: true,
     headerBackTitleVisible: false,
+    headerTitleContainerStyle: {
+      maxWidth: '72%',
+      minWidth: '72%',
+      width: '100%',
+    },
     headerStyle: {
       elevation: 0,
       shadowOffset: { width: 0, height: 6 },
