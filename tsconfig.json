@@ -60,5 +60,15 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules", "build", "**/*.test.ts", "**/__tests__/*.ts", "**/__mocks__/*.ts", "**/build/**", "babel.config.js", "jest.config.js", "jestSetup.js"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "**/*.test.ts",
+    "**/__tests__/*.ts",
+    "**/__mocks__/*.ts",
+    "**/build/**",
+    "babel.config.js",
+    "jest.config.js",
+    "jestSetup.js"
+  ]
 }
