@@ -20,13 +20,16 @@ const ContactStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = createDefaultStackOptions(theme)
+
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen name={Screens.Contacts} component={ListContacts} options={{ title: t('Screens.Contacts') }} />
       <Stack.Screen
         name={Screens.ContactDetails}
         component={ContactDetails}
-        options={{ title: t('Screens.ContactDetails') }}
+        options={{
+          title: t('Screens.ContactDetails'),
+        }}
       />
       <Stack.Screen name={Screens.Chat} component={Chat} />
       <Stack.Screen name={Screens.WhatAreContacts} component={WhatAreContacts} options={{ title: '' }} />
