@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import SettingsMenu from '../components/misc/SettingsMenu'
+import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
 import Home from '../screens/Home'
 import ListNotifications from '../screens/ListNotifications'

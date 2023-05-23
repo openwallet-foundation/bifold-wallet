@@ -2,8 +2,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderLeftBack from '../components/buttons/HeaderLeftBack'
-import HeaderRightHome from '../components/buttons/HeaderRightHome'
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
+import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
 import ProofDetails from '../screens/ProofDetails'
@@ -40,13 +40,12 @@ const ProofRequestStack: React.FC = () => {
         options={({ navigation }) => ({
           title: '',
           headerLeft: () => (
-            <HeaderLeftBack
-              title=""
-              icon="arrow-left"
-              size={26}
+            <HeaderButton
+              buttonLocation={ButtonLocation.Left}
               accessibilityLabel={t('Global.Back')}
               testID={testIdWithKey('BackButton')}
               onPress={() => navigation.navigate(Screens.ProofRequests, {})}
+              icon="arrow-left"
             />
           ),
         })}
@@ -57,10 +56,8 @@ const ProofRequestStack: React.FC = () => {
         options={({ navigation, route }) => ({
           title: '',
           headerLeft: () => (
-            <HeaderLeftBack
-              title=""
-              icon="arrow-left"
-              size={26}
+            <HeaderButton
+              buttonLocation={ButtonLocation.Left}
               accessibilityLabel={t('Global.Back')}
               testID={testIdWithKey('BackButton')}
               onPress={() => {
@@ -70,6 +67,7 @@ const ProofRequestStack: React.FC = () => {
                   navigation.navigate(Screens.ProofRequests, {})
                 }
               }}
+              icon="arrow-right"
             />
           ),
           headerRight: () => <HeaderRightHome />,
