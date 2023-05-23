@@ -1,31 +1,33 @@
 {
   "name": "@aries-bifold/oca",
-  "main": "build/index",
-  "types": "build/index",
-  "version": "0.0.1-alpha.1365+bc01e09f",
-  "files": [
-    "build"
-  ],
-  "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native/tree/main/packages/oca",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
-    "directory": "packages/oca"
-  },
+  "version": "1.0.0-alpha.0",
+  "description": "",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf ./build",
-    "compile": "tsc -p tsconfig.build.json",
+    "compile": "tsc",
     "prepublishOnly": "yarn run build",
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "git+https://github.com/hyperledger/aries-mobile-agent-react-native.git",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native/issues"
+  },
+  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
   "devDependencies": {
-    "@types/ws": "^7.4.6",
-    "typescript": "~4.9.4"
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.14.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
   },
-  "gitHead": "bc01e09f07f0530b5230500ef07581afbe34816f"
+  "resolutions": {
+    "@aries-framework/core": "0.3.3"
+  },
+  "dependencies": {
+    "@aries-framework/core": "^0.3.3"
+  }
 }
