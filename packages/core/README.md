@@ -28,7 +28,6 @@
 </p>
 <br />
 
-Aries Bifold Core provides the primary components and services of Aries Bifold. 
-
+Aries Bifold Core provides the primary components and services of Aries Bifold.
 
 _Package structure inspired / adapted from the [Aries Framework Javascript](https://github.com/hyperledger/aries-framework-javascript) project_
