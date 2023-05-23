@@ -138,7 +138,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       return t('CredentialDetails.RemoveFromWallet')
     }
 
-    return t('Global.Remove')
+    return t('Global.Decline')
   }
 
   const titleForAccessibilityLabel = (): string => {
@@ -150,7 +150,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       return t('CredentialDetails.RemoveCredential')
     }
 
-    return t('Global.Remove')
+    return t('Global.Decline')
   }
 
   const headerImageForType = (usageType: ModalUsage) => {
@@ -273,7 +273,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               title={titleForConfirmButton()}
               accessibilityLabel={titleForAccessibilityLabel()}
               testID={testIdWithKey('ConfirmRemoveButton')}
-              onPress={() => onSubmit && onSubmit()}
+              onPress={onSubmit}
               buttonType={ButtonType.ModalCritical}
             />
           </View>
@@ -282,7 +282,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               title={t('Global.Cancel')}
               accessibilityLabel={t('Global.Cancel')}
               testID={testIdWithKey('CancelRemoveButton')}
-              onPress={() => onCancel && onCancel()}
+              onPress={onCancel}
               buttonType={ButtonType.ModalSecondary}
             />
           </View>
