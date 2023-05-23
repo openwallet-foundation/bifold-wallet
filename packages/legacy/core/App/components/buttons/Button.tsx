@@ -42,6 +42,7 @@ const Button: React.FC<ButtonProps & React.RefAttributes<TouchableOpacity>> = fo
         onPress={onPress}
         accessible={accessible}
         accessibilityLabel={accessibilityLabel}
+        accessibilityRole={'button'}
         testID={testID}
         style={[
           buttonStyles[buttonType].color,
