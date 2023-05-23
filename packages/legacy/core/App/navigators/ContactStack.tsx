@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderRightHome from '../components/buttons/HeaderRightHome'
+import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
 import ConnectionInvitation from '../screens/ConnectionInvitation'

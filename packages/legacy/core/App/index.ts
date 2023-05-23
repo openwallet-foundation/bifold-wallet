@@ -8,6 +8,7 @@ import indyLedgers from '../configs/ledgers/indy'
 
 import * as components from './components'
 import Button, { ButtonType } from './components/buttons/Button'
+import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
@@ -102,6 +103,8 @@ export {
   homeTourSteps,
   Button,
   ButtonType,
+  HeaderButton,
+  ButtonLocation,
   CheckBoxRow,
   CredentialCard,
   ErrorModal,
