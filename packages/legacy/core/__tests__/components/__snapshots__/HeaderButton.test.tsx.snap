@@ -33,7 +33,6 @@ exports[`HeaderButton Component Left alignment renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "red",
         "flexDirection": "row",
         "marginLeft": 15,
         "marginRight": 0,
@@ -99,7 +98,6 @@ exports[`HeaderButton Component Right alignment renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "red",
         "flexDirection": "row",
         "marginLeft": 0,
         "marginRight": 15,
@@ -165,7 +163,6 @@ exports[`HeaderButton Component Right alignment with text renders correctly 1`] 
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "red",
         "flexDirection": "row",
         "marginLeft": 0,
         "marginRight": 15,

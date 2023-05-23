@@ -33,7 +33,6 @@ exports[`Header Right Home Component Renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "red",
         "flexDirection": "row",
         "marginLeft": 0,
         "marginRight": 15,
