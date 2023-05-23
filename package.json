@@ -3,9 +3,7 @@
   "private": true,
   "license": "Apache-2.0",
   "workspaces": [
-    "packages/oca",
-    "packages/core",
-    "packages/legacy",
+    "packages/*",
     "packages/legacy/core",
     "packages/legacy/app"
   ],
@@ -14,6 +12,9 @@
     "type": "git"
   },
   "scripts": {
+    "clean": "lerna run clean",
+    "build": "lerna run build",
+    "publish": "lerna publish --loglevel=verbose --canary --dist-tag alpha --force-publish --exact",
     "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
     "test": "cd packages/legacy/core && TZ=GMT yarn test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --color .",
@@ -30,6 +31,7 @@
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^3.3.1",
+    "lerna": "^6.6.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.4",
     "typescript": "4.4.3"

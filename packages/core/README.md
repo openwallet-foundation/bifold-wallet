@@ -6,7 +6,7 @@
     height="200px"
   />
 </p>
-<h1 align="center"><b>Aries Bifold - OCA</b></h1>
+<h1 align="center"><b>Aries Bifold - Core</b></h1>
 <p align="center">
   <a
     href="https://raw.githubusercontent.com/hyperledger/aries-mobile-agent-react-native/main/LICENSE"
@@ -19,15 +19,15 @@
       alt="typescript"
       src="https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg"
   /></a>
-    <a href="https://www.npmjs.com/package/@aries-bifold/oca"
+    <a href="https://www.npmjs.com/package/@aries-bifold/core"
     ><img
-      alt="@aries-bifold/oca version"
-      src="https://img.shields.io/npm/v/@aries-bifold/oca"
+      alt="@aries-bifold/core version"
+      src="https://img.shields.io/npm/v/@aries-bifold/core"
   /></a>
 
 </p>
 <br />
 
-Aries Bifold OCA provides an interpreter for OCA ([Overlay Capture Architecture](https://humancolossus.foundation/blog/cjzegoi58xgpfzwxyrqlroy48dihwz)) bundles. More details to come.
+Aries Bifold Core provides the primary components and services of Aries Bifold.
 
 _Package structure inspired / adapted from the [Aries Framework Javascript](https://github.com/hyperledger/aries-framework-javascript) project_
