@@ -14,11 +14,11 @@ import { Text } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 
 import { isPresentationReceived } from '../../verifier'
+import InfoIcon from '../components/buttons/InfoIcon'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
 import { ChatMessage, ExtendedChatMessage, Role } from '../components/chat/ChatMessage'
-import InfoIcon from '../components/misc/InfoIcon'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -127,18 +127,13 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const [store] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
-
   const connection = useConnectionById(connectionId)
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const credentials = useCredentialsByConnectionId(connectionId)
   const proofs = useProofsByConnectionId(connectionId)
-
   const theirLabel = useMemo(() => connection?.theirLabel || connection?.id || '', [connection])
-
   const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
-
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
-
   const { ChatTheme: theme } = useTheme()
 
   useMemo(() => {
@@ -148,8 +143,6 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   useEffect(() => {
     navigation.setOptions({
       title: theirLabel,
-      headerTitleAlign: 'center',
-      headerTitleContainerStyle: { maxWidth: '65%' },
       headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
     })
   }, [connection])
@@ -205,6 +198,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         const role = getProofEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getProofEventLabel(record) as any)
+
         return {
           _id: record.id,
           text: actionLabel,

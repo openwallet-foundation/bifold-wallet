@@ -30,5 +30,4 @@
 
 Aries Bifold OCA provides an interpreter for OCA ([Overlay Capture Architecture](https://humancolossus.foundation/blog/cjzegoi58xgpfzwxyrqlroy48dihwz)) bundles. More details to come.
 
-
 _Package structure inspired / adapted from the [Aries Framework Javascript](https://github.com/hyperledger/aries-framework-javascript) project_

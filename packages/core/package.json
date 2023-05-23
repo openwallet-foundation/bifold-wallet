@@ -1,0 +1,56 @@
+{
+  "name": "@aries-bifold/core",
+  "main": "build/index",
+  "types": "build/index",
+  "version": "0.0.1-alpha.1365+bc01e09f",
+  "files": [
+    "build",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native/tree/main/packages/core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
+    "directory": "packages/core"
+  },
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf ./build",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "yarn run build",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-native": "0.71.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.2",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "0.71.5",
+    "@types/ws": "^7.4.6",
+    "react": "18.2.0",
+    "react-native": "0.71.5",
+    "rimraf": "^4.0.7",
+    "typescript": "~4.9.4"
+  },
+  "gitHead": "bc01e09f07f0530b5230500ef07581afbe34816f"
+}
