@@ -2,7 +2,7 @@
   "name": "@aries-bifold/core",
   "main": "build/index",
   "types": "build/index",
-  "version": "0.0.1-alpha.1365+bc01e09f",
+  "version": "0.0.1-alpha.1436+c015ed6",
   "files": [
     "build",
     "android",
@@ -52,5 +52,5 @@
     "rimraf": "^4.0.7",
     "typescript": "~4.9.4"
   },
-  "gitHead": "bc01e09f07f0530b5230500ef07581afbe34816f"
+  "gitHead": "c015ed658d1a458809a2f9a8623dc3752a523a5e"
 }

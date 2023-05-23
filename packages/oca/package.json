@@ -1,6 +1,6 @@
 {
   "name": "@aries-bifold/oca",
-  "version": "1.0.0-alpha.0",
+  "version": "0.0.1-alpha.1436+c015ed6",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -29,5 +29,6 @@
   },
   "dependencies": {
     "@aries-framework/core": "^0.3.3"
-  }
+  },
+  "gitHead": "c015ed658d1a458809a2f9a8623dc3752a523a5e"
 }
