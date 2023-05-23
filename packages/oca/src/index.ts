@@ -1,3 +1,4 @@
-export function multiply(a: number, b: number): number {
-  return a * b
-}
+export * as interfaces from './interfaces'
+export * as types from './types'
+export * as utils from './utils'
+export * as formatters from './formatters'

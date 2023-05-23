@@ -175,4 +175,4 @@ app/ios/Pods/*
 lib/
 app/android/app/src/main/assets/app.bundle
 **/.yarn/cache
-.yarn/install-state.gz
+**/.yarn/install-state.gz
