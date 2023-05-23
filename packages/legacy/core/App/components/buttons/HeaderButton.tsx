@@ -36,7 +36,6 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
       alignItems: 'center',
       marginRight: buttonLocation === ButtonLocation.Left ? 0 : 15,
       marginLeft: buttonLocation === ButtonLocation.Right ? 0 : 15,
-      backgroundColor: 'red',
       minWidth: defaultIconSize,
       minHeight: defaultIconSize,
     },

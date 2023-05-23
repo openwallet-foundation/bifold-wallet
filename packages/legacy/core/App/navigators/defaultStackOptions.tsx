@@ -12,7 +12,6 @@ export function createDefaultStackOptions({ ColorPallet }: ITheme) {
       flexShrink: 1,
       maxWidth: '68%',
       width: '100%',
-      backgroundColor: 'green',
     },
     headerStyle: {
       elevation: 0,
