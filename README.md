@@ -2,7 +2,7 @@
 
 # Summary
 
-Aries Mobile Agent React Native (Bifold) is an open-source mobile Aries client that's part of the [Hyperledger Foundation](https://www.hyperledger.org/), a global ecosystem committed to advancing enterprise-grade blockchain technologies. This project is centered around Verifiable Credentials (VC), using blockchain and best in-class cryptograpy technology to deliver trusted, secure data exchanges.
+Aries Mobile Agent React Native (Bifold) is an open-source mobile Aries client that's part of the [Hyperledger Foundation](https://www.hyperledger.org/), a global ecosystem committed to advancing enterprise-grade blockchain technologies. This project is centered around Verifiable Credentials (VC), using blockchain and best in-class cryptography technology to deliver trusted, secure data exchanges.
 
 Designed with React Native, Bifold offers cross-platform capabilities, supporting a wide range of use-cases and devices. Bifold is built on the Aries Framework Javascript (AFJ), providing a solid foundation for its architecture.
 
@@ -28,7 +28,7 @@ Joining the Bifold community on Hyperledger's Discord is a breeze:
 2. Click on 'Accept the invite'
 3. Dive into the various channels!
 
-`#bifold` is our main discussion channel for everything Bifold wallet ralted. And since Bifold uses Aries Framework Javascript (AFJ) extensively, you might also want to join the `#aries-javascript` channel for deeper technical conversations. We can't wait to see you there!
+`#bifold` is our main discussion channel for everything Bifold wallet related. And since Bifold uses Aries Framework Javascript (AFJ) extensively, you might also want to join the `#aries-javascript` channel for deeper technical conversations. We can't wait to see you there!
 
 Additionally, we hold a bi-weekly user group meeting. You can find the updated schedule, past agendas, and meeting recordings on this [wiki page](https://wiki.hyperledger.org/display/ARIES/Aries+Bifold+User+Group).
 
