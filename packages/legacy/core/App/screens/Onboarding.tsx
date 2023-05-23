@@ -106,11 +106,11 @@ const Onboarding: React.FC<OnboardingProps> = ({
         headerRight: () => (
           <HeaderButton
             buttonLocation={ButtonLocation.Right}
-            accessibilityLabel={t('Global.Skip')}
+            accessibilityLabel={t('Tour.Skip')}
             testID={testIdWithKey('Skip')}
             onPress={onSkipTouched}
             icon="chevron-right"
-            text="Skip"
+            text={t('Tour.Skip')}
           />
         ),
       })
