@@ -1,15 +1,15 @@
 name: Native Build & Test
 
 env:
-  cacheId: "8" # increment to expire the cache
+  cacheId: '8' # increment to expire the cache
 
 on:
   pull_request:
     branches: [main]
     paths:
-      - "packages/legacy/app/ios/**"
-      - "packages/legacy/app/android/**"
-      - "**/package-lock.json"
+      - 'packages/legacy/app/ios/**'
+      - 'packages/legacy/app/android/**'
+      - '**/package-lock.json'
     types: [opened, synchronize, reopened, labeled]
   push:
     branches: [main]
@@ -107,9 +107,9 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:
-          distribution: "zulu"
+          distribution: 'zulu'
           java-version: 11
-          cache: "gradle"
+          cache: 'gradle'
 
       - name: Setup Android SDK
         working-directory: ./packages/legacy/app/android
