@@ -285,7 +285,7 @@ export const TextTheme: ITextTheme = {
     color: ColorPallet.grayscale.white,
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     color: ColorPallet.grayscale.white,
   },

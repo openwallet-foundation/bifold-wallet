@@ -359,17 +359,14 @@ const translation = {
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline credential offer?",
     "Declined": "Declined",
-<<<<<<< HEAD
     "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service.",
     "DeclineParagraph2": "Are you sure you want to decline this credential offer?",
     "CustomOfferTitle": "Delete this offer?",
     "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list.",
-    "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated."
-=======
+    "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated.",
     "DeleteOfferTitle": "Delete this offer?",
     "DeleteOfferMessage": "Deleting this offer will remove the notification from your list.",
     "DeleteOfferDescription": "Don't recognize the organization? Check your Contacts list. You only receive notifications from contacts you've initiated",
->>>>>>> chore/french-translation
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",
@@ -443,6 +440,7 @@ const translation = {
     "Hide": "Hide",
     "Show": "Show",
     "HideAll": "Hide all",
+    "ShowAll": "Show all",
     "Hidden": "Hidden",
     "InvalidDate": "Invalid Date: "
   },

@@ -5,21 +5,26 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { hitSlop } from '../../constants'
 import { ColorPallet } from '../../theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
+const iconSize = 24
+
 const styles = StyleSheet.create({
   button: {
-    paddingHorizontal: 16,
+    marginRight: 10,
+    marginLeft: 0,
+    minWidth: iconSize,
   },
 })
 
 type InfoProps = {
-  connectionId: any
+  connectionId: string
 }
 
-const InfoIcon: React.FC<InfoProps> = ({ connectionId }: any) => {
+const InfoIcon: React.FC<InfoProps> = ({ connectionId }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { t } = useTranslation()
 
@@ -35,8 +40,9 @@ const InfoIcon: React.FC<InfoProps> = ({ connectionId }: any) => {
           params: { connectionId: connectionId },
         })
       }
+      hitSlop={hitSlop}
     >
-      <Icon name="information" size={24} color={ColorPallet.brand.headerIcon}></Icon>
+      <Icon name="information" size={iconSize} color={ColorPallet.brand.headerIcon}></Icon>
     </TouchableOpacity>
   )
 }

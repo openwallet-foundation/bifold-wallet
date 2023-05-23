@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { tourMargin } from '../../constants'
+import { tourMargin, hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { RenderProps } from '../../contexts/tour/tour-context'
 import { testIdWithKey } from '../../utils/testable'
@@ -81,7 +81,6 @@ export function TourBox(props: TourBoxProps): ReactElement {
   const [paginationDots, setPaginationDots] = useState<PaginationDotTypes[]>([])
   const [xPos, setXPos] = useState(0)
   const swipeThreshold = 75
-  const hitSlop = { top: 20, bottom: 20, left: 50, right: 50 }
 
   const styles = StyleSheet.create({
     container: {
@@ -187,8 +186,13 @@ export function TourBox(props: TourBoxProps): ReactElement {
             {title}
           </Text>
         </View>
-        <View style={[styles.dismissIcon]} testID={testIdWithKey('Dismiss')}>
-          <TouchableOpacity onPress={stop}>
+        <View style={[styles.dismissIcon]}>
+          <TouchableOpacity
+            onPress={stop}
+            testID={testIdWithKey('Close')}
+            accessibilityLabel={t('Global.Close')}
+            hitSlop={hitSlop}
+          >
             <Icon name={dismissIconName} size={iconSize} color={iconColor} />
           </TouchableOpacity>
         </View>
@@ -198,7 +202,12 @@ export function TourBox(props: TourBoxProps): ReactElement {
       {(!hideLeft || !hideRight) && (
         <View style={styles.footerContainer}>
           {!hideLeft && (
-            <TouchableOpacity testID={testIdWithKey('Back')} onPress={handleLeft} hitSlop={hitSlop}>
+            <TouchableOpacity
+              accessibilityLabel={leftText}
+              testID={testIdWithKey('Back')}
+              onPress={handleLeft}
+              hitSlop={hitSlop}
+            >
               <Text style={styles.navText}>{leftText}</Text>
             </TouchableOpacity>
           )}
@@ -212,7 +221,12 @@ export function TourBox(props: TourBoxProps): ReactElement {
             )}
           </View>
           {!hideRight && (
-            <TouchableOpacity testID={testIdWithKey('Next')} onPress={handleRight} hitSlop={hitSlop}>
+            <TouchableOpacity
+              accessibilityLabel={rightText}
+              testID={testIdWithKey('Next')}
+              onPress={handleRight}
+              hitSlop={hitSlop}
+            >
               <Text style={styles.navText}>{rightText}</Text>
             </TouchableOpacity>
           )}

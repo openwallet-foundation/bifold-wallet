@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { ITheme } from '../../theme'
 import { testIdWithKey } from '../../utils/testable'
@@ -41,6 +42,7 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
       testID={testIdWithKey('ScanTorch')}
       style={[styles.container, { backgroundColor: active ? theme.ColorPallet.grayscale.white : undefined }]}
       onPress={onPress}
+      hitSlop={hitSlop}
     >
       {children}
     </TouchableOpacity>
