@@ -24,33 +24,43 @@ exports[`Header Right Home Component Renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "marginLeft": 0,
-      "marginRight": 15,
-      "minWidth": 26,
       "opacity": 1,
     }
   }
   testID="com.ariesbifold:id/HomeButton"
 >
-  <Text
-    allowFontScaling={false}
+  <View
     style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 26,
-        },
-        undefined,
-        Object {
-          "fontFamily": "Material Design Icons",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
-        },
-        Object {},
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "marginLeft": 0,
+        "marginRight": 15,
+        "minHeight": 26,
+        "minWidth": 26,
+      }
     }
   >
-    󰋜
-  </Text>
+    <Text
+      allowFontScaling={false}
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 26,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Material Design Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
+        ]
+      }
+    >
+      󰋜
+    </Text>
+  </View>
 </View>
 `;
