@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import HeaderRightHome from '../../App/components/buttons/HeaderRightHome'
+import HeaderRightHome from '../../App/components/buttons/HeaderHome'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
