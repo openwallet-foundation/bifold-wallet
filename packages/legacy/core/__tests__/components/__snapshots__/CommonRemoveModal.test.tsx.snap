@@ -221,7 +221,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/ConfirmRemoveButton"
+          testID="com.ariesbifold:id/ConfirmDeclineButton"
         >
           <View
             style={
@@ -287,7 +287,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/CancelRemoveButton"
+          testID="com.ariesbifold:id/CancelDeclineButton"
         >
           <View
             style={
@@ -547,7 +547,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/ConfirmRemoveButton"
+          testID="com.ariesbifold:id/ConfirmButton"
         >
           <View
             style={
@@ -613,7 +613,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/CancelRemoveButton"
+          testID="com.ariesbifold:id/CancelButton"
         >
           <View
             style={
@@ -882,7 +882,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/ConfirmRemoveButton"
+          testID="com.ariesbifold:id/ConfirmDeclineButton"
         >
           <View
             style={
@@ -948,7 +948,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/CancelRemoveButton"
+          testID="com.ariesbifold:id/CancelDeclineButton"
         >
           <View
             style={
