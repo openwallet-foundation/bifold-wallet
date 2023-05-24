@@ -47,6 +47,12 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const isFocused = useIsFocused()
+  const [generating, setGenerating] = useState(true)
+  const [message, setMessage] = useState<string | undefined>(undefined)
+  const [invitationUrl, setInvitationUrl] = useState<string | undefined>(undefined)
+  const [recordId, setRecordId] = useState<string | undefined>(undefined)
+  const record: ProofExchangeRecord | undefined = useProofById(recordId ?? '')
+  const template = useTemplate(templateId)
 
   const styles = StyleSheet.create({
     container: {
@@ -103,12 +109,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
   })
 
-  const [generating, setGenerating] = useState(true)
-  const [message, setMessage] = useState<string | undefined>(undefined)
-  const [invitationUrl, setInvitationUrl] = useState<string | undefined>(undefined)
-  const [recordId, setRecordId] = useState<string | undefined>(undefined)
-
-  const template = useTemplate(templateId)
   if (!template) {
     throw new Error('Unable to find proof request template')
   }
@@ -142,12 +142,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }
   }, [invitationUrl])
 
-  useEffect(() => {
-    if (isFocused) {
-      createProofRequest()
-    }
-  }, [isFocused])
-
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
@@ -161,7 +155,11 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }, [])
   )
 
-  const record: ProofExchangeRecord | undefined = useProofById(recordId || '')
+  useEffect(() => {
+    if (isFocused) {
+      createProofRequest()
+    }
+  }, [isFocused])
 
   useEffect(() => {
     if (record && (isPresentationReceived(record) || isPresentationFailed(record))) {
