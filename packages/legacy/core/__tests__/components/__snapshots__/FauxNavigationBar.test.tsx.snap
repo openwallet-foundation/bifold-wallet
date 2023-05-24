@@ -65,6 +65,7 @@ Array [
       >
         <View
           accessibilityLabel="Global.Home"
+          accessibilityRole="button"
           accessible={true}
           collapsable={false}
           hitSlop={

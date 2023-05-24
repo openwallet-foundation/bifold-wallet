@@ -94,6 +94,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 onPress={onDismissPressed}
                 testID={testIdWithKey('Dismiss')}
                 accessibilityLabel={t('Global.Dismiss')}
+                accessibilityRole={'button'}
                 hitSlop={hitSlop}
               >
                 <Icon name={dismissIconName} size={iconSize} color={iconColor} />

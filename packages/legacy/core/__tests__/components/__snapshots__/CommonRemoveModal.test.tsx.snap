@@ -25,6 +25,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
   >
     <View
       accessibilityLabel="Global.Close"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -195,6 +196,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
       >
         <View
           accessibilityLabel="Global.Decline"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -259,6 +261,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
       >
         <View
           accessibilityLabel="Global.Cancel"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -343,6 +346,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
   >
     <View
       accessibilityLabel="Global.Close"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -518,6 +522,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
       >
         <View
           accessibilityLabel="Global.Decline"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -582,6 +587,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
       >
         <View
           accessibilityLabel="Global.Cancel"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -666,6 +672,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
   >
     <View
       accessibilityLabel="Global.Close"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -850,6 +857,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
       >
         <View
           accessibilityLabel="Global.Decline"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -914,6 +922,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
       >
         <View
           accessibilityLabel="Global.Cancel"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -998,6 +1007,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
   >
     <View
       accessibilityLabel="Global.Close"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -1376,6 +1386,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
       >
         <View
           accessibilityLabel="ContactDetails.RemoveContact"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -1440,6 +1451,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
       >
         <View
           accessibilityLabel="Global.Cancel"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -1524,6 +1536,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
   >
     <View
       accessibilityLabel="Global.Close"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -2010,6 +2023,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
       >
         <View
           accessibilityLabel="CredentialDetails.RemoveCredential"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -2074,6 +2088,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
       >
         <View
           accessibilityLabel="Global.Cancel"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -2158,6 +2173,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
   >
     <View
       accessibilityLabel="Global.Close"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -2536,6 +2552,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
       >
         <View
           accessibilityLabel="ContactDetails.RemoveContact"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -2600,6 +2617,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
       >
         <View
           accessibilityLabel="Global.Cancel"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,

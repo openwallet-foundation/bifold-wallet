@@ -191,6 +191,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
             onPress={stop}
             testID={testIdWithKey('Close')}
             accessibilityLabel={t('Global.Close')}
+            accessibilityRole={'button'}
             hitSlop={hitSlop}
           >
             <Icon name={dismissIconName} size={iconSize} color={iconColor} />
@@ -204,6 +205,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
           {!hideLeft && (
             <TouchableOpacity
               accessibilityLabel={leftText}
+              accessibilityRole={'button'}
               testID={testIdWithKey('Back')}
               onPress={handleLeft}
               hitSlop={hitSlop}
@@ -223,6 +225,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
           {!hideRight && (
             <TouchableOpacity
               accessibilityLabel={rightText}
+              accessibilityRole={'button'}
               testID={testIdWithKey('Next')}
               onPress={handleRight}
               hitSlop={hitSlop}

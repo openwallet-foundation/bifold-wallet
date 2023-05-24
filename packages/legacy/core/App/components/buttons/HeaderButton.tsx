@@ -65,7 +65,13 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
     }
   }
   return (
-    <TouchableOpacity accessibilityLabel={accessibilityLabel} testID={testID} onPress={onPress} hitSlop={hitSlop}>
+    <TouchableOpacity
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={'button'}
+      testID={testID}
+      onPress={onPress}
+      hitSlop={hitSlop}
+    >
       <View style={style.container}>{layoutForButtonLocation(buttonLocation)}</View>
     </TouchableOpacity>
   )
