@@ -6,12 +6,13 @@ import { useTranslation } from 'react-i18next'
 import { Animated, BackHandler, Dimensions, FlatList, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import HeaderRight from '../components/buttons/HeaderRightSkip'
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+// import HeaderRight from 'components/buttons/HeaderRightSkip'
 
 const { width } = Dimensions.get('window')
 
@@ -103,11 +104,13 @@ const Onboarding: React.FC<OnboardingProps> = ({
     !disableSkip &&
       navigation.setOptions({
         headerRight: () => (
-          <HeaderRight
-            title={t('Global.Skip')}
-            accessibilityLabel={t('Global.Skip')}
+          <HeaderButton
+            buttonLocation={ButtonLocation.Right}
+            accessibilityLabel={t('Tour.Skip')}
             testID={testIdWithKey('Skip')}
             onPress={onSkipTouched}
+            icon="chevron-right"
+            text={t('Tour.Skip')}
           />
         ),
       })

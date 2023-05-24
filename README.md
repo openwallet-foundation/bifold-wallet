@@ -1,154 +1,48 @@
-# Aries Mobile Agent React Native
+# Bifold README.md
 
-Aries Mobile Agent React Native is an open source Aries mobile agent app. This is a project that has been created to focus the community's efforts towards a central open source project. Various different organizations and people have expressed interest in a open source community project to help focus efforts to help prevent duplication of work between projects. Aries Bifold is also intended to help get complex or specific use-case projects started faster by cloning and having a basis of an Aries agent.
+# Summary
 
-## Component Effort
+Aries Mobile Agent React Native (Bifold) is an open-source mobile Aries client that's part of the [Hyperledger Foundation](https://www.hyperledger.org/), a global ecosystem committed to advancing enterprise-grade blockchain technologies. This project is centered around Verifiable Credentials (VC), using blockchain and best in-class cryptography technology to deliver trusted, secure data exchanges.
 
-This repo is going through some adjustments to accomlish the community's goals around component based architectures. Details may be found [here](/docs/components/readme.md).
+Designed with React Native, Bifold offers cross-platform capabilities, supporting a wide range of use-cases and devices. Bifold is built on the Aries Framework Javascript (AFJ), providing a solid foundation for its architecture.
 
-## Code
+Our aim is to cultivate a collaborative environment, bringing together organizations and individuals to prevent duplicate efforts and to promote shared solutions. By doing so, we hope to accelerate the adoption of VC technology across various sectors.
 
-This project utilizes [Aries Framework Javascript (AFJ)](https://github.com/hyperledger/aries-framework-javascript) and [indy-sdk-react-native](https://github.com/hyperledger/indy-sdk-react-native).
+One of Bifold's key features is its capacity to hold and utilize VCs in the AnonCreds format. We are also diligently working towards supporting other formats, such as W3C, through the AFJ project. This flexibility makes Bifold a versatile tool for complex or specific use-case projects, streamlining the process of initiating and managing VCs.
+
+Join us as we work towards a future where verifiable credentials are easily accessible and widely adopted, enhancing trust and security in the digital world.
+
+# Current Status
+
+Currently, we're updating Bifold's architecture to make it easier to maintain and customize for various use cases. Check out our [design roadmap issue](https://github.com/hyperledger/aries-mobile-agent-react-native/issues/754) for more information, and we welcome your feedback.
+
+## Contributing
+
+We warmly welcome contributions to the Bifold project! If you're interested in joining our community, please start by reading our [Contributor's Guide](./CONTRIBUTING).
 
 ## Community
 
-The Bifold User Group call takes place every other week on Tuesdays, 16:00 UTC via [Zoom](https://zoom.us/j/92215586249?pwd=Vm5ZTGV4T0cwVEl4blh3MjBzYjVYZz09).
-This meeting is for contributors to discuss issues and plan work items.
-Meeting agendas and recordings can be found [here](https://wiki.hyperledger.org/display/ARIES/Framework+JS+Meetings).
-Everybody is welcome to attend and contribute!
+Joining the Bifold community on Hyperledger's Discord is a breeze:
 
-## Project State
+1. Head to https://discord.com/invite/hyperledger
+2. Click on 'Accept the invite'
+3. Dive into the various channels!
 
-### Platform
+`#bifold` is our main discussion channel for everything Bifold wallet related. And since Bifold uses Aries Framework Javascript (AFJ) extensively, you might also want to join the `#aries-javascript` channel for deeper technical conversations. We can't wait to see you there!
 
-Aries Bifold currently is built on React Native 0.64.1
+Additionally, we hold a bi-weekly user group meeting. You can find the updated schedule, past agendas, and meeting recordings on this [wiki page](https://wiki.hyperledger.org/display/ARIES/Aries+Bifold+User+Group).
 
-As of now Aries Bifold targets Android API 29.0.3, with plans to support API 30 soon.
+Please note, being part of the Hyperledger Foundation, we expect all interactions to adhere to the [Antitrust Policy](https://wiki.hyperledger.org/download/attachments/29034696/Antitrustnotice.png?version=1&modificationDate=1581695654000&api=v2) and [Code of Conduct](https://wiki.hyperledger.org/display/HYP/Hyperledger+Code+of+Conduct).
 
-iOS targets iOS 10.0+. Aries Bifold can only be run on physical devices as of right now.
+# Development
 
-### Testing
+To better understand the technical aspects of the Bifold project including how to set it up and run it please see the following documents:
 
-Aries Bifold utilizes the [Aries Agent Test Harness (AATH)](https://github.com/hyperledger/aries-agent-test-harness) to test for Aries Agent compatibility and interoperability.
+1. [Developers Guide](./DEVELOPER.md)
 
-Aries Bifold also utilizes the [Aries Toolbox](https://github.com/hyperledger/aries-toolbox) & [aries-acapy-plugin-toolbox](https://github.com/hyperledger/aries-acapy-plugin-toolbox) for issuer and verifier roles.
+# Success Stories
 
-## Install
+The organizations or jurisdictions listed below have either deployed a project based on Bifold, are currently assessing the technology, or are actively developing a solution. If you want your organization to be included in this list, please submit a Pull Request against this README.md.
 
-You can watch a recording of setting up and running the mobile wallet and receiving a credential using the ACA-Py demo. Watch the video [here](https://youtu.be/AomoHvw4lgc) (thanks [@xtrycatchx](https://github.com/xtrycatchx)).
-
-### Compatible Node Version
-
-- Node: `16.15.0`
-- Npm: `8.5.5`
-
-1. React Native Setup:
-   - React Native installation instructions are documented [here](https://reactnative.dev/docs/environment-setup).
-   - (iOS) Install [Cocoa Pods](https://cocoapods.org/)
-2. Clone the Bifold repo and install its dependencies:
-   ```sh
-   git clone https://github.com/hyperledger/aries-mobile-agent-react-native
-   cd aries-mobile-agent-react-native
-   npm install
-   ```
-3. (iOS) iOS specific install:
-   - Install iOS Pods:
-     ```sh
-     cd app/ios
-     pod install
-     ```
-   - In the /ios directory, open the project workspace file in Xcode.
-     Once the project is open, navigate to the project's Signing & Capabilities tab and apply your personal Apple Developer Account or your organization's team to target AriesBifold and target AriesBifoldTests.
-   - Adjust the bundle identifier if needed.
-
-## Configure
-
-In the app directory add an `.env` file containing:
-
-```
-MEDIATOR_URL=https://public.mediator.indiciotech.io?c_i=eyJAdHlwZSI6ICJkaWQ6c292OkJ6Q2JzTlloTXJqSGlxWkRUVUFTSGc7c3BlYy9jb25uZWN0aW9ucy8xLjAvaW52aXRhdGlvbiIsICJAaWQiOiAiMDVlYzM5NDItYTEyOS00YWE3LWEzZDQtYTJmNDgwYzNjZThhIiwgInNlcnZpY2VFbmRwb2ludCI6ICJodHRwczovL3B1YmxpYy5tZWRpYXRvci5pbmRpY2lvdGVjaC5pbyIsICJyZWNpcGllbnRLZXlzIjogWyJDc2dIQVpxSktuWlRmc3h0MmRIR3JjN3U2M3ljeFlEZ25RdEZMeFhpeDIzYiJdLCAibGFiZWwiOiAiSW5kaWNpbyBQdWJsaWMgTWVkaWF0b3IifQ==
-GENESIS_URL=https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
-```
-
-Note - To run your own mediator or use a different network, go [here for advanced configuration](#advanced-configuration).
-
-## Run
-
-- Launch the metro bundler:
-  ```sh
-  cd app
-  npm run start
-  ```
-- Open a second terminal and run:
-  - (Android)
-    ```sh
-    cd app
-    npm run android
-    ```
-  - (iOS)
-    ```sh
-    cd app
-    npm run ios
-    ```
-  - (iOS) Via Xcode: Open `app\ios\AriesBifold.xcworkspace`
-    Choose your physical iOS device as the destination. Click the "Play" button to Build and Run.
-
-**NOTE: Bifold does not work on iOS simulators** -- use a physical device instead.
-
-### Advanced Configuration
-
-#### Mediator
-
-In order to use Aries Bifold, you must have a mediator to use with the app. Bifold is configured to use 'Implicit' mediation and requires a mediator that supports the [coordinate-mediation protocol](https://github.com/hyperledger/aries-rfcs/tree/main/features/0211-route-coordination).
-Bifold by default utilizes the [Indicio Public Mediator](https://indicio-tech.github.io/mediator/), which utilizes ACA-Py. For running your own ACA-Py mediator more details can be found [here](https://github.com/hyperledger/aries-cloudagent-python/blob/main/Mediation.md).
-
-#### Network
-
-Aries Bifold as of right now is tied to one ledger with the intention of adding multi-ledger support in the future. You must provide a genesis url for your chosen network, such as:
-
-- Indicio TestNet: https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis
-- Sovrin StagingNet: https://raw.githubusercontent.com/sovrin-foundation/sovrin/master/sovrin/pool_transactions_sandbox_genesis
-
-## Troubleshooting
-
-#### Hot Reloading
-
-Hot reloading may not work correctly with instantiated Agent objects. Reloading (`r`) or reopening the app may work. Any changes made to native modules require you to re-run the compile step.
-
-### Dependency Issues, Native Module Linking Issues, or Usage Issues
-
-If you end up changing dependencies or structures, you may need to perform the following steps:
-
-#### Android
-
-```sh
-rm -rf app/node_modules
-rm -rf core/node_modules
-npm install
-```
-
-Clean the Android build:
-
-```sh
-cd app/android
-./gradlew clean
-cd ..
-```
-
-Start and clean the Metro cache:
-
-```sh
-cd app
-npm run start
-```
-
-In your second terminal, you can now run:
-
-```sh
-cd app
-npm run android
-```
-
-## License
-
-[Apache License Version 2.0](./LICENSE)
+- [BC Wallet](https://apps.apple.com/us/app/bc-wallet/id1587380443)
+  The BC Wallet is a digital wallet app developed by the Government of British Columbia.

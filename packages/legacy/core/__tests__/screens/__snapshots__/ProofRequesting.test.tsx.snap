@@ -149,6 +149,7 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
     >
       <View
         accessibilityLabel="Verifier.GenerateNewQR"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": true,
@@ -216,6 +217,7 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
     >
       <View
         accessibilityLabel="Verifier.ShareLink"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": true,
@@ -428,6 +430,7 @@ exports[`ProofRequesting Component renders correctly 1`] = `
     >
       <View
         accessibilityLabel="Verifier.GenerateNewQR"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": true,
@@ -495,6 +498,7 @@ exports[`ProofRequesting Component renders correctly 1`] = `
     >
       <View
         accessibilityLabel="Verifier.ShareLink"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": true,
@@ -751,6 +755,7 @@ exports[`ProofRequesting Component renders correctly 2`] = `
     >
       <View
         accessibilityLabel="Verifier.GenerateNewQR"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": false,
@@ -811,6 +816,7 @@ exports[`ProofRequesting Component renders correctly 2`] = `
     >
       <View
         accessibilityLabel="Verifier.ShareLink"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": false,

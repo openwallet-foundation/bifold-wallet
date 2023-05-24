@@ -90,6 +90,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
             <TouchableOpacity
               accessible={true}
               accessibilityLabel={t('Global.Home')}
+              accessibilityRole={'button'}
               testID={testIdWithKey('Home')}
               style={styles.iconButton}
               onPress={onHome || closeHome}

@@ -2,7 +2,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderRightHome from '../components/buttons/HeaderRightHome'
+import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
