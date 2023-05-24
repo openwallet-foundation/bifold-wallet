@@ -3,6 +3,7 @@
 exports[`HeaderButton Component Left alignment renders correctly 1`] = `
 <View
   accessibilityLabel="LeftButton"
+  accessibilityRole="button"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -68,6 +69,7 @@ exports[`HeaderButton Component Left alignment renders correctly 1`] = `
 exports[`HeaderButton Component Right alignment renders correctly 1`] = `
 <View
   accessibilityLabel="RightButton"
+  accessibilityRole="button"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -133,6 +135,7 @@ exports[`HeaderButton Component Right alignment renders correctly 1`] = `
 exports[`HeaderButton Component Right alignment with text renders correctly 1`] = `
 <View
   accessibilityLabel="RightButton"
+  accessibilityRole="button"
   accessible={true}
   collapsable={false}
   focusable={true}

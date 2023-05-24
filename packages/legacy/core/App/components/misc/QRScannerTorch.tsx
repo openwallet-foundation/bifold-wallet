@@ -39,6 +39,7 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
     <TouchableOpacity
       accessible={true}
       accessibilityLabel={t('Scan.Torch')}
+      accessibilityRole={'button'}
       testID={testIdWithKey('ScanTorch')}
       style={[styles.container, { backgroundColor: active ? theme.ColorPallet.grayscale.white : undefined }]}
       onPress={onPress}

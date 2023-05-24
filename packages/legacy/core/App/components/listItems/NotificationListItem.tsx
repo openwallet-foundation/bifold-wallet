@@ -364,8 +364,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         ) && (
           <View>
             <TouchableOpacity
-              accessibilityLabel={t('Global.Close')}
-              testID={testIdWithKey(`Close${notificationType}`)}
+              accessibilityLabel={t('Global.Dismiss')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey(`Dismiss${notificationType}`)}
               onPress={onClose}
               hitSlop={hitSlop}
             >

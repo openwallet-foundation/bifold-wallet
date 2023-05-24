@@ -3,6 +3,7 @@
 exports[`Header Right Home Component Renders correctly 1`] = `
 <View
   accessibilityLabel="Global.Home"
+  accessibilityRole="button"
   accessible={true}
   collapsable={false}
   focusable={true}

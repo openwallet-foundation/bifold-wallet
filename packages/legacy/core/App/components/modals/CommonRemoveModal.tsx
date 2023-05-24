@@ -248,6 +248,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       <View style={[styles.headerView]}>
         <TouchableOpacity
           accessibilityLabel={t('Global.Close')}
+          accessibilityRole={'button'}
           testID={testIdWithKey('Close')}
           onPress={() => onCancel && onCancel()}
           hitSlop={hitSlop}

@@ -154,6 +154,7 @@ exports[`Onboarding Renders correctly 1`] = `
   >
     <View
       accessibilityLabel="Global.Back"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -261,6 +262,7 @@ exports[`Onboarding Renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Next"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}

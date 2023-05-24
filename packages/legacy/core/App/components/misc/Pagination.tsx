@@ -57,6 +57,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={t('Global.Back')}
+        accessibilityRole={'button'}
         testID={testIdWithKey('Back')}
         onPress={previous}
         hitSlop={hitSlop}
@@ -83,6 +84,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={t('Global.Next')}
+        accessibilityRole={'button'}
         testID={testIdWithKey('Next')}
         onPress={next}
         hitSlop={hitSlop}

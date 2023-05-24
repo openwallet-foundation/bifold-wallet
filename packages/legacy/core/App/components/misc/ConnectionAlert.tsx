@@ -83,6 +83,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
         <TouchableOpacity
           testID={t('Global.Info')}
           accessibilityLabel={t('Global.Info')}
+          accessibilityRole={'button'}
           onPress={toggleInfoCard}
           hitSlop={hitSlop}
         >

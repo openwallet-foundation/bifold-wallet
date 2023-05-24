@@ -45,6 +45,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={t('CredentialDetails.RemoveFromWallet')}
+        accessibilityRole={'button'}
         testID={testIdWithKey('RemoveFromWallet')}
         activeOpacity={1}
         onPress={callOnRemove}

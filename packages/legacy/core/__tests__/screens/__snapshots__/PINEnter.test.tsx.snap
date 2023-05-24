@@ -315,6 +315,7 @@ exports[`displays a PIN create screen PIN create renders correctly 1`] = `
               >
                 <View
                   accessibilityLabel="PINCreate.Show"
+                  accessibilityRole="button"
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -377,6 +378,7 @@ exports[`displays a PIN create screen PIN create renders correctly 1`] = `
             >
               <View
                 accessibilityLabel="PINEnter.Unlock"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "disabled": false,

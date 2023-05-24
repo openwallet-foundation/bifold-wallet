@@ -321,6 +321,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
           >
             <View
               accessibilityLabel="Verifier.UseProofRequest"
+              accessibilityRole="button"
               accessibilityState={
                 Object {
                   "disabled": false,
@@ -384,6 +385,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
           >
             <View
               accessibilityLabel="Verifier.ShowTemplateUsageHistory"
+              accessibilityRole="button"
               accessibilityState={
                 Object {
                   "disabled": false,
