@@ -153,6 +153,30 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     return t('Global.Decline')
   }
 
+  const testIdForConformationButton = (): string => {
+    if (usage === ModalUsage.ContactRemove || usage === ModalUsage.CredentialRemove) {
+      return testIdWithKey('ConfirmRemoveButton')
+    }
+
+    if (usage === ModalUsage.CredentialOfferDecline || usage === ModalUsage.ProofRequestDecline) {
+      return testIdWithKey('ConfirmDeclineButton')
+    }
+
+    return testIdWithKey('ConfirmButton')
+  }
+
+  const testIdForCancelButton = (): string => {
+    if (usage === ModalUsage.ContactRemove || usage === ModalUsage.CredentialRemove) {
+      return testIdWithKey('CancelRemoveButton')
+    }
+
+    if (usage === ModalUsage.CredentialOfferDecline || usage === ModalUsage.ProofRequestDecline) {
+      return testIdWithKey('CancelDeclineButton')
+    }
+
+    return testIdWithKey('CancelButton')
+  }
+
   const headerImageForType = (usageType: ModalUsage) => {
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -273,7 +297,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
             <Button
               title={titleForConfirmButton()}
               accessibilityLabel={titleForAccessibilityLabel()}
-              testID={testIdWithKey('ConfirmRemoveButton')}
+              testID={testIdForConformationButton()}
               onPress={onSubmit}
               buttonType={ButtonType.ModalCritical}
             />
@@ -282,7 +306,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
             <Button
               title={t('Global.Cancel')}
               accessibilityLabel={t('Global.Cancel')}
-              testID={testIdWithKey('CancelRemoveButton')}
+              testID={testIdForCancelButton()}
               onPress={onCancel}
               buttonType={ButtonType.ModalSecondary}
             />
