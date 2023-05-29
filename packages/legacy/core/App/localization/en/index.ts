@@ -108,6 +108,11 @@ const translation = {
     "Title1038": "Unable to generate a proof request.",
     "Message1038": "There was a problem while generating a proof request.",
   },
+  "ActivityLog": {
+    "Your": "Your",
+    "Activity": "activity log",
+    "Updated": "has been updated",
+  },
   "StatusMessages": {
     "InitAgent": "Initializing agent .."
   },
@@ -358,7 +363,10 @@ const translation = {
     "DeclineParagraph2": "Are you sure you want to decline this credential offer?",
     "CustomOfferTitle": "Delete this offer?",
     "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list.",
-    "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated."
+    "CustomOfferParagraph2": "Don't recongize the organization? Check your Contact list. you only recieve notifications from contacts you've initiated.",
+    "DeleteOfferTitle": "Delete this offer?",
+    "DeleteOfferMessage": "Deleting this offer will remove the notification from your list.",
+    "DeleteOfferDescription": "Don't recognize the organization? Check your Contacts list. You only receive notifications from contacts you've initiated",
   },
   "ProofRequest": {
     "ProofRequest": "Proof Request",
@@ -468,6 +476,13 @@ const translation = {
     "ProofRequestUsageHistory": "Usage History",
     "ConnectionInvitation": "Connection Invitation",
     "CreateConnectionInvitation": "Create a connection invitation",
+    "AttemptLockout": "Temporarily Locked",
+    "OnTheWay":'On The Way',
+    "Declined": 'Declined',
+    "UseBiometry": 'Use Biometry',
+    "RecreatePIN": 'Change PIN',
+    "CustomNotification": 'Custom Notification',
+    "ProofRequesting": 'Proof Requesting',
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

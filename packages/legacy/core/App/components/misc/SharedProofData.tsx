@@ -171,7 +171,6 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
 
 const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedProofDataLoad }: SharedProofDataProps) => {
   const { agent } = useAgent()
-
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
