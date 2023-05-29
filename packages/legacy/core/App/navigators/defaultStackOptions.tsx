@@ -1,13 +1,18 @@
 import React from 'react'
 
 import HeaderTitle from '../components/texts/HeaderTitle'
-import { Theme } from '../theme'
+import { ITheme } from '../theme'
 
-export function createDefaultStackOptions({ ColorPallet }: Theme) {
+export function createDefaultStackOptions({ ColorPallet }: ITheme) {
   return {
     headerTintColor: ColorPallet.brand.headerIcon,
     headerShown: true,
     headerBackTitleVisible: false,
+    headerTitleContainerStyle: {
+      flexShrink: 1,
+      maxWidth: '68%',
+      width: '100%',
+    },
     headerStyle: {
       elevation: 0,
       shadowOffset: { width: 0, height: 6 },

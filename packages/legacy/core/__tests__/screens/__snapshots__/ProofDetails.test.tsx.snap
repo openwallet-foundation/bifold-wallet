@@ -320,6 +320,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
         >
           <View
             accessibilityLabel="Verifier.GenerateNewQR"
+            accessibilityRole="button"
             accessibilityState={
               Object {
                 "disabled": false,

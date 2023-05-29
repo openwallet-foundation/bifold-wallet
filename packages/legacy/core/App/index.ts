@@ -8,6 +8,7 @@ import indyLedgers from '../configs/ledgers/indy'
 
 import * as components from './components'
 import Button, { ButtonType } from './components/buttons/Button'
+import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
@@ -42,7 +43,7 @@ export { initLanguages, initStoredLanguage, translationResources } from './local
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
 export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
-
+export { Assets as ImageAssets } from './theme'
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
 export { ColorPallet } from './theme'
@@ -58,7 +59,20 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 
 export type { AnimatedComponents } from './animated-components'
-export type { Theme } from './theme'
+export type {
+  ISVGAssets,
+  IFontAttributes,
+  IInputAttributes,
+  IInputs,
+  ITextTheme,
+  IBrandColors,
+  ISemanticColors,
+  INotificationColors,
+  IGrayscaleColors,
+  IColorPallet,
+  IAssets,
+  ITheme,
+} from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
 export type { TourStep } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
@@ -89,6 +103,8 @@ export {
   homeTourSteps,
   Button,
   ButtonType,
+  HeaderButton,
+  ButtonLocation,
   CheckBoxRow,
   CredentialCard,
   ErrorModal,

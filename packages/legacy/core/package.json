@@ -1,6 +1,7 @@
 {
   "name": "aries-bifold",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "style-check": "npm run prettier -- --check",
     "style-format": "npm run prettier -- --write",

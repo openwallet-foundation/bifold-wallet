@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { Theme } from '../../theme'
+import { ITheme } from '../../theme'
 import { testIdWithKey } from '../../utils/testable'
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
   onPress?: () => void
 }
 
-function createStyles({ ColorPallet }: Theme) {
+function createStyles({ ColorPallet }: ITheme) {
   return StyleSheet.create({
     container: {
       width: 48,
@@ -38,9 +39,11 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
     <TouchableOpacity
       accessible={true}
       accessibilityLabel={t('Scan.Torch')}
+      accessibilityRole={'button'}
       testID={testIdWithKey('ScanTorch')}
       style={[styles.container, { backgroundColor: active ? theme.ColorPallet.grayscale.white : undefined }]}
       onPress={onPress}
+      hitSlop={hitSlop}
     >
       {children}
     </TouchableOpacity>

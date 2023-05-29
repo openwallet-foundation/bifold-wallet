@@ -83,6 +83,14 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -142,6 +150,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,
@@ -281,6 +290,14 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -340,6 +357,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,
@@ -479,6 +497,14 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -538,6 +564,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,
@@ -677,6 +704,14 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -736,6 +771,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,

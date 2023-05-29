@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Animated, Text, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
+import { hitSlop } from '../../constants'
 import { testIdWithKey } from '../../utils/testable'
 
 interface IPaginationStyleSheet {
@@ -37,15 +38,20 @@ export const Pagination: React.FC<IPaginationProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const shouldHideBack = () => {
+  const shouldHideBack = (): boolean => {
     if (activeIndex === 0) {
       return true
     }
+
+    return false
   }
-  const shouldHideNext = () => {
+
+  const shouldHideNext = (): boolean => {
     if (activeIndex === pages.length - 1) {
       return true
     }
+
+    return false
   }
 
   // FIXME: Issue #204. Better to `disable` the `TouchableOpacity`
@@ -56,8 +62,12 @@ export const Pagination: React.FC<IPaginationProps> = ({
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={t('Global.Back')}
+        accessibilityRole={'button'}
         testID={testIdWithKey('Back')}
         onPress={previous}
+        accessibilityElementsHidden={shouldHideBack()}
+        importantForAccessibility={shouldHideBack() ? 'no-hide-descendants' : 'auto'}
+        hitSlop={hitSlop}
       >
         <Text
           style={[
@@ -78,11 +88,16 @@ export const Pagination: React.FC<IPaginationProps> = ({
         dotStyle={style.pagerDot}
         containerStyle={style.pagerPosition}
       />
+
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={t('Global.Next')}
+        accessibilityRole={'button'}
         testID={testIdWithKey('Next')}
         onPress={next}
+        accessibilityElementsHidden={shouldHideNext()}
+        importantForAccessibility={shouldHideNext() ? 'no-hide-descendants' : 'auto'}
+        hitSlop={hitSlop}
       >
         <Text
           style={[

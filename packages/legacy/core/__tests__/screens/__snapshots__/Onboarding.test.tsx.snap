@@ -153,10 +153,21 @@ exports[`Onboarding Renders correctly 1`] = `
     }
   >
     <View
+      accessibilityElementsHidden={true}
       accessibilityLabel="Global.Back"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      importantForAccessibility="no-hide-descendants"
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -252,10 +263,21 @@ exports[`Onboarding Renders correctly 1`] = `
       />
     </View>
     <View
+      accessibilityElementsHidden={false}
       accessibilityLabel="Global.Next"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      importantForAccessibility="auto"
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}

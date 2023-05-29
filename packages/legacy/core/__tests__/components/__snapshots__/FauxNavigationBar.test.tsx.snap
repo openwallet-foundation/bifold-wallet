@@ -6,7 +6,7 @@ Array [
     style={
       Object {
         "alignItems": "flex-end",
-        "backgroundColor": "#42803E",
+        "backgroundColor": "ColorPallet.brand.primary",
         "flexDirection": "row",
         "height": 44,
         "justifyContent": "center",
@@ -17,7 +17,7 @@ Array [
     style={
       Object {
         "alignItems": "flex-end",
-        "backgroundColor": "#42803E",
+        "backgroundColor": "ColorPallet.brand.primary",
         "flexDirection": "row",
         "height": 44,
         "justifyContent": "center",
@@ -48,6 +48,14 @@ Array [
       </Text>
       <RNGestureHandlerButton
         collapsable={false}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
         onGestureEvent={[Function]}
         onGestureHandlerEvent={[Function]}
         onGestureHandlerStateChange={[Function]}
@@ -57,8 +65,17 @@ Array [
       >
         <View
           accessibilityLabel="Global.Home"
+          accessibilityRole="button"
           accessible={true}
           collapsable={false}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
           nativeID="animatedComponent"
           style={
             Object {
@@ -99,7 +116,7 @@ Array [
     style={
       Object {
         "alignItems": "flex-end",
-        "backgroundColor": "#42803E",
+        "backgroundColor": "ColorPallet.brand.primary",
         "flexDirection": "row",
         "height": 44,
         "justifyContent": "center",
@@ -110,7 +127,7 @@ Array [
     style={
       Object {
         "alignItems": "flex-end",
-        "backgroundColor": "#42803E",
+        "backgroundColor": "ColorPallet.brand.primary",
         "flexDirection": "row",
         "height": 44,
         "justifyContent": "center",
