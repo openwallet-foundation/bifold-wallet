@@ -1,8 +1,8 @@
+import { t } from 'i18next'
 import React from 'react'
 
 import HeaderTitle from '../components/texts/HeaderTitle'
 import { ITheme } from '../theme'
-import { t } from 'i18next'
 
 export function createDefaultStackOptions({ ColorPallet }: ITheme) {
   return {
@@ -24,6 +24,6 @@ export function createDefaultStackOptions({ ColorPallet }: ITheme) {
     },
     headerTitleAlign: 'center' as 'center' | 'left',
     headerTitle: (props: { children: React.ReactNode }) => <HeaderTitle {...props} />,
-    headerBackAccessibilityLabel: t('Global.Back')
+    headerBackAccessibilityLabel: t('Global.Back'),
   }
 }
