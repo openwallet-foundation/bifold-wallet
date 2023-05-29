@@ -38,15 +38,20 @@ export const Pagination: React.FC<IPaginationProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const shouldHideBack = () => {
+  const shouldHideBack = (): boolean => {
     if (activeIndex === 0) {
       return true
     }
+
+    return false
   }
-  const shouldHideNext = () => {
+
+  const shouldHideNext = (): boolean => {
     if (activeIndex === pages.length - 1) {
       return true
     }
+
+    return false
   }
 
   // FIXME: Issue #204. Better to `disable` the `TouchableOpacity`
@@ -60,6 +65,8 @@ export const Pagination: React.FC<IPaginationProps> = ({
         accessibilityRole={'button'}
         testID={testIdWithKey('Back')}
         onPress={previous}
+        accessibilityElementsHidden={shouldHideBack()}
+        importantForAccessibility={shouldHideBack() ? 'no-hide-descendants' : 'auto'}
         hitSlop={hitSlop}
       >
         <Text
@@ -81,12 +88,15 @@ export const Pagination: React.FC<IPaginationProps> = ({
         dotStyle={style.pagerDot}
         containerStyle={style.pagerPosition}
       />
+
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={t('Global.Next')}
         accessibilityRole={'button'}
         testID={testIdWithKey('Next')}
         onPress={next}
+        accessibilityElementsHidden={shouldHideNext()}
+        importantForAccessibility={shouldHideNext() ? 'no-hide-descendants' : 'auto'}
         hitSlop={hitSlop}
       >
         <Text
