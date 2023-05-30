@@ -19,6 +19,7 @@ import { useTemplate } from '../hooks/proof-request-templates'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { Attribute, Field, Predicate } from '../types/record'
+import { formatIfDate } from '../utils/helpers'
 import { buildFieldsFromIndyProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
@@ -32,6 +33,11 @@ interface ProofRequestAttributesCardParams {
 
 const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
   const { ListItems } = useTheme()
+  const [value, setValue] = useState(item.value)
+
+  useEffect(() => {
+    formatIfDate(item.format, value, setValue)
+  }, [])
 
   const style = StyleSheet.create({
     attributeTitle: {
@@ -46,7 +52,7 @@ const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
   return (
     <View style={{ flexDirection: 'row' }}>
       <Text style={style.attributeTitle}>{item.label || item.name}</Text>
-      <Text style={style.attributeTitle}>{item.value}</Text>
+      <Text style={style.attributeTitle}>{value}</Text>
     </View>
   )
 }
@@ -56,6 +62,14 @@ const PredicateItem: React.FC<{
   onChangeValue: (name: string, value: string) => void
 }> = ({ item, onChangeValue }) => {
   const { ListItems, ColorPallet } = useTheme()
+  const [pValue, setPValue] = useState(item.pValue)
+
+  useEffect(() => {
+    // can't format the date if parameterizable, must remain a number
+    if (!item.parameterizable) {
+      formatIfDate(item.format, pValue, setPValue)
+    }
+  }, [])
 
   const style = StyleSheet.create({
     attributeTitle: {
@@ -82,10 +96,10 @@ const PredicateItem: React.FC<{
           style={[style.attributeTitle, style.input]}
           onChangeText={(value) => onChangeValue(item.name || '', value)}
         >
-          {item.pValue}
+          {pValue}
         </TextInput>
       )}
-      {!item.parameterizable && <Text style={style.attributeTitle}>{item.pValue}</Text>}
+      {!item.parameterizable && <Text style={style.attributeTitle}>{pValue}</Text>}
     </View>
   )
 }

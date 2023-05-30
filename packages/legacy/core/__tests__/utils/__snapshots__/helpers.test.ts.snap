@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Helpers Sorts retrieved credentials by revocation 1`] = `
+exports[`credentialSortFn Sorts retrieved credentials by revocation 1`] = `
 Array [
   Object {
     "credentialId": "4e91a381-7ed6-4ea7-8011-39a11cbd0c18",
