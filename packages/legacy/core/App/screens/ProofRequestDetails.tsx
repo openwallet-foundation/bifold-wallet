@@ -1,6 +1,6 @@
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -19,7 +19,7 @@ import { useTemplate } from '../hooks/proof-request-templates'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { Attribute, Field, Predicate } from '../types/record'
-import { formatTime } from '../utils/helpers'
+import { formatIfDate } from '../utils/helpers'
 import { buildFieldsFromIndyProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
@@ -29,24 +29,6 @@ type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Scree
 interface ProofRequestAttributesCardParams {
   data: IndyProofRequestTemplatePayloadData
   onChangeValue: (schema: string, label: string, name: string, value: string) => void
-}
-
-const formatIfDate = (
-  format: string | undefined,
-  value: string | number | null,
-  setter: Dispatch<SetStateAction<string | number | null>>
-) => {
-  const potentialDate = value ? value.toString() : null
-  if (format === 'YYYYMMDD' && potentialDate && potentialDate.length === format.length) {
-    const year = potentialDate.substring(0, 4)
-    const month = potentialDate.substring(4, 6)
-    const day = potentialDate.substring(6, 8)
-    // NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
-    const date = new Date(Number(year), Number(month) - 1, Number(day))
-    if (!isNaN(date.getDate())) {
-      setter(formatTime(date))
-    }
-  }
 }
 
 const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
