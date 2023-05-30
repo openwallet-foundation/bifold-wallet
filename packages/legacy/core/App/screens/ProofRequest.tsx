@@ -26,8 +26,8 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
-import { useAppAgent } from '../utils/agent'
 import { ModalUsage } from '../types/remove'
+import { useAppAgent } from '../utils/agent'
 import { parseCredDefFromId } from '../utils/cred-def'
 import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
@@ -277,8 +277,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const handleDeclineTouched = async () => {
     try {
       if (agent && proof) {
-        await agent.proofs.declineRequest(proof.id)
-        await agent.proofs.sendProblemReport(proof.id, t('ProofRequest.Declined')) // currently, fails for connectionless case
+        await agent.proofs.declineRequest({ proofRecordId: proof.id })
+        await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') }) // currently, fails for connectionless case
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)

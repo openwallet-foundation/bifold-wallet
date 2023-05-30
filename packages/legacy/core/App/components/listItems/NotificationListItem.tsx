@@ -129,7 +129,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     try {
       const proofId = (notification as ProofExchangeRecord).id
       if (agent) {
-        await agent.proofs.declineRequest(proofId)
+        await agent.proofs.declineRequest({ proofRecordId: proofId })
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)

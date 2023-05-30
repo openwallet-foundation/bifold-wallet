@@ -152,7 +152,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         await agent.credentials.declineOffer(credential.id)
         await agent.credentials.sendProblemReport({
           credentialRecordId: credential.id,
-          message: t('CredentialOffer.Declined'),
+          description: t('CredentialOffer.Declined')
         })
       }
 
