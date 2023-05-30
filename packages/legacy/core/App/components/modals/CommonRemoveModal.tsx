@@ -6,9 +6,6 @@ import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import CredentialDeclined from '../../assets/img/credential-declined.svg'
-import CustomNotificationDecline from '../../assets/img/delete-notification.svg'
-import ProofDeclined from '../../assets/img/proof-declined.svg'
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
@@ -67,6 +64,7 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
 }
 
 const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     iconContainer: {
       marginRight: 10,
@@ -77,7 +75,7 @@ const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
   return (
     <View style={{ marginVertical: 10, flexDirection: 'row', alignItems: 'flex-start' }}>
       <View style={styles.iconContainer}>
-        <Icon name={'circle'} size={9} />
+        <Icon name={'circle'} size={9} color={ColorPallet.brand.modalIcon} />
       </View>
       <Text style={[textStyle, { flexShrink: 1 }]}>{text}</Text>
     </View>
@@ -90,7 +88,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   }
 
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, Assets } = useTheme()
 
   const imageDisplayOptions = {
     height: 115,
@@ -119,8 +117,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       borderTopLeftRadius: 10,
     },
     bodyText: {
-      fontSize: 18,
-      fontWeight: '400',
+      ...TextTheme.modalNormal,
     },
     declineBodyText: {
       ...TextTheme.modalNormal,
@@ -180,10 +177,12 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   const headerImageForType = (usageType: ModalUsage) => {
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        {usageType === ModalUsage.CredentialOfferDecline && <ProofDeclined {...imageDisplayOptions} />}
-        {usageType === ModalUsage.ProofRequestDecline && <CredentialDeclined {...imageDisplayOptions} />}
+        {usageType === ModalUsage.CredentialOfferDecline && (
+          <Assets.svg.proofRequestDeclined {...imageDisplayOptions} />
+        )}
+        {usageType === ModalUsage.ProofRequestDecline && <Assets.svg.credentialDeclined {...imageDisplayOptions} />}
         {usageType === ModalUsage.CustomNotificationDecline && (
-          <CustomNotificationDecline style={{ marginBottom: 15 }} {...imageDisplayOptions} />
+          <Assets.svg.deleteNotification style={{ marginBottom: 15 }} {...imageDisplayOptions} />
         )}
       </View>
     )
@@ -277,7 +276,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
           onPress={() => onCancel && onCancel()}
           hitSlop={hitSlop}
         >
-          <Icon name={'close'} size={42} color={TextTheme.modalNormal.color} />
+          <Icon name={'close'} size={42} color={ColorPallet.brand.modalIcon} />
         </TouchableOpacity>
       </View>
       <SafeAreaView
