@@ -1121,8 +1121,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               style={
                 Array [
                   Object {
+                    "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "400",
+                    "fontWeight": "normal",
                   },
                 ]
               }
@@ -1151,7 +1152,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -1171,8 +1172,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -1205,7 +1207,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -1225,8 +1227,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -1259,7 +1262,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -1279,8 +1282,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -1313,7 +1317,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -1333,8 +1337,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -1349,8 +1354,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               style={
                 Array [
                   Object {
+                    "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "400",
+                    "fontWeight": "normal",
                   },
                   Object {
                     "marginTop": 10,
@@ -2287,8 +2293,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               style={
                 Array [
                   Object {
+                    "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "400",
+                    "fontWeight": "normal",
                   },
                 ]
               }
@@ -2317,7 +2324,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -2337,8 +2344,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -2371,7 +2379,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -2391,8 +2399,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -2425,7 +2434,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -2445,8 +2454,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -2479,7 +2489,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#FFFFFF",
                         "fontSize": 9,
                       },
                       undefined,
@@ -2499,8 +2509,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                 style={
                   Array [
                     Object {
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "400",
+                      "fontWeight": "normal",
                     },
                     Object {
                       "flexShrink": 1,
@@ -2515,8 +2526,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               style={
                 Array [
                   Object {
+                    "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "400",
+                    "fontWeight": "normal",
                   },
                   Object {
                     "marginTop": 10,
