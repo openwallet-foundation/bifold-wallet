@@ -83,6 +83,7 @@ export interface IBrandColors {
   modalSecondary: string
   modalPrimaryBackground: string
   modalSecondaryBackground: string
+  modalIcon: string
   link: string
   text: string
   icon: string
@@ -173,6 +174,7 @@ const BrandColors: IBrandColors = {
   modalSecondary: '#FFFFFFFF',
   modalPrimaryBackground: '#000000',
   modalSecondaryBackground: '#313132',
+  modalIcon: GrayscaleColors.white,
   unorderedList: GrayscaleColors.white,
   unorderedListModal: GrayscaleColors.white,
   link: GrayscaleColors.white,
