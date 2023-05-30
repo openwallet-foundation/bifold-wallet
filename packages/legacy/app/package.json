@@ -28,7 +28,7 @@
     "@formatjs/intl-numberformat": "7.2.4",
     "@formatjs/intl-pluralrules": "4.1.4",
     "@formatjs/intl-relativetimeformat": "9.3.1",
-    "@hyperledger/anoncreds-react-native": "0.1.0-dev.17",
+    "@hyperledger/anoncreds-react-native": "0.1.0-dev.18",
     "@hyperledger/aries-askar-react-native": "^0.1.0-dev.11",
     "@hyperledger/indy-vdr-react-native": "^0.1.0-dev.15",
     "@react-native-async-storage/async-storage": "1.15.11",

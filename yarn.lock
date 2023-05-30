@@ -2695,16 +2695,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-react-native@npm:0.1.0-dev.17":
-  version: 0.1.0-dev.17
-  resolution: "@hyperledger/anoncreds-react-native@npm:0.1.0-dev.17"
+"@hyperledger/anoncreds-react-native@npm:0.1.0-dev.18":
+  version: 0.1.0-dev.18
+  resolution: "@hyperledger/anoncreds-react-native@npm:0.1.0-dev.18"
   dependencies:
-    "@hyperledger/anoncreds-shared": 0.1.0-dev.17
+    "@hyperledger/anoncreds-shared": 0.1.0-dev.18
     "@mapbox/node-pre-gyp": ^1.0.10
   peerDependencies:
     react: ">= 16"
     react-native: ">= 0.66.0"
-  checksum: 0480a5720b986d1e441efb60beaf21bbd65d4404386f8c2ae0d2482616d8a14d3523288d7634abc1a2041349ff26cf2cb6fdcde4ceea7b58932cb88127330b8b
+  checksum: 35e69f5d5cec07af26a974b173f86bd09cea7208d221d32bd96e04234f0d2e40ef144419009c1bbe1310b329a2992a2d8a250e9767284e39ffe76cbf200bf7c1
   languageName: node
   linkType: hard
 
@@ -2728,10 +2728,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-shared@npm:0.1.0-dev.17":
-  version: 0.1.0-dev.17
-  resolution: "@hyperledger/anoncreds-shared@npm:0.1.0-dev.17"
-  checksum: ffbe5f84be6c2fd7b3b7fde19c57271b641ac70a0962740c0048e1d9549a25c165b1314ed663a6e2441225b8cf2ead25f3fed4259952fbf3ada022ef7aaafbee
+"@hyperledger/anoncreds-shared@npm:0.1.0-dev.18":
+  version: 0.1.0-dev.18
+  resolution: "@hyperledger/anoncreds-shared@npm:0.1.0-dev.18"
+  checksum: 99734d645c0df0e148a42843b453e975ae2b701a473fc7d5f3dda2036a7d8deace69f28e37ef0d0a37935a22c39d615f6f008f817e71752ff690a69741941592
   languageName: node
   linkType: hard
 
@@ -5881,7 +5881,7 @@ __metadata:
     "@formatjs/intl-numberformat": 7.2.4
     "@formatjs/intl-pluralrules": 4.1.4
     "@formatjs/intl-relativetimeformat": 9.3.1
-    "@hyperledger/anoncreds-react-native": 0.1.0-dev.17
+    "@hyperledger/anoncreds-react-native": 0.1.0-dev.18
     "@hyperledger/aries-askar-react-native": ^0.1.0-dev.11
     "@hyperledger/indy-vdr-react-native": ^0.1.0-dev.15
     "@react-native-async-storage/async-storage": 1.15.11
@@ -6098,7 +6098,7 @@ __metadata:
     "@formatjs/intl-numberformat": ^7.2.3
     "@formatjs/intl-pluralrules": ^4.1.3
     "@formatjs/intl-relativetimeformat": ^9.2.3
-    "@hyperledger/anoncreds-react-native": 0.1.0-dev.17
+    "@hyperledger/anoncreds-react-native": 0.1.0-dev.18
     "@hyperledger/aries-askar-react-native": ^0.1.0-dev.11
     "@hyperledger/indy-vdr-react-native": ^0.1.0-dev.15
     "@react-native-async-storage/async-storage": ^1.12.1
