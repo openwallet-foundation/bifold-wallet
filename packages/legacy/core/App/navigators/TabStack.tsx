@@ -91,8 +91,14 @@ const TabStack: React.FC = () => {
                       alignItems: 'center',
                     }}
                   >
-                    <View style={{ ...TabTheme.focusTabIconStyle }}>
+                    <View
+                      accessible={true}
+                      accessibilityRole={'button'}
+                      accessibilityLabel={t('TabStack.Scan')}
+                      style={{ ...TabTheme.focusTabIconStyle }}
+                    >
                       <Icon
+                        accessible={false}
                         name="qrcode-scan"
                         color={TabTheme.tabBarButtonIconStyle.color}
                         size={32}

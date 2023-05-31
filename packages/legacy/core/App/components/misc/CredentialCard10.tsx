@@ -278,7 +278,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       accessible={true}
       accessibilityLabel={`${
         overlay.metaOverlay?.issuerName ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuerName}` : ''
-      }, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''}`}
+      }, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.`}
       disabled={typeof onPress === 'undefined' ? true : false}
       onPress={onPress}
       style={[styles.container, style]}
