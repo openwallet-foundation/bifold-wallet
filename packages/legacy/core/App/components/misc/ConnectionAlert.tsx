@@ -64,7 +64,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
       marginVertical: 6,
     },
     informationIcon: {
-      color: ColorPallet.brand.icon,
+      color: ColorPallet.notification.infoIcon,
       marginLeft: 10,
     },
   })
