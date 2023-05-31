@@ -82,7 +82,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
         <Text style={styles.notifyTitle}>{t('ConnectionAlert.AddedContacts')}</Text>
         <TouchableOpacity
           testID={t('Global.Info')}
-          accessibilityLabel={t('Global.Info')}
+          accessibilityLabel={t('ConnectionAlert.WhatAreContacts')}
           accessibilityRole={'button'}
           onPress={toggleInfoCard}
           hitSlop={hitSlop}
