@@ -260,6 +260,8 @@ const translation = {
         "CredentialsNotFound": "Justificatifs non trouvés",
         "CredentialDetails": "Détails des justificatifs",
         "EmptyList": "Votre portefeuille est vide. Vos justificatifs acceptés seront ajoutés ici.",
+        "IssuedBy": "Issued by (FR)",
+        "Credential": "credential (FR)"
     },
     "CredentialDetails": {
         "Id": "Identifiant :",

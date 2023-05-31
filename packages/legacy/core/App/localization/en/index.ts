@@ -261,6 +261,8 @@ const translation = {
     "CredentialsNotFound": "Credentials not found",
     "CredentialDetails": "Credential Details",
     "EmptyList": "Your wallet is empty. Your accepted credentials will be added here.",
+    "IssuedBy": "Issued by",
+    "Credential": "credential"
   },
   "CredentialDetails": {
     "Id": "Id:",

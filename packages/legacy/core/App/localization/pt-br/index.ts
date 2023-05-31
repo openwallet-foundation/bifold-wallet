@@ -243,6 +243,8 @@ const translation = {
     "CredentialsNotFound": "Credenciais não encontradas",
     "CredentialDetails": "Detalhes da Credencial",
     "EmptyList": "Sua carteira está vazia. Suas credenciais aceitas serão adicionadas aqui.",
+    "IssuedBy": "Issued by (PT-BR)",
+    "Credential": "credential (PT-BR)"
   },
   "CredentialDetails": {
     "Id": "Id:",
