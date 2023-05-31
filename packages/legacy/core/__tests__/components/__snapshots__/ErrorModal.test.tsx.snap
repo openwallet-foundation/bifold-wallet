@@ -158,6 +158,8 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -328,6 +330,8 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }

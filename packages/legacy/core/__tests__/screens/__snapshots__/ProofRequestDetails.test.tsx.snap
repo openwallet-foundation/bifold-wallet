@@ -367,6 +367,8 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                         "textAlign": "center",
                       },
                       false,
+                      false,
+                      false,
                     ]
                   }
                 >
@@ -431,6 +433,8 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
+                      false,
+                      false,
                       false,
                     ]
                   }

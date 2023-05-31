@@ -242,6 +242,8 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -307,6 +309,8 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }
@@ -568,6 +572,8 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -633,6 +639,8 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }
@@ -903,6 +911,8 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -968,6 +978,8 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }
@@ -1446,6 +1458,8 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -1511,6 +1525,8 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }
@@ -2094,6 +2110,8 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -2159,6 +2177,8 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }
@@ -2637,6 +2657,8 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -2702,6 +2724,8 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }

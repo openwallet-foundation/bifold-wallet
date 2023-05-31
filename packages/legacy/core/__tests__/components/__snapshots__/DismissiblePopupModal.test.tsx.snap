@@ -254,6 +254,8 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                       "textAlign": "center",
                     },
                     false,
+                    false,
+                    false,
                   ]
                 }
               >

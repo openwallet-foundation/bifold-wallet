@@ -216,6 +216,8 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                 "textAlign": "center",
               },
               false,
+              false,
+              false,
             ]
           }
         >
@@ -654,6 +656,8 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                               "textAlign": "center",
                             },
                             false,
+                            false,
+                            false,
                           ]
                         }
                       >
@@ -872,6 +876,8 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                 "fontWeight": "bold",
                 "textAlign": "center",
               },
+              false,
+              false,
               false,
             ]
           }
@@ -1315,6 +1321,8 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                               "textAlign": "center",
                             },
                             false,
+                            false,
+                            false,
                           ]
                         }
                       >
@@ -1588,6 +1596,8 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                 "fontWeight": "bold",
                 "textAlign": "center",
               },
+              false,
+              false,
             ]
           }
         >
@@ -2025,6 +2035,8 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                               "fontWeight": "bold",
                               "textAlign": "center",
                             },
+                            false,
+                            false,
                             false,
                           ]
                         }

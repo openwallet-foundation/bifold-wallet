@@ -366,6 +366,8 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                       "textAlign": "center",
                     },
                     false,
+                    false,
+                    false,
                   ]
                 }
               >
