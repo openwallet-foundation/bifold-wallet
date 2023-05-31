@@ -444,7 +444,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const CredentialCard: React.FC<{ status?: CredentialStatus }> = ({ status }) => {
     return (
-      <View style={styles.cardContainer}>
+      <View
+        style={styles.cardContainer}
+        accessible={!proof}
+        accessibilityLabel={`${
+          overlay.metaOverlay?.issuerName ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuerName}` : ''
+        }, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''}`}
+      >
         <CredentialCardSecondaryBody />
         <CredentialCardLogo />
         <CredentialCardPrimaryBody />
