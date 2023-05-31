@@ -19,7 +19,7 @@ const CardWatermark: React.FC<CardWatermarkProps> = ({ watermark, style, height,
   return (
     <View style={{ position: 'absolute', left: '-50%', top: '-100%', width: '200%', height: '200%' }}>
       {Array.from({ length: Math.ceil((height * 2) / fontSize + 1) }).map((_, i) => (
-        <Text key={i} numberOfLines={1} style={style}>
+        <Text accessible={false} key={i} numberOfLines={1} style={style}>
           {watermarkText}
         </Text>
       ))}

@@ -97,6 +97,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     (field) => field.name === overlay?.cardLayoutOverlay?.secondaryAttribute?.name
   )
 
+  const cardData = [...(displayItems ?? []), primaryField, secondaryField]
+
   const getSecondaryBackgroundColor = () => {
     if (proof) {
       return overlay.cardLayoutOverlay?.primaryBackgroundColor
@@ -281,7 +283,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
+  const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
+    return { label: item?.label ?? startCase(item?.name ?? ''), value: item?.value || `${item?.pType} ${item?.pValue}` }
+  }
+
   const renderCardAttribute = (item: Attribute & Predicate) => {
+    const { label, value } = parseAttribute(item)
     return (
       item && (
         <View style={{ marginTop: 15 }}>
@@ -293,14 +300,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 color={ListItems.proofError.color}
                 size={ListItems.recordAttributeText.fontSize}
               />
-              <AttributeLabel label={item?.label ?? startCase(item?.name ?? '')} />
+              <AttributeLabel label={label} />
             </View>
           ) : (
-            <AttributeLabel label={item?.label ?? startCase(item?.name ?? '')} />
+            <AttributeLabel label={label} />
           )}
-          {!(item?.value || item?.pValue) ? null : (
-            <AttributeValue value={item?.value || `${item?.pType} ${item?.pValue}`} />
-          )}
+          {!(item?.value || item?.pValue) ? null : <AttributeValue value={value} />}
         </View>
       )
     )
@@ -358,7 +363,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </View>
           )}
           <FlatList
-            data={[...(displayItems ?? []), primaryField, secondaryField]}
+            data={cardData}
             scrollEnabled={false}
             renderItem={({ item }) => {
               return renderCardAttribute(item as Attribute & Predicate)
@@ -446,10 +451,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       <View
         style={styles.cardContainer}
-        accessible={!proof}
-        accessibilityLabel={`${
-          overlay.metaOverlay?.issuerName ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuerName}` : ''
-        }, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''}`}
+        accessible={true}
+        accessibilityLabel={
+          `${
+            overlay.metaOverlay?.issuerName ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuerName}` : ''
+          }, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''} ${t(
+            'Credentials.Credential'
+          )}.` +
+          cardData.map((item) => {
+            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
+            if (label && value) {
+              return ` ${label}, ${value}`
+            }
+          })
+        }
       >
         <CredentialCardSecondaryBody />
         <CredentialCardLogo />
