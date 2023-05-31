@@ -222,7 +222,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
 
     if (type === ModalUsage.CredentialRemove) {
       return (
-        <View>
+        <View style={[{ marginBottom: 25 }]}>
           <View style={[{ marginBottom: 25 }]}>
             <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
           </View>
@@ -247,7 +247,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
 
     if (type === ModalUsage.ContactRemove) {
       return (
-        <View>
+        <View style={[{ marginBottom: 25 }]}>
           <View style={[{ marginBottom: 25 }]}>
             <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
           </View>

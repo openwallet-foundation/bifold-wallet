@@ -18,7 +18,9 @@ const UnorderedList: React.FC<UnorderedListProps> = ({ UnorderedListItems }) => 
             <Text
               style={[TextTheme.normal, { color: ColorPallet.brand.unorderedList, paddingLeft: 5 }]}
             >{`\u2022`}</Text>
-            <Text style={[TextTheme.normal, { color: ColorPallet.brand.unorderedList, paddingLeft: 5 }]}>{item}</Text>
+            <Text style={[TextTheme.normal, { color: ColorPallet.brand.unorderedList, paddingLeft: 5, flex: 1 }]}>
+              {item}
+            </Text>
           </View>
         )
       })}
