@@ -17,7 +17,7 @@ import { Buffer } from 'buffer'
 import { WalletQuery } from 'indy-sdk-react-native'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
-import { ReactNode } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
@@ -119,6 +119,24 @@ export function formatTime(time: Date, params?: { long?: boolean; format?: strin
     }
   }
   return formattedTime
+}
+
+export function formatIfDate(
+  format: string | undefined,
+  value: string | number | null,
+  setter: Dispatch<SetStateAction<string | number | null>>
+) {
+  const potentialDate = value ? value.toString() : null
+  if (format === 'YYYYMMDD' && potentialDate && potentialDate.length === format.length) {
+    const year = potentialDate.substring(0, 4)
+    const month = potentialDate.substring(4, 6)
+    const day = potentialDate.substring(6, 8)
+    // NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
+    const date = new Date(Number(year), Number(month) - 1, Number(day))
+    if (!isNaN(date.getDate())) {
+      setter(formatTime(date))
+    }
+  }
 }
 
 /**

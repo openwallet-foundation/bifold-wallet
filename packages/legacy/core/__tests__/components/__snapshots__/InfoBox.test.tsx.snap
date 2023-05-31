@@ -196,6 +196,8 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
                 "textAlign": "center",
               },
               false,
+              false,
+              false,
             ]
           }
         >
@@ -402,6 +404,8 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
                 "fontWeight": "bold",
                 "textAlign": "center",
               },
+              false,
+              false,
               false,
             ]
           }
@@ -610,6 +614,8 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
                 "textAlign": "center",
               },
               false,
+              false,
+              false,
             ]
           }
         >
@@ -816,6 +822,8 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
                 "fontWeight": "bold",
                 "textAlign": "center",
               },
+              false,
+              false,
               false,
             ]
           }
