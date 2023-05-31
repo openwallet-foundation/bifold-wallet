@@ -1104,7 +1104,15 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
             }
           }
         />
-        <View>
+        <View
+          style={
+            Array [
+              Object {
+                "marginBottom": 25,
+              },
+            ]
+          }
+        >
           <View
             style={
               Array [
@@ -1643,7 +1651,15 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             }
           }
         />
-        <View>
+        <View
+          style={
+            Array [
+              Object {
+                "marginBottom": 25,
+              },
+            ]
+          }
+        >
           <View
             style={
               Array [
@@ -1816,6 +1832,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                           },
                           Object {
                             "color": "#FFFFFF",
+                            "flex": 1,
                             "paddingLeft": 5,
                           },
                         ]
@@ -1862,6 +1879,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                           },
                           Object {
                             "color": "#FFFFFF",
+                            "flex": 1,
                             "paddingLeft": 5,
                           },
                         ]
@@ -2008,6 +2026,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                           },
                           Object {
                             "color": "#FFFFFF",
+                            "flex": 1,
                             "paddingLeft": 5,
                           },
                         ]
@@ -2284,7 +2303,15 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
             }
           }
         />
-        <View>
+        <View
+          style={
+            Array [
+              Object {
+                "marginBottom": 25,
+              },
+            ]
+          }
+        >
           <View
             style={
               Array [
