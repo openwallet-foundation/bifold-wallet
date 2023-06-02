@@ -47,6 +47,12 @@
     "@react-navigation/native": "6.0.6",
     "@react-navigation/stack": "6.0.11",
     "@types/node": "16.9.6",
-    "react-native@0.66.5": "patch:react-native@npm%3A0.66.5#./.yarn/patches/react-native-npm-0.66.5-22e5dd8ec5.patch"
+    "react-native@0.66.5": "patch:react-native@npm%3A0.66.5#./.yarn/patches/react-native-npm-0.66.5-22e5dd8ec5.patch",
+    "@hyperledger/aries-askar-react-native": "0.1.0-dev.12",
+    "@hyperledger/aries-askar-shared": "0.1.0-dev.12",
+    "@hyperledger/indy-vdr-react-native": "0.1.0-dev.16",
+    "@hyperledger/indy-vdr-shared": "0.1.0-dev.16",
+    "@hyperledger/anoncreds-react-native": "0.1.0-dev.19",
+    "@hyperledger/anoncreds-shared": "0.1.0-dev.19"
   }
 }

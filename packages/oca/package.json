@@ -24,11 +24,8 @@
     "rimraf": "^5.0.0",
     "typescript": "^5.0.4"
   },
-  "resolutions": {
-    "@aries-framework/core": "0.3.3"
-  },
   "dependencies": {
-    "@aries-framework/core": "^0.3.3"
+    "@aries-framework/core": "0.4.0-alpha.130"
   },
   "gitHead": "c015ed658d1a458809a2f9a8623dc3752a523a5e"
 }
