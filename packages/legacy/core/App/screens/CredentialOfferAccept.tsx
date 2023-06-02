@@ -1,6 +1,6 @@
 import { CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Modal, StatusBar, StyleSheet, Text, View, ScrollView } from 'react-native'

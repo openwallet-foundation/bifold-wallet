@@ -2,7 +2,7 @@ import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-frame
 
 import { V1RequestPresentationMessage } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { NavigatorScreenParams } from '@react-navigation/core'
+import { NavigatorScreenParams } from '@react-navigation/native'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
