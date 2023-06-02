@@ -1,9 +1,11 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import HeaderTitle from '../components/texts/HeaderTitle'
 import { ITheme } from '../theme'
 
 export function createDefaultStackOptions({ ColorPallet }: ITheme) {
+  const { t } = useTranslation()
   return {
     headerTintColor: ColorPallet.brand.headerIcon,
     headerShown: true,
@@ -23,5 +25,6 @@ export function createDefaultStackOptions({ ColorPallet }: ITheme) {
     },
     headerTitleAlign: 'center' as 'center' | 'left',
     headerTitle: (props: { children: React.ReactNode }) => <HeaderTitle {...props} />,
+    headerBackAccessibilityLabel: t('Global.Back'),
   }
 }

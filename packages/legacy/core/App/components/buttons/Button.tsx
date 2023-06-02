@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
@@ -36,6 +36,7 @@ const Button: React.FC<ButtonProps & React.RefAttributes<TouchableOpacity>> = fo
       [ButtonType.ModalPrimary]: { color: Buttons.modalPrimary, text: Buttons.modalPrimaryText },
       [ButtonType.ModalSecondary]: { color: Buttons.modalSecondary, text: Buttons.modalSecondaryText },
     }
+    const [isActive, setIsActive] = useState<boolean>(false)
 
     return (
       <TouchableOpacity
@@ -43,10 +44,13 @@ const Button: React.FC<ButtonProps & React.RefAttributes<TouchableOpacity>> = fo
         accessible={accessible}
         accessibilityLabel={accessibilityLabel}
         accessibilityRole={'button'}
+        onPressIn={() => setIsActive(!disabled && true)}
+        onPressOut={() => setIsActive(false)}
         testID={testID}
         style={[
           buttonStyles[buttonType].color,
           disabled && (buttonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
+          isActive && buttonType === ButtonType.Secondary && { backgroundColor: Buttons.primary.backgroundColor },
         ]}
         disabled={disabled}
         activeOpacity={heavyOpacity}
@@ -65,6 +69,8 @@ const Button: React.FC<ButtonProps & React.RefAttributes<TouchableOpacity>> = fo
               buttonStyles[buttonType].text,
               disabled &&
                 (buttonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
+              isActive && { textDecorationLine: 'underline' },
+              isActive && buttonType === ButtonType.Secondary && { color: Buttons.primaryText.color },
             ]}
           >
             {title}
