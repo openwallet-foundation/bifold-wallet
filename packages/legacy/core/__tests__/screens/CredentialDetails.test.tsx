@@ -1,6 +1,6 @@
 import { CredentialMetadataKeys, CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
@@ -48,9 +48,6 @@ interface CredentialContextInterface {
   credentials: CredentialExchangeRecord[]
 }
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })

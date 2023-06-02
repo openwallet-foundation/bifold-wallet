@@ -7,9 +7,6 @@ import Splash from '../../App/screens/Splash'
 import authContext from '../contexts/auth'
 import configurationContext from '../contexts/configuration'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })

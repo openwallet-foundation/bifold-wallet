@@ -1,7 +1,7 @@
 import { CredentialExchangeRecord, ConnectionRecord } from '@aries-framework/core'
 import { useCredentialById, useConnectionById } from '@aries-framework/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
@@ -15,9 +15,6 @@ import configurationContext from '../contexts/configuration'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })

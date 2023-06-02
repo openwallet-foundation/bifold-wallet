@@ -1,5 +1,5 @@
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
@@ -12,9 +12,6 @@ import { testIdWithKey } from '../../App'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })

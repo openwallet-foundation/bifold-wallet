@@ -5,9 +5,6 @@ import { AuthContext } from '../../App/contexts/auth'
 import PINEnter from '../../App/screens/PINEnter'
 import authContext from '../contexts/auth'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
