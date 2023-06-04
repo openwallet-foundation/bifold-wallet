@@ -22,9 +22,9 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
+import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
-import { ModalUsage } from '../types/remove'
 import { getCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
@@ -152,7 +152,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         await agent.credentials.declineOffer(credential.id)
         await agent.credentials.sendProblemReport({
           credentialRecordId: credential.id,
-          description: t('CredentialOffer.Declined')
+          description: t('CredentialOffer.Declined'),
         })
       }
 
