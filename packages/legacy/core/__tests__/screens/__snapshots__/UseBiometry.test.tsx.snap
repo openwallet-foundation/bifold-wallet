@@ -1564,7 +1564,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
               Array [
                 Object {
                   "color": undefined,
-                  "fontSize": 35,
+                  "fontSize": 25,
                 },
                 Object {
                   "color": "#FFFFFF",
