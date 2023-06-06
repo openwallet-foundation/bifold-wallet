@@ -10,7 +10,7 @@ type GradientProps = {
 /**
  * To be used in a relative position controlsContainer that is below (and not in) scrollview content
  */
-function ContentGradient({ backgroundColor, height = 30 }: GradientProps) {
+const ContentGradient = ({ backgroundColor, height = 30 }: GradientProps) => {
   const id = 'gradient'
 
   const styles = StyleSheet.create({
