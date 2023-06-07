@@ -173,7 +173,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={[styles.icon]}>
-          <Icon name={iconName} size={iconSize} color={iconColor} />
+          <Icon accessible={false} name={iconName} size={iconSize} color={iconColor} />
         </View>
         <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
           {title}

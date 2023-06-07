@@ -354,7 +354,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     <View style={[styles.container, styleConfig.containerStyle]} testID={testIdWithKey('NotificationListItem')}>
       <View style={styles.headerContainer}>
         <View style={styles.icon}>
-          <Icon name={styleConfig.iconName} size={iconSize} color={styleConfig.iconColor} />
+          <Icon accessible={false} name={styleConfig.iconName} size={iconSize} color={styleConfig.iconColor} />
         </View>
         <Text style={[styles.headerText, styleConfig.textStyle]} testID={testIdWithKey('HeaderText')}>
           {details.title}
