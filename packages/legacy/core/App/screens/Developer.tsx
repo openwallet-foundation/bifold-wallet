@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Text, TouchableWithoutFeedback, Switch, StyleSheet } from 'react-native'
+import { View, Text, Pressable, Switch, StyleSheet } from 'react-native'
 
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -65,13 +65,11 @@ const Developer: React.FC = () => {
       </Text>
       <View style={styles.settingContainer}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.settingLabelText}>{t('Verifier.UseVerifierCapability')}</Text>
+          <Text accessible={false} style={styles.settingLabelText}>
+            {t('Verifier.UseVerifierCapability')}
+          </Text>
         </View>
-        <TouchableWithoutFeedback
-          style={styles.settingSwitchContainer}
-          accessibilityLabel={t('Verifier.Toggle')}
-          accessibilityRole={'switch'}
-        >
+        <Pressable style={styles.settingSwitchContainer} accessibilityLabel={'xx'} accessibilityRole={'switch'}>
           <Switch
             testID={testIdWithKey('ToggleVerifierCapability')}
             trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
@@ -80,13 +78,13 @@ const Developer: React.FC = () => {
             onValueChange={toggleVerifierCapabilitySwitch}
             value={useVerifierCapability}
           />
-        </TouchableWithoutFeedback>
+        </Pressable>
       </View>
       <View style={styles.settingContainer}>
         <View style={{ flex: 1 }}>
           <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
         </View>
-        <TouchableWithoutFeedback
+        <Pressable
           style={styles.settingSwitchContainer}
           accessibilityLabel={t('Connection.Toggle')}
           accessibilityRole={'switch'}
@@ -99,7 +97,7 @@ const Developer: React.FC = () => {
             onValueChange={toggleConnectionInviterCapabilitySwitch}
             value={useConnectionInviterCapability}
           />
-        </TouchableWithoutFeedback>
+        </Pressable>
       </View>
     </View>
   )
