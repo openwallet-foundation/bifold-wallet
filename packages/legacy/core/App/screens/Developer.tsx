@@ -69,7 +69,11 @@ const Developer: React.FC = () => {
             {t('Verifier.UseVerifierCapability')}
           </Text>
         </View>
-        <Pressable style={styles.settingSwitchContainer} accessibilityLabel={'xx'} accessibilityRole={'switch'}>
+        <Pressable
+          style={styles.settingSwitchContainer}
+          accessibilityLabel={t('Verifier.Toggle')}
+          accessibilityRole={'switch'}
+        >
           <Switch
             testID={testIdWithKey('ToggleVerifierCapability')}
             trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
