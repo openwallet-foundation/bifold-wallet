@@ -12,6 +12,7 @@ import { GenericFn } from '../../types/fn'
 import { ModalUsage } from '../../types/remove'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import ContentGradient from '../misc/ContentGradient'
 import UnorderedListModal from '../misc/UnorderedListModal'
 
 interface CommonRemoveModalProps {
@@ -105,6 +106,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       marginTop: 'auto',
       marginHorizontal: 20,
       marginBottom: Platform.OS === 'ios' ? 108 : 80,
+      position: 'relative',
     },
     headerView: {
       alignItems: 'flex-end',
@@ -292,6 +294,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
           {contentForType(usage)}
         </ScrollView>
         <View style={[styles.controlsContainer]}>
+          <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />
           <View style={[{ paddingTop: 10 }]}>
             <Button
               title={titleForConfirmButton()}
