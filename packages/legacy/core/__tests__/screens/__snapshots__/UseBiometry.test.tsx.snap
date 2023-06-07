@@ -126,38 +126,47 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
             }
           }
         >
-          <RCTSwitch
+          <View
             accessibilityLabel="Biometry.Toggle"
             accessibilityRole="switch"
             accessible={true}
-            disabled={false}
-            focusable={false}
-            onChange={[Function]}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
             onClick={[Function]}
+            onFocus={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
-            onTintColor="rgba(53, 130, 63, 0.35)"
-            style={
-              Array [
-                Object {
-                  "height": 31,
-                  "width": 51,
-                },
-                Object {
-                  "backgroundColor": "#D3D3D3",
-                  "borderRadius": 16,
-                },
-              ]
-            }
-            testID="com.ariesbifold:id/ToggleBiometrics"
-            thumbTintColor="#606060"
-            tintColor="#D3D3D3"
-            value={false}
-          />
+          >
+            <RCTSwitch
+              accessibilityRole="switch"
+              disabled={false}
+              onChange={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              onTintColor="rgba(53, 130, 63, 0.35)"
+              style={
+                Array [
+                  Object {
+                    "height": 31,
+                    "width": 51,
+                  },
+                  Object {
+                    "backgroundColor": "#D3D3D3",
+                    "borderRadius": 16,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/ToggleBiometrics"
+              thumbTintColor="#606060"
+              tintColor="#D3D3D3"
+              value={false}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -785,38 +794,47 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
             }
           }
         >
-          <RCTSwitch
+          <View
             accessibilityLabel="Biometry.Toggle"
             accessibilityRole="switch"
             accessible={true}
-            disabled={true}
-            focusable={false}
-            onChange={[Function]}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
             onClick={[Function]}
+            onFocus={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
-            onTintColor="rgba(53, 130, 63, 0.35)"
-            style={
-              Array [
-                Object {
-                  "height": 31,
-                  "width": 51,
-                },
-                Object {
-                  "backgroundColor": "#D3D3D3",
-                  "borderRadius": 16,
-                },
-              ]
-            }
-            testID="com.ariesbifold:id/ToggleBiometrics"
-            thumbTintColor="#606060"
-            tintColor="#D3D3D3"
-            value={false}
-          />
+          >
+            <RCTSwitch
+              accessibilityRole="switch"
+              disabled={true}
+              onChange={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              onTintColor="rgba(53, 130, 63, 0.35)"
+              style={
+                Array [
+                  Object {
+                    "height": 31,
+                    "width": 51,
+                  },
+                  Object {
+                    "backgroundColor": "#D3D3D3",
+                    "borderRadius": 16,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/ToggleBiometrics"
+              thumbTintColor="#606060"
+              tintColor="#D3D3D3"
+              value={false}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -1467,38 +1485,47 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
             }
           }
         >
-          <RCTSwitch
+          <View
             accessibilityLabel="Biometry.Toggle"
             accessibilityRole="switch"
             accessible={true}
-            disabled={false}
-            focusable={false}
-            onChange={[Function]}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
             onClick={[Function]}
+            onFocus={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
-            onTintColor="rgba(53, 130, 63, 0.35)"
-            style={
-              Array [
-                Object {
-                  "height": 31,
-                  "width": 51,
-                },
-                Object {
-                  "backgroundColor": "#D3D3D3",
-                  "borderRadius": 16,
-                },
-              ]
-            }
-            testID="com.ariesbifold:id/ToggleBiometrics"
-            thumbTintColor="#42803E"
-            tintColor="#D3D3D3"
-            value={true}
-          />
+          >
+            <RCTSwitch
+              accessibilityRole="switch"
+              disabled={false}
+              onChange={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              onTintColor="rgba(53, 130, 63, 0.35)"
+              style={
+                Array [
+                  Object {
+                    "height": 31,
+                    "width": 51,
+                  },
+                  Object {
+                    "backgroundColor": "#D3D3D3",
+                    "borderRadius": 16,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/ToggleBiometrics"
+              thumbTintColor="#42803E"
+              tintColor="#D3D3D3"
+              value={true}
+            />
+          </View>
         </View>
       </View>
     </View>

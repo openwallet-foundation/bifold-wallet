@@ -9,7 +9,7 @@ import {
   StatusBar,
   Platform,
   ScrollView,
-  TouchableWithoutFeedback,
+  Pressable,
   DeviceEventEmitter,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -154,7 +154,7 @@ const UseBiometry: React.FC = () => {
             <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <TouchableWithoutFeedback accessibilityLabel={t('Biometry.Toggle')} accessibilityRole={'switch'}>
+            <Pressable accessibilityLabel={t('Biometry.Toggle')} accessibilityRole={'switch'}>
               <Switch
                 testID={testIdWithKey('ToggleBiometrics')}
                 trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
@@ -164,7 +164,7 @@ const UseBiometry: React.FC = () => {
                 value={biometryEnabled}
                 disabled={!biometryAvailable}
               />
-            </TouchableWithoutFeedback>
+            </Pressable>
           </View>
         </View>
       </ScrollView>
