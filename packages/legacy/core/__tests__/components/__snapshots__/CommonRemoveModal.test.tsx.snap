@@ -181,10 +181,88 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
             "marginBottom": 108,
             "marginHorizontal": 20,
             "marginTop": "auto",
+            "position": "relative",
           },
         ]
       }
     >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "position": "absolute",
+            "top": -30,
+            "width": "100%",
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight="30"
+          bbWidth="100%"
+          focusable={false}
+          height="30"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 30,
+                "width": "100%",
+              },
+            ]
+          }
+          width="100%"
+        >
+          <RNSVGGroup>
+            <RNSVGDefs>
+              <RNSVGLinearGradient
+                gradient={
+                  Array [
+                    0,
+                    0,
+                    1,
+                    -16777216,
+                  ]
+                }
+                gradientTransform={null}
+                gradientUnits={0}
+                name="gradient"
+                x1="0%"
+                x2="0%"
+                y1="0%"
+                y2="100%"
+              />
+            </RNSVGDefs>
+            <RNSVGRect
+              fill={
+                Array [
+                  1,
+                  "gradient",
+                ]
+              }
+              height="30"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="100%"
+              x={0}
+              y={0}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
       <View
         style={
           Array [
@@ -511,10 +589,88 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
             "marginBottom": 108,
             "marginHorizontal": 20,
             "marginTop": "auto",
+            "position": "relative",
           },
         ]
       }
     >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "position": "absolute",
+            "top": -30,
+            "width": "100%",
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight="30"
+          bbWidth="100%"
+          focusable={false}
+          height="30"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 30,
+                "width": "100%",
+              },
+            ]
+          }
+          width="100%"
+        >
+          <RNSVGGroup>
+            <RNSVGDefs>
+              <RNSVGLinearGradient
+                gradient={
+                  Array [
+                    0,
+                    0,
+                    1,
+                    -16777216,
+                  ]
+                }
+                gradientTransform={null}
+                gradientUnits={0}
+                name="gradient"
+                x1="0%"
+                x2="0%"
+                y1="0%"
+                y2="100%"
+              />
+            </RNSVGDefs>
+            <RNSVGRect
+              fill={
+                Array [
+                  1,
+                  "gradient",
+                ]
+              }
+              height="30"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="100%"
+              x={0}
+              y={0}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
       <View
         style={
           Array [
@@ -850,10 +1006,88 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
             "marginBottom": 108,
             "marginHorizontal": 20,
             "marginTop": "auto",
+            "position": "relative",
           },
         ]
       }
     >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "position": "absolute",
+            "top": -30,
+            "width": "100%",
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight="30"
+          bbWidth="100%"
+          focusable={false}
+          height="30"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 30,
+                "width": "100%",
+              },
+            ]
+          }
+          width="100%"
+        >
+          <RNSVGGroup>
+            <RNSVGDefs>
+              <RNSVGLinearGradient
+                gradient={
+                  Array [
+                    0,
+                    0,
+                    1,
+                    -16777216,
+                  ]
+                }
+                gradientTransform={null}
+                gradientUnits={0}
+                name="gradient"
+                x1="0%"
+                x2="0%"
+                y1="0%"
+                y2="100%"
+              />
+            </RNSVGDefs>
+            <RNSVGRect
+              fill={
+                Array [
+                  1,
+                  "gradient",
+                ]
+              }
+              height="30"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="100%"
+              x={0}
+              y={0}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
       <View
         style={
           Array [
@@ -1397,10 +1631,88 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
             "marginBottom": 108,
             "marginHorizontal": 20,
             "marginTop": "auto",
+            "position": "relative",
           },
         ]
       }
     >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "position": "absolute",
+            "top": -30,
+            "width": "100%",
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight="30"
+          bbWidth="100%"
+          focusable={false}
+          height="30"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 30,
+                "width": "100%",
+              },
+            ]
+          }
+          width="100%"
+        >
+          <RNSVGGroup>
+            <RNSVGDefs>
+              <RNSVGLinearGradient
+                gradient={
+                  Array [
+                    0,
+                    0,
+                    1,
+                    -16777216,
+                  ]
+                }
+                gradientTransform={null}
+                gradientUnits={0}
+                name="gradient"
+                x1="0%"
+                x2="0%"
+                y1="0%"
+                y2="100%"
+              />
+            </RNSVGDefs>
+            <RNSVGRect
+              fill={
+                Array [
+                  1,
+                  "gradient",
+                ]
+              }
+              height="30"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="100%"
+              x={0}
+              y={0}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
       <View
         style={
           Array [
@@ -2049,10 +2361,88 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             "marginBottom": 108,
             "marginHorizontal": 20,
             "marginTop": "auto",
+            "position": "relative",
           },
         ]
       }
     >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "position": "absolute",
+            "top": -30,
+            "width": "100%",
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight="30"
+          bbWidth="100%"
+          focusable={false}
+          height="30"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 30,
+                "width": "100%",
+              },
+            ]
+          }
+          width="100%"
+        >
+          <RNSVGGroup>
+            <RNSVGDefs>
+              <RNSVGLinearGradient
+                gradient={
+                  Array [
+                    0,
+                    0,
+                    1,
+                    -16777216,
+                  ]
+                }
+                gradientTransform={null}
+                gradientUnits={0}
+                name="gradient"
+                x1="0%"
+                x2="0%"
+                y1="0%"
+                y2="100%"
+              />
+            </RNSVGDefs>
+            <RNSVGRect
+              fill={
+                Array [
+                  1,
+                  "gradient",
+                ]
+              }
+              height="30"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="100%"
+              x={0}
+              y={0}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
       <View
         style={
           Array [
@@ -2596,10 +2986,88 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
             "marginBottom": 108,
             "marginHorizontal": 20,
             "marginTop": "auto",
+            "position": "relative",
           },
         ]
       }
     >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "position": "absolute",
+            "top": -30,
+            "width": "100%",
+          }
+        }
+      >
+        <RNSVGSvgView
+          bbHeight="30"
+          bbWidth="100%"
+          focusable={false}
+          height="30"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "flex": 0,
+                "height": 30,
+                "width": "100%",
+              },
+            ]
+          }
+          width="100%"
+        >
+          <RNSVGGroup>
+            <RNSVGDefs>
+              <RNSVGLinearGradient
+                gradient={
+                  Array [
+                    0,
+                    0,
+                    1,
+                    -16777216,
+                  ]
+                }
+                gradientTransform={null}
+                gradientUnits={0}
+                name="gradient"
+                x1="0%"
+                x2="0%"
+                y1="0%"
+                y2="100%"
+              />
+            </RNSVGDefs>
+            <RNSVGRect
+              fill={
+                Array [
+                  1,
+                  "gradient",
+                ]
+              }
+              height="30"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="100%"
+              x={0}
+              y={0}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
       <View
         style={
           Array [
