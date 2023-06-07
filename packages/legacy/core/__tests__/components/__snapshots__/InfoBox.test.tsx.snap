@@ -33,6 +33,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [
@@ -242,6 +243,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [
@@ -451,6 +453,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [
@@ -660,6 +663,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [

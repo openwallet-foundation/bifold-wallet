@@ -51,6 +51,7 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
           }
         >
           <Text
+            accessible={false}
             allowFontScaling={false}
             style={
               Array [
@@ -224,6 +225,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           }
         >
           <Text
+            accessible={false}
             allowFontScaling={false}
             style={
               Array [
