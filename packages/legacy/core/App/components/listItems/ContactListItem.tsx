@@ -81,6 +81,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     },
     timeContainer: {
       paddingVertical: 4,
+      alignSelf: 'center',
     },
   })
 

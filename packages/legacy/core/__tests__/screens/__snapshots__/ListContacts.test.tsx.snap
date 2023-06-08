@@ -172,6 +172,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
                 <View
                   style={
                     Object {
+                      "alignSelf": "center",
                       "paddingVertical": 4,
                     }
                   }
@@ -308,6 +309,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
                 <View
                   style={
                     Object {
+                      "alignSelf": "center",
                       "paddingVertical": 4,
                     }
                   }
