@@ -7,7 +7,12 @@ import {
   RetrievedCredentials,
   IndyCredentialInfo,
   IndyProofFormat,
+  ProofState,
+  ProofExchangeRecord,
+  BasicMessageRecord,
+  CredentialState,
 } from '@aries-framework/core'
+import { BasicMessageRole } from '@aries-framework/core/build/modules/basic-messages/BasicMessageRole'
 import {
   FormatDataMessagePayload,
   FormatRetrievedCredentialOptions,
@@ -21,6 +26,7 @@ import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
+import { Role } from '../types/chat'
 import { Attribute, Predicate, ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
 import { ChildFn } from '../types/tour'
 
@@ -513,4 +519,94 @@ export const getJson = (jsonString: string): Record<string, unknown> | undefined
  */
 export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children is ChildFn<T> {
   return typeof children === 'function'
+}
+
+export function getCredentialEventRole(record: CredentialExchangeRecord) {
+  switch (record.state) {
+    // assuming only Holder states are supported here
+    case CredentialState.ProposalSent:
+      return Role.me
+    case CredentialState.OfferReceived:
+      return Role.them
+    case CredentialState.RequestSent:
+      return Role.me
+    case CredentialState.Declined:
+      return Role.me
+    case CredentialState.CredentialReceived:
+      return Role.me
+    case CredentialState.Done:
+      return Role.me
+    default:
+      return Role.me
+  }
+}
+
+export function getCredentialEventLabel(record: CredentialExchangeRecord) {
+  switch (record.state) {
+    // assuming only Holder states are supported here
+    case CredentialState.ProposalSent:
+      return 'Chat.CredentialProposalSent'
+    case CredentialState.OfferReceived:
+      return 'Chat.CredentialOfferReceived'
+    case CredentialState.RequestSent:
+      return 'Chat.CredentialRequestSent'
+    case CredentialState.Declined:
+      return 'Chat.CredentialDeclined'
+    case CredentialState.CredentialReceived:
+    case CredentialState.Done:
+      return 'Chat.CredentialReceived'
+    default:
+      return ''
+  }
+}
+
+export function getProofEventRole(record: ProofExchangeRecord) {
+  switch (record.state) {
+    case ProofState.RequestSent:
+      return Role.me
+    case ProofState.ProposalReceived:
+      return Role.me
+    case ProofState.PresentationReceived:
+      return Role.them
+    case ProofState.RequestReceived:
+      return Role.me
+    case ProofState.ProposalSent:
+    case ProofState.PresentationSent:
+      return Role.me
+    case ProofState.Declined:
+      return Role.me
+    case ProofState.Abandoned:
+      return Role.them
+    case ProofState.Done:
+      return record.isVerified !== undefined ? Role.them : Role.me
+    default:
+      return Role.me
+  }
+}
+
+export function getProofEventLabel(record: ProofExchangeRecord) {
+  switch (record.state) {
+    case ProofState.RequestSent:
+    case ProofState.ProposalReceived:
+      return 'Chat.ProofRequestSent'
+    case ProofState.PresentationReceived:
+      return 'Chat.ProofPresentationReceived'
+    case ProofState.RequestReceived:
+      return 'Chat.ProofRequestReceived'
+    case ProofState.ProposalSent:
+    case ProofState.PresentationSent:
+      return 'Chat.ProofRequestSatisfied'
+    case ProofState.Declined:
+      return 'Chat.ProofRequestRejected'
+    case ProofState.Abandoned:
+      return 'Chat.ProofRequestRejectReceived'
+    case ProofState.Done:
+      return record.isVerified !== undefined ? 'Chat.ProofPresentationReceived' : 'Chat.ProofRequestSatisfied'
+    default:
+      return ''
+  }
+}
+
+export function getMessageEventRole(record: BasicMessageRecord) {
+  return record.role === BasicMessageRole.Sender ? Role.me : Role.them
 }

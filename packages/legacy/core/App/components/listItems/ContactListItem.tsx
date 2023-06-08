@@ -1,16 +1,34 @@
-import type { ConnectionRecord } from '@aries-framework/core'
+import type {
+  BasicMessageRecord,
+  ConnectionRecord,
+  CredentialExchangeRecord,
+  ProofExchangeRecord,
+} from '@aries-framework/core'
 
+import { useBasicMessagesByConnectionId } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
+import { useCredentialsByConnectionId } from '../../hooks/credentials'
+import { useProofsByConnectionId } from '../../hooks/proofs'
+import { Role } from '../../types/chat'
 import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
-import { formatTime } from '../../utils/helpers'
+import {
+  formatTime,
+  getCredentialEventLabel,
+  getCredentialEventRole,
+  getProofEventLabel,
+  getProofEventRole,
+} from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import Text from '../texts/Text'
 
+interface CondensedMessage {
+  text: string
+  createdAt: Date
+}
 interface Props {
   contact: ConnectionRecord
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
@@ -18,7 +36,12 @@ interface Props {
 
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { TextTheme, ColorPallet, ListItems } = useTheme()
+  const connectionId = contact.id
+  const basicMessages = useBasicMessagesByConnectionId(connectionId)
+  const credentials = useCredentialsByConnectionId(connectionId)
+  const proofs = useProofsByConnectionId(connectionId)
+  const [message, setMessage] = useState('')
 
   const styles = StyleSheet.create({
     container: {
@@ -32,7 +55,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       width: 50,
       height: 50,
       borderRadius: 25,
-      borderColor: ColorPallet.brand.secondary,
+      borderColor: ListItems.avatarCircle.borderColor,
       borderWidth: 1,
       marginRight: 16,
     },
@@ -41,12 +64,17 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       textAlign: 'center',
     },
     avatarImage: {
-      width: 30,
-      height: 30,
+      width: 40,
+      height: 40,
     },
     contactNameContainer: {
       flex: 1,
       paddingVertical: 4,
+    },
+    nameAndTimeContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      flex: 1,
     },
     contactNameText: {
       ...TextTheme.labelTitle,
@@ -55,6 +83,41 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       paddingVertical: 4,
     },
   })
+
+  useEffect(() => {
+    const transformedMessages: Array<CondensedMessage> = basicMessages.map((record: BasicMessageRecord) => {
+      return {
+        text: record.content,
+        createdAt: record.updatedAt || record.createdAt,
+      }
+    })
+
+    transformedMessages.push(
+      ...credentials.map((record: CredentialExchangeRecord) => {
+        const role = getCredentialEventRole(record)
+        const userLabel = role === Role.me ? t('Chat.UserYou') + ' ' : ''
+        const actionLabel = t(getCredentialEventLabel(record) as any)
+        return {
+          text: userLabel + actionLabel + '.',
+          createdAt: record.updatedAt || record.createdAt,
+        }
+      })
+    )
+
+    transformedMessages.push(
+      ...proofs.map((record: ProofExchangeRecord) => {
+        const role = getProofEventRole(record)
+        const userLabel = role === Role.me ? t('Chat.UserYou') + ' ' : ''
+        const actionLabel = t(getProofEventLabel(record) as any)
+
+        return {
+          text: userLabel + actionLabel + '.',
+          createdAt: record.updatedAt || record.createdAt,
+        }
+      })
+    )
+    setMessage(transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)[0]?.text || '')
+  }, [basicMessages, credentials, proofs])
 
   const navigateToContact = useCallback(() => {
     navigation
@@ -81,11 +144,20 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
             <Text style={styles.avatarPlaceholder}>{contactLabelAbbr}</Text>
           )}
         </View>
-        <View style={styles.contactNameContainer}>
-          <Text style={styles.contactNameText}>{contactLabel}</Text>
-        </View>
-        <View style={styles.timeContainer}>
-          <Text>{formatTime(contact.createdAt)}</Text>
+        <View style={{ flex: 1 }}>
+          <View style={styles.nameAndTimeContainer}>
+            <View style={styles.contactNameContainer}>
+              <Text style={styles.contactNameText}>{contactLabel}</Text>
+            </View>
+            <View style={styles.timeContainer}>
+              <Text>{formatTime(contact.createdAt)}</Text>
+            </View>
+          </View>
+          <View>
+            <Text style={TextTheme.normal} numberOfLines={1} ellipsizeMode={'tail'}>
+              {message}
+            </Text>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
