@@ -1,5 +1,4 @@
 import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
-import { IndySdkToAskarMigrationUpdater } from '@aries-framework/indy-sdk-to-askar-migration'
 import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -7,9 +6,8 @@ import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
-import * as RNFS from 'react-native-fs'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -30,6 +28,7 @@ import {
   Tours as ToursState,
 } from '../types/state'
 import { getAgentModules } from '../utils/agent'
+import { migrateToAskar } from '../utils/migration'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
@@ -219,16 +218,7 @@ const Splash: React.FC = () => {
         if (!didMigrateToAskar(store.migration)) {
           newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
 
-          // The backup file is kept in case anything goes wrong. this will allow us to release patches and still update the
-          // original indy-sdk database in a future version we could manually add a check to remove the old file from storage.
-          const base = Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath : RNFS.ExternalDirectoryPath
-          const dbPath = `${base}/.indy_client/wallet/${credentials.id}/sqlite.db`
-
-          const updater = await IndySdkToAskarMigrationUpdater.initialize({
-            dbPath,
-            agent: newAgent,
-          })
-          await updater.update()
+          await migrateToAskar(credentials.id, credentials.key, newAgent)
 
           newAgent.config.logger.debug('Successfully finished updating agent to Aries Askar')
           // Store that we migrated to askar.
