@@ -37,10 +37,9 @@ interface Props {
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet, ListItems } = useTheme()
-  const connectionId = contact.id
-  const basicMessages = useBasicMessagesByConnectionId(connectionId)
-  const credentials = useCredentialsByConnectionId(connectionId)
-  const proofs = useProofsByConnectionId(connectionId)
+  const basicMessages = useBasicMessagesByConnectionId(contact.id)
+  const credentials = useCredentialsByConnectionId(contact.id)
+  const proofs = useProofsByConnectionId(contact.id)
   const [message, setMessage] = useState('')
 
   const styles = StyleSheet.create({
@@ -64,8 +63,8 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       textAlign: 'center',
     },
     avatarImage: {
-      width: 40,
-      height: 40,
+      width: 30,
+      height: 30,
     },
     contactNameContainer: {
       flex: 1,
@@ -96,10 +95,10 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     transformedMessages.push(
       ...credentials.map((record: CredentialExchangeRecord) => {
         const role = getCredentialEventRole(record)
-        const userLabel = role === Role.me ? t('Chat.UserYou') + ' ' : ''
+        const userLabel = role === Role.me ? `${t('Chat.UserYou')} ` : ''
         const actionLabel = t(getCredentialEventLabel(record) as any)
         return {
-          text: userLabel + actionLabel + '.',
+          text: `${userLabel}${actionLabel}.`,
           createdAt: record.updatedAt || record.createdAt,
         }
       })
@@ -108,16 +107,16 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     transformedMessages.push(
       ...proofs.map((record: ProofExchangeRecord) => {
         const role = getProofEventRole(record)
-        const userLabel = role === Role.me ? t('Chat.UserYou') + ' ' : ''
+        const userLabel = role === Role.me ? `${t('Chat.UserYou')} ` : ''
         const actionLabel = t(getProofEventLabel(record) as any)
 
         return {
-          text: userLabel + actionLabel + '.',
+          text: `${userLabel}${actionLabel}.`,
           createdAt: record.updatedAt || record.createdAt,
         }
       })
     )
-    setMessage(transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)[0]?.text || '')
+    setMessage(transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)[0]?.text ?? '')
   }, [basicMessages, credentials, proofs])
 
   const navigateToContact = useCallback(() => {
