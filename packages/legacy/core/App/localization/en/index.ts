@@ -323,7 +323,7 @@ const translation = {
     "ScanQRComment": "with your digital wallet to make a connection.",
     "MakingConnection": "Making connection...",
     "ConnectionCompleted": "Connection completed!",
-    "Toggle": "Toggle connection inviter capability",
+    "Toggle": "Toggle Connection Inviter Capability",
     "UseConnectionInviterCapability": "Use connection inviter capability?",
     "OpenContact": "Open Contact",
   },
@@ -515,7 +515,7 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
-    "Toggle": "Toggle Verifier capability",
+    "Toggle": "Toggle Verifier Capability",
     "ProcessingProof": "Just a moment...",
     "ZeroKnowledgeProof": "Zero-knowledge proof",
     "Parameterizable": "Parameterizable",
@@ -545,7 +545,7 @@ const translation = {
     'TutorialStep1Description': 'You will connect with the other person. They will receive a proof request.',
     "InvalidPredicateValueTitle": "Invalid value for {{ predicate }}",
     "InvalidPredicateValueDetails": "Must be a number",
-    "ConnectionLessLabel": "Anonymous"
+    "ConnectionLessLabel": "Anonymous",
   }
 }
 
