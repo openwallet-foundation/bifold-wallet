@@ -5,7 +5,7 @@ import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 import ContactListItem from '../components/listItems/ContactListItem'
-import EmptyList from '../components/misc/EmptyList'
+import EmptyListContacts from '../components/misc/EmptyListContacts'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens } from '../types/navigators'
@@ -41,7 +41,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
         ItemSeparatorComponent={() => <View style={style.itemSeparator} />}
         keyExtractor={(connection) => connection.id}
         renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
-        ListEmptyComponent={() => <EmptyList />}
+        ListEmptyComponent={() => <EmptyListContacts navigation={navigation} />}
       />
     </View>
   )

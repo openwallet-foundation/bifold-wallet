@@ -1,10 +1,11 @@
+import { ConnectionRecord, DidExchangeRole, DidExchangeState } from '@aries-framework/core'
+import { useConnections } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import ListContacts from '../../App/screens/ListContacts'
-import { useConnections } from '@aries-framework/react-hooks'
-import { ConnectionRecord, DidExchangeRole, DidExchangeState } from '@aries-framework/core'
+
 import { ConfigurationContext } from '../../App/contexts/configuration'
+import ListContacts from '../../App/screens/ListContacts'
 import configurationContext from '../contexts/configuration'
 
 jest.mock('@react-navigation/core', () => {

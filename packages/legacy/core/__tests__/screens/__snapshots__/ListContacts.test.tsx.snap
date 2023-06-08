@@ -110,7 +110,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "borderColor": "#FFFFFFFF",
+                  "borderColor": "#FFFFFF",
                   "borderRadius": 25,
                   "borderWidth": 1,
                   "height": 50,
@@ -122,17 +122,12 @@ exports[`ListContacts Component Renders correctly 1`] = `
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 21,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 21,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  }
                 }
               >
                 F
@@ -142,46 +137,66 @@ exports[`ListContacts Component Renders correctly 1`] = `
               style={
                 Object {
                   "flex": 1,
-                  "paddingVertical": 4,
                 }
               }
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 16,
-                      "fontWeight": "bold",
-                    },
-                  ]
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  }
                 }
               >
-                Faber
-              </Text>
-            </View>
-            <View
-              style={
-                Object {
-                  "paddingVertical": 4,
-                }
-              }
-            >
-              <Text
-                style={
-                  Array [
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "paddingVertical": 4,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 16,
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    Faber
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "alignSelf": "center",
+                      "paddingVertical": 4,
+                    }
+                  }
+                >
+                  <Text>
+                    Jan 1, 2020
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <Text
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                  style={
                     Object {
                       "color": "#FFFFFF",
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                Jan 1, 2020
-              </Text>
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    }
+                  }
+                >
+                  
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -232,7 +247,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "borderColor": "#FFFFFFFF",
+                  "borderColor": "#FFFFFF",
                   "borderRadius": 25,
                   "borderWidth": 1,
                   "height": 50,
@@ -244,17 +259,12 @@ exports[`ListContacts Component Renders correctly 1`] = `
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 21,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 21,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  }
                 }
               >
                 B
@@ -264,46 +274,66 @@ exports[`ListContacts Component Renders correctly 1`] = `
               style={
                 Object {
                   "flex": 1,
-                  "paddingVertical": 4,
                 }
               }
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 16,
-                      "fontWeight": "bold",
-                    },
-                  ]
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  }
                 }
               >
-                Bob
-              </Text>
-            </View>
-            <View
-              style={
-                Object {
-                  "paddingVertical": 4,
-                }
-              }
-            >
-              <Text
-                style={
-                  Array [
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "paddingVertical": 4,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 16,
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    Bob
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "alignSelf": "center",
+                      "paddingVertical": 4,
+                    }
+                  }
+                >
+                  <Text>
+                    Jan 1, 2020
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <Text
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                  style={
                     Object {
                       "color": "#FFFFFF",
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                Jan 1, 2020
-              </Text>
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    }
+                  }
+                >
+                  
+                </Text>
+              </View>
             </View>
           </View>
         </View>

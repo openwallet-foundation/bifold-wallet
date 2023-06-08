@@ -6,14 +6,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
+import { Role } from '../../types/chat'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Text from '../texts/Text'
-
-export enum Role {
-  me = 'me',
-  them = 'them',
-}
 
 export interface ChatMessageProps {
   messageProps: React.ComponentProps<typeof Message>

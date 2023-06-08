@@ -27,6 +27,10 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
       marginTop: 30,
       marginHorizontal: 15,
     },
+    fakeLink: {
+      color: ColorPallet.brand.link,
+      textDecorationLine: 'underline',
+    },
   })
 
   const goToContactList = () => {
@@ -44,15 +48,16 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
           style={{ marginTop: 15, flexGrow: 0 }}
           scrollEnabled={false}
           data={[
-            { key: t('WhatAreContacts.ListItemCredentialUpdates') },
+            { key: t('WhatAreContacts.ListItemDirectMessage') },
             { key: t('WhatAreContacts.ListItemNewCredentials') },
-            { key: t('WhatAreContacts.ListItemProofRequest') },
+            { key: t('WhatAreContacts.ListItemNotifiedOfUpdates') },
+            { key: t('WhatAreContacts.ListItemRequest') },
           ]}
           renderItem={({ item }) => {
             return (
               <View style={{ marginBottom: 10, flexDirection: 'row' }}>
                 <Text style={{ ...TextTheme.normal, marginRight: 5 }}>{'\u2022'}</Text>
-                <Text style={TextTheme.normal}>{item.key}</Text>
+                <Text style={[TextTheme.normal, { flexShrink: 1, flexWrap: 'wrap' }]}>{item.key}</Text>
               </View>
             )
           }}
@@ -60,11 +65,10 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}></View>
         <Text style={TextTheme.normal}>
           {t('WhatAreContacts.RemoveContacts') + ' '}
-          <Text onPress={goToContactList} style={{ ...TextTheme.normal, color: ColorPallet.brand.link }}>
+          <Text onPress={goToContactList} style={[TextTheme.normal, styles.fakeLink]}>
             {t('WhatAreContacts.ContactsLink')}.
           </Text>
         </Text>
-        <Text style={{ ...TextTheme.normal, marginTop: 10 }}>{t('WhatAreContacts.ContactSharing')}</Text>
       </View>
     </SafeAreaView>
   )
