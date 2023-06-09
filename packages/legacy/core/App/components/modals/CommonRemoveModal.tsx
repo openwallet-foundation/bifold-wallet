@@ -133,6 +133,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       return t('ContactDetails.RemoveContact')
     }
 
+    if (usage === ModalUsage.ContactRemoveWithCredentials) {
+      return t('ContactDetails.GoToCredentials')
+    }
+
     if (usage === ModalUsage.CredentialRemove) {
       return t('CredentialDetails.RemoveFromWallet')
     }
@@ -145,6 +149,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       return t('ContactDetails.RemoveContact')
     }
 
+    if (usage === ModalUsage.ContactRemoveWithCredentials) {
+      return t('ContactDetails.GoToCredentials')
+    }
+
     if (usage === ModalUsage.CredentialRemove) {
       return t('CredentialDetails.RemoveCredential')
     }
@@ -153,6 +161,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   }
 
   const testIdForConformationButton = (): string => {
+    if (usage === ModalUsage.ContactRemoveWithCredentials) {
+      return testIdWithKey('GoToCredentialsButton')
+    }
+
     if (usage === ModalUsage.ContactRemove || usage === ModalUsage.CredentialRemove) {
       return testIdWithKey('ConfirmRemoveButton')
     }
@@ -167,6 +179,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   const testIdForCancelButton = (): string => {
     if (usage === ModalUsage.ContactRemove || usage === ModalUsage.CredentialRemove) {
       return testIdWithKey('CancelRemoveButton')
+    }
+
+    if (usage === ModalUsage.ContactRemoveWithCredentials) {
+      return testIdWithKey('AbortGoToCredentialsButton')
     }
 
     if (usage === ModalUsage.CredentialOfferDecline || usage === ModalUsage.ProofRequestDecline) {
@@ -265,6 +281,19 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       )
     }
 
+    if (type === ModalUsage.ContactRemoveWithCredentials) {
+      return (
+        <View style={[{ marginBottom: 25 }]}>
+          <View style={[{ marginBottom: 25 }]}>
+            <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.UnableToRemoveTitle')}</Text>
+          </View>
+          <View>
+            <Text style={[styles.bodyText]}>{t('ContactDetails.UnableToRemoveCaption')}</Text>
+          </View>
+        </View>
+      )
+    }
+
     return null
   }
 
@@ -301,7 +330,9 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               accessibilityLabel={titleForAccessibilityLabel()}
               testID={testIdForConformationButton()}
               onPress={onSubmit}
-              buttonType={ButtonType.ModalCritical}
+              buttonType={
+                usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
+              }
             />
           </View>
           <View style={[{ paddingTop: 10 }]}>
