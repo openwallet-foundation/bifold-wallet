@@ -31,6 +31,10 @@ interface AttributeValueParams {
   style?: Record<string, unknown>
 }
 
+const isDataUrl = (value: string | number | null) => {
+  return typeof value === 'string' && value.startsWith('data:image/')
+}
+
 export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, shown }) => {
   const { ListItems } = useTheme()
   const styles = StyleSheet.create({
@@ -38,8 +42,7 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
       ...ListItems.recordAttributeText,
     },
   })
-
-  if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
+  if ((field.encoding == validEncoding && field.format && validFormat.test(field.format)) || isDataUrl(field.value)) {
     return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
   }
   if (field.type == BaseType.DateInt) {
