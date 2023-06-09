@@ -4,6 +4,7 @@ import { SvgProps } from 'react-native-svg'
 import Arrow from './assets/icons/large-arrow.svg'
 import AppLockout from './assets/img/app-lockout.svg'
 import Biometrics from './assets/img/biometrics.svg'
+import ContactBook from './assets/img/contact-book.svg'
 import CredentialDeclined from './assets/img/credential-declined.svg'
 import DeleteNotification from './assets/img/delete-notification.svg'
 import EmptyWallet from './assets/img/empty-wallet.svg'
@@ -13,6 +14,7 @@ import ProofRequestDeclined from './assets/img/proof-declined.svg'
 export interface ISVGAssets {
   appLockout: React.FC<SvgProps>
   biometrics: React.FC<SvgProps>
+  contactBook: React.FC<SvgProps>
   credentialDeclined: React.FC<SvgProps>
   deleteNotification: React.FC<SvgProps>
   emptyWallet: React.FC<SvgProps>
@@ -779,6 +781,7 @@ export const Assets = {
     credentialDeclined: CredentialDeclined,
     deleteNotification: DeleteNotification,
     emptyWallet: EmptyWallet,
+    contactBook: ContactBook,
     logo: Logo,
     proofRequestDeclined: ProofRequestDeclined,
     arrow: Arrow,

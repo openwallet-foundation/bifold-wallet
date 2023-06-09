@@ -224,8 +224,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
     <View style={[styles.section, styles.sectionHeader]}>
-      <Icon name={icon} size={24} style={{ marginRight: 10, color: SettingsTheme.iconColor }} />
-      <Text style={[TextTheme.headingThree, { flexShrink: 1 }]}>{title}</Text>
+      <Icon accessible={false} name={icon} size={24} style={{ marginRight: 10, color: SettingsTheme.iconColor }} />
+      <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
+        {title}
+      </Text>
     </View>
   )
 

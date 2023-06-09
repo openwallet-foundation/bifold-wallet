@@ -2,8 +2,7 @@ import React from 'react'
 import { Text, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
-
-import { Role } from './ChatMessage'
+import { Role } from '../../types/chat'
 
 interface ChatEventProps {
   userLabel?: string
