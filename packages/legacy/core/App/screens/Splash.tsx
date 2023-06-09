@@ -28,13 +28,11 @@ import {
   Tours as ToursState,
 } from '../types/state'
 import { getAgentModules } from '../utils/agent'
-import { migrateToAskar } from '../utils/migration'
+import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
 }
-
-const didMigrateToAskar = (state: MigrationState) => state.didMigrateToAskar
 
 const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
   if (state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && !state.didConsiderBiometry) {

@@ -23,7 +23,7 @@ import {
 } from '../services/keychain'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
-import { migrateToAskar } from '../utils/migration'
+import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
 export interface AuthContext {
   checkPIN: (PIN: string) => Promise<boolean>
@@ -95,7 +95,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       const hash = await hashPIN(PIN, secret.salt)
 
-      if (!store.migration.didMigrateToAskar) {
+      if (!didMigrateToAskar(store.migration)) {
         await migrateToAskar(secret.id, hash)
         dispatch({
           type: DispatchAction.DID_MIGRATE_TO_ASKAR,
