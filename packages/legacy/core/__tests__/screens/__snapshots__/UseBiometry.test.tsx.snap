@@ -141,6 +141,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
+            testID="com.ariesbifold:id/ToggleBiometrics"
           >
             <RCTSwitch
               accessibilityRole="switch"
@@ -161,7 +162,6 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                   },
                 ]
               }
-              testID="com.ariesbifold:id/ToggleBiometrics"
               thumbTintColor="#606060"
               tintColor="#D3D3D3"
               value={false}
@@ -809,6 +809,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
+            testID="com.ariesbifold:id/ToggleBiometrics"
           >
             <RCTSwitch
               accessibilityRole="switch"
@@ -829,7 +830,6 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                   },
                 ]
               }
-              testID="com.ariesbifold:id/ToggleBiometrics"
               thumbTintColor="#606060"
               tintColor="#D3D3D3"
               value={false}
@@ -1500,6 +1500,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
+            testID="com.ariesbifold:id/ToggleBiometrics"
           >
             <RCTSwitch
               accessibilityRole="switch"
@@ -1520,10 +1521,9 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                   },
                 ]
               }
-              testID="com.ariesbifold:id/ToggleBiometrics"
-              thumbTintColor="#42803E"
+              thumbTintColor="#606060"
               tintColor="#D3D3D3"
-              value={true}
+              value={false}
             />
           </View>
         </View>
