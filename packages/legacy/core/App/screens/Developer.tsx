@@ -73,9 +73,9 @@ const Developer: React.FC = () => {
           style={styles.settingSwitchContainer}
           accessibilityLabel={t('Verifier.Toggle')}
           accessibilityRole={'switch'}
+          testID={testIdWithKey('ToggleVerifierCapability')}
         >
           <Switch
-            testID={testIdWithKey('ToggleVerifierCapability')}
             trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
             thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
@@ -92,9 +92,9 @@ const Developer: React.FC = () => {
           style={styles.settingSwitchContainer}
           accessibilityLabel={t('Connection.Toggle')}
           accessibilityRole={'switch'}
+          testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
         >
           <Switch
-            testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
             trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
             thumbColor={useConnectionInviterCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}

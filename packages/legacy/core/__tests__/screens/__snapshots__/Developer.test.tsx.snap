@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Developer screen screen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "borderColor": "#42803E",
+      "borderRadius": 3,
+      "borderWidth": 1,
+      "marginHorizontal": 20,
+      "marginTop": 50,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        },
+        Object {
+          "margin": 10,
+        },
+      ]
+    }
+  >
+    Place content here you would like to make available to developers when developer mode is enabled.
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginHorizontal": 10,
+        "marginVertical": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={false}
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "bold",
+            "marginRight": 10,
+            "textAlign": "left",
+          }
+        }
+      >
+        Verifier.UseVerifierCapability
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Verifier.Toggle"
+      accessibilityRole="switch"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "justifyContent": "center",
+        }
+      }
+      testID="com.ariesbifold:id/ToggleVerifierCapability"
+    >
+      <RCTSwitch
+        accessibilityRole="switch"
+        onChange={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        onTintColor="rgba(53, 130, 63, 0.35)"
+        style={
+          Array [
+            Object {
+              "height": 31,
+              "width": 51,
+            },
+            Object {
+              "backgroundColor": "#D3D3D3",
+              "borderRadius": 16,
+            },
+          ]
+        }
+        thumbTintColor="#606060"
+        tintColor="#D3D3D3"
+        value={false}
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginHorizontal": 10,
+        "marginVertical": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "bold",
+            "marginRight": 10,
+            "textAlign": "left",
+          }
+        }
+      >
+        Connection.UseConnectionInviterCapability
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Connection.Toggle"
+      accessibilityRole="switch"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "justifyContent": "center",
+        }
+      }
+      testID="com.ariesbifold:id/ToggleConnectionInviterCapabilitySwitch"
+    >
+      <RCTSwitch
+        accessibilityRole="switch"
+        onChange={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        onTintColor="rgba(53, 130, 63, 0.35)"
+        style={
+          Array [
+            Object {
+              "height": 31,
+              "width": 51,
+            },
+            Object {
+              "backgroundColor": "#D3D3D3",
+              "borderRadius": 16,
+            },
+          ]
+        }
+        thumbTintColor="#606060"
+        tintColor="#D3D3D3"
+        value={false}
+      />
+    </View>
+  </View>
+</View>
+`;
