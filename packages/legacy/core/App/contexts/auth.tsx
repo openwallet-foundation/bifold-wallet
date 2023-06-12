@@ -23,6 +23,7 @@ import {
 } from '../services/keychain'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
+import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
 export interface AuthContext {
   checkPIN: (PIN: string) => Promise<boolean>
@@ -38,7 +39,7 @@ export const AuthContext = createContext<AuthContext>(null as unknown as AuthCon
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const { t } = useTranslation()
 
   const setPIN = async (PIN: string): Promise<void> => {
@@ -85,14 +86,22 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   const checkPIN = async (PIN: string): Promise<boolean> => {
-    const secret = await loadWalletSalt()
-
-    if (!secret || !secret.salt) {
-      return false
-    }
-
-    const hash = await hashPIN(PIN, secret.salt)
     try {
+      const secret = await loadWalletSalt()
+
+      if (!secret || !secret.salt) {
+        return false
+      }
+
+      const hash = await hashPIN(PIN, secret.salt)
+
+      if (!didMigrateToAskar(store.migration)) {
+        await migrateToAskar(secret.id, hash)
+        dispatch({
+          type: DispatchAction.DID_MIGRATE_TO_ASKAR,
+        })
+      }
+
       // NOTE: a custom wallet is used to check if the wallet key is correct. This is different from the wallet used in the rest of the app.
       // We create an AskarWallet instance and open the wallet with the given secret.
       const askarWallet = new AskarWallet(
