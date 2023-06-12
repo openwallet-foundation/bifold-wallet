@@ -216,7 +216,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         const credNamesInAttrs = fields[proofKey].map((attr) =>
           parseCredDefFromId(attr.credentialInfo?.credentialDefinitionId, attr.credentialInfo?.schemaId)
         )
-        if (credNamesInAttrs.includes(startCase(credName))) {
+        if (credNamesInAttrs.includes(startCase(credName)) || credNamesInAttrs.includes(credName)) {
           credFound = true
           return
         }
