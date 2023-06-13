@@ -463,6 +463,9 @@ const translation = {
     "LedgerConnectivityIssueTitle": "Serviços de Carteira",
     "LedgerConnectivityIssueMessage": "Um firewall pode estar te impedindo de conectar-se a serviços relacionados a carteira.",
   },
+  "Onboarding": {
+    "SkipA11y": "Skip introduction to Aries Bifold (PT-BR)",
+  },
   "Chat": {
     "OpenItem": "Abrir",
     "UserYou": "Você",

@@ -498,6 +498,9 @@ const translation = {
     "LedgerConnectivityIssueTitle": "Wallet Services",
     "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services.",
   },
+  "Onboarding": {
+    "SkipA11y": "Skip introduction to Aries Bifold",
+  },
   "Chat": {
     "OpenItem": "Open",
     "UserYou": "You",
