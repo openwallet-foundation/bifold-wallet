@@ -488,6 +488,9 @@ const translation = {
         "LedgerConnectivityIssueTitle": "Services de portefeuille",
         "LedgerConnectivityIssueMessage": "Il se peut qu'un pare-feu vous empêche de vous connecter aux services liés au portefeuille.",
     },
+    "Onboarding": {
+        "SkipA11y": "Skip introduction to Aries Bifold (FR)",
+    },
     "Chat": {
         "OpenItem": "Ouvrir",
         "UserYou": "Vous avez",

@@ -12,7 +12,6 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-// import HeaderRight from 'components/buttons/HeaderRightSkip'
 
 const { width } = Dimensions.get('window')
 
@@ -106,11 +105,11 @@ const Onboarding: React.FC<OnboardingProps> = ({
         headerRight: () => (
           <HeaderButton
             buttonLocation={ButtonLocation.Right}
-            accessibilityLabel={t('Tour.Skip')}
+            accessibilityLabel={t('Onboarding.SkipA11y')}
             testID={testIdWithKey('Skip')}
             onPress={onSkipTouched}
             icon="chevron-right"
-            text={t('Tour.Skip')}
+            text={t('Global.Skip')}
           />
         ),
       })
