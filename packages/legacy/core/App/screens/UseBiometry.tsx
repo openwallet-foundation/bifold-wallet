@@ -113,9 +113,8 @@ const UseBiometry: React.FC = () => {
     // If successfully authenticated the toggle may proceed.
     if (status) {
       setBiometryEnabled((previousState) => !previousState)
-      DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     }
-
+    DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     setCanSeeCheckPIN(false)
   }
 
