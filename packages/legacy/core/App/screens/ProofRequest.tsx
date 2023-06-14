@@ -12,7 +12,6 @@ import {
   GetFormatDataReturn,
 } from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import { useAgent, useConnectionById, useProofById, useCredentials } from '@aries-framework/react-hooks'
-import startCase from 'lodash.startcase'
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Text, DeviceEventEmitter, FlatList } from 'react-native'
@@ -32,7 +31,6 @@ import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { ModalUsage } from '../types/remove'
-import { parseCredDefFromId } from '../utils/cred-def'
 import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -204,19 +202,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
-  const hasAvailableCredentials = (credName?: string): boolean => {
+  const hasAvailableCredentials = (credDefId?: string): boolean => {
     const fields: Fields = {
       ...retrievedCredentials?.requestedAttributes,
       ...retrievedCredentials?.requestedPredicates,
     }
 
-    if (credName) {
+    if (credDefId) {
       let credFound = false
       Object.keys(fields).forEach((proofKey) => {
-        const credNamesInAttrs = fields[proofKey].map((attr) =>
-          parseCredDefFromId(attr.credentialInfo?.credentialDefinitionId, attr.credentialInfo?.schemaId)
-        )
-        if (credNamesInAttrs.includes(startCase(credName))) {
+        const credDefsInAttrs = fields[proofKey].map((attr) => attr.credentialInfo?.credentialDefinitionId)
+        if (credDefsInAttrs.includes(credDefId)) {
           credFound = true
           return
         }
@@ -344,7 +340,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       </View>
     )
   }
-
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <View style={styles.pageContent}>
@@ -361,7 +356,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   schemaId={item.schemaId}
                   displayItems={[...(item.attributes ?? []), ...(item.predicates ?? [])]}
                   credName={item.credName}
-                  existsInWallet={hasAvailableCredentials(item.credName)}
+                  existsInWallet={hasAvailableCredentials(item.credDefId)}
                   proof
                 ></CredentialCard>
               </View>
