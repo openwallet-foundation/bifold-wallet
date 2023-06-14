@@ -2,7 +2,7 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, StyleProp, StyleSheet, Text, TextInput, TextStyle, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -31,37 +31,27 @@ interface ProofRequestAttributesCardParams {
   onChangeValue: (schema: string, label: string, name: string, value: string) => void
 }
 
-const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
-  const { ListItems } = useTheme()
+const AttributeItem: React.FC<{ item: Attribute; style?: StyleProp<TextStyle> }> = ({ item, style }) => {
   const [value, setValue] = useState(item.value)
 
   useEffect(() => {
     formatIfDate(item.format, value, setValue)
   }, [])
 
-  const style = StyleSheet.create({
-    attributeTitle: {
-      ...ListItems.requestTemplateTitle,
-      fontWeight: 'bold',
-      fontSize: 18,
-      paddingVertical: 8,
-      marginRight: 8,
-    },
-  })
-
   return (
     <View style={{ flexDirection: 'row' }}>
-      <Text style={style.attributeTitle}>{item.label || item.name}</Text>
-      <Text style={style.attributeTitle}>{value}</Text>
+      <Text style={style}>{item.label || item.name}</Text>
+      <Text style={style}>{value}</Text>
     </View>
   )
 }
 
 const PredicateItem: React.FC<{
   item: Predicate
+  style?: StyleProp<TextStyle>
   onChangeValue: (name: string, value: string) => void
-}> = ({ item, onChangeValue }) => {
-  const { ListItems, ColorPallet } = useTheme()
+}> = ({ item, style, onChangeValue }) => {
+  const { ColorPallet } = useTheme()
   const [pValue, setPValue] = useState(item.pValue)
 
   useEffect(() => {
@@ -71,14 +61,7 @@ const PredicateItem: React.FC<{
     }
   }, [])
 
-  const style = StyleSheet.create({
-    attributeTitle: {
-      ...ListItems.requestTemplateTitle,
-      fontWeight: 'bold',
-      fontSize: 18,
-      paddingVertical: 8,
-      marginRight: 8,
-    },
+  const defaultStyle = StyleSheet.create({
     input: {
       textAlign: 'center',
       borderBottomColor: ColorPallet.grayscale.black,
@@ -88,18 +71,18 @@ const PredicateItem: React.FC<{
 
   return (
     <View style={{ flexDirection: 'row' }}>
-      <Text style={style.attributeTitle}>{item.label || item.name}</Text>
-      <Text style={style.attributeTitle}>{item.pType}</Text>
+      <Text style={style}>{item.label || item.name}</Text>
+      <Text style={style}>{item.pType}</Text>
       {item.parameterizable && (
         <TextInput
           keyboardType="numeric"
-          style={[style.attributeTitle, style.input]}
+          style={[style, defaultStyle.input]}
           onChangeText={(value) => onChangeValue(item.name || '', value)}
         >
           {pValue}
         </TextInput>
       )}
-      {!item.parameterizable && <Text style={style.attributeTitle}>{pValue}</Text>}
+      {!item.parameterizable && <Text style={style}>{pValue}</Text>}
     </View>
   )
 }
@@ -124,13 +107,15 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
       fontSize: 20,
       paddingVertical: 8,
     },
+    attributeTitle: {
+      ...ListItems.requestTemplateTitle,
+      fontWeight: 'bold',
+      fontSize: 18,
+      paddingVertical: 8,
+      marginRight: 8,
+    },
     attributesList: {
       paddingLeft: 14,
-    },
-    attributesDelimiter: {
-      width: '100%',
-      height: 2,
-      backgroundColor: ColorPallet.grayscale.lightGrey,
     },
   })
 
@@ -160,10 +145,6 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
     })
   }, [data.schema])
 
-  const countAttributes = attributes?.length
-
-  const AttributeDelimiter: React.FC = () => <View style={style.attributesDelimiter} />
-
   return (
     <View style={[style.credentialCard]}>
       <Text style={style.schemaTitle}>{meta?.name}</Text>
@@ -171,19 +152,20 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
         style={style.attributesList}
         data={attributes}
         keyExtractor={(record, index) => record.name || index.toString()}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           return (
-            <View>
-              {item instanceof Attribute && <AttributeItem item={item as Attribute} />}
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={style.attributeTitle}>{`\u2022`}</Text>
+              {item instanceof Attribute && <AttributeItem style={style.attributeTitle} item={item as Attribute} />}
               {item instanceof Predicate && (
                 <PredicateItem
                   item={item as Predicate}
+                  style={style.attributeTitle}
                   onChangeValue={(name, value) => {
                     onChangeValue(data.schema, item.label || name, name, value)
                   }}
                 />
               )}
-              {index + 1 !== countAttributes && <AttributeDelimiter />}
             </View>
           )
         }}
