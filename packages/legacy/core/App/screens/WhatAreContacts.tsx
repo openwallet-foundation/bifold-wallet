@@ -1,7 +1,7 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
@@ -25,7 +25,8 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
     },
     pageContent: {
       marginTop: 30,
-      marginHorizontal: 15,
+      paddingLeft: 25,
+      paddingRight: 25,
     },
     fakeLink: {
       color: ColorPallet.brand.link,
@@ -39,37 +40,38 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
       ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
   }
 
+  const bulletPoints = [
+    t('WhatAreContacts.ListItemDirectMessage'),
+    t('WhatAreContacts.ListItemNewCredentials'),
+    t('WhatAreContacts.ListItemNotifiedOfUpdates'),
+    t('WhatAreContacts.ListItemRequest'),
+  ].map((text, index) => {
+    return (
+      <View key={index} style={{ marginBottom: 10, flexDirection: 'row' }}>
+        <Text style={{ ...TextTheme.normal, paddingRight: 5 }}>{'\u2022'}</Text>
+        <Text style={[TextTheme.normal, { flexShrink: 1 }]}>{text}</Text>
+      </View>
+    )
+  })
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.pageContent}>
+      <ScrollView
+        contentContainerStyle={styles.pageContent}
+        directionalLockEnabled
+        automaticallyAdjustContentInsets={false}
+        showsHorizontalScrollIndicator={false}
+      >
         <Text style={styles.title}>{t('WhatAreContacts.Title')}</Text>
         <Text style={TextTheme.normal}>{t('WhatAreContacts.Preamble')}</Text>
-        <FlatList
-          style={{ marginTop: 15, flexGrow: 0 }}
-          scrollEnabled={false}
-          data={[
-            { key: t('WhatAreContacts.ListItemDirectMessage') },
-            { key: t('WhatAreContacts.ListItemNewCredentials') },
-            { key: t('WhatAreContacts.ListItemNotifiedOfUpdates') },
-            { key: t('WhatAreContacts.ListItemRequest') },
-          ]}
-          renderItem={({ item }) => {
-            return (
-              <View style={{ marginBottom: 10, flexDirection: 'row' }}>
-                <Text style={{ ...TextTheme.normal, marginRight: 5 }}>{'\u2022'}</Text>
-                <Text style={[TextTheme.normal, { flexShrink: 1, flexWrap: 'wrap' }]}>{item.key}</Text>
-              </View>
-            )
-          }}
-        />
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}></View>
-        <Text style={TextTheme.normal}>
-          {t('WhatAreContacts.RemoveContacts') + ' '}
+        {bulletPoints}
+        <Text style={[TextTheme.normal, { marginBottom: 30 }]}>
+          {`${t('WhatAreContacts.RemoveContacts')} `}
           <Text onPress={goToContactList} style={[TextTheme.normal, styles.fakeLink]}>
             {t('WhatAreContacts.ContactsLink')}.
           </Text>
         </Text>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

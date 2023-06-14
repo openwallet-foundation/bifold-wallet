@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WhatAreContacts Screen Renders correctly 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#000000",
+      "flex": 1,
+    }
+  }
+>
+  <RCTScrollView
+    automaticallyAdjustContentInsets={false}
+    contentContainerStyle={
+      Object {
+        "marginTop": 30,
+        "paddingLeft": 25,
+        "paddingRight": 25,
+      }
+    }
+    directionalLockEnabled={true}
+    showsHorizontalScrollIndicator={false}
+  >
+    <View>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 32,
+            "fontWeight": "bold",
+            "marginBottom": 15,
+          }
+        }
+      >
+        WhatAreContacts.Title
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          }
+        }
+      >
+        WhatAreContacts.Preamble
+      </Text>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginBottom": 10,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "paddingRight": 5,
+            }
+          }
+        >
+          •
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          WhatAreContacts.ListItemDirectMessage
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginBottom": 10,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "paddingRight": 5,
+            }
+          }
+        >
+          •
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          WhatAreContacts.ListItemNewCredentials
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginBottom": 10,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "paddingRight": 5,
+            }
+          }
+        >
+          •
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          WhatAreContacts.ListItemNotifiedOfUpdates
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginBottom": 10,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "paddingRight": 5,
+            }
+          }
+        >
+          •
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "flexShrink": 1,
+              },
+            ]
+          }
+        >
+          WhatAreContacts.ListItemRequest
+        </Text>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginBottom": 30,
+            },
+          ]
+        }
+      >
+        WhatAreContacts.RemoveContacts 
+        <Text
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "textDecorationLine": "underline",
+              },
+            ]
+          }
+        >
+          WhatAreContacts.ContactsLink
+          .
+        </Text>
+      </Text>
+    </View>
+  </RCTScrollView>
+</RCTSafeAreaView>
+`;
