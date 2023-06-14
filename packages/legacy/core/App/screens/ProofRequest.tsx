@@ -276,7 +276,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     toggleDeclineModalVisible()
-    navigation.goBack()
+    navigation.getParent()?.navigate(Screens.Home)
   }
 
   const proofPageHeader = () => {
