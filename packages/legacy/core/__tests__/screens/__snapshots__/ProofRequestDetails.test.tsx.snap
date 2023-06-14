@@ -208,7 +208,26 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               onLayout={[Function]}
               style={null}
             >
-              <View>
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#000000",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "marginRight": 8,
+                      "paddingVertical": 8,
+                    }
+                  }
+                >
+                  •
+                </Text>
                 <View
                   style={
                     Object {
@@ -241,22 +260,32 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                     }
                   />
                 </View>
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "#D3D3D3",
-                      "height": 2,
-                      "width": "100%",
-                    }
-                  }
-                />
               </View>
             </View>
             <View
               onLayout={[Function]}
               style={null}
             >
-              <View>
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#000000",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "marginRight": 8,
+                      "paddingVertical": 8,
+                    }
+                  }
+                >
+                  •
+                </Text>
                 <View
                   style={
                     Object {
