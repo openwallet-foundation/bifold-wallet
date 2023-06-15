@@ -25,7 +25,7 @@ export const migrateToAskar = async (walletId: string, key: string, agent?: Agen
           key,
         },
         logger: new ConsoleLogger(LogLevel.trace),
-        autoUpdateStorageOnStartup: true,
+        autoUpdateStorageOnStartup: false,
       },
       modules: {
         askar: new AskarModule({
