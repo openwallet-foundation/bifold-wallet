@@ -113,9 +113,8 @@ const UseBiometry: React.FC = () => {
     // If successfully authenticated the toggle may proceed.
     if (status) {
       setBiometryEnabled((previousState) => !previousState)
-      DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     }
-
+    DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     setCanSeeCheckPIN(false)
   }
 
@@ -154,9 +153,13 @@ const UseBiometry: React.FC = () => {
             <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <Pressable accessibilityLabel={t('Biometry.Toggle')} accessibilityRole={'switch'}>
+            <Pressable
+              testID={testIdWithKey('ToggleBiometrics')}
+              accessible
+              accessibilityLabel={t('Biometry.Toggle')}
+              accessibilityRole={'switch'}
+            >
               <Switch
-                testID={testIdWithKey('ToggleBiometrics')}
                 trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
                 thumbColor={biometryEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
                 ios_backgroundColor={ColorPallet.grayscale.lightGrey}

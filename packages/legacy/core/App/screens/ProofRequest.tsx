@@ -7,7 +7,6 @@ import {
 } from '@aries-framework/anoncreds'
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useCredentials, useProofById } from '@aries-framework/react-hooks'
-import startCase from 'lodash.startcase'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
@@ -28,7 +27,6 @@ import { NotificationStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
-import { parseCredDefFromId } from '../utils/cred-def'
 import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -212,19 +210,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
-  const hasAvailableCredentials = (credName?: string): boolean => {
+  const hasAvailableCredentials = (credDefId?: string): boolean => {
     const fields: Fields = {
       ...retrievedCredentials?.attributes,
       ...retrievedCredentials?.predicates,
     }
 
-    if (credName) {
+    if (credDefId) {
       let credFound = false
       Object.keys(fields).forEach((proofKey) => {
-        const credNamesInAttrs = fields[proofKey].map((attr) =>
-          parseCredDefFromId(attr.credentialInfo?.credentialDefinitionId, attr.credentialInfo?.schemaId)
-        )
-        if (credNamesInAttrs.includes(startCase(credName))) {
+        const credDefsInAttrs = fields[proofKey].map((attr) => attr.credentialInfo?.credentialDefinitionId)
+        if (credDefsInAttrs.includes(credDefId)) {
           credFound = true
           return
         }
@@ -287,7 +283,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     toggleDeclineModalVisible()
-    navigation.goBack()
+    navigation.getParent()?.navigate(Screens.Home)
   }
 
   const proofPageHeader = () => {
@@ -355,7 +351,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       </View>
     )
   }
-
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <View style={styles.pageContent}>
@@ -372,7 +367,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   schemaId={item.schemaId}
                   displayItems={[...(item.attributes ?? []), ...(item.predicates ?? [])]}
                   credName={item.credName}
-                  existsInWallet={hasAvailableCredentials(item.credName)}
+                  existsInWallet={hasAvailableCredentials(item.credDefId)}
                   proof
                 ></CredentialCard>
               </View>

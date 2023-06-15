@@ -18,7 +18,7 @@ import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { CredentialMetadata } from '../types/metadata'
+import { CredentialMetadata, customMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../types/oca'
 import { ModalUsage } from '../types/remove'
@@ -52,7 +52,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
-  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
+  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(
+    (credential!.metadata.get(CredentialMetadata.customMetadata) as customMetadata)?.revoked_detail_dismissed ?? false
+  )
 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({
     bundle: undefined,
@@ -150,7 +152,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   useEffect(() => {
     if (credential?.revocationNotification) {
-      credential.metadata.set(CredentialMetadata.customMetadata, { revoked_seen: true })
+      const meta = credential!.metadata.get(CredentialMetadata.customMetadata)
+      credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
       agent?.credentials.update(credential)
     }
   }, [isRevoked])
@@ -186,6 +189,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const handleDismissRevokedMessage = () => {
     setIsRevokedMessageHidden(true)
+    const meta = credential!.metadata.get(CredentialMetadata.customMetadata)
+    credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
+    agent?.credentials.update(credential)
   }
 
   const callOnRemove = useCallback(() => handleOnRemove(), [])
