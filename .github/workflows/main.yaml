@@ -11,8 +11,8 @@ on:
       - 'packages/legacy/app/android/**'
       - '**/package-lock.json'
     types: [opened, synchronize, reopened, labeled]
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
 
 jobs:
   build-ios:
