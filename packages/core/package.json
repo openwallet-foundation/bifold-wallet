@@ -2,7 +2,7 @@
   "name": "@hyperledger/aries-core",
   "main": "build/index",
   "types": "build/index",
-  "version": "0.0.1-alpha.1436+c015ed6",
+  "version": "0.0.0",
   "files": [
     "build",
     "android",
