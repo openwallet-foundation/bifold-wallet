@@ -1,3 +1,8 @@
+/*
+ Original file from Aries Framework JavaScript:
+ located at: https://github.com/hyperledger/aries-framework-javascript
+*/
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import conventionalRecommendedBump from 'conventional-recommended-bump'
