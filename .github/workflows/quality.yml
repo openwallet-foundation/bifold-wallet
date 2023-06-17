@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, labeled]
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   lint:
