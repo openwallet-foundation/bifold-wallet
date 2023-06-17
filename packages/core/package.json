@@ -1,5 +1,5 @@
 {
-  "name": "@hyperledger/aries-core",
+  "name": "@hyperledger/aries-bifold-core",
   "main": "build/index",
   "types": "build/index",
   "version": "0.0.0",
