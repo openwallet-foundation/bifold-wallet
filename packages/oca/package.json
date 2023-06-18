@@ -1,6 +1,6 @@
 {
   "name": "@hyperledger/aries-oca",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "TypeScript implementation of Overlay Capture Architecture (OCA) for styling Aries Verifiable Credentials",
   "main": "build/index.js",
   "types": "build/index.d.ts",
