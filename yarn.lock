@@ -4375,10 +4375,63 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/conventional-changelog-core@npm:*":
+  version: 4.2.2
+  resolution: "@types/conventional-changelog-core@npm:4.2.2"
+  dependencies:
+    "@types/conventional-changelog-writer": "*"
+    "@types/conventional-commits-parser": "*"
+    "@types/conventional-recommended-bump": "*"
+    "@types/git-raw-commits": "*"
+    "@types/node": "*"
+    "@types/normalize-package-data": "*"
+  checksum: 43196917624e402752782e89c3a1597cc2d5c86a2b615cf060fd52b079b914a86b7e844a94cea5fd4afb01d2948ae79a018a731bd80b2dd3455eb2ec3e1a3eb5
+  languageName: node
+  linkType: hard
+
+"@types/conventional-changelog-writer@npm:*":
+  version: 4.0.3
+  resolution: "@types/conventional-changelog-writer@npm:4.0.3"
+  dependencies:
+    "@types/conventional-commits-parser": "*"
+    "@types/node": "*"
+  checksum: c40049890e93cbbee87b5b6d8f8ec9e631215ad71434e6914e59ea5cb2f7c8748e97febf5150f4b90f6cd7b5032a42dc1ed8a6887626f1645b941f606a7d67f8
+  languageName: node
+  linkType: hard
+
+"@types/conventional-commits-parser@npm:*":
+  version: 3.0.3
+  resolution: "@types/conventional-commits-parser@npm:3.0.3"
+  dependencies:
+    "@types/node": "*"
+  checksum: d40c0685380f160ec4c9f4287c03d1ffe9572eb5805865db1e03a31791da0357457ba389b2b532f9daa4aca3315c6344e822d7d619f082338f23ea01e6423e09
+  languageName: node
+  linkType: hard
+
+"@types/conventional-recommended-bump@npm:*, @types/conventional-recommended-bump@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@types/conventional-recommended-bump@npm:6.1.0"
+  dependencies:
+    "@types/conventional-changelog-core": "*"
+    "@types/conventional-changelog-writer": "*"
+    "@types/conventional-commits-parser": "*"
+  checksum: 123c0d7a3b9cbf3e4a55f5d0bc9a889e65ccfc22a88543e43b73fb840c5a9c5b386285e5a1c873d86af405dae94c957b3f2401c8b86ee9dcd880558c8a1c79f3
+  languageName: node
+  linkType: hard
+
 "@types/eslint-visitor-keys@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/eslint-visitor-keys@npm:1.0.0"
   checksum: a90f0b023e357a59ea04268e0387cfb0ea06703068cc48fe2ca97fa158bcf3c51a6611a56bdbdf763e3451150b92bba3fb5d0b689fc55f856cae8555ec366a63
+  languageName: node
+  linkType: hard
+
+"@types/git-raw-commits@npm:*":
+  version: 2.0.1
+  resolution: "@types/git-raw-commits@npm:2.0.1"
+  dependencies:
+    "@types/node": "*"
+  checksum: b5d41433a5201b8fbd475d29d08df77d60a402acfdba9703125eab96449a7040721d698e8bad8debbb3377338e08c3d75faab409e2e2b47b6f0a66f535d1594f
   languageName: node
   linkType: hard
 
@@ -4550,7 +4603,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/normalize-package-data@npm:^2.4.0":
+"@types/normalize-package-data@npm:*, @types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
   checksum: e87bccbf11f95035c89a132b52b79ce69a1e3652fe55962363063c9c0dae0fe2477ebc585e03a9652adc6f381d24ba5589cc5e51849df4ced3d3e004a7d40ed5
@@ -5378,6 +5431,7 @@ __metadata:
   resolution: "aries-bifold-root@workspace:."
   dependencies:
     "@react-native-community/eslint-config": ^2.0.0
+    "@types/conventional-recommended-bump": ^6.1.0
     "@typescript-eslint/eslint-plugin": ^4.20.0
     "@typescript-eslint/parser": ^4.33.0
     conventional-changelog-conventionalcommits: ^5.0.0

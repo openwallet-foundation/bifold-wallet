@@ -3,8 +3,7 @@
  located at: https://github.com/hyperledger/aries-framework-javascript
 */
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// eslint-disable-next-line import/no-extraneous-dependencies
 import conventionalRecommendedBump from 'conventional-recommended-bump'
 
 import lerna from '../lerna.json'
