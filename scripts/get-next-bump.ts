@@ -55,6 +55,8 @@ conventionalRecommendedBump(
     whatBump,
     skipUnstable: true,
   },
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore-next-line
   (error: unknown, recommendation: { releaseType: string | undefined }) => {
     if (error) throw error
 
