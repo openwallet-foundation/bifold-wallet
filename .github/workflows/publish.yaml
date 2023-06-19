@@ -34,8 +34,8 @@ jobs:
           export NEXT_VERSION_BUMP="major"
           npx lerna publish --no-verify-access --no-private --loglevel=verbose --canary $NEXT_VERSION_BUMP --dist-tag $NPM_TAG --force-publish --yes
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
 
       - name: Fetch current published version
         id: get-version
