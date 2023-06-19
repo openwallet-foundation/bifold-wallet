@@ -27,10 +27,12 @@ jobs:
 
       # On push to main, release unstable version
       - name: Release ${{ env.NPM_TAG }}
+        timeout-minutes: 3
         run: |
-          git update-index --assume-unchanged $(find . -type d -name node_modules -prune -o -name 'package.json' -print | tr "\n" " ")
-          export NEXT_VERSION_BUMP=$(yarn next-version-bump)
-          npx lerna publish --loglevel=verbose --canary $NEXT_VERSION_BUMP --dist-tag $NPM_TAG --force-publish --yes
+          #git update-index --assume-unchanged $(find . -type d -name node_modules -prune -o -name 'package.json' -print | tr "\n" " ")
+          #export NEXT_VERSION_BUMP=$(yarn next-version-bump)
+          export NEXT_VERSION_BUMP="major"
+          npx lerna publish --no-private --loglevel=verbose --canary $NEXT_VERSION_BUMP --dist-tag $NPM_TAG --force-publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
