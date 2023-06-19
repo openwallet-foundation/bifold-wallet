@@ -51,11 +51,16 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       }
 
       await agent.connections.deleteById(connection.id)
+
+      navigation.navigate(Screens.Contacts)
+
+      // FIXME: This delay is a hack so that the toast doesn't appear until the modal is dismissed
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
       Toast.show({
         type: ToastType.Success,
         text1: t('ContactDetails.ContactRemoved'),
       })
-      navigation.navigate(Screens.Contacts)
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1037'), t('Error.Message1037'), (err as Error).message, 1025)
 
