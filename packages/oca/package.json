@@ -4,6 +4,7 @@
   "description": "TypeScript implementation of Overlay Capture Architecture (OCA) for styling Aries Verifiable Credentials",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf ./build",
@@ -13,14 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fullboar/aries-mobile-agent-react-native.git",
+    "url": "git+https://github.com/hyperledger/aries-mobile-agent-react-native.git",
     "directory": "packages/oca"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/hyperledger/aries-mobile-agent-react-native/issues"
   },
