@@ -18,7 +18,7 @@ jobs:
   build-ios:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
@@ -30,7 +30,7 @@ jobs:
 
       - name: Cache pod dependencies
         id: pod-cache
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: packages/legacy/app/ios/Pods
           key: ${{ runner.os }}-pods-${{ env.cacheId }}-${{ hashFiles('**/Podfile.lock ') }}
@@ -45,7 +45,7 @@ jobs:
           echo $(git rev-parse HEAD:packages/legacy/app/ios) >> ./dd-cache-key.txt
 
       - name: Cache derived data
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: packages/legacy/app/ios/xbuild/Build
           key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
@@ -94,7 +94,7 @@ jobs:
         build-tools: [31.0.0]
         sdk-tools: [4333796]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
@@ -105,7 +105,7 @@ jobs:
           sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
 
       - name: Setup JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: 11
