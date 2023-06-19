@@ -14,26 +14,30 @@
   "scripts": {
     "clean": "lerna run clean",
     "build": "lerna run build",
-    "publish": "lerna publish --loglevel=verbose --canary --dist-tag alpha --force-publish --exact",
     "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
     "test": "cd packages/legacy/core && TZ=GMT yarn test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --color .",
     "pre-commit-lint:core": "cd packages/legacy/core && yarn run pre-commit-lint",
     "pre-commit-lint": "run-s pre-commit-lint:core",
     "typecheck:core": "cd packages/legacy/core && yarn run typecheck",
-    "typecheck": "run-s typecheck:core"
+    "typecheck": "run-s typecheck:core",
+    "next-version-bump": "ts-node ./scripts/get-next-bump.ts"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
+    "@types/conventional-recommended-bump": "^6.1.0",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "conventional-changelog-conventionalcommits": "^5.0.0",
+    "conventional-recommended-bump": "^6.1.0",
     "eslint": "^7.14.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^3.3.1",
-    "lerna": "^6.6.1",
+    "lerna": "^6.6.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.4",
+    "ts-node": "^10.0.0",
     "typescript": "4.4.3"
   },
   "engines": {

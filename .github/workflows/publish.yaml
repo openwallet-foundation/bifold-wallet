@@ -1,0 +1,57 @@
+name: Publish
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/oca/**'
+  workflow_dispatch:
+env:
+  NPM_PKG: '@hyperledger/aries-oca'
+  NPM_TAG: 'alpha'
+jobs:
+  release-canary:
+    name: Alpha Release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      # On push to main, release unstable version
+      - name: Release ${{ env.NPM_TAG }}
+        timeout-minutes: 3
+        run: |
+          #git update-index --assume-unchanged $(find . -type d -name node_modules -prune -o -name 'package.json' -print | tr "\n" " ")
+          #export NEXT_VERSION_BUMP=$(yarn next-version-bump)
+          export NEXT_VERSION_BUMP="major"
+          npx lerna publish --no-private --loglevel=verbose --canary $NEXT_VERSION_BUMP --dist-tag $NPM_TAG --force-publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Fetch current published version
+        id: get-version
+        run: |
+          LAST_RELEASED_VERSION=$(npm view $NPM_PKG@$NPM_TAG version)
+          echo "last_released_version=$LAST_RELEASED_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Config git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "github-action@users.noreply.github.com"
+
+      - name: Set current git tag
+        run: |
+          git tag v${{ steps.get-version.outputs.last_released_version }}
+          git push origin v${{ steps.get-version.outputs.last_released_version}} --no-verify
+
+# Release will be triggerd by
+# if: "${{ startsWith(github.event.head_commit.message, 'chore(release): v') }}"
