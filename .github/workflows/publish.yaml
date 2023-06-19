@@ -29,7 +29,7 @@ jobs:
       # On push to main, release unstable version
       - name: Release ${{ env.NPM_TAG }}
         run: |
-          #git update-index --assume-unchanged $(find . -type d -name node_modules -prune -o -name 'package.json' -print | tr "\n" " ")
+          git update-index --assume-unchanged $(find . -type d -name node_modules -prune -o -name 'package.json' -print | tr "\n" " ")
           #export NEXT_VERSION_BUMP=$(yarn next-version-bump)
           export NEXT_VERSION_BUMP="major"
           npx lerna publish --no-private --loglevel=verbose --canary $NEXT_VERSION_BUMP --dist-tag $NPM_TAG --force-publish --yes
