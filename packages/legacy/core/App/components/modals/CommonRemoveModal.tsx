@@ -154,7 +154,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     }
   }
 
-  const testIdForConfirmationButton = (): string => {
+  const testIdForConfirmButton = (): string => {
     switch (usage) {
       case ModalUsage.ContactRemove:
       case ModalUsage.CredentialRemove:
@@ -316,7 +316,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
             <Button
               title={titleForConfirmButton()}
               accessibilityLabel={labelForConfirmButton()}
-              testID={testIdForConfirmationButton()}
+              testID={testIdForConfirmButton()}
               onPress={onSubmit}
               buttonType={
                 usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
