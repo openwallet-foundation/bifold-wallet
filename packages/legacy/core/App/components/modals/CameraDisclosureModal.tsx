@@ -2,16 +2,16 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View, Linking, Platform } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, View, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import IOSStatusBar from '../../components/misc/IOSStatusBar'
 import { useTheme } from '../../contexts/theme'
 import { Screens, HomeStackParams } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
 import DismissiblePopupModal from './DismissiblePopupModal'
-import IOSStatusBar from '../../components/misc/IOSStatusBar'
 
 interface CameraDisclosureModalProps {
   requestCameraUse: () => Promise<boolean>

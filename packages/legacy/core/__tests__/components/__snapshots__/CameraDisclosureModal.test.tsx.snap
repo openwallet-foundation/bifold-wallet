@@ -7,6 +7,14 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
   transparent={true}
   visible={true}
 >
+  <View
+    style={
+      Object {
+        "backgroundColor": "#42803E",
+        "height": 40,
+      }
+    }
+  />
   <RNCSafeAreaView
     style={
       Object {

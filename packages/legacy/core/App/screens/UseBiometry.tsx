@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Modal,
-  Switch,
-  ScrollView,
-  Pressable,
-  DeviceEventEmitter,
-} from 'react-native'
+import { StyleSheet, Text, View, Modal, Switch, ScrollView, Pressable, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
+import IOSStatusBar from '../components/misc/IOSStatusBar'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
@@ -22,7 +14,6 @@ import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
-import IOSStatusBar from '../components/misc/IOSStatusBar'
 
 enum UseBiometryUsage {
   InitialSetup,

@@ -246,6 +246,14 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
     transparent={false}
     visible={false}
   >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "height": 40,
+        }
+      }
+    />
     <RNCSafeAreaView
       edges={
         Array [
@@ -916,6 +924,14 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
     transparent={false}
     visible={false}
   >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "height": 40,
+        }
+      }
+    />
     <RNCSafeAreaView
       edges={
         Array [
@@ -1644,6 +1660,14 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
     transparent={false}
     visible={false}
   >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "height": 40,
+        }
+      }
+    />
     <RNCSafeAreaView
       edges={
         Array [

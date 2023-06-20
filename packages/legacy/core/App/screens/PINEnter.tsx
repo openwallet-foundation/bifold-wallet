@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusBar, Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter, SafeAreaView } from 'react-native'
+import { Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
@@ -17,7 +17,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
-import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PINEnterProps {
