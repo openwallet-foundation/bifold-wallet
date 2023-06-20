@@ -120,9 +120,6 @@ const UseBiometry: React.FC = () => {
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
-      <StatusBar
-        barStyle={Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(ColorPallet.brand.primary)}
-      />
       <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center' }}>
           <Assets.svg.biometrics style={[styles.image]} />
@@ -191,6 +188,7 @@ const UseBiometry: React.FC = () => {
         transparent={false}
         animationType={'slide'}
       >
+        {Platform.OS === "ios" && <View style={{ height: 40, backgroundColor: ColorPallet.brand.primary }}></View>}
         <PINEnter usage={PINEntryUsage.PINCheck} setAuthenticated={onAuthenticationComplete} />
       </Modal>
     </SafeAreaView>

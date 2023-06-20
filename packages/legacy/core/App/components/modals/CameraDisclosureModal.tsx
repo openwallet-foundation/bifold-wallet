@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View, Linking } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, View, Linking, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
@@ -69,6 +69,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
 
   return (
     <Modal visible={modalVisible} animationType={'slide'} transparent>
+      {Platform.OS === "ios" && <View style={{ height: 40, backgroundColor: ColorPallet.brand.primary }}></View>}
       {showSettingsPopup && (
         <DismissiblePopupModal
           title={t('CameraDisclosure.AllowCameraUse')}
