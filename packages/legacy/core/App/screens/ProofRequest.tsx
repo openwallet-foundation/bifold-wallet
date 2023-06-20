@@ -28,7 +28,7 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens } from '../types/navigators'
+import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { ModalUsage } from '../types/remove'
 import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
@@ -275,7 +275,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     toggleDeclineModalVisible()
-    navigation.getParent()?.navigate(Screens.Home)
+
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
   const proofPageHeader = () => {
