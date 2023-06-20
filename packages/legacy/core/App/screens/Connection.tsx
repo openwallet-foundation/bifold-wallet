@@ -1,4 +1,8 @@
-import { DidExchangeState } from '@aries-framework/core'
+import {
+  DidExchangeState,
+  CredentialExchangeRecord as CredentialRecord,
+  ProofExchangeRecord,
+} from '@aries-framework/core'
 import { useConnectionById, useAgent } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -19,7 +23,7 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 type LocalState = {
   isVisible: boolean
-  notificationRecord?: any
+  notificationRecord?: CredentialRecord | ProofExchangeRecord
   isInitialized: boolean
   shouldShowDelayMessage: boolean
   connectionIsActive: boolean
