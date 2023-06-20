@@ -67,6 +67,7 @@ const Language = () => {
             <View style={[styles.section, styles.sectionRow]}>
               <Text style={[TextTheme.title]}>{value}</Text>
               <BouncyCheckbox
+                accessibilityLabel={value}
                 disableText
                 fillColor={ColorPallet.brand.secondaryBackground}
                 unfillColor={ColorPallet.brand.secondaryBackground}
