@@ -11,6 +11,7 @@ import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
 import DismissiblePopupModal from './DismissiblePopupModal'
+import IOSStatusBar from '../../components/misc/IOSStatusBar'
 
 interface CameraDisclosureModalProps {
   requestCameraUse: () => Promise<boolean>
@@ -69,7 +70,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
 
   return (
     <Modal visible={modalVisible} animationType={'slide'} transparent>
-      {Platform.OS === "ios" && <View style={{ height: 40, backgroundColor: ColorPallet.brand.primary }}></View>}
+      <IOSStatusBar></IOSStatusBar>
       {showSettingsPopup && (
         <DismissiblePopupModal
           title={t('CameraDisclosure.AllowCameraUse')}

@@ -6,8 +6,6 @@ import {
   View,
   Modal,
   Switch,
-  StatusBar,
-  Platform,
   ScrollView,
   Pressable,
   DeviceEventEmitter,
@@ -21,10 +19,10 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
+import IOSStatusBar from '../components/misc/IOSStatusBar'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -188,7 +186,7 @@ const UseBiometry: React.FC = () => {
         transparent={false}
         animationType={'slide'}
       >
-        {Platform.OS === "ios" && <View style={{ height: 40, backgroundColor: ColorPallet.brand.primary }}></View>}
+        <IOSStatusBar></IOSStatusBar>
         <PINEnter usage={PINEntryUsage.PINCheck} setAuthenticated={onAuthenticationComplete} />
       </Modal>
     </SafeAreaView>
