@@ -82,12 +82,34 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     connectionIsActive: false,
   })
 
+  const onDismissModalTouched = () => {
+    dispatch({ shouldShowDelayMessage: false, isVisible: false })
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
+  const abortTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+  }
+
+  const startTimer = () => {
+    if (!state.isInitialized) {
+      timerRef.current = setTimeout(() => {
+        dispatch({ shouldShowDelayMessage: false })
+        timerRef.current = null
+      }, connTimerDelay)
+
+      dispatch({ isInitialized: true })
+    }
+  }
+
   useEffect(() => {
     // FIX:(jl) There may be a better way to fetch queued messages.
     // Under investigation.
     if (connection && connection.state === DidExchangeState.Completed) {
       dispatch({ connectionIsActive: true })
-      // setState((prev) => ({ ...prev, connectionIsActive: true }))
       agent?.mediationRecipient.initiateMessagePickup()
     }
   }, [connection])
@@ -104,29 +126,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     }
   }, [state])
-
-  const abortTimer = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current)
-      timerRef.current = null
-    }
-  }
-
-  const onDismissModalTouched = () => {
-    dispatch({ shouldShowDelayMessage: false, isVisible: false })
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
-
-  const startTimer = () => {
-    if (!state.isInitialized) {
-      timerRef.current = setTimeout(() => {
-        dispatch({ shouldShowDelayMessage: false })
-        timerRef.current = null
-      }, connTimerDelay)
-
-      dispatch({ isInitialized: true })
-    }
-  }
 
   useFocusEffect(
     useCallback(() => {
