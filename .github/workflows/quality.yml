@@ -13,7 +13,7 @@ jobs:
     name: Linting
     steps:
       - name: Checkout aries-mobile-agent-react-native
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
@@ -39,7 +39,7 @@ jobs:
     name: Testing
     steps:
       - name: Checkout aries-mobile-agent-react-native
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node

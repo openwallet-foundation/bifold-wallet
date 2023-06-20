@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { ProofCustomMetadata, ProofMetadata, GroupedSharedProofDataItem, markProofAsViewed } from '../../verifier'
-import CheckInCircle from '../assets/img/check-in-circle.svg'
+import InformationReceived from '../assets/img/information-received.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useTheme } from '../contexts/theme'
@@ -38,10 +38,22 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     container: {
       flexGrow: 1,
     },
+    iconContainer: {
+      backgroundColor: ColorPallet.notification.info,
+      width: 100,
+      height: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 15,
+      borderRadius: 50,
+      borderColor: ColorPallet.notification.infoBorder,
+      borderWidth: 3,
+      alignSelf: 'center',
+      overflow: 'hidden',
+    },
     header: {
-      backgroundColor: ColorPallet.semantic.success,
       paddingHorizontal: 30,
-      paddingVertical: 20,
+      paddingTop: 20,
     },
     headerTitleContainer: {
       flexDirection: 'row',
@@ -49,15 +61,11 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
       alignItems: 'center',
     },
     headerTitle: {
-      marginHorizontal: 10,
-      color: ColorPallet.grayscale.white,
-      fontSize: 34,
+      ...TextTheme.normal,
       fontWeight: 'bold',
     },
     headerDetails: {
-      color: ColorPallet.grayscale.white,
-      marginVertical: 10,
-      fontSize: 18,
+      ...TextTheme.normal,
     },
     descriptionContainer: {
       marginHorizontal: 30,
@@ -101,6 +109,10 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     }
   }, [navigation])
 
+  const onDone = useCallback(() => {
+    navigation.navigate(Screens.ProofRequests, {})
+  }, [navigation])
+
   useEffect(() => {
     if (!connection || !isHistory) return
     navigation.setOptions({ title: connectionLabel })
@@ -130,23 +142,32 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('ProofDetailsView')}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.headerTitleContainer}>
-            <CheckInCircle {...{ height: 45, width: 45 }} />
-            <Text style={styles.headerTitle}>{t('Verifier.InformationReceived')}</Text>
+          <View style={styles.iconContainer}>
+            <InformationReceived></InformationReceived>
           </View>
-          <Text style={styles.headerDetails}>
-            {connectionLabel} {t('Verifier.InformationReceivedDetails')}
+          <Text>
+            <Text style={styles.headerTitle}>{t('Verifier.InformationReceived') + ' '}</Text>
+            <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
           </Text>
         </View>
         <View style={styles.content}>
           <SharedProofData recordId={record.id} />
         </View>
         <View style={styles.footerButton}>
+          <View style={{ marginBottom: 15 }}>
+            <Button
+              title={t('Global.Done')}
+              accessibilityLabel={t('Global.Done')}
+              testID={testIdWithKey('Done')}
+              buttonType={ButtonType.Primary}
+              onPress={onDone}
+            />
+          </View>
           <Button
             title={t('Verifier.GenerateNewQR')}
             accessibilityLabel={t('Verifier.GenerateNewQR')}
             testID={testIdWithKey('GenerateNewQR')}
-            buttonType={ButtonType.Primary}
+            buttonType={ButtonType.Secondary}
             onPress={onGenerateNew}
           />
         </View>

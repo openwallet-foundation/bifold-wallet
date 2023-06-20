@@ -107,9 +107,8 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
         <View
           style={
             Object {
-              "backgroundColor": "#2E8540",
               "paddingHorizontal": 30,
-              "paddingVertical": 20,
+              "paddingTop": 20,
             }
           }
         >
@@ -117,40 +116,44 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
             style={
               Object {
                 "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "flex-start",
+                "alignSelf": "center",
+                "backgroundColor": "#313132",
+                "borderColor": "#0099FF",
+                "borderRadius": 50,
+                "borderWidth": 3,
+                "height": 100,
+                "justifyContent": "center",
+                "marginBottom": 15,
+                "overflow": "hidden",
+                "width": 100,
               }
             }
           >
-            <
-              height={45}
-              width={45}
-            />
+            < />
+          </View>
+          <Text>
             <Text
               style={
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 34,
+                  "fontSize": 18,
                   "fontWeight": "bold",
-                  "marginHorizontal": 10,
                 }
               }
             >
-              Verifier.InformationReceived
+              Verifier.InformationReceived 
             </Text>
-          </View>
-          <Text
-            style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "marginVertical": 10,
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                }
               }
-            }
-          >
-            Verifier.ConnectionLessLabel
-             
-            Verifier.InformationReceivedDetails
+            >
+              Verifier.InformationReceivedDetails
+            </Text>
           </Text>
         </View>
         <View
@@ -319,6 +322,71 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
           }
         >
           <View
+            style={
+              Object {
+                "marginBottom": 15,
+              }
+            }
+          >
+            <View
+              accessibilityLabel="Global.Done"
+              accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#42803E",
+                  "borderRadius": 4,
+                  "opacity": 1,
+                  "padding": 16,
+                }
+              }
+              testID="com.ariesbifold:id/Done"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ]
+                  }
+                >
+                  Global.Done
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
             accessibilityLabel="Verifier.GenerateNewQR"
             accessibilityRole="button"
             accessibilityState={
@@ -339,8 +407,9 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#42803E",
+                "borderColor": "#42803E",
                 "borderRadius": 4,
+                "borderWidth": 2,
                 "opacity": 1,
                 "padding": 16,
               }
@@ -360,7 +429,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                 style={
                   Array [
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#42803E",
                       "fontSize": 18,
                       "fontWeight": "bold",
                       "textAlign": "center",
