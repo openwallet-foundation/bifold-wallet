@@ -23,7 +23,7 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens } from '../types/navigators'
+import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
@@ -274,7 +274,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     try {
       if (agent && proof) {
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
-        await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') }) // currently, fails for connectionless case
+        // sending a problem report fails if there is neither a connectionId nor a ~service decorator
+        if (proof.connectionId) {
+          await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        }
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
@@ -283,7 +286,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
 
     toggleDeclineModalVisible()
-    navigation.getParent()?.navigate(Screens.Home)
+
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
   const proofPageHeader = () => {

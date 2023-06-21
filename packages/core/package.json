@@ -1,8 +1,9 @@
 {
-  "name": "@aries-bifold/core",
+  "name": "@hyperledger/aries-bifold-core",
+  "version": "0.0.0",
+  "private": true,
   "main": "build/index",
   "types": "build/index",
-  "version": "0.0.1-alpha.1436+c015ed6",
   "files": [
     "build",
     "android",
@@ -51,6 +52,5 @@
     "react-native": "0.71.5",
     "rimraf": "^4.0.7",
     "typescript": "~4.9.4"
-  },
-  "gitHead": "c015ed658d1a458809a2f9a8623dc3752a523a5e"
+  }
 }

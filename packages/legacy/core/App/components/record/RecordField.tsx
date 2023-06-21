@@ -42,7 +42,10 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
       ...ListItems.recordAttributeText,
     },
   })
-  if ((field.encoding == validEncoding && field.format && validFormat.test(field.format)) || isDataUrl(field.value)) {
+  if (
+    (field.encoding == validEncoding && field.format && validFormat.test(field.format) && field.value) ||
+    isDataUrl(field.value)
+  ) {
     return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
   }
   if (field.type == BaseType.DateInt) {

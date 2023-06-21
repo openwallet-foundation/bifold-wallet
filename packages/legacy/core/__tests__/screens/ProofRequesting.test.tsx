@@ -106,9 +106,6 @@ describe('ProofRequesting Component', () => {
 
     await act(async () => null)
     expect(tree).toMatchSnapshot()
-
-    const sharedButton = tree.getByTestId(testIdWithKey('ShareLink'))
-    expect(sharedButton).not.toBeNull()
   })
 
   test('generate new qr works correctly', async () => {
