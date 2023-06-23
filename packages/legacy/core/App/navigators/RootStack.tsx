@@ -47,7 +47,7 @@ const RootStack: React.FC = () => {
 
   const lockoutUser = async () => {
     if (agent && state.authentication.didAuthenticate) {
-      // make shure agent is shutdown so wallet isn't still open
+      // make sure agent is shutdown so wallet isn't still open
       removeSavedWalletSecret()
       await agent.shutdown()
       dispatch({

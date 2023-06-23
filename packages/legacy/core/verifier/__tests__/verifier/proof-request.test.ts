@@ -10,13 +10,13 @@ describe('Helpers', () => {
     spy = jest.spyOn(Date, 'now').mockImplementation(() => 1677766511505)
   })
 
-  test('Build indy proof request from template containing two requested attributes', async () => {
+  test('Build anoncreds proof request from template containing two requested attributes', async () => {
     const template = defaultProofRequestTemplates[0]
     const proofRequest = buildProofRequestDataForTemplate(template)
     expect(proofRequest).toMatchSnapshot()
   })
 
-  test('Build indy proof request from template containing two requested attributes and predicate', async () => {
+  test('Build anoncreds proof request from template containing two requested attributes and predicate', async () => {
     const template = defaultProofRequestTemplates[1]
     const proofRequest = buildProofRequestDataForTemplate(template)
     expect(proofRequest).toMatchSnapshot()
