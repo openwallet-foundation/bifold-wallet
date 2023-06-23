@@ -252,6 +252,10 @@ const credNameFromRestriction = (queries?: AnonCredsProofRequestRestriction[]): 
   }
 }
 
+export const isDataUrl = (value: string | number | null) => {
+  return typeof value === 'string' && value.startsWith('data:image/')
+}
+
 export const processProofAttributes = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
