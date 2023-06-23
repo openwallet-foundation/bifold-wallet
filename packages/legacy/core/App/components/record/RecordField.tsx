@@ -7,6 +7,7 @@ import { hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { BaseType } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
+import { isDataUrl } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import RecordBinaryField from './RecordBinaryField'
@@ -29,10 +30,6 @@ interface AttributeValueParams {
   field: Attribute
   shown?: boolean
   style?: Record<string, unknown>
-}
-
-const isDataUrl = (value: string | number | null) => {
-  return typeof value === 'string' && value.startsWith('data:image/')
 }
 
 export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, shown }) => {

@@ -248,6 +248,10 @@ const credNameFromRestriction = (queries?: WalletQuery[]): string => {
   }
 }
 
+export const isDataUrl = (value: string | number | null) => {
+  return typeof value === 'string' && value.startsWith('data:image/')
+}
+
 export const processProofAttributes = (
   request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
   credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
