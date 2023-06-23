@@ -228,11 +228,11 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   }
 
   const { recordId, isHistory } = route?.params
-  const record: ProofExchangeRecord = useProofById(recordId)
+  const record = useProofById(recordId)
   const { agent } = useAgent()
 
   useEffect(() => {
-    if (agent) markProofAsViewed(agent, record)
+    if (agent && record) markProofAsViewed(agent, record)
   }, [])
 
   useFocusEffect(
@@ -251,6 +251,8 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
     }, [])
   )
+
+  if (!record) return null
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>

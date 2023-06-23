@@ -21,6 +21,11 @@ export const defaultState: State = {
   authentication: {
     didAuthenticate: false,
   },
+  // NOTE: from AFJ 0.4.0 on we use Aries Askar. New wallets will be created with Askar from the start
+  // which we will know when we create the pin while using askar as a dependency.
+  migration: {
+    didMigrateToAskar: false,
+  },
   loginAttempt: {
     loginAttempts: 0,
     servedPenalty: true,

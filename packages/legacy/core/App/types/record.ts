@@ -1,4 +1,5 @@
-import { IndyRevocationInterval, CredentialExchangeRecord } from '@aries-framework/core'
+import { AnonCredsNonRevokedInterval, AnonCredsProofRequestRestriction } from '@aries-framework/anoncreds'
+import { CredentialExchangeRecord } from '@aries-framework/core'
 
 export interface FieldParams {
   name: string | null
@@ -9,8 +10,8 @@ export interface FieldParams {
   revoked?: boolean
   credentialId?: string
   label?: string
-  restrictions?: Array<Record<string, unknown>>
-  nonRevoked?: IndyRevocationInterval
+  restrictions?: AnonCredsProofRequestRestriction[]
+  nonRevoked?: AnonCredsNonRevokedInterval
 }
 
 export interface AttributeParams extends FieldParams {
@@ -33,8 +34,8 @@ export class Field {
   public revoked?: boolean
   public credentialId?: string
   public label?: string
-  public restrictions?: Array<Record<string, unknown>>
-  public nonRevoked?: IndyRevocationInterval
+  public restrictions?: AnonCredsProofRequestRestriction[]
+  public nonRevoked?: AnonCredsNonRevokedInterval
 
   protected constructor(params: FieldParams) {
     this.name = params.name

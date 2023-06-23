@@ -13,6 +13,10 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('react-native-fs', () => ({}))
+jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
+jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
+jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 
 describe('UseBiometry Screen', () => {
   beforeAll(() => {

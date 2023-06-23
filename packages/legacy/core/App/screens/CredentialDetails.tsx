@@ -25,11 +25,11 @@ import { ModalUsage } from '../types/remove'
 import {
   credentialTextColor,
   getCredentialIdentifiers,
-  isValidIndyCredential,
+  isValidAnonCredsCredential,
   toImageSource,
 } from '../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
-import { buildFieldsFromIndyCredential } from '../utils/oca'
+import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -124,7 +124,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [])
 
   useEffect(() => {
-    if (!(credential && isValidIndyCredential(credential))) {
+    if (!(credential && isValidAnonCredsCredential(credential))) {
       return
     }
 
@@ -141,7 +141,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         alias: credentialConnectionLabel,
         credConnectionId: credential.connectionId,
       },
-      attributes: buildFieldsFromIndyCredential(credential),
+      attributes: buildFieldsFromAnonCredsCredential(credential),
       language: i18n.language,
     }
 

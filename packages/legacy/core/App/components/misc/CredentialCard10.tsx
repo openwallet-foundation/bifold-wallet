@@ -1,7 +1,7 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, ImageBackground, StyleSheet, Text, View, ViewStyle, Image } from 'react-native'
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { useConfiguration } from '../../contexts/configuration'
@@ -11,11 +11,11 @@ import { CardLayoutOverlay10, CredentialOverlay } from '../../types/oca'
 import {
   credentialTextColor,
   getCredentialIdentifiers,
-  isValidIndyCredential,
+  isValidAnonCredsCredential,
   toImageSource,
 } from '../../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../../utils/helpers'
-import { buildFieldsFromIndyCredential } from '../../utils/oca'
+import { buildFieldsFromAnonCredsCredential } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
@@ -132,13 +132,13 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   })
 
   useEffect(() => {
-    if (!(credential && isValidIndyCredential(credential))) {
+    if (!(credential && isValidAnonCredsCredential(credential))) {
       return
     }
 
     const params = {
       identifiers: getCredentialIdentifiers(credential),
-      attributes: buildFieldsFromIndyCredential(credential),
+      attributes: buildFieldsFromAnonCredsCredential(credential),
       meta: {
         credConnectionId: credential?.connectionId,
         alias: credentialConnectionLabel,

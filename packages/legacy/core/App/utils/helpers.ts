@@ -1,25 +1,29 @@
 import {
+  AnonCredsCredentialsForProofRequest,
+  AnonCredsProofFormat,
+  AnonCredsProofFormatService,
+  AnonCredsProofRequestRestriction,
+  AnonCredsRequestedAttributeMatch,
+  AnonCredsRequestedPredicateMatch,
+  LegacyIndyProofFormat,
+  LegacyIndyProofFormatService,
+} from '@aries-framework/anoncreds'
+import {
   Agent,
   ConnectionRecord,
   CredentialExchangeRecord,
-  RequestedAttribute,
-  RequestedPredicate,
-  RetrievedCredentials,
-  IndyCredentialInfo,
-  IndyProofFormat,
-  ProofState,
-  ProofExchangeRecord,
-  BasicMessageRecord,
   CredentialState,
+  BasicMessageRecord,
+  ProofExchangeRecord,
+  ProofState,
 } from '@aries-framework/core'
 import { BasicMessageRole } from '@aries-framework/core/build/modules/basic-messages/BasicMessageRole'
 import {
-  FormatDataMessagePayload,
-  FormatRetrievedCredentialOptions,
-} from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
+  GetCredentialsForRequestReturn,
+  ProofFormatDataMessagePayload,
+} from '@aries-framework/core/build/modules/proofs/protocol/ProofProtocolOptions'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
-import { WalletQuery } from 'indy-sdk-react-native'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
 import { Dispatch, ReactNode, SetStateAction } from 'react'
@@ -186,9 +190,9 @@ export function getConnectionImageUrl(connectionId: string) {
 }
 
 export function firstValidCredential(
-  fields: RequestedAttribute[] | RequestedPredicate[],
+  fields: AnonCredsRequestedAttributeMatch[] | AnonCredsRequestedPredicateMatch[],
   revoked = true
-): RequestedAttribute | RequestedPredicate | null {
+): AnonCredsRequestedAttributeMatch | AnonCredsRequestedPredicateMatch | null {
   if (!fields.length) {
     return null
   }
@@ -232,7 +236,7 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-const credNameFromRestriction = (queries?: WalletQuery[]): string => {
+const credNameFromRestriction = (queries?: AnonCredsProofRequestRestriction[]): string => {
   let schema_name = ''
   let cred_def_id = ''
   let schema_id = ''
@@ -253,17 +257,19 @@ export const isDataUrl = (value: string | number | null) => {
 }
 
 export const processProofAttributes = (
-  request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
+  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
-  if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
+
+  const requestedProofAttributes = request?.indy?.requested_attributes ?? request?.anoncreds?.requested_attributes
+  const retrievedCredentialAttributes =
+    credentials?.proofFormats?.indy?.attributes ?? credentials?.proofFormats?.anoncreds?.attributes
+
+  if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
-
-  const requestedProofAttributes = request.indy.requested_attributes
-  const retrievedCredentialAttributes = credentials.proofFormats.indy.requestedAttributes
 
   for (const key of Object.keys(retrievedCredentialAttributes)) {
     // The shift operation modifies the original input array, therefore make a copy
@@ -299,9 +305,9 @@ export const processProofAttributes = (
         }
       }
 
-      let attributeValue = '' //(credentialInfo as IndyCredentialInfo).attributes[attributeName]
+      let attributeValue = ''
       if (credential) {
-        attributeValue = (credential.credentialInfo as IndyCredentialInfo).attributes[attributeName]
+        attributeValue = credential.credentialInfo.attributes[attributeName]
       }
       processedAttributes[credName].attributes?.push(
         new Attribute({
@@ -316,18 +322,19 @@ export const processProofAttributes = (
 }
 
 export const processProofPredicates = (
-  request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
+  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
-  if (!(request?.indy?.requested_predicates && credentials?.proofFormats?.indy?.requestedPredicates)) {
+  const requestedProofPredicates = request?.anoncreds?.requested_predicates ?? request?.indy?.requested_predicates
+  const retrievedCredentialPredicates =
+    credentials?.proofFormats?.anoncreds?.predicates ?? credentials?.proofFormats?.indy?.predicates
+
+  if (!requestedProofPredicates || !retrievedCredentialPredicates) {
     return {}
   }
-
-  const requestedProofPredicates = request.indy.requested_predicates
-  const retrievedCredentialPredicates = credentials.proofFormats.indy.requestedPredicates
 
   for (const key of Object.keys(requestedProofPredicates)) {
     // The shift operation modifies the original input array, therefore make a copy
@@ -396,9 +403,11 @@ export const mergeAttributesAndPredicates = (
 /**
  * @deprecated The function should not be used
  */
-export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials): RetrievedCredentials => {
-  const requestedAttributes = Object.values(credentials?.requestedAttributes).pop()
-  const requestedPredicates = Object.values(credentials?.requestedPredicates).pop()
+export const sortCredentialsForAutoSelect = (
+  credentials: AnonCredsCredentialsForProofRequest
+): AnonCredsCredentialsForProofRequest => {
+  const requestedAttributes = Object.values(credentials?.attributes).pop()
+  const requestedPredicates = Object.values(credentials?.predicates).pop()
   const sortFn = (a: any, b: any) => {
     if (a.revoked && !b.revoked) {
       return 1

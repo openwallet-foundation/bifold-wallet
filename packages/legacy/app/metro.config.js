@@ -21,8 +21,7 @@ for (const packageDir of packageDirs) {
     return acc
   }, extraNodeModules)
 }
-console.dir(extraExclusionlist)
-console.dir(extraNodeModules)
+
 const { getDefaultConfig } = require('metro-config')
 const exclusionList = require('metro-config/src/defaults/exclusionList')
 module.exports = (async () => {

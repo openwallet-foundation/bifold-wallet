@@ -14,7 +14,7 @@ import { useTheme } from '../../contexts/theme'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute, Field, Predicate } from '../../types/record'
 import { toImageSource } from '../../utils/credential'
-import { buildFieldsFromSharedIndyProof } from '../../utils/oca'
+import { buildFieldsFromSharedAnonCredsProof } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
 import { AttributeValue } from '../record/RecordField'
@@ -82,9 +82,12 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11> | undefined>(undefined)
 
   useEffect(() => {
-    const attributes = buildFieldsFromSharedIndyProof(sharedData.data)
+    const attributes = buildFieldsFromSharedAnonCredsProof(sharedData.data)
     const params = {
-      identifiers: sharedData.identifiers,
+      identifiers: {
+        credentialDefinitionId: sharedData.identifiers.cred_def_id,
+        schemaId: sharedData.identifiers.schema_id,
+      },
       language: i18n.language,
       attributes,
     }
@@ -160,7 +163,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
 
   return overlay ? (
     <View style={styles.container}>
-      <View key={sharedData.identifiers.credentialDefinitionId} style={styles.cardContainer}>
+      <View key={sharedData.identifiers.cred_def_id} style={styles.cardContainer}>
         <CardColor overlay={overlay} />
         <CardLogo overlay={overlay} />
         <CardBody overlay={overlay} />
@@ -213,7 +216,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedPro
       {!loading &&
         sharedData?.size &&
         Array.from(sharedData.values()).map((item) => (
-          <SharedDataCard sharedData={item} key={item.identifiers.credentialDefinitionId} />
+          <SharedDataCard sharedData={item} key={item.identifiers.cred_def_id} />
         ))}
     </View>
   )

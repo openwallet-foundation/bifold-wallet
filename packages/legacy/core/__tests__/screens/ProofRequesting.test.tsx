@@ -8,17 +8,16 @@ import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
 import * as proofRequestUtils from '../../verifier/utils/proof-request'
 import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
-import {
-  INDY_PROOF_REQUEST_ATTACHMENT_ID,
-  OutOfBandInvitation,
-  ProofExchangeRecord,
-  ProofState,
-  V1RequestPresentationMessage,
-} from '@aries-framework/core'
+import { OutOfBandInvitation, ProofExchangeRecord, ProofState } from '@aries-framework/core'
+import { V1RequestPresentationMessage, INDY_PROOF_REQUEST_ATTACHMENT_ID } from '@aries-framework/anoncreds'
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
+jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
+jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
+jest.mock('react-native-fs', () => ({}))
+jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })
@@ -48,7 +47,7 @@ const proof_request = {
 
 const requestPresentationMessage = new V1RequestPresentationMessage({
   comment: 'some comment',
-  requestPresentationAttachments: [
+  requestAttachments: [
     new Attachment({
       id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
       mimeType: 'application/json',
@@ -107,7 +106,6 @@ describe('ProofRequesting Component', () => {
 
     await act(async () => null)
     expect(tree).toMatchSnapshot()
-
   })
 
   test('generate new qr works correctly', async () => {

@@ -1,65 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Helpers Parse indy proof 1`] = `
-ParsedIndyProof {
-  "resolvedPredicates": Array [
-    Object {
-      "identifiers": Object {
-        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-        "revocationRegistryId": undefined,
-        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-        "timestamp": undefined,
-      },
-      "name": "age",
-      "predicateType": ">=",
-      "predicateValue": 1,
-    },
-  ],
-  "sharedAttributeGroups": Array [
-    Object {
-      "attributes": Array [
-        Object {
-          "name": "first_name",
-          "value": "Aries",
-        },
-        Object {
-          "name": "second_name",
-          "value": "Bifold",
-        },
-      ],
-      "identifiers": Object {
-        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-        "revocationRegistryId": undefined,
-        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-        "timestamp": undefined,
-      },
-    },
-  ],
-  "sharedAttributes": Array [
-    Object {
-      "identifiers": Object {
-        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-        "revocationRegistryId": undefined,
-        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-        "timestamp": undefined,
-      },
-      "name": "date",
-      "value": "1/1/1",
-    },
-    Object {
-      "identifiers": Object {
-        "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
-        "revocationRegistryId": undefined,
-        "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
-        "timestamp": undefined,
-      },
-      "name": "passport_no",
-      "value": "123123",
-    },
-  ],
-  "unresolvedAttributeGroups": Array [],
-  "unresolvedAttributes": Array [],
-  "unresolvedPredicates": Array [],
+exports[`Helpers Get proof identifiers 1`] = `
+Object {
+  "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+  "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
 }
 `;
 
@@ -70,10 +14,8 @@ Map {
       "resolvedPredicates": Array [
         Object {
           "identifiers": Object {
-            "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-            "revocationRegistryId": undefined,
-            "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-            "timestamp": undefined,
+            "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+            "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
           },
           "name": "age",
           "predicateType": ">=",
@@ -93,20 +35,16 @@ Map {
             },
           ],
           "identifiers": Object {
-            "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-            "revocationRegistryId": undefined,
-            "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-            "timestamp": undefined,
+            "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+            "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
           },
         },
       ],
       "sharedAttributes": Array [
         Object {
           "identifiers": Object {
-            "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-            "revocationRegistryId": undefined,
-            "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-            "timestamp": undefined,
+            "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+            "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
           },
           "name": "date",
           "value": "1/1/1",
@@ -114,10 +52,8 @@ Map {
       ],
     },
     "identifiers": Object {
-      "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-      "revocationRegistryId": undefined,
-      "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-      "timestamp": undefined,
+      "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+      "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
     },
   },
   "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest" => Object {
@@ -127,10 +63,8 @@ Map {
       "sharedAttributes": Array [
         Object {
           "identifiers": Object {
-            "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
-            "revocationRegistryId": undefined,
-            "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
-            "timestamp": undefined,
+            "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
+            "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
           },
           "name": "passport_no",
           "value": "123123",
@@ -138,20 +72,64 @@ Map {
       ],
     },
     "identifiers": Object {
-      "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
-      "revocationRegistryId": undefined,
-      "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
-      "timestamp": undefined,
+      "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
+      "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
     },
   },
 }
 `;
 
-exports[`Helpers Get proof identifiers 1`] = `
-Object {
-  "credentialDefinitionId": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
-  "revocationRegistryId": undefined,
-  "schemaId": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
-  "timestamp": undefined,
+exports[`Helpers Parse indy proof 1`] = `
+ParsedAnonCredsProof {
+  "resolvedPredicates": Array [
+    Object {
+      "identifiers": Object {
+        "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+        "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+      },
+      "name": "age",
+      "predicateType": ">=",
+      "predicateValue": 1,
+    },
+  ],
+  "sharedAttributeGroups": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": "first_name",
+          "value": "Aries",
+        },
+        Object {
+          "name": "second_name",
+          "value": "Bifold",
+        },
+      ],
+      "identifiers": Object {
+        "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+        "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+      },
+    },
+  ],
+  "sharedAttributes": Array [
+    Object {
+      "identifiers": Object {
+        "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712167:latest",
+        "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Faber College:1.0.0",
+      },
+      "name": "date",
+      "value": "1/1/1",
+    },
+    Object {
+      "identifiers": Object {
+        "cred_def_id": "7KuDTpQh3GJ7Gp6kErpWvM:3:CL:712168:latest",
+        "schema_id": "7KuDTpQh3GJ7Gp6kErpWvM:2:Passport:1.0.0",
+      },
+      "name": "passport_no",
+      "value": "123123",
+    },
+  ],
+  "unresolvedAttributeGroups": Array [],
+  "unresolvedAttributes": Array [],
+  "unresolvedPredicates": Array [],
 }
 `;

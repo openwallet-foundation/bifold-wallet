@@ -1,4 +1,6 @@
-import { CredentialMetadataKeys, CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
+// TODO: export this from @aries-framework/anoncreds
+import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
+import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
@@ -31,11 +33,11 @@ describe('displays a credentials list screen', () => {
     createdAt: new Date('2020-01-01T00:00:00'),
     protocolVersion: 'v1',
   })
-  testOpenVPCredentialRecord.metadata.set(CredentialMetadataKeys.IndyCredential, {
+  testOpenVPCredentialRecord.metadata.set(AnonCredsCredentialMetadataKey, {
     schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
   })
   testOpenVPCredentialRecord.credentials.push({
-    credentialRecordType: 'indy',
+    credentialRecordType: 'anoncreds',
     credentialRecordId: '',
   })
   const testCredential1 = new CredentialExchangeRecord({

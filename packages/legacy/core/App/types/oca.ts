@@ -1,3 +1,4 @@
+// TODO: export this from @aries-framework/anoncreds
 import startCase from 'lodash.startcase'
 
 import { parseCredDefFromId } from '../utils/cred-def'
@@ -330,7 +331,7 @@ export class OCABundleResolver implements OCABundleResolverType {
     const bundle = await this.resolve(params)
     let presentationFields = [...params.attributes]
     if (bundle?.captureBase?.attributes) {
-      // if the oca brandaing has the attrbutes set, only display those attributes
+      // if the oca branding has the attributes set, only display those attributes
       const bundleFields = Object.keys(bundle.captureBase.attributes)
       presentationFields = presentationFields.filter((item) => item.name && bundleFields.includes(item.name))
       for (let i = 0; i < presentationFields.length; i++) {

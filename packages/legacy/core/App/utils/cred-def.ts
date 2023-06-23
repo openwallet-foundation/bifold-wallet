@@ -1,4 +1,6 @@
-import { CredentialMetadataKeys, CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
+// TODO: export this from @aries-framework/anoncreds
+import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
+import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
 
 import { parseSchemaFromId, credentialSchema } from './schema'
 
@@ -21,7 +23,7 @@ export function parseCredDefFromId(credDefId?: string, schemaId?: string): strin
 }
 
 function credentialDefinition(credential: CredentialRecord): string | undefined {
-  return credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId
+  return credential.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId
 }
 
 export function parsedCredDefNameFromCredential(credential: CredentialRecord): string {

@@ -1,38 +1,42 @@
-import { IndyRevocationInterval, PredicateType } from '@aries-framework/core'
+import {
+  AnonCredsNonRevokedInterval,
+  AnonCredsPredicateType,
+  AnonCredsProofRequestRestriction,
+} from '@aries-framework/anoncreds'
 
-export interface IndyRequestedPredicate {
+export interface AnonCredsRequestedPredicate {
   label?: string
   name: string
-  predicateType: PredicateType
+  predicateType: AnonCredsPredicateType
   predicateValue: number
-  restrictions?: Array<Record<string, string>>
-  nonRevoked?: IndyRevocationInterval
+  restrictions?: AnonCredsProofRequestRestriction[]
+  nonRevoked?: AnonCredsNonRevokedInterval
   parameterizable?: boolean
 }
 
-export interface IndyRequestedAttribute {
+export interface AnonCredsRequestedAttribute {
   label?: string
   name?: string
   names?: Array<string>
-  restrictions?: Array<Record<string, string>>
+  restrictions?: AnonCredsProofRequestRestriction[]
   revealed?: boolean
-  nonRevoked?: IndyRevocationInterval
+  nonRevoked?: AnonCredsNonRevokedInterval
 }
 
-export interface IndyProofRequestTemplatePayloadData {
+export interface AnonCredsProofRequestTemplatePayloadData {
   schema: string
-  requestedAttributes?: Array<IndyRequestedAttribute>
-  requestedPredicates?: Array<IndyRequestedPredicate>
+  requestedAttributes?: Array<AnonCredsRequestedAttribute>
+  requestedPredicates?: Array<AnonCredsRequestedPredicate>
 }
 
 export enum ProofRequestType {
-  Indy = 'indy',
+  AnonCreds = 'anoncreds',
   DIF = 'dif',
 }
 
-export interface IndyProofRequestTemplatePayload {
-  type: ProofRequestType.Indy
-  data: Array<IndyProofRequestTemplatePayloadData>
+export interface AnonCredsProofRequestTemplatePayload {
+  type: ProofRequestType.AnonCreds
+  data: Array<AnonCredsProofRequestTemplatePayloadData>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -48,5 +52,5 @@ export interface ProofRequestTemplate {
   name: string
   description: string
   version: string
-  payload: IndyProofRequestTemplatePayload | DifProofRequestTemplatePayload
+  payload: AnonCredsProofRequestTemplatePayload | DifProofRequestTemplatePayload
 }

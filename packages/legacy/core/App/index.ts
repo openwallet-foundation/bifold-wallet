@@ -57,6 +57,7 @@ export { createStyles } from './screens/OnboardingPages'
 export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
+export { didMigrateToAskar, migrateToAskar } from './utils/migration'
 
 export type { AnimatedComponents } from './animated-components'
 export type {
@@ -85,6 +86,7 @@ export type {
   Onboarding as OnboardingState,
   LoginAttempt as LoginAttemptState,
   Preferences as PreferencesState,
+  Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
 export * from '../verifier'

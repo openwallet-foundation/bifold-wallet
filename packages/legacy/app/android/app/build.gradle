@@ -154,7 +154,7 @@ android {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86", "arm64-v8a"/*, "x86_64" */ //TODO(JamesKEbert): add x86_64 support from libindy
+            include "armeabi-v7a", "x86", "arm64-v8a"/*, "x86_64" */
         }
     }
     signingConfigs {
@@ -202,7 +202,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "com.facebook.react:react-native:0.66.5"
 
     implementation 'net.java.dev.jna:jna:5.2.0'
     

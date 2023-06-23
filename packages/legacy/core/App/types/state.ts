@@ -5,6 +5,10 @@ export interface Onboarding {
   didConsiderBiometry: boolean
 }
 
+export interface Migration {
+  didMigrateToAskar: boolean
+}
+
 export interface Preferences {
   useBiometry: boolean
   biometryPreferencesUpdated: boolean
@@ -45,5 +49,6 @@ export interface State {
   preferences: Preferences
   tours: Tours
   deepLink: DeepLink
+  migration: Migration
   loading: boolean
 }

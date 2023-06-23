@@ -1,67 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Helpers Build indy proof request from template containing two requested attributes 1`] = `
+exports[`Helpers Build anoncreds proof request from template containing two requested attributes 1`] = `
 Object {
-  "indy": Object {
+  "anoncreds": Object {
     "name": "Student full name",
     "nonce": "1677766511505",
-    "requestedAttributes": Map {
-      "referent_0" => ProofAttributeInfo {
+    "requestedAttributes": Object {
+      "referent_0": Object {
         "name": "student_first_name",
         "names": undefined,
-        "nonRevoked": undefined,
+        "non_revoked": undefined,
         "restrictions": Array [
           Object {
-            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+            "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
           },
         ],
       },
-      "referent_1" => ProofAttributeInfo {
+      "referent_1": Object {
         "name": "student_last_name",
         "names": undefined,
-        "nonRevoked": undefined,
+        "non_revoked": undefined,
         "restrictions": Array [
           Object {
-            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+            "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
           },
         ],
       },
     },
-    "requestedPredicates": Map {},
+    "requestedPredicates": Object {},
     "version": "0.0.1",
   },
 }
 `;
 
-exports[`Helpers Build indy proof request from template containing two requested attributes and predicate 1`] = `
+exports[`Helpers Build anoncreds proof request from template containing two requested attributes and predicate 1`] = `
 Object {
-  "indy": Object {
+  "anoncreds": Object {
     "name": "Student full name and expiration date",
     "nonce": "1677766511505",
-    "requestedAttributes": Map {
-      "referent_0" => ProofAttributeInfo {
+    "requestedAttributes": Object {
+      "referent_0": Object {
         "name": undefined,
         "names": Array [
           "student_first_name",
           "student_last_name",
         ],
-        "nonRevoked": undefined,
+        "non_revoked": undefined,
         "restrictions": Array [
           Object {
-            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+            "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
           },
         ],
       },
     },
-    "requestedPredicates": Map {
-      "referent_1" => ProofPredicateInfo {
+    "requestedPredicates": Object {
+      "referent_1": Object {
         "name": "expiry_date",
-        "nonRevoked": undefined,
-        "predicateType": ">=",
-        "predicateValue": 20240101,
+        "non_revoked": undefined,
+        "p_type": ">=",
+        "p_value": 20240101,
         "restrictions": Array [
           Object {
-            "credentialDefinitionId": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+            "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
           },
         ],
       },

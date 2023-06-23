@@ -1,32 +1,28 @@
-import { Agent, ProofExchangeRecord, ProofIdentifier, ProofState } from '@aries-framework/core'
-import { IndyProof, IndyProofRequest } from 'indy-sdk-react-native'
+import { AnonCredsProof, AnonCredsProofRequest } from '@aries-framework/anoncreds'
+import { Agent, ProofExchangeRecord, ProofState } from '@aries-framework/core'
 
+import { BifoldAgent } from '../../App/utils/agent'
 import { ProofMetadata } from '../types/metadata'
 import {
   CredentialSharedProofData,
   GroupedSharedProofData,
   GroupedSharedProofDataItem,
-  ParsedIndyProof,
+  ParsedAnonCredsProof,
 } from '../types/proof'
 
 /*
  * Extract identifiers from indy proof
  * */
-export const getProofIdentifiers = (proof: IndyProof, proofIndex: number): ProofIdentifier => {
+export const getProofIdentifiers = (proof: AnonCredsProof, proofIndex: number) => {
   const identifiers = proof.identifiers[proofIndex]
   if (!identifiers) {
     throw new Error('Invalid indy proof data')
   }
-  return {
-    schemaId: identifiers.schema_id,
-    credentialDefinitionId: identifiers.cred_def_id,
-    revocationRegistryId: identifiers.rev_reg_id,
-    timestamp: identifiers.timestamp,
-  }
+  return identifiers
 }
 
 /*
- * Process indy proof and return
+ * Process anoncreds proof and return
  *  - shared attributes
  *  - shared attribute groups
  *  - resolved predicates
@@ -34,8 +30,8 @@ export const getProofIdentifiers = (proof: IndyProof, proofIndex: number): Proof
  *  - missing attribute groups
  *  - unresolved predicates
  * */
-export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): ParsedIndyProof => {
-  const result = new ParsedIndyProof()
+export const parseAnonCredsProof = (request: AnonCredsProofRequest, proof: AnonCredsProof): ParsedAnonCredsProof => {
+  const result = new ParsedAnonCredsProof()
 
   for (const [referent, requested_attribute] of Object.entries(request.requested_attributes)) {
     if (requested_attribute.name) {
@@ -55,7 +51,7 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
     }
 
     if (requested_attribute.names) {
-      const shared = proof.requested_proof.revealed_attr_groups[referent]
+      const shared = proof.requested_proof.revealed_attr_groups?.[referent]
       if (shared) {
         const attributes = Object.entries(shared.values).map(([name, value]) => ({
           name,
@@ -98,34 +94,34 @@ export const parseIndyProof = (request: IndyProofRequest, proof: IndyProof): Par
 /*
  * Group parsed indy proof data ( returned from `parseIndyProof`) by credential definition id
  * */
-export const groupSharedProofDataByCredential = (data: ParsedIndyProof): GroupedSharedProofData => {
+export const groupSharedProofDataByCredential = (data: ParsedAnonCredsProof): GroupedSharedProofData => {
   const result: GroupedSharedProofData = new Map<string, GroupedSharedProofDataItem>()
   for (const item of data.sharedAttributes) {
-    if (!result.has(item.identifiers.credentialDefinitionId)) {
-      result.set(item.identifiers.credentialDefinitionId, {
+    if (!result.has(item.identifiers.cred_def_id)) {
+      result.set(item.identifiers.cred_def_id, {
         data: new CredentialSharedProofData(),
         identifiers: item.identifiers,
       })
     }
-    result.get(item.identifiers.credentialDefinitionId)?.data.sharedAttributes.push(item)
+    result.get(item.identifiers.cred_def_id)?.data.sharedAttributes.push(item)
   }
   for (const item of data.sharedAttributeGroups) {
-    if (!result.has(item.identifiers.credentialDefinitionId)) {
-      result.set(item.identifiers.credentialDefinitionId, {
+    if (!result.has(item.identifiers.cred_def_id)) {
+      result.set(item.identifiers.cred_def_id, {
         data: new CredentialSharedProofData(),
         identifiers: item.identifiers,
       })
     }
-    result.get(item.identifiers.credentialDefinitionId)?.data.sharedAttributeGroups.push(item)
+    result.get(item.identifiers.cred_def_id)?.data.sharedAttributeGroups.push(item)
   }
   for (const item of data.resolvedPredicates) {
-    if (!result.has(item.identifiers.credentialDefinitionId)) {
-      result.set(item.identifiers.credentialDefinitionId, {
+    if (!result.has(item.identifiers.cred_def_id)) {
+      result.set(item.identifiers.cred_def_id, {
         data: new CredentialSharedProofData(),
         identifiers: item.identifiers,
       })
     }
-    result.get(item.identifiers.credentialDefinitionId)?.data.resolvedPredicates.push(item)
+    result.get(item.identifiers.cred_def_id)?.data.resolvedPredicates.push(item)
   }
   return result
 }
@@ -133,11 +129,14 @@ export const groupSharedProofDataByCredential = (data: ParsedIndyProof): Grouped
 /*
  * Retrieve proof details from AFJ record
  * */
-export const getProofData = async (agent: Agent, recordId: string): Promise<ParsedIndyProof | undefined> => {
+export const getProofData = async (agent: BifoldAgent, recordId: string): Promise<ParsedAnonCredsProof | undefined> => {
   const data = await agent.proofs.getFormatData(recordId)
-  if (data.request?.indy && data.presentation?.indy) {
-    return parseIndyProof(data.request.indy, data.presentation.indy)
+  if (data.request?.anoncreds && data.presentation?.anoncreds) {
+    return parseAnonCredsProof(data.request.anoncreds, data.presentation.anoncreds)
+  } else if (data.request?.indy && data.presentation?.indy) {
+    return parseAnonCredsProof(data.request.indy, data.presentation.indy)
   }
+
   return undefined
 }
 

@@ -12,15 +12,6 @@
     "node": ">=16.15.0 <18.0.0",
     "yarn": "^3.3.1"
   },
-  "resolutions": {
-    "@aries-framework/core": "0.3.3",
-    "@react-navigation/core": "6.1.0",
-    "@react-navigation/native": "6.0.6",
-    "@react-navigation/stack": "6.0.11",
-    "@types/node": "16.9.6",
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2"
-  },
   "scripts": {
     "ci:core": "cd core && npm ci",
     "ci:app": "cd app && npm ci",
