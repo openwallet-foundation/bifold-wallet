@@ -9,7 +9,7 @@ import {
   StatusBar,
   Platform,
   ScrollView,
-  TouchableWithoutFeedback,
+  Pressable,
   DeviceEventEmitter,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -113,9 +113,8 @@ const UseBiometry: React.FC = () => {
     // If successfully authenticated the toggle may proceed.
     if (status) {
       setBiometryEnabled((previousState) => !previousState)
-      DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     }
-
+    DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     setCanSeeCheckPIN(false)
   }
 
@@ -154,9 +153,13 @@ const UseBiometry: React.FC = () => {
             <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <TouchableWithoutFeedback accessibilityLabel={t('Biometry.Toggle')} accessibilityRole={'switch'}>
+            <Pressable
+              testID={testIdWithKey('ToggleBiometrics')}
+              accessible
+              accessibilityLabel={t('Biometry.Toggle')}
+              accessibilityRole={'switch'}
+            >
               <Switch
-                testID={testIdWithKey('ToggleBiometrics')}
                 trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
                 thumbColor={biometryEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
                 ios_backgroundColor={ColorPallet.grayscale.lightGrey}
@@ -164,7 +167,7 @@ const UseBiometry: React.FC = () => {
                 value={biometryEnabled}
                 disabled={!biometryAvailable}
               />
-            </TouchableWithoutFeedback>
+            </Pressable>
           </View>
         </View>
       </ScrollView>

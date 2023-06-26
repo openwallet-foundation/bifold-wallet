@@ -153,7 +153,9 @@ exports[`Onboarding Renders correctly 1`] = `
     }
   >
     <View
+      accessibilityElementsHidden={true}
       accessibilityLabel="Global.Back"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -165,6 +167,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "top": 44,
         }
       }
+      importantForAccessibility="no-hide-descendants"
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -260,7 +263,9 @@ exports[`Onboarding Renders correctly 1`] = `
       />
     </View>
     <View
+      accessibilityElementsHidden={false}
       accessibilityLabel="Global.Next"
+      accessibilityRole="button"
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -272,6 +277,7 @@ exports[`Onboarding Renders correctly 1`] = `
           "top": 44,
         }
       }
+      importantForAccessibility="auto"
       nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}

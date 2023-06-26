@@ -108,6 +108,7 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
         <View style={style.hideIcon}>
           <TouchableOpacity
             accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
+            accessibilityRole={'button'}
             testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
             onPress={() => setShowPIN(!showPIN)}
             hitSlop={hitSlop}

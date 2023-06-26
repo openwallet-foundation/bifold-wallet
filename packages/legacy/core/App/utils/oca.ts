@@ -1,13 +1,15 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 
-import { CredentialSharedProofData, IndyProofRequestTemplatePayloadData } from '../../verifier'
+import { CredentialSharedProofData, AnonCredsProofRequestTemplatePayloadData } from '../../verifier'
 import { Attribute, Field, Predicate } from '../types/record'
 
-export const buildFieldsFromIndyCredential = (credential: CredentialExchangeRecord): Array<Field> => {
+export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchangeRecord): Array<Field> => {
   return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []
 }
 
-export const buildFieldsFromIndyProofRequestTemplate = (data: IndyProofRequestTemplatePayloadData): Array<Field> => {
+export const buildFieldsFromAnonCredsProofRequestTemplate = (
+  data: AnonCredsProofRequestTemplatePayloadData
+): Array<Field> => {
   const fields = []
   if (data.requestedAttributes) {
     for (const item of data.requestedAttributes) {
@@ -35,7 +37,7 @@ export const buildFieldsFromIndyProofRequestTemplate = (data: IndyProofRequestTe
   return fields
 }
 
-export const buildFieldsFromSharedIndyProof = (data: CredentialSharedProofData): Array<Field> => {
+export const buildFieldsFromSharedAnonCredsProof = (data: CredentialSharedProofData): Array<Field> => {
   const fields = []
   for (const attribute of data.sharedAttributes) {
     fields.push(

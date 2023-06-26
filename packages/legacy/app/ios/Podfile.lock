@@ -1,4 +1,12 @@
 PODS:
+  - anoncreds (0.1.0):
+    - React
+    - React-callinvoker
+    - React-Core
+  - aries-askar (0.1.0):
+    - React
+    - React-callinvoker
+    - React-Core
   - boost (1.76.0)
   - CatCrypto (0.3.2)
   - CocoaAsyncSocket (7.6.5)
@@ -14,10 +22,12 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.9.0)
-  - indy-sdk-react-native (0.2.2):
+  - indy-vdr (0.1.0):
     - React
+    - React-callinvoker
+    - React-Core
   - libevent (2.1.12)
-  - Permission-Camera (3.6.1):
+  - Permission-Camera (3.8.0):
     - RNPermissions
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -343,7 +353,7 @@ PODS:
     - React-Core
   - RNLocalize (2.1.5):
     - React-Core
-  - RNPermissions (3.6.1):
+  - RNPermissions (3.8.0):
     - React-Core
   - RNReanimated (2.14.4):
     - DoubleConversion
@@ -382,13 +392,15 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - "anoncreds (from `../node_modules/@hyperledger/anoncreds-react-native`)"
+  - "aries-askar (from `../node_modules/@hyperledger/aries-askar-react-native`)"
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (~> 0.9.0)
-  - indy-sdk-react-native (from `../node_modules/indy-sdk-react-native`)
+  - "indy-vdr (from `../node_modules/@hyperledger/indy-vdr-react-native`)"
   - libevent (~> 2.1.12)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -451,6 +463,10 @@ SPEC REPOS:
     - libevent
 
 EXTERNAL SOURCES:
+  anoncreds:
+    :path: "../node_modules/@hyperledger/anoncreds-react-native"
+  aries-askar:
+    :path: "../node_modules/@hyperledger/aries-askar-react-native"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   DoubleConversion:
@@ -461,8 +477,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
-  indy-sdk-react-native:
-    :path: "../node_modules/indy-sdk-react-native"
+  indy-vdr:
+    :path: "../node_modules/@hyperledger/indy-vdr-react-native"
   Permission-Camera:
     :path: "../node_modules/react-native-permissions/ios/Camera"
   RCT-Folly:
@@ -563,6 +579,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  anoncreds: 8e6ab626d5250ae6301c3e96d6fc739186e083f0
+  aries-askar: fde2367dd2eec5c646e71cd909f518a3585b0f17
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
@@ -572,9 +590,9 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
-  indy-sdk-react-native: 52c3fdd11b673d11cdae5c28fa79a184084c6688
+  indy-vdr: 85cd66089f151256581323440e78988891f4082e
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
+  Permission-Camera: e6d142d7d8b714afe0a83e5e6ae17eb949f1e3e9
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 405e24508a0feed1771d48caebb85c581db53122
   RCTTypeSafety: 0654998ea6afd3dccecbf6bb379d7c10d1361a72
@@ -617,13 +635,13 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNKeychain: f75b8c8b2f17d3b2aa1f25b4a0ac5b83d947ff8f
   RNLocalize: 74b82db20cc3895ccc25af992c644879bcec2815
-  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
+  RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
   RNReanimated: f066aa91ef8ef7b2a9baed4c15ec06f5e5fb5d11
   RNScreens: 0591543e343c7444ea1756b6265d81a4295922c9
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Yoga: b316a990bb6d115afa1b436b5626ac7c61717d17
 
-PODFILE CHECKSUM: ac6fb920404abfaf943a3b94ff54624a7f9c89e8
+PODFILE CHECKSUM: 36c4ac4baaf4f38cc60cae1675c2ba258ad8d4ff
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

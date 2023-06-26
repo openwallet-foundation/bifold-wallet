@@ -173,7 +173,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={[styles.icon]}>
-          <Icon name={iconName} size={iconSize} color={iconColor} />
+          <Icon accessible={false} name={iconName} size={iconSize} color={iconColor} />
         </View>
         <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
           {title}
@@ -204,7 +204,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
           <Button
             title={onCallToActionLabel || t('Global.Okay')}
             accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
-            testID={testIdWithKey('Okay')}
+            testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
             buttonType={ButtonType.Primary}
             onPress={onCallToActionPressed}
           />

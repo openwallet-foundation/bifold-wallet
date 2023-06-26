@@ -1,26 +1,36 @@
 import {
+  AnonCredsCredentialsForProofRequest,
+  AnonCredsProofFormat,
+  AnonCredsProofFormatService,
+  AnonCredsProofRequestRestriction,
+  AnonCredsRequestedAttributeMatch,
+  AnonCredsRequestedPredicateMatch,
+  LegacyIndyProofFormat,
+  LegacyIndyProofFormatService,
+} from '@aries-framework/anoncreds'
+import {
   Agent,
   ConnectionRecord,
   CredentialExchangeRecord,
-  RequestedAttribute,
-  RequestedPredicate,
-  RetrievedCredentials,
-  IndyCredentialInfo,
-  IndyProofFormat,
+  CredentialState,
+  BasicMessageRecord,
+  ProofExchangeRecord,
+  ProofState,
 } from '@aries-framework/core'
+import { BasicMessageRole } from '@aries-framework/core/build/modules/basic-messages/BasicMessageRole'
 import {
-  FormatDataMessagePayload,
-  FormatRetrievedCredentialOptions,
-} from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
+  GetCredentialsForRequestReturn,
+  ProofFormatDataMessagePayload,
+} from '@aries-framework/core/build/modules/proofs/protocol/ProofProtocolOptions'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { Buffer } from 'buffer'
-import { WalletQuery } from 'indy-sdk-react-native'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
-import { ReactNode } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
+import { Role } from '../types/chat'
 import { Attribute, Predicate, ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
 import { ChildFn } from '../types/tour'
 
@@ -121,6 +131,24 @@ export function formatTime(time: Date, params?: { long?: boolean; format?: strin
   return formattedTime
 }
 
+export function formatIfDate(
+  format: string | undefined,
+  value: string | number | null,
+  setter: Dispatch<SetStateAction<string | number | null>>
+) {
+  const potentialDate = value ? value.toString() : null
+  if (format === 'YYYYMMDD' && potentialDate && potentialDate.length === format.length) {
+    const year = potentialDate.substring(0, 4)
+    const month = potentialDate.substring(4, 6)
+    const day = potentialDate.substring(6, 8)
+    // NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
+    const date = new Date(Number(year), Number(month) - 1, Number(day))
+    if (!isNaN(date.getDate())) {
+      setter(formatTime(date))
+    }
+  }
+}
+
 /**
  * @deprecated The function should not be used
  */
@@ -162,9 +190,9 @@ export function getConnectionImageUrl(connectionId: string) {
 }
 
 export function firstValidCredential(
-  fields: RequestedAttribute[] | RequestedPredicate[],
+  fields: AnonCredsRequestedAttributeMatch[] | AnonCredsRequestedPredicateMatch[],
   revoked = true
-): RequestedAttribute | RequestedPredicate | null {
+): AnonCredsRequestedAttributeMatch | AnonCredsRequestedPredicateMatch | null {
   if (!fields.length) {
     return null
   }
@@ -208,7 +236,7 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-const credNameFromRestriction = (queries?: WalletQuery[]): string => {
+const credNameFromRestriction = (queries?: AnonCredsProofRequestRestriction[]): string => {
   let schema_name = ''
   let cred_def_id = ''
   let schema_id = ''
@@ -224,18 +252,24 @@ const credNameFromRestriction = (queries?: WalletQuery[]): string => {
   }
 }
 
+export const isDataUrl = (value: string | number | null) => {
+  return typeof value === 'string' && value.startsWith('data:image/')
+}
+
 export const processProofAttributes = (
-  request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
+  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
-  if (!(request?.indy?.requested_attributes && credentials?.proofFormats?.indy?.requestedAttributes)) {
+
+  const requestedProofAttributes = request?.indy?.requested_attributes ?? request?.anoncreds?.requested_attributes
+  const retrievedCredentialAttributes =
+    credentials?.proofFormats?.indy?.attributes ?? credentials?.proofFormats?.anoncreds?.attributes
+
+  if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
-
-  const requestedProofAttributes = request.indy.requested_attributes
-  const retrievedCredentialAttributes = credentials.proofFormats.indy.requestedAttributes
 
   for (const key of Object.keys(retrievedCredentialAttributes)) {
     // The shift operation modifies the original input array, therefore make a copy
@@ -271,9 +305,9 @@ export const processProofAttributes = (
         }
       }
 
-      let attributeValue = '' //(credentialInfo as IndyCredentialInfo).attributes[attributeName]
+      let attributeValue = ''
       if (credential) {
-        attributeValue = (credential.credentialInfo as IndyCredentialInfo).attributes[attributeName]
+        attributeValue = credential.credentialInfo.attributes[attributeName]
       }
       processedAttributes[credName].attributes?.push(
         new Attribute({
@@ -288,18 +322,19 @@ export const processProofAttributes = (
 }
 
 export const processProofPredicates = (
-  request?: FormatDataMessagePayload<[IndyProofFormat], 'request'> | undefined,
-  credentials?: FormatRetrievedCredentialOptions<[IndyProofFormat]>,
+  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
+  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
-  if (!(request?.indy?.requested_predicates && credentials?.proofFormats?.indy?.requestedPredicates)) {
+  const requestedProofPredicates = request?.anoncreds?.requested_predicates ?? request?.indy?.requested_predicates
+  const retrievedCredentialPredicates =
+    credentials?.proofFormats?.anoncreds?.predicates ?? credentials?.proofFormats?.indy?.predicates
+
+  if (!requestedProofPredicates || !retrievedCredentialPredicates) {
     return {}
   }
-
-  const requestedProofPredicates = request.indy.requested_predicates
-  const retrievedCredentialPredicates = credentials.proofFormats.indy.requestedPredicates
 
   for (const key of Object.keys(requestedProofPredicates)) {
     // The shift operation modifies the original input array, therefore make a copy
@@ -368,9 +403,11 @@ export const mergeAttributesAndPredicates = (
 /**
  * @deprecated The function should not be used
  */
-export const sortCredentialsForAutoSelect = (credentials: RetrievedCredentials): RetrievedCredentials => {
-  const requestedAttributes = Object.values(credentials?.requestedAttributes).pop()
-  const requestedPredicates = Object.values(credentials?.requestedPredicates).pop()
+export const sortCredentialsForAutoSelect = (
+  credentials: AnonCredsCredentialsForProofRequest
+): AnonCredsCredentialsForProofRequest => {
+  const requestedAttributes = Object.values(credentials?.attributes).pop()
+  const requestedPredicates = Object.values(credentials?.predicates).pop()
   const sortFn = (a: any, b: any) => {
     if (a.revoked && !b.revoked) {
       return 1
@@ -495,4 +532,94 @@ export const getJson = (jsonString: string): Record<string, unknown> | undefined
  */
 export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children is ChildFn<T> {
   return typeof children === 'function'
+}
+
+export function getCredentialEventRole(record: CredentialExchangeRecord) {
+  switch (record.state) {
+    // assuming only Holder states are supported here
+    case CredentialState.ProposalSent:
+      return Role.me
+    case CredentialState.OfferReceived:
+      return Role.them
+    case CredentialState.RequestSent:
+      return Role.me
+    case CredentialState.Declined:
+      return Role.me
+    case CredentialState.CredentialReceived:
+      return Role.me
+    case CredentialState.Done:
+      return Role.me
+    default:
+      return Role.me
+  }
+}
+
+export function getCredentialEventLabel(record: CredentialExchangeRecord) {
+  switch (record.state) {
+    // assuming only Holder states are supported here
+    case CredentialState.ProposalSent:
+      return 'Chat.CredentialProposalSent'
+    case CredentialState.OfferReceived:
+      return 'Chat.CredentialOfferReceived'
+    case CredentialState.RequestSent:
+      return 'Chat.CredentialRequestSent'
+    case CredentialState.Declined:
+      return 'Chat.CredentialDeclined'
+    case CredentialState.CredentialReceived:
+    case CredentialState.Done:
+      return 'Chat.CredentialReceived'
+    default:
+      return ''
+  }
+}
+
+export function getProofEventRole(record: ProofExchangeRecord) {
+  switch (record.state) {
+    case ProofState.RequestSent:
+      return Role.me
+    case ProofState.ProposalReceived:
+      return Role.me
+    case ProofState.PresentationReceived:
+      return Role.them
+    case ProofState.RequestReceived:
+      return Role.me
+    case ProofState.ProposalSent:
+    case ProofState.PresentationSent:
+      return Role.me
+    case ProofState.Declined:
+      return Role.me
+    case ProofState.Abandoned:
+      return Role.them
+    case ProofState.Done:
+      return record.isVerified !== undefined ? Role.them : Role.me
+    default:
+      return Role.me
+  }
+}
+
+export function getProofEventLabel(record: ProofExchangeRecord) {
+  switch (record.state) {
+    case ProofState.RequestSent:
+    case ProofState.ProposalReceived:
+      return 'Chat.ProofRequestSent'
+    case ProofState.PresentationReceived:
+      return 'Chat.ProofPresentationReceived'
+    case ProofState.RequestReceived:
+      return 'Chat.ProofRequestReceived'
+    case ProofState.ProposalSent:
+    case ProofState.PresentationSent:
+      return 'Chat.ProofRequestSatisfied'
+    case ProofState.Declined:
+      return 'Chat.ProofRequestRejected'
+    case ProofState.Abandoned:
+      return 'Chat.ProofRequestRejectReceived'
+    case ProofState.Done:
+      return record.isVerified !== undefined ? 'Chat.ProofPresentationReceived' : 'Chat.ProofRequestSatisfied'
+    default:
+      return ''
+  }
+}
+
+export function getMessageEventRole(record: BasicMessageRecord) {
+  return record.role === BasicMessageRole.Sender ? Role.me : Role.them
 }

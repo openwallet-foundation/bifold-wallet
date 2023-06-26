@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BackHandler, DeviceEventEmitter, Dimensions, ScrollView, Share, StyleSheet, Text, View } from 'react-native'
+import { BackHandler, DeviceEventEmitter, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -30,7 +30,7 @@ type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.P
 const windowDimensions = Dimensions.get('window')
 
 const qrContainerSize = windowDimensions.width - 20
-const qrSize = qrContainerSize - 60
+const qrSize = qrContainerSize - 20
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
   if (!route?.params) {
@@ -47,6 +47,11 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const isFocused = useIsFocused()
+  const [generating, setGenerating] = useState(true)
+  const [message, setMessage] = useState<string | undefined>(undefined)
+  const [recordId, setRecordId] = useState<string | undefined>(undefined)
+  const record: ProofExchangeRecord | undefined = useProofById(recordId ?? '')
+  const template = useTemplate(templateId)
 
   const styles = StyleSheet.create({
     container: {
@@ -56,7 +61,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     headerContainer: {
       alignItems: 'center',
       padding: 16,
-      marginVertical: 20,
       marginHorizontal: 30,
       textAlign: 'center',
     },
@@ -90,9 +94,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       alignItems: 'center',
       justifyContent: 'center',
       marginHorizontal: 10,
-      borderColor: ColorPallet.brand.primary,
-      borderWidth: 10,
-      borderRadius: 40,
+      marginTop: 15,
     },
     buttonContainer: {
       marginTop: 'auto',
@@ -103,12 +105,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
   })
 
-  const [generating, setGenerating] = useState(true)
-  const [message, setMessage] = useState<string | undefined>(undefined)
-  const [invitationUrl, setInvitationUrl] = useState<string | undefined>(undefined)
-  const [recordId, setRecordId] = useState<string | undefined>(undefined)
-
-  const template = useTemplate(templateId)
   if (!template) {
     throw new Error('Unable to find proof request template')
   }
@@ -121,7 +117,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       if (result) {
         setRecordId(result.proofRecord.id)
         setMessage(JSON.stringify(result.invitation.toJSON()))
-        setInvitationUrl(result.invitationUrl)
         linkProofWithTemplate(agent, result.proofRecord, templateId)
       }
     } catch (e) {
@@ -132,21 +127,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       setGenerating(false)
     }
   }, [])
-
-  const shareLink = useCallback(() => {
-    if (invitationUrl && invitationUrl.trim().length > 0) {
-      Share.share({
-        title: t('ProofRequest.ProofRequest'),
-        message: invitationUrl,
-      })
-    }
-  }, [invitationUrl])
-
-  useEffect(() => {
-    if (isFocused) {
-      createProofRequest()
-    }
-  }, [isFocused])
 
   useFocusEffect(
     useCallback(() => {
@@ -161,7 +141,11 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     }, [])
   )
 
-  const record: ProofExchangeRecord | undefined = useProofById(recordId || '')
+  useEffect(() => {
+    if (isFocused) {
+      createProofRequest()
+    }
+  }, [isFocused])
 
   useEffect(() => {
     if (record && (isPresentationReceived(record) || isPresentationFailed(record))) {
@@ -172,34 +156,23 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <ScrollView>
-        <View style={styles.headerContainer}>
-          <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
-          <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>
-        </View>
-        <Text style={styles.interopText}>AIP 2.0</Text>
         <View style={styles.qrContainer}>
           {generating && <LoadingIndicator />}
           {message && <QRRenderer value={message} size={qrSize} />}
+        </View>
+        <View style={styles.headerContainer}>
+          <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
+          <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
         <View style={styles.footerButton}>
           <Button
-            title={t('Verifier.GenerateNewQR')}
-            accessibilityLabel={t('Verifier.GenerateNewQR')}
+            title={t('Verifier.RefreshQR')}
+            accessibilityLabel={t('Verifier.RefreshQR')}
             testID={testIdWithKey('GenerateNewQR')}
             buttonType={ButtonType.Primary}
             onPress={() => createProofRequest()}
-            disabled={generating}
-          />
-        </View>
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Verifier.ShareLink')}
-            accessibilityLabel={t('Verifier.ShareLink')}
-            testID={testIdWithKey('ShareLink')}
-            buttonType={ButtonType.Secondary}
-            onPress={() => shareLink()}
             disabled={generating}
           />
         </View>

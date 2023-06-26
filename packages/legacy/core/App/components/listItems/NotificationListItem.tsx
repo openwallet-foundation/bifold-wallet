@@ -1,6 +1,6 @@
 import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
 
-import { V1RequestPresentationMessage } from '@aries-framework/core'
+import { V1RequestPresentationMessage } from '@aries-framework/anoncreds'
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -129,7 +129,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     try {
       const proofId = (notification as ProofExchangeRecord).id
       if (agent) {
-        await agent.proofs.declineRequest(proofId)
+        await agent.proofs.declineRequest({ proofRecordId: proofId })
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
@@ -354,7 +354,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     <View style={[styles.container, styleConfig.containerStyle]} testID={testIdWithKey('NotificationListItem')}>
       <View style={styles.headerContainer}>
         <View style={styles.icon}>
-          <Icon name={styleConfig.iconName} size={iconSize} color={styleConfig.iconColor} />
+          <Icon accessible={false} name={styleConfig.iconName} size={iconSize} color={styleConfig.iconColor} />
         </View>
         <Text style={[styles.headerText, styleConfig.textStyle]} testID={testIdWithKey('HeaderText')}>
           {details.title}
@@ -364,8 +364,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         ) && (
           <View>
             <TouchableOpacity
-              accessibilityLabel={t('Global.Close')}
-              testID={testIdWithKey(`Close${notificationType}`)}
+              accessibilityLabel={t('Global.Dismiss')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey(`Dismiss${notificationType}`)}
               onPress={onClose}
               hitSlop={hitSlop}
             >

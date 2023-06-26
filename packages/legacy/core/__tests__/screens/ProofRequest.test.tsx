@@ -1,13 +1,5 @@
-import {
-  CredentialExchangeRecord,
-  CredentialState,
-  IndyCredentialInfo,
-  INDY_PROOF_REQUEST_ATTACHMENT_ID,
-  ProofExchangeRecord,
-  ProofState,
-  RequestedAttribute,
-  V1RequestPresentationMessage,
-} from '@aries-framework/core'
+import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@aries-framework/anoncreds'
+import { CredentialExchangeRecord, CredentialState, ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
@@ -32,6 +24,9 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
+jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
+jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
+jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
@@ -83,7 +78,7 @@ describe('displays a proof request screen', () => {
 
     const requestPresentationMessage = new V1RequestPresentationMessage({
       comment: 'some comment',
-      requestPresentationAttachments: [
+      requestAttachments: [
         new Attachment({
           id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
           mimeType: 'application/json',
@@ -122,27 +117,34 @@ describe('displays a proof request screen', () => {
     }
 
     const testRetrievedCredentials = {
-      requestedAttributes: {
-        email: [
-          new RequestedAttribute({
-            credentialId: testCredentials[0].id,
-            revealed: true,
-            credentialInfo: new IndyCredentialInfo({
-              ...attributeBase,
-              attributes: { email: testEmail },
-            }),
-          }),
-        ],
-        time: [
-          new RequestedAttribute({
-            credentialId: testCredentials[0].id,
-            revealed: true,
-            credentialInfo: new IndyCredentialInfo({
-              ...attributeBase,
-              attributes: { time: testTime },
-            }),
-          }),
-        ],
+      proofFormats: {
+        indy: {
+          predicates: {},
+          attributes: {
+            email: [
+              {
+                credentialId: testCredentials[0].id,
+                revealed: true,
+                credentialInfo: {
+                  ...attributeBase,
+                  credentialId: testCredentials[0].id,
+                  attributes: { email: testEmail },
+                },
+              },
+            ],
+            time: [
+              {
+                credentialId: testCredentials[0].id,
+                revealed: true,
+                credentialInfo: {
+                  ...attributeBase,
+                  attributes: { time: testTime },
+                  credentialId: testCredentials[0].id,
+                },
+              },
+            ],
+          },
+        },
       },
     }
 
@@ -179,7 +181,7 @@ describe('displays a proof request screen', () => {
       const { agent } = useAgent()
 
       // @ts-ignore
-      agent?.proofs.getRequestedCredentialsForProofRequest.mockResolvedValue(testRetrievedCredentials)
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
 
       const { getByText, getAllByText, queryByText } = render(
         <NetworkProvider>
@@ -223,8 +225,16 @@ describe('displays a proof request screen', () => {
       const { agent } = useAgent()
 
       // @ts-ignore
-      agent?.proofs.getRequestedCredentialsForProofRequest.mockResolvedValue({
-        requestedAttributes: { ...testRetrievedCredentials.requestedAttributes, time: [] },
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue({
+        proofFormats: {
+          indy: {
+            attributes: {
+              ...testRetrievedCredentials.proofFormats.indy.attributes,
+              time: [],
+            },
+            predicates: {},
+          },
+        },
       })
 
       const tree = render(

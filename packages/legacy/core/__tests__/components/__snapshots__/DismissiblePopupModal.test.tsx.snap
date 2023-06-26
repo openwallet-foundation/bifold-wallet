@@ -132,6 +132,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
           >
             <View
               accessibilityLabel="Global.Dismiss"
+              accessibilityRole="button"
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -207,6 +208,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
           </Text>
           <View
             accessibilityLabel="Global.Okay"
+            accessibilityRole="button"
             accessibilityState={
               Object {
                 "disabled": false,
@@ -251,6 +253,8 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                       "fontWeight": "bold",
                       "textAlign": "center",
                     },
+                    false,
+                    false,
                     false,
                   ]
                 }
@@ -398,6 +402,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
           >
             <View
               accessibilityLabel="Global.Dismiss"
+              accessibilityRole="button"
               accessible={true}
               collapsable={false}
               focusable={true}

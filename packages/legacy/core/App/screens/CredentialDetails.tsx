@@ -18,18 +18,18 @@ import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { CredentialMetadata } from '../types/metadata'
+import { CredentialMetadata, customMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CardOverlayType, CredentialOverlay } from '../types/oca'
 import { ModalUsage } from '../types/remove'
 import {
   credentialTextColor,
   getCredentialIdentifiers,
-  isValidIndyCredential,
+  isValidAnonCredsCredential,
   toImageSource,
 } from '../utils/credential'
 import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
-import { buildFieldsFromIndyCredential } from '../utils/oca'
+import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -52,7 +52,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
-  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(false)
+  const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(
+    (credential!.metadata.get(CredentialMetadata.customMetadata) as customMetadata)?.revoked_detail_dismissed ?? false
+  )
 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({
     bundle: undefined,
@@ -122,7 +124,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [])
 
   useEffect(() => {
-    if (!(credential && isValidIndyCredential(credential))) {
+    if (!(credential && isValidAnonCredsCredential(credential))) {
       return
     }
 
@@ -139,7 +141,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         alias: credentialConnectionLabel,
         credConnectionId: credential.connectionId,
       },
-      attributes: buildFieldsFromIndyCredential(credential),
+      attributes: buildFieldsFromAnonCredsCredential(credential),
       language: i18n.language,
     }
 
@@ -150,7 +152,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   useEffect(() => {
     if (credential?.revocationNotification) {
-      credential.metadata.set(CredentialMetadata.customMetadata, { revoked_seen: true })
+      const meta = credential!.metadata.get(CredentialMetadata.customMetadata)
+      credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
       agent?.credentials.update(credential)
     }
   }, [isRevoked])
@@ -167,12 +170,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
       await agent.credentials.deleteById(credential.id)
 
+      navigation.pop()
+
+      // FIXME: This delay is a hack so that the toast doesn't appear until the modal is dismissed
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
       Toast.show({
         type: ToastType.Success,
         text1: t('CredentialDetails.CredentialRemoved'),
       })
-
-      navigation.pop()
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
 
@@ -186,6 +192,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const handleDismissRevokedMessage = () => {
     setIsRevokedMessageHidden(true)
+    const meta = credential!.metadata.get(CredentialMetadata.customMetadata)
+    credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
+    agent?.credentials.update(credential)
   }
 
   const callOnRemove = useCallback(() => handleOnRemove(), [])

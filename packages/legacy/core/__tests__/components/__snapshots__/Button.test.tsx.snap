@@ -3,6 +3,7 @@
 exports[`Button Component Primary renders correctly 1`] = `
 <View
   accessibilityLabel="primary"
+  accessibilityRole="button"
   accessibilityState={
     Object {
       "disabled": false,
@@ -47,6 +48,8 @@ exports[`Button Component Primary renders correctly 1`] = `
             "textAlign": "center",
           },
           false,
+          false,
+          false,
         ]
       }
     >
@@ -59,6 +62,7 @@ exports[`Button Component Primary renders correctly 1`] = `
 exports[`Button Component Secondary renders correctly 1`] = `
 <View
   accessibilityLabel="secondary"
+  accessibilityRole="button"
   accessibilityState={
     Object {
       "disabled": false,
@@ -103,6 +107,8 @@ exports[`Button Component Secondary renders correctly 1`] = `
             "fontWeight": "bold",
             "textAlign": "center",
           },
+          false,
+          false,
           false,
         ]
       }

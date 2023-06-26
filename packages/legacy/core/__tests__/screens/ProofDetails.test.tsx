@@ -1,9 +1,5 @@
-import {
-  INDY_PROOF_REQUEST_ATTACHMENT_ID,
-  ProofExchangeRecord,
-  ProofState,
-  V1RequestPresentationMessage,
-} from '@aries-framework/core'
+import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@aries-framework/anoncreds'
+import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 import { useProofById } from '@aries-framework/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
@@ -15,7 +11,7 @@ import React from 'react'
 import { testIdWithKey } from '../../App/utils/testable'
 import ProofDetails from '../../App/screens/ProofDetails'
 import * as proofUtils from '../../verifier/utils/proof'
-import { IndyProof } from 'indy-sdk-react-native'
+import { AnonCredsProof } from '@aries-framework/anoncreds'
 import configurationContext from '../contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import { ConfigurationContext } from '../../App/contexts/configuration'
@@ -45,7 +41,7 @@ const proof_request = {
   requested_predicates: {},
 }
 
-const proof: IndyProof = {
+const proof: AnonCredsProof = {
   proof: {
     proofs: [],
     aggregated_proof: {
@@ -87,7 +83,7 @@ const proof: IndyProof = {
 
 const requestPresentationMessage = new V1RequestPresentationMessage({
   comment: 'some comment',
-  requestPresentationAttachments: [
+  requestAttachments: [
     new Attachment({
       id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
       mimeType: 'application/json',
@@ -98,7 +94,7 @@ const requestPresentationMessage = new V1RequestPresentationMessage({
   ],
 })
 
-const data = proofUtils.parseIndyProof(proof_request, proof)
+const data = proofUtils.parseAnonCredsProof(proof_request, proof)
 
 describe('ProofDetails Component', () => {
   afterEach(() => {

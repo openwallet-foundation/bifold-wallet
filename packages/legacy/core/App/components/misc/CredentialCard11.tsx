@@ -2,7 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -13,7 +13,7 @@ import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute, Predicate } from '../../types/record'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
-import { getCredentialConnectionLabel } from '../../utils/helpers'
+import { getCredentialConnectionLabel, isDataUrl } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
@@ -97,6 +97,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     (field) => field.name === overlay?.cardLayoutOverlay?.secondaryAttribute?.name
   )
 
+  const cardData = [...(displayItems ?? []), primaryField, secondaryField]
+
   const getSecondaryBackgroundColor = () => {
     if (proof) {
       return overlay.cardLayoutOverlay?.primaryBackgroundColor
@@ -127,6 +129,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     primaryBodyContainer: {
       flexGrow: 1,
       padding,
+    },
+    imageAttr: {
+      height: 150,
+      aspectRatio: 1,
+      resizeMode: 'contain',
+      borderRadius: 10,
     },
     statusContainer: {
       backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -265,23 +273,34 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const AttributeValue: React.FC<{ value: string | number | null }> = ({ value }) => {
     return (
-      <Text
-        style={[
-          TextTheme.normal,
-          styles.textContainer,
-          {
-            lineHeight: 24,
-            fontWeight: 'bold',
-          },
-        ]}
-        testID={testIdWithKey('AttributeValue')}
-      >
-        {value}
-      </Text>
+      <>
+        {isDataUrl(value) ? (
+          <Image style={styles.imageAttr} source={{ uri: value as string }}></Image>
+        ) : (
+          <Text
+            style={[
+              TextTheme.normal,
+              styles.textContainer,
+              {
+                lineHeight: 24,
+                fontWeight: 'bold',
+              },
+            ]}
+            testID={testIdWithKey('AttributeValue')}
+          >
+            {value}
+          </Text>
+        )}
+      </>
     )
   }
 
+  const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
+    return { label: item?.label ?? startCase(item?.name ?? ''), value: item?.value || `${item?.pType} ${item?.pValue}` }
+  }
+
   const renderCardAttribute = (item: Attribute & Predicate) => {
+    const { label, value } = parseAttribute(item)
     return (
       item && (
         <View style={{ marginTop: 15 }}>
@@ -293,14 +312,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 color={ListItems.proofError.color}
                 size={ListItems.recordAttributeText.fontSize}
               />
-              <AttributeLabel label={item?.label ?? startCase(item?.name ?? '')} />
+              <AttributeLabel label={label} />
             </View>
           ) : (
-            <AttributeLabel label={item?.label ?? startCase(item?.name ?? '')} />
+            <AttributeLabel label={label} />
           )}
-          {!(item?.value || item?.pValue) ? null : (
-            <AttributeValue value={item?.value || `${item?.pType} ${item?.pValue}`} />
-          )}
+          {!(item?.value || item?.pValue) ? null : <AttributeValue value={value} />}
         </View>
       )
     )
@@ -358,7 +375,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </View>
           )}
           <FlatList
-            data={[...(displayItems ?? []), primaryField, secondaryField]}
+            data={cardData}
             scrollEnabled={false}
             renderItem={({ item }) => {
               return renderCardAttribute(item as Attribute & Predicate)
@@ -444,7 +461,23 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const CredentialCard: React.FC<{ status?: CredentialStatus }> = ({ status }) => {
     return (
-      <View style={styles.cardContainer}>
+      <View
+        style={styles.cardContainer}
+        accessible={true}
+        accessibilityLabel={
+          `${
+            overlay.metaOverlay?.issuerName ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuerName}` : ''
+          }, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''} ${t(
+            'Credentials.Credential'
+          )}.` +
+          cardData.map((item) => {
+            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
+            if (label && value) {
+              return ` ${label}, ${value}`
+            }
+          })
+        }
+      >
         <CredentialCardSecondaryBody />
         <CredentialCardLogo />
         <CredentialCardPrimaryBody />

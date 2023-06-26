@@ -7,6 +7,7 @@ import { hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { BaseType } from '../../types/oca'
 import { Attribute, Field } from '../../types/record'
+import { isDataUrl } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import RecordBinaryField from './RecordBinaryField'
@@ -38,8 +39,10 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
       ...ListItems.recordAttributeText,
     },
   })
-
-  if (field.encoding == validEncoding && field.format && validFormat.test(field.format)) {
+  if (
+    (field.encoding == validEncoding && field.format && validFormat.test(field.format) && field.value) ||
+    isDataUrl(field.value)
+  ) {
     return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
   }
   if (field.type == BaseType.DateInt) {

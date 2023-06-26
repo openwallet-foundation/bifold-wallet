@@ -29,6 +29,7 @@ const CloseButton: React.FC<Props> = ({ onPress }) => {
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={t('Scan.Close')}
+        accessibilityRole={'button'}
         testID={testIdWithKey('ScanClose')}
         style={styles.button}
         onPress={onPress}

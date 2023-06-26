@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Text, TouchableWithoutFeedback, Switch, StyleSheet } from 'react-native'
+import { View, Text, Pressable, Switch, StyleSheet } from 'react-native'
 
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -65,41 +65,43 @@ const Developer: React.FC = () => {
       </Text>
       <View style={styles.settingContainer}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.settingLabelText}>{t('Verifier.UseVerifierCapability')}</Text>
+          <Text accessible={false} style={styles.settingLabelText}>
+            {t('Verifier.UseVerifierCapability')}
+          </Text>
         </View>
-        <TouchableWithoutFeedback
+        <Pressable
           style={styles.settingSwitchContainer}
           accessibilityLabel={t('Verifier.Toggle')}
           accessibilityRole={'switch'}
+          testID={testIdWithKey('ToggleVerifierCapability')}
         >
           <Switch
-            testID={testIdWithKey('ToggleVerifierCapability')}
             trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
             thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleVerifierCapabilitySwitch}
             value={useVerifierCapability}
           />
-        </TouchableWithoutFeedback>
+        </Pressable>
       </View>
       <View style={styles.settingContainer}>
         <View style={{ flex: 1 }}>
           <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
         </View>
-        <TouchableWithoutFeedback
+        <Pressable
           style={styles.settingSwitchContainer}
           accessibilityLabel={t('Connection.Toggle')}
           accessibilityRole={'switch'}
+          testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
         >
           <Switch
-            testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
             trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
             thumbColor={useConnectionInviterCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleConnectionInviterCapabilitySwitch}
             value={useConnectionInviterCapability}
           />
-        </TouchableWithoutFeedback>
+        </Pressable>
       </View>
     </View>
   )

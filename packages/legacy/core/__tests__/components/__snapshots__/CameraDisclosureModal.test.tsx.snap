@@ -94,6 +94,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
       >
         <View
           accessibilityLabel="CameraDisclosure.Allow"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -139,6 +140,8 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
                     "textAlign": "center",
                   },
                   false,
+                  false,
+                  false,
                 ]
               }
             >
@@ -156,6 +159,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
       >
         <View
           accessibilityLabel="Global.NotNow"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "disabled": false,
@@ -201,6 +205,8 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
+                  false,
+                  false,
                   false,
                 ]
               }

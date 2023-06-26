@@ -33,6 +33,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [
@@ -150,6 +151,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,
@@ -195,6 +197,8 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
                 "textAlign": "center",
               },
               false,
+              false,
+              false,
             ]
           }
         >
@@ -239,6 +243,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [
@@ -356,6 +361,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,
@@ -401,6 +407,8 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
                 "textAlign": "center",
               },
               false,
+              false,
+              false,
             ]
           }
         >
@@ -445,6 +453,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [
@@ -562,6 +571,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,
@@ -607,6 +617,8 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
                 "textAlign": "center",
               },
               false,
+              false,
+              false,
             ]
           }
         >
@@ -651,6 +663,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       }
     >
       <Text
+        accessible={false}
         allowFontScaling={false}
         style={
           Array [
@@ -768,6 +781,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
     </View>
     <View
       accessibilityLabel="Global.Okay"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "disabled": false,
@@ -812,6 +826,8 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
                 "fontWeight": "bold",
                 "textAlign": "center",
               },
+              false,
+              false,
               false,
             ]
           }

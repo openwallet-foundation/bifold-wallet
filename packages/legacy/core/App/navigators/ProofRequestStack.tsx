@@ -67,7 +67,7 @@ const ProofRequestStack: React.FC = () => {
                   navigation.navigate(Screens.ProofRequests, {})
                 }
               }}
-              icon="arrow-right"
+              icon="arrow-left"
             />
           ),
           headerRight: () => <HeaderRightHome />,

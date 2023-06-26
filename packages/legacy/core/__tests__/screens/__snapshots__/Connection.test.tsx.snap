@@ -116,6 +116,7 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
     >
       <View
         accessibilityLabel="Loading.BackToHome"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": false,
@@ -159,6 +160,8 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
                   "fontWeight": "bold",
                   "textAlign": "center",
                 },
+                false,
+                false,
                 false,
               ]
             }
@@ -290,6 +293,7 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
     >
       <View
         accessibilityLabel="Loading.BackToHome"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": false,
@@ -335,6 +339,8 @@ exports[`ConnectionModal Component Renders correctly 1`] = `
                   "fontWeight": "bold",
                   "textAlign": "center",
                 },
+                false,
+                false,
                 false,
               ]
             }
@@ -464,6 +470,7 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
     >
       <View
         accessibilityLabel="Loading.BackToHome"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "disabled": false,
@@ -509,6 +516,8 @@ exports[`ConnectionModal Component Updates after delay 1`] = `
                   "fontWeight": "bold",
                   "textAlign": "center",
                 },
+                false,
+                false,
                 false,
               ]
             }
