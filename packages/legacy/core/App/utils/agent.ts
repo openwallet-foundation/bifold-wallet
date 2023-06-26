@@ -33,6 +33,7 @@ interface GetAgentModulesOptions {
 }
 
 export type BifoldAgent = Agent<ReturnType<typeof getAgentModules>>
+
 export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgentModulesOptions) {
   const indyCredentialFormat = new LegacyIndyCredentialFormatService()
   const indyProofFormat = new LegacyIndyProofFormatService()
@@ -86,3 +87,15 @@ interface MyAgentContextInterface {
 }
 
 export const useAppAgent = useAgent as () => MyAgentContextInterface
+
+export const createLinkSecretIfRequired = async (agent: Agent) => {
+  // If we don't have any link secrets yet, we will create a
+  // default link secret that will be used for all anoncreds
+  // credential requests.
+  const linkSecretIds = await agent.modules.anoncreds.getLinkSecretIds()
+  if (linkSecretIds.length === 0) {
+    await agent.modules.anoncreds.createLinkSecret({
+      setAsDefault: true,
+    })
+  }
+}
