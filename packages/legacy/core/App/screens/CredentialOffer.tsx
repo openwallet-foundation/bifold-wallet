@@ -137,7 +137,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       if (!(agent && credential && assertConnectedNetwork())) {
         return
       }
+
       setAcceptModalVisible(true)
+
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
     } catch (err: unknown) {
       setButtonsVisible(true)
