@@ -32,10 +32,7 @@
     "rimraf": "^5.0.0",
     "typescript": "^5.0.4"
   },
-  "resolutions": {
-    "@aries-framework/core": "0.3.3"
-  },
   "dependencies": {
-    "@aries-framework/core": "^0.3.3"
+    "@aries-framework/core": "0.4.0"
   }
 }

@@ -1,13 +1,15 @@
-import { CredentialExchangeRecord, CredentialMetadataKeys, CredentialState } from '@aries-framework/core'
+// TODO: export this from @aries-framework/anoncreds
+import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
+import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
 import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'
 
-export const isValidIndyCredential = (credential: CredentialExchangeRecord) => {
+export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord) => {
   return (
     credential &&
     (credential.state === CredentialState.OfferReceived ||
-      credential.credentials.find((c) => c.credentialRecordType === 'indy'))
+      credential.credentials.find((c) => c.credentialRecordType === 'anoncreds'))
   )
 }
 
@@ -29,7 +31,7 @@ export const toImageSource = (source: unknown): ImageSourcePropType => {
 
 export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) => {
   return {
-    credentialDefinitionId: credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.credentialDefinitionId,
-    schemaId: credential.metadata.get(CredentialMetadataKeys.IndyCredential)?.schemaId,
+    credentialDefinitionId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId,
+    schemaId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.schemaId,
   }
 }
