@@ -27,7 +27,7 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from '../types/state'
-import { getAgentModules } from '../utils/agent'
+import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
@@ -227,14 +227,7 @@ const Splash: React.FC = () => {
 
         await newAgent.initialize()
 
-        // If we don't have any link secrets yet, we will create a default link secret that will be used
-        // for all anoncreds credential requests.
-        const linkSecretIds = await newAgent.modules.anoncreds.getLinkSecretIds()
-        if (linkSecretIds.length === 0) {
-          await newAgent.modules.anoncreds.createLinkSecret({
-            setAsDefault: true,
-          })
-        }
+        await createLinkSecretIfRequired(newAgent)
 
         setAgent(newAgent)
         navigation.dispatch(
