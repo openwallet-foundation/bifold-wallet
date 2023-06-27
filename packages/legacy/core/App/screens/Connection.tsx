@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -118,6 +118,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       setIsInitialized(true)
     }
   }
+
+  useEffect(() => {
+    if (shouldShowDelayMessage && !notificationRecord) {
+      AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
+    }
+  }, [shouldShowDelayMessage])
 
   useFocusEffect(
     useCallback(() => {
