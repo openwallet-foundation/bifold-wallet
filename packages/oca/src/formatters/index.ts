@@ -1,3 +1,5 @@
-import * as credential from './credential'
+import CredentialFormatter from './credential/CredentialFormatter'
+import DisplayAttribute from './credential/DisplayAttribute'
+import LocalizedCredential from './credential/LocalizedCredential'
 
-export { credential }
+export { CredentialFormatter, DisplayAttribute, LocalizedCredential }
