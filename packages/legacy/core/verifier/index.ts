@@ -3,16 +3,16 @@ export type {
   ProofRequestTemplate,
   DifProofRequestTemplatePayload,
   DifProofRequestTemplatePayloadData,
-  IndyProofRequestTemplatePayload,
-  IndyProofRequestTemplatePayloadData,
-  IndyRequestedAttribute,
-  IndyRequestedPredicate,
+  AnonCredsProofRequestTemplatePayload,
+  AnonCredsProofRequestTemplatePayloadData,
+  AnonCredsRequestedAttribute,
+  AnonCredsRequestedPredicate,
 } from './types/proof-reqeust-template'
 export type {
   GroupedSharedProofData,
   GroupedSharedProofDataItem,
   CredentialSharedProofData,
-  ParsedIndyProof,
+  ParsedAnonCredsProof,
   UnresolvedPredicate,
   ResolvedPredicate,
   SharedAttributesGroup,
@@ -25,7 +25,7 @@ export { ProofMetadata } from './types/metadata'
 export { useProofsByTemplateId } from './hooks/proofs'
 export {
   getProofIdentifiers,
-  parseIndyProof,
+  parseAnonCredsProof,
   groupSharedProofDataByCredential,
   getProofData,
   isPresentationReceived,
