@@ -77,6 +77,29 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     connectionIsActive: false,
   })
 
+  const abortTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+  }
+
+  const onDismissModalTouched = () => {
+    dispatch({ shouldShowDelayMessage: false, isVisible: false })
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
+  const startTimer = () => {
+    if (!state.isInitialized) {
+      timerRef.current = setTimeout(() => {
+        dispatch({ shouldShowDelayMessage: true })
+        timerRef.current = null
+      }, connTimerDelay)
+
+      dispatch({ isInitialized: true })
+    }
+  }
+
   useEffect(() => {
     if (connection && connection.state === DidExchangeState.Completed) {
       dispatch({ connectionIsActive: true })
@@ -95,26 +118,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     }
   }, [state.shouldShowDelayMessage])
-  const abortTimer = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current)
-      timerRef.current = null
-    }
-  }
-  const onDismissModalTouched = () => {
-    dispatch({ shouldShowDelayMessage: false, isVisible: false })
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
-  const startTimer = () => {
-    if (!state.isInitialized) {
-      timerRef.current = setTimeout(() => {
-        dispatch({ shouldShowDelayMessage: true })
-        timerRef.current = null
-      }, connTimerDelay)
-
-      dispatch({ isInitialized: true })
-    }
-  }
 
   useEffect(() => {
     if (shouldShowDelayMessage && !notificationRecord) {
