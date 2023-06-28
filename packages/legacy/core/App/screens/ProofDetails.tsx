@@ -229,6 +229,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   const { recordId, isHistory } = route?.params
   const record: ProofExchangeRecord = useProofById(recordId)
+  console.log(record)
   const { agent } = useAgent()
 
   useEffect(() => {
