@@ -44,7 +44,7 @@ const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
 
   return (
     <View style={styles.container} testID={testIdWithKey('QRRenderer')}>
-      {<QRCode value={value} size={qrSize} onError={handleQRCodeGenerationError} />}
+      {<QRCode ecl="L" value={value} size={qrSize} onError={handleQRCodeGenerationError} />}
       {isInvalidQR && <Text style={styles.errorMessage}>{t('QRRender.GenerationError')}</Text>}
     </View>
   )

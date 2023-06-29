@@ -5,7 +5,7 @@ Object {
   "anoncreds": Object {
     "name": "Student full name",
     "nonce": "1677766511505",
-    "requestedAttributes": Object {
+    "requested_attributes": Object {
       "referent_0": Object {
         "name": "student_first_name",
         "names": undefined,
@@ -27,7 +27,7 @@ Object {
         ],
       },
     },
-    "requestedPredicates": Object {},
+    "requested_predicates": Object {},
     "version": "0.0.1",
   },
 }
@@ -38,7 +38,7 @@ Object {
   "anoncreds": Object {
     "name": "Student full name and expiration date",
     "nonce": "1677766511505",
-    "requestedAttributes": Object {
+    "requested_attributes": Object {
       "referent_0": Object {
         "name": undefined,
         "names": Array [
@@ -53,7 +53,7 @@ Object {
         ],
       },
     },
-    "requestedPredicates": Object {
+    "requested_predicates": Object {
       "referent_1": Object {
         "name": "expiry_date",
         "non_revoked": undefined,

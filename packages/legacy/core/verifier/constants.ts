@@ -1,2 +1,2 @@
-export const protocolVersion = 'v1'
+export const protocolVersion = 'v2'
 export const domain = 'didcomm://invite'

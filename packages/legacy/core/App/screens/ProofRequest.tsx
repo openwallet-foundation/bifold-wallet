@@ -46,9 +46,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { assertConnectedNetwork } = useNetwork()
   const fullCredentials = useCredentials().records
   const proof = useProofById(proofId)
-  const proofConnectionLabel = proof?.connectionId
-    ? useConnectionById(proof.connectionId)?.theirLabel
-    : proof?.connectionId ?? ''
+  const connection = proof?.connectionId ? useConnectionById(proof.connectionId) : undefined
+  const proofConnectionLabel = connection?.theirLabel ?? proof?.connectionId ?? ''
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
@@ -56,6 +55,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
+  const [goalCode, setGoalCode] = useState<string>()
+
+  const oobRecord = connection?.outOfBandId ? agent?.oob.findById(connection.outOfBandId) : undefined
+
+  oobRecord?.then((rec) => {
+    setGoalCode(rec?.outOfBandInvitation.goalCode)
+  })
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -262,6 +268,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         proofRecordId: proof.id,
         proofFormats: automaticRequestedCreds.proofFormats,
       })
+
+      if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+        agent.connections.deleteById(proof.connectionId)
+      }
     } catch (err: unknown) {
       setPendingModalVisible(false)
 
@@ -277,6 +287,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         // sending a problem report fails if there is neither a connectionId nor a ~service decorator
         if (proof.connectionId) {
           await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+          if (goalCode && goalCode.endsWith('verify.once')) {
+            agent.connections.deleteById(proof.connectionId)
+          }
         }
       }
     } catch (err: unknown) {

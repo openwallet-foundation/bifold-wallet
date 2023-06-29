@@ -1,4 +1,5 @@
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
+import { useConnections } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
@@ -8,7 +9,7 @@ import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
 import * as proofRequestUtils from '../../verifier/utils/proof-request'
 import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
-import { OutOfBandInvitation, ProofExchangeRecord, ProofState } from '@aries-framework/core'
+import { ConnectionRecord, DidExchangeRole, DidExchangeState, OutOfBandInvitation, ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { V1RequestPresentationMessage, INDY_PROOF_REQUEST_ATTACHMENT_ID } from '@aries-framework/anoncreds'
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 
@@ -79,12 +80,34 @@ const data = {
 }
 
 describe('ProofRequesting Component', () => {
+  const testContactRecord1 = new ConnectionRecord({
+    id: '1',
+    did: '9gtPKWtaUKxJir5YG2VPxX',
+    theirLabel: 'Faber',
+    role: DidExchangeRole.Responder,
+    theirDid: '2SBuq9fpLT8qUiQKr2RgBe',
+    threadId: '1',
+    state: DidExchangeState.Completed,
+    createdAt: new Date('2020-01-01T00:00:00.000Z'),
+  })
+  const testContactRecord2 = new ConnectionRecord({
+    id: '2',
+    did: '2SBuq9fpLT8qUiQKr2RgBe',
+    role: DidExchangeRole.Requester,
+    theirLabel: 'Bob',
+    theirDid: '9gtPKWtaUKxJir5YG2VPxX',
+    threadId: '1',
+    state: DidExchangeState.Completed,
+    createdAt: new Date('2020-01-01T00:00:00.000Z'),
+  })
   afterEach(() => {
     cleanup()
   })
   beforeEach(() => {
     jest.clearAllMocks()
 
+    // @ts-ignore
+    useConnections.mockReturnValue({ records: [testContactRecord1, testContactRecord2] })
     jest.spyOn(proofRequestUtils, 'createConnectionlessProofRequestInvitation').mockReturnValue(Promise.resolve(data))
     jest.spyOn(proofRequestTemplatesHooks, 'useTemplate').mockReturnValue(template)
   })
