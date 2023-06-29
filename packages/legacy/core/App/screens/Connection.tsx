@@ -12,8 +12,15 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
+import { BifoldError } from '../types/error'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+
+enum ConnectionPurpose {
+  Unknown = 1,
+  PresentationRequest = 2,
+  CredentialOffer = 3,
+}
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -21,10 +28,11 @@ type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalSt
 
 type LocalState = {
   isVisible: boolean
-  notificationRecord?: any
   isInitialized: boolean
   shouldShowDelayMessage: boolean
   connectionIsActive: boolean
+  notificationRecord?: any
+  goal?: ConnectionPurpose
 }
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
@@ -100,8 +108,43 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
   }
 
+  const displayTextForCurrentState = () => {
+    // t('Connection.JustAMoment')
+    return 'Be cool like a cucumber.'
+  }
+
   useEffect(() => {
+    if (!connection || !connection.id) {
+      // We should expect a proof request next.
+      dispatch({ goal: ConnectionPurpose.PresentationRequest })
+    }
+
+    // If connectionId then not connectionless.
+    // We should look for a goal code in tags.
+    // If do not (and we won't) then navigate to the contact chat.
+
     if (connection && connection.state === DidExchangeState.Completed) {
+      const tags = connection.getTags()
+      if (tags && tags.goalCode) {
+        // TODO(jl): Goal codes are not yet supported. They will be part
+        // of OOB connections only, which are not yet supported.
+        throw new BifoldError(
+          'Goal Code',
+          "We don't handle goal codes yet.",
+          'A goal code was found but they are currently unsupported.',
+          99
+        )
+      }
+
+      // No goal code, so we don't know what to expect next.
+      // Navigate to the contact chat.
+
+      // navigation.getParent()
+      // ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
+      navigation
+        .getParent()
+        ?.navigate(TabStacks.HomeStack, { screen: Screens.ContactDetails, params: { connectionId } })
+
       dispatch({ connectionIsActive: true })
       agent?.mediationRecipient.initiateMessagePickup()
     }
@@ -177,7 +220,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
               style={[TextTheme.modalHeadingThree, styles.messageText]}
               testID={testIdWithKey('CredentialOnTheWay')}
             >
-              {t('Connection.JustAMoment')}
+              {displayTextForCurrentState()}
             </Text>
           </View>
 

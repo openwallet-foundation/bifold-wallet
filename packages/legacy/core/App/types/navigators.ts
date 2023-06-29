@@ -108,6 +108,7 @@ export type CredentialStackParams = {
 export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
+  [Screens.ContactDetails]: undefined
 }
 
 export type ConnectStackParams = {
