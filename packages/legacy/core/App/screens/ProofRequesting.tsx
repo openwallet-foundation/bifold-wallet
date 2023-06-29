@@ -1,6 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { DidExchangeState, ProofExchangeRecord } from '@aries-framework/core'
+import { DidExchangeState } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
@@ -9,23 +9,18 @@ import { useTranslation } from 'react-i18next'
 import { BackHandler, DeviceEventEmitter, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import {
-  isPresentationFailed,
-  isPresentationReceived,
-  linkProofWithTemplate,
-  sendProofRequest,
-} from '../../verifier'
+import { isPresentationFailed, isPresentationReceived, linkProofWithTemplate, sendProofRequest } from '../../verifier'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
 import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
+import { useConnectionByOutOfBandId } from '../hooks/connections'
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
 import { createTempConnectionInvitation } from '../utils/helpers'
-import { useConnectionByOutOfBandId } from '../hooks/connections'
+import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
@@ -51,9 +46,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const isFocused = useIsFocused()
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
-  const [recordId, setRecordId] = useState<string | undefined>(undefined)
-  const [proofRecordId, setProofRecordId] = useState<string|undefined>(undefined)
-  const record = useConnectionByOutOfBandId(recordId ?? '')
+  const [connectionRecordId, setConnectionRecordId] = useState<string | undefined>(undefined)
+  const [proofRecordId, setProofRecordId] = useState<string | undefined>(undefined)
+  const record = useConnectionByOutOfBandId(connectionRecordId ?? '')
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
 
@@ -119,7 +114,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       setGenerating(true)
       const result = await createTempConnectionInvitation(agent, 'verify')
       if (result) {
-        setRecordId(result.record.id)
+        setConnectionRecordId(result.record.id)
         setMessage(result.invitationUrl)
       }
     } catch (e) {
@@ -153,7 +148,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   useEffect(() => {
     const sendAsyncProof = async () => {
       if (record && record.state === DidExchangeState.Completed) {
-        // send proof logic 
+        // send proof logic
         const result = await sendProofRequest(agent, template, record.id, predicateValues)
         if (result?.proofRecord) {
           linkProofWithTemplate(agent, result.proofRecord, templateId)
@@ -164,8 +159,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     sendAsyncProof()
   }, [record])
 
-  useEffect(()=>{
-    if(proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))){
+  useEffect(() => {
+    if (proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))) {
       navigation.navigate(Screens.ProofDetails, { recordId: proofRecord.id })
     }
   }, [proofRecord])

@@ -479,17 +479,6 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
 }
 
 /**
- * Create a new connection invitation with a goal code specifying that it will be deleted after issuing or verifying once depending on type
- *
- * @param agent an Agent instance
- * @param type add goalCode to connection invitation
- * @returns a connection record
- */
-export const createTempConnectionInvitation = async (agent: Agent | undefined, type: 'issue'|'verify') => {
-  return createConnectionInvitation(agent, `aries.vc.${type}.once`)
-}
-
-/**
  * Create a new connection invitation
  *
  * @param agent an Agent instance
@@ -497,7 +486,7 @@ export const createTempConnectionInvitation = async (agent: Agent | undefined, t
  * @returns a connection record
  */
 export const createConnectionInvitation = async (agent: Agent | undefined, goalCode?: string) => {
-  const record = await agent?.oob.createInvitation({goalCode})
+  const record = await agent?.oob.createInvitation({ goalCode })
   if (!record) {
     throw new Error('Could not create new invitation')
   }
@@ -507,6 +496,17 @@ export const createConnectionInvitation = async (agent: Agent | undefined, goalC
     invitation: record.outOfBandInvitation,
     invitationUrl,
   }
+}
+
+/**
+ * Create a new connection invitation with a goal code specifying that it will be deleted after issuing or verifying once depending on type
+ *
+ * @param agent an Agent instance
+ * @param type add goalCode to connection invitation
+ * @returns a connection record
+ */
+export const createTempConnectionInvitation = async (agent: Agent | undefined, type: 'issue' | 'verify') => {
+  return createConnectionInvitation(agent, `aries.vc.${type}.once`)
 }
 
 /**

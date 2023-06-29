@@ -59,7 +59,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const oobRecord = connection?.outOfBandId ? agent?.oob.findById(connection.outOfBandId) : undefined
 
-  oobRecord?.then(rec =>{
+  oobRecord?.then((rec) => {
     setGoalCode(rec?.outOfBandInvitation.goalCode)
   })
 
@@ -269,7 +269,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         proofFormats: automaticRequestedCreds.proofFormats,
       })
 
-      if(proof.connectionId && goalCode && goalCode.endsWith("verify.once")){
+      if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
         agent.connections.deleteById(proof.connectionId)
       }
     } catch (err: unknown) {
@@ -287,7 +287,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         // sending a problem report fails if there is neither a connectionId nor a ~service decorator
         if (proof.connectionId) {
           await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
-          if(goalCode && goalCode.endsWith("verify.once")){
+          if (goalCode && goalCode.endsWith('verify.once')) {
             agent.connections.deleteById(proof.connectionId)
           }
         }
