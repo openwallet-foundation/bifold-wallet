@@ -79,10 +79,7 @@ const NameWallet: React.FC = () => {
         type: DispatchAction.UPDATE_WALLET_NAME,
         payload: [walletName],
       })
-      dispatch({
-        type: DispatchAction.DID_NAME_WALLET,
-        payload: [true],
-      })
+      dispatch({ type: DispatchAction.DID_NAME_WALLET })
       navigation.navigate({ name: Screens.UseBiometry } as never)
     }
   }

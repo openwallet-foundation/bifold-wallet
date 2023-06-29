@@ -214,7 +214,7 @@ const Splash: React.FC = () => {
 
         const newAgent = new Agent({
           config: {
-            label: 'Aries Bifold',
+            label: store.preferences.walletName,
             walletConfig: {
               id: credentials.id,
               key: credentials.key,

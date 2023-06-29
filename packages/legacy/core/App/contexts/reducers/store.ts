@@ -155,22 +155,17 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
     case PreferencesDispatchAction.UPDATE_WALLET_NAME: {
+      // We should never see 'My Wallet - 123', that's just there to let us know something went wrong while saving the wallet name
       const name = (action?.payload ?? []).pop() ?? 'My Wallet - 123'
       const preferences = {
         ...state.preferences,
         walletName: name,
       }
-      const onboarding = {
-        ...state.onboarding,
-        didNameWallet: true,
-      }
       const newState = {
         ...state,
-        onboarding,
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
       AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
@@ -309,6 +304,20 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_NAME_WALLET: {
+      const onboarding = {
+        ...state.onboarding,
+        didNameWallet: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+
       return newState
     }
     case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {
