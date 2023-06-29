@@ -17,6 +17,7 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_NAME_WALLET = 'onboarding/didNameWallet',
 }
 
 enum MigrationDispatchAction {
@@ -38,6 +39,7 @@ enum PreferencesDispatchAction {
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
+  UPDATE_WALLET_NAME = 'preferences/updateWalletName',
 }
 
 enum ToursDispatchAction {
@@ -151,6 +153,27 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         preferences,
       }
+    }
+    case PreferencesDispatchAction.UPDATE_WALLET_NAME: {
+      const name = (action?.payload ?? []).pop() ?? 'My Wallet - 123'
+      const preferences = {
+        ...state.preferences,
+        walletName: name,
+      }
+      const onboarding = {
+        ...state.onboarding,
+        didNameWallet: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
     }
     case ToursDispatchAction.UPDATE_SEEN_TOUR_PROMPT: {
       const seenToursPrompt: ToursState = (action?.payload ?? []).pop() ?? false

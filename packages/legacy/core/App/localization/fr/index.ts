@@ -477,10 +477,19 @@ const translation = {
         "RecreatePIN": 'Changer le NIP',
         "CustomNotification": 'Notification personnalisée',
         "ProofRequesting": 'Demande de preuve',
+        "NameWallet": "Name your wallet (FR)"
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
         "BackToHome": "Retour à l'accueil"
+    },
+    "NameWallet": {
+        "NameYourWallet": "Name your wallet (FR)",
+        "ThisIsTheName": "This is the name people see when connecting with you. (FR)",
+        "CharCountTitle": "Character count exceeded (FR)",
+        "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count. (FR)",
+        "EmptyNameTitle": "Wallet name can't be empty (FR)",
+        "EmptyNameDescription": "This is the name people see when connecting with you.\n\nPlease enter a wallet name. (FR)",
     },
     "NetInfo": {
         "NoInternetConnectionTitle": "Aucune connexion Internet",
