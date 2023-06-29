@@ -1,16 +1,12 @@
 import {
-  Agent,
-  AgentMessage,
-  AttributeFilter,
-  AttributeValue,
-  AutoAcceptProof,
-  ProofAttributeInfo,
-  ProofExchangeRecord,
-  ProofPredicateInfo,
-  ProofRequest,
+  AnonCredsRequestedAttribute,
+  AnonCredsRequestedPredicate,
+  LegacyIndyProofRequest,
   V1RequestPresentationMessage,
-} from '@aries-framework/core'
+} from '@aries-framework/anoncreds'
+import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@aries-framework/core'
 
+import { BifoldAgent } from '../../App/utils/agent'
 import { ProofRequestTemplate, ProofRequestType } from '../types/proof-reqeust-template'
 
 const protocolVersion = 'v1'
@@ -19,40 +15,16 @@ const domain = 'http://aries-mobile-agent.com'
 /*
  * Find Proof Request message in the storage by the given id
  * */
-export const findProofRequestMessage = async (agent: Agent, id: string): Promise<ProofRequest | undefined> => {
+export const findProofRequestMessage = async (
+  agent: Agent,
+  id: string
+): Promise<LegacyIndyProofRequest | undefined> => {
   const message = await agent.proofs.findRequestMessage(id)
   if (message && message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
     return message.indyProofRequest
   } else {
     return undefined
   }
-}
-
-const convertCase: { [key: string]: keyof AttributeFilter | undefined } = {
-  schema_id: 'schemaId',
-  schema_issuer_did: 'schemaIssuerDid',
-  schema_name: 'schemaName',
-  schema_version: 'schemaVersion',
-  issuer_did: 'issuerDid',
-  cred_def_id: 'credentialDefinitionId',
-}
-
-const fromAnonCreds = (restriction: Record<string, string>): AttributeFilter => {
-  const restrictionObject = {} as AttributeFilter
-  Object.keys(restriction).forEach((anonKey) => {
-    if (anonKey.startsWith('attr::') && anonKey.endsWith('::value')) {
-      restrictionObject.attributeValue = new AttributeValue({
-        name: anonKey.split('::')[1],
-        value: restriction[anonKey],
-      })
-    } else {
-      const key = convertCase[anonKey]
-      if (key) {
-        restrictionObject[key] = restriction[anonKey] as any
-      }
-    }
-  })
-  return restrictionObject
 }
 
 /*
@@ -65,21 +37,20 @@ export const buildProofRequestDataForTemplate = (
   template: ProofRequestTemplate,
   customValues?: Record<string, Record<string, number>>
 ) => {
-  if (template.payload.type === ProofRequestType.Indy) {
-    const requestedAttributes: Map<string, ProofAttributeInfo> = new Map()
-    const requestedPredicates: Map<string, ProofPredicateInfo> = new Map()
+  if (template.payload.type === ProofRequestType.AnonCreds) {
+    const requestedAttributes: Record<string, AnonCredsRequestedAttribute> = {}
+    const requestedPredicates: Record<string, AnonCredsRequestedPredicate> = {}
     let index = 0
 
     template.payload.data.forEach((data) => {
       if (data.requestedAttributes?.length) {
         data.requestedAttributes.forEach((requestedAttribute) => {
-          const attribute = new ProofAttributeInfo({
+          requestedAttributes[`referent_${index}`] = {
             name: requestedAttribute.name,
             names: requestedAttribute.names,
-            nonRevoked: requestedAttribute.nonRevoked,
-            restrictions: requestedAttribute.restrictions?.map((restriction) => fromAnonCreds(restriction)),
-          })
-          requestedAttributes.set(`referent_${index}`, attribute)
+            non_revoked: requestedAttribute.nonRevoked,
+            restrictions: requestedAttribute.restrictions,
+          }
           index++
         })
       }
@@ -88,22 +59,20 @@ export const buildProofRequestDataForTemplate = (
           const customValue =
             customValues && customValues[data.schema] ? customValues[data.schema][requestedPredicate.name] : undefined
 
-          const predicate = new ProofPredicateInfo({
+          requestedPredicates[`referent_${index}`] = {
             name: requestedPredicate.name,
-            predicateValue:
+            p_value:
               requestedPredicate.parameterizable && customValue ? customValue : requestedPredicate.predicateValue,
-            predicateType: requestedPredicate.predicateType,
-            nonRevoked: requestedPredicate.nonRevoked,
-            restrictions: requestedPredicate.restrictions?.map((restriction) => fromAnonCreds(restriction)),
-          })
-
-          requestedPredicates.set(`referent_${index}`, predicate)
+            p_type: requestedPredicate.predicateType,
+            non_revoked: requestedPredicate.nonRevoked,
+            restrictions: requestedPredicate.restrictions,
+          }
           index++
         })
       }
     })
     return {
-      indy: {
+      anoncreds: {
         name: template.name,
         version: template.version,
         nonce: Date.now().toString(),
@@ -128,7 +97,7 @@ export interface CreateProofRequestInvitationResult {
  * Create connectionless proof request invitation for provided template
  * */
 export const createConnectionlessProofRequestInvitation = async (
-  agent: Agent,
+  agent: BifoldAgent,
   template: ProofRequestTemplate,
   customPredicateValues?: Record<string, Record<string, number>>
 ): Promise<CreateProofRequestInvitationResult | undefined> => {
@@ -162,7 +131,7 @@ export interface SendProofRequestResult {
  * Build Proof Request for provided template and send it to provided connection
  * */
 export const sendProofRequest = async (
-  agent: Agent,
+  agent: BifoldAgent,
   template: ProofRequestTemplate,
   connectionId: string,
   customPredicateValues?: Record<string, Record<string, number>>
@@ -185,7 +154,7 @@ export const sendProofRequest = async (
  * Check if the Proof Request template contains at least one predicate
  * */
 export const hasPredicates = (record: ProofRequestTemplate): boolean => {
-  if (record.payload.type === ProofRequestType.Indy) {
+  if (record.payload.type === ProofRequestType.AnonCreds) {
     return record.payload.data.some((d) => d.requestedPredicates && d.requestedPredicates?.length > 0)
   }
   if (record.payload.type === ProofRequestType.DIF) {
@@ -198,7 +167,7 @@ export const hasPredicates = (record: ProofRequestTemplate): boolean => {
  * Check if the Proof Request template contains parameterizable predicates
  * */
 export const isParameterizable = (record: ProofRequestTemplate): boolean => {
-  if (record.payload.type === ProofRequestType.Indy) {
+  if (record.payload.type === ProofRequestType.AnonCreds) {
     return record.payload.data.some((d) => d.requestedPredicates?.some((predicate) => predicate.parameterizable))
   }
   if (record.payload.type === ProofRequestType.DIF) {

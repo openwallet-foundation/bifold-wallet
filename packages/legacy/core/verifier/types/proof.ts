@@ -1,4 +1,5 @@
-import { ProofIdentifier } from '@aries-framework/core'
+import { AnonCredsProof } from '@aries-framework/anoncreds'
+type AnonCredsProofIdentifier = AnonCredsProof['identifiers'][number]
 
 export interface MissingAttribute {
   name: string
@@ -7,7 +8,7 @@ export interface MissingAttribute {
 export interface SharedAttribute {
   name: string
   value: string
-  identifiers: ProofIdentifier
+  identifiers: AnonCredsProofIdentifier
 }
 
 export interface SharedGroupedAttribute {
@@ -17,14 +18,14 @@ export interface SharedGroupedAttribute {
 
 export interface SharedAttributesGroup {
   attributes: Array<SharedGroupedAttribute>
-  identifiers: ProofIdentifier
+  identifiers: AnonCredsProofIdentifier
 }
 
 export interface ResolvedPredicate {
   name: string
   predicateType: string
   predicateValue: number
-  identifiers: ProofIdentifier
+  identifiers: AnonCredsProofIdentifier
 }
 
 export interface UnresolvedPredicate {
@@ -33,7 +34,7 @@ export interface UnresolvedPredicate {
   predicateValue: number
 }
 
-export class ParsedIndyProof {
+export class ParsedAnonCredsProof {
   public sharedAttributes: Array<SharedAttribute>
   public sharedAttributeGroups: Array<SharedAttributesGroup>
   public resolvedPredicates: Array<ResolvedPredicate>
@@ -63,5 +64,5 @@ export class CredentialSharedProofData {
   }
 }
 
-export type GroupedSharedProofDataItem = { data: CredentialSharedProofData; identifiers: ProofIdentifier }
+export type GroupedSharedProofDataItem = { data: CredentialSharedProofData; identifiers: AnonCredsProofIdentifier }
 export type GroupedSharedProofData = Map<string, GroupedSharedProofDataItem>

@@ -1,6 +1,8 @@
-import { IndyPoolConfig } from '@aries-framework/core'
+import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
 
-// @ts-ignore
-import ledgers from './ledgers.json'
+import _ledgers from './ledgers.json'
 
-export default ledgers as IndyPoolConfig[]
+// type-check the json
+const ledgers: IndyVdrPoolConfig[] = _ledgers
+
+export default ledgers

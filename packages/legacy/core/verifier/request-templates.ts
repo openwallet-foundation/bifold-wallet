@@ -1,5 +1,3 @@
-import { PredicateType } from '@aries-framework/core'
-
 import { ProofRequestTemplate, ProofRequestType } from './types/proof-reqeust-template'
 
 export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
@@ -9,7 +7,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
     description: 'Verify the full name of a student',
     version: '0.0.1',
     payload: {
-      type: ProofRequestType.Indy,
+      type: ProofRequestType.AnonCreds,
       data: [
         {
           schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
@@ -33,7 +31,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
     description: 'Verify that full name of a student and that he/she has a not expired student card.',
     version: '0.0.1',
     payload: {
-      type: ProofRequestType.Indy,
+      type: ProofRequestType.AnonCreds,
       data: [
         {
           schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
@@ -46,7 +44,7 @@ export const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
           requestedPredicates: [
             {
               name: 'expiry_date',
-              predicateType: PredicateType.GreaterThanOrEqualTo,
+              predicateType: '>=',
               predicateValue: 20240101,
               restrictions: [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
             },

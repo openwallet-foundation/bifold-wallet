@@ -21,6 +21,9 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
+jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
+jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
 jest.useFakeTimers('legacy')
@@ -37,7 +40,7 @@ const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
 const connectionRecord = new ConnectionRecord(connection)
 const credentialRecord = new CredentialExchangeRecord(credential)
 credentialRecord.credentials.push({
-  credentialRecordType: 'indy',
+  credentialRecordType: 'anoncreds',
   credentialRecordId: '',
 })
 // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`

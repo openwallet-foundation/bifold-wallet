@@ -2,7 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -13,7 +13,7 @@ import { GenericFn } from '../../types/fn'
 import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
 import { Attribute, Predicate } from '../../types/record'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
-import { getCredentialConnectionLabel } from '../../utils/helpers'
+import { getCredentialConnectionLabel, isDataUrl } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
@@ -129,6 +129,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     primaryBodyContainer: {
       flexGrow: 1,
       padding,
+    },
+    imageAttr: {
+      height: 150,
+      aspectRatio: 1,
+      resizeMode: 'contain',
+      borderRadius: 10,
     },
     statusContainer: {
       backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -267,19 +273,25 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const AttributeValue: React.FC<{ value: string | number | null }> = ({ value }) => {
     return (
-      <Text
-        style={[
-          TextTheme.normal,
-          styles.textContainer,
-          {
-            lineHeight: 24,
-            fontWeight: 'bold',
-          },
-        ]}
-        testID={testIdWithKey('AttributeValue')}
-      >
-        {value}
-      </Text>
+      <>
+        {isDataUrl(value) ? (
+          <Image style={styles.imageAttr} source={{ uri: value as string }}></Image>
+        ) : (
+          <Text
+            style={[
+              TextTheme.normal,
+              styles.textContainer,
+              {
+                lineHeight: 24,
+                fontWeight: 'bold',
+              },
+            ]}
+            testID={testIdWithKey('AttributeValue')}
+          >
+            {value}
+          </Text>
+        )}
+      </>
     )
   }
 

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LegacyIndyCredentialFormat } from '@aries-framework/anoncreds'
 import {
   BasicMessageRecord,
   CredentialExchangeRecord,
-  GetFormatDataReturn,
-  IndyCredentialFormat,
+  CredentialProtocolOptions,
   ProofExchangeRecord,
 } from '@aries-framework/core'
 
@@ -15,10 +15,14 @@ const useBasicMessagesByConnectionId = jest.fn().mockReturnValue([] as BasicMess
 const mockCredentialModule = {
   acceptOffer: jest.fn(),
   declineOffer: jest.fn(),
-  getFormatData: jest.fn().mockReturnValue(Promise.resolve({} as GetFormatDataReturn<[IndyCredentialFormat]>)),
+  getFormatData: jest
+    .fn()
+    .mockReturnValue(
+      Promise.resolve({} as CredentialProtocolOptions.GetCredentialFormatDataReturn<[LegacyIndyCredentialFormat]>)
+    ),
 }
 const mockProofModule = {
-  getRequestedCredentialsForProofRequest: jest.fn(),
+  getCredentialsForRequest: jest.fn(),
   acceptRequest: jest.fn(),
   declineRequest: jest.fn(),
 }

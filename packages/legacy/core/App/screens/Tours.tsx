@@ -63,6 +63,7 @@ const Tours: React.FC = () => {
             <View style={[styles.section, styles.sectionRow]}>
               <Text style={[TextTheme.title]}>{value}</Text>
               <BouncyCheckbox
+                accessibilityLabel={value}
                 disableText
                 fillColor="#FFFFFFFF"
                 unfillColor="#FFFFFFFF"
