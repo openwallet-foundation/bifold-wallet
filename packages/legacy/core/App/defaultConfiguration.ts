@@ -44,5 +44,6 @@ export const defaultConfiguration: ConfigurationContext = {
   },
   useCustomNotifications: useNotifications,
   proofRequestTemplates: defaultProofRequestTemplates,
-  enableWalletNaming: true,
+  enableTours: false,
+  enableWalletNaming: false,
 }
