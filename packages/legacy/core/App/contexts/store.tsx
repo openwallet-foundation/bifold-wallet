@@ -1,6 +1,7 @@
 import React, { createContext, Dispatch, useContext, useReducer } from 'react'
 
 import { State } from '../types/state'
+import { generateRandomWalletName } from '../utils/helpers'
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
 
@@ -17,6 +18,7 @@ export const defaultState: State = {
     didCompleteTutorial: false,
     didCreatePIN: false,
     didConsiderBiometry: false,
+    didNameWallet: false,
   },
   authentication: {
     didAuthenticate: false,
@@ -39,6 +41,7 @@ export const defaultState: State = {
     useBiometry: false,
     useVerifierCapability: false,
     useConnectionInviterCapability: false,
+    walletName: generateRandomWalletName(),
   },
   tours: {
     seenToursPrompt: false,

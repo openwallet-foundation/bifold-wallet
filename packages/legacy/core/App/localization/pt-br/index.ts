@@ -452,10 +452,19 @@ const translation = {
     "ProofRequestUsageHistory": "Histórico de uso",
     "ConnectionInvitation": "Convite de conexão",
     "CreateConnectionInvitation": "Criar um convite de conexão",
+    "NameWallet": "Name your wallet (PT-BR)",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
     "BackToHome": "Voltar para a home"
+  },
+  "NameWallet": {
+    "NameYourWallet": "Name your wallet (PT-BR)",
+    "ThisIsTheName": "This is the name people see when connecting with you. (PT-BR)",
+    "CharCountTitle": "Character count exceeded (PT-BR)",
+    "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count. (PT-BR)",
+    "EmptyNameTitle": "Wallet name can't be empty (PT-BR)",
+    "EmptyNameDescription": "This is the name people see when connecting with you.\n\nPlease enter a wallet name. (PT-BR)",
   },
   "NetInfo": {
     "NoInternetConnectionTitle": "Sem conexão com a internet",

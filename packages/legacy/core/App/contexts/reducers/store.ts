@@ -17,6 +17,7 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_NAME_WALLET = 'onboarding/didNameWallet',
 }
 
 enum MigrationDispatchAction {
@@ -38,6 +39,7 @@ enum PreferencesDispatchAction {
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
+  UPDATE_WALLET_NAME = 'preferences/updateWalletName',
 }
 
 enum ToursDispatchAction {
@@ -151,6 +153,22 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         preferences,
       }
+    }
+    case PreferencesDispatchAction.UPDATE_WALLET_NAME: {
+      // We should never see 'My Wallet - 123', that's just there to let us know something went wrong while saving the wallet name
+      const name = (action?.payload ?? []).pop() ?? 'My Wallet - 123'
+      const preferences = {
+        ...state.preferences,
+        walletName: name,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
     }
     case ToursDispatchAction.UPDATE_SEEN_TOUR_PROMPT: {
       const seenToursPrompt: ToursState = (action?.payload ?? []).pop() ?? false
@@ -286,6 +304,20 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_NAME_WALLET: {
+      const onboarding = {
+        ...state.onboarding,
+        didNameWallet: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+
       return newState
     }
     case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {

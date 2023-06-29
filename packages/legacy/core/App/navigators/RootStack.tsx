@@ -13,6 +13,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
+import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
@@ -42,7 +43,7 @@ const RootStack: React.FC = () => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash, useBiometry } = useConfiguration()
+  const { pages, terms, splash, useBiometry, enableWalletNaming } = useConfiguration()
   useDeepLinks()
 
   const lockoutUser = async () => {
@@ -228,6 +229,17 @@ const RootStack: React.FC = () => {
           {(props) => <PINCreate {...props} setAuthenticated={onAuthenticated} />}
         </Stack.Screen>
         <Stack.Screen
+          name={Screens.NameWallet}
+          options={() => ({
+            title: t('Screens.NameWallet'),
+            headerTintColor: OnboardingTheme.headerTintColor,
+            headerShown: true,
+            headerLeft: () => false,
+            rightLeft: () => false,
+          })}
+          component={NameWallet}
+        />
+        <Stack.Screen
           name={Screens.UseBiometry}
           options={() => ({
             title: t('Screens.Biometry'),
@@ -246,6 +258,7 @@ const RootStack: React.FC = () => {
     state.onboarding.didAgreeToTerms &&
     state.onboarding.didCompleteTutorial &&
     state.onboarding.didCreatePIN &&
+    (!enableWalletNaming || state.onboarding.didNameWallet) &&
     state.onboarding.didConsiderBiometry
   ) {
     return state.authentication.didAuthenticate ? mainStack() : authStack()

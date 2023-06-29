@@ -35,6 +35,7 @@ export enum Screens {
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
   ConnectionInvitation = 'Connection Invitation',
+  NameWallet = 'Name Wallet',
 }
 
 export enum Stacks {
@@ -78,6 +79,7 @@ export type AuthenticateStackParams = {
   [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.UseBiometry]: undefined
+  [Screens.NameWallet]: undefined
 }
 
 export type ContactStackParams = {

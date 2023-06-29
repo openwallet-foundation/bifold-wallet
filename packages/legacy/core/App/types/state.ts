@@ -3,6 +3,7 @@ export interface Onboarding {
   didAgreeToTerms: boolean
   didCreatePIN: boolean
   didConsiderBiometry: boolean
+  didNameWallet: boolean
 }
 
 export interface Migration {
@@ -15,6 +16,7 @@ export interface Preferences {
   developerModeEnabled: boolean
   useVerifierCapability?: boolean
   useConnectionInviterCapability?: boolean
+  walletName: string
 }
 
 export interface Tours {
