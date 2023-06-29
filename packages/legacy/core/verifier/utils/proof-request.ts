@@ -9,7 +9,7 @@ import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@arie
 import { BifoldAgent } from '../../App/utils/agent'
 import { ProofRequestTemplate, ProofRequestType } from '../types/proof-reqeust-template'
 
-const protocolVersion = 'v1'
+const protocolVersion = 'v2'
 const domain = 'http://aries-mobile-agent.com'
 
 /*
@@ -76,8 +76,8 @@ export const buildProofRequestDataForTemplate = (
         name: template.name,
         version: template.version,
         nonce: Date.now().toString(),
-        requestedAttributes,
-        requestedPredicates,
+        requested_attributes: requestedAttributes,
+        requested_predicates: requestedPredicates,
       },
     }
   }
