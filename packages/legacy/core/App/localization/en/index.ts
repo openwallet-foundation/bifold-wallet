@@ -487,10 +487,19 @@ const translation = {
     "RecreatePIN": 'Change PIN',
     "CustomNotification": 'Custom Notification',
     "ProofRequesting": 'Proof Requesting',
+    "NameWallet": "Name your wallet",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
     "BackToHome": "Go back to home"
+  },
+  "NameWallet": {
+    "NameYourWallet": "Name your wallet",
+    "ThisIsTheName": "This is the name people see when connecting with you.",
+    "CharCountTitle": "Character count exceeded",
+    "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count.",
+    "EmptyNameTitle": "Wallet name can't be empty",
+    "EmptyNameDescription": "This is the name people see when connecting with you.\n\nPlease enter a wallet name.",
   },
   "NetInfo": {
     "NoInternetConnectionTitle": "No internet connection",

@@ -635,3 +635,11 @@ export function getProofEventLabel(record: ProofExchangeRecord) {
 export function getMessageEventRole(record: BasicMessageRecord) {
   return record.role === BasicMessageRole.Sender ? Role.me : Role.them
 }
+
+export function generateRandomWalletName() {
+  let name = 'My Wallet - '
+  for (let i = 0; i < 4; i++) {
+    name = name.concat(Math.floor(Math.random() * 10).toString())
+  }
+  return name
+}
