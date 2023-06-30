@@ -1,4 +1,8 @@
-import { DidExchangeState } from '@aries-framework/core'
+import {
+  DidExchangeState,
+  ProofExchangeRecord,
+  CredentialExchangeRecord as CredentialRecord,
+} from '@aries-framework/core'
 import { useConnectionById, useAgent } from '@aries-framework/react-hooks'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -12,15 +16,9 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-import { BifoldError } from '../types/error'
+// import { BifoldError } from '../types/error'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-
-enum ConnectionPurpose {
-  Unknown = 1,
-  PresentationRequest = 2,
-  CredentialOffer = 3,
-}
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -31,8 +29,7 @@ type LocalState = {
   isInitialized: boolean
   shouldShowDelayMessage: boolean
   connectionIsActive: boolean
-  notificationRecord?: any
-  goal?: ConnectionPurpose
+  notificationRecord?: ProofExchangeRecord | CredentialRecord
 }
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
@@ -108,49 +105,41 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
   }
 
-  const displayTextForCurrentState = () => {
-    // t('Connection.JustAMoment')
-    return 'Be cool like a cucumber.'
-  }
-
   useEffect(() => {
-    if (!connection || !connection.id) {
-      // We should expect a proof request next.
-      dispatch({ goal: ConnectionPurpose.PresentationRequest })
+    // If `autoRedirectConnectionToHome` is set to true,
+    // navigate to the home screen.
+    if (autoRedirectConnectionToHome) {
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+
+      return
     }
 
-    // If connectionId then not connectionless.
-    // We should look for a goal code in tags.
-    // If do not (and we won't) then navigate to the contact chat.
+    // Note: V1 connections are not required to enter the `Completed` state and may
+    // remain at `RequestSent` indefinitely. This is a known issue that is addressed
+    // in higher protocol versions.
+    if (
+      connection &&
+      (connection.state === DidExchangeState.Completed || connection.state === DidExchangeState.RequestSent)
+    ) {
+      dispatch({ connectionIsActive: true })
+      agent?.mediationRecipient.initiateMessagePickup()
 
-    if (connection && connection.state === DidExchangeState.Completed) {
-      const tags = connection.getTags()
-      if (tags && tags.goalCode) {
-        // TODO(jl): Goal codes are not yet supported. They will be part
-        // of OOB connections only, which are not yet supported.
-        throw new BifoldError(
-          'Goal Code',
-          "We don't handle goal codes yet.",
-          'A goal code was found but they are currently unsupported.',
-          99
-        )
-      }
-
-      // No goal code, so we don't know what to expect next.
-      // Navigate to the contact chat.
-
-      // navigation.getParent()
-      // ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
+      // No goal code, we don't know what to expect next.
+      // Navigate to the contact details.
       navigation
         .getParent()
         ?.navigate(TabStacks.HomeStack, { screen: Screens.ContactDetails, params: { connectionId } })
+    }
 
-      dispatch({ connectionIsActive: true })
-      agent?.mediationRecipient.initiateMessagePickup()
+    return () => {
+      connection === undefined && abortTimer()
     }
   }, [connection])
 
   useEffect(() => {
+    // When the delay message is shown, we should
+    // automatically navigate to the home screen if
+    // configuration is set to do so.
     if (
       autoRedirectConnectionToHome &&
       state.shouldShowDelayMessage &&
@@ -176,13 +165,14 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   )
 
   useEffect(() => {
+    // This effect is used to handle the case where this screen
+    // needs to automatically process a notification.
     if (state.notificationRecord) {
       switch (state.notificationRecord.type) {
-        case 'CredentialRecord':
-          navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
-          break
         case 'ProofRecord':
-          navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+          if (!connection || !connection.id) {
+            navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+          }
           break
         default:
           throw new Error('Unhandled notification type')
@@ -202,6 +192,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         }
       }
     }
+
+    return () => {
+      notifications === undefined && abortTimer()
+    }
   }, [notifications, state])
 
   return (
@@ -220,7 +214,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
               style={[TextTheme.modalHeadingThree, styles.messageText]}
               testID={testIdWithKey('CredentialOnTheWay')}
             >
-              {displayTextForCurrentState()}
+              {t('Connection.JustAMoment')}
             </Text>
           </View>
 
