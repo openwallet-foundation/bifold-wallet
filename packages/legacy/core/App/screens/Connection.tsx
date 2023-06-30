@@ -1,19 +1,13 @@
-import {
-  DidExchangeState,
-  ProofExchangeRecord,
-  CredentialExchangeRecord as CredentialRecord,
-} from '@aries-framework/core'
+import { DidExchangeState } from '@aries-framework/core'
 import { useConnectionById, useAgent } from '@aries-framework/react-hooks'
-import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useRef, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
@@ -28,19 +22,21 @@ type LocalState = {
   isInitialized: boolean
   shouldShowDelayMessage: boolean
   connectionIsActive: boolean
-  notificationRecord?: ProofExchangeRecord | CredentialRecord
 }
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
-  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+  // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
+  // logic should be: if this property is set, rather than showing the
+  // delay message, the user should be redirected to the home screen.
+  // const { connectionTimerDelay } = useConfiguration()
+  // const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
 
   if (!navigation || !route) {
     throw new Error('Connection route props were not set properly')
   }
 
-  const { connectionId, threadId } = route.params
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const { connectionId } = route.params
+  // const timerRef = useRef<NodeJS.Timeout | null>(null)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { agent } = useAgent()
   const { t } = useTranslation()
@@ -81,23 +77,23 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     connectionIsActive: false,
   })
 
-  const startTimer = () => {
-    if (!state.isInitialized) {
-      timerRef.current = setTimeout(() => {
-        dispatch({ shouldShowDelayMessage: true })
-        timerRef.current = null
-      }, connTimerDelay)
+  // const startTimer = () => {
+  //   if (!state.isInitialized) {
+  //     timerRef.current = setTimeout(() => {
+  //       dispatch({ shouldShowDelayMessage: true })
+  //       timerRef.current = null
+  //     }, connTimerDelay)
 
-      dispatch({ isInitialized: true })
-    }
-  }
+  //     dispatch({ isInitialized: true })
+  //   }
+  // }
 
-  const abortTimer = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current)
-      timerRef.current = null
-    }
-  }
+  // const abortTimer = () => {
+  //   if (timerRef.current) {
+  //     clearTimeout(timerRef.current)
+  //     timerRef.current = null
+  //   }
+  // }
 
   const onDismissModalTouched = () => {
     dispatch({ shouldShowDelayMessage: false, isVisible: false })
@@ -105,21 +101,15 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    // If `autoRedirectConnectionToHome` is set to true,
-    // navigate to the home screen.
-    if (autoRedirectConnectionToHome) {
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-
+    // Wait for OOB proof notification to arrive.
+    if (!connection) {
       return
     }
 
     // Note: V1 connections are not required to enter the `Completed` state and may
     // remain at `RequestSent` indefinitely. This is a known issue that is addressed
     // in higher protocol versions.
-    if (
-      connection &&
-      (connection.state === DidExchangeState.Completed || connection.state === DidExchangeState.RequestSent)
-    ) {
+    if (connection.state === DidExchangeState.Completed || connection.state === DidExchangeState.RequestSent) {
       dispatch({ connectionIsActive: true })
       agent?.mediationRecipient.initiateMessagePickup()
 
@@ -131,71 +121,38 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     return () => {
-      connection === undefined && abortTimer()
+      connection === undefined
     }
   }, [connection])
 
-  useEffect(() => {
-    // When the delay message is shown, we should
-    // automatically navigate to the home screen if
-    // configuration is set to do so.
-    if (
-      autoRedirectConnectionToHome &&
-      state.shouldShowDelayMessage &&
-      state.connectionIsActive &&
-      !state.notificationRecord
-    ) {
-      dispatch({ shouldShowDelayMessage: false, isVisible: false })
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-    }
-  }, [state.shouldShowDelayMessage])
+  // useMemo(() => {
+  //   startTimer()
+  //   return () => abortTimer
+  // }, [])
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.log('************* FOCUS *************')
+  //     startTimer()
+  //     return () => abortTimer
+  //   }, [])
+  // )
 
   useEffect(() => {
-    if (shouldShowDelayMessage && !notificationRecord) {
-      AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
-    }
-  }, [shouldShowDelayMessage])
-
-  useFocusEffect(
-    useCallback(() => {
-      startTimer()
-      return () => abortTimer
-    }, [])
-  )
-
-  useEffect(() => {
-    // This effect is used to handle the case where this screen
-    // needs to automatically process a notification.
-    if (state.notificationRecord) {
-      switch (state.notificationRecord.type) {
-        case 'ProofRecord':
-          if (!connection || !connection.id) {
-            navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-          }
-          break
-        default:
-          throw new Error('Unhandled notification type')
-      }
-    }
-  }, [state.notificationRecord])
-
-  useEffect(() => {
-    if (state.isVisible && state.isInitialized && !state.notificationRecord) {
+    if (state.isVisible) {
       for (const notification of notifications) {
-        if (
-          (connectionId && notification.connectionId === connectionId) ||
-          (threadId && notification.threadId == threadId)
-        ) {
-          dispatch({ notificationRecord: notification, isVisible: false })
+        if (!connection && notification.state === 'request-received') {
+          navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
+          dispatch({ isVisible: false })
           break
         }
       }
     }
 
     return () => {
-      notifications === undefined && abortTimer()
+      notifications === undefined
     }
-  }, [notifications, state])
+  }, [notifications])
 
   return (
     <Modal
