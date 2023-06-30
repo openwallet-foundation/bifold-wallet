@@ -87,7 +87,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
                   onPress={() => resetShown()}
                   testID={testIdWithKey('HideAll')}
                   accessible={true}
-                  accessibilityLabel={t('Record.HideAll')}
+                  accessibilityLabel={showAll ? t('Record.ShowAll') : t('Record.HideAll')}
                 >
                   <Text style={ListItems.recordLink}>{showAll ? t('Record.ShowAll') : t('Record.HideAll')}</Text>
                 </TouchableOpacity>
