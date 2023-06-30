@@ -16,7 +16,6 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
-// import { BifoldError } from '../types/error'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -82,6 +81,17 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     connectionIsActive: false,
   })
 
+  const startTimer = () => {
+    if (!state.isInitialized) {
+      timerRef.current = setTimeout(() => {
+        dispatch({ shouldShowDelayMessage: true })
+        timerRef.current = null
+      }, connTimerDelay)
+
+      dispatch({ isInitialized: true })
+    }
+  }
+
   const abortTimer = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current)
@@ -92,17 +102,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const onDismissModalTouched = () => {
     dispatch({ shouldShowDelayMessage: false, isVisible: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
-
-  const startTimer = () => {
-    if (!state.isInitialized) {
-      timerRef.current = setTimeout(() => {
-        dispatch({ shouldShowDelayMessage: true })
-        timerRef.current = null
-      }, connTimerDelay)
-
-      dispatch({ isInitialized: true })
-    }
   }
 
   useEffect(() => {
@@ -124,8 +123,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       dispatch({ connectionIsActive: true })
       agent?.mediationRecipient.initiateMessagePickup()
 
-      // No goal code, we don't know what to expect next.
-      // Navigate to the contact details.
+      // No goal code, we don't know what to expect next,
+      // navigate to the contact details.
       navigation
         .getParent()
         ?.navigate(TabStacks.HomeStack, { screen: Screens.ContactDetails, params: { connectionId } })
