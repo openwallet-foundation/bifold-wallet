@@ -40,10 +40,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   const { connectionId, threadId } = route.params
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
