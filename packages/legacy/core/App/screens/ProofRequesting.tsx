@@ -51,6 +51,13 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const record = useConnectionByOutOfBandId(connectionRecordId ?? '')
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
+  const [goalCode, setGoalCode] = useState<string>()
+
+  const oobRecord = connectionRecordId ? agent?.oob.findById(connectionRecordId) : undefined
+
+  oobRecord?.then((rec) => {
+    setGoalCode(rec?.outOfBandInvitation.goalCode)
+  })
 
   const styles = StyleSheet.create({
     container: {
@@ -161,6 +168,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
 
   useEffect(() => {
     if (proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))) {
+      if (goalCode?.endsWith('verify.once')) {
+        agent.connections.deleteById(record?.id ?? '')
+      }
       navigation.navigate(Screens.ProofDetails, { recordId: proofRecord.id })
     }
   }, [proofRecord])
