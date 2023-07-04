@@ -356,7 +356,9 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                           },
                           Object {
                             "backgroundColor": "#313132",
+                            "borderColor": "#FFFFFFFF",
                             "borderRadius": 5,
+                            "borderWidth": 1,
                             "justifyContent": "flex-start",
                             "paddingHorizontal": 12,
                             "paddingVertical": 4,
@@ -1026,7 +1028,9 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                           },
                           Object {
                             "backgroundColor": "#313132",
+                            "borderColor": "#FFFFFFFF",
                             "borderRadius": 5,
+                            "borderWidth": 1,
                             "justifyContent": "flex-start",
                             "paddingHorizontal": 12,
                             "paddingVertical": 4,
@@ -1754,7 +1758,9 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                           },
                           Object {
                             "backgroundColor": "#313132",
+                            "borderColor": "#FFFFFFFF",
                             "borderRadius": 5,
+                            "borderWidth": 1,
                             "justifyContent": "flex-start",
                             "paddingHorizontal": 12,
                             "paddingVertical": 4,

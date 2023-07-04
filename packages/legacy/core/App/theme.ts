@@ -761,7 +761,8 @@ const LoadingTheme = {
 const PINInputTheme = {
   cell: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
-    borderColor: ColorPallet.brand.secondaryBackground,
+    borderColor: ColorPallet.brand.secondary,
+    borderWidth: 1,
   },
   focussedCell: {
     borderColor: ColorPallet.brand.headerIcon,

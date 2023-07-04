@@ -111,7 +111,9 @@ exports[`displays a PIN create screen PIN create renders correctly 1`] = `
                       },
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
                         "borderRadius": 5,
+                        "borderWidth": 1,
                         "justifyContent": "flex-start",
                         "paddingHorizontal": 12,
                         "paddingVertical": 4,
