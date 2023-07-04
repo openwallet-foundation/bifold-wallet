@@ -132,9 +132,6 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
                   "fontSize": 24,
                   "fontWeight": "bold",
                 },
-                Object {
-                  "fontSize": 28,
-                },
               ]
             }
           >
@@ -145,7 +142,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 24,
+                  "fontSize": 18,
                   "fontWeight": "normal",
                   "marginTop": 25,
                 },
@@ -162,7 +159,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 24,
+                  "fontSize": 18,
                   "fontWeight": "normal",
                   "marginTop": 25,
                 },
@@ -540,9 +537,6 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
                   "fontSize": 24,
                   "fontWeight": "bold",
                 },
-                Object {
-                  "fontSize": 28,
-                },
               ]
             }
           >
@@ -553,7 +547,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 24,
+                  "fontSize": 18,
                   "fontWeight": "normal",
                   "marginTop": 25,
                 },
@@ -570,7 +564,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 24,
+                  "fontSize": 18,
                   "fontWeight": "normal",
                   "marginTop": 25,
                 },
@@ -943,9 +937,6 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
                   "fontSize": 24,
                   "fontWeight": "bold",
                 },
-                Object {
-                  "fontSize": 28,
-                },
               ]
             }
           >
@@ -956,7 +947,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 24,
+                  "fontSize": 18,
                   "fontWeight": "normal",
                   "marginTop": 25,
                 },
@@ -973,7 +964,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 24,
+                  "fontSize": 18,
                   "fontWeight": "normal",
                   "marginTop": 25,
                 },
@@ -987,7 +978,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               Array [
                 Object {
                   "color": "#FFFFFF",
-                  "fontSize": 24,
+                  "fontSize": 18,
                   "fontWeight": "normal",
                   "marginTop": 25,
                 },
