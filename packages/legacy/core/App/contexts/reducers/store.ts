@@ -11,6 +11,7 @@ import {
   Migration as MigrationState,
   State,
 } from '../../types/state'
+import { generateRandomWalletName } from '../../utils/helpers'
 
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
@@ -149,6 +150,11 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
+      // For older wallets that haven't explicitly named their wallet yet
+      if (!preferences.walletName) {
+        preferences.walletName = generateRandomWalletName()
+      }
+
       return {
         ...state,
         preferences,
