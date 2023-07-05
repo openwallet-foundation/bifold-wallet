@@ -254,6 +254,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
+    const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
+
     return (
       <Text
         style={[
@@ -266,7 +268,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         ]}
         testID={testIdWithKey('AttributeName')}
       >
-        {label}
+        {ylabel}
       </Text>
     )
   }
@@ -296,7 +298,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
-    return { label: item?.label ?? startCase(item?.name ?? ''), value: item?.value || `${item?.pType} ${item?.pValue}` }
+    return { label: item?.label ?? item?.name ?? '', value: item?.value || `${item?.pType} ${item?.pValue}` }
   }
 
   const renderCardAttribute = (item: Attribute & Predicate) => {
