@@ -48,7 +48,7 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
         paddingHorizontal: 12,
         paddingVertical: 4,
         justifyContent: 'flex-start',
-        backgroundColor: PINInputTheme.cell.backgroundColor,
+        ...PINInputTheme.cell,
       },
       cell: {
         height: cellHeight,

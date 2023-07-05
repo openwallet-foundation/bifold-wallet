@@ -30,14 +30,8 @@ import {
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
-const onboardingComplete = (state: StoreOnboardingState, enableWalletNaming: boolean | undefined): boolean => {
-  return (
-    state.didCompleteTutorial &&
-    state.didAgreeToTerms &&
-    state.didCreatePIN &&
-    (state.didNameWallet || !enableWalletNaming) &&
-    state.didConsiderBiometry
-  )
+const onboardingComplete = (state: StoreOnboardingState): boolean => {
+  return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
 }
 
 const resumeOnboardingAt = (state: StoreOnboardingState, enableWalletNaming: boolean | undefined): Screens => {
@@ -155,7 +149,7 @@ const Splash: React.FC = () => {
         if (data) {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
           dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
-          if (onboardingComplete(onboardingState, enableWalletNaming) && !attemptData?.lockoutDate) {
+          if (onboardingComplete(onboardingState) && !attemptData?.lockoutDate) {
             navigation.dispatch(
               CommonActions.reset({
                 index: 0,
@@ -163,7 +157,7 @@ const Splash: React.FC = () => {
               })
             )
             return
-          } else if (onboardingComplete(onboardingState, enableWalletNaming) && attemptData?.lockoutDate) {
+          } else if (onboardingComplete(onboardingState) && attemptData?.lockoutDate) {
             // return to lockout screen if lockout date is set
             navigation.dispatch(
               CommonActions.reset({
@@ -214,7 +208,7 @@ const Splash: React.FC = () => {
 
         const newAgent = new Agent({
           config: {
-            label: store.preferences.walletName,
+            label: store.preferences.walletName || 'Aries Bifold',
             walletConfig: {
               id: credentials.id,
               key: credentials.key,
