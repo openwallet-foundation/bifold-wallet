@@ -102,7 +102,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
-    if (metadata.proof_request_template_id) {
+    if (metadata?.proof_request_template_id) {
       navigation.navigate(Screens.ProofRequesting, { templateId: metadata.proof_request_template_id })
     } else {
       navigation.navigate(Screens.ProofRequests, {})
@@ -232,8 +232,10 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { agent } = useAgent()
 
   useEffect(() => {
-    if (agent && record) markProofAsViewed(agent, record)
-  }, [])
+    if (agent && record && !record.metadata?.data?.customMetadata?.details_seen) {
+      markProofAsViewed(agent, record)
+    }
+  }, [record])
 
   useFocusEffect(
     useCallback(() => {
