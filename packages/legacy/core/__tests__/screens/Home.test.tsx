@@ -72,6 +72,11 @@ describe('with a notifications module, when an issuer sends a credential offer',
       state: ProofState.RequestReceived,
       protocolVersion: 'v1',
     }),
+    new ProofExchangeRecord({
+      threadId: '3',
+      state: ProofState.Done,
+      protocolVersion: 'v1',
+    }),
   ]
 
   beforeEach(() => {
@@ -96,7 +101,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
         <Home route={{} as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-    const notificationLabel = await findByText('Home.Notifications (2)')
+    const notificationLabel = await findByText('Home.Notifications (3)')
 
     expect(notificationLabel).toBeTruthy()
   })
@@ -134,7 +139,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     const flatListInstance = await findAllByTestId(testIdWithKey('NotificationListItem'))
 
-    expect(flatListInstance).toHaveLength(2)
+    expect(flatListInstance).toHaveLength(3)
   })
 
   /**
@@ -189,9 +194,40 @@ describe('with a notifications module, when an issuer sends a credential offer',
     })
 
     expect(navigation.navigate).toHaveBeenCalledTimes(1)
+
     expect(navigation.navigate).toHaveBeenCalledWith('Notifications Stack', {
       screen: 'Proof Request',
       params: { proofId: testProofRecords[0].id },
+    })
+
+  })
+
+  /**
+   * Scenario: Holder selects a proof request
+   * Given the holder has received a proof request from a connected verifier
+   * When the holder selects the proof request
+   * When the holder is taken to the proof request screen/flow
+   */
+  test('touch notification triggers navigation correctly III', async () => {
+    const { findByTestId } = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
+    )
+
+    const button = await findByTestId(testIdWithKey('ViewProofRecordReceived'))
+    const navigation = useNavigation()
+
+    expect(button).toBeDefined()
+
+    act(() => {
+      fireEvent(button, 'press')
+    })
+
+    expect(navigation.navigate).toHaveBeenCalledTimes(1)
+    expect(navigation.navigate).toHaveBeenCalledWith('Contacts Stack', {
+      screen: 'Proof Details',
+      params: { recordId: testProofRecords[1].id, isHistory: true },
     })
   })
 })

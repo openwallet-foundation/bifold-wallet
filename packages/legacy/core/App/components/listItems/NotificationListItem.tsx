@@ -1,6 +1,5 @@
-import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
-
 import { V1RequestPresentationMessage } from '@aries-framework/anoncreds'
+import { CredentialExchangeRecord, ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -10,6 +9,7 @@ import { StyleSheet, View, ViewStyle, Text, TextStyle, DeviceEventEmitter, Touch
 import Toast from 'react-native-toast-message'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { markProofAsViewed } from '../../../verifier'
 import { ToastType } from '../../components/toast/BaseToast'
 import { EventTypes, hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
@@ -127,6 +127,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
+  const isReceivedProof = notificationType === NotificationType.ProofRequest && notification.state === ProofState.Done
+
   const declineProofRequest = async () => {
     try {
       const proofId = (notification as ProofExchangeRecord).id
@@ -143,6 +145,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       type: ToastType.Success,
       text1: t('ProofRequest.ProofRejected'),
     })
+  }
+
+  const dismissProofRequest = async () => {
+    if (agent && notificationType === NotificationType.ProofRequest) {
+      markProofAsViewed(agent, notification as ProofExchangeRecord)
+    }
   }
 
   const declineCredentialOffer = async () => {
@@ -174,7 +182,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
     if (notificationType === NotificationType.ProofRequest) {
       usage = ModalUsage.ProofRequestDecline
-      onSubmit = declineProofRequest
+      if (notification.state === ProofState.Done) {
+        onSubmit = dismissProofRequest
+      } else {
+        onSubmit = declineProofRequest
+      }
     } else if (notificationType === NotificationType.CredentialOffer) {
       usage = ModalUsage.CredentialOfferDecline
       onSubmit = declineCredentialOffer
@@ -262,10 +274,20 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         onClose = toggleDeclineModalVisible
         break
       case NotificationType.ProofRequest:
-        onPress = () => {
-          navigation
-            .getParent()
-            ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
+        if (isReceivedProof) {
+          onPress = () => {
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.ProofDetails,
+              params: { recordId: notification.id, isHistory: true },
+            })
+          }
+        } else {
+          onPress = () => {
+            navigation.getParent()?.navigate(Stacks.NotificationStack, {
+              screen: Screens.ProofRequest,
+              params: { proofId: (notification as ProofExchangeRecord).id },
+            })
+          }
         }
         onClose = toggleDeclineModalVisible
         break
@@ -392,7 +414,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         <Button
           title={details.buttonTitle ?? t('Global.View')}
           accessibilityLabel={details.buttonTitle ?? t('Global.View')}
-          testID={testIdWithKey(`View${notificationType}`)}
+          testID={testIdWithKey(`View${notificationType}${isReceivedProof ? 'Received' : ''}`)}
           buttonType={ButtonType.Primary}
           onPress={onPress}
         />
