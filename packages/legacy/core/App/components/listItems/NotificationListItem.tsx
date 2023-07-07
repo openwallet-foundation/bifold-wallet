@@ -7,8 +7,10 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle, Text, TextStyle, DeviceEventEmitter, TouchableOpacity } from 'react-native'
+import Toast from 'react-native-toast-message'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { ToastType } from '../../components/toast/BaseToast'
 import { EventTypes, hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
@@ -137,6 +139,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     }
 
     toggleDeclineModalVisible()
+    Toast.show({
+      type: ToastType.Success,
+      text1: t('ProofRequest.ProofRejected'),
+    })
   }
 
   const declineCredentialOffer = async () => {
@@ -151,6 +157,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     }
 
     toggleDeclineModalVisible()
+    Toast.show({
+      type: ToastType.Success,
+      text1: t('CredentialOffer.CredentialRejected'),
+    })
   }
 
   const declineCustomNotification = async () => {

@@ -11,6 +11,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Toast from 'react-native-toast-message'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -18,6 +19,7 @@ import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
+import { ToastType } from '../components/toast/BaseToast'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
@@ -301,6 +303,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     toggleDeclineModalVisible()
 
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+
+    Toast.show({
+      type: ToastType.Success,
+      text1: t('ProofRequest.ProofRejected'),
+    })
   }
 
   const proofPageHeader = () => {

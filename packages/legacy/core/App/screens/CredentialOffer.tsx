@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Toast from 'react-native-toast-message'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
@@ -14,6 +15,7 @@ import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
+import { ToastType } from '../components/toast/BaseToast'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
@@ -160,6 +162,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
       toggleDeclineModalVisible()
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+
+      Toast.show({
+        type: ToastType.Success,
+        text1: t('CredentialOffer.CredentialRejected'),
+      })
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error).message, 1025)
 
