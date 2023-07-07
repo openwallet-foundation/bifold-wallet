@@ -16,6 +16,7 @@ export interface Preferences {
   developerModeEnabled: boolean
   useVerifierCapability?: boolean
   useConnectionInviterCapability?: boolean
+  useDevVerifierTemplates?: boolean
   walletName: string
 }
 
