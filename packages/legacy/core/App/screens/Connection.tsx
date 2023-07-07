@@ -102,7 +102,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     // Wait for OOB proof notification to arrive.
-    if (!connection) {
+    if (!connection || !connectionId) {
       return
     }
 
@@ -115,13 +115,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
       // No goal code, we don't know what to expect next,
       // navigate to the contact details.
-      navigation
-        .getParent()
-        ?.navigate(TabStacks.HomeStack, { screen: Screens.ContactDetails, params: { connectionId } })
-    }
-
-    return () => {
-      connection === undefined
+      navigation.navigate(Screens.Chat, { connectionId })
+      dispatch({ isVisible: false })
     }
   }, [connection])
 
@@ -147,10 +142,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           break
         }
       }
-    }
-
-    return () => {
-      notifications === undefined
     }
   }, [notifications])
 

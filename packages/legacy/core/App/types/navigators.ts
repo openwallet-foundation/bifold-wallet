@@ -108,7 +108,6 @@ export type CredentialStackParams = {
 export type HomeStackParams = {
   [Screens.Home]: undefined
   [Screens.Notifications]: undefined
-  [Screens.ContactDetails]: undefined
 }
 
 export type ConnectStackParams = {
@@ -141,4 +140,5 @@ export type DeliveryStackParams = {
   [Screens.ProofRequest]: { proofId: string }
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
+  [Screens.Chat]: { connectionId: string }
 }
