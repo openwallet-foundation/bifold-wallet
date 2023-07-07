@@ -45,6 +45,14 @@ const Developer: React.FC = () => {
   })
 
   const toggleVerifierCapabilitySwitch = () => {
+    // if verifier feature is switched off then also turn off the dev templates
+    if(useVerifierCapability){
+      dispatch({
+        type: DispatchAction.USE_DEV_VERIFIER_TEMPLATES,
+        payload: [false]
+      })
+      setDevVerifierTemplates(false)
+    }
     dispatch({
       type: DispatchAction.USE_VERIFIER_CAPABILITY,
       payload: [!useVerifierCapability],
@@ -59,13 +67,21 @@ const Developer: React.FC = () => {
     })
     setConnectionInviterCapability((previousState) => !previousState)
   }
-  
-  const toggleDevVerifierTemplatesSwitch = () =>{
+
+  const toggleDevVerifierTemplatesSwitch = () => {
+    // if we switch on dev templates we can assume the user also wants to enable the verifier capability
+    if (!useDevVerifierTemplates) {
+      dispatch({
+        type: DispatchAction.USE_VERIFIER_CAPABILITY,
+        payload: [true],
+      })
+      setUseVerifierCapability(true)
+    }
     dispatch({
-      type:DispatchAction.USE_DEV_VERIFIER_TEMPLATES,
+      type: DispatchAction.USE_DEV_VERIFIER_TEMPLATES,
       payload: [!useDevVerifierTemplates]
     })
-    setDevVerifierTemplates((previousState)=> !previousState)
+    setDevVerifierTemplates((previousState) => !previousState)
   }
 
   return (
