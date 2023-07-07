@@ -379,6 +379,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           <FlatList
             data={cardData}
             scrollEnabled={false}
+            initialNumToRender={cardData?.length}
             renderItem={({ item }) => {
               return renderCardAttribute(item as Attribute & Predicate)
             }}
