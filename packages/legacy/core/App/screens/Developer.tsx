@@ -46,10 +46,10 @@ const Developer: React.FC = () => {
 
   const toggleVerifierCapabilitySwitch = () => {
     // if verifier feature is switched off then also turn off the dev templates
-    if(useVerifierCapability){
+    if (useVerifierCapability) {
       dispatch({
         type: DispatchAction.USE_DEV_VERIFIER_TEMPLATES,
-        payload: [false]
+        payload: [false],
       })
       setDevVerifierTemplates(false)
     }
@@ -79,7 +79,7 @@ const Developer: React.FC = () => {
     }
     dispatch({
       type: DispatchAction.USE_DEV_VERIFIER_TEMPLATES,
-      payload: [!useDevVerifierTemplates]
+      payload: [!useDevVerifierTemplates],
     })
     setDevVerifierTemplates((previousState) => !previousState)
   }

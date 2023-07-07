@@ -8,12 +8,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { ProofRequestTemplate, hasPredicates, isParameterizable } from '../../verifier'
 import EmptyList from '../components/misc/EmptyList'
 import { useConfiguration } from '../contexts/configuration'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplates } from '../hooks/proof-request-templates'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { testIdWithKey } from '../utils/testable'
-import { useStore } from '../contexts/store'
 
 interface ProofRequestsCardProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
@@ -118,7 +118,9 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
   const { connectionId } = route?.params
 
   // if useDevVerifierTemplates not set then exclude dev templates
-  const proofRequestTemplates = useTemplates().filter(tem => store.preferences.useDevVerifierTemplates || !tem.devOnly)
+  const proofRequestTemplates = useTemplates().filter(
+    (tem) => store.preferences.useDevVerifierTemplates || !tem.devOnly
+  )
 
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>

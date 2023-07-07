@@ -41,7 +41,7 @@ export const defaultState: State = {
     useBiometry: false,
     useVerifierCapability: false,
     useConnectionInviterCapability: false,
-    useDevVerifierTemplates:false,
+    useDevVerifierTemplates: false,
     walletName: generateRandomWalletName(),
   },
   tours: {
