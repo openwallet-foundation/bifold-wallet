@@ -492,7 +492,9 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
+    "UseDevVerifierTemplates": "Use development verifier templates? (PB)",
     "Toggle": "Alternar capacidade do verificador",
+    "ToggleDevTemplates": "Toggle Verifier Development Templates (PB)",
     "ProcessingProof": "Um momento...",
     "ZeroKnowledgeProof": "Prova de conhecimento Zero",
     "Parameterizable": "Parametrizável",
