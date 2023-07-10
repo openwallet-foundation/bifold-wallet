@@ -1,15 +1,13 @@
 import { DidExchangeState } from '@aries-framework/core'
 import { useConnectionById, useAgent } from '@aries-framework/react-hooks'
-import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
@@ -17,35 +15,34 @@ import { testIdWithKey } from '../utils/testable'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
+type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
+
+type LocalState = {
+  isVisible: boolean
+  isInitialized: boolean
+  shouldShowDelayMessage: boolean
+  connectionIsActive: boolean
+}
+
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
-  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+  // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
+  // logic should be: if this property is set, rather than showing the
+  // delay message, the user should be redirected to the home screen.
+  // const { connectionTimerDelay } = useConfiguration()
+  // const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
 
   if (!navigation || !route) {
     throw new Error('Connection route props were not set properly')
   }
 
-  const { connectionId, threadId } = route.params
+  const { connectionId } = route.params
+  // const timerRef = useRef<NodeJS.Timeout | null>(null)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [state, setState] = useState<{
-    isVisible: boolean
-    notificationRecord?: any
-    isInitialized: boolean
-    shouldShowDelayMessage: boolean
-    connectionIsActive: boolean
-  }>({
-    isVisible: true,
-    isInitialized: false,
-    shouldShowDelayMessage: false,
-    connectionIsActive: false,
-  })
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
-  const { isInitialized, shouldShowDelayMessage, isVisible, notificationRecord, connectionIsActive } = state
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -72,102 +69,89 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       marginTop: 20,
     },
   })
+  const merge: MergeFunction = (current, next) => ({ ...current, ...next })
+  const [state, dispatch] = useReducer(merge, {
+    isVisible: true,
+    isInitialized: false,
+    shouldShowDelayMessage: false,
+    connectionIsActive: false,
+  })
+
+  // const startTimer = () => {
+  //   if (!state.isInitialized) {
+  //     timerRef.current = setTimeout(() => {
+  //       dispatch({ shouldShowDelayMessage: true })
+  //       timerRef.current = null
+  //     }, connTimerDelay)
+
+  //     dispatch({ isInitialized: true })
+  //   }
+  // }
+
+  // const abortTimer = () => {
+  //   if (timerRef.current) {
+  //     clearTimeout(timerRef.current)
+  //     timerRef.current = null
+  //   }
+  // }
+
+  const onDismissModalTouched = () => {
+    dispatch({ shouldShowDelayMessage: false, isVisible: false })
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
 
   useEffect(() => {
-    // FIX:(jl) There may be a better way to fetch queued messages.
-    // Under investigation.
-    if (connection && connection.state === DidExchangeState.Completed) {
-      setState((prev) => ({ ...prev, connectionIsActive: true }))
+    // Wait for OOB proof notification to arrive.
+    if (!connection || !connectionId) {
+      return
+    }
+
+    // Note: V1 connections are not required to enter the `Completed` state and may
+    // remain at `RequestSent` indefinitely. This is a known issue that is addressed
+    // in higher protocol versions.
+    if (connection.state === DidExchangeState.Completed || connection.state === DidExchangeState.RequestSent) {
+      dispatch({ connectionIsActive: true })
       agent?.mediationRecipient.initiateMessagePickup()
+
+      // No goal code, we don't know what to expect next,
+      // navigate to the chat screen.
+      navigation.navigate(Screens.Chat, { connectionId })
+      dispatch({ isVisible: false })
     }
   }, [connection])
 
-  const setModalVisible = (value: boolean) => {
-    setState((prev) => ({ ...prev, isVisible: value }))
-  }
-  const setIsInitialized = (value: boolean) => {
-    setState((prev) => ({ ...prev, isInitialized: value }))
-  }
-  const setShouldShowDelayMessage = (value: boolean) => {
-    setState((prev) => ({ ...prev, shouldShowDelayMessage: value }))
-  }
-  useEffect(() => {
-    if (autoRedirectConnectionToHome && shouldShowDelayMessage && connectionIsActive && !notificationRecord) {
-      setShouldShowDelayMessage(false)
-      setModalVisible(false)
-      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-    }
-  }, [shouldShowDelayMessage])
-  const abortTimer = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current)
-      timerRef.current = null
-    }
-  }
-  const onDismissModalTouched = () => {
-    setShouldShowDelayMessage(false)
-    setModalVisible(false)
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
-  const startTimer = () => {
-    if (!isInitialized) {
-      timerRef.current = setTimeout(() => {
-        setShouldShowDelayMessage(true)
-        timerRef.current = null
-      }, connTimerDelay)
-      setIsInitialized(true)
-    }
-  }
+  // useMemo(() => {
+  //   startTimer()
+  //   return () => abortTimer
+  // }, [])
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.log('************* FOCUS *************')
+  //     startTimer()
+  //     return () => abortTimer
+  //   }, [])
+  // )
 
   useEffect(() => {
-    if (shouldShowDelayMessage && !notificationRecord) {
-      AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
-    }
-  }, [shouldShowDelayMessage])
-
-  useFocusEffect(
-    useCallback(() => {
-      startTimer()
-      return () => abortTimer
-    }, [])
-  )
-
-  useEffect(() => {
-    if (notificationRecord) {
-      switch (notificationRecord.type) {
-        case 'CredentialRecord':
-          navigation.navigate(Screens.CredentialOffer, { credentialId: notificationRecord.id })
-          break
-        case 'ProofRecord':
-          navigation.navigate(Screens.ProofRequest, { proofId: notificationRecord.id })
-          break
-        default:
-          throw new Error('Unhandled notification type')
-      }
-    }
-  }, [notificationRecord])
-
-  useEffect(() => {
-    if (isVisible && isInitialized && !notificationRecord) {
+    if (state.isVisible) {
       for (const notification of notifications) {
-        if (
-          (connectionId && notification.connectionId === connectionId) ||
-          (threadId && notification.threadId == threadId)
-        ) {
-          setState((prev) => ({ ...prev, notificationRecord: notification, isVisible: false }))
+        if (!connection && notification.state === 'request-received') {
+          navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
+          dispatch({ isVisible: false })
           break
         }
       }
     }
-  }, [notifications, state])
+  }, [notifications])
 
   return (
     <Modal
-      visible={isVisible}
+      visible={state.isVisible}
       transparent={true}
       animationType={'slide'}
       onRequestClose={() => {
-        setModalVisible(false)
+        dispatch({ isVisible: false })
       }}
     >
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
@@ -185,7 +169,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
             <ConnectionLoading />
           </View>
 
-          {shouldShowDelayMessage && (
+          {state.shouldShowDelayMessage && (
             <Text style={[TextTheme.modalNormal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
               {t('Connection.TakingTooLong')}
             </Text>

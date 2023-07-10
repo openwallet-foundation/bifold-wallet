@@ -12,6 +12,7 @@ const navigation = {
   goBack: jest.fn(),
   pop: jest.fn(),
   reset: jest.fn(),
+  isFocused: () => true,
 }
 
 const useNavigation = () => {

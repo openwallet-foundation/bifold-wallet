@@ -2,12 +2,15 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
+import Chat from '../screens/Chat'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
-import { DeliveryStackParams, Screens } from '../types/navigators'
+import { DeliveryStackParams, Screens, TabStacks } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -39,6 +42,24 @@ const DeliveryStack: React.FC = () => {
         name={Screens.CredentialOffer}
         component={CredentialOffer}
         options={{ title: t('Screens.CredentialOffer') }}
+      />
+      <Stack.Screen
+        name={Screens.Chat}
+        component={Chat}
+        options={({ navigation }) => ({
+          title: t('Screens.CredentialOffer'),
+          headerLeft: () => (
+            <HeaderButton
+              buttonLocation={ButtonLocation.Left}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => {
+                navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+              }}
+              icon="arrow-left"
+            />
+          ),
+        })}
       />
     </Stack.Navigator>
   )

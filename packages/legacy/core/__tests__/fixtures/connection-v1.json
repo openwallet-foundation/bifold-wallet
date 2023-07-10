@@ -1,0 +1,18 @@
+{
+  "_tags": {},
+  "metadata": {},
+  "connectionTypes": [],
+  "id": "43be26c3-4b24-4915-9a84-367c5aac5bca",
+  "createdAt": "2023-06-30T18:44:29.268Z",
+  "did": "did:peer:1zQmYDZQFXdHuZam9e1kNtEevQjL9boEBGszBDGX2N8X8xeQ",
+  "invitationDid": "did:peer:2.SeyJzIjoiaHR0cHM6Ly90cmFjdGlvbi1kdHMtYWNhcHktZGV2LmFwcHMuc2lsdmVyLmRldm9wcy5nb3YuYmMuY2EiLCJ0IjoiZGlkLWNvbW11bmljYXRpb24iLCJwcmlvcml0eSI6MCwicmVjaXBpZW50S2V5cyI6WyJkaWQ6a2V5Ono2TWtuY3B2aG9GUXdnendyQTNRQXk3a1ZkYlB5d0I5c1FzUjFuTGszN3VKVmltSCN6Nk1rbmNwdmhvRlF3Z3p3ckEzUUF5N2tWZGJQeXdCOXNRc1IxbkxrMzd1SlZpbUgiXX0",
+  "theirLabel": "BestBC College",
+  "state": "request-sent",
+  "role": "requester",
+  "autoAcceptConnection": true,
+  "threadId": "5f35f941-854a-4f76-ad51-5ef7f16b238c",
+  "mediatorId": "5497adc9-01d4-4f39-a9a8-b947dc662d5d",
+  "protocol": "https://didcomm.org/connections/1.0",
+  "outOfBandId": "99c18620-ec05-4b81-b569-a8065d62263f",
+  "updatedAt": "2023-06-30T18:44:29.272Z"
+}
