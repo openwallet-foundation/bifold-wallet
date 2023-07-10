@@ -52,5 +52,6 @@ export interface ProofRequestTemplate {
   name: string
   description: string
   version: string
+  devOnly?: boolean
   payload: AnonCredsProofRequestTemplatePayload | DifProofRequestTemplatePayload
 }

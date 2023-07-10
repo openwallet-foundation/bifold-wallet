@@ -140,4 +140,5 @@ export type DeliveryStackParams = {
   [Screens.ProofRequest]: { proofId: string }
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
+  [Screens.Chat]: { connectionId: string }
 }
