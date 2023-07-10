@@ -114,7 +114,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       agent?.mediationRecipient.initiateMessagePickup()
 
       // No goal code, we don't know what to expect next,
-      // navigate to the contact details.
+      // navigate to the chat screen.
       navigation.navigate(Screens.Chat, { connectionId })
       dispatch({ isVisible: false })
     }

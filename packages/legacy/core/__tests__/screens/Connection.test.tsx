@@ -50,7 +50,7 @@ describe('ConnectionModal Component', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Navigate to contact details when connection present', async () => {
+  test('Navigate to chat when connection present', async () => {
     // @ts-ignore-next-line
     useConnectionById.mockReturnValueOnce(connection)
     const element = (
@@ -62,10 +62,7 @@ describe('ConnectionModal Component', () => {
     render(element)
 
     expect(navigationContext.getParent()?.navigate).toBeCalledTimes(1)
-    expect(navigationContext.getParent()?.navigate).toBeCalledWith('Tab Home Stack', {
-      params: { connectionId: '123' },
-      screen: 'Contact Details',
-    })
+    expect(navigationContext.getParent()?.navigate).toBeCalledWith('Chat', { connectionId: '123' })
   })
 
   test('Navigate to Proof when OOB connection', async () => {
