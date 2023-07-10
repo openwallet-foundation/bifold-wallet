@@ -408,7 +408,7 @@ const translation = {
     "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials.",
     "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access.",
     "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service.",
-    "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",  
+    "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",
   },
   "Settings": {
     "Version": "Version",
@@ -481,7 +481,7 @@ const translation = {
     "ConnectionInvitation": "Connection Invitation",
     "CreateConnectionInvitation": "Create a connection invitation",
     "AttemptLockout": "Temporarily Locked",
-    "OnTheWay":'On The Way',
+    "OnTheWay": 'On The Way',
     "Declined": 'Declined',
     "UseBiometry": 'Use Biometry',
     "RecreatePIN": 'Change PIN',
@@ -527,7 +527,9 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
+    "UseDevVerifierTemplates": "Use development verifier templates?",
     "Toggle": "Toggle Verifier Capability",
+    "ToggleDevTemplates": "Toggle Verifier Development Templates",
     "ProcessingProof": "Just a moment...",
     "ZeroKnowledgeProof": "Zero-knowledge proof",
     "Parameterizable": "Parameterizable",

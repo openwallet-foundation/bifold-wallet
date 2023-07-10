@@ -16,6 +16,8 @@ const Developer: React.FC = () => {
     !!store.preferences.useConnectionInviterCapability
   )
 
+  const [useDevVerifierTemplates, setDevVerifierTemplates] = useState(!!store.preferences.useDevVerifierTemplates)
+
   const styles = StyleSheet.create({
     container: {
       marginTop: 50,
@@ -43,6 +45,14 @@ const Developer: React.FC = () => {
   })
 
   const toggleVerifierCapabilitySwitch = () => {
+    // if verifier feature is switched off then also turn off the dev templates
+    if (useVerifierCapability) {
+      dispatch({
+        type: DispatchAction.USE_DEV_VERIFIER_TEMPLATES,
+        payload: [false],
+      })
+      setDevVerifierTemplates(false)
+    }
     dispatch({
       type: DispatchAction.USE_VERIFIER_CAPABILITY,
       payload: [!useVerifierCapability],
@@ -56,6 +66,22 @@ const Developer: React.FC = () => {
       payload: [!useConnectionInviterCapability],
     })
     setConnectionInviterCapability((previousState) => !previousState)
+  }
+
+  const toggleDevVerifierTemplatesSwitch = () => {
+    // if we switch on dev templates we can assume the user also wants to enable the verifier capability
+    if (!useDevVerifierTemplates) {
+      dispatch({
+        type: DispatchAction.USE_VERIFIER_CAPABILITY,
+        payload: [true],
+      })
+      setUseVerifierCapability(true)
+    }
+    dispatch({
+      type: DispatchAction.USE_DEV_VERIFIER_TEMPLATES,
+      payload: [!useDevVerifierTemplates],
+    })
+    setDevVerifierTemplates((previousState) => !previousState)
   }
 
   return (
@@ -100,6 +126,25 @@ const Developer: React.FC = () => {
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleConnectionInviterCapabilitySwitch}
             value={useConnectionInviterCapability}
+          />
+        </Pressable>
+      </View>
+      <View style={styles.settingContainer}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.settingLabelText}>{t('Verifier.UseDevVerifierTemplates')}</Text>
+        </View>
+        <Pressable
+          style={styles.settingSwitchContainer}
+          accessibilityLabel={t('Verifier.ToggleDevTemplates')}
+          accessibilityRole={'switch'}
+          testID={testIdWithKey('ToggleDevVerifierTemplatesSwitch')}
+        >
+          <Switch
+            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+            thumbColor={useDevVerifierTemplates ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+            onValueChange={toggleDevVerifierTemplatesSwitch}
+            value={useDevVerifierTemplates}
           />
         </Pressable>
       </View>
