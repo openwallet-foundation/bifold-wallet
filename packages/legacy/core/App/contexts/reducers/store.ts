@@ -11,6 +11,7 @@ import {
   Migration as MigrationState,
   State,
 } from '../../types/state'
+import { generateRandomWalletName } from '../../utils/helpers'
 
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
@@ -39,6 +40,7 @@ enum PreferencesDispatchAction {
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
+  USE_DEV_VERIFIER_TEMPLATES = 'preferences/useDevVerifierTemplates',
   UPDATE_WALLET_NAME = 'preferences/updateWalletName',
 }
 
@@ -147,8 +149,28 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       return newState
     }
+    case PreferencesDispatchAction.USE_DEV_VERIFIER_TEMPLATES: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        useDevVerifierTemplates: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
+      // For older wallets that haven't explicitly named their wallet yet
+      if (!preferences.walletName) {
+        preferences.walletName = generateRandomWalletName()
+      }
+
       return {
         ...state,
         preferences,
