@@ -1,8 +1,8 @@
-// TODO: export this from @aries-framework/anoncreds
+/* eslint-disable import/no-extraneous-dependencies */
 import startCase from 'lodash.startcase'
 
-import { parseCredDefFromId } from '../utils/cred-def'
-import { hashCode, hashToRGBA } from '../utils/helpers'
+import { hashCode, hashToRGBA } from '../../utils/color'
+import { parseCredDefFromId } from '../../utils/credential-definition'
 
 import { Field } from './record'
 
@@ -245,7 +245,7 @@ export class OCABundleResolver implements OCABundleResolverType {
     }
   }
 
-  public get cardOverlayType() {
+  public get cardOverlayType(): CardOverlayType {
     return this.options.cardOverlayType ?? CardOverlayType.CardLayout11
   }
 
@@ -329,10 +329,8 @@ export class OCABundleResolver implements OCABundleResolverType {
     language?: string
   }): Promise<Field[]> {
     const bundle = await this.resolve(params)
-    console.log("presentationFields:Bundle is:", JSON.stringify(bundle))
     let presentationFields = [...params.attributes]
     if (bundle?.captureBase?.attributes) {
-      console.log("found attributes in bundle:", bundle?.captureBase?.attributes)
       // if the oca branding has the attributes set, only display those attributes
       const bundleFields = Object.keys(bundle.captureBase.attributes)
       presentationFields = presentationFields.filter((item) => item.name && bundleFields.includes(item.name))
@@ -346,8 +344,6 @@ export class OCABundleResolver implements OCABundleResolverType {
           presentationField.encoding = bundle?.characterEncodingOverlay?.attributeCharacterEncoding[key]
         }
       }
-    } else {
-      console.log("Dinit find any bundle!!!")
     }
     return presentationFields
   }
@@ -357,12 +353,13 @@ export class OCABundleResolver implements OCABundleResolverType {
     attributes?: Array<Field>
     meta?: Meta
     language?: string
-  }) {
+  }): Promise<{
+    bundle: OCABundle | undefined
+    presentationFields: Field[]
+    metaOverlay: MetaOverlay | undefined
+    cardLayoutOverlay: CardLayoutOverlay10 | CardLayoutOverlay11 | undefined
+  }> {
     const [bundle, defaultBundle] = await Promise.all([this.resolve(params), this.resolveDefaultBundle(params)])
-
-    console.log("Bundle resolved are:", JSON.stringify(bundle))
-    console.log("Default resolved are:", JSON.stringify(defaultBundle))
-    console.log("Params", JSON.stringify(params))
     const fields = params.attributes
       ? await this.presentationFields({
           ...params,
@@ -373,8 +370,6 @@ export class OCABundleResolver implements OCABundleResolverType {
     const overlayBundle = bundle ?? defaultBundle
     const metaOverlay = overlayBundle?.metaOverlay
     const cardLayoutOverlay = overlayBundle?.cardLayoutOverlay
-    const returnedValue = { bundle: overlayBundle, presentationFields: fields, metaOverlay, cardLayoutOverlay }
-    console.log("Final return value:", JSON.stringify(returnedValue))
 
     return { bundle: overlayBundle, presentationFields: fields, metaOverlay, cardLayoutOverlay }
   }
