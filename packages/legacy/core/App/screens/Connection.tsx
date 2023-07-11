@@ -1,4 +1,5 @@
 import { useConnectionById } from '@aries-framework/react-hooks'
+import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,13 +8,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useConfiguration } from '../contexts/configuration'
-import { useOutOfBandByConnectionId } from '../hooks/connections'
-import { useFocusEffect } from '@react-navigation/native'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -45,8 +45,15 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
-  const oobRecord = useOutOfBandByConnectionId(connectionId ?? "")
+  const oobRecord = useOutOfBandByConnectionId(connectionId ?? '')
   const goalCode = oobRecord?.outOfBandInvitation.goalCode
+  const merge: MergeFunction = (current, next) => ({ ...current, ...next })
+  const [state, dispatch] = useReducer(merge, {
+    isVisible: true,
+    isInitialized: false,
+    shouldShowDelayMessage: false,
+    connectionIsActive: false,
+  })
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -73,13 +80,23 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       marginTop: 20,
     },
   })
-  const merge: MergeFunction = (current, next) => ({ ...current, ...next })
-  const [state, dispatch] = useReducer(merge, {
-    isVisible: true,
-    isInitialized: false,
-    shouldShowDelayMessage: false,
-    connectionIsActive: false,
-  })
+
+  const goalCodeAction = (goalCode: string): (() => void) => {
+    const codes: { [key: string]: undefined | (() => void) } = {
+      'aries.vc.verify': () => navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id }),
+      'aries.vc.issue': () =>
+        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id }),
+    }
+    let action = codes[goalCode]
+    if (action === undefined) {
+      const matchCode = Object.keys(codes).find((code) => goalCode.startsWith(code))
+      action = codes[matchCode ?? '']
+      if (action === undefined) {
+        throw new Error('Unhandled goal code type')
+      }
+    }
+    return action
+  }
 
   const startTimer = () => {
     if (!state.isInitialized) {
@@ -111,20 +128,19 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.shouldShowDelayMessage])
 
   useEffect(() => {
-    if (connectionId && oobRecord && (!goalCode || (!goalCode.startsWith("aries.vc.verify") && !goalCode.startsWith("aries.vc.issue")))) {
+    if (
+      connectionId &&
+      oobRecord &&
+      (!goalCode || (!goalCode.startsWith('aries.vc.verify') && !goalCode.startsWith('aries.vc.issue')))
+    ) {
       // No goal code, we don't know what to expect next,
       // navigate to the chat screen.
       navigation.navigate(Screens.Chat, { connectionId })
       dispatch({ isVisible: false })
+      return
     }
     if (state.notificationRecord && goalCode) {
-      if (goalCode.startsWith("aries.vc.issue")) {
-        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
-      } else if (goalCode.startsWith("aries.vc.verify")) {
-        navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-      } else {
-        throw new Error('Unhandled notification type')
-      }
+      goalCodeAction(goalCode)()
     }
   }, [connection, goalCode, state.notificationRecord])
 
@@ -135,7 +151,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('************* FOCUS *************')
       startTimer()
       return () => abortTimer
     }, [])
@@ -144,8 +159,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (state.isVisible) {
       for (const notification of notifications) {
-        if (!state.notificationRecord && ((connectionId && notification.connectionId === connectionId) ||
-          (threadId && notification.threadId == threadId))
+        if (
+          !state.notificationRecord &&
+          ((connectionId && notification.connectionId === connectionId) ||
+            (threadId && notification.threadId == threadId))
         ) {
           dispatch({ notificationRecord: notification, isVisible: false })
           break

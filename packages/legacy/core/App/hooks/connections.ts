@@ -10,23 +10,20 @@ export const useConnectionByOutOfBandId = (outOfBandId: string): ConnectionRecor
   )
 }
 
-export const useOutOfBandByConnectionId = (connectionId: string): OutOfBandRecord | undefined => {
-  const connection = useConnectionById(connectionId)
-  return useOutOfBandById(connection?.outOfBandId ?? "")
-}
-
 export const useOutOfBandById = (oobId: string): OutOfBandRecord | undefined => {
   const { agent } = useAgent()
   const [oob, setOob] = useState<OutOfBandRecord | undefined>(undefined)
   if (!oob) {
-    agent?.oob.findById(oobId).then(res => {
+    agent?.oob.findById(oobId).then((res) => {
       if (res) {
         setOob(res)
       }
     })
   }
-  return useMemo(
-    () => oob,
-    [oobId, oob]
-  )
+  return useMemo(() => oob, [oobId, oob])
+}
+
+export const useOutOfBandByConnectionId = (connectionId: string): OutOfBandRecord | undefined => {
+  const connection = useConnectionById(connectionId)
+  return useOutOfBandById(connection?.outOfBandId ?? '')
 }

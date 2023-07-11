@@ -52,7 +52,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
 
-  const goalCode = useOutOfBandByConnectionId(record?.id ?? "")?.outOfBandInvitation.goalCode
+  const goalCode = useOutOfBandByConnectionId(record?.id ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     container: {

@@ -22,6 +22,7 @@ import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
@@ -31,7 +32,6 @@ import { mergeAttributesAndPredicates, processProofAttributes, processProofPredi
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
-import { useOutOfBandByConnectionId } from '../hooks/connections'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 type Fields = Record<string, AnonCredsRequestedAttributeMatch[] | AnonCredsRequestedPredicateMatch[]>
@@ -57,7 +57,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
 
-  const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? "")?.outOfBandInvitation.goalCode
+  const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -144,26 +144,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             // We should ignore the key, if the value is undefined. For now this is a workaround.
             ...(hasIndy
               ? {
-                indy: {
-                  // Setting `filterByNonRevocationRequirements` to `false` returns all
-                  // credentials even if they are revokable (and revoked). We need this to
-                  // be able to show why a proof cannot be satisfied. Otherwise we can only
-                  // show failure.
-                  filterByNonRevocationRequirements: false,
-                },
-              }
+                  indy: {
+                    // Setting `filterByNonRevocationRequirements` to `false` returns all
+                    // credentials even if they are revokable (and revoked). We need this to
+                    // be able to show why a proof cannot be satisfied. Otherwise we can only
+                    // show failure.
+                    filterByNonRevocationRequirements: false,
+                  },
+                }
               : {}),
 
             ...(hasAnonCreds
               ? {
-                anoncreds: {
-                  // Setting `filterByNonRevocationRequirements` to `false` returns all
-                  // credentials even if they are revokable (and revoked). We need this to
-                  // be able to show why a proof cannot be satisfied. Otherwise we can only
-                  // show failure.
-                  filterByNonRevocationRequirements: false,
-                },
-              }
+                  anoncreds: {
+                    // Setting `filterByNonRevocationRequirements` to `false` returns all
+                    // credentials even if they are revokable (and revoked). We need this to
+                    // be able to show why a proof cannot be satisfied. Otherwise we can only
+                    // show failure.
+                    filterByNonRevocationRequirements: false,
+                  },
+                }
               : {}),
           },
         })
