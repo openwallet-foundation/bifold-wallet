@@ -31,6 +31,7 @@ import { mergeAttributesAndPredicates, processProofAttributes, processProofPredi
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 type Fields = Record<string, AnonCredsRequestedAttributeMatch[] | AnonCredsRequestedPredicateMatch[]>
@@ -55,13 +56,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
-  const [goalCode, setGoalCode] = useState<string>()
 
-  const oobRecord = connection?.outOfBandId ? agent?.oob.findById(connection.outOfBandId) : undefined
-
-  oobRecord?.then((rec) => {
-    setGoalCode(rec?.outOfBandInvitation.goalCode)
-  })
+  const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? "")?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -148,26 +144,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             // We should ignore the key, if the value is undefined. For now this is a workaround.
             ...(hasIndy
               ? {
-                  indy: {
-                    // Setting `filterByNonRevocationRequirements` to `false` returns all
-                    // credentials even if they are revokable (and revoked). We need this to
-                    // be able to show why a proof cannot be satisfied. Otherwise we can only
-                    // show failure.
-                    filterByNonRevocationRequirements: false,
-                  },
-                }
+                indy: {
+                  // Setting `filterByNonRevocationRequirements` to `false` returns all
+                  // credentials even if they are revokable (and revoked). We need this to
+                  // be able to show why a proof cannot be satisfied. Otherwise we can only
+                  // show failure.
+                  filterByNonRevocationRequirements: false,
+                },
+              }
               : {}),
 
             ...(hasAnonCreds
               ? {
-                  anoncreds: {
-                    // Setting `filterByNonRevocationRequirements` to `false` returns all
-                    // credentials even if they are revokable (and revoked). We need this to
-                    // be able to show why a proof cannot be satisfied. Otherwise we can only
-                    // show failure.
-                    filterByNonRevocationRequirements: false,
-                  },
-                }
+                anoncreds: {
+                  // Setting `filterByNonRevocationRequirements` to `false` returns all
+                  // credentials even if they are revokable (and revoked). We need this to
+                  // be able to show why a proof cannot be satisfied. Otherwise we can only
+                  // show failure.
+                  filterByNonRevocationRequirements: false,
+                },
+              }
               : {}),
           },
         })
@@ -268,7 +264,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         proofRecordId: proof.id,
         proofFormats: automaticRequestedCreds.proofFormats,
       })
-
       if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
         agent.connections.deleteById(proof.connectionId)
       }
