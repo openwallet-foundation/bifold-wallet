@@ -18,10 +18,10 @@ import {
   MetaOverlay,
   OverlayBundle,
 } from '../../types'
+import { generateColor } from '../../utils/color'
 
 import { Field } from './record'
 import { parseCredDefFromId } from './utils/cred-def'
-import { generateColor } from '../../utils/color'
 
 export enum BaseType {
   Binary = 'Binary',
