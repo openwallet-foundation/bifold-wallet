@@ -2705,10 +2705,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-oca@workspace:packages/oca"
   dependencies:
+    "@aries-framework/anoncreds": ^0.4.0
     "@aries-framework/core": 0.4.0
+    "@types/lodash.startcase": ^4.4.7
     "@typescript-eslint/parser": ^4.33.0
     eslint: ^7.14.0
     eslint-import-resolver-typescript: ^2.5.0
+    lodash.startcase: ^4.4.0
     rimraf: ^5.0.0
     typescript: ^5.0.4
   languageName: unknown
@@ -5046,7 +5049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.startcase@npm:^4.4.6":
+"@types/lodash.startcase@npm:^4.4.6, @types/lodash.startcase@npm:^4.4.7":
   version: 4.4.7
   resolution: "@types/lodash.startcase@npm:4.4.7"
   dependencies:
