@@ -19,7 +19,8 @@ export default class BrandingOverlay extends BaseOverlay {
     this.logo = overlay.logo
     this.#background_image = overlay.background_image
     this.#background_image_slice = overlay.background_image_slice
-    this.#primary_background_color = overlay.primary_background_color ?? generateColor(credentialDefinitionId)
+    this.#primary_background_color =
+      overlay.primary_background_color ?? generateColor(credentialDefinitionId ?? 'default')
     this.#secondary_background_color = overlay.secondary_background_color
     this.#primary_attribute = overlay.primary_attribute
     this.#secondary_attribute = overlay.secondary_attribute

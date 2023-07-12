@@ -1,13 +1,16 @@
 import { ILabelOverlayData } from '../../interfaces/data'
-import BaseOverlayL10n from '../base/BaseOverlayL10n'
+import BaseOverlay from '../base/BaseOverlay'
 
-export default class LabelOverlay extends BaseOverlayL10n {
+export default class LabelOverlay extends BaseOverlay {
   #attribute_labels: Record<string, string>
   #attribute_categories: string[]
   #category_labels: Record<string, string>
 
+  language: string
+
   constructor(overlay: ILabelOverlayData) {
     super(overlay)
+    this.language = overlay.language
     this.#attribute_labels = overlay.attribute_labels
     this.#attribute_categories = overlay.attribute_categories
     this.#category_labels = overlay.category_labels

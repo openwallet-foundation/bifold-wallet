@@ -9,7 +9,6 @@ import {
 } from '../../interfaces'
 import {
   BaseOverlay,
-  BaseOverlayL10n,
   BrandingOverlay,
   CaptureBase,
   CharacterEncodingOverlay,
@@ -22,6 +21,7 @@ import {
 
 import { Field } from './record'
 import { parseCredDefFromId } from './utils/cred-def'
+import { generateColor } from '../../utils/color'
 
 export enum BaseType {
   Binary = 'Binary',
@@ -61,6 +61,10 @@ export interface OCABundleType {
   get formatOverlay(): FormatOverlay | undefined
   get characterEncodingOverlay(): CharacterEncodingOverlay | undefined
   get brandingOverlay(): BrandingOverlay | LegacyBrandingOverlay | undefined
+}
+
+interface LanguageOverlay {
+  language: string
 }
 
 export interface OCABundleResolverType {
@@ -156,7 +160,6 @@ export class OCABundle implements OCABundleType {
       issuer: '',
       issuer_description: '',
       issuer_url: '',
-      watermark: '',
     })
   }
 
@@ -167,7 +170,9 @@ export class OCABundle implements OCABundleType {
     if (language !== undefined) {
       // we want to return branding even if there isn't a bundle for a given language
       const overlay = this.bundle.overlays.find(
-        (item) => item.type === type.toString() && (item as unknown as BaseOverlayL10n).language === language
+        (item) =>
+          ((item as unknown as LanguageOverlay).language === undefined && item.type === type.toString()) ||
+          (item.type === type.toString() && (item as unknown as LanguageOverlay).language === language)
       ) as T | undefined
       if (overlay) {
         return overlay
@@ -177,13 +182,17 @@ export class OCABundle implements OCABundleType {
   }
 }
 
-export class OCABundleResolver implements OCABundleResolverType {
-  private bundles: Record<string, OverlayBundle> = {}
-  private options: OCABundleResolverOptions
+export class DefaultOCABundleResolver implements OCABundleResolverType {
+  protected bundles: Record<string, OverlayBundle> = {}
+  protected options: OCABundleResolverOptions
 
   public constructor(bundlesData: Record<string, IOverlayBundleData> = {}, options?: OCABundleResolverOptions) {
     for (const cid in bundlesData) {
-      this.bundles[cid] = new OverlayBundle(cid, bundlesData[cid])
+      try {
+        this.bundles[cid] = new OverlayBundle(cid, bundlesData[cid])
+      } catch (error) {
+        // might get an error trying to parse javascript's default value
+      }
     }
 
     this.options = {
@@ -215,7 +224,13 @@ export class OCABundleResolver implements OCABundleResolverType {
       credential_support_url: '',
       issuer_description: '',
       issuer_url: '',
-      watermark: '',
+    }
+
+    let colorHash = 'default'
+    if (metaOverlay?.name) {
+      colorHash = metaOverlay.name
+    } else if (metaOverlay?.issuer) {
+      colorHash = metaOverlay.issuer
     }
 
     const brandingoOverlay01: ILegacyBrandingOverlayData = {
@@ -227,6 +242,7 @@ export class OCABundleResolver implements OCABundleResolverType {
       capture_base: '',
       type: OverlayType.Branding10,
       logo: '',
+      primary_background_color: generateColor(colorHash),
       background_image: '',
       background_image_slice: '',
       secondary_background_color: '',
