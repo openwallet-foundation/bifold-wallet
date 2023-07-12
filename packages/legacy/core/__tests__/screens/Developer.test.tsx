@@ -28,8 +28,10 @@ describe('Developer screen', () => {
 
     const VerifierToggle = await findByTestId(testIdWithKey('ToggleVerifierCapability'))
     const ConnectionToggle = await findByTestId(testIdWithKey('ToggleConnectionInviterCapabilitySwitch'))
+    const DevVerifierToggle = await findByTestId(testIdWithKey('ToggleDevVerifierTemplatesSwitch'))
 
     expect(VerifierToggle).not.toBe(null)
     expect(ConnectionToggle).not.toBe(null)
+    expect(DevVerifierToggle).not.toBe(null)
   })
 })
