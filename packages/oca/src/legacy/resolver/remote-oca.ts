@@ -58,13 +58,18 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
     if (bundlePath !== '') {
       return this.remoteServer.get(bundlePath).then((response) => {
-        const bundleData: IOverlayBundleData[] = response.data
-        const overlayBundle = new OverlayBundle(params.identifiers.credentialDefinitionId ?? '', bundleData[0])
-        this.bundles[identifier] = overlayBundle
-        return new OCABundle(overlayBundle, {
-          ...this.options,
-          language: language ?? this.options.language,
-        })
+        try {
+          const bundleData: IOverlayBundleData[] = response.data
+          const overlayBundle = new OverlayBundle(params.identifiers.credentialDefinitionId ?? '', bundleData[0])
+          this.bundles[identifier] = overlayBundle
+          return new OCABundle(overlayBundle, {
+            ...this.options,
+            language: language ?? this.options.language,
+          })
+        } catch (error) {
+          // probably couldnt parse the overlay bundle.
+          return undefined
+        }
       })
     }
 

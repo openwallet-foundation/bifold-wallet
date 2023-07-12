@@ -22,7 +22,6 @@ class OverlayBundle {
   flaggedAttributes!: IOverlayBundleAttribute[]
 
   constructor(credentialDefinitionId: string, bundle: IOverlayBundleData) {
-    console.warn("%ccarregando: " + credentialDefinitionId, bundle, 'color: cyan')
     this.credentialDefinitionId = credentialDefinitionId
     this.captureBase = new CaptureBase(bundle.capture_base)
     this.overlays = bundle.overlays
