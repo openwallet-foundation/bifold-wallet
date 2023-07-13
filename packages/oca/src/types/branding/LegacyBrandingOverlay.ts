@@ -19,7 +19,7 @@ export default class LegacyBrandingOverlay extends BaseOverlay {
   constructor(credentialDefinitionId: string, overlay: ILegacyBrandingOverlayData) {
     super(overlay)
 
-    this.backgroundColor = overlay.backgroundColor ?? generateColor(credentialDefinitionId ?? 'default')
+    this.backgroundColor = overlay.backgroundColor ?? generateColor(credentialDefinitionId)
     this.imageSource = overlay.imageSource
     this.header = overlay.header
     this.footer = overlay.footer

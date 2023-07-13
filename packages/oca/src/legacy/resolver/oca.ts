@@ -19,9 +19,9 @@ import {
   OverlayBundle,
 } from '../../types'
 import { generateColor } from '../../utils/color'
+import { parseCredDefFromId } from '../../utils/credential-definition'
 
 import { Field } from './record'
-import { parseCredDefFromId } from './utils/cred-def'
 
 export enum BaseType {
   Binary = 'Binary',
@@ -236,20 +236,13 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     const brandingoOverlay01: ILegacyBrandingOverlayData = {
       capture_base: '',
       type: OverlayType.Branding01,
+      backgroundColor: generateColor(colorHash),
     }
 
     const brandingoOverlay10: IBrandingOverlayData = {
       capture_base: '',
       type: OverlayType.Branding10,
-      logo: '',
       primary_background_color: generateColor(colorHash),
-      background_image: '',
-      background_image_slice: '',
-      secondary_background_color: '',
-      primary_attribute: '',
-      secondary_attribute: '',
-      issued_date_attribute: '',
-      expiry_date_attribute: '',
     }
 
     const bundle: OverlayBundle = new OverlayBundle(params.identifiers?.credentialDefinitionId as string, {
