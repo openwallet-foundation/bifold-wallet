@@ -15,7 +15,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
 import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
-import { useConnectionByOutOfBandId } from '../hooks/connections'
+import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks/connections'
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
@@ -24,9 +24,10 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
-const windowDimensions = Dimensions.get('window')
-
-const qrContainerSize = windowDimensions.width - 20
+const { width, height } = Dimensions.get('window')
+const aspectRatio = height / width
+const isTablet = aspectRatio < 1.6 // assume 4:3 for tablets
+const qrContainerSize = isTablet ? width - width * 0.3 : width - 20
 const qrSize = qrContainerSize - 20
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
@@ -51,13 +52,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const record = useConnectionByOutOfBandId(connectionRecordId ?? '')
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
-  const [goalCode, setGoalCode] = useState<string>()
 
-  const oobRecord = connectionRecordId ? agent?.oob.findById(connectionRecordId) : undefined
-
-  oobRecord?.then((rec) => {
-    setGoalCode(rec?.outOfBandInvitation.goalCode)
-  })
+  const goalCode = useOutOfBandByConnectionId(record?.id ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     container: {
@@ -95,7 +91,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       color: ColorPallet.brand.primary,
     },
     qrContainer: {
-      width: qrContainerSize,
       height: qrContainerSize,
       alignItems: 'center',
       justifyContent: 'center',

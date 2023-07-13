@@ -25,7 +25,6 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
             "justifyContent": "center",
             "marginHorizontal": 10,
             "marginTop": 15,
-            "width": 730,
           }
         }
       >
@@ -219,7 +218,6 @@ exports[`ProofRequesting Component renders correctly 1`] = `
             "justifyContent": "center",
             "marginHorizontal": 10,
             "marginTop": 15,
-            "width": 730,
           }
         }
       >
@@ -413,7 +411,6 @@ exports[`ProofRequesting Component renders correctly 2`] = `
             "justifyContent": "center",
             "marginHorizontal": 10,
             "marginTop": 15,
-            "width": 730,
           }
         }
       />

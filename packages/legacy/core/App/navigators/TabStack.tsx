@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, useWindowDimensions, View } from 'react-native'
+import { Text, useWindowDimensions, View, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -23,8 +23,12 @@ const TabStack: React.FC = () => {
   const { assertConnectedNetwork } = useNetwork()
   const { ColorPallet, TabTheme } = useTheme()
   const { fontScale } = useWindowDimensions()
-
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
+  const styles = StyleSheet.create({
+    tabBarIcon: {
+      flex: 1,
+    },
+  })
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
@@ -43,6 +47,7 @@ const TabStack: React.FC = () => {
           name={TabStacks.HomeStack}
           component={HomeStack}
           options={{
+            tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
               <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                 <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
@@ -70,6 +75,7 @@ const TabStack: React.FC = () => {
         <Tab.Screen
           name={TabStacks.ConnectStack}
           options={{
+            tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ focused }) => (
               <View
                 style={{
@@ -138,6 +144,7 @@ const TabStack: React.FC = () => {
           name={TabStacks.CredentialStack}
           component={CredentialStack}
           options={{
+            tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
               <AttachTourStep index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>

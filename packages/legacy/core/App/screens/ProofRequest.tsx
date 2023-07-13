@@ -22,6 +22,7 @@ import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
@@ -55,13 +56,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
-  const [goalCode, setGoalCode] = useState<string>()
 
-  const oobRecord = connection?.outOfBandId ? agent?.oob.findById(connection.outOfBandId) : undefined
-
-  oobRecord?.then((rec) => {
-    setGoalCode(rec?.outOfBandInvitation.goalCode)
-  })
+  const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -268,7 +264,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         proofRecordId: proof.id,
         proofFormats: automaticRequestedCreds.proofFormats,
       })
-
       if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
         agent.connections.deleteById(proof.connectionId)
       }

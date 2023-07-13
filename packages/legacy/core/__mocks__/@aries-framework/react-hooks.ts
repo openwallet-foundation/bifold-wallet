@@ -31,12 +31,15 @@ const mockProofModule = {
 const mockMediationRecipient = {
   initiateMessagePickup: jest.fn(),
 }
-
+const mockOobModule = {
+  findById: jest.fn().mockReturnValue(Promise.resolve(null))
+}
 const useAgent = () => ({
   agent: {
     credentials: mockCredentialModule,
     proofs: mockProofModule,
     mediationRecipient: mockMediationRecipient,
+    oob: mockOobModule
   },
 })
 const useCredentialById = jest.fn()
