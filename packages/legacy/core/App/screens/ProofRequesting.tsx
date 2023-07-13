@@ -15,7 +15,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
 import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
-import { useConnectionByOutOfBandId } from '../hooks/connections'
+import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks/connections'
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
@@ -52,13 +52,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const record = useConnectionByOutOfBandId(connectionRecordId ?? '')
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
-  const [goalCode, setGoalCode] = useState<string>()
 
-  const oobRecord = connectionRecordId ? agent?.oob.findById(connectionRecordId) : undefined
-
-  oobRecord?.then((rec) => {
-    setGoalCode(rec?.outOfBandInvitation.goalCode)
-  })
+  const goalCode = useOutOfBandByConnectionId(record?.id ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     container: {
