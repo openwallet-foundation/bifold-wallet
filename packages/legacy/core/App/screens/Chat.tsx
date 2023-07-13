@@ -3,6 +3,7 @@ import {
   CredentialExchangeRecord,
   CredentialState,
   ProofExchangeRecord,
+  ProofState,
 } from '@aries-framework/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -98,12 +99,26 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          withDetails: record.state === CredentialState.Done,
+          withDetails: record.state === CredentialState.Done || record.state === CredentialState.OfferReceived,
           onDetails: () => {
-            navigation.getParent()?.navigate(Stacks.ContactStack, {
-              screen: Screens.CredentialDetails,
-              params: { credential: record },
-            })
+            const navMap: { [key in CredentialState]?: () => void } = {
+              [CredentialState.Done]: () => {
+                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                  screen: Screens.CredentialDetails,
+                  params: { credential: record },
+                })
+              },
+              [CredentialState.OfferReceived]: () => {
+                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                  screen: Screens.CredentialOffer,
+                  params: { credentialId: record.id },
+                })
+              },
+            }
+            const nav = navMap[record.state]
+            if (nav) {
+              nav()
+            }
           },
         }
       })
@@ -114,7 +129,6 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         const role = getProofEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getProofEventLabel(record) as any)
-
         return {
           _id: record.id,
           text: actionLabel,
@@ -122,12 +136,39 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          withDetails: isPresentationReceived(record) && record.isVerified !== undefined,
+          withDetails:
+            (isPresentationReceived(record) && record.isVerified !== undefined) ||
+            record.state === ProofState.RequestReceived ||
+            record.state === ProofState.PresentationSent ||
+            (record.state === ProofState.Done && record.isVerified === undefined),
           onDetails: () => {
-            navigation.getParent()?.navigate(Stacks.ContactStack, {
-              screen: Screens.ProofDetails,
-              params: { recordId: record.id, isHistory: true },
-            })
+            const toProofDetails = () => {
+              navigation.getParent()?.navigate(Stacks.ContactStack, {
+                screen: Screens.ProofDetails,
+                params: {
+                  recordId: record.id,
+                  isHistory: true,
+                  senderReview:
+                    record.state === ProofState.PresentationSent ||
+                    (record.state === ProofState.Done && record.isVerified === undefined),
+                },
+              })
+            }
+            const navMap: { [key in ProofState]?: () => void } = {
+              [ProofState.Done]: toProofDetails,
+              [ProofState.PresentationSent]: toProofDetails,
+              [ProofState.PresentationReceived]: toProofDetails,
+              [ProofState.RequestReceived]: () => {
+                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                  screen: Screens.ProofRequest,
+                  params: { proofId: record.id },
+                })
+              },
+            }
+            const nav = navMap[record.state]
+            if (nav) {
+              nav()
+            }
           },
         }
       })

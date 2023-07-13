@@ -343,6 +343,8 @@ const translation = {
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Decline credential offer? (PB-BR)",
     "Declined": "Recusado",
+    "ReviewSentInformation_one": "(PB) You shared the following information from {{count}} credential with",
+    "ReviewSentInformation_other": "(PB) You shared the following information from {{count}} credentials with",
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service. (PB-BR)",

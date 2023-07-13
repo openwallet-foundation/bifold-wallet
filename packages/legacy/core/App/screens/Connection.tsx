@@ -1,14 +1,16 @@
-import { DidExchangeState } from '@aries-framework/core'
-import { useConnectionById, useAgent } from '@aries-framework/react-hooks'
+import { useConnectionById } from '@aries-framework/react-hooks'
+import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useReducer } from 'react'
+import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
 import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -20,6 +22,7 @@ type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalSt
 type LocalState = {
   isVisible: boolean
   isInitialized: boolean
+  notificationRecord?: any
   shouldShowDelayMessage: boolean
   connectionIsActive: boolean
 }
@@ -28,21 +31,29 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
   // logic should be: if this property is set, rather than showing the
   // delay message, the user should be redirected to the home screen.
-  // const { connectionTimerDelay } = useConfiguration()
-  // const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+  const { connectionTimerDelay } = useConfiguration()
+  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
 
   if (!navigation || !route) {
     throw new Error('Connection route props were not set properly')
   }
 
-  const { connectionId } = route.params
-  // const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const { connectionId, threadId } = route.params
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
-  const { agent } = useAgent()
   const { t } = useTranslation()
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
+  const oobRecord = useOutOfBandByConnectionId(connectionId ?? '')
+  const goalCode = oobRecord?.outOfBandInvitation.goalCode
+  const merge: MergeFunction = (current, next) => ({ ...current, ...next })
+  const [state, dispatch] = useReducer(merge, {
+    isVisible: true,
+    isInitialized: false,
+    shouldShowDelayMessage: false,
+    connectionIsActive: false,
+  })
   const styles = StyleSheet.create({
     container: {
       height: '100%',
@@ -69,31 +80,41 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       marginTop: 20,
     },
   })
-  const merge: MergeFunction = (current, next) => ({ ...current, ...next })
-  const [state, dispatch] = useReducer(merge, {
-    isVisible: true,
-    isInitialized: false,
-    shouldShowDelayMessage: false,
-    connectionIsActive: false,
-  })
 
-  // const startTimer = () => {
-  //   if (!state.isInitialized) {
-  //     timerRef.current = setTimeout(() => {
-  //       dispatch({ shouldShowDelayMessage: true })
-  //       timerRef.current = null
-  //     }, connTimerDelay)
+  const goalCodeAction = (goalCode: string): (() => void) => {
+    const codes: { [key: string]: undefined | (() => void) } = {
+      'aries.vc.verify': () => navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id }),
+      'aries.vc.issue': () =>
+        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id }),
+    }
+    let action = codes[goalCode]
+    if (action === undefined) {
+      const matchCode = Object.keys(codes).find((code) => goalCode.startsWith(code))
+      action = codes[matchCode ?? '']
+      if (action === undefined) {
+        throw new Error('Unhandled goal code type')
+      }
+    }
+    return action
+  }
 
-  //     dispatch({ isInitialized: true })
-  //   }
-  // }
+  const startTimer = () => {
+    if (!state.isInitialized) {
+      timerRef.current = setTimeout(() => {
+        dispatch({ shouldShowDelayMessage: true })
+        timerRef.current = null
+      }, connTimerDelay)
 
-  // const abortTimer = () => {
-  //   if (timerRef.current) {
-  //     clearTimeout(timerRef.current)
-  //     timerRef.current = null
-  //   }
-  // }
+      dispatch({ isInitialized: true })
+    }
+  }
+
+  const abortTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+  }
 
   const onDismissModalTouched = () => {
     dispatch({ shouldShowDelayMessage: false, isVisible: false })
@@ -101,41 +122,51 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    // Wait for OOB proof notification to arrive.
-    if (!connection || !connectionId) {
-      return
+    if (state.shouldShowDelayMessage && !state.notificationRecord) {
+      AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
     }
+  }, [state.shouldShowDelayMessage])
 
-    // Note: V1 connections are not required to enter the `Completed` state and may
-    // remain at `RequestSent` indefinitely. This is a known issue that is addressed
-    // in higher protocol versions.
-    if (connection.state === DidExchangeState.Completed || connection.state === DidExchangeState.RequestSent) {
-      dispatch({ connectionIsActive: true })
-      agent?.mediationRecipient.initiateMessagePickup()
-
+  useEffect(() => {
+    if (
+      connectionId &&
+      oobRecord &&
+      (!goalCode || (!goalCode.startsWith('aries.vc.verify') && !goalCode.startsWith('aries.vc.issue')))
+    ) {
       // No goal code, we don't know what to expect next,
       // navigate to the chat screen.
       navigation.navigate(Screens.Chat, { connectionId })
       dispatch({ isVisible: false })
+      return
     }
-  }, [connection])
+    if (state.notificationRecord && goalCode) {
+      goalCodeAction(goalCode)()
+    }
+  }, [connection, goalCode, state.notificationRecord])
 
-  // useMemo(() => {
-  //   startTimer()
-  //   return () => abortTimer
-  // }, [])
+  useMemo(() => {
+    startTimer()
+    return () => abortTimer
+  }, [])
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log('************* FOCUS *************')
-  //     startTimer()
-  //     return () => abortTimer
-  //   }, [])
-  // )
+  useFocusEffect(
+    useCallback(() => {
+      startTimer()
+      return () => abortTimer
+    }, [])
+  )
 
   useEffect(() => {
     if (state.isVisible) {
       for (const notification of notifications) {
+        if (
+          !state.notificationRecord &&
+          ((connectionId && notification.connectionId === connectionId) ||
+            (threadId && notification.threadId == threadId))
+        ) {
+          dispatch({ notificationRecord: notification, isVisible: false })
+          break
+        }
         if (!connection && notification.state === 'request-received') {
           navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
           dispatch({ isVisible: false })
