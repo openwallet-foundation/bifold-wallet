@@ -89,13 +89,15 @@ export type ContactStackParams = {
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofRequest]: { proofId: string }
 }
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }
   [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean; senderReview?: boolean }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
   [Screens.ProofRequestUsageHistory]: { templateId: string }
 }
