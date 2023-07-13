@@ -396,6 +396,8 @@ const translation = {
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Refusé le justificatif d'identité",
         "Declined": "Diminué",
+        "ReviewSentInformation_one": "(FR) You shared the following information from {{count}} credential with",
+        "ReviewSentInformation_other": "(FR) You shared the following information from {{count}} credentials with",
         "ShareFollowingInformation_one": "partage les informations suivantes à partir des informations d'identification {{count}}.",
         "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}.",
         "DeclineBulletPoint1": "Les organisations et les services exigent que vous prouviez que vous êtes éligible pour continuer avec leur service ou leur accès.",
