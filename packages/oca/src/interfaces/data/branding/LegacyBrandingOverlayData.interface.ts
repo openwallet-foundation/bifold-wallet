@@ -1,16 +1,16 @@
 import IBaseOverlayData from '../base/BaseOverlayData.interface'
 
 export default interface ILegacyBrandingOverlayData extends IBaseOverlayData {
-  backgroundColor?: string
-  imageSource?: string
+  background_color?: string
+  image_source?: string
   header?: {
     color?: string
-    backgroundColor?: string
-    imageSource?: string
-    hideIssuer?: boolean
+    background_color?: string
+    image_source?: string
+    hide_issuer?: boolean
   }
   footer?: {
     color?: string
-    backgroundColor?: string
+    background_color?: string
   }
 }

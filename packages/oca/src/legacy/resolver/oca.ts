@@ -88,6 +88,8 @@ export interface OCABundleResolverType {
     meta?: Meta
     language?: string
   }): Promise<CredentialOverlay<BaseOverlay | BrandingOverlay | LegacyBrandingOverlay>>
+
+  getBrandingOverlayType(): BrandingOverlayType
 }
 
 export interface OCABundleResolverOptions {
@@ -201,7 +203,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     }
   }
 
-  public get cardOverlayType(): BrandingOverlayType {
+  public getBrandingOverlayType(): BrandingOverlayType {
     return this.options.brandingOverlayType ?? BrandingOverlayType.Branding01
   }
 
@@ -236,7 +238,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     const brandingoOverlay01: ILegacyBrandingOverlayData = {
       capture_base: '',
       type: OverlayType.Branding01,
-      backgroundColor: generateColor(colorHash),
+      background_color: generateColor(colorHash),
     }
 
     const brandingoOverlay10: IBrandingOverlayData = {
@@ -254,7 +256,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
       },
       overlays: [
         metaOverlay,
-        this.cardOverlayType === BrandingOverlayType.Branding01 ? brandingoOverlay01 : brandingoOverlay10,
+        this.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? brandingoOverlay01 : brandingoOverlay10,
       ],
     })
 
