@@ -24,9 +24,10 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
-const windowDimensions = Dimensions.get('window')
-
-const qrContainerSize = windowDimensions.width - 20
+const { width, height } = Dimensions.get('window')
+const aspectRatio = height / width
+const isTablet = aspectRatio < 1.6 // assume 4:3 for tablets
+const qrContainerSize = isTablet ? width - width * 0.3 : width - 20
 const qrSize = qrContainerSize - 20
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
@@ -95,7 +96,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       color: ColorPallet.brand.primary,
     },
     qrContainer: {
-      width: qrContainerSize,
       height: qrContainerSize,
       alignItems: 'center',
       justifyContent: 'center',
