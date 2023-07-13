@@ -20,7 +20,7 @@ export const useOutOfBandById = (oobId: string): OutOfBandRecord | undefined => 
       }
     })
   }
-  return useMemo(() => oob, [oobId, oob])
+  return oob
 }
 
 export const useOutOfBandByConnectionId = (connectionId: string): OutOfBandRecord | undefined => {
