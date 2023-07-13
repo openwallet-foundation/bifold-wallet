@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useConnectionById } from '@aries-framework/react-hooks'
-import { render } from '@testing-library/react-native'
+import { render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
@@ -10,6 +10,7 @@ import { useNotifications } from '../../App/hooks/notifications'
 import ConnectionModal from '../../App/screens/Connection'
 import configurationContext from '../contexts/configuration'
 import navigationContext from '../contexts/navigation'
+import timeTravel from '../helpers/timetravel'
 
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
@@ -50,7 +51,7 @@ describe('ConnectionModal Component', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Navigate to chat when connection present', async () => {
+  test('Updates after delay', async () => {
     // @ts-ignore-next-line
     useConnectionById.mockReturnValueOnce(connection)
     const element = (
@@ -59,13 +60,16 @@ describe('ConnectionModal Component', () => {
       </ConfigurationContext.Provider>
     )
 
-    render(element)
+    const tree = render(element)
 
-    expect(navigationContext.getParent()?.navigate).toBeCalledTimes(1)
-    expect(navigationContext.getParent()?.navigate).toBeCalledWith('Chat', { connectionId: '123' })
+    await waitFor(() => {
+      timeTravel(10000)
+    })
+
+    expect(tree).toMatchSnapshot()
   })
 
-  test('Navigate to Proof when OOB connection', async () => {
+  test('Dismiss on demand', async () => {
     // @ts-ignore-next-line
     useNotifications.mockReturnValueOnce({ total: 1, notifications: [proofNotif] })
     const element = (
@@ -74,11 +78,12 @@ describe('ConnectionModal Component', () => {
       </ConfigurationContext.Provider>
     )
 
-    render(element)
+    const tree = render(element)
 
-    expect(navigationContext.navigate).toBeCalledTimes(1)
-    expect(navigationContext.navigate).toBeCalledWith('Proof Request', {
-      proofId: 'bcd2af54-6021-4389-bb5f-3cc8bbedfb50',
+    await waitFor(() => {
+      timeTravel(10000)
     })
+
+    expect(tree).toMatchSnapshot()
   })
 })
