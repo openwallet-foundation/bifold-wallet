@@ -112,8 +112,6 @@ export interface Meta {
 export class OCABundle implements OCABundleType {
   private bundle: OverlayBundle
   private options: OCABundleResolverOptions
-  private defaultBrandingOverlay: BrandingOverlay
-  private defaultLegacyBrandingOverlay: LegacyBrandingOverlay
 
   public constructor(bundle: OverlayBundle, options?: OCABundleResolverOptions) {
     this.bundle = bundle
@@ -121,18 +119,6 @@ export class OCABundle implements OCABundleType {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
       language: options?.language ?? 'en',
     }
-
-    this.defaultBrandingOverlay = new BrandingOverlay(this.bundle.credentialDefinitionId, {
-      capture_base: '',
-      type: BrandingOverlayType.Branding01,
-      primary_background_color: generateColor(this.bundle.credentialDefinitionId),
-    })
-
-    this.defaultLegacyBrandingOverlay = new LegacyBrandingOverlay(this.bundle.credentialDefinitionId, {
-      capture_base: '',
-      type: BrandingOverlayType.Branding10,
-      background_color: generateColor(this.bundle.credentialDefinitionId),
-    })
   }
 
   public get captureBase(): CaptureBase {
@@ -160,18 +146,8 @@ export class OCABundle implements OCABundleType {
     return this.getOverlay<MetaOverlay>(OverlayType.Meta10, this.options.language)
   }
 
-  public get brandingOverlay(): BrandingOverlay | LegacyBrandingOverlay {
-    // making sure that it wont be undefined
-    const overlay: BrandingOverlay | LegacyBrandingOverlay | undefined = this.getOverlay(
-      this.options?.brandingOverlayType || BrandingOverlayType.Branding10
-    )
-    if (overlay) {
-      return overlay
-    } else if (this.options?.brandingOverlayType === BrandingOverlayType.Branding01) {
-      return this.defaultLegacyBrandingOverlay
-    } else {
-      return this.defaultBrandingOverlay
-    }
+  public get brandingOverlay(): BrandingOverlay | LegacyBrandingOverlay | undefined {
+    return this.getOverlay(this.options?.brandingOverlayType || BrandingOverlayType.Branding10)
   }
 
   public buildOverlay(name: string, language: string): MetaOverlay {
