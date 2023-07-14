@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import ImageModal from '../../components/modals/ImageModal'
@@ -14,6 +15,7 @@ interface RecordBinaryFieldProps {
 
 const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, shown, style }) => {
   const { ListItems } = useTheme()
+  const { t } = useTranslation()
   const [showImageModal, setShowImageModal] = useState(false)
 
   const styles = StyleSheet.create({
@@ -32,7 +34,7 @@ const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, s
     <View>
       {shown ? (
         <TouchableOpacity
-          accessibilityLabel={'zoom'}
+          accessibilityLabel={t('Record.Zoom')}
           testID={testIdWithKey('zoom')}
           onPress={() => setShowImageModal(true)}
         >
