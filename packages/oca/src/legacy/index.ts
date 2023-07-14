@@ -1,2 +1,3 @@
-export * from './types/oca'
-export * from './types/record'
+export * from './resolver/oca'
+export * from './resolver/record'
+export * from './resolver/remote-oca'

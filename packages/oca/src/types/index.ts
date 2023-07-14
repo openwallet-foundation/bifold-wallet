@@ -1,6 +1,7 @@
 import OverlayTypeMap from './OverlayTypeMap'
 import BaseOverlay from './base/BaseOverlay'
 import BrandingOverlay from './branding/BrandingOverlay'
+import LegacyBrandingOverlay from './branding/LegacyBrandingOverlay'
 import OverlayBundle from './bundle/OverlayBundle'
 import CaptureBase from './capture-base/CaptureBase'
 import CharacterEncodingOverlay from './semantic/CharacterEncodingOverlay'
@@ -15,6 +16,7 @@ export {
   CaptureBase,
   OverlayBundle,
   BrandingOverlay,
+  LegacyBrandingOverlay,
   CharacterEncodingOverlay,
   FormatOverlay,
   InformationOverlay,

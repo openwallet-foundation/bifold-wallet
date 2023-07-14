@@ -36,6 +36,7 @@
   "dependencies": {
     "@aries-framework/anoncreds": "^0.4.0",
     "@aries-framework/core": "0.4.0",
+    "axios": "^1.4.0",
     "lodash.startcase": "^4.4.0"
   }
 }
