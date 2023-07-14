@@ -31,7 +31,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
   // logic should be: if this property is set, rather than showing the
   // delay message, the user should be redirected to the home screen.
-  const { connectionTimerDelay } = useConfiguration()
+  const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
 
   if (!navigation || !route) {
@@ -124,6 +124,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (state.shouldShowDelayMessage && !state.notificationRecord) {
       AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
+      if (autoRedirectConnectionToHome) {
+        dispatch({ shouldShowDelayMessage: false, isVisible: false })
+        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      }
     }
   }, [state.shouldShowDelayMessage])
 
