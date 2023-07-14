@@ -3,16 +3,16 @@ import { generateColor } from '../../utils/color'
 import BaseOverlay from '../base/BaseOverlay'
 
 export default class BrandingOverlay extends BaseOverlay {
-  #background_image: string
-  #background_image_slice: string
+  #background_image?: string
+  #background_image_slice?: string
   #primary_background_color: string
-  #secondary_background_color: string
-  #primary_attribute: string
-  #secondary_attribute: string
-  #issued_date_attribute: string
-  #expiry_date_attribute: string
+  #secondary_background_color?: string
+  #primary_attribute?: string
+  #secondary_attribute?: string
+  #issued_date_attribute?: string
+  #expiry_date_attribute?: string
 
-  logo: string
+  logo?: string
 
   constructor(credentialDefinitionId: string, overlay: IBrandingOverlayData) {
     super(overlay)
@@ -27,35 +27,35 @@ export default class BrandingOverlay extends BaseOverlay {
     this.#expiry_date_attribute = overlay.expiry_date_attribute
   }
 
-  get backgroundImage(): string {
+  get backgroundImage(): string | undefined {
     return this.#background_image
   }
 
-  get backgroundImageSlice(): string {
+  get backgroundImageSlice(): string | undefined {
     return this.#background_image_slice
   }
 
-  get primaryBackgroundColor(): string {
+  get primaryBackgroundColor(): string | undefined {
     return this.#primary_background_color
   }
 
-  get secondaryBackgroundColor(): string {
+  get secondaryBackgroundColor(): string | undefined {
     return this.#secondary_background_color
   }
 
-  get primaryAttribute(): string {
+  get primaryAttribute(): string | undefined {
     return this.#primary_attribute
   }
 
-  get secondaryAttribute(): string {
+  get secondaryAttribute(): string | undefined {
     return this.#secondary_attribute
   }
 
-  get issuedDateAttribute(): string {
+  get issuedDateAttribute(): string | undefined {
     return this.#issued_date_attribute
   }
 
-  get expiryDateAttribute(): string {
+  get expiryDateAttribute(): string | undefined {
     return this.#expiry_date_attribute
   }
 }
