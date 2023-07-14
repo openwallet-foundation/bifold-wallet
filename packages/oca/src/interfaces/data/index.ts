@@ -1,5 +1,6 @@
 import IBaseOverlayData from './base/BaseOverlayData.interface'
 import IBrandingOverlayData from './branding/BrandingOverlayData.interface'
+import ILegacyBrandingOverlayData from './branding/LegacyBrandingOverlayData.interface'
 import IOverlayBundleData from './bundle/OverlayBundleData.interface'
 import ICaptureBaseData from './capture-base/CaptureBaseData.interface'
 import ICharacterEncodingOverlayData from './semantic/CharacterEncodingOverlayData.interface'
@@ -14,6 +15,7 @@ export {
   ICaptureBaseData,
   IOverlayBundleData,
   IBrandingOverlayData,
+  ILegacyBrandingOverlayData,
   ICharacterEncodingOverlayData,
   IFormatOverlayData,
   IInformationOverlayData,

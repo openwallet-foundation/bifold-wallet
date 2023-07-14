@@ -2709,6 +2709,7 @@ __metadata:
     "@aries-framework/core": 0.4.0
     "@types/lodash.startcase": ^4.4.7
     "@typescript-eslint/parser": ^4.33.0
+    axios: ^1.4.0
     eslint: ^7.14.0
     eslint-import-resolver-typescript: ^2.5.0
     lodash.startcase: ^4.4.0
@@ -6427,7 +6428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.0.0":
+"axios@npm:^1.0.0, axios@npm:^1.4.0":
   version: 1.4.0
   resolution: "axios@npm:1.4.0"
   dependencies:
