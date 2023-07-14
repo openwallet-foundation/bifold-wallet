@@ -9,4 +9,5 @@ export default interface IMetaOverlayData extends IBaseOverlayData {
   issuer: string
   issuer_description: string
   issuer_url: string
+  watermark?: string
 }

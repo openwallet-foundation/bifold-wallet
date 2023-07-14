@@ -1,8 +1,9 @@
-import { IBrandingOverlayData, IOverlayBundleData } from '../../interfaces/data'
+import { IBrandingOverlayData, ILegacyBrandingOverlayData, IOverlayBundleData } from '../../interfaces/data'
 import { IOverlayBundleAttribute, IOverlayBundleMetadata } from '../../interfaces/overlay'
 import OverlayTypeMap from '../OverlayTypeMap'
 import BaseOverlay from '../base/BaseOverlay'
 import BrandingOverlay from '../branding/BrandingOverlay'
+import LegacyBrandingOverlay from '../branding/LegacyBrandingOverlay'
 import CaptureBase from '../capture-base/CaptureBase'
 import CharacterEncodingOverlay from '../semantic/CharacterEncodingOverlay'
 import FormatOverlay from '../semantic/FormatOverlay'
@@ -24,11 +25,20 @@ class OverlayBundle {
     this.credentialDefinitionId = credentialDefinitionId
     this.captureBase = new CaptureBase(bundle.capture_base)
     this.overlays = bundle.overlays
-      .filter((overlay) => overlay.type !== 'aries/overlays/branding/1.0')
+      .filter((overlay) => !overlay.type.startsWith('aries/overlays/branding/'))
       .map((overlay) => {
         const OverlayClass = (OverlayTypeMap.get(overlay.type) || BaseOverlay) as typeof BaseOverlay
         return new OverlayClass(overlay)
       })
+    this.overlays.push(
+      ...bundle.overlays
+        .filter((overlay) => overlay.type === 'aries/overlays/branding/0.1')
+        .map((overlay) => {
+          const OverlayClass = (OverlayTypeMap.get(overlay.type) ||
+            LegacyBrandingOverlay) as typeof LegacyBrandingOverlay
+          return new OverlayClass(credentialDefinitionId, overlay as ILegacyBrandingOverlayData)
+        })
+    )
     this.overlays.push(
       ...bundle.overlays
         .filter((overlay) => overlay.type === 'aries/overlays/branding/1.0')
