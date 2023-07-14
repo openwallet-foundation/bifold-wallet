@@ -310,7 +310,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   setActionForNotificationType(notificationType)
 
   useEffect(() => {
-    const detailsPromise = async () =>{
+    const detailsPromise = async () => {
       const details = await detailsForNotificationType(notificationType)
       setDetails(details)
     }
