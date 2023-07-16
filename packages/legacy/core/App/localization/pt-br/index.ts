@@ -427,7 +427,8 @@ const translation = {
     "Show": "Mostrar",
     "HideAll": "Esconder todos",
     "ShowAll": "Mostrar tudos",
-    "Hidden": "Escondido"
+    "Hidden": "Escondido",
+    "Zoom": "Zoom (PT-BR)",
   },
   "Screens": {
     "Splash": "Splash",
