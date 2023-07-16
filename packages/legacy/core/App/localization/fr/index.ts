@@ -439,6 +439,7 @@ const translation = {
         "ShowAll": "Afficher tout",
         "Hidden": "Masqué",
         "InvalidDate": "Date invalide: ",
+        "Zoom": "Zoom (FR)",
     },
     "Screens": {
         "Splash": "Page de garde",
