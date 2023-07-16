@@ -448,7 +448,8 @@ const translation = {
     "HideAll": "Hide all",
     "ShowAll": "Show all",
     "Hidden": "Hidden",
-    "InvalidDate": "Invalid Date: "
+    "InvalidDate": "Invalid Date: ",
+    "Zoom": "Zoom",
   },
   "Screens": {
     "Splash": "Splash",
