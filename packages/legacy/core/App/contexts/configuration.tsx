@@ -1,4 +1,5 @@
 import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
+import { legacy } from '@hyperledger/aries-oca'
 import { createContext, ReducerAction, useContext } from 'react'
 
 import { ProofRequestTemplate } from '../../verifier'
@@ -6,7 +7,6 @@ import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import OnboardingPages from '../screens/OnboardingPages'
 import { ScanProps } from '../screens/Scan'
-import { OCABundleResolver } from '../types/oca'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
 
@@ -28,7 +28,7 @@ export interface ConfigurationContext {
   credentialListOptions: React.FC
   credentialEmptyList: React.FC<EmptyListProps>
   developer: React.FC
-  OCABundleResolver: OCABundleResolver
+  OCABundleResolver: legacy.OCABundleResolverType
   scan: React.FC<ScanProps>
   useBiometry: React.FC
   record: React.FC<RecordProps>

@@ -2701,6 +2701,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@hyperledger/aries-oca@npm:1.0.0-alpha.34":
+  version: 1.0.0-alpha.34
+  resolution: "@hyperledger/aries-oca@npm:1.0.0-alpha.34"
+  dependencies:
+    "@aries-framework/anoncreds": ^0.4.0
+    "@aries-framework/core": 0.4.0
+    axios: ^1.4.0
+    lodash.startcase: ^4.4.0
+  checksum: 073fd78ac2403ed31f4ed07fa9dfc9cfea67744a16a757a225f08366e377753ed3b41c67996039816509ccfe452f036c0a5029f63e5a18de2286870b55f49e77
+  languageName: node
+  linkType: hard
+
 "@hyperledger/aries-oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-oca@workspace:packages/oca"
@@ -5897,6 +5909,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.0
+    "@hyperledger/aries-oca": 1.0.0-alpha.34
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/masked-view": 0.1.11
@@ -6020,6 +6033,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": ^9.2.3
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.0
+    "@hyperledger/aries-oca": 1.0.0-alpha.34
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": ^1.12.1
     "@react-native-community/eslint-config": ^2.0.0
@@ -6118,6 +6132,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": ^9.2.3
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.0
+    "@hyperledger/aries-oca": 1.0.0-alpha.34
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": ^1.12.1
     "@react-native-community/masked-view": ^0.1.11

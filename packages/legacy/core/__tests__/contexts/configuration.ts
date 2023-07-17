@@ -1,7 +1,7 @@
+import { legacy } from '@hyperledger/aries-oca'
 import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
-import { OCABundleResolver } from '../../App/types/oca'
 import { defaultProofRequestTemplates } from '../../verifier'
 
 const configurationContext: ConfigurationContext = {
@@ -12,7 +12,7 @@ const configurationContext: ConfigurationContext = {
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: () => null,
-  OCABundleResolver: new OCABundleResolver(require('../../App/assets/oca-bundles.json')),
+  OCABundleResolver: new legacy.DefaultOCABundleResolver(require('../../App/assets/oca-bundles.json')),
   useBiometry: () => null,
   record: Record,
   settings: [],

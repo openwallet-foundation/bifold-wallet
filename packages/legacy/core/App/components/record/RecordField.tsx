@@ -1,3 +1,4 @@
+import { legacy } from '@hyperledger/aries-oca'
 import startCase from 'lodash.startcase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -5,8 +6,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { BaseType } from '../../types/oca'
-import { Attribute, Field } from '../../types/record'
 import { isDataUrl } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -14,20 +13,20 @@ import RecordBinaryField from './RecordBinaryField'
 import RecordDateIntField from './RecordDateIntField'
 
 interface RecordFieldProps {
-  field: Field
+  field: legacy.Field
   hideFieldValue?: boolean
   hideBottomBorder?: boolean
   shown?: boolean
   onToggleViewPressed?: () => void
-  fieldLabel?: (field: Field) => React.ReactElement | null
-  fieldValue?: (field: Field) => React.ReactElement | null
+  fieldLabel?: (field: legacy.Field) => React.ReactElement | null
+  fieldValue?: (field: legacy.Field) => React.ReactElement | null
 }
 
 export const validEncoding = 'base64'
 export const validFormat = new RegExp('^image/(jpeg|png|jpg)')
 
 interface AttributeValueParams {
-  field: Attribute
+  field: legacy.Attribute
   shown?: boolean
   style?: Record<string, unknown>
 }
@@ -45,7 +44,7 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
   ) {
     return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
   }
-  if (field.type == BaseType.DateInt) {
+  if (field.type == legacy.BaseType.DateInt) {
     return <RecordDateIntField field={field} style={style} shown={shown} />
   }
   return (
@@ -107,7 +106,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
         ) : (
           <>
             <View style={styles.valueText}>
-              <AttributeValue field={field as Attribute} shown={shown} />
+              <AttributeValue field={field as legacy.Attribute} shown={shown} />
             </View>
             {hideFieldValue ? (
               <TouchableOpacity

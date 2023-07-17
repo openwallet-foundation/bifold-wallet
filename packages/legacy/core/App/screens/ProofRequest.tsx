@@ -7,6 +7,7 @@ import {
 } from '@aries-framework/anoncreds'
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useCredentials, useProofById } from '@aries-framework/react-hooks'
+import { legacy } from '@hyperledger/aries-oca'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
@@ -25,7 +26,6 @@ import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
-import { ProofCredentialItems } from '../types/record'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
 import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
@@ -51,7 +51,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const proofConnectionLabel = connection?.theirLabel ?? proof?.connectionId ?? ''
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
-  const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
+  const [proofItems, setProofItems] = useState<legacy.ProofCredentialItems[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()

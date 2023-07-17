@@ -23,6 +23,7 @@ import {
   ProofFormatDataMessagePayload,
 } from '@aries-framework/core/build/modules/proofs/protocol/ProofProtocolOptions'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import { legacy } from '@hyperledger/aries-oca'
 import { Buffer } from 'buffer'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
@@ -31,7 +32,6 @@ import { Dispatch, ReactNode, SetStateAction } from 'react'
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
 import { Role } from '../types/chat'
-import { Attribute, Predicate, ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
 import { ChildFn } from '../types/tour'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
@@ -260,8 +260,8 @@ export const processProofAttributes = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[]
-): { [key: string]: ProofCredentialAttributes } => {
-  const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
+): { [key: string]: legacy.ProofCredentialAttributes } => {
+  const processedAttributes = {} as { [key: string]: legacy.ProofCredentialAttributes }
 
   const requestedProofAttributes = request?.indy?.requested_attributes ?? request?.anoncreds?.requested_attributes
   const retrievedCredentialAttributes =
@@ -310,7 +310,7 @@ export const processProofAttributes = (
         attributeValue = credential.credentialInfo.attributes[attributeName]
       }
       processedAttributes[credName].attributes?.push(
-        new Attribute({
+        new legacy.Attribute({
           revoked,
           name: attributeName,
           value: attributeValue,
@@ -325,8 +325,8 @@ export const processProofPredicates = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[]
-): { [key: string]: ProofCredentialPredicates } => {
-  const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
+): { [key: string]: legacy.ProofCredentialPredicates } => {
+  const processedPredicates = {} as { [key: string]: legacy.ProofCredentialPredicates }
 
   const requestedProofPredicates = request?.anoncreds?.requested_predicates ?? request?.indy?.requested_predicates
   const retrievedCredentialPredicates =
@@ -372,7 +372,7 @@ export const processProofPredicates = (
     }
 
     processedPredicates[credName].predicates?.push(
-      new Predicate({
+      new legacy.Predicate({
         credentialId,
         name,
         revoked,
@@ -385,8 +385,8 @@ export const processProofPredicates = (
 }
 
 export const mergeAttributesAndPredicates = (
-  attributes: { [key: string]: ProofCredentialAttributes },
-  predicates: { [key: string]: ProofCredentialPredicates }
+  attributes: { [key: string]: legacy.ProofCredentialAttributes },
+  predicates: { [key: string]: legacy.ProofCredentialPredicates }
 ) => {
   const merged = { ...attributes }
   for (const [key, predicate] of Object.entries(predicates)) {

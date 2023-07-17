@@ -1,4 +1,5 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
+import { BrandingOverlay, legacy } from '@hyperledger/aries-oca'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,8 +11,6 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { CredentialStatus } from '../../types/credential-status'
 import { GenericFn } from '../../types/fn'
-import { CardLayoutOverlay11, CredentialOverlay } from '../../types/oca'
-import { Attribute, Predicate } from '../../types/record'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { getCredentialConnectionLabel, isDataUrl } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
@@ -22,7 +21,7 @@ interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
-  displayItems?: (Attribute | Predicate)[]
+  displayItems?: (legacy.Attribute | legacy.Predicate)[]
   revoked?: boolean
   error?: boolean
   elevated?: boolean
@@ -88,24 +87,24 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     credential?.revocationNotification !== undefined && !!proof
   )
 
-  const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({})
+  const [overlay, setOverlay] = useState<legacy.CredentialOverlay<BrandingOverlay>>({})
 
   const primaryField = overlay?.presentationFields?.find(
-    (field) => field.name === overlay?.cardLayoutOverlay?.primaryAttribute?.name
+    (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
   )
   const secondaryField = overlay?.presentationFields?.find(
-    (field) => field.name === overlay?.cardLayoutOverlay?.secondaryAttribute?.name
+    (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
   )
 
   const cardData = [...(displayItems ?? []), primaryField, secondaryField]
 
   const getSecondaryBackgroundColor = () => {
     if (proof) {
-      return overlay.cardLayoutOverlay?.primaryBackgroundColor
+      return overlay.brandingOverlay?.primaryBackgroundColor
     } else {
-      return overlay.cardLayoutOverlay?.backgroundImageSlice?.src
+      return overlay.brandingOverlay?.backgroundImageSlice
         ? 'rgba(0, 0, 0, 0)'
-        : overlay.cardLayoutOverlay?.secondaryBackgroundColor
+        : overlay.brandingOverlay?.secondaryBackgroundColor
     }
   }
 
@@ -113,7 +112,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: overlay.cardLayoutOverlay?.primaryBackgroundColor,
+      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
     },
     cardContainer: {
@@ -124,7 +123,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor() ?? overlay.cardLayoutOverlay?.primaryBackgroundColor,
+      backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
       flexGrow: 1,
@@ -175,7 +174,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     textContainer: {
       color: proof
         ? TextTheme.normal.color
-        : credentialTextColor(ColorPallet, overlay.cardLayoutOverlay?.primaryBackgroundColor),
+        : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
       flexShrink: 1,
     },
     errorText: {
@@ -207,7 +206,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       setOverlay({
         ...overlay,
         ...bundle,
-        cardLayoutOverlay: bundle.cardLayoutOverlay as CardLayoutOverlay11,
+        brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
       })
     })
   }, [credential])
@@ -220,9 +219,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const CredentialCardLogo: React.FC = () => {
     return (
       <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
-        {overlay.cardLayoutOverlay?.logo?.src ? (
+        {overlay.brandingOverlay?.logo ? (
           <Image
-            source={toImageSource(overlay.cardLayoutOverlay?.logo.src)}
+            source={toImageSource(overlay.brandingOverlay?.logo)}
             style={{
               resizeMode: 'cover',
               width: logoHeight,
@@ -243,7 +242,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             ]}
           >
             {!error ? (
-              (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuerName ?? 'C')?.charAt(0).toUpperCase()
+              (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()
             ) : (
               <Icon name={'warning'} size={30} style={styles.errorIcon} />
             )}
@@ -297,11 +296,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
+  const parseAttribute = (item: (legacy.Attribute & legacy.Predicate) | undefined) => {
     return { label: item?.label ?? item?.name ?? '', value: item?.value || `${item?.pType} ${item?.pValue}` }
   }
 
-  const renderCardAttribute = (item: Attribute & Predicate) => {
+  const renderCardAttribute = (item: legacy.Attribute & legacy.Predicate) => {
     const { label, value } = parseAttribute(item)
     return (
       item && (
@@ -330,7 +329,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View style={{ marginLeft: -1 * logoHeight + padding, margin: -1 }}>
           <View>
-            {!(overlay.metaOverlay?.issuerName === 'Unknown Contact' && proof) && (
+            {!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof) && (
               <View style={{ flexDirection: 'row' }}>
                 <Text
                   testID={testIdWithKey('CredentialIssuer')}
@@ -345,7 +344,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                     },
                   ]}
                 >
-                  {overlay.metaOverlay?.issuerName}
+                  {overlay.metaOverlay?.issuer}
                 </Text>
               </View>
             )}
@@ -381,7 +380,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             scrollEnabled={false}
             initialNumToRender={cardData?.length}
             renderItem={({ item }) => {
-              return renderCardAttribute(item as Attribute & Predicate)
+              return renderCardAttribute(item as legacy.Attribute & legacy.Predicate)
             }}
           />
         </View>
@@ -403,9 +402,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           },
         ]}
       >
-        {overlay.cardLayoutOverlay?.backgroundImageSlice?.src && !displayItems ? (
+        {overlay.brandingOverlay?.backgroundImageSlice && !displayItems ? (
           <ImageBackground
-            source={toImageSource(overlay.cardLayoutOverlay?.backgroundImageSlice.src)}
+            source={toImageSource(overlay.brandingOverlay?.backgroundImageSlice)}
             style={{ flexGrow: 1 }}
             imageStyle={{
               borderTopLeftRadius: borderRadius,
@@ -468,13 +467,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={styles.cardContainer}
         accessible={true}
         accessibilityLabel={
-          `${
-            overlay.metaOverlay?.issuerName ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuerName}` : ''
-          }, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''} ${t(
-            'Credentials.Credential'
-          )}.` +
+          `${overlay.metaOverlay?.issuer ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}` : ''}, ${
+            overlay.metaOverlay?.watermark ?? ''
+          } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
           cardData.map((item) => {
-            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
+            const { label, value } = parseAttribute(item as (legacy.Attribute & legacy.Predicate) | undefined)
             if (label && value) {
               return ` ${label}, ${value}`
             }
