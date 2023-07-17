@@ -1,6 +1,6 @@
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
+import { createStackNavigator, StackCardStyleInterpolator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState } from 'react-native'
@@ -167,6 +167,13 @@ const RootStack: React.FC = () => {
   const mainStack = () => {
     const Stack = createStackNavigator()
 
+    // This function is to make the fade in behavior of both iOS and Android consistent for the settings menu
+    const forFade: StackCardStyleInterpolator = ({ current }) => ({
+      cardStyle: {
+        opacity: current.progress,
+      },
+    })
+
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
@@ -177,7 +184,13 @@ const RootStack: React.FC = () => {
           // below is part of the temporary gating of the new scan screen tabs feature
           options={{ presentation: state.preferences.useConnectionInviterCapability ? 'card' : 'modal' }}
         />
-        <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
+        <Stack.Screen
+          name={Stacks.SettingStack}
+          component={SettingStack}
+          options={{
+            cardStyleInterpolator: forFade,
+          }}
+        />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
         <Stack.Screen name={Stacks.ConnectionStack} component={DeliveryStack} />
