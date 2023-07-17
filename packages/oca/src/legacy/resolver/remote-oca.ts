@@ -41,7 +41,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
 
     if (this.bundles[identifier]) {
       return Promise.resolve(
-        new OCABundle(this.bundles[identifier], {
+        new OCABundle(this.bundles[identifier] as OverlayBundle, {
           ...this.options,
           language: language ?? this.options.language,
         })

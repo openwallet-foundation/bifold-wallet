@@ -185,13 +185,20 @@ export class OCABundle implements OCABundleType {
 }
 
 export class DefaultOCABundleResolver implements OCABundleResolverType {
-  protected bundles: Record<string, OverlayBundle> = {}
+  protected bundles: Record<string, OverlayBundle | string> = {}
   protected options: OCABundleResolverOptions
 
-  public constructor(bundlesData: Record<string, IOverlayBundleData> = {}, options?: OCABundleResolverOptions) {
+  public constructor(
+    bundlesData: Record<string, IOverlayBundleData | string> = {},
+    options?: OCABundleResolverOptions
+  ) {
     for (const cid in bundlesData) {
       try {
-        this.bundles[cid] = new OverlayBundle(cid, bundlesData[cid])
+        if (typeof bundlesData[cid] !== 'string') {
+          this.bundles[cid] = new OverlayBundle(cid, bundlesData[cid] as IOverlayBundleData)
+        } else {
+          this.bundles[cid] = bundlesData[cid] as string
+        }
       } catch (error) {
         // might get an error trying to parse javascript's default value
       }
@@ -286,7 +293,9 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
         if (typeof bundle === 'string') {
           bundle = this.bundles[bundle]
         }
-        return Promise.resolve(new OCABundle(bundle, { ...this.options, language: language ?? this.options.language }))
+        return Promise.resolve(
+          new OCABundle(bundle as OverlayBundle, { ...this.options, language: language ?? this.options.language })
+        )
       }
     }
     return Promise.resolve(undefined)
