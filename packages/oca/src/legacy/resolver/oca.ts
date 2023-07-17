@@ -205,13 +205,13 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     }
 
     this.options = {
-      brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding01,
+      brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
       language: options?.language ?? 'en',
     }
   }
 
   public getBrandingOverlayType(): BrandingOverlayType {
-    return this.options.brandingOverlayType ?? BrandingOverlayType.Branding01
+    return this.options.brandingOverlayType ?? BrandingOverlayType.Branding10
   }
 
   private getDefaultBundle(params: { language?: string; identifiers?: Identifiers; meta?: Meta }) {
