@@ -571,7 +571,7 @@ exports[`ConnectionModal Component Test goal code loading screen auto navigate 1
   hardwareAccelerated={false}
   onRequestClose={[Function]}
   transparent={true}
-  visible={true}
+  visible={false}
 >
   <RNCSafeAreaView
     style={
@@ -667,24 +667,6 @@ exports[`ConnectionModal Component Test goal code loading screen auto navigate 1
             </View>
           </View>
         </View>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              Object {
-                "marginTop": 20,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/TakingTooLong"
-        >
-          Connection.TakingTooLong
-        </Text>
       </View>
     </RCTScrollView>
     <View
