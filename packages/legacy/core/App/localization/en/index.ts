@@ -229,6 +229,7 @@ const translation = {
     "TypeHere": "Type Message Here",
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here.",
     "WhatAreContacts": "What are Contacts?",
+    "AddContact": "Add Contact",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -311,6 +312,9 @@ const translation = {
     "ConnectionAccepted": "Connection Accepted",
     "ConnectionNotFound": "Connection not found",
     "InvalidQrCode": "Invalid QR code. Please try again.",
+    "WillScanAutomatically": "A valid QR code will scan automatically.",
+    "ScanQRCode": "Scan QR code",
+    "MyQRCode": "My QR code",
     "UnableToHandleRedirection": "Unable to handle redirection",
     "Close": "Close",
     "Torch": "Flash"
@@ -321,6 +325,7 @@ const translation = {
     "ConnectionInvitation": "Connection Invitation",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a connection will be created.",
+    "ShareQR": "Sharing this QR code with someone will add them as a Contact.",
     "MakingConnection": "Making connection...",
     "ConnectionCompleted": "Connection completed!",
     "Toggle": "Toggle Connection Inviter Capability",
@@ -421,6 +426,7 @@ const translation = {
     "AppGuides": "App guides",
     "Build": "Build",
     "WhatAreContacts": "What are Contacts?",
+    "ScanMyQR": "Scan my QR code",
     "Help": "Help",
     "MoreInformation": "More information",
     "Developer": "Developer options"

@@ -171,7 +171,12 @@ const RootStack: React.FC = () => {
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
-        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
+        <Stack.Screen
+          name={Stacks.ConnectStack}
+          component={ConnectStack}
+          // below is part of the temporary gating of the new scan screen tabs feature
+          options={{ presentation: state.preferences.useConnectionInviterCapability ? 'card' : 'modal' }}
+        />
         <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />

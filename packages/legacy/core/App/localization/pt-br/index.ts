@@ -212,6 +212,7 @@ const translation = {
     "TypeHere": "Type Message Here (PT-BR)",
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (PT-BR)",
     "WhatAreContacts": "What are Contacts? (PT-BR)",
+    "AddContact": "Add Contact (PT-BR)",
   },
   "ContactDetails": {
     "Created": "Criado",
@@ -291,6 +292,9 @@ const translation = {
     "ConnectionAccepted": "Conexão Aceita",
     "ConnectionNotFound": "Conexão Não Encontrada",
     "InvalidQrCode": "QR code inválido. Favor tentar novamente.",
+    "WillScanAutomatically": "A valid QR code will scan automatically. (PT-BR)",
+    "ScanQRCode": "Scan QR code (PT-BR)",
+    "MyQRCode": "My QR code (PT-BR)",
     "UnableToHandleRedirection": "Não foi possível tratar redirecionamento",
     "Close": "Fechar",
     "Torch": "Flash"
@@ -301,6 +305,7 @@ const translation = {
     "ConnectionInvitation": "Convite de conexão",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a connection will be created. (PB)",
+    "ShareQR": "Sharing this QR code with someone will add them as a Contact. (PT-BR)",
     "MakingConnection": "Fazendo conexão...",
     "ConnectionCompleted": "Conexão concluída!",
     "Toggle": "Alternar capacidade de convite de conexão",
@@ -397,6 +402,7 @@ const translation = {
     "Language": "Idioma",
     "AppGuides": "App guides (PT-BR)",
     "WhatAreContacts": "O que são Contatos?",
+    "ScanMyQR": "Scan my QR code (PT-BR)",
     "Developer": "Developer options"
   },
   "TabStack": {

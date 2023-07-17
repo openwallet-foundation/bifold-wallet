@@ -1,14 +1,17 @@
 import { ConnectionRecord, ConnectionType } from '@aries-framework/core'
 import { useConnections } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'
 
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import ContactListItem from '../components/listItems/ContactListItem'
 import EmptyListContacts from '../components/misc/EmptyListContacts'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { ContactStackParams, Screens } from '../types/navigators'
+import { ContactStackParams, Screens, Stacks } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 interface ListContactsProps {
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
@@ -16,6 +19,7 @@ interface ListContactsProps {
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { ColorPallet } = useTheme()
+  const { t } = useTranslation()
   const style = StyleSheet.create({
     list: {
       backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -33,6 +37,31 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   if (!store.preferences.developerModeEnabled) {
     connections = records.filter((r) => !r.connectionTypes.includes(ConnectionType.Mediator))
   }
+
+  const onPressAddContact = () => {
+    navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan, params: { defaultToConnect: true } })
+  }
+
+  useEffect(() => {
+    if (store.preferences.useConnectionInviterCapability) {
+      navigation.setOptions({
+        headerRight: () => (
+          <HeaderButton
+            buttonLocation={ButtonLocation.Right}
+            accessibilityLabel={t('Contacts.AddContact')}
+            testID={testIdWithKey('AddContact')}
+            onPress={onPressAddContact}
+            icon="plus-circle-outline"
+          />
+        ),
+      })
+    } else {
+      navigation.setOptions({
+        headerRight: () => false,
+      })
+    }
+  }, [store.preferences.useConnectionInviterCapability])
+
   return (
     <View>
       <FlatList

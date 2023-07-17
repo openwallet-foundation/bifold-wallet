@@ -222,6 +222,22 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     })
   }
 
+  if (store.preferences.useConnectionInviterCapability) {
+    const section = settingsSections.find((item) => item.header.title === t('Screens.Contacts'))
+    if (section) {
+      section.data.splice(1, 0, {
+        title: t('Settings.ScanMyQR'),
+        accessibilityLabel: t('Settings.ScanMyQR'),
+        testID: testIdWithKey('ScanMyQR'),
+        onPress: () =>
+          navigation.getParent()?.navigate(Stacks.ConnectStack, {
+            screen: Screens.Scan,
+            params: { defaultToConnect: true },
+          }),
+      })
+    }
+  }
+
   const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
     <View style={[styles.section, styles.sectionHeader]}>
       <Icon accessible={false} name={icon} size={24} style={{ marginRight: 10, color: SettingsTheme.iconColor }} />
