@@ -229,6 +229,7 @@ const translation = {
         "TypeHere": "Type Message Here (FR)",
         "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (FR)",
         "WhatAreContacts": "What are Contacts? (FR)",
+        "AddContact": "Add Contact (FR)",
     },
     "ContactDetails": {
         "Created": "Créé",
@@ -311,6 +312,9 @@ const translation = {
         "ConnectionAccepted": "Connexion acceptée",
         "ConnectionNotFound": "Connexion non trouvée",
         "InvalidQrCode": "Code QR non valide. Veuillez réessayer.",
+        "WillScanAutomatically": "A valid QR code will scan automatically. (FR)",
+        "ScanQRCode": "Scan QR code (FR)",
+        "MyQRCode": "My QR code (FR)",
         "UnableToHandleRedirection": "Impossible de traiter la redirection",
         "Close": "Fermer",
         "Torch": "Flash"
@@ -321,6 +325,7 @@ const translation = {
         "ConnectionInvitation": "Invitation de connexion",
         "ScanQR": "Show this QR code to the other person (FR)",
         "ScanQRComment": "After the QR code is scanned, a connection will be created. (FR)",
+        "ShareQR": "Sharing this QR code with someone will add them as a Contact. (FR)",
         "MakingConnection": "Faire le lien...",
         "ConnectionCompleted": "Connexion terminée !",
         "Toggle": "Basculer la capacité d'invitation à la connexion",
@@ -413,6 +418,7 @@ const translation = {
         "AppGuides": "Guides d'applications",
         "Build": "Créer",
         "WhatAreContacts": "Qu’est-ce qu’un Contact?",
+        "ScanMyQR": "Scan my QR code (FR)",
         "Developer": "Options de développeur"
     },
     "TabStack": {
