@@ -123,10 +123,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (state.shouldShowDelayMessage && !state.notificationRecord) {
-      AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
       if (autoRedirectConnectionToHome) {
         dispatch({ shouldShowDelayMessage: false, isVisible: false })
         navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      } else {
+        AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
       }
     }
   }, [state.shouldShowDelayMessage])
