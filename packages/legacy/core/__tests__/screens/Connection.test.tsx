@@ -11,6 +11,7 @@ import ConnectionModal from '../../App/screens/Connection'
 import configurationContext from '../contexts/configuration'
 import navigationContext from '../contexts/navigation'
 import timeTravel from '../helpers/timetravel'
+import { useOutOfBandByConnectionId } from '../../App/hooks/connections'
 
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
@@ -30,12 +31,17 @@ jest.mock('../../App/hooks/notifications', () => ({
   useNotifications: jest.fn(),
 }))
 
+jest.mock('../../App/hooks/connections', () => ({
+  useOutOfBandByConnectionId: jest.fn(),
+}))
 const props = { params: { connectionId: '123' } }
 
 describe('ConnectionModal Component', () => {
   beforeEach(() => {
     // @ts-ignore-next-line
     useNotifications.mockReturnValue({ total: 0, notifications: [] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: "aries.vc.verify.once" } })
     jest.clearAllMocks()
     jest.clearAllTimers()
   })
@@ -82,6 +88,44 @@ describe('ConnectionModal Component', () => {
 
     await waitFor(() => {
       timeTravel(10000)
+    })
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Test goal code loading screen', async () => {
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: "aries.vc.verify.once" } })
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={navigationContext} route={props as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    await waitFor(() => {
+      timeTravel(10000)
+    })
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Test goal code loading screen auto navigate', async () => {
+    const config = configurationContext
+    configurationContext.autoRedirectConnectionToHome = true
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: "aries.vc.verify.once" } })
+    const element = (
+      <ConfigurationContext.Provider value={config}>
+        <ConnectionModal navigation={navigationContext} route={props as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    await waitFor(() => {
+      timeTravel(15000)
     })
 
     expect(tree).toMatchSnapshot()
