@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useConnectionById } from '@aries-framework/react-hooks'
+import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
@@ -12,6 +12,7 @@ import configurationContext from '../contexts/configuration'
 import navigationContext from '../contexts/navigation'
 import timeTravel from '../helpers/timetravel'
 import { useOutOfBandByConnectionId } from '../../App/hooks/connections'
+import { useNavigation } from '@react-navigation/core'
 
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
@@ -41,7 +42,7 @@ describe('ConnectionModal Component', () => {
     // @ts-ignore-next-line
     useNotifications.mockReturnValue({ total: 0, notifications: [] })
     // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: "aries.vc.verify.once" } })
+    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
     jest.clearAllMocks()
     jest.clearAllTimers()
   })
@@ -95,7 +96,7 @@ describe('ConnectionModal Component', () => {
 
   test('Test goal code loading screen', async () => {
     // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: "aries.vc.verify.once" } })
+    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
         <ConnectionModal navigation={navigationContext} route={props as any} />
@@ -115,7 +116,7 @@ describe('ConnectionModal Component', () => {
     const config = configurationContext
     configurationContext.autoRedirectConnectionToHome = true
     // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: "aries.vc.verify.once" } })
+    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
     const element = (
       <ConfigurationContext.Provider value={config}>
         <ConnectionModal navigation={navigationContext} route={props as any} />
@@ -129,5 +130,28 @@ describe('ConnectionModal Component', () => {
     })
 
     expect(tree).toMatchSnapshot()
+  })
+
+  test('No connection proof request auto navigate', async () => {
+    const navigation = useNavigation()
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue(undefined)
+    // @ts-ignore-next-line
+    useConnectionById.mockReturnValue(undefined)
+    // @ts-ignore-next-line
+    useProofById.mockReturnValue(proofNotif)
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={{ params: {} } as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(1)
+    expect(navigation.navigate).toBeCalledWith('Proof Request', { proofId: proofNotif.id })
   })
 })

@@ -138,7 +138,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       !oobRecord &&
       !goalCode &&
       state.notificationRecord &&
-      state.notificationRecord.type === 'proof-request'
+      state.notificationRecord.state === 'request-received'
     ) {
       navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
       dispatch({ isVisible: false })
@@ -186,8 +186,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           break
         }
         if (!connection && notification.state === 'request-received') {
-          navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
-          dispatch({ isVisible: false })
+          dispatch({ notificationRecord: notification, isVisible: false })
           break
         }
       }
