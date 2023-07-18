@@ -134,6 +134,19 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (
+      !connectionId &&
+      !oobRecord &&
+      !goalCode &&
+      state.notificationRecord &&
+      state.notificationRecord.type === 'proof-request'
+    ) {
+      navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      dispatch({ isVisible: false })
+
+      return
+    }
+
+    if (
       connectionId &&
       oobRecord &&
       (!goalCode || (!goalCode.startsWith('aries.vc.verify') && !goalCode.startsWith('aries.vc.issue')))
