@@ -56,7 +56,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
-
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
