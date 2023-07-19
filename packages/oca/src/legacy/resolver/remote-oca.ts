@@ -1,9 +1,10 @@
 import axios from 'axios'
 
 import { IOverlayBundleData } from '../../interfaces'
-import { OverlayBundle } from '../../types'
+import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
+import { generateColor } from '../../utils'
 
-import { DefaultOCABundleResolver, Identifiers, OCABundle, OCABundleResolverOptions } from './oca'
+import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, OCABundleResolverOptions } from './oca'
 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
   indexFileName?: string
@@ -61,6 +62,20 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
         try {
           const bundleData: IOverlayBundleData[] = response.data
           const overlayBundle = new OverlayBundle(params.identifiers.credentialDefinitionId ?? '', bundleData[0])
+          // make sure that the bundle will have at least one branding overlay
+          if (
+            !overlayBundle.overlays.find(
+              (overlay) =>
+                overlay.type === BrandingOverlayType.Branding01 || overlay.type === BrandingOverlayType.Branding10
+            )
+          ) {
+            overlayBundle.overlays.push(
+              ...this.getFallbackBrandingOverlays(
+                overlayBundle.credentialDefinitionId,
+                overlayBundle.captureBase.digest
+              )
+            )
+          }
           this.bundles[identifier] = overlayBundle
           return new OCABundle(overlayBundle, {
             ...this.options,
@@ -74,5 +89,20 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
 
     return Promise.resolve(undefined)
+  }
+
+  private getFallbackBrandingOverlays(credentialDefinitionId: string, captureBase: string): BaseOverlay[] {
+    const legacyBrandingOverlay: LegacyBrandingOverlay = new LegacyBrandingOverlay(credentialDefinitionId, {
+      capture_base: captureBase,
+      type: 'aries/overlays/branding/0.1',
+      background_color: generateColor(credentialDefinitionId),
+    })
+
+    const brandingOverlay: BrandingOverlay = new BrandingOverlay(credentialDefinitionId, {
+      capture_base: captureBase,
+      type: 'aries/overlays/branding/1.0',
+      primary_background_color: generateColor(credentialDefinitionId),
+    })
+    return [legacyBrandingOverlay, brandingOverlay]
   }
 }
