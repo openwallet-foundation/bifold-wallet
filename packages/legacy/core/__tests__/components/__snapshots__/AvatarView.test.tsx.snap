@@ -35,3 +35,39 @@ exports[`AvatarView Component Renders correctly 1`] = `
   </Text>
 </View>
 `;
+
+exports[`AvatarView Component Renders correctly 2 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderColor": "#FFFFFF",
+        "borderRadius": 32,
+        "borderWidth": 3,
+        "height": 64,
+        "justifyContent": "center",
+        "margin": 12,
+        "width": 64,
+      },
+      Object {
+        "borderColor": "#060741",
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 32,
+        "fontWeight": "normal",
+      }
+    }
+    testID="com.ariesbifold:id/AvatarName"
+  >
+    B
+  </Text>
+</View>
+`;
