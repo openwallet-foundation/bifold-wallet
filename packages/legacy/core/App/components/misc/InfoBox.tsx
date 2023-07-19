@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -61,6 +61,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       marginLeft: 10 + iconSize,
       paddingHorizontal: 5,
       paddingBottom: 5,
+      flexGrow: 0,
     },
     headerText: {
       ...TextTheme.normal,
@@ -179,7 +180,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
           {title}
         </Text>
       </View>
-      <View style={styles.bodyContainer}>
+      <ScrollView style={styles.bodyContainer}>
         {!showDetails ? bodyContent : null}
         {(description || (message && showDetails)) && (
           <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
@@ -201,15 +202,17 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
           </TouchableOpacity>
         )}
         {onCallToActionPressed && (
-          <Button
-            title={onCallToActionLabel || t('Global.Okay')}
-            accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
-            testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
-            buttonType={ButtonType.Primary}
-            onPress={onCallToActionPressed}
-          />
+          <View style={{ paddingTop: 10 }}>
+            <Button
+              title={onCallToActionLabel || t('Global.Okay')}
+              accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
+              testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
+              buttonType={ButtonType.Primary}
+              onPress={onCallToActionPressed}
+            />
+          </View>
         )}
-      </View>
+      </ScrollView>
     </View>
   )
 }
