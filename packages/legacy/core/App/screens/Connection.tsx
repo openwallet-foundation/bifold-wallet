@@ -33,11 +33,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // delay message, the user should be redirected to the home screen.
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-
-  if (!navigation || !route) {
-    throw new Error('Connection route props were not set properly')
-  }
-
   const { connectionId, threadId } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
@@ -88,13 +83,16 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id }),
     }
     let action = codes[goalCode]
+
     if (action === undefined) {
       const matchCode = Object.keys(codes).find((code) => goalCode.startsWith(code))
       action = codes[matchCode ?? '']
+
       if (action === undefined) {
         throw new Error('Unhandled goal code type')
       }
     }
+
     return action
   }
 
@@ -134,6 +132,19 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (
+      !connectionId &&
+      !oobRecord &&
+      !goalCode &&
+      state.notificationRecord &&
+      state.notificationRecord.state === 'request-received'
+    ) {
+      navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      dispatch({ isVisible: false })
+
+      return
+    }
+
+    if (
       connectionId &&
       oobRecord &&
       (!goalCode || (!goalCode.startsWith('aries.vc.verify') && !goalCode.startsWith('aries.vc.issue')))
@@ -144,6 +155,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       dispatch({ isVisible: false })
       return
     }
+
     if (state.notificationRecord && goalCode) {
       goalCodeAction(goalCode)()
     }
@@ -173,8 +185,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           break
         }
         if (!connection && notification.state === 'request-received') {
-          navigation.navigate(Screens.ProofRequest, { proofId: notification.id })
-          dispatch({ isVisible: false })
+          dispatch({ notificationRecord: notification, isVisible: false })
           break
         }
       }
