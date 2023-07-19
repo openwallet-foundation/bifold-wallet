@@ -69,144 +69,155 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       Hello Title
     </Text>
   </View>
-  <View
+  <RCTScrollView
     style={
       Object {
         "flexDirection": "column",
+        "flexGrow": 0,
         "marginLeft": 40,
         "paddingBottom": 5,
         "paddingHorizontal": 5,
       }
     }
   >
-    <View
-      accessibilityLabel="Global.ShowDetails"
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      hitSlop={
-        Object {
-          "bottom": 44,
-          "left": 44,
-          "right": 44,
-          "top": 44,
-        }
-      }
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "marginVertical": 14,
-          "opacity": 1,
-        }
-      }
-      testID="com.ariesbifold:id/ShowDetails"
-    >
+    <View>
       <View
-        style={
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
           Object {
-            "flexDirection": "row",
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
           }
         }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/ShowDetails"
       >
-        <Text
+        <View
           style={
             Object {
-              "color": "#FFFFFF",
-              "fontSize": 20,
-              "fontWeight": "normal",
+              "flexDirection": "row",
             }
           }
         >
-          Global.ShowDetails
-           
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
+          <Text
+            style={
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 30,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
+                "fontSize": 20,
                 "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
       </View>
-    </View>
-    <View
-      accessibilityLabel="Global.Okay"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "disabled": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#42803E",
-          "borderRadius": 4,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/Okay"
-    >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
+            "paddingTop": 10,
           }
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
+        <View
+          accessibilityLabel="Global.Okay"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
           }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/Okay"
         >
-          Global.Okay
-        </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ]
+              }
+            >
+              Global.Okay
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
-  </View>
+  </RCTScrollView>
 </View>
 `;
 
@@ -279,144 +290,155 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       Hello Title
     </Text>
   </View>
-  <View
+  <RCTScrollView
     style={
       Object {
         "flexDirection": "column",
+        "flexGrow": 0,
         "marginLeft": 40,
         "paddingBottom": 5,
         "paddingHorizontal": 5,
       }
     }
   >
-    <View
-      accessibilityLabel="Global.ShowDetails"
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      hitSlop={
-        Object {
-          "bottom": 44,
-          "left": 44,
-          "right": 44,
-          "top": 44,
-        }
-      }
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "marginVertical": 14,
-          "opacity": 1,
-        }
-      }
-      testID="com.ariesbifold:id/ShowDetails"
-    >
+    <View>
       <View
-        style={
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
           Object {
-            "flexDirection": "row",
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
           }
         }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/ShowDetails"
       >
-        <Text
+        <View
           style={
             Object {
-              "color": "#FFFFFF",
-              "fontSize": 20,
-              "fontWeight": "normal",
+              "flexDirection": "row",
             }
           }
         >
-          Global.ShowDetails
-           
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
+          <Text
+            style={
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 30,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
+                "fontSize": 20,
                 "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
       </View>
-    </View>
-    <View
-      accessibilityLabel="Global.Okay"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "disabled": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#42803E",
-          "borderRadius": 4,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/Okay"
-    >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
+            "paddingTop": 10,
           }
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
+        <View
+          accessibilityLabel="Global.Okay"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
           }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/Okay"
         >
-          Global.Okay
-        </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ]
+              }
+            >
+              Global.Okay
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
-  </View>
+  </RCTScrollView>
 </View>
 `;
 
@@ -489,144 +511,155 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       Hello Title
     </Text>
   </View>
-  <View
+  <RCTScrollView
     style={
       Object {
         "flexDirection": "column",
+        "flexGrow": 0,
         "marginLeft": 40,
         "paddingBottom": 5,
         "paddingHorizontal": 5,
       }
     }
   >
-    <View
-      accessibilityLabel="Global.ShowDetails"
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      hitSlop={
-        Object {
-          "bottom": 44,
-          "left": 44,
-          "right": 44,
-          "top": 44,
-        }
-      }
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "marginVertical": 14,
-          "opacity": 1,
-        }
-      }
-      testID="com.ariesbifold:id/ShowDetails"
-    >
+    <View>
       <View
-        style={
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
           Object {
-            "flexDirection": "row",
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
           }
         }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/ShowDetails"
       >
-        <Text
+        <View
           style={
             Object {
-              "color": "#FFFFFF",
-              "fontSize": 20,
-              "fontWeight": "normal",
+              "flexDirection": "row",
             }
           }
         >
-          Global.ShowDetails
-           
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
+          <Text
+            style={
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 30,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
+                "fontSize": 20,
                 "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
       </View>
-    </View>
-    <View
-      accessibilityLabel="Global.Okay"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "disabled": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#42803E",
-          "borderRadius": 4,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/Okay"
-    >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
+            "paddingTop": 10,
           }
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
+        <View
+          accessibilityLabel="Global.Okay"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
           }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/Okay"
         >
-          Global.Okay
-        </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ]
+              }
+            >
+              Global.Okay
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
-  </View>
+  </RCTScrollView>
 </View>
 `;
 
@@ -699,143 +732,154 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       Hello Title
     </Text>
   </View>
-  <View
+  <RCTScrollView
     style={
       Object {
         "flexDirection": "column",
+        "flexGrow": 0,
         "marginLeft": 40,
         "paddingBottom": 5,
         "paddingHorizontal": 5,
       }
     }
   >
-    <View
-      accessibilityLabel="Global.ShowDetails"
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      hitSlop={
-        Object {
-          "bottom": 44,
-          "left": 44,
-          "right": 44,
-          "top": 44,
-        }
-      }
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "marginVertical": 14,
-          "opacity": 1,
-        }
-      }
-      testID="com.ariesbifold:id/ShowDetails"
-    >
+    <View>
       <View
-        style={
+        accessibilityLabel="Global.ShowDetails"
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
           Object {
-            "flexDirection": "row",
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
           }
         }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginVertical": 14,
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/ShowDetails"
       >
-        <Text
+        <View
           style={
             Object {
-              "color": "#FFFFFF",
-              "fontSize": 20,
-              "fontWeight": "normal",
+              "flexDirection": "row",
             }
           }
         >
-          Global.ShowDetails
-           
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
+          <Text
+            style={
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 30,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
+                "fontSize": 20,
                 "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
+              }
+            }
+          >
+            Global.ShowDetails
+             
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
       </View>
-    </View>
-    <View
-      accessibilityLabel="Global.Okay"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "disabled": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      nativeID="animatedComponent"
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#42803E",
-          "borderRadius": 4,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/Okay"
-    >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
+            "paddingTop": 10,
           }
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
+        <View
+          accessibilityLabel="Global.Okay"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
           }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/Okay"
         >
-          Global.Okay
-        </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ]
+              }
+            >
+              Global.Okay
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
-  </View>
+  </RCTScrollView>
 </View>
 `;
