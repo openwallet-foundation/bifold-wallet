@@ -14,7 +14,6 @@ jobs:
     name: Alpha Release
     runs-on: ubuntu-latest
     timeout-minutes: 7
-    if: github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v2
         with:
