@@ -42,6 +42,8 @@ describe('ConnectionModal Component', () => {
   beforeEach(() => {
     // @ts-ignore-next-line
     useNotifications.mockReturnValue({ total: 0, notifications: [] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: "aries.vc.verify.once" } })
     jest.clearAllMocks()
     jest.clearAllTimers()
   })
