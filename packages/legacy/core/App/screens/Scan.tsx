@@ -8,10 +8,12 @@ import { Platform } from 'react-native'
 import { check, Permission, PERMISSIONS, request, RESULTS } from 'react-native-permissions'
 import Toast from 'react-native-toast-message'
 
+import NewQRView from '../components/misc/NewQRView'
 import QRScanner from '../components/misc/QRScanner'
 import CameraDisclosureModal from '../components/modals/CameraDisclosureModal'
 import LoadingModal from '../components/modals/LoadingModal'
 import { ToastType } from '../components/toast/BaseToast'
+import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
 import { PermissionContract } from '../types/permissions'
@@ -19,12 +21,17 @@ import { connectFromInvitation, getJson, getUrl, receiveMessageFromUrlRedirect }
 
 export type ScanProps = StackScreenProps<ConnectStackParams>
 
-const Scan: React.FC<ScanProps> = ({ navigation }) => {
+const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [store] = useStore()
   const [loading, setLoading] = useState<boolean>(true)
   const [showDisclosureModal, setShowDisclosureModal] = useState<boolean>(true)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
+  let defaultToConnect = false
+  if (route?.params && route.params['defaultToConnect']) {
+    defaultToConnect = route.params['defaultToConnect']
+  }
 
   const handleInvitation = async (value: string): Promise<void> => {
     try {
@@ -125,7 +132,18 @@ const Scan: React.FC<ScanProps> = ({ navigation }) => {
     return <CameraDisclosureModal requestCameraUse={requestCameraUse} />
   }
 
-  return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
+  if (store.preferences.useConnectionInviterCapability) {
+    return (
+      <NewQRView
+        defaultToConnect={defaultToConnect}
+        handleCodeScan={handleCodeScan}
+        error={qrCodeScanError}
+        enableCameraOnError={true}
+      />
+    )
+  } else {
+    return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
+  }
 }
 
 export default Scan
