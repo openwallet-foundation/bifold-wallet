@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Helper funciton Create connection invitation 1`] = `
+exports[`Helper function Create connection invitation 1`] = `
 Object {
   "invitation": Object {
     "toUrl": [MockFunction] {
