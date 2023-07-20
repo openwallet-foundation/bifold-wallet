@@ -56,7 +56,7 @@ describe('formatIfDate', () => {
   })
 })
 
-describe('Helper funciton', () => {
+describe('Helper function', () => {
   test('Create connection invitation', async () => {
     const { agent } = useAgent()
     const invitation = {
@@ -72,7 +72,7 @@ describe('Helper funciton', () => {
     expect(result).toMatchSnapshot()
   })
 
-  test('Create connection fails', async () => {
+  test('Create connection throws', async () => {
     const { agent } = useAgent()
 
     await expect(createConnectionInvitation(agent, 'aries.foo')).rejects.toThrow()
