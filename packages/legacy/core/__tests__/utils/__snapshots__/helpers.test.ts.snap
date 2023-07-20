@@ -1,5 +1,76 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Helper function Create connection invitation 1`] = `
+Object {
+  "invitation": Object {
+    "toUrl": [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "domain": "didcomm://invite",
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": Promise {
+            "_A": null,
+            "_x": 0,
+            "_y": 1,
+            "_z": "cat",
+          },
+        },
+      ],
+    },
+  },
+  "invitationUrl": Promise {
+    "_A": null,
+    "_x": 0,
+    "_y": 1,
+    "_z": "cat",
+  },
+  "record": Object {
+    "_tags": Object {
+      "recipientKeyFingerprints": Array [
+        "z6MkgopJypqUusEtLpSkn9NckpjGjpyoAk9aC6RpTETx3W7p",
+      ],
+    },
+    "autoAcceptConnection": true,
+    "createdAt": "2023-07-19T23:14:48.816Z",
+    "id": "8dcd8d3a-1332-4e7c-8f76-ad2014ea406d",
+    "mediatorId": "4d06602b-c297-4c86-99d9-938e864cac28",
+    "metadata": Object {},
+    "outOfBandInvitation": Object {
+      "toUrl": [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {
+              "domain": "didcomm://invite",
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": Promise {
+              "_A": null,
+              "_x": 0,
+              "_y": 1,
+              "_z": "cat",
+            },
+          },
+        ],
+      },
+    },
+    "reusable": false,
+    "role": "sender",
+    "state": "await-response",
+    "updatedAt": "2023-07-19T23:14:48.816Z",
+  },
+}
+`;
+
 exports[`credentialSortFn Sorts retrieved credentials by revocation 1`] = `
 Array [
   Object {

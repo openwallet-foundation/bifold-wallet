@@ -490,7 +490,9 @@ export const createConnectionInvitation = async (agent: Agent | undefined, goalC
   if (!record) {
     throw new Error('Could not create new invitation')
   }
+
   const invitationUrl = record.outOfBandInvitation.toUrl({ domain })
+
   return {
     record,
     invitation: record.outOfBandInvitation,

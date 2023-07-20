@@ -12,4 +12,11 @@ describe('AvatarView Component', () => {
 
     expect(tree).toMatchSnapshot()
   })
+
+  test('Renders correctly 2', async () => {
+    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
+    const tree = render(<AvatarView name={'Bacon'} />)
+
+    expect(tree).toMatchSnapshot()
+  })
 })
