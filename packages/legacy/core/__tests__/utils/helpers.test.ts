@@ -1,7 +1,6 @@
+import { useAgent } from '@aries-framework/react-hooks'
 import fs from 'fs'
 import path from 'path'
-import { Agent } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
 
 import { createConnectionInvitation, credentialSortFn, formatIfDate } from '../../App/utils/helpers'
 
@@ -9,8 +8,6 @@ const proofCredentialPath = path.join(__dirname, '../fixtures/proof-credential.j
 const credentials = JSON.parse(fs.readFileSync(proofCredentialPath, 'utf8'))
 const connectionInvitationPath = path.join(__dirname, '../fixtures/connection-invitation.json')
 const connectionInvitation = JSON.parse(fs.readFileSync(connectionInvitationPath, 'utf8'))
-const connectionInvitationAsUrlPath = path.join(__dirname, '../fixtures/connection-invitation-url.txt')
-const connectionInvitationAsUrl = fs.readFileSync(connectionInvitationAsUrlPath, 'utf8')
 
 describe('credentialSortFn', () => {
   test('Sorts retrieved credentials by revocation', async () => {
