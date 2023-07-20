@@ -38,7 +38,7 @@ const { width } = Dimensions.get('window')
  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
  | 2 |   |   |   |   |   |   |   |
  | 3 |   |   |   |   |   |   |   |
- | 4 |   |   |   |   |   |   |   |1
+ | 4 |   |   |   |   |   |   |   |
 
 The card width is the full screen width, and the card height is half of the screen width
 
