@@ -11,6 +11,12 @@ import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Text from '../texts/Text'
 
+export enum CallbackType {
+  CredentialOffer = 'CredentialOffer',
+  ProofRequest = 'ProofRequest',
+  PresentationSent = 'PresentationSent',
+}
+
 export interface ChatMessageProps {
   messageProps: React.ComponentProps<typeof Message>
 }
@@ -18,12 +24,13 @@ export interface ChatMessageProps {
 export interface ExtendedChatMessage extends IMessage {
   renderEvent: () => JSX.Element
   createdAt: Date
-  withDetails?: boolean
+  messageOpensCallbackType?: CallbackType
   onDetails?: () => void
 }
 
 const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) => {
   const { ChatTheme: theme } = useTheme()
+
   return (
     <Text style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
       {formatTime(message.createdAt)}
@@ -33,6 +40,7 @@ const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) =>
 
 const MessageIcon: React.FC = () => {
   const { ChatTheme: theme } = useTheme()
+
   return (
     <View style={{ ...theme.documentIconContainer }}>
       <Icon name={'file-document-outline'} size={32} color={theme.documentIcon.color} />
@@ -43,8 +51,33 @@ const MessageIcon: React.FC = () => {
 export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
   const { t } = useTranslation()
   const { ChatTheme: theme } = useTheme()
-
   const message = useMemo(() => messageProps.currentMessage as ExtendedChatMessage, [messageProps])
+
+  const textForCallbackType = (callbackType: CallbackType) => {
+    // Receiving a credential offer
+    if (callbackType === CallbackType.CredentialOffer) {
+      return t('Chat.ViewOffer')
+    }
+
+    // Receiving a proof request
+    if (callbackType === CallbackType.ProofRequest) {
+      return t('Chat.ViewRequest')
+    }
+
+    // After a presentation of a proof
+    if (callbackType === CallbackType.PresentationSent) {
+      return t('Chat.OpenPresentation')
+    }
+
+    return t('Chat.OpenItem')
+  }
+
+  const testIdForCallbackType = (callbackType: CallbackType) => {
+    const text = textForCallbackType(callbackType)
+    const textWithoutSpaces = text.replace(/\s+/g, '')
+
+    return testIdWithKey(textWithoutSpaces)
+  }
 
   return (
     <View
@@ -79,12 +112,12 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
             right: { ...theme.rightText },
           }}
           renderTime={() => <MessageTime message={message} />}
-          renderCustomView={() => (message.withDetails ? <MessageIcon /> : null)}
+          renderCustomView={() => (message.messageOpensCallbackType ? <MessageIcon /> : null)}
         />
-        {message.withDetails && (
+        {message.messageOpensCallbackType && (
           <TouchableOpacity
-            accessibilityLabel={t('Chat.OpenItem')}
-            testID={testIdWithKey('OpenItem')}
+            accessibilityLabel={textForCallbackType(message.messageOpensCallbackType)}
+            testID={testIdForCallbackType(message.messageOpensCallbackType)}
             onPress={() => {
               if (message.onDetails) message.onDetails()
             }}
@@ -93,7 +126,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
             }}
             hitSlop={hitSlop}
           >
-            <Text style={{ ...theme.openButtonTextStyle }}>{t('Chat.OpenItem')}</Text>
+            <Text style={{ ...theme.openButtonTextStyle }}>
+              {textForCallbackType(message.messageOpensCallbackType)}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
