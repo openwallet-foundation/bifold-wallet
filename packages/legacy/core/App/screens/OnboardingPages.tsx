@@ -140,28 +140,11 @@ export const createPageWith = (
   title: string,
   body: string,
   OnboardingTheme: any,
-  devModeListener?: boolean
+  devModeListener?: boolean,
+  onDevModeTouched?: () => void
 ) => {
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
-  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
-  const [, dispatch] = useStore()
-  const developerOptionCount = useRef(0)
-  const touchCountToEnableBiometrics = 9
-
-  const incrementDeveloperMenuCounter = () => {
-    if (developerOptionCount.current >= touchCountToEnableBiometrics) {
-      developerOptionCount.current = 0
-      dispatch({
-        type: DispatchAction.ENABLE_DEVELOPER_MODE,
-        payload: [true],
-      })
-      navigation.navigate(Screens.Developer)
-      return
-    }
-
-    developerOptionCount.current = developerOptionCount.current + 1
-  }
   const titleElement = (
     <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
       {title}
@@ -169,10 +152,10 @@ export const createPageWith = (
   )
   return (
     <ScrollView style={{ padding: 20 }}>
-      <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
+      <View style={{ alignItems: 'center' }}>{<image style={imageDisplayOptions}/>}</View>
       <View style={{ marginBottom: 20 }}>
         {devModeListener ? (
-          <TouchableWithoutFeedback testID={testIdWithKey('DeveloperModeTouch')} onPress={incrementDeveloperMenuCounter}>{titleElement}</TouchableWithoutFeedback>
+          <TouchableWithoutFeedback testID={testIdWithKey('DeveloperModeTouch')} onPress={onDevModeTouched}>{titleElement}</TouchableWithoutFeedback>
         ) : (
           titleElement
         )}
@@ -185,8 +168,31 @@ export const createPageWith = (
 }
 
 const OnboardingPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any): Array<Element> => {
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
+  const [, dispatch] = useStore()
+  const onDevModeEnabled = () => {
+    dispatch({
+      type: DispatchAction.ENABLE_DEVELOPER_MODE,
+      payload: [true],
+    })
+    navigation.getParent()?.navigate(Screens.Developer)
+  }
+  const developerOptionCount = useRef(0)
+  const touchCountToEnableBiometrics = 9
+
+  const incrementDeveloperMenuCounter = () => {
+    if (developerOptionCount.current >= touchCountToEnableBiometrics) {
+      developerOptionCount.current = 0
+      if (onDevModeEnabled) {
+        onDevModeEnabled()
+      }
+      return
+    }
+
+    developerOptionCount.current = developerOptionCount.current + 1
+  }
   return [
-    ...guides.map((g) => createPageWith(g.image, g.title, g.body, OnboardingTheme, g.devModeListener)),
+    ...guides.map((g) => createPageWith(g.image, g.title, g.body, OnboardingTheme, g.devModeListener, g.devModeListener ? incrementDeveloperMenuCounter : undefined)),
     customPages(onTutorialCompleted, OnboardingTheme),
   ]
 }
