@@ -1,0 +1,514 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatMessage Credential offer renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "justifyContent": "flex-end",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "alignSelf": "flex-end",
+        "flexDirection": "column",
+        "marginBottom": 16,
+        "marginLeft": 16,
+        "marginRight": 16,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+          },
+          Object {
+            "margin": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#f0f0f0",
+              "borderRadius": 15,
+              "justifyContent": "flex-end",
+              "marginRight": 60,
+              "minHeight": 20,
+            },
+            null,
+            null,
+            Object {
+              "backgroundColor": "#313132",
+              "borderRadius": 4,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "padding": 16,
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "backgroundColor": "#42803E",
+                  "borderRadius": 4,
+                  "marginBottom": 8,
+                  "padding": 4,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 32,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰧮
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "flex-start",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      accessibilityLabel="Chat.ViewOffer"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "borderRadius": 32,
+          "marginTop": 16,
+          "opacity": 1,
+          "paddingBottom": 8,
+          "paddingLeft": 16,
+          "paddingRight": 16,
+          "paddingTop": 8,
+        }
+      }
+      testID="com.ariesbifold:id/Chat.ViewOffer"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Chat.ViewOffer
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ChatMessage Proof request renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "justifyContent": "flex-end",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "alignSelf": "flex-end",
+        "flexDirection": "column",
+        "marginBottom": 16,
+        "marginLeft": 16,
+        "marginRight": 16,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+          },
+          Object {
+            "margin": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#f0f0f0",
+              "borderRadius": 15,
+              "justifyContent": "flex-end",
+              "marginRight": 60,
+              "minHeight": 20,
+            },
+            null,
+            null,
+            Object {
+              "backgroundColor": "#313132",
+              "borderRadius": 4,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "padding": 16,
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "backgroundColor": "#42803E",
+                  "borderRadius": 4,
+                  "marginBottom": 8,
+                  "padding": 4,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 32,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰧮
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "flex-start",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      accessibilityLabel="Chat.ViewRequest"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "borderRadius": 32,
+          "marginTop": 16,
+          "opacity": 1,
+          "paddingBottom": 8,
+          "paddingLeft": 16,
+          "paddingRight": 16,
+          "paddingTop": 8,
+        }
+      }
+      testID="com.ariesbifold:id/Chat.ViewRequest"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Chat.ViewRequest
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ChatMessage Sent presentation renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "justifyContent": "flex-end",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "alignSelf": "flex-end",
+        "flexDirection": "column",
+        "marginBottom": 16,
+        "marginLeft": 16,
+        "marginRight": 16,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+          },
+          Object {
+            "margin": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#f0f0f0",
+              "borderRadius": 15,
+              "justifyContent": "flex-end",
+              "marginRight": 60,
+              "minHeight": 20,
+            },
+            null,
+            null,
+            Object {
+              "backgroundColor": "#313132",
+              "borderRadius": 4,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "padding": 16,
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "backgroundColor": "#42803E",
+                  "borderRadius": 4,
+                  "marginBottom": 8,
+                  "padding": 4,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 32,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰧮
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "flex-start",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      accessibilityLabel="Chat.OpenPresentation"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "borderRadius": 32,
+          "marginTop": 16,
+          "opacity": 1,
+          "paddingBottom": 8,
+          "paddingLeft": 16,
+          "paddingRight": 16,
+          "paddingTop": 8,
+        }
+      }
+      testID="com.ariesbifold:id/Chat.OpenPresentation"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+            },
+            Object {
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Chat.OpenPresentation
+      </Text>
+    </View>
+  </View>
+</View>
+`;

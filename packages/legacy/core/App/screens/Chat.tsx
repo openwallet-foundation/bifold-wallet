@@ -18,7 +18,7 @@ import InfoIcon from '../components/buttons/InfoIcon'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
-import { ChatMessage, ExtendedChatMessage } from '../components/chat/ChatMessage'
+import { ChatMessage, ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -88,11 +88,36 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       }
     })
 
+    const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord) => {
+      if (
+        record instanceof CredentialExchangeRecord &&
+        (record.state === CredentialState.Done || record.state === CredentialState.OfferReceived)
+      ) {
+        return CallbackType.CredentialOffer
+      }
+
+      if (
+        (record instanceof ProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
+        record.state === ProofState.RequestReceived ||
+        (record.state === ProofState.Done && record.isVerified === undefined)
+      ) {
+        return CallbackType.ProofRequest
+      }
+
+      if (
+        record instanceof ProofExchangeRecord &&
+        (record.state === ProofState.PresentationSent || record.state === ProofState.Done)
+      ) {
+        return CallbackType.PresentationSent
+      }
+    }
+
     transformedMessages.push(
       ...credentials.map((record: CredentialExchangeRecord) => {
         const role = getCredentialEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getCredentialEventLabel(record) as any)
+
         return {
           _id: record.id,
           text: actionLabel,
@@ -100,7 +125,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          withDetails: record.state === CredentialState.Done || record.state === CredentialState.OfferReceived,
+          messageOpensCallbackType: callbackTypeForMessage(record),
           onDetails: () => {
             const navMap: { [key in CredentialState]?: () => void } = {
               [CredentialState.Done]: () => {
@@ -130,6 +155,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         const role = getProofEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getProofEventLabel(record) as any)
+
         return {
           _id: record.id,
           text: actionLabel,
@@ -137,11 +163,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          withDetails:
-            (isPresentationReceived(record) && record.isVerified !== undefined) ||
-            record.state === ProofState.RequestReceived ||
-            record.state === ProofState.PresentationSent ||
-            (record.state === ProofState.Done && record.isVerified === undefined),
+          messageOpensCallbackType: callbackTypeForMessage(record),
           onDetails: () => {
             const toProofDetails = () => {
               navigation.getParent()?.navigate(Stacks.ContactStack, {
