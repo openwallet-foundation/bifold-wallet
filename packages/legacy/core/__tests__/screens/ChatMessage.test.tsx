@@ -54,14 +54,13 @@ describe('ChatMessage', () => {
   test('Sent presentation renders correctly', () => {
     props.currentMessage.messageOpensCallbackType = CallbackType.PresentationSent
     // @ts-ignore
-    const tree = render(<ChatMessage messageProps={props} />)
+    const { getByTestId } = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.OpenPresentation'))
 
     fireEvent(button, 'press')
 
     expect(onDetailsMock).toHaveBeenCalledTimes(1)
     expect(button).not.toBeNull()
-    expect(button)
     expect(tree).toMatchSnapshot()
   })
 })
