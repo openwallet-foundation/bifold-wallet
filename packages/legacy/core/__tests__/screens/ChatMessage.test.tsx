@@ -61,7 +61,6 @@ describe('ChatMessage', () => {
 
     expect(onDetailsMock).toHaveBeenCalledTimes(1)
     expect(button).not.toBeNull()
-    expect(button)
     expect(tree).toMatchSnapshot()
   })
 })
