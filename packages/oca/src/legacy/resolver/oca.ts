@@ -9,6 +9,7 @@ import {
 } from '../../interfaces'
 import {
   BaseOverlay,
+  BaseOverlayType,
   BrandingOverlay,
   CaptureBase,
   CharacterEncodingOverlay,
@@ -23,29 +24,10 @@ import { parseCredDefFromId } from '../../utils/credential-definition'
 
 import { Field } from './record'
 
-export enum BaseType {
-  Binary = 'Binary',
-  Text = 'Text',
-  DateTime = 'DateTime',
-  Numeric = 'Numeric',
-  DateInt = 'DateInt',
-}
-
-export enum BaseOverlayType {
-  Base10 = 'spec/capture_base/1.0',
-  Meta10 = 'spec/overlays/meta/1.0',
-  Label10 = 'spec/overlays/label/1.0',
-  Format10 = 'spec/overlays/format/1.0',
-  CharacterEncoding10 = 'spec/overlays/character_encoding/1.0',
-}
-
 export enum BrandingOverlayType {
-  Branding01 = 'aries/overlays/branding/0.1',
-  Branding10 = 'aries/overlays/branding/1.0',
+  Branding01 = BaseOverlayType.Branding01,
+  Branding10 = BaseOverlayType.Branding10,
 }
-
-export const OverlayType = { ...BaseOverlayType, ...BrandingOverlayType }
-export type OverlayType = BaseOverlayType | BrandingOverlayType
 
 export interface CredentialOverlay<T> {
   bundle?: OCABundle
@@ -131,19 +113,19 @@ export class OCABundle implements OCABundleType {
   }
 
   public get characterEncodingOverlay(): CharacterEncodingOverlay | undefined {
-    return this.getOverlay<CharacterEncodingOverlay>(OverlayType.CharacterEncoding10)
+    return this.getOverlay<CharacterEncodingOverlay>(BaseOverlayType.CharacterEncoding10)
   }
 
   public get formatOverlay(): FormatOverlay | undefined {
-    return this.getOverlay<FormatOverlay>(OverlayType.Format10)
+    return this.getOverlay<FormatOverlay>(BaseOverlayType.Format10)
   }
 
   public get labelOverlay(): LabelOverlay | undefined {
-    return this.getOverlay<LabelOverlay>(OverlayType.Label10, this.options.language)
+    return this.getOverlay<LabelOverlay>(BaseOverlayType.Label10, this.options.language)
   }
 
   public get metaOverlay(): MetaOverlay | undefined {
-    return this.getOverlay<MetaOverlay>(OverlayType.Meta10, this.options.language)
+    return this.getOverlay<MetaOverlay>(BaseOverlayType.Meta10, this.options.language)
   }
 
   public get brandingOverlay(): BrandingOverlay | LegacyBrandingOverlay | undefined {
@@ -153,7 +135,7 @@ export class OCABundle implements OCABundleType {
   public buildOverlay(name: string, language: string): MetaOverlay {
     return new MetaOverlay({
       capture_base: '',
-      type: OverlayType.Meta10,
+      type: BaseOverlayType.Meta10,
       name,
       language,
       description: '',
@@ -166,7 +148,7 @@ export class OCABundle implements OCABundleType {
   }
 
   private getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined {
-    if (type === OverlayType.Base10) {
+    if (type === BaseOverlayType.CaptureBase10) {
       return this.bundle.captureBase as unknown as T
     }
     if (language !== undefined) {
@@ -221,7 +203,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
 
     const metaOverlay: IMetaOverlayData = {
       capture_base: '',
-      type: OverlayType.Meta10,
+      type: BaseOverlayType.Meta10,
       name: startCase(
         params.meta?.credName ??
           parseCredDefFromId(params.identifiers?.credentialDefinitionId, params.identifiers?.schemaId)
@@ -244,13 +226,13 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
 
     const brandingoOverlay01: ILegacyBrandingOverlayData = {
       capture_base: '',
-      type: OverlayType.Branding01,
+      type: BaseOverlayType.Branding01,
       background_color: generateColor(colorHash),
     }
 
     const brandingoOverlay10: IBrandingOverlayData = {
       capture_base: '',
-      type: OverlayType.Branding10,
+      type: BaseOverlayType.Branding10,
       primary_background_color: generateColor(colorHash),
     }
 
@@ -258,7 +240,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
       capture_base: {
         attributes: {},
         classification: '',
-        type: OverlayType.Base10,
+        type: BaseOverlayType.CaptureBase10,
         flagged_attributes: [],
       },
       overlays: [

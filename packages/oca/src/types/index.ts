@@ -1,4 +1,5 @@
 import OverlayTypeMap from './OverlayTypeMap'
+import { OverlayType, CaptureBaseAttributeType } from './TypeEnums'
 import BaseOverlay from './base/BaseOverlay'
 import BrandingOverlay from './branding/BrandingOverlay'
 import LegacyBrandingOverlay from './branding/LegacyBrandingOverlay'
@@ -12,6 +13,8 @@ import MetaOverlay from './semantic/MetaOverlay'
 import StandardOverlay from './semantic/StandardOverlay'
 
 export {
+  OverlayType as BaseOverlayType,
+  CaptureBaseAttributeType as BaseType,
   BaseOverlay,
   CaptureBase,
   OverlayBundle,
