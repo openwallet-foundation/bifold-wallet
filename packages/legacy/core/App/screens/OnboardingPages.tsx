@@ -152,10 +152,12 @@ export const createPageWith = (
   )
   return (
     <ScrollView style={{ padding: 20 }}>
-      <View style={{ alignItems: 'center' }}>{<PageImage style={imageDisplayOptions}/>}</View>
+      <View style={{ alignItems: 'center' }}>{<PageImage style={imageDisplayOptions} />}</View>
       <View style={{ marginBottom: 20 }}>
         {devModeListener ? (
-          <TouchableWithoutFeedback testID={testIdWithKey('DeveloperModeTouch')} onPress={onDevModeTouched}>{titleElement}</TouchableWithoutFeedback>
+          <TouchableWithoutFeedback testID={testIdWithKey('DeveloperModeTouch')} onPress={onDevModeTouched}>
+            {titleElement}
+          </TouchableWithoutFeedback>
         ) : (
           titleElement
         )}
@@ -192,7 +194,16 @@ const OnboardingPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any): 
     developerOptionCount.current = developerOptionCount.current + 1
   }
   return [
-    ...guides.map((g) => createPageWith(g.image, g.title, g.body, OnboardingTheme, g.devModeListener, g.devModeListener ? incrementDeveloperMenuCounter : undefined)),
+    ...guides.map((g) =>
+      createPageWith(
+        g.image,
+        g.title,
+        g.body,
+        OnboardingTheme,
+        g.devModeListener,
+        g.devModeListener ? incrementDeveloperMenuCounter : undefined
+      )
+    ),
     customPages(onTutorialCompleted, OnboardingTheme),
   ]
 }
