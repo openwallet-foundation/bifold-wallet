@@ -34,7 +34,7 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
               }
             }
           >
-            <image
+            <
               style={
                 Object {
                   "height": 180,
@@ -168,7 +168,7 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
                   }
                 }
               >
-                <image
+                <
                   style={
                     Object {
                       "height": 180,
