@@ -82,6 +82,11 @@ export type AuthenticateStackParams = {
   [Screens.NameWallet]: undefined
 }
 
+export type OnboardingStackParams = {
+  [Screens.Onboarding]: undefined
+  [Screens.Developer]: undefined
+}
+
 export type ContactStackParams = {
   [Screens.ConnectionInvitation]: undefined
   [Screens.Contacts]: undefined
