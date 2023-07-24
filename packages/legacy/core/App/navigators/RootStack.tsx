@@ -13,6 +13,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
+import Developer from '../screens/Developer'
 import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
@@ -20,6 +21,7 @@ import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -268,6 +270,11 @@ const RootStack: React.FC = () => {
             rightLeft: () => false,
           })}
           component={useBiometry}
+        />
+        <Stack.Screen
+          name={Screens.Developer}
+          component={Developer}
+          options={{ ...defaultStackOptions, title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
         />
       </Stack.Navigator>
     )
