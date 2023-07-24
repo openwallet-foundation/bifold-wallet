@@ -172,7 +172,12 @@ export const createPageWith = (
       <View style={{ alignItems: 'center' }}>{image(imageDisplayOptions)}</View>
       <View style={{ marginBottom: 20 }}>
         {devModeListener ? (
-          <TouchableWithoutFeedback testID={testIdWithKey('DeveloperModeTouch')} onPress={incrementDeveloperMenuCounter}>{titleElement}</TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            testID={testIdWithKey('DeveloperModeTouch')}
+            onPress={incrementDeveloperMenuCounter}
+          >
+            {titleElement}
+          </TouchableWithoutFeedback>
         ) : (
           titleElement
         )}
