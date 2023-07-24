@@ -54,7 +54,7 @@ describe('ChatMessage', () => {
   test('Sent presentation renders correctly', () => {
     props.currentMessage.messageOpensCallbackType = CallbackType.PresentationSent
     // @ts-ignore
-    const { getByTestId } = render(<ChatMessage messageProps={props} />)
+    const tree = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.OpenPresentation'))
 
     fireEvent(button, 'press')
