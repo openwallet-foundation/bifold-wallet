@@ -459,7 +459,6 @@ const translation = {
     "SendProofRequest": "Envie um pedido de prova",
     "ChooseProofRequest": "Escolha um pedido de prova",
     "ProofRequestUsageHistory": "Histórico de uso",
-    "ConnectionInvitation": "Convite de conexão",
     "CreateConnectionInvitation": "Criar um convite de conexão",
     "NameWallet": "Name your wallet (PT-BR)",
   },
