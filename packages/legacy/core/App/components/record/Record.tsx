@@ -1,4 +1,4 @@
-import { legacy } from '@hyperledger/aries-oca'
+import { Field } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -13,9 +13,9 @@ import RecordHeader from './RecordHeader'
 export interface RecordProps {
   header?: () => React.ReactElement | null
   footer?: () => React.ReactElement | null
-  fields: legacy.Field[]
+  fields: Field[]
   hideFieldValues?: boolean
-  field?: (field: legacy.Field, index: number, fields: legacy.Field[]) => React.ReactElement | null
+  field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
 }
 
 const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {

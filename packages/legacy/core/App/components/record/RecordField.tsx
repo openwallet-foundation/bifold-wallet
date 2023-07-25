@@ -1,4 +1,5 @@
-import { legacy } from '@hyperledger/aries-oca'
+import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
+import { Attribute, Field } from '@hyperledger/aries-oca/build/legacy'
 import startCase from 'lodash.startcase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,20 +14,20 @@ import RecordBinaryField from './RecordBinaryField'
 import RecordDateIntField from './RecordDateIntField'
 
 interface RecordFieldProps {
-  field: legacy.Field
+  field: Field
   hideFieldValue?: boolean
   hideBottomBorder?: boolean
   shown?: boolean
   onToggleViewPressed?: () => void
-  fieldLabel?: (field: legacy.Field) => React.ReactElement | null
-  fieldValue?: (field: legacy.Field) => React.ReactElement | null
+  fieldLabel?: (field: Field) => React.ReactElement | null
+  fieldValue?: (field: Field) => React.ReactElement | null
 }
 
 export const validEncoding = 'base64'
 export const validFormat = new RegExp('^image/(jpeg|png|jpg)')
 
 interface AttributeValueParams {
-  field: legacy.Attribute
+  field: Attribute
   shown?: boolean
   style?: Record<string, unknown>
 }
@@ -44,7 +45,7 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
   ) {
     return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
   }
-  if (field.type == legacy.BaseType.DateInt) {
+  if (field.type == CaptureBaseAttributeType.DateInt) {
     return <RecordDateIntField field={field} style={style} shown={shown} />
   }
   return (
@@ -106,7 +107,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
         ) : (
           <>
             <View style={styles.valueText}>
-              <AttributeValue field={field as legacy.Attribute} shown={shown} />
+              <AttributeValue field={field as Attribute} shown={shown} />
             </View>
             {hideFieldValue ? (
               <TouchableOpacity

@@ -1,5 +1,6 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { LegacyBrandingOverlay, legacy } from '@hyperledger/aries-oca'
+import { LegacyBrandingOverlay } from '@hyperledger/aries-oca'
+import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
@@ -72,7 +73,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()
-  const [overlay, setOverlay] = useState<legacy.CredentialOverlay<LegacyBrandingOverlay>>({})
+  const [overlay, setOverlay] = useState<CredentialOverlay<LegacyBrandingOverlay>>({})
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 

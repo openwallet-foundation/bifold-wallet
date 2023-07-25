@@ -1,5 +1,5 @@
 import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
-import { legacy } from '@hyperledger/aries-oca'
+import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { createContext, ReducerAction, useContext } from 'react'
 
 import { ProofRequestTemplate } from '../../verifier'
@@ -28,7 +28,7 @@ export interface ConfigurationContext {
   credentialListOptions: React.FC
   credentialEmptyList: React.FC<EmptyListProps>
   developer: React.FC
-  OCABundleResolver: legacy.OCABundleResolverType
+  OCABundleResolver: OCABundleResolverType
   scan: React.FC<ScanProps>
   useBiometry: React.FC
   record: React.FC<RecordProps>

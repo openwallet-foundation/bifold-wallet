@@ -2,7 +2,8 @@
 import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
 import { CredentialPreviewAttribute } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
-import { BrandingOverlay, legacy } from '@hyperledger/aries-oca'
+import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -50,7 +51,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
-  const [overlay, setOverlay] = useState<legacy.CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
+  const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
 

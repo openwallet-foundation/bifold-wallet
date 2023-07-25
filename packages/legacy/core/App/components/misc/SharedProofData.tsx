@@ -1,5 +1,6 @@
 import { useAgent } from '@aries-framework/react-hooks'
-import { BrandingOverlay, legacy } from '@hyperledger/aries-oca'
+import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { Attribute, CredentialOverlay, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
@@ -78,7 +79,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
     },
   })
 
-  const [overlay, setOverlay] = useState<legacy.CredentialOverlay<BrandingOverlay> | undefined>(undefined)
+  const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay> | undefined>(undefined)
 
   useEffect(() => {
     const attributes = buildFieldsFromSharedAnonCredsProof(sharedData.data)
@@ -91,16 +92,16 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
       attributes,
     }
     OCABundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay(bundle as legacy.CredentialOverlay<BrandingOverlay>)
+      setOverlay(bundle as CredentialOverlay<BrandingOverlay>)
     })
   }, [sharedData])
 
-  const CardField: React.FC<{ item: legacy.Field }> = ({ item }) => {
+  const CardField: React.FC<{ item: Field }> = ({ item }) => {
     return (
       <View key={item.name} style={styles.attributeContainer}>
         <Text style={styles.attributeName}>{item.label || item.name}</Text>
-        {item instanceof legacy.Attribute && <AttributeValue style={styles.attributeValue} field={item} shown={true} />}
-        {item instanceof legacy.Predicate && (
+        {item instanceof Attribute && <AttributeValue style={styles.attributeValue} field={item} shown={true} />}
+        {item instanceof Predicate && (
           <Text style={styles.attributeValue}>
             {item.pType} {item.pValue}
           </Text>
@@ -109,7 +110,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
     )
   }
 
-  const CardBody: React.FC<{ overlay: legacy.CredentialOverlay<BrandingOverlay> }> = ({ overlay }) => {
+  const CardBody: React.FC<{ overlay: CredentialOverlay<BrandingOverlay> }> = ({ overlay }) => {
     return (
       <View style={styles.cardAttributes}>
         {overlay.presentationFields?.map((item) => (
@@ -119,7 +120,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
     )
   }
 
-  const CardColor: React.FC<{ overlay: legacy.CredentialOverlay<BrandingOverlay> }> = ({ overlay }) => {
+  const CardColor: React.FC<{ overlay: CredentialOverlay<BrandingOverlay> }> = ({ overlay }) => {
     return (
       <View
         testID={testIdWithKey('CardColor')}
@@ -128,7 +129,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
     )
   }
 
-  const CardLogo: React.FC<{ overlay: legacy.CredentialOverlay<BrandingOverlay> }> = ({ overlay }) => {
+  const CardLogo: React.FC<{ overlay: CredentialOverlay<BrandingOverlay> }> = ({ overlay }) => {
     return (
       <View style={styles.logoContainer}>
         {overlay.brandingOverlay?.logo ? (

@@ -1,5 +1,7 @@
 import { useAgent } from '@aries-framework/react-hooks'
-import { MetaOverlay, legacy } from '@hyperledger/aries-oca'
+import { MetaOverlay } from '@hyperledger/aries-oca'
+import { Attribute, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { OverlayType } from '@hyperledger/aries-oca/build/types/TypeEnums'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,7 +32,7 @@ interface ProofRequestAttributesCardParams {
   onChangeValue: (schema: string, label: string, name: string, value: string) => void
 }
 
-const AttributeItem: React.FC<{ item: legacy.Attribute; style?: StyleProp<TextStyle> }> = ({ item, style }) => {
+const AttributeItem: React.FC<{ item: Attribute; style?: StyleProp<TextStyle> }> = ({ item, style }) => {
   const [value, setValue] = useState(item.value)
 
   useEffect(() => {
@@ -46,7 +48,7 @@ const AttributeItem: React.FC<{ item: legacy.Attribute; style?: StyleProp<TextSt
 }
 
 const PredicateItem: React.FC<{
-  item: legacy.Predicate
+  item: Predicate
   style?: StyleProp<TextStyle>
   onChangeValue: (name: string, value: string) => void
 }> = ({ item, style, onChangeValue }) => {
@@ -119,7 +121,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
   })
 
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
-  const [attributes, setAttributes] = useState<legacy.Field[] | undefined>(undefined)
+  const [attributes, setAttributes] = useState<Field[] | undefined>(undefined)
 
   useEffect(() => {
     OCABundleResolver.resolve({ identifiers: { schemaId: data.schema }, language: i18n.language }).then((bundle) => {
@@ -127,7 +129,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
         bundle?.metaOverlay ||
         new MetaOverlay({
           capture_base: '',
-          type: legacy.OverlayType.Meta10,
+          type: OverlayType.Meta10,
           name: parseSchemaFromId(data.schema).name,
           description: '',
           language: i18n.language,
@@ -163,12 +165,10 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
           return (
             <View style={{ flexDirection: 'row' }}>
               <Text style={style.attributeTitle}>{`\u2022`}</Text>
-              {item instanceof legacy.Attribute && (
-                <AttributeItem style={style.attributeTitle} item={item as legacy.Attribute} />
-              )}
-              {item instanceof legacy.Predicate && (
+              {item instanceof Attribute && <AttributeItem style={style.attributeTitle} item={item as Attribute} />}
+              {item instanceof Predicate && (
                 <PredicateItem
-                  item={item as legacy.Predicate}
+                  item={item as Predicate}
                   style={style.attributeTitle}
                   onChangeValue={(name, value) => {
                     onChangeValue(data.schema, item.label || name, name, value)
@@ -242,7 +242,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
         bundle?.metaOverlay ||
         new MetaOverlay({
           capture_base: '',
-          type: legacy.OverlayType.Meta10,
+          type: OverlayType.Meta10,
           name: template.name,
           description: template.description,
           language: i18n.language,

@@ -1,4 +1,5 @@
-import { IOverlayBundleData, legacy } from '@hyperledger/aries-oca'
+import { IOverlayBundleData } from '@hyperledger/aries-oca'
+import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 import defaultIndyLedgers from '../configs/ledgers/indy'
 import { defaultProofRequestTemplates } from '../verifier'
@@ -26,8 +27,8 @@ export const defaultConfiguration: ConfigurationContext = {
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: EmptyList,
-  OCABundleResolver: new legacy.DefaultOCABundleResolver(bundle as unknown as Record<string, IOverlayBundleData>, {
-    brandingOverlayType: legacy.BrandingOverlayType.Branding10,
+  OCABundleResolver: new DefaultOCABundleResolver(bundle as unknown as Record<string, IOverlayBundleData>, {
+    brandingOverlayType: BrandingOverlayType.Branding10,
   }),
   scan: Scan,
   useBiometry: UseBiometry,

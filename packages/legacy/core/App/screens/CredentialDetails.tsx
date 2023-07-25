@@ -2,7 +2,8 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
-import { BrandingOverlay, legacy } from '@hyperledger/aries-oca'
+import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
@@ -56,7 +57,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     (credential!.metadata.get(CredentialMetadata.customMetadata) as customMetadata)?.revoked_detail_dismissed ?? false
   )
 
-  const [overlay, setOverlay] = useState<legacy.CredentialOverlay<BrandingOverlay>>({
+  const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
     presentationFields: [],
     metaOverlay: undefined,
@@ -146,7 +147,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     OCABundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay({ ...overlay, ...(bundle as legacy.CredentialOverlay<BrandingOverlay>) })
+      setOverlay({ ...overlay, ...(bundle as CredentialOverlay<BrandingOverlay>) })
     })
   }, [credential])
 
@@ -297,7 +298,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   const header = () => {
-    return OCABundleResolver.getBrandingOverlayType() === legacy.BrandingOverlayType.Branding01 ? (
+    return OCABundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? (
       <View>
         {isRevoked && !isRevokedMessageHidden ? (
           <View style={{ padding: paddingVertical, paddingBottom: 0 }}>

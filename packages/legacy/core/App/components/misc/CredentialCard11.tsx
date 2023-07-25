@@ -1,5 +1,6 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { BrandingOverlay, legacy } from '@hyperledger/aries-oca'
+import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +22,7 @@ interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
-  displayItems?: (legacy.Attribute | legacy.Predicate)[]
+  displayItems?: (Attribute | Predicate)[]
   revoked?: boolean
   error?: boolean
   elevated?: boolean
@@ -87,7 +88,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     credential?.revocationNotification !== undefined && !!proof
   )
 
-  const [overlay, setOverlay] = useState<legacy.CredentialOverlay<BrandingOverlay>>({})
+  const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
 
   const primaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
@@ -296,11 +297,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  const parseAttribute = (item: (legacy.Attribute & legacy.Predicate) | undefined) => {
+  const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
     return { label: item?.label ?? item?.name ?? '', value: item?.value || `${item?.pType} ${item?.pValue}` }
   }
 
-  const renderCardAttribute = (item: legacy.Attribute & legacy.Predicate) => {
+  const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
     return (
       item && (
@@ -380,7 +381,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             scrollEnabled={false}
             initialNumToRender={cardData?.length}
             renderItem={({ item }) => {
-              return renderCardAttribute(item as legacy.Attribute & legacy.Predicate)
+              return renderCardAttribute(item as Attribute & Predicate)
             }}
           />
         </View>
@@ -471,7 +472,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             overlay.metaOverlay?.watermark ?? ''
           } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
           cardData.map((item) => {
-            const { label, value } = parseAttribute(item as (legacy.Attribute & legacy.Predicate) | undefined)
+            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
             if (label && value) {
               return ` ${label}, ${value}`
             }

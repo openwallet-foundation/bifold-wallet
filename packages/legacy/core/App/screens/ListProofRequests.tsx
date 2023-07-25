@@ -1,4 +1,4 @@
-import { MetaOverlay, legacy } from '@hyperledger/aries-oca'
+import { MetaOverlay, OverlayType } from '@hyperledger/aries-oca'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -69,7 +69,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
         bundle?.metaOverlay ||
         new MetaOverlay({
           capture_base: '',
-          type: legacy.OverlayType.Meta10,
+          type: OverlayType.Meta10,
           name: template.name,
           description: template.description,
           language: i18n.language,

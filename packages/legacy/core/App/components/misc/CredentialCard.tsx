@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
-import { legacy } from '@hyperledger/aries-oca'
+import { Attribute, BrandingOverlayType, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React from 'react'
 import { ViewStyle } from 'react-native'
 
@@ -18,7 +18,7 @@ interface CredentialCardProps {
   onPress?: GenericFn
   style?: ViewStyle
   proof?: boolean
-  displayItems?: (legacy.Attribute | legacy.Predicate)[]
+  displayItems?: (Attribute | Predicate)[]
   existsInWallet?: boolean
 }
 
@@ -36,7 +36,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   // add ability to reference credential by ID, allows us to get past react hook restrictions
   const { OCABundleResolver } = useConfiguration()
   const { ColorPallet } = useTheme()
-  const getCredOverlayType = (type: legacy.BrandingOverlayType) => {
+  const getCredOverlayType = (type: BrandingOverlayType) => {
     if (proof) {
       return (
         <CredentialCard11
@@ -54,7 +54,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
 
     if (credential) {
-      if (type === legacy.BrandingOverlayType.Branding01) {
+      if (type === BrandingOverlayType.Branding01) {
         return <CredentialCard10 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
       } else {
         return <CredentialCard11 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />

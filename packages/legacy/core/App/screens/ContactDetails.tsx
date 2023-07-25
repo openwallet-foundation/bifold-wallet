@@ -1,6 +1,6 @@
 import { CredentialState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useCredentialByState } from '@aries-framework/react-hooks'
-import { legacy } from '@hyperledger/aries-oca'
+import { Attribute } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useState } from 'react'
@@ -96,7 +96,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
               date: connection?.createdAt ? formatTime(connection.createdAt) : '',
             }),
           },
-        ] as legacy.Attribute[],
+        ] as Attribute[],
         footer: () => <RecordRemove onRemove={callOnRemove} />,
       })}
       <CommonRemoveModal
