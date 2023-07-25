@@ -9,7 +9,7 @@ import {
 } from '../../interfaces'
 import {
   BaseOverlay,
-  BaseOverlayType,
+  OverlayType,
   BrandingOverlay,
   CaptureBase,
   CharacterEncodingOverlay,
@@ -25,8 +25,8 @@ import { parseCredDefFromId } from '../../utils/credential-definition'
 import { Field } from './record'
 
 export enum BrandingOverlayType {
-  Branding01 = BaseOverlayType.Branding01,
-  Branding10 = BaseOverlayType.Branding10,
+  Branding01 = OverlayType.Branding01,
+  Branding10 = OverlayType.Branding10,
 }
 
 export interface CredentialOverlay<T> {
@@ -113,19 +113,19 @@ export class OCABundle implements OCABundleType {
   }
 
   public get characterEncodingOverlay(): CharacterEncodingOverlay | undefined {
-    return this.getOverlay<CharacterEncodingOverlay>(BaseOverlayType.CharacterEncoding10)
+    return this.getOverlay<CharacterEncodingOverlay>(OverlayType.CharacterEncoding10)
   }
 
   public get formatOverlay(): FormatOverlay | undefined {
-    return this.getOverlay<FormatOverlay>(BaseOverlayType.Format10)
+    return this.getOverlay<FormatOverlay>(OverlayType.Format10)
   }
 
   public get labelOverlay(): LabelOverlay | undefined {
-    return this.getOverlay<LabelOverlay>(BaseOverlayType.Label10, this.options.language)
+    return this.getOverlay<LabelOverlay>(OverlayType.Label10, this.options.language)
   }
 
   public get metaOverlay(): MetaOverlay | undefined {
-    return this.getOverlay<MetaOverlay>(BaseOverlayType.Meta10, this.options.language)
+    return this.getOverlay<MetaOverlay>(OverlayType.Meta10, this.options.language)
   }
 
   public get brandingOverlay(): BrandingOverlay | LegacyBrandingOverlay | undefined {
@@ -135,7 +135,7 @@ export class OCABundle implements OCABundleType {
   public buildOverlay(name: string, language: string): MetaOverlay {
     return new MetaOverlay({
       capture_base: '',
-      type: BaseOverlayType.Meta10,
+      type: OverlayType.Meta10,
       name,
       language,
       description: '',
@@ -148,7 +148,7 @@ export class OCABundle implements OCABundleType {
   }
 
   private getOverlay<T extends BaseOverlay>(type: string, language?: string): T | undefined {
-    if (type === BaseOverlayType.CaptureBase10) {
+    if (type === OverlayType.CaptureBase10) {
       return this.bundle.captureBase as unknown as T
     }
     if (language !== undefined) {
@@ -203,7 +203,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
 
     const metaOverlay: IMetaOverlayData = {
       capture_base: '',
-      type: BaseOverlayType.Meta10,
+      type: OverlayType.Meta10,
       name: startCase(
         params.meta?.credName ??
           parseCredDefFromId(params.identifiers?.credentialDefinitionId, params.identifiers?.schemaId)
@@ -226,13 +226,13 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
 
     const brandingoOverlay01: ILegacyBrandingOverlayData = {
       capture_base: '',
-      type: BaseOverlayType.Branding01,
+      type: OverlayType.Branding01,
       background_color: generateColor(colorHash),
     }
 
     const brandingoOverlay10: IBrandingOverlayData = {
       capture_base: '',
-      type: BaseOverlayType.Branding10,
+      type: OverlayType.Branding10,
       primary_background_color: generateColor(colorHash),
     }
 
@@ -240,7 +240,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
       capture_base: {
         attributes: {},
         classification: '',
-        type: BaseOverlayType.CaptureBase10,
+        type: OverlayType.CaptureBase10,
         flagged_attributes: [],
       },
       overlays: [
