@@ -13,8 +13,8 @@ import MetaOverlay from './semantic/MetaOverlay'
 import StandardOverlay from './semantic/StandardOverlay'
 
 export {
-  OverlayType as BaseOverlayType,
-  CaptureBaseAttributeType as BaseType,
+  OverlayType,
+  CaptureBaseAttributeType,
   BaseOverlay,
   CaptureBase,
   OverlayBundle,
