@@ -80,9 +80,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
         <View
           accessibilityLabel="ContactDetails.AContact"
           accessible={true}
-          collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -217,9 +215,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
         <View
           accessibilityLabel="ContactDetails.AContact"
           accessible={true}
-          collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

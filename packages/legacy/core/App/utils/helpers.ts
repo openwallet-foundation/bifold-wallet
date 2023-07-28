@@ -114,7 +114,7 @@ export function formatTime(
   const now = new Date()
   const sameYear = time.getFullYear() === now.getFullYear()
   const sameDay = time.getDate() === now.getDate() && time.getMonth() === now.getMonth() && sameYear
-  const isNonEnglish = i18n.resolvedLanguage !== 'en'
+  const isNonEnglish = i18n.resolvedLanguage === 'fr' || i18n.resolvedLanguage === 'pt-BR'
 
   // for the shortened approach eg. in chat bubbles
   if (chatFormat) {
