@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, View } from 'react-native'
 import { Bubble, IMessage, Message } from 'react-native-gifted-chat'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
@@ -33,17 +32,19 @@ const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) =>
 
   return (
     <Text style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
-      {formatTime(message.createdAt)}
+      {formatTime(message.createdAt, { includeHour: true, chatFormat: true, trim: true })}
     </Text>
   )
 }
 
-const MessageIcon: React.FC = () => {
-  const { ChatTheme: theme } = useTheme()
+const MessageIcon: React.FC<{ type: CallbackType }> = ({ type }) => {
+  const { ChatTheme: theme, Assets } = useTheme()
 
   return (
-    <View style={{ ...theme.documentIconContainer }}>
-      <Icon name={'file-document-outline'} size={32} color={theme.documentIcon.color} />
+    <View style={{ ...theme.documentIconContainer, marginBottom: 16 }}>
+      {type === CallbackType.CredentialOffer && <Assets.svg.iconCredentialOfferLight width={40} height={40} />}
+      {type === CallbackType.PresentationSent && <Assets.svg.iconInfoSentLight width={40} height={40} />}
+      {type === CallbackType.ProofRequest && <Assets.svg.iconProofRequestLight width={40} height={40} />}
     </View>
   )
 }
@@ -112,7 +113,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
             right: { ...theme.rightText },
           }}
           renderTime={() => <MessageTime message={message} />}
-          renderCustomView={() => (message.messageOpensCallbackType ? <MessageIcon /> : null)}
+          renderCustomView={() =>
+            message.messageOpensCallbackType ? <MessageIcon type={message.messageOpensCallbackType} /> : null
+          }
         />
         {message.messageOpensCallbackType && (
           <TouchableOpacity
