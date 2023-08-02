@@ -39,6 +39,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const [biometricsErr, setBiometricsErr] = useState(false)
   const navigation = useNavigation()
+  // 'You're logged out' popup modal
+  const [displayNotification, setDisplayNotification] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
@@ -275,6 +277,18 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     }
   }
 
+  // NOTE: Using local state here is to prevent modal issues caused by other modals being left open when the device sleeps.
+  // When two modals are attempted to be mounted at once it causes issues on iOS - in this case it causes the second modal
+  // to be invisible and prevent interaction with other elements on the screen. Using this approach ensures that the previous
+  // screen (and modal) is fully unmounted before this one is mounted. A similar approach would be to use a setTimeout.
+  useEffect(() => {
+    if (store.lockout.displayNotification) {
+      setDisplayNotification(true)
+    } else {
+      setDisplayNotification(false)
+    }
+  }, [store.lockout.displayNotification])
+
   return (
     <KeyboardView>
       <StatusBar barStyle={StatusBarStyles.Light} />
@@ -321,7 +335,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
             autoFocus={true}
           />
         </View>
-        {store.lockout.displayNotification && (
+        {displayNotification && (
           <PopupModal
             notificationType={InfoBoxType.Info}
             title={t('PINEnter.LoggedOut')}
