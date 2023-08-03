@@ -183,22 +183,20 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     }
   }
 
-  const headerImageForType = (usageType: ModalUsage) => {
+  const headerImageForType = (): Element => {
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        {usageType === ModalUsage.CredentialOfferDecline && (
-          <Assets.svg.proofRequestDeclined {...imageDisplayOptions} />
-        )}
-        {usageType === ModalUsage.ProofRequestDecline && <Assets.svg.credentialDeclined {...imageDisplayOptions} />}
-        {usageType === ModalUsage.CustomNotificationDecline && (
+        {usage === ModalUsage.CredentialOfferDecline && <Assets.svg.proofRequestDeclined {...imageDisplayOptions} />}
+        {usage === ModalUsage.ProofRequestDecline && <Assets.svg.credentialDeclined {...imageDisplayOptions} />}
+        {usage === ModalUsage.CustomNotificationDecline && (
           <Assets.svg.deleteNotification style={{ marginBottom: 15 }} {...imageDisplayOptions} />
         )}
       </View>
     )
   }
 
-  const contentForType = (type: ModalUsage) => {
-    switch (type) {
+  const contentForType = (): Element | null => {
+    switch (usage) {
       case ModalUsage.ContactRemove:
         return (
           <View style={[{ marginBottom: 25 }]}>
@@ -306,8 +304,8 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
         ]}
       >
         <ScrollView style={[styles.container]}>
-          {headerImageForType(usage)}
-          {contentForType(usage)}
+          {headerImageForType()}
+          {contentForType()}
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />
