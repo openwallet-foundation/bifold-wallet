@@ -1,4 +1,4 @@
-import { IndyPoolConfig } from '@aries-framework/core'
+import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
 import { createContext, ReducerAction, useContext } from 'react'
 
 import { ProofRequestTemplate } from '../../verifier'
@@ -33,7 +33,7 @@ export interface ConfigurationContext {
   useBiometry: React.FC
   record: React.FC<RecordProps>
   PINSecurity: PINSecurityParams
-  indyLedgers: IndyPoolConfig[]
+  indyLedgers: IndyVdrPoolConfig[]
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
@@ -41,6 +41,7 @@ export interface ConfigurationContext {
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: Array<ProofRequestTemplate>
   enableTours?: boolean
+  enableWalletNaming?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

@@ -23,6 +23,7 @@ type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.Proo
 interface VerifiedProofProps {
   record: ProofExchangeRecord
   isHistory?: boolean
+  senderReview?: boolean
   navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
 }
 
@@ -30,7 +31,12 @@ interface UnverifiedProofProps {
   record: ProofExchangeRecord
 }
 
-const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHistory }: VerifiedProofProps) => {
+const VerifiedProof: React.FC<VerifiedProofProps> = ({
+  record,
+  navigation,
+  isHistory,
+  senderReview,
+}: VerifiedProofProps) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -102,7 +108,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
-    if (metadata.proof_request_template_id) {
+    if (metadata?.proof_request_template_id) {
       navigation.navigate(Screens.ProofRequesting, { templateId: metadata.proof_request_template_id })
     } else {
       navigation.navigate(Screens.ProofRequests, {})
@@ -125,8 +131,17 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({ record, navigation, isHis
           {sharedProofDataItems.length > 0 && (
             <View style={styles.descriptionContainer}>
               <Text style={styles.descriptionText}>
-                <Text style={styles.label}>{connectionLabel}</Text>{' '}
-                {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
+                {senderReview ? (
+                  <>
+                    {t('ProofRequest.ReviewSentInformation', { count: sharedProofDataItems.length })}{' '}
+                    <Text style={styles.label}>{connectionLabel}</Text>
+                  </>
+                ) : (
+                  <>
+                    <Text style={styles.label}>{connectionLabel}</Text>{' '}
+                    {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
+                  </>
+                )}
               </Text>
             </View>
           )}
@@ -204,7 +219,6 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record }) => {
       fontSize: 18,
     },
   })
-
   return (
     <View testID={testIdWithKey('UnverifiedProofView')}>
       <View style={styles.header}>
@@ -227,13 +241,15 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     throw new Error('ProofRequesting route prams were not set properly')
   }
 
-  const { recordId, isHistory } = route?.params
-  const record: ProofExchangeRecord = useProofById(recordId)
+  const { recordId, isHistory, senderReview } = route?.params
+  const record = useProofById(recordId)
   const { agent } = useAgent()
 
   useEffect(() => {
-    if (agent) markProofAsViewed(agent, record)
-  }, [])
+    if (agent && record && !record.metadata?.data?.customMetadata?.details_seen) {
+      markProofAsViewed(agent, record)
+    }
+  }, [record])
 
   useFocusEffect(
     useCallback(() => {
@@ -252,10 +268,14 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     }, [])
   )
 
+  if (!record) return null
+
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      {record.isVerified && <VerifiedProof record={record} isHistory={isHistory} navigation={navigation} />}
-      {!record.isVerified && <UnverifiedProof record={record} />}
+      {(record.isVerified || senderReview) && (
+        <VerifiedProof record={record} isHistory={isHistory} navigation={navigation} senderReview={senderReview} />
+      )}
+      {!(record.isVerified || senderReview) && <UnverifiedProof record={record} />}
     </SafeAreaView>
   )
 }

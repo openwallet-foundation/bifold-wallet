@@ -212,6 +212,7 @@ const translation = {
     "TypeHere": "Type Message Here (PT-BR)",
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (PT-BR)",
     "WhatAreContacts": "What are Contacts? (PT-BR)",
+    "AddContact": "Add Contact (PT-BR)",
   },
   "ContactDetails": {
     "Created": "Criado",
@@ -291,6 +292,9 @@ const translation = {
     "ConnectionAccepted": "Conexão Aceita",
     "ConnectionNotFound": "Conexão Não Encontrada",
     "InvalidQrCode": "QR code inválido. Favor tentar novamente.",
+    "WillScanAutomatically": "A valid QR code will scan automatically. (PT-BR)",
+    "ScanQRCode": "Scan QR code (PT-BR)",
+    "MyQRCode": "My QR code (PT-BR)",
     "UnableToHandleRedirection": "Não foi possível tratar redirecionamento",
     "Close": "Fechar",
     "Torch": "Flash"
@@ -301,6 +305,7 @@ const translation = {
     "ConnectionInvitation": "Convite de conexão",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a connection will be created. (PB)",
+    "ShareQR": "Sharing this QR code with someone will add them as a Contact. (PT-BR)",
     "MakingConnection": "Fazendo conexão...",
     "ConnectionCompleted": "Conexão concluída!",
     "Toggle": "Alternar capacidade de convite de conexão",
@@ -343,6 +348,8 @@ const translation = {
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Decline credential offer? (PB-BR)",
     "Declined": "Recusado",
+    "ReviewSentInformation_one": "(PB) You shared the following information from {{count}} credential with",
+    "ReviewSentInformation_other": "(PB) You shared the following information from {{count}} credentials with",
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service. (PB-BR)",
@@ -395,6 +402,7 @@ const translation = {
     "Language": "Idioma",
     "AppGuides": "App guides (PT-BR)",
     "WhatAreContacts": "O que são Contatos?",
+    "ScanMyQR": "Scan my QR code (PT-BR)",
     "Developer": "Developer options"
   },
   "TabStack": {
@@ -419,7 +427,8 @@ const translation = {
     "Show": "Mostrar",
     "HideAll": "Esconder todos",
     "ShowAll": "Mostrar tudos",
-    "Hidden": "Escondido"
+    "Hidden": "Escondido",
+    "Zoom": "Zoom (PT-BR)",
   },
   "Screens": {
     "Splash": "Splash",
@@ -452,10 +461,19 @@ const translation = {
     "ProofRequestUsageHistory": "Histórico de uso",
     "ConnectionInvitation": "Convite de conexão",
     "CreateConnectionInvitation": "Criar um convite de conexão",
+    "NameWallet": "Name your wallet (PT-BR)",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
     "BackToHome": "Voltar para a home"
+  },
+  "NameWallet": {
+    "NameYourWallet": "Name your wallet (PT-BR)",
+    "ThisIsTheName": "This is the name people see when connecting with you. (PT-BR)",
+    "CharCountTitle": "Character count exceeded (PT-BR)",
+    "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count. (PT-BR)",
+    "EmptyNameTitle": "Wallet name can't be empty (PT-BR)",
+    "EmptyNameDescription": "This is the name people see when connecting with you.\n\nPlease enter a wallet name. (PT-BR)",
   },
   "NetInfo": {
     "NoInternetConnectionTitle": "Sem conexão com a internet",
@@ -467,6 +485,9 @@ const translation = {
     "SkipA11y": "Skip introduction to Aries Bifold (PT-BR)",
   },
   "Chat": {
+    "OpenPresentation": "Open Presentation (PT-BR)",
+    "ViewRequest": "View Request (PT-BR)",
+    "ViewOffer": "View Offer (PT-BR)",
     "OpenItem": "Abrir",
     "UserYou": "Você",
     "CredentialProposalSent": "enviou uma proposta de credencial",
@@ -483,7 +504,9 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
+    "UseDevVerifierTemplates": "Use development verifier templates? (PB)",
     "Toggle": "Alternar capacidade do verificador",
+    "ToggleDevTemplates": "Toggle Verifier Development Templates (PB)",
     "ProcessingProof": "Um momento...",
     "ZeroKnowledgeProof": "Prova de conhecimento Zero",
     "Parameterizable": "Parametrizável",

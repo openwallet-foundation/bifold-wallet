@@ -20,7 +20,6 @@ export const useNotifications = (): Notifications => {
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived]).filter(
     (proof: ProofExchangeRecord) => {
       if (proof.isVerified === undefined) return false
-
       const metadata = proof.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       return !metadata?.details_seen
     }

@@ -1,0 +1,423 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewQRView Component Renders correctly on first tab 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#313132",
+      "flex": 1,
+      "justifyContent": "space-between",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <ActivityIndicator
+      size="small"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "borderTopColor": "#000000",
+        "borderTopWidth": 4,
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="Scan.ScanQRCode"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 10,
+        }
+      }
+      testID="com.ariesbifold:id/Scan.ScanQRCode"
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "color": "#42803E",
+            },
+          ]
+        }
+      >
+        Scan.ScanQRCode
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Scan.MyQRCode"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 10,
+        }
+      }
+      testID="com.ariesbifold:id/Scan.MyQRCode"
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            false,
+          ]
+        }
+      >
+        Scan.MyQRCode
+      </Text>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;
+
+exports[`NewQRView Component Renders correctly on second tab 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#313132",
+      "flex": 1,
+      "justifyContent": "space-between",
+    }
+  }
+>
+  <RCTScrollView>
+    <View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+              }
+            }
+            testID="com.ariesbifold:id/LoadingActivityIndicator"
+          >
+            <Image
+              source={
+                Object {
+                  "default": "",
+                }
+              }
+              style={
+                Object {
+                  "height": "33%",
+                  "width": "33%",
+                }
+              }
+              testID="com.ariesbifold:id/LoadingActivityIndicatorImage"
+            />
+            <View
+              collapsable={false}
+              nativeID="animatedComponent"
+              style={
+                Object {
+                  "position": "absolute",
+                  "transform": Array [
+                    Object {
+                      "rotate": "0deg",
+                    },
+                  ],
+                }
+              }
+            >
+              <
+                fill="#FFFFFF"
+                height={200}
+                width={200}
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "paddingHorizontal": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 32,
+                "fontWeight": "bold",
+                "marginBottom": 20,
+                "textAlign": "center",
+              }
+            }
+          >
+            My Wallet - 1234
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+                "textAlign": "center",
+              }
+            }
+          >
+            Connection.ShareQR
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    style={
+      Object {
+        "borderTopColor": "#000000",
+        "borderTopWidth": 4,
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="Scan.ScanQRCode"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 10,
+        }
+      }
+      testID="com.ariesbifold:id/Scan.ScanQRCode"
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            false,
+          ]
+        }
+      >
+        Scan.ScanQRCode
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Scan.MyQRCode"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 10,
+        }
+      }
+      testID="com.ariesbifold:id/Scan.MyQRCode"
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "color": "#42803E",
+            },
+          ]
+        }
+      >
+        Scan.MyQRCode
+      </Text>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;

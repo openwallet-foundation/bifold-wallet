@@ -1,6 +1,5 @@
-import { getProofIdentifiers, groupSharedProofDataByCredential, parseIndyProof } from '../../utils/proof'
-import { IndyProof } from 'indy-sdk-react-native'
-
+import { getProofIdentifiers, groupSharedProofDataByCredential, parseAnonCredsProof } from '../../utils/proof'
+import { AnonCredsProof } from '@aries-framework/anoncreds'
 const proof_request = {
   name: 'proof-request',
   version: '1.0',
@@ -25,7 +24,7 @@ const proof_request = {
   },
 }
 
-const proof: IndyProof = {
+const proof: AnonCredsProof = {
   proof: {
     proofs: [],
     aggregated_proof: {
@@ -83,12 +82,12 @@ const proof: IndyProof = {
 
 describe('Helpers', () => {
   test('Parse indy proof', async () => {
-    const proofRequest = parseIndyProof(proof_request, proof)
+    const proofRequest = parseAnonCredsProof(proof_request, proof)
     expect(proofRequest).toMatchSnapshot()
   })
 
   test('Group shared proof data by credential', async () => {
-    const data = parseIndyProof(proof_request, proof)
+    const data = parseAnonCredsProof(proof_request, proof)
     const groupedData = groupSharedProofDataByCredential(data)
     expect(groupedData).toMatchSnapshot()
   })

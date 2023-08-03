@@ -3,6 +3,7 @@ import {
   CredentialExchangeRecord,
   CredentialState,
   ProofExchangeRecord,
+  ProofState,
 } from '@aries-framework/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -10,13 +11,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { isPresentationReceived } from '../../verifier'
 import InfoIcon from '../components/buttons/InfoIcon'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
-import { ChatMessage, ExtendedChatMessage } from '../components/chat/ChatMessage'
+import { ChatMessage, ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -86,11 +88,36 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       }
     })
 
+    const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord) => {
+      if (
+        record instanceof CredentialExchangeRecord &&
+        (record.state === CredentialState.Done || record.state === CredentialState.OfferReceived)
+      ) {
+        return CallbackType.CredentialOffer
+      }
+
+      if (
+        (record instanceof ProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
+        record.state === ProofState.RequestReceived ||
+        (record.state === ProofState.Done && record.isVerified === undefined)
+      ) {
+        return CallbackType.ProofRequest
+      }
+
+      if (
+        record instanceof ProofExchangeRecord &&
+        (record.state === ProofState.PresentationSent || record.state === ProofState.Done)
+      ) {
+        return CallbackType.PresentationSent
+      }
+    }
+
     transformedMessages.push(
       ...credentials.map((record: CredentialExchangeRecord) => {
         const role = getCredentialEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getCredentialEventLabel(record) as any)
+
         return {
           _id: record.id,
           text: actionLabel,
@@ -98,12 +125,26 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          withDetails: record.state === CredentialState.Done,
+          messageOpensCallbackType: callbackTypeForMessage(record),
           onDetails: () => {
-            navigation.getParent()?.navigate(Stacks.ContactStack, {
-              screen: Screens.CredentialDetails,
-              params: { credential: record },
-            })
+            const navMap: { [key in CredentialState]?: () => void } = {
+              [CredentialState.Done]: () => {
+                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                  screen: Screens.CredentialDetails,
+                  params: { credential: record },
+                })
+              },
+              [CredentialState.OfferReceived]: () => {
+                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                  screen: Screens.CredentialOffer,
+                  params: { credentialId: record.id },
+                })
+              },
+            }
+            const nav = navMap[record.state]
+            if (nav) {
+              nav()
+            }
           },
         }
       })
@@ -122,12 +163,35 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          withDetails: isPresentationReceived(record) && record.isVerified !== undefined,
+          messageOpensCallbackType: callbackTypeForMessage(record),
           onDetails: () => {
-            navigation.getParent()?.navigate(Stacks.ContactStack, {
-              screen: Screens.ProofDetails,
-              params: { recordId: record.id, isHistory: true },
-            })
+            const toProofDetails = () => {
+              navigation.getParent()?.navigate(Stacks.ContactStack, {
+                screen: Screens.ProofDetails,
+                params: {
+                  recordId: record.id,
+                  isHistory: true,
+                  senderReview:
+                    record.state === ProofState.PresentationSent ||
+                    (record.state === ProofState.Done && record.isVerified === undefined),
+                },
+              })
+            }
+            const navMap: { [key in ProofState]?: () => void } = {
+              [ProofState.Done]: toProofDetails,
+              [ProofState.PresentationSent]: toProofDetails,
+              [ProofState.PresentationReceived]: toProofDetails,
+              [ProofState.RequestReceived]: () => {
+                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                  screen: Screens.ProofRequest,
+                  params: { proofId: record.id },
+                })
+              },
+            }
+            const nav = navMap[record.state]
+            if (nav) {
+              nav()
+            }
           },
         }
       })
@@ -163,21 +227,23 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   }, [t, store.preferences.useVerifierCapability, onSendRequest])
 
   return (
-    <GiftedChat
-      messages={messages}
-      showAvatarForEveryMessage={true}
-      renderAvatar={() => null}
-      renderMessage={(props) => <ChatMessage messageProps={props} />}
-      renderInputToolbar={(props) => renderInputToolbar(props, theme)}
-      renderSend={(props) => renderSend(props, theme)}
-      renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
-      disableComposer={!silentAssertConnectedNetwork()}
-      onSend={onSend}
-      user={{
-        _id: Role.me,
-      }}
-      renderActions={(props) => renderActions(props, theme, actions)}
-    />
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1 }}>
+      <GiftedChat
+        messages={messages}
+        showAvatarForEveryMessage={true}
+        renderAvatar={() => null}
+        renderMessage={(props) => <ChatMessage messageProps={props} />}
+        renderInputToolbar={(props) => renderInputToolbar(props, theme)}
+        renderSend={(props) => renderSend(props, theme)}
+        renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
+        disableComposer={!silentAssertConnectedNetwork()}
+        onSend={onSend}
+        user={{
+          _id: Role.me,
+        }}
+        renderActions={(props) => renderActions(props, theme, actions)}
+      />
+    </SafeAreaView>
   )
 }
 

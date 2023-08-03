@@ -1,6 +1,5 @@
-import type { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
-
-import { V1RequestPresentationMessage } from '@aries-framework/core'
+import { V1RequestPresentationMessage } from '@aries-framework/anoncreds'
+import { CredentialExchangeRecord, ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -9,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle, Text, TextStyle, DeviceEventEmitter, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { markProofAsViewed } from '../../../verifier'
 import { EventTypes, hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
@@ -125,11 +125,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
+  const isReceivedProof = notificationType === NotificationType.ProofRequest && notification.state === ProofState.Done
+
   const declineProofRequest = async () => {
     try {
       const proofId = (notification as ProofExchangeRecord).id
       if (agent) {
-        await agent.proofs.declineRequest(proofId)
+        await agent.proofs.declineRequest({ proofRecordId: proofId })
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
@@ -137,6 +139,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
     }
 
     toggleDeclineModalVisible()
+  }
+
+  const dismissProofRequest = async () => {
+    if (agent && notificationType === NotificationType.ProofRequest) {
+      markProofAsViewed(agent, notification as ProofExchangeRecord)
+    }
   }
 
   const declineCredentialOffer = async () => {
@@ -164,7 +172,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
     if (notificationType === NotificationType.ProofRequest) {
       usage = ModalUsage.ProofRequestDecline
-      onSubmit = declineProofRequest
+      if (notification.state === ProofState.Done) {
+        onSubmit = dismissProofRequest
+      } else {
+        onSubmit = declineProofRequest
+      }
     } else if (notificationType === NotificationType.CredentialOffer) {
       usage = ModalUsage.CredentialOfferDecline
       onSubmit = declineCredentialOffer
@@ -252,10 +264,20 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         onClose = toggleDeclineModalVisible
         break
       case NotificationType.ProofRequest:
-        onPress = () => {
-          navigation
-            .getParent()
-            ?.navigate(Stacks.NotificationStack, { screen: Screens.ProofRequest, params: { proofId: notification.id } })
+        if (isReceivedProof) {
+          onPress = () => {
+            navigation.getParent()?.navigate(Stacks.ContactStack, {
+              screen: Screens.ProofDetails,
+              params: { recordId: notification.id, isHistory: true },
+            })
+          }
+        } else {
+          onPress = () => {
+            navigation.getParent()?.navigate(Stacks.NotificationStack, {
+              screen: Screens.ProofRequest,
+              params: { proofId: (notification as ProofExchangeRecord).id },
+            })
+          }
         }
         onClose = toggleDeclineModalVisible
         break
@@ -288,9 +310,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   setActionForNotificationType(notificationType)
 
   useEffect(() => {
-    detailsForNotificationType(notificationType).then((details) => {
+    const detailsPromise = async () => {
+      const details = await detailsForNotificationType(notificationType)
       setDetails(details)
-    })
+    }
+    detailsPromise()
   }, [notificationType])
 
   useEffect(() => {
@@ -382,7 +406,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         <Button
           title={details.buttonTitle ?? t('Global.View')}
           accessibilityLabel={details.buttonTitle ?? t('Global.View')}
-          testID={testIdWithKey(`View${notificationType}`)}
+          testID={testIdWithKey(`View${notificationType}${isReceivedProof ? 'Received' : ''}`)}
           buttonType={ButtonType.Primary}
           onPress={onPress}
         />

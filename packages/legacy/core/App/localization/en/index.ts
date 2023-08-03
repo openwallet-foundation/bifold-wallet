@@ -229,6 +229,7 @@ const translation = {
     "TypeHere": "Type Message Here",
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here.",
     "WhatAreContacts": "What are Contacts?",
+    "AddContact": "Add Contact",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -311,6 +312,9 @@ const translation = {
     "ConnectionAccepted": "Connection Accepted",
     "ConnectionNotFound": "Connection not found",
     "InvalidQrCode": "Invalid QR code. Please try again.",
+    "WillScanAutomatically": "A valid QR code will scan automatically.",
+    "ScanQRCode": "Scan QR code",
+    "MyQRCode": "My QR code",
     "UnableToHandleRedirection": "Unable to handle redirection",
     "Close": "Close",
     "Torch": "Flash"
@@ -321,6 +325,7 @@ const translation = {
     "ConnectionInvitation": "Connection Invitation",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a connection will be created.",
+    "ShareQR": "Sharing this QR code with someone will add them as a Contact.",
     "MakingConnection": "Making connection...",
     "ConnectionCompleted": "Connection completed!",
     "Toggle": "Toggle Connection Inviter Capability",
@@ -404,11 +409,13 @@ const translation = {
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline proof request?",
     "Declined": "Declined",
+    "ReviewSentInformation_one": "You shared the following information from {{count}} credential with",
+    "ReviewSentInformation_other": "You shared the following information from {{count}} credentials with",
     "ShareFollowingInformation_one": "is sharing the following information from {{count}} credential.",
     "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials.",
     "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access.",
     "DeclineBulletPoint2": "In order to receive the proof request again, you will need to restart the process with the service.",
-    "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",  
+    "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",
   },
   "Settings": {
     "Version": "Version",
@@ -419,6 +426,7 @@ const translation = {
     "AppGuides": "App guides",
     "Build": "Build",
     "WhatAreContacts": "What are Contacts?",
+    "ScanMyQR": "Scan my QR code",
     "Help": "Help",
     "MoreInformation": "More information",
     "Developer": "Developer options"
@@ -446,7 +454,8 @@ const translation = {
     "HideAll": "Hide all",
     "ShowAll": "Show all",
     "Hidden": "Hidden",
-    "InvalidDate": "Invalid Date: "
+    "InvalidDate": "Invalid Date: ",
+    "Zoom": "Zoom",
   },
   "Screens": {
     "Splash": "Splash",
@@ -481,16 +490,25 @@ const translation = {
     "ConnectionInvitation": "Connection Invitation",
     "CreateConnectionInvitation": "Create a connection invitation",
     "AttemptLockout": "Temporarily Locked",
-    "OnTheWay":'On The Way',
+    "OnTheWay": 'On The Way',
     "Declined": 'Declined',
     "UseBiometry": 'Use Biometry',
     "RecreatePIN": 'Change PIN',
     "CustomNotification": 'Custom Notification',
     "ProofRequesting": 'Proof Requesting',
+    "NameWallet": "Name your wallet",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
     "BackToHome": "Go back to home"
+  },
+  "NameWallet": {
+    "NameYourWallet": "Name your wallet",
+    "ThisIsTheName": "This is the name people see when connecting with you.",
+    "CharCountTitle": "Character count exceeded",
+    "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count.",
+    "EmptyNameTitle": "Wallet name can't be empty",
+    "EmptyNameDescription": "This is the name people see when connecting with you.\n\nPlease enter a wallet name.",
   },
   "NetInfo": {
     "NoInternetConnectionTitle": "No internet connection",
@@ -502,6 +520,9 @@ const translation = {
     "SkipA11y": "Skip introduction to Aries Bifold",
   },
   "Chat": {
+    "OpenPresentation": "Open Presentation",
+    "ViewRequest": "View Request",
+    "ViewOffer": "View Offer",
     "OpenItem": "Open",
     "UserYou": "You",
     "CredentialProposalSent": "sent a credential proposal",
@@ -518,7 +539,9 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
+    "UseDevVerifierTemplates": "Use development verifier templates?",
     "Toggle": "Toggle Verifier Capability",
+    "ToggleDevTemplates": "Toggle Verifier Development Templates",
     "ProcessingProof": "Just a moment...",
     "ZeroKnowledgeProof": "Zero-knowledge proof",
     "Parameterizable": "Parameterizable",

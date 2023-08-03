@@ -123,7 +123,6 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     },
     declineBodyText: {
       ...TextTheme.modalNormal,
-      fontSize: 24,
       marginTop: 25,
     },
   })

@@ -1,6 +1,7 @@
 import React, { createContext, Dispatch, useContext, useReducer } from 'react'
 
 import { State } from '../types/state'
+import { generateRandomWalletName } from '../utils/helpers'
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
 
@@ -17,9 +18,15 @@ export const defaultState: State = {
     didCompleteTutorial: false,
     didCreatePIN: false,
     didConsiderBiometry: false,
+    didNameWallet: false,
   },
   authentication: {
     didAuthenticate: false,
+  },
+  // NOTE: from AFJ 0.4.0 on we use Aries Askar. New wallets will be created with Askar from the start
+  // which we will know when we create the pin while using askar as a dependency.
+  migration: {
+    didMigrateToAskar: false,
   },
   loginAttempt: {
     loginAttempts: 0,
@@ -34,6 +41,8 @@ export const defaultState: State = {
     useBiometry: false,
     useVerifierCapability: false,
     useConnectionInviterCapability: false,
+    useDevVerifierTemplates: false,
+    walletName: generateRandomWalletName(),
   },
   tours: {
     seenToursPrompt: false,

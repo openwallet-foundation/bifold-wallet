@@ -8,14 +8,22 @@ import {
   Authentication as AuthenticationState,
   Lockout as LockoutState,
   LoginAttempt as LoginAttemptState,
+  Migration as MigrationState,
   State,
 } from '../../types/state'
+import { generateRandomWalletName } from '../../utils/helpers'
 
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_NAME_WALLET = 'onboarding/didNameWallet',
+}
+
+enum MigrationDispatchAction {
+  DID_MIGRATE_TO_ASKAR = 'migration/didMigrateToAskar',
+  MIGRATION_UPDATED = 'migration/migrationStateLoaded',
 }
 
 enum LockoutDispatchAction {
@@ -32,6 +40,8 @@ enum PreferencesDispatchAction {
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
+  USE_DEV_VERIFIER_TEMPLATES = 'preferences/useDevVerifierTemplates',
+  UPDATE_WALLET_NAME = 'preferences/updateWalletName',
 }
 
 enum ToursDispatchAction {
@@ -57,6 +67,7 @@ export type DispatchAction =
   | ToursDispatchAction
   | AuthenticationDispatchAction
   | DeepLinkDispatchAction
+  | MigrationDispatchAction
 
 export const DispatchAction = {
   ...OnboardingDispatchAction,
@@ -66,6 +77,7 @@ export const DispatchAction = {
   ...ToursDispatchAction,
   ...AuthenticationDispatchAction,
   ...DeepLinkDispatchAction,
+  ...MigrationDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -137,12 +149,48 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       return newState
     }
+    case PreferencesDispatchAction.USE_DEV_VERIFIER_TEMPLATES: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        useDevVerifierTemplates: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
+      // For older wallets that haven't explicitly named their wallet yet
+      if (!preferences.walletName) {
+        preferences.walletName = generateRandomWalletName()
+      }
+
       return {
         ...state,
         preferences,
       }
+    }
+    case PreferencesDispatchAction.UPDATE_WALLET_NAME: {
+      // We should never see 'My Wallet - 123', that's just there to let us know something went wrong while saving the wallet name
+      const name = (action?.payload ?? []).pop() ?? 'My Wallet - 123'
+      const preferences = {
+        ...state.preferences,
+        walletName: name,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
     }
     case ToursDispatchAction.UPDATE_SEEN_TOUR_PROMPT: {
       const seenToursPrompt: ToursState = (action?.payload ?? []).pop() ?? false
@@ -263,12 +311,55 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state.onboarding,
         didCreatePIN: true,
       }
+      // If the pin is created with this version (that includes Askar), we
+      // we can assume that a wallet using Indy SDK was never created. This
+      // allows us to skip the migration step. For wallets initialized using
+      // the indy sdk this won't be called, so the migration will be performed
+      const migration: MigrationState = {
+        ...state.migration,
+        didMigrateToAskar: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+        migration,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_NAME_WALLET: {
+      const onboarding = {
+        ...state.onboarding,
+        didNameWallet: true,
+      }
       const newState = {
         ...state,
         onboarding,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+
       return newState
+    }
+    case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {
+      const migration: MigrationState = {
+        ...state.migration,
+        didMigrateToAskar: true,
+      }
+      const newState = {
+        ...state,
+        migration,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      return newState
+    }
+    case MigrationDispatchAction.MIGRATION_UPDATED: {
+      const migration: MigrationState = (action?.payload || []).pop()
+      return {
+        ...state,
+        migration,
+      }
     }
     case AuthenticationDispatchAction.DID_AUTHENTICATE: {
       const value: AuthenticationState = (action?.payload || []).pop()

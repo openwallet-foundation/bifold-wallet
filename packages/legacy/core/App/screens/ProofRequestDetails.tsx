@@ -6,7 +6,7 @@ import { FlatList, StyleProp, StyleSheet, Text, TextInput, TextStyle, View } fro
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
-  IndyProofRequestTemplatePayloadData,
+  AnonCredsProofRequestTemplatePayloadData,
   ProofRequestType,
   linkProofWithTemplate,
   sendProofRequest,
@@ -20,14 +20,14 @@ import { Screens, ProofRequestsStackParams } from '../types/navigators'
 import { MetaOverlay, OverlayType } from '../types/oca'
 import { Attribute, Field, Predicate } from '../types/record'
 import { formatIfDate } from '../utils/helpers'
-import { buildFieldsFromIndyProofRequestTemplate } from '../utils/oca'
+import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestDetails>
 
 interface ProofRequestAttributesCardParams {
-  data: IndyProofRequestTemplatePayloadData
+  data: AnonCredsProofRequestTemplatePayloadData
   onChangeValue: (schema: string, label: string, name: string, value: string) => void
 }
 
@@ -135,7 +135,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
   }, [data.schema])
 
   useEffect(() => {
-    const attributes = buildFieldsFromIndyProofRequestTemplate(data)
+    const attributes = buildFieldsFromAnonCredsProofRequestTemplate(data)
     OCABundleResolver.presentationFields({
       identifiers: { schemaId: data.schema },
       attributes,
@@ -214,7 +214,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const { templateId, connectionId } = route?.params
 
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
-  const [attributes, setAttributes] = useState<Array<IndyProofRequestTemplatePayloadData> | undefined>(undefined)
+  const [attributes, setAttributes] = useState<Array<AnonCredsProofRequestTemplatePayloadData> | undefined>(undefined)
   const [customPredicateValues, setCustomPredicateValues] = useState<Record<string, Record<string, number>>>({})
   const [invalidPredicate, setInvalidPredicate] = useState<
     { visible: boolean; predicate: string | undefined } | undefined
@@ -226,7 +226,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   }
 
   useEffect(() => {
-    const attributes = template.payload.type === ProofRequestType.Indy ? template.payload.data : []
+    const attributes = template.payload.type === ProofRequestType.AnonCreds ? template.payload.data : []
 
     OCABundleResolver.resolve({ identifiers: { templateId }, language: i18n.language }).then((bundle) => {
       const metaOverlay = bundle?.metaOverlay || {

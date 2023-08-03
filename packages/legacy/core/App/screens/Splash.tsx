@@ -1,13 +1,4 @@
-import {
-  Agent,
-  AutoAcceptCredential,
-  AutoAcceptProof,
-  ConsoleLogger,
-  HttpOutboundTransport,
-  LogLevel,
-  MediatorPickupStrategy,
-  WsOutboundTransport,
-} from '@aries-framework/core'
+import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -30,19 +21,38 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
 import {
-  Onboarding as StoreOnboardingState,
-  Preferences as PreferencesState,
   LoginAttempt as LoginAttemptState,
+  Migration as MigrationState,
+  Preferences as PreferencesState,
+  Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from '../types/state'
+import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
+import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
 }
 
-const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
-  if (state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && !state.didConsiderBiometry) {
+const resumeOnboardingAt = (state: StoreOnboardingState, enableWalletNaming: boolean | undefined): Screens => {
+  if (
+    state.didCompleteTutorial &&
+    state.didAgreeToTerms &&
+    state.didCreatePIN &&
+    (state.didNameWallet || !enableWalletNaming) &&
+    !state.didConsiderBiometry
+  ) {
     return Screens.UseBiometry
+  }
+
+  if (
+    state.didCompleteTutorial &&
+    state.didAgreeToTerms &&
+    state.didCreatePIN &&
+    enableWalletNaming &&
+    !state.didNameWallet
+  ) {
+    return Screens.NameWallet
   }
 
   if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didCreatePIN) {
@@ -62,7 +72,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState): Screens => {
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { indyLedgers } = useConfiguration()
+  const { indyLedgers, enableWalletNaming } = useConfiguration()
   const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
@@ -115,6 +125,16 @@ const Splash: React.FC = () => {
           })
         }
 
+        const migrationData = await AsyncStorage.getItem(LocalStorageKeys.Migration)
+        if (migrationData) {
+          const dataAsJSON = JSON.parse(migrationData) as MigrationState
+
+          dispatch({
+            type: DispatchAction.MIGRATION_UPDATED,
+            payload: [dataAsJSON],
+          })
+        }
+
         const toursData = await AsyncStorage.getItem(LocalStorageKeys.Tours)
         if (toursData) {
           const dataAsJSON = JSON.parse(toursData) as ToursState
@@ -151,7 +171,7 @@ const Splash: React.FC = () => {
             navigation.dispatch(
               CommonActions.reset({
                 index: 0,
-                routes: [{ name: resumeOnboardingAt(onboardingState) }],
+                routes: [{ name: resumeOnboardingAt(onboardingState, enableWalletNaming) }],
               })
             )
           }
@@ -186,31 +206,45 @@ const Splash: React.FC = () => {
           return
         }
 
-        const options = {
+        const newAgent = new Agent({
           config: {
-            label: 'Aries Bifold',
-            mediatorConnectionsInvite: Config.MEDIATOR_URL,
-            mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
-            walletConfig: { id: credentials.id, key: credentials.key },
-            autoAcceptConnections: true,
-            autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
-            autoAcceptProofs: AutoAcceptProof.ContentApproved,
+            label: store.preferences.walletName || 'Aries Bifold',
+            walletConfig: {
+              id: credentials.id,
+              key: credentials.key,
+            },
             logger: new ConsoleLogger(LogLevel.trace),
-            indyLedgers,
-            connectToIndyLedgersOnStartup: true,
             autoUpdateStorageOnStartup: true,
           },
           dependencies: agentDependencies,
-        }
-
-        const newAgent = new Agent(options)
+          modules: getAgentModules({
+            indyNetworks: indyLedgers,
+            mediatorInvitationUrl: Config.MEDIATOR_URL,
+          }),
+        })
         const wsTransport = new WsOutboundTransport()
         const httpTransport = new HttpOutboundTransport()
 
         newAgent.registerOutboundTransport(wsTransport)
         newAgent.registerOutboundTransport(httpTransport)
 
+        // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
+        if (!didMigrateToAskar(store.migration)) {
+          newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
+
+          await migrateToAskar(credentials.id, credentials.key, newAgent)
+
+          newAgent.config.logger.debug('Successfully finished updating agent to Aries Askar')
+          // Store that we migrated to askar.
+          dispatch({
+            type: DispatchAction.DID_MIGRATE_TO_ASKAR,
+          })
+        }
+
         await newAgent.initialize()
+
+        await createLinkSecretIfRequired(newAgent)
+
         setAgent(newAgent)
         navigation.dispatch(
           CommonActions.reset({

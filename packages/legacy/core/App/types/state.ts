@@ -3,6 +3,11 @@ export interface Onboarding {
   didAgreeToTerms: boolean
   didCreatePIN: boolean
   didConsiderBiometry: boolean
+  didNameWallet: boolean
+}
+
+export interface Migration {
+  didMigrateToAskar: boolean
 }
 
 export interface Preferences {
@@ -11,6 +16,8 @@ export interface Preferences {
   developerModeEnabled: boolean
   useVerifierCapability?: boolean
   useConnectionInviterCapability?: boolean
+  useDevVerifierTemplates?: boolean
+  walletName: string
 }
 
 export interface Tours {
@@ -45,5 +52,6 @@ export interface State {
   preferences: Preferences
   tours: Tours
   deepLink: DeepLink
+  migration: Migration
   loading: boolean
 }

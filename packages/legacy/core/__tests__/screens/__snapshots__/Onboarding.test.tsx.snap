@@ -1,5 +1,384 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Onboarding Onboarding Developer mode 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+      "bottom",
+    ]
+  }
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#000000",
+      "flex": 1,
+    }
+  }
+>
+  <RCTScrollView
+    data={
+      Array [
+        <ScrollView
+          style={
+            Object {
+              "padding": 20,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
+          >
+            <
+              style={
+                Object {
+                  "height": 180,
+                  "width": 180,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "marginBottom": 20,
+              }
+            }
+          >
+            <TouchableWithoutFeedback
+              onPress={[MockFunction]}
+              testID="com.ariesbifold:id/DeveloperModeTouch"
+            >
+              <Text
+                style={
+                  Array [
+                    Object {},
+                    Object {
+                      "fontSize": 18,
+                    },
+                  ]
+                }
+                testID="com.ariesbifold:id/HeaderText"
+              >
+                test
+              </Text>
+            </TouchableWithoutFeedback>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "flexShrink": 1,
+                  },
+                  Object {
+                    "marginTop": 25,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/BodyText"
+            >
+              body
+            </Text>
+          </View>
+        </ScrollView>,
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={true}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    onViewableItemsChanged={[Function]}
+    pagingEnabled={true}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={16}
+    showsHorizontalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    style={
+      Array [
+        Object {
+          "width": 750,
+        },
+      ]
+    }
+    viewabilityConfig={
+      Object {
+        "viewAreaCoveragePercentThreshold": 60,
+      }
+    }
+    viewabilityConfigCallbackPairs={
+      Array [
+        Object {
+          "onViewableItemsChanged": [Function],
+          "viewabilityConfig": Object {
+            "viewAreaCoveragePercentThreshold": 60,
+          },
+        },
+      ]
+    }
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "width": 750,
+              },
+              Object {
+                "backgroundColor": "#000000",
+                "flexDirection": "column",
+              },
+            ]
+          }
+        >
+          <RCTScrollView
+            style={
+              Object {
+                "padding": 20,
+              }
+            }
+          >
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <
+                  style={
+                    Object {
+                      "height": 180,
+                      "width": 180,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginBottom": 20,
+                  }
+                }
+              >
+                <Text
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Array [
+                      Object {},
+                      Object {
+                        "fontSize": 18,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/DeveloperModeTouch"
+                >
+                  test
+                </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "flexShrink": 1,
+                      },
+                      Object {
+                        "marginTop": 25,
+                      },
+                    ]
+                  }
+                  testID="com.ariesbifold:id/BodyText"
+                >
+                  body
+                </Text>
+              </View>
+            </View>
+          </RCTScrollView>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "marginBottom": 30,
+      }
+    }
+  >
+    <View
+      accessibilityElementsHidden={true}
+      accessibilityLabel="Global.Back"
+      accessibilityRole="button"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      importantForAccessibility="no-hide-descendants"
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="com.ariesbifold:id/Back"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": "transparent",
+              "paddingRight": 20,
+            },
+          ]
+        }
+      >
+        Back
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "bottom": 20,
+            "flexDirection": "row",
+            "position": "absolute",
+          },
+          Object {
+            "position": "relative",
+            "top": 0,
+          },
+        ]
+      }
+    >
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "backgroundColor": "rgba(66, 128, 62, 1)",
+            "borderColor": "#42803E",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "height": 10,
+            "marginHorizontal": 5,
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+            "width": 10,
+          }
+        }
+      />
+    </View>
+    <View
+      accessibilityElementsHidden={true}
+      accessibilityLabel="Global.Next"
+      accessibilityRole="button"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      importantForAccessibility="no-hide-descendants"
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="com.ariesbifold:id/Next"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+            Object {
+              "color": "transparent",
+              "paddingLeft": 20,
+            },
+          ]
+        }
+      >
+        Next
+      </Text>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;
+
 exports[`Onboarding Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
