@@ -255,7 +255,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       case ModalUsage.CredentialOfferDecline:
         return (
           <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.DeclineTitle')}</Text>
+            <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.DeclineTitle')}</Text>
             <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
             <Text style={[styles.declineBodyText]}>{t('CredentialOffer.DeclineParagraph2')}</Text>
           </View>
@@ -263,7 +263,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       case ModalUsage.ProofRequestDecline:
         return (
           <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('ProofRequest.DeclineTitle')}</Text>
+            <Text style={[TextTheme.modalTitle]}>{t('ProofRequest.DeclineTitle')}</Text>
             <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
             <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
             <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
@@ -272,7 +272,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       case ModalUsage.CustomNotificationDecline:
         return (
           <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle, { fontSize: 28 }]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
+            <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
             <Text style={[styles.declineBodyText, { marginTop: 30 }]}>
               {t('CredentialOffer.CustomOfferParagraph1')}
             </Text>
