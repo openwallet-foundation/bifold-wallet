@@ -27,6 +27,7 @@ import { Buffer } from 'buffer'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
 import { Dispatch, ReactNode, SetStateAction } from 'react'
+import { useWindowDimensions } from 'react-native'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
@@ -39,6 +40,24 @@ import { parseCredDefFromId } from './cred-def'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
+
+export enum Orientation {
+  Landscape = 'landscape',
+  Portrait = 'portrait',
+}
+
+export const orientation = () => {
+  const { width, height } = useWindowDimensions()
+
+  return width > height ? Orientation.Landscape : Orientation.Portrait
+}
+
+export const isTablet = () => {
+  const { width, height } = useWindowDimensions()
+  const aspectRatio = height / width
+
+  return aspectRatio < 1.6 // assume 4:3 for tablets
+}
 
 /**
  * Generates a numerical hash based on a given string

@@ -3,7 +3,7 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Vibration, View, StyleSheet, Text, ScrollView, Dimensions } from 'react-native'
+import { Vibration, View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -21,9 +21,6 @@ import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanTab from './ScanTab'
 
-const windowDimensions = Dimensions.get('window')
-const qrSize = windowDimensions.width - 40
-
 interface Props {
   defaultToConnect: boolean
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
@@ -32,6 +29,8 @@ interface Props {
 }
 
 const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, enableCameraOnError }) => {
+  const { width } = useWindowDimensions()
+  const qrSize = width - 40
   const navigation = useNavigation()
   const [store] = useStore()
   const [cameraActive, setCameraActive] = useState(true)
