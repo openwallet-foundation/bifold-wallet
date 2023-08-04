@@ -27,7 +27,6 @@ import { Buffer } from 'buffer'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
 import { Dispatch, ReactNode, SetStateAction } from 'react'
-import { useWindowDimensions } from 'react-native'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
@@ -46,14 +45,11 @@ export enum Orientation {
   Portrait = 'portrait',
 }
 
-export const orientation = () => {
-  const { width, height } = useWindowDimensions()
-
+export const orientation = (width: number, height: number) => {
   return width > height ? Orientation.Landscape : Orientation.Portrait
 }
 
-export const isTablet = () => {
-  const { width, height } = useWindowDimensions()
+export const isTablet = (width: number, height: number) => {
   const aspectRatio = height / width
 
   return aspectRatio < 1.6 // assume 4:3 for tablets

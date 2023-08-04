@@ -25,8 +25,8 @@ import { testIdWithKey } from '../utils/testable'
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
 const calculateQrSizeForDevice = () => {
-  const { width } = useWindowDimensions()
-  const qrContainerSize = isTablet() ? width - width * 0.3 : width - 20
+  const { width, height } = useWindowDimensions()
+  const qrContainerSize = isTablet(width, height) ? width - width * 0.3 : width - 20
   const qrSize = qrContainerSize - 20
 
   return { qrSize, qrContainerSize }
