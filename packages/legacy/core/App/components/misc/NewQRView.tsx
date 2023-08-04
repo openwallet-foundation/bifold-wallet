@@ -14,6 +14,7 @@ import { useConnectionByOutOfBandId } from '../../hooks/connections'
 import { QrCodeScanError } from '../../types/error'
 import { Screens, Stacks } from '../../types/navigators'
 import { createConnectionInvitation } from '../../utils/helpers'
+import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
 
 import QRRenderer from './QRRenderer'
@@ -169,7 +170,12 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
               {error ? (
                 <>
                   <Icon style={styles.icon} name="cancel" size={30}></Icon>
-                  <Text style={[TextTheme.normal, { color: ColorPallet.grayscale.white }]}>{error.message}</Text>
+                  <Text
+                    testID={testIdWithKey('ErrorMessage')}
+                    style={[TextTheme.normal, { color: ColorPallet.grayscale.white }]}
+                  >
+                    {error.message}
+                  </Text>
                 </>
               ) : (
                 <Text style={[TextTheme.normal, { color: ColorPallet.grayscale.white }]}>
