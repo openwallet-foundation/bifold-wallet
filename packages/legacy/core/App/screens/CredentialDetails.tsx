@@ -131,8 +131,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
     if (credential?.revocationNotification?.revocationDate) {
       const date = new Date(credential.revocationNotification.revocationDate)
-      setRevocationDate(formatTime(date))
-      setPreciseRevocationDate(formatTime(date, { long: true }))
+      setRevocationDate(formatTime(date, { shortMonth: true }))
+      setPreciseRevocationDate(formatTime(date, { includeHour: true }))
     }
 
     const params = {
