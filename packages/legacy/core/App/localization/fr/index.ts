@@ -477,7 +477,6 @@ const translation = {
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
         "ProofRequestUsageHistory": "Historique d'utilisation",
-        "ConnectionInvitation": "Invitation de connexion",
         "CreateConnectionInvitation": "Créer une invitation de connexion",
         "AttemptLockout": "Temporairement Verrouillé",
         "OnTheWay": 'En chemin',

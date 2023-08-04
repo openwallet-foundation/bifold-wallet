@@ -202,27 +202,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   }
 
   if (store.preferences.useConnectionInviterCapability) {
-    settingsSections.splice(2, 0, {
-      header: {
-        icon: 'send',
-        title: t('Screens.ConnectionInvitation'),
-      },
-      data: [
-        {
-          title: t('Screens.CreateConnectionInvitation'),
-          accessibilityLabel: t('Screens.CreateConnectionInvitation'),
-          testID: testIdWithKey('CreateConnectionInvitation'),
-          onPress: () =>
-            navigation.getParent()?.navigate(Stacks.ContactStack, {
-              screen: Screens.ConnectionInvitation,
-              params: { navigation: navigation },
-            }),
-        },
-      ],
-    })
-  }
-
-  if (store.preferences.useConnectionInviterCapability) {
     const section = settingsSections.find((item) => item.header.title === t('Screens.Contacts'))
     if (section) {
       section.data.splice(1, 0, {
