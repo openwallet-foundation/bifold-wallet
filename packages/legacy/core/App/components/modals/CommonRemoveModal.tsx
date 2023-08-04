@@ -128,172 +128,158 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   })
 
   const titleForConfirmButton = (): string => {
-    if (usage === ModalUsage.ContactRemove) {
-      return t('ContactDetails.RemoveContact')
+    switch (usage) {
+      case ModalUsage.ContactRemove:
+        return t('ContactDetails.RemoveContact')
+      case ModalUsage.ContactRemoveWithCredentials:
+        return t('ContactDetails.GoToCredentials')
+      case ModalUsage.CredentialRemove:
+        return t('CredentialDetails.RemoveFromWallet')
+      default:
+        return t('Global.Decline')
     }
-
-    if (usage === ModalUsage.ContactRemoveWithCredentials) {
-      return t('ContactDetails.GoToCredentials')
-    }
-
-    if (usage === ModalUsage.CredentialRemove) {
-      return t('CredentialDetails.RemoveFromWallet')
-    }
-
-    return t('Global.Decline')
   }
 
-  const titleForAccessibilityLabel = (): string => {
-    if (usage === ModalUsage.ContactRemove) {
-      return t('ContactDetails.RemoveContact')
+  const labelForConfirmButton = (): string => {
+    switch (usage) {
+      case ModalUsage.ContactRemove:
+        return t('ContactDetails.RemoveContact')
+      case ModalUsage.ContactRemoveWithCredentials:
+        return t('ContactDetails.GoToCredentials')
+      case ModalUsage.CredentialRemove:
+        return t('CredentialDetails.RemoveCredential')
+      default:
+        return t('Global.Decline')
     }
-
-    if (usage === ModalUsage.ContactRemoveWithCredentials) {
-      return t('ContactDetails.GoToCredentials')
-    }
-
-    if (usage === ModalUsage.CredentialRemove) {
-      return t('CredentialDetails.RemoveCredential')
-    }
-
-    return t('Global.Decline')
   }
 
-  const testIdForConformationButton = (): string => {
-    if (usage === ModalUsage.ContactRemoveWithCredentials) {
-      return testIdWithKey('GoToCredentialsButton')
+  const testIdForConfirmButton = (): string => {
+    switch (usage) {
+      case ModalUsage.ContactRemove:
+      case ModalUsage.CredentialRemove:
+        return testIdWithKey('ConfirmRemoveButton')
+      case ModalUsage.ContactRemoveWithCredentials:
+        return testIdWithKey('GoToCredentialsButton')
+      case ModalUsage.CredentialOfferDecline:
+      case ModalUsage.ProofRequestDecline:
+        return testIdWithKey('ConfirmDeclineButton')
+      default:
+        return testIdWithKey('ConfirmButton')
     }
-
-    if (usage === ModalUsage.ContactRemove || usage === ModalUsage.CredentialRemove) {
-      return testIdWithKey('ConfirmRemoveButton')
-    }
-
-    if (usage === ModalUsage.CredentialOfferDecline || usage === ModalUsage.ProofRequestDecline) {
-      return testIdWithKey('ConfirmDeclineButton')
-    }
-
-    return testIdWithKey('ConfirmButton')
   }
 
   const testIdForCancelButton = (): string => {
-    if (usage === ModalUsage.ContactRemove || usage === ModalUsage.CredentialRemove) {
-      return testIdWithKey('CancelRemoveButton')
+    switch (usage) {
+      case ModalUsage.ContactRemove:
+      case ModalUsage.CredentialRemove:
+        return testIdWithKey('CancelRemoveButton')
+      case ModalUsage.ContactRemoveWithCredentials:
+        return testIdWithKey('AbortGoToCredentialsButton')
+      case ModalUsage.CredentialOfferDecline:
+      case ModalUsage.ProofRequestDecline:
+        return testIdWithKey('CancelDeclineButton')
+      default:
+        return testIdWithKey('CancelButton')
     }
-
-    if (usage === ModalUsage.ContactRemoveWithCredentials) {
-      return testIdWithKey('AbortGoToCredentialsButton')
-    }
-
-    if (usage === ModalUsage.CredentialOfferDecline || usage === ModalUsage.ProofRequestDecline) {
-      return testIdWithKey('CancelDeclineButton')
-    }
-
-    return testIdWithKey('CancelButton')
   }
 
-  const headerImageForType = (usageType: ModalUsage) => {
+  const headerImageForType = (): Element => {
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        {usageType === ModalUsage.CredentialOfferDecline && (
-          <Assets.svg.proofRequestDeclined {...imageDisplayOptions} />
-        )}
-        {usageType === ModalUsage.ProofRequestDecline && <Assets.svg.credentialDeclined {...imageDisplayOptions} />}
-        {usageType === ModalUsage.CustomNotificationDecline && (
+        {usage === ModalUsage.CredentialOfferDecline && <Assets.svg.proofRequestDeclined {...imageDisplayOptions} />}
+        {usage === ModalUsage.ProofRequestDecline && <Assets.svg.credentialDeclined {...imageDisplayOptions} />}
+        {usage === ModalUsage.CustomNotificationDecline && (
           <Assets.svg.deleteNotification style={{ marginBottom: 15 }} {...imageDisplayOptions} />
         )}
       </View>
     )
   }
 
-  const contentForType = (type: ModalUsage) => {
-    if (type === ModalUsage.CredentialOfferDecline) {
-      return (
-        <View style={[{ marginBottom: 25 }]}>
-          <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.DeclineTitle')}</Text>
-          <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
-          <Text style={[styles.declineBodyText]}>{t('CredentialOffer.DeclineParagraph2')}</Text>
-        </View>
-      )
-    }
-
-    if (type === ModalUsage.ProofRequestDecline) {
-      return (
-        <View style={[{ marginBottom: 25 }]}>
-          <Text style={[TextTheme.modalTitle]}>{t('ProofRequest.DeclineTitle')}</Text>
-          <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
-          <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
-          <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
-        </View>
-      )
-    }
-
-    if (type === ModalUsage.CustomNotificationDecline) {
-      return (
-        <View style={[{ marginBottom: 25 }]}>
-          <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
-          <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('CredentialOffer.CustomOfferParagraph1')}</Text>
-          <Text style={[styles.declineBodyText]}>{t('CredentialOffer.CustomOfferParagraph2')}</Text>
-        </View>
-      )
-    }
-
-    if (type === ModalUsage.CredentialRemove) {
-      return (
-        <View style={[{ marginBottom: 25 }]}>
+  const contentForType = (): Element | null => {
+    switch (usage) {
+      case ModalUsage.ContactRemove:
+        return (
           <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
+            <View style={[{ marginBottom: 25 }]}>
+              <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
+            </View>
+            <View>
+              <Text style={[styles.bodyText]}>{t('ContactDetails.RemoveContactMessageTop')}</Text>
+              <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint1')} textStyle={styles.bodyText} />
+              <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint2')} textStyle={styles.bodyText} />
+              <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint3')} textStyle={styles.bodyText} />
+              <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint4')} textStyle={styles.bodyText} />
+              <Text style={[styles.bodyText, { marginTop: 10 }]}>{t('ContactDetails.RemoveContactMessageBottom')}</Text>
+            </View>
           </View>
-          <View>
-            <Text style={[TextTheme.modalNormal]}>{t('CredentialDetails.RemoveCaption')}</Text>
-          </View>
-          <View style={{ marginTop: 25 }}>
-            <Dropdown
-              title={t('CredentialDetails.YouWillNotLose')}
-              content={[t('CredentialDetails.YouWillNotLoseListItem1'), t('CredentialDetails.YouWillNotLoseListItem2')]}
-            />
-          </View>
-          <View style={{ marginTop: 25 }}>
-            <Dropdown
-              title={t('CredentialDetails.HowToGetThisCredentialBack')}
-              content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
-            />
-          </View>
-        </View>
-      )
-    }
-
-    if (type === ModalUsage.ContactRemove) {
-      return (
-        <View style={[{ marginBottom: 25 }]}>
+        )
+      case ModalUsage.CredentialRemove:
+        return (
           <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
+            <View style={[{ marginBottom: 25 }]}>
+              <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
+            </View>
+            <View>
+              <Text style={[TextTheme.modalNormal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+            </View>
+            <View style={{ marginTop: 25 }}>
+              <Dropdown
+                title={t('CredentialDetails.YouWillNotLose')}
+                content={[
+                  t('CredentialDetails.YouWillNotLoseListItem1'),
+                  t('CredentialDetails.YouWillNotLoseListItem2'),
+                ]}
+              />
+            </View>
+            <View style={{ marginTop: 25 }}>
+              <Dropdown
+                title={t('CredentialDetails.HowToGetThisCredentialBack')}
+                content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
+              />
+            </View>
           </View>
-          <View>
-            <Text style={[styles.bodyText]}>{t('ContactDetails.RemoveContactMessageTop')}</Text>
-            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint1')} textStyle={styles.bodyText} />
-            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint2')} textStyle={styles.bodyText} />
-            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint3')} textStyle={styles.bodyText} />
-            <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint4')} textStyle={styles.bodyText} />
-            <Text style={[styles.bodyText, { marginTop: 10 }]}>{t('ContactDetails.RemoveContactMessageBottom')}</Text>
-          </View>
-        </View>
-      )
-    }
-
-    if (type === ModalUsage.ContactRemoveWithCredentials) {
-      return (
-        <View style={[{ marginBottom: 25 }]}>
+        )
+      case ModalUsage.ContactRemoveWithCredentials:
+        return (
           <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.UnableToRemoveTitle')}</Text>
+            <View style={[{ marginBottom: 25 }]}>
+              <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.UnableToRemoveTitle')}</Text>
+            </View>
+            <View>
+              <Text style={[styles.bodyText]}>{t('ContactDetails.UnableToRemoveCaption')}</Text>
+            </View>
           </View>
-          <View>
-            <Text style={[styles.bodyText]}>{t('ContactDetails.UnableToRemoveCaption')}</Text>
+        )
+      case ModalUsage.CredentialOfferDecline:
+        return (
+          <View style={[{ marginBottom: 25 }]}>
+            <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.DeclineTitle')}</Text>
+            <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
+            <Text style={[styles.declineBodyText]}>{t('CredentialOffer.DeclineParagraph2')}</Text>
           </View>
-        </View>
-      )
+        )
+      case ModalUsage.ProofRequestDecline:
+        return (
+          <View style={[{ marginBottom: 25 }]}>
+            <Text style={[TextTheme.modalTitle]}>{t('ProofRequest.DeclineTitle')}</Text>
+            <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
+            <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
+            <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
+          </View>
+        )
+      case ModalUsage.CustomNotificationDecline:
+        return (
+          <View style={[{ marginBottom: 25 }]}>
+            <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
+            <Text style={[styles.declineBodyText, { marginTop: 30 }]}>
+              {t('CredentialOffer.CustomOfferParagraph1')}
+            </Text>
+            <Text style={[styles.declineBodyText]}>{t('CredentialOffer.CustomOfferParagraph2')}</Text>
+          </View>
+        )
+      default:
+        return null
     }
-
-    return null
   }
 
   return (
@@ -318,16 +304,16 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
         ]}
       >
         <ScrollView style={[styles.container]}>
-          {headerImageForType(usage)}
-          {contentForType(usage)}
+          {headerImageForType()}
+          {contentForType()}
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />
           <View style={[{ paddingTop: 10 }]}>
             <Button
               title={titleForConfirmButton()}
-              accessibilityLabel={titleForAccessibilityLabel()}
-              testID={testIdForConformationButton()}
+              accessibilityLabel={labelForConfirmButton()}
+              testID={testIdForConfirmButton()}
               onPress={onSubmit}
               buttonType={
                 usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical

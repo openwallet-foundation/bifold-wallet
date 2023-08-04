@@ -9,7 +9,14 @@ import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
 import * as proofRequestUtils from '../../verifier/utils/proof-request'
 import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
-import { ConnectionRecord, DidExchangeRole, DidExchangeState, OutOfBandInvitation, ProofExchangeRecord, ProofState } from '@aries-framework/core'
+import {
+  ConnectionRecord,
+  DidExchangeRole,
+  DidExchangeState,
+  OutOfBandInvitation,
+  ProofExchangeRecord,
+  ProofState,
+} from '@aries-framework/core'
 import { V1RequestPresentationMessage, INDY_PROOF_REQUEST_ATTACHMENT_ID } from '@aries-framework/anoncreds'
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 
