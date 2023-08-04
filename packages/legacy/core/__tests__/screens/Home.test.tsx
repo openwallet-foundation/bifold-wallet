@@ -199,7 +199,6 @@ describe('with a notifications module, when an issuer sends a credential offer',
       screen: 'Proof Request',
       params: { proofId: testProofRecords[0].id },
     })
-
   })
 
   /**
