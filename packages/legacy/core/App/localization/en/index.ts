@@ -487,7 +487,6 @@ const translation = {
     "SendProofRequest": "Send a proof request",
     "ChooseProofRequest": "Choose a proof request",
     "ProofRequestUsageHistory": "Usage History",
-    "ConnectionInvitation": "Connection Invitation",
     "CreateConnectionInvitation": "Create a connection invitation",
     "AttemptLockout": "Temporarily Locked",
     "OnTheWay": 'On The Way',
