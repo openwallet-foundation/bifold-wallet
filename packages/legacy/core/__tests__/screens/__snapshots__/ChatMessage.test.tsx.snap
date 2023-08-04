@@ -71,34 +71,21 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
             <View
               style={
                 Object {
+                  "alignItems": "center",
                   "alignSelf": "flex-start",
                   "backgroundColor": "#42803E",
                   "borderRadius": 4,
-                  "marginBottom": 8,
-                  "padding": 4,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginBottom": 16,
+                  "width": 50,
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 32,
-                    },
-                    undefined,
-                    Object {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                󰧮
-              </Text>
+              <
+                height={40}
+                width={40}
+              />
             </View>
           </View>
           <View
@@ -242,34 +229,21 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
             <View
               style={
                 Object {
+                  "alignItems": "center",
                   "alignSelf": "flex-start",
                   "backgroundColor": "#42803E",
                   "borderRadius": 4,
-                  "marginBottom": 8,
-                  "padding": 4,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginBottom": 16,
+                  "width": 50,
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 32,
-                    },
-                    undefined,
-                    Object {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                󰧮
-              </Text>
+              <
+                height={40}
+                width={40}
+              />
             </View>
           </View>
           <View
@@ -413,34 +387,21 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
             <View
               style={
                 Object {
+                  "alignItems": "center",
                   "alignSelf": "flex-start",
                   "backgroundColor": "#42803E",
                   "borderRadius": 4,
-                  "marginBottom": 8,
-                  "padding": 4,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginBottom": 16,
+                  "width": 50,
                 }
               }
             >
-              <Text
-                allowFontScaling={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 32,
-                    },
-                    undefined,
-                    Object {
-                      "fontFamily": "Material Design Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                󰧮
-              </Text>
+              <
+                height={40}
+                width={40}
+              />
             </View>
           </View>
           <View
