@@ -108,7 +108,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               <>
                 <Icon style={styles.icon} name="cancel" size={30}></Icon>
                 <Text
-                  testID={testIdWithKey('Error')}
+                  testID={testIdWithKey('ErrorMessage')}
                   style={[TextTheme.caption, { color: ColorPallet.grayscale.white }]}
                 >
                   {error.message}

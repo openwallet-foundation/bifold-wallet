@@ -171,7 +171,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                 <>
                   <Icon style={styles.icon} name="cancel" size={30}></Icon>
                   <Text
-                    testID={testIdWithKey('Error')}
+                    testID={testIdWithKey('ErrorMessage')}
                     style={[TextTheme.normal, { color: ColorPallet.grayscale.white }]}
                   >
                     {error.message}
