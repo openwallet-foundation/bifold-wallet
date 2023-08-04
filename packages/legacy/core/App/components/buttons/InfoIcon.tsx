@@ -27,7 +27,7 @@ const InfoIcon: React.FC<InfoIconProps> = ({ connectionId }) => {
           params: { connectionId: connectionId },
         })
       }
-      icon="information"
+      icon="dots-vertical"
     />
   )
 }

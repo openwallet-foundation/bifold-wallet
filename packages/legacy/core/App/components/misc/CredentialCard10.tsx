@@ -256,7 +256,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
             testID={testIdWithKey('CredentialIssued')}
             maxFontSizeMultiplier={1}
           >
-            {t('CredentialDetails.Issued')}: {formatTime(credential.createdAt)}
+            {t('CredentialDetails.Issued')}: {formatTime(credential.createdAt, { shortMonth: true })}
           </Text>
         )}
       </View>

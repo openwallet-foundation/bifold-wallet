@@ -2,7 +2,7 @@ import { useAgent } from '@aries-framework/react-hooks'
 import fs from 'fs'
 import path from 'path'
 
-import { createConnectionInvitation, credentialSortFn, formatIfDate } from '../../App/utils/helpers'
+import { createConnectionInvitation, credentialSortFn, formatIfDate, formatTime } from '../../App/utils/helpers'
 
 const proofCredentialPath = path.join(__dirname, '../fixtures/proof-credential.json')
 const credentials = JSON.parse(fs.readFileSync(proofCredentialPath, 'utf8'))
@@ -16,6 +16,41 @@ describe('credentialSortFn', () => {
     const sortedCreds = requestedAttributes[key].sort(credentialSortFn)
 
     expect(sortedCreds).toMatchSnapshot()
+  })
+})
+
+// This is a difficult function to test completely because of the i18n
+describe('formatTime', () => {
+  test.skip('without params', () => {
+    const result = formatTime(new Date('December 17, 2012 03:24:00'))
+    // This would be December 17, 2012 but the i18n is not working in Jest
+    expect(result).toBe('Dec 17, 2012')
+  })
+
+  test('shortMonth', () => {
+    const result = formatTime(new Date('December 17, 2012 03:24:00'), { shortMonth: true })
+    expect(result).toBe('Dec 17, 2012')
+  })
+
+  test('includeHour', () => {
+    const result = formatTime(new Date('December 17, 2012 03:24:00'), { includeHour: true })
+    expect(result).toBe('Dec 17, 2012, 3:24 am')
+  })
+
+  test('trim with current year', () => {
+    const currentYear = new Date().getFullYear()
+    const result = formatTime(new Date(`January 1, ${currentYear} 03:24:00`), { trim: true })
+    expect(result).toBe('Jan 1')
+  })
+
+  test('trim with previous year', () => {
+    const result = formatTime(new Date('January 1, 2012 03:24:00'), { trim: true })
+    expect(result).toBe('Jan 1, 2012')
+  })
+
+  test('format', () => {
+    const result = formatTime(new Date(`January 1, 2012 03:24:00`), { format: 'D MMM YYYY' })
+    expect(result).toBe('1 Jan 2012')
   })
 })
 
@@ -56,7 +91,7 @@ describe('formatIfDate', () => {
   })
 })
 
-describe('Helper function', () => {
+describe('createConnectionInvitation', () => {
   test('Create connection invitation', async () => {
     const { agent } = useAgent()
     const invitation = {

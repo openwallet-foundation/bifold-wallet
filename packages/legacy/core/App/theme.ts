@@ -8,6 +8,14 @@ import ContactBook from './assets/img/contact-book.svg'
 import CredentialDeclined from './assets/img/credential-declined.svg'
 import DeleteNotification from './assets/img/delete-notification.svg'
 import EmptyWallet from './assets/img/empty-wallet.svg'
+import IconCredentialOfferDark from './assets/img/icon-credential-offer-dark.svg'
+import IconCredentialOfferLight from './assets/img/icon-credential-offer-light.svg'
+import IconInfoRecievedDark from './assets/img/icon-info-recieved-dark.svg'
+import IconInfoRecievedLight from './assets/img/icon-info-recieved-light.svg'
+import IconInfoSentDark from './assets/img/icon-info-sent-dark.svg'
+import IconInfoSentLight from './assets/img/icon-info-sent-light.svg'
+import IconProofRequestDark from './assets/img/icon-proof-request-dark.svg'
+import IconProofRequestLight from './assets/img/icon-proof-request-light.svg'
 import Logo from './assets/img/logo.svg'
 import ProofRequestDeclined from './assets/img/proof-declined.svg'
 
@@ -21,6 +29,14 @@ export interface ISVGAssets {
   logo: React.FC<SvgProps>
   proofRequestDeclined: React.FC<SvgProps>
   arrow: React.FC<SvgProps>
+  iconCredentialOfferDark: React.FC<SvgProps>
+  iconCredentialOfferLight: React.FC<SvgProps>
+  iconInfoRecievedDark: React.FC<SvgProps>
+  iconInfoRecievedLight: React.FC<SvgProps>
+  iconInfoSentDark: React.FC<SvgProps>
+  iconInfoSentLight: React.FC<SvgProps>
+  iconProofRequestDark: React.FC<SvgProps>
+  iconProofRequestLight: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -696,9 +712,12 @@ export const ChatTheme = {
   documentIconContainer: {
     backgroundColor: ColorPallet.brand.primary,
     alignSelf: 'flex-start',
-    padding: 4,
     borderRadius: 4,
     marginBottom: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50,
+    height: 50,
   },
   documentIcon: {
     color: ColorPallet.grayscale.white,
@@ -786,6 +805,14 @@ export const Assets = {
     logo: Logo,
     proofRequestDeclined: ProofRequestDeclined,
     arrow: Arrow,
+    iconCredentialOfferDark: IconCredentialOfferDark,
+    iconCredentialOfferLight: IconCredentialOfferLight,
+    iconInfoRecievedDark: IconInfoRecievedDark,
+    iconInfoRecievedLight: IconInfoRecievedLight,
+    iconInfoSentDark: IconInfoSentDark,
+    iconInfoSentLight: IconInfoSentLight,
+    iconProofRequestDark: IconProofRequestDark,
+    iconProofRequestLight: IconProofRequestLight,
   },
   img: {
     logoPrimary: {

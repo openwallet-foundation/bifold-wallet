@@ -12,6 +12,7 @@ exports[`Chat screen Renders correctly 1`] = `
   style={
     Object {
       "flex": 1,
+      "paddingTop": 20,
     }
   }
 >

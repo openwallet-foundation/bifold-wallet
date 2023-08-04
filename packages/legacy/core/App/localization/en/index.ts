@@ -37,8 +37,8 @@ const translation = {
     "Remove": "Remove",
   },
   "Date": {
-    "ShortFormat": "MMM D, YYYY",
-    "LongFormat": "D MMMM YYYY, HH:mm:ss",
+    "ShortFormat": "MMM D",
+    "LongFormat": "MMMM D",
     "MonthLong": {
       "January": "January",
       "February": "February",
@@ -66,7 +66,10 @@ const translation = {
       "October": "Oct",
       "November": "Nov",
       "December": "Dec",
-    }
+    },
+    "MinuteAgo": "minute ago",
+    "MinutesAgo": "minutes ago",
+    "JustNow": "Just now",
   },
   "Language": {
     "English": "English",
@@ -226,7 +229,7 @@ const translation = {
   },
   "Contacts": {
     "EmptyList": "Your Contacts is empty!",
-    "TypeHere": "Type Message Here",
+    "TypeHere": "Message this contact...",
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here.",
     "WhatAreContacts": "What are Contacts?",
     "AddContact": "Add Contact",
@@ -524,6 +527,7 @@ const translation = {
     "ViewOffer": "View Offer",
     "OpenItem": "Open",
     "UserYou": "You",
+    "YouConnected": "You connected with",
     "CredentialProposalSent": "sent a credential proposal",
     "CredentialOfferReceived": "sent a credential offer",
     "CredentialRequestSent": "sent a credential request",

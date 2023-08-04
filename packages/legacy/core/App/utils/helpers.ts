@@ -82,32 +82,88 @@ export const hashToRGBA = (hash: number) => {
 
   return color
 }
-
-export function formatTime(time: Date, params?: { long?: boolean; format?: string }): string {
+/**
+ *
+ * @param time
+ * @param params see below
+ * shortMonth: whether to use Jun in place of June, Mar in place of March for example (overridden by `format`)
+ * format: an optional custom moment format string to create the formatted date from
+ * includeHour: whether to add the hour and minute and am/pm. eg 9:32 pm (overridden by `chatFormat` and `trim`)
+ * chatFormat: whether to style the date to appear like a chat message timestamp eg. '7 minutes ago' or 'Just now'
+ * trim: if true, if it's the same day the date will be trimmed to just the hour, if it's the same year then the year will be trimmed from the date
+ * eg. if the current year is 2023, February 12, 2023 will be trimmed to February 12
+ * @returns formatted time string
+ */
+export function formatTime(
+  time: Date,
+  params?: { shortMonth?: boolean; format?: string; includeHour?: boolean; chatFormat?: boolean; trim?: boolean }
+): string {
   const getMonthKey = 'MMMM'
   const momentTime = moment(time)
   const monthKey = momentTime.format(getMonthKey)
   const customMonthFormatRe = /M+/
-  const long = params?.long
+  const shortMonth = params?.shortMonth
   const format = params?.format
+  const includeHour = params?.includeHour
+  const chatFormat = params?.chatFormat
+  const trim = params?.trim
   const shortDateFormatMaskLength = 3
+  const millisecondsAgo = moment().diff(momentTime)
+  const lessThanAMinuteAgo = millisecondsAgo / 1000 / 60 < 1
+  const lessThanAnHourAgo = millisecondsAgo / 1000 / 60 / 60 < 1
+  const now = new Date()
+  const sameYear = time.getFullYear() === now.getFullYear()
+  const sameDay = time.getDate() === now.getDate() && time.getMonth() === now.getMonth() && sameYear
+  const isNonEnglish = i18n.resolvedLanguage === 'fr' || i18n.resolvedLanguage === 'pt-BR'
+
+  // for the shortened approach eg. in chat bubbles
+  if (chatFormat) {
+    if (lessThanAMinuteAgo) {
+      return i18n.t('Date.JustNow')
+    }
+    if (lessThanAnHourAgo) {
+      const minutesAgo = Math.floor(millisecondsAgo / 1000 / 60)
+      return minutesAgo === 1 ? `1 ${i18n.t('Date.MinuteAgo')}` : `${minutesAgo} ${i18n.t('Date.MinutesAgo')}`
+    }
+    if (sameDay) {
+      return momentTime.format('h:mm a')
+    }
+  }
 
   let formatString = i18n.t('Date.ShortFormat')
+  let formattedTime = ''
+  // if sameDay and abbreviated
+  if (sameDay && trim) {
+    return momentTime.format('h:mm a')
+  }
+
   if (format) {
     formatString = format
+    formattedTime = momentTime.format(format)
   } else {
-    if (long) {
+    if (!shortMonth) {
       formatString = i18n.t('Date.LongFormat')
     }
 
     // if translation fails
     if (formatString === 'Date.ShortFormat' || formatString === 'Date.LongFormat' || formatString === undefined) {
-      formatString = 'MMM D, YYYY'
+      formatString = 'MMM D'
+    }
+
+    // if trim is true, don't include the year for same year times
+    formattedTime =
+      trim && sameYear
+        ? momentTime.format(formatString)
+        : // if non-english, don't include comma between year and month
+        isNonEnglish
+        ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
+        : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
+    if (includeHour) {
+      formattedTime = `${formattedTime}, ${momentTime.format('h:mm a')}`
     }
   }
-  const customMonthFormat = formatString?.match(customMonthFormatRe)?.[0]
 
-  let formattedTime = momentTime.format(formatString)
+  const customMonthFormat = formatString?.match(customMonthFormatRe)?.[0]
 
   if (customMonthFormat) {
     let monthReplacement = ''
@@ -144,7 +200,7 @@ export function formatIfDate(
     // NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
     const date = new Date(Number(year), Number(month) - 1, Number(day))
     if (!isNaN(date.getDate())) {
-      setter(formatTime(date))
+      setter(formatTime(date, { shortMonth: true }))
     }
   }
 }

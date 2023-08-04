@@ -110,7 +110,7 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
       </View>
       <View style={style.rightContainer}>
         {presentationReceived && <Icon style={style.icon} name={'chevron-right'} />}
-        <Text style={style.date}>{formatTime(record.createdAt)}</Text>
+        <Text style={style.date}>{formatTime(record.createdAt, { shortMonth: true })}</Text>
       </View>
     </TouchableOpacity>
   )

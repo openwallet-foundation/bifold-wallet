@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { isPresentationReceived } from '../../verifier'
 import InfoIcon from '../components/buttons/InfoIcon'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
+import ActionSlider from '../components/chat/ActionSlider'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
 import { ChatMessage, ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
@@ -52,7 +53,8 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const theirLabel = useMemo(() => connection?.theirLabel || connection?.id || '', [connection])
   const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
-  const { ChatTheme: theme } = useTheme()
+  const [showActionSlider, setShowActionSlider] = useState(false)
+  const { ChatTheme: theme, Assets } = useTheme()
 
   useMemo(() => {
     assertConnectedNetwork()
@@ -71,17 +73,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       return {
         _id: record.id,
         text: record.content,
-        renderEvent: () => (
-          <Text
-            style={
-              role === Role.me
-                ? [theme.rightText, theme.rightTextHighlighted]
-                : [theme.leftText, theme.leftTextHighlighted]
-            }
-          >
-            {record.content}
-          </Text>
-        ),
+        renderEvent: () => <Text style={role === Role.me ? theme.rightText : theme.leftText}>{record.content}</Text>,
         createdAt: record.updatedAt || record.createdAt,
         type: record.type,
         user: { _id: role },
@@ -196,7 +188,27 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         }
       })
     )
-    setMessages(transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt))
+
+    const connectedMessage = connection
+      ? {
+          _id: 'connected',
+          text: `${t('Chat.YouConnected')} ${theirLabel}`,
+          renderEvent: () => (
+            <Text style={theme.rightText}>
+              {t('Chat.YouConnected')}
+              <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
+            </Text>
+          ),
+          createdAt: connection.createdAt,
+          user: { _id: Role.me },
+        }
+      : undefined
+
+    setMessages(
+      connectedMessage
+        ? [...transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt), connectedMessage]
+        : transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)
+    )
   }, [basicMessages, credentials, proofs])
 
   const onSend = useCallback(
@@ -215,22 +227,29 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
 
   const actions = useMemo(() => {
     return store.preferences.useVerifierCapability
-      ? {
-          [t('Verifier.SendProofRequest')]: () => onSendRequest(),
-          // if we localize Cancel, it will not be recognized as a "Cancel" button by the Chat library and on ios
-          // tapping outside the action sheet will not close it
-          ['Cancel']: () => {
-            /* do nothing */
+      ? [
+          {
+            text: t('Verifier.SendProofRequest'),
+            onPress: () => {
+              setShowActionSlider(false)
+              onSendRequest()
+            },
+            icon: () => <Assets.svg.iconInfoSentDark height={30} width={30} />,
           },
-        }
+        ]
       : undefined
   }, [t, store.preferences.useVerifierCapability, onSendRequest])
 
+  const onDismiss = () => {
+    setShowActionSlider(false)
+  }
+
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1 }}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>
       <GiftedChat
         messages={messages}
         showAvatarForEveryMessage={true}
+        alignTop
         renderAvatar={() => null}
         renderMessage={(props) => <ChatMessage messageProps={props} />}
         renderInputToolbar={(props) => renderInputToolbar(props, theme)}
@@ -242,7 +261,9 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           _id: Role.me,
         }}
         renderActions={(props) => renderActions(props, theme, actions)}
+        onPressActionButton={() => setShowActionSlider(true)}
       />
+      {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
     </SafeAreaView>
   )
 }
