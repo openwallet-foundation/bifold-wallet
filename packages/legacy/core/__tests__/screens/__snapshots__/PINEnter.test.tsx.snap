@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays a PIN create screen PIN create renders correctly 1`] = `
+exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -390,6 +390,626 @@ exports[`displays a PIN create screen PIN create renders correctly 1`] = `
                 collapsable={false}
                 focusable={true}
                 nativeID="animatedComponent"
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#42803E",
+                    "borderRadius": 4,
+                    "opacity": 1,
+                    "padding": 16,
+                  }
+                }
+                testID="com.ariesbifold:id/Enter"
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                        false,
+                      ]
+                    }
+                  >
+                    PINEnter.Unlock
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</RNCSafeAreaView>
+`;
+
+exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out message is present 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        Object {
+          "flexGrow": 1,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "height": "100%",
+              "justifyContent": "space-between",
+              "padding": 20,
+            }
+          }
+        >
+          <View
+            style={Object {}}
+          >
+            <Image
+              source={
+                Object {
+                  "default": "",
+                }
+              }
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "height": 120,
+                  "marginBottom": 20,
+                  "resizeMode": "contain",
+                  "width": 120,
+                }
+              }
+            />
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "alignSelf": "center",
+                    "marginBottom": 16,
+                  },
+                ]
+              }
+            >
+              PINEnter.EnterPIN
+            </Text>
+            <View
+              style={
+                Object {
+                  "alignItems": "flex-end",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "flexWrap": "wrap",
+                  "justifyContent": "flex-start",
+                  "marginBottom": 24,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flexGrow": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "flexDirection": "row",
+                        "justifyContent": "space-between",
+                      },
+                      Object {
+                        "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 5,
+                        "borderWidth": 1,
+                        "justifyContent": "flex-start",
+                        "paddingHorizontal": 12,
+                        "paddingVertical": 4,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#313132",
+                        "height": 48,
+                        "paddingHorizontal": 2,
+                      }
+                    }
+                  >
+                    <Text
+                      maxFontSizeMultiplier={1}
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 26,
+                          "fontWeight": "bold",
+                          "lineHeight": 48,
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#313132",
+                        "height": 48,
+                        "paddingHorizontal": 2,
+                      }
+                    }
+                  >
+                    <Text
+                      maxFontSizeMultiplier={1}
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 26,
+                          "fontWeight": "bold",
+                          "lineHeight": 48,
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#313132",
+                        "height": 48,
+                        "paddingHorizontal": 2,
+                      }
+                    }
+                  >
+                    <Text
+                      maxFontSizeMultiplier={1}
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 26,
+                          "fontWeight": "bold",
+                          "lineHeight": 48,
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#313132",
+                        "height": 48,
+                        "paddingHorizontal": 2,
+                      }
+                    }
+                  >
+                    <Text
+                      maxFontSizeMultiplier={1}
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 26,
+                          "fontWeight": "bold",
+                          "lineHeight": 48,
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#313132",
+                        "height": 48,
+                        "paddingHorizontal": 2,
+                      }
+                    }
+                  >
+                    <Text
+                      maxFontSizeMultiplier={1}
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 26,
+                          "fontWeight": "bold",
+                          "lineHeight": 48,
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#313132",
+                        "height": 48,
+                        "paddingHorizontal": 2,
+                      }
+                    }
+                  >
+                    <Text
+                      maxFontSizeMultiplier={1}
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 26,
+                          "fontWeight": "bold",
+                          "lineHeight": 48,
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <TextInput
+                    accessibilityLabel="PINEnter.EnterPIN"
+                    accessible={true}
+                    autoCapitalize="characters"
+                    autoCorrect={false}
+                    autoFocus={true}
+                    blurOnSubmit={false}
+                    caretHidden={true}
+                    clearButtonMode="never"
+                    disableFullscreenUI={true}
+                    keyboardType="numeric"
+                    maxLength={6}
+                    onBlur={[Function]}
+                    onChangeText={[Function]}
+                    onFocus={[Function]}
+                    onPressOut={[Function]}
+                    spellCheck={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "fontSize": 1,
+                        "left": 0,
+                        "opacity": 0.01,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                    testID="com.ariesbifold:id/EnterPIN"
+                    textContentType="password"
+                    underlineColorAndroid="transparent"
+                    value=""
+                  />
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "flexShrink": 1,
+                    "marginVertical": 10,
+                    "paddingHorizontal": 10,
+                  }
+                }
+              >
+                <View
+                  accessibilityLabel="PINCreate.Show"
+                  accessibilityRole="button"
+                  accessible={true}
+                  focusable={true}
+                  hitSlop={
+                    Object {
+                      "bottom": 44,
+                      "left": 44,
+                      "right": 44,
+                      "top": 44,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                  testID="com.ariesbifold:id/Show"
+                >
+                  <Text
+                    allowFontScaling={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 30,
+                        },
+                        undefined,
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <Modal
+            hardwareAccelerated={false}
+            transparent={true}
+            visible={true}
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(0, 0, 0, 0.5)",
+                  "flex": 1,
+                  "justifyContent": "center",
+                  "padding": 20,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "#313132",
+                    "borderColor": "#0099FF",
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                    "minWidth": 700,
+                    "padding": 10,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "paddingHorizontal": 5,
+                      "paddingTop": 5,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignSelf": "center",
+                          "marginRight": 10,
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      accessible={false}
+                      allowFontScaling={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#0099FF",
+                            "fontSize": 30,
+                          },
+                          undefined,
+                          Object {
+                            "fontFamily": "Material Icons",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                  </View>
+                  <Text
+                    style={
+                      Object {
+                        "alignSelf": "center",
+                        "color": "#FFFFFF",
+                        "flexShrink": 1,
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      }
+                    }
+                    testID="com.ariesbifold:id/HeaderText"
+                  >
+                    PINEnter.LoggedOut
+                  </Text>
+                </View>
+                <RCTScrollView
+                  style={
+                    Object {
+                      "flexDirection": "column",
+                      "flexGrow": 0,
+                      "marginLeft": 40,
+                      "paddingBottom": 5,
+                      "paddingHorizontal": 5,
+                    }
+                  }
+                >
+                  <View>
+                    <View>
+                      <Text
+                        style={
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                            "marginVertical": 5,
+                          }
+                        }
+                      >
+                        PINEnter.LoggedOutDescription
+                      </Text>
+                    </View>
+                    <View
+                      style={
+                        Object {
+                          "paddingTop": 10,
+                        }
+                      }
+                    >
+                      <View
+                        accessibilityLabel="Global.Okay"
+                        accessibilityRole="button"
+                        accessibilityState={
+                          Object {
+                            "disabled": false,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        nativeID="animatedComponent"
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={
+                          Object {
+                            "backgroundColor": "#42803E",
+                            "borderRadius": 4,
+                            "opacity": 1,
+                            "padding": 16,
+                          }
+                        }
+                        testID="com.ariesbifold:id/Global.Okay"
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "center",
+                            }
+                          }
+                        >
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 18,
+                                  "fontWeight": "bold",
+                                  "textAlign": "center",
+                                },
+                                false,
+                                false,
+                                false,
+                              ]
+                            }
+                          >
+                            Global.Okay
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </RCTScrollView>
+              </View>
+            </View>
+          </Modal>
+          <View
+            style={Object {}}
+          >
+            <View
+              style={
+                Object {
+                  "width": "100%",
+                }
+              }
+            >
+              <View
+                accessibilityLabel="PINEnter.Unlock"
+                accessibilityRole="button"
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                focusable={true}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}

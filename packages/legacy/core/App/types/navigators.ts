@@ -34,7 +34,6 @@ export enum Screens {
   ProofRequests = 'Proof Requests',
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
-  ConnectionInvitation = 'Connection Invitation',
   NameWallet = 'Name Wallet',
 }
 
@@ -82,20 +81,26 @@ export type AuthenticateStackParams = {
   [Screens.NameWallet]: undefined
 }
 
+export type OnboardingStackParams = {
+  [Screens.Onboarding]: undefined
+  [Screens.Developer]: undefined
+}
+
 export type ContactStackParams = {
-  [Screens.ConnectionInvitation]: undefined
   [Screens.Contacts]: undefined
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofRequest]: { proofId: string }
 }
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }
   [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
-  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
+  [Screens.ProofDetails]: { recordId: string; isHistory?: boolean; senderReview?: boolean }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
   [Screens.ProofRequestUsageHistory]: { templateId: string }
 }
@@ -140,4 +145,5 @@ export type DeliveryStackParams = {
   [Screens.ProofRequest]: { proofId: string }
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
+  [Screens.Chat]: { connectionId: string }
 }

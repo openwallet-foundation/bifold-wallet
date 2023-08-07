@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { ProofRequestTemplate, hasPredicates, isParameterizable } from '../../verifier'
 import EmptyList from '../components/misc/EmptyList'
 import { useConfiguration } from '../contexts/configuration'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplates } from '../hooks/proof-request-templates'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
@@ -104,6 +105,7 @@ type ListProofRequestsProps = StackScreenProps<ProofRequestsStackParams, Screens
 const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
+  const [store] = useStore()
 
   const style = StyleSheet.create({
     container: {
@@ -115,7 +117,10 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
 
   const { connectionId } = route?.params
 
-  const proofRequestTemplates = useTemplates()
+  // if useDevVerifierTemplates not set then exclude dev templates
+  const proofRequestTemplates = useTemplates().filter(
+    (tem) => store.preferences.useDevVerifierTemplates || !tem.devOnly
+  )
 
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>

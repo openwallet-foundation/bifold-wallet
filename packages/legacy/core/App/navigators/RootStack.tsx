@@ -1,6 +1,6 @@
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
+import { createStackNavigator, StackCardStyleInterpolator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState } from 'react-native'
@@ -13,6 +13,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
+import Developer from '../screens/Developer'
 import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
@@ -20,6 +21,7 @@ import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -50,6 +52,7 @@ const RootStack: React.FC = () => {
     if (agent && state.authentication.didAuthenticate) {
       // make sure agent is shutdown so wallet isn't still open
       removeSavedWalletSecret()
+      await agent.wallet.close()
       await agent.shutdown()
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
@@ -166,12 +169,30 @@ const RootStack: React.FC = () => {
   const mainStack = () => {
     const Stack = createStackNavigator()
 
+    // This function is to make the fade in behavior of both iOS and Android consistent for the settings menu
+    const forFade: StackCardStyleInterpolator = ({ current }) => ({
+      cardStyle: {
+        opacity: current.progress,
+      },
+    })
+
     return (
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
-        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} options={{ presentation: 'modal' }} />
-        <Stack.Screen name={Stacks.SettingStack} component={SettingStack} />
+        <Stack.Screen
+          name={Stacks.ConnectStack}
+          component={ConnectStack}
+          // below is part of the temporary gating of the new scan screen tabs feature
+          options={{ presentation: state.preferences.useConnectionInviterCapability ? 'card' : 'modal' }}
+        />
+        <Stack.Screen
+          name={Stacks.SettingStack}
+          component={SettingStack}
+          options={{
+            cardStyleInterpolator: forFade,
+          }}
+        />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
         <Stack.Screen name={Stacks.ConnectionStack} component={DeliveryStack} />
@@ -249,6 +270,11 @@ const RootStack: React.FC = () => {
             rightLeft: () => false,
           })}
           component={useBiometry}
+        />
+        <Stack.Screen
+          name={Screens.Developer}
+          component={Developer}
+          options={{ ...defaultStackOptions, title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
         />
       </Stack.Navigator>
     )

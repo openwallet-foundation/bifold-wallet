@@ -7,6 +7,7 @@ import {
   ProofExchangeRecord,
 } from '@aries-framework/core'
 
+const mediationRecipient = jest.fn()
 const useCredentials = jest.fn().mockReturnValue({ records: [] } as any)
 const useProofs = jest.fn().mockReturnValue({ records: [] } as any)
 const useCredentialByState = jest.fn().mockReturnValue([] as CredentialExchangeRecord[])
@@ -26,10 +27,21 @@ const mockProofModule = {
   acceptRequest: jest.fn(),
   declineRequest: jest.fn(),
 }
+
+const mockMediationRecipient = {
+  initiateMessagePickup: jest.fn(),
+}
+const mockOobModule = {
+  findById: jest.fn().mockReturnValue(Promise.resolve(null)),
+  createInvitation: jest.fn(),
+  toUrl: jest.fn(),
+}
 const useAgent = () => ({
   agent: {
     credentials: mockCredentialModule,
     proofs: mockProofModule,
+    mediationRecipient: mockMediationRecipient,
+    oob: mockOobModule,
   },
 })
 const useCredentialById = jest.fn()

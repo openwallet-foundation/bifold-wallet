@@ -37,8 +37,8 @@ const translation = {
         "Close": "Fermer",
     },
     "Date": {
-        "ShortFormat": "D MMM YYYY",
-        "LongFormat": "D MMMM YYYY, HH:mm:ss",
+        "ShortFormat": "D MMM",
+        "LongFormat": "D MMMM",
         "MonthLong": {
             "January": "janvier",
             "February": "février",
@@ -66,7 +66,10 @@ const translation = {
             "October": "oct",
             "November": "nov",
             "December": "déc",
-        }
+        },
+        "MinuteAgo": "minute ago (FR)",
+        "MinutesAgo": "minutes ago (FR)",
+        "JustNow": "Just now (FR)",
     },
     "Language": {
         "English": "Anglais",
@@ -226,9 +229,10 @@ const translation = {
     },
     "Contacts": {
         "EmptyList": "Your Contacts is empty! (FR)",
-        "TypeHere": "Type Message Here (FR)",
+        "TypeHere": "Message this contact... (FR)",
         "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (FR)",
         "WhatAreContacts": "What are Contacts? (FR)",
+        "AddContact": "Add Contact (FR)",
     },
     "ContactDetails": {
         "Created": "Créé",
@@ -311,6 +315,9 @@ const translation = {
         "ConnectionAccepted": "Connexion acceptée",
         "ConnectionNotFound": "Connexion non trouvée",
         "InvalidQrCode": "Code QR non valide. Veuillez réessayer.",
+        "WillScanAutomatically": "A valid QR code will scan automatically. (FR)",
+        "ScanQRCode": "Scan QR code (FR)",
+        "MyQRCode": "My QR code (FR)",
         "UnableToHandleRedirection": "Impossible de traiter la redirection",
         "Close": "Fermer",
         "Torch": "Flash"
@@ -321,6 +328,7 @@ const translation = {
         "ConnectionInvitation": "Invitation de connexion",
         "ScanQR": "Show this QR code to the other person (FR)",
         "ScanQRComment": "After the QR code is scanned, a connection will be created. (FR)",
+        "ShareQR": "Sharing this QR code with someone will add them as a Contact. (FR)",
         "MakingConnection": "Faire le lien...",
         "ConnectionCompleted": "Connexion terminée !",
         "Toggle": "Basculer la capacité d'invitation à la connexion",
@@ -396,6 +404,8 @@ const translation = {
         "ProofRequestDeclined": "Demande de preuve refusée",
         "DeclineTitle": "Refusé le justificatif d'identité",
         "Declined": "Diminué",
+        "ReviewSentInformation_one": "(FR) You shared the following information from {{count}} credential with",
+        "ReviewSentInformation_other": "(FR) You shared the following information from {{count}} credentials with",
         "ShareFollowingInformation_one": "partage les informations suivantes à partir des informations d'identification {{count}}.",
         "ShareFollowingInformation_other": "partage les informations suivantes à partir des informations d'identification {{count}}.",
         "DeclineBulletPoint1": "Les organisations et les services exigent que vous prouviez que vous êtes éligible pour continuer avec leur service ou leur accès.",
@@ -411,6 +421,7 @@ const translation = {
         "AppGuides": "Guides d'applications",
         "Build": "Créer",
         "WhatAreContacts": "Qu’est-ce qu’un Contact?",
+        "ScanMyQR": "Scan my QR code (FR)",
         "Developer": "Options de développeur"
     },
     "TabStack": {
@@ -437,6 +448,7 @@ const translation = {
         "ShowAll": "Afficher tout",
         "Hidden": "Masqué",
         "InvalidDate": "Date invalide: ",
+        "Zoom": "Zoom (FR)",
     },
     "Screens": {
         "Splash": "Page de garde",
@@ -468,7 +480,6 @@ const translation = {
         "SendProofRequest": "Envoyer une demande de justificatif",
         "ChooseProofRequest": "Choisissez une demande de justificatif",
         "ProofRequestUsageHistory": "Historique d'utilisation",
-        "ConnectionInvitation": "Invitation de connexion",
         "CreateConnectionInvitation": "Créer une invitation de connexion",
         "AttemptLockout": "Temporairement Verrouillé",
         "OnTheWay": 'En chemin',
@@ -501,8 +512,12 @@ const translation = {
         "SkipA11y": "Skip introduction to Aries Bifold (FR)",
     },
     "Chat": {
+        "OpenPresentation": "Open Presentation (FR)",
+        "ViewRequest": "View Request (FR)",
+        "ViewOffer": "View Offer (FR)",
         "OpenItem": "Ouvrir",
         "UserYou": "Vous avez",
+        "YouConnected": "You connected with (FR)",
         "CredentialProposalSent": "envoyé une proposition d'accréditation",
         "CredentialOfferReceived": "a envoyé une offre d'accréditation",
         "CredentialRequestSent": "envoyé une demande d'informations d'identification",
@@ -517,7 +532,9 @@ const translation = {
     },
     "Verifier": {
         "UseVerifierCapability": "Utiliser la fonctionnalité Verifier?",
+        "UseDevVerifierTemplates": "Use development verifier templates? (FR)",
         "Toggle": "Basculer la capacité de vérification",
+        "ToggleDevTemplates": "Toggle Verifier Development Templates (FR)",
         "ProcessingProof": "Juste un moment...",
         "ZeroKnowledgeProof": "Preuve zéro connaissance",
         "Parameterizable": "Paramétrable",

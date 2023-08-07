@@ -5,11 +5,12 @@ import { useTranslation } from 'react-i18next'
 import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
-import ConnectionInvitation from '../screens/ConnectionInvitation'
 import ContactDetails from '../screens/ContactDetails'
 import CredentialDetails from '../screens/CredentialDetails'
+import CredentialOffer from '../screens/CredentialOffer'
 import ListContacts from '../screens/ListContacts'
 import ProofDetails from '../screens/ProofDetails'
+import ProofRequest from '../screens/ProofRequest'
 import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
@@ -39,6 +40,11 @@ const ContactStack: React.FC = () => {
         options={{ title: t('Screens.CredentialDetails') }}
       />
       <Stack.Screen
+        name={Screens.CredentialOffer}
+        component={CredentialOffer}
+        options={{ title: t('Screens.CredentialOffer') }}
+      />
+      <Stack.Screen
         name={Screens.ProofDetails}
         component={ProofDetails}
         options={() => ({
@@ -47,12 +53,9 @@ const ContactStack: React.FC = () => {
         })}
       />
       <Stack.Screen
-        name={Screens.ConnectionInvitation}
-        component={ConnectionInvitation}
-        options={() => ({
-          title: '',
-          headerRight: () => <HeaderRightHome />,
-        })}
+        name={Screens.ProofRequest}
+        component={ProofRequest}
+        options={{ title: t('Screens.ProofRequest') }}
       />
     </Stack.Navigator>
   )

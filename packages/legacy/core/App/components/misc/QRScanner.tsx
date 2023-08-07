@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
+import { testIdWithKey } from '../../utils/testable'
 
 import QRScannerClose from './QRScannerClose'
 import QRScannerTorch from './QRScannerTorch'
@@ -106,7 +107,12 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
             {error ? (
               <>
                 <Icon style={styles.icon} name="cancel" size={30}></Icon>
-                <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white }]}>{error.message}</Text>
+                <Text
+                  testID={testIdWithKey('ErrorMessage')}
+                  style={[TextTheme.caption, { color: ColorPallet.grayscale.white }]}
+                >
+                  {error.message}
+                </Text>
               </>
             ) : (
               <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white, height: 30, margin: 4 }]}> </Text>

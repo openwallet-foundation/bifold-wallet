@@ -36,8 +36,8 @@ const translation = {
     "Remove": "Remove (PB)",
   },
   "Date": {
-    "ShortFormat": "D MMM YYYY",
-    "LongFormat": "D MMMM YYYY, HH:mm:ss",
+    "ShortFormat": "D MMM",
+    "LongFormat": "D MMMM",
     "MonthLong": {
       "January": "janeiro",
       "February": "fevereiro",
@@ -65,7 +65,10 @@ const translation = {
       "October": "out",
       "November": "nov",
       "December": "dez",
-    }
+    },
+    "MinuteAgo": "minute ago (PT-BR)",
+    "MinutesAgo": "minutes ago (PT-BR)",
+    "JustNow": "Just now (PT-BR)",
   },
   "Language": {
     "English": "Inglês",
@@ -209,9 +212,10 @@ const translation = {
   },
   "Contacts": {
     "EmptyList": "Your Contacts is empty! (PT-BR)",
-    "TypeHere": "Type Message Here (PT-BR)",
+    "TypeHere": "Message this contact... (PT-BR)",
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (PT-BR)",
     "WhatAreContacts": "What are Contacts? (PT-BR)",
+    "AddContact": "Add Contact (PT-BR)",
   },
   "ContactDetails": {
     "Created": "Criado",
@@ -291,6 +295,9 @@ const translation = {
     "ConnectionAccepted": "Conexão Aceita",
     "ConnectionNotFound": "Conexão Não Encontrada",
     "InvalidQrCode": "QR code inválido. Favor tentar novamente.",
+    "WillScanAutomatically": "A valid QR code will scan automatically. (PT-BR)",
+    "ScanQRCode": "Scan QR code (PT-BR)",
+    "MyQRCode": "My QR code (PT-BR)",
     "UnableToHandleRedirection": "Não foi possível tratar redirecionamento",
     "Close": "Fechar",
     "Torch": "Flash"
@@ -301,6 +308,7 @@ const translation = {
     "ConnectionInvitation": "Convite de conexão",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a connection will be created. (PB)",
+    "ShareQR": "Sharing this QR code with someone will add them as a Contact. (PT-BR)",
     "MakingConnection": "Fazendo conexão...",
     "ConnectionCompleted": "Conexão concluída!",
     "Toggle": "Alternar capacidade de convite de conexão",
@@ -343,6 +351,8 @@ const translation = {
     "AbortDecline": "Não, voltar",
     "DeclineTitle": "Decline credential offer? (PB-BR)",
     "Declined": "Recusado",
+    "ReviewSentInformation_one": "(PB) You shared the following information from {{count}} credential with",
+    "ReviewSentInformation_other": "(PB) You shared the following information from {{count}} credentials with",
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service. (PB-BR)",
@@ -395,6 +405,7 @@ const translation = {
     "Language": "Idioma",
     "AppGuides": "App guides (PT-BR)",
     "WhatAreContacts": "O que são Contatos?",
+    "ScanMyQR": "Scan my QR code (PT-BR)",
     "Developer": "Developer options"
   },
   "TabStack": {
@@ -419,7 +430,8 @@ const translation = {
     "Show": "Mostrar",
     "HideAll": "Esconder todos",
     "ShowAll": "Mostrar tudos",
-    "Hidden": "Escondido"
+    "Hidden": "Escondido",
+    "Zoom": "Zoom (PT-BR)",
   },
   "Screens": {
     "Splash": "Splash",
@@ -450,7 +462,6 @@ const translation = {
     "SendProofRequest": "Envie um pedido de prova",
     "ChooseProofRequest": "Escolha um pedido de prova",
     "ProofRequestUsageHistory": "Histórico de uso",
-    "ConnectionInvitation": "Convite de conexão",
     "CreateConnectionInvitation": "Criar um convite de conexão",
     "NameWallet": "Name your wallet (PT-BR)",
   },
@@ -476,8 +487,12 @@ const translation = {
     "SkipA11y": "Skip introduction to Aries Bifold (PT-BR)",
   },
   "Chat": {
+    "OpenPresentation": "Open Presentation (PT-BR)",
+    "ViewRequest": "View Request (PT-BR)",
+    "ViewOffer": "View Offer (PT-BR)",
     "OpenItem": "Abrir",
     "UserYou": "Você",
+    "YouConnected": "You connected with (PT-BR)",
     "CredentialProposalSent": "enviou uma proposta de credencial",
     "CredentialOfferReceived": "enviou uma oferta de credencial",
     "CredentialRequestSent": "enviou uma solicitação de credencial",
@@ -492,7 +507,9 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
+    "UseDevVerifierTemplates": "Use development verifier templates? (PB)",
     "Toggle": "Alternar capacidade do verificador",
+    "ToggleDevTemplates": "Toggle Verifier Development Templates (PB)",
     "ProcessingProof": "Um momento...",
     "ZeroKnowledgeProof": "Prova de conhecimento Zero",
     "Parameterizable": "Parametrizável",

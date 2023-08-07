@@ -1,27 +1,57 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NavigationContext } from '@react-navigation/native'
+import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { render, waitFor, fireEvent } from '@testing-library/react-native'
+import fs from 'fs'
+import path from 'path'
 import React from 'react'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
-import configurationContext from '../contexts/configuration'
+import { useNotifications } from '../../App/hooks/notifications'
 import ConnectionModal from '../../App/screens/Connection'
-import { testIdWithKey } from '../../App/utils/testable'
-import navigationContext from '../contexts/navigation'
+import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
+import { useOutOfBandByConnectionId } from '../../App/hooks/connections'
+import { useNavigation } from '@react-navigation/core'
+import { testIdWithKey } from '../../App/utils/testable'
+
+const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
+const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
+const connectionPath = path.join(__dirname, '../fixtures/connection-v1.json')
+const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
+const outOfBandInvitation = { goalCode: 'aries.vc.verify.once' }
+const props = { params: { connectionId: connection.id } }
 
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
 
-const props = { params: { connectionId: '123' } }
+jest.mock('../../App/hooks/notifications', () => ({
+  useNotifications: jest.fn(),
+}))
+
+jest.mock('../../App/hooks/connections', () => ({
+  useOutOfBandByConnectionId: jest.fn(),
+}))
 
 describe('ConnectionModal Component', () => {
+  beforeEach(() => {
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 0, notifications: [] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
+    jest.clearAllMocks()
+    jest.clearAllTimers()
+  })
+
   test('Renders correctly', async () => {
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <NavigationContext.Provider value={navigationContext}>
-          <ConnectionModal navigation={navigationContext} route={props as any} />
-        </NavigationContext.Provider>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
       </ConfigurationContext.Provider>
     )
     const tree = render(element)
@@ -30,13 +60,14 @@ describe('ConnectionModal Component', () => {
   })
 
   test('Updates after delay', async () => {
+    // @ts-ignore-next-line
+    useConnectionById.mockReturnValueOnce(connection)
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <NavigationContext.Provider value={navigationContext}>
-          <ConnectionModal navigation={navigationContext} route={props as any} />
-        </NavigationContext.Provider>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
       </ConfigurationContext.Provider>
     )
+
     const tree = render(element)
 
     await waitFor(() => {
@@ -47,23 +78,143 @@ describe('ConnectionModal Component', () => {
   })
 
   test('Dismiss on demand', async () => {
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValueOnce({ total: 1, notifications: [proofNotif] })
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <NavigationContext.Provider value={navigationContext}>
-          <ConnectionModal navigation={navigationContext} route={props as any} />
-        </NavigationContext.Provider>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
       </ConfigurationContext.Provider>
     )
+
     const tree = render(element)
 
     await waitFor(() => {
       timeTravel(10000)
     })
 
-    const backHomeBtn = tree.getByTestId(testIdWithKey('BackToHome'))
+    expect(tree).toMatchSnapshot()
+  })
 
-    fireEvent(backHomeBtn, 'press')
+  test('Test goal code loading screen', async () => {
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    await waitFor(() => {
+      timeTravel(10000)
+    })
 
     expect(tree).toMatchSnapshot()
+  })
+
+  test('Test goal code loading screen auto navigate', async () => {
+    const config = configurationContext
+    configurationContext.autoRedirectConnectionToHome = true
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValueOnce({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
+    const element = (
+      <ConfigurationContext.Provider value={config}>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    await waitFor(() => {
+      timeTravel(15000)
+    })
+
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('Connection with no goal code', async () => {
+    const navigation = useNavigation()
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: {} })
+    // @ts-ignore-next-line
+    useConnectionById.mockReturnValue(connection)
+    // @ts-ignore-next-line
+    useProofById.mockReturnValue(proofNotif)
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(1)
+    expect(navigation.navigate).toBeCalledWith('Chat', { connectionId: connection.id })
+  })
+
+  test('No connection proof request auto navigate', async () => {
+    const navigation = useNavigation()
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue(undefined)
+    // @ts-ignore-next-line
+    useConnectionById.mockReturnValue(undefined)
+    // @ts-ignore-next-line
+    useProofById.mockReturnValue(proofNotif)
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={{ params: {} } as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(1)
+    expect(navigation.navigate).toBeCalledWith('Proof Request', { proofId: proofNotif.id })
+  })
+
+  test('Goal code extracted and navigation to Chat', async () => {
+    const navigation = useNavigation()
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation })
+    // @ts-ignore-next-line
+    useConnectionById.mockReturnValue(undefined)
+    // @ts-ignore-next-line
+    useProofById.mockReturnValue(proofNotif)
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={{ params: {} } as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(1)
+    expect(navigation.navigate).toBeCalledWith('Proof Request', { proofId: proofNotif.id })
+  })
+
+  test('Dismiss navigates Home', async () => {
+    const navigation = useNavigation()
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const { getByTestId } = render(element)
+    const dismissButton = getByTestId(testIdWithKey('BackToHome'))
+    fireEvent(dismissButton, 'press')
+
+    expect(navigation.navigate).toBeCalledTimes(1)
+    expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
   })
 })

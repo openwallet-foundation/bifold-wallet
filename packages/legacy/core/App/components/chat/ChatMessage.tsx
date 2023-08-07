@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, View } from 'react-native'
 import { Bubble, IMessage, Message } from 'react-native-gifted-chat'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
@@ -11,6 +10,12 @@ import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Text from '../texts/Text'
 
+export enum CallbackType {
+  CredentialOffer = 'CredentialOffer',
+  ProofRequest = 'ProofRequest',
+  PresentationSent = 'PresentationSent',
+}
+
 export interface ChatMessageProps {
   messageProps: React.ComponentProps<typeof Message>
 }
@@ -18,24 +23,28 @@ export interface ChatMessageProps {
 export interface ExtendedChatMessage extends IMessage {
   renderEvent: () => JSX.Element
   createdAt: Date
-  withDetails?: boolean
+  messageOpensCallbackType?: CallbackType
   onDetails?: () => void
 }
 
 const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) => {
   const { ChatTheme: theme } = useTheme()
+
   return (
     <Text style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
-      {formatTime(message.createdAt)}
+      {formatTime(message.createdAt, { includeHour: true, chatFormat: true, trim: true })}
     </Text>
   )
 }
 
-const MessageIcon: React.FC = () => {
-  const { ChatTheme: theme } = useTheme()
+const MessageIcon: React.FC<{ type: CallbackType }> = ({ type }) => {
+  const { ChatTheme: theme, Assets } = useTheme()
+
   return (
-    <View style={{ ...theme.documentIconContainer }}>
-      <Icon name={'file-document-outline'} size={32} color={theme.documentIcon.color} />
+    <View style={{ ...theme.documentIconContainer, marginBottom: 16 }}>
+      {type === CallbackType.CredentialOffer && <Assets.svg.iconCredentialOfferLight width={40} height={40} />}
+      {type === CallbackType.PresentationSent && <Assets.svg.iconInfoSentLight width={40} height={40} />}
+      {type === CallbackType.ProofRequest && <Assets.svg.iconProofRequestLight width={40} height={40} />}
     </View>
   )
 }
@@ -43,8 +52,33 @@ const MessageIcon: React.FC = () => {
 export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
   const { t } = useTranslation()
   const { ChatTheme: theme } = useTheme()
-
   const message = useMemo(() => messageProps.currentMessage as ExtendedChatMessage, [messageProps])
+
+  const textForCallbackType = (callbackType: CallbackType) => {
+    // Receiving a credential offer
+    if (callbackType === CallbackType.CredentialOffer) {
+      return t('Chat.ViewOffer')
+    }
+
+    // Receiving a proof request
+    if (callbackType === CallbackType.ProofRequest) {
+      return t('Chat.ViewRequest')
+    }
+
+    // After a presentation of a proof
+    if (callbackType === CallbackType.PresentationSent) {
+      return t('Chat.OpenPresentation')
+    }
+
+    return t('Chat.OpenItem')
+  }
+
+  const testIdForCallbackType = (callbackType: CallbackType) => {
+    const text = textForCallbackType(callbackType)
+    const textWithoutSpaces = text.replace(/\s+/g, '')
+
+    return testIdWithKey(textWithoutSpaces)
+  }
 
   return (
     <View
@@ -79,12 +113,14 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
             right: { ...theme.rightText },
           }}
           renderTime={() => <MessageTime message={message} />}
-          renderCustomView={() => (message.withDetails ? <MessageIcon /> : null)}
+          renderCustomView={() =>
+            message.messageOpensCallbackType ? <MessageIcon type={message.messageOpensCallbackType} /> : null
+          }
         />
-        {message.withDetails && (
+        {message.messageOpensCallbackType && (
           <TouchableOpacity
-            accessibilityLabel={t('Chat.OpenItem')}
-            testID={testIdWithKey('OpenItem')}
+            accessibilityLabel={textForCallbackType(message.messageOpensCallbackType)}
+            testID={testIdForCallbackType(message.messageOpensCallbackType)}
             onPress={() => {
               if (message.onDetails) message.onDetails()
             }}
@@ -93,7 +129,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
             }}
             hitSlop={hitSlop}
           >
-            <Text style={{ ...theme.openButtonTextStyle }}>{t('Chat.OpenItem')}</Text>
+            <Text style={{ ...theme.openButtonTextStyle }}>
+              {textForCallbackType(message.messageOpensCallbackType)}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
