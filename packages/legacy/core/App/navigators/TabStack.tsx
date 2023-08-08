@@ -56,7 +56,7 @@ const TabStack: React.FC = () => {
                     style={{
                       ...TabTheme.tabBarTextStyle,
                       color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                      fontWeight: focused ? 'bold' : 'normal'
+                      fontWeight: focused ? 'bold' : 'normal',
                     }}
                   >
                     {t('TabStack.Home')}
@@ -155,7 +155,7 @@ const TabStack: React.FC = () => {
                       style={{
                         ...TabTheme.tabBarTextStyle,
                         color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                        fontWeight: focused ? 'bold' : 'normal'
+                        fontWeight: focused ? 'bold' : 'normal',
                       }}
                     >
                       {t('TabStack.Credentials')}
