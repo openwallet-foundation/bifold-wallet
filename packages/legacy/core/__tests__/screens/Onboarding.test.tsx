@@ -9,7 +9,6 @@ import { OnboardingTheme, theme } from '../../App/theme'
 import CredentialList from '../../App/assets/img/credential-list.svg'
 import { testIdWithKey } from '../../App/utils/testable'
 
-
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 
 jest.mock('@react-navigation/core', () => {
@@ -48,15 +47,19 @@ describe('Onboarding', () => {
 
   test('Onboarding Developer mode', async () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
-    const testFunc = jest.fn();
+    const testFunc = jest.fn()
     const tree = render(
-      <Onboarding pages={[createPageWith(CredentialList, "test", "body", {}, true, testFunc)]} nextButtonText="Next" previousButtonText="Back" style={carousel} />
+      <Onboarding
+        pages={[createPageWith(CredentialList, 'test', 'body', {}, true, testFunc)]}
+        nextButtonText="Next"
+        previousButtonText="Back"
+        style={carousel}
+      />
     )
     expect(tree).toMatchSnapshot()
 
     const devModeButton = await tree.getByTestId(testIdWithKey('DeveloperModeTouch'))
-    fireEvent(devModeButton, "press")
+    fireEvent(devModeButton, 'press')
     expect(testFunc).toBeCalledTimes(1)
   })
-
 })

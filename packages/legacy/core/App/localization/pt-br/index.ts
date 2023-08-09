@@ -36,8 +36,8 @@ const translation = {
     "Remove": "Remove (PB)",
   },
   "Date": {
-    "ShortFormat": "D MMM YYYY",
-    "LongFormat": "D MMMM YYYY, HH:mm:ss",
+    "ShortFormat": "D MMM",
+    "LongFormat": "D MMMM",
     "MonthLong": {
       "January": "janeiro",
       "February": "fevereiro",
@@ -65,7 +65,10 @@ const translation = {
       "October": "out",
       "November": "nov",
       "December": "dez",
-    }
+    },
+    "MinuteAgo": "minute ago (PT-BR)",
+    "MinutesAgo": "minutes ago (PT-BR)",
+    "JustNow": "Just now (PT-BR)",
   },
   "Language": {
     "English": "Inglês",
@@ -209,7 +212,7 @@ const translation = {
   },
   "Contacts": {
     "EmptyList": "Your Contacts is empty! (PT-BR)",
-    "TypeHere": "Type Message Here (PT-BR)",
+    "TypeHere": "Message this contact... (PT-BR)",
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here. (PT-BR)",
     "WhatAreContacts": "What are Contacts? (PT-BR)",
     "AddContact": "Add Contact (PT-BR)",
@@ -406,7 +409,7 @@ const translation = {
     "Developer": "Developer options"
   },
   "TabStack": {
-    "Home": "Home",
+    "Home": "Notifications (PB)",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
   },
@@ -436,7 +439,7 @@ const translation = {
     "Terms": "Termos & Condições",
     "CreatePIN": "Criar um PIN",
     "EnterPIN": "Digitar o PIN",
-    "Home": "Home",
+    "Home": "Notifications (PB)",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
     "CredentialDetails": "Detalhes de Credencial",
@@ -459,7 +462,6 @@ const translation = {
     "SendProofRequest": "Envie um pedido de prova",
     "ChooseProofRequest": "Escolha um pedido de prova",
     "ProofRequestUsageHistory": "Histórico de uso",
-    "ConnectionInvitation": "Convite de conexão",
     "CreateConnectionInvitation": "Criar um convite de conexão",
     "NameWallet": "Name your wallet (PT-BR)",
   },
@@ -490,6 +492,7 @@ const translation = {
     "ViewOffer": "View Offer (PT-BR)",
     "OpenItem": "Abrir",
     "UserYou": "Você",
+    "YouConnected": "You connected with (PT-BR)",
     "CredentialProposalSent": "enviou uma proposta de credencial",
     "CredentialOfferReceived": "enviou uma oferta de credencial",
     "CredentialRequestSent": "enviou uma solicitação de credencial",

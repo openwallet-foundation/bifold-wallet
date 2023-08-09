@@ -39,6 +39,6 @@ export const renderSend = (props: any, theme: any) => (
       ...theme.sendContainer,
     }}
   >
-    <Icon name="arrow-up-circle" size={38} color={props.text ? theme.sendEnabled : theme.sendDisabled} />
+    <Icon name="send" size={38} color={props.text ? theme.sendEnabled : theme.sendDisabled} />
   </Send>
 )

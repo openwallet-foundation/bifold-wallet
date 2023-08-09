@@ -9,6 +9,7 @@ module.exports = {
       '<rootDir>/__mocks__/file.js',
     '\\.(css|less)$': '<rootDir>/__mocks__/style.js',
     axios: 'axios/dist/node/axios.cjs',
+    'react-i18next': '<rootDir>/__mocks__/react-i18next.ts',
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',

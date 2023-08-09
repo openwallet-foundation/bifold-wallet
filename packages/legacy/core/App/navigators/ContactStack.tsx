@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
-import ConnectionInvitation from '../screens/ConnectionInvitation'
 import ContactDetails from '../screens/ContactDetails'
 import CredentialDetails from '../screens/CredentialDetails'
 import CredentialOffer from '../screens/CredentialOffer'
@@ -57,14 +56,6 @@ const ContactStack: React.FC = () => {
         name={Screens.ProofRequest}
         component={ProofRequest}
         options={{ title: t('Screens.ProofRequest') }}
-      />
-      <Stack.Screen
-        name={Screens.ConnectionInvitation}
-        component={ConnectionInvitation}
-        options={() => ({
-          title: '',
-          headerRight: () => <HeaderRightHome />,
-        })}
       />
     </Stack.Navigator>
   )

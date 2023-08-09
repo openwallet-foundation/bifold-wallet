@@ -29,7 +29,7 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown, st
       //NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
       const date = new Date(Number(year), Number(month) - 1, Number(day))
       if (!isNaN(date.getDate())) {
-        setDate(formatTime(date))
+        setDate(formatTime(date, { shortMonth: true }))
         return
       }
     }
