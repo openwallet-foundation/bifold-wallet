@@ -4,7 +4,7 @@ import { defaultProofRequestTemplates } from '../verifier'
 import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
-import HomeContentView from './components/views/HomeContentView'
+import HomeFooterView from './components/views/HomeFooterView'
 import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
@@ -21,7 +21,7 @@ export const defaultConfiguration: ConfigurationContext = {
   splash: Splash,
   terms: Terms,
   developer: Developer,
-  homeContentView: HomeContentView,
+  homeContentView: HomeFooterView,
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: EmptyList,
