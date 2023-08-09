@@ -90,41 +90,6 @@ describe('with a notifications module, when an issuer sends a credential offer',
   })
 
   /**
-   * Scenario: Home Screen with pending notifications
-   * Given Wallet has successfully loaded
-   * When the Home Screen successfully loads
-   * Then the number of pending notifications is displayed in the "Home" button in the main navigation bar
-   */
-  test('notification label is displayed with number of notifications', async () => {
-    const { findByText } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <Home route={{} as any} navigation={useNavigation()} />
-      </ConfigurationContext.Provider>
-    )
-    const notificationLabel = await findByText('Home.Notifications (3)')
-
-    expect(notificationLabel).toBeTruthy()
-  })
-
-  test('Pressing the "See All" button navigates correctly', async () => {
-    const navigation = useNavigation()
-    const { findByText } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <Home route={{} as any} navigation={useNavigation()} />
-      </ConfigurationContext.Provider>
-    )
-    const seeAllButton = await findByText('Home.SeeAll')
-
-    expect(seeAllButton).toBeTruthy()
-
-    act(() => {
-      fireEvent(seeAllButton, 'press')
-    })
-
-    expect(navigation.navigate).toBeCalledWith('Notifications')
-  })
-
-  /**
    * Scenario: Holder receives a credential offer
    * Given the holder has a connection with an issuer
    * When the issuer sends a credential offer

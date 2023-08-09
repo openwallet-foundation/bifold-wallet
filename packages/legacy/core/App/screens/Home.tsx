@@ -5,14 +5,12 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, View, Dimensions } from 'react-native'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
-import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import AppGuideModal from '../components/modals/AppGuideModal'
 import { AttachTourStep } from '../components/tour/AttachTourStep'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-// import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
 
@@ -34,36 +32,6 @@ const Home: React.FC<HomeProps> = () => {
   const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
   const screenIsFocused = useIsFocused()
-
-  // const styles = StyleSheet.create({
-  //   container: {
-  //     paddingHorizontal: offset,
-  //   },
-  //   rowContainer: {
-  //     flexDirection: 'row',
-  //     justifyContent: 'space-between',
-  //     alignItems: 'center',
-  //     flexWrap: 'wrap',
-  //     paddingHorizontal: offset,
-  //   },
-  //   messageContainer: {
-  //     alignItems: 'center',
-  //     justifyContent: 'center',
-  //     marginTop: 35,
-  //     marginHorizontal: offset,
-  //   },
-  //   header: {
-  //     marginTop: offset,
-  //     marginBottom: 20,
-  //   },
-  //   linkContainer: {
-  //     minHeight: HomeTheme.link.fontSize,
-  //     marginTop: 10,
-  //   },
-  //   link: {
-  //     ...HomeTheme.link,
-  //   },
-  // })
 
   const DisplayListItemType = (item: any): Element => {
     let component: Element
