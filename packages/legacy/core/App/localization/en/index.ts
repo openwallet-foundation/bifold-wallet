@@ -435,7 +435,7 @@ const translation = {
     "Developer": "Developer options"
   },
   "TabStack": {
-    "Home": "Home",
+    "Home": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
   },
@@ -466,7 +466,7 @@ const translation = {
     "Terms": "Terms & Conditions",
     "CreatePIN": "Create a PIN",
     "EnterPIN": "Enter PIN",
-    "Home": "Home",
+    "Home": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
     "CredentialDetails": "Credential Details",
