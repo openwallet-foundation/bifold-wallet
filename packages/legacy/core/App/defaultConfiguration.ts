@@ -5,6 +5,7 @@ import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
+import HomeHeaderView from './components/views/HomeHeaderView'
 import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
@@ -21,7 +22,8 @@ export const defaultConfiguration: ConfigurationContext = {
   splash: Splash,
   terms: Terms,
   developer: Developer,
-  homeContentView: HomeFooterView,
+  homeHeaderView: HomeHeaderView,
+  homeFooterView: HomeFooterView,
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: EmptyList,

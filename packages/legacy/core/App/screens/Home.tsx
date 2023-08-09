@@ -25,7 +25,7 @@ const Home: React.FC<HomeProps> = () => {
   const { useCustomNotifications, enableTours: enableToursConfig } = useConfiguration()
   const { notifications } = useCustomNotifications()
   const { t } = useTranslation()
-  const { homeContentView: HomeContentView } = useConfiguration()
+  const { homeFooterView: HomeFooterView, homeHeaderView: HomeHeaderView } = useConfiguration()
 
   // This syntax is required for the jest mocks to work
   // eslint-disable-next-line import/no-named-as-default-member
@@ -144,20 +144,8 @@ const Home: React.FC<HomeProps> = () => {
             </AttachTourStep>
           </View>
         )}
-        ListHeaderComponent={() => (
-          <View style={{ marginHorizontal: 20, marginTop: 20, marginBottom: 10 }}>
-            <InfoBox
-              notificationType={InfoBoxType.Info}
-              title="Get your Person credential"
-              description="Add your person credential to your wallet and use it to get access to services online"
-              onCallToActionPressed={() => {
-                console.log('pressed')
-              }}
-              onCallToActionLabel="Start"
-            />
-          </View>
-        )}
-        ListFooterComponent={() => <HomeContentView />}
+        ListHeaderComponent={() => <HomeHeaderView />}
+        ListFooterComponent={() => <HomeFooterView />}
         data={notifications}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (

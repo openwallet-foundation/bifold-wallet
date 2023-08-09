@@ -9,11 +9,11 @@ import { useNotifications } from '../../hooks/notifications'
 
 const offset = 25
 
-interface HomeFooterView {
+interface HomeFooterViewProps {
   children?: any
 }
 
-const HomeFooterView: React.FC<HomeFooterView> = ({ children }) => {
+const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
   const credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
