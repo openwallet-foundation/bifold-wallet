@@ -425,7 +425,7 @@ const translation = {
         "Developer": "Options de développeur"
     },
     "TabStack": {
-        "Home": "Accueil",
+        "Home": "Notifications (FR)",
         "Scan": "Numériser",
         "Credentials": "Justificatifs"
     },
@@ -456,7 +456,7 @@ const translation = {
         "Terms": "Conditions d'utilisation",
         "CreatePIN": "Créer un NIP à 6 chiffres",
         "EnterPIN": "Saisir le NIP",
-        "Home": "Accueil",
+        "Home": "Notifications (FR)",
         "Scan": "Numériser",
         "Credentials": "Justificatifs",
         "CredentialDetails": "Détails des justificatifs",
