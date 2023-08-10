@@ -6,6 +6,7 @@ const authContext = {
   setPIN: jest.fn(),
   isBiometricsActive: jest.fn(),
   disableBiometrics: jest.fn(),
+  rekeyWallet: jest.fn(),
 }
 
 export default authContext

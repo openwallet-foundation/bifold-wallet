@@ -10,7 +10,6 @@ import Language from '../screens/Language'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
-import PINRecreate from '../screens/PINRecreate'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
 import UseBiometry from '../screens/UseBiometry'
@@ -64,11 +63,6 @@ const SettingStack: React.FC = () => {
           headerLeft: biometryUpdatePending ? () => null : undefined,
           headerBackTestID: testIdWithKey('Back'),
         }}
-      />
-      <Stack.Screen
-        name={Screens.RecreatePIN}
-        component={PINRecreate}
-        options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.CreatePIN}
