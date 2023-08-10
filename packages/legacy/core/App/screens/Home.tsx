@@ -2,7 +2,7 @@ import { useIsFocused } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View, Dimensions } from 'react-native'
+import { FlatList, View } from 'react-native'
 
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
@@ -13,9 +13,6 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
-
-const { width } = Dimensions.get('window')
-const offset = 25
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -104,7 +101,7 @@ const Home: React.FC<HomeProps> = () => {
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"
         ListEmptyComponent={() => (
-          <View style={{ marginHorizontal: offset, width: width - 2 * offset }}>
+          <View style={{ marginHorizontal: 25, marginVertical: 20 }}>
             <AttachTourStep index={1} fill>
               <View>
                 <NoNewUpdates />
