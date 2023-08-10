@@ -21,7 +21,7 @@ import toastConfig from './components/toast/ToastConfig'
 import { AttachTourStep } from './components/tour/AttachTourStep'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { TourBox } from './components/tour/TourBox'
-import HomeContentView from './components/views/HomeContentView'
+import HomeFooterView from './components/views/HomeFooterView'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
 import { CommonUtilProvider } from './contexts/commons'
@@ -122,7 +122,7 @@ export {
   Splash,
   Developer,
   Terms,
-  HomeContentView,
+  HomeFooterView as HomeContentView,
   UseBiometry,
   AttemptLockout,
   Record,
