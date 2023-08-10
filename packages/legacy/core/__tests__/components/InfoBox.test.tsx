@@ -75,7 +75,7 @@ describe('ErrorModal Component', () => {
     expect(tree.queryByText('Global.Okay')).toBeNull()
   })
 
-  test('Callback triggered ', async () => {
+  test('Callback triggered', async () => {
     const tree = render(
       <InfoBox
         notificationType={InfoBoxType.Info}
