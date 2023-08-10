@@ -136,6 +136,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aries-framework/push-notifications@npm:0.5.0":
+  version: 0.5.0
+  resolution: "@aries-framework/push-notifications@npm:0.5.0"
+  dependencies:
+    class-transformer: 0.5.1
+    class-validator: 0.14.0
+    reflect-metadata: ^0.1.13
+    tsyringe: ^4.6.0
+  peerDependencies:
+    "@aries-framework/core": ^0.4.0
+  checksum: fb7f5df97473e15c7fb8a193ac6fb8b30927e2eb0abdc196cf78f151632a2bb6148b2390c5fe0e22532faab83e494b4307f03aeca530d987c3cd2f2b5da1b936
+  languageName: node
+  linkType: hard
+
 "@aries-framework/react-hooks@npm:^0.4.2":
   version: 0.4.2
   resolution: "@aries-framework/react-hooks@npm:0.4.2"
@@ -5883,6 +5897,7 @@ __metadata:
     "@aries-framework/core": ^0.4.0
     "@aries-framework/indy-sdk-to-askar-migration": 0.4.0
     "@aries-framework/indy-vdr": ^0.4.0
+    "@aries-framework/push-notifications": 0.5.0
     "@aries-framework/react-hooks": ^0.4.2
     "@aries-framework/react-native": ^0.4.0
     "@babel/core": 7.15.5
@@ -6005,6 +6020,7 @@ __metadata:
     "@aries-framework/core": ^0.4.0
     "@aries-framework/indy-sdk-to-askar-migration": 0.4.0
     "@aries-framework/indy-vdr": ^0.4.0
+    "@aries-framework/push-notifications": 0.5.0
     "@aries-framework/react-hooks": ^0.4.2
     "@aries-framework/react-native": ^0.4.0
     "@babel/core": ^7.12.9
@@ -6106,6 +6122,7 @@ __metadata:
     "@aries-framework/core": ^0.4.0
     "@aries-framework/indy-sdk-to-askar-migration": 0.4.0
     "@aries-framework/indy-vdr": ^0.4.0
+    "@aries-framework/push-notifications": 0.5.0
     "@aries-framework/react-hooks": ^0.4.2
     "@aries-framework/react-native": ^0.4.0
     "@formatjs/intl-datetimeformat": ^4.2.3
@@ -19716,6 +19733,15 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"tsyringe@npm:^4.6.0":
+  version: 4.8.0
+  resolution: "tsyringe@npm:4.8.0"
+  dependencies:
+    tslib: ^1.9.3
+  checksum: 6bf13235cc1ae86829169e3a887c3ff6ee2d220678df01dd0fff202b5a533d4eb47a52334b76d2b1b1cf80c8c92ff22173a54ad72c9f1b8ea0ea4957304966f0
   languageName: node
   linkType: hard
 
