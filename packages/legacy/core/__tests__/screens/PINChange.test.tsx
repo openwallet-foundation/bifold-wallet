@@ -23,13 +23,19 @@ jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn(),
 }))
 
-describe('displays a PIN create screen', () => {
+describe('displays a PIN change screen', () => {
   beforeEach(() => {
     // @ts-ignore-next-line
     useConfiguration.mockReturnValue({ PINSecurity: { rules: PINRules, displayHelper: false }, enableWalletNaming: false })
     jest.clearAllMocks()
   })
-  test('PIN create renders correctly', async () => {
+
+  test('PIN change renders correctly', async () => {
+    const route = {
+      params: {
+        updatePin: true
+      }
+    } as any
     const tree = render(
       <StoreProvider
         initialState={{
@@ -37,16 +43,18 @@ describe('displays a PIN create screen', () => {
         }}
       >
         <AuthContext.Provider value={authContext}>
-          <PINCreate route={{} as any} navigation={jest.fn() as any} setAuthenticated={jest.fn()} />
+          <PINCreate route={route} navigation={jest.fn() as any} setAuthenticated={jest.fn()} />
         </AuthContext.Provider>
       </StoreProvider>
     )
 
     // Causes RangeError: Invalid string length
     // expect(tree).toMatchSnapshot()
-    const pinInput1 = tree.getByTestId(testIdWithKey('EnterPIN'))
-    const pinInput2 = tree.getByTestId(testIdWithKey('ReenterPIN'))
-    expect(pinInput1).not.toBe(null)
-    expect(pinInput2).not.toBe(null)
+    const oldPinInput = tree.getByTestId(testIdWithKey('EnterOldPIN'))
+    const newPinInput1 = tree.getByTestId(testIdWithKey('EnterPIN'))
+    const newPinInput2 = tree.getByTestId(testIdWithKey('ReenterPIN'))
+    expect(oldPinInput).not.toBe(null)
+    expect(newPinInput1).not.toBe(null)
+    expect(newPinInput2).not.toBe(null)
   })
 })
