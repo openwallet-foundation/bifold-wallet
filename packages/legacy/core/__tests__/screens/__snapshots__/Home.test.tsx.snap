@@ -38,7 +38,7 @@ exports[`displays a home screen renders correctly 1`] = `
       style={
         Object {
           "marginHorizontal": 25,
-          "width": 700,
+          "marginVertical": 20,
         }
       }
     >
