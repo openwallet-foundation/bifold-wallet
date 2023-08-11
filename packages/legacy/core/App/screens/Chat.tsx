@@ -9,7 +9,7 @@ import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@ar
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Clipboard, Linking, Text, TouchableHighlight } from 'react-native'
+import { Linking, Text } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -34,7 +34,6 @@ import {
   getProofEventLabel,
   getProofEventRole,
 } from '../utils/helpers'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
 
@@ -56,7 +55,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
 
   useMemo(() => {
     assertConnectedNetwork()
@@ -72,26 +71,33 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   useEffect(() => {
     const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
       const role = getMessageEventRole(record)
+      // eslint-disable-next-line
       const linkRegex = /(?:https?\:\/\/\w+(?:\.\w+)+\S*)|(?:[\w\d\.\_\-]+@\w+(?:\.\w+)+)/gm
+      // eslint-disable-next-line
       const mailRegex = /^[\w\d\.\_\-]+@\w+(?:\.\w+)+$/gm
       const links = record.content.match(linkRegex) ?? []
-      const handleLinkPress = (link:string)=>{
-        if(link.match(mailRegex)){
-          link = "mailto:" + link
+      const handleLinkPress = (link: string) => {
+        if (link.match(mailRegex)) {
+          link = 'mailto:' + link
         }
         Linking.openURL(link)
       }
       const msgText = (
         <Text style={role === Role.me ? theme.rightText : theme.leftText}>
-          {
-            record.content.split(linkRegex).map((split, i) => {
-              if (i < links.length) {
-                const link = links[i]
-                return (<><Text>{split}</Text><Text onPress={()=>handleLinkPress(link)} style={{ ...TextTheme.normal, color: ColorPallet.brand.link }}>{link}</Text></>)
-              }
-              return (<Text>{split}</Text>)
-            })
-          }
+          {record.content.split(linkRegex).map((split, i) => {
+            if (i < links.length) {
+              const link = links[i]
+              return (
+                <>
+                  <Text>{split}</Text>
+                  <Text onPress={() => handleLinkPress(link)} style={{ color: ColorPallet.brand.link }}>
+                    {link}
+                  </Text>
+                </>
+              )
+            }
+            return <Text>{split}</Text>
+          })}
         </Text>
       )
       return {
@@ -215,17 +221,17 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
 
     const connectedMessage = connection
       ? {
-        _id: 'connected',
-        text: `${t('Chat.YouConnected')} ${theirLabel}`,
-        renderEvent: () => (
-          <Text style={theme.rightText}>
-            {t('Chat.YouConnected')}
-            <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
-          </Text>
-        ),
-        createdAt: connection.createdAt,
-        user: { _id: Role.me },
-      }
+          _id: 'connected',
+          text: `${t('Chat.YouConnected')} ${theirLabel}`,
+          renderEvent: () => (
+            <Text style={theme.rightText}>
+              {t('Chat.YouConnected')}
+              <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
+            </Text>
+          ),
+          createdAt: connection.createdAt,
+          user: { _id: Role.me },
+        }
       : undefined
 
     setMessages(
@@ -252,15 +258,15 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const actions = useMemo(() => {
     return store.preferences.useVerifierCapability
       ? [
-        {
-          text: t('Verifier.SendProofRequest'),
-          onPress: () => {
-            setShowActionSlider(false)
-            onSendRequest()
+          {
+            text: t('Verifier.SendProofRequest'),
+            onPress: () => {
+              setShowActionSlider(false)
+              onSendRequest()
+            },
+            icon: () => <Assets.svg.iconInfoSentDark height={30} width={30} />,
           },
-          icon: () => <Assets.svg.iconInfoSentDark height={30} width={30} />,
-        },
-      ]
+        ]
       : undefined
   }, [t, store.preferences.useVerifierCapability, onSendRequest])
 
