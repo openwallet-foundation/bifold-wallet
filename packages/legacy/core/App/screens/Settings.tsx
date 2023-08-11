@@ -138,6 +138,16 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.UseBiometry),
         },
         {
+          title: t('Settings.ChangePin'),
+          value: undefined,
+          accessibilityLabel: t('Settings.ChangePin'),
+          testID: testIdWithKey('Change Pin'),
+          onPress: () =>
+            navigation
+              .getParent()
+              ?.navigate(Stacks.SettingStack, { screen: Screens.CreatePIN, params: { updatePin: true } }),
+        },
+        {
           title: t('Settings.Language'),
           value: currentLanguage,
           accessibilityLabel: t('Settings.Language'),
