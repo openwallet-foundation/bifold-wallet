@@ -28,7 +28,6 @@ export enum Screens {
   OnTheWay = 'On The Way',
   Declined = 'Declined',
   UseBiometry = 'Use Biometry',
-  RecreatePIN = 'Change PIN',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofRequests = 'Proof Requests',
@@ -125,7 +124,6 @@ export type SettingStackParams = {
   [Screens.Tours]: undefined
   [Screens.UseBiometry]: undefined
   [Screens.CreatePIN]: undefined
-  [Screens.RecreatePIN]: undefined
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
