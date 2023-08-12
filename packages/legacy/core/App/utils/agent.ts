@@ -22,6 +22,7 @@ import {
   AutoAcceptProof,
 } from '@aries-framework/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
+import { PushNotificationsFcmModule, PushNotificationsApnsModule } from '@aries-framework/push-notifications'
 import { useAgent } from '@aries-framework/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { ariesAskar } from '@hyperledger/aries-askar-react-native'
@@ -77,6 +78,8 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
       mediatorInvitationUrl: mediatorInvitationUrl,
       mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
     }),
+    pushNotificationsFcm: new PushNotificationsFcmModule(),
+    pushNotificationsApns: new PushNotificationsApnsModule(),
   }
 }
 
