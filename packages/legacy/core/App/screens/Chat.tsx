@@ -9,7 +9,7 @@ import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@ar
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text } from 'react-native'
+import { Linking, Text } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -55,6 +55,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
+  const { ColorPallet } = useTheme()
 
   useMemo(() => {
     assertConnectedNetwork()
@@ -70,10 +71,39 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   useEffect(() => {
     const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
       const role = getMessageEventRole(record)
+      // eslint-disable-next-line
+      const linkRegex = /(?:https?\:\/\/\w+(?:\.\w+)+\S*)|(?:[\w\d\.\_\-]+@\w+(?:\.\w+)+)/gm
+      // eslint-disable-next-line
+      const mailRegex = /^[\w\d\.\_\-]+@\w+(?:\.\w+)+$/gm
+      const links = record.content.match(linkRegex) ?? []
+      const handleLinkPress = (link: string) => {
+        if (link.match(mailRegex)) {
+          link = 'mailto:' + link
+        }
+        Linking.openURL(link)
+      }
+      const msgText = (
+        <Text style={role === Role.me ? theme.rightText : theme.leftText}>
+          {record.content.split(linkRegex).map((split, i) => {
+            if (i < links.length) {
+              const link = links[i]
+              return (
+                <>
+                  <Text>{split}</Text>
+                  <Text onPress={() => handleLinkPress(link)} style={{ color: ColorPallet.brand.link }}>
+                    {link}
+                  </Text>
+                </>
+              )
+            }
+            return <Text>{split}</Text>
+          })}
+        </Text>
+      )
       return {
         _id: record.id,
         text: record.content,
-        renderEvent: () => <Text style={role === Role.me ? theme.rightText : theme.leftText}>{record.content}</Text>,
+        renderEvent: () => msgText,
         createdAt: record.updatedAt || record.createdAt,
         type: record.type,
         user: { _id: role },
