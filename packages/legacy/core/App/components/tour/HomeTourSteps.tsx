@@ -10,7 +10,7 @@ import { TourBox } from './TourBox'
 export const homeTourSteps: TourStep[] = [
   {
     render: (props) => {
-      const { current, next, stop, previous } = props
+      const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()
       return (
@@ -20,7 +20,8 @@ export const homeTourSteps: TourStep[] = [
           rightText={t('Tour.Next')}
           onLeft={stop}
           onRight={next}
-          current={current}
+          currentTour={currentTour}
+          currentStep={currentStep}
           previous={previous}
           stop={stop}
           next={next}
@@ -30,6 +31,7 @@ export const homeTourSteps: TourStep[] = [
               ...TextTheme.normal,
               color: ColorPallet.notification.infoText,
             }}
+            allowFontScaling={false}
           >
             {t('Tour.AddAndShareDescription')}
           </Text>
@@ -39,7 +41,7 @@ export const homeTourSteps: TourStep[] = [
   },
   {
     render: (props) => {
-      const { current, next, stop, previous } = props
+      const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()
       return (
@@ -49,7 +51,8 @@ export const homeTourSteps: TourStep[] = [
           rightText={t('Tour.Next')}
           onLeft={previous}
           onRight={next}
-          current={current}
+          currentTour={currentTour}
+          currentStep={currentStep}
           next={next}
           stop={stop}
           previous={previous}
@@ -59,6 +62,7 @@ export const homeTourSteps: TourStep[] = [
               ...TextTheme.normal,
               color: ColorPallet.notification.infoText,
             }}
+            allowFontScaling={false}
           >
             {t('Tour.NotificationsDescription')}
           </Text>
@@ -68,7 +72,7 @@ export const homeTourSteps: TourStep[] = [
   },
   {
     render: (props) => {
-      const { current, next, stop, previous } = props
+      const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()
       return (
@@ -78,7 +82,8 @@ export const homeTourSteps: TourStep[] = [
           rightText={t('Tour.Done')}
           onLeft={previous}
           onRight={stop}
-          current={current}
+          currentTour={currentTour}
+          currentStep={currentStep}
           next={next}
           stop={stop}
           previous={previous}
@@ -88,6 +93,7 @@ export const homeTourSteps: TourStep[] = [
               ...TextTheme.normal,
               color: ColorPallet.notification.infoText,
             }}
+            allowFontScaling={false}
           >
             {t('Tour.YourCredentialsDescription')}
           </Text>

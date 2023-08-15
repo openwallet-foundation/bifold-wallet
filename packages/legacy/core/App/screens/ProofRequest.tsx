@@ -7,6 +7,7 @@ import {
 } from '@aries-framework/anoncreds'
 import { ProofExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useCredentials, useProofById } from '@aries-framework/react-hooks'
+import { useIsFocused } from '@react-navigation/core'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
@@ -20,13 +21,18 @@ import ConnectionImage from '../components/misc/ConnectionImage'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
+import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
 import { ProofCredentialItems } from '../types/record'
 import { ModalUsage } from '../types/remove'
+import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
@@ -57,6 +63,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
+  const { enableTours: enableToursConfig } = useConfiguration()
+  const [store, dispatch] = useStore()
+  const { start } = useTour()
+  const screenIsFocused = useIsFocused()
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -105,6 +115,22 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       paddingHorizontal: 10,
     },
   })
+
+  useEffect(() => {
+    const shouldShowTour =
+      store.preferences.developerModeEnabled &&
+      enableToursConfig &&
+      store.tours.enableTours &&
+      !store.tours.seenProofRequestTour
+
+    if (shouldShowTour && screenIsFocused) {
+      start(TourID.ProofRequestTour)
+      dispatch({
+        type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
+        payload: [true],
+      })
+    }
+  }, [screenIsFocused])
 
   useEffect(() => {
     if (!agent) {

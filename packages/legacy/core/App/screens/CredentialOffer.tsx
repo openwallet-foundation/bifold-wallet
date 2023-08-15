@@ -2,6 +2,7 @@
 import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
 import { CredentialPreviewAttribute } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
+import { useIsFocused } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,11 +19,15 @@ import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { useTour } from '../contexts/tour/tour-context'
 import { BifoldError } from '../types/error'
 import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
 import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
 import { ModalUsage } from '../types/remove'
+import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
@@ -45,7 +50,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { ListItems, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertConnectedNetwork } = useNetwork()
-  const { OCABundleResolver } = useConfiguration()
+  const { OCABundleResolver, enableTours: enableToursConfig } = useConfiguration()
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
@@ -53,6 +58,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+  const [store, dispatch] = useStore()
+  const { start } = useTour()
+  const screenIsFocused = useIsFocused()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -67,6 +75,21 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       paddingTop: 10,
     },
   })
+
+  useEffect(() => {
+    const shouldShowTour =
+      store.preferences.developerModeEnabled &&
+      enableToursConfig &&
+      store.tours.enableTours &&
+      !store.tours.seenCredentialOfferTour
+    if (shouldShowTour && screenIsFocused) {
+      start(TourID.CredentialOfferTour)
+      dispatch({
+        type: DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR,
+        payload: [true],
+      })
+    }
+  }, [screenIsFocused])
 
   useEffect(() => {
     if (!agent) {

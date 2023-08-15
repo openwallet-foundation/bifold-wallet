@@ -182,7 +182,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
     >
       <View style={styles.headerContainer}>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+          <Text allowFontScaling={false} style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             {title}
           </Text>
         </View>
@@ -202,17 +202,21 @@ export function TourBox(props: TourBoxProps): ReactElement {
 
       {(!hideLeft || !hideRight) && (
         <View style={styles.footerContainer}>
-          {!hideLeft && (
-            <TouchableOpacity
-              accessibilityLabel={leftText}
-              accessibilityRole={'button'}
-              testID={testIdWithKey('Back')}
-              onPress={handleLeft}
-              hitSlop={hitSlop}
-            >
-              <Text style={styles.navText}>{leftText}</Text>
-            </TouchableOpacity>
-          )}
+          <View>
+            {!hideLeft && (
+              <TouchableOpacity
+                accessibilityLabel={leftText}
+                accessibilityRole={'button'}
+                testID={testIdWithKey('Back')}
+                onPress={handleLeft}
+                hitSlop={hitSlop}
+              >
+                <Text allowFontScaling={false} style={styles.navText}>
+                  {leftText}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
           <View style={styles.pagerContainer}>
             {paginationDots.map((dot, index) =>
               dot === PaginationDotTypes.Filled ? (
@@ -222,17 +226,21 @@ export function TourBox(props: TourBoxProps): ReactElement {
               )
             )}
           </View>
-          {!hideRight && (
-            <TouchableOpacity
-              accessibilityLabel={rightText}
-              accessibilityRole={'button'}
-              testID={testIdWithKey('Next')}
-              onPress={handleRight}
-              hitSlop={hitSlop}
-            >
-              <Text style={styles.navText}>{rightText}</Text>
-            </TouchableOpacity>
-          )}
+          <View>
+            {!hideRight && (
+              <TouchableOpacity
+                accessibilityLabel={rightText}
+                accessibilityRole={'button'}
+                testID={testIdWithKey('Next')}
+                onPress={handleRight}
+                hitSlop={hitSlop}
+              >
+                <Text allowFontScaling={false} style={styles.navText}>
+                  {rightText}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       )}
     </View>
