@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeHeaderView Component Renders correctly 1`] = `<View />`;

@@ -50,12 +50,13 @@ const TabStack: React.FC = () => {
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
               <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
+                <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
                 {showLabels && (
                   <Text
                     style={{
                       ...TabTheme.tabBarTextStyle,
                       color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                      fontWeight: focused ? 'bold' : 'normal',
                     }}
                   >
                     {t('TabStack.Home')}
@@ -154,6 +155,7 @@ const TabStack: React.FC = () => {
                       style={{
                         ...TabTheme.tabBarTextStyle,
                         color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                        fontWeight: focused ? 'bold' : 'normal',
                       }}
                     >
                       {t('TabStack.Credentials')}

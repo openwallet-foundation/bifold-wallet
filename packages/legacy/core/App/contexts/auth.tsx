@@ -5,6 +5,7 @@ import 'reflect-metadata'
 
 import { AskarWallet } from '@aries-framework/askar'
 import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@aries-framework/core'
+import { useAgent } from '@aries-framework/react-hooks'
 import { agentDependencies } from '@aries-framework/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,6 +34,7 @@ export interface AuthContext {
   setPIN: (PIN: string) => Promise<void>
   commitPIN: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
+  rekeyWallet: (oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
@@ -40,6 +42,7 @@ export const AuthContext = createContext<AuthContext>(null as unknown as AuthCon
 export const AuthProvider: React.FC = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [store, dispatch] = useStore()
+  const { agent } = useAgent()
   const { t } = useTranslation()
 
   const setPIN = async (PIN: string): Promise<void> => {
@@ -132,6 +135,30 @@ export const AuthProvider: React.FC = ({ children }) => {
     await wipeWalletKey(true)
   }
 
+  const rekeyWallet = async (oldPin: string, newPin: string, useBiometry?: boolean): Promise<boolean> => {
+    try {
+      // argon2.hash can sometimes generate an error
+      const secret = await loadWalletSalt()
+      if (!secret) {
+        return false
+      }
+      const oldHash = await hashPIN(oldPin, secret.salt)
+      const newSecret = await secretForPIN(newPin)
+      const newHash = await hashPIN(newPin, newSecret.salt)
+      if (!newSecret.key) {
+        return false
+      }
+
+      await agent?.wallet.close()
+      await agent?.wallet.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
+      await storeWalletSecret(newSecret, useBiometry)
+      setWalletSecret(newSecret)
+    } catch {
+      return false
+    }
+    return true
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -142,6 +169,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         commitPIN,
         setPIN,
         isBiometricsActive,
+        rekeyWallet,
       }}
     >
       {children}
