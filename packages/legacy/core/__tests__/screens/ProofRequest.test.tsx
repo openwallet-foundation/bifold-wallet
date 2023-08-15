@@ -13,6 +13,8 @@ import ProofRequest from '../../App/screens/ProofRequest'
 import { testIdWithKey } from '../../App/utils/testable'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
+import { useConfiguration } from '../../App/contexts/configuration'
+import { CardOverlayType, OCABundleResolver } from '../../App/types/oca'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -23,6 +25,9 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('../../App/contexts/configuration', () => ({
+  useConfiguration: jest.fn(),
+}))
 
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
@@ -36,6 +41,11 @@ describe('displays a proof request screen', () => {
   })
 
   beforeEach(() => {
+    // @ts-ignore-next-line
+    useConfiguration.mockReturnValue({
+      OCABundleResolver: new OCABundleResolver({}, { cardOverlayType: CardOverlayType.CardLayout11 }),
+    })
+
     jest.clearAllMocks()
   })
 
@@ -48,35 +58,38 @@ describe('displays a proof request screen', () => {
    * AND they can see the verifier's name
    * AND a list of claims being requested with their respectively matched VC claim value
    * AND the most recent credential is initially suggested for each attribute
-   * AND a link to the details of the credential
    * AND there is a "Decline" Button
    * AND there is a "Share" Button
    */
   describe('with a proof request', () => {
     const testEmail = 'test@email.com'
     const testTime = '2022-02-11 20:00:18.180718'
+    const testAge = '16'
 
-    const testCredentials = [
-      new CredentialExchangeRecord({
-        threadId: '1',
-        state: CredentialState.Done,
-        credentialAttributes: [
-          {
-            name: 'email',
-            value: testEmail,
-            toJSON: jest.fn(),
-          },
-          {
-            name: 'time',
-            value: testTime,
-            toJSON: jest.fn(),
-          },
-        ],
-        protocolVersion: 'v1',
-      }),
-    ]
+    const { id: credentialId } = new CredentialExchangeRecord({
+      threadId: '1',
+      state: CredentialState.Done,
+      credentialAttributes: [
+        {
+          name: 'email',
+          value: testEmail,
+          toJSON: jest.fn(),
+        },
+        {
+          name: 'time',
+          value: testTime,
+          toJSON: jest.fn(),
+        },
+        {
+          name: 'age',
+          value: testAge,
+          toJSON: jest.fn(),
+        },
+      ],
+      protocolVersion: 'v1',
+    })
 
-    const requestPresentationMessage = new V1RequestPresentationMessage({
+    const { id: presentationMessageId } = new V1RequestPresentationMessage({
       comment: 'some comment',
       requestAttachments: [
         new Attachment({
@@ -92,10 +105,16 @@ describe('displays a proof request screen', () => {
                   name: 'email',
                 },
                 time: {
-                  names: ['time'],
+                  name: 'time',
                 },
               },
-              requestedPredicates: {},
+              requestedPredicates: {
+                age: {
+                  name: 'age',
+                  pType: '<=',
+                  pValue: 18,
+                },
+              },
             },
           }),
         }),
@@ -103,8 +122,8 @@ describe('displays a proof request screen', () => {
     })
 
     const testProofRequest = new ProofExchangeRecord({
-      connectionId: '123',
-      threadId: requestPresentationMessage.id,
+      connectionId: '',
+      threadId: presentationMessageId,
       state: ProofState.RequestReceived,
       protocolVersion: 'V1',
     })
@@ -112,34 +131,79 @@ describe('displays a proof request screen', () => {
     const attributeBase = {
       referent: '',
       schemaId: '',
-      credentialDefinitionId: '',
+      credentialDefinitionId: 'AAAAAAAAAAAAAAAAAAAAAA:1:AA:1234:test',
       toJSON: jest.fn(),
+    }
+
+    const testProofFormatData = {
+      request: {
+        indy: {
+          requested_attributes: {
+            email: {
+              name: 'email',
+              restrictions: [
+                {
+                  cred_def_id: attributeBase.credentialDefinitionId,
+                },
+              ],
+            },
+            time: {
+              name: 'time',
+              restrictions: [
+                {
+                  cred_def_id: attributeBase.credentialDefinitionId,
+                },
+              ],
+            },
+          },
+          requested_predicates: {
+            additionalProp2: {
+              name: 'age',
+              p_type: '<=',
+              p_value: 18,
+              restrictions: [{ cred_def_id: attributeBase.credentialDefinitionId }],
+            },
+          },
+        },
+      },
     }
 
     const testRetrievedCredentials = {
       proofFormats: {
         indy: {
-          predicates: {},
-          attributes: {
-            email: [
+          predicates: {
+            age: [
               {
-                credentialId: testCredentials[0].id,
+                credentialId: credentialId,
                 revealed: true,
                 credentialInfo: {
                   ...attributeBase,
-                  credentialId: testCredentials[0].id,
+                  credentialId: credentialId,
+                  attributes: { age: testAge },
+                },
+              },
+            ],
+          },
+          attributes: {
+            email: [
+              {
+                credentialId: credentialId,
+                revealed: true,
+                credentialInfo: {
+                  ...attributeBase,
+                  credentialId: credentialId,
                   attributes: { email: testEmail },
                 },
               },
             ],
             time: [
               {
-                credentialId: testCredentials[0].id,
+                credentialId: credentialId,
                 revealed: true,
                 credentialInfo: {
                   ...attributeBase,
                   attributes: { time: testTime },
-                  credentialId: testCredentials[0].id,
+                  credentialId: credentialId,
                 },
               },
             ],
@@ -151,7 +215,7 @@ describe('displays a proof request screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-ignore-next-line
       useProofById.mockReturnValue(testProofRequest)
     })
 
@@ -177,13 +241,16 @@ describe('displays a proof request screen', () => {
       expect(declineButton).not.toBeDisabled()
     })
 
-    test.skip('displays a proof request with all claims available', async () => {
+    test('displays a proof request with all claims available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore
+      // @ts-ignore-next-line
+      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+
+      // @ts-ignore-next-line
       agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
 
-      const { getByText, getAllByText, queryByText } = render(
+      const { getByText, getByTestId, queryByText } = render(
         <NetworkProvider>
           <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
         </NetworkProvider>
@@ -200,9 +267,8 @@ describe('displays a proof request screen', () => {
       const emailValue = getByText(testEmail)
       const timeLabel = getByText(/Time/, { exact: false })
       const timeValue = getByText(testTime)
-      const detailsLinks = getAllByText('ProofRequest.Details', { exact: false })
-      const shareButton = getByText('Global.Share', { exact: false })
-      const declineButton = getByText('Global.Decline', { exact: false })
+      const shareButton = getByTestId(testIdWithKey('Share'))
+      const declineButton = getByTestId(testIdWithKey('Decline'))
 
       expect(contact).not.toBeNull()
       expect(contact).toBeTruthy()
@@ -216,15 +282,18 @@ describe('displays a proof request screen', () => {
       expect(timeValue).not.toBeNull()
       expect(timeValue).toBeTruthy()
       expect(missingClaim).toBeNull()
-      expect(detailsLinks.length).toBe(2)
       expect(shareButton).not.toBeNull()
+      expect(shareButton).toBeEnabled()
       expect(declineButton).not.toBeNull()
     })
 
     test('displays a proof request with one or more claims not available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore
+      // @ts-ignore-next-line
+      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+
+      // @ts-ignore-next-line
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
           indy: {
@@ -250,6 +319,70 @@ describe('displays a proof request screen', () => {
       const shareButton = tree.getByTestId(testIdWithKey('Share'))
       const declineButton = tree.getByTestId(testIdWithKey('Decline'))
 
+      expect(shareButton).not.toBeNull()
+      expect(shareButton).toBeDisabled()
+      expect(declineButton).not.toBeNull()
+    })
+
+    test('displays a proof request with one or more predicates not satisfied', async () => {
+      const { agent } = useAgent()
+
+      // @ts-ignore-next-line
+      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+
+      // @ts-ignore-next-line
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue({
+        proofFormats: {
+          indy: {
+            attributes: testRetrievedCredentials.proofFormats.indy.attributes,
+            predicates: {
+              age: [
+                {
+                  credentialId: credentialId,
+                  revealed: true,
+                  credentialInfo: {
+                    ...attributeBase,
+                    credentialId: credentialId,
+                    attributes: { age: 20 },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      })
+
+      const { getByText, getByTestId } = render(
+        <NetworkContext.Provider value={networkContext}>
+          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </NetworkContext.Provider>
+      )
+
+      await waitFor(() => {
+        timeTravel(1000)
+      })
+
+      const predicateMessage = getByText('ProofRequest.YouDoNotHaveDataPredicate', { exact: false })
+      const emailLabel = getByText(/Email/, { exact: false })
+      const emailValue = getByText(testEmail)
+      const ageLabel = getByText(/Age/, { exact: false })
+      const ageValue = getByText('<= 18')
+      const ageNotSatisfied = getByText('ProofRequest.PredicateNotSatisfied', { exact: false })
+      const shareButton = getByTestId(testIdWithKey('Share'))
+      const declineButton = getByTestId(testIdWithKey('Decline'))
+
+      expect(predicateMessage).not.toBeNull()
+      expect(predicateMessage).toBeTruthy()
+      expect(emailLabel).not.toBeNull()
+      expect(emailLabel).toBeTruthy()
+      expect(emailValue).not.toBeNull()
+      expect(emailValue).toBeTruthy()
+      expect(ageLabel).not.toBeNull()
+      expect(ageLabel).toBeTruthy()
+      expect(ageValue).not.toBeNull()
+      expect(ageValue).toBeTruthy()
+      expect(ageNotSatisfied).not.toBeNull()
+      expect(ageNotSatisfied).toBeTruthy()
       expect(shareButton).not.toBeNull()
       expect(shareButton).toBeDisabled()
       expect(declineButton).not.toBeNull()
