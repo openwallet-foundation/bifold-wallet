@@ -9,3 +9,10 @@ export type Optional<T> = T | undefined
  * An alias of what a React child looks when passed as function.
  */
 export type ChildFn<T> = (value: T) => ReactNode
+
+export enum TourID {
+  HomeTour = 1,
+  CredentialsTour,
+  CredentialOfferTour,
+  ProofRequestTour,
+}
