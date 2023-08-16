@@ -499,9 +499,9 @@ const translation = {
     "SkipA11y": "Skip introduction to Aries Bifold (PT-BR)",
   },
   "Chat": {
-    "OpenPresentation": "Open Presentation (PT-BR)",
-    "ViewRequest": "View Request (PT-BR)",
-    "ViewOffer": "View Offer (PT-BR)",
+    "OpenPresentation": "Open presentation (PT-BR)",
+    "ViewRequest": "View request (PT-BR)",
+    "ViewOffer": "View offer (PT-BR)",
     "OpenItem": "Abrir",
     "UserYou": "Você",
     "YouConnected": "You connected with (PT-BR)",
