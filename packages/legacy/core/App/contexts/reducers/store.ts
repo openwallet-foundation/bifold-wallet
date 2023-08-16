@@ -49,6 +49,9 @@ enum ToursDispatchAction {
   UPDATE_SEEN_TOUR_PROMPT = 'tours/seenTourPrompt',
   ENABLE_TOURS = 'tours/enableTours',
   UPDATE_SEEN_HOME_TOUR = 'tours/seenHomeTour',
+  UPDATE_SEEN_CREDENTIALS_TOUR = 'tours/seenCredentialsTour',
+  UPDATE_SEEN_CREDENTIAL_OFFER_TOUR = 'tours/seenCredentialOfferTour',
+  UPDATE_SEEN_PROOF_REQUEST_TOUR = 'tours/seenProofRequestTour',
 }
 
 enum AuthenticationDispatchAction {
@@ -226,6 +229,9 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       if (enableTours) {
         tours.enableTours = enableTours
         tours.seenHomeTour = false
+        tours.seenCredentialsTour = false
+        tours.seenCredentialOfferTour = false
+        tours.seenProofRequestTour = false
       } else {
         tours.enableTours = enableTours
       }
@@ -245,7 +251,67 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         seenHomeTour,
       }
 
-      if (seenHomeTour) {
+      if (seenHomeTour && tours.seenCredentialsTour && tours.seenCredentialOfferTour && tours.seenProofRequestTour) {
+        tours.enableTours = false
+      }
+
+      const newState = {
+        ...state,
+        tours,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+
+      return newState
+    }
+    case ToursDispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR: {
+      const seenCredentialsTour = (action?.payload ?? []).pop() ?? false
+      const tours = {
+        ...state.tours,
+        seenCredentialsTour,
+      }
+
+      if (seenCredentialsTour && tours.seenHomeTour && tours.seenCredentialOfferTour && tours.seenProofRequestTour) {
+        tours.enableTours = false
+      }
+
+      const newState = {
+        ...state,
+        tours,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+
+      return newState
+    }
+    case ToursDispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR: {
+      const seenCredentialOfferTour = (action?.payload ?? []).pop() ?? false
+      const tours = {
+        ...state.tours,
+        seenCredentialOfferTour,
+      }
+
+      if (seenCredentialOfferTour && tours.seenHomeTour && tours.seenCredentialsTour && tours.seenProofRequestTour) {
+        tours.enableTours = false
+      }
+
+      const newState = {
+        ...state,
+        tours,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+
+      return newState
+    }
+    case ToursDispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR: {
+      const seenProofRequestTour = (action?.payload ?? []).pop() ?? false
+      const tours = {
+        ...state.tours,
+        seenProofRequestTour,
+      }
+
+      if (seenProofRequestTour && tours.seenHomeTour && tours.seenCredentialOfferTour && tours.seenCredentialsTour) {
         tours.enableTours = false
       }
 

@@ -48,6 +48,9 @@ export const defaultState: State = {
     seenToursPrompt: false,
     enableTours: true,
     seenHomeTour: false,
+    seenCredentialsTour: false,
+    seenCredentialOfferTour: false,
+    seenProofRequestTour: false,
   },
   deepLink: {
     activeDeepLink: '',
