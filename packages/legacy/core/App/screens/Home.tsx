@@ -7,12 +7,12 @@ import { FlatList, View } from 'react-native'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import AppGuideModal from '../components/modals/AppGuideModal'
-import { AttachTourStep } from '../components/tour/AttachTourStep'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
+import { TourID } from '../types/tour'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -26,7 +26,7 @@ const Home: React.FC<HomeProps> = () => {
   // eslint-disable-next-line import/no-named-as-default-member
   // const { HomeTheme } = useTheme()
   const [store, dispatch] = useStore()
-  const { start, stop } = useTour()
+  const { start } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
   const screenIsFocused = useIsFocused()
 
@@ -59,7 +59,7 @@ const Home: React.FC<HomeProps> = () => {
           type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
           payload: [true],
         })
-        start()
+        start(TourID.HomeTour)
       } else {
         dispatch({
           type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
@@ -68,8 +68,6 @@ const Home: React.FC<HomeProps> = () => {
         setShowTourPopup(true)
       }
     }
-
-    return stop
   }, [screenIsFocused])
 
   const onCTAPressed = () => {
@@ -82,7 +80,7 @@ const Home: React.FC<HomeProps> = () => {
       type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
       payload: [true],
     })
-    start()
+    start(TourID.HomeTour)
   }
 
   const onDismissPressed = () => {
@@ -102,11 +100,9 @@ const Home: React.FC<HomeProps> = () => {
         decelerationRate="fast"
         ListEmptyComponent={() => (
           <View style={{ marginHorizontal: 25, marginVertical: 20 }}>
-            <AttachTourStep index={1} fill>
-              <View>
-                <NoNewUpdates />
-              </View>
-            </AttachTourStep>
+            <View>
+              <NoNewUpdates />
+            </View>
           </View>
         )}
         ListHeaderComponent={() => <HomeHeaderView />}

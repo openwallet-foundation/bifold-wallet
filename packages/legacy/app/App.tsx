@@ -2,6 +2,9 @@ import {
   AgentProvider,
   TourProvider,
   homeTourSteps,
+  credentialsTourSteps,
+  credentialOfferTourSteps,
+  proofRequestTourSteps,
   CommonUtilProvider,
   AuthProvider,
   ConfigurationProvider,
@@ -56,7 +59,14 @@ const App = () => {
                     />
                     <NetInfo />
                     <ErrorModal />
-                    <TourProvider steps={homeTourSteps} overlayColor={'gray'} overlayOpacity={0.7}>
+                    <TourProvider
+                      homeTourSteps={homeTourSteps}
+                      credentialsTourSteps={credentialsTourSteps}
+                      credentialOfferTourSteps={credentialOfferTourSteps}
+                      proofRequestTourSteps={proofRequestTourSteps}
+                      overlayColor={'gray'}
+                      overlayOpacity={0.7}
+                    >
                       <RootStack />
                     </TourProvider>
                     <Toast topOffset={15} config={toastConfig} />

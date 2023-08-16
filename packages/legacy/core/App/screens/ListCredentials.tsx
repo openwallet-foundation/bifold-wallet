@@ -1,25 +1,55 @@
 import { CredentialState } from '@aries-framework/core'
 import { useCredentialByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
+import { useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { useTour } from '../contexts/tour/tour-context'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import { TourID } from '../types/tour'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
-  const { credentialListOptions: CredentialListOptions, credentialEmptyList: CredentialEmptyList } = useConfiguration()
+  const {
+    credentialListOptions: CredentialListOptions,
+    credentialEmptyList: CredentialEmptyList,
+    enableTours: enableToursConfig,
+  } = useConfiguration()
   const credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
   const { ColorPallet } = useTheme()
+  const [store, dispatch] = useStore()
+  const { start, stop } = useTour()
+  const screenIsFocused = useIsFocused()
+
+  useEffect(() => {
+    const shouldShowTour =
+      store.preferences.developerModeEnabled &&
+      enableToursConfig &&
+      store.tours.enableTours &&
+      !store.tours.seenCredentialsTour
+
+    if (shouldShowTour && screenIsFocused) {
+      start(TourID.CredentialsTour)
+      dispatch({
+        type: DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR,
+        payload: [true],
+      })
+    }
+
+    return stop
+  }, [screenIsFocused])
 
   return (
     <View>

@@ -1,11 +1,21 @@
 import { createContext, ReactElement, useContext } from 'react'
 import { LayoutRectangle } from 'react-native'
 
+import { TourID } from '../../types/tour'
+
 export interface RenderProps {
+  /**
+   * The ID of the current tour selected
+   */
+  currentTour: TourID
   /**
    * The index of the current step the tour is on.
    */
-  current: number
+  currentStep: number
+  /**
+   * Directly change the current spotlight
+   */
+  changeSpot?: (spot: LayoutRectangle) => void
   /**
    * Goes to the next step, if any. Stops the tour on the last step.
    */
@@ -61,15 +71,17 @@ export interface TourStep {
 
 export interface Tour {
   /**
+   * The ID of the tour
+   */
+  currentTour: TourID
+  /**
    * The current step index.
    */
-  current?: number
+  currentStep?: number
   /**
-   * Moves to a specific step.
-   *
-   * @param index the index of the step to go
+   * Manually change the current spot (useful for steps that don't have an associated AttachTourStep)
    */
-  goTo: (index: number) => void
+  changeSpot: (spot: LayoutRectangle) => void
   /**
    * Goes to the next step, if any. Stops the tour on the last step.
    */
@@ -79,9 +91,9 @@ export interface Tour {
    */
   previous: () => void
   /**
-   * Kicks off the tour from step `0`.
+   * Kicks off a tour from step `0`.
    */
-  start: () => void
+  start: (tourId: TourID) => void
   /**
    * Terminates the tour execution.
    */
@@ -100,9 +112,21 @@ export interface TourCtx extends Tour {
    */
   spot: LayoutRectangle
   /**
-   * The list of steps for the tour.
+   * The list of steps for the home tour.
    */
-  steps: TourStep[]
+  homeTourSteps: TourStep[]
+  /**
+   * Same as above for the credential list screen
+   */
+  credentialsTourSteps: TourStep[]
+  /**
+   * Same as above for the credential offer screen
+   */
+  credentialOfferTourSteps: TourStep[]
+  /**
+   * Same as above for the proof request screen
+   */
+  proofRequestTourSteps: TourStep[]
 }
 
 export const ORIGIN_SPOT: LayoutRectangle = {
@@ -113,13 +137,17 @@ export const ORIGIN_SPOT: LayoutRectangle = {
 }
 
 export const TourContext = createContext<TourCtx>({
+  currentTour: TourID.HomeTour,
+  currentStep: undefined,
   changeSpot: () => undefined,
-  goTo: () => undefined,
   next: () => undefined,
   previous: () => undefined,
   spot: ORIGIN_SPOT,
   start: () => undefined,
-  steps: [],
+  homeTourSteps: [],
+  credentialsTourSteps: [],
+  credentialOfferTourSteps: [],
+  proofRequestTourSteps: [],
   stop: () => undefined,
 })
 
@@ -129,11 +157,12 @@ export const TourContext = createContext<TourCtx>({
  * @returns the Tour context
  */
 export function useTour(): Tour {
-  const { current, goTo, next, previous, start, stop } = useContext(TourContext)
+  const { currentTour, currentStep, changeSpot, next, previous, start, stop } = useContext(TourContext)
 
   return {
-    current,
-    goTo,
+    currentTour,
+    currentStep,
+    changeSpot,
     next,
     previous,
     start,

@@ -2,6 +2,7 @@ import React, { cloneElement, ReactElement, ReactNode, RefObject, useContext, us
 import { StyleProp, View } from 'react-native'
 
 import { TourContext } from '../../contexts/tour/tour-context'
+import { TourID } from '../../types/tour'
 import { testIdWithKey } from '../../utils/testable'
 
 export interface ChildProps<T> {
@@ -30,6 +31,10 @@ export interface AttachTourStepProps<T> {
    * The index of the `steps` array to which the step is attatched to.
    */
   index: number
+  /**
+   * The id of the tour this step belongs to (ie. home tour or proof request tour or etc.)
+   */
+  tourID: TourID
 }
 
 /**
@@ -39,18 +44,18 @@ export interface AttachTourStepProps<T> {
  * @param props the component props
  * @returns an AttachTourStep React element
  */
-export function AttachTourStep<T>({ children, fill = false, index }: AttachTourStepProps<T>): ReactElement {
-  const { current, changeSpot } = useContext(TourContext)
+export function AttachTourStep<T>({ children, fill = false, index, tourID }: AttachTourStepProps<T>): ReactElement {
+  const { currentStep, currentTour, changeSpot } = useContext(TourContext)
 
   const childRef = useRef<View>(null)
 
   useEffect(() => {
-    if (current === index) {
+    if (currentTour === tourID && currentStep === index) {
       childRef.current?.measureInWindow((x, y, width, height) => {
         changeSpot({ height, width, x, y })
       })
     }
-  }, [changeSpot, current, index])
+  }, [changeSpot, currentTour, currentStep, index])
 
   const { style, ...rest } = children.props
   const childStyle = style ?? {}

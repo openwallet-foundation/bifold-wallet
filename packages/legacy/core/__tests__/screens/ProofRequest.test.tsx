@@ -8,9 +8,11 @@ import '@testing-library/jest-native/extend-expect'
 import { cleanup, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
 import ProofRequest from '../../App/screens/ProofRequest'
 import { testIdWithKey } from '../../App/utils/testable'
+import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
 
@@ -157,9 +159,11 @@ describe('displays a proof request screen', () => {
 
     test('loading screen displays', async () => {
       const tree = render(
-        <NetworkProvider>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-        </NetworkProvider>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <NetworkProvider>
+            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          </NetworkProvider>
+        </ConfigurationContext.Provider>
       )
 
       await waitFor(() => {
@@ -184,9 +188,11 @@ describe('displays a proof request screen', () => {
       agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
 
       const { getByText, getAllByText, queryByText } = render(
-        <NetworkProvider>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-        </NetworkProvider>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <NetworkProvider>
+            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          </NetworkProvider>
+        </ConfigurationContext.Provider>
       )
 
       await waitFor(() => {
@@ -238,9 +244,11 @@ describe('displays a proof request screen', () => {
       })
 
       const tree = render(
-        <NetworkContext.Provider value={networkContext}>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-        </NetworkContext.Provider>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <NetworkContext.Provider value={networkContext}>
+            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          </NetworkContext.Provider>
+        </ConfigurationContext.Provider>
       )
 
       await waitFor(() => {

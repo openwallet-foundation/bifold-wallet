@@ -1,0 +1,338 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TourBox Renders properly with defaults 1`] = `
+Array [
+  <View
+    onTouchEnd={[Function]}
+    onTouchStart={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "borderColor": "#0099FF",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "margin": "auto",
+        "padding": 20,
+        "width": 700,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Object {
+              "alignSelf": "flex-start",
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            }
+          }
+          testID="com.ariesbifold:id/HeaderText"
+        >
+          Title
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-end",
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#0099FF",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "marginVertical": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-around",
+        }
+      }
+    >
+      <View>
+        <View
+          accessibilityLabel="Left"
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Back"
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Object {
+                "color": "#42803E",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Left
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignSelf": "center",
+            "flexDirection": "row",
+          }
+        }
+      />
+      <View>
+        <View
+          accessibilityLabel="Right"
+          accessibilityRole="button"
+          accessible={true}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Next"
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Object {
+                "color": "#42803E",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Right
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>,
+  <Modal
+    animationType="fade"
+    hardwareAccelerated={false}
+    presentationStyle="overFullScreen"
+    transparent={true}
+    visible={false}
+  >
+    <View
+      style={
+        Object {
+          "height": 1334,
+          "width": 750,
+        }
+      }
+      testID="com.ariesbifold:id/SpotlightOverlay"
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight="100%"
+        bbWidth="100%"
+        focusable={false}
+        height="100%"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        onPress={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        renderToHardwareTextureAndroid={true}
+        responsible={true}
+        shouldRasterizeIOS={true}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "flex": 0,
+              "height": "100%",
+              "width": "100%",
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/SpotOverlay"
+        vbHeight={1334}
+        vbWidth={750}
+        width="100%"
+      >
+        <RNSVGGroup>
+          <RNSVGDefs>
+            <RNSVGMask
+              height="100%"
+              maskContentUnits={1}
+              maskTransform={
+                Array [
+                  1,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                ]
+              }
+              maskUnits={0}
+              name="mask"
+              width="100%"
+              x={0}
+              y={0}
+            >
+              <RNSVGRect
+                fill={4294967295}
+                height="100%"
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+                width="100%"
+                x={0}
+                y={0}
+              />
+            </RNSVGMask>
+          </RNSVGDefs>
+          <RNSVGRect
+            fill={4286611584}
+            height="100%"
+            mask="mask"
+            opacity={0.7}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            width="100%"
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+      <View
+        style={
+          Object {
+            "left": 25,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 25,
+            "top": 266.8,
+          }
+        }
+        testID="com.ariesbifold:id/SpotTooltip"
+      />
+    </View>
+  </Modal>,
+]
+`;

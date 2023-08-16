@@ -24,6 +24,9 @@ export interface Tours {
   seenToursPrompt: boolean
   enableTours: boolean
   seenHomeTour: boolean
+  seenCredentialsTour: boolean
+  seenCredentialOfferTour: boolean
+  seenProofRequestTour: boolean
 }
 
 export interface Lockout {

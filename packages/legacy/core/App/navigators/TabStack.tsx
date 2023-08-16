@@ -10,6 +10,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
+import { TourID } from '../types/tour'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialStack from './CredentialStack'
@@ -49,20 +50,22 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
-                {showLabels && (
-                  <Text
-                    style={{
-                      ...TabTheme.tabBarTextStyle,
-                      color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                      fontWeight: focused ? 'bold' : 'normal',
-                    }}
-                  >
-                    {t('TabStack.Home')}
-                  </Text>
-                )}
-              </View>
+              <AttachTourStep tourID={TourID.HomeTour} index={1}>
+                <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
+                  <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
+                  {showLabels && (
+                    <Text
+                      style={{
+                        ...TabTheme.tabBarTextStyle,
+                        color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                        fontWeight: focused ? 'bold' : 'normal',
+                      }}
+                    >
+                      {t('TabStack.Home')}
+                    </Text>
+                  )}
+                </View>
+              </AttachTourStep>
             ),
             tabBarShowLabel: false,
             tabBarBadge: total || undefined,
@@ -85,42 +88,50 @@ const TabStack: React.FC = () => {
                   width: 90,
                 }}
               >
-                <AttachTourStep index={0} fill>
+                <AttachTourStep tourID={TourID.HomeTour} index={0} fill>
                   <View
                     style={{
                       position: 'absolute',
-                      bottom: 0,
-                      width: 90,
-                      minHeight: 90,
                       flexGrow: 1,
+                      width: 90,
+                      bottom: 0,
+                      minHeight: 90,
                       margin: 'auto',
-                      justifyContent: 'flex-end',
-                      alignItems: 'center',
                     }}
                   >
-                    <View
-                      accessible={true}
-                      accessibilityRole={'button'}
-                      accessibilityLabel={t('TabStack.Scan')}
-                      style={{ ...TabTheme.focusTabIconStyle }}
-                    >
-                      <Icon
-                        accessible={false}
-                        name="qrcode-scan"
-                        color={TabTheme.tabBarButtonIconStyle.color}
-                        size={32}
-                        style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
-                      />
-                    </View>
-                    <Text
-                      style={{
-                        ...TabTheme.tabBarTextStyle,
-                        color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                        marginTop: 5,
-                      }}
-                    >
-                      {t('TabStack.Scan')}
-                    </Text>
+                    <AttachTourStep tourID={TourID.CredentialsTour} index={0} fill>
+                      <View
+                        style={{
+                          flexGrow: 1,
+                          justifyContent: 'flex-end',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <View
+                          accessible={true}
+                          accessibilityRole={'button'}
+                          accessibilityLabel={t('TabStack.Scan')}
+                          style={{ ...TabTheme.focusTabIconStyle }}
+                        >
+                          <Icon
+                            accessible={false}
+                            name="qrcode-scan"
+                            color={TabTheme.tabBarButtonIconStyle.color}
+                            size={32}
+                            style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
+                          />
+                        </View>
+                        <Text
+                          style={{
+                            ...TabTheme.tabBarTextStyle,
+                            color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                            marginTop: 5,
+                          }}
+                        >
+                          {t('TabStack.Scan')}
+                        </Text>
+                      </View>
+                    </AttachTourStep>
                   </View>
                 </AttachTourStep>
               </View>
@@ -147,7 +158,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep index={2}>
+              <AttachTourStep tourID={TourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
                   {showLabels && (

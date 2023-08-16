@@ -2,7 +2,7 @@ import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState 
 import { ColorValue, LayoutRectangle } from 'react-native'
 
 import { TourOverlay } from '../../components/tour/TourOverlay'
-import { ChildFn } from '../../types/tour'
+import { ChildFn, TourID } from '../../types/tour'
 import { isChildFunction } from '../../utils/helpers'
 
 import { BackdropPressBehavior, OSConfig, Tour, TourContext, TourCtx, TourStep, ORIGIN_SPOT } from './tour-context'
@@ -43,9 +43,21 @@ export interface TourProviderProps {
    */
   overlayOpacity?: number
   /**
-   * An array of `TourStep` objects that define each step of the tour.
+   * The list of steps for the home tour.
    */
-  steps: TourStep[]
+  homeTourSteps: TourStep[]
+  /**
+   * Same as above for the credential list screen
+   */
+  credentialsTourSteps: TourStep[]
+  /**
+   * Same as above for the credential offer screen
+   */
+  credentialOfferTourSteps: TourStep[]
+  /**
+   * Same as above for the proof request screen
+   */
+  proofRequestTourSteps: TourStep[]
 }
 
 export const TourProvider = forwardRef<Tour, TourProviderProps>((props, ref) => {
@@ -54,80 +66,129 @@ export const TourProvider = forwardRef<Tour, TourProviderProps>((props, ref) => 
     onBackdropPress,
     overlayColor = 'black',
     overlayOpacity = 0.45,
-    steps,
+    homeTourSteps,
+    credentialsTourSteps,
+    credentialOfferTourSteps,
+    proofRequestTourSteps,
     nativeDriver = false,
   } = props
 
-  const [current, setCurrent] = useState<number>()
+  const [currentTour, setCurrentTour] = useState<TourID>(TourID.HomeTour)
+  const [currentStep, setCurrentStep] = useState<number>()
   const [spot, setSpot] = useState(ORIGIN_SPOT)
 
   const renderStep = useCallback(
     (index: number): void | Promise<void> => {
-      const step = steps[index]
-
-      if (step !== undefined) {
-        setCurrent(index)
+      if (
+        (currentTour === TourID.HomeTour && homeTourSteps[index] !== undefined) ||
+        (currentTour === TourID.CredentialsTour && credentialsTourSteps[index] !== undefined) ||
+        (currentTour === TourID.CredentialOfferTour && credentialOfferTourSteps[index] !== undefined) ||
+        (currentTour === TourID.ProofRequestTour && proofRequestTourSteps[index] !== undefined)
+      ) {
+        setCurrentStep(index)
       }
     },
-    [steps]
+    [currentTour, homeTourSteps, credentialsTourSteps, credentialOfferTourSteps, proofRequestTourSteps]
   )
 
   const changeSpot = useCallback((newSpot: LayoutRectangle): void => {
     setSpot(newSpot)
   }, [])
 
-  const start = useCallback((): void => {
-    renderStep(0)
-  }, [renderStep])
-
-  const stop = useCallback((): void => {
-    setCurrent(undefined)
-    setSpot(ORIGIN_SPOT)
-  }, [])
-
-  const next = useCallback((): void => {
-    if (current !== undefined) {
-      current === steps.length - 1 ? stop() : renderStep(current + 1)
-    }
-  }, [stop, renderStep, current, steps.length])
-
-  const previous = useCallback((): void => {
-    if (current !== undefined && current > 0) {
-      renderStep(current - 1)
-    }
-  }, [renderStep, current])
-
-  const goTo = useCallback(
-    (index: number): void => {
-      renderStep(index)
+  const start = useCallback(
+    (tourId: TourID): void => {
+      setCurrentTour(tourId)
+      renderStep(0)
     },
     [renderStep]
   )
 
-  const currentStep = useMemo((): TourStep => {
-    const step = current !== undefined ? steps[current] : undefined
+  const stop = useCallback((): void => {
+    setCurrentStep(undefined)
+    setSpot(ORIGIN_SPOT)
+  }, [])
 
-    return step ?? { render: () => <></> }
-  }, [steps, current])
+  const next = useCallback((): void => {
+    let steps = homeTourSteps
+    if (currentTour === TourID.CredentialsTour) {
+      steps = credentialsTourSteps
+    } else if (currentTour === TourID.CredentialOfferTour) {
+      steps = credentialOfferTourSteps
+    } else if (currentTour === TourID.ProofRequestTour) {
+      steps = proofRequestTourSteps
+    }
+
+    if (currentStep !== undefined) {
+      currentStep === steps.length - 1 ? stop() : renderStep(currentStep + 1)
+    }
+  }, [
+    stop,
+    renderStep,
+    currentStep,
+    currentTour,
+    homeTourSteps,
+    credentialsTourSteps,
+    credentialOfferTourSteps,
+    proofRequestTourSteps,
+  ])
+
+  // works the same regardless of which tour is on
+  const previous = useCallback((): void => {
+    if (currentStep !== undefined && currentStep > 0) {
+      renderStep(currentStep - 1)
+    }
+  }, [renderStep, currentStep])
+
+  const tourStep = useMemo((): TourStep => {
+    let stepToRender = undefined
+    let steps = homeTourSteps
+    if (currentTour === TourID.CredentialsTour) {
+      steps = credentialsTourSteps
+    } else if (currentTour === TourID.CredentialOfferTour) {
+      steps = credentialOfferTourSteps
+    } else if (currentTour === TourID.ProofRequestTour) {
+      steps = proofRequestTourSteps
+    }
+
+    stepToRender = currentStep !== undefined ? steps[currentStep] : undefined
+    return stepToRender ?? { render: () => <></> }
+  }, [homeTourSteps, credentialsTourSteps, credentialOfferTourSteps, proofRequestTourSteps, currentStep])
 
   const tour = useMemo(
     (): TourCtx => ({
       changeSpot,
-      current,
-      goTo,
+      currentTour,
+      currentStep,
       next,
       previous,
       spot,
       start,
-      steps,
       stop,
+      homeTourSteps,
+      credentialsTourSteps,
+      credentialOfferTourSteps,
+      proofRequestTourSteps,
     }),
-    [changeSpot, current, goTo, next, previous, spot, start, steps, stop]
+    [
+      changeSpot,
+      currentTour,
+      currentStep,
+      next,
+      previous,
+      spot,
+      start,
+      stop,
+      homeTourSteps,
+      credentialsTourSteps,
+      credentialOfferTourSteps,
+      proofRequestTourSteps,
+    ]
   )
 
   useImperativeHandle(ref, () => ({
-    current,
-    goTo,
+    currentTour,
+    currentStep,
+    changeSpot,
     next,
     previous,
     start,
@@ -140,11 +201,13 @@ export const TourProvider = forwardRef<Tour, TourProviderProps>((props, ref) => 
 
       <TourOverlay
         color={overlayColor}
-        current={current}
+        currentStep={currentStep}
+        currentTour={currentTour}
+        changeSpot={changeSpot}
         backdropOpacity={overlayOpacity}
         onBackdropPress={onBackdropPress}
         spot={spot}
-        tourStep={currentStep}
+        tourStep={tourStep}
         nativeDriver={nativeDriver}
       />
     </TourContext.Provider>
