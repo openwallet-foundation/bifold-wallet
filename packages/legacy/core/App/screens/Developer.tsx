@@ -17,6 +17,7 @@ const Developer: React.FC = () => {
   )
 
   const [useDevVerifierTemplates, setDevVerifierTemplates] = useState(!!store.preferences.useDevVerifierTemplates)
+  const [enableWalletNaming, setEnableWalletNaming] = useState(!!store.preferences.enableWalletNaming)
 
   const styles = StyleSheet.create({
     container: {
@@ -84,6 +85,14 @@ const Developer: React.FC = () => {
     setDevVerifierTemplates((previousState) => !previousState)
   }
 
+  const toggleWalletNamingSwitch = () => {
+    dispatch({
+      type: DispatchAction.ENABLE_WALLET_NAMING,
+      payload: [!enableWalletNaming],
+    })
+    setEnableWalletNaming((previousState) => !previousState)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={[TextTheme.normal, { margin: 10 }]}>
@@ -148,6 +157,27 @@ const Developer: React.FC = () => {
           />
         </Pressable>
       </View>
+      {!store.onboarding.didCreatePIN && (
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.settingLabelText}>{t('NameWallet.EnableWalletNaming')}</Text>
+          </View>
+          <Pressable
+            style={styles.settingSwitchContainer}
+            accessibilityLabel={t('NameWallet.ToggleWalletNaming')}
+            accessibilityRole={'switch'}
+            testID={testIdWithKey('EnableWalletNamingSwitch')}
+          >
+            <Switch
+              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+              thumbColor={enableWalletNaming ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              onValueChange={toggleWalletNamingSwitch}
+              value={enableWalletNaming}
+            />
+          </Pressable>
+        </View>
+      )}
     </View>
   )
 }

@@ -517,6 +517,8 @@ const translation = {
     "BackToHome": "Go back to home"
   },
   "NameWallet": {
+    "EnableWalletNaming": "Enable wallet naming?",
+    "ToggleWalletNaming": "Toggle wallet naming",
     "NameYourWallet": "Name your wallet",
     "ThisIsTheName": "This is the name people see when connecting with you.",
     "CharCountTitle": "Character count exceeded",
