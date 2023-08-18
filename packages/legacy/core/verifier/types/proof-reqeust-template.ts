@@ -10,6 +10,7 @@ export interface AnonCredsRequestedPredicate {
   predicateType: AnonCredsPredicateType
   predicateValue: number
   restrictions?: AnonCredsProofRequestRestriction[]
+  devRestrictions?: AnonCredsProofRequestRestriction[]
   nonRevoked?: AnonCredsNonRevokedInterval
   parameterizable?: boolean
 }
@@ -19,6 +20,7 @@ export interface AnonCredsRequestedAttribute {
   name?: string
   names?: Array<string>
   restrictions?: AnonCredsProofRequestRestriction[]
+  devRestrictions?: AnonCredsProofRequestRestriction[]
   revealed?: boolean
   nonRevoked?: AnonCredsNonRevokedInterval
 }

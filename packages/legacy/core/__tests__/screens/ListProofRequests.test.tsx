@@ -7,7 +7,7 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import configurationContext from '../contexts/configuration'
 import ListProofRequests from '../../App/screens/ListProofRequests'
-import { defaultProofRequestTemplates } from '../../verifier'
+import { useProofRequestTemplates } from '../../verifier/request-templates'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -60,7 +60,7 @@ describe('ListProofRequests Component', () => {
       fireEvent(templateItemInstance, 'press')
 
       expect(navigation.navigate).toBeCalledWith('Proof Request Details', {
-        templateId: defaultProofRequestTemplates[0].id,
+        templateId: useProofRequestTemplates(false)[0].id,
       })
     })
   })

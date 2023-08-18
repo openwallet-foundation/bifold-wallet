@@ -545,6 +545,7 @@ const translation = {
     },
     "Verifier": {
         "UseVerifierCapability": "Utiliser la fonctionnalité Verifier?",
+        "AcceptDevCredentials": "Accept non-production credentials? (FR)",
         "UseDevVerifierTemplates": "Use development verifier templates? (FR)",
         "Toggle": "Basculer la capacité de vérification",
         "ToggleDevTemplates": "Toggle Verifier Development Templates (FR)",
