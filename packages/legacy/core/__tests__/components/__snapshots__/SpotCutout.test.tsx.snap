@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotCutout Renders properly with defaults 1`] = `
+<Modal
+  animationType="fade"
+  hardwareAccelerated={false}
+  presentationStyle="overFullScreen"
+  transparent={true}
+  visible={false}
+>
+  <View
+    style={
+      Object {
+        "height": 1334,
+        "width": 750,
+      }
+    }
+    testID="com.ariesbifold:id/SpotlightOverlay"
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight="100%"
+      bbWidth="100%"
+      focusable={false}
+      height="100%"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      onPress={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      renderToHardwareTextureAndroid={true}
+      responsible={true}
+      shouldRasterizeIOS={true}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": "100%",
+            "width": "100%",
+          },
+        ]
+      }
+      testID="com.ariesbifold:id/SpotOverlay"
+      vbHeight={1334}
+      vbWidth={750}
+      width="100%"
+    >
+      <RNSVGGroup>
+        <RNSVGDefs>
+          <RNSVGMask
+            height="100%"
+            maskContentUnits={1}
+            maskTransform={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            maskUnits={0}
+            name="mask"
+            width="100%"
+            x={0}
+            y={0}
+          >
+            <RNSVGRect
+              fill={4294967295}
+              height="100%"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="100%"
+              x={0}
+              y={0}
+            />
+          </RNSVGMask>
+        </RNSVGDefs>
+        <RNSVGRect
+          fill={4286611584}
+          height="100%"
+          mask="mask"
+          opacity={0.7}
+          propList={
+            Array [
+              "fill",
+            ]
+          }
+          width="100%"
+          x={0}
+          y={0}
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "left": 25,
+          "opacity": 1,
+          "position": "absolute",
+          "right": 25,
+          "top": 266.8,
+        }
+      }
+      testID="com.ariesbifold:id/SpotTooltip"
+    />
+  </View>
+</Modal>
+`;

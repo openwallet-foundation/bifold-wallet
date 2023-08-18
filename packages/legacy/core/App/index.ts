@@ -19,7 +19,10 @@ import InfoTextBox from './components/texts/InfoTextBox'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import { AttachTourStep } from './components/tour/AttachTourStep'
+import { credentialOfferTourSteps } from './components/tour/CredentialOfferTourSteps'
+import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
+import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { TourBox } from './components/tour/TourBox'
 import HomeFooterView from './components/views/HomeFooterView'
 import * as contexts from './contexts'
@@ -104,6 +107,9 @@ export {
   AttachTourStep,
   TourBox,
   homeTourSteps,
+  credentialsTourSteps,
+  credentialOfferTourSteps,
+  proofRequestTourSteps,
   Button,
   ButtonType,
   HeaderButton,
