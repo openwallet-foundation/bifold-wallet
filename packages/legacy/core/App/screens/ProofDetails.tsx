@@ -14,10 +14,10 @@ import { ProofCustomMetadata, ProofMetadata, GroupedSharedProofDataItem, markPro
 import InformationReceived from '../assets/img/information-received.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { useStore } from '../contexts/store'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 

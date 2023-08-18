@@ -5,10 +5,10 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
-import { useStore } from '../contexts/store'
-import { DispatchAction } from '../contexts/reducers/store'
 
 const DataRetention: React.FC = () => {
   const { t } = useTranslation()

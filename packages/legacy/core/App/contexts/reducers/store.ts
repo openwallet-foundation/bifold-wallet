@@ -207,7 +207,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences.walletName = generateRandomWalletName()
       }
       // For older wallets initialized before data retention option was created
-      if (preferences.useDataRetention === undefined){
+      if (preferences.useDataRetention === undefined) {
         preferences.useDataRetention = true
       }
 
