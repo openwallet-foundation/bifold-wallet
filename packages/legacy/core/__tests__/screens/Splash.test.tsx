@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native'
+import { render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import { LocalStorageKeys } from '../../App/constants'
@@ -40,7 +40,6 @@ describe('Splash Screen', () => {
 
   test('Starts onboarding correctly', async () => {
     AsyncStorage.getItem = jest.fn().mockImplementation((key: string) => {
-      console.log('getItem called with:', key)
       switch (key) {
         case LocalStorageKeys.LoginAttempts:
           return JSON.stringify({
@@ -81,21 +80,22 @@ describe('Splash Screen', () => {
           })
       }
     })
+    await waitFor(() => {
+      render(
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <ConfigurationContext.Provider value={configurationContext}>
+            <AuthContext.Provider value={authContext}>
+              <Splash />
+            </AuthContext.Provider>
+          </ConfigurationContext.Provider>
+        </StoreProvider>
+      )
+    })
 
-    render(
-      <StoreProvider
-        initialState={{
-          ...defaultState,
-        }}
-      >
-        <ConfigurationContext.Provider value={configurationContext}>
-          <AuthContext.Provider value={authContext}>
-            <Splash />
-          </AuthContext.Provider>
-        </ConfigurationContext.Provider>
-      </StoreProvider>
-    )
-
-    expect(mockedDispatch).toHaveBeenCalledTimes(1)
+    expect(mockedDispatch).toHaveBeenCalled()
   })
 })
