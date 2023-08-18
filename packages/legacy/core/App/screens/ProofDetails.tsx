@@ -17,6 +17,7 @@ import SharedProofData from '../components/misc/SharedProofData'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { useStore } from '../contexts/store'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
@@ -244,6 +245,14 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { recordId, isHistory, senderReview } = route?.params
   const record = useProofById(recordId)
   const { agent } = useAgent()
+  const [store] = useStore()
+  useEffect(() => {
+    return () => {
+      if (!store.preferences.useDataRetention) {
+        agent?.proofs.deleteById(recordId)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (agent && record && !record.metadata?.data?.customMetadata?.details_seen) {
