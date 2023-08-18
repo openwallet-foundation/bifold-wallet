@@ -15,6 +15,7 @@ const Developer: React.FC = () => {
   const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
     !!store.preferences.useConnectionInviterCapability
   )
+  const [acceptDevCredentials, setAcceptDevCredentials] = useState<boolean>(!!store.preferences.acceptDevCredentials)
 
   const [useDevVerifierTemplates, setDevVerifierTemplates] = useState(!!store.preferences.useDevVerifierTemplates)
   const [enableWalletNaming, setEnableWalletNaming] = useState(!!store.preferences.enableWalletNaming)
@@ -59,6 +60,14 @@ const Developer: React.FC = () => {
       payload: [!useVerifierCapability],
     })
     setUseVerifierCapability((previousState) => !previousState)
+  }
+
+  const toggleAcceptDevCredentialsSwitch = () => {
+    dispatch({
+      type: DispatchAction.ACCEPT_DEV_CREDENTIALS,
+      payload: [!acceptDevCredentials],
+    })
+    setAcceptDevCredentials((previousState) => !previousState)
   }
 
   const toggleConnectionInviterCapabilitySwitch = () => {
@@ -116,6 +125,27 @@ const Developer: React.FC = () => {
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleVerifierCapabilitySwitch}
             value={useVerifierCapability}
+          />
+        </Pressable>
+      </View>
+      <View style={styles.settingContainer}>
+        <View style={{ flex: 1 }}>
+          <Text accessible={false} style={styles.settingLabelText}>
+            {t('Verifier.AcceptDevCredentials')}
+          </Text>
+        </View>
+        <Pressable
+          style={styles.settingSwitchContainer}
+          accessibilityLabel={t('Verifier.Toggle')}
+          accessibilityRole={'switch'}
+          testID={testIdWithKey('ToggleAcceptDevCredentials')}
+        >
+          <Switch
+            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+            thumbColor={acceptDevCredentials ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+            onValueChange={toggleAcceptDevCredentialsSwitch}
+            value={acceptDevCredentials}
           />
         </Pressable>
       </View>

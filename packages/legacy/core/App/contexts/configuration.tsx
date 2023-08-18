@@ -40,7 +40,7 @@ export interface ConfigurationContext {
   useCustomNotifications: () => { total: number; notifications: any }
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
-  proofRequestTemplates?: Array<ProofRequestTemplate>
+  proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
   enableTours?: boolean
 }
 

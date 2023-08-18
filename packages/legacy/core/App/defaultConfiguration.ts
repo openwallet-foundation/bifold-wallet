@@ -1,5 +1,5 @@
 import defaultIndyLedgers from '../configs/ledgers/indy'
-import { defaultProofRequestTemplates } from '../verifier'
+import { useProofRequestTemplates } from '../verifier'
 
 import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
@@ -45,6 +45,6 @@ export const defaultConfiguration: ConfigurationContext = {
     pageTitle: '',
   },
   useCustomNotifications: useNotifications,
-  proofRequestTemplates: defaultProofRequestTemplates,
+  proofRequestTemplates: useProofRequestTemplates,
   enableTours: false,
 }

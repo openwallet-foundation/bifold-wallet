@@ -19,6 +19,7 @@ export interface Preferences {
   useDevVerifierTemplates?: boolean
   enableWalletNaming: boolean
   walletName: string
+  acceptDevCredentials: boolean
 }
 
 export interface Tours {
