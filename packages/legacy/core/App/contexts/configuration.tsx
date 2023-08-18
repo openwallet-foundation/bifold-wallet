@@ -42,7 +42,6 @@ export interface ConfigurationContext {
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: Array<ProofRequestTemplate>
   enableTours?: boolean
-  enableWalletNaming?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Splash Screen Renders correctly 1`] = `
+exports[`Splash Screen Renders default correctly 1`] = `
 <RNCSafeAreaView
   style={
     Object {

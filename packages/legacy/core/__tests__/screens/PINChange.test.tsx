@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import { AuthContext } from '../../App/contexts/auth'
-import PINCreate from '../../App/screens/PINCreate'
-import authContext from '../contexts/auth'
 import { PINRules } from '../../App/constants'
-import { StoreProvider, defaultState } from '../../App/contexts/store'
+import { AuthContext } from '../../App/contexts/auth'
 import { useConfiguration } from '../../App/contexts/configuration'
+import { StoreProvider, defaultState } from '../../App/contexts/store'
+import PINCreate from '../../App/screens/PINCreate'
 import { testIdWithKey } from '../../App/utils/testable'
+import authContext from '../contexts/auth'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -26,15 +26,15 @@ jest.mock('../../App/contexts/configuration', () => ({
 describe('displays a PIN change screen', () => {
   beforeEach(() => {
     // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({ PINSecurity: { rules: PINRules, displayHelper: false }, enableWalletNaming: false })
+    useConfiguration.mockReturnValue({ PINSecurity: { rules: PINRules, displayHelper: false } })
     jest.clearAllMocks()
   })
 
   test('PIN change renders correctly', async () => {
     const route = {
       params: {
-        updatePin: true
-      }
+        updatePin: true,
+      },
     } as any
     const tree = render(
       <StoreProvider
