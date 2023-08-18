@@ -17,6 +17,7 @@ export interface Preferences {
   useVerifierCapability?: boolean
   useConnectionInviterCapability?: boolean
   useDevVerifierTemplates?: boolean
+  enableWalletNaming: boolean
   walletName: string
 }
 
