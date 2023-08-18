@@ -421,7 +421,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     </Text>
                   ) : (
                     <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                      {t('ProofRequest.YouDoNotHaveDataPredicate')}
+                      {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
+                      <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>
                     </Text>
                   )}
                 </View>

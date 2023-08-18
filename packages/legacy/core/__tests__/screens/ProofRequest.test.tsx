@@ -15,8 +15,6 @@ import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
-import { useConfiguration } from '../../App/contexts/configuration'
-import { CardOverlayType, OCABundleResolver } from '../../App/types/oca'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -27,9 +25,6 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
-jest.mock('../../App/contexts/configuration', () => ({
-  useConfiguration: jest.fn(),
-}))
 
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
@@ -43,11 +38,6 @@ describe('displays a proof request screen', () => {
   })
 
   beforeEach(() => {
-    // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({
-      OCABundleResolver: new OCABundleResolver({}, { cardOverlayType: CardOverlayType.CardLayout11 }),
-    })
-
     jest.clearAllMocks()
   })
 
@@ -361,9 +351,11 @@ describe('displays a proof request screen', () => {
       })
 
       const { getByText, getByTestId } = render(
-        <NetworkContext.Provider value={networkContext}>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-        </NetworkContext.Provider>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <NetworkContext.Provider value={networkContext}>
+            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          </NetworkContext.Provider>
+        </ConfigurationContext.Provider>
       )
 
       await waitFor(() => {
@@ -371,6 +363,7 @@ describe('displays a proof request screen', () => {
       })
 
       const predicateMessage = getByText('ProofRequest.YouDoNotHaveDataPredicate', { exact: false })
+      const contact = getByText('ContactDetails.AContact', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })
       const emailValue = getByText(testEmail)
       const ageLabel = getByText(/Age/, { exact: false })
@@ -381,6 +374,8 @@ describe('displays a proof request screen', () => {
 
       expect(predicateMessage).not.toBeNull()
       expect(predicateMessage).toBeTruthy()
+      expect(contact).not.toBeNull()
+      expect(contact).toBeTruthy()
       expect(emailLabel).not.toBeNull()
       expect(emailLabel).toBeTruthy()
       expect(emailValue).not.toBeNull()
