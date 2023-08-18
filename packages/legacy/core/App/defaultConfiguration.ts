@@ -47,5 +47,4 @@ export const defaultConfiguration: ConfigurationContext = {
   useCustomNotifications: useNotifications,
   proofRequestTemplates: useProofRequestTemplates,
   enableTours: false,
-  enableWalletNaming: false,
 }

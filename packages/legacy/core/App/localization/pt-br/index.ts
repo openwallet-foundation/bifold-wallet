@@ -482,6 +482,8 @@ const translation = {
     "BackToHome": "Voltar para a home"
   },
   "NameWallet": {
+    "EnableWalletNaming": "Enable wallet naming? (PT-BR)",
+    "ToggleWalletNaming": "Toggle wallet naming (PT-BR)",
     "NameYourWallet": "Nome da sua carteira",
     "ThisIsTheName": "Este é o nome que as pessoas verão quando se conectar a você.",
     "CharCountTitle": "Número de caracteres excedido",

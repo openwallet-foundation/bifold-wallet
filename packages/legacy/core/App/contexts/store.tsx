@@ -43,6 +43,7 @@ export const defaultState: State = {
     useConnectionInviterCapability: false,
     useDevVerifierTemplates: false,
     acceptDevCredentials: false,
+    enableWalletNaming: false,
     walletName: generateRandomWalletName(),
   },
   tours: {

@@ -72,7 +72,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState, enableWalletNaming: boo
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { indyLedgers, enableWalletNaming } = useConfiguration()
+  const { indyLedgers } = useConfiguration()
   const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
@@ -149,29 +149,35 @@ const Splash: React.FC = () => {
         if (data) {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
           dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
-          if (onboardingComplete(onboardingState) && !attemptData?.lockoutDate) {
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [{ name: Screens.EnterPIN }],
-              })
-            )
-            return
-          } else if (onboardingComplete(onboardingState) && attemptData?.lockoutDate) {
-            // return to lockout screen if lockout date is set
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [{ name: Screens.AttemptLockout }],
-              })
-            )
+          if (onboardingComplete(onboardingState)) {
+            // if they previously completed onboarding before wallet naming was enabled, mark complete
+            if (!store.onboarding.didNameWallet) {
+              dispatch({ type: DispatchAction.DID_NAME_WALLET, payload: [true] })
+            }
+
+            if (!attemptData?.lockoutDate) {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: Screens.EnterPIN }],
+                })
+              )
+            } else {
+              // return to lockout screen if lockout date is set
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: Screens.AttemptLockout }],
+                })
+              )
+            }
             return
           } else {
             // If onboarding was interrupted we need to pickup from where we left off.
             navigation.dispatch(
               CommonActions.reset({
                 index: 0,
-                routes: [{ name: resumeOnboardingAt(onboardingState, enableWalletNaming) }],
+                routes: [{ name: resumeOnboardingAt(onboardingState, store.preferences.enableWalletNaming) }],
               })
             )
           }
