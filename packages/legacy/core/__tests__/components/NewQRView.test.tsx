@@ -43,6 +43,7 @@ describe('NewQRView Component', () => {
             useVerifierCapability: false,
             useConnectionInviterCapability: false,
             useDevVerifierTemplates: false,
+            acceptDevCredentials:false,
             walletName: 'My Wallet - 1234',
           },
         }}

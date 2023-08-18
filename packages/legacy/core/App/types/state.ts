@@ -18,6 +18,7 @@ export interface Preferences {
   useConnectionInviterCapability?: boolean
   useDevVerifierTemplates?: boolean
   walletName: string
+  acceptDevCredentials: boolean
 }
 
 export interface Tours {
