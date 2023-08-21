@@ -6,7 +6,7 @@ import React from 'react'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import configurationContext from '../contexts/configuration'
-import { defaultProofRequestTemplates } from '../../verifier'
+import { useProofRequestTemplates } from '../../verifier/request-templates'
 import ProofRequestDetails from '../../App/screens/ProofRequestDetails'
 import { testIdWithKey } from '../../App'
 
@@ -28,8 +28,8 @@ jest.mock('react-native-device-info', () => () => jest.fn())
 
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
-
-const templateId = defaultProofRequestTemplates[0].id
+const templates = useProofRequestTemplates(false)
+const templateId = templates[0].id
 const connectionId = 'test'
 const navigation = useNavigation()
 

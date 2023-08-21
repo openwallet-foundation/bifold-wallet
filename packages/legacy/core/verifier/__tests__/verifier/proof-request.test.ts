@@ -1,4 +1,4 @@
-import { defaultProofRequestTemplates } from '../../request-templates'
+import { useProofRequestTemplates } from '../../request-templates'
 import { buildProofRequestDataForTemplate, hasPredicates } from '../../utils/proof-request'
 
 import SpyInstance = jest.SpyInstance
@@ -9,22 +9,23 @@ describe('Helpers', () => {
   beforeAll(() => {
     spy = jest.spyOn(Date, 'now').mockImplementation(() => 1677766511505)
   })
+  const templates = useProofRequestTemplates(false)
 
   test('Build anoncreds proof request from template containing two requested attributes', async () => {
-    const template = defaultProofRequestTemplates[0]
+    const template = templates[0]
     const proofRequest = buildProofRequestDataForTemplate(template)
     expect(proofRequest).toMatchSnapshot()
   })
 
   test('Build anoncreds proof request from template containing two requested attributes and predicate', async () => {
-    const template = defaultProofRequestTemplates[1]
+    const template = templates[1]
     const proofRequest = buildProofRequestDataForTemplate(template)
     expect(proofRequest).toMatchSnapshot()
   })
 
   test('Check if proof has predicates', async () => {
-    expect(hasPredicates(defaultProofRequestTemplates[0])).toBeFalsy()
-    expect(hasPredicates(defaultProofRequestTemplates[1])).toBeTruthy()
+    expect(hasPredicates(templates[0])).toBeFalsy()
+    expect(hasPredicates(templates[1])).toBeTruthy()
   })
 
   afterAll(() => {

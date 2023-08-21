@@ -45,7 +45,7 @@ const RootStack: React.FC = () => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash, useBiometry, enableWalletNaming } = useConfiguration()
+  const { pages, terms, splash, useBiometry } = useConfiguration()
   useDeepLinks()
 
   const lockoutUser = async () => {
@@ -284,7 +284,7 @@ const RootStack: React.FC = () => {
     state.onboarding.didAgreeToTerms &&
     state.onboarding.didCompleteTutorial &&
     state.onboarding.didCreatePIN &&
-    (!enableWalletNaming || state.onboarding.didNameWallet) &&
+    (!state.preferences.enableWalletNaming || state.onboarding.didNameWallet) &&
     state.onboarding.didConsiderBiometry
   ) {
     return state.authentication.didAuthenticate ? mainStack() : authStack()

@@ -2,7 +2,8 @@ import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
-import { defaultProofRequestTemplates } from '../../verifier'
+import { useProofRequestTemplates } from '../../verifier/request-templates'
+
 
 const configurationContext: ConfigurationContext = {
   pages: () => [],
@@ -42,7 +43,7 @@ const configurationContext: ConfigurationContext = {
     pageTitle: '',
   },
   useCustomNotifications: useNotifications,
-  proofRequestTemplates: defaultProofRequestTemplates,
+  proofRequestTemplates: useProofRequestTemplates,
 }
 
 export default configurationContext

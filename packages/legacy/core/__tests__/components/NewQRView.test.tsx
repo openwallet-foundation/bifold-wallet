@@ -37,12 +37,7 @@ describe('NewQRView Component', () => {
         initialState={{
           ...defaultState,
           preferences: {
-            developerModeEnabled: false,
-            biometryPreferencesUpdated: false,
-            useBiometry: false,
-            useVerifierCapability: false,
-            useConnectionInviterCapability: false,
-            useDevVerifierTemplates: false,
+            ...defaultState.preferences,
             walletName: 'My Wallet - 1234',
           },
         }}
