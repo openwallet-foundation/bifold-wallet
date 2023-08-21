@@ -519,6 +519,8 @@ const translation = {
     "BackToHome": "Go back to home"
   },
   "NameWallet": {
+    "EnableWalletNaming": "Enable wallet naming?",
+    "ToggleWalletNaming": "Toggle wallet naming",
     "NameYourWallet": "Name your wallet",
     "ThisIsTheName": "This is the name people see when connecting with you.",
     "CharCountTitle": "Character count exceeded",
@@ -556,6 +558,7 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
+    "AcceptDevCredentials": "Accept non-production credentials?",
     "UseDevVerifierTemplates": "Use development verifier templates?",
     "Toggle": "Toggle Verifier Capability",
     "ToggleDevTemplates": "Toggle Verifier Development Templates",

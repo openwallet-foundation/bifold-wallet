@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { defaultProofRequestTemplates } from '../../verifier'
+import { useProofRequestTemplates } from '../../verifier/request-templates'
 import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
 import * as proofRequestUtils from '../../verifier/utils/proof-request'
@@ -39,7 +39,8 @@ jest.mock('react-native-device-info', () => () => jest.fn())
 jest.useFakeTimers('legacy')
 jest.spyOn(global, 'setTimeout')
 
-const template = defaultProofRequestTemplates[0]
+const templates = useProofRequestTemplates(true)
+const template = templates[0]
 const templateId = template.id
 
 const proof_request = {

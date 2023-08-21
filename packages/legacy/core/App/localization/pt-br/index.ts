@@ -484,6 +484,8 @@ const translation = {
     "BackToHome": "Voltar para a home"
   },
   "NameWallet": {
+    "EnableWalletNaming": "Enable wallet naming? (PT-BR)",
+    "ToggleWalletNaming": "Toggle wallet naming (PT-BR)",
     "NameYourWallet": "Nome da sua carteira",
     "ThisIsTheName": "Este é o nome que as pessoas verão quando se conectar a você.",
     "CharCountTitle": "Número de caracteres excedido",
@@ -521,6 +523,7 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
+    "AcceptDevCredentials": "Accept non-production credentials? (PB)",
     "UseDevVerifierTemplates": "Usar templates de verificador de desenvolvimento?",
     "Toggle": "Alternar capacidade do verificador",
     "ToggleDevTemplates": "Alternar Templates de Verificador de Desenvolvimento",

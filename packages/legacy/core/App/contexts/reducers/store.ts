@@ -41,7 +41,9 @@ enum PreferencesDispatchAction {
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
   USE_DEV_VERIFIER_TEMPLATES = 'preferences/useDevVerifierTemplates',
+  ENABLE_WALLET_NAMING = 'preferences/enableWalletNaming',
   UPDATE_WALLET_NAME = 'preferences/updateWalletName',
+  ACCEPT_DEV_CREDENTIALS = 'preferences/acceptDevCredentials',
 }
 
 enum ToursDispatchAction {
@@ -167,12 +169,38 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       return newState
     }
+    case PreferencesDispatchAction.ACCEPT_DEV_CREDENTIALS: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        acceptDevCredentials: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
       // For older wallets that haven't explicitly named their wallet yet
       if (!preferences.walletName) {
         preferences.walletName = generateRandomWalletName()
       }
+
+      return {
+        ...state,
+        preferences,
+      }
+    }
+    case PreferencesDispatchAction.ENABLE_WALLET_NAMING: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = { ...state.preferences, enableWalletNaming: choice }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return {
         ...state,
