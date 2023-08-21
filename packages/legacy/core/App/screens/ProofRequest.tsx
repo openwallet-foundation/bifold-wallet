@@ -1,7 +1,9 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import {
+  AnonCredsCredentialInfo,
   AnonCredsCredentialsForProofRequest,
+  AnonCredsPredicateType,
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@aries-framework/anoncreds'
@@ -30,7 +32,7 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
-import { ProofCredentialItems } from '../types/record'
+import { Predicate, ProofCredentialItems } from '../types/record'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
@@ -237,26 +239,96 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
-  const hasAvailableCredentials = (credDefId?: string): boolean => {
-    const fields: Fields = {
-      ...retrievedCredentials?.attributes,
-      ...retrievedCredentials?.predicates,
+  const getCredentialsFields = (): Fields => ({
+    ...retrievedCredentials?.attributes,
+    ...retrievedCredentials?.predicates,
+  })
+
+  /**
+   * Retrieve current credentials info filtered by `credentialDefinitionId` if given.
+   * @param credDefId Credential Definition Id
+   * @returns Array of `AnonCredsCredentialInfo`
+   */
+  const getCredentialInfo = (credDefId?: string): AnonCredsCredentialInfo[] => {
+    const credentialInfo: AnonCredsCredentialInfo[] = []
+    const fields = getCredentialsFields()
+
+    Object.keys(fields).forEach((proofKey) => {
+      credentialInfo.push(...fields[proofKey].map((attr) => attr.credentialInfo))
+    })
+
+    return credDefId == undefined
+      ? credentialInfo
+      : credentialInfo.filter((cred) => cred.credentialDefinitionId === credDefId)
+  }
+
+  /**
+   * Evaluate if given attribute value satisfies the predicate.
+   * @param attribute Credential attribute value
+   * @param pValue Predicate value
+   * @param pType Predicate type ({@link AnonCredsPredicateType})
+   * @returns `true`if predicate is satisfied, otherwise `false`
+   */
+  const evaluateOperation = (attribute: number, pValue: number, pType: AnonCredsPredicateType): boolean => {
+    if (pType === '>=') {
+      return attribute >= pValue
     }
 
-    if (credDefId) {
-      let credFound = false
-      Object.keys(fields).forEach((proofKey) => {
-        const credDefsInAttrs = fields[proofKey].map((attr) => attr.credentialInfo?.credentialDefinitionId)
-        if (credDefsInAttrs.includes(credDefId)) {
-          credFound = true
-          return
+    if (pType === '>') {
+      return attribute > pValue
+    }
+
+    if (pType === '<=') {
+      return attribute <= pValue
+    }
+    if (pType === '<') {
+      return attribute < pValue
+    }
+
+    return false
+  }
+
+  /**
+   * Given proof credential items, evaluate and return its predicates, setting `satisfied` property.
+   * @param proofCredentialsItems
+   * @returns Array of evaluated predicates
+   */
+  const evaluatePredicates = (proofCredentialItems: ProofCredentialItems): Predicate[] => {
+    const predicates = proofCredentialItems.predicates
+
+    if (!predicates || predicates.length == 0) {
+      return []
+    }
+
+    const credentialAttributes = getCredentialInfo(proofCredentialItems.credDefId).map((ci) => ci.attributes)
+
+    return predicates.map((predicate) => {
+      const { pType: pType, pValue: pValue, name: field } = predicate
+      let satisfied = false
+
+      if (field) {
+        const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
+
+        if (attribute && pValue) {
+          satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
         }
-      })
-      return credFound
+      }
+
+      return { ...predicate, satisfied }
+    })
+  }
+
+  const hasAvailableCredentials = (credDefId?: string): boolean => {
+    const fields = getCredentialsFields()
+
+    if (credDefId) {
+      return getCredentialInfo(credDefId).some((credInfo) => credInfo.credentialDefinitionId === credDefId)
     }
 
     return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
+
+  const hasSatisfiedPredicates = () => proofItems.flatMap(evaluatePredicates).every((p) => p.satisfied)
 
   const handleAcceptPress = async () => {
     try {
@@ -334,7 +406,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
-              {!hasAvailableCredentials() ? (
+              {!hasAvailableCredentials() || !hasSatisfiedPredicates() ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon
                     style={{ marginLeft: -2, marginRight: 10 }}
@@ -342,10 +414,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     color={ListItems.proofIcon.color}
                     size={ListItems.proofIcon.fontSize}
                   />
-                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                    <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                    {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}:
-                  </Text>
+                  {hasSatisfiedPredicates() ? (
+                    <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                      <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                      {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}
+                    </Text>
+                  ) : (
+                    <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                      {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
+                      <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>
+                    </Text>
+                  )}
                 </View>
               ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
@@ -375,7 +454,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             testID={testIdWithKey('Share')}
             buttonType={ButtonType.Primary}
             onPress={handleAcceptPress}
-            disabled={!hasAvailableCredentials()}
+            disabled={!hasAvailableCredentials() || !hasSatisfiedPredicates()}
           />
         </View>
         <View style={styles.footerButton}>
@@ -404,9 +483,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   credential={item.credExchangeRecord}
                   credDefId={item.credDefId}
                   schemaId={item.schemaId}
-                  displayItems={[...(item.attributes ?? []), ...(item.predicates ?? [])]}
+                  displayItems={[...(item.attributes ?? []), ...evaluatePredicates(item)]}
                   credName={item.credName}
-                  existsInWallet={hasAvailableCredentials(item.credDefId)}
+                  existsInWallet={hasAvailableCredentials(item.credDefId) && hasSatisfiedPredicates()}
                   proof
                 ></CredentialCard>
               </View>
