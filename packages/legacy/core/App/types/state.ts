@@ -20,6 +20,7 @@ export interface Preferences {
   enableWalletNaming: boolean
   walletName: string
   acceptDevCredentials: boolean
+  useDataRetention: boolean
 }
 
 export interface Tours {
