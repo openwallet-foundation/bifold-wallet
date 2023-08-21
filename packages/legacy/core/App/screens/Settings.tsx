@@ -154,6 +154,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           testID: testIdWithKey('Language'),
           onPress: () => navigation.navigate(Screens.Language),
         },
+        {
+          title: t('Settings.DataRetention'),
+          value: store.preferences.useDataRetention ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Settings.DataRetention'),
+          testID: testIdWithKey('DataRetention'),
+          onPress: () => navigation.navigate(Screens.DataRetention),
+        },
       ],
     },
     ...(settings || []),

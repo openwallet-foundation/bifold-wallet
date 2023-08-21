@@ -44,6 +44,7 @@ enum PreferencesDispatchAction {
   ENABLE_WALLET_NAMING = 'preferences/enableWalletNaming',
   UPDATE_WALLET_NAME = 'preferences/updateWalletName',
   ACCEPT_DEV_CREDENTIALS = 'preferences/acceptDevCredentials',
+  USE_DATA_RETENTION = 'preferences/useDataRetention',
 }
 
 enum ToursDispatchAction {
@@ -184,11 +185,30 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       return newState
     }
+    case PreferencesDispatchAction.USE_DATA_RETENTION: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        useDataRetention: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
     case PreferencesDispatchAction.PREFERENCES_UPDATED: {
       const preferences: PreferencesState = (action?.payload || []).pop()
       // For older wallets that haven't explicitly named their wallet yet
       if (!preferences.walletName) {
         preferences.walletName = generateRandomWalletName()
+      }
+      // For older wallets initialized before data retention option was created
+      if (preferences.useDataRetention === undefined) {
+        preferences.useDataRetention = true
       }
 
       return {

@@ -6,6 +6,7 @@ import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import DataRetention from '../screens/DataRetention'
 import Language from '../screens/Language'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
@@ -49,6 +50,11 @@ const SettingStack: React.FC = () => {
         name={Screens.Language}
         component={Language}
         options={{ title: t('Screens.Language'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.DataRetention}
+        component={DataRetention}
+        options={{ title: t('Screens.DataRetention'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.Tours}
