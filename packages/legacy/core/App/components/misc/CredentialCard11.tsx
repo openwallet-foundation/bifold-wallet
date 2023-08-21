@@ -306,7 +306,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       item && (
         <View style={{ marginTop: 15 }}>
-          {!(item?.value || item?.pValue) ? (
+          {!(item?.value || item?.satisfied) ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
@@ -320,6 +320,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             <AttributeLabel label={label} />
           )}
           {!(item?.value || item?.pValue) ? null : <AttributeValue value={value} />}
+          {item?.satisfied != undefined && item?.satisfied === false ? (
+            <Text style={[styles.errorText]} numberOfLines={1}>
+              {t('ProofRequest.PredicateNotSatisfied')}
+            </Text>
+          ) : null}
         </View>
       )
     )

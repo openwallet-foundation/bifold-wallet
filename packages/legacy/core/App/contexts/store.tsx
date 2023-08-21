@@ -42,12 +42,18 @@ export const defaultState: State = {
     useVerifierCapability: false,
     useConnectionInviterCapability: false,
     useDevVerifierTemplates: false,
+    acceptDevCredentials: false,
+    useDataRetention: true,
+    enableWalletNaming: false,
     walletName: generateRandomWalletName(),
   },
   tours: {
     seenToursPrompt: false,
     enableTours: true,
     seenHomeTour: false,
+    seenCredentialsTour: false,
+    seenCredentialOfferTour: false,
+    seenProofRequestTour: false,
   },
   deepLink: {
     activeDeepLink: '',
