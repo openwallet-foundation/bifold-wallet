@@ -1,0 +1,267 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Data Retention screen screen renders correctly 1`] = `
+<RNCSafeAreaView
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#000000",
+        "width": "100%",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#313132",
+          "paddingHorizontal": 25,
+          "paddingVertical": 16,
+        },
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 20,
+            "fontWeight": "bold",
+          },
+        ]
+      }
+    >
+      Global.On
+    </Text>
+    <View
+      ImageComponent={[Function]}
+      accessibilityLabel="Global.On"
+      accessible={true}
+      collapsable={false}
+      disableBuiltInState={true}
+      disableText={true}
+      fillColor="#313132"
+      focusable={true}
+      innerIconStyle={
+        Object {
+          "borderColor": "#42803E",
+          "borderWidth": 2,
+        }
+      }
+      isChecked={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      size={36}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+      testID="com.ariesbifold:id/dataRetentionOn"
+      unfillColor="#313132"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#313132",
+            "borderRadius": 18,
+            "height": 36,
+            "justifyContent": "center",
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+            "width": 36,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderColor": "#313132",
+                "borderRadius": 18,
+                "borderWidth": 1,
+                "height": 36,
+                "justifyContent": "center",
+                "width": 36,
+              },
+              Object {
+                "borderColor": "#42803E",
+                "borderWidth": 2,
+              },
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#42803E",
+                  "fontSize": 18,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#313132",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderBottomColor": "#000000",
+            "borderBottomWidth": 1,
+            "marginHorizontal": 25,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#313132",
+          "paddingHorizontal": 25,
+          "paddingVertical": 16,
+        },
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 20,
+            "fontWeight": "bold",
+          },
+        ]
+      }
+    >
+      Global.Off
+    </Text>
+    <View
+      ImageComponent={[Function]}
+      accessibilityLabel="Global.Off"
+      accessible={true}
+      collapsable={false}
+      disableBuiltInState={true}
+      disableText={true}
+      fillColor="#313132"
+      focusable={true}
+      innerIconStyle={
+        Object {
+          "borderColor": "#42803E",
+          "borderWidth": 2,
+        }
+      }
+      isChecked={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      size={36}
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+      testID="com.ariesbifold:id/dataRetentionOff"
+      unfillColor="#313132"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#313132",
+            "borderRadius": 18,
+            "height": 36,
+            "justifyContent": "center",
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+            "width": 36,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderColor": "#313132",
+                "borderRadius": 18,
+                "borderWidth": 1,
+                "height": 36,
+                "justifyContent": "center",
+                "width": 36,
+              },
+              Object {
+                "borderColor": "#42803E",
+                "borderWidth": 2,
+              },
+            ]
+          }
+        />
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;
