@@ -221,7 +221,7 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
     },
     footerButton: {
       margin: 20,
-      marginTop:'auto',
+      marginTop: 'auto',
     },
   })
   const onGenerateNew = useCallback(() => {
@@ -234,28 +234,28 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
   }, [navigation])
 
   return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('UnverifiedProofView')}>
-        <View style={styles.header}>
-          <View style={styles.headerTitleContainer}>
-            <Icon name="bookmark-remove" size={45} color={'white'} />
-            {record.state === ProofState.Abandoned && (
-              <Text style={styles.headerTitle}>{t('Verifier.PresentationDeclined')}</Text>
-            )}
-            {record.isVerified === false && (
-              <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
-            )}
-          </View>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('UnverifiedProofView')}>
+      <View style={styles.header}>
+        <View style={styles.headerTitleContainer}>
+          <Icon name="bookmark-remove" size={45} color={'white'} />
+          {record.state === ProofState.Abandoned && (
+            <Text style={styles.headerTitle}>{t('Verifier.PresentationDeclined')}</Text>
+          )}
+          {record.isVerified === false && (
+            <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
+          )}
         </View>
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Verifier.GenerateNewQR')}
-            accessibilityLabel={t('Verifier.GenerateNewQR')}
-            testID={testIdWithKey('GenerateNewQR')}
-            buttonType={ButtonType.Primary}
-            onPress={onGenerateNew}
-          />
-        </View>
-      </ScrollView>
+      </View>
+      <View style={styles.footerButton}>
+        <Button
+          title={t('Verifier.GenerateNewQR')}
+          accessibilityLabel={t('Verifier.GenerateNewQR')}
+          testID={testIdWithKey('GenerateNewQR')}
+          buttonType={ButtonType.Primary}
+          onPress={onGenerateNew}
+        />
+      </View>
+    </ScrollView>
   )
 }
 
