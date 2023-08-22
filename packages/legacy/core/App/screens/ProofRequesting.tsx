@@ -24,7 +24,7 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
-const calculateQrSizeForDevice = () => {
+const useQrSizeForDevice = () => {
   const { width, height } = useWindowDimensions()
   const qrContainerSize = isTablet(width, height) ? width - width * 0.3 : width - 20
   const qrSize = qrContainerSize - 20
@@ -54,7 +54,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
   const goalCode = useOutOfBandByConnectionId(record?.id ?? '')?.outOfBandInvitation.goalCode
-  const { qrSize, qrContainerSize } = calculateQrSizeForDevice()
+  const { qrSize, qrContainerSize } = useQrSizeForDevice()
 
   const styles = StyleSheet.create({
     container: {
