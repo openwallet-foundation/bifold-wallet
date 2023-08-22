@@ -38,7 +38,7 @@ export const minute = 60000
 export const hour = 3600000
 
 // wallet timeout of 5 minutes, 0 means the wallet never locks due to inactivity
-export const walletTimeout = minute * 5
+export const walletTimeout = minute * 1
 
 /* lockout attempt rules: The base rules apply the lockout at a specified number of incorrect attempts,
  and the threshold rules apply the lockout penalty to each attempt after the threshold that falls on the attemptIncrement.

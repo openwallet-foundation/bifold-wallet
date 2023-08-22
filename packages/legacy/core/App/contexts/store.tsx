@@ -46,6 +46,7 @@ export const defaultState: State = {
     useDataRetention: true,
     enableWalletNaming: false,
     walletName: generateRandomWalletName(),
+    preventAutoLock: false,
   },
   tours: {
     seenToursPrompt: false,

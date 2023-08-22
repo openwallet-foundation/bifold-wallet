@@ -15,10 +15,10 @@ const Developer: React.FC = () => {
   const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
     !!store.preferences.useConnectionInviterCapability
   )
-  const [acceptDevCredentials, setAcceptDevCredentials] = useState<boolean>(!!store.preferences.acceptDevCredentials)
-
+  const [acceptDevCredentials, setAcceptDevCredentials] = useState(!!store.preferences.acceptDevCredentials)
   const [useDevVerifierTemplates, setDevVerifierTemplates] = useState(!!store.preferences.useDevVerifierTemplates)
   const [enableWalletNaming, setEnableWalletNaming] = useState(!!store.preferences.enableWalletNaming)
+  const [preventAutoLock, setPreventAutoLock] = useState(!!store.preferences.preventAutoLock)
 
   const styles = StyleSheet.create({
     container: {
@@ -100,6 +100,14 @@ const Developer: React.FC = () => {
       payload: [!enableWalletNaming],
     })
     setEnableWalletNaming((previousState) => !previousState)
+  }
+
+  const togglePreventAutoLockSwitch = () => {
+    dispatch({
+      type: DispatchAction.PREVENT_AUTO_LOCK,
+      payload: [!preventAutoLock],
+    })
+    setPreventAutoLock((previousState) => !previousState)
   }
 
   return (
@@ -208,6 +216,25 @@ const Developer: React.FC = () => {
           </Pressable>
         </View>
       )}
+      <View style={styles.settingContainer}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.settingLabelText}>{t('Settings.PreventAutoLock')}</Text>
+        </View>
+        <Pressable
+          style={styles.settingSwitchContainer}
+          accessibilityLabel={t('Settings.TogglePreventAutoLock')}
+          accessibilityRole={'switch'}
+          testID={testIdWithKey('TogglePreventAutoLockSwitch')}
+        >
+          <Switch
+            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+            thumbColor={preventAutoLock ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+            onValueChange={togglePreventAutoLockSwitch}
+            value={preventAutoLock}
+          />
+        </Pressable>
+      </View>
     </View>
   )
 }
