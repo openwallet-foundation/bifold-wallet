@@ -49,13 +49,12 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       height: 250,
       borderRadius: 24,
       borderWidth: 2,
-      borderColor: 'yellow',
+      borderColor: ColorPallet.grayscale.white,
     },
     viewFinderContainer: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'blue',
     },
     errorContainer: {
       flexDirection: 'row',
