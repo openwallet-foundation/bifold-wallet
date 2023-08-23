@@ -3,7 +3,6 @@ import { render, fireEvent, act } from '@testing-library/react-native'
 import React from 'react'
 
 import CameraDisclosureModal from '../../App/components/modals/CameraDisclosureModal'
-import { Screens } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 
 let requestCameraUse = jest.fn(() => Promise.resolve(true))
@@ -40,7 +39,7 @@ describe('CameraDisclosureModal Component', () => {
     const notNowButton = getByTestId(testIdWithKey('NotNow'))
     fireEvent(notNowButton, 'press')
 
-    expect(navigation.navigate).toBeCalledWith(Screens.Home)
-    expect(navigation.navigate).toHaveBeenCalledTimes(1)
+    expect(navigation.getParent).toBeCalled()
+    expect(navigation.getParent).toHaveBeenCalledTimes(1)
   })
 })

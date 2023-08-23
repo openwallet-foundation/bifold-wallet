@@ -117,7 +117,12 @@ const RootStack: React.FC = () => {
       // prevents the user from being locked out during metro reloading
       setPrevAppStateVisible(appStateVisible)
       //lock user out after 5 minutes
-      if (walletTimeout && backgroundTime && Date.now() - backgroundTime > walletTimeout) {
+      if (
+        !state.preferences.preventAutoLock &&
+        walletTimeout &&
+        backgroundTime &&
+        Date.now() - backgroundTime > walletTimeout
+      ) {
         lockoutUser()
       }
     }

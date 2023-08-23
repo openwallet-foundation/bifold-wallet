@@ -418,6 +418,8 @@ const translation = {
     "ChangePin": "Alterar o PIN",
     "Language": "Idioma",
     "DataRetention": "Retenção de dados",
+    "PreventAutoLock": "Prevenir travamento automático",
+    "TogglePreventAutoLock": "Alternar prevenir travamento automático",
     "AppGuides": "Guia do app",
     "WhatAreContacts": "O que são Contatos?",
     "ScanMyQR": "Scanear meu QR code",
