@@ -45,6 +45,7 @@ enum PreferencesDispatchAction {
   UPDATE_WALLET_NAME = 'preferences/updateWalletName',
   ACCEPT_DEV_CREDENTIALS = 'preferences/acceptDevCredentials',
   USE_DATA_RETENTION = 'preferences/useDataRetention',
+  PREVENT_AUTO_LOCK = 'preferences/preventAutoLock',
 }
 
 enum ToursDispatchAction {
@@ -242,6 +243,17 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
+    }
+    case PreferencesDispatchAction.PREVENT_AUTO_LOCK: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = { ...state.preferences, preventAutoLock: choice }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return {
+        ...state,
+        preferences,
+      }
     }
     case ToursDispatchAction.UPDATE_SEEN_TOUR_PROMPT: {
       const seenToursPrompt: ToursState = (action?.payload ?? []).pop() ?? false

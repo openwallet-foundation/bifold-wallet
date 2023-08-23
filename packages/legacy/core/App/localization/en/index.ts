@@ -442,6 +442,8 @@ const translation = {
     "ChangePin": "Change PIN",
     "Language": "Language",
     "DataRetention": "Data retention",
+    "PreventAutoLock": "Prevent auto-lock",
+    "TogglePreventAutoLock": "Toggle prevent auto-lock",
     "AppGuides": "App guides",
     "Build": "Build",
     "WhatAreContacts": "What are Contacts?",

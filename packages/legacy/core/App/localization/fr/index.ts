@@ -433,6 +433,8 @@ const translation = {
         "ChangePin": "Change PIN (FR)",
         "Language": "Langue",
         "DataRetention": "Data retention (FR)",
+        "PreventAutoLock": "Prevent auto-lock (FR)",
+        "TogglePreventAutoLock": "Toggle prevent auto-lock (FR)",
         "AppGuides": "Guides d'applications",
         "Build": "Créer",
         "WhatAreContacts": "Qu’est-ce qu’un Contact?",
