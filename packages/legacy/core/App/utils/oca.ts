@@ -1,7 +1,7 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
+import { Attribute, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
 
 import { CredentialSharedProofData, AnonCredsProofRequestTemplatePayloadData } from '../../verifier'
-import { Attribute, Field, Predicate } from '../types/record'
 
 export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchangeRecord): Array<Field> => {
   return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []

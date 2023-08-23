@@ -2,6 +2,8 @@
 import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
 import { CredentialPreviewAttribute } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
+import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
@@ -25,7 +27,6 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { BifoldError } from '../types/error'
 import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
-import { CardLayoutOverlay11, CredentialOverlay } from '../types/oca'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
@@ -55,7 +56,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
-  const [overlay, setOverlay] = useState<CredentialOverlay<CardLayoutOverlay11>>({ presentationFields: [] })
+  const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
   const [store, dispatch] = useStore()

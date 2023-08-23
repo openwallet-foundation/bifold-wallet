@@ -23,6 +23,12 @@ import {
   ProofFormatDataMessagePayload,
 } from '@aries-framework/core/build/modules/proofs/protocol/ProofProtocolOptions'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import {
+  Attribute,
+  Predicate,
+  ProofCredentialAttributes,
+  ProofCredentialPredicates,
+} from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
@@ -31,7 +37,6 @@ import { Dispatch, ReactNode, SetStateAction } from 'react'
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
 import { Role } from '../types/chat'
-import { Attribute, Predicate, ProofCredentialAttributes, ProofCredentialPredicates } from '../types/record'
 import { ChildFn } from '../types/tour'
 
 export { parsedCredDefNameFromCredential } from './cred-def'

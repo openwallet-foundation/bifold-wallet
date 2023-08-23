@@ -1,9 +1,9 @@
+import { Field } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
-import { Field } from '../../types/record'
 import { testIdWithKey } from '../../utils/testable'
 
 import RecordField from './RecordField'

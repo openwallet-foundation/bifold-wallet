@@ -11,6 +11,7 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 import { formatTime } from '../../App/utils/helpers'
 import configurationContext from '../contexts/configuration'
+import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 const buildCredentialExchangeRecord = () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
@@ -45,10 +46,6 @@ const buildCredentialExchangeRecord = () => {
   })
   return testOpenVPCredentialRecord
 }
-interface CredentialContextInterface {
-  loading: boolean
-  credentials: CredentialExchangeRecord[]
-}
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -62,6 +59,8 @@ jest.mock('react-native-localize', () => {
 jest.useRealTimers()
 
 const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
+
+
 
 /**
  * Given a credential has been accepted
@@ -77,17 +76,21 @@ const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
  *  List of Claims/Attributes
  *  Attribute names are just capitalized name
  */
-describe.skip('displays a credential details screen', () => {
-  const testCredentialRecords: CredentialContextInterface = {
-    loading: false,
-    credentials: [mock_testOpenVPCredentialRecord],
-  }
+describe('displays a credential details screen', () => {
 
   afterEach(() => {
     cleanup()
   })
 
-  describe('with a credential list item', () => {
+  describe('with a credential list item (CardLayout aries/overlays/branding/0.1)', () => {
+    
+    const configurationContext_branding01 = {
+      ...configurationContext,
+      OCABundleResolver: new DefaultOCABundleResolver(require('../../App/assets/oca-bundles.json'), {
+        brandingOverlayType: BrandingOverlayType.Branding01
+      }),
+    }    
+
     beforeEach(() => {
       jest.clearAllMocks()
 
@@ -97,10 +100,10 @@ describe.skip('displays a credential details screen', () => {
 
     test('a credential name and issue date is displayed', async () => {
       const { findByText } = render(
-        <ConfigurationContext.Provider value={configurationContext}>
+        <ConfigurationContext.Provider value={configurationContext_branding01}>
           <CredentialDetails
             navigation={useNavigation()}
-            route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+            route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
           ></CredentialDetails>
         </ConfigurationContext.Provider>
       )
@@ -116,12 +119,37 @@ describe.skip('displays a credential details screen', () => {
     })
   })
 
+  describe('with a credential list item (CardLayout aries/overlays/branding/1.0)', () => {
+    
+    beforeEach(() => {
+      jest.clearAllMocks()
+
+      // @ts-ignore
+      useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
+    })
+
+    test('a credential name is displayed', async () => {
+      const { findByText } = render(
+        <ConfigurationContext.Provider value={configurationContext}>
+          <CredentialDetails
+            navigation={useNavigation()}
+            route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
+          ></CredentialDetails>
+        </ConfigurationContext.Provider>
+      )
+
+      const credentialName = await findByText('Unverified Person', { exact: false })
+
+      expect(credentialName).not.toBe(null)
+    })
+  })
+
   test('a list of credential details is displayed, attribute names are human readable', async () => {
     const { findByText } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
       </ConfigurationContext.Provider>
     )
@@ -140,7 +168,7 @@ describe.skip('displays a credential details screen', () => {
       <ConfigurationContext.Provider value={configurationContext}>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
       </ConfigurationContext.Provider>
     )
@@ -155,7 +183,7 @@ describe.skip('displays a credential details screen', () => {
       <ConfigurationContext.Provider value={configurationContext}>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
       </ConfigurationContext.Provider>
     )
@@ -184,7 +212,7 @@ describe.skip('displays a credential details screen', () => {
       <ConfigurationContext.Provider value={configurationContext}>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credentialId: testCredentialRecords.credentials[0].id } } as any}
+          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
       </ConfigurationContext.Provider>
     )
