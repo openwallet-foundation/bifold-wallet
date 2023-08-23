@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Modal, StyleSheet, StatusBar, DeviceEventEmitter } from 'react-native'
+import { Modal, StyleSheet, StatusBar, DeviceEventEmitter, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { EventTypes } from '../../constants'
@@ -8,9 +8,8 @@ import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
-const { height } = Dimensions.get('window')
-
 const ErrorModal: React.FC = () => {
+  const { height } = useWindowDimensions()
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [error, setError] = useState<BifoldError>()

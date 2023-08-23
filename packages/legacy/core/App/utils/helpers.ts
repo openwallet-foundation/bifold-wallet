@@ -40,6 +40,21 @@ import { parseCredDefFromId } from './cred-def'
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
 
+export enum Orientation {
+  Landscape = 'landscape',
+  Portrait = 'portrait',
+}
+
+export const orientation = (width: number, height: number) => {
+  return width > height ? Orientation.Landscape : Orientation.Portrait
+}
+
+export const isTablet = (width: number, height: number) => {
+  const aspectRatio = height / width
+
+  return aspectRatio < 1.6 // assume 4:3 for tablets
+}
+
 /**
  * Generates a numerical hash based on a given string
  * @see https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript

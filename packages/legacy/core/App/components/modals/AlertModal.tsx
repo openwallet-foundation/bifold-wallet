@@ -1,13 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { InfoBoxType } from '../../components/misc/InfoBox'
 
 import PopupModal from './PopupModal'
-
-const { height } = Dimensions.get('window')
 
 interface AlertModalProps {
   title: string
@@ -17,6 +15,7 @@ interface AlertModalProps {
 
 const AlertModal: React.FC<AlertModalProps> = ({ title, message, submit }) => {
   const { t } = useTranslation()
+  const { height } = useWindowDimensions()
 
   const styles = StyleSheet.create({
     container: {

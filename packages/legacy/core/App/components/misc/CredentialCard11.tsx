@@ -2,7 +2,7 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { useWindowDimensions, FlatList, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -31,12 +31,6 @@ interface CredentialCard11Props {
   schemaId?: string
   proof?: boolean
 }
-
-const { width } = Dimensions.get('screen')
-
-const borderRadius = 10
-const padding = width * 0.05
-const logoHeight = width * 0.12
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -79,6 +73,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   schemaId,
   proof,
 }) => {
+  const { width } = useWindowDimensions()
+  const borderRadius = 10
+  const padding = width * 0.05
+  const logoHeight = width * 0.12
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const { OCABundleResolver } = useConfiguration()

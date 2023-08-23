@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useWindowDimensions, Vibration, View, StyleSheet, Text } from 'react-native'
+import { Vibration, View, StyleSheet, Text } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -18,12 +18,12 @@ interface Props {
   enableCameraOnError?: boolean
 }
 
-const CameraViewContainer: React.FC<{ portrait: boolean }> = ({ portrait, children }) => {
+const CameraViewContainer: React.FC = ({ children }) => {
   return (
     <View
       style={{
         flex: 1,
-        flexDirection: portrait ? 'column' : 'row',
+        flexDirection: 'column',
         alignItems: 'center',
       }}
     >
@@ -36,8 +36,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const navigation = useNavigation()
   const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
-  const { width, height } = useWindowDimensions()
-  const portraitMode = height > width
   const { t } = useTranslation()
   const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
@@ -45,9 +43,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
     container: {
       height: '100%',
       width: '100%',
-      backgroundColor: ColorPallet.grayscale.black,
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     viewFinder: {
       width: 250,
@@ -70,6 +65,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       padding: 4,
     },
   })
+
   return (
     <View style={styles.container}>
       <RNCamera
@@ -101,7 +97,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           }
         }}
       >
-        <CameraViewContainer portrait={portraitMode}>
+        <CameraViewContainer>
           <QRScannerClose onPress={() => navigation.goBack()}></QRScannerClose>
           <View style={styles.errorContainer}>
             {error ? (

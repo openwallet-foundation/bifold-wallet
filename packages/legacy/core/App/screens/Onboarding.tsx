@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Animated, BackHandler, Dimensions, FlatList, View } from 'react-native'
+import { Animated, BackHandler, FlatList, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
@@ -12,8 +12,6 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-
-const { width } = Dimensions.get('window')
 
 export interface OnboardingStyleSheet {
   container: Record<string, any>
@@ -47,6 +45,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [, dispatch] = useStore()
+  const { width } = useWindowDimensions()
 
   const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
     if (!viewableItems[0]) {
