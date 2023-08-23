@@ -132,6 +132,7 @@ const Developer: React.FC = () => {
             thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleVerifierCapabilitySwitch}
+            testID={testIdWithKey('VerifierCapabilitySwitchElement')}
             value={useVerifierCapability}
           />
         </Pressable>
@@ -153,6 +154,7 @@ const Developer: React.FC = () => {
             thumbColor={acceptDevCredentials ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleAcceptDevCredentialsSwitch}
+            testID={testIdWithKey('AcceptDevCredentialsSwitchElement')}
             value={acceptDevCredentials}
           />
         </Pressable>
@@ -172,6 +174,7 @@ const Developer: React.FC = () => {
             thumbColor={useConnectionInviterCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleConnectionInviterCapabilitySwitch}
+            testID={testIdWithKey('ConnectionInviterCapabilitySwitchElement')}
             value={useConnectionInviterCapability}
           />
         </Pressable>
@@ -191,6 +194,7 @@ const Developer: React.FC = () => {
             thumbColor={useDevVerifierTemplates ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={toggleDevVerifierTemplatesSwitch}
+            testID={testIdWithKey('DevVerifierTemplatesSwitchElement')}
             value={useDevVerifierTemplates}
           />
         </Pressable>
@@ -204,13 +208,14 @@ const Developer: React.FC = () => {
             style={styles.settingSwitchContainer}
             accessibilityLabel={t('NameWallet.ToggleWalletNaming')}
             accessibilityRole={'switch'}
-            testID={testIdWithKey('EnableWalletNamingSwitch')}
+            testID={testIdWithKey('ToggleEnableWalletNamingSwitch')}
           >
             <Switch
               trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
               thumbColor={enableWalletNaming ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
               ios_backgroundColor={ColorPallet.grayscale.lightGrey}
               onValueChange={toggleWalletNamingSwitch}
+              testID={testIdWithKey('EnableWalletNamingSwitchElement')}
               value={enableWalletNaming}
             />
           </Pressable>
@@ -231,6 +236,7 @@ const Developer: React.FC = () => {
             thumbColor={preventAutoLock ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
             ios_backgroundColor={ColorPallet.grayscale.lightGrey}
             onValueChange={togglePreventAutoLockSwitch}
+            testID={testIdWithKey('PreventAutoLockSwitchElement')}
             value={preventAutoLock}
           />
         </Pressable>
