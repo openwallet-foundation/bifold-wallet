@@ -6,7 +6,7 @@ import { Modal, ScrollView, StyleSheet, Text, View, Linking } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
-import { Screens, HomeStackParams } from '../../types/navigators'
+import { Screens, HomeStackParams, TabStacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
@@ -55,12 +55,12 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
   const onOpenSettingsTouched = async () => {
     setModalVisible(false)
     await Linking.openSettings()
-    navigation.navigate(Screens.Home)
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
   const onNotNowTouched = () => {
     setModalVisible(false)
-    navigation.navigate(Screens.Home)
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
   const onOpenSettingsDismissed = () => {
