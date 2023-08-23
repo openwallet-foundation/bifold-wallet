@@ -3,7 +3,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { useWindowDimensions, Image, StyleSheet, Text, View } from 'react-native'
 
 import {
   GroupedSharedProofData,
@@ -24,16 +24,14 @@ interface SharedProofDataProps {
   onSharedProofDataLoad?: (sharedProofData: GroupedSharedProofDataItem[]) => void
 }
 
-const { width } = Dimensions.get('screen')
-const logoHeight = width * 0.12
-const padding = width * 0.05
-const borderRadius = 10
-
 const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ sharedData }) => {
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()
   const { i18n } = useTranslation()
-
+  const { width } = useWindowDimensions()
+  const logoHeight = width * 0.12
+  const padding = width * 0.05
+  const borderRadius = 10
   const styles = StyleSheet.create({
     container: {
       marginBottom: 20,

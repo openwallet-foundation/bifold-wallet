@@ -19,6 +19,7 @@ export enum Screens {
   ProofRequestUsageHistory = 'Proof Request Usage History',
   Settings = 'Settings',
   Language = 'Language',
+  DataRetention = 'Data Retention',
   Tours = 'Tours',
   Contacts = 'Contacts',
   ContactDetails = 'Contact Details',
@@ -121,6 +122,7 @@ export type ConnectStackParams = {
 export type SettingStackParams = {
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
+  [Screens.DataRetention]: undefined
   [Screens.Tours]: undefined
   [Screens.UseBiometry]: undefined
   [Screens.CreatePIN]: undefined

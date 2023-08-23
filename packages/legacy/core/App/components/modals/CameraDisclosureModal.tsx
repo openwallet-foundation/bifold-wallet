@@ -68,7 +68,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
   }
 
   return (
-    <Modal visible={modalVisible} animationType={'slide'} transparent>
+    <Modal visible={modalVisible} animationType={'slide'} supportedOrientations={['portrait', 'landscape']} transparent>
       {showSettingsPopup && (
         <DismissiblePopupModal
           title={t('CameraDisclosure.AllowCameraUse')}

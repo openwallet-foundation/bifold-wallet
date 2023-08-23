@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, ViewStyle, Text, useWindowDimensions } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 
 import { useTheme } from '../../contexts/theme'
@@ -13,9 +13,8 @@ interface QRRendererProps {
   onError?: () => void
 }
 
-const windowDimensions = Dimensions.get('window')
-
 const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
+  const { width } = useWindowDimensions()
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 
@@ -40,7 +39,7 @@ const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
     }
   }, [onError])
 
-  const qrSize = size ?? windowDimensions.width - 80
+  const qrSize = size ?? width - 80
 
   return (
     <View style={styles.container} testID={testIdWithKey('QRRenderer')}>

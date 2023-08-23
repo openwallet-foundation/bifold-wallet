@@ -26,6 +26,7 @@ const mockProofModule = {
   getCredentialsForRequest: jest.fn(),
   acceptRequest: jest.fn(),
   declineRequest: jest.fn(),
+  getFormatData: jest.fn(),
 }
 
 const mockMediationRecipient = {

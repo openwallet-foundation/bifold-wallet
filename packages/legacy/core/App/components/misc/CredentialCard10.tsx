@@ -3,7 +3,7 @@ import { LegacyBrandingOverlay } from '@hyperledger/aries-oca'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { useWindowDimensions, Image, ImageBackground, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { useConfiguration } from '../../contexts/configuration'
@@ -32,7 +32,6 @@ const paddingHorizontal = 10
 const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 const borderPadding = 8
-const { width } = Dimensions.get('window')
 
 /**
  * A card is defined as a 4x8 (height/rows x width/columns) grid.
@@ -66,10 +65,11 @@ Variation 1:
 
 Note: The small logo MUST be provided as 1x1 (height/width) ratio, while the large logo MUST be provided as 1x4 (height/width) ratio
  */
-const cardHeight = width / 2 // a card height is half of the screen width
-const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
 
 const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style = {}, onPress = undefined }) => {
+  const { width } = useWindowDimensions()
+  const cardHeight = width / 2 // a card height is half of the screen width
+  const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
   const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()

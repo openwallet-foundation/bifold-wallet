@@ -2715,15 +2715,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperledger/aries-oca@npm:1.0.0-alpha.53":
-  version: 1.0.0-alpha.53
-  resolution: "@hyperledger/aries-oca@npm:1.0.0-alpha.53"
+"@hyperledger/aries-oca@npm:1.0.0-alpha.72":
+  version: 1.0.0-alpha.72
+  resolution: "@hyperledger/aries-oca@npm:1.0.0-alpha.72"
   dependencies:
     "@aries-framework/anoncreds": ^0.4.0
     "@aries-framework/core": 0.4.0
     axios: ^1.4.0
     lodash.startcase: ^4.4.0
-  checksum: f51d184aa8e5ca67b40394d0f1788f9bb4cfc77362097f1d7d0f1fe22f05cf5762ea7315dc08c0035bc4b8ff5b1daf8bb879d9667a87cfb0909a3740b54a6dcd
+  checksum: fb0521334e43981f9f39c913ad1a007c3aad36cf39c1288ae75d274c61fac33d55413b54247d44636c821d9e5e739d4bd00e6879cd461ecfd05d17f596b7e0fd
   languageName: node
   linkType: hard
 
@@ -5924,7 +5924,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.1
-    "@hyperledger/aries-oca": 1.0.0-alpha.53
+    "@hyperledger/aries-oca": 1.0.0-alpha.72
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/masked-view": 0.1.11
@@ -6049,7 +6049,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": ^9.2.3
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.1
-    "@hyperledger/aries-oca": 1.0.0-alpha.53
+    "@hyperledger/aries-oca": 1.0.0-alpha.72
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": ^1.12.1
     "@react-native-community/eslint-config": ^2.0.0
@@ -6149,7 +6149,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": ^9.2.3
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.1
-    "@hyperledger/aries-oca": 1.0.0-alpha.53
+    "@hyperledger/aries-oca": 1.0.0-alpha.72
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": ^1.12.1
     "@react-native-community/masked-view": ^0.1.11

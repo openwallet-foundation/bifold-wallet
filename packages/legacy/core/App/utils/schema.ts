@@ -16,6 +16,7 @@ export function parseSchemaFromId(schemaId?: string): { name: string; version: s
       version = schemaIdParts?.[4]
     }
   }
+
   return { name, version }
 }
 

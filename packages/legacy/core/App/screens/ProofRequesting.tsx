@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BackHandler, DeviceEventEmitter, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { BackHandler, DeviceEventEmitter, useWindowDimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { isPresentationFailed, isPresentationReceived, linkProofWithTemplate, sendProofRequest } from '../../verifier'
@@ -19,16 +19,18 @@ import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { createTempConnectionInvitation } from '../utils/helpers'
+import { createTempConnectionInvitation, isTablet } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
-const { width, height } = Dimensions.get('window')
-const aspectRatio = height / width
-const isTablet = aspectRatio < 1.6 // assume 4:3 for tablets
-const qrContainerSize = isTablet ? width - width * 0.3 : width - 20
-const qrSize = qrContainerSize - 20
+const useQrSizeForDevice = () => {
+  const { width, height } = useWindowDimensions()
+  const qrContainerSize = isTablet(width, height) ? width - width * 0.3 : width - 20
+  const qrSize = qrContainerSize - 20
+
+  return { qrSize, qrContainerSize }
+}
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
   if (!route?.params) {
@@ -36,7 +38,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }
 
   const { templateId, predicateValues } = route?.params
-
   const { agent } = useAgent()
   if (!agent) {
     throw new Error('Unable to fetch agent from AFJ')
@@ -52,8 +53,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const record = useConnectionByOutOfBandId(connectionRecordId ?? '')
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
-
   const goalCode = useOutOfBandByConnectionId(record?.id ?? '')?.outOfBandInvitation.goalCode
+  const { qrSize, qrContainerSize } = useQrSizeForDevice()
 
   const styles = StyleSheet.create({
     container: {

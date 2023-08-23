@@ -2,12 +2,54 @@ import { useAgent } from '@aries-framework/react-hooks'
 import fs from 'fs'
 import path from 'path'
 
-import { createConnectionInvitation, credentialSortFn, formatIfDate, formatTime } from '../../App/utils/helpers'
+import {
+  isTablet,
+  orientation,
+  Orientation,
+  createConnectionInvitation,
+  credentialSortFn,
+  formatIfDate,
+  formatTime,
+} from '../../App/utils/helpers'
 
 const proofCredentialPath = path.join(__dirname, '../fixtures/proof-credential.json')
 const credentials = JSON.parse(fs.readFileSync(proofCredentialPath, 'utf8'))
 const connectionInvitationPath = path.join(__dirname, '../fixtures/connection-invitation.json')
 const connectionInvitation = JSON.parse(fs.readFileSync(connectionInvitationPath, 'utf8'))
+
+describe('orientation', () => {
+  test('Not tablet aspect ratio', async () => {
+    const width = 1000
+    const height = 800
+    const result = isTablet(width, height)
+
+    expect(result).toBeTruthy()
+  })
+
+  test('Is tablet aspect ratio', async () => {
+    const width = 1000
+    const height = 600
+    const result = isTablet(width, height)
+
+    expect(result).toBeTruthy()
+  })
+
+  test('Is landscape', async () => {
+    const width = 1000
+    const height = 600
+    const result = orientation(width, height)
+
+    expect(result).toBe(Orientation.Landscape)
+  })
+
+  test('Is portrait', async () => {
+    const width = 600
+    const height = 1000
+    const result = orientation(width, height)
+
+    expect(result).toBe(Orientation.Portrait)
+  })
+})
 
 describe('credentialSortFn', () => {
   test('Sorts retrieved credentials by revocation', async () => {
