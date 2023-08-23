@@ -1,10 +1,10 @@
+import { Attribute } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
 
 import { dateIntFormat, hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { Attribute } from '../../types/record'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 

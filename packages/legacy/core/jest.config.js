@@ -8,6 +8,7 @@ module.exports = {
     '\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/file.js',
     '\\.(css|less)$': '<rootDir>/__mocks__/style.js',
+    axios: 'axios/dist/node/axios.cjs',
     'react-i18next': '<rootDir>/__mocks__/react-i18next.ts',
   },
   transform: {
