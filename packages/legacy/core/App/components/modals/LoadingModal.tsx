@@ -1,13 +1,12 @@
 import React from 'react'
-import { Dimensions, Modal, StyleSheet } from 'react-native'
+import { Modal, StyleSheet, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useTheme } from '../../contexts/theme'
 
-const { height } = Dimensions.get('window')
-
 const LoadingModal: React.FC = () => {
+  const { height } = useWindowDimensions()
   const { LoadingTheme } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
   const styles = StyleSheet.create({

@@ -1,6 +1,14 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, View, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native'
+import {
+  Modal,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Image,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -14,7 +22,7 @@ interface ImageModalProps {
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({ uri, onDismissPressed }) => {
-  const { height, width } = Dimensions.get('window')
+  const { height, width } = useWindowDimensions()
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 

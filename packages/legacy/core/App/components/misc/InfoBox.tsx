@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -11,7 +11,6 @@ import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
 const iconSize = 30
-const { width } = Dimensions.get('window')
 
 export enum InfoBoxType {
   Info,
@@ -41,6 +40,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   onCallToActionLabel,
   onClosePressed,
 }) => {
+  const { width } = useWindowDimensions()
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const [showDetails, setShowDetails] = useState<boolean>(false)

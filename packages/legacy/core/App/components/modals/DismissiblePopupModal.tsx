@@ -1,6 +1,14 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, View, Text, Dimensions, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import {
+  Modal,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  useWindowDimensions,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -24,7 +32,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
   onCallToActionLabel,
   onDismissPressed,
 }) => {
-  const { height, width } = Dimensions.get('window')
+  const { height, width } = useWindowDimensions()
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const iconSize = 30
