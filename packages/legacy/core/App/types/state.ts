@@ -21,6 +21,7 @@ export interface Preferences {
   walletName: string
   acceptDevCredentials: boolean
   useDataRetention: boolean
+  preventAutoLock: boolean
 }
 
 export interface Tours {
