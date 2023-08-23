@@ -116,15 +116,6 @@ describe('ProofDetails Component', () => {
   }
 
   describe('with a verified proof record', () => {
-    beforeEach(() => {
-      jest.clearAllMocks()
-
-      // @ts-ignore
-      useProofById.mockReturnValue(testVerifiedProofRequest)
-      // @ts-ignore
-      jest.spyOn(proofUtils, 'getProofData').mockReturnValue(Promise.resolve(data))
-    })
-
     const testVerifiedProofRequest = new ProofExchangeRecord({
       connectionId: undefined,
       threadId: requestPresentationMessage.id,
@@ -145,13 +136,21 @@ describe('ProofDetails Component', () => {
       expect(secondNameAttributeValue).not.toBe(null)
     }
 
+    beforeEach(() => {
+      jest.clearAllMocks()
+
+      // @ts-ignore
+      useProofById.mockReturnValue(testVerifiedProofRequest)
+      // @ts-ignore
+      jest.spyOn(proofUtils, 'getProofData').mockReturnValue(Promise.resolve(data))
+    })
+
     test('renders correctly when history is true', async () => {
       const tree = renderView({ recordId: testVerifiedProofRequest.id, isHistory: true })
 
-      await act(async () => null)
-      expect(tree).toMatchSnapshot()
-
       const proofDetailsHistoryView = await tree.findByTestId(testIdWithKey('ProofDetailsHistoryView'))
+
+      expect(tree).toMatchSnapshot()
       expect(proofDetailsHistoryView).not.toBe(null)
 
       await checkAttributes(tree)
@@ -160,12 +159,10 @@ describe('ProofDetails Component', () => {
     test('renders correctly when history is false', async () => {
       const tree = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
 
-      await act(async () => null)
-      expect(tree).toMatchSnapshot()
-
       const proofDetailsView = await tree.findByTestId(testIdWithKey('ProofDetailsView'))
       const generateNewButton = await tree.findByTestId(testIdWithKey('GenerateNewQR'))
 
+      expect(tree).toMatchSnapshot()
       expect(proofDetailsView).not.toBe(null)
       expect(generateNewButton).not.toBe(null)
 
@@ -176,12 +173,21 @@ describe('ProofDetails Component', () => {
       const navigation = useNavigation()
       const tree = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
 
-      await act(async () => null)
-
       const generateNewButton = tree.getByTestId(testIdWithKey('GenerateNewQR'))
-      expect(generateNewButton).not.toBeNull()
-
       fireEvent(generateNewButton, 'press')
+
+      expect(generateNewButton).not.toBeNull()
+      expect(navigation.navigate).toBeCalledWith('Proof Requests', {})
+    })
+
+    test('Done', async () => {
+      const navigation = useNavigation()
+      const { getByTestId } = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
+
+      const doneButton = getByTestId(testIdWithKey('Done'))
+      fireEvent(doneButton, 'press')
+
+      expect(doneButton).not.toBeNull()
       expect(navigation.navigate).toBeCalledWith('Proof Requests', {})
     })
   })
@@ -205,10 +211,8 @@ describe('ProofDetails Component', () => {
     test('Unverified proof view should be rendered correctly', async () => {
       const tree = renderView({ recordId: testUnverifiedProofRequest.id, isHistory: false })
 
-      await act(async () => null)
-      expect(tree).toMatchSnapshot()
-
       const unverifiedView = await tree.getByTestId(testIdWithKey('UnverifiedProofView'))
+      expect(tree).toMatchSnapshot()
       expect(unverifiedView).not.toBeNull()
     })
   })

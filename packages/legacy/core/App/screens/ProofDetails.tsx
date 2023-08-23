@@ -30,6 +30,7 @@ interface VerifiedProofProps {
 
 interface UnverifiedProofProps {
   record: ProofExchangeRecord
+  navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
 }
 
 const VerifiedProof: React.FC<VerifiedProofProps> = ({
@@ -192,13 +193,12 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
   )
 }
 
-const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record }) => {
+const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation }) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
     header: {
-      flexGrow: 1,
       backgroundColor: ColorPallet.semantic.error,
       paddingHorizontal: 30,
       paddingVertical: 20,
@@ -219,9 +219,23 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record }) => {
       marginVertical: 10,
       fontSize: 18,
     },
+    footerButton: {
+      margin: 20,
+      marginTop: 'auto',
+    },
   })
+
+  const onGenerateNew = useCallback(() => {
+    const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
+    if (metadata?.proof_request_template_id) {
+      navigation.navigate(Screens.ProofRequesting, { templateId: metadata.proof_request_template_id })
+    } else {
+      navigation.navigate(Screens.ProofRequests, {})
+    }
+  }, [navigation])
+
   return (
-    <View testID={testIdWithKey('UnverifiedProofView')}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('UnverifiedProofView')}>
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
           <Icon name="bookmark-remove" size={45} color={'white'} />
@@ -233,7 +247,16 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record }) => {
           )}
         </View>
       </View>
-    </View>
+      <View style={styles.footerButton}>
+        <Button
+          title={t('Verifier.GenerateNewQR')}
+          accessibilityLabel={t('Verifier.GenerateNewQR')}
+          testID={testIdWithKey('GenerateNewQR')}
+          buttonType={ButtonType.Primary}
+          onPress={onGenerateNew}
+        />
+      </View>
+    </ScrollView>
   )
 }
 
@@ -246,6 +269,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const record = useProofById(recordId)
   const { agent } = useAgent()
   const [store] = useStore()
+
   useEffect(() => {
     return () => {
       if (!store.preferences.useDataRetention) {
@@ -284,7 +308,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       {(record.isVerified || senderReview) && (
         <VerifiedProof record={record} isHistory={isHistory} navigation={navigation} senderReview={senderReview} />
       )}
-      {!(record.isVerified || senderReview) && <UnverifiedProof record={record} />}
+      {!(record.isVerified || senderReview) && <UnverifiedProof record={record} navigation={navigation} />}
     </SafeAreaView>
   )
 }

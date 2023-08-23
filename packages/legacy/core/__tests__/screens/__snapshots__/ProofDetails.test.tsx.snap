@@ -14,63 +14,135 @@ exports[`ProofDetails Component renders correctly with an unverified proof Unver
     }
   }
 >
-  <View
+  <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "flexGrow": 1,
+      }
+    }
     testID="com.ariesbifold:id/UnverifiedProofView"
   >
-    <View
-      style={
-        Object {
-          "backgroundColor": "#D8292F",
-          "flexGrow": 1,
-          "paddingHorizontal": 30,
-          "paddingVertical": 20,
-        }
-      }
-    >
+    <View>
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "flex-start",
+            "backgroundColor": "#D8292F",
+            "paddingHorizontal": 30,
+            "paddingVertical": 20,
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "color": "white",
-                "fontSize": 45,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Design Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          󰃆
-        </Text>
-        <Text
+        <View
           style={
             Object {
-              "color": "#FFFFFF",
-              "fontSize": 34,
-              "fontWeight": "bold",
-              "marginHorizontal": 8,
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
             }
           }
         >
-          Verifier.ProofVerificationFailed
-        </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 45,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰃆
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 34,
+                "fontWeight": "bold",
+                "marginHorizontal": 8,
+              }
+            }
+          >
+            Verifier.ProofVerificationFailed
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "margin": 20,
+            "marginTop": "auto",
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Verifier.GenerateNewQR"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/GenerateNewQR"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ]
+              }
+            >
+              Verifier.GenerateNewQR
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
-  </View>
+  </RCTScrollView>
 </RNCSafeAreaView>
 `;
 
