@@ -23,6 +23,7 @@ export interface PredicateParams extends FieldParams {
   pValue: string | number | null
   pType: string
   parameterizable?: boolean
+  satisfied?: boolean
 }
 
 export class Field {
@@ -66,12 +67,14 @@ export class Predicate extends Field {
   public pValue: string | number | null
   public pType: string
   public parameterizable?: boolean
+  public satisfied?: boolean
 
   public constructor(params: PredicateParams) {
     super(params)
     this.pValue = params.pValue
     this.pType = params.pType
     this.parameterizable = params.parameterizable
+    this.satisfied = params.satisfied
   }
 }
 
