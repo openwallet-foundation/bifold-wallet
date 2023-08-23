@@ -417,7 +417,7 @@ const translation = {
     "AboutApp": "Sobre o App",
     "ChangePin": "Alterar o PIN",
     "Language": "Idioma",
-    "DataRetention": "Data retention (PB)",
+    "DataRetention": "Retenção de dados",
     "AppGuides": "Guia do app",
     "WhatAreContacts": "O que são Contatos?",
     "ScanMyQR": "Scanear meu QR code",
@@ -466,7 +466,7 @@ const translation = {
     "ProofDetails": "Detalhes da prova",
     "Settings": "Configurações",
     "Language": "Idioma",
-    "DataRetention": "Data retention (PB)",
+    "DataRetention": "Retenção de dados",
     "Tours": "Guias do app",
     "Contacts": "Contatos",
     "Decline": "Recusar",
@@ -486,8 +486,8 @@ const translation = {
     "BackToHome": "Voltar para a home"
   },
   "NameWallet": {
-    "EnableWalletNaming": "Enable wallet naming? (PT-BR)",
-    "ToggleWalletNaming": "Toggle wallet naming (PT-BR)",
+    "EnableWalletNaming": "Habilitar nome da carteira?",
+    "ToggleWalletNaming": "Alternar nome da carteira",
     "NameYourWallet": "Nome da sua carteira",
     "ThisIsTheName": "Este é o nome que as pessoas verão quando se conectar a você.",
     "CharCountTitle": "Número de caracteres excedido",
@@ -525,7 +525,7 @@ const translation = {
   },
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
-    "AcceptDevCredentials": "Accept non-production credentials? (PB)",
+    "AcceptDevCredentials": "Aceitar credenciais que não sejam de produção",
     "UseDevVerifierTemplates": "Usar templates de verificador de desenvolvimento?",
     "Toggle": "Alternar capacidade do verificador",
     "ToggleDevTemplates": "Alternar Templates de Verificador de Desenvolvimento",
