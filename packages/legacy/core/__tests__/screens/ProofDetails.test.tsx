@@ -179,9 +179,22 @@ describe('ProofDetails Component', () => {
       await act(async () => null)
 
       const generateNewButton = tree.getByTestId(testIdWithKey('GenerateNewQR'))
-      expect(generateNewButton).not.toBeNull()
-
       fireEvent(generateNewButton, 'press')
+
+      expect(generateNewButton).not.toBeNull()
+      expect(navigation.navigate).toBeCalledWith('Proof Requests', {})
+    })
+
+    test('Done', async () => {
+      const navigation = useNavigation()
+      const { getByTestId } = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
+
+      await act(async () => null)
+
+      const doneButton = getByTestId(testIdWithKey('Done'))
+      fireEvent(doneButton, 'press')
+
+      expect(doneButton).not.toBeNull()
       expect(navigation.navigate).toBeCalledWith('Proof Requests', {})
     })
   })

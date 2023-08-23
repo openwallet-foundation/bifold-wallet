@@ -224,6 +224,7 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
       marginTop: 'auto',
     },
   })
+
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
     if (metadata?.proof_request_template_id) {
@@ -268,6 +269,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const record = useProofById(recordId)
   const { agent } = useAgent()
   const [store] = useStore()
+
   useEffect(() => {
     return () => {
       if (!store.preferences.useDataRetention) {
