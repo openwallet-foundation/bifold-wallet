@@ -7,7 +7,7 @@ import configurationContext from '../contexts/configuration'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { testIdWithKey } from '../../App/utils/testable'
 import { StoreContext, StoreProvider } from '../../App'
-import { defaultState } from '../contexts/store'
+import { testDefaultState } from '../contexts/store'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -44,9 +44,9 @@ describe('Settings Screen', () => {
 
   test('If developer mode is enabled, developer mode button is shown', async () => {
     const customState = {
-      ...defaultState,
+      ...testDefaultState,
       preferences: {
-        ...defaultState.preferences,
+        ...testDefaultState.preferences,
         developerModeEnabled: true
       }
     } 
@@ -64,9 +64,9 @@ describe('Settings Screen', () => {
 
   test('If mobile verifier is enabled, verifier options are shown', async () => {
     const customState = {
-      ...defaultState,
+      ...testDefaultState,
       preferences: {
-        ...defaultState.preferences,
+        ...testDefaultState.preferences,
         useVerifierCapability: true
       }
     }    
