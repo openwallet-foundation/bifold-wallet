@@ -5,8 +5,8 @@ import React from 'react'
 
 import RecordField from '../../App/components/record/RecordField'
 import { hiddenFieldValue } from '../../App/constants'
-import { BaseType } from '../../App/types/oca'
 import { testIdWithKey } from '../../App/utils/testable'
+import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 
 const base64ImagePath = path.join(__dirname, '../fixtures/base64-image.txt')
 const base64Image = fs.readFileSync(base64ImagePath, 'utf8')
@@ -35,7 +35,7 @@ describe('Record Field Component', () => {
   })
 
   test('Hidden date field ', async () => {
-    const dateField = { ...defaultField, type: BaseType.DateInt }
+    const dateField = { ...defaultField, type: CaptureBaseAttributeType.DateInt }
     const tree = render(<RecordField field={dateField} shown={false} />)
     const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 
@@ -64,7 +64,7 @@ describe('Record Field Component', () => {
   test('Shown date field should render a date field', async () => {
     const dateField = {
       ...defaultField,
-      type: BaseType.DateInt,
+      type: CaptureBaseAttributeType.DateInt,
       value: 20000101,
     }
     const tree = render(<RecordField field={dateField} shown={true} />)

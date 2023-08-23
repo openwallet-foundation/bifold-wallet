@@ -1,3 +1,6 @@
+import { IOverlayBundleData } from '@hyperledger/aries-oca'
+import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
+
 import defaultIndyLedgers from '../configs/ledgers/indy'
 import { useProofRequestTemplates } from '../verifier'
 
@@ -15,7 +18,6 @@ import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
-import * as oca from './types/oca'
 
 export const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
@@ -27,8 +29,8 @@ export const defaultConfiguration: ConfigurationContext = {
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: EmptyList,
-  OCABundleResolver: new oca.OCABundleResolver(bundle as unknown as Record<string, oca.Bundle>, {
-    cardOverlayType: oca.CardOverlayType.CardLayout11,
+  OCABundleResolver: new DefaultOCABundleResolver(bundle as unknown as Record<string, IOverlayBundleData>, {
+    brandingOverlayType: BrandingOverlayType.Branding10,
   }),
   scan: Scan,
   useBiometry: UseBiometry,

@@ -1,8 +1,8 @@
+import { hashCode, hashToRGBA } from '@hyperledger/aries-oca'
 import React from 'react'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
-import { hashCode, hashToRGBA } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 interface AvatarViewProps {
