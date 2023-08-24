@@ -2,75 +2,115 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
 
-function syncPackageJson() {
+const path = require('path')
+
+function yellow(text){
+  return '\x1b[33m' + text + '\x1b[0m'
+}
+function green(text){
+  return '\x1b[32m' + text + '\x1b[0m'
+}
+function cyan(text){
+  return '\x1b[36m' + text + '\x1b[0m'
+}
+function red(text){
+  return '\x1b[31m' + text + '\x1b[0m'
+}
+function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
   const { execSync } = require('child_process')
-  const pak = require('./package.json')
+  //const pak = require('./package.json')
   function parseNameAndVersion(val) {
     const sep = val.lastIndexOf('@')
     return [val.substring(0, sep), val.substring(sep + 1)]
   }
-  function npmInstall(command) {
-    console.log(`cmd\n${command}`)
-    execSync(command, { stdio: 'inherit', cwd: process.cwd() })
+  function run(command, cwd) {
+    console.log(`cmd:\n  ${command}\n  cwd:${cwd}`)
+    execSync(command, { stdio: 'inherit', cwd: cwd })
   }
-  const lockedDependencies = execSync('npm ls --package-lock-only', { cwd: __dirname })
-    .toString()
-    .trim()
-    .split('\n')
-    .splice(1)
-    .map((item) => {
-      return item.substring(4)
-    })
-    .reduce((prev, val) => {
-      const [name, version] = parseNameAndVersion(val)
-      prev[name] = version
-      return prev
-    }, {})
-
-  //const peerDependencies = pak.peerDependencies
-  //console.log(`peerDependencies:${ Object.keys(pak.peerDependencies).length}`)
-  for (const item of Object.keys(pak.peerDependencies)) {
-    pak.peerDependencies[item] = '' + lockedDependencies[item]
-  }
-  console.log(JSON.stringify(pak.peerDependencies, undefined, 2))
-
-  //console.log(`devDependencies:${ Object.keys(pak.devDependencies).length}`)
-  for (const item of Object.keys(pak.devDependencies)) {
-    if (pak.devDependencies[item].startsWith('npm:')) {
-      const curVersion = pak.devDependencies[item]
-      const [name] = parseNameAndVersion(curVersion)
-      pak.devDependencies[item] = name + '@' + lockedDependencies[item + '@' + name]
-    } else {
-      pak.devDependencies[item] = '' + lockedDependencies[item]
+  function mapPackages(jsonFile, section, aggregated) {
+    const items = jsonFile[section]
+    if (items) {
+      for (const key in items) {
+        const item = {section:section, version:items[key]}
+        //item['$source']=jsonFile['$source']
+        if (!aggregated[key]) {
+          aggregated[key] = [item]
+        } else{
+          aggregated[key].push(item)
+        }
+      }
     }
   }
-  console.log('Installing Dependencies ...')
-  for (const item of Object.keys(pak.peerDependencies)) {
-    npmInstall(`npm install ${item}@${pak.peerDependencies[item]} --force --save-exact`, {
-      stdio: 'inherit',
-      cwd: process.cwd(),
-    })
-  }
-  console.log('Installing Dev Dependencies ...')
-  const devAllowList = [
-    '@babel/core',
-    '@babel/runtime',
-    '@types/lodash.merge',
-    '@types/react',
-    '@types/react-native',
-    'babel-plugin-module-resolver',
-    'metro-react-native-babel-preset',
-    'react-native-svg-transformer',
-    'typescript',
-  ]
-  for (const item of Object.keys(pak.devDependencies)) {
-    if (devAllowList.includes(item)) {
-      npmInstall(`npm install -D ${item}@${pak.devDependencies[item]} --force --save-exact`, {
-        stdio: 'inherit',
-        cwd: process.cwd(),
-      })
+  const sourcePackageJsonFile = path.resolve(process.cwd(), sourcePackageJsonFilePath)
+  const destPackageJsonFile = path.resolve(process.cwd(), destPackageJsonFilePath)
+  const destPackageJsonFileDir = path.dirname(destPackageJsonFile)
+  console.log(`Reading source dependencies from ${sourcePackageJsonFilePath}`)
+  const sourceJsonFile = require(sourcePackageJsonFile)
+  console.log(`Reading target dependencies from ${destPackageJsonFilePath}`)
+  const dstJsonFile = require(destPackageJsonFile)
+  const srcDependencies = {}
+  const dstDependencies = {}
+  sourceJsonFile['$source'] = sourcePackageJsonFile
+  mapPackages(sourceJsonFile, 'dependencies', srcDependencies)
+  mapPackages(sourceJsonFile, 'devDependencies', srcDependencies)
+  mapPackages(sourceJsonFile, 'peerDependencies', srcDependencies)
+
+  mapPackages(dstJsonFile, 'dependencies', dstDependencies)
+  mapPackages(dstJsonFile, 'devDependencies', dstDependencies)
+  mapPackages(dstJsonFile, 'peerDependencies', dstDependencies)
+
+  console.log(`Reading source dependencies from ${sourcePackageJsonFile}`)
+  console.log(`Reading target dependencies from ${destPackageJsonFile}`)
+  //console.dir(srcDependencies)
+  //console.dir(sourceJsonFile)
+  //return;
+  for (const srcDependencyName in srcDependencies) {
+    const srcDependencyInfo = srcDependencies[srcDependencyName]
+    if (srcDependencyInfo.length === 1) {
+      const srcDependencyVersion = srcDependencyInfo[0].version
+      if (!srcDependencyVersion.startsWith('workspace:')) {
+        let dstDependencyInfo = dstDependencies[srcDependencyName]
+        if (!dstDependencyInfo){
+          //console.info(`${srcDependencyName}: Found in '${sourcePackageJsonFilePath}', but not in 'destPackageJsonFilePath'`)
+          //dstDependencyInfo = [{section:'devDependencies'}, {section:'peerDependencies'}]
+        }
+        if (!dstDependencyInfo) {
+          console.info(cyan(`${srcDependencyName}: Skipping! Found in '${sourcePackageJsonFilePath}', but not in '${destPackageJsonFilePath}'`))
+        } else if (dstDependencyInfo.length === 1) {
+          const dstDependencyVersion = dstDependencyInfo[0].version
+          if (srcDependencyVersion !== dstDependencyVersion) {
+            console.info(yellow(`${srcDependencyName}: Updating from ${dstDependencyVersion} to ${srcDependencyVersion}`))
+            if (dstDependencyInfo[0].section === 'devDependencies') {
+              run(`yarn add --dev ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
+            } else if (dstDependencyInfo[0].section === 'peerDependencies') {
+              run(`yarn add --peer ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
+            } else if (dstDependencyInfo[0].section === 'dependencies') {
+              run(`yarn add --peer ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
+            }else{
+              console.error(`${srcDependencyName}: Uknown '${dstDependencyInfo[0].section}' dependency section from ${destPackageJsonFilePath}`)
+            }
+          } else {
+            console.info(green(`${srcDependencyName}: Already in sync at version ${srcDependencyVersion}`))
+          }
+        }else if (dstDependencyInfo.length === 2 && dstDependencyInfo[0].section === 'devDependencies' && dstDependencyInfo[1].section === 'peerDependencies'){
+          const dstDependencyVersion = dstDependencyInfo[0].version
+          if (srcDependencyVersion !== dstDependencyVersion) {
+            run(`yarn add --dev --peer ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
+          } else {
+            console.info(green(`${srcDependencyName}: Already in sync at version ${srcDependencyVersion}`))
+          }
+        }else {
+          console.error(`${srcDependencyName}: Found ${dstDependencyInfo.length} dependencies in target '${destPackageJsonFilePath}', but it was expected 1:\n ${JSON.stringify(dstDependencyInfo)}`)
+        }
+      }else{
+        console.info(cyan(`${srcDependencyName}: Skipping because version is '${srcDependencyVersion}'`))
+      }
+    }else {
+      console.error(`${srcDependencyName}: Found ${srcDependencyInfo.length} dependencies in source '${sourcePackageJsonFilePath}', but it was expected 1:\n ${JSON.stringify(srcDependencyInfo)}`)
     }
   }
+  //console.dir(sourceDependencies, {depth: 3})
+  //const lockedDependencies = execSync('yarn info --json', { cwd: __dirname })
   //console.log(JSON.stringify(pak.devDependencies, undefined, 2))
   /*
   fs.writeFile(
@@ -87,12 +127,13 @@ function syncPackageJson() {
   )
   */
 }
+
 module.exports = {
   cli: (_args) => {
     const args = _args.splice(2)
     console.log(args)
     if (args[0] === 'sync-package-json') {
-      syncPackageJson()
+      syncPackageJson(args[2], args[4])
     }
   },
 }
