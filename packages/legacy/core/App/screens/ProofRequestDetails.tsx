@@ -17,6 +17,7 @@ import {
 import Button, { ButtonType } from '../components/buttons/Button'
 import AlertModal from '../components/modals/AlertModal'
 import { useConfiguration } from '../contexts/configuration'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplate } from '../hooks/proof-request-templates'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
@@ -24,7 +25,6 @@ import { formatIfDate } from '../utils/helpers'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
-import { useStore } from '../contexts/store'
 
 type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestDetails>
 
@@ -186,7 +186,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
 
 const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, navigation }) => {
   const { ColorPallet, TextTheme } = useTheme()
-  const [store,] = useStore()
+  const [store] = useStore()
   const { t } = useTranslation()
   const { i18n } = useTranslation()
   const { OCABundleResolver } = useConfiguration()
