@@ -24,6 +24,7 @@ import { formatIfDate } from '../utils/helpers'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
+import { useStore } from '../contexts/store'
 
 type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestDetails>
 
@@ -185,6 +186,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
 
 const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, navigation }) => {
   const { ColorPallet, TextTheme } = useTheme()
+  const [store,] = useStore()
   const { t } = useTranslation()
   const { i18n } = useTranslation()
   const { OCABundleResolver } = useConfiguration()
@@ -323,15 +325,17 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
             onPress={() => useProofRequest()}
           />
         </View>
-        <View style={style.footerButton}>
-          <Button
-            title={t('Verifier.ShowTemplateUsageHistory')}
-            accessibilityLabel={t('Verifier.ShowTemplateUsageHistory')}
-            testID={testIdWithKey('ShowTemplateUsageHistory')}
-            buttonType={ButtonType.Secondary}
-            onPress={() => showTemplateUsageHistory()}
-          />
-        </View>
+        {store.preferences.useDataRetention && (
+          <View style={style.footerButton}>
+            <Button
+              title={t('Verifier.ShowTemplateUsageHistory')}
+              accessibilityLabel={t('Verifier.ShowTemplateUsageHistory')}
+              testID={testIdWithKey('ShowTemplateUsageHistory')}
+              buttonType={ButtonType.Secondary}
+              onPress={() => showTemplateUsageHistory()}
+            />
+          </View>
+        )}
       </View>
     )
   }
