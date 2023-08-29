@@ -62,11 +62,11 @@ function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
   //console.dir(sourceJsonFile)
   //return;
   for (const srcDependencyName in srcDependencies) {
-    const srcDependencyInfo = srcDependencies[srcDependencyName]
+    const srcDependencyInfo = srcDependencies[srcDependencyName].source
     if (srcDependencyInfo.length === 1) {
       const srcDependencyVersion = srcDependencyInfo[0].version
       if (!srcDependencyVersion.startsWith('workspace:')) {
-        let dstDependencyInfo = dstDependencies[srcDependencyName]
+        let dstDependencyInfo = dstDependencies[srcDependencyName]?.source
         if (!dstDependencyInfo){
           //console.info(`${srcDependencyName}: Found in '${sourcePackageJsonFilePath}', but not in 'destPackageJsonFilePath'`)
           //dstDependencyInfo = [{section:'devDependencies'}, {section:'peerDependencies'}]

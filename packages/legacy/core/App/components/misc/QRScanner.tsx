@@ -18,7 +18,7 @@ interface Props {
   enableCameraOnError?: boolean
 }
 
-const CameraViewContainer: React.FC = ({ children }) => {
+const CameraViewContainer: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <View
       style={{
