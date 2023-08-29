@@ -1,5 +1,6 @@
 import {
   BasicMessageRecord,
+  BasicMessageRepository,
   CredentialExchangeRecord,
   CredentialState,
   ProofExchangeRecord,
@@ -26,6 +27,7 @@ import { useTheme } from '../contexts/theme'
 import { useCredentialsByConnectionId } from '../hooks/credentials'
 import { useProofsByConnectionId } from '../hooks/proofs'
 import { Role } from '../types/chat'
+import { BasicMessageMetadata, basicMessageCustomMetadata } from '../types/metadata'
 import { ContactStackParams, Screens, Stacks } from '../types/navigators'
 import {
   getCredentialEventLabel,
@@ -67,6 +69,18 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
       headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
     })
   }, [connection])
+
+  // when chat is open, mark messages as seen
+  useEffect(() => {
+    basicMessages.forEach((msg) => {
+      const meta = msg.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
+      if (agent && !meta?.seen) {
+        msg.metadata.set(BasicMessageMetadata.customMetadata, { ...meta, seen: true })
+        const basicMessageRepository = agent.context.dependencyManager.resolve(BasicMessageRepository)
+        basicMessageRepository.update(agent.context, msg)
+      }
+    })
+  }, [basicMessages])
 
   useEffect(() => {
     const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
@@ -281,6 +295,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
         showAvatarForEveryMessage={true}
         alignTop
         renderAvatar={() => null}
+        messageIdGenerator={(msg) => msg?._id.toString() || '0'}
         renderMessage={(props) => <ChatMessage messageProps={props} />}
         renderInputToolbar={(props) => renderInputToolbar(props, theme)}
         renderSend={(props) => renderSend(props, theme)}

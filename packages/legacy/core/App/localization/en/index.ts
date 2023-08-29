@@ -318,7 +318,11 @@ const translation = {
     "YouHave": "You have",
     "Credential": "credential",
     "Credentials": "credentials",
-    "InYourWallet": "in your wallet"
+    "InYourWallet": "in your wallet",
+    "NewMessage": "New message",
+    "SentMessage": "sent a message",
+    "ReceivedMessage": "You received a new message",
+    "ViewMessage": "View message",
   },
   "Scan": {
     "SuccessfullyAcceptedConnection": "Successfully Accepted Connection",
