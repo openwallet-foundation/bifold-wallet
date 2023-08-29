@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 
 const path = require('path')
+const { execSync } = require('child_process')
 
 function yellow(text){
   return '\x1b[33m' + text + '\x1b[0m'
@@ -16,31 +17,26 @@ function cyan(text){
 function red(text){
   return '\x1b[31m' + text + '\x1b[0m'
 }
-function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
-  const { execSync } = require('child_process')
-  //const pak = require('./package.json')
-  function parseNameAndVersion(val) {
-    const sep = val.lastIndexOf('@')
-    return [val.substring(0, sep), val.substring(sep + 1)]
-  }
-  function run(command, cwd) {
-    console.log(`cmd:\n  ${command}\n  cwd:${cwd}`)
-    execSync(command, { stdio: 'inherit', cwd: cwd })
-  }
-  function mapPackages(jsonFile, section, aggregated) {
-    const items = jsonFile[section]
-    if (items) {
-      for (const key in items) {
-        const item = {section:section, version:items[key]}
-        //item['$source']=jsonFile['$source']
-        if (!aggregated[key]) {
-          aggregated[key] = [item]
-        } else{
-          aggregated[key].push(item)
-        }
+function run(command, cwd) {
+  console.log(`cmd:\n  ${command}\n  cwd:${cwd}`)
+  execSync(command, { stdio: 'inherit', cwd: cwd })
+}
+function mapPackages(jsonFile, section, aggregated) {
+  const items = jsonFile[section]
+  if (items) {
+    for (const key in items) {
+      const item = {section:section, version:items[key]}
+      //item['$source']=jsonFile['$source']
+      if (!aggregated[key]) {
+        aggregated[key] = {source:[item]}
+      } else{
+        aggregated[key].source.push(item)
       }
     }
   }
+}
+
+function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
   const sourcePackageJsonFile = path.resolve(process.cwd(), sourcePackageJsonFilePath)
   const destPackageJsonFile = path.resolve(process.cwd(), destPackageJsonFilePath)
   const destPackageJsonFileDir = path.dirname(destPackageJsonFile)
@@ -58,6 +54,7 @@ function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
   mapPackages(dstJsonFile, 'dependencies', dstDependencies)
   mapPackages(dstJsonFile, 'devDependencies', dstDependencies)
   mapPackages(dstJsonFile, 'peerDependencies', dstDependencies)
+  mapPackages(dstJsonFile, 'resolutions', dstDependencies)
 
   console.log(`Reading source dependencies from ${sourcePackageJsonFile}`)
   console.log(`Reading target dependencies from ${destPackageJsonFile}`)
@@ -80,12 +77,19 @@ function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
           const dstDependencyVersion = dstDependencyInfo[0].version
           if (srcDependencyVersion !== dstDependencyVersion) {
             console.info(yellow(`${srcDependencyName}: Updating from ${dstDependencyVersion} to ${srcDependencyVersion}`))
+            console.log(`  ${JSON.stringify(dstDependencyInfo)}`)
             if (dstDependencyInfo[0].section === 'devDependencies') {
               run(`yarn add --dev ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
             } else if (dstDependencyInfo[0].section === 'peerDependencies') {
               run(`yarn add --peer ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
             } else if (dstDependencyInfo[0].section === 'dependencies') {
-              run(`yarn add --peer ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
+              run(`yarn add ${srcDependencyName}@${srcDependencyVersion}`, destPackageJsonFileDir)
+            } else if (dstDependencyInfo[0].section === 'resolutions') {
+              if (dstDependencyInfo[0].version.startsWith('patch:')){
+                console.error(red(`${srcDependencyName}: Cannot overwrite '${dstDependencyInfo[0].section}' version from '${dstDependencyInfo[0].version}' to '${srcDependencyVersion}' in ${destPackageJsonFilePath}`))
+              } else {
+                run(`yarn set resolution ${srcDependencyName}@npm:* ${srcDependencyVersion}`, destPackageJsonFileDir)
+              }
             }else{
               console.error(`${srcDependencyName}: Uknown '${dstDependencyInfo[0].section}' dependency section from ${destPackageJsonFilePath}`)
             }
@@ -109,23 +113,51 @@ function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
       console.error(`${srcDependencyName}: Found ${srcDependencyInfo.length} dependencies in source '${sourcePackageJsonFilePath}', but it was expected 1:\n ${JSON.stringify(srcDependencyInfo)}`)
     }
   }
-  //console.dir(sourceDependencies, {depth: 3})
-  //const lockedDependencies = execSync('yarn info --json', { cwd: __dirname })
-  //console.log(JSON.stringify(pak.devDependencies, undefined, 2))
-  /*
-  fs.writeFile(
-    'app-package.json',
-    JSON.stringify({ dependencies: pak.peerDependencies, devDependencies: pak.devDependencies }, undefined, 2),
-    'utf8',
-    (err) => {
-      if (err) {
-        console.log('An error occured while writing JSON Object to File.')
-        return console.log(err)
-      }
-      console.log('JSON file has been saved.')
+}
+
+function syncPackageLock(sourcePackageJsonFilePath, destPackageJsonFilePath) {
+  const sourcePackageJsonFile = path.resolve(process.cwd(), sourcePackageJsonFilePath)
+  const destPackageJsonFile = path.resolve(process.cwd(), destPackageJsonFilePath)
+  const sourcePackageJsonFileDir = path.dirname(sourcePackageJsonFile)
+  const destPackageJsonFileDir = path.dirname(destPackageJsonFile)
+  console.log(`Reading source dependencies from ${sourcePackageJsonFilePath}`)
+  const sourceJsonFile = require(sourcePackageJsonFile)
+  console.log(`Reading target dependencies from ${destPackageJsonFilePath}`)
+  const dstJsonFile = require(destPackageJsonFile)
+  const srcDependencies = {}
+  const dstDependencies = {}
+  sourceJsonFile['$source'] = sourcePackageJsonFile
+  mapPackages(sourceJsonFile, 'dependencies', srcDependencies)
+  mapPackages(sourceJsonFile, 'devDependencies', srcDependencies)
+  mapPackages(sourceJsonFile, 'peerDependencies', srcDependencies)
+
+  mapPackages(dstJsonFile, 'dependencies', dstDependencies)
+  mapPackages(dstJsonFile, 'devDependencies', dstDependencies)
+  mapPackages(dstJsonFile, 'peerDependencies', dstDependencies)
+  mapPackages(dstJsonFile, 'resolutions', dstDependencies)
+
+  console.log(`Reading source dependencies from ${sourcePackageJsonFile}`)
+  console.log(`Reading target dependencies from ${destPackageJsonFile}`)
+  for (const dependencyName in srcDependencies) {
+    const srcDependencyInfo = srcDependencies[dependencyName]
+    //console.log(`processing ${srcDependencyName}`)
+    const yarnInfo = JSON.parse(execSync(`yarn info ${dependencyName} --json`, { cwd: sourcePackageJsonFileDir }).toString())
+    srcDependencyInfo.resolved = yarnInfo.children.Version
+  }
+  for (const dependencyName in dstDependencies) {
+    const dependencyInfo = dstDependencies[dependencyName]
+    if (srcDependencies[dependencyName]){
+      const yarnInfo = JSON.parse(execSync(`yarn info ${dependencyName} --json`, { cwd: destPackageJsonFileDir }).toString())
+      dependencyInfo.resolved = yarnInfo.children.Version
     }
-  )
-  */
+  }
+  for (const dependencyName in srcDependencies) {
+    const srcDependencyInfo = srcDependencies[dependencyName]
+    const dstDependencyInfo = dstDependencies[dependencyName]
+    if (srcDependencyInfo && dstDependencyInfo && srcDependencyInfo.resolved !== dstDependencyInfo.resolved) {
+      console.log(yellow(`${dependencyName} mismatch: source is ${srcDependencyInfo.resolved}, target is ${dstDependencyInfo.resolved}`))
+    }
+  }
 }
 
 module.exports = {
@@ -134,6 +166,8 @@ module.exports = {
     console.log(args)
     if (args[0] === 'sync-package-json') {
       syncPackageJson(args[2], args[4])
+    } else if (args[0] === 'sync-package-lock') {
+      syncPackageLock(args[2], args[4])
     }
   },
 }
