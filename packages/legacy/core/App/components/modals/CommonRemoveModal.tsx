@@ -304,8 +304,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
         ]}
       >
         <ScrollView style={[styles.container]}>
-          {headerImageForType()}
-          {contentForType()}
+          <>
+            {headerImageForType()}
+            {contentForType()}
+          </>
         </ScrollView>
         <View style={[styles.controlsContainer]}>
           <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />

@@ -84,7 +84,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
   const renderItem = useCallback(
     ({ item, index }: { item: Element; index: number }) => (
       <View key={index} style={[{ width }, style.carouselContainer]}>
-        {item}
+        {item as React.ReactNode}
       </View>
     ),
     []
