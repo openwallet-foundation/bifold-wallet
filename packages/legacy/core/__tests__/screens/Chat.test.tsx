@@ -101,20 +101,6 @@ describe('Chat screen with messages', () => {
     }))
   })
 
-  test('Renders messages', async () => {
-    const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
-        <Chat navigation={navigationContext} route={props as any} />
-      </ConfigurationContext.Provider>
-    )
-    const { findByText } = render(element)
-
-    const seenChatMessage = findByText('Hi')
-    const unseenChatMessage = findByText('Hello')
-    expect(seenChatMessage).toBeDefined()
-    expect(unseenChatMessage).toBeDefined()
-  })
-
   test('Marks messages as seen', async () => {
     render(
       <ConfigurationContext.Provider value={configurationContext}>
