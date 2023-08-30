@@ -1,10 +1,12 @@
 import {
+  BasicMessageRecord,
+  BasicMessageRole,
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
   ProofExchangeRecord,
   ProofState,
 } from '@aries-framework/core'
-import { useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
+import { useBasicMessages, useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
@@ -78,6 +80,29 @@ describe('with a notifications module, when an issuer sends a credential offer',
       protocolVersion: 'v1',
     }),
   ]
+  const testBasicMessages: BasicMessageRecord[] = [
+    new BasicMessageRecord({
+      threadId: '1',
+      connectionId: '1',
+      role: BasicMessageRole.Receiver,
+      content: 'Hello',
+      sentTime: '20200303',
+    }),
+    new BasicMessageRecord({
+      threadId: '2',
+      connectionId: '1',
+      role: BasicMessageRole.Receiver,
+      content: 'Hi',
+      sentTime: '20200303',
+    }),
+    new BasicMessageRecord({
+      threadId: '3',
+      connectionId: '2',
+      role: BasicMessageRole.Receiver,
+      content: 'Hey',
+      sentTime: '20200303',
+    }),
+  ]
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -87,6 +112,8 @@ describe('with a notifications module, when an issuer sends a credential offer',
     useCredentialByState.mockReturnValue(testCredentialRecords)
     // @ts-ignore
     useProofByState.mockReturnValue(testProofRecords)
+    // @ts-ignore
+    useBasicMessages.mockReturnValue({ records: testBasicMessages })
   })
 
   /**
@@ -104,7 +131,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     const flatListInstance = await findAllByTestId(testIdWithKey('NotificationListItem'))
 
-    expect(flatListInstance).toHaveLength(3)
+    expect(flatListInstance).toHaveLength(5)
   })
 
   /**
@@ -192,6 +219,35 @@ describe('with a notifications module, when an issuer sends a credential offer',
     expect(navigation.navigate).toHaveBeenCalledWith('Contacts Stack', {
       screen: 'Proof Details',
       params: { recordId: testProofRecords[1].id, isHistory: true },
+    })
+  })
+
+  /**
+   * Scenario: Holder selects a basic message notification
+   * Given the holder has received a message from a contact
+   * When the holder taps the View message button
+   * The holder is taken to the chat screen for that contact
+   */
+  test('touch notification triggers navigation correctly IV', async () => {
+    const { getAllByTestId } = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <Home route={{} as any} navigation={useNavigation()} />
+      </ConfigurationContext.Provider>
+    )
+
+    const button = await getAllByTestId(testIdWithKey('ViewBasicMessage'))[0]
+    const navigation = useNavigation()
+
+    expect(button).toBeDefined()
+
+    act(() => {
+      fireEvent(button, 'press')
+    })
+
+    expect(navigation.getParent()?.navigate).toHaveBeenCalledTimes(1)
+    expect(navigation.getParent()?.navigate).toHaveBeenCalledWith('Contacts Stack', {
+      screen: 'Chat',
+      params: { connectionId: '1' },
     })
   })
 })

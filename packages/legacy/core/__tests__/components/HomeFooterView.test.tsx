@@ -1,9 +1,9 @@
 import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
+import { useCredentialByState } from '@aries-framework/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import HomeFooterView from '../../App/components/views/HomeFooterView'
-import { useCredentialByState } from '@aries-framework/react-hooks'
 
 describe('HomeFooterView Component', () => {
   test('Renders correctly with no notifications', async () => {

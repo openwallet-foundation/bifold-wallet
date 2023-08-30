@@ -176,17 +176,20 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (state.isVisible) {
       for (const notification of notifications) {
-        if (
-          !state.notificationRecord &&
-          ((connectionId && notification.connectionId === connectionId) ||
-            (threadId && notification.threadId == threadId))
-        ) {
-          dispatch({ notificationRecord: notification, isVisible: false })
-          break
-        }
-        if (!connection && notification.state === 'request-received') {
-          dispatch({ notificationRecord: notification, isVisible: false })
-          break
+        // no action taken for BasicMessageRecords
+        if (notification.type !== 'BasicMessageRecord') {
+          if (
+            !state.notificationRecord &&
+            ((connectionId && notification.connectionId === connectionId) ||
+              (threadId && notification.threadId == threadId))
+          ) {
+            dispatch({ notificationRecord: notification, isVisible: false })
+            break
+          }
+          if (!connection && notification.state === 'request-received') {
+            dispatch({ notificationRecord: notification, isVisible: false })
+            break
+          }
         }
       }
     }

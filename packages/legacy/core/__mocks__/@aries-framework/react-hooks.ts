@@ -7,12 +7,12 @@ import {
   ProofExchangeRecord,
 } from '@aries-framework/core'
 
-const mediationRecipient = jest.fn()
 const useCredentials = jest.fn().mockReturnValue({ records: [] } as any)
 const useProofs = jest.fn().mockReturnValue({ records: [] } as any)
 const useCredentialByState = jest.fn().mockReturnValue([] as CredentialExchangeRecord[])
 const useProofByState = jest.fn().mockReturnValue([] as ProofExchangeRecord[])
 const useBasicMessagesByConnectionId = jest.fn().mockReturnValue([] as BasicMessageRecord[])
+const useBasicMessages = jest.fn().mockReturnValue({ records: [] as BasicMessageRecord[] })
 const mockCredentialModule = {
   acceptOffer: jest.fn(),
   declineOffer: jest.fn(),
@@ -37,12 +37,21 @@ const mockOobModule = {
   createInvitation: jest.fn(),
   toUrl: jest.fn(),
 }
+const mockBasicMessageRepository = {
+  update: jest.fn(),
+}
+const mockAgentContext = {
+  dependencyManager: {
+    resolve: jest.fn().mockReturnValue(mockBasicMessageRepository),
+  },
+}
 const useAgent = () => ({
   agent: {
     credentials: mockCredentialModule,
     proofs: mockProofModule,
     mediationRecipient: mockMediationRecipient,
     oob: mockOobModule,
+    context: mockAgentContext,
   },
 })
 const useCredentialById = jest.fn()
@@ -60,5 +69,6 @@ export {
   useProofById,
   useProofByState,
   useConnections,
+  useBasicMessages,
   useBasicMessagesByConnectionId,
 }

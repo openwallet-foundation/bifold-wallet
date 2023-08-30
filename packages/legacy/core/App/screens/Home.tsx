@@ -46,7 +46,9 @@ const Home: React.FC<HomeProps> = () => {
 
   const DisplayListItemType = (item: any): Element => {
     let component: Element
-    if (item.type === 'CredentialRecord') {
+    if (item.type === 'BasicMessageRecord') {
+      component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
+    } else if (item.type === 'CredentialRecord') {
       let notificationType = NotificationType.CredentialOffer
       if (item.revocationNotification) {
         notificationType = NotificationType.Revocation

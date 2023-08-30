@@ -20,7 +20,7 @@ import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { CredentialMetadata, customMetadata } from '../types/metadata'
+import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
 import { CredentialStackParams, Screens } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import {
@@ -54,7 +54,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(
-    (credential!.metadata.get(CredentialMetadata.customMetadata) as customMetadata)?.revoked_detail_dismissed ?? false
+    (credential!.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
+      ?.revoked_detail_dismissed ?? false
   )
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({

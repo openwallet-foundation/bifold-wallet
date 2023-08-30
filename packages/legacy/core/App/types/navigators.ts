@@ -12,7 +12,6 @@ export enum Screens {
   Scan = 'Scan',
   Credentials = 'Credentials',
   CredentialDetails = 'Credential Details',
-  Notifications = 'Notifications',
   CredentialOffer = 'Credential Offer',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
@@ -112,7 +111,6 @@ export type CredentialStackParams = {
 
 export type HomeStackParams = {
   [Screens.Home]: undefined
-  [Screens.Notifications]: undefined
 }
 
 export type ConnectStackParams = {
