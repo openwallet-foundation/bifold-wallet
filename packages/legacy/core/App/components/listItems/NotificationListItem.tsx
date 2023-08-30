@@ -1,6 +1,13 @@
 import { V1RequestPresentationMessage } from '@aries-framework/anoncreds'
-import { CredentialExchangeRecord, ProofExchangeRecord, ProofState } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
+import {
+  Agent,
+  BasicMessageRecord,
+  BasicMessageRepository,
+  CredentialExchangeRecord,
+  ProofExchangeRecord,
+  ProofState,
+} from '@aries-framework/core'
+import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
@@ -15,6 +22,7 @@ import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import { GenericFn } from '../../types/fn'
+import { BasicMessageMetadata, basicMessageCustomMetadata } from '../../types/metadata'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { ModalUsage } from '../../types/remove'
 import { parsedSchema } from '../../utils/helpers'
@@ -26,6 +34,7 @@ import CommonRemoveModal from '../modals/CommonRemoveModal'
 const iconSize = 30
 
 export enum NotificationType {
+  BasicMessage = 'BasicMessage',
   CredentialOffer = 'Offer',
   ProofRequest = 'ProofRecord',
   Revocation = 'Revocation',
@@ -35,7 +44,7 @@ export enum NotificationType {
 
 interface NotificationListItemProps {
   notificationType: NotificationType
-  notification: CredentialExchangeRecord | ProofExchangeRecord
+  notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
 }
 
 type DisplayDetails = {
@@ -52,6 +61,13 @@ type StyleConfig = {
   iconName: string
 }
 
+const markMessageAsSeen = async (agent: Agent, record: BasicMessageRecord) => {
+  const meta = record.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
+  record.metadata.set(BasicMessageMetadata.customMetadata, { ...meta, seen: true })
+  const basicMessageRepository = agent.context.dependencyManager.resolve(BasicMessageRepository)
+  await basicMessageRepository.update(agent.context, record)
+}
+
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { customNotification } = useConfiguration()
@@ -60,6 +76,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
+  const connection = useConnectionById(notification.connectionId ?? '')
   const [details, setDetails] = useState<DisplayDetails>({
     type: InfoBoxType.Info,
     title: undefined,
@@ -125,7 +142,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
-  const isReceivedProof = notificationType === NotificationType.ProofRequest && notification.state === ProofState.Done
+  const isReceivedProof =
+    notificationType === NotificationType.ProofRequest &&
+    (notification as ProofExchangeRecord).state === ProofState.Done
 
   const declineProofRequest = async () => {
     try {
@@ -144,6 +163,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   const dismissProofRequest = async () => {
     if (agent && notificationType === NotificationType.ProofRequest) {
       markProofAsViewed(agent, notification as ProofExchangeRecord)
+    }
+  }
+
+  const dismissBasicMessage = async () => {
+    if (agent && notificationType === NotificationType.BasicMessage) {
+      markMessageAsSeen(agent, notification as BasicMessageRecord)
     }
   }
 
@@ -172,7 +197,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
     if (notificationType === NotificationType.ProofRequest) {
       usage = ModalUsage.ProofRequestDecline
-      if (notification.state === ProofState.Done) {
+      if ((notification as ProofExchangeRecord).state === ProofState.Done) {
         onSubmit = dismissProofRequest
       } else {
         onSubmit = declineProofRequest
@@ -200,6 +225,16 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   const detailsForNotificationType = async (notificationType: NotificationType): Promise<DisplayDetails> => {
     return new Promise((resolve) => {
       switch (notificationType) {
+        case NotificationType.BasicMessage:
+          resolve({
+            type: InfoBoxType.Info,
+            title: t('Home.NewMessage'),
+            body: connection?.theirLabel
+              ? `${connection.theirLabel} ${t('Home.SentMessage')}`
+              : t('Home.ReceivedMessage'),
+            buttonTitle: t('Home.ViewMessage'),
+          })
+          break
         case NotificationType.CredentialOffer:
           resolve({
             type: InfoBoxType.Info,
@@ -254,6 +289,15 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
   const setActionForNotificationType = (notificationType: NotificationType): void => {
     switch (notificationType) {
+      case NotificationType.BasicMessage:
+        onPress = () => {
+          navigation.getParent()?.navigate(Stacks.ContactStack, {
+            screen: Screens.Chat,
+            params: { connectionId: notification.connectionId },
+          })
+        }
+        onClose = dismissBasicMessage
+        break
       case NotificationType.CredentialOffer:
         onPress = () => {
           navigation.getParent()?.navigate(Stacks.NotificationStack, {
@@ -383,9 +427,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         <Text style={[styles.headerText, styleConfig.textStyle]} testID={testIdWithKey('HeaderText')}>
           {details.title}
         </Text>
-        {[NotificationType.Custom, NotificationType.ProofRequest, NotificationType.CredentialOffer].includes(
-          notificationType
-        ) && (
+        {[
+          NotificationType.BasicMessage,
+          NotificationType.Custom,
+          NotificationType.ProofRequest,
+          NotificationType.CredentialOffer,
+        ].includes(notificationType) && (
           <View>
             <TouchableOpacity
               accessibilityLabel={t('Global.Dismiss')}
