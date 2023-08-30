@@ -208,7 +208,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
       })
     })
-  }, [credential])
+  }, [credential, i18n.language])
 
   useEffect(() => {
     setIsRevoked(credential?.revocationNotification !== undefined && !proof)
