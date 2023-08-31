@@ -104,7 +104,10 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
               return (
                 <>
                   <Text>{split}</Text>
-                  <Text onPress={() => handleLinkPress(link)} style={{ color: ColorPallet.brand.link }}>
+                  <Text
+                    onPress={() => handleLinkPress(link)}
+                    style={{ color: ColorPallet.brand.link, textDecorationLine: 'underline' }}
+                  >
                     {link}
                   </Text>
                 </>
