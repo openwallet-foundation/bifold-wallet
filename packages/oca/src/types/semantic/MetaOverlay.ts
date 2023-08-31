@@ -2,16 +2,16 @@ import { IMetaOverlayData } from '../../interfaces/data'
 import BaseOverlay from '../base/BaseOverlay'
 
 export default class MetaOverlay extends BaseOverlay {
-  #credential_help_text: string
-  #credential_support_url: string
-  #issuer_description: string
-  #issuer_url: string
+  #credential_help_text?: string
+  #credential_support_url?: string
+  #issuer_description?: string
+  #issuer_url?: string
   #watermark?: string
 
   language: string
-  name: string
-  description: string
-  issuer: string
+  name?: string
+  description?: string
+  issuer?: string
 
   constructor(overlay: IMetaOverlayData) {
     super(overlay)
@@ -26,19 +26,19 @@ export default class MetaOverlay extends BaseOverlay {
     this.#watermark = overlay.watermark
   }
 
-  get credentialHelpText(): string {
+  get credentialHelpText(): string | undefined {
     return this.#credential_help_text
   }
 
-  get credentialSupportUrl(): string {
+  get credentialSupportUrl(): string | undefined {
     return this.#credential_support_url
   }
 
-  get issuerDescription(): string {
+  get issuerDescription(): string | undefined {
     return this.#issuer_description
   }
 
-  get issuerUrl(): string {
+  get issuerUrl(): string | undefined {
     return this.#issuer_url
   }
 
