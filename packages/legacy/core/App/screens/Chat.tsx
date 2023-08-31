@@ -104,7 +104,10 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
               return (
                 <>
                   <Text>{split}</Text>
-                  <Text onPress={() => handleLinkPress(link)} style={{ color: ColorPallet.brand.link, textDecorationLine: "underline" }}>
+                  <Text
+                    onPress={() => handleLinkPress(link)}
+                    style={{ color: ColorPallet.brand.link, textDecorationLine: 'underline' }}
+                  >
                     {link}
                   </Text>
                 </>
@@ -235,17 +238,17 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
 
     const connectedMessage = connection
       ? {
-        _id: 'connected',
-        text: `${t('Chat.YouConnected')} ${theirLabel}`,
-        renderEvent: () => (
-          <Text style={theme.rightText}>
-            {t('Chat.YouConnected')}
-            <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
-          </Text>
-        ),
-        createdAt: connection.createdAt,
-        user: { _id: Role.me },
-      }
+          _id: 'connected',
+          text: `${t('Chat.YouConnected')} ${theirLabel}`,
+          renderEvent: () => (
+            <Text style={theme.rightText}>
+              {t('Chat.YouConnected')}
+              <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
+            </Text>
+          ),
+          createdAt: connection.createdAt,
+          user: { _id: Role.me },
+        }
       : undefined
 
     setMessages(
@@ -272,15 +275,15 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const actions = useMemo(() => {
     return store.preferences.useVerifierCapability
       ? [
-        {
-          text: t('Verifier.SendProofRequest'),
-          onPress: () => {
-            setShowActionSlider(false)
-            onSendRequest()
+          {
+            text: t('Verifier.SendProofRequest'),
+            onPress: () => {
+              setShowActionSlider(false)
+              onSendRequest()
+            },
+            icon: () => <Assets.svg.iconInfoSentDark height={30} width={30} />,
           },
-          icon: () => <Assets.svg.iconInfoSentDark height={30} width={30} />,
-        },
-      ]
+        ]
       : undefined
   }, [t, store.preferences.useVerifierCapability, onSendRequest])
 
