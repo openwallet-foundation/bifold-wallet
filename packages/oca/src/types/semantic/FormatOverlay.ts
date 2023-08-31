@@ -3,6 +3,7 @@ import BaseOverlay from '../base/BaseOverlay'
 
 export default class FormatOverlay extends BaseOverlay {
   #attribute_formats: Record<string, string>
+
   constructor(overlay: IFormatOverlayData) {
     super(overlay)
     this.#attribute_formats = overlay.attribute_formats

@@ -3,8 +3,8 @@ import BaseOverlay from '../base/BaseOverlay'
 
 export default class LabelOverlay extends BaseOverlay {
   #attribute_labels: Record<string, string>
-  #attribute_categories: string[]
-  #category_labels: Record<string, string>
+  #attribute_categories?: string[]
+  #category_labels?: Record<string, string>
 
   language: string
 
@@ -20,11 +20,11 @@ export default class LabelOverlay extends BaseOverlay {
     return this.#attribute_labels
   }
 
-  get attributeCategories(): string[] {
+  get attributeCategories(): string[] | undefined {
     return this.#attribute_categories
   }
 
-  get categoryLabels(): Record<string, string> {
+  get categoryLabels(): Record<string, string> | undefined {
     return this.#category_labels
   }
 }

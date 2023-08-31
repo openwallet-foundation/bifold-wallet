@@ -3,7 +3,7 @@ import BaseOverlay from '../base/BaseOverlay'
 
 export default class StandardOverlay extends BaseOverlay {
   // DEPRECATED - Use #attribute_standards instead
-  #attr_standards: Record<string, string>
+  #attr_standards?: Record<string, string>
   #attribute_standards: Record<string, string>
 
   constructor(overlay: IStandardOverlayData) {
@@ -14,7 +14,7 @@ export default class StandardOverlay extends BaseOverlay {
   }
 
   // DEPRECATED - Use attributeStandards instead
-  get attrStandards(): Record<string, string> {
+  get attrStandards(): Record<string, string> | undefined {
     return this.#attr_standards
   }
 
