@@ -15,6 +15,7 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
 import { StatusBarStyles } from '../utils/luminance'
@@ -219,8 +220,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       })
 
       setAuthenticated(true)
-    } catch (error: unknown) {
-      // TODO:(jl) process error
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1041'), t('Error.Message1041'), (err as Error)?.message ?? err, 1041)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 
@@ -256,24 +258,22 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       }
 
       setAuthenticated(true)
-    } catch (error) {
-      //TODO:(jl)
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1042'), t('Error.Message1042'), (err as Error)?.message ?? err, 1042)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 
+  // both of the async functions called in this function are completely wrapped in trycatch
   const onPINInputCompleted = async (PIN: string) => {
-    try {
-      setContinueEnabled(false)
+    setContinueEnabled(false)
 
-      if (usage === PINEntryUsage.PINCheck) {
-        await verifyPIN(PIN)
-      }
+    if (usage === PINEntryUsage.PINCheck) {
+      await verifyPIN(PIN)
+    }
 
-      if (usage === PINEntryUsage.WalletUnlock) {
-        await unlockWalletWithPIN(PIN)
-      }
-    } catch (error: unknown) {
-      // TODO:(jl) process error
+    if (usage === PINEntryUsage.WalletUnlock) {
+      await unlockWalletWithPIN(PIN)
     }
   }
 

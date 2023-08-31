@@ -153,7 +153,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         await agent.proofs.declineRequest({ proofRecordId: proofId })
       }
     } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
+      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
 
@@ -179,7 +179,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         await agent.credentials.declineOffer(credentialId)
       }
     } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
+      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
 

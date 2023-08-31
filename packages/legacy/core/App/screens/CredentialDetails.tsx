@@ -182,8 +182,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         text1: t('CredentialDetails.CredentialRemoved'),
       })
     } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error).message, 1025)
-
+      const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error)?.message ?? err, 1032)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }

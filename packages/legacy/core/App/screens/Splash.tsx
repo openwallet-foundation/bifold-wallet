@@ -6,19 +6,18 @@ import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
+import { DeviceEventEmitter, StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Toast from 'react-native-toast-message'
 
-import { ToastType } from '../components/toast/BaseToast'
-import { LocalStorageKeys } from '../constants'
+import { EventTypes, LocalStorageKeys } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
 import {
   LoginAttempt as LoginAttemptState,
@@ -90,18 +89,14 @@ const Splash: React.FC = () => {
   })
 
   const loadAuthAttempts = async (): Promise<LoginAttemptState | undefined> => {
-    try {
-      const attemptsData = await AsyncStorage.getItem(LocalStorageKeys.LoginAttempts)
-      if (attemptsData) {
-        const attempts = JSON.parse(attemptsData) as LoginAttemptState
-        dispatch({
-          type: DispatchAction.ATTEMPT_UPDATED,
-          payload: [attempts],
-        })
-        return attempts
-      }
-    } catch (error) {
-      // todo (WK)
+    const attemptsData = await AsyncStorage.getItem(LocalStorageKeys.LoginAttempts)
+    if (attemptsData) {
+      const attempts = JSON.parse(attemptsData) as LoginAttemptState
+      dispatch({
+        type: DispatchAction.ATTEMPT_UPDATED,
+        payload: [attempts],
+      })
+      return attempts
     }
   }
 
@@ -190,8 +185,14 @@ const Splash: React.FC = () => {
             routes: [{ name: Screens.Onboarding }],
           })
         )
-      } catch (error) {
-        // TODO:(am add error handling here)
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1044'),
+          t('Error.Message1044'),
+          (err as Error)?.message ?? err,
+          1044
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
 
@@ -258,15 +259,14 @@ const Splash: React.FC = () => {
             routes: [{ name: Stacks.TabStack }],
           })
         )
-      } catch (e: unknown) {
-        Toast.show({
-          type: ToastType.Error,
-          text1: t('Global.Failure'),
-          text2: (e as Error)?.message || t('Error.Unknown'),
-          visibilityTime: 2000,
-          position: 'bottom',
-        })
-        return
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1045'),
+          t('Error.Message1045'),
+          (err as Error)?.message ?? err,
+          1045
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
 
