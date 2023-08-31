@@ -2,10 +2,10 @@ import { ICharacterEncodingOverlayData } from '../../interfaces/data'
 import BaseOverlay from '../base/BaseOverlay'
 
 export default class CharacterEncodingOverlay extends BaseOverlay {
-  #default_character_encoding: string
+  #default_character_encoding?: string
   // DEPRECATED - Use #attribute_character_encoding instead
-  #attr_character_encoding: Record<string, string>
-  #attribute_character_encoding: Record<string, string>
+  #attr_character_encoding?: Record<string, string>
+  #attribute_character_encoding?: Record<string, string>
 
   constructor(overlay: ICharacterEncodingOverlayData) {
     super(overlay)
@@ -15,16 +15,16 @@ export default class CharacterEncodingOverlay extends BaseOverlay {
     this.#attribute_character_encoding = overlay.attribute_character_encoding
   }
 
-  get defaultCharacterEncoding(): string {
+  get defaultCharacterEncoding(): string | undefined {
     return this.#default_character_encoding
   }
 
   // DEPRECATED - Use attributeCharacterEncoding instead
-  get attrCharacterEncoding(): Record<string, string> {
+  get attrCharacterEncoding(): Record<string, string> | undefined {
     return this.#attr_character_encoding
   }
 
-  get attributeCharacterEncoding(): Record<string, string> {
+  get attributeCharacterEncoding(): Record<string, string> | undefined {
     return this.#attribute_character_encoding
   }
 }

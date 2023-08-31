@@ -301,7 +301,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
           presentationField.label = bundle?.labelOverlay?.attributeLabels[key]
           presentationField.format = bundle?.formatOverlay?.attributeFormats[key]
           presentationField.type = bundle?.captureBase?.attributes?.[key]
-          presentationField.encoding = bundle?.characterEncodingOverlay?.attributeCharacterEncoding[key]
+          presentationField.encoding = bundle?.characterEncodingOverlay?.attributeCharacterEncoding?.[key]
         }
       }
     }
