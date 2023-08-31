@@ -238,7 +238,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         setLoading(false)
       })
       .catch((err: unknown) => {
-        const error = new BifoldError(t('Error.Title1026'), t('Error.Message1026'), (err as Error)?.message, 1026)
+        const error = new BifoldError(
+          t('Error.Title1026'),
+          t('Error.Message1026'),
+          (err as Error)?.message ?? err,
+          1026
+        )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [])
