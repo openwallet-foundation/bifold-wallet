@@ -90,8 +90,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compile-sdk: [31]
-        build-tools: [31.0.0]
+        compile-sdk: [33]
+        build-tools: [33.0.2]
         sdk-tools: [4333796]
     steps:
       - uses: actions/checkout@v3
