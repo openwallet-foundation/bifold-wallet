@@ -120,8 +120,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         setConnectionRecordId(result.record.id)
         setMessage(result.invitationUrl)
       }
-    } catch (e) {
-      const error = new BifoldError(t('Error.Title1038'), t('Error.Message1038'), (e as Error).message, 1038)
+    } catch (e: unknown) {
+      const error = new BifoldError(t('Error.Title1038'), t('Error.Message1038'), (e as Error)?.message ?? e, 1038)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       navigation.goBack()
     } finally {
