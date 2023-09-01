@@ -146,7 +146,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     if (
       connectionId &&
-      oobRecord &&
       (!goalCode || (!goalCode.startsWith('aries.vc.verify') && !goalCode.startsWith('aries.vc.issue')))
     ) {
       // No goal code, we don't know what to expect next,
