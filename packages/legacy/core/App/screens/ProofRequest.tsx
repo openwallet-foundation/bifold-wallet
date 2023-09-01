@@ -304,30 +304,36 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
    * @param proofCredentialsItems
    * @returns Array of evaluated predicates
    */
-  const evaluatePredicates = (proofCredentialItems: ProofCredentialItems): Predicate[] => {
-    const predicates = proofCredentialItems.predicates
+  const evaluatePredicates =
+    (credDefId?: string) =>
+    (proofCredentialItems: ProofCredentialItems): Predicate[] => {
+      const predicates = proofCredentialItems.predicates
 
-    if (!predicates || predicates.length == 0) {
-      return []
-    }
-
-    const credentialAttributes = getCredentialInfo(proofCredentialItems.credDefId).map((ci) => ci.attributes)
-
-    return predicates.map((predicate) => {
-      const { pType: pType, pValue: pValue, name: field } = predicate
-      let satisfied = false
-
-      if (field) {
-        const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
-
-        if (attribute && pValue) {
-          satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
-        }
+      if (!predicates || predicates.length == 0) {
+        return []
       }
 
-      return { ...predicate, satisfied }
-    })
-  }
+      if (credDefId && credDefId != proofCredentialItems.credDefId) {
+        return []
+      }
+
+      const credentialAttributes = getCredentialInfo(proofCredentialItems.credDefId).map((ci) => ci.attributes)
+
+      return predicates.map((predicate) => {
+        const { pType: pType, pValue: pValue, name: field } = predicate
+        let satisfied = false
+
+        if (field) {
+          const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
+
+          if (attribute && pValue) {
+            satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
+          }
+        }
+
+        return { ...predicate, satisfied }
+      })
+    }
 
   const hasAvailableCredentials = (credDefId?: string): boolean => {
     const fields = getCredentialsFields()
@@ -339,7 +345,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
 
-  const hasSatisfiedPredicates = () => proofItems.flatMap(evaluatePredicates).every((p) => p.satisfied)
+  const hasSatisfiedPredicates = (credDefId?: string) =>
+    proofItems.flatMap(evaluatePredicates(credDefId)).every((p) => p.satisfied)
 
   const handleAcceptPress = async () => {
     try {
@@ -492,9 +499,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   credential={item.credExchangeRecord}
                   credDefId={item.credDefId}
                   schemaId={item.schemaId}
-                  displayItems={[...(item.attributes ?? []), ...evaluatePredicates(item)]}
+                  displayItems={[...(item.attributes ?? []), ...evaluatePredicates(item.credDefId)(item)]}
                   credName={item.credName}
-                  existsInWallet={hasAvailableCredentials(item.credDefId) && hasSatisfiedPredicates()}
+                  existsInWallet={hasAvailableCredentials(item.credDefId)}
+                  satisfiedPredicates={hasSatisfiedPredicates(item.credDefId)}
                   proof
                 ></CredentialCard>
               </View>

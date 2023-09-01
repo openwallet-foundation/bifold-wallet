@@ -20,6 +20,7 @@ interface CredentialCardProps {
   proof?: boolean
   displayItems?: (Attribute | Predicate)[]
   existsInWallet?: boolean
+  satisfiedPredicates?: boolean
 }
 
 const CredentialCard: React.FC<CredentialCardProps> = ({
@@ -30,6 +31,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   displayItems,
   credName,
   existsInWallet,
+  satisfiedPredicates,
   style = {},
   onPress = undefined,
 }) => {
@@ -43,6 +45,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           displayItems={displayItems}
           style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
           error={!existsInWallet}
+          predicateError={!satisfiedPredicates}
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
