@@ -62,8 +62,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         text1: t('ContactDetails.ContactRemoved'),
       })
     } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1037'), t('Error.Message1037'), (err as Error).message, 1025)
-
+      const error = new BifoldError(t('Error.Title1037'), t('Error.Message1037'), (err as Error)?.message ?? err, 1037)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
