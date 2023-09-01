@@ -203,7 +203,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }
 
         return { format, credentials }
-      } catch (error: unknown) {
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1043'),
+          t('Error.Message1043'),
+          (err as Error)?.message ?? err,
+          1043
+        )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
@@ -232,7 +238,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         setLoading(false)
       })
       .catch((err: unknown) => {
-        const error = new BifoldError(t('Error.Title1026'), t('Error.Message1026'), (err as Error).message, 1026)
+        const error = new BifoldError(
+          t('Error.Title1026'),
+          t('Error.Message1026'),
+          (err as Error)?.message ?? err,
+          1026
+        )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [])
@@ -366,8 +377,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       }
     } catch (err: unknown) {
       setPendingModalVisible(false)
-
-      const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error).message, 1027)
+      const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error)?.message ?? err, 1027)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
@@ -385,8 +395,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         }
       }
     } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error).message, 1028)
-
+      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
 
