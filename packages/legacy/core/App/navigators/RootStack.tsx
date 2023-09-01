@@ -13,7 +13,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
-import Developer from '../screens/Developer'
 import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
@@ -46,7 +45,7 @@ const RootStack: React.FC = () => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash, useBiometry } = useConfiguration()
+  const { pages, terms, splash, useBiometry, developer } = useConfiguration()
   useDeepLinks()
 
   const lockoutUser = async () => {
@@ -285,7 +284,7 @@ const RootStack: React.FC = () => {
         />
         <Stack.Screen
           name={Screens.Developer}
-          component={Developer}
+          component={developer}
           options={{ ...defaultStackOptions, title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
         />
       </Stack.Navigator>

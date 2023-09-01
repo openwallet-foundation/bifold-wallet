@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Text, Pressable, Switch, StyleSheet } from 'react-native'
+import { View, Text, Pressable, Switch, StyleSheet, ScrollView } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -22,11 +23,9 @@ const Developer: React.FC = () => {
 
   const styles = StyleSheet.create({
     container: {
-      marginTop: 50,
-      marginHorizontal: 20,
-      borderColor: ColorPallet.brand.primary,
-      borderWidth: 1,
-      borderRadius: 3,
+      flex: 1,
+      paddingTop: 10,
+      paddingHorizontal: 10,
     },
     settingContainer: {
       flexDirection: 'row',
@@ -111,137 +110,139 @@ const Developer: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={[TextTheme.normal, { margin: 10 }]}>
-        Place content here you would like to make available to developers when developer mode is enabled.
-      </Text>
-      <View style={styles.settingContainer}>
-        <View style={{ flex: 1 }}>
-          <Text accessible={false} style={styles.settingLabelText}>
-            {t('Verifier.UseVerifierCapability')}
-          </Text>
-        </View>
-        <Pressable
-          style={styles.settingSwitchContainer}
-          accessibilityLabel={t('Verifier.Toggle')}
-          accessibilityRole={'switch'}
-          testID={testIdWithKey('ToggleVerifierCapability')}
-        >
-          <Switch
-            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-            thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-            onValueChange={toggleVerifierCapabilitySwitch}
-            testID={testIdWithKey('VerifierCapabilitySwitchElement')}
-            value={useVerifierCapability}
-          />
-        </Pressable>
-      </View>
-      <View style={styles.settingContainer}>
-        <View style={{ flex: 1 }}>
-          <Text accessible={false} style={styles.settingLabelText}>
-            {t('Verifier.AcceptDevCredentials')}
-          </Text>
-        </View>
-        <Pressable
-          style={styles.settingSwitchContainer}
-          accessibilityLabel={t('Verifier.Toggle')}
-          accessibilityRole={'switch'}
-          testID={testIdWithKey('ToggleAcceptDevCredentials')}
-        >
-          <Switch
-            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-            thumbColor={acceptDevCredentials ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-            onValueChange={toggleAcceptDevCredentialsSwitch}
-            testID={testIdWithKey('AcceptDevCredentialsSwitchElement')}
-            value={acceptDevCredentials}
-          />
-        </Pressable>
-      </View>
-      <View style={styles.settingContainer}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
-        </View>
-        <Pressable
-          style={styles.settingSwitchContainer}
-          accessibilityLabel={t('Connection.Toggle')}
-          accessibilityRole={'switch'}
-          testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
-        >
-          <Switch
-            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-            thumbColor={useConnectionInviterCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-            onValueChange={toggleConnectionInviterCapabilitySwitch}
-            testID={testIdWithKey('ConnectionInviterCapabilitySwitchElement')}
-            value={useConnectionInviterCapability}
-          />
-        </Pressable>
-      </View>
-      <View style={styles.settingContainer}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.settingLabelText}>{t('Verifier.UseDevVerifierTemplates')}</Text>
-        </View>
-        <Pressable
-          style={styles.settingSwitchContainer}
-          accessibilityLabel={t('Verifier.ToggleDevTemplates')}
-          accessibilityRole={'switch'}
-          testID={testIdWithKey('ToggleDevVerifierTemplatesSwitch')}
-        >
-          <Switch
-            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-            thumbColor={useDevVerifierTemplates ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-            onValueChange={toggleDevVerifierTemplatesSwitch}
-            testID={testIdWithKey('DevVerifierTemplatesSwitchElement')}
-            value={useDevVerifierTemplates}
-          />
-        </Pressable>
-      </View>
-      {!store.onboarding.didCreatePIN && (
+    <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
+      <ScrollView style={styles.container}>
+        <Text style={[TextTheme.normal, { margin: 10 }]}>
+          Place content here you would like to make available to developers when developer mode is enabled.
+        </Text>
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.settingLabelText}>{t('NameWallet.EnableWalletNaming')}</Text>
+            <Text accessible={false} style={styles.settingLabelText}>
+              {t('Verifier.UseVerifierCapability')}
+            </Text>
           </View>
           <Pressable
             style={styles.settingSwitchContainer}
-            accessibilityLabel={t('NameWallet.ToggleWalletNaming')}
+            accessibilityLabel={t('Verifier.Toggle')}
             accessibilityRole={'switch'}
-            testID={testIdWithKey('ToggleEnableWalletNamingSwitch')}
+            testID={testIdWithKey('ToggleVerifierCapability')}
           >
             <Switch
               trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={enableWalletNaming ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
               ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-              onValueChange={toggleWalletNamingSwitch}
-              testID={testIdWithKey('EnableWalletNamingSwitchElement')}
-              value={enableWalletNaming}
+              onValueChange={toggleVerifierCapabilitySwitch}
+              testID={testIdWithKey('VerifierCapabilitySwitchElement')}
+              value={useVerifierCapability}
             />
           </Pressable>
         </View>
-      )}
-      <View style={styles.settingContainer}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.settingLabelText}>{t('Settings.PreventAutoLock')}</Text>
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <Text accessible={false} style={styles.settingLabelText}>
+              {t('Verifier.AcceptDevCredentials')}
+            </Text>
+          </View>
+          <Pressable
+            style={styles.settingSwitchContainer}
+            accessibilityLabel={t('Verifier.Toggle')}
+            accessibilityRole={'switch'}
+            testID={testIdWithKey('ToggleAcceptDevCredentials')}
+          >
+            <Switch
+              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+              thumbColor={acceptDevCredentials ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              onValueChange={toggleAcceptDevCredentialsSwitch}
+              testID={testIdWithKey('AcceptDevCredentialsSwitchElement')}
+              value={acceptDevCredentials}
+            />
+          </Pressable>
         </View>
-        <Pressable
-          style={styles.settingSwitchContainer}
-          accessibilityLabel={t('Settings.TogglePreventAutoLock')}
-          accessibilityRole={'switch'}
-          testID={testIdWithKey('TogglePreventAutoLockSwitch')}
-        >
-          <Switch
-            trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-            thumbColor={preventAutoLock ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-            ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-            onValueChange={togglePreventAutoLockSwitch}
-            testID={testIdWithKey('PreventAutoLockSwitchElement')}
-            value={preventAutoLock}
-          />
-        </Pressable>
-      </View>
-    </View>
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
+          </View>
+          <Pressable
+            style={styles.settingSwitchContainer}
+            accessibilityLabel={t('Connection.Toggle')}
+            accessibilityRole={'switch'}
+            testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
+          >
+            <Switch
+              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+              thumbColor={useConnectionInviterCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              onValueChange={toggleConnectionInviterCapabilitySwitch}
+              testID={testIdWithKey('ConnectionInviterCapabilitySwitchElement')}
+              value={useConnectionInviterCapability}
+            />
+          </Pressable>
+        </View>
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.settingLabelText}>{t('Verifier.UseDevVerifierTemplates')}</Text>
+          </View>
+          <Pressable
+            style={styles.settingSwitchContainer}
+            accessibilityLabel={t('Verifier.ToggleDevTemplates')}
+            accessibilityRole={'switch'}
+            testID={testIdWithKey('ToggleDevVerifierTemplatesSwitch')}
+          >
+            <Switch
+              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+              thumbColor={useDevVerifierTemplates ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              onValueChange={toggleDevVerifierTemplatesSwitch}
+              testID={testIdWithKey('DevVerifierTemplatesSwitchElement')}
+              value={useDevVerifierTemplates}
+            />
+          </Pressable>
+        </View>
+        {!store.onboarding.didCreatePIN && (
+          <View style={styles.settingContainer}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.settingLabelText}>{t('NameWallet.EnableWalletNaming')}</Text>
+            </View>
+            <Pressable
+              style={styles.settingSwitchContainer}
+              accessibilityLabel={t('NameWallet.ToggleWalletNaming')}
+              accessibilityRole={'switch'}
+              testID={testIdWithKey('ToggleEnableWalletNamingSwitch')}
+            >
+              <Switch
+                trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+                thumbColor={enableWalletNaming ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+                ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+                onValueChange={toggleWalletNamingSwitch}
+                testID={testIdWithKey('EnableWalletNamingSwitchElement')}
+                value={enableWalletNaming}
+              />
+            </Pressable>
+          </View>
+        )}
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.settingLabelText}>{t('Settings.PreventAutoLock')}</Text>
+          </View>
+          <Pressable
+            style={styles.settingSwitchContainer}
+            accessibilityLabel={t('Settings.TogglePreventAutoLock')}
+            accessibilityRole={'switch'}
+            testID={testIdWithKey('TogglePreventAutoLockSwitch')}
+          >
+            <Switch
+              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+              thumbColor={preventAutoLock ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              onValueChange={togglePreventAutoLockSwitch}
+              testID={testIdWithKey('PreventAutoLockSwitchElement')}
+              value={preventAutoLock}
+            />
+          </Pressable>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
