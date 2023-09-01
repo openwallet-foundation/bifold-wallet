@@ -25,6 +25,7 @@ interface CredentialCard11Props {
   displayItems?: (Attribute | Predicate)[]
   revoked?: boolean
   error?: boolean
+  predicateError?: boolean
   elevated?: boolean
   credName?: string
   credDefId?: string
@@ -67,6 +68,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   displayItems,
   onPress = undefined,
   error = false,
+  predicateError = false,
   elevated = false,
   credName,
   credDefId,
@@ -240,7 +242,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               },
             ]}
           >
-            {!error ? (
+            {!predicateError && !error ? (
               (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()
             ) : (
               <Icon name={'warning'} size={30} style={styles.errorIcon} />
@@ -400,7 +402,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           styles.secondaryBodyContainer,
           {
             backgroundColor:
-              error || isProofRevoked
+              error || predicateError || isProofRevoked
                 ? ColorPallet.notification.errorBorder
                 : styles.secondaryBodyContainer.backgroundColor,
           },
@@ -418,7 +420,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             {null}
           </ImageBackground>
         ) : (
-          !(error || proof || getSecondaryBackgroundColor()) && (
+          !(error || predicateError || proof || getSecondaryBackgroundColor()) && (
             <View
               style={[
                 {
