@@ -3,9 +3,9 @@ import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackCardStyleInterpolator, StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState } from 'react-native'
+import { AppState, DeviceEventEmitter } from 'react-native'
 
-import { walletTimeout } from '../constants'
+import { EventTypes, walletTimeout } from '../constants'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -19,6 +19,7 @@ import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
+import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
@@ -83,8 +84,14 @@ const RootStack: React.FC = () => {
             screen: Screens.Connection,
             params: { threadId: message['@id'] },
           })
-        } catch (error) {
-          // TODO:(am add error handling here)
+        } catch (err: unknown) {
+          const error = new BifoldError(
+            t('Error.Title1039'),
+            t('Error.Message1039'),
+            (err as Error)?.message ?? err,
+            1039
+          )
+          DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
         }
       }
 

@@ -64,7 +64,13 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
           return
         }
       } catch (err: unknown) {
-        const error = new BifoldError(t('Error.Title1031'), t('Error.Message1031'), (err as Error).message, 1031)
+        const error = new BifoldError(
+          t('Error.Title1031'),
+          t('Error.Message1031'),
+          (err as Error)?.message ?? err,
+          1031
+        )
+        // throwing for QrCodeScanError
         throw error
       }
     }

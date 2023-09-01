@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
   findNodeHandle,
+  DeviceEventEmitter,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -21,13 +22,14 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
-import { minPINLength } from '../constants'
+import { EventTypes, minPINLength } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { PINCreationValidations, PINValidationsType } from '../utils/PINCreationValidation'
 import { StatusBarStyles } from '../utils/luminance'
@@ -113,8 +115,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
           })
         )
       }
-    } catch (e) {
-      // TODO:(jl)
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1040'), t('Error.Message1040'), (err as Error)?.message ?? err, 1040)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 
