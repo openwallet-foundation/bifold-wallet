@@ -26,12 +26,10 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
     const { t } = useTranslation()
     const { TextTheme, PINInputTheme } = useTheme()
     const cellHeight = 48
-
     const myOnChangeText = (value: string) => {
       onPINChanged && onPINChanged(value)
       setPIN(value)
     }
-
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
       value: PIN,
       setValue: myOnChangeText,
