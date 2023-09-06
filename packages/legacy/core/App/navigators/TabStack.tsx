@@ -68,6 +68,7 @@ const TabStack: React.FC = () => {
                     <Text
                       style={{
                         ...TabTheme.tabBarTextStyle,
+                        color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
                         fontWeight: focused ? 'bold' : 'normal',
                       }}
                     >
