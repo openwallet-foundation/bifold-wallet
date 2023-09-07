@@ -34,10 +34,21 @@ describe('Settings Screen', () => {
   })
 
   test('Renders correctly', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+        walletName: "My Wallet"
+      }
+    } 
+    
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <Settings navigation={useNavigation()} route={{} as any} />
-      </ConfigurationContext.Provider>
+      <StoreContext.Provider value={[customState, () => { return }]}>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <Settings navigation={useNavigation()} route={{} as any} />
+        </ConfigurationContext.Provider>
+      </StoreContext.Provider>
     )
     expect(tree).toMatchSnapshot()
   })
@@ -47,7 +58,8 @@ describe('Settings Screen', () => {
       ...testDefaultState,
       preferences: {
         ...testDefaultState.preferences,
-        developerModeEnabled: true
+        developerModeEnabled: true,
+        walletName: "My Wallet"
       }
     } 
     const tree = render(
@@ -67,7 +79,8 @@ describe('Settings Screen', () => {
       ...testDefaultState,
       preferences: {
         ...testDefaultState.preferences,
-        useVerifierCapability: true
+        useVerifierCapability: true,
+        walletName: "My Wallet"
       }
     }    
     const tree = render(
