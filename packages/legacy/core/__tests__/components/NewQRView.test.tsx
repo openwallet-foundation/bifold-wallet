@@ -6,6 +6,7 @@ import NewQRView from '../../App/components/misc/NewQRView'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import configurationContext from '../contexts/configuration'
+import { useNavigation } from '../../__mocks__/custom/@react-navigation/core'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -21,10 +22,12 @@ describe('NewQRView Component', () => {
     useConnections.mockReturnValue({ records: [] })
   })
 
+  const navigation = useNavigation()
+
   test('Renders correctly on first tab', async () => {
     const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
-        <NewQRView defaultToConnect={false} handleCodeScan={() => Promise.resolve()} />
+        <NewQRView defaultToConnect={false} handleCodeScan={() => Promise.resolve()} navigation={navigation as any} route={{} as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -43,7 +46,7 @@ describe('NewQRView Component', () => {
         }}
       >
         <ConfigurationContext.Provider value={configurationContext}>
-          <NewQRView defaultToConnect={true} handleCodeScan={() => Promise.resolve()} />
+          <NewQRView defaultToConnect={true} handleCodeScan={() => Promise.resolve()} navigation={navigation as any} route={{} as any} />
         </ConfigurationContext.Provider>
       </StoreProvider>
     )

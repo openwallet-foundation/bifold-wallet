@@ -4,6 +4,7 @@ const translation = {
     "Enter": "Entrar",
     "Submit": "Enviar",
     "NoneYet!": "Nenhuma ainda!",
+    "Save": "Save (PB)",
     "Cancel": "Cancelar",
     "Confirm": "Confirmar",
     "Accept": "Aceitar",
