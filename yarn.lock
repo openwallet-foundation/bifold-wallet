@@ -7600,7 +7600,7 @@ __metadata:
     react-native-bouncy-checkbox: ^3.0.5
     react-native-builder-bob: ^0.18.2
     react-native-camera: ^3.31.1
-    react-native-collapsible: ^1.6.0
+    react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
     react-native-device-info: ^8.4.9
@@ -7670,7 +7670,7 @@ __metadata:
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
     react-native-camera: ^3.31.1
-    react-native-collapsible: ^1.6.0
+    react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
     react-native-device-info: ^8.4.9
@@ -21206,6 +21206,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: a804072e05b2e4e41d54cb44bec4b63d27a88075e4e54359208c2f0e53cdbd8c5d6090e150ff88faa24b76b022b1ba51952cb60432e44d8114f9c73feb175db3
+  languageName: node
+  linkType: hard
+
+"react-native-collapsible@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "react-native-collapsible@npm:1.6.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: ec28769002dd29290f3a9e49ebb7d8ac93a7dfd759669a06f3c235983548e622269b267753b32c4f41224ca5ea6b71bc497fd8594bba0d1e28566f44318a06b7
   languageName: node
   linkType: hard
 
