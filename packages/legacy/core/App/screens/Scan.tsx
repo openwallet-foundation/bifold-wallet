@@ -145,6 +145,8 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
         handleCodeScan={handleCodeScan}
         error={qrCodeScanError}
         enableCameraOnError={true}
+        navigation={navigation}
+        route={route}
       />
     )
   } else {

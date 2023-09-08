@@ -5,6 +5,7 @@ const translation = {
     "Submit": "Submit",
     "NoneYet!": "None yet!",
     "Cancel": "Cancel",
+    "Save": "Save",
     "Confirm": "Confirm",
     "Accept": "Accept",
     "Reject": "Reject",

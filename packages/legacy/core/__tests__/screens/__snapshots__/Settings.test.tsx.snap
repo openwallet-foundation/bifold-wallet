@@ -37,7 +37,17 @@ exports[`Settings Screen Renders correctly 1`] = `
             },
           ],
           "header": Object {
-            "icon": "apartment",
+            "icon": Object {
+              "name": "apartment",
+              "size": 30,
+            },
+            "iconRight": Object {
+              "action": [Function],
+              "name": "edit",
+              "style": Object {
+                "color": "#42803E",
+              },
+            },
             "title": "Screens.Contacts",
           },
         },
@@ -64,9 +74,17 @@ exports[`Settings Screen Renders correctly 1`] = `
               "title": "Settings.Language",
               "value": "Language.English",
             },
+            Object {
+              "accessibilityLabel": "Settings.Developer",
+              "onPress": [Function],
+              "testID": "com.ariesbifold:id/DeveloperOptions",
+              "title": "Settings.Developer",
+            },
           ],
           "header": Object {
-            "icon": "settings",
+            "icon": Object {
+              "name": "settings",
+            },
             "title": "Settings.AppSettings",
           },
         },
@@ -724,6 +742,108 @@ exports[`Settings Screen Renders correctly 1`] = `
           </RCTScrollView>
           <View
             style={
+              Object {
+                "backgroundColor": "#313132",
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderBottomColor": "#000000",
+                    "borderBottomWidth": 1,
+                    "marginHorizontal": 25,
+                  },
+                ]
+              }
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View>
+          <RCTScrollView
+            contentContainerStyle={
+              Object {
+                "flexGrow": 1,
+              }
+            }
+            horizontal={true}
+            style={
+              Object {
+                "backgroundColor": "#313132",
+                "flexGrow": 1,
+                "paddingVertical": 24,
+              }
+            }
+          >
+            <View>
+              <View
+                accessibilityLabel="Settings.Developer"
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                nativeID="animatedComponent"
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "space-between",
+                    "opacity": 1,
+                    "paddingHorizontal": 25,
+                  }
+                }
+                testID="com.ariesbifold:id/DeveloperOptions"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 21,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "fontWeight": "normal",
+                        "marginRight": 14,
+                      },
+                    ]
+                  }
+                >
+                  Settings.Developer
+                </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 21,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontWeight": "normal",
+                      },
+                    ]
+                  }
+                />
+              </View>
+            </View>
+          </RCTScrollView>
+          <View
+            style={
               Array [
                 Object {
                   "marginBottom": 10,
@@ -751,7 +871,7 @@ exports[`Settings Screen Renders correctly 1`] = `
           <View
             accessibilityState={
               Object {
-                "disabled": false,
+                "disabled": true,
               }
             }
             accessible={true}
