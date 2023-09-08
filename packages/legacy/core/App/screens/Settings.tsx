@@ -39,7 +39,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     { id: Locales.fr, value: t('Language.French') },
     { id: Locales.ptBr, value: t('Language.Portuguese') },
   ]
-
+  const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
@@ -102,8 +102,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const settingsSections: SettingSection[] = [
     {
       header: {
-        icon: { name: 'person', size: 30 },
-        title: store.preferences.walletName,
+        icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
+        title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
         iconRight: {
           name: 'edit',
           action: () => {
@@ -250,26 +250,39 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     iconRight,
     title,
   }) => (
-    <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
-      <Icon
-        accessible={false}
-        name={icon.name}
-        size={icon.size ?? 24}
-        style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
-      />
-      <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
-        {title}
-      </Text>
-      {iconRight && (
-        <TouchableOpacity onPress={iconRight.action}>
+    // gate keep behind developer mode
+    store.preferences.useConnectionInviterCapability ? (
+      <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
+        <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
           <Icon
-            name={iconRight.name}
-            size={iconRight.size ?? 24}
-            style={[{ marginLeft: 'auto', color: SettingsTheme.iconColor }, iconRight.style]}
-          ></Icon>
-        </TouchableOpacity>
-      )}
-    </View>
+            accessible={false}
+            name={icon.name}
+            size={icon.size ?? defaultIconSize}
+            style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
+          />
+          <Text numberOfLines={1} accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1, }]}>
+            {title}
+          </Text>
+        </View>
+        {iconRight && (
+          <TouchableOpacity onPress={iconRight.action}>
+            <Icon
+              name={iconRight.name}
+              size={iconRight.size ?? defaultIconSize}
+              style={[{ color: SettingsTheme.iconColor }, iconRight.style]}
+            ></Icon>
+          </TouchableOpacity>
+        )}
+      </View>
+    ) : (
+      <View style={[styles.section, styles.sectionHeader]}>
+        <Icon accessible={false} name={icon.name} size={24} style={{ marginRight: 10, color: SettingsTheme.iconColor }} />
+        <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
+          {title}
+        </Text>
+      </View>
+    )
+
   )
 
   const SectionRow: React.FC<{
