@@ -265,9 +265,12 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           </Text>
         </View>
         {iconRight && (
-          <TouchableOpacity accessible={iconRight.action !== undefined}
-          accessibilityLabel={iconRight.action ? icon.accessibilityLabel : undefined} 
-          testID={testIdWithKey(`${title}Action`)} onPress={iconRight.action}>
+          <TouchableOpacity
+            accessible={iconRight.action !== undefined}
+            accessibilityLabel={iconRight.action ? icon.accessibilityLabel : undefined}
+            testID={testIdWithKey(`${title}Action`)}
+            onPress={iconRight.action}
+          >
             <Icon
               name={iconRight.name}
               size={iconRight.size ?? defaultIconSize}
