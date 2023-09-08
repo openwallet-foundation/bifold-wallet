@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
 
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { EventTypes, walletTimeout } from '../constants'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
@@ -13,13 +14,14 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
+import Chat from '../screens/Chat'
 import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { BifoldError } from '../types/error'
-import { AuthenticateStackParams, Screens, Stacks } from '../types/navigators'
+import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -191,6 +193,25 @@ const RootStack: React.FC = () => {
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
+        <Stack.Screen
+          name={Screens.Chat}
+          component={Chat}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: t('Screens.CredentialOffer'),
+            headerLeft: () => (
+              <HeaderButton
+                buttonLocation={ButtonLocation.Left}
+                accessibilityLabel={t('Global.Back')}
+                testID={testIdWithKey('BackButton')}
+                onPress={() => {
+                  navigation.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+                }}
+                icon="arrow-left"
+              />
+            ),
+          })}
+        />
         <Stack.Screen
           name={Stacks.ConnectStack}
           component={ConnectStack}

@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
+import { CommonActions } from '@react-navigation/native'
 import { render, waitFor, fireEvent } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
+import { useOutOfBandByConnectionId } from '../../App/hooks/connections'
 import { useNotifications } from '../../App/hooks/notifications'
 import ConnectionModal from '../../App/screens/Connection'
+import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
-import { useOutOfBandByConnectionId } from '../../App/hooks/connections'
-import { useNavigation } from '@react-navigation/core'
-import { testIdWithKey } from '../../App/utils/testable'
 
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
@@ -152,8 +153,11 @@ describe('ConnectionModal Component', () => {
     const tree = render(element)
 
     expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(1)
-    expect(navigation.navigate).toBeCalledWith('Chat', { connectionId: connection.id })
+    expect(navigation.getParent()?.dispatch).toBeCalledTimes(1)
+    expect(CommonActions.reset).toBeCalledWith({
+      index: 1,
+      routes: [{ name: 'Tab Stack' }, { name: 'Chat', params: { connectionId: connection.id } }],
+    })
   })
 
   test('No connection proof request auto navigate', async () => {
