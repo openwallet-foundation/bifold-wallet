@@ -249,18 +249,18 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     icon,
     iconRight,
     title,
-  }) => (
+  }) =>
     // gate keep behind developer mode
     store.preferences.useConnectionInviterCapability ? (
       <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <Icon
             accessible={false}
             name={icon.name}
             size={icon.size ?? defaultIconSize}
             style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
           />
-          <Text numberOfLines={1} accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1, }]}>
+          <Text numberOfLines={1} accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
             {title}
           </Text>
         </View>
@@ -276,14 +276,17 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       </View>
     ) : (
       <View style={[styles.section, styles.sectionHeader]}>
-        <Icon accessible={false} name={icon.name} size={24} style={{ marginRight: 10, color: SettingsTheme.iconColor }} />
+        <Icon
+          accessible={false}
+          name={icon.name}
+          size={24}
+          style={{ marginRight: 10, color: SettingsTheme.iconColor }}
+        />
         <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
           {title}
         </Text>
       </View>
     )
-
-  )
 
   const SectionRow: React.FC<{
     title: string

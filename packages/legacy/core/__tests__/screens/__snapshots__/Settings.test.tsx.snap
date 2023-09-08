@@ -38,7 +38,7 @@ exports[`Settings Screen Renders correctly 1`] = `
           ],
           "header": Object {
             "icon": Object {
-              "name": "person",
+              "name": "apartment",
               "size": 30,
             },
             "iconRight": Object {
@@ -48,7 +48,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                 "color": "#42803E",
               },
             },
-            "title": "My Wallet",
+            "title": "Screens.Contacts",
           },
         },
         Object {
@@ -124,9 +124,6 @@ exports[`Settings Screen Renders correctly 1`] = `
                 "paddingBottom": 0,
                 "paddingHorizontal": 25,
               },
-              Object {
-                "justifyContent": "space-between",
-              },
             ]
           }
         >
@@ -137,15 +134,12 @@ exports[`Settings Screen Renders correctly 1`] = `
               Array [
                 Object {
                   "color": undefined,
-                  "fontSize": 30,
+                  "fontSize": 24,
                 },
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "marginRight": 10,
-                  },
-                  undefined,
-                ],
+                Object {
+                  "color": "#FFFFFF",
+                  "marginRight": 10,
+                },
                 Object {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
@@ -155,7 +149,7 @@ exports[`Settings Screen Renders correctly 1`] = `
               ]
             }
           >
-            
+            
           </Text>
           <Text
             accessibilityRole="header"
@@ -172,55 +166,8 @@ exports[`Settings Screen Renders correctly 1`] = `
               ]
             }
           >
-            My Wallet
+            Screens.Contacts
           </Text>
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            nativeID="animatedComponent"
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 24,
-                  },
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "marginLeft": "auto",
-                    },
-                    Object {
-                      "color": "#42803E",
-                    },
-                  ],
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
         </View>
       </View>
       <View
@@ -449,9 +396,6 @@ exports[`Settings Screen Renders correctly 1`] = `
                 "paddingBottom": 0,
                 "paddingHorizontal": 25,
               },
-              Object {
-                "justifyContent": undefined,
-              },
             ]
           }
         >
@@ -464,13 +408,10 @@ exports[`Settings Screen Renders correctly 1`] = `
                   "color": undefined,
                   "fontSize": 24,
                 },
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "marginRight": 10,
-                  },
-                  undefined,
-                ],
+                Object {
+                  "color": "#FFFFFF",
+                  "marginRight": 10,
+                },
                 Object {
                   "fontFamily": "Material Icons",
                   "fontStyle": "normal",
