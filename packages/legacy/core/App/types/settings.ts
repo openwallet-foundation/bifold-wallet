@@ -13,6 +13,7 @@ export interface SettingIcon {
   size?: number
   style?: any
   action?: () => void
+  accessibilityLabel?: string
 }
 
 export interface SettingSection {

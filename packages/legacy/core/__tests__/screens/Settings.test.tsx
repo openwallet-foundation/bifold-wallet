@@ -53,6 +53,30 @@ describe('Settings Screen', () => {
     expect(tree).toMatchSnapshot()
   })
 
+  test('Renders correctly with wallet naming', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+        useConnectionInviterCapability: true,
+        walletName: "Wallet123"
+      }
+    } 
+    
+    const tree = render(
+      <StoreContext.Provider value={[customState, () => { return }]}>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <Settings navigation={useNavigation()} route={{} as any} />
+        </ConfigurationContext.Provider>
+      </StoreContext.Provider>
+    )
+    const walletName = tree.getByText('Wallet123')
+    const editButton = tree.getByTestId(testIdWithKey('Wallet123Action'))
+    expect(editButton).not.toBeNull()
+    expect(walletName).not.toBeNull()
+  })
+
   test('If developer mode is enabled, developer mode button is shown', async () => {
     const customState = {
       ...testDefaultState,
