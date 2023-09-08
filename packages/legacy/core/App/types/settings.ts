@@ -8,10 +8,19 @@ export interface Setting {
   testID?: string
 }
 
+export interface SettingIcon {
+  name: string
+  size?: number
+  style?: any
+  action?: () => void
+  accessibilityLabel?: string
+}
+
 export interface SettingSection {
   header: {
     title: string
-    icon: string
+    icon: SettingIcon
+    iconRight?: SettingIcon
   }
   data: Setting[]
 }

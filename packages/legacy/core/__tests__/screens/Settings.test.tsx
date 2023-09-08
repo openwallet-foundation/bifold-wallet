@@ -6,7 +6,7 @@ import Settings from '../../App/screens/Settings'
 import configurationContext from '../contexts/configuration'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { testIdWithKey } from '../../App/utils/testable'
-import { StoreContext, StoreProvider } from '../../App'
+import { StoreContext } from '../../App'
 import { testDefaultState } from '../contexts/store'
 
 jest.mock('@react-navigation/core', () => {
@@ -34,12 +34,47 @@ describe('Settings Screen', () => {
   })
 
   test('Renders correctly', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+        walletName: "My Wallet"
+      }
+    } 
+    
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <Settings navigation={useNavigation()} route={{} as any} />
-      </ConfigurationContext.Provider>
+      <StoreContext.Provider value={[customState, () => { return }]}>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <Settings navigation={useNavigation()} route={{} as any} />
+        </ConfigurationContext.Provider>
+      </StoreContext.Provider>
     )
     expect(tree).toMatchSnapshot()
+  })
+
+  test('Renders correctly with wallet naming', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+        useConnectionInviterCapability: true,
+        walletName: "Wallet123"
+      }
+    } 
+    
+    const tree = render(
+      <StoreContext.Provider value={[customState, () => { return }]}>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <Settings navigation={useNavigation()} route={{} as any} />
+        </ConfigurationContext.Provider>
+      </StoreContext.Provider>
+    )
+    const walletName = tree.getByText('Wallet123')
+    const editButton = tree.getByTestId(testIdWithKey('Wallet123Action'))
+    expect(editButton).not.toBeNull()
+    expect(walletName).not.toBeNull()
   })
 
   test('If developer mode is enabled, developer mode button is shown', async () => {
@@ -47,7 +82,8 @@ describe('Settings Screen', () => {
       ...testDefaultState,
       preferences: {
         ...testDefaultState.preferences,
-        developerModeEnabled: true
+        developerModeEnabled: true,
+        walletName: "My Wallet"
       }
     } 
     const tree = render(
@@ -67,7 +103,8 @@ describe('Settings Screen', () => {
       ...testDefaultState,
       preferences: {
         ...testDefaultState.preferences,
-        useVerifierCapability: true
+        useVerifierCapability: true,
+        walletName: "My Wallet"
       }
     }    
     const tree = render(

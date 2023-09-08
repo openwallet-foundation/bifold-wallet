@@ -21,7 +21,7 @@ import { useTheme } from '../contexts/theme'
 import { Locales } from '../localization'
 import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
-import { SettingSection } from '../types/settings'
+import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
@@ -39,7 +39,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     { id: Locales.fr, value: t('Language.French') },
     { id: Locales.ptBr, value: t('Language.Portuguese') },
   ]
-
+  const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.primaryBackground,
@@ -102,8 +102,15 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const settingsSections: SettingSection[] = [
     {
       header: {
-        icon: 'apartment',
-        title: t('Screens.Contacts'),
+        icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
+        title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
+        iconRight: {
+          name: 'edit',
+          action: () => {
+            navigation.navigate(Screens.NameWallet)
+          },
+          style: { color: ColorPallet.brand.primary },
+        },
       },
       data: [
         {
@@ -126,7 +133,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     {
       header: {
-        icon: 'settings',
+        icon: { name: 'settings' },
         title: t('Settings.AppSettings'),
       },
       data: [
@@ -193,7 +200,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   if (store.preferences.useVerifierCapability) {
     settingsSections.splice(1, 0, {
       header: {
-        icon: 'send',
+        icon: { name: 'send' },
         title: t('Screens.ProofRequests'),
       },
       data: [
@@ -223,7 +230,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   }
 
   if (store.preferences.useConnectionInviterCapability) {
-    const section = settingsSections.find((item) => item.header.title === t('Screens.Contacts'))
+    const section = settingsSections.find((item) => item.header.title === store.preferences.walletName)
     if (section) {
       section.data.splice(1, 0, {
         title: t('Settings.ScanMyQR'),
@@ -238,14 +245,53 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     }
   }
 
-  const SectionHeader: React.FC<{ icon: string; title: string }> = ({ icon, title }) => (
-    <View style={[styles.section, styles.sectionHeader]}>
-      <Icon accessible={false} name={icon} size={24} style={{ marginRight: 10, color: SettingsTheme.iconColor }} />
-      <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
-        {title}
-      </Text>
-    </View>
-  )
+  const SectionHeader: React.FC<{ icon: SettingIcon; iconRight?: SettingIcon; title: string }> = ({
+    icon,
+    iconRight,
+    title,
+  }) =>
+    // gate keep behind developer mode
+    store.preferences.useConnectionInviterCapability ? (
+      <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
+        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <Icon
+            accessible={false}
+            name={icon.name}
+            size={icon.size ?? defaultIconSize}
+            style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
+          />
+          <Text numberOfLines={1} accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
+            {title}
+          </Text>
+        </View>
+        {iconRight && (
+          <TouchableOpacity
+            accessible={iconRight.action !== undefined}
+            accessibilityLabel={iconRight.action ? icon.accessibilityLabel : undefined}
+            testID={testIdWithKey(`${title}Action`)}
+            onPress={iconRight.action}
+          >
+            <Icon
+              name={iconRight.name}
+              size={iconRight.size ?? defaultIconSize}
+              style={[{ color: SettingsTheme.iconColor }, iconRight.style]}
+            ></Icon>
+          </TouchableOpacity>
+        )}
+      </View>
+    ) : (
+      <View style={[styles.section, styles.sectionHeader]}>
+        <Icon
+          accessible={false}
+          name={icon.name}
+          size={24}
+          style={{ marginRight: 10, color: SettingsTheme.iconColor }}
+        />
+        <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
+          {title}
+        </Text>
+      </View>
+    )
 
   const SectionRow: React.FC<{
     title: string
@@ -282,9 +328,9 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         )}
         renderSectionHeader={({
           section: {
-            header: { title, icon },
+            header: { title, icon, iconRight },
           },
-        }) => <SectionHeader icon={icon} title={title} />}
+        }) => <SectionHeader icon={icon} iconRight={iconRight} title={title} />}
         ItemSeparatorComponent={() => (
           <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
             <View style={[styles.itemSeparator]}></View>

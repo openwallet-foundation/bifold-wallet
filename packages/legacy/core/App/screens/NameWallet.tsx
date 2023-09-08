@@ -1,3 +1,4 @@
+import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,9 +27,15 @@ const NameWallet: React.FC = () => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const navigation = useNavigation()
-  const [walletName, setWalletName] = useState(generateRandomWalletName())
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
+  const { agent } = useAgent()
+  const [walletName, setWalletName] = useState(store.preferences.walletName ?? generateRandomWalletName())
   const [loading, setLoading] = useState(false)
+  const onBoardingComplete =
+    store.onboarding.didCompleteTutorial &&
+    store.onboarding.didAgreeToTerms &&
+    store.onboarding.didCreatePIN &&
+    store.onboarding.didConsiderBiometry
   const [errorState, setErrorState] = useState<ErrorState>({
     visible: false,
     title: '',
@@ -60,6 +67,10 @@ const NameWallet: React.FC = () => {
     setWalletName(text)
   }
 
+  const handleCancelPressed = () => {
+    navigation.goBack()
+  }
+
   const handleContinuePressed = () => {
     if (walletName.length < 1) {
       setErrorState({
@@ -79,8 +90,15 @@ const NameWallet: React.FC = () => {
         type: DispatchAction.UPDATE_WALLET_NAME,
         payload: [walletName],
       })
+      if (agent) {
+        agent.config.label = walletName
+      }
       dispatch({ type: DispatchAction.DID_NAME_WALLET })
-      navigation.navigate({ name: Screens.UseBiometry } as never)
+      if (onBoardingComplete) {
+        navigation.goBack()
+      } else {
+        navigation.navigate({ name: Screens.UseBiometry } as never)
+      }
     }
   }
 
@@ -108,15 +126,26 @@ const NameWallet: React.FC = () => {
         <View style={styles.controlsContainer}>
           <View style={styles.buttonContainer}>
             <Button
-              title={t('Global.Continue')}
+              title={onBoardingComplete ? t('Global.Save') : t('Global.Continue')}
               buttonType={ButtonType.Primary}
-              testID={testIdWithKey('Continue')}
-              accessibilityLabel={t('Global.Continue')}
+              testID={onBoardingComplete ? testIdWithKey('Save') : testIdWithKey('Continue')}
+              accessibilityLabel={onBoardingComplete ? t('Global.Save') : t('Global.Continue')}
               onPress={handleContinuePressed}
               disabled={loading}
             >
               {loading && <ButtonLoading />}
             </Button>
+            {onBoardingComplete && (
+              <View style={{ marginTop: 15 }}>
+                <Button
+                  title={t('Global.Cancel')}
+                  buttonType={ButtonType.Secondary}
+                  testID={testIdWithKey('Cancel')}
+                  accessibilityLabel={t('Global.Cancel')}
+                  onPress={handleCancelPressed}
+                />
+              </View>
+            )}
           </View>
         </View>
       </View>
