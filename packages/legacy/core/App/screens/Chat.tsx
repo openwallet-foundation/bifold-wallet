@@ -7,7 +7,8 @@ import {
   ProofState,
 } from '@aries-framework/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
-import { StackScreenProps } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Text } from 'react-native'
@@ -28,7 +29,7 @@ import { useCredentialsByConnectionId } from '../hooks/credentials'
 import { useProofsByConnectionId } from '../hooks/proofs'
 import { Role } from '../types/chat'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../types/metadata'
-import { ContactStackParams, Screens, Stacks } from '../types/navigators'
+import { RootStackParams, ContactStackParams, Screens, Stacks } from '../types/navigators'
 import {
   getCredentialEventLabel,
   getCredentialEventRole,
@@ -37,9 +38,9 @@ import {
   getProofEventRole,
 } from '../utils/helpers'
 
-type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat>
+type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat> | StackScreenProps<RootStackParams, Screens.Chat>
 
-const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
+const Chat: React.FC<ChatProps> = ({ route }) => {
   if (!route?.params) {
     throw new Error('Chat route params were not set properly')
   }
@@ -48,6 +49,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   const [store] = useStore()
   const { t } = useTranslation()
   const { agent } = useAgent()
+  const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
   const connection = useConnectionById(connectionId)
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const credentials = useCredentialsByConnectionId(connectionId)
@@ -168,13 +170,13 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           onDetails: () => {
             const navMap: { [key in CredentialState]?: () => void } = {
               [CredentialState.Done]: () => {
-                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                navigation.navigate(Stacks.ContactStack as any, {
                   screen: Screens.CredentialDetails,
                   params: { credential: record },
                 })
               },
               [CredentialState.OfferReceived]: () => {
-                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                navigation.navigate(Stacks.ContactStack as any, {
                   screen: Screens.CredentialOffer,
                   params: { credentialId: record.id },
                 })
@@ -205,7 +207,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
           messageOpensCallbackType: callbackTypeForMessage(record),
           onDetails: () => {
             const toProofDetails = () => {
-              navigation.getParent()?.navigate(Stacks.ContactStack, {
+              navigation.navigate(Stacks.ContactStack as any, {
                 screen: Screens.ProofDetails,
                 params: {
                   recordId: record.id,
@@ -221,7 +223,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
               [ProofState.PresentationSent]: toProofDetails,
               [ProofState.PresentationReceived]: toProofDetails,
               [ProofState.RequestReceived]: () => {
-                navigation.getParent()?.navigate(Stacks.ContactStack, {
+                navigation.navigate(Stacks.ContactStack as any, {
                   screen: Screens.ProofRequest,
                   params: { proofId: record.id },
                 })
@@ -266,7 +268,7 @@ const Chat: React.FC<ChatProps> = ({ navigation, route }) => {
   )
 
   const onSendRequest = useCallback(async () => {
-    navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
+    navigation.navigate(Stacks.ProofRequestsStack as any, {
       screen: Screens.ProofRequests,
       params: { navigation: navigation, connectionId },
     })
