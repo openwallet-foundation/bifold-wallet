@@ -115,9 +115,11 @@ export type HomeStackParams = {
 
 export type ConnectStackParams = {
   [Screens.Scan]: undefined
+  [Screens.NameWallet]: undefined
 }
 
 export type SettingStackParams = {
+  [Screens.NameWallet]: undefined
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
   [Screens.DataRetention]: undefined

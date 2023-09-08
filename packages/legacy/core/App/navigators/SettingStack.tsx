@@ -8,6 +8,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import DataRetention from '../screens/DataRetention'
 import Language from '../screens/Language'
+import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
@@ -45,6 +46,11 @@ const SettingStack: React.FC = () => {
         name={Screens.Settings}
         component={Settings}
         options={{ title: t('Screens.Settings'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.NameWallet}
+        component={NameWallet}
+        options={{ title: t('Screens.NameWallet'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.Language}

@@ -1,10 +1,11 @@
 import { DidExchangeState } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Vibration, View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -12,7 +13,7 @@ import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { useConnectionByOutOfBandId } from '../../hooks/connections'
 import { QrCodeScanError } from '../../types/error'
-import { Screens, Stacks } from '../../types/navigators'
+import { Screens, Stacks, ConnectStackParams } from '../../types/navigators'
 import { createConnectionInvitation } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
@@ -21,17 +22,18 @@ import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanTab from './ScanTab'
 
-interface Props {
+type ConnectProps = StackScreenProps<ConnectStackParams>
+
+interface Props extends ConnectProps {
   defaultToConnect: boolean
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
 }
 
-const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, enableCameraOnError }) => {
+const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, enableCameraOnError, navigation }) => {
   const { width } = useWindowDimensions()
   const qrSize = width - 40
-  const navigation = useNavigation()
   const [store] = useStore()
   const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
@@ -103,6 +105,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
       ...TextTheme.normal,
       textAlign: 'center',
     },
+    editButton: { ...TextTheme.headingTwo, marginBottom: 20, marginLeft: 10, color: ColorPallet.brand.primary },
   })
 
   const createInvitation = useCallback(async () => {
@@ -114,12 +117,16 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     }
   }, [])
 
+  const handleEdit = () => {
+    navigation.navigate(Screens.NameWallet)
+  }
+
   useEffect(() => {
     navigation.setOptions({ title: firstTabActive ? 'Scan QR code' : 'My QR code' })
     if (!firstTabActive) {
       createInvitation()
     }
-  }, [firstTabActive])
+  }, [firstTabActive, store.preferences.walletName])
 
   const record = useConnectionByOutOfBandId(recordId || '')
 
@@ -196,7 +203,12 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
               {invitation && <QRRenderer value={invitation} size={qrSize} />}
             </View>
             <View style={{ paddingHorizontal: 20, flex: 1 }}>
-              <Text style={styles.walletName}>{store.preferences.walletName}</Text>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={styles.walletName}>{store.preferences.walletName}</Text>
+                <TouchableOpacity onPress={handleEdit}>
+                  <Icon style={styles.editButton} name="edit" size={24}></Icon>
+                </TouchableOpacity>
+              </View>
               <Text style={styles.secondaryText}>{t('Connection.ShareQR')}</Text>
             </View>
           </View>
