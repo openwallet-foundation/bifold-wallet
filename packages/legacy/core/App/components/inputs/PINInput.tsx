@@ -23,13 +23,17 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
     // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
     const [PIN, setPIN] = useState('')
     const [showPIN, setShowPIN] = useState(false)
-    const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-      value: PIN,
-      setValue: setPIN,
-    })
     const { t } = useTranslation()
     const { TextTheme, PINInputTheme } = useTheme()
     const cellHeight = 48
+    const onChangeText = (value: string) => {
+      onPINChanged && onPINChanged(value)
+      setPIN(value)
+    }
+    const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+      value: PIN,
+      setValue: onChangeText,
+    })
 
     const style = StyleSheet.create({
       container: {
@@ -79,10 +83,7 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
             accessible
             value={PIN}
             rootStyle={style.codeFieldRoot}
-            onChangeText={(value: string) => {
-              onPINChanged && onPINChanged(value)
-              setPIN(value)
-            }}
+            onChangeText={onChangeText}
             cellCount={minPINLength}
             keyboardType="numeric"
             textContentType="password"
