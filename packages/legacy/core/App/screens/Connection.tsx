@@ -1,5 +1,5 @@
 import { useConnectionById } from '@aries-framework/react-hooks'
-import { useFocusEffect } from '@react-navigation/native'
+import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +12,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
-import { Screens, TabStacks, DeliveryStackParams } from '../types/navigators'
+import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
@@ -149,8 +149,14 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       (!goalCode || (!goalCode.startsWith('aries.vc.verify') && !goalCode.startsWith('aries.vc.issue')))
     ) {
       // No goal code, we don't know what to expect next,
-      // navigate to the chat screen.
-      navigation.navigate(Screens.Chat, { connectionId })
+      // navigate to the chat screen and set home screen as only history
+      navigation.getParent()?.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
+        })
+      )
+
       dispatch({ isVisible: false })
       return
     }

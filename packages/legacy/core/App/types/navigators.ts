@@ -57,6 +57,7 @@ export enum TabStacks {
 export type RootStackParams = {
   [Screens.Splash]: undefined
   [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
+  [Screens.Chat]: { connectionId: string }
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>

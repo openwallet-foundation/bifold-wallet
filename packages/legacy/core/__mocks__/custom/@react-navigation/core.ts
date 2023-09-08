@@ -1,10 +1,11 @@
 const navigate = jest.fn()
-
+const dispatch = jest.fn()
 const navigation = {
   navigate,
   setOptions: jest.fn(),
   getParent: jest.fn(() => ({
     navigate,
+    dispatch,
   })),
   getState: jest.fn(() => ({
     index: jest.fn(),
@@ -13,7 +14,7 @@ const navigation = {
   pop: jest.fn(),
   reset: jest.fn(),
   isFocused: () => true,
-  dispatch: jest.fn(),
+  dispatch,
 }
 
 const useNavigation = () => {
