@@ -6,7 +6,7 @@ import Settings from '../../App/screens/Settings'
 import configurationContext from '../contexts/configuration'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { testIdWithKey } from '../../App/utils/testable'
-import { StoreContext, StoreProvider } from '../../App'
+import { StoreContext } from '../../App'
 import { testDefaultState } from '../contexts/store'
 
 jest.mock('@react-navigation/core', () => {
