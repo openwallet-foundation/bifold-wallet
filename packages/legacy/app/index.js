@@ -24,8 +24,8 @@ import { NavigationContainer, useNavigationContainerRef } from '@react-navigatio
 import { NavigationTheme } from 'aries-bifold'
 import * as React from 'react'
 import { AppRegistry, LogBox } from 'react-native'
+//import { version as ReactNativeVersion } from 'react-native/Libraries/Core/ReactNativeVersion'
 
-import {version as ReactNativeVersion} from 'react-native/Libraries/Core/ReactNativeVersion'
 import App from './App'
 import { name as appName } from './app.json'
 
@@ -34,7 +34,7 @@ const navigationTheme = {
 }
 
 LogBox.ignoreAllLogs()
-console.log(`React Native Version:${ReactNativeVersion.major}.${ReactNativeVersion.minor}.${ReactNativeVersion.patch}`)
+// console.log(`React Native Version:${ReactNativeVersion.major}.${ReactNativeVersion.minor}.${ReactNativeVersion.patch}`)
 const Base = () => {
   const navigationRef = useNavigationContainerRef()
 
