@@ -52,7 +52,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
   const [PINOld, setPINOld] = useState('')
-  const [continueEnabled, setContinueEnabled] = useState(true)
+  const [continueEnabled, setContinueEnabled] = useState(false)
+  const [isLoading, setLoading] = useState(false)
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
     title: '',
@@ -163,6 +164,10 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     await passcodeCreate(PINOne)
   }
 
+  const checkEmptyPINs = (p: string) => {
+    return p !== '' && PIN !== '' && PINTwo !== ''
+  }
+
   return (
     <KeyboardView>
       <StatusBar barStyle={StatusBarStyles.Light} />
@@ -180,6 +185,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
               testID={testIdWithKey('EnterOldPIN')}
               onPINChanged={(p: string) => {
                 setPINOld(p)
+                setContinueEnabled(checkEmptyPINs(p))
               }}
             />
           )}
@@ -187,6 +193,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             label={t('PINCreate.EnterPINTitle', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
               setPIN(p)
+              setContinueEnabled(checkEmptyPINs(p))
               setPINOneValidations(PINCreationValidations(p, PINSecurity.rules))
 
               if (p.length === minPINLength) {
@@ -227,6 +234,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             label={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
               setPINTwo(p)
+              setContinueEnabled(checkEmptyPINs(p))
 
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
@@ -266,6 +274,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             buttonType={ButtonType.Primary}
             disabled={!continueEnabled}
             onPress={async () => {
+              setLoading(true)
               if (updatePin) {
                 const valid = validatePINEntry(PIN, PINTwo)
                 if (valid) {
@@ -289,10 +298,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
               } else {
                 await confirmEntry(PIN, PINTwo)
               }
+              setLoading(false)
             }}
             ref={createPINButtonRef}
           >
-            {!continueEnabled && <ButtonLoading />}
+            {!continueEnabled && isLoading ? <ButtonLoading /> : null}
           </Button>
         </View>
       </View>
