@@ -58,7 +58,7 @@ describe('ListContacts Component', () => {
 
   test('Renders correctly', async () => {
     const tree = renderView()
-    await act(async () => null)
+    await act(async () => {})
     expect(tree).toMatchSnapshot()
 
     const faberContact = await tree.findByText('Faber', { exact: true })
