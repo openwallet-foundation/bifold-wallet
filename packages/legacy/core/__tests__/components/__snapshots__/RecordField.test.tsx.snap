@@ -10,29 +10,39 @@ exports[`Record Field Component Shown binary field should render a binary field 
     }
   }
 >
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "normal",
-        },
-        Object {
-          "fontWeight": "bold",
-        },
-      ]
-    }
-    testID="com.ariesbifold:id/AttributeName"
-  >
-    Test
-  </Text>
   <View
     style={
       Object {
         "flexDirection": "row",
         "justifyContent": "space-between",
-        "paddingTop": 10,
+        "paddingTop": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
+      }
+      testID="com.ariesbifold:id/AttributeName"
+    >
+      Test
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingTop": 5,
       }
     }
   >
@@ -111,29 +121,39 @@ exports[`Record Field Component Shown date field should render a date field 1`] 
     }
   }
 >
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "normal",
-        },
-        Object {
-          "fontWeight": "bold",
-        },
-      ]
-    }
-    testID="com.ariesbifold:id/AttributeName"
-  >
-    Test
-  </Text>
   <View
     style={
       Object {
         "flexDirection": "row",
         "justifyContent": "space-between",
-        "paddingTop": 10,
+        "paddingTop": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
+      }
+      testID="com.ariesbifold:id/AttributeName"
+    >
+      Test
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingTop": 5,
       }
     }
   >
