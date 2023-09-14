@@ -24,11 +24,11 @@ describe('CameraDisclosureModal Component', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Pressing "Allow" triggers requestCameraUse callback', async () => {
+  test('Pressing "Continue" triggers requestCameraUse callback', async () => {
     const { getByTestId } = render(<CameraDisclosureModal requestCameraUse={requestCameraUse} />)
-    const allowButton = getByTestId(testIdWithKey('Allow'))
+    const continueButton = getByTestId(testIdWithKey('Continue'))
     await act(async () => {
-      fireEvent(allowButton, 'press')
+      fireEvent(continueButton, 'press')
       expect(requestCameraUse).toHaveBeenCalledTimes(1)
     })
   })
