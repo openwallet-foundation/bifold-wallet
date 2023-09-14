@@ -36,6 +36,7 @@ import { NotificationStackParams, Screens, TabStacks } from '../types/navigators
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
+import { getCredentialIdentifiers } from '../utils/credential'
 import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -65,7 +66,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
-  const { enableTours: enableToursConfig } = useConfiguration()
+  const { enableTours: enableToursConfig, OCABundleResolver } = useConfiguration()
+  const [containsPI, setContainsPI] = useState(false)
   const [store, dispatch] = useStore()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
@@ -254,6 +256,22 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     ...retrievedCredentials?.attributes,
     ...retrievedCredentials?.predicates,
   })
+
+  useEffect(() => {
+    // get oca bundle to see if we're presenting personally identifiable elements
+    proofItems.some(async (item) => {
+      if (!item || !item.credExchangeRecord) {
+        return false
+      }
+      const labels = (item.attributes ?? []).map((field) => field.label ?? field.name ?? '')
+      const credIds = getCredentialIdentifiers(item.credExchangeRecord)
+      const bundle = await OCABundleResolver.resolveAllBundles({ identifiers: credIds })
+      const flaggedAttributes: string[] = (bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name)
+      const foundPI = labels.some((label) => flaggedAttributes.includes(label))
+      setContainsPI(foundPI)
+      return foundPI
+    })
+  }, [proofItems])
 
   /**
    * Retrieve current credentials info filtered by `credentialDefinitionId` if given.
@@ -449,6 +467,37 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   <Text style={[TextTheme.title]}>{` ${proofItems.length} `}</Text>
                   <Text>{proofItems.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
+              )}
+              {containsPI && (
+                <View
+                  style={{
+                    backgroundColor: ColorPallet.notification.warn,
+                    width: '100%',
+                    marginTop: 10,
+                    borderColor: ColorPallet.notification.warnBorder,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                    flexDirection: 'row',
+                  }}
+                >
+                  <Icon
+                    style={{ marginTop: 15, marginLeft: 10 }}
+                    name="warning"
+                    color={ColorPallet.notification.warnIcon}
+                    size={TextTheme.title.fontSize + 5}
+                  />
+                  <Text
+                    style={{
+                      ...TextTheme.title,
+                      color: ColorPallet.notification.warnText,
+                      flex: 1,
+                      flexWrap: 'wrap',
+                      margin: 10,
+                    }}
+                  >
+                    {t('ProofRequest.SensitiveInformation')}
+                  </Text>
+                </View>
               )}
             </View>
           </>
