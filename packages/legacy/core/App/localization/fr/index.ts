@@ -416,6 +416,7 @@ const translation = {
         "RejectThisProof?": "Rejeter cette preuve?",
         "AcceptingProof": "Acceptation de la preuve",
         "SuccessfullyAcceptedProof": "Preuve acceptée avec succès",
+        "SensitiveInformation": "This request is asking for sensitive information. (FR)",
         "RejectingProof": "Rejet de la preuve",
         "ProofAccepted": "Preuve acceptée",
         "ProofRejected": "Preuve rejetée",
