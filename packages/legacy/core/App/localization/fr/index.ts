@@ -535,6 +535,7 @@ const translation = {
         "EnableWalletNaming": "Enable wallet naming? (FR)",
         "ToggleWalletNaming": "Toggle wallet naming (FR)",
         "NameYourWallet": "Name your wallet (FR)",
+        "EditWalletName": "Edit wallet name (FR)",
         "ThisIsTheName": "This is the name people see when connecting with you. (FR)",
         "CharCountTitle": "Character count exceeded (FR)",
         "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count. (FR)",

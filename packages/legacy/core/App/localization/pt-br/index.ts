@@ -511,6 +511,7 @@ const translation = {
     "EnableWalletNaming": "Habilitar nome da carteira?",
     "ToggleWalletNaming": "Alternar nome da carteira",
     "NameYourWallet": "Nome da sua carteira",
+    "EditWalletName": "Edit wallet name (PT-BR)",
     "ThisIsTheName": "Este é o nome que as pessoas verão quando se conectar a você.",
     "CharCountTitle": "Número de caracteres excedido",
     "CharCountDescription": "Voce excedeu o numer máximo de 50 caracteres. Por favor, reduza o número de caracteres.",
