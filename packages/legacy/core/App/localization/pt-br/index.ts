@@ -160,7 +160,6 @@ const translation = {
     "AllowCameraUse": "Permitir uso da câmera",
     "CameraDisclosure": "A câmera é usada para escanear QR Codes para processamento imediato no dispositivo. Nenhuma informação sobre as imagens é armazenada, usada para análise, ou compartilhada.",
     "ToContinueUsing": "Para continuar usando a funcionalidade de scan da Aries Bifold, favor permitir o uso da câmera.",
-    "Allow": "Permitir",
     "OpenSettings": "Abrir as configurações",
   },
   "PINCreate": {

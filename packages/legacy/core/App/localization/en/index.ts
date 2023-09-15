@@ -166,7 +166,6 @@ const translation = {
     "AllowCameraUse": "Allow camera use",
     "CameraDisclosure": "The camera is used to scan QR codes that initiate a credential offer or credential request. No information about the images is stored, used for analytics, or shared.",
     "ToContinueUsing": "To continue using the Aries Bifold scan feature, please allow camera permissions.",
-    "Allow": "Allow",
     "OpenSettings": "Open settings",
   },
   "PINCreate": {
