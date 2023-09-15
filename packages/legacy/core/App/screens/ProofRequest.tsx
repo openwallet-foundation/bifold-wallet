@@ -203,7 +203,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         if (!format) {
           throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
         }
-
         return { format, credentials }
       } catch (err: unknown) {
         const error = new BifoldError(
@@ -233,6 +232,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )
         const attributes = processProofAttributes(format.request, credentials, credentialRecords)
         const predicates = processProofPredicates(format.request, credentials, credentialRecords)
+        console.warn(JSON.stringify(attributes))
         setRetrievedCredentials(proofFormat)
 
         const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
@@ -359,7 +359,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     if (credDefId) {
       return getCredentialInfo(credDefId).some((credInfo) => credInfo.credentialDefinitionId === credDefId)
     }
-
     return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
 
