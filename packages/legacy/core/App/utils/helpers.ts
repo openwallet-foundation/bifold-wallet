@@ -360,14 +360,12 @@ export const processProofAttributes = (
       )
     }
     let revoked = false
-    let revocationDate = undefined
     let credExchangeRecord = undefined
     if (credential) {
       credExchangeRecord = credentialRecords?.filter(
         (record) => record.credentials[0]?.credentialRecordId === credential.credentialId
       )[0]
       revoked = credExchangeRecord?.revocationNotification !== undefined
-      revocationDate = credExchangeRecord?.revocationNotification?.revocationDate
     }
     const { name, names, non_revoked } = requestedProofAttributes[key]
 
@@ -387,17 +385,15 @@ export const processProofAttributes = (
       if (credential) {
         attributeValue = credential.credentialInfo.attributes[attributeName]
       }
-      console.warn(revocationDate)
       processedAttributes[credName].attributes?.push(
         new Attribute({
           revoked,
-          revocationDate,
+          credentialId: credential?.credentialId,
           name: attributeName,
           value: attributeValue,
           nonRevoked: non_revoked,
         })
       )
-      console.warn(processedAttributes[credName].attributes)
     }
   }
   return processedAttributes
