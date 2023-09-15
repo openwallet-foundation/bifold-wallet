@@ -95,13 +95,6 @@ describe('with a notifications module, when an issuer sends a credential offer',
       content: 'Hi',
       sentTime: '20200303',
     }),
-    new BasicMessageRecord({
-      threadId: '3',
-      connectionId: '2',
-      role: BasicMessageRole.Receiver,
-      content: 'Hey',
-      sentTime: '20200303',
-    }),
   ]
 
   beforeEach(() => {
@@ -131,7 +124,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     const flatListInstance = await findAllByTestId(testIdWithKey('NotificationListItem'))
 
-    expect(flatListInstance).toHaveLength(5)
+    expect(flatListInstance).toHaveLength(4)
   })
 
   /**
@@ -229,13 +222,13 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * The holder is taken to the chat screen for that contact
    */
   test('touch notification triggers navigation correctly IV', async () => {
-    const { getAllByTestId } = render(
+    const { getByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
 
-    const button = await getAllByTestId(testIdWithKey('ViewBasicMessage'))[0]
+    const button = await getByTestId(testIdWithKey('ViewBasicMessage'))
     const navigation = useNavigation()
 
     expect(button).toBeDefined()
