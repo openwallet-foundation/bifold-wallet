@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react-native'
+import { act, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import { LocalStorageKeys } from '../../App/constants'
@@ -26,7 +26,13 @@ jest.mock('@react-navigation/core', () => {
 })
 
 describe('Splash Screen', () => {
-  test('Renders default correctly', () => {
+  beforeAll(()=>{
+    jest.useFakeTimers()
+  })
+  afterAll(()=>{
+    jest.useRealTimers()
+  })
+  test('Renders default correctly', async () => {
     const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <AuthContext.Provider value={authContext}>
@@ -34,7 +40,7 @@ describe('Splash Screen', () => {
         </AuthContext.Provider>
       </ConfigurationContext.Provider>
     )
-
+    await act(()=>{ jest.runAllTimers() })
     expect(tree).toMatchSnapshot()
   })
 
@@ -95,7 +101,7 @@ describe('Splash Screen', () => {
         </StoreProvider>
       )
     })
-
+    await act(()=>{ jest.runAllTimers() })
     expect(mockedDispatch).toHaveBeenCalled()
   })
 })
