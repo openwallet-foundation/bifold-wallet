@@ -74,12 +74,31 @@ exports[`ListContacts Component Renders correctly 1`] = `
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           accessibilityLabel="ContactDetails.AContact"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
+          collapsable={false}
           focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
@@ -191,9 +210,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
                       "fontWeight": "normal",
                     }
                   }
-                >
-                  
-                </Text>
+                />
               </View>
             </View>
           </View>
@@ -209,12 +226,31 @@ exports[`ListContacts Component Renders correctly 1`] = `
         />
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           accessibilityLabel="ContactDetails.AContact"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
+          collapsable={false}
           focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
@@ -326,9 +362,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
                       "fontWeight": "normal",
                     }
                   }
-                >
-                  
-                </Text>
+                />
               </View>
             </View>
           </View>

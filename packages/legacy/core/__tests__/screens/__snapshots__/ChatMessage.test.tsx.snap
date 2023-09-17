@@ -57,6 +57,15 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
         }
       >
         <View
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
           accessible={true}
           focusable={false}
           onClick={[Function]}
@@ -104,6 +113,23 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.ViewOffer"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -115,7 +141,6 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -215,6 +240,15 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
         }
       >
         <View
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
           accessible={true}
           focusable={false}
           onClick={[Function]}
@@ -262,6 +296,23 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.ViewRequest"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -273,7 +324,6 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -373,6 +423,15 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
         }
       >
         <View
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
           accessible={true}
           focusable={false}
           onClick={[Function]}
@@ -420,6 +479,23 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.OpenPresentation"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -431,7 +507,6 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
