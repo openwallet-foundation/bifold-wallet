@@ -11,6 +11,7 @@ import { ProofExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useCredentials, useProofById } from '@aries-framework/react-hooks'
 import { Predicate, ProofCredentialItems } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
+import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
@@ -41,7 +42,6 @@ import { mergeAttributesAndPredicates, processProofAttributes, processProofPredi
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
-import moment from 'moment'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 type Fields = Record<string, AnonCredsRequestedAttributeMatch[] | AnonCredsRequestedPredicateMatch[]>
@@ -175,26 +175,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             // We should ignore the key, if the value is undefined. For now this is a workaround.
             ...(hasIndy
               ? {
-                indy: {
-                  // Setting `filterByNonRevocationRequirements` to `false` returns all
-                  // credentials even if they are revokable (and revoked). We need this to
-                  // be able to show why a proof cannot be satisfied. Otherwise we can only
-                  // show failure.
-                  filterByNonRevocationRequirements: false,
-                },
-              }
+                  indy: {
+                    // Setting `filterByNonRevocationRequirements` to `false` returns all
+                    // credentials even if they are revokable (and revoked). We need this to
+                    // be able to show why a proof cannot be satisfied. Otherwise we can only
+                    // show failure.
+                    filterByNonRevocationRequirements: false,
+                  },
+                }
               : {}),
 
             ...(hasAnonCreds
               ? {
-                anoncreds: {
-                  // Setting `filterByNonRevocationRequirements` to `false` returns all
-                  // credentials even if they are revokable (and revoked). We need this to
-                  // be able to show why a proof cannot be satisfied. Otherwise we can only
-                  // show failure.
-                  filterByNonRevocationRequirements: false,
-                },
-              }
+                  anoncreds: {
+                    // Setting `filterByNonRevocationRequirements` to `false` returns all
+                    // credentials even if they are revokable (and revoked). We need this to
+                    // be able to show why a proof cannot be satisfied. Otherwise we can only
+                    // show failure.
+                    filterByNonRevocationRequirements: false,
+                  },
+                }
               : {}),
           },
         })
@@ -238,24 +238,51 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         setRetrievedCredentials(proofFormat)
 
         // checks if any attribute is revoked and past the revocation interval from the proof
-        const revList = credentialRecords.map(cred => { return { id: cred.credentials.map(item => item.credentialRecordId), revocationDate: cred.revocationNotification?.revocationDate } })
-        const foundRevocationOffense = revList.some(item => {
-          const revDate = moment(item.revocationDate)
-          return item.id.some(id => {
-            return Object.keys(attributes).some(key => {
-              const dateIntervals = attributes[key].attributes?.filter(a => a.credentialId === id).map(a => { return { to: a.nonRevoked?.to !== undefined ? moment.unix(a.nonRevoked.to) : undefined, from: a.nonRevoked?.from !== undefined ? moment.unix(a.nonRevoked.from) : undefined } })
-              return dateIntervals?.some(inter => (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate))
-            })
-          })
-        }) || revList.some(item => {
-          const revDate = moment(item.revocationDate)
-          return item.id.some(id => {
-            return Object.keys(predicates).some(key => {
-              const dateIntervals = predicates[key].predicates?.filter(a => a.credentialId === id).map(a => { return { to: a.nonRevoked?.to !== undefined ? moment.unix(a.nonRevoked.to) : undefined, from: a.nonRevoked?.from !== undefined ? moment.unix(a.nonRevoked.from) : undefined } })
-              return dateIntervals?.some(inter => (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate))
-            })
-          })
+        const revList = credentialRecords.map((cred) => {
+          return {
+            id: cred.credentials.map((item) => item.credentialRecordId),
+            revocationDate: cred.revocationNotification?.revocationDate,
+          }
         })
+        const foundRevocationOffense =
+          revList.some((item) => {
+            const revDate = moment(item.revocationDate)
+            return item.id.some((id) => {
+              return Object.keys(attributes).some((key) => {
+                const dateIntervals = attributes[key].attributes
+                  ?.filter((attr) => attr.credentialId === id)
+                  .map((attr) => {
+                    return {
+                      to: attr.nonRevoked?.to !== undefined ? moment.unix(attr.nonRevoked.to) : undefined,
+                      from: attr.nonRevoked?.from !== undefined ? moment.unix(attr.nonRevoked.from) : undefined,
+                    }
+                  })
+                return dateIntervals?.some(
+                  (inter) =>
+                    (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate)
+                )
+              })
+            })
+          }) ||
+          revList.some((item) => {
+            const revDate = moment(item.revocationDate)
+            return item.id.some((id) => {
+              return Object.keys(predicates).some((key) => {
+                const dateIntervals = predicates[key].predicates
+                  ?.filter((pred) => pred.credentialId === id)
+                  .map((pred) => {
+                    return {
+                      to: pred.nonRevoked?.to !== undefined ? moment.unix(pred.nonRevoked.to) : undefined,
+                      from: pred.nonRevoked?.from !== undefined ? moment.unix(pred.nonRevoked.from) : undefined,
+                    }
+                  })
+                return dateIntervals?.some(
+                  (inter) =>
+                    (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate)
+                )
+              })
+            })
+          })
 
         setRevocationOffense(foundRevocationOffense)
 
@@ -348,34 +375,34 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
    */
   const evaluatePredicates =
     (credDefId?: string) =>
-      (proofCredentialItems: ProofCredentialItems): Predicate[] => {
-        const predicates = proofCredentialItems.predicates
+    (proofCredentialItems: ProofCredentialItems): Predicate[] => {
+      const predicates = proofCredentialItems.predicates
 
-        if (!predicates || predicates.length == 0) {
-          return []
-        }
-
-        if (credDefId && credDefId != proofCredentialItems.credDefId) {
-          return []
-        }
-
-        const credentialAttributes = getCredentialInfo(proofCredentialItems.credDefId).map((ci) => ci.attributes)
-
-        return predicates.map((predicate) => {
-          const { pType: pType, pValue: pValue, name: field } = predicate
-          let satisfied = false
-
-          if (field) {
-            const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
-
-            if (attribute && pValue) {
-              satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
-            }
-          }
-
-          return { ...predicate, satisfied }
-        })
+      if (!predicates || predicates.length == 0) {
+        return []
       }
+
+      if (credDefId && credDefId != proofCredentialItems.credDefId) {
+        return []
+      }
+
+      const credentialAttributes = getCredentialInfo(proofCredentialItems.credDefId).map((ci) => ci.attributes)
+
+      return predicates.map((predicate) => {
+        const { pType: pType, pValue: pValue, name: field } = predicate
+        let satisfied = false
+
+        if (field) {
+          const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
+
+          if (attribute && pValue) {
+            satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
+          }
+        }
+
+        return { ...predicate, satisfied }
+      })
+    }
 
   const hasAvailableCredentials = (credDefId?: string): boolean => {
     const fields = getCredentialsFields()

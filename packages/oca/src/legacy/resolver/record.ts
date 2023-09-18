@@ -98,4 +98,4 @@ export interface ProofCredentialPredicates {
   predicates?: Predicate[]
 }
 
-export interface ProofCredentialItems extends ProofCredentialAttributes, ProofCredentialPredicates { }
+export interface ProofCredentialItems extends ProofCredentialAttributes, ProofCredentialPredicates {}
