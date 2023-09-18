@@ -99,7 +99,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
         }
       >
         <View
-          accessibilityLabel="CameraDisclosure.Allow"
+          accessibilityLabel="Global.Continue"
           accessibilityRole="button"
           accessibilityState={
             Object {
@@ -125,7 +125,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
               "padding": 16,
             }
           }
-          testID="com.ariesbifold:id/Allow"
+          testID="com.ariesbifold:id/Continue"
         >
           <View
             style={
@@ -151,7 +151,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
                 ]
               }
             >
-              CameraDisclosure.Allow
+              Global.Continue
             </Text>
           </View>
         </View>
