@@ -19,7 +19,7 @@ function red(text) {
 }
 function run(command, cwd) {
   console.log(`cmd:\n  ${command}\n  cwd:${cwd}`)
-  //execSync(command, { stdio: 'inherit', cwd: cwd })
+  execSync(command, { stdio: 'inherit', cwd: cwd })
 }
 function mapPackages(jsonFile, section, aggregated) {
   const items = jsonFile[section]
@@ -147,8 +147,17 @@ function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
     }
   }
 }
-
-function syncPackageLock(sourcePackageJsonFilePath, destPackageJsonFilePath) {
+/**
+ *
+ * @param {Object} opts
+ * @param {string} opts.src
+ * @param {string} opts.dst
+ * @param {string} opts.fix
+ */
+function syncPackageLock(opts) {
+  const sourcePackageJsonFilePath = opts.src
+  const destPackageJsonFilePath = opts.dst
+  const fix = (opts?.fix || 'false') === 'true'
   const sourcePackageJsonFile = path.resolve(process.cwd(), sourcePackageJsonFilePath)
   const destPackageJsonFile = path.resolve(process.cwd(), destPackageJsonFilePath)
   const sourcePackageJsonFileDir = path.dirname(sourcePackageJsonFile)
@@ -198,6 +207,42 @@ function syncPackageLock(sourcePackageJsonFilePath, destPackageJsonFilePath) {
             `${dependencyName} mismatch: source is ${srcDependencyInfo.resolved}, target is ${dstDependencyInfo.resolved}`
           )
         )
+        if (fix) {
+          console.log('Fixing ...')
+          console.dir(dstDependencyInfo)
+          if (
+            dstDependencyInfo.source.length === 2 &&
+            dstDependencyInfo.source[0].section === 'devDependencies' &&
+            dstDependencyInfo.source[1].section === 'peerDependencies'
+          ) {
+            run(
+              `yarn add --dev --peer --exact --mode=skip-build ${dependencyName}@${srcDependencyInfo.resolved}`,
+              destPackageJsonFileDir
+            )
+          } else if (
+            dstDependencyInfo.source.length === 1 &&
+            dstDependencyInfo.source[0].section === 'devDependencies'
+          ) {
+            run(
+              `yarn add --dev --exact --mode=skip-build ${dependencyName}@${srcDependencyInfo.resolved}`,
+              destPackageJsonFileDir
+            )
+          } else if (
+            dstDependencyInfo.source.length === 1 &&
+            dstDependencyInfo.source[0].section === 'peerDependencies'
+          ) {
+            run(
+              `yarn add --peer --exact --mode=skip-build ${dependencyName}@${srcDependencyInfo.resolved}`,
+              destPackageJsonFileDir
+            )
+          } else if (dstDependencyInfo.source.length === 1 && dstDependencyInfo.source[0].section === 'dependencies') {
+            run(
+              `yarn add --exact --mode=skip-build ${dependencyName}@${srcDependencyInfo.resolved}`,
+              destPackageJsonFileDir
+            )
+          }
+          //execSync(`yarn add ${dependencyName} --json`, { cwd: destPackageJsonFileDir }).toString()
+        }
       } else {
         console.log(
           green(`${dependencyName} source: ${srcDependencyInfo.resolved} , target: ${dstDependencyInfo.resolved}`)
@@ -209,12 +254,33 @@ function syncPackageLock(sourcePackageJsonFilePath, destPackageJsonFilePath) {
 
 module.exports = {
   cli: (_args) => {
-    const args = _args.splice(2)
+    /** @type {string[]} */
+    let args = _args.splice(2)
     console.log(args)
-    if (args[0] === 'sync-package-json') {
+    const opt = {}
+    const cmd = args[0]
+    args.shift()
+    while (args.length > 0) {
+      const eq = args[0].indexOf('=')
+      if (args[0].startsWith('--')) {
+        if (eq > 0) {
+          const key = args[0].substring(2, eq)
+          const value = args[0].substring(eq + 1)
+          opt[key] = value
+        } else {
+          const key = args[0].substring(2)
+          const value = args[1]
+          opt[key] = value
+          args.shift()
+        }
+      }
+      //console.log(`${args[0]}    length ${args.length}`)
+      args.shift()
+    }
+    if (cmd === 'sync-package-json') {
       syncPackageJson(args[2], args[4])
-    } else if (args[0] === 'sync-package-lock') {
-      syncPackageLock(args[2], args[4])
+    } else if (cmd === 'sync-package-lock') {
+      syncPackageLock(opt)
     }
   },
 }
