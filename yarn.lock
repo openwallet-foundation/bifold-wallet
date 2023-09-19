@@ -2937,16 +2937,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@evilmartians/lefthook@npm:^1.2.2":
-  version: 1.4.11
-  resolution: "@evilmartians/lefthook@npm:1.4.11"
-  bin:
-    lefthook: bin/index.js
-  checksum: d17ffe468f88e94404a76a4e9e74df5a0f16e4b1511762268da00c5e5710f59911c19f9a8e2066f105f9124b1cf4da702d7396fc75f73c3e87026c016b7d4d16
-  conditions: (os=darwin | os=linux | os=win32) & (cpu=x64 | cpu=arm64 | cpu=ia32)
-  languageName: node
-  linkType: hard
-
 "@expo/react-native-action-sheet@npm:^3.6.0":
   version: 3.14.0
   resolution: "@expo/react-native-action-sheet@npm:3.14.0"
@@ -3189,41 +3179,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullboar/react-native-attestation@0.1.14, @fullboar/react-native-attestation@workspace:packages/react-native-attestation":
-  version: 0.0.0-use.local
-  resolution: "@fullboar/react-native-attestation@workspace:packages/react-native-attestation"
-  dependencies:
-    "@babel/core": ^7.18.5
-    "@babel/plugin-proposal-class-properties": ^7.17.12
-    "@babel/preset-env": ^7.18.2
-    "@babel/preset-react": ^7.17.12
-    "@babel/preset-typescript": ^7.17.12
-    "@commitlint/config-conventional": ^17.0.2
-    "@evilmartians/lefthook": ^1.2.2
-    "@react-native-community/eslint-config": ^3.0.2
-    "@release-it/conventional-changelog": ^5.0.0
-    "@types/jest": ^28.1.2
-    "@types/react": ~17.0.21
-    "@types/react-native": 0.70.0
-    commitlint: ^17.0.2
-    del-cli: ^5.0.0
-    eslint: ^8.4.1
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.0.0
-    jest: ^28.1.1
-    pod-install: ^0.1.0
-    prettier: ^2.0.5
-    react: 18.2.0
-    react-native: 0.72.4
-    react-native-builder-bob: ^0.21.3
-    release-it: ^15.0.0
-    turbo: ^1.10.7
-    typescript: ^5.0.2
+"@fullboar/react-native-attestation@npm:0.1.14":
+  version: 0.1.14
+  resolution: "@fullboar/react-native-attestation@npm:0.1.14::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40fullboar%2Freact-native-attestation%2F0.1.14%2Fbf24c51e48e8f1418ed7f6f8fe4e2bc1c330e441"
   peerDependencies:
     react: "*"
     react-native: "*"
-  languageName: unknown
-  linkType: soft
+  checksum: e3e1a0366ad0545db4490677dce7321bd5970e68e3fe053973045fa0e6365dfcd362f952df993d49b52530c9cb1edf8b2e81468009a7005cd29088a9b64bc3d6
+  languageName: node
+  linkType: hard
 
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
@@ -3377,6 +3341,41 @@ __metadata:
     lodash.startcase: ^4.4.0
     rimraf: ^5.0.0
     typescript: ^5.0.4
+  languageName: unknown
+  linkType: soft
+
+"@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation":
+  version: 0.0.0-use.local
+  resolution: "@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation"
+  dependencies:
+    "@babel/core": ^7.18.5
+    "@babel/plugin-proposal-class-properties": ^7.17.12
+    "@babel/preset-env": ^7.18.2
+    "@babel/preset-react": ^7.17.12
+    "@babel/preset-typescript": ^7.17.12
+    "@commitlint/config-conventional": ^17.0.2
+    "@react-native-community/eslint-config": ^3.0.2
+    "@release-it/conventional-changelog": ^5.0.0
+    "@types/jest": ^28.1.2
+    "@types/react": ~17.0.21
+    "@types/react-native": 0.70.0
+    commitlint: ^17.0.2
+    del-cli: ^5.0.0
+    eslint: ^8.4.1
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.0.0
+    jest: ^28.1.1
+    pod-install: ^0.1.0
+    prettier: ^2.0.5
+    react: 18.2.0
+    react-native: 0.72.4
+    react-native-builder-bob: ^0.21.3
+    release-it: ^15.0.0
+    turbo: ^1.10.7
+    typescript: ^5.0.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
   languageName: unknown
   linkType: soft
 
