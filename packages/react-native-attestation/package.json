@@ -1,6 +1,5 @@
 {
-  "name": "@fullboar/react-native-attestation",
-  "version": "0.1.14",
+  "name": "@hyperledger/aries-react-native-attestation",
   "description": "Mobile app attestation",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
