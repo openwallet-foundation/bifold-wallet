@@ -187,7 +187,7 @@ RCT_EXPORT_METHOD(sha256:(NSString *)stringToBeHashed
     resolve(result);
 }
 
-RCT_EXPORT_METHOD(appleAttestationAsBase64:(NSString *)keyId
+RCT_EXPORT_METHOD(appleAttestation:(NSString *)keyId
                   challenge:(NSString *)challenge
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)

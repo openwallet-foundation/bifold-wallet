@@ -34,11 +34,11 @@ export const sha256 = async (stringToHash: string): Promise<Buffer> => {
   return Buffer.from(bytes);
 };
 
-export const appleAttestationAsBase64 = async (
+export const appleAttestation = async (
   keyId: string,
   challenge: string
 ): Promise<Buffer> => {
-  const bytes: Uint8Array = await Attestation.appleAttestationAsBase64(
+  const bytes: Uint8Array = await Attestation.appleAttestation(
     keyId,
     challenge
   );
