@@ -84,7 +84,7 @@ const RootStack: React.FC = () => {
         const connectionRecord = await connectFromInvitation(deepLink, agent)
         navigation.navigate(Stacks.ConnectionStack as any, {
           screen: Screens.Connection,
-          params: { connectionId: connectionRecord.id },
+          params: { connectionId: connectionRecord?.connectionRecord?.id },
         })
       } catch {
         try {

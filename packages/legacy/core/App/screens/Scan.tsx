@@ -36,11 +36,23 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   const handleInvitation = async (value: string): Promise<void> => {
     try {
       const connectionRecord = await connectFromInvitation(value, agent)
-      navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-        screen: Screens.Connection,
-        params: { connectionId: connectionRecord.id },
-      })
+      if (connectionRecord?.connectionRecord?.id) {
+        // not connectionless
+        navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+          screen: Screens.Connection,
+          params: { connectionId: connectionRecord.connectionRecord.id },
+        })
+      } else {
+        //connectionless
+        //const invitation = await agent?.oob.parseInvitation(value)
+        navigation.navigate(Stacks.ConnectionStack as any, {
+          screen: Screens.Connection,
+          params: { threadId: connectionRecord?.outOfBandRecord.outOfBandInvitation.threadId },
+        })
+      }
     } catch (err: unknown) {
+      // [Error: Connection does not have an ID]
+      // [AriesFrameworkError: An out of band record with invitation 05fe3693-2c12-4165-a3b6-370280ccd43b has already been received. Invitations should have a unique id.]
       try {
         // if scanned value is json -> pass into AFJ as is
         const json = getJson(value)
