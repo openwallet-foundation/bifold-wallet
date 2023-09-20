@@ -109,6 +109,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           action: () => {
             navigation.navigate(Screens.NameWallet)
           },
+          accessibilityLabel: t('NameWallet.EditWalletName'),
           style: { color: ColorPallet.brand.primary },
         },
       },
@@ -255,6 +256,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <Icon
+            importantForAccessibility={'no-hide-descendants'}
             accessible={false}
             name={icon.name}
             size={icon.size ?? defaultIconSize}
@@ -267,7 +269,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         {iconRight && (
           <TouchableOpacity
             accessible={iconRight.action !== undefined}
-            accessibilityLabel={iconRight.action ? icon.accessibilityLabel : undefined}
+            accessibilityLabel={iconRight.action ? iconRight.accessibilityLabel : undefined}
             testID={testIdWithKey(`${title}Action`)}
             onPress={iconRight.action}
           >
@@ -282,6 +284,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     ) : (
       <View style={[styles.section, styles.sectionHeader]}>
         <Icon
+          importantForAccessibility={'no-hide-descendants'}
           accessible={false}
           name={icon.name}
           size={24}

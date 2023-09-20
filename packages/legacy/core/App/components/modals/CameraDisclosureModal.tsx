@@ -43,7 +43,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
     },
   })
 
-  const onAllowTouched = async () => {
+  const onContinueTouched = async () => {
     setRequestInProgress(true)
     const granted = await requestCameraUse()
     if (!granted) {
@@ -89,10 +89,10 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
         <View style={[styles.controlsContainer]}>
           <View style={styles.buttonContainer}>
             <Button
-              title={t('CameraDisclosure.Allow')}
-              accessibilityLabel={t('CameraDisclosure.Allow')}
-              testID={testIdWithKey('Allow')}
-              onPress={onAllowTouched}
+              title={t('Global.Continue')}
+              accessibilityLabel={t('Global.Continue')}
+              testID={testIdWithKey('Continue')}
+              onPress={onContinueTouched}
               buttonType={ButtonType.ModalPrimary}
               disabled={requestInProgress}
             />

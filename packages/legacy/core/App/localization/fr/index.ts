@@ -166,7 +166,6 @@ const translation = {
         "AllowCameraUse": "Autoriser l'utilisation de la caméra",
         "CameraDisclosure": "La caméra est utilisée pour capturer les codes QR qui initient une offre de justificatifs d'identité ou une demande de preuve. Aucune information de l'image n'est sauvegardée, utilisée pour les analyses, ou partagée.",
         "ToContinueUsing": "Pour continuer à utiliser la fonction de balayage du Portefeuille QC, autoriser l'utilisation de caméra.",
-        "Allow": "Autoriser",
         "OpenSettings": "Ourvir Paramètres",
     },
     "PINCreate": {
@@ -416,6 +415,7 @@ const translation = {
         "RejectThisProof?": "Rejeter cette preuve?",
         "AcceptingProof": "Acceptation de la preuve",
         "SuccessfullyAcceptedProof": "Preuve acceptée avec succès",
+        "SensitiveInformation": "This request is asking for sensitive information. (FR)",
         "RejectingProof": "Rejet de la preuve",
         "ProofAccepted": "Preuve acceptée",
         "ProofRejected": "Preuve rejetée",
@@ -534,6 +534,7 @@ const translation = {
         "EnableWalletNaming": "Enable wallet naming? (FR)",
         "ToggleWalletNaming": "Toggle wallet naming (FR)",
         "NameYourWallet": "Name your wallet (FR)",
+        "EditWalletName": "Edit wallet name (FR)",
         "ThisIsTheName": "This is the name people see when connecting with you. (FR)",
         "CharCountTitle": "Character count exceeded (FR)",
         "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count. (FR)",
