@@ -9,3 +9,6 @@ build
 lib/
 bifold-app/
 generate-app-package-json.js
+
+# packages
+packages/react-native-attestation/**/*.js

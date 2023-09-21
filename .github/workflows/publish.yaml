@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - 'packages/oca/**'
+      - 'packages/react-native-attestation/**'
   workflow_dispatch:
 env:
   NPM_PKG: '@hyperledger/aries-oca'

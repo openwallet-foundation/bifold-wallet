@@ -1,6 +1,9 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "packages": ["packages/oca"],
+  "packages": [
+    "packages/oca",
+    "packages/react-native-attestation"
+  ],
   "useWorkspaces": true,
   "npmClient": "yarn",
   "version": "0.0.0"
