@@ -160,7 +160,6 @@ const translation = {
     "AllowCameraUse": "Permitir uso da câmera",
     "CameraDisclosure": "A câmera é usada para escanear QR Codes para processamento imediato no dispositivo. Nenhuma informação sobre as imagens é armazenada, usada para análise, ou compartilhada.",
     "ToContinueUsing": "Para continuar usando a funcionalidade de scan da Aries Bifold, favor permitir o uso da câmera.",
-    "Allow": "Permitir",
     "OpenSettings": "Abrir as configurações",
   },
   "PINCreate": {
@@ -483,6 +482,7 @@ const translation = {
     "Notifications": "Notificações",
     "CredentialOffer": "Oferta de Credencial",
     "ProofRequest": "Requisição de Prova",
+    "ProofChangeCredential":"Choose a credential (PB)",
     "ProofRequestDetails": "Detalhes Da Solicitação De Comprovação",
     "ProofRequestAttributeDetails": "Atributos de Requisição de Prova",
     "ProofDetails": "Detalhes da prova",
@@ -511,6 +511,7 @@ const translation = {
     "EnableWalletNaming": "Habilitar nome da carteira?",
     "ToggleWalletNaming": "Alternar nome da carteira",
     "NameYourWallet": "Nome da sua carteira",
+    "EditWalletName": "Edit wallet name (PT-BR)",
     "ThisIsTheName": "Este é o nome que as pessoas verão quando se conectar a você.",
     "CharCountTitle": "Número de caracteres excedido",
     "CharCountDescription": "Voce excedeu o numer máximo de 50 caracteres. Por favor, reduza o número de caracteres.",

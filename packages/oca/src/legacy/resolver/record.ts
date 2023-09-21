@@ -79,7 +79,9 @@ export class Predicate extends Field {
 }
 
 export interface ProofCredentialAttributes {
+  altCredentials?: string[]
   credExchangeRecord?: CredentialExchangeRecord
+  credId: string
   credDefId?: string
   schemaId?: string
   credName: string
@@ -87,7 +89,9 @@ export interface ProofCredentialAttributes {
 }
 
 export interface ProofCredentialPredicates {
+  altCredentials?: string[]
   credExchangeRecord?: CredentialExchangeRecord
+  credId:string
   credDefId?: string
   schemaId?: string
   credName: string

@@ -13,7 +13,7 @@ import { Predicate, ProofCredentialItems } from '@hyperledger/aries-oca/build/le
 import { useIsFocused } from '@react-navigation/core'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -32,29 +32,28 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
+import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { getCredentialIdentifiers } from '../utils/credential'
-import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
+import { Fields, evaluatePredicates, getCredentialInfo, mergeAttributesAndPredicates, processProofAttributes, processProofPredicates, retrieveCredentialsForProof } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
+import { getAllCredentialsForProof } from '../hooks/proofs'
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
-type Fields = Record<string, AnonCredsRequestedAttributeMatch[] | AnonCredsRequestedPredicateMatch[]>
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   if (!route?.params) {
     throw new Error('ProofRequest route prams were not set properly')
   }
 
-  const { proofId } = route?.params
+  const { proofId, selectedCredentials } = route?.params
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertConnectedNetwork } = useNetwork()
-  const fullCredentials = useCredentials().records
   const proof = useProofById(proofId)
   const connection = proof?.connectionId ? useConnectionById(proof.connectionId) : undefined
   const proofConnectionLabel = connection?.theirLabel ?? proof?.connectionId ?? ''
@@ -68,9 +67,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
   const { enableTours: enableToursConfig, OCABundleResolver } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
+  const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [store, dispatch] = useStore()
+  const credProofPromise = getAllCredentialsForProof(proofId)
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
+
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -154,101 +156,41 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [])
 
-  useMemo(() => {
-    if (!(agent && proof)) {
-      return
-    }
+
+  useEffect(() => {
 
     setLoading(true)
-
-    const retrieveCredentialsForProof = async (proof: ProofExchangeRecord) => {
-      try {
-        const format = await agent.proofs.getFormatData(proof.id)
-        const hasAnonCreds = format.request?.anoncreds !== undefined
-        const hasIndy = format.request?.indy !== undefined
-        const credentials = await agent.proofs.getCredentialsForRequest({
-          proofRecordId: proof.id,
-          proofFormats: {
-            // FIXME: AFJ will try to use the format, even if the value is undefined (but the key is present)
-            // We should ignore the key, if the value is undefined. For now this is a workaround.
-            ...(hasIndy
-              ? {
-                  indy: {
-                    // Setting `filterByNonRevocationRequirements` to `false` returns all
-                    // credentials even if they are revokable (and revoked). We need this to
-                    // be able to show why a proof cannot be satisfied. Otherwise we can only
-                    // show failure.
-                    filterByNonRevocationRequirements: false,
-                  },
-                }
-              : {}),
-
-            ...(hasAnonCreds
-              ? {
-                  anoncreds: {
-                    // Setting `filterByNonRevocationRequirements` to `false` returns all
-                    // credentials even if they are revokable (and revoked). We need this to
-                    // be able to show why a proof cannot be satisfied. Otherwise we can only
-                    // show failure.
-                    filterByNonRevocationRequirements: false,
-                  },
-                }
-              : {}),
-          },
-        })
-        if (!credentials) {
-          throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
-        }
-
-        if (!format) {
-          throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
-        }
-
-        return { format, credentials }
-      } catch (err: unknown) {
-        const error = new BifoldError(
-          t('Error.Title1043'),
-          t('Error.Message1043'),
-          (err as Error)?.message ?? err,
-          1043
-        )
-        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-      }
-    }
-
-    retrieveCredentialsForProof(proof)
-      .then((retrieved) => retrieved ?? { format: undefined, credentials: undefined })
-      .then(({ format, credentials }) => {
-        if (!(format && credentials && fullCredentials)) {
-          return
-        }
-
-        const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
-        const reqCredIds = [
-          ...Object.keys(proofFormat?.attributes ?? {}).map((key) => proofFormat?.attributes[key][0]?.credentialId),
-          ...Object.keys(proofFormat?.predicates ?? {}).map((key) => proofFormat?.predicates[key][0]?.credentialId),
-        ]
-        const credentialRecords = fullCredentials.filter((record) =>
-          reqCredIds.includes(record.credentials[0]?.credentialRecordId)
-        )
-        const attributes = processProofAttributes(format.request, credentials, credentialRecords)
-        const predicates = processProofPredicates(format.request, credentials, credentialRecords)
-        setRetrievedCredentials(proofFormat)
-
-        const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
-        setProofItems(groupedProof)
+    credProofPromise?.then((value) => {
+      if (value) {
+        const { groupedProof, retrievedCredentials } = value
         setLoading(false)
-      })
-      .catch((err: unknown) => {
-        const error = new BifoldError(
-          t('Error.Title1026'),
-          t('Error.Message1026'),
-          (err as Error)?.message ?? err,
-          1026
-        )
-        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-      })
-  }, [])
+        setRetrievedCredentials(retrievedCredentials)
+        let credList: string[] = []
+        if (selectedCredentials) {
+          credList = selectedCredentials
+        } else {
+          // we only want one of each satisfying credential
+          groupedProof.forEach(item => {
+            const credId = item.altCredentials[0]
+            if (!credList.includes(credId)) {
+              credList.push(credId)
+            }
+          })
+        }
+        setActiveCreds(groupedProof.filter(item => credList.includes(item.credId)))
+        setProofItems(groupedProof)
+      }
+    }).catch((err: unknown) => {
+      const error = new BifoldError(
+        t('Error.Title1026'),
+        t('Error.Message1026'),
+        (err as Error)?.message ?? err,
+        1026
+      )
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    })
+
+  }, [selectedCredentials])
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
@@ -259,112 +201,35 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     // get oca bundle to see if we're presenting personally identifiable elements
-    proofItems.some(async (item) => {
-      if (!item || !item.credExchangeRecord) {
+    activeCreds.some(async (item) => {
+      if (!item || !(item.credDefId || item.schemaId)) {
         return false
       }
       const labels = (item.attributes ?? []).map((field) => field.label ?? field.name ?? '')
-      const credIds = getCredentialIdentifiers(item.credExchangeRecord)
-      const bundle = await OCABundleResolver.resolveAllBundles({ identifiers: credIds })
+      const bundle = await OCABundleResolver.resolveAllBundles({ identifiers: { credentialDefinitionId: item.credDefId, schemaId: item.schemaId } })
       const flaggedAttributes: string[] = (bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name)
       const foundPI = labels.some((label) => flaggedAttributes.includes(label))
       setContainsPI(foundPI)
       return foundPI
     })
-  }, [proofItems])
+  }, [activeCreds])
 
-  /**
-   * Retrieve current credentials info filtered by `credentialDefinitionId` if given.
-   * @param credDefId Credential Definition Id
-   * @returns Array of `AnonCredsCredentialInfo`
-   */
-  const getCredentialInfo = (credDefId?: string): AnonCredsCredentialInfo[] => {
-    const credentialInfo: AnonCredsCredentialInfo[] = []
-    const fields = getCredentialsFields()
 
-    Object.keys(fields).forEach((proofKey) => {
-      credentialInfo.push(...fields[proofKey].map((attr) => attr.credentialInfo))
-    })
 
-    return credDefId == undefined
-      ? credentialInfo
-      : credentialInfo.filter((cred) => cred.credentialDefinitionId === credDefId)
-  }
 
-  /**
-   * Evaluate if given attribute value satisfies the predicate.
-   * @param attribute Credential attribute value
-   * @param pValue Predicate value
-   * @param pType Predicate type ({@link AnonCredsPredicateType})
-   * @returns `true`if predicate is satisfied, otherwise `false`
-   */
-  const evaluateOperation = (attribute: number, pValue: number, pType: AnonCredsPredicateType): boolean => {
-    if (pType === '>=') {
-      return attribute >= pValue
-    }
-
-    if (pType === '>') {
-      return attribute > pValue
-    }
-
-    if (pType === '<=') {
-      return attribute <= pValue
-    }
-    if (pType === '<') {
-      return attribute < pValue
-    }
-
-    return false
-  }
-
-  /**
-   * Given proof credential items, evaluate and return its predicates, setting `satisfied` property.
-   * @param proofCredentialsItems
-   * @returns Array of evaluated predicates
-   */
-  const evaluatePredicates =
-    (credDefId?: string) =>
-    (proofCredentialItems: ProofCredentialItems): Predicate[] => {
-      const predicates = proofCredentialItems.predicates
-
-      if (!predicates || predicates.length == 0) {
-        return []
-      }
-
-      if (credDefId && credDefId != proofCredentialItems.credDefId) {
-        return []
-      }
-
-      const credentialAttributes = getCredentialInfo(proofCredentialItems.credDefId).map((ci) => ci.attributes)
-
-      return predicates.map((predicate) => {
-        const { pType: pType, pValue: pValue, name: field } = predicate
-        let satisfied = false
-
-        if (field) {
-          const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
-
-          if (attribute && pValue) {
-            satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
-          }
-        }
-
-        return { ...predicate, satisfied }
-      })
-    }
 
   const hasAvailableCredentials = (credDefId?: string): boolean => {
     const fields = getCredentialsFields()
 
     if (credDefId) {
-      return getCredentialInfo(credDefId).some((credInfo) => credInfo.credentialDefinitionId === credDefId)
+      return getCredentialInfo(credDefId, fields).some((credInfo) => credInfo.credentialDefinitionId === credDefId)
     }
 
-    return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
+    return !!retrievedCredentials && Object.values(fields).every((c) => c?.length > 0)
   }
 
-  const hasSatisfiedPredicates = (credDefId?: string) =>
-    proofItems.flatMap(evaluatePredicates(credDefId)).every((p) => p.satisfied)
+  const hasSatisfiedPredicates = (fields: Fields, credDefId?: string) =>
+    activeCreds.flatMap(evaluatePredicates(fields, credDefId)).every((p) => p.satisfied)
 
   const handleAcceptPress = async () => {
     try {
@@ -380,14 +245,27 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
       const formatToUse = format.request?.anoncreds ? 'anoncreds' : 'indy'
 
-      const automaticRequestedCreds =
-        retrievedCredentials &&
-        (await agent.proofs.selectCredentialsForRequest({
-          proofRecordId: proof.id,
-          proofFormats: {
-            [formatToUse]: {},
-          },
-        }))
+      // this is the best way to supply our desired credentials in the proof, otherwise it selects them automatically
+      const credObject = {
+        ...retrievedCredentials,
+        attributes: Object.keys(retrievedCredentials.attributes)
+          .map(key => {
+            return {
+              [key]: retrievedCredentials.attributes[key]
+                .find(cred => activeCreds.map(item => item.credId).includes(cred.credentialId))
+            }
+          }).reduce((prev, current) => { return { ...prev, ...current } }),
+        predicates: Object.keys(retrievedCredentials.predicates)
+          .map(key => {
+            return {
+              [key]: retrievedCredentials.predicates[key]
+                .find(cred => activeCreds.map(item => item.credId).includes(cred.credentialId))
+            }
+          }).reduce((prev, current) => { return { ...prev, ...current } }, {}),
+        selfAttestedAttributes: {}
+      }
+      const automaticRequestedCreds = { proofFormats: { [formatToUse]: { ...credObject } } }
+
 
       if (!automaticRequestedCreds) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
@@ -440,7 +318,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
-              {!hasAvailableCredentials() || !hasSatisfiedPredicates() ? (
+              {!hasAvailableCredentials() || !hasSatisfiedPredicates(getCredentialsFields()) ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon
                     style={{ marginLeft: -2, marginRight: 10 }}
@@ -448,7 +326,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     color={ListItems.proofIcon.color}
                     size={ListItems.proofIcon.fontSize}
                   />
-                  {hasSatisfiedPredicates() ? (
+                  {hasSatisfiedPredicates(getCredentialsFields()) ? (
                     <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                       <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
                       {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}
@@ -464,8 +342,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
                   <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
-                  <Text style={[TextTheme.title]}>{` ${proofItems.length} `}</Text>
-                  <Text>{proofItems.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
+                  <Text style={[TextTheme.title]}>{` ${activeCreds?.length} `}</Text>
+                  <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
               )}
               {containsPI && (
@@ -506,6 +384,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     )
   }
 
+  const handleAltCredChange = (altCredentials: string[]) => {
+    navigation.getParent()?.navigate(Stacks.ProofRequestsStack, { screen: Screens.ProofChangeCredential, params: { altCredentials, proofId, selectedCredentials: selectedCredentials ?? activeCreds.map(item => item.credId) } })
+  }
+
   const proofPageFooter = () => {
     return (
       <View style={[styles.pageFooter, styles.pageMargin]}>
@@ -519,7 +401,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             testID={testIdWithKey('Share')}
             buttonType={ButtonType.Primary}
             onPress={handleAcceptPress}
-            disabled={!hasAvailableCredentials() || !hasSatisfiedPredicates()}
+            disabled={!hasAvailableCredentials() || !hasSatisfiedPredicates(getCredentialsFields())}
           />
         </View>
         <View style={styles.footerButton}>
@@ -534,26 +416,33 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       </View>
     )
   }
+  // FIXME: (WK) we need to have all creds in the cred list otherwise react will complain that the order of hooks changes. Solution it to add all creds to flatlist but only display selection
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <View style={styles.pageContent}>
         <FlatList
-          data={proofItems}
+          data={proofItems ?? []}
           ListHeaderComponent={proofPageHeader}
           ListFooterComponent={proofPageFooter}
           renderItem={({ item }) => {
             return (
-              <View style={{ marginTop: 10, marginHorizontal: 20 }}>
-                <CredentialCard
-                  credential={item.credExchangeRecord}
-                  credDefId={item.credDefId}
-                  schemaId={item.schemaId}
-                  displayItems={[...(item.attributes ?? []), ...evaluatePredicates(item.credDefId)(item)]}
-                  credName={item.credName}
-                  existsInWallet={hasAvailableCredentials(item.credDefId)}
-                  satisfiedPredicates={hasSatisfiedPredicates(item.credDefId)}
-                  proof
-                ></CredentialCard>
+              <View>
+                {loading || !activeCreds.map(cred => cred.credId).includes(item.credId) ? null : (
+                  <View style={{ marginTop: 10, marginHorizontal: 20, }}>
+                    <CredentialCard
+                      credential={item.credExchangeRecord}
+                      credDefId={item.credDefId}
+                      schemaId={item.schemaId}
+                      displayItems={[...(item.attributes ?? []), ...evaluatePredicates(getCredentialsFields(), item.credDefId)(item)]}
+                      credName={item.credName}
+                      existsInWallet={hasAvailableCredentials(item.credDefId)}
+                      satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credDefId)}
+                      hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
+                      handleAltCredChange={(item.altCredentials && item.altCredentials.length > 1) ? () => { handleAltCredChange(item.altCredentials, item.credId) } : undefined}
+                      proof={true}
+                    ></CredentialCard>
+                  </View>
+                )}
               </View>
             )
           }}

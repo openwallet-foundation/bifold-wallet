@@ -166,7 +166,6 @@ const translation = {
     "AllowCameraUse": "Allow camera use",
     "CameraDisclosure": "The camera is used to scan QR codes that initiate a credential offer or credential request. No information about the images is stored, used for analytics, or shared.",
     "ToContinueUsing": "To continue using the Aries Bifold scan feature, please allow camera permissions.",
-    "Allow": "Allow",
     "OpenSettings": "Open settings",
   },
   "PINCreate": {
@@ -510,6 +509,7 @@ const translation = {
     "CredentialDetails": "Credential Details",
     "Notifications": "Notifications",
     "CredentialOffer": "Credential Offer",
+    "ProofChangeCredential":"Choose a credential",
     "ProofRequest": "Proof Request",
     "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",
@@ -546,6 +546,7 @@ const translation = {
     "EnableWalletNaming": "Enable wallet naming?",
     "ToggleWalletNaming": "Toggle wallet naming",
     "NameYourWallet": "Name your wallet",
+    "EditWalletName": "Edit wallet name",
     "ThisIsTheName": "This is the name people see when connecting with you.",
     "CharCountTitle": "Character count exceeded",
     "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count.",

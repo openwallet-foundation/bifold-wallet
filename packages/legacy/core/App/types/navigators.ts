@@ -30,6 +30,7 @@ export enum Screens {
   UseBiometry = 'Use Biometry',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
+  ProofChangeCredential = 'Choose a credential',
   ProofRequests = 'Proof Requests',
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
@@ -103,6 +104,7 @@ export type ProofRequestsStackParams = {
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean; senderReview?: boolean }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
   [Screens.ProofRequestUsageHistory]: { templateId: string }
+  [Screens.ProofChangeCredential]: { altCredentials: string[], proofId: string, selectedCredentials: string[] }
 }
 
 export type CredentialStackParams = {
@@ -135,7 +137,7 @@ export type SettingStackParams = {
 export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
-  [Screens.ProofRequest]: { proofId: string }
+  [Screens.ProofRequest]: { proofId: string, selectedCredentials?: string[] }
   [Screens.CustomNotification]: undefined
   [Screens.ProofDetails]: { recordId: string }
 }
