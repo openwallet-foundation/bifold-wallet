@@ -8,7 +8,6 @@ export interface FieldParams {
   encoding?: string
   mimeType?: string
   revoked?: boolean
-  revocationDate?: string
   credentialId?: string
   label?: string
   restrictions?: AnonCredsProofRequestRestriction[]
@@ -34,7 +33,6 @@ export class Field {
   public encoding?: string
   public mimeType?: string
   public revoked?: boolean
-  public revocationDate?: string
   public credentialId?: string
   public label?: string
   public restrictions?: AnonCredsProofRequestRestriction[]
@@ -47,7 +45,6 @@ export class Field {
     this.encoding = params.encoding
     this.mimeType = params.mimeType
     this.revoked = params.revoked
-    this.revocationDate = params.revocationDate
     this.credentialId = params.credentialId
     this.label = params.label
     this.restrictions = params.restrictions
@@ -84,7 +81,6 @@ export class Predicate extends Field {
 export interface ProofCredentialAttributes {
   credExchangeRecord?: CredentialExchangeRecord
   credDefId?: string
-  reqNonRevoked?: AnonCredsNonRevokedInterval
   schemaId?: string
   credName: string
   attributes?: Attribute[]

@@ -7,9 +7,14 @@ import {
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@aries-framework/anoncreds'
-import { ProofExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useCredentials, useProofById } from '@aries-framework/react-hooks'
-import { Predicate, ProofCredentialItems } from '@hyperledger/aries-oca/build/legacy'
+import {
+  Predicate,
+  ProofCredentialAttributes,
+  ProofCredentialItems,
+  ProofCredentialPredicates,
+} from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
@@ -156,6 +161,39 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [])
 
+  const containsRevokedCreds = (
+    credExRecords: CredentialExchangeRecord[],
+    fields: {
+      [key: string]: ProofCredentialAttributes & ProofCredentialPredicates
+    }
+  ) => {
+    const revList = credExRecords.map((cred) => {
+      return {
+        id: cred.credentials.map((item) => item.credentialRecordId),
+        revocationDate: cred.revocationNotification?.revocationDate,
+      }
+    })
+
+    return revList.some((item) => {
+      const revDate = moment(item.revocationDate)
+      return item.id.some((id) => {
+        return Object.keys(fields).some((key) => {
+          const dateIntervals = ((fields[key].attributes ?? fields[key].predicates) as any[])
+            ?.filter((attr: any) => attr.credentialId === id)
+            .map((attr: any) => {
+              return {
+                to: attr.nonRevoked?.to !== undefined ? moment.unix(attr.nonRevoked.to) : undefined,
+                from: attr.nonRevoked?.from !== undefined ? moment.unix(attr.nonRevoked.from) : undefined,
+              }
+            })
+          return dateIntervals?.some(
+            (inter: any) =>
+              (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate)
+          )
+        })
+      })
+    })
+  }
   useMemo(() => {
     if (!(agent && proof)) {
       return
@@ -237,52 +275,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
         setRetrievedCredentials(proofFormat)
 
-        // checks if any attribute is revoked and past the revocation interval from the proof
-        const revList = credentialRecords.map((cred) => {
-          return {
-            id: cred.credentials.map((item) => item.credentialRecordId),
-            revocationDate: cred.revocationNotification?.revocationDate,
-          }
-        })
         const foundRevocationOffense =
-          revList.some((item) => {
-            const revDate = moment(item.revocationDate)
-            return item.id.some((id) => {
-              return Object.keys(attributes).some((key) => {
-                const dateIntervals = attributes[key].attributes
-                  ?.filter((attr) => attr.credentialId === id)
-                  .map((attr) => {
-                    return {
-                      to: attr.nonRevoked?.to !== undefined ? moment.unix(attr.nonRevoked.to) : undefined,
-                      from: attr.nonRevoked?.from !== undefined ? moment.unix(attr.nonRevoked.from) : undefined,
-                    }
-                  })
-                return dateIntervals?.some(
-                  (inter) =>
-                    (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate)
-                )
-              })
-            })
-          }) ||
-          revList.some((item) => {
-            const revDate = moment(item.revocationDate)
-            return item.id.some((id) => {
-              return Object.keys(predicates).some((key) => {
-                const dateIntervals = predicates[key].predicates
-                  ?.filter((pred) => pred.credentialId === id)
-                  .map((pred) => {
-                    return {
-                      to: pred.nonRevoked?.to !== undefined ? moment.unix(pred.nonRevoked.to) : undefined,
-                      from: pred.nonRevoked?.from !== undefined ? moment.unix(pred.nonRevoked.from) : undefined,
-                    }
-                  })
-                return dateIntervals?.some(
-                  (inter) =>
-                    (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate)
-                )
-              })
-            })
-          })
+          containsRevokedCreds(credentialRecords, attributes) || containsRevokedCreds(credentialRecords, predicates)
 
         setRevocationOffense(foundRevocationOffense)
 
