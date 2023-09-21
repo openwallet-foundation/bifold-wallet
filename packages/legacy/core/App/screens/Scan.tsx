@@ -35,19 +35,18 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
 
   const handleInvitation = async (value: string): Promise<void> => {
     try {
-      const connectionRecord = await connectFromInvitation(value, agent)
-      if (connectionRecord?.connectionRecord?.id) {
+      const receivedInvitation = await connectFromInvitation(value, agent)
+      if (receivedInvitation?.connectionRecord?.id) {
         // not connectionless
         navigation.getParent()?.navigate(Stacks.ConnectionStack, {
           screen: Screens.Connection,
-          params: { connectionId: connectionRecord.connectionRecord.id },
+          params: { connectionId: receivedInvitation.connectionRecord.id },
         })
       } else {
         //connectionless
-        //const invitation = await agent?.oob.parseInvitation(value)
         navigation.navigate(Stacks.ConnectionStack as any, {
           screen: Screens.Connection,
-          params: { threadId: connectionRecord?.outOfBandRecord.outOfBandInvitation.threadId },
+          params: { threadId: receivedInvitation?.outOfBandRecord.outOfBandInvitation.threadId },
         })
       }
     } catch (err: unknown) {
