@@ -367,7 +367,7 @@ export const processProofAttributes = (
       )[0]
       revoked = credExchangeRecord?.revocationNotification !== undefined
     }
-    const { name, names } = requestedProofAttributes[key]
+    const { name, names, non_revoked } = requestedProofAttributes[key]
 
     for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
       if (!processedAttributes[credName]) {
@@ -388,8 +388,10 @@ export const processProofAttributes = (
       processedAttributes[credName].attributes?.push(
         new Attribute({
           revoked,
+          credentialId: credential?.credentialId,
           name: attributeName,
           value: attributeValue,
+          nonRevoked: non_revoked,
         })
       )
     }
