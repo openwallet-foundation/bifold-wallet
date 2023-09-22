@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import { ProofRequestTemplate } from '../../verifier'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
@@ -13,10 +11,8 @@ export const useTemplates = (): Array<ProofRequestTemplate> => {
 export const useTemplate = (templateId: string): ProofRequestTemplate | undefined => {
   const { proofRequestTemplates } = useConfiguration()
   const [store] = useStore()
-  return useMemo(
-    () =>
-      proofRequestTemplates &&
-      proofRequestTemplates(store.preferences.acceptDevCredentials).find((template) => template.id === templateId),
-    [templateId]
+  return (
+    proofRequestTemplates &&
+    proofRequestTemplates(store.preferences.acceptDevCredentials).find((template) => template.id === templateId)
   )
 }
