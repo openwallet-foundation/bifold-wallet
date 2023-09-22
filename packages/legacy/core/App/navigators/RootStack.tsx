@@ -70,6 +70,15 @@ const RootStack: React.FC = () => {
   // handle deeplink events
   useEffect(() => {
     async function handleDeepLink(deepLink: string) {
+      // If it's just the general link with no params, set link inactive and do nothing
+      if (deepLink.endsWith('//')) {
+        dispatch({
+          type: DispatchAction.ACTIVE_DEEP_LINK,
+          payload: [undefined],
+        })
+        return
+      }
+
       try {
         // Try connection based
         const connectionRecord = await connectFromInvitation(deepLink, agent)
@@ -102,6 +111,7 @@ const RootStack: React.FC = () => {
         payload: [undefined],
       })
     }
+
     if (agent && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
       handleDeepLink(state.deepLink.activeDeepLink)
     }
