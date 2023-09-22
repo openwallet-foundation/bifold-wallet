@@ -24,13 +24,10 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
     throw new Error('Change credential route params were not set properly')
   }
   const proofId = route.params.proofId
-  const fullCredentials = useCredentials().records
   const altCredentials = route.params.altCredentials
   const selectedCredentials = route.params.selectedCredentials
-  const proof = useProofById(proofId)
   const { ColorPallet, TextTheme } = useTheme()
   const { t } = useTranslation()
-  const { agent } = useAgent()
   const [loading, setLoading] = useState(false)
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
@@ -78,8 +75,26 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
       if (value) {
         const { groupedProof, retrievedCredentials } = value
         setLoading(false)
-        setRetrievedCredentials(retrievedCredentials)
-        setProofItems(groupedProof.filter((proof) => altCredentials.includes(proof.credId)))
+        const activeCreds = groupedProof.filter((proof) => altCredentials.includes(proof.credId))
+        const credList = activeCreds.map(cred => cred.credId)
+        const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials ?
+          {
+            ...retrievedCredentials,
+            attributes: Object.keys(retrievedCredentials.attributes).map(key => { return { [key]: retrievedCredentials.attributes[key].filter(attr => credList.includes(attr.credentialId)) } }).reduce((prev, curr) => {
+              return {
+                ...prev,
+                ...curr
+              }
+            }, {}),
+            predicates: Object.keys(retrievedCredentials.predicates).map(key => { return { [key]: retrievedCredentials.predicates[key].filter(attr => credList.includes(attr.credentialId)) } }).reduce((prev, curr) => {
+              return {
+                ...prev,
+                ...curr
+              }
+            }, {})
+          } : undefined
+        setRetrievedCredentials(selectRetrievedCredentials)
+        setProofItems(activeCreds)
       }
     })
       .catch((err: unknown) => {
@@ -101,7 +116,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
             <RecordLoading />
           </View>
         ) : (
-          <Text style={TextTheme.normal}>You have multiple credentials to choose from:</Text>
+          <Text style={TextTheme.normal}>{t('ProofRequest.MultipleCredentials')}</Text>
         )}
       </View>
     )
@@ -117,6 +132,8 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
       },
     })
   }
+  const hasSatisfiedPredicates = (fields: Fields, credId?: string) =>
+    proofItems.flatMap(item => evaluatePredicates(fields, credId)(item)).every((p) => p.satisfied)
 
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
@@ -136,11 +153,11 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                   schemaId={item.schemaId}
                   displayItems={[
                     ...(item.attributes ?? []),
-                    ...evaluatePredicates(getCredentialsFields(), item.credDefId)(item),
+                    ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                   ]}
                   credName={item.credName}
                   existsInWallet={true}
-                  satisfiedPredicates={true}
+                  satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                   proof={true}
                 ></CredentialCard>
               </TouchableOpacity>

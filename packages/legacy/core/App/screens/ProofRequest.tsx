@@ -67,7 +67,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
-  const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
@@ -181,7 +180,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       const revDate = moment(item.revocationDate)
       return item.id.some((id) => {
         return Object.keys(fields).some((key) => {
-          
+
           const dateIntervals = fields[key]
             ?.filter((attr) => attr.credentialId === id)
             .map((attr) => {
@@ -207,7 +206,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       if (value) {
         const { groupedProof, retrievedCredentials, fullCredentials } = value
         setLoading(false)
-        setRetrievedCredentials(retrievedCredentials)
         let credList: string[] = []
         if (selectedCredentials) {
           credList = selectedCredentials
@@ -220,9 +218,27 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             }
           })
         }
+
+        const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials ?
+          {
+            ...retrievedCredentials,
+            attributes: Object.keys(retrievedCredentials.attributes).map(key => { return { [key]: retrievedCredentials.attributes[key].filter(attr=>credList.includes(attr.credentialId)) } }).reduce((prev, curr) => {
+              return {
+                ...prev,
+                ...curr
+              }
+            }, {}),
+            predicates: Object.keys(retrievedCredentials.predicates).map(key => { return { [key]: retrievedCredentials.predicates[key].filter(attr=>credList.includes(attr.credentialId)) } }).reduce((prev, curr) => {
+              return {
+                ...prev,
+                ...curr
+              }
+            }, {})
+          } : undefined
+        setRetrievedCredentials(selectRetrievedCredentials)
+
         const activeCreds = groupedProof.filter(item => credList.includes(item.credId))
         setActiveCreds(activeCreds)
-        setProofItems(groupedProof)
 
         const unpackCredToField = (credentials: (ProofCredentialAttributes & ProofCredentialPredicates)[]): { [key: string]: Attribute[] & Predicate[] } => {
           return credentials.reduce((prev, current) => {
@@ -273,17 +289,18 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
 
 
-  const hasAvailableCredentials = (credDefId?: string): boolean => {
+  const hasAvailableCredentials = (credId?: string): boolean => {
     const fields = getCredentialsFields()
 
-    if (credDefId) {
-      return getCredentialInfo(credDefId, fields).some((credInfo) => credInfo.credentialDefinitionId === credDefId)
+    if (credId) {
+      return getCredentialInfo(credId, fields).some((credInfo) => credInfo.credentialId === credId)
     }
     return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
 
-  const hasSatisfiedPredicates = (fields: Fields, credDefId?: string) =>
-    activeCreds.flatMap(evaluatePredicates(fields, credDefId)).every((p) => p.satisfied)
+  const hasSatisfiedPredicates = (fields: Fields, credId?: string) => 
+    activeCreds.flatMap(item => evaluatePredicates(fields, credId)(item)).every((p) => p.satisfied)
+
 
   const handleAcceptPress = async () => {
     try {
@@ -475,22 +492,22 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <View style={styles.pageContent}>
         <FlatList
-          data={proofItems ?? []}
+          data={activeCreds ?? []}
           ListHeaderComponent={proofPageHeader}
           ListFooterComponent={proofPageFooter}
           renderItem={({ item }) => {
             return (
               <View>
-                {loading || !activeCreds.map(cred => cred.credId).includes(item.credId) ? null : (
+                {loading ? null : (
                   <View style={{ marginTop: 10, marginHorizontal: 20, }}>
                     <CredentialCard
                       credential={item.credExchangeRecord}
                       credDefId={item.credDefId}
                       schemaId={item.schemaId}
-                      displayItems={[...(item.attributes ?? []), ...evaluatePredicates(getCredentialsFields(), item.credDefId)(item)]}
+                      displayItems={[...(item.attributes ?? []), ...evaluatePredicates(getCredentialsFields(), item.credId)(item)]}
                       credName={item.credName}
-                      existsInWallet={hasAvailableCredentials(item.credDefId)}
-                      satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credDefId)}
+                      existsInWallet={hasAvailableCredentials(item.credId)}
+                      satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                       hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
                       handleAltCredChange={(item.altCredentials && item.altCredentials.length > 1) ? () => { handleAltCredChange(item.altCredentials, item.credId) } : undefined}
                       proof={true}

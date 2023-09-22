@@ -345,16 +345,16 @@ export type Fields = Record<string, AnonCredsRequestedAttributeMatch[] | AnonCre
    * @param credDefId Credential Definition Id
    * @returns Array of `AnonCredsCredentialInfo`
    */
-export const getCredentialInfo = (credDefId: string, fields: Fields): AnonCredsCredentialInfo[] => {
+export const getCredentialInfo = (credId: string, fields: Fields): AnonCredsCredentialInfo[] => {
   const credentialInfo: AnonCredsCredentialInfo[] = []
 
   Object.keys(fields).forEach((proofKey) => {
     credentialInfo.push(...fields[proofKey].map((attr) => attr.credentialInfo))
   })
 
-  return credDefId == undefined
+  return !credId
     ? credentialInfo
-    : credentialInfo.filter((cred) => cred.credentialDefinitionId === credDefId)
+    : credentialInfo.filter((cred) => cred.credentialId === credId)
 }
 
 /**
@@ -389,19 +389,18 @@ const evaluateOperation = (attribute: number, pValue: number, pType: AnonCredsPr
  * @returns Array of evaluated predicates
  */
 export const evaluatePredicates =
-  (fields: Fields, credDefId?: string) =>
+  (fields: Fields, credId?: string) =>
     (proofCredentialItems: ProofCredentialItems): Predicate[] => {
       const predicates = proofCredentialItems.predicates
-
       if (!predicates || predicates.length == 0) {
         return []
       }
 
-      if (credDefId && credDefId != proofCredentialItems.credDefId || !proofCredentialItems.credDefId) {
+      if (credId && credId != proofCredentialItems.credId || !proofCredentialItems.credId) {
         return []
       }
 
-      const credentialAttributes = getCredentialInfo(proofCredentialItems.credDefId, fields).map((ci) => ci.attributes)
+      const credentialAttributes = getCredentialInfo(proofCredentialItems.credId, fields).map((ci) => ci.attributes)
 
       return predicates.map((predicate) => {
         const { pType: pType, pValue: pValue, name: field } = predicate
@@ -420,7 +419,7 @@ export const evaluatePredicates =
     }
 
 
-export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: ProofExchangeRecord, fullCredentials: CredentialExchangeRecord[], t: TFunction<"translation", undefined>, allCreds?: boolean, credPreference?: string[]) => {
+export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: ProofExchangeRecord, fullCredentials: CredentialExchangeRecord[], t: TFunction<"translation", undefined>) => {
   try {
     const format = await agent.proofs.getFormatData(proof.id)
     const hasAnonCreds = format.request?.anoncreds !== undefined
@@ -469,8 +468,8 @@ export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: Pro
 
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
 
-    const attributes = processProofAttributes(format.request, credentials, fullCredentials, allCreds, credPreference)
-    const predicates = processProofPredicates(format.request, credentials, fullCredentials, allCreds, credPreference)
+    const attributes = processProofAttributes(format.request, credentials, fullCredentials)
+    const predicates = processProofPredicates(format.request, credentials, fullCredentials)
 
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
     return { groupedProof: groupedProof, retrievedCredentials: proofFormat, fullCredentials }
@@ -489,8 +488,6 @@ export const processProofAttributes = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[],
-  allCreds?: boolean,
-  credPreference?: string[]
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
@@ -506,15 +503,7 @@ export const processProofAttributes = (
     const altCredentials = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn).map(cred => cred.credentialId)
 
     let credentialList = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn)
-    if (!allCreds) {
-      let cred = undefined
-      if (credPreference) {
-        cred = credentialList.find(cred => credPreference.includes(cred.credId)) ?? credentialList.shift()
-      } else {
-        cred = credentialList.shift()
-      }
-      credentialList = cred ? [cred] : [] as AnonCredsRequestedAttributeMatch[]
-    }
+
     //iterate over all credentials that satisfy the proof
     for (const credential of credentialList) {
 
@@ -577,8 +566,6 @@ export const processProofPredicates = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
   credentialRecords?: CredentialExchangeRecord[],
-  allCreds?: boolean,
-  credPreference?: string[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
@@ -594,15 +581,7 @@ export const processProofPredicates = (
     const altCredentials = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn).map(cred => cred.credentialId)
 
     let credentialList = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn)
-    if (!allCreds) {
-      let cred = undefined
-      if (credPreference) {
-        cred = credentialList.find(cred => credPreference.includes(cred.credId)) ?? credentialList.shift()
-      } else {
-        cred = credentialList.shift()
-      }
-      credentialList = cred ? [cred] : [] as AnonCredsRequestedAttributeMatch[]
-    }
+
     for (const credential of credentialList) {
 
       let revoked = false
@@ -615,7 +594,7 @@ export const processProofPredicates = (
       } else {
         continue
       }
-      const { credentialId, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
+      const { credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
       const { name, p_type: pType, p_value: pValue, non_revoked } = requestedProofPredicates[key]
 
       const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)

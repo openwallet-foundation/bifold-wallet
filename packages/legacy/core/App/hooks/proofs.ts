@@ -22,7 +22,7 @@ export const getAllCredentialsForProof = (proofId: string) => {
       if (!proof || !agent) {
         return
       }
-      return retrieveCredentialsForProof(agent, proof, fullCredentials, t, true)
+      return retrieveCredentialsForProof(agent, proof, fullCredentials, t)
     }, [proofId]
   )
 }

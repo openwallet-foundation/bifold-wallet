@@ -397,6 +397,7 @@ const translation = {
     "RejectThisProof?": "Rejeitar esta Requisição de Prova?",
     "DeclineThisProof?": "Recusar esta Requisição de Prova?",
     "AcceptingProof": "Aceitando Prova",
+    "MultipleCredentials": "You have multiple crdentials to choose from: (PB)",
     "SuccessfullyAcceptedProof": "Prova Aceita com Sucesso",
     "SensitiveInformation": "This request is asking for sensitive information. (PB)",
     "ProofRequestNotFound": "Requisição de Prova não encontrada.",
