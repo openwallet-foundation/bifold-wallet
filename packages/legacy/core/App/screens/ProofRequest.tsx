@@ -7,10 +7,17 @@ import {
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@aries-framework/anoncreds'
-import { ProofExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useCredentials, useProofById } from '@aries-framework/react-hooks'
-import { Predicate, ProofCredentialItems } from '@hyperledger/aries-oca/build/legacy'
+import {
+  Attribute,
+  Predicate,
+  ProofCredentialAttributes,
+  ProofCredentialItems,
+  ProofCredentialPredicates,
+} from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
+import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -58,6 +65,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const connection = proof?.connectionId ? useConnectionById(proof.connectionId) : undefined
   const proofConnectionLabel = connection?.theirLabel ?? proof?.connectionId ?? ''
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
+  const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -156,13 +164,48 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     }
   }, [])
 
+  const containsRevokedCreds = (
+    credExRecords: CredentialExchangeRecord[],
+    fields: {
+      [key: string]: Attribute[] & Predicate[]
+    }
+  ) => {
+    const revList = credExRecords.map((cred) => {
+      return {
+        id: cred.credentials.map((item) => item.credentialRecordId),
+        revocationDate: cred.revocationNotification?.revocationDate,
+      }
+    })
+
+    return revList.some((item) => {
+      const revDate = moment(item.revocationDate)
+      return item.id.some((id) => {
+        return Object.keys(fields).some((key) => {
+          
+          const dateIntervals = fields[key]
+            ?.filter((attr) => attr.credentialId === id)
+            .map((attr) => {
+              return {
+                to: attr.nonRevoked?.to !== undefined ? moment.unix(attr.nonRevoked.to) : undefined,
+                from: attr.nonRevoked?.from !== undefined ? moment.unix(attr.nonRevoked.from) : undefined,
+              }
+            })
+          return dateIntervals?.some(
+            (inter) =>
+              (inter.to !== undefined && inter.to > revDate) || (inter.from !== undefined && inter.from > revDate)
+          )
+        })
+      })
+    })
+  }
+
 
   useEffect(() => {
 
     setLoading(true)
     credProofPromise?.then((value) => {
       if (value) {
-        const { groupedProof, retrievedCredentials } = value
+        const { groupedProof, retrievedCredentials, fullCredentials } = value
         setLoading(false)
         setRetrievedCredentials(retrievedCredentials)
         let credList: string[] = []
@@ -177,8 +220,20 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             }
           })
         }
-        setActiveCreds(groupedProof.filter(item => credList.includes(item.credId)))
+        const activeCreds = groupedProof.filter(item => credList.includes(item.credId))
+        setActiveCreds(activeCreds)
         setProofItems(groupedProof)
+
+        const unpackCredToField = (credentials: (ProofCredentialAttributes & ProofCredentialPredicates)[]): { [key: string]: Attribute[] & Predicate[] } => {
+          return credentials.reduce((prev, current) => {
+            return { ...prev, [current.credId]: current.attributes ?? current.predicates ?? [] }
+          }, {})
+        }
+
+        const records = fullCredentials.filter(record => record.credentials.some(cred => credList.includes(cred.credentialRecordId)))
+        const foundRevocationOffense =
+          containsRevokedCreds(records, unpackCredToField(activeCreds)) || containsRevokedCreds(records, unpackCredToField(activeCreds))
+        setRevocationOffense(foundRevocationOffense)
       }
     }).catch((err: unknown) => {
       const error = new BifoldError(
@@ -224,8 +279,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     if (credDefId) {
       return getCredentialInfo(credDefId, fields).some((credInfo) => credInfo.credentialDefinitionId === credDefId)
     }
-
-    return !!retrievedCredentials && Object.values(fields).every((c) => c?.length > 0)
+    return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }
 
   const hasSatisfiedPredicates = (fields: Fields, credDefId?: string) =>
@@ -401,7 +455,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             testID={testIdWithKey('Share')}
             buttonType={ButtonType.Primary}
             onPress={handleAcceptPress}
-            disabled={!hasAvailableCredentials() || !hasSatisfiedPredicates(getCredentialsFields())}
+            disabled={!hasAvailableCredentials() || !hasSatisfiedPredicates(getCredentialsFields()) || revocationOffense}
           />
         </View>
         <View style={styles.footerButton}>

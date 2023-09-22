@@ -468,12 +468,12 @@ export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: Pro
     }
 
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
-    
+
     const attributes = processProofAttributes(format.request, credentials, fullCredentials, allCreds, credPreference)
     const predicates = processProofPredicates(format.request, credentials, fullCredentials, allCreds, credPreference)
 
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
-    return { groupedProof: groupedProof, retrievedCredentials: proofFormat }
+    return { groupedProof: groupedProof, retrievedCredentials: proofFormat, fullCredentials }
   } catch (err: unknown) {
     const error = new BifoldError(
       t('Error.Title1043'),
@@ -531,14 +531,14 @@ export const processProofAttributes = (
       let credExchangeRecord = undefined
       if (credential) {
         credExchangeRecord = credentialRecords?.find(
-          (record) => record.credentials.map(cred=>cred.credentialRecordId).includes(credential.credentialId)
+          (record) => record.credentials.map(cred => cred.credentialRecordId).includes(credential.credentialId)
         )
         revoked = credExchangeRecord?.revocationNotification !== undefined
-      }else{
+      } else {
         continue
       }
-      
-      const { name, names } = requestedProofAttributes[key]
+
+      const { name, names, non_revoked } = requestedProofAttributes[key]
 
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
         if (!processedAttributes[credential?.credentialId]) {
@@ -561,8 +561,10 @@ export const processProofAttributes = (
         processedAttributes[credential.credentialId].attributes?.push(
           new Attribute({
             revoked,
+            credentialId: credential.credentialId,
             name: attributeName,
             value: attributeValue,
+            nonRevoked: non_revoked
           })
         )
       }
@@ -607,14 +609,14 @@ export const processProofPredicates = (
       let credExchangeRecord = undefined
       if (credential) {
         credExchangeRecord = credentialRecords?.find(
-          (record) => record.credentials.map(cred=>cred.credentialRecordId).includes(credential.credentialId)
+          (record) => record.credentials.map(cred => cred.credentialRecordId).includes(credential.credentialId)
         )
         revoked = credExchangeRecord?.revocationNotification !== undefined
-      }else{
+      } else {
         continue
       }
       const { credentialId, credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
-      const { name, p_type: pType, p_value: pValue } = requestedProofPredicates[key]
+      const { name, p_type: pType, p_value: pValue, non_revoked } = requestedProofPredicates[key]
 
       const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)
 
@@ -630,7 +632,7 @@ export const processProofPredicates = (
         processedPredicates[credential.credentialId] = {
           altCredentials,
           credExchangeRecord,
-          credId: credential?.credentialId,
+          credId: credential.credentialId,
           schemaId,
           credDefId: credentialDefinitionId,
           credName: credName,
@@ -640,11 +642,12 @@ export const processProofPredicates = (
 
       processedPredicates[credential.credentialId].predicates?.push(
         new Predicate({
-          credentialId,
+          credentialId: credential?.credentialId,
           name,
           revoked,
           pValue,
           pType,
+          nonRevoked: non_revoked
         })
       )
     }
@@ -656,7 +659,7 @@ export const mergeAttributesAndPredicates = (
   attributes: { [key: string]: ProofCredentialAttributes },
   predicates: { [key: string]: ProofCredentialPredicates }
 ) => {
-  const merged = { ...attributes }
+  const merged: { [key: string]: ProofCredentialAttributes & ProofCredentialPredicates } = { ...attributes }
   for (const [key, predicate] of Object.entries(predicates)) {
     const existingEntry = merged[key]
     if (existingEntry) {

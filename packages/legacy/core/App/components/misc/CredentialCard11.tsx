@@ -365,7 +365,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           )}
           {!(item?.value || item?.pValue) ? null : (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {flaggedAttributes?.includes(label) && !allPI && proof && (
+              {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
                 <Icon
                   style={{ paddingTop: 2, paddingHorizontal: 2 }}
                   name="warning"
@@ -373,7 +373,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   size={ListItems.recordAttributeText.fontSize}
                 />
               )}
-              <AttributeValue warn={flaggedAttributes?.includes(label) && proof} value={value} />
+              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={value} />
             </View>
           )}
           {item?.satisfied != undefined && item?.satisfied === false ? (
@@ -525,7 +525,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               <Icon
                 size={0.7 * logoHeight}
                 style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
-                name="warning"
+                name={status === 'error' ? 'error' : 'warning'}
               />
             </View>
           ) : (
