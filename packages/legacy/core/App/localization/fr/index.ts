@@ -412,6 +412,7 @@ const translation = {
         "ProofRequest": "Demande de preuve",
         "RequestProcessing": "Juste un instant...",
         "OfferDelay": "Retard de l'offre",
+        "ChangeCredential": "Change credential (FR)",
         "RejectThisProof?": "Rejeter cette preuve?",
         "AcceptingProof": "Acceptation de la preuve",
         "MultipleCredentials": "You have multiple crdentials to choose from: (FR)",

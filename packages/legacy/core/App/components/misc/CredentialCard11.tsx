@@ -449,9 +449,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   <View>
                     <TouchableOpacity
                       onPress={handleAltCredChange}
+                      testID={testIdWithKey('changeCredential')}
                       style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
-                      <Text style={styles.credActionText}>Change credential</Text>
+                      <Text style={styles.credActionText}>{t('ProofRequest.ChangeCredential')}</Text>
                       <Icon
                         style={{ ...styles.credActionText, fontSize: styles.credActionText.fontSize + 5 }}
                         name="chevron-right"

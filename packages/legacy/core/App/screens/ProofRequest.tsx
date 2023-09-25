@@ -339,7 +339,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           })
           .reduce((prev, current) => {
             return { ...prev, ...current }
-          }),
+          }, {}),
         predicates: Object.keys(retrievedCredentials.predicates)
           .map((key) => {
             return {

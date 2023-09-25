@@ -394,6 +394,7 @@ const translation = {
     "ProofRequest": "Requisição de Prova",
     "RequestProcessing": "Só um momento...",
     "OfferDelay": "Atrasar oferta",
+    "ChangeCredential": "Change credential (PB)",
     "RejectThisProof?": "Rejeitar esta Requisição de Prova?",
     "DeclineThisProof?": "Recusar esta Requisição de Prova?",
     "AcceptingProof": "Aceitando Prova",

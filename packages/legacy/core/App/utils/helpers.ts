@@ -530,7 +530,7 @@ export const processProofPredicates = (
     return {}
   }
 
-  for (const key of Object.keys(requestedProofPredicates)) {
+  for (const key of Object.keys(retrievedCredentialPredicates)) {
     const altCredentials = [...(retrievedCredentialPredicates[key] ?? [])]
       .sort(credentialSortFn)
       .map((cred) => cred.credentialId)
