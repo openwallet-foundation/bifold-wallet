@@ -36,20 +36,18 @@ import { Buffer } from 'buffer'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
 import { Dispatch, ReactNode, SetStateAction } from 'react'
+import { TFunction } from 'react-i18next'
+import { DeviceEventEmitter } from 'react-native'
 
 import { EventTypes, domain } from '../constants'
 import { i18n } from '../localization/index'
 import { Role } from '../types/chat'
+import { BifoldError } from '../types/error'
 import { ChildFn } from '../types/tour'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 import { BifoldAgent } from './agent'
 import { parseCredDefFromId } from './cred-def'
-
-import { BifoldError } from '../types/error'
-
-import { DeviceEventEmitter } from 'react-native'
-import { TFunction } from 'react-i18next'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
@@ -418,71 +416,6 @@ export const evaluatePredicates =
     })
   }
 
-export const retrieveCredentialsForProof = async (
-  agent: BifoldAgent,
-  proof: ProofExchangeRecord,
-  fullCredentials: CredentialExchangeRecord[],
-  t: TFunction<'translation', undefined>
-) => {
-  try {
-    const format = await agent.proofs.getFormatData(proof.id)
-    const hasAnonCreds = format.request?.anoncreds !== undefined
-    const hasIndy = format.request?.indy !== undefined
-    const credentials = await agent.proofs.getCredentialsForRequest({
-      proofRecordId: proof.id,
-      proofFormats: {
-        // FIXME: AFJ will try to use the format, even if the value is undefined (but the key is present)
-        // We should ignore the key, if the value is undefined. For now this is a workaround.
-        ...(hasIndy
-          ? {
-              indy: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: false,
-              },
-            }
-          : {}),
-
-        ...(hasAnonCreds
-          ? {
-              anoncreds: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: false,
-              },
-            }
-          : {}),
-      },
-    })
-    if (!credentials) {
-      throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
-    }
-
-    if (!format) {
-      throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
-    }
-
-    if (!(format && credentials && fullCredentials)) {
-      return
-    }
-
-    const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
-
-    const attributes = processProofAttributes(format.request, credentials, fullCredentials)
-    const predicates = processProofPredicates(format.request, credentials, fullCredentials)
-
-    const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
-    return { groupedProof: groupedProof, retrievedCredentials: proofFormat, fullCredentials }
-  } catch (err: unknown) {
-    const error = new BifoldError(t('Error.Title1043'), t('Error.Message1043'), (err as Error)?.message ?? err, 1043)
-    DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-  }
-}
-
 export const processProofAttributes = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
@@ -562,6 +495,26 @@ export const processProofAttributes = (
   return processedAttributes
 }
 
+export const mergeAttributesAndPredicates = (
+  attributes: { [key: string]: ProofCredentialAttributes },
+  predicates: { [key: string]: ProofCredentialPredicates }
+) => {
+  const merged: { [key: string]: ProofCredentialAttributes & ProofCredentialPredicates } = { ...attributes }
+  for (const [key, predicate] of Object.entries(predicates)) {
+    const existingEntry = merged[key]
+    if (existingEntry) {
+      const mergedAltCreds = existingEntry.altCredentials?.filter((credId) =>
+        predicate.altCredentials?.includes(credId)
+      )
+      merged[key] = { ...existingEntry, ...predicate }
+      merged[key].altCredentials = mergedAltCreds
+    } else {
+      merged[key] = predicate
+    }
+  }
+  return merged
+}
+
 export const processProofPredicates = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
@@ -635,24 +588,69 @@ export const processProofPredicates = (
   return processedPredicates
 }
 
-export const mergeAttributesAndPredicates = (
-  attributes: { [key: string]: ProofCredentialAttributes },
-  predicates: { [key: string]: ProofCredentialPredicates }
+export const retrieveCredentialsForProof = async (
+  agent: BifoldAgent,
+  proof: ProofExchangeRecord,
+  fullCredentials: CredentialExchangeRecord[],
+  t: TFunction<'translation', undefined>
 ) => {
-  const merged: { [key: string]: ProofCredentialAttributes & ProofCredentialPredicates } = { ...attributes }
-  for (const [key, predicate] of Object.entries(predicates)) {
-    const existingEntry = merged[key]
-    if (existingEntry) {
-      const mergedAltCreds = existingEntry.altCredentials?.filter((credId) =>
-        predicate.altCredentials?.includes(credId)
-      )
-      merged[key] = { ...existingEntry, ...predicate }
-      merged[key].altCredentials = mergedAltCreds
-    } else {
-      merged[key] = predicate
+  try {
+    const format = await agent.proofs.getFormatData(proof.id)
+    const hasAnonCreds = format.request?.anoncreds !== undefined
+    const hasIndy = format.request?.indy !== undefined
+    const credentials = await agent.proofs.getCredentialsForRequest({
+      proofRecordId: proof.id,
+      proofFormats: {
+        // FIXME: AFJ will try to use the format, even if the value is undefined (but the key is present)
+        // We should ignore the key, if the value is undefined. For now this is a workaround.
+        ...(hasIndy
+          ? {
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
+          : {}),
+
+        ...(hasAnonCreds
+          ? {
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
+          : {}),
+      },
+    })
+    if (!credentials) {
+      throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
     }
+
+    if (!format) {
+      throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+    }
+
+    if (!(format && credentials && fullCredentials)) {
+      return
+    }
+
+    const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
+
+    const attributes = processProofAttributes(format.request, credentials, fullCredentials)
+    const predicates = processProofPredicates(format.request, credentials, fullCredentials)
+
+    const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
+    return { groupedProof: groupedProof, retrievedCredentials: proofFormat, fullCredentials }
+  } catch (err: unknown) {
+    const error = new BifoldError(t('Error.Title1043'), t('Error.Message1043'), (err as Error)?.message ?? err, 1043)
+    DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
   }
-  return merged
 }
 
 /**

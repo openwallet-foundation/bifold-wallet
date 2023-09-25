@@ -1,8 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import {
-  AnonCredsCredentialsForProofRequest,
-} from '@aries-framework/anoncreds'
+import { AnonCredsCredentialsForProofRequest } from '@aries-framework/anoncreds'
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import {
@@ -40,11 +38,7 @@ import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/na
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
-import {
-  Fields,
-  evaluatePredicates,
-  getCredentialInfo,
-} from '../utils/helpers'
+import { Fields, evaluatePredicates, getCredentialInfo } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -218,36 +212,36 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
           const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials
             ? {
-              ...retrievedCredentials,
-              attributes: Object.keys(retrievedCredentials.attributes)
-                .map((key) => {
-                  return {
-                    [key]: retrievedCredentials.attributes[key].filter((attr) =>
-                      credList.includes(attr.credentialId)
-                    ),
-                  }
-                })
-                .reduce((prev, curr) => {
-                  return {
-                    ...prev,
-                    ...curr,
-                  }
-                }, {}),
-              predicates: Object.keys(retrievedCredentials.predicates)
-                .map((key) => {
-                  return {
-                    [key]: retrievedCredentials.predicates[key].filter((attr) =>
-                      credList.includes(attr.credentialId)
-                    ),
-                  }
-                })
-                .reduce((prev, curr) => {
-                  return {
-                    ...prev,
-                    ...curr,
-                  }
-                }, {}),
-            }
+                ...retrievedCredentials,
+                attributes: Object.keys(retrievedCredentials.attributes)
+                  .map((key) => {
+                    return {
+                      [key]: retrievedCredentials.attributes[key].filter((attr) =>
+                        credList.includes(attr.credentialId)
+                      ),
+                    }
+                  })
+                  .reduce((prev, curr) => {
+                    return {
+                      ...prev,
+                      ...curr,
+                    }
+                  }, {}),
+                predicates: Object.keys(retrievedCredentials.predicates)
+                  .map((key) => {
+                    return {
+                      [key]: retrievedCredentials.predicates[key].filter((attr) =>
+                        credList.includes(attr.credentialId)
+                      ),
+                    }
+                  })
+                  .reduce((prev, curr) => {
+                    return {
+                      ...prev,
+                      ...curr,
+                    }
+                  }, {}),
+              }
             : undefined
           setRetrievedCredentials(selectRetrievedCredentials)
 
@@ -480,7 +474,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
   const handleAltCredChange = (selectedCred: string, altCredentials: string[]) => {
     const onCredChange = (cred: string) => {
-      const newSelectedCreds = (selectedCredentials.length > 0 ? selectedCredentials : activeCreds.map(item => item.credId)).filter((id) => !altCredentials.includes(id))
+      const newSelectedCreds = (
+        selectedCredentials.length > 0 ? selectedCredentials : activeCreds.map((item) => item.credId)
+      ).filter((id) => !altCredentials.includes(id))
       setSelectedCredentials([cred, ...newSelectedCreds])
     }
     navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
@@ -489,7 +485,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         selectedCred,
         altCredentials,
         proofId,
-        onCredChange
+        onCredChange,
       },
     })
   }
@@ -552,8 +548,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       handleAltCredChange={
                         item.altCredentials && item.altCredentials.length > 1
                           ? () => {
-                            handleAltCredChange(item.credId, item.altCredentials)
-                          }
+                              handleAltCredChange(item.credId, item.altCredentials)
+                            }
                           : undefined
                       }
                       proof={true}

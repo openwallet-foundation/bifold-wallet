@@ -1,6 +1,5 @@
 import { AnonCredsCredentialsForProofRequest } from '@aries-framework/anoncreds'
 import { ProofCredentialItems } from '@hyperledger/aries-oca/build/legacy'
-import { useNavigation } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +12,7 @@ import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
 import { getAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
-import { ProofRequestsStackParams, Screens, Stacks } from '../types/navigators'
+import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { Fields, evaluatePredicates } from '../utils/helpers'
 
 type ProofChangeProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofChangeCredential>
