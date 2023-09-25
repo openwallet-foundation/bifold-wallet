@@ -42,15 +42,16 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/fullboar/react-native-attestation",
+  "repository": "https://github.com/hyperledger/aries-mobile-agent-react-native",
   "author": "Jason C. Leach <jason.leach@fullboar.ca> (https://github.com/fullboar)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/fullboar/react-native-attestation/issues"
+    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native/issues"
   },
-  "homepage": "https://github.com/fullboar/react-native-attestation#readme",
+  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "installConfig": {
     "hoistingLimits": "workspaces"
