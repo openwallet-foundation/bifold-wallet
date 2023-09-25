@@ -1,6 +1,8 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,14 +13,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
+import { ProofRequestsStackParams, Screens, Stacks } from '../../types/navigators'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { getCredentialConnectionLabel, isDataUrl } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
-import { useNavigation } from '@react-navigation/core'
-import { ProofRequestsStackParams, Screens, Stacks } from '../../types/navigators'
-import { StackNavigationProp } from '@react-navigation/stack'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -79,7 +79,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   schemaId,
   proof,
   hasAltCredentials,
-  handleAltCredChange
+  handleAltCredChange,
 }) => {
   const { width } = useWindowDimensions()
   const borderRadius = 10
@@ -201,19 +201,19 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     selectedCred: {
       borderWidth: 5,
       borderRadius: 15,
-      borderColor: ColorPallet.semantic.focus
+      borderColor: ColorPallet.semantic.focus,
     },
     seperator: {
-      width: "100%",
+      width: '100%',
       height: 2,
       marginVertical: 10,
-      backgroundColor: ColorPallet.grayscale.lightGrey
+      backgroundColor: ColorPallet.grayscale.lightGrey,
     },
     credActionText: {
       fontSize: 20,
       fontWeight: 'bold',
-      color: ColorPallet.brand.link
-    }
+      color: ColorPallet.brand.link,
+    },
   })
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
@@ -447,12 +447,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
             ListFooterComponent={
               hasAltCredentials ? (
-                <View style={{ width: "125%" }}>
+                <View style={{ width: '125%' }}>
                   <View style={styles.seperator}></View>
                   <View>
-                    <TouchableOpacity onPress={handleAltCredChange} style={{ display: 'flex', flexDirection: "row", alignItems: 'center', justifyContent: "center" }}>
+                    <TouchableOpacity
+                      onPress={handleAltCredChange}
+                      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
                       <Text style={styles.credActionText}>Change credential</Text>
-                      <Icon style={{ ...styles.credActionText, fontSize: styles.credActionText.fontSize + 5 }} name='chevron-right'></Icon>
+                      <Icon
+                        style={{ ...styles.credActionText, fontSize: styles.credActionText.fontSize + 5 }}
+                        name="chevron-right"
+                      ></Icon>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -548,7 +554,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={styles.cardContainer}
         accessible={true}
         accessibilityLabel={
-          `${overlay.metaOverlay?.issuer ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}` : ''}, ${overlay.metaOverlay?.watermark ?? ''
+          `${overlay.metaOverlay?.issuer ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}` : ''}, ${
+            overlay.metaOverlay?.watermark ?? ''
           } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
           cardData.map((item) => {
             const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
@@ -567,7 +574,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
   return overlay.bundle ? (
     <View
-      style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }, hasAltCredentials ? styles.selectedCred : undefined]}
+      style={[
+        styles.container,
+        style,
+        { elevation: elevated ? 5 : 0, overflow: 'hidden' },
+        hasAltCredentials ? styles.selectedCred : undefined,
+      ]}
       onLayout={(event) => {
         setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
       }}

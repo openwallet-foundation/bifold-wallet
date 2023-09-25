@@ -43,9 +43,11 @@ import { Role } from '../types/chat'
 import { ChildFn } from '../types/tour'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
-import { parseCredDefFromId } from './cred-def'
 import { BifoldAgent } from './agent'
+import { parseCredDefFromId } from './cred-def'
+
 import { BifoldError } from '../types/error'
+
 import { DeviceEventEmitter } from 'react-native'
 import { TFunction } from 'react-i18next'
 
@@ -183,8 +185,8 @@ export function formatTime(
         ? momentTime.format(formatString)
         : // if non-english, don't include comma between year and month
         isNonEnglish
-          ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
-          : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
+        ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
+        : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
     if (includeHour) {
       formattedTime = `${formattedTime}, ${momentTime.format('h:mm a')}`
     }
@@ -341,10 +343,10 @@ export const isDataUrl = (value: string | number | null) => {
 export type Fields = Record<string, AnonCredsRequestedAttributeMatch[] | AnonCredsRequestedPredicateMatch[]>
 
 /**
-   * Retrieve current credentials info filtered by `credentialDefinitionId` if given.
-   * @param credDefId Credential Definition Id
-   * @returns Array of `AnonCredsCredentialInfo`
-   */
+ * Retrieve current credentials info filtered by `credentialDefinitionId` if given.
+ * @param credDefId Credential Definition Id
+ * @returns Array of `AnonCredsCredentialInfo`
+ */
 export const getCredentialInfo = (credId: string, fields: Fields): AnonCredsCredentialInfo[] => {
   const credentialInfo: AnonCredsCredentialInfo[] = []
 
@@ -352,18 +354,16 @@ export const getCredentialInfo = (credId: string, fields: Fields): AnonCredsCred
     credentialInfo.push(...fields[proofKey].map((attr) => attr.credentialInfo))
   })
 
-  return !credId
-    ? credentialInfo
-    : credentialInfo.filter((cred) => cred.credentialId === credId)
+  return !credId ? credentialInfo : credentialInfo.filter((cred) => cred.credentialId === credId)
 }
 
 /**
-   * Evaluate if given attribute value satisfies the predicate.
-   * @param attribute Credential attribute value
-   * @param pValue Predicate value
-   * @param pType Predicate type ({@link AnonCredsPredicateType})
-   * @returns `true`if predicate is satisfied, otherwise `false`
-   */
+ * Evaluate if given attribute value satisfies the predicate.
+ * @param attribute Credential attribute value
+ * @param pValue Predicate value
+ * @param pType Predicate type ({@link AnonCredsPredicateType})
+ * @returns `true`if predicate is satisfied, otherwise `false`
+ */
 const evaluateOperation = (attribute: number, pValue: number, pType: AnonCredsPredicateType): boolean => {
   if (pType === '>=') {
     return attribute >= pValue
@@ -390,36 +390,40 @@ const evaluateOperation = (attribute: number, pValue: number, pType: AnonCredsPr
  */
 export const evaluatePredicates =
   (fields: Fields, credId?: string) =>
-    (proofCredentialItems: ProofCredentialItems): Predicate[] => {
-      const predicates = proofCredentialItems.predicates
-      if (!predicates || predicates.length == 0) {
-        return []
-      }
-
-      if (credId && credId != proofCredentialItems.credId || !proofCredentialItems.credId) {
-        return []
-      }
-
-      const credentialAttributes = getCredentialInfo(proofCredentialItems.credId, fields).map((ci) => ci.attributes)
-
-      return predicates.map((predicate) => {
-        const { pType: pType, pValue: pValue, name: field } = predicate
-        let satisfied = false
-
-        if (field) {
-          const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
-
-          if (attribute && pValue) {
-            satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
-          }
-        }
-
-        return { ...predicate, satisfied }
-      })
+  (proofCredentialItems: ProofCredentialItems): Predicate[] => {
+    const predicates = proofCredentialItems.predicates
+    if (!predicates || predicates.length == 0) {
+      return []
     }
 
+    if ((credId && credId != proofCredentialItems.credId) || !proofCredentialItems.credId) {
+      return []
+    }
 
-export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: ProofExchangeRecord, fullCredentials: CredentialExchangeRecord[], t: TFunction<"translation", undefined>) => {
+    const credentialAttributes = getCredentialInfo(proofCredentialItems.credId, fields).map((ci) => ci.attributes)
+
+    return predicates.map((predicate) => {
+      const { pType: pType, pValue: pValue, name: field } = predicate
+      let satisfied = false
+
+      if (field) {
+        const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
+
+        if (attribute && pValue) {
+          satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
+        }
+      }
+
+      return { ...predicate, satisfied }
+    })
+  }
+
+export const retrieveCredentialsForProof = async (
+  agent: BifoldAgent,
+  proof: ProofExchangeRecord,
+  fullCredentials: CredentialExchangeRecord[],
+  t: TFunction<'translation', undefined>
+) => {
   try {
     const format = await agent.proofs.getFormatData(proof.id)
     const hasAnonCreds = format.request?.anoncreds !== undefined
@@ -431,26 +435,26 @@ export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: Pro
         // We should ignore the key, if the value is undefined. For now this is a workaround.
         ...(hasIndy
           ? {
-            indy: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: false,
-            },
-          }
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
           : {}),
 
         ...(hasAnonCreds
           ? {
-            anoncreds: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: false,
-            },
-          }
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
           : {}),
       },
     })
@@ -474,12 +478,7 @@ export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: Pro
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
     return { groupedProof: groupedProof, retrievedCredentials: proofFormat, fullCredentials }
   } catch (err: unknown) {
-    const error = new BifoldError(
-      t('Error.Title1043'),
-      t('Error.Message1043'),
-      (err as Error)?.message ?? err,
-      1043
-    )
+    const error = new BifoldError(t('Error.Title1043'), t('Error.Message1043'), (err as Error)?.message ?? err, 1043)
     DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
   }
 }
@@ -487,7 +486,7 @@ export const retrieveCredentialsForProof = async (agent: BifoldAgent, proof: Pro
 export const processProofAttributes = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
-  credentialRecords?: CredentialExchangeRecord[],
+  credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
@@ -500,13 +499,14 @@ export const processProofAttributes = (
   }
 
   for (const key of Object.keys(retrievedCredentialAttributes)) {
-    const altCredentials = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn).map(cred => cred.credentialId)
+    const altCredentials = [...(retrievedCredentialAttributes[key] ?? [])]
+      .sort(credentialSortFn)
+      .map((cred) => cred.credentialId)
 
-    let credentialList = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn)
+    const credentialList = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn)
 
     //iterate over all credentials that satisfy the proof
     for (const credential of credentialList) {
-
       const credNameRestriction = credNameFromRestriction(requestedProofAttributes[key]?.restrictions)
 
       let credName = credNameRestriction ?? key
@@ -519,8 +519,8 @@ export const processProofAttributes = (
       let revoked = false
       let credExchangeRecord = undefined
       if (credential) {
-        credExchangeRecord = credentialRecords?.find(
-          (record) => record.credentials.map(cred => cred.credentialRecordId).includes(credential.credentialId)
+        credExchangeRecord = credentialRecords?.find((record) =>
+          record.credentials.map((cred) => cred.credentialRecordId).includes(credential.credentialId)
         )
         revoked = credExchangeRecord?.revocationNotification !== undefined
       } else {
@@ -553,7 +553,7 @@ export const processProofAttributes = (
             credentialId: credential.credentialId,
             name: attributeName,
             value: attributeValue,
-            nonRevoked: non_revoked
+            nonRevoked: non_revoked,
           })
         )
       }
@@ -565,7 +565,7 @@ export const processProofAttributes = (
 export const processProofPredicates = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
-  credentialRecords?: CredentialExchangeRecord[],
+  credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
 
@@ -578,17 +578,18 @@ export const processProofPredicates = (
   }
 
   for (const key of Object.keys(requestedProofPredicates)) {
-    const altCredentials = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn).map(cred => cred.credentialId)
+    const altCredentials = [...(retrievedCredentialPredicates[key] ?? [])]
+      .sort(credentialSortFn)
+      .map((cred) => cred.credentialId)
 
-    let credentialList = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn)
+    const credentialList = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn)
 
     for (const credential of credentialList) {
-
       let revoked = false
       let credExchangeRecord = undefined
       if (credential) {
-        credExchangeRecord = credentialRecords?.find(
-          (record) => record.credentials.map(cred => cred.credentialRecordId).includes(credential.credentialId)
+        credExchangeRecord = credentialRecords?.find((record) =>
+          record.credentials.map((cred) => cred.credentialRecordId).includes(credential.credentialId)
         )
         revoked = credExchangeRecord?.revocationNotification !== undefined
       } else {
@@ -626,7 +627,7 @@ export const processProofPredicates = (
           revoked,
           pValue,
           pType,
-          nonRevoked: non_revoked
+          nonRevoked: non_revoked,
         })
       )
     }
@@ -642,7 +643,9 @@ export const mergeAttributesAndPredicates = (
   for (const [key, predicate] of Object.entries(predicates)) {
     const existingEntry = merged[key]
     if (existingEntry) {
-      const mergedAltCreds = existingEntry.altCredentials?.filter(credId => predicate.altCredentials?.includes(credId))
+      const mergedAltCreds = existingEntry.altCredentials?.filter((credId) =>
+        predicate.altCredentials?.includes(credId)
+      )
       merged[key] = { ...existingEntry, ...predicate }
       merged[key].altCredentials = mergedAltCreds
     } else {

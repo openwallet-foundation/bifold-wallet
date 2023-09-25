@@ -91,7 +91,7 @@ export interface ProofCredentialAttributes {
 export interface ProofCredentialPredicates {
   altCredentials?: string[]
   credExchangeRecord?: CredentialExchangeRecord
-  credId:string
+  credId: string
   credDefId?: string
   schemaId?: string
   credName: string

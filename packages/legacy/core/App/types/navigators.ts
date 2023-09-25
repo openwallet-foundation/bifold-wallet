@@ -104,7 +104,7 @@ export type ProofRequestsStackParams = {
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean; senderReview?: boolean }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
   [Screens.ProofRequestUsageHistory]: { templateId: string }
-  [Screens.ProofChangeCredential]: { altCredentials: string[], proofId: string, selectedCredentials: string[] }
+  [Screens.ProofChangeCredential]: { selectedCred:string, altCredentials: string[]; proofId: string; onCredChange: (arg: string) => void }
 }
 
 export type CredentialStackParams = {
@@ -137,7 +137,7 @@ export type SettingStackParams = {
 export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
-  [Screens.ProofRequest]: { proofId: string, selectedCredentials?: string[] }
+  [Screens.ProofRequest]: { proofId: string; selectedCredentials?: string[] }
   [Screens.CustomNotification]: undefined
   [Screens.ProofDetails]: { recordId: string }
 }

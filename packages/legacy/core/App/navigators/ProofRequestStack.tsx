@@ -6,12 +6,12 @@ import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton
 import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
+import ProofChangeCredential from '../screens/ProofChangeCredential'
 import ProofDetails from '../screens/ProofDetails'
 import ProofRequestDetails from '../screens/ProofRequestDetails'
 import ProofRequestUsageHistory from '../screens/ProofRequestUsageHistory'
 import ProofRequesting from '../screens/ProofRequesting'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import ProofChangeCredential from '../screens/ProofChangeCredential'
 import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
@@ -36,7 +36,11 @@ const ProofRequestStack: React.FC = () => {
           title: '',
         })}
       />
-      <Stack.Screen name={Screens.ProofChangeCredential} component={ProofChangeCredential} options={{ title: t('Screens.ProofChangeCredential') }}></Stack.Screen>
+      <Stack.Screen
+        name={Screens.ProofChangeCredential}
+        component={ProofChangeCredential}
+        options={{ title: t('Screens.ProofChangeCredential') }}
+      ></Stack.Screen>
       <Stack.Screen
         name={Screens.ProofRequesting}
         component={ProofRequesting}
