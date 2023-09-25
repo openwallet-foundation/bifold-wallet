@@ -14,6 +14,7 @@ import { getAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { Fields, evaluatePredicates } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 
 type ProofChangeProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofChangeCredential>
 
@@ -132,7 +133,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
 
   const changeCred = (credId: string) => {
     onCredChange(credId)
-    navigation.getParent()?.goBack()
+    navigation.goBack()
   }
   const hasSatisfiedPredicates = (fields: Fields, credId?: string) =>
     proofItems.flatMap((item) => evaluatePredicates(fields, credId)(item)).every((p) => p.satisfied)
@@ -146,6 +147,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
           return (
             <View style={styles.pageMargin}>
               <TouchableOpacity
+                testID={testIdWithKey(`select:${item.credId}`)}
                 onPress={() => changeCred(item.credId ?? '', item.altCredentials)}
                 style={[item.credId === selectedCred ? styles.selectedCred : undefined, { marginBottom: 10 }]}
               >

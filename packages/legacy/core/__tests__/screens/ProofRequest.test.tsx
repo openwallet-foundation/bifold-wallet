@@ -295,17 +295,17 @@ describe('displays a proof request screen', () => {
         credentialAttributes: [
           {
             name: 'email',
-            value: testEmail,
+            value: testEmail2,
             toJSON: jest.fn(),
           },
           {
             name: 'time',
-            value: testTime,
+            value: testTime2,
             toJSON: jest.fn(),
           },
           {
             name: 'age',
-            value: testAge,
+            value: testAge2,
             toJSON: jest.fn(),
           },
         ],
