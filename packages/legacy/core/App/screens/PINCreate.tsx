@@ -1,7 +1,7 @@
 import { ParamListBase, useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
@@ -52,7 +52,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
   const [PINOld, setPINOld] = useState('')
-  const [continueEnabled, setContinueEnabled] = useState(false)
+  const [continueEnabled, setContinueEnabled] = useState(true)
   const [isLoading, setLoading] = useState(false)
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
@@ -163,10 +163,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
 
     await passcodeCreate(PINOne)
   }
-
-  const checkEmptyPINs = (p: string) => {
-    return p !== '' && PIN !== '' && PINTwo !== ''
-  }
+  useEffect(() => {
+    if (updatePin) {
+      setContinueEnabled(PIN !== '' && PINTwo !== '' && PINOld !== '')
+    }
+  }, [PINOld, PIN, PINTwo])
 
   return (
     <KeyboardView>
@@ -185,7 +186,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
               testID={testIdWithKey('EnterOldPIN')}
               onPINChanged={(p: string) => {
                 setPINOld(p)
-                setContinueEnabled(checkEmptyPINs(p))
               }}
             />
           )}
@@ -193,7 +193,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             label={t('PINCreate.EnterPINTitle', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
               setPIN(p)
-              setContinueEnabled(checkEmptyPINs(p))
               setPINOneValidations(PINCreationValidations(p, PINSecurity.rules))
 
               if (p.length === minPINLength) {
@@ -234,8 +233,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             label={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
               setPINTwo(p)
-              setContinueEnabled(checkEmptyPINs(p))
-
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
                 if (createPINButtonRef && createPINButtonRef.current) {
