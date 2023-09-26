@@ -57,6 +57,7 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
         }
       >
         <View
+          accessibilityRole="text"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -67,7 +68,7 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
             }
           }
           accessible={true}
-          focusable={false}
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -240,6 +241,7 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
         }
       >
         <View
+          accessibilityRole="text"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -250,7 +252,7 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
             }
           }
           accessible={true}
-          focusable={false}
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -423,6 +425,7 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
         }
       >
         <View
+          accessibilityRole="text"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -433,7 +436,7 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
             }
           }
           accessible={true}
-          focusable={false}
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
