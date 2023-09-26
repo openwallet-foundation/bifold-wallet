@@ -6,7 +6,7 @@ import {
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
@@ -146,7 +146,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
         renderItem={({ item }) => {
           return (
             <View style={styles.pageMargin}>
-              <TouchableOpacity
+              <Pressable
                 testID={testIdWithKey(`select:${item.credId}`)}
                 onPress={() => changeCred(item.credId ?? '')}
                 style={[item.credId === selectedCred ? styles.selectedCred : undefined, { marginBottom: 10 }]}
@@ -164,7 +164,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                   satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                   proof={true}
                 ></CredentialCard>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           )
         }}
