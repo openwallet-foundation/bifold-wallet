@@ -235,16 +235,6 @@ export function connectionRecordFromId(connectionId?: string): ConnectionRecord 
   }
 }
 
-/**
- * @deprecated The function should not be used
- */
-export function getConnectionName(connection: ConnectionRecord | void): string | void {
-  if (!connection) {
-    return
-  }
-  return connection?.alias || connection?.theirLabel
-}
-
 export function getCredentialConnectionLabel(credential?: CredentialExchangeRecord) {
   if (!credential) {
     return ''

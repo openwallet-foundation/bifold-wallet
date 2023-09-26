@@ -7,7 +7,7 @@ import {
   ProofState,
 } from '@aries-framework/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -54,12 +54,28 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const credentials = useCredentialsByConnectionId(connectionId)
   const proofs = useProofsByConnectionId(connectionId)
-  const theirLabel = useMemo(() => connection?.theirLabel || connection?.id || '', [connection])
+  const isFocused = useIsFocused()
   const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
   const { ColorPallet } = useTheme()
+  const [theirLabel, setTheirLabel] = useState(
+    (connection?.id && store.preferences.alternateContactNames[connection.id]) ||
+      connection?.theirLabel ||
+      connection?.id ||
+      ''
+  )
+
+  // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up
+  useEffect(() => {
+    setTheirLabel(
+      (connection?.id && store.preferences.alternateContactNames[connection.id]) ||
+        connection?.theirLabel ||
+        connection?.id ||
+        ''
+    )
+  }, [isFocused, connection, store.preferences.alternateContactNames])
 
   useMemo(() => {
     assertConnectedNetwork()
@@ -70,7 +86,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       title: theirLabel,
       headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
     })
-  }, [connection])
+  }, [connection, theirLabel])
 
   // when chat is open, mark messages as seen
   useEffect(() => {
@@ -259,7 +275,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         ? [...transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt), connectedMessage]
         : transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)
     )
-  }, [basicMessages, credentials, proofs])
+  }, [basicMessages, credentials, proofs, theirLabel])
 
   const onSend = useCallback(
     async (messages: IMessage[]) => {

@@ -41,6 +41,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
 }: VerifiedProofProps) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
+  const [store] = useStore()
 
   const styles = StyleSheet.create({
     container: {
@@ -98,8 +99,13 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
 
   const connection = useConnectionById(record.connectionId || '')
   const connectionLabel = useMemo(
-    () => (connection ? connection?.alias || connection?.theirLabel : t('Verifier.ConnectionLessLabel')),
-    [connection]
+    () =>
+      connection
+        ? (connection?.id && store.preferences.alternateContactNames[connection.id]) ||
+          connection?.alias ||
+          connection?.theirLabel
+        : t('Verifier.ConnectionLessLabel'),
+    [connection, store.preferences.alternateContactNames]
   )
 
   const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])

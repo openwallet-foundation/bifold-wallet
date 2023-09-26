@@ -71,7 +71,7 @@ const markMessageAsSeen = async (agent: Agent, record: BasicMessageRecord) => {
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { customNotification } = useConfiguration()
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
@@ -224,14 +224,21 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
   const detailsForNotificationType = async (notificationType: NotificationType): Promise<DisplayDetails> => {
     return new Promise((resolve) => {
+      const { connectionId } = notification
+      let altName = ''
+      if (connectionId && store.preferences.alternateContactNames[connectionId]) {
+        altName = store.preferences.alternateContactNames[connectionId]
+      }
+
       switch (notificationType) {
         case NotificationType.BasicMessage:
           resolve({
             type: InfoBoxType.Info,
             title: t('Home.NewMessage'),
-            body: connection?.theirLabel
-              ? `${connection.theirLabel} ${t('Home.SentMessage')}`
-              : t('Home.ReceivedMessage'),
+            body:
+              altName || connection?.theirLabel
+                ? `${altName || connection?.theirLabel} ${t('Home.SentMessage')}`
+                : t('Home.ReceivedMessage'),
             buttonTitle: t('Home.ViewMessage'),
           })
           break

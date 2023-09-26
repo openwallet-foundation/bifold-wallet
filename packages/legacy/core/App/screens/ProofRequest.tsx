@@ -63,7 +63,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const fullCredentials = useCredentials().records
   const proof = useProofById(proofId)
   const connection = proof?.connectionId ? useConnectionById(proof.connectionId) : undefined
-  const proofConnectionLabel = connection?.theirLabel ?? proof?.connectionId ?? ''
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
@@ -76,6 +75,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { enableTours: enableToursConfig, OCABundleResolver } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
   const [store, dispatch] = useStore()
+  const proofConnectionLabel = useMemo(
+    () =>
+      (proof?.connectionId && store.preferences.alternateContactNames[proof.connectionId]) ??
+      connection?.theirLabel ??
+      proof?.connectionId ??
+      '',
+    [connection, store.preferences.alternateContactNames]
+  )
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
 
