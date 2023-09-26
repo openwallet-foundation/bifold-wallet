@@ -1,7 +1,7 @@
 import { ParamListBase, useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
@@ -53,6 +53,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const [PINTwo, setPINTwo] = useState('')
   const [PINOld, setPINOld] = useState('')
   const [continueEnabled, setContinueEnabled] = useState(true)
+  const [isLoading, setLoading] = useState(false)
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
     title: '',
@@ -162,6 +163,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
 
     await passcodeCreate(PINOne)
   }
+  useEffect(() => {
+    if (updatePin) {
+      setContinueEnabled(PIN !== '' && PINTwo !== '' && PINOld !== '')
+    }
+  }, [PINOld, PIN, PINTwo])
 
   return (
     <KeyboardView>
@@ -227,7 +233,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             label={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
               setPINTwo(p)
-
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
                 if (createPINButtonRef && createPINButtonRef.current) {
@@ -266,6 +271,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             buttonType={ButtonType.Primary}
             disabled={!continueEnabled}
             onPress={async () => {
+              setLoading(true)
               if (updatePin) {
                 const valid = validatePINEntry(PIN, PINTwo)
                 if (valid) {
@@ -289,10 +295,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
               } else {
                 await confirmEntry(PIN, PINTwo)
               }
+              setLoading(false)
             }}
             ref={createPINButtonRef}
           >
-            {!continueEnabled && <ButtonLoading />}
+            {!continueEnabled && isLoading ? <ButtonLoading /> : null}
           </Button>
         </View>
       </View>
