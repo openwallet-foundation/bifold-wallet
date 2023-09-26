@@ -366,7 +366,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        <View style={{ marginLeft: -1 * logoHeight + padding, margin: -1 }}>
+        <View
+          style={{
+            marginLeft: -1 * logoHeight + padding,
+            margin: -1,
+            marginRight: 40,
+          }}
+        >
           <View>
             {!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof) && (
               <View style={{ flexDirection: 'row' }}>
