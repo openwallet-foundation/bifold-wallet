@@ -1,4 +1,8 @@
-import { AnonCredsCredentialsForProofRequest } from '@aries-framework/anoncreds'
+import {
+  AnonCredsCredentialsForProofRequest,
+  AnonCredsRequestedAttributeMatch,
+  AnonCredsRequestedPredicateMatch,
+} from '@aries-framework/anoncreds'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -69,37 +73,33 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
           setLoading(false)
           const activeCreds = groupedProof.filter((proof) => altCredentials.includes(proof.credId))
           const credList = activeCreds.map((cred) => cred.credId)
+          const formatCredentials = (
+            retrievedItems: Record<string, (AnonCredsRequestedAttributeMatch | AnonCredsRequestedPredicateMatch)[]>
+          ) => {
+            return Object.keys(retrievedItems)
+              .map((key) => {
+                return {
+                  [key]: retrievedItems[key].filter((attr) => credList.includes(attr.credentialId)),
+                }
+              })
+              .reduce((prev, curr) => {
+                return {
+                  ...prev,
+                  ...curr,
+                }
+              }, {})
+          }
           const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials
             ? {
                 ...retrievedCredentials,
-                attributes: Object.keys(retrievedCredentials.attributes)
-                  .map((key) => {
-                    return {
-                      [key]: retrievedCredentials.attributes[key].filter((attr) =>
-                        credList.includes(attr.credentialId)
-                      ),
-                    }
-                  })
-                  .reduce((prev, curr) => {
-                    return {
-                      ...prev,
-                      ...curr,
-                    }
-                  }, {}),
-                predicates: Object.keys(retrievedCredentials.predicates)
-                  .map((key) => {
-                    return {
-                      [key]: retrievedCredentials.predicates[key].filter((attr) =>
-                        credList.includes(attr.credentialId)
-                      ),
-                    }
-                  })
-                  .reduce((prev, curr) => {
-                    return {
-                      ...prev,
-                      ...curr,
-                    }
-                  }, {}),
+                attributes: formatCredentials(retrievedCredentials.attributes) as Record<
+                  string,
+                  AnonCredsRequestedAttributeMatch[]
+                >,
+                predicates: formatCredentials(retrievedCredentials.predicates) as Record<
+                  string,
+                  AnonCredsRequestedPredicateMatch[]
+                >,
               }
             : undefined
           setRetrievedCredentials(selectRetrievedCredentials)
