@@ -142,7 +142,7 @@ export type SettingStackParams = {
 export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }
-  [Screens.ProofRequest]: { proofId: string; selectedCredentials?: string[] }
+  [Screens.ProofRequest]: { proofId: string }
   [Screens.CustomNotification]: undefined
   [Screens.ProofDetails]: { recordId: string }
 }
