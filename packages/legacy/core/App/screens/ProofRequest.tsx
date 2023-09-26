@@ -3,13 +3,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import { AnonCredsCredentialsForProofRequest } from '@aries-framework/anoncreds'
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
-import {
-  Attribute,
-  Predicate,
-  ProofCredentialAttributes,
-  ProofCredentialItems,
-  ProofCredentialPredicates,
-} from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
@@ -35,6 +29,7 @@ import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { getAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
+import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
@@ -203,8 +198,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           } else {
             // we only want one of each satisfying credential
             groupedProof.forEach((item) => {
-              const credId = item.altCredentials[0]
-              if (!credList.includes(credId)) {
+              const credId = item.altCredentials?.[0]
+              if (credId && !credList.includes(credId)) {
                 credList.push(credId)
               }
             })
@@ -548,7 +543,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                       handleAltCredChange={
                         item.altCredentials && item.altCredentials.length > 1
                           ? () => {
-                              handleAltCredChange(item.credId, item.altCredentials)
+                              handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
                             }
                           : undefined
                       }

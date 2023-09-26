@@ -77,25 +77,3 @@ export class Predicate extends Field {
     this.satisfied = params.satisfied
   }
 }
-
-export interface ProofCredentialAttributes {
-  altCredentials?: string[]
-  credExchangeRecord?: CredentialExchangeRecord
-  credId: string
-  credDefId?: string
-  schemaId?: string
-  credName: string
-  attributes?: Attribute[]
-}
-
-export interface ProofCredentialPredicates {
-  altCredentials?: string[]
-  credExchangeRecord?: CredentialExchangeRecord
-  credId: string
-  credDefId?: string
-  schemaId?: string
-  credName: string
-  predicates?: Predicate[]
-}
-
-export interface ProofCredentialItems extends ProofCredentialAttributes, ProofCredentialPredicates {}

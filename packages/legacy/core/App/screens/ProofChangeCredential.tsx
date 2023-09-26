@@ -1,5 +1,4 @@
 import { AnonCredsCredentialsForProofRequest } from '@aries-framework/anoncreds'
-import { ProofCredentialItems } from '@hyperledger/aries-oca/build/legacy'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +12,7 @@ import { useTheme } from '../contexts/theme'
 import { getAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
+import { ProofCredentialItems } from '../types/proof-items'
 import { Fields, evaluatePredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -148,7 +148,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
             <View style={styles.pageMargin}>
               <TouchableOpacity
                 testID={testIdWithKey(`select:${item.credId}`)}
-                onPress={() => changeCred(item.credId ?? '', item.altCredentials)}
+                onPress={() => changeCred(item.credId ?? '')}
                 style={[item.credId === selectedCred ? styles.selectedCred : undefined, { marginBottom: 10 }]}
               >
                 <CredentialCard
