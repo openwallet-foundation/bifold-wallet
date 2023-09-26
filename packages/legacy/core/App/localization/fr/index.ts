@@ -415,7 +415,7 @@ const translation = {
         "ChangeCredential": "Change credential (FR)",
         "RejectThisProof?": "Rejeter cette preuve?",
         "AcceptingProof": "Acceptation de la preuve",
-        "MultipleCredentials": "You have multiple crdentials to choose from: (FR)",
+        "MultipleCredentials": "You have multiple credentials to choose from: (FR)",
         "SuccessfullyAcceptedProof": "Preuve acceptée avec succès",
         "SensitiveInformation": "This request is asking for sensitive information. (FR)",
         "RejectingProof": "Rejet de la preuve",
