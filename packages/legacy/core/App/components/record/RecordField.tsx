@@ -84,7 +84,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
     valueContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingTop: 10,
+      paddingTop: 5,
     },
     valueText: {
       ...ListItems.recordAttributeText,
@@ -94,13 +94,32 @@ const RecordField: React.FC<RecordFieldProps> = ({
 
   return (
     <View style={styles.container}>
-      {fieldLabel ? (
-        fieldLabel(field)
-      ) : (
-        <Text style={[ListItems.recordAttributeLabel, { fontWeight: 'bold' }]} testID={testIdWithKey('AttributeName')}>
-          {field.label ?? startCase(field.name || '')}
-        </Text>
-      )}
+      <View style={styles.valueContainer}>
+        {fieldLabel ? (
+          fieldLabel(field)
+        ) : (
+          <Text
+            style={[ListItems.recordAttributeLabel, { fontWeight: 'bold' }]}
+            testID={testIdWithKey('AttributeName')}
+          >
+            {field.label ?? startCase(field.name || '')}
+          </Text>
+        )}
+
+        {hideFieldValue ? (
+          <TouchableOpacity
+            accessible={true}
+            accessibilityLabel={shown ? t('Record.Hide') : t('Record.Show')}
+            testID={testIdWithKey('ShowHide')}
+            activeOpacity={1}
+            onPress={onToggleViewPressed}
+            style={styles.link}
+          >
+            <Text style={ListItems.recordLink}>{shown ? t('Record.Hide') : t('Record.Show')}</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
+
       <View style={styles.valueContainer}>
         {fieldValue ? (
           fieldValue(field)
@@ -109,18 +128,6 @@ const RecordField: React.FC<RecordFieldProps> = ({
             <View style={styles.valueText}>
               <AttributeValue field={field as Attribute} shown={shown} />
             </View>
-            {hideFieldValue ? (
-              <TouchableOpacity
-                accessible={true}
-                accessibilityLabel={shown ? t('Record.Hide') : t('Record.Show')}
-                testID={testIdWithKey('ShowHide')}
-                activeOpacity={1}
-                onPress={onToggleViewPressed}
-                style={styles.link}
-              >
-                <Text style={ListItems.recordLink}>{shown ? t('Record.Hide') : t('Record.Show')}</Text>
-              </TouchableOpacity>
-            ) : null}
           </>
         )}
       </View>
