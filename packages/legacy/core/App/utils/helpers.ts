@@ -548,12 +548,8 @@ export const connectFromInvitation = async (uri: string, agent: Agent | undefine
   }
 
   const record = await agent?.oob.receiveInvitation(invitation)
-  const connectionRecord = record?.connectionRecord
-  if (!connectionRecord?.id) {
-    throw new Error('Connection does not have an ID')
-  }
 
-  return connectionRecord
+  return record
 }
 
 /**
