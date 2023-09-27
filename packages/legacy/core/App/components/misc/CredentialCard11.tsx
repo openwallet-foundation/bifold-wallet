@@ -546,7 +546,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     }
 
     return (
-      <View testID={testIdWithKey('CredentialCardStatus')} style={styles.statusContainer}>
+      <View
+        testID={testIdWithKey('CredentialCardStatus')}
+        style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
+      >
         <Status status={status} />
       </View>
     )

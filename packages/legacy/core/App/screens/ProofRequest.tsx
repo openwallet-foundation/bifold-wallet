@@ -30,7 +30,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
-import { getAllCredentialsForProof } from '../hooks/proofs'
+import { useAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
@@ -69,7 +69,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [store, dispatch] = useStore()
-  const credProofPromise = getAllCredentialsForProof(proofId)
+  const credProofPromise = useAllCredentialsForProof(proofId)
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
 

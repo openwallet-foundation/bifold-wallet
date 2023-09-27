@@ -13,7 +13,7 @@ import RecordLoading from '../components/animated/RecordLoading'
 import { CredentialCard } from '../components/misc'
 import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
-import { getAllCredentialsForProof } from '../hooks/proofs'
+import { useAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/proof-items'
@@ -35,7 +35,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
   const [loading, setLoading] = useState(false)
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
-  const credProofPromise = getAllCredentialsForProof(proofId)
+  const credProofPromise = useAllCredentialsForProof(proofId)
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,

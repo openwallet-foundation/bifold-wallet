@@ -13,7 +13,7 @@ export const useProofsByConnectionId = (connectionId: string): ProofExchangeReco
   )
 }
 
-export const getAllCredentialsForProof = (proofId: string) => {
+export const useAllCredentialsForProof = (proofId: string) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const fullCredentials = useCredentials().records
