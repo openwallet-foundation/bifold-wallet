@@ -88,7 +88,7 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
             keyboardType="numeric"
             textContentType="password"
             renderCell={({ index, symbol, isFocused }) => {
-              let child: Element | string = ''
+              let child: React.ReactNode | string = ''
               if (symbol) {
                 child = showPIN ? symbol : '●'
               } else if (isFocused) {

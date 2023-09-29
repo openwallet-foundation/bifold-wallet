@@ -36,7 +36,7 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('react-native-localize', () => {})
 jest.mock('react-native-device-info', () => () => jest.fn())
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 const templates = useProofRequestTemplates(true)
@@ -135,7 +135,7 @@ describe('ProofRequesting Component', () => {
       { timeout: 50000 }
     )
 
-    await act(async () => null)
+    await act(async () => {})
     expect(tree).toMatchSnapshot()
   })
 

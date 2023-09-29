@@ -4,6 +4,23 @@ exports[`HeaderButton Component Left alignment renders correctly 1`] = `
 <View
   accessibilityLabel="LeftButton"
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -15,7 +32,6 @@ exports[`HeaderButton Component Left alignment renders correctly 1`] = `
       "top": 44,
     }
   }
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -44,6 +60,7 @@ exports[`HeaderButton Component Left alignment renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
@@ -70,6 +87,23 @@ exports[`HeaderButton Component Right alignment renders correctly 1`] = `
 <View
   accessibilityLabel="RightButton"
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -81,7 +115,6 @@ exports[`HeaderButton Component Right alignment renders correctly 1`] = `
       "top": 44,
     }
   }
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -110,6 +143,7 @@ exports[`HeaderButton Component Right alignment renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
@@ -136,6 +170,23 @@ exports[`HeaderButton Component Right alignment with text renders correctly 1`] 
 <View
   accessibilityLabel="RightButton"
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -147,7 +198,6 @@ exports[`HeaderButton Component Right alignment with text renders correctly 1`] 
       "top": 44,
     }
   }
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -190,6 +240,7 @@ exports[`HeaderButton Component Right alignment with text renders correctly 1`] 
     </Text>
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {

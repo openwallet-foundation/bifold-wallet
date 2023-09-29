@@ -26,6 +26,23 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
     <View
       accessibilityLabel="Global.Close"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -37,7 +54,6 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -54,6 +70,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -274,13 +291,24 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -341,13 +369,24 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -426,6 +465,23 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
     <View
       accessibilityLabel="Global.Close"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -437,7 +493,6 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -454,6 +509,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -679,13 +735,24 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -746,13 +813,24 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -831,6 +909,23 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
     <View
       accessibilityLabel="Global.Close"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -842,7 +937,6 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -859,6 +953,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -1093,13 +1188,24 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1160,13 +1266,24 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1245,6 +1362,23 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
     <View
       accessibilityLabel="Global.Close"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -1256,7 +1390,6 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1273,6 +1406,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -1394,6 +1528,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -1449,6 +1584,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -1504,6 +1640,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -1559,6 +1696,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -1718,13 +1856,24 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1785,13 +1934,24 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1870,6 +2030,23 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
     <View
       accessibilityLabel="Global.Close"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -1881,7 +2058,6 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1898,6 +2074,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -2107,13 +2284,24 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -2174,13 +2362,24 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -2259,6 +2458,23 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
     <View
       accessibilityLabel="Global.Close"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -2270,7 +2486,6 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -2287,6 +2502,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -2398,10 +2614,26 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             }
           >
             <View
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -2438,6 +2670,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
               </Text>
               <Text
                 allowFontScaling={false}
+                selectable={false}
                 style={
                   Array [
                     Object {
@@ -2459,7 +2692,6 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             </View>
             <View
               collapsable={false}
-              nativeID="animatedComponent"
               pointerEvents="auto"
               style={
                 Object {
@@ -2470,8 +2702,6 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
-                nativeID="animatedComponent"
                 onLayout={[Function]}
                 style={Object {}}
               >
@@ -2592,10 +2822,26 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             }
           >
             <View
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -2632,6 +2878,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
               </Text>
               <Text
                 allowFontScaling={false}
+                selectable={false}
                 style={
                   Array [
                     Object {
@@ -2653,7 +2900,6 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             </View>
             <View
               collapsable={false}
-              nativeID="animatedComponent"
               pointerEvents="auto"
               style={
                 Object {
@@ -2664,8 +2910,6 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             >
               <View
                 collapsable={false}
-                forwardedRef={[Function]}
-                nativeID="animatedComponent"
                 onLayout={[Function]}
                 style={Object {}}
               >
@@ -2837,13 +3081,24 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -2904,13 +3159,24 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -2989,6 +3255,23 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
     <View
       accessibilityLabel="Global.Close"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -3000,7 +3283,6 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
           "top": 44,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -3017,6 +3299,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -3138,6 +3421,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -3193,6 +3477,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -3248,6 +3533,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -3303,6 +3589,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -3462,13 +3749,24 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -3529,13 +3827,24 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

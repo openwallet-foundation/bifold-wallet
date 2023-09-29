@@ -44,7 +44,6 @@ exports[`Scan Screen Renders correctly 1`] = `
       />
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "position": "absolute",

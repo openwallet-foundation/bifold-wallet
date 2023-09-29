@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import HeaderTitle from '../components/texts/HeaderTitle'
 import { ITheme } from '../theme'
 
-export function createDefaultStackOptions({ ColorPallet }: ITheme) {
+export function createDefaultStackOptions({ ColorPallet }: ITheme): any {
   const { t } = useTranslation()
   return {
     headerTintColor: ColorPallet.brand.headerIcon,

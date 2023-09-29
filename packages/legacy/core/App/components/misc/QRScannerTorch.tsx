@@ -8,7 +8,7 @@ import { useTheme } from '../../contexts/theme'
 import { ITheme } from '../../theme'
 import { testIdWithKey } from '../../utils/testable'
 
-interface Props {
+interface Props extends React.PropsWithChildren {
   active: boolean
   onPress?: () => void
 }

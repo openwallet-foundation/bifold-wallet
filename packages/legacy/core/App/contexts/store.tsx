@@ -7,7 +7,7 @@ import _defaultReducer, { ReducerAction } from './reducers/store'
 
 type Reducer = <S extends State>(state: S, action: ReducerAction<any>) => S
 
-interface StoreProviderProps {
+interface StoreProviderProps extends React.PropsWithChildren {
   initialState?: State
   reducer?: Reducer
 }

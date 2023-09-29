@@ -1,21 +1,3 @@
-import {
-  BasicMessageRecord,
-  BasicMessageRole,
-  CredentialExchangeRecord as CredentialRecord,
-  CredentialState,
-  ProofExchangeRecord,
-  ProofState,
-} from '@aries-framework/core'
-import { useBasicMessages, useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
-import { useNavigation } from '@react-navigation/core'
-import { act, fireEvent, render } from '@testing-library/react-native'
-import React from 'react'
-
-// eslint-disable-next-line import/no-named-as-default
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import Home from '../../App/screens/Home'
-import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -24,11 +6,39 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
+jest.mock('@aries-framework/react-hooks', ()=>({
+  ...jest.requireActual('@aries-framework/react-hooks'),
+  useBasicMessages: jest.fn().mockReturnValue({records: []}),
+  useCredentialByState: jest.fn().mockReturnValue([]),
+  useProofByState: jest.fn().mockReturnValue([]),
+  useAgent: jest.fn(),
+  useConnectionById: jest.fn(),
+}))
+import {
+  BasicMessageRecord,
+  BasicMessageRole,
+  CredentialExchangeRecord as CredentialRecord,
+  CredentialState,
+  ProofExchangeRecord,
+  ProofState,
+} from '@aries-framework/core'
+//import { useBasicMessages, useCredentialByState, useProofByState, useAgent } from '@aries-framework/react-hooks'
+import { useNavigation } from '@react-navigation/core'
+import { act, fireEvent, render } from '@testing-library/react-native'
+
+import React from 'react'
+import { useBasicMessages, useCredentialByState, useProofByState, useAgent, useConnectionById } from '@aries-framework/react-hooks'
+
+// eslint-disable-next-line import/no-named-as-default
+import { ConfigurationContext } from '../../App/contexts/configuration'
+import Home from '../../App/screens/Home'
+import { testIdWithKey } from '../../App/utils/testable'
+import configurationContext from '../contexts/configuration'
+
+import { useTranslation } from 'react-i18next'
+
 describe('displays a home screen', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    // eslint-disable-next-line import/no-named-as-default-member
-    React.useState = jest.fn().mockReturnValue([false, jest.fn()])
   })
 
   test('renders correctly', () => {
@@ -98,15 +108,20 @@ describe('with a notifications module, when an issuer sends a credential offer',
   ]
 
   beforeEach(() => {
-    jest.clearAllMocks()
-    // eslint-disable-next-line import/no-named-as-default-member
-    React.useState = jest.fn().mockReturnValue([false, jest.fn()])
+    jest.resetAllMocks()
     // @ts-ignore
-    useCredentialByState.mockReturnValue(testCredentialRecords)
+    useBasicMessages.mockReturnValue({records: testBasicMessages})
+
     // @ts-ignore
     useProofByState.mockReturnValue(testProofRecords)
     // @ts-ignore
-    useBasicMessages.mockReturnValue({ records: testBasicMessages })
+    useCredentialByState.mockReturnValue(testCredentialRecords)
+
+    // @ts-ignore
+    useAgent.mockReturnValue({})
+
+    // @ts-ignore
+    useConnectionById.mockReturnValue({theirLabel:'ACME'})
   })
 
   /**
@@ -134,21 +149,22 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder is taken to the credential offer screen/flow
    */
   test('touch notification triggers navigation correctly I', async () => {
-    const { findByTestId } = render(
+    const navigation = useNavigation()
+    const view = render(
       <ConfigurationContext.Provider value={configurationContext}>
-        <Home route={{} as any} navigation={useNavigation()} />
+        <Home route={{} as any} navigation={navigation as any} />
       </ConfigurationContext.Provider>
     )
 
-    const button = await findByTestId(testIdWithKey('ViewOffer'))
-    const navigation = useNavigation()
+    const button = await view.findByTestId(testIdWithKey('ViewOffer'))
+    
 
     expect(button).toBeDefined()
-
-    act(() => {
+    //view.debug()
+    await act(() => {
       fireEvent(button, 'press')
     })
-
+    
     expect(navigation.navigate).toHaveBeenCalledTimes(1)
     expect(navigation.navigate).toHaveBeenCalledWith('Notifications Stack', {
       screen: 'Credential Offer',
@@ -174,7 +190,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     expect(button).toBeDefined()
 
-    act(() => {
+    await act(() => {
       fireEvent(button, 'press')
     })
 
@@ -222,21 +238,17 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * The holder is taken to the chat screen for that contact
    */
   test('touch notification triggers navigation correctly IV', async () => {
-    const { getByTestId } = render(
+    const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
       </ConfigurationContext.Provider>
     )
-
-    const button = await getByTestId(testIdWithKey('ViewBasicMessage'))
-    const navigation = useNavigation()
-
-    expect(button).toBeDefined()
-
-    act(() => {
+    await act(async () => {
+      const button = await findByTestId(testIdWithKey('ViewBasicMessage'))
+      expect(button).toBeDefined()
       fireEvent(button, 'press')
     })
-
+    const navigation = useNavigation()
     expect(navigation.getParent()?.navigate).toHaveBeenCalledTimes(1)
     expect(navigation.getParent()?.navigate).toHaveBeenCalledWith('Contacts Stack', {
       screen: 'Chat',

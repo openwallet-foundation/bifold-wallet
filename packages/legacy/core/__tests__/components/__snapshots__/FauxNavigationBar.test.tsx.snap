@@ -76,7 +76,6 @@ Array [
               "top": 44,
             }
           }
-          nativeID="animatedComponent"
           style={
             Object {
               "opacity": 1,
@@ -85,6 +84,7 @@ Array [
         >
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
