@@ -17,6 +17,7 @@ import SharedProofData from '../components/misc/SharedProofData'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
+import { getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
@@ -101,9 +102,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
   const connectionLabel = useMemo(
     () =>
       connection
-        ? (connection?.id && store.preferences.alternateContactNames[connection.id]) ||
-          connection?.alias ||
-          connection?.theirLabel
+        ? getConnectionName(connection, store.preferences.alternateContactNames)
         : t('Verifier.ConnectionLessLabel'),
     [connection, store.preferences.alternateContactNames]
   )

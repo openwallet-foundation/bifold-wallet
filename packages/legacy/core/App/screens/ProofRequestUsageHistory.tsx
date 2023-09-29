@@ -12,7 +12,7 @@ import EmptyList from '../components/misc/EmptyList'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { formatTime } from '../utils/helpers'
+import { formatTime, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestUsageHistoryProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestUsageHistory>
@@ -44,11 +44,8 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
   const [store] = useStore()
   const connection = record.connectionId ? useConnectionById(record.connectionId) : undefined
   const theirLabel = useMemo(
-    () =>
-      (record.connectionId && store.preferences.alternateContactNames[record.connectionId]) ||
-      connection?.theirLabel ||
-      connection?.alias,
-    [record.connectionId, store.preferences.alternateContactNames]
+    () => getConnectionName(connection, store.preferences.alternateContactNames),
+    [connection, store.preferences.alternateContactNames]
   )
 
   const style = StyleSheet.create({

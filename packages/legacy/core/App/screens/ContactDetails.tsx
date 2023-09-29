@@ -16,7 +16,7 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { formatTime } from '../utils/helpers'
+import { formatTime, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
@@ -99,10 +99,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const callCancelUnableToRemove = useCallback(() => handleCancelUnableRemove(), [])
 
   const contactLabel = useMemo(
-    () =>
-      (connection?.id && store.preferences.alternateContactNames[connection.id]) ||
-      connection?.alias ||
-      connection?.theirLabel,
+    () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
   )
 

@@ -43,7 +43,12 @@ import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { getCredentialIdentifiers } from '../utils/credential'
-import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
+import {
+  getConnectionName,
+  mergeAttributesAndPredicates,
+  processProofAttributes,
+  processProofPredicates,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -76,11 +81,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [containsPI, setContainsPI] = useState(false)
   const [store, dispatch] = useStore()
   const proofConnectionLabel = useMemo(
-    () =>
-      (proof?.connectionId && store.preferences.alternateContactNames[proof.connectionId]) ??
-      connection?.theirLabel ??
-      proof?.connectionId ??
-      '',
+    () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
   )
   const { start } = useTour()

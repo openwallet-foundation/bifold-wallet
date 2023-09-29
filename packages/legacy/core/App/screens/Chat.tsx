@@ -31,6 +31,7 @@ import { Role } from '../types/chat'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../types/metadata'
 import { RootStackParams, ContactStackParams, Screens, Stacks } from '../types/navigators'
 import {
+  getConnectionName,
   getCredentialEventLabel,
   getCredentialEventRole,
   getMessageEventRole,
@@ -60,21 +61,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
   const { ColorPallet } = useTheme()
-  const [theirLabel, setTheirLabel] = useState(
-    (connection?.id && store.preferences.alternateContactNames[connection.id]) ||
-      connection?.theirLabel ||
-      connection?.id ||
-      ''
-  )
+  const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
 
   // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up
   useEffect(() => {
-    setTheirLabel(
-      (connection?.id && store.preferences.alternateContactNames[connection.id]) ||
-        connection?.theirLabel ||
-        connection?.id ||
-        ''
-    )
+    setTheirLabel(getConnectionName(connection, store.preferences.alternateContactNames))
   }, [isFocused, connection, store.preferences.alternateContactNames])
 
   useMemo(() => {

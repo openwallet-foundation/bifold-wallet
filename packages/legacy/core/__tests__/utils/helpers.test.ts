@@ -1,3 +1,4 @@
+import { ConnectionRecord } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import fs from 'fs'
 import path from 'path'
@@ -10,6 +11,7 @@ import {
   credentialSortFn,
   formatIfDate,
   formatTime,
+  getConnectionName,
 } from '../../App/utils/helpers'
 
 const proofCredentialPath = path.join(__dirname, '../fixtures/proof-credential.json')
@@ -153,5 +155,43 @@ describe('createConnectionInvitation', () => {
     const { agent } = useAgent()
 
     await expect(createConnectionInvitation(agent, 'aries.foo')).rejects.toThrow()
+  })
+})
+
+describe('getConnectionName', () => {
+  test('With all properties and alternate name', async () => {
+    const connection = { id: '1', theirLabel: 'Mike', alias: 'Mikey' }
+    const alternateContactNames = { '1': 'Mikeroni' }
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('Mikeroni')
+  })
+  test('With all properties and no alternate name', async () => {
+    const connection = { id: '1', theirLabel: 'Mike', alias: 'Mikey' }
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('Mike')
+  })
+  test('With no theirLabel but an alias', async () => {
+    const connection = { id: '1', alias: 'Mikey' }
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('Mikey')
+  })
+  test('With no theirLabel or alias', async () => {
+    const connection = { id: '1' }
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('1')
+  })
+  test('With undefined connection', async () => {
+    const connection = undefined
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as unknown as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('')
   })
 })

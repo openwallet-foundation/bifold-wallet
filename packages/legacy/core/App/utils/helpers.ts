@@ -235,6 +235,19 @@ export function connectionRecordFromId(connectionId?: string): ConnectionRecord 
   }
 }
 
+export function getConnectionName(
+  connection: ConnectionRecord | undefined,
+  alternateContactNames: Record<string, string>
+): string {
+  return (
+    (connection?.id && alternateContactNames[connection?.id]) ||
+    connection?.theirLabel ||
+    connection?.alias ||
+    connection?.id ||
+    ''
+  )
+}
+
 export function getCredentialConnectionLabel(credential?: CredentialExchangeRecord) {
   if (!credential) {
     return ''

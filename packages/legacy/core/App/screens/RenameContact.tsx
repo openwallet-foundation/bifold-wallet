@@ -15,6 +15,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens } from '../types/navigators'
+import { getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ErrorState = {
@@ -26,19 +27,13 @@ type ErrorState = {
 type RenameContactProps = StackScreenProps<ContactStackParams, Screens.RenameContact>
 
 const RenameContact: React.FC<RenameContactProps> = ({ route }) => {
-  if (!route?.params) {
-    throw new Error('RenameContact route params were not set properly')
-  }
-
   const { connectionId } = route.params
   const connection = useConnectionById(connectionId)
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const navigation = useNavigation()
   const [store, dispatch] = useStore()
-  const [contactName, setContactName] = useState(
-    store.preferences.alternateContactNames[connectionId] || connection?.theirLabel || ''
-  )
+  const [contactName, setContactName] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
   const [loading, setLoading] = useState(false)
   const [errorState, setErrorState] = useState<ErrorState>({
     visible: false,

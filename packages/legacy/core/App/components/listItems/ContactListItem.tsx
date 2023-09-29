@@ -19,6 +19,7 @@ import { Role } from '../../types/chat'
 import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import {
   formatTime,
+  getConnectionName,
   getCredentialEventLabel,
   getCredentialEventRole,
   getProofEventLabel,
@@ -135,7 +136,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   }, [contact])
 
   const contactLabel = useMemo(
-    () => store.preferences.alternateContactNames[contact.id] || contact.alias || contact.theirLabel,
+    () => getConnectionName(contact, store.preferences.alternateContactNames),
     [contact, store.preferences.alternateContactNames]
   )
   const contactLabelAbbr = useMemo(
