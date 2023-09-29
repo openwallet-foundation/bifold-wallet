@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MockDate from 'mockdate'
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 const unitOfTime = 10

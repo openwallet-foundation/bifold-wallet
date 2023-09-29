@@ -43,6 +43,23 @@ exports[`Data Retention screen screen renders correctly 1`] = `
     <View
       ImageComponent={[Function]}
       accessibilityLabel="Global.On"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       disableBuiltInState={true}
@@ -79,6 +96,7 @@ exports[`Data Retention screen screen renders correctly 1`] = `
       unfillColor="#313132"
     >
       <View
+        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -116,6 +134,7 @@ exports[`Data Retention screen screen renders correctly 1`] = `
         >
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
@@ -189,6 +208,23 @@ exports[`Data Retention screen screen renders correctly 1`] = `
     <View
       ImageComponent={[Function]}
       accessibilityLabel="Global.Off"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       disableBuiltInState={true}
@@ -225,6 +261,7 @@ exports[`Data Retention screen screen renders correctly 1`] = `
       unfillColor="#313132"
     >
       <View
+        collapsable={false}
         style={
           Object {
             "alignItems": "center",

@@ -12,7 +12,7 @@ export enum ButtonType {
   ModalSecondary,
 }
 
-export interface ButtonProps {
+export interface ButtonProps extends React.PropsWithChildren {
   title: string
   buttonType: ButtonType
   accessibilityLabel?: string

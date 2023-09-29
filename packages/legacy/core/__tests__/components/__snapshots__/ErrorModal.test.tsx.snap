@@ -5,191 +5,14 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `
   hardwareAccelerated={false}
   transparent={true}
   visible={false}
->
-  <RNCSafeAreaView
-    style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#000000",
-          "flexDirection": "column",
-          "justifyContent": "center",
-          "minHeight": 1334,
-        },
-      ]
-    }
-  >
-    <View
-      style={
-        Object {
-          "backgroundColor": "#313132",
-          "borderColor": "#D8292F",
-          "borderRadius": 5,
-          "borderWidth": 1,
-          "minWidth": 700,
-          "padding": 10,
-        }
-      }
-    >
-      <View
-        style={
-          Object {
-            "flexDirection": "row",
-            "paddingHorizontal": 5,
-            "paddingTop": 5,
-          }
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignSelf": "center",
-                "marginRight": 10,
-              },
-            ]
-          }
-        >
-          <Text
-            accessible={false}
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#D8292F",
-                  "fontSize": 30,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-        <Text
-          style={
-            Object {
-              "alignSelf": "center",
-              "color": "#FFFFFF",
-              "flexShrink": 1,
-              "fontSize": 18,
-              "fontWeight": "bold",
-            }
-          }
-          testID="com.ariesbifold:id/HeaderText"
-        >
-          Error.Unknown
-        </Text>
-      </View>
-      <RCTScrollView
-        style={
-          Object {
-            "flexDirection": "column",
-            "flexGrow": 0,
-            "marginLeft": 40,
-            "paddingBottom": 5,
-            "paddingHorizontal": 5,
-          }
-        }
-      >
-        <View>
-          <Text
-            style={
-              Object {
-                "color": "#FFFFFF",
-                "flexShrink": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "marginVertical": 16,
-              }
-            }
-            testID="com.ariesbifold:id/BodyText"
-          >
-            Error.Problem
-          </Text>
-          <View
-            style={
-              Object {
-                "paddingTop": 10,
-              }
-            }
-          >
-            <View
-              accessibilityLabel="Global.Okay"
-              accessibilityRole="button"
-              accessibilityState={
-                Object {
-                  "disabled": false,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              nativeID="animatedComponent"
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "opacity": 1,
-                  "padding": 16,
-                }
-              }
-              testID="com.ariesbifold:id/Okay"
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                      false,
-                      false,
-                    ]
-                  }
-                >
-                  Global.Okay
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </RCTScrollView>
-    </View>
-  </RNCSafeAreaView>
-</Modal>
+/>
 `;
 
 exports[`ErrorModal Component Renders correctly 1`] = `
 <Modal
   hardwareAccelerated={false}
   transparent={true}
-  visible={false}
+  visible={true}
 >
   <RNCSafeAreaView
     style={
@@ -238,6 +61,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           <Text
             accessible={false}
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
@@ -269,7 +93,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           }
           testID="com.ariesbifold:id/HeaderText"
         >
-          Error.Unknown
+          title
         </Text>
       </View>
       <RCTScrollView
@@ -284,20 +108,93 @@ exports[`ErrorModal Component Renders correctly 1`] = `
         }
       >
         <View>
-          <Text
-            style={
+          <View
+            accessibilityLabel="Global.ShowDetails"
+            accessibilityState={
               Object {
-                "color": "#FFFFFF",
-                "flexShrink": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "marginVertical": 16,
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
               }
             }
-            testID="com.ariesbifold:id/BodyText"
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "marginVertical": 14,
+                "opacity": 1,
+              }
+            }
+            testID="com.ariesbifold:id/ShowDetails"
           >
-            Error.Problem
-          </Text>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 20,
+                    "fontWeight": "normal",
+                  }
+                }
+              >
+                Global.ShowDetails
+                 
+              </Text>
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 30,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
           <View
             style={
               Object {
@@ -310,13 +207,24 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               accessibilityRole="button"
               accessibilityState={
                 Object {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
               collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}

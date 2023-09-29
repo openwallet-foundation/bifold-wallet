@@ -23,6 +23,7 @@ exports[`Chat screen Renders correctly 1`] = `
         "flex": 1,
       }
     }
+    testID="GC_LOADING_CONTAINER"
   />
 </RNCSafeAreaView>
 `;

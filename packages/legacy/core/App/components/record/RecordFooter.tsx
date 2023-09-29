@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
-const RecordFooter: React.FC = ({ children }) => {
+const RecordFooter: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {

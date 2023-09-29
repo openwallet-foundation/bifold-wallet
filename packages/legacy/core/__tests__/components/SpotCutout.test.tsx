@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native'
+import { act, render } from '@testing-library/react-native'
 import React from 'react'
 
 import { credentialOfferTourSteps } from '../../App/components/tour/CredentialOfferTourSteps'
@@ -9,7 +9,13 @@ import { SpotCutout } from '../../App/components/tour/SpotCutout'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
 
 describe('SpotCutout', () => {
-  test('Renders properly with defaults', () => {
+  beforeAll(()=>{
+    jest.useFakeTimers()
+  })
+  afterAll(()=>{
+    jest.useRealTimers()
+  })
+  test('Renders properly with defaults', async () => {
     const tree = render(
       <TourProvider
         homeTourSteps={homeTourSteps}
@@ -22,7 +28,7 @@ describe('SpotCutout', () => {
         <SpotCutout />
       </TourProvider>
     )
-
+    await act(()=>{ jest.runAllTimers() })
     expect(tree).toMatchSnapshot()
   })
 })

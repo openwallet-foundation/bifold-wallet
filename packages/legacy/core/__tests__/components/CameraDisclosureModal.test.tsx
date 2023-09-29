@@ -14,6 +14,12 @@ jest.mock('@react-navigation/native', () => {
 })
 
 describe('CameraDisclosureModal Component', () => {
+  beforeAll(()=>{
+    jest.useFakeTimers()
+  })
+  afterAll(()=>{
+    jest.useRealTimers()
+  })
   beforeEach(() => {
     jest.clearAllMocks()
     requestCameraUse = jest.fn(() => Promise.resolve(true))
@@ -33,13 +39,14 @@ describe('CameraDisclosureModal Component', () => {
     })
   })
 
-  test('Pressing "Not now" navigates correctly', () => {
+  test('Pressing "Not now" navigates correctly', async () => {
     const navigation = useNavigation()
     const { getByTestId } = render(<CameraDisclosureModal requestCameraUse={requestCameraUse} />)
     const notNowButton = getByTestId(testIdWithKey('NotNow'))
-    fireEvent(notNowButton, 'press')
-
-    expect(navigation.getParent).toBeCalled()
-    expect(navigation.getParent).toHaveBeenCalledTimes(1)
+    await act(async () => {
+      fireEvent(notNowButton, 'press')
+    })
+    expect(navigation.navigate).toBeCalled()
+    expect(navigation.navigate).toHaveBeenCalledTimes(1)
   })
 })

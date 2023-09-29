@@ -7,10 +7,26 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
   visible={true}
 >
   <View
+    accessibilityState={
+      Object {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={false}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -38,6 +54,15 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
       }
     >
       <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
         accessible={false}
         focusable={false}
         onClick={[Function]}
@@ -80,6 +105,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
           >
             <Text
               allowFontScaling={false}
+              selectable={false}
               style={
                 Array [
                   Object {
@@ -133,6 +159,23 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
             <View
               accessibilityLabel="Global.Dismiss"
               accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -144,7 +187,6 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                   "top": 44,
                 }
               }
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -161,6 +203,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
             >
               <Text
                 allowFontScaling={false}
+                selectable={false}
                 style={
                   Array [
                     Object {
@@ -211,13 +254,24 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
             accessibilityRole="button"
             accessibilityState={
               Object {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
             collapsable={false}
             focusable={true}
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -277,10 +331,26 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
   visible={true}
 >
   <View
+    accessibilityState={
+      Object {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={false}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -308,6 +378,15 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
       }
     >
       <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
         accessible={false}
         focusable={false}
         onClick={[Function]}
@@ -350,6 +429,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
           >
             <Text
               allowFontScaling={false}
+              selectable={false}
               style={
                 Array [
                   Object {
@@ -403,6 +483,23 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
             <View
               accessibilityLabel="Global.Dismiss"
               accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -414,7 +511,6 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                   "top": 44,
                 }
               }
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -431,6 +527,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
             >
               <Text
                 allowFontScaling={false}
+                selectable={false}
                 style={
                   Array [
                     Object {

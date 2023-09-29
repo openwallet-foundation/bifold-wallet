@@ -32,6 +32,7 @@ exports[`displays a home screen renders correctly 1`] = `
 >
   <View>
     <View
+      collapsable={false}
       onLayout={[Function]}
     />
     <View
@@ -72,6 +73,7 @@ exports[`displays a home screen renders correctly 1`] = `
           >
             <Text
               allowFontScaling={false}
+              selectable={false}
               style={
                 Array [
                   Object {

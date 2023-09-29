@@ -14,22 +14,12 @@ Object {
       "results": Array [
         Object {
           "type": "return",
-          "value": Promise {
-            "_A": null,
-            "_x": 0,
-            "_y": 1,
-            "_z": "cat",
-          },
+          "value": Promise {},
         },
       ],
     },
   },
-  "invitationUrl": Promise {
-    "_A": null,
-    "_x": 0,
-    "_y": 1,
-    "_z": "cat",
-  },
+  "invitationUrl": Promise {},
   "record": Object {
     "_tags": Object {
       "recipientKeyFingerprints": Array [
@@ -53,12 +43,7 @@ Object {
         "results": Array [
           Object {
             "type": "return",
-            "value": Promise {
-              "_A": null,
-              "_x": 0,
-              "_y": 1,
-              "_z": "cat",
-            },
+            "value": Promise {},
           },
         ],
       },

@@ -29,7 +29,7 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 describe('displays a proof request screen', () => {

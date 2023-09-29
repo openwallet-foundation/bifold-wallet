@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native'
+import { act, render } from '@testing-library/react-native'
 import React from 'react'
 import { View, Text } from 'react-native'
 
@@ -21,7 +21,13 @@ const tourStep = {
 }
 
 describe('TourBox', () => {
-  test('Renders properly with defaults', () => {
+  beforeAll(()=>{
+    jest.useFakeTimers()
+  })
+  afterAll(()=>{
+    jest.useRealTimers()
+  })
+  test('Renders properly with defaults', async () => {
     const changeSpot = jest.fn()
     const onBackdropPress = jest.fn()
     const tree = render(
@@ -46,7 +52,7 @@ describe('TourBox', () => {
         />
       </TourProvider>
     )
-
+    await act(()=>{ jest.runAllTimers() })
     expect(tree).toMatchSnapshot()
   })
 })

@@ -44,8 +44,8 @@ const Home: React.FC<HomeProps> = () => {
     },
   })
 
-  const DisplayListItemType = (item: any): Element => {
-    let component: Element
+  const DisplayListItemType = (item: any): React.ReactNode => {
+    let component: React.ReactNode
     if (item.type === 'BasicMessageRecord') {
       component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
     } else if (item.type === 'CredentialRecord') {

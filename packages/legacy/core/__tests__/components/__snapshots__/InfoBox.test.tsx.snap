@@ -35,6 +35,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
       <Text
         accessible={false}
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -83,6 +84,23 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -94,7 +112,6 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
             "top": 44,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -131,6 +148,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           </Text>
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
@@ -163,13 +181,24 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -256,6 +285,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
       <Text
         accessible={false}
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -304,6 +334,23 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -315,7 +362,6 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
             "top": 44,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -352,6 +398,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
           </Text>
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
@@ -384,13 +431,24 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -477,6 +535,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
       <Text
         accessible={false}
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -525,6 +584,23 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -536,7 +612,6 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
             "top": 44,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -573,6 +648,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
           </Text>
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
@@ -605,13 +681,24 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -698,6 +785,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
       <Text
         accessible={false}
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -746,6 +834,23 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -757,7 +862,6 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
             "top": 44,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -794,6 +898,7 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
           </Text>
           <Text
             allowFontScaling={false}
+            selectable={false}
             style={
               Array [
                 Object {
@@ -826,13 +931,24 @@ exports[`ErrorModal Component Renders correctly as Warning 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

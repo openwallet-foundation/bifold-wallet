@@ -26,7 +26,7 @@ jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 const props = { params: { visible: true, credentialId: '123' } }
@@ -61,7 +61,7 @@ describe('displays a credential offer screen', () => {
       </ConfigurationContext.Provider>
     )
 
-    await act(async () => null)
+    await act(async () => {})
 
     expect(tree).toMatchSnapshot()
   })
@@ -75,7 +75,7 @@ describe('displays a credential offer screen', () => {
       </ConfigurationContext.Provider>
     )
 
-    await act(async () => null)
+    await act(async () => {})
 
     const acceptButton = getByTestId(testIdWithKey('AcceptCredentialOffer'))
     const declineButton = getByTestId(testIdWithKey('DeclineCredentialOffer'))
@@ -93,7 +93,7 @@ describe('displays a credential offer screen', () => {
       </ConfigurationContext.Provider>
     )
 
-    await act(async () => null)
+    await act(async () => {})
 
     const acceptButton = tree.getByTestId(testIdWithKey('AcceptCredentialOffer'))
 
@@ -111,7 +111,7 @@ describe('displays a credential offer screen', () => {
       </ConfigurationContext.Provider>
     )
 
-    await act(async () => null)
+    await act(async () => {})
 
     const declineButton = tree.getByTestId(testIdWithKey('DeclineCredentialOffer'))
 

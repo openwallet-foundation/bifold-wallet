@@ -21,19 +21,6 @@ exports[`NewQRView Component Renders correctly on first tab 1`] = `
   <View
     style={
       Object {
-        "alignItems": "center",
-        "flex": 1,
-        "justifyContent": "center",
-      }
-    }
-  >
-    <ActivityIndicator
-      size="small"
-    />
-  </View>
-  <View
-    style={
-      Object {
         "borderTopColor": "#000000",
         "borderTopWidth": 4,
         "flexDirection": "row",
@@ -44,10 +31,26 @@ exports[`NewQRView Component Renders correctly on first tab 1`] = `
   >
     <View
       accessibilityLabel="Scan.ScanQRCode"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -69,6 +72,7 @@ exports[`NewQRView Component Renders correctly on first tab 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -106,10 +110,26 @@ exports[`NewQRView Component Renders correctly on first tab 1`] = `
     </View>
     <View
       accessibilityLabel="Scan.MyQRCode"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -131,6 +151,7 @@ exports[`NewQRView Component Renders correctly on first tab 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -228,13 +249,12 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
             />
             <View
               collapsable={false}
-              nativeID="animatedComponent"
               style={
                 Object {
                   "position": "absolute",
                   "transform": Array [
                     Object {
-                      "rotate": "0deg",
+                      "rotate": "360deg",
                     },
                   ],
                 }
@@ -290,7 +310,6 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
               <View
                 accessible={true}
                 collapsable={false}
-                nativeID="animatedComponent"
                 style={
                   Object {
                     "opacity": 1,
@@ -299,6 +318,7 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
               >
                 <Text
                   allowFontScaling={false}
+                  selectable={false}
                   style={
                     Array [
                       Object {
@@ -355,10 +375,26 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
   >
     <View
       accessibilityLabel="Scan.ScanQRCode"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -380,6 +416,7 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {
@@ -415,10 +452,26 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
     </View>
     <View
       accessibilityLabel="Scan.MyQRCode"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -440,6 +493,7 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           Array [
             Object {

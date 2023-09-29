@@ -12,6 +12,11 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
+jest.mock('react-native-camera', () => {
+  return require('../../__mocks__/custom/react-native-camera')
+})
+
+
 describe('Scan Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()

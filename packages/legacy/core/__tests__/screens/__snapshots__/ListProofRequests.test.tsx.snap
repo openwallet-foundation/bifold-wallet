@@ -116,15 +116,32 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           accessibilityLabel="Screens.ProofRequestDetails"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -187,6 +204,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
           >
             <Text
               allowFontScaling={false}
+              selectable={false}
               style={
                 Array [
                   Object {
@@ -212,15 +230,32 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           accessibilityLabel="Screens.ProofRequestDetails"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -293,6 +328,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
           >
             <Text
               allowFontScaling={false}
+              selectable={false}
               style={
                 Array [
                   Object {

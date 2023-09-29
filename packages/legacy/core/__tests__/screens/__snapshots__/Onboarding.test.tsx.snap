@@ -130,6 +130,7 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
           Array [
@@ -185,6 +186,15 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
                 }
               >
                 <Text
+                  accessibilityState={
+                    Object {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
                   accessible={true}
                   focusable={true}
                   onClick={[Function]}
@@ -242,6 +252,23 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
       accessibilityElementsHidden={true}
       accessibilityLabel="Global.Back"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -254,7 +281,6 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
         }
       }
       importantForAccessibility="no-hide-descendants"
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -305,7 +331,6 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "backgroundColor": "rgba(66, 128, 62, 1)",
@@ -330,6 +355,23 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
       accessibilityElementsHidden={true}
       accessibilityLabel="Global.Next"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -342,7 +384,6 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
         }
       }
       importantForAccessibility="no-hide-descendants"
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -458,6 +499,7 @@ exports[`Onboarding Renders correctly 1`] = `
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
           Array [
@@ -489,6 +531,7 @@ exports[`Onboarding Renders correctly 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
           Array [
@@ -535,6 +578,23 @@ exports[`Onboarding Renders correctly 1`] = `
       accessibilityElementsHidden={true}
       accessibilityLabel="Global.Back"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -547,7 +607,6 @@ exports[`Onboarding Renders correctly 1`] = `
         }
       }
       importantForAccessibility="no-hide-descendants"
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -598,7 +657,6 @@ exports[`Onboarding Renders correctly 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "backgroundColor": "rgba(66, 128, 62, 1)",
@@ -620,7 +678,6 @@ exports[`Onboarding Renders correctly 1`] = `
       />
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "backgroundColor": "rgba(255, 255, 255, 1)",
@@ -645,6 +702,23 @@ exports[`Onboarding Renders correctly 1`] = `
       accessibilityElementsHidden={false}
       accessibilityLabel="Global.Next"
       accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -657,7 +731,6 @@ exports[`Onboarding Renders correctly 1`] = `
         }
       }
       importantForAccessibility="auto"
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}

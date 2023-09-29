@@ -142,9 +142,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -167,9 +165,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -192,9 +188,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -217,9 +211,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -242,9 +234,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -267,9 +257,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <TextInput
                     accessibilityLabel="PINEnter.EnterPIN"
@@ -318,6 +306,23 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                 <View
                   accessibilityLabel="PINCreate.Show"
                   accessibilityRole="button"
+                  accessibilityState={
+                    Object {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    Object {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
                   collapsable={false}
                   focusable={true}
@@ -329,7 +334,6 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                       "top": 44,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -346,6 +350,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
@@ -383,13 +388,24 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                 accessibilityRole="button"
                 accessibilityState={
                   Object {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  Object {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -586,9 +602,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -611,9 +625,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -636,9 +648,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -661,9 +671,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -686,9 +694,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -711,9 +717,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "textAlign": "center",
                         }
                       }
-                    >
-                      
-                    </Text>
+                    />
                   </View>
                   <TextInput
                     accessibilityLabel="PINEnter.EnterPIN"
@@ -762,7 +766,25 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                 <View
                   accessibilityLabel="PINCreate.Show"
                   accessibilityRole="button"
+                  accessibilityState={
+                    Object {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    Object {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
                   accessible={true}
+                  collapsable={false}
                   focusable={true}
                   hitSlop={
                     Object {
@@ -788,6 +810,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                 >
                   <Text
                     allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
@@ -860,6 +883,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                     <Text
                       accessible={false}
                       allowFontScaling={false}
+                      selectable={false}
                       style={
                         Array [
                           Object {
@@ -932,13 +956,24 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                         accessibilityRole="button"
                         accessibilityState={
                           Object {
+                            "busy": undefined,
+                            "checked": undefined,
                             "disabled": false,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          Object {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
                           }
                         }
                         accessible={true}
                         collapsable={false}
                         focusable={true}
-                        nativeID="animatedComponent"
                         onClick={[Function]}
                         onResponderGrant={[Function]}
                         onResponderMove={[Function]}
@@ -1005,10 +1040,23 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                 accessibilityRole="button"
                 accessibilityState={
                   Object {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  Object {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
+                collapsable={false}
                 focusable={true}
                 onClick={[Function]}
                 onResponderGrant={[Function]}

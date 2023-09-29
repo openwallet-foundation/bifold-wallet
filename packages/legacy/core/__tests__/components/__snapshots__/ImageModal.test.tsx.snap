@@ -7,10 +7,26 @@ exports[`ImageModal component Renders correctly 1`] = `
   visible={true}
 >
   <View
+    accessibilityState={
+      Object {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={false}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -39,6 +55,15 @@ exports[`ImageModal component Renders correctly 1`] = `
       }
     >
       <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
         accessible={false}
         focusable={false}
         onClick={[Function]}
@@ -68,6 +93,23 @@ exports[`ImageModal component Renders correctly 1`] = `
           <View
             accessibilityLabel="Global.Dismiss"
             accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             collapsable={false}
             focusable={true}
@@ -79,7 +121,6 @@ exports[`ImageModal component Renders correctly 1`] = `
                 "top": 44,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -96,6 +137,7 @@ exports[`ImageModal component Renders correctly 1`] = `
           >
             <Text
               allowFontScaling={false}
+              selectable={false}
               style={
                 Array [
                   Object {

@@ -77,6 +77,23 @@ exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -157,6 +174,23 @@ exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -236,6 +270,23 @@ exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
         <View
           accessibilityLabel="Connection.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -315,6 +366,23 @@ exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.ToggleDevTemplates"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -394,6 +462,23 @@ exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
         <View
           accessibilityLabel="NameWallet.ToggleWalletNaming"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -473,6 +558,23 @@ exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
         <View
           accessibilityLabel="Settings.TogglePreventAutoLock"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -599,6 +701,23 @@ exports[`Developer screen enableWalletNaming can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -679,6 +798,23 @@ exports[`Developer screen enableWalletNaming can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -758,6 +894,23 @@ exports[`Developer screen enableWalletNaming can be toggled 1`] = `
         <View
           accessibilityLabel="Connection.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -837,6 +990,23 @@ exports[`Developer screen enableWalletNaming can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.ToggleDevTemplates"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -916,6 +1086,23 @@ exports[`Developer screen enableWalletNaming can be toggled 1`] = `
         <View
           accessibilityLabel="NameWallet.ToggleWalletNaming"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -995,6 +1182,23 @@ exports[`Developer screen enableWalletNaming can be toggled 1`] = `
         <View
           accessibilityLabel="Settings.TogglePreventAutoLock"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1121,6 +1325,23 @@ exports[`Developer screen preventAutoLock can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1201,6 +1422,23 @@ exports[`Developer screen preventAutoLock can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1280,6 +1518,23 @@ exports[`Developer screen preventAutoLock can be toggled 1`] = `
         <View
           accessibilityLabel="Connection.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1359,6 +1614,23 @@ exports[`Developer screen preventAutoLock can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.ToggleDevTemplates"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1438,6 +1710,23 @@ exports[`Developer screen preventAutoLock can be toggled 1`] = `
         <View
           accessibilityLabel="NameWallet.ToggleWalletNaming"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1517,6 +1806,23 @@ exports[`Developer screen preventAutoLock can be toggled 1`] = `
         <View
           accessibilityLabel="Settings.TogglePreventAutoLock"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1643,6 +1949,23 @@ exports[`Developer screen screen renders correctly 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1723,6 +2046,23 @@ exports[`Developer screen screen renders correctly 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1802,6 +2142,23 @@ exports[`Developer screen screen renders correctly 1`] = `
         <View
           accessibilityLabel="Connection.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1881,6 +2238,23 @@ exports[`Developer screen screen renders correctly 1`] = `
         <View
           accessibilityLabel="Verifier.ToggleDevTemplates"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -1960,6 +2334,23 @@ exports[`Developer screen screen renders correctly 1`] = `
         <View
           accessibilityLabel="NameWallet.ToggleWalletNaming"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2039,6 +2430,23 @@ exports[`Developer screen screen renders correctly 1`] = `
         <View
           accessibilityLabel="Settings.TogglePreventAutoLock"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2165,6 +2573,23 @@ exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2245,6 +2670,23 @@ exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2324,6 +2766,23 @@ exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Connection.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2403,6 +2862,23 @@ exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.ToggleDevTemplates"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2482,6 +2958,23 @@ exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
         <View
           accessibilityLabel="NameWallet.ToggleWalletNaming"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2561,6 +3054,23 @@ exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Settings.TogglePreventAutoLock"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2687,6 +3197,23 @@ exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2767,6 +3294,23 @@ exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2846,6 +3390,23 @@ exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
         <View
           accessibilityLabel="Connection.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -2925,6 +3486,23 @@ exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.ToggleDevTemplates"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3004,6 +3582,23 @@ exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
         <View
           accessibilityLabel="NameWallet.ToggleWalletNaming"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3083,6 +3678,23 @@ exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
         <View
           accessibilityLabel="Settings.TogglePreventAutoLock"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3209,6 +3821,23 @@ exports[`Developer screen useVerifierCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3289,6 +3918,23 @@ exports[`Developer screen useVerifierCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3368,6 +4014,23 @@ exports[`Developer screen useVerifierCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Connection.Toggle"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3447,6 +4110,23 @@ exports[`Developer screen useVerifierCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Verifier.ToggleDevTemplates"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3526,6 +4206,23 @@ exports[`Developer screen useVerifierCapability can be toggled 1`] = `
         <View
           accessibilityLabel="NameWallet.ToggleWalletNaming"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -3605,6 +4302,23 @@ exports[`Developer screen useVerifierCapability can be toggled 1`] = `
         <View
           accessibilityLabel="Settings.TogglePreventAutoLock"
           accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}

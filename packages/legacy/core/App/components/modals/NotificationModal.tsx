@@ -12,7 +12,7 @@ import { HomeStackParams, Screens } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
-interface NotificationModalProps {
+interface NotificationModalProps extends React.PropsWithChildren {
   title: string
   doneTitle?: string
   doneType?: ButtonType

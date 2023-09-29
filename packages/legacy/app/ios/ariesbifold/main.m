@@ -2,7 +2,8 @@
 
 #import "AppDelegate.h"
 
-int main(int argc, char * argv[]) {
+int main(int argc, char *argv[])
+{
   struct rlimit rlim;
   unsigned long long NEW_SOFT_LIMIT = 1024;
 

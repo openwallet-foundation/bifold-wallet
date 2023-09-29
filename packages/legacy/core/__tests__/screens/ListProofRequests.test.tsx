@@ -19,7 +19,7 @@ jest.mock('@react-navigation/native', () => {
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 const navigation = useNavigation()
@@ -37,7 +37,7 @@ describe('ListProofRequests Component', () => {
 
   test('Renders correctly', async () => {
     const tree = renderView()
-    await act(async () => null)
+    await act(async () => {})
     expect(tree).toMatchSnapshot()
   })
 

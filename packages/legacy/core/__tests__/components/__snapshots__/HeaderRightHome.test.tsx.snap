@@ -4,6 +4,23 @@ exports[`Header Right Home Component Renders correctly 1`] = `
 <View
   accessibilityLabel="Global.Home"
   accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -15,7 +32,6 @@ exports[`Header Right Home Component Renders correctly 1`] = `
       "top": 44,
     }
   }
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -44,6 +60,7 @@ exports[`Header Right Home Component Renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
