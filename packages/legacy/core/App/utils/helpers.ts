@@ -422,6 +422,9 @@ export const processProofAttributes = (
   const retrievedCredentialAttributes =
     credentials?.proofFormats?.indy?.attributes ?? credentials?.proofFormats?.anoncreds?.attributes
 
+  // non_revoked interval can sometimes be top level
+  const requestNonRevoked = request?.indy?.non_revoked ?? request?.anoncreds?.non_revoked
+
   if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
@@ -454,7 +457,6 @@ export const processProofAttributes = (
       } else {
         continue
       }
-
       const { name, names, non_revoked } = requestedProofAttributes[key]
 
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
@@ -481,7 +483,7 @@ export const processProofAttributes = (
             credentialId: credential.credentialId,
             name: attributeName,
             value: attributeValue,
-            nonRevoked: non_revoked,
+            nonRevoked: requestNonRevoked ?? non_revoked,
           })
         )
       }
@@ -524,6 +526,9 @@ export const processProofPredicates = (
   if (!requestedProofPredicates || !retrievedCredentialPredicates) {
     return {}
   }
+
+  // non_revoked interval can sometimes be top level
+  const requestNonRevoked = request?.indy?.non_revoked ?? request?.anoncreds?.non_revoked
 
   for (const key of Object.keys(retrievedCredentialPredicates)) {
     const altCredentials = [...(retrievedCredentialPredicates[key] ?? [])]
@@ -575,7 +580,7 @@ export const processProofPredicates = (
           revoked,
           pValue,
           pType,
-          nonRevoked: non_revoked,
+          nonRevoked: requestNonRevoked ?? non_revoked,
         })
       )
     }
