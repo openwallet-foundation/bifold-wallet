@@ -2,7 +2,7 @@ import { canConnectToLedgerNode, fetchLedgerNodes } from '../App/utils/ledger'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('../configs/ledgers/indy')
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 // Use these ports to trigger TCP socket behaviour in the

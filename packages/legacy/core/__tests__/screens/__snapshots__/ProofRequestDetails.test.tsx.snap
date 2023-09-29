@@ -78,6 +78,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
   >
     <View>
       <View
+        collapsable={false}
         onLayout={[Function]}
       >
         <View
@@ -113,6 +114,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -205,6 +207,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
             viewabilityConfigCallbackPairs={Array []}
           >
             <View
+              onFocusCapture={[Function]}
               onLayout={[Function]}
               style={null}
             >
@@ -263,6 +266,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               </View>
             </View>
             <View
+              onFocusCapture={[Function]}
               onLayout={[Function]}
               style={null}
             >
@@ -320,13 +324,6 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                 </View>
               </View>
             </View>
-            <View
-              style={
-                Object {
-                  "height": 0,
-                }
-              }
-            />
           </View>
         </View>
       </View>
@@ -353,13 +350,24 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               accessibilityRole="button"
               accessibilityState={
                 Object {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
               collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -419,13 +427,24 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
               accessibilityRole="button"
               accessibilityState={
                 Object {
+                  "busy": undefined,
+                  "checked": undefined,
                   "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
               collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}

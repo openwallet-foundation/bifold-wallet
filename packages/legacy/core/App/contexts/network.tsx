@@ -15,7 +15,7 @@ export interface NetworkContext {
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
 
-export const NetworkProvider: React.FC = ({ children }) => {
+export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const netInfo = useNetInfo()
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
 

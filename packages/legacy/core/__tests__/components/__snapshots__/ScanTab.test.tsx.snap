@@ -3,10 +3,26 @@
 exports[`ScanTab Renders correctly 1`] = `
 <View
   accessibilityLabel="title"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -28,6 +44,7 @@ exports[`ScanTab Renders correctly 1`] = `
 >
   <Text
     allowFontScaling={false}
+    selectable={false}
     style={
       Array [
         Object {

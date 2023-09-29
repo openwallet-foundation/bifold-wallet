@@ -22,7 +22,7 @@ const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
 const outOfBandInvitation = { goalCode: 'aries.vc.verify.once' }
 const props = { params: { connectionId: connection.id } }
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')

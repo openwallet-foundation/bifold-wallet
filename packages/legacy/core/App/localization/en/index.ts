@@ -445,8 +445,10 @@ const translation = {
     "AbortDecline": "No, go back",
     "DeclineTitle": "Decline proof request?",
     "Declined": "Declined",
+    "ReviewSentInformation": "You shared the following information from {{count}} credentials with", // this exists to make typescript happy
     "ReviewSentInformation_one": "You shared the following information from {{count}} credential with",
     "ReviewSentInformation_other": "You shared the following information from {{count}} credentials with",
+    "ShareFollowingInformation": "is sharing the following information from {{count}} credentials.", // this exists to make typescript happy
     "ShareFollowingInformation_one": "is sharing the following information from {{count}} credential.",
     "ShareFollowingInformation_other": "is sharing the following information from {{count}} credentials.",
     "DeclineBulletPoint1": "Organizations and services require that you prove you're eligible to continue with their service or access.",

@@ -39,7 +39,7 @@ export interface AuthContext {
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
