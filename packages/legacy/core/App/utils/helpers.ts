@@ -395,7 +395,7 @@ export const evaluatePredicates =
 
     const credentialAttributes = getCredentialInfo(proofCredentialItems.credId, fields).map((ci) => ci.attributes)
 
-    return predicates.map((predicate) => {
+    return predicates.map((predicate: Predicate) => {
       const { pType: pType, pValue: pValue, name: field } = predicate
       let satisfied = false
 
@@ -500,7 +500,7 @@ export const mergeAttributesAndPredicates = (
   for (const [key, predicate] of Object.entries(predicates)) {
     const existingEntry = merged[key]
     if (existingEntry) {
-      const mergedAltCreds = existingEntry.altCredentials?.filter((credId) =>
+      const mergedAltCreds = existingEntry.altCredentials?.filter((credId: string) =>
         predicate.altCredentials?.includes(credId)
       )
       merged[key] = { ...existingEntry, ...predicate }
