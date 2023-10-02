@@ -7642,7 +7642,7 @@ __metadata:
     "@types/react": ^18.0.24
     "@types/react-native": 0.63.53
     aries-bifold: "workspace:^"
-    axios: ^0.21.0
+    axios: ^1.4.0
     babel-plugin-module-resolver: ^5.0.0
     eslint: ^8.47.0
     eslint-import-resolver-typescript: ^2.5.0
