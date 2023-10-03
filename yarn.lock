@@ -3987,7 +3987,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperledger/aries-oca@0.0.0, @hyperledger/aries-oca@workspace:packages/oca":
+"@hyperledger/aries-oca@^1.0.0, @hyperledger/aries-oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-oca@workspace:packages/oca"
   dependencies:
@@ -7267,7 +7267,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.1
-    "@hyperledger/aries-oca": 0.0.0
+    "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/masked-view": 0.1.11
@@ -7285,7 +7285,7 @@ __metadata:
     "@types/lodash.startcase": ^4.4.7
     "@types/react": ^18.0.24
     "@types/react-native": 0.71.5
-    aries-bifold: "workspace:^"
+    aries-bifold: ^1.0.0
     axios: ^1.4.0
     babel-plugin-module-resolver: ^5.0.0
     eslint: ^8.48.0
@@ -7358,7 +7358,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"aries-bifold@workspace:^, aries-bifold@workspace:packages/legacy/core":
+"aries-bifold@^1.0.0, aries-bifold@workspace:packages/legacy/core":
   version: 0.0.0-use.local
   resolution: "aries-bifold@workspace:packages/legacy/core"
   dependencies:
@@ -7384,7 +7384,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.1
-    "@hyperledger/aries-oca": 0.0.0
+    "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/eslint-config": ^3.2.0
