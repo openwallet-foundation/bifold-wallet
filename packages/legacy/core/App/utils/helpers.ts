@@ -5,7 +5,9 @@ import {
   AnonCredsProofFormat,
   AnonCredsProofFormatService,
   AnonCredsProofRequestRestriction,
+  AnonCredsRequestedAttribute,
   AnonCredsRequestedAttributeMatch,
+  AnonCredsRequestedPredicate,
   AnonCredsRequestedPredicateMatch,
   LegacyIndyProofFormat,
   LegacyIndyProofFormatService,
@@ -411,6 +413,31 @@ export const evaluatePredicates =
     })
   }
 
+const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
+  const credName = credNameFromRestriction(attrReq.restrictions)
+  //there is no credId in this context so use credName as a placeholder
+  const processedAttributes: ProofCredentialAttributes = {
+    credExchangeRecord: undefined,
+    altCredentials: [credName],
+    credId: credName,
+    schemaId: undefined,
+    credDefId: undefined,
+    credName: credName,
+    attributes: [] as Attribute[],
+  }
+  const { name, names } = attrReq
+  for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
+    processedAttributes.attributes?.push(
+      new Attribute({
+        revoked: false,
+        credentialId: credName,
+        name: attributeName,
+        value: '',
+      })
+    )
+  }
+  return processedAttributes
+}
 export const processProofAttributes = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
@@ -428,7 +455,6 @@ export const processProofAttributes = (
   if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
-
   for (const key of Object.keys(retrievedCredentialAttributes)) {
     const altCredentials = [...(retrievedCredentialAttributes[key] ?? [])]
       .sort(credentialSortFn)
@@ -436,11 +462,20 @@ export const processProofAttributes = (
 
     const credentialList = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn)
 
+    const { name, names, non_revoked } = requestedProofAttributes[key]
+
+    if (credentialList.length <= 0) {
+      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key])
+      if (!processedAttributes[key]) {
+        processedAttributes[key] = missingAttributes
+      } else {
+        processedAttributes[key].attributes?.push(...(missingAttributes.attributes ?? []))
+      }
+    }
+
     //iterate over all credentials that satisfy the proof
     for (const credential of credentialList) {
-      const credNameRestriction = credNameFromRestriction(requestedProofAttributes[key]?.restrictions)
-
-      let credName = credNameRestriction ?? key
+      let credName = key
       if (credential?.credentialInfo?.credentialDefinitionId || credential?.credentialInfo?.schemaId) {
         credName = parseCredDefFromId(
           credential?.credentialInfo?.credentialDefinitionId,
@@ -457,7 +492,6 @@ export const processProofAttributes = (
       } else {
         continue
       }
-      const { name, names, non_revoked } = requestedProofAttributes[key]
 
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
         if (!processedAttributes[credential?.credentialId]) {
@@ -512,6 +546,31 @@ export const mergeAttributesAndPredicates = (
   return merged
 }
 
+const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
+  const credName = credNameFromRestriction(predReq.restrictions)
+  //there is no credId in this context so use credName as a placeholder
+  const processedPredicates: ProofCredentialPredicates = {
+    credExchangeRecord: undefined,
+    altCredentials: [credName],
+    credId: credName,
+    schemaId: undefined,
+    credDefId: undefined,
+    credName: credName,
+    predicates: [] as Predicate[],
+  }
+  const { name, p_type: pType, p_value: pValue } = predReq
+
+  processedPredicates.predicates?.push(
+    new Predicate({
+      revoked: false,
+      credentialId: credName,
+      name: name,
+      pValue,
+      pType,
+    })
+  )
+  return processedPredicates
+}
 export const processProofPredicates = (
   request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
   credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
@@ -536,6 +595,15 @@ export const processProofPredicates = (
       .map((cred) => cred.credentialId)
 
     const credentialList = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn)
+    const { name, p_type: pType, p_value: pValue, non_revoked } = requestedProofPredicates[key]
+    if (credentialList.length <= 0) {
+      const missingPredicates = addMissingDisplayPredicates(requestedProofPredicates[key])
+      if (!processedPredicates[key]) {
+        processedPredicates[key] = missingPredicates
+      } else {
+        processedPredicates[key].predicates?.push(...(missingPredicates.predicates ?? []))
+      }
+    }
 
     for (const credential of credentialList) {
       let revoked = false
@@ -549,7 +617,6 @@ export const processProofPredicates = (
         continue
       }
       const { credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
-      const { name, p_type: pType, p_value: pValue, non_revoked } = requestedProofPredicates[key]
 
       const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)
 
