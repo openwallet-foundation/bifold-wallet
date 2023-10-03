@@ -134,8 +134,9 @@ export function formatTime(
   const now = new Date()
   const sameYear = time.getFullYear() === now.getFullYear()
   const sameDay = time.getDate() === now.getDate() && time.getMonth() === now.getMonth() && sameYear
-  const isNonEnglish = i18n.resolvedLanguage === 'fr' || i18n.resolvedLanguage === 'pt-BR'
-
+  const isPortuguese = i18n.resolvedLanguage === 'pt-BR'
+  const isNonEnglish = i18n.resolvedLanguage === 'fr' || isPortuguese
+  const hoursFormat = isPortuguese ? 'HH:mm' : 'h:mm a'
   // for the shortened approach eg. in chat bubbles
   if (chatFormat) {
     if (lessThanAMinuteAgo) {
@@ -146,7 +147,7 @@ export function formatTime(
       return minutesAgo === 1 ? `1 ${i18n.t('Date.MinuteAgo')}` : `${minutesAgo} ${i18n.t('Date.MinutesAgo')}`
     }
     if (sameDay) {
-      return momentTime.format('h:mm a')
+      return momentTime.format(hoursFormat)
     }
   }
 
@@ -154,7 +155,7 @@ export function formatTime(
   let formattedTime = ''
   // if sameDay and abbreviated
   if (sameDay && trim) {
-    return momentTime.format('h:mm a')
+    return momentTime.format(hoursFormat)
   }
 
   if (format) {
@@ -179,7 +180,7 @@ export function formatTime(
         ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
         : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
     if (includeHour) {
-      formattedTime = `${formattedTime}, ${momentTime.format('h:mm a')}`
+      formattedTime = `${formattedTime}, ${momentTime.format(hoursFormat)}`
     }
   }
 
