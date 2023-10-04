@@ -21,6 +21,7 @@
     "postinstall": "npx patch-package",
     "ios": "npx react-native run-ios --device",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --color .",
+    "build": "bob build",
     "prepack": "bob build",
     "pre-commit-lint": "npx lint-staged",
     "prepare": "install-self-peers -- --ignore-scripts",
