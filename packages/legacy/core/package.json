@@ -4,6 +4,7 @@
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "App/index.ts",
+  "source": "App/index",
   "types": "lib/typescript/App/index.d.ts",
   "bin": {
     "bifold": "bin/bifold"
