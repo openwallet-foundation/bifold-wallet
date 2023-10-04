@@ -7,7 +7,7 @@ const https = require('https')
 const url = require('url')
 
 const networkUrl =
-  'https://raw.githubusercontent.com/hyperledger/indy-node-monitor/63ce2b937fc22e7243b040924673dca8f608dc90/fetch-validator-status/networks.json'
+  'https://raw.githubusercontent.com/hyperledger/indy-node-monitor/main/fetch-validator-status/networks.json'
 const networksToAdd = [
   { id: 'bct', connectionOnStartup: true, production: false },
   { id: 'cdn', connectionOnStartup: true, production: false },
