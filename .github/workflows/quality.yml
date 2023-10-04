@@ -22,10 +22,9 @@ jobs:
         run: |
           yarn install --immutable
 
-      - name: Bundle Legacy Core
+      - name: Build Workspace
         run: |
-          cd packages/legacy/core && \
-          yarn run prepack
+          yarn lerna run build
 
       - name: Check style
         run: |
@@ -48,6 +47,10 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --immutable
+
+      - name: Build Workspace
+        run: |
+          yarn lerna run build
 
       - name: Automated testing
         run: |

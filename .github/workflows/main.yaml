@@ -57,6 +57,10 @@ jobs:
           yarn install --immutable && \
           git status
 
+      - name: Build Workspace
+        run: |
+          yarn lerna run build
+
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./packages/legacy/app/ios
@@ -139,6 +143,10 @@ jobs:
         run: |
           node -v && yarn -v && yarn install --immutable && \
           git status
+
+      - name: Build Workspace
+        run: |
+          yarn lerna run build
 
       - name: Android Release Build
         working-directory: ./packages/legacy/app/android
