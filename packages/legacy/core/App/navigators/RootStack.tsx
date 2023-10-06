@@ -1,6 +1,7 @@
 import { useAgent } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackCardStyleInterpolator, StackNavigationProp } from '@react-navigation/stack'
+import { parseUrl } from 'query-string'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
@@ -89,6 +90,16 @@ const RootStack: React.FC = () => {
       } catch {
         try {
           // Try connectionless here
+          const queryParams = parseUrl(deepLink).query
+          const param = queryParams['d_m'] ?? queryParams['c_i']
+          // if missing both of the required params, don't attempt to open OOB
+          if (!param) {
+            dispatch({
+              type: DispatchAction.ACTIVE_DEEP_LINK,
+              payload: [undefined],
+            })
+            return
+          }
           const message = await getOobDeepLink(deepLink, agent)
           navigation.navigate(Stacks.ConnectionStack as any, {
             screen: Screens.Connection,
