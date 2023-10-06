@@ -7,8 +7,9 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'packages/legacy/app/ios/**'
-      - 'packages/legacy/app/android/**'
+      - 'packages/legacy/app/**'
+      - 'packages/legacy/core/**'
+      - 'packages/oca/**'
       - '**/package-lock.json'
     types: [opened, synchronize, reopened, labeled]
   push:
