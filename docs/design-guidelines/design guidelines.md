@@ -105,6 +105,12 @@ Touch targets are areas of a screen that response to user input (touch, voice co
 To avoid overlapping touch targets, there should be a space of at least 16 dp between horizontally stacked buttons and 16 px between vertically stacked buttons.
 
 ## Scrolling
+Content should never be hidden or cut off.
+
+If content or elements extend past the screen size, always enable scrolling so that people can interact with the contents. Be mindful of accessibility settings that would increase the font size.
+
+Ensure that content does not get covered by fixed elements on the screen by adding padding at the bottom.
+
 
 ## Loading
 
