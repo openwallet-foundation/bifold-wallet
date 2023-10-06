@@ -32,7 +32,7 @@ People skim content. Only show relevant information for the intended user flow (
 
 **Tips:**
 - Use callout boxes to highlight important information
-- Hide information in accordions so people can easily scan their desired topics and expand the content further
+- Hide information in accordions to avoid visual clutter which will help people scan their desired topics and expand the content further
 - Ensure the maximum line length is 50-70 character (depending on character style)
 
 
@@ -79,7 +79,7 @@ Buttons let people know what actions they can take.
 ### Hierarchy
 [insert image of example of button hierarchy]
 
-The importance of a button can be determined by it's level of visibility and placement. 
+The importance of a button can be determined by it's level of visibility and placement. Highly visible buttons that are strategically placed will allow people to quickly identify the next call-to-action and help complete their task/goal quicker. This helps reduce cognitive load (the mental effort of a user to process information).
 
 There is no agreement on the placement of primary and secondary buttons ex. "Okay" / "Cancel" versus "Cancel" / "Okay". It is important to be consistent. 
 
@@ -112,8 +112,69 @@ If content or elements extend past the screen size, always enable scrolling so t
 Ensure that content does not get covered by fixed elements on the screen by adding padding at the bottom.
 
 
-## Loading
+## Progress indicators
+Progress indicators indicates help communicate what the system is doing, giving context to users so they constantly know that the system is working and removes uncertainty.
 
-## Modals
+If loading is expected to be long, a way to escape the loading state should always be available. Manage a user's expectations by informing them if progress is expected to be long or if it's taking longer than usual so they may take appropriate steps. 
+
+If a delay is expected to be | 
+--- | ---
+<1 second | use the pressed/pending state
+1-4 seconds |  provide a dedicated visual cue, such as a button with an animated icon, a loading bar, or a skeleton screen
+ > 4 seconds | use a loading screen
+
+### Use the correct type of progress indicator
+- Determinate progress indicators communicate a known completion rate. Ex. progress bar with a percent complete indicator. 
+- Indeterminate progress indicators communicate an unknown completion rate or if the completion rate is not important to communicate. Ex. A spinning wheel
+
+### Use loading times effectively
+If a long wait is inevitable, turn it into a positive experience by adding value while people wait.
+
+**Tips**
+- Add tips on how to use the app
+- Advertise new features
+- Describe what people may be expecting after the wait
+- Add a quick survey
+- Add a delightful animation
 
 ## Accessibility
+The following is a fraction of reccomendations based off of WCAG standards. Designing with accessibility in mind will allow diverse people to use your app and improves the overall experience for everyone. 
+
+### Accessibility Roles
+**Interactive icons or buttons that don't have text** should have:
+- accessibility label that convey the purpose of the button
+- "button" accessibility role
+
+All **buttons or interactive icons** should have:
+- "button" accessibility role
+
+All **links** should have:
+- "link" accessibility role
+
+**Tab navigation bar** should have:
+- "tab" accessibility role
+
+All **title of a screen, modal, notification** should have:
+- "header" accessibility role
+
+### Accessibility States
+
+**Elements with multiple states** should have:
+- "togglebutton" / "radio" / "checkbox" / etc. accessibility role
+- accessibilityState "checked" / "disabled" / "selected" / etc. to indicate if the element is on or off, disabled, or selected.
+
+### Decorative images
+Icons that don't add extra context or meaning are decorative and should have accessibility disabled or hidden to avoid being focused.
+
+### Focus order
+As users navigate sequentially using assistive technology, information should be presented in an order that is consistent with the meaning of the content.
+
+Elements should be laid out so that the focus follows the language's written/reading direction (ex. left-to-right or right-to-left) and isn't inconsistent with the meaning of the content.
+
+Group elements together so that assistive technology such as screen readers read grouped elements together
+
+If context changes, the focus should change to the new context that doesn't confuse the user.
+
+For example, when a module paginates to the next page, the following should happen:
+- Focus should move from the 'next' button to the Page title.
+- If the module was dismissed, the focus should revert back to the element that initiated the module
