@@ -3,6 +3,45 @@ This document is an adaptable set of reccomendations that follow standard design
 - Material Design
 - B.C. government web standards and guides
 
+## Principles
+
+### Predicatable
+User flows should be intuitive and consistent. Use existing mental models and standard UI elements. If existing mental models are not sufficient, then ensure that the system is easy to learn. Consistency will help the learning curve.
+
+### Simple
+Be clear and concise rather than clever. Strategically place elements to avoid visual clutter and componentize comtent to reduce cognitive load. Organize the information architecture so that branches focus on a single goal. 
+
+### Friendly
+Digital wallets can easily lean towards being technical and complex, which can be intimidating to some. Anthropomorphize your system and attribute a friendly personality to better approach and engage users. This can mean writing content in a conversational tone, use light animation to smooth transitions, using brighter colours, rounding edges, etc.
+
+## Layout
+Use visual cues to help identify hierarchy. Material Design takes inspiration on how light behaves in the physical world and uses brightness and shadow to communicate hierarchy. 
+
+Avoid placing elements close to the edge of the screen. Some mobile devices have rounded screens or are in a phone case with a thick bezel that makes it hard to tap elements close to a screen's edge.
+
+### Anatomy
+The layout of a screen typically has a:
+- app bar 
+- body
+- navigation
+
+#### App bar
+The app bar is used to communicate where you are and what you can do on the screen. They are typically placed at the bottom or top. They may contain a:
+- Screen title
+- A way to navigate away
+- Additional actions that can be taken for that screen
+
+If people do not always need to navigate away or take action, consider hiding the app bar con scroll.
+
+#### Body
+The body is where most people will interact and takes up most of the screen. It contains the main actions or important information. If people need more room to interact with the body, consider hiding other elements of the screen, such as the app bar or navigation
+
+#### Navigation
+Screens should have a way to navigate away from their current screen to a different one. These can be:
+- Tab bar
+- navigation pane
+
+
 ## Content Design
 
 ### Audience
@@ -90,7 +129,7 @@ States include: Active/Enabled, Disabled, Hover, Focused, Pressed
 
 Buttons that are in a disabled state should be clear on why it's disabled. If it is not clear, consider enabling the button and displaying an alert to inform people on why the button is disabled. [insert image of an alert when a form is missing a field] 
 
-### Text versus Icon versus both
+### Text versus icon versus both
 Text should accompany icons that are not universally recognized. Icons that are well understood or universally recognized may be placed without text. 
 
 ### Touch targets
@@ -102,7 +141,7 @@ Touch targets are areas of a screen that response to user input (touch, voice co
 - The size of the target is determined by the user agent and is not modified by the author
 - A particular presentation of the target is essential to the information being conveyed
 
-To avoid overlapping touch targets, there should be a space of at least 16 dp between horizontally stacked buttons and 16 px between vertically stacked buttons.
+To avoid overlapping touch targets, there should be a space of at least 16 dp between horizontally stacked buttons and 16 px between vertically stacked buttons.\
 
 ## Scrolling
 Content should never be hidden or cut off.
