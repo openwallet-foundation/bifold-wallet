@@ -1,3 +1,4 @@
+import { ProofRequestTemplate, hasPredicates, isParameterizable } from '@hyperledger/aries-bifold-verifier'
 import { MetaOverlay, OverlayType } from '@hyperledger/aries-oca'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
@@ -6,7 +7,6 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { ProofRequestTemplate, hasPredicates, isParameterizable } from '../../verifier'
 import EmptyList from '../components/misc/EmptyList'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'

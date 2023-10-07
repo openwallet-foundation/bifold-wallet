@@ -1,8 +1,8 @@
+import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { IOverlayBundleData } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 import defaultIndyLedgers from '../configs/ledgers/indy'
-import { useProofRequestTemplates } from '../verifier'
 
 import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'

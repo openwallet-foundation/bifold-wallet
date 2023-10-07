@@ -1,4 +1,10 @@
 import { useAgent } from '@aries-framework/react-hooks'
+import {
+  AnonCredsProofRequestTemplatePayloadData,
+  ProofRequestType,
+  linkProofWithTemplate,
+  sendProofRequest,
+} from '@hyperledger/aries-bifold-verifier'
 import { MetaOverlay } from '@hyperledger/aries-oca'
 import { Attribute, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { OverlayType } from '@hyperledger/aries-oca/build/types/TypeEnums'
@@ -8,12 +14,6 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, StyleProp, StyleSheet, Text, TextInput, TextStyle, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import {
-  AnonCredsProofRequestTemplatePayloadData,
-  ProofRequestType,
-  linkProofWithTemplate,
-  sendProofRequest,
-} from '../../verifier'
 import Button, { ButtonType } from '../components/buttons/Button'
 import AlertModal from '../components/modals/AlertModal'
 import { useConfiguration } from '../contexts/configuration'

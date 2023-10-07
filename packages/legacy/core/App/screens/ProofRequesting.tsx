@@ -2,6 +2,14 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { DidExchangeState } from '@aries-framework/core'
 import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import {
+  ProofCustomMetadata,
+  ProofMetadata,
+  isPresentationFailed,
+  isPresentationReceived,
+  linkProofWithTemplate,
+  sendProofRequest,
+} from '@hyperledger/aries-bifold-verifier'
 import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -18,14 +26,6 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import {
-  ProofCustomMetadata,
-  ProofMetadata,
-  isPresentationFailed,
-  isPresentationReceived,
-  linkProofWithTemplate,
-  sendProofRequest,
-} from '../../verifier'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'

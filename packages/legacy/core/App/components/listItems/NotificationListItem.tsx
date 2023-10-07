@@ -8,6 +8,7 @@ import {
   ProofState,
 } from '@aries-framework/core'
 import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
+import { markProofAsViewed } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
@@ -15,7 +16,6 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle, Text, TextStyle, DeviceEventEmitter, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { markProofAsViewed } from '../../../verifier'
 import { EventTypes, hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'

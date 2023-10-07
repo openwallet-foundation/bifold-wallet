@@ -10,7 +10,7 @@ import React from 'react'
 
 import { testIdWithKey } from '../../App/utils/testable'
 import ProofDetails from '../../App/screens/ProofDetails'
-import * as proofUtils from '../../verifier/utils/proof'
+import * as verifier from '@hyperledger/aries-bifold-verifier'
 import { AnonCredsProof } from '@aries-framework/anoncreds'
 import configurationContext from '../contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
@@ -94,7 +94,7 @@ const requestPresentationMessage = new V1RequestPresentationMessage({
   ],
 })
 
-const data = proofUtils.parseAnonCredsProof(proof_request, proof)
+const data = verifier.parseAnonCredsProof(proof_request, proof)
 
 describe('ProofDetails Component', () => {
   afterEach(() => {
