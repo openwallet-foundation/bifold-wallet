@@ -17,8 +17,6 @@ Digital wallets can easily lean towards being technical and complex, which can b
 ## Layout
 Use visual cues to help identify hierarchy. Material Design takes inspiration on how light behaves in the physical world and uses brightness and shadow to communicate hierarchy. 
 
-Avoid placing elements close to the edge of the screen. Some mobile devices have rounded screens or are in a phone case with a thick bezel that makes it hard to tap elements close to a screen's edge.
-
 ### Anatomy
 The layout of a screen typically has a:
 - app bar 
@@ -41,6 +39,21 @@ Screens should have a way to navigate away from their current screen to a differ
 - Tab bar
 - navigation pane
 
+### Safe Areas
+Ensure there's adquate space between elements to avoid mistaps. If there isn't enough room to place all elements, consider collapsing items into subtasks. 
+
+Avoid placing elements close to the edge of the screen (margin). Some mobile devices have rounded screens or are in a phone case with a thick bezel that makes it hard to tap elements close to a screen's edge.
+
+Be mindful of content within the body that may get covered by a keyboard. The safe area should move to align with the keyboard to avoid obscuring important content.
+
+### Responsive design
+Devices come in different sizes and can be used in different orientations. Consider different layouts for different sizes to strategically use space. Be mindful of elemeents that do not scale well.
+
+With extra space, make use of white space and avoid cramming too much information into a screen to reduce cognitive load. 
+
+Containers should have a maximum width to ensure that elements in a container don't lose their relationship with each other if they were spread apart. A maximum width also controls the line legnth of content, ensuring that the maximum line length is 50-70 characters.
+
+Some elements
 
 ## Content Design
 
@@ -72,7 +85,7 @@ People skim content. Only show relevant information for the intended user flow (
 **Tips:**
 - Use callout boxes to highlight important information
 - Hide information in accordions to avoid visual clutter which will help people scan their desired topics and expand the content further
-- Ensure the maximum line length is 50-70 character (depending on character style)
+- Ensure the maximum line length is 50-70 characters (depending on character style)
 
 
 ### Descriptive call to actions
