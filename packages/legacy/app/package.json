@@ -7,7 +7,8 @@
     "android": "react-native run-android",
     "gradle": "./android/gradlew --project-dir=./android --no-daemon",
     "gradle:write-locks": "cd android && ./gradlew app:dependencies --write-locks",
-    "postinstall": "patch-package && react-native setup-ios-permissions && pod-install --non-interactive",
+    "prepare": "patch-package",
+    "setup:ios": "react-native setup-ios-permissions && pod-install --non-interactive",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "echo 'nothing to do'"
