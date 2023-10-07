@@ -18,10 +18,13 @@ Digital wallets can easily lean towards being technical and complex, which can b
 Use visual cues to help identify hierarchy. Material Design takes inspiration on how light behaves in the physical world and uses brightness and shadow to communicate hierarchy. 
 
 ### Anatomy
+
+![Anatomy of a screen](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/patch-1/docs/design-guidelines/Layout.png)
+
 The layout of a screen typically has a:
-- app bar 
-- body
-- navigation
+1. app bar 
+2. body
+3. navigation
 
 #### App bar
 The app bar is used to communicate where you are and what you can do on the screen. They are typically placed at the bottom or top. They may contain a:
@@ -40,6 +43,8 @@ Screens should have a way to navigate away from their current screen to a differ
 - navigation pane
 
 ### Safe Areas
+![Safe areas of a screen](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/patch-1/docs/design-guidelines/Safe%20area.png)
+
 Ensure there's adquate space between elements to avoid mistaps. If there isn't enough room to place all elements, consider collapsing items into subtasks. 
 
 Avoid placing elements close to the edge of the screen (margin). Some mobile devices have rounded screens or are in a phone case with a thick bezel that makes it hard to tap elements close to a screen's edge.
