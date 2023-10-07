@@ -142,7 +142,7 @@ describe('ProofDetails Component', () => {
       // @ts-ignore
       useProofById.mockReturnValue(testVerifiedProofRequest)
       // @ts-ignore
-      jest.spyOn(proofUtils, 'getProofData').mockReturnValue(Promise.resolve(data))
+      jest.spyOn(verifier, 'getProofData').mockReturnValue(Promise.resolve(data))
     })
 
     test('renders correctly when history is true', async () => {
