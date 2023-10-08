@@ -12,9 +12,8 @@
   ],
   "packageManager": "yarn@3.3.1",
   "scripts": {
-    "build": "yarn run clean && yarn run compile",
+    "build": "yarn run clean && yarn run bob build",
     "clean": "rimraf ./build",
-    "compile": "tsc",
     "prepublishOnly": "yarn run build",
     "test": "TZ=GMT jest",
     "test:coverage": "TZ=GMT jest --coverage"
