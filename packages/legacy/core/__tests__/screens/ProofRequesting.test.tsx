@@ -33,6 +33,14 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('@hyperledger/aries-bifold-verifier',() => {
+  const original = jest. requireActual('@hyperledger/aries-bifold-verifier')
+  return {
+    ...original,
+     __esModule: true,
+     createConnectionlessProofRequestInvitation: jest.fn(original.createConnectionlessProofRequestInvitation)
+  }
+})
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
 jest.mock('react-native-device-info', () => () => jest.fn())

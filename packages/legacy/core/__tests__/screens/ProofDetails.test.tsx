@@ -24,6 +24,14 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('@hyperledger/aries-bifold-verifier',() => {
+  const original = jest. requireActual('@hyperledger/aries-bifold-verifier')
+  return {
+    ...original,
+     __esModule: true,
+     getProofData: jest.fn(original.getProofData)
+  }
+})
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
 jest.useFakeTimers({ legacyFakeTimers: true })
