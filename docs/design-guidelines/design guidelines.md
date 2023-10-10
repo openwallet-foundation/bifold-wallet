@@ -89,6 +89,7 @@ Mobile apps don't have the luxury of space. Is it better for digital wallets mob
 
 ### Layout
 ![Callouts and accordions](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/f4162c6207938d17da7e2e6040707eb78a237d1d/docs/design-guidelines/assets/Callout%20and%20accordions.png)
+
 People skim content. Only show relevant information for the intended user flow (happy path). Be mindful of the horizontal line length. 
 
 **Tips:**
@@ -179,7 +180,9 @@ Progress indicators indicates help communicate what the system is doing, giving 
 
 If loading is expected to be long, a way to escape the loading state should always be available. Manage a user's expectations by informing them if progress is expected to be long or if it's taking longer than usual so they may take appropriate steps. 
 
-If a delay is expected to be | 
+If a delay is expected to be:
+
+Time interval | reccomendation
 --- | ---
 <1 second | use the pressed/pending state
 1-4 seconds |  provide a dedicated visual cue, such as a button with an animated icon, a loading bar, or a skeleton screen
