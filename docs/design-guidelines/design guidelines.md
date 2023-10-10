@@ -9,7 +9,7 @@ This document is an adaptable set of reccomendations that follow standard design
 User flows should be intuitive and consistent. Use existing mental models and standard UI elements. If existing mental models are not sufficient, then ensure that the system is easy to learn. Consistency will help the learning curve.
 
 ### Simple
-Be clear and concise rather than clever. Strategically place elements to avoid visual clutter and componentize comtent to reduce cognitive load. Organize the information architecture so that branches focus on a single goal. 
+Be clear and concise rather than clever. Strategically place elements to avoid visual clutter and componentize content to reduce cognitive load. Organize the information architecture so that branches focus on a single goal. 
 
 ### Friendly
 Digital wallets can easily lean towards being technical and complex, which can be intimidating to some. Anthropomorphize your system and attribute a friendly personality to better approach and engage users. This can mean writing content in a conversational tone, use light animation to smooth transitions, using brighter colours, rounding edges, etc.
@@ -19,7 +19,7 @@ Use visual cues to help identify hierarchy. Material Design takes inspiration on
 
 ### Anatomy
 
-![Anatomy of a screen](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/patch-1/docs/design-guidelines/Layout.png)
+![Anatomy of a screen](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/4f41ce41fdc10c7e4c88f154e2994358c2f3d5a0/docs/design-guidelines/assets/Layout.png)
 
 The layout of a screen typically has a:
 1. app bar 
@@ -43,7 +43,7 @@ Screens should have a way to navigate away from their current screen to a differ
 - navigation pane
 
 ### Safe Areas
-![Safe areas of a screen](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/patch-1/docs/design-guidelines/Safe%20area.png)
+![Safe areas of a screen](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/4f41ce41fdc10c7e4c88f154e2994358c2f3d5a0/docs/design-guidelines/assets/Safe%20area.png)
 
 Ensure there's adquate space between elements to avoid mistaps. If there isn't enough room to place all elements, consider collapsing items into subtasks. 
 
@@ -52,6 +52,8 @@ Avoid placing elements close to the edge of the screen (margin). Some mobile dev
 Be mindful of content within the body that may get covered by a keyboard. The safe area should move to align with the keyboard to avoid obscuring important content.
 
 ### Responsive design
+![Scalable elements](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/4e597988ed125ddd7e3e4b5b29ed60eea39ade87/docs/design-guidelines/assets/Scalable%20elements.png)
+
 Devices come in different sizes and can be used in different orientations. Consider different layouts for different sizes to strategically use space. Be mindful of elemeents that do not scale well.
 
 With extra space, make use of white space and avoid cramming too much information into a screen to reduce cognitive load. 
@@ -63,8 +65,9 @@ Some elements
 ## Content Design
 
 ### Audience
+![Multi-lingual](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/f4162c6207938d17da7e2e6040707eb78a237d1d/docs/design-guidelines/assets/Multi-language.png)
 
-Content should be written according to who your audience is. Ensure that it is written in a language that they understand. 
+Content should be written according to who your audience is. Ensure that it is written in languages that they understand and that the UI can accomodate different reading orientations. 
 
 ### Plain language
 Even if your audience may have a more technical background, writing in plain language will help ensure that anyone reading will understand it.
@@ -82,9 +85,10 @@ Mobile apps don't have the luxury of space. Is it better for digital wallets mob
 
 **Tips:**
 - Divide content in short paragraphs that focus on one topic. Small segments of information are easier to read and comprehend.
-- Write in lists if possible instead of long setences so content is read more easily
+- Write in lists if possible instead of long sentences so content is read more easily
 
 ### Layout
+![Callouts and accordions](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/f4162c6207938d17da7e2e6040707eb78a237d1d/docs/design-guidelines/assets/Callout%20and%20accordions.png)
 People skim content. Only show relevant information for the intended user flow (happy path). Be mindful of the horizontal line length. 
 
 **Tips:**
@@ -94,6 +98,8 @@ People skim content. Only show relevant information for the intended user flow (
 
 
 ### Descriptive call to actions
+![Descriptive buttons and links](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/f4162c6207938d17da7e2e6040707eb78a237d1d/docs/design-guidelines/assets/Descriptive%20buttons.png)
+
 Avoid button text or link text that do not independently describe what the function does, for example, "View" -> View offer" or "Click here" -> "Learn more about content design"
 
 ## Data Formats
@@ -164,10 +170,9 @@ To avoid overlapping touch targets, there should be a space of at least 16 dp be
 ## Scrolling
 Content should never be hidden or cut off.
 
-If content or elements extend past the screen size, always enable scrolling so that people can interact with the contents. Be mindful of accessibility settings that would increase the font size.
+If content or elements extend past the screen size, always enable scrolling so that people can interact with the contents. Be mindful of factors that would affect the size of content, such as settings changing the font size or language settings (ex. French content is on average 15-20% longer than English).
 
 Ensure that content does not get covered by fixed elements on the screen by adding padding at the bottom.
-
 
 ## Progress indicators
 Progress indicators indicates help communicate what the system is doing, giving context to users so they constantly know that the system is working and removes uncertainty.
