@@ -196,37 +196,39 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
         )}
       </View>
       <ScrollView style={styles.bodyContainer}>
-        {!showDetails ? bodyContent : null}
-        {(description || (message && showDetails)) && (
-          <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-            {showDetails ? message : description}
-          </Text>
-        )}
-        {message && !showDetails && (
-          <TouchableOpacity
-            accessibilityLabel={t('Global.ShowDetails')}
-            testID={testIdWithKey('ShowDetails')}
-            style={{ marginVertical: 14 }}
-            onPress={onShowDetailsTouched}
-            hitSlop={hitSlop}
-          >
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.showDetailsText}>{t('Global.ShowDetails')} </Text>
-              <Icon name="chevron-right" size={iconSize} color={ColorPallet.brand.link} />
+        <>
+          {!showDetails ? bodyContent : null}
+          {(description || (message && showDetails)) && (
+            <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+              {showDetails ? message : description}
+            </Text>
+          )}
+          {message && !showDetails && (
+            <TouchableOpacity
+              accessibilityLabel={t('Global.ShowDetails')}
+              testID={testIdWithKey('ShowDetails')}
+              style={{ marginVertical: 14 }}
+              onPress={onShowDetailsTouched}
+              hitSlop={hitSlop}
+            >
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.showDetailsText}>{t('Global.ShowDetails')} </Text>
+                <Icon name="chevron-right" size={iconSize} color={ColorPallet.brand.link} />
+              </View>
+            </TouchableOpacity>
+          )}
+          {onCallToActionPressed && (
+            <View style={{ paddingTop: 10 }}>
+              <Button
+                title={onCallToActionLabel || t('Global.Okay')}
+                accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
+                testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
+                buttonType={ButtonType.Primary}
+                onPress={onCallToActionPressed}
+              />
             </View>
-          </TouchableOpacity>
-        )}
-        {onCallToActionPressed && (
-          <View style={{ paddingTop: 10 }}>
-            <Button
-              title={onCallToActionLabel || t('Global.Okay')}
-              accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
-              testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
-              buttonType={ButtonType.Primary}
-              onPress={onCallToActionPressed}
-            />
-          </View>
-        )}
+          )}
+        </>
       </ScrollView>
     </View>
   )

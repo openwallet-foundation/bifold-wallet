@@ -52,6 +52,8 @@ module.exports = {
         devDependencies: false,
       },
     ],
+    '@typescript-eslint/no-explicit-any': 'off',
+    'no-unsafe-optional-chaining': 'warn',
   },
   globals: {
     require: true,

@@ -176,3 +176,5 @@ lib/
 app/android/app/src/main/assets/app.bundle
 **/.yarn/cache
 **/.yarn/install-state.gz
+.xcode.env.local
+packages/legacy/app/vendor/bundle/**

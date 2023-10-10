@@ -103,13 +103,24 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -168,13 +179,24 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

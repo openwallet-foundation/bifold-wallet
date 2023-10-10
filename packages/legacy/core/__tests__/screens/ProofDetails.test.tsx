@@ -26,7 +26,7 @@ jest.mock('@react-navigation/native', () => {
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 const proof_request = {
@@ -173,7 +173,7 @@ describe('ProofDetails Component', () => {
       const navigation = useNavigation()
       const tree = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
 
-      const generateNewButton = tree.getByTestId(testIdWithKey('GenerateNewQR'))
+      const generateNewButton = await tree.findByTestId(testIdWithKey('GenerateNewQR'))
       fireEvent(generateNewButton, 'press')
 
       expect(generateNewButton).not.toBeNull()
@@ -182,9 +182,9 @@ describe('ProofDetails Component', () => {
 
     test('Done', async () => {
       const navigation = useNavigation()
-      const { getByTestId } = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
+      const { findByTestId } = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
 
-      const doneButton = getByTestId(testIdWithKey('Done'))
+      const doneButton = await findByTestId(testIdWithKey('Done'))
       fireEvent(doneButton, 'press')
 
       expect(doneButton).not.toBeNull()
@@ -211,7 +211,7 @@ describe('ProofDetails Component', () => {
     test('Unverified proof view should be rendered correctly', async () => {
       const tree = renderView({ recordId: testUnverifiedProofRequest.id, isHistory: false })
 
-      const unverifiedView = await tree.getByTestId(testIdWithKey('UnverifiedProofView'))
+      const unverifiedView = await tree.findByTestId(testIdWithKey('UnverifiedProofView'))
       expect(tree).toMatchSnapshot()
       expect(unverifiedView).not.toBeNull()
     })

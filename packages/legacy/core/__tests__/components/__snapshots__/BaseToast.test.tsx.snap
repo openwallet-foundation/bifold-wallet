@@ -2,10 +2,26 @@
 
 exports[`BaseToast Component Error renders correctly 1`] = `
 <View
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -40,6 +56,7 @@ exports[`BaseToast Component Error renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
@@ -121,10 +138,26 @@ exports[`BaseToast Component Error renders correctly 1`] = `
 
 exports[`BaseToast Component Info renders correctly 1`] = `
 <View
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -159,6 +192,7 @@ exports[`BaseToast Component Info renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
@@ -240,10 +274,26 @@ exports[`BaseToast Component Info renders correctly 1`] = `
 
 exports[`BaseToast Component Success renders correctly 1`] = `
 <View
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -278,6 +328,7 @@ exports[`BaseToast Component Success renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
@@ -359,10 +410,26 @@ exports[`BaseToast Component Success renders correctly 1`] = `
 
 exports[`BaseToast Component Warn renders correctly 1`] = `
 <View
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -397,6 +464,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         Array [
           Object {
