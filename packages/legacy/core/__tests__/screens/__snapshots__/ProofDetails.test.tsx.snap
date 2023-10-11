@@ -328,14 +328,17 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                     Object {
                       "paddingBottom": 10,
                       "paddingTop": 20,
+                      "width": "65%",
                     }
                   }
                 >
                   <View
                     style={
-                      Object {
-                        "marginBottom": 10,
-                      }
+                      Array [
+                        Object {
+                          "marginBottom": 10,
+                        },
+                      ]
                     }
                   >
                     <Text
@@ -364,9 +367,11 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                   </View>
                   <View
                     style={
-                      Object {
-                        "marginBottom": 10,
-                      }
+                      Array [
+                        Object {
+                          "marginBottom": 10,
+                        },
+                      ]
                     }
                   >
                     <Text
@@ -704,14 +709,17 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                     Object {
                       "paddingBottom": 10,
                       "paddingTop": 20,
+                      "width": "65%",
                     }
                   }
                 >
                   <View
                     style={
-                      Object {
-                        "marginBottom": 10,
-                      }
+                      Array [
+                        Object {
+                          "marginBottom": 10,
+                        },
+                      ]
                     }
                   >
                     <Text
@@ -740,9 +748,11 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                   </View>
                   <View
                     style={
-                      Object {
-                        "marginBottom": 10,
-                      }
+                      Array [
+                        Object {
+                          "marginBottom": 10,
+                        },
+                      ]
                     }
                   >
                     <Text

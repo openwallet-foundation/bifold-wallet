@@ -23,6 +23,7 @@ import {
   ProofFormatDataMessagePayload,
 } from '@aries-framework/core/build/modules/proofs/protocol/ProofProtocolOptions'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 import {
   Attribute,
   Predicate,
@@ -32,7 +33,8 @@ import {
 import { Buffer } from 'buffer'
 import moment from 'moment'
 import { ParsedUrl, parseUrl } from 'query-string'
-import { Dispatch, ReactNode, SetStateAction } from 'react'
+import { ReactNode } from 'react'
+import { TFunction } from 'react-i18next'
 
 import { domain } from '../constants'
 import { i18n } from '../localization/index'
@@ -208,11 +210,7 @@ export function formatTime(
   return formattedTime
 }
 
-export function formatIfDate(
-  format: string | undefined,
-  value: string | number | null,
-  setter: Dispatch<SetStateAction<string | number | null>>
-) {
+export function formatIfDate(format: string | undefined, value: string | number | null) {
   const potentialDate = value ? value.toString() : null
   if (format === 'YYYYMMDD' && potentialDate && potentialDate.length === format.length) {
     const year = potentialDate.substring(0, 4)
@@ -221,9 +219,10 @@ export function formatIfDate(
     // NOTE: JavaScript counts months from 0 to 11: January = 0, December = 11.
     const date = new Date(Number(year), Number(month) - 1, Number(day))
     if (!isNaN(date.getDate())) {
-      setter(formatTime(date, { shortMonth: true }))
+      return formatTime(date, { shortMonth: true })
     }
   }
+  return value
 }
 
 /**
@@ -388,6 +387,7 @@ export const processProofAttributes = (
       }
       processedAttributes[credName].attributes?.push(
         new Attribute({
+          ...requestedProofAttributes[key],
           revoked,
           credentialId: credential?.credentialId,
           name: attributeName,
@@ -406,7 +406,6 @@ export const processProofPredicates = (
   credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
-
   const requestedProofPredicates = request?.anoncreds?.requested_predicates ?? request?.indy?.requested_predicates
   const retrievedCredentialPredicates =
     credentials?.proofFormats?.anoncreds?.predicates ?? credentials?.proofFormats?.indy?.predicates
@@ -452,6 +451,7 @@ export const processProofPredicates = (
 
     processedPredicates[credName].predicates?.push(
       new Predicate({
+        ...requestedProofPredicates[key],
         credentialId,
         name,
         revoked,
@@ -477,6 +477,37 @@ export const mergeAttributesAndPredicates = (
     }
   }
   return merged
+}
+
+export const pTypeToText = (
+  item: Predicate,
+  t: TFunction<'translation', undefined>,
+  attributeTypes?: Record<string, string>
+) => {
+  const itemCopy = { ...item }
+  const pTypeMap: { [key: string]: string | undefined } = {
+    '>=': t('ProofRequest.PredicateGe'),
+    '>': t('ProofRequest.PredicateGr'),
+    '<=': t('ProofRequest.PredicateLe'),
+    '<': t('ProofRequest.PredicateLs'),
+  }
+  const pTypeDateMap: { [key: string]: string | undefined } = {
+    '>=': t('ProofRequest.PredicateGeDate'),
+    '>': t('ProofRequest.PredicateGeDate'),
+    '<=': t('ProofRequest.PredicateLeDate'),
+    '<': t('ProofRequest.PredicateLeDate'),
+  }
+  const pTypeDateOffset: { [key: string]: number | undefined } = {
+    '>=': -1,
+    '<=': 1,
+  }
+  if (attributeTypes && attributeTypes[item.name ?? ''] == CaptureBaseAttributeType.DateTime) {
+    itemCopy.pType = pTypeDateMap[item.pType] ?? item.pType
+    itemCopy.pValue = parseInt(`${itemCopy.pValue}`) + (pTypeDateOffset[item.pType] ?? 0)
+  } else {
+    itemCopy.pType = pTypeMap[item.pType] ?? item.pType
+  }
+  return itemCopy
 }
 
 /**

@@ -391,6 +391,12 @@ const translation = {
     "CustomOfferParagraph2": "Não reconhece a organização. Verifique sua lista de Contatos. Você só recebe notificões de Contatos que você tenha adicionado.",
   },
   "ProofRequest": {
+    "PredicateGeDate": "is after (PB)",
+    "PredicateLeDate": "is before (PB)",
+    "PredicateGe": "is greater than or equal to (PB)",
+    "PredicateGr": "is greater than (PB)",
+    "PredicateLe": "is less than or equal to (PB)",
+    "PredicateLs": "is less than (PB)",
     "ProofRequest": "Requisição de Prova",
     "RequestProcessing": "Só um momento...",
     "OfferDelay": "Atrasar oferta",
