@@ -45,7 +45,7 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
   ) {
     return <RecordBinaryField attributeValue={field.value as string} style={style} shown={shown} />
   }
-  if (field.type == CaptureBaseAttributeType.DateInt) {
+  if (field.type == CaptureBaseAttributeType.DateInt || field.type == CaptureBaseAttributeType.DateTime) {
     return <RecordDateIntField field={field} style={style} shown={shown} />
   }
   return (
