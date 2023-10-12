@@ -275,6 +275,9 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       if (!store.preferences.useDataRetention) {
         agent?.proofs.deleteById(recordId)
       }
+      if ((record?.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata).delete_conn_after_seen) {
+        agent?.connections.deleteById(record?.connectionId ?? '')
+      }
     }
   }, [])
 
