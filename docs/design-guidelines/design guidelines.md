@@ -5,7 +5,7 @@ This document is an adaptable set of reccomendations that follow standard design
 
 ## Principles
 
-### Predicatable
+### Predictable
 User flows should be intuitive and consistent. Use existing mental models and standard UI elements. If existing mental models are not sufficient, then ensure that the system is easy to learn. Consistency will help the learning curve.
 
 ### Simple
@@ -136,6 +136,11 @@ Use a hyphen (-) to separate each block of digits in phone numbers:
 Ex. 604-660-2421 or 1-800-663-7867
 
 Hyperlink phone numbers so people can call a number by clicking on it.
+
+### Data redaction
+Digital wallets contain sensitive personally identifiable information. Consider hiding or partially hiding sensitive information such as PINs, passwords, personal information, etc to ensure confidentiality and privacy. 
+
+Sensitive information should be hideden on default with the option to show the information. Consider partially hiding information to allow people to identify the information without fully revealing it.
 
 ## Buttons
 Buttons let people know what actions they can take. 
