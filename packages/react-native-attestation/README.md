@@ -10,12 +10,16 @@ npm install react-native-attestation
 
 ## Usage
 
-```js
-import { multiply } from 'react-native-attestation';
+```ts
+import {
+  generateKey,
+  appleAttestation,
+} from '@hyperledger/aries-react-native-attestation';
 
 // ...
 
-const result = await multiply(3, 7);
+const keyId = await generateKey();
+const attestationAsBuffer = await appleAttestation(keyId, nonce);
 ```
 
 ## Contributing
@@ -24,7 +28,7 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 
 ## License
 
-MIT
+Apache-2.0 License
 
 ---
 

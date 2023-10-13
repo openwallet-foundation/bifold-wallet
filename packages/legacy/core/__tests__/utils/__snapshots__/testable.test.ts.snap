@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testable Converts a string to testID 1`] = `"UpdateYourProfile"`;
+
 exports[`Testable Produces the correct testID 1`] = `"com.ariesbifold:id/blarb"`;
