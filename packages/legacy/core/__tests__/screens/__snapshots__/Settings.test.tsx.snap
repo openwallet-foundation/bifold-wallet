@@ -48,6 +48,7 @@ exports[`Settings Screen Renders correctly 1`] = `
               "style": Object {
                 "color": "#42803E",
               },
+              "testID": "com.ariesbifold:id/EditWalletName",
             },
             "title": "Screens.Contacts",
           },

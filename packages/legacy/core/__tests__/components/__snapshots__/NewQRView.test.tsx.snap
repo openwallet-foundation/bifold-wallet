@@ -306,8 +306,10 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
               onGestureHandlerStateChange={[Function]}
               onHandlerStateChange={[Function]}
               rippleColor={0}
+              testID="com.ariesbifold:id/EditWalletName"
             >
               <View
+                accessibilityLabel="NameWallet.EditWalletName"
                 accessible={true}
                 collapsable={false}
                 style={
