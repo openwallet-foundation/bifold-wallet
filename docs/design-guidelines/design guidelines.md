@@ -146,9 +146,15 @@ Sensitive information should be hideden on default with the option to show the i
 Buttons let people know what actions they can take. 
 
 ### Hierarchy
-[insert image of example of button hierarchy]
 
 The importance of a button can be determined by it's level of visibility and placement. Highly visible buttons that are strategically placed will allow people to quickly identify the next call-to-action and help complete their task/goal quicker. This helps reduce cognitive load (the mental effort of a user to process information).
+
+![Button hierarchy](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/722a46ceb272abb2062aaf6531c8a712a0031904/docs/design-guidelines/assets/Button%20hierarchy.png)
+
+1. Primary button. The level of importance and what this button does is communicated by its positioning, colour, and lighting (shadows). People instinctively know that this button is the intended flow.
+2. Secondary button. Its lack of colour helps detract people from it but the positioning help indicate that it's a secondary action.
+3. It's lack of colour and positioning minimizes its presence. People who are looking for it can still find it however.
+4. Although a floating action button with a lot of emphasis, it is behind a scrim (shading). 
 
 There is no agreement on the placement of primary and secondary buttons ex. "Okay" / "Cancel" versus "Cancel" / "Okay". It is important to be consistent. 
 
@@ -160,10 +166,14 @@ States include: Active/Enabled, Disabled, Hover, Focused, Pressed
 Buttons that are in a disabled state should be clear on why it's disabled. If it is not clear, consider enabling the button and displaying an alert to inform people on why the button is disabled. [insert image of an alert when a form is missing a field] 
 
 ### Text versus icon versus both
+
+![Button text](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/722a46ceb272abb2062aaf6531c8a712a0031904/docs/design-guidelines/assets/Icon%20text.png)
+
 Text should accompany icons that are not universally recognized. Icons that are well understood or universally recognized may be placed without text. 
 
 ### Touch targets
-[insert image of touch target of buttons]
+
+![Touch targets](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/722a46ceb272abb2062aaf6531c8a712a0031904/docs/design-guidelines/assets/Touch%20targets.png)
 
 Touch targets are areas of a screen that response to user input (touch, voice control, screen readers, etc.). WCAG standards recommends a touch target of 44 by 44 dp, except when:
 - The target is available through an equivalent link or control on the same page that is at least 44 by 44 dp
@@ -171,9 +181,12 @@ Touch targets are areas of a screen that response to user input (touch, voice co
 - The size of the target is determined by the user agent and is not modified by the author
 - A particular presentation of the target is essential to the information being conveyed
 
-To avoid overlapping touch targets, there should be a space of at least 16 dp between horizontally stacked buttons and 16 px between vertically stacked buttons.\
+To avoid overlapping touch targets, there should be a space of at least 16 dp between horizontally stacked buttons and 16 dp between vertically stacked buttons.
 
 ## Scrolling
+
+![Padding](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/2b5bd6626ccf57a5c7ac2fc4b28bb54738bf3b37/docs/design-guidelines/assets/Scroll%20padding.png)
+
 Content should never be hidden or cut off.
 
 If content or elements extend past the screen size, always enable scrolling so that people can interact with the contents. Be mindful of factors that would affect the size of content, such as settings changing the font size or language settings (ex. French content is on average 15-20% longer than English).
@@ -181,6 +194,9 @@ If content or elements extend past the screen size, always enable scrolling so t
 Ensure that content does not get covered by fixed elements on the screen by adding padding at the bottom.
 
 ## Progress indicators
+
+![Progress indicators](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/2b5bd6626ccf57a5c7ac2fc4b28bb54738bf3b37/docs/design-guidelines/assets/Progress%20indicator.png)
+
 Progress indicators indicates help communicate what the system is doing, giving context to users so they constantly know that the system is working and removes uncertainty.
 
 If loading is expected to be long, a way to escape the loading state should always be available. Manage a user's expectations by informing them if progress is expected to be long or if it's taking longer than usual so they may take appropriate steps. 
@@ -194,10 +210,13 @@ Time interval | reccomendation
  > 4 seconds | use a loading screen
 
 ### Use the correct type of progress indicator
-- Determinate progress indicators communicate a known completion rate. Ex. progress bar with a percent complete indicator. 
-- Indeterminate progress indicators communicate an unknown completion rate or if the completion rate is not important to communicate. Ex. A spinning wheel
+1. Determinate progress indicators communicate a known completion rate. Ex. progress bar with a percent complete indicator. 
+2. Indeterminate progress indicators communicate an unknown completion rate or if the completion rate is not important to communicate. Ex. A spinning wheel
 
 ### Use loading times effectively
+
+![Fun loading screens](https://github.com/knguyenBC/aries-mobile-agent-react-native/blob/2b5bd6626ccf57a5c7ac2fc4b28bb54738bf3b37/docs/design-guidelines/assets/loading%20fun.png)
+
 If a long wait is inevitable, turn it into a positive experience by adding value while people wait.
 
 **Tips**
