@@ -1,4 +1,5 @@
-import { useAgent } from '@aries-framework/react-hooks'
+import { ProofState } from '@aries-framework/core'
+import { useAgent, useProofByState } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator, StackCardStyleInterpolator, StackNavigationProp } from '@react-navigation/stack'
 import { parseUrl } from 'query-string'
@@ -6,6 +7,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
 
+import { ProofCustomMetadata, ProofMetadata } from '../../verifier'
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { EventTypes, walletTimeout } from '../constants'
 import { useAuth } from '../contexts/auth'
@@ -50,6 +52,18 @@ const RootStack: React.FC = () => {
   const OnboardingTheme = theme.OnboardingTheme
   const { pages, terms, splash, useBiometry, developer } = useConfiguration()
   useDeepLinks()
+
+  // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
+  const declinedProofs = useProofByState([ProofState.Declined, ProofState.Abandoned])
+  useEffect(() => {
+    declinedProofs.forEach((proof) => {
+      const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
+      if (meta?.delete_conn_after_seen) {
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
+        proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
+      }
+    })
+  }, [declinedProofs, state.preferences.useDataRetention])
 
   const lockoutUser = async () => {
     if (agent && state.authentication.didAuthenticate) {
