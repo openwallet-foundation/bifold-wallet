@@ -131,7 +131,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       flexGrow: 1,
       padding,
       marginLeft: -1 * logoHeight + padding,
-      marginRight: logoHeight * 2,
+      marginRight: logoHeight + (logoHeight - padding) + padding,
     },
     imageAttr: {
       height: 150,
