@@ -1,0 +1,93 @@
+---
+name: Native Build & Test
+env:
+  cacheId: "8"
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - packages/legacy/app/ios/**
+      - packages/legacy/app/android/**
+      - "**/package-lock.json"
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+  push:
+    branches:
+      - main
+  workflow_dispatch: null
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compile-sdk:
+          - 33
+        build-tools:
+          - 33.0.2
+        sdk-tools:
+          - 4333796
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+      - name: setup ubuntu
+        run: |
+          sudo apt-get --quiet update --yes
+          sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 11
+          cache: gradle
+      - name: Setup Android SDK
+        working-directory: ./packages/legacy/app/android
+        run: >
+          set -x
+
+          sudo mkdir -p /root/.android
+
+          sudo touch /root/.android/repositories.cfg
+
+          export ANDROID_HOME=$PWD/android-sdk
+
+          mkdir -p $ANDROID_HOME/cmdline-tools
+
+          wget --quiet --output-document=commandlinetools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+
+          unzip -d $ANDROID_HOME/cmdline-tools commandlinetools-linux.zip
+
+          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+
+          find $ANDROID_HOME -name sdkmanager
+
+
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+
+          echo y | sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
+
+          echo y | sdkmanager "platform-tools" >/dev/null
+
+          echo y | sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
+
+          find $ANDROID_HOME -type f -executable -print
+
+
+          chmod +x ./gradlew
+
+          set +o pipefail
+
+          yes | sdkmanager --licenses
+
+          set -o pipefail
+      - name: Install React Native Dependencies
+        run: |
+          node -v && yarn -v && yarn install --immutable && \
+          git status
+      - name: Android Release Build
+        working-directory: ./packages/legacy/app/android
+        run: ./gradlew --no-daemon bundleRelease
