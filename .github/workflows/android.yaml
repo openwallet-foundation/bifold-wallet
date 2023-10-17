@@ -4,16 +4,11 @@ env:
   cacheId: '9' # increment to expire the cache
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - 'packages/legacy/app/**'
-      - 'packages/legacy/core/**'
-      - 'packages/oca/**'
-      - '**/package-lock.json'
-    types: [opened, synchronize, reopened, labeled]
-  push:
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Who to greet"
+        default: "World"
 
 jobs:
   build-ios:
