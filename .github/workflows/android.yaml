@@ -1,5 +1,5 @@
 ---
-name: Native Build & Test
+name: Android Build & Test
 env:
   cacheId: "8"
 on:
