@@ -155,8 +155,8 @@ jobs:
         with:
           name: release-artifacts
           paths: |
-            app/build/outputs/apk/release/
-            app/build/outputs/bundle/release/
+            ./packages/legacy/app/android/app/build/outputs/apk/release/
+            ./packages/legacy/app/android/app/build/outputs/bundle/release/
      
       - name: Create Github Release
         uses: softprops/action-gh-release@v1
@@ -164,5 +164,5 @@ jobs:
           generate_release_notes: true
           prerelease: true
           files: |
-            app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/bundle/release/app-release.aab
+             ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
+             ./packages/legacy/app/android/app/build/outputs/bundle/release/app-release.aab
