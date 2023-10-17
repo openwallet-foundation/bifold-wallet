@@ -154,9 +154,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-artifacts
-          paths: |
-            ./packages/legacy/app/android/app/build/outputs/apk/release/
-            ./packages/legacy/app/android/app/build/outputs/bundle/release/
+          path: ./packages/legacy/app/android/app/build/outputs/apk/release/
      
       - name: Create Github Release
         uses: softprops/action-gh-release@v1
@@ -165,4 +163,3 @@ jobs:
           prerelease: true
           files: |
              ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
-             ./packages/legacy/app/android/app/build/outputs/bundle/release/app-release.aab
