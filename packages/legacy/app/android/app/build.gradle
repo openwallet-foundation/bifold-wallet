@@ -144,7 +144,7 @@ dependencies {
     }
 }
 task printVersionInformation {
-    println "v" + defaultConfig.versionName + " (" + defaultConfig.versionCode + ")"
+    println "v" + configurations.versionName + " (" + configurations.versionCode + ")"
 }
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
