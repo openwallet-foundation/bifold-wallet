@@ -102,7 +102,7 @@ android {
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     task printVersionName {
-        println project.ext.version_name
+        println project.ext.versionName
     }
     signingConfigs {
         debug {
