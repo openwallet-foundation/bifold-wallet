@@ -25,14 +25,8 @@ const Language = () => {
     { id: Locales.ptBr, value: t('Language.Portuguese', { lng: Locales.ptBr }) },
   ]
 
-  const languages: Language[] = []
   const supportedLanguagesKeys = Object.keys(supportedLanguages)
-
-  for (const pl of possibleLanguages) {
-    if (supportedLanguagesKeys.includes(pl.id)) {
-      languages.push(pl)
-    }
-  }
+  const languages: Language[] = possibleLanguages.filter((lang) => supportedLanguagesKeys.includes(lang.id))
 
   const styles = StyleSheet.create({
     container: {
