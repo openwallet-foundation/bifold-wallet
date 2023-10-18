@@ -128,10 +128,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
-      flexGrow: 1,
+      flex: 1,
       padding,
       marginLeft: -1 * logoHeight + padding,
-      marginRight: logoHeight * 2,
     },
     imageAttr: {
       height: 150,
