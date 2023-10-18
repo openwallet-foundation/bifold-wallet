@@ -1,14 +1,10 @@
-name: Android & iOS Build
+name: Android Build
 
 env:
   cacheId: '9' # increment to expire the cache
 
 on:
   workflow_dispatch:
-    inputs:
-      name:
-        description: "Who to greet"
-        default: "World"
 
 jobs:
   build-android:
@@ -71,14 +67,33 @@ jobs:
 
       - name: Android Release Build
         working-directory: ./packages/legacy/app/android
-        run: ./gradlew --no-daemon bundleRelease
-        
+        run: ./gradlew --no-daemon assembleRelease
+
       - name: Upload Release Build to Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: release-artifacts
           path: ./packages/legacy/app/android/app/build/outputs/apk/release/
-     
+
+      - name: Set output
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
+      - name: Get version
+        - run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
+
+
+      # - name: Check output
+      #   env:
+      #     RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      #   run: |
+      #     echo $RELEASE_VERSION
+      #     echo ${{ steps.vars.outputs.tag }}
+
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v4.0.0
+
       - name: Create Github Release
         uses: softprops/action-gh-release@v1
         with:
@@ -86,3 +101,5 @@ jobs:
           prerelease: true
           files: |
              ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
+          tag_name: ${{env.VERSION_INFORMATION}}
+          body: ${{steps.github_release.outputs.changelog}}

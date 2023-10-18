@@ -101,9 +101,7 @@ android {
 
         missingDimensionStrategy 'react-native-camera', 'general'
     }
-    task printVersionName {
-        println project.ext.versionName
-    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -144,6 +142,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+}
+task printVersionInformation {
+    println "v" + defaultConfig.versionName + " (" + defaultConfig.versionCode + ")"
 }
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
