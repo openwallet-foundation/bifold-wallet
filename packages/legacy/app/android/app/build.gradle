@@ -101,6 +101,9 @@ android {
 
         missingDimensionStrategy 'react-native-camera', 'general'
     }
+    task printVersionName {
+        println project.ext.version_name
+    }
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -133,7 +136,7 @@ dependencies {
     implementation("com.facebook.react:react-android")
 
     implementation 'net.java.dev.jna:jna:5.2.0'
-    
+
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     if (hermesEnabled.toBoolean()) {
