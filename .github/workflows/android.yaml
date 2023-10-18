@@ -4,6 +4,10 @@ env:
   cacheId: "9"
 on:
   workflow_dispatch: null
+  push:
+    tags:
+     - '*'
+
 jobs:
   build-android:
     runs-on: ubuntu-latest
