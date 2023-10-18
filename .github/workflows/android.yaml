@@ -1,105 +1,104 @@
+---
 name: Android Build
-
 env:
-  cacheId: '9' # increment to expire the cache
-
+  cacheId: "9"
 on:
-  workflow_dispatch:
-
+  workflow_dispatch: null
 jobs:
   build-android:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compile-sdk: [33]
-        build-tools: [33.0.2]
-        sdk-tools: [4333796]
+        compile-sdk:
+          - 33
+        build-tools:
+          - 33.0.2
+        sdk-tools:
+          - 4333796
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
-
       - name: setup ubuntu
         run: |
           sudo apt-get --quiet update --yes
           sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
+          distribution: zulu
           java-version: 11
-          cache: 'gradle'
-
+          cache: gradle
       - name: Setup Android SDK
         working-directory: ./packages/legacy/app/android
-        run: |
+        run: >
           set -x
+
           sudo mkdir -p /root/.android
+
           sudo touch /root/.android/repositories.cfg
+
           export ANDROID_HOME=$PWD/android-sdk
+
           mkdir -p $ANDROID_HOME/cmdline-tools
+
           wget --quiet --output-document=commandlinetools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+
           unzip -d $ANDROID_HOME/cmdline-tools commandlinetools-linux.zip
+
           mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+
           find $ANDROID_HOME -name sdkmanager
 
+
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+
           echo y | sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
+
           echo y | sdkmanager "platform-tools" >/dev/null
+
           echo y | sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
+
           find $ANDROID_HOME -type f -executable -print
 
-          chmod +x ./gradlew
-          set +o pipefail
-          yes | sdkmanager --licenses
-          set -o pipefail
 
+          chmod +x ./gradlew
+
+          set +o pipefail
+
+          yes | sdkmanager --licenses
+
+          set -o pipefail
       - name: Install React Native Dependencies
         run: |
           node -v && yarn -v && yarn install --immutable && \
           git status
-
       - name: Build Workspace
         run: |
           yarn lerna run build
-
       - name: Android Release Build
         working-directory: ./packages/legacy/app/android
         run: ./gradlew --no-daemon assembleRelease
-
       - name: Upload Release Build to Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: release-artifacts
           path: ./packages/legacy/app/android/app/build/outputs/apk/release/
-
       - name: Set output
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
       - name: Get version
-        - run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
-
-
-      # - name: Check output
-      #   env:
-      #     RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-      #   run: |
-      #     echo $RELEASE_VERSION
-      #     echo ${{ steps.vars.outputs.tag }}
-
-      - name: "Build Changelog"
+        run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q
+          printVersionInformation)" >> $GITHUB_ENV
+      - name: Build Changelog
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v4.0.0
-
       - name: Create Github Release
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
           prerelease: true
-          files: |
-             ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
+          files: >
+            ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
           tag_name: ${{env.VERSION_INFORMATION}}
           body: ${{steps.github_release.outputs.changelog}}
