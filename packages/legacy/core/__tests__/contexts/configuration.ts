@@ -4,7 +4,6 @@ import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
 import { useProofRequestTemplates } from '../../verifier/request-templates'
 
-
 const configurationContext: ConfigurationContext = {
   pages: () => [],
   terms: () => null,
@@ -44,6 +43,7 @@ const configurationContext: ConfigurationContext = {
   },
   useCustomNotifications: useNotifications,
   proofRequestTemplates: useProofRequestTemplates,
+  supportedLanguages: {},
 }
 
 export default configurationContext

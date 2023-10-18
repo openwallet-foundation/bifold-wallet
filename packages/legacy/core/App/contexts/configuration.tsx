@@ -5,6 +5,7 @@ import { createContext, ReducerAction, useContext } from 'react'
 import { ProofRequestTemplate } from '../../verifier'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
+import { TranslationResources } from '../localization'
 import OnboardingPages from '../screens/OnboardingPages'
 import { ScanProps } from '../screens/Scan'
 import { PINSecurityParams } from '../types/security'
@@ -42,6 +43,7 @@ export interface ConfigurationContext {
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
   enableTours?: boolean
+  supportedLanguages: TranslationResources
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

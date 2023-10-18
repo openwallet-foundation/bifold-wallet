@@ -12,7 +12,7 @@ import ptBr from './pt-br'
 
 export type Translation = typeof en
 
-type TranslationResources = {
+export type TranslationResources = {
   [key: string]: any
 }
 
