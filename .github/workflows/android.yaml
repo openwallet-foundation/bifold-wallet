@@ -76,9 +76,16 @@ jobs:
       - name: Build Workspace
         run: |
           yarn lerna run build
+      - name: Build Changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v4.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Android Release Build
         working-directory: ./packages/legacy/app/android
         run: ./gradlew --no-daemon assembleRelease
+
       - name: Upload Release Build to Artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -102,8 +109,4 @@ jobs:
           tag_name: ${{github.run_number}}
           body: ${{steps.github_release.outputs.changelog}}
 
-      - name: Build Changelog
-        id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@v4.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
