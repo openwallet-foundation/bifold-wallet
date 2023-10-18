@@ -76,9 +76,14 @@ jobs:
       - name: Build Workspace
         run: |
           yarn lerna run build
+
       - name: Build Changelog
-        id: build_changelog
+        id: github_release
         uses: mikepenz/release-changelog-builder-action@v4.0.0
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          configuration: ".github/config/configuration.json"
+          ignorePreReleases: ${{ !contains(github.ref, '-') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
