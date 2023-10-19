@@ -538,6 +538,7 @@ const translation = {
     "CustomNotification": 'Custom Notification',
     "ProofRequesting": 'Proof Requesting',
     "NameWallet": "Name your wallet",
+    "RenameContact": "Edit Contact Name",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
@@ -553,6 +554,14 @@ const translation = {
     "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count.",
     "EmptyNameTitle": "Wallet name can't be empty",
     "EmptyNameDescription": "This is the name people see when connecting with you.\n\nPlease enter a wallet name.",
+  },
+  "RenameContact": {
+    "ThisContactName": "This contact name is only displayed in your Contacts List.",
+    "ContactName": "Contact name",
+    "CharCountTitle": "Character count exceeded",
+    "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count.",
+    "EmptyNameTitle": "Contact name can't be empty",
+    "EmptyNameDescription": "This is the name you will see for this Contact in your Contacts list.\n\nPlease enter a contact name.",
   },
   "NetInfo": {
     "NoInternetConnectionTitle": "No internet connection",

@@ -524,7 +524,8 @@ const translation = {
         "UseBiometry": 'Utiliser la biométrie',
         "CustomNotification": 'Notification personnalisée',
         "ProofRequesting": 'Demande de preuve',
-        "NameWallet": "Name your wallet (FR)"
+        "NameWallet": "Name your wallet (FR)",
+        "RenameContact": "Edit Contact Name (FR)",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
@@ -540,6 +541,10 @@ const translation = {
         "CharCountDescription": "You've exceeded the maximum character count of 50 characters. Please reduce your character count. (FR)",
         "EmptyNameTitle": "Wallet name can't be empty (FR)",
         "EmptyNameDescription": "This is the name people see when connecting with you.\n\nPlease enter a wallet name. (FR)",
+    },
+    "RenameContact": {
+        "ThisContactName": "This contact name is only displayed in your Contacts List. (FR)",
+        "ContactName": "Contact name (FR)",
     },
     "NetInfo": {
         "NoInternetConnectionTitle": "Aucune connexion Internet",

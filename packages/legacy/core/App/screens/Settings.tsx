@@ -110,6 +110,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             navigation.navigate(Screens.NameWallet)
           },
           accessibilityLabel: t('NameWallet.EditWalletName'),
+          testID: testIdWithKey('EditWalletName'),
           style: { color: ColorPallet.brand.primary },
         },
       },
@@ -270,7 +271,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           <TouchableOpacity
             accessible={iconRight.action !== undefined}
             accessibilityLabel={iconRight.action ? iconRight.accessibilityLabel : undefined}
-            testID={testIdWithKey(`${title}Action`)}
+            testID={iconRight.testID ? iconRight.testID : undefined}
             onPress={iconRight.action}
           >
             <Icon

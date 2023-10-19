@@ -25,7 +25,7 @@ import { GenericFn } from '../../types/fn'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../../types/metadata'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
 import { ModalUsage } from '../../types/remove'
-import { parsedSchema } from '../../utils/helpers'
+import { getConnectionName, parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { InfoBoxType } from '../misc/InfoBox'
@@ -71,7 +71,7 @@ const markMessageAsSeen = async (agent: Agent, record: BasicMessageRecord) => {
 const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const { customNotification } = useConfiguration()
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
@@ -224,14 +224,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
 
   const detailsForNotificationType = async (notificationType: NotificationType): Promise<DisplayDetails> => {
     return new Promise((resolve) => {
+      const theirLabel = getConnectionName(connection, store.preferences.alternateContactNames)
+
       switch (notificationType) {
         case NotificationType.BasicMessage:
           resolve({
             type: InfoBoxType.Info,
             title: t('Home.NewMessage'),
-            body: connection?.theirLabel
-              ? `${connection.theirLabel} ${t('Home.SentMessage')}`
-              : t('Home.ReceivedMessage'),
+            body: theirLabel ? `${theirLabel} ${t('Home.SentMessage')}` : t('Home.ReceivedMessage'),
             buttonTitle: t('Home.ViewMessage'),
           })
           break

@@ -14,6 +14,7 @@ export interface SettingIcon {
   style?: any
   action?: () => void
   accessibilityLabel?: string
+  testID?: string
 }
 
 export interface SettingSection {
