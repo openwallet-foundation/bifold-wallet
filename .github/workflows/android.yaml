@@ -128,6 +128,7 @@ jobs:
           file: ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
           notifyTesters: true
           debug: false
-          releaseNotes: ${{steps.github_release.outputs.changelog}}
+          releaseNotes: |
+            ${{steps.github_release.outputs.changelog}}
 
 
