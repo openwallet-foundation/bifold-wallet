@@ -246,7 +246,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
               }
             }}
             testID={testIdWithKey('ReenterPIN')}
-            accessibilityLabel={t('PINCreate.ReenterPIN')}
+            accessibilityLabel={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             autoFocus={false}
             ref={PINTwoInputRef}
           />

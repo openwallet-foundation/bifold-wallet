@@ -109,6 +109,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
                   <Text
                     onPress={() => handleLinkPress(link)}
                     style={{ color: ColorPallet.brand.link, textDecorationLine: 'underline' }}
+                    accessibilityRole={'link'}
                   >
                     {link}
                   </Text>
