@@ -116,7 +116,7 @@ jobs:
           prerelease: true
           files: >
             ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
-          tag_name: ${{github.run_number}}
+          tag_name: ${{ github.ref_name }}
           body: ${{steps.github_release.outputs.changelog}}
 
 
