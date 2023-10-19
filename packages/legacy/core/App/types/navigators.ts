@@ -34,6 +34,7 @@ export enum Screens {
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
   NameWallet = 'Name Wallet',
+  RenameContact = 'Rename Contact',
 }
 
 export enum Stacks {
@@ -90,6 +91,7 @@ export type ContactStackParams = {
   [Screens.Contacts]: undefined
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
+  [Screens.RenameContact]: { connectionId: string }
   [Screens.WhatAreContacts]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.CredentialOffer]: { credentialId: string }

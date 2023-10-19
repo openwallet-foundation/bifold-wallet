@@ -47,6 +47,7 @@ export const defaultState: State = {
     enableWalletNaming: false,
     walletName: generateRandomWalletName(),
     preventAutoLock: false,
+    alternateContactNames: {},
   },
   tours: {
     seenToursPrompt: false,

@@ -501,6 +501,7 @@ const translation = {
     "ProofRequestUsageHistory": "Histórico de uso",
     "CreateConnectionInvitation": "Criar um convite de conexão",
     "NameWallet": "Nomear sua carteira",
+    "RenameContact": "Edit Contact Name (PT-BR)",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
@@ -516,6 +517,10 @@ const translation = {
     "CharCountDescription": "Voce excedeu o numer máximo de 50 caracteres. Por favor, reduza o número de caracteres.",
     "EmptyNameTitle": "O nome de sua carteira não pode ser vazio",
     "EmptyNameDescription": "Este é o nome que as pessoas verão quando se conerctar a você. Por favor, digite o nome da carteira.",
+  },
+  "RenameContact": {
+    "ThisContactName": "This contact name is only displayed in your Contacts List. (PT-BR)",
+    "ContactName": "Contact name (PT-BR)",
   },
   "NetInfo": {
     "NoInternetConnectionTitle": "Sem conexão com a internet",

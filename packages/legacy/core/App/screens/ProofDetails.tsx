@@ -17,6 +17,7 @@ import SharedProofData from '../components/misc/SharedProofData'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
+import { getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
@@ -41,6 +42,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
 }: VerifiedProofProps) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
+  const [store] = useStore()
 
   const styles = StyleSheet.create({
     container: {
@@ -98,8 +100,11 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
 
   const connection = useConnectionById(record.connectionId || '')
   const connectionLabel = useMemo(
-    () => (connection ? connection?.alias || connection?.theirLabel : t('Verifier.ConnectionLessLabel')),
-    [connection]
+    () =>
+      connection
+        ? getConnectionName(connection, store.preferences.alternateContactNames)
+        : t('Verifier.ConnectionLessLabel'),
+    [connection, store.preferences.alternateContactNames]
   )
 
   const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
