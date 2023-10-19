@@ -46,6 +46,7 @@ enum PreferencesDispatchAction {
   ACCEPT_DEV_CREDENTIALS = 'preferences/acceptDevCredentials',
   USE_DATA_RETENTION = 'preferences/useDataRetention',
   PREVENT_AUTO_LOCK = 'preferences/preventAutoLock',
+  UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
 }
 
 enum ToursDispatchAction {
@@ -212,6 +213,10 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences.useDataRetention = true
       }
 
+      if (!preferences.alternateContactNames) {
+        preferences.alternateContactNames = {}
+      }
+
       return {
         ...state,
         preferences,
@@ -254,6 +259,24 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         preferences,
       }
+    }
+    case PreferencesDispatchAction.UPDATE_ALTERNATE_CONTACT_NAMES: {
+      const idNamePair = (action?.payload ?? []).pop() ?? {}
+      const preferences = {
+        ...state.preferences,
+        alternateContactNames: {
+          ...state.preferences.alternateContactNames,
+          ...idNamePair,
+        },
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
     }
     case ToursDispatchAction.UPDATE_SEEN_TOUR_PROMPT: {
       const seenToursPrompt: ToursState = (action?.payload ?? []).pop() ?? false

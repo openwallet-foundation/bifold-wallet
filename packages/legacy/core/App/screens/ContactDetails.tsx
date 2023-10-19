@@ -1,23 +1,23 @@
 import { CredentialState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useCredentialByState } from '@aries-framework/react-hooks'
-import { Attribute } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter } from 'react-native'
+import { DeviceEventEmitter, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
-import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
 import { EventTypes } from '../constants'
-import { useConfiguration } from '../contexts/configuration'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { formatTime } from '../utils/helpers'
+import { formatTime, getConnectionName } from '../utils/helpers'
+import { testIdWithKey } from '../utils/testable'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
@@ -34,7 +34,15 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ].filter((credential) => credential.connectionId === connection?.id)
-  const { record } = useConfiguration()
+  const { ColorPallet, TextTheme } = useTheme()
+  const [store] = useStore()
+
+  const styles = StyleSheet.create({
+    contentContainer: {
+      padding: 20,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+    },
+  })
 
   const handleOnRemove = () => {
     if (connectionCredentials?.length) {
@@ -79,25 +87,52 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     setIsCredentialsRemoveModalDisplayed(false)
   }
 
+  const handleGoToRename = () => {
+    navigation.navigate(Screens.RenameContact, { connectionId })
+  }
+
+  const callGoToRename = useCallback(() => handleGoToRename(), [])
   const callOnRemove = useCallback(() => handleOnRemove(), [])
   const callSubmitRemove = useCallback(() => handleSubmitRemove(), [])
   const callCancelRemove = useCallback(() => handleCancelRemove(), [])
   const callGoToCredentials = useCallback(() => handleGoToCredentials(), [])
   const callCancelUnableToRemove = useCallback(() => handleCancelUnableRemove(), [])
 
+  const contactLabel = useMemo(
+    () => getConnectionName(connection, store.preferences.alternateContactNames),
+    [connection, store.preferences.alternateContactNames]
+  )
+
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      {record({
-        fields: [
-          {
-            name: connection?.alias || connection?.theirLabel,
-            value: t('ContactDetails.DateOfConnection', {
-              date: connection?.createdAt ? formatTime(connection.createdAt, { includeHour: true }) : '',
-            }),
-          },
-        ] as Attribute[],
-        footer: () => <RecordRemove onRemove={callOnRemove} />,
-      })}
+      <View style={styles.contentContainer}>
+        <Text style={{ ...TextTheme.headingThree }}>{contactLabel}</Text>
+        <Text style={{ ...TextTheme.normal, marginTop: 20 }}>
+          {t('ContactDetails.DateOfConnection', {
+            date: connection?.createdAt ? formatTime(connection.createdAt, { includeHour: true }) : '',
+          })}
+        </Text>
+      </View>
+      <TouchableOpacity
+        onPress={callGoToRename}
+        accessibilityLabel={t('Screens.RenameContact')}
+        accessibilityRole={'button'}
+        testID={testIdWithKey('RenameContact')}
+        style={[styles.contentContainer, { marginTop: 10 }]}
+      >
+        <Text style={{ ...TextTheme.normal }}>{t('Screens.RenameContact')}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={callOnRemove}
+        accessibilityLabel={t('ContactDetails.RemoveContact')}
+        accessibilityRole={'button'}
+        testID={testIdWithKey('RemoveFromWallet')}
+        style={[styles.contentContainer, { marginTop: 10 }]}
+      >
+        <Text style={{ ...TextTheme.normal, color: ColorPallet.semantic.error }}>
+          {t('ContactDetails.RemoveContact')}
+        </Text>
+      </TouchableOpacity>
       <CommonRemoveModal
         usage={ModalUsage.ContactRemove}
         visible={isRemoveModalDisplayed}
