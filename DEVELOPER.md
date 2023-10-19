@@ -1,5 +1,4 @@
 # Developers Guide
-
 The following document is intended to help developers get started with the Bifold project. It includes information on how to set up your development environment, build the project, and run the app in an emulator.
 
 # Project Overview
@@ -28,7 +27,7 @@ npm install -g yarn
 nvm install 16.15
 ```
 
-This project will need to run on an iOS device or Android device or emulator. While it is recommended to test your software on both, especially if you're contributing back to the project, for demonstration purposes you can choose one or the other.
+Project will need to run on an iOS device or Android device or emulator. While it is recommended to test your software on both, especially if you're contributing back to the project, for demonstration purposes you can choose one or the other.
 
 [Android Studio](https://developer.android.com/studio)
 [Apple Xcode](https://developer.apple.com/xcode/)
