@@ -21,7 +21,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplate } from '../hooks/proof-request-templates'
 import { Screens, ProofRequestsStackParams } from '../types/navigators'
-import { formatIfDate } from '../utils/helpers'
+import { formatIfDate, pTypeToText } from '../utils/helpers'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'
 import { testIdWithKey } from '../utils/testable'
@@ -37,7 +37,7 @@ const AttributeItem: React.FC<{ item: Attribute; style?: StyleProp<TextStyle> }>
   const [value, setValue] = useState(item.value)
 
   useEffect(() => {
-    formatIfDate(item.format, value, setValue)
+    setValue(formatIfDate(item.format, value))
   }, [])
 
   return (
@@ -54,14 +54,6 @@ const PredicateItem: React.FC<{
   onChangeValue: (name: string, value: string) => void
 }> = ({ item, style, onChangeValue }) => {
   const { ColorPallet } = useTheme()
-  const [pValue, setPValue] = useState(item.pValue)
-
-  useEffect(() => {
-    // can't format the date if parameterizable, must remain a number
-    if (!item.parameterizable) {
-      formatIfDate(item.format, pValue, setPValue)
-    }
-  }, [])
 
   const defaultStyle = StyleSheet.create({
     input: {
@@ -72,7 +64,7 @@ const PredicateItem: React.FC<{
   })
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       <Text style={style}>{item.label || item.name}</Text>
       <Text style={style}>{item.pType}</Text>
       {item.parameterizable && (
@@ -81,17 +73,17 @@ const PredicateItem: React.FC<{
           style={[style, defaultStyle.input]}
           onChangeText={(value) => onChangeValue(item.name || '', value)}
         >
-          {pValue}
+          {item.pValue}
         </TextInput>
       )}
-      {!item.parameterizable && <Text style={style}>{pValue}</Text>}
+      {!item.parameterizable && <Text style={style}>{item.pValue}</Text>}
     </View>
   )
 }
 
 const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = ({ data, onChangeValue }) => {
   const { ListItems, ColorPallet } = useTheme()
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { OCABundleResolver } = useConfiguration()
 
   const style = StyleSheet.create({
@@ -113,16 +105,18 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
       ...ListItems.requestTemplateTitle,
       fontWeight: 'bold',
       fontSize: 18,
-      paddingVertical: 8,
       marginRight: 8,
     },
     attributesList: {
       paddingLeft: 14,
     },
+    fieldContainer: { flexDirection: 'row', paddingVertical: 8 },
   })
 
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
   const [attributes, setAttributes] = useState<Field[] | undefined>(undefined)
+  const [attributeTypes, setAttributeTypes] = useState<Record<string, string> | undefined>(undefined)
+  const [attributeFormats, setAttributeFormats] = useState<Record<string, string | undefined> | undefined>(undefined)
 
   useEffect(() => {
     OCABundleResolver.resolve({ identifiers: { schemaId: data.schema }, language: i18n.language }).then((bundle) => {
@@ -142,9 +136,6 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
         })
       setMeta(metaOverlay)
     })
-  }, [data.schema])
-
-  useEffect(() => {
     const attributes = buildFieldsFromAnonCredsProofRequestTemplate(data)
     OCABundleResolver.presentationFields({
       identifiers: { schemaId: data.schema },
@@ -155,6 +146,32 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
     })
   }, [data.schema])
 
+  useEffect(() => {
+    const credDefId = (data.requestedAttributes ?? data.requestedPredicates)
+      ?.flatMap((reqItem) => reqItem.restrictions?.map((restrictionItem) => restrictionItem.cred_def_id))
+      .find((item) => item !== undefined)
+    const params = {
+      identifiers: {
+        credentialDefinitionId: credDefId,
+        schemaId: data.schema,
+      },
+      language: i18n.language,
+      attributes,
+    }
+    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
+      setAttributeTypes(bundle?.bundle?.captureBase.attributes)
+      setAttributeFormats(
+        (bundle.bundle as any)?.bundle.attributes
+          .map((attr: any) => {
+            return { name: attr.name, format: attr.format }
+          })
+          .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
+            return { ...prev, [curr.name]: curr.format }
+          }, {})
+      )
+    })
+  }, [])
+
   return (
     <View style={[style.credentialCard]}>
       <Text style={style.schemaTitle}>{meta?.name}</Text>
@@ -163,13 +180,21 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
         data={attributes}
         keyExtractor={(record, index) => record.name || index.toString()}
         renderItem={({ item }) => {
+          item.format = attributeFormats?.[item.name ?? '']
+          let parsedPredicate: Predicate | undefined = undefined
+          if (item instanceof Predicate) {
+            parsedPredicate = pTypeToText(item, t, attributeTypes) as Predicate
+            if (!parsedPredicate.parameterizable) {
+              parsedPredicate.pValue = formatIfDate(parsedPredicate.format, parsedPredicate.pValue)
+            }
+          }
           return (
-            <View style={{ flexDirection: 'row' }}>
+            <View style={style.fieldContainer}>
               <Text style={style.attributeTitle}>{`\u2022`}</Text>
               {item instanceof Attribute && <AttributeItem style={style.attributeTitle} item={item as Attribute} />}
               {item instanceof Predicate && (
                 <PredicateItem
-                  item={item as Predicate}
+                  item={parsedPredicate as Predicate}
                   style={style.attributeTitle}
                   onChangeValue={(name, value) => {
                     onChangeValue(data.schema, item.label || name, name, value)

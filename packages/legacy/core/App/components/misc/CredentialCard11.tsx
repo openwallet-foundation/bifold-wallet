@@ -12,7 +12,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
-import { getCredentialConnectionLabel, isDataUrl } from '../../utils/helpers'
+import { formatIfDate, getCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
@@ -101,6 +101,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const secondaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
   )
+
+  const attributeTypes = overlay.bundle?.captureBase.attributes
+  const attributeFormats: Record<string, string | undefined> = (overlay.bundle as any)?.bundle.attributes
+    .map((attr: any) => {
+      return { name: attr.name, format: attr.format }
+    })
+    .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
+      return { ...prev, [curr.name]: curr.format }
+    }, {})
 
   const cardData = [...(displayItems ?? []), primaryField, secondaryField]
 
@@ -215,7 +224,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   })
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
-    return { label: item?.label ?? item?.name ?? '', value: item?.value || `${item?.pType} ${item?.pValue}` }
+    let parsedItem = item
+    if (item && !item.value) {
+      parsedItem = pTypeToText(item, t, attributeTypes) as Attribute & Predicate
+    }
+    const parsedValue = formatIfDate(
+      attributeFormats?.[item?.name ?? ''],
+      parsedItem?.value ?? parsedItem?.pValue ?? null
+    )
+    return {
+      label: item?.label ?? item?.name ?? '',
+      value: item?.value ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
+    }
   }
 
   useEffect(() => {
@@ -345,6 +365,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
+    const parsedValue = formatIfDate(item?.format, value) ?? ''
     return (
       item && (
         <View style={{ marginTop: 15 }}>
@@ -371,7 +392,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   size={ListItems.recordAttributeText.fontSize}
                 />
               )}
-              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={value} />
+              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
             </View>
           )}
           {item?.satisfied != undefined && item?.satisfied === false ? (

@@ -14,6 +14,7 @@ import {
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
+import { formatIfDate, pTypeToText } from '../../utils/helpers'
 import { buildFieldsFromSharedAnonCredsProof } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
@@ -59,6 +60,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
       elevation: 5,
     },
     cardAttributes: {
+      width: '65%',
       paddingTop: 20,
       paddingBottom: 10,
     },
@@ -79,6 +81,15 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay> | undefined>(undefined)
 
+  const attributeTypes = overlay?.bundle?.captureBase.attributes
+  const attributeFormats: Record<string, string | undefined> = (overlay?.bundle as any)?.bundle.attributes
+    .map((attr: any) => {
+      return { name: attr.name, format: attr.format }
+    })
+    .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
+      return { ...prev, [curr.name]: curr.format }
+    }, {})
+
   useEffect(() => {
     const attributes = buildFieldsFromSharedAnonCredsProof(sharedData.data)
     const params = {
@@ -95,14 +106,21 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
   }, [sharedData])
 
   const CardField: React.FC<{ item: Field }> = ({ item }) => {
+    const { t } = useTranslation()
+    let parsedPredicate: Predicate | undefined = undefined
+    if (item instanceof Predicate) {
+      parsedPredicate = pTypeToText(item, t, attributeTypes) as Predicate
+      parsedPredicate.pValue = formatIfDate(attributeFormats[item.name ?? ''], parsedPredicate.pValue)
+    } else {
+      ;(item as Attribute).value = formatIfDate(attributeFormats[item.name ?? ''], (item as Attribute).value)
+    }
+
     return (
-      <View key={item.name} style={styles.attributeContainer}>
+      <View key={item.name} style={[styles.attributeContainer]}>
         <Text style={styles.attributeName}>{item.label || item.name}</Text>
         {item instanceof Attribute && <AttributeValue style={styles.attributeValue} field={item} shown={true} />}
         {item instanceof Predicate && (
-          <Text style={styles.attributeValue}>
-            {item.pType} {item.pValue}
-          </Text>
+          <Text style={styles.attributeValue}>{`${parsedPredicate?.pType} ${parsedPredicate?.pValue}`}</Text>
         )}
       </View>
     )

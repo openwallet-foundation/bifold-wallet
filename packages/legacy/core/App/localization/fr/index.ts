@@ -409,6 +409,12 @@ const translation = {
         "CustomOfferParagraph2": "Vous ne reconnaissez pas l'organisation? Vérifiez votre liste de Contacts. Vous ne recevez des notifications que des Contacts que vous avez initiés."
     },
     "ProofRequest": {
+        "PredicateGeDate": "is after (FR)",
+        "PredicateLeDate": "is before (FR)",
+        "PredicateGe": "is greater than or equal to (FR)",
+        "PredicateGr": "is greater than (FR)",
+        "PredicateLe": "is less than or equal to (FR)",
+        "PredicateLs": "is less than (FR)",
         "ProofRequest": "Demande de preuve",
         "RequestProcessing": "Juste un instant...",
         "OfferDelay": "Retard de l'offre",

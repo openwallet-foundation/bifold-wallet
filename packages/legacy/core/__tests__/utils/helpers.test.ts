@@ -99,39 +99,34 @@ describe('formatTime', () => {
 })
 
 describe('formatIfDate', () => {
-  let setter = jest.fn()
-
-  beforeEach(() => {
-    setter = jest.fn()
-  })
 
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   test('without format', () => {
-    formatIfDate(undefined, '20020523', setter)
-    expect(setter).toBeCalledTimes(0)
+    const result = formatIfDate(undefined, '20020523')
+    expect(result).toEqual('20020523')
   })
 
   test('with format and string date', () => {
-    formatIfDate('YYYYMMDD', '20020523', setter)
-    expect(setter).toBeCalledTimes(1)
+    const result = formatIfDate('YYYYMMDD', '20020523')
+    expect(result).toEqual("May 23, 2002")
   })
 
   test('with format and number date', () => {
-    formatIfDate('YYYYMMDD', 20020523, setter)
-    expect(setter).toBeCalledTimes(1)
+    const result = formatIfDate('YYYYMMDD', 20020523)
+    expect(result).toEqual("May 23, 2002")
   })
 
   test('with format but invalid string date', () => {
-    formatIfDate('YYYYMMDD', '203', setter)
-    expect(setter).toBeCalledTimes(0)
+    const result = formatIfDate('YYYYMMDD', '203')
+    expect(result).toEqual('203')
   })
 
   test('with format but invalid number date', () => {
-    formatIfDate('YYYYMMDD', 203, setter)
-    expect(setter).toBeCalledTimes(0)
+    const result = formatIfDate('YYYYMMDD', 203)
+    expect(result).toEqual(203)
   })
 })
 

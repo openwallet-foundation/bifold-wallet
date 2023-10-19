@@ -411,6 +411,12 @@ const translation = {
     "DeleteOfferDescription": "Don't recognize the organization? Check your Contacts list. You only receive notifications from Contacts you've initiated",
   },
   "ProofRequest": {
+    "PredicateGeDate": "is after",
+    "PredicateLeDate": "is before",
+    "PredicateGe": "is greater than or equal to",
+    "PredicateGr": "is greater than",
+    "PredicateLe": "is less than or equal to",
+    "PredicateLs": "is less than",
     "ProofRequest": "Proof Request",
     "RequestProcessing": "Just a moment...",
     "OfferDelay": "Offer delay",
