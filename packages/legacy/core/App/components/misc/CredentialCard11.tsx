@@ -128,8 +128,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
-      flexGrow: 1,
+      flex: 1,
       padding,
+      marginLeft: -1 * logoHeight + padding,
     },
     imageAttr: {
       height: 150,
@@ -366,70 +367,62 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        <View
-          style={{
-            marginLeft: -1 * logoHeight + padding,
-            margin: -1,
-            marginRight: 40,
-          }}
-        >
-          <View>
-            {!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof) && (
-              <View style={{ flexDirection: 'row' }}>
-                <Text
-                  testID={testIdWithKey('CredentialIssuer')}
-                  style={[
-                    TextTheme.label,
-                    styles.textContainer,
-                    {
-                      lineHeight: 19,
-                      opacity: 0.8,
-                      flex: 1,
-                      flexWrap: 'wrap',
-                    },
-                  ]}
-                >
-                  {overlay.metaOverlay?.issuer}
-                </Text>
-              </View>
-            )}
+        <View>
+          {!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof) && (
             <View style={{ flexDirection: 'row' }}>
               <Text
-                testID={testIdWithKey('CredentialName')}
+                testID={testIdWithKey('CredentialIssuer')}
                 style={[
-                  TextTheme.normal,
+                  TextTheme.label,
                   styles.textContainer,
                   {
-                    fontWeight: 'bold',
-                    lineHeight: 24,
+                    lineHeight: 19,
+                    opacity: 0.8,
                     flex: 1,
                     flexWrap: 'wrap',
-                    color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
                   },
                 ]}
               >
-                {overlay.metaOverlay?.name}
-              </Text>
-            </View>
-          </View>
-          {(error || isProofRevoked) && (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon style={[styles.errorIcon]} name="close" size={30} />
-
-              <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-                {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
+                {overlay.metaOverlay?.issuer}
               </Text>
             </View>
           )}
-          <FlatList
-            data={cardData}
-            scrollEnabled={false}
-            initialNumToRender={cardData?.length}
-            renderItem={({ item }) => {
-              return renderCardAttribute(item as Attribute & Predicate)
-            }}
-          />
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              testID={testIdWithKey('CredentialName')}
+              style={[
+                TextTheme.normal,
+                styles.textContainer,
+                {
+                  fontWeight: 'bold',
+                  lineHeight: 24,
+                  flex: 1,
+                  flexWrap: 'wrap',
+                  color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
+                },
+              ]}
+            >
+              {overlay.metaOverlay?.name}
+            </Text>
+          </View>
         </View>
+        {(error || isProofRevoked) && (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon style={[styles.errorIcon]} name="close" size={30} />
+
+            <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+              {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
+            </Text>
+          </View>
+        )}
+        <FlatList
+          data={cardData}
+          scrollEnabled={false}
+          initialNumToRender={cardData?.length}
+          renderItem={({ item }) => {
+            return renderCardAttribute(item as Attribute & Predicate)
+          }}
+        />
       </View>
     )
   }
