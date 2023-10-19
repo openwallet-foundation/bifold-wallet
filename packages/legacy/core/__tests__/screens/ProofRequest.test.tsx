@@ -5,7 +5,7 @@ import { useAgent, useProofById } from '@aries-framework/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import '@testing-library/jest-native/extend-expect'
-import { cleanup, render, waitFor } from '@testing-library/react-native'
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
@@ -149,7 +149,7 @@ describe('displays a proof request screen', () => {
             },
           },
           requested_predicates: {
-            additionalProp2: {
+            age: {
               name: 'age',
               p_type: '<=',
               p_value: 18,
@@ -281,6 +281,159 @@ describe('displays a proof request screen', () => {
       expect(shareButton).not.toBeNull()
       expect(shareButton).toBeEnabled()
       expect(declineButton).not.toBeNull()
+    })
+
+    test('displays a proof request with multiple satisfying credentials', async () => {
+      const { agent } = useAgent()
+      const testEmail2 = 'test2@email.com'
+      const testTime2 = '2023-02-11 20:00:18.180718'
+      const testAge2 = '17'
+
+      const { id: credentialId2 } = new CredentialExchangeRecord({
+        threadId: '1',
+        state: CredentialState.Done,
+        credentialAttributes: [
+          {
+            name: 'email',
+            value: testEmail2,
+            toJSON: jest.fn(),
+          },
+          {
+            name: 'time',
+            value: testTime2,
+            toJSON: jest.fn(),
+          },
+          {
+            name: 'age',
+            value: testAge2,
+            toJSON: jest.fn(),
+          },
+        ],
+        protocolVersion: 'v1',
+      })
+
+      const testRetrievedCredentials2 = {
+        proofFormats: {
+          indy: {
+            predicates: {
+              age: [
+                {
+                  credentialId: credentialId,
+                  revealed: true,
+                  credentialInfo: {
+                    ...attributeBase,
+                    credentialId: credentialId,
+                    attributes: { age: testAge },
+                  },
+                },
+                {
+                  credentialId: credentialId2,
+                  revealed: true,
+                  credentialInfo: {
+                    ...attributeBase,
+                    credentialId: credentialId2,
+                    attributes: { age: testAge2 },
+                  },
+                },
+              ],
+            },
+            attributes: {
+              email: [
+                {
+                  credentialId: credentialId,
+                  revealed: true,
+                  credentialInfo: {
+                    ...attributeBase,
+                    credentialId: credentialId,
+                    attributes: { email: testEmail },
+                  },
+                },
+                {
+                  credentialId: credentialId2,
+                  revealed: true,
+                  credentialInfo: {
+                    ...attributeBase,
+                    credentialId: credentialId2,
+                    attributes: { email: testEmail2 },
+                  },
+                },
+              ],
+              time: [
+                {
+                  credentialId: credentialId,
+                  revealed: true,
+                  credentialInfo: {
+                    ...attributeBase,
+                    attributes: { time: testTime },
+                    credentialId: credentialId,
+                  },
+                },
+                {
+                  credentialId: credentialId2,
+                  revealed: true,
+                  credentialInfo: {
+                    ...attributeBase,
+                    attributes: { time: testTime2 },
+                    credentialId: credentialId2,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      }
+
+      // @ts-ignore-next-line
+      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+
+      // @ts-ignore-next-line
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials2)
+
+      const navigation = useNavigation()
+
+      const { getByText, getByTestId, queryByText } = render(
+        <ConfigurationContext.Provider value={configurationContext}>
+          <NetworkProvider>
+            <ProofRequest navigation={navigation as any} route={{ params: { proofId: testProofRequest.id } } as any} />
+          </NetworkProvider>
+        </ConfigurationContext.Provider>
+      )
+
+      await waitFor(() => {
+        Promise.resolve()
+      })
+      const changeCred = getByText('ProofRequest.ChangeCredential', { exact: false })
+      const changeCredButton = getByTestId(testIdWithKey('changeCredential'))
+      const contact = getByText('ContactDetails.AContact', { exact: false })
+      const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
+      const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
+      const emailLabel = getByText(/Email/, { exact: false })
+      const emailValue = getByText(testEmail)
+      const timeLabel = getByText(/Time/, { exact: false })
+      const timeValue = getByText(testTime)
+      const shareButton = getByTestId(testIdWithKey('Share'))
+      const declineButton = getByTestId(testIdWithKey('Decline'))
+
+      expect(changeCred).not.toBeNull()
+      expect(changeCredButton).not.toBeNull()
+      expect(contact).not.toBeNull()
+      expect(contact).toBeTruthy()
+      expect(missingInfo).toBeNull()
+      expect(emailLabel).not.toBeNull()
+      expect(emailLabel).toBeTruthy()
+      expect(emailValue).not.toBeNull()
+      expect(emailValue).toBeTruthy()
+      expect(timeLabel).not.toBeNull()
+      expect(timeLabel).toBeTruthy()
+      expect(timeValue).not.toBeNull()
+      expect(timeValue).toBeTruthy()
+      expect(missingClaim).toBeNull()
+      expect(shareButton).not.toBeNull()
+      expect(shareButton).toBeEnabled()
+      expect(declineButton).not.toBeNull()
+
+      fireEvent(changeCredButton, 'press')
+      expect(navigation.navigate).toBeCalledTimes(1)
     })
 
     test('displays a proof request with one or more claims not available', async () => {
