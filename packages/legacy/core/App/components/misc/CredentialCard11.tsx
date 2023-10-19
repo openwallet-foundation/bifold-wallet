@@ -147,7 +147,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       resizeMode: 'contain',
       borderRadius: 10,
     },
-
     statusContainer: {
       backgroundColor: 'rgba(0, 0, 0, 0)',
       borderTopRightRadius: borderRadius,
@@ -325,22 +324,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         {isDataUrl(value) ? (
           <Image style={styles.imageAttr} source={{ uri: value as string }}></Image>
         ) : (
-          <View>
-            <Text
-              style={[
-                TextTheme.normal,
-                styles.textContainer,
-                {
-                  lineHeight: 24,
-                  fontWeight: 'bold',
-                },
-                { color: warn ? ColorPallet.notification.warnText : styles.textContainer.color },
-              ]}
-              testID={testIdWithKey('AttributeValue')}
-            >
-              {value}
-            </Text>
-          </View>
+          <Text
+            style={[
+              TextTheme.normal,
+              styles.textContainer,
+              {
+                lineHeight: 24,
+                fontWeight: 'bold',
+              },
+              { color: warn ? ColorPallet.notification.warnText : styles.textContainer.color },
+            ]}
+            testID={testIdWithKey('AttributeValue')}
+          >
+            {value}
+          </Text>
         )}
       </>
     )

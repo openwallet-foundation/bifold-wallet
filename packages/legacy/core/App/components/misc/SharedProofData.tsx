@@ -60,6 +60,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
       elevation: 5,
     },
     cardAttributes: {
+      width: '65%',
       paddingTop: 20,
       paddingBottom: 10,
     },

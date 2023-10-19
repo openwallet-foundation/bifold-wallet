@@ -328,6 +328,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                     Object {
                       "paddingBottom": 10,
                       "paddingTop": 20,
+                      "width": "65%",
                     }
                   }
                 >
@@ -708,6 +709,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                     Object {
                       "paddingBottom": 10,
                       "paddingTop": 20,
+                      "width": "65%",
                     }
                   }
                 >
