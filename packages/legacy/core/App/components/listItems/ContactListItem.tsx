@@ -11,6 +11,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
 
+import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { useCredentialsByConnectionId } from '../../hooks/credentials'
 import { useProofsByConnectionId } from '../../hooks/proofs'
@@ -18,6 +19,7 @@ import { Role } from '../../types/chat'
 import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import {
   formatTime,
+  getConnectionName,
   getCredentialEventLabel,
   getCredentialEventRole,
   getProofEventLabel,
@@ -41,6 +43,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const credentials = useCredentialsByConnectionId(contact.id)
   const proofs = useProofsByConnectionId(contact.id)
   const [message, setMessage] = useState<CondensedMessage>({ text: '', createdAt: contact.createdAt })
+  const [store] = useStore()
 
   const styles = StyleSheet.create({
     container: {
@@ -132,8 +135,14 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
   }, [contact])
 
-  const contactLabel = useMemo(() => contact.alias || contact.theirLabel, [contact])
-  const contactLabelAbbr = useMemo(() => contactLabel?.charAt(0).toUpperCase(), [contact])
+  const contactLabel = useMemo(
+    () => getConnectionName(contact, store.preferences.alternateContactNames),
+    [contact, store.preferences.alternateContactNames]
+  )
+  const contactLabelAbbr = useMemo(
+    () => contactLabel?.charAt(0).toUpperCase(),
+    [contact, store.preferences.alternateContactNames]
+  )
 
   return (
     <TouchableOpacity
