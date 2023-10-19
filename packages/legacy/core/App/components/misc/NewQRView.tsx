@@ -204,7 +204,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
             </View>
             <View style={{ paddingHorizontal: 20, flex: 1 }}>
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={styles.walletName}>{store.preferences.walletName}</Text>
+                <Text style={[styles.walletName, { paddingHorizontal: 20 }]}>{store.preferences.walletName}</Text>
                 <TouchableOpacity
                   accessibilityLabel={t('NameWallet.EditWalletName')}
                   testID={testIdWithKey('EditWalletName')}
