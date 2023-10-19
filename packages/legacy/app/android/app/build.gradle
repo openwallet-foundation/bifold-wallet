@@ -142,6 +142,7 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
 }
 // task printVersionInformation {
 //     println "v" + ext.versionName + " (" + ext.versionCode + ")"
