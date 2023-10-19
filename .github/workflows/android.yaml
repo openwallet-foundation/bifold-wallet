@@ -122,7 +122,7 @@ jobs:
       - name: upload artefact to App Center
         uses: wzieba/AppCenter-Github-Action@v1
         with:
-          appName: wzieba/Sample-App
+          appName: Actions
           token: ${{secrets.APPCENTER_KEY}}
           group: Collaborators
           file: ./packages/legacy/app/android/app/build/outputs/apk/release/app-release.apk
