@@ -15,6 +15,7 @@ import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
+import { useTranslation } from '../../__mocks__/react-i18next'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -57,6 +58,8 @@ describe('displays a proof request screen', () => {
     const testEmail = 'test@email.com'
     const testTime = '2022-02-11 20:00:18.180718'
     const testAge = '16'
+
+    const { t } = useTranslation()
 
     const { id: credentialId } = new CredentialExchangeRecord({
       threadId: '1',
@@ -520,7 +523,7 @@ describe('displays a proof request screen', () => {
       const emailLabel = getByText(/Email/, { exact: false })
       const emailValue = getByText(testEmail)
       const ageLabel = getByText(/Age/, { exact: false })
-      const ageValue = getByText('<= 18')
+      const ageValue = getByText(t('ProofRequest.PredicateLe') + ' 18')
       const ageNotSatisfied = getByText('ProofRequest.PredicateNotSatisfied', { exact: false })
       const shareButton = getByTestId(testIdWithKey('Share'))
       const declineButton = getByTestId(testIdWithKey('Decline'))
