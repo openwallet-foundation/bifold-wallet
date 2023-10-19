@@ -43,7 +43,12 @@ import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { getCredentialIdentifiers } from '../utils/credential'
-import { mergeAttributesAndPredicates, processProofAttributes, processProofPredicates } from '../utils/helpers'
+import {
+  getConnectionName,
+  mergeAttributesAndPredicates,
+  processProofAttributes,
+  processProofPredicates,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -63,7 +68,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const fullCredentials = useCredentials().records
   const proof = useProofById(proofId)
   const connection = proof?.connectionId ? useConnectionById(proof.connectionId) : undefined
-  const proofConnectionLabel = connection?.theirLabel ?? proof?.connectionId ?? ''
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
@@ -76,6 +80,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { enableTours: enableToursConfig, OCABundleResolver } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
   const [store, dispatch] = useStore()
+  const proofConnectionLabel = useMemo(
+    () => getConnectionName(connection, store.preferences.alternateContactNames),
+    [connection, store.preferences.alternateContactNames]
+  )
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
 

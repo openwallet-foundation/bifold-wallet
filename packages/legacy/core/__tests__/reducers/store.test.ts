@@ -94,4 +94,12 @@ describe('Store reducer', () => {
     const returnedState = storeReducer(defaultState, { type: DispatchAction.PREVENT_AUTO_LOCK, payload: [false] })
     expect(returnedState.preferences.preventAutoLock).toBe(false)
   })
+
+  test('UPDATE_ALTERNATE_CONTACT_NAMES adds an id-name pair', () => {
+    const returnedState = storeReducer(defaultState, {
+      type: DispatchAction.UPDATE_ALTERNATE_CONTACT_NAMES,
+      payload: [{ '123': 'My Alt Name' }],
+    })
+    expect(returnedState.preferences.alternateContactNames).toEqual({ '123': 'My Alt Name' })
+  })
 })

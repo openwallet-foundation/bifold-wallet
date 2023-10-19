@@ -1,0 +1,333 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact Details Screen Renders correctly 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "padding": 20,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 26,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      BestBC College
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginTop": 20,
+        }
+      }
+    >
+      ContactDetails.DateOfConnection
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="Screens.RenameContact"
+    accessibilityRole="button"
+    accessibilityState={
+      Object {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "marginTop": 10,
+        "opacity": 1,
+        "padding": 20,
+      }
+    }
+    testID="com.ariesbifold:id/RenameContact"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        }
+      }
+    >
+      Screens.RenameContact
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="ContactDetails.RemoveContact"
+    accessibilityRole="button"
+    accessibilityState={
+      Object {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "marginTop": 10,
+        "opacity": 1,
+        "padding": 20,
+      }
+    }
+    testID="com.ariesbifold:id/RemoveFromWallet"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#D8292F",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        }
+      }
+    >
+      ContactDetails.RemoveContact
+    </Text>
+  </View>
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    transparent={true}
+    visible={false}
+  />
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    transparent={true}
+    visible={false}
+  />
+</RNCSafeAreaView>
+`;
+
+exports[`Contact Details Screen Renders correctly with alt contact name 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "padding": 20,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 26,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Alt Name
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+          "marginTop": 20,
+        }
+      }
+    >
+      ContactDetails.DateOfConnection
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="Screens.RenameContact"
+    accessibilityRole="button"
+    accessibilityState={
+      Object {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "marginTop": 10,
+        "opacity": 1,
+        "padding": 20,
+      }
+    }
+    testID="com.ariesbifold:id/RenameContact"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        }
+      }
+    >
+      Screens.RenameContact
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="ContactDetails.RemoveContact"
+    accessibilityRole="button"
+    accessibilityState={
+      Object {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "marginTop": 10,
+        "opacity": 1,
+        "padding": 20,
+      }
+    }
+    testID="com.ariesbifold:id/RemoveFromWallet"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#D8292F",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        }
+      }
+    >
+      ContactDetails.RemoveContact
+    </Text>
+  </View>
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    transparent={true}
+    visible={false}
+  />
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    transparent={true}
+    visible={false}
+  />
+</RNCSafeAreaView>
+`;

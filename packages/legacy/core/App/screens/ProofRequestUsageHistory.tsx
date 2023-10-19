@@ -9,9 +9,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useProofsByTemplateId, isPresentationReceived } from '../../verifier'
 import EmptyList from '../components/misc/EmptyList'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { formatTime } from '../utils/helpers'
+import { formatTime, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestUsageHistoryProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestUsageHistory>
@@ -40,8 +41,12 @@ const getPresentationStateLabel = (record: ProofExchangeRecord) => {
 const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordProps> = ({ record, navigation }) => {
   const { t } = useTranslation()
   const { ListItems, ColorPallet } = useTheme()
-
+  const [store] = useStore()
   const connection = record.connectionId ? useConnectionById(record.connectionId) : undefined
+  const theirLabel = useMemo(
+    () => getConnectionName(connection, store.preferences.alternateContactNames),
+    [connection, store.preferences.alternateContactNames]
+  )
 
   const style = StyleSheet.create({
     card: {
@@ -101,7 +106,7 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
       <View style={style.leftContainer}>
         <View style={style.cardRow}>
           <Text style={style.valueLabel}>{t('Verifier.PresentationFrom')}:</Text>
-          <Text style={style.valueText}>{connection?.theirLabel || t('Verifier.ConnectionlessPresentation')}</Text>
+          <Text style={style.valueText}>{theirLabel || t('Verifier.ConnectionlessPresentation')}</Text>
         </View>
         <View style={style.cardRow}>
           <Text style={style.valueLabel}>{t('Verifier.PresentationState')}:</Text>
