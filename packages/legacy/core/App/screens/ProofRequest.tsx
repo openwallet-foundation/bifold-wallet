@@ -10,7 +10,7 @@ import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -37,7 +37,7 @@ import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredica
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
-import { Fields, evaluatePredicates, getCredentialInfo } from '../utils/helpers'
+import { getConnectionName, Fields, evaluatePredicates, getCredentialInfo } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -55,7 +55,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { assertConnectedNetwork } = useNetwork()
   const proof = useProofById(proofId)
   const connection = proof?.connectionId ? useConnectionById(proof.connectionId) : undefined
-  const proofConnectionLabel = connection?.theirLabel ?? proof?.connectionId ?? ''
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
@@ -70,6 +69,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
+  const proofConnectionLabel = useMemo(
+    () => getConnectionName(connection, store.preferences.alternateContactNames),
+    [connection, store.preferences.alternateContactNames]
+  )
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
 

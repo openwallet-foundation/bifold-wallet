@@ -9,7 +9,14 @@ import { useTranslation } from 'react-i18next'
 import { BackHandler, DeviceEventEmitter, useWindowDimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { isPresentationFailed, isPresentationReceived, linkProofWithTemplate, sendProofRequest } from '../../verifier'
+import {
+  ProofCustomMetadata,
+  ProofMetadata,
+  isPresentationFailed,
+  isPresentationReceived,
+  linkProofWithTemplate,
+  sendProofRequest,
+} from '../../verifier'
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import QRRenderer from '../components/misc/QRRenderer'
@@ -154,6 +161,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         // send proof logic
         const result = await sendProofRequest(agent, template, record.id, predicateValues)
         if (result?.proofRecord) {
+          // verifier side doesn't have access to the goal code so we need to add metadata here
+          const metadata = result.proofRecord.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
+          result.proofRecord.metadata.set(ProofMetadata.customMetadata, { ...metadata, delete_conn_after_seen: true })
           linkProofWithTemplate(agent, result.proofRecord, templateId)
         }
         setProofRecordId(result?.proofRecord.id)
