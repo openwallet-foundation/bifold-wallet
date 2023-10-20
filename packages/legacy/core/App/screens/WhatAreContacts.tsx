@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 
+import Link from '../components/texts/Link'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
 
@@ -27,10 +28,6 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
       marginTop: 30,
       paddingLeft: 25,
       paddingRight: 25,
-    },
-    fakeLink: {
-      color: ColorPallet.brand.link,
-      textDecorationLine: 'underline',
     },
   })
 
@@ -65,12 +62,8 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
         <Text style={styles.title}>{t('WhatAreContacts.Title')}</Text>
         <Text style={TextTheme.normal}>{t('WhatAreContacts.Preamble')}</Text>
         {bulletPoints}
-        <Text style={[TextTheme.normal, { marginBottom: 30 }]}>
-          {`${t('WhatAreContacts.RemoveContacts')} `}
-          <Text onPress={goToContactList} style={[TextTheme.normal, styles.fakeLink]}>
-            {t('WhatAreContacts.ContactsLink')}.
-          </Text>
-        </Text>
+        <Text style={TextTheme.normal}>{`${t('WhatAreContacts.RemoveContacts')} `}</Text>
+        <Link linkText={t('WhatAreContacts.ContactsLink')} onPress={goToContactList} />
       </ScrollView>
     </SafeAreaView>
   )

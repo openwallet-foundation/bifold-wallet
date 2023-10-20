@@ -10,7 +10,7 @@ import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { ModalUsage } from '../../types/remove'
-import { testIdWithKey } from '../../utils/testable'
+import { testIdForAccessabilityLabel, testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import ContentGradient from '../misc/ContentGradient'
 import UnorderedListModal from '../misc/UnorderedListModal'
@@ -40,6 +40,8 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
     <>
       <TouchableOpacity
         onPress={() => setIsCollapsed(!isCollapsed)}
+        accessibilityLabel={title}
+        testID={testIdWithKey(testIdForAccessabilityLabel(title))}
         style={[
           {
             padding: 15,

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link Component Renders correctly, testID exists, and is pressable 1`] = `
+<Text
+  accessibilityLabel="my link"
+  accessibilityRole="link"
+  accessible={true}
+  onPress={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  style={
+    Array [
+      Object {
+        "alignSelf": "flex-start",
+        "color": "#FFFFFF",
+        "fontSize": 18,
+        "fontWeight": "normal",
+        "textDecorationLine": "underline",
+      },
+      Object {},
+    ]
+  }
+  testID="com.ariesbifold:id/MyLink"
+>
+  my link
+</Text>
+`;

@@ -16,6 +16,7 @@ import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
+import Link from './components/texts/Link'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import { AttachTourStep } from './components/tour/AttachTourStep'
@@ -54,7 +55,7 @@ export { animatedComponents } from './animated-components'
 export { theme } from './theme'
 export { useAuth } from './contexts/auth'
 export { NavigationTheme } from './theme'
-export { testIdWithKey } from './utils/testable'
+export { testIdWithKey, testIdForAccessabilityLabel } from './utils/testable'
 export { Screens, Stacks, TabStacks } from './types/navigators'
 export { createStyles } from './screens/OnboardingPages'
 export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
@@ -120,6 +121,7 @@ export {
   InfoTextBox,
   InfoBox,
   InfoBoxType,
+  Link,
   ToastType,
   toastConfig,
   RootStack,

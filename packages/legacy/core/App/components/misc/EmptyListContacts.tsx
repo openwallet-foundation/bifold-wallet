@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
-import { testIdWithKey } from '../../utils/testable'
+import Link from '../texts/Link'
 
 export interface EmptyListProps {
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
@@ -26,12 +26,12 @@ const EmptyListContacts: React.FC<EmptyListProps> = ({ navigation }) => {
     },
     text: {
       textAlign: 'center',
-      paddingTop: 10,
+      marginTop: 10,
     },
-    fakeLink: {
-      ...TextTheme.normal,
-      color: ColorPallet.notification.infoText,
-      textDecorationLine: 'underline',
+    link: {
+      textAlign: 'center',
+      marginTop: 10,
+      alignSelf: 'center',
     },
   })
 
@@ -42,15 +42,9 @@ const EmptyListContacts: React.FC<EmptyListProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Assets.svg.contactBook fill={ListItems.emptyList.color} height={120} />
-      <Text style={[TextTheme.headingThree, styles.text, { paddingTop: 30 }]}>{t('Contacts.EmptyList')}</Text>
+      <Text style={[TextTheme.headingThree, styles.text, { marginTop: 30 }]}>{t('Contacts.EmptyList')}</Text>
       <Text style={[ListItems.emptyList, styles.text]}>{t('Contacts.PeopleAndOrganizations')}</Text>
-      <Text
-        style={[styles.fakeLink, styles.text]}
-        onPress={navigateToWhatAreContacts}
-        testID={testIdWithKey('WhatAreContacts')}
-      >
-        {t('Contacts.WhatAreContacts')}
-      </Text>
+      <Link style={styles.link} linkText={t('Contacts.WhatAreContacts')} onPress={navigateToWhatAreContacts} />
     </View>
   )
 }

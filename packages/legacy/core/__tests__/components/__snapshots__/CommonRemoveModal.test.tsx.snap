@@ -2614,6 +2614,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             }
           >
             <View
+              accessibilityLabel="CredentialDetails.YouWillNotLose"
               accessibilityState={
                 Object {
                   "busy": undefined,
@@ -2651,6 +2652,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                   "padding": 15,
                 }
               }
+              testID="com.ariesbifold:id/CredentialDetails.YouWillNotLose"
             >
               <Text
                 style={
@@ -2822,6 +2824,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             }
           >
             <View
+              accessibilityLabel="CredentialDetails.HowToGetThisCredentialBack"
               accessibilityState={
                 Object {
                   "busy": undefined,
@@ -2859,6 +2862,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                   "padding": 15,
                 }
               }
+              testID="com.ariesbifold:id/CredentialDetails.HowToGetThisCredentialBack"
             >
               <Text
                 style={
