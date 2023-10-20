@@ -27,6 +27,8 @@ export const renderComposer = (props: any, theme: any, placeholder: string) => (
     }}
     placeholder={placeholder}
     placeholderTextColor={theme.placeholderText}
+    // the placeholder is read by accessibility features when multiline is enabled so a label is not necessary (results in double announcing if used)
+    textInputProps={{ accessibilityLabel: '' }}
   />
 )
 
