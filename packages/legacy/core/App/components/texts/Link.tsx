@@ -4,14 +4,14 @@ import { Text, StyleSheet, TextStyle, TextProps } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { testIdForAccessabilityLabel, testIdWithKey } from '../../utils/testable'
 
-interface Props {
+interface LinkProps {
   linkText: string
   style?: TextStyle
   textProps?: TextProps
   onPress: () => void
 }
 
-const Link: React.FC<Props> = ({ linkText, onPress, style = {}, ...textProps }) => {
+const Link: React.FC<LinkProps> = ({ linkText, onPress, style = {}, ...textProps }) => {
   const { TextTheme, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     link: {
