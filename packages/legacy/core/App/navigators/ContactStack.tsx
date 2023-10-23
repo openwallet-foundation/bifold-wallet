@@ -11,6 +11,7 @@ import CredentialOffer from '../screens/CredentialOffer'
 import ListContacts from '../screens/ListContacts'
 import ProofDetails from '../screens/ProofDetails'
 import ProofRequest from '../screens/ProofRequest'
+import RenameContact from '../screens/RenameContact'
 import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
@@ -31,6 +32,11 @@ const ContactStack: React.FC = () => {
         options={{
           title: t('Screens.ContactDetails'),
         }}
+      />
+      <Stack.Screen
+        name={Screens.RenameContact}
+        component={RenameContact}
+        options={{ title: t('Screens.RenameContact') }}
       />
       <Stack.Screen name={Screens.Chat} component={Chat} />
       <Stack.Screen name={Screens.WhatAreContacts} component={WhatAreContacts} options={{ title: '' }} />

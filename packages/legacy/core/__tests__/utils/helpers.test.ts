@@ -1,3 +1,4 @@
+import { ConnectionRecord } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import fs from 'fs'
 import path from 'path'
@@ -10,6 +11,7 @@ import {
   credentialSortFn,
   formatIfDate,
   formatTime,
+  getConnectionName,
 } from '../../App/utils/helpers'
 
 const proofCredentialPath = path.join(__dirname, '../fixtures/proof-credential.json')
@@ -97,39 +99,34 @@ describe('formatTime', () => {
 })
 
 describe('formatIfDate', () => {
-  let setter = jest.fn()
-
-  beforeEach(() => {
-    setter = jest.fn()
-  })
 
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   test('without format', () => {
-    formatIfDate(undefined, '20020523', setter)
-    expect(setter).toBeCalledTimes(0)
+    const result = formatIfDate(undefined, '20020523')
+    expect(result).toEqual('20020523')
   })
 
   test('with format and string date', () => {
-    formatIfDate('YYYYMMDD', '20020523', setter)
-    expect(setter).toBeCalledTimes(1)
+    const result = formatIfDate('YYYYMMDD', '20020523')
+    expect(result).toEqual("May 23, 2002")
   })
 
   test('with format and number date', () => {
-    formatIfDate('YYYYMMDD', 20020523, setter)
-    expect(setter).toBeCalledTimes(1)
+    const result = formatIfDate('YYYYMMDD', 20020523)
+    expect(result).toEqual("May 23, 2002")
   })
 
   test('with format but invalid string date', () => {
-    formatIfDate('YYYYMMDD', '203', setter)
-    expect(setter).toBeCalledTimes(0)
+    const result = formatIfDate('YYYYMMDD', '203')
+    expect(result).toEqual('203')
   })
 
   test('with format but invalid number date', () => {
-    formatIfDate('YYYYMMDD', 203, setter)
-    expect(setter).toBeCalledTimes(0)
+    const result = formatIfDate('YYYYMMDD', 203)
+    expect(result).toEqual(203)
   })
 })
 
@@ -153,5 +150,43 @@ describe('createConnectionInvitation', () => {
     const { agent } = useAgent()
 
     await expect(createConnectionInvitation(agent, 'aries.foo')).rejects.toThrow()
+  })
+})
+
+describe('getConnectionName', () => {
+  test('With all properties and alternate name', async () => {
+    const connection = { id: '1', theirLabel: 'Mike', alias: 'Mikey' }
+    const alternateContactNames = { '1': 'Mikeroni' }
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('Mikeroni')
+  })
+  test('With all properties and no alternate name', async () => {
+    const connection = { id: '1', theirLabel: 'Mike', alias: 'Mikey' }
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('Mike')
+  })
+  test('With no theirLabel but an alias', async () => {
+    const connection = { id: '1', alias: 'Mikey' }
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('Mikey')
+  })
+  test('With no theirLabel or alias', async () => {
+    const connection = { id: '1' }
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('1')
+  })
+  test('With undefined connection', async () => {
+    const connection = undefined
+    const alternateContactNames = {}
+
+    const result = getConnectionName(connection as unknown as ConnectionRecord, alternateContactNames)
+    expect(result).toBe('')
   })
 })

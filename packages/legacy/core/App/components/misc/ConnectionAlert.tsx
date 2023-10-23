@@ -9,6 +9,7 @@ import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import PopupModal from '../modals/PopupModal'
+import Link from '../texts/Link'
 
 import { InfoBoxType } from './InfoBox'
 import UnorderedList from './UnorderedList'
@@ -40,11 +41,6 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
       paddingLeft: 10,
       paddingVertical: 15,
       marginVertical: 15,
-    },
-    fakeLink: {
-      ...TextTheme.normal,
-      color: ColorPallet.notification.infoText,
-      textDecorationLine: 'underline',
     },
     row: {
       flexDirection: 'row',
@@ -104,13 +100,12 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
                   t('ConnectionAlert.PopupPoint3'),
                 ]}
               />
-              <Text style={styles.modalText}>
-                {t('ConnectionAlert.SettingsInstruction')}
-                <Text style={styles.fakeLink} onPress={navigateToSettings}>
-                  {t('ConnectionAlert.SettingsLink')}
-                </Text>
-                .
-              </Text>
+              <Text style={styles.modalText}>{t('ConnectionAlert.SettingsInstruction')}</Text>
+              <Link
+                style={{ marginBottom: 8 }}
+                onPress={navigateToSettings}
+                linkText={t('ConnectionAlert.SettingsLink')}
+              />
               <Text style={styles.modalText}>{t('ConnectionAlert.PrivacyMessage')}</Text>
             </View>
           }
