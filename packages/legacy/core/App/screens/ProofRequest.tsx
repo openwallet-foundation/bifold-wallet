@@ -12,7 +12,7 @@ import { useIsFocused } from '@react-navigation/core'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -37,7 +37,7 @@ import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredica
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
-import { getConnectionName, Fields, evaluatePredicates, getCredentialInfo } from '../utils/helpers'
+import { getConnectionName, Fields, evaluatePredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -300,14 +300,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     })
   }, [activeCreds])
 
-  const hasAvailableCredentials = (credId?: string): boolean => {
+  const hasAvailableCredentials = useMemo(() => {
     const fields = getCredentialsFields()
 
-    if (credId) {
-      return getCredentialInfo(credId, fields).some((credInfo) => credInfo.credentialId === credId)
-    }
     return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
-  }
+  }, [retrievedCredentials])
 
   const hasSatisfiedPredicates = (fields: Fields, credId?: string) =>
     activeCreds.flatMap((item) => evaluatePredicates(fields, credId)(item)).every((p) => p.satisfied)
@@ -407,7 +404,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
-              {!hasAvailableCredentials() || !hasSatisfiedPredicates(getCredentialsFields()) ? (
+              {!hasSatisfiedPredicates(getCredentialsFields()) ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon
                     style={{ marginLeft: -2, marginRight: 10 }}
@@ -415,17 +412,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     color={ListItems.proofIcon.color}
                     size={ListItems.proofIcon.fontSize}
                   />
-                  {hasSatisfiedPredicates(getCredentialsFields()) ? (
-                    <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                      <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
-                      {t('ProofRequest.IsRequestingSomethingYouDontHaveAvailable')}
-                    </Text>
-                  ) : (
-                    <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                      {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
-                      <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>
-                    </Text>
-                  )}
+
+                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                    {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
+                    <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>
+                  </Text>
                 </View>
               ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
@@ -467,6 +458,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 </View>
               )}
             </View>
+            {!hasAvailableCredentials && (
+              <Text
+                style={{
+                  ...TextTheme.title,
+                }}
+              >
+                {t('ProofRequest.FromYourWallet')}
+              </Text>
+            )}
           </>
         )}
       </View>
@@ -504,9 +504,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             testID={testIdWithKey('Share')}
             buttonType={ButtonType.Primary}
             onPress={handleAcceptPress}
-            disabled={
-              !hasAvailableCredentials() || !hasSatisfiedPredicates(getCredentialsFields()) || revocationOffense
-            }
+            disabled={!hasAvailableCredentials || !hasSatisfiedPredicates(getCredentialsFields()) || revocationOffense}
           />
         </View>
         <View style={styles.footerButton}>
@@ -521,54 +519,102 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       </View>
     )
   }
-  // FIXME: (WK) we need to have all creds in the cred list otherwise react will complain that the order of hooks changes. Solution it to add all creds to flatlist but only display selection
+
+  interface CredentialListProps {
+    header?: JSX.Element
+    footer?: JSX.Element
+    items: ProofCredentialItems[]
+  }
+  const CredentialList: React.FC<CredentialListProps> = ({ header, footer, items }) => {
+    return (
+      <FlatList
+        data={items}
+        scrollEnabled={false}
+        ListHeaderComponent={header}
+        ListFooterComponent={footer}
+        renderItem={({ item }) => {
+          return (
+            <View>
+              {loading ? null : (
+                <View style={{ marginTop: 10, marginHorizontal: 20 }}>
+                  <CredentialCard
+                    credential={item.credExchangeRecord}
+                    credDefId={item.credDefId}
+                    schemaId={item.schemaId}
+                    displayItems={[
+                      ...(item.attributes ?? []),
+                      ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
+                    ]}
+                    credName={item.credName}
+                    existsInWallet={item.credDefId !== undefined}
+                    satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
+                    hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
+                    handleAltCredChange={
+                      item.altCredentials && item.altCredentials.length > 1
+                        ? () => {
+                            handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
+                          }
+                        : undefined
+                    }
+                    proof={true}
+                  ></CredentialCard>
+                </View>
+              )}
+            </View>
+          )
+        }}
+      />
+    )
+  }
+
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
-      <View style={styles.pageContent}>
-        <FlatList
-          data={activeCreds ?? []}
-          ListHeaderComponent={proofPageHeader}
-          ListFooterComponent={proofPageFooter}
-          renderItem={({ item }) => {
-            return (
-              <View>
-                {loading ? null : (
-                  <View style={{ marginTop: 10, marginHorizontal: 20 }}>
-                    <CredentialCard
-                      credential={item.credExchangeRecord}
-                      credDefId={item.credDefId}
-                      schemaId={item.schemaId}
-                      displayItems={[
-                        ...(item.attributes ?? []),
-                        ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
-                      ]}
-                      credName={item.credName}
-                      existsInWallet={hasAvailableCredentials(item.credId)}
-                      satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
-                      hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
-                      handleAltCredChange={
-                        item.altCredentials && item.altCredentials.length > 1
-                          ? () => {
-                              handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
-                            }
-                          : undefined
-                      }
-                      proof={true}
-                    ></CredentialCard>
-                  </View>
-                )}
-              </View>
-            )
-          }}
+      <ScrollView>
+        <View style={styles.pageContent}>
+          <CredentialList
+            header={proofPageHeader()}
+            footer={hasAvailableCredentials ? proofPageFooter() : undefined}
+            items={activeCreds.filter((cred) => cred.credDefId !== undefined) ?? []}
+          />
+          {!hasAvailableCredentials && (
+            <CredentialList
+              header={
+                <View style={styles.pageMargin}>
+                  {!loading && (
+                    <>
+                      <View
+                        style={{
+                          width: 'auto',
+                          borderWidth: 1,
+                          borderColor: ColorPallet.grayscale.lightGrey,
+                          marginTop: 20,
+                        }}
+                      ></View>
+                      <Text
+                        style={{
+                          ...TextTheme.title,
+                          marginTop: 10,
+                        }}
+                      >
+                        {t('ProofRequest.MissingCredentials')}
+                      </Text>
+                    </>
+                  )}
+                </View>
+              }
+              footer={proofPageFooter()}
+              items={activeCreds.filter((cred) => cred.credDefId === undefined) ?? []}
+            />
+          )}
+        </View>
+        <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
+        <CommonRemoveModal
+          usage={ModalUsage.ProofRequestDecline}
+          visible={declineModalVisible}
+          onSubmit={handleDeclineTouched}
+          onCancel={toggleDeclineModalVisible}
         />
-      </View>
-      <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
-      <CommonRemoveModal
-        usage={ModalUsage.ProofRequestDecline}
-        visible={declineModalVisible}
-        onSubmit={handleDeclineTouched}
-        onCancel={toggleDeclineModalVisible}
-      />
+      </ScrollView>
     </SafeAreaView>
   )
 }
