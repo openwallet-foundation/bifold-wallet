@@ -391,6 +391,8 @@ const translation = {
     "CustomOfferParagraph2": "Não reconhece a organização. Verifique sua lista de Contatos. Você só recebe notificões de Contatos que você tenha adicionado.",
   },
   "ProofRequest": {
+    "FromYourWallet": "From your wallet (PB)",
+    "MissingCredentials": "Missing credentials (PB)",
     "PredicateGeDate": "é posterior a",
     "PredicateLeDate": "é anterior a",
     "PredicateGe": "é maior ou igual a",

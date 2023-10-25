@@ -310,7 +310,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             {!predicateError && !error ? (
               (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()
             ) : (
-              <Icon name={'warning'} size={30} style={styles.errorIcon} />
+              <Icon name={'error'} size={30} style={styles.errorIcon} />
             )}
           </Text>
         )}
