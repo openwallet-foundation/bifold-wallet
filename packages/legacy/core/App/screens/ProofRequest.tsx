@@ -37,7 +37,7 @@ import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredica
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
-import { getConnectionName, Fields, evaluatePredicates, getCredentialInfo } from '../utils/helpers'
+import { getConnectionName, Fields, evaluatePredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
@@ -232,16 +232,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
           const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials
             ? {
-              ...retrievedCredentials,
-              attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
-                string,
-                AnonCredsRequestedAttributeMatch[]
-              >,
-              predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
-                string,
-                AnonCredsRequestedPredicateMatch[]
-              >,
-            }
+                ...retrievedCredentials,
+                attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
+                  string,
+                  AnonCredsRequestedAttributeMatch[]
+                >,
+                predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
+                  string,
+                  AnonCredsRequestedPredicateMatch[]
+                >,
+              }
             : undefined
           setRetrievedCredentials(selectRetrievedCredentials)
 
@@ -504,9 +504,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             testID={testIdWithKey('Share')}
             buttonType={ButtonType.Primary}
             onPress={handleAcceptPress}
-            disabled={
-              !hasAvailableCredentials || !hasSatisfiedPredicates(getCredentialsFields()) || revocationOffense
-            }
+            disabled={!hasAvailableCredentials || !hasSatisfiedPredicates(getCredentialsFields()) || revocationOffense}
           />
         </View>
         <View style={styles.footerButton}>
@@ -554,8 +552,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     handleAltCredChange={
                       item.altCredentials && item.altCredentials.length > 1
                         ? () => {
-                          handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
-                        }
+                            handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
+                          }
                         : undefined
                     }
                     proof={true}
@@ -573,29 +571,41 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <ScrollView>
         <View style={styles.pageContent}>
-          <CredentialList header={proofPageHeader()} footer={hasAvailableCredentials ? proofPageFooter() : undefined} items={activeCreds.filter(cred => cred.credDefId !== undefined) ?? []} />
-          {!hasAvailableCredentials && <CredentialList header={(
-            <View style={styles.pageMargin}>
-              {!loading && (
-                <>
-                  <View style={{
-                    width: "auto",
-                    borderWidth: 1,
-                    borderColor: ColorPallet.grayscale.lightGrey,
-                    marginTop: 20
-                  }}></View>
-                  <Text
-                    style={{
-                      ...TextTheme.title,
-                      marginTop: 10,
-                    }}
-                  >
-                    {t('ProofRequest.MissingCredentials')}
-                  </Text>
-                </>
-              )}
-            </View>
-          )} footer={proofPageFooter()} items={activeCreds.filter(cred => cred.credDefId === undefined) ?? []} />}
+          <CredentialList
+            header={proofPageHeader()}
+            footer={hasAvailableCredentials ? proofPageFooter() : undefined}
+            items={activeCreds.filter((cred) => cred.credDefId !== undefined) ?? []}
+          />
+          {!hasAvailableCredentials && (
+            <CredentialList
+              header={
+                <View style={styles.pageMargin}>
+                  {!loading && (
+                    <>
+                      <View
+                        style={{
+                          width: 'auto',
+                          borderWidth: 1,
+                          borderColor: ColorPallet.grayscale.lightGrey,
+                          marginTop: 20,
+                        }}
+                      ></View>
+                      <Text
+                        style={{
+                          ...TextTheme.title,
+                          marginTop: 10,
+                        }}
+                      >
+                        {t('ProofRequest.MissingCredentials')}
+                      </Text>
+                    </>
+                  )}
+                </View>
+              }
+              footer={proofPageFooter()}
+              items={activeCreds.filter((cred) => cred.credDefId === undefined) ?? []}
+            />
+          )}
         </View>
         <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
         <CommonRemoveModal
