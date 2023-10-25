@@ -573,7 +573,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <ScrollView>
         <View style={styles.pageContent}>
-          <CredentialList header={proofPageHeader()} items={activeCreds.filter(cred => cred.credDefId !== undefined) ?? []} />
+          <CredentialList header={proofPageHeader()} footer={hasAvailableCredentials ? proofPageFooter() : undefined} items={activeCreds.filter(cred => cred.credDefId !== undefined) ?? []} />
           {!hasAvailableCredentials && <CredentialList header={(
             <View style={styles.pageMargin}>
               {!loading && (
