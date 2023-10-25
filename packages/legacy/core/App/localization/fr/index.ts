@@ -409,6 +409,8 @@ const translation = {
         "CustomOfferParagraph2": "Vous ne reconnaissez pas l'organisation? Vérifiez votre liste de Contacts. Vous ne recevez des notifications que des Contacts que vous avez initiés."
     },
     "ProofRequest": {
+        "FromYourWallet": "From your wallet (FR)",
+        "MissingCredentials": "Missing credentials (FR)",
         "PredicateGeDate": "is after (FR)",
         "PredicateLeDate": "is before (FR)",
         "PredicateGe": "is greater than or equal to (FR)",
@@ -506,7 +508,7 @@ const translation = {
         "CredentialDetails": "Détails des justificatifs",
         "Notifications": "Notifications",
         "CredentialOffer": "Offre de justificatif",
-        "ProofChangeCredential":"Choose a credential (FR)",
+        "ProofChangeCredential": "Choose a credential (FR)",
         "ProofRequest": "Demande de preuve",
         "ProofRequestAttributeDetails": "Détails des attributs de la demande de preuve",
         "ProofDetails": "Détails de la preuve",
