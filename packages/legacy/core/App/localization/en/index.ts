@@ -411,6 +411,8 @@ const translation = {
     "DeleteOfferDescription": "Don't recognize the organization? Check your Contacts list. You only receive notifications from Contacts you've initiated",
   },
   "ProofRequest": {
+    "FromYourWallet": "From your wallet",
+    "MissingCredentials": "Missing credentials",
     "PredicateGeDate": "is after",
     "PredicateLeDate": "is before",
     "PredicateGe": "is greater than or equal to",
@@ -433,7 +435,7 @@ const translation = {
     "ProofRejected": "Proof Rejected",
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
     "NewProofRequest": "New Proof Request",
-    "NotAvailableInYourWallet": "Not available",
+    "NotAvailableInYourWallet": "Not in your wallet",
     "PredicateNotSatisfied": "Requirement not met",
     "IsRequesting": "is requesting",
     "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",
