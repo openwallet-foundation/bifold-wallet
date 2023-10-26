@@ -49,4 +49,5 @@ export const defaultConfiguration: ConfigurationContext = {
   useCustomNotifications: useNotifications,
   proofRequestTemplates: useProofRequestTemplates,
   enableTours: false,
+  enableImplicitInvitations: true,
 }
