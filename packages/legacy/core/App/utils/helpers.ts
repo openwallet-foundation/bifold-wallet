@@ -468,10 +468,10 @@ export const processProofAttributes = (
 
     if (credentialList.length <= 0) {
       const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key])
-      if (!processedAttributes[key]) {
-        processedAttributes[key] = missingAttributes
+      if (!processedAttributes[missingAttributes.credName]) {
+        processedAttributes[missingAttributes.credName] = missingAttributes
       } else {
-        processedAttributes[key].attributes?.push(...(missingAttributes.attributes ?? []))
+        processedAttributes[missingAttributes.credName].attributes?.push(...(missingAttributes.attributes ?? []))
       }
     }
 
@@ -494,7 +494,6 @@ export const processProofAttributes = (
       } else {
         continue
       }
-
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
         if (!processedAttributes[credential?.credentialId]) {
           // init processedAttributes object
@@ -600,10 +599,10 @@ export const processProofPredicates = (
     const { name, p_type: pType, p_value: pValue, non_revoked } = requestedProofPredicates[key]
     if (credentialList.length <= 0) {
       const missingPredicates = addMissingDisplayPredicates(requestedProofPredicates[key])
-      if (!processedPredicates[key]) {
-        processedPredicates[key] = missingPredicates
+      if (!processedPredicates[missingPredicates.credName]) {
+        processedPredicates[missingPredicates.credName] = missingPredicates
       } else {
-        processedPredicates[key].predicates?.push(...(missingPredicates.predicates ?? []))
+        processedPredicates[missingPredicates.credName].predicates?.push(...(missingPredicates.predicates ?? []))
       }
     }
 

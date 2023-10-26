@@ -76,6 +76,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
 
+  const hasSomeCred = useMemo(() => activeCreds.some(cred => cred.credDefId !== undefined), [activeCreds])
+
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -232,16 +234,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
           const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials
             ? {
-                ...retrievedCredentials,
-                attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
-                  string,
-                  AnonCredsRequestedAttributeMatch[]
-                >,
-                predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
-                  string,
-                  AnonCredsRequestedPredicateMatch[]
-                >,
-              }
+              ...retrievedCredentials,
+              attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
+                string,
+                AnonCredsRequestedAttributeMatch[]
+              >,
+              predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
+                string,
+                AnonCredsRequestedPredicateMatch[]
+              >,
+            }
             : undefined
           setRetrievedCredentials(selectRetrievedCredentials)
 
@@ -458,7 +460,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 </View>
               )}
             </View>
-            {!hasAvailableCredentials && (
+            {!hasAvailableCredentials && hasSomeCred && (
               <Text
                 style={{
                   ...TextTheme.title,
@@ -552,8 +554,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     handleAltCredChange={
                       item.altCredentials && item.altCredentials.length > 1
                         ? () => {
-                            handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
-                          }
+                          handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
+                        }
                         : undefined
                     }
                     proof={true}
@@ -582,14 +584,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <View style={styles.pageMargin}>
                   {!loading && (
                     <>
-                      <View
+                      {hasSomeCred && (<View
                         style={{
                           width: 'auto',
                           borderWidth: 1,
                           borderColor: ColorPallet.grayscale.lightGrey,
                           marginTop: 20,
                         }}
-                      ></View>
+                      ></View>)}
                       <Text
                         style={{
                           ...TextTheme.title,
