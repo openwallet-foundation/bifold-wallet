@@ -37,6 +37,7 @@ import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
+import Preface from './screens/Preface'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
@@ -130,6 +131,7 @@ export {
   Splash,
   Developer,
   Terms,
+  Preface,
   HomeFooterView as HomeContentView,
   UseBiometry,
   AttemptLockout,
