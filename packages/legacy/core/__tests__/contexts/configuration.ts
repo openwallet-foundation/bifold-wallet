@@ -3,6 +3,7 @@ import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
 import { useProofRequestTemplates } from '../../verifier/request-templates'
+import { Locales } from '../../App/localization'
 
 const configurationContext: ConfigurationContext = {
   pages: () => [],
@@ -43,7 +44,7 @@ const configurationContext: ConfigurationContext = {
   },
   useCustomNotifications: useNotifications,
   proofRequestTemplates: useProofRequestTemplates,
-  supportedLanguages: {},
+  supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
 }
 
 export default configurationContext

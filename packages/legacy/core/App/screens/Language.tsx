@@ -15,18 +15,14 @@ interface Language {
 }
 
 const Language = () => {
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
   const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
   const { supportedLanguages } = useConfiguration()
-  // List of available languages into the localization directory
-  const possibleLanguages = [
-    { id: Locales.en, value: t('Language.English', { lng: Locales.en }) },
-    { id: Locales.fr, value: t('Language.French', { lng: Locales.fr }) },
-    { id: Locales.ptBr, value: t('Language.Portuguese', { lng: Locales.ptBr }) },
-  ]
 
-  const supportedLanguagesKeys = Object.keys(supportedLanguages)
-  const languages: Language[] = possibleLanguages.filter((lang) => supportedLanguagesKeys.includes(lang.id))
+  const languages: Language[] = supportedLanguages.map((lang) => ({
+    id: lang,
+    value: i18n.t(`Language.code`, { context: lang }),
+  }))
 
   const styles = StyleSheet.create({
     container: {

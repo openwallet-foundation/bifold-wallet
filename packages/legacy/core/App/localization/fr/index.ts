@@ -73,9 +73,9 @@ const translation = {
         "JustNow": "Just now (FR)",
     },
     "Language": {
-        "English": "Anglais",
-        "French": "Français",
-        "Portuguese": "Portugais",
+        "code_en": "Anglais",
+        "code_fr": "Français",
+        "code_pt-BR": "Portugais",
     },
     "Error": {
         "Unknown": "Erreur inconnue",
