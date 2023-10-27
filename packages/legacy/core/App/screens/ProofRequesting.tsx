@@ -6,7 +6,16 @@ import { useIsFocused } from '@react-navigation/core'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BackHandler, DeviceEventEmitter, useWindowDimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  BackHandler,
+  DeviceEventEmitter,
+  useWindowDimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Vibration,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -158,6 +167,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   useEffect(() => {
     const sendAsyncProof = async () => {
       if (record && record.state === DidExchangeState.Completed) {
+        //send haptic feedback to verifier that connection is completed
+        Vibration.vibrate()
         // send proof logic
         const result = await sendProofRequest(agent, template, record.id, predicateValues)
         if (result?.proofRecord) {
