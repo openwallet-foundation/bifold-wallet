@@ -841,7 +841,6 @@ export const connectFromInvitation = async (
       }
     } catch (e) {
       // don't throw an error, will try to connect again below
-      agent?.config.logger.debug(`Not a valid DID:\n${JSON.stringify(invitation.getDidServices(), null, 2)}`)
     }
   }
   if (!record) {
