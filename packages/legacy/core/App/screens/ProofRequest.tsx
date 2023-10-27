@@ -76,6 +76,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
 
+  const hasMatchingCredDef = useMemo(() => activeCreds.some((cred) => cred.credDefId !== undefined), [activeCreds])
+
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -458,7 +460,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 </View>
               )}
             </View>
-            {!hasAvailableCredentials && (
+            {!hasAvailableCredentials && hasMatchingCredDef && (
               <Text
                 style={{
                   ...TextTheme.title,
@@ -582,14 +584,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <View style={styles.pageMargin}>
                   {!loading && (
                     <>
-                      <View
-                        style={{
-                          width: 'auto',
-                          borderWidth: 1,
-                          borderColor: ColorPallet.grayscale.lightGrey,
-                          marginTop: 20,
-                        }}
-                      ></View>
+                      {hasMatchingCredDef && (
+                        <View
+                          style={{
+                            width: 'auto',
+                            borderWidth: 1,
+                            borderColor: ColorPallet.grayscale.lightGrey,
+                            marginTop: 20,
+                          }}
+                        />
+                      )}
                       <Text
                         style={{
                           ...TextTheme.title,
