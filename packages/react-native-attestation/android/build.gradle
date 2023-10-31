@@ -110,6 +110,8 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "com.google.android.gms:play-services-base:18.2.0"
+  implementation "com.google.android.play:integrity:1.2.0"
 }
 
 if (isNewArchitectureEnabled()) {
