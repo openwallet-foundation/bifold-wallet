@@ -10,6 +10,7 @@ import * as components from './components'
 import Button, { ButtonType } from './components/buttons/Button'
 import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
+import ContentGradient from './components/misc/ContentGradient'
 import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
@@ -37,6 +38,7 @@ import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
+import Preface from './screens/Preface'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
@@ -117,6 +119,7 @@ export {
   ButtonLocation,
   CheckBoxRow,
   CredentialCard,
+  ContentGradient,
   ErrorModal,
   InfoTextBox,
   InfoBox,
@@ -130,6 +133,7 @@ export {
   Splash,
   Developer,
   Terms,
+  Preface,
   HomeFooterView as HomeContentView,
   UseBiometry,
   AttemptLockout,

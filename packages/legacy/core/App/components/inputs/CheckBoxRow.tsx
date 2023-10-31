@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, TextStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -7,25 +7,36 @@ import { useTheme } from '../../contexts/theme'
 
 interface Props {
   title: string
+  titleStyle?: TextStyle
   accessibilityLabel?: string
   testID?: string
   checked: boolean
   onPress: () => void
+  reverse?: boolean
 }
 
-const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, checked, onPress }) => {
+const CheckBoxRow: React.FC<Props> = ({
+  title,
+  titleStyle = {},
+  accessibilityLabel,
+  testID,
+  checked,
+  onPress,
+  reverse,
+}) => {
   const { Inputs } = useTheme()
   const style = StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection: 'row',
+      flexDirection: reverse ? 'row-reverse' : 'row',
       alignItems: 'center',
       margin: 10,
     },
     text: {
       ...Inputs.checkBoxText,
       flexShrink: 1,
-      marginLeft: 10,
+      marginLeft: reverse ? 0 : 10,
+      marginRight: reverse ? 10 : 0,
     },
   })
   const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
@@ -45,7 +56,7 @@ const CheckBoxRow: React.FC<Props> = ({ title, accessibilityLabel, testID, check
           <Icon name={'check-box-outline-blank'} size={36} color={Inputs.checkBoxColor.color} />
         )}
       </TouchableOpacity>
-      <Text style={[style.text]}>{title}</Text>
+      <Text style={[style.text, titleStyle]}>{title}</Text>
     </View>
   )
 }

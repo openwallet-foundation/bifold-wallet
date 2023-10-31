@@ -15,6 +15,7 @@ import { generateRandomWalletName } from '../../utils/helpers'
 
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
+  DID_SEE_PREFACE = 'onboarding/didSeePreface',
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
@@ -430,6 +431,18 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
+    }
+    case OnboardingDispatchAction.DID_SEE_PREFACE: {
+      const onboarding = {
+        ...state.onboarding,
+        didSeePreface: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
     }
     case OnboardingDispatchAction.DID_COMPLETE_TUTORIAL: {
       const onboarding = {

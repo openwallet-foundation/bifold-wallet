@@ -512,6 +512,7 @@ const translation = {
   "Screens": {
     "Splash": "Splash",
     "Onboarding": "Onboarding",
+    "Preface": "Aries Bifold",
     "Terms": "Terms & Conditions",
     "CreatePIN": "Create a PIN",
     "EnterPIN": "Enter PIN",
@@ -582,6 +583,11 @@ const translation = {
   },
   "Onboarding": {
     "SkipA11y": "Skip introduction to Aries Bifold",
+  },
+  "Preface": {
+    "PrimaryHeading": "Is this app for you?",
+    "Paragraph1": "Most people will not have a need for Aries Bifold because very few digital credentials are currently available.",
+    "Confirmed": "I have confirmed that this app is for me.",
   },
   "Chat": {
     "OpenPresentation": "Open presentation",

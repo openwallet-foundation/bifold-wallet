@@ -85,7 +85,9 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
           "fontSize": 18,
           "fontWeight": "normal",
           "marginLeft": 10,
+          "marginRight": 0,
         },
+        Object {},
       ]
     }
   >

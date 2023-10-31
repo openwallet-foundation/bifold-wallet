@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
+import { StoreContext } from '../../App'
+import { ConfigurationContext } from '../../App/contexts/configuration'
 import NameWallet from '../../App/screens/NameWallet'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import { StoreContext, StoreProvider } from '../../App'
 import { testDefaultState } from '../contexts/store'
 
 jest.mock('@react-navigation/core', () => {
@@ -48,16 +48,23 @@ describe('NameWallet Screen', () => {
         didCreatePIN: true,
         didConsiderBiometry: true,
         didNameWallet: true,
+        didSeePreface: true,
       },
-    } 
+    }
     const tree = render(
-      <StoreContext.Provider value={[customState, () => { return }]}>
+      <StoreContext.Provider
+        value={[
+          customState,
+          () => {
+            return
+          },
+        ]}
+      >
         <ConfigurationContext.Provider value={configurationContext}>
           <NameWallet />
         </ConfigurationContext.Provider>
       </StoreContext.Provider>
     )
-
 
     const SaveButton = await tree.getByTestId(testIdWithKey('Save'))
     const CancelButton = await tree.getByTestId(testIdWithKey('Cancel'))

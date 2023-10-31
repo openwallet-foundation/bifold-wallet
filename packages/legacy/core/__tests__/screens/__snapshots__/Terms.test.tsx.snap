@@ -1,0 +1,898 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+      "bottom",
+    ]
+  }
+>
+  <RCTScrollView
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+          "padding": 20,
+        },
+      ]
+    }
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#313132",
+            "borderColor": "#0099FF",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "padding": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "center",
+                "marginRight": 10,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#0099FF",
+                    "fontSize": 30,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "alignSelf": "center",
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Please agree to the terms and conditions below before using this application.
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginBottom": 20,
+              "marginTop": 20,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </Text>
+         
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#000000",
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "#FCBA19",
+                "marginRight": 10,
+                "width": 8,
+              },
+            ]
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "paddingBottom": 10,
+                "paddingTop": 10,
+              },
+            ]
+          }
+        >
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+        </Text>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 20,
+            },
+          ]
+        }
+      >
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "marginBottom": 20,
+              "marginTop": "auto",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flex": 1,
+              "flexDirection": "row",
+              "margin": 10,
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Terms.IAgree"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="com.ariesbifold:id/IAgree"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 36,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginLeft": 10,
+                  "marginRight": 0,
+                },
+                Object {},
+              ]
+            }
+          >
+            Terms.Attestation
+          </Text>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "paddingTop": 10,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityLabel="Global.Continue"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/Continue"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Global.Continue
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "marginBottom": 20,
+                "paddingTop": 10,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityLabel="Global.Back"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "borderColor": "#42803E",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/Back"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Global.Back
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
+
+exports[`Terms Screen Renders correctly 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+      "bottom",
+    ]
+  }
+>
+  <RCTScrollView
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#000000",
+          "padding": 20,
+        },
+      ]
+    }
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#313132",
+            "borderColor": "#0099FF",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "padding": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "center",
+                "marginRight": 10,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#0099FF",
+                    "fontSize": 30,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "alignSelf": "center",
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Please agree to the terms and conditions below before using this application.
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginBottom": 20,
+              "marginTop": 20,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </Text>
+         
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#000000",
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "#FCBA19",
+                "marginRight": 10,
+                "width": 8,
+              },
+            ]
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "paddingBottom": 10,
+                "paddingTop": 10,
+              },
+            ]
+          }
+        >
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+        </Text>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "flexShrink": 1,
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 20,
+            },
+          ]
+        }
+      >
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "marginBottom": 20,
+              "marginTop": "auto",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flex": 1,
+              "flexDirection": "row",
+              "margin": 10,
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Terms.IAgree"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="com.ariesbifold:id/IAgree"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 36,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginLeft": 10,
+                  "marginRight": 0,
+                },
+                Object {},
+              ]
+            }
+          >
+            Terms.Attestation
+          </Text>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "paddingTop": 10,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityLabel="Global.Continue"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": true,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "backgroundColor": "rgba(53, 130, 63, 0.35)",
+                "borderRadius": 4,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/Continue"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Global.Continue
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "marginBottom": 20,
+                "paddingTop": 10,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityLabel="Global.Back"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "borderColor": "#42803E",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/Back"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Global.Back
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;

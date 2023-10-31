@@ -33,8 +33,13 @@ const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
 }
 
-const resumeOnboardingAt = (state: StoreOnboardingState, enableWalletNaming: boolean | undefined): Screens => {
+const resumeOnboardingAt = (
+  state: StoreOnboardingState,
+  enableWalletNaming: boolean | undefined,
+  showPreface: boolean | undefined
+): Screens => {
   if (
+    (state.didSeePreface || !showPreface) &&
     state.didCompleteTutorial &&
     state.didAgreeToTerms &&
     state.didCreatePIN &&
@@ -45,6 +50,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState, enableWalletNaming: boo
   }
 
   if (
+    (state.didSeePreface || !showPreface) &&
     state.didCompleteTutorial &&
     state.didAgreeToTerms &&
     state.didCreatePIN &&
@@ -54,15 +60,24 @@ const resumeOnboardingAt = (state: StoreOnboardingState, enableWalletNaming: boo
     return Screens.NameWallet
   }
 
-  if (state.didCompleteTutorial && state.didAgreeToTerms && !state.didCreatePIN) {
+  if (
+    (state.didSeePreface || !showPreface) &&
+    state.didCompleteTutorial &&
+    state.didAgreeToTerms &&
+    !state.didCreatePIN
+  ) {
     return Screens.CreatePIN
   }
 
-  if (state.didCompleteTutorial && !state.didAgreeToTerms) {
+  if ((state.didSeePreface || !showPreface) && state.didCompleteTutorial && !state.didAgreeToTerms) {
     return Screens.Terms
   }
 
-  return Screens.Onboarding
+  if (state.didSeePreface || !showPreface) {
+    return Screens.Onboarding
+  }
+
+  return Screens.Preface
 }
 
 /**
@@ -71,7 +86,7 @@ const resumeOnboardingAt = (state: StoreOnboardingState, enableWalletNaming: boo
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { indyLedgers } = useConfiguration()
+  const { indyLedgers, showPreface } = useConfiguration()
   const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
@@ -150,6 +165,11 @@ const Splash: React.FC = () => {
               dispatch({ type: DispatchAction.DID_NAME_WALLET, payload: [true] })
             }
 
+            // if they previously completed onboarding before preface was enabled, mark seen
+            if (!store.onboarding.didSeePreface) {
+              dispatch({ type: DispatchAction.DID_SEE_PREFACE })
+            }
+
             if (!attemptData?.lockoutDate) {
               navigation.dispatch(
                 CommonActions.reset({
@@ -172,19 +192,30 @@ const Splash: React.FC = () => {
             navigation.dispatch(
               CommonActions.reset({
                 index: 0,
-                routes: [{ name: resumeOnboardingAt(onboardingState, store.preferences.enableWalletNaming) }],
+                routes: [
+                  { name: resumeOnboardingAt(onboardingState, store.preferences.enableWalletNaming, showPreface) },
+                ],
               })
             )
           }
           return
         }
         // We have no onboarding state, starting from step zero.
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: Screens.Onboarding }],
-          })
-        )
+        if (showPreface) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: Screens.Preface }],
+            })
+          )
+        } else {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: Screens.Onboarding }],
+            })
+          )
+        }
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1044'),

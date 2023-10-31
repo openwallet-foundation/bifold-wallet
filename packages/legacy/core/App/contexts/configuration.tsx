@@ -23,6 +23,7 @@ export interface ConfigurationContext {
   pages: typeof OnboardingPages
   splash: React.FC
   terms: React.FC
+  preface: React.FC
   homeHeaderView: React.FC
   homeFooterView: React.FC
   credentialListHeaderRight: React.FC
@@ -42,6 +43,7 @@ export interface ConfigurationContext {
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
   enableTours?: boolean
+  showPreface?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

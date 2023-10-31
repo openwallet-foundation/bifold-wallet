@@ -499,6 +499,7 @@ const translation = {
     "Screens": {
         "Splash": "Page de garde",
         "Onboarding": "Inscription",
+        "Preface": "Aries Bifold",
         "Terms": "Conditions d'utilisation",
         "CreatePIN": "Créer un NIP à 6 chiffres",
         "EnterPIN": "Saisir le NIP",
@@ -565,6 +566,11 @@ const translation = {
     },
     "Onboarding": {
         "SkipA11y": "Skip introduction to Aries Bifold (FR)",
+    },
+    "Preface": {
+        "PrimaryHeading": "Is this app for you? (FR)",
+        "Paragraph1": "Most people will not have a need for Aries Bifold because very few digital credentials are currently available. (FR)",
+        "Confirmed": "I have confirmed that this app is for me. (FR)",
     },
     "Chat": {
         "OpenPresentation": "Open presentation (FR)",

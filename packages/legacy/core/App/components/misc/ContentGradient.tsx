@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import Svg, { Defs, Rect, LinearGradient, Stop } from 'react-native-svg'
 
-type GradientProps = {
+type ContentGradientProps = {
   backgroundColor: string
   height?: number
 }
@@ -10,7 +10,7 @@ type GradientProps = {
 /**
  * To be used in a relative position controlsContainer that is below (and not in) scrollview content
  */
-const ContentGradient = ({ backgroundColor, height = 30 }: GradientProps) => {
+const ContentGradient: React.FC<ContentGradientProps> = ({ backgroundColor, height = 30 }) => {
   const id = 'gradient'
 
   const styles = StyleSheet.create({

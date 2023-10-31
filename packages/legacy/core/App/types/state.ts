@@ -1,4 +1,5 @@
 export interface Onboarding {
+  didSeePreface: boolean
   didCompleteTutorial: boolean
   didAgreeToTerms: boolean
   didCreatePIN: boolean
