@@ -288,13 +288,18 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
           >
             <Text
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 32,
-                  "fontWeight": "bold",
-                  "marginBottom": 20,
-                  "textAlign": "center",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 32,
+                    "fontWeight": "bold",
+                    "marginBottom": 20,
+                    "textAlign": "center",
+                  },
+                  Object {
+                    "paddingHorizontal": 20,
+                  },
+                ]
               }
             >
               My Wallet - 1234
@@ -306,8 +311,10 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
               onGestureHandlerStateChange={[Function]}
               onHandlerStateChange={[Function]}
               rippleColor={0}
+              testID="com.ariesbifold:id/EditWalletName"
             >
               <View
+                accessibilityLabel="NameWallet.EditWalletName"
                 accessible={true}
                 collapsable={false}
                 style={

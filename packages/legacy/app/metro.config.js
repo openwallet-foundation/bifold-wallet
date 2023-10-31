@@ -1,7 +1,12 @@
-/* eslint-disable */
-const path = require('path')
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-var-requires */
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
 const escape = require('escape-string-regexp')
-const packageDirs = [path.resolve(__dirname, '../core')]
+const exclusionList = require('metro-config/src/defaults/exclusionList')
+const path = require('path')
+
+const packageDirs = [path.resolve(__dirname, '../core'), path.resolve(__dirname, '../../oca')]
 
 const watchFolders = [...packageDirs]
 
@@ -22,33 +27,33 @@ for (const packageDir of packageDirs) {
   }, extraNodeModules)
 }
 
-const { getDefaultConfig } = require('metro-config')
-const exclusionList = require('metro-config/src/defaults/exclusionList')
-module.exports = (async () => {
-  const {
-    resolver: { sourceExts, assetExts },
-  } = await getDefaultConfig()
-  const metroConfig = {
-    projectRoot: path.resolve(__dirname, './'),
-    /*resetCache: true,*/
-    transformer: {
-      babelTransformerPath: require.resolve('react-native-svg-transformer'),
-      getTransformOptions: async () => ({
-        transform: {
-          experimentalImportSupport: false,
-          inlineRequires: true,
-        },
-      }),
-    },
-    resolver: {
-      blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
-      extraNodeModules: extraNodeModules,
-      assetExts: assetExts.filter((ext) => ext !== 'svg'),
-      sourceExts: [...sourceExts, 'svg', 'cjs'],
-    },
-    watchFolders,
-  }
-  // eslint-disable-next-line no-console
-  //console.dir(metroConfig)
-  return metroConfig
-})()
+const {
+  resolver: { sourceExts, assetExts },
+} = getDefaultConfig()
+
+/**
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
+const config = {
+  transformer: {
+    babelTransformerPath: require.resolve('react-native-svg-transformer'),
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: true,
+      },
+    }),
+  },
+  resolver: {
+    blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
+    extraNodeModules: extraNodeModules,
+    assetExts: assetExts.filter((ext) => ext !== 'svg'),
+    sourceExts: [...sourceExts, 'svg', 'cjs'],
+  },
+  watchFolders,
+}
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), config)

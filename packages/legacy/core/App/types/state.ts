@@ -22,6 +22,7 @@ export interface Preferences {
   acceptDevCredentials: boolean
   useDataRetention: boolean
   preventAutoLock: boolean
+  alternateContactNames: Record<string, string>
 }
 
 export interface Tours {

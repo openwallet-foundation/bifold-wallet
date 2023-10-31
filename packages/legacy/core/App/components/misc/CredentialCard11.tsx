@@ -12,7 +12,7 @@ import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
-import { getCredentialConnectionLabel, isDataUrl } from '../../utils/helpers'
+import { formatIfDate, getCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
@@ -30,6 +30,8 @@ interface CredentialCard11Props {
   credDefId?: string
   schemaId?: string
   proof?: boolean
+  hasAltCredentials?: boolean
+  handleAltCredChange?: () => void
 }
 
 /*
@@ -73,6 +75,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   credDefId,
   schemaId,
   proof,
+  hasAltCredentials,
+  handleAltCredChange,
 }) => {
   const { width } = useWindowDimensions()
   const borderRadius = 10
@@ -97,6 +101,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const secondaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
   )
+
+  const attributeTypes = overlay.bundle?.captureBase.attributes
+  const attributeFormats: Record<string, string | undefined> = (overlay.bundle as any)?.bundle.attributes
+    .map((attr: any) => {
+      return { name: attr.name, format: attr.format }
+    })
+    .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
+      return { ...prev, [curr.name]: curr.format }
+    }, {})
 
   const cardData = [...(displayItems ?? []), primaryField, secondaryField]
 
@@ -128,8 +141,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
-      flexGrow: 1,
+      flex: 1,
       padding,
+      marginLeft: -1 * logoHeight + padding,
     },
     imageAttr: {
       height: 150,
@@ -191,10 +205,37 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       fontSize: 22,
       transform: [{ rotate: '-30deg' }],
     },
+    selectedCred: {
+      borderWidth: 5,
+      borderRadius: 15,
+      borderColor: ColorPallet.semantic.focus,
+    },
+    seperator: {
+      width: '100%',
+      height: 2,
+      marginVertical: 10,
+      backgroundColor: ColorPallet.grayscale.lightGrey,
+    },
+    credActionText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: ColorPallet.brand.link,
+    },
   })
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
-    return { label: item?.label ?? item?.name ?? '', value: item?.value || `${item?.pType} ${item?.pValue}` }
+    let parsedItem = item
+    if (item && !item.value) {
+      parsedItem = pTypeToText(item, t, attributeTypes) as Attribute & Predicate
+    }
+    const parsedValue = formatIfDate(
+      attributeFormats?.[item?.name ?? ''],
+      parsedItem?.value ?? parsedItem?.pValue ?? null
+    )
+    return {
+      label: item?.label ?? item?.name ?? '',
+      value: item?.value ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
+    }
   }
 
   useEffect(() => {
@@ -269,7 +310,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             {!predicateError && !error ? (
               (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()
             ) : (
-              <Icon name={'warning'} size={30} style={styles.errorIcon} />
+              <Icon name={'error'} size={30} style={styles.errorIcon} />
             )}
           </Text>
         )}
@@ -324,6 +365,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
+    const parsedValue = formatIfDate(item?.format, value) ?? ''
     return (
       item && (
         <View style={{ marginTop: 15 }}>
@@ -350,7 +392,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   size={ListItems.recordAttributeText.fontSize}
                 />
               )}
-              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={value} />
+              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
             </View>
           )}
           {item?.satisfied != undefined && item?.satisfied === false ? (
@@ -366,70 +408,82 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        <View
-          style={{
-            marginLeft: -1 * logoHeight + padding,
-            margin: -1,
-            marginRight: 40,
-          }}
-        >
-          <View>
-            {!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof) && (
-              <View style={{ flexDirection: 'row' }}>
-                <Text
-                  testID={testIdWithKey('CredentialIssuer')}
-                  style={[
-                    TextTheme.label,
-                    styles.textContainer,
-                    {
-                      lineHeight: 19,
-                      opacity: 0.8,
-                      flex: 1,
-                      flexWrap: 'wrap',
-                    },
-                  ]}
-                >
-                  {overlay.metaOverlay?.issuer}
-                </Text>
-              </View>
-            )}
+        <View>
+          {!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof) && (
             <View style={{ flexDirection: 'row' }}>
               <Text
-                testID={testIdWithKey('CredentialName')}
+                testID={testIdWithKey('CredentialIssuer')}
                 style={[
-                  TextTheme.normal,
+                  TextTheme.label,
                   styles.textContainer,
                   {
-                    fontWeight: 'bold',
-                    lineHeight: 24,
+                    lineHeight: 19,
+                    opacity: 0.8,
                     flex: 1,
                     flexWrap: 'wrap',
-                    color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
                   },
                 ]}
               >
-                {overlay.metaOverlay?.name}
-              </Text>
-            </View>
-          </View>
-          {(error || isProofRevoked) && (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon style={[styles.errorIcon]} name="close" size={30} />
-
-              <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-                {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
+                {overlay.metaOverlay?.issuer}
               </Text>
             </View>
           )}
-          <FlatList
-            data={cardData}
-            scrollEnabled={false}
-            initialNumToRender={cardData?.length}
-            renderItem={({ item }) => {
-              return renderCardAttribute(item as Attribute & Predicate)
-            }}
-          />
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              testID={testIdWithKey('CredentialName')}
+              style={[
+                TextTheme.normal,
+                styles.textContainer,
+                {
+                  fontWeight: 'bold',
+                  lineHeight: 24,
+                  flex: 1,
+                  flexWrap: 'wrap',
+                  color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
+                },
+              ]}
+            >
+              {overlay.metaOverlay?.name}
+            </Text>
+          </View>
         </View>
+        {(error || isProofRevoked) && (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon style={[styles.errorIcon]} name="close" size={30} />
+
+            <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+              {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
+            </Text>
+          </View>
+        )}
+        <FlatList
+          data={cardData}
+          scrollEnabled={false}
+          initialNumToRender={cardData?.length}
+          renderItem={({ item }) => {
+            return renderCardAttribute(item as Attribute & Predicate)
+          }}
+          ListFooterComponent={
+            hasAltCredentials ? (
+              <View>
+                <View style={styles.seperator}></View>
+                <View>
+                  <TouchableOpacity
+                    onPress={handleAltCredChange}
+                    testID={testIdWithKey('changeCredential')}
+                    style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    <Text style={styles.credActionText}>{t('ProofRequest.ChangeCredential')}</Text>
+                    <Icon
+                      style={{ ...styles.credActionText, fontSize: styles.credActionText.fontSize + 5 }}
+                      name="chevron-right"
+                    ></Icon>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : null
+          }
+        />
       </View>
     )
   }
@@ -506,7 +560,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     }
 
     return (
-      <View testID={testIdWithKey('CredentialCardStatus')} style={styles.statusContainer}>
+      <View
+        testID={testIdWithKey('CredentialCardStatus')}
+        style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
+      >
         <Status status={status} />
       </View>
     )
@@ -538,7 +595,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
   return overlay.bundle ? (
     <View
-      style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}
+      style={[
+        styles.container,
+        style,
+        { elevation: elevated ? 5 : 0, overflow: 'hidden' },
+        hasAltCredentials ? styles.selectedCred : undefined,
+      ]}
       onLayout={(event) => {
         setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
       }}
