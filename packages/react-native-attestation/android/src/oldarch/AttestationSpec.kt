@@ -7,5 +7,6 @@ import com.facebook.react.bridge.Promise
 abstract class AttestationSpec internal constructor(context: ReactApplicationContext) :
   ReactContextBaseJavaModule(context) {
 
-  abstract fun multiply(a: Double, b: Double, promise: Promise)
+  abstract fun isPlayIntegrityAvailable(promise: Promise)
+  abstract fun googleAttestation(nonce: String, promise: Promise)
 }

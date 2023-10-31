@@ -14,12 +14,20 @@ npm install react-native-attestation
 import {
   generateKey,
   appleAttestation,
+  isPlayIntegrityAvailable,
+  googleAttestation,
 } from '@hyperledger/aries-react-native-attestation';
 
 // ...
-
-const keyId = await generateKey();
-const attestationAsBuffer = await appleAttestation(keyId, nonce);
+if (Platform.OS === 'ios') {
+  const keyId = await generateKey();
+  const attestationAsBuffer = await appleAttestation(keyId, nonce);
+} else if (Platform.OS === 'android') {
+  const available = await isPlayIntegrityAvailable()
+  if (available) {
+    const integrityToken = await googleAttestation(nonce)
+  }
+}
 ```
 
 ## Contributing
