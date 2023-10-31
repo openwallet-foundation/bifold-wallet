@@ -359,7 +359,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
               title={t('PINEnter.Unlock')}
               buttonType={ButtonType.Primary}
               testID={testIdWithKey('Enter')}
-              disabled={!continueEnabled}
+              disabled={!continueEnabled || PIN.length < minPINLength}
               accessibilityLabel={t('PINEnter.Unlock')}
               onPress={() => {
                 Keyboard.dismiss()

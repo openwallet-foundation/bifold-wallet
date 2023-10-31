@@ -269,7 +269,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             testID={actionButtonTestId}
             accessibilityLabel={actionButtonLabel}
             buttonType={ButtonType.Primary}
-            disabled={!continueEnabled}
+            disabled={!continueEnabled || PIN.length < minPINLength || PINTwo.length < minPINLength}
             onPress={async () => {
               setLoading(true)
               if (updatePin) {
