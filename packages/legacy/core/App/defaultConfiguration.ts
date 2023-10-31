@@ -14,6 +14,7 @@ import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
+import Preface from './screens/Preface'
 import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
@@ -23,6 +24,7 @@ export const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
   splash: Splash,
   terms: Terms,
+  preface: Preface,
   developer: Developer,
   homeHeaderView: HomeHeaderView,
   homeFooterView: HomeFooterView,
@@ -49,4 +51,5 @@ export const defaultConfiguration: ConfigurationContext = {
   useCustomNotifications: useNotifications,
   proofRequestTemplates: useProofRequestTemplates,
   enableTours: false,
+  showPreface: false,
 }

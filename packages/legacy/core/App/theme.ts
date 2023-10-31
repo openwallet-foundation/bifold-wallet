@@ -17,6 +17,7 @@ import IconInfoSentLight from './assets/img/icon-info-sent-light.svg'
 import IconProofRequestDark from './assets/img/icon-proof-request-dark.svg'
 import IconProofRequestLight from './assets/img/icon-proof-request-light.svg'
 import Logo from './assets/img/logo.svg'
+import Preface from './assets/img/preface.svg'
 import ProofRequestDeclined from './assets/img/proof-declined.svg'
 
 export interface ISVGAssets {
@@ -37,6 +38,7 @@ export interface ISVGAssets {
   iconInfoSentLight: React.FC<SvgProps>
   iconProofRequestDark: React.FC<SvgProps>
   iconProofRequestLight: React.FC<SvgProps>
+  preface: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -813,6 +815,7 @@ export const Assets = {
     iconInfoSentLight: IconInfoSentLight,
     iconProofRequestDark: IconProofRequestDark,
     iconProofRequestLight: IconProofRequestLight,
+    preface: Preface,
   },
   img: {
     logoPrimary: {

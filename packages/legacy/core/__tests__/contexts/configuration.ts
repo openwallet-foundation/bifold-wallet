@@ -1,14 +1,15 @@
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
+
 import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
 import { useProofRequestTemplates } from '../../verifier/request-templates'
 
-
 const configurationContext: ConfigurationContext = {
   pages: () => [],
   terms: () => null,
   splash: () => null,
+  preface: () => null,
   homeHeaderView: () => null,
   homeFooterView: () => null,
   credentialListHeaderRight: () => null,
