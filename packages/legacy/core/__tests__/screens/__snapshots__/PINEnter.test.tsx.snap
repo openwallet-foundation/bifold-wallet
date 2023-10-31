@@ -390,7 +390,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                   Object {
                     "busy": undefined,
                     "checked": undefined,
-                    "disabled": false,
+                    "disabled": true,
                     "expanded": undefined,
                     "selected": undefined,
                   }
@@ -415,7 +415,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "#42803E",
+                    "backgroundColor": "rgba(53, 130, 63, 0.35)",
                     "borderRadius": 4,
                     "opacity": 1,
                     "padding": 16,
@@ -441,7 +441,12 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                           "fontWeight": "bold",
                           "textAlign": "center",
                         },
-                        false,
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
                         false,
                         false,
                       ]
@@ -1042,7 +1047,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                   Object {
                     "busy": undefined,
                     "checked": undefined,
-                    "disabled": false,
+                    "disabled": true,
                     "expanded": undefined,
                     "selected": undefined,
                   }
@@ -1067,7 +1072,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "#42803E",
+                    "backgroundColor": "rgba(53, 130, 63, 0.35)",
                     "borderRadius": 4,
                     "opacity": 1,
                     "padding": 16,
@@ -1093,7 +1098,12 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "fontWeight": "bold",
                           "textAlign": "center",
                         },
-                        false,
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
                         false,
                         false,
                       ]
