@@ -55,8 +55,7 @@ yarn install
 Some packages need to be built (transpiled) before they can be used from the app. Do this with the following command:
 
 ```sh
-cd packages/legacy \ &&
-yarn run prepare
+yarn run build
 ```
 
 As noted above Bifold requires a mediator to communicate with other Agents. For development purposes, this can be set by creating a `.env` file in the following directory:
