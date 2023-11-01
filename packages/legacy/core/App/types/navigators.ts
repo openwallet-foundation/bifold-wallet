@@ -6,6 +6,7 @@ export enum Screens {
   Splash = 'Splash',
   Onboarding = 'Onboarding',
   Terms = 'Terms',
+  Preface = 'Preface',
   CreatePIN = 'Create a PIN',
   EnterPIN = 'Enter PIN',
   Home = 'Home',
@@ -74,6 +75,7 @@ export type TabStackParams = {
 }
 
 export type AuthenticateStackParams = {
+  [Screens.Preface]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined

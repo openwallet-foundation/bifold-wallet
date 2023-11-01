@@ -50,8 +50,17 @@ const RootStack: React.FC = () => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash, useBiometry, developer, enableImplicitInvitations, enableReuseConnections } =
-    useConfiguration()
+  const {
+    pages,
+    terms,
+    splash,
+    useBiometry,
+    developer,
+    preface,
+    showPreface,
+    enableImplicitInvitations,
+    enableReuseConnections,
+  } = useConfiguration()
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
@@ -281,6 +290,11 @@ const RootStack: React.FC = () => {
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen
+          name={Screens.Preface}
+          component={preface}
+          options={{ title: t('Screens.Preface'), headerShown: true }}
+        />
+        <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
             title: t('Screens.Onboarding'),
@@ -354,6 +368,7 @@ const RootStack: React.FC = () => {
   }
 
   if (
+    (!showPreface || state.onboarding.didSeePreface) &&
     state.onboarding.didAgreeToTerms &&
     state.onboarding.didCompleteTutorial &&
     state.onboarding.didCreatePIN &&
