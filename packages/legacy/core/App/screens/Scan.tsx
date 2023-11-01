@@ -32,10 +32,18 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   if (route?.params && route.params['defaultToConnect']) {
     defaultToConnect = route.params['defaultToConnect']
   }
+  let implicitInvitations = false
+  if (route?.params && route.params['implicitInvitations']) {
+    implicitInvitations = route.params['implicitInvitations']
+  }
+  let reuseConnections = false
+  if (route?.params && route.params['reuseConnections']) {
+    reuseConnections = route.params['reuseConnections']
+  }
 
   const handleInvitation = async (value: string): Promise<void> => {
     try {
-      const receivedInvitation = await connectFromInvitation(value, agent)
+      const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnections)
       if (receivedInvitation?.connectionRecord?.id) {
         // not connectionless
         navigation.getParent()?.navigate(Stacks.ConnectionStack, {

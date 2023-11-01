@@ -20,6 +20,7 @@ import {
   BasicMessageRecord,
   ProofExchangeRecord,
   ProofState,
+  parseDid,
 } from '@aries-framework/core'
 import { BasicMessageRole } from '@aries-framework/core/build/modules/basic-messages/BasicMessageRole'
 import {
@@ -815,14 +816,36 @@ export const receiveMessageFromDeepLink = async (url: string, agent: Agent | und
  * @param agent an Agent instance
  * @returns a connection record from parsing and receiving the invitation
  */
-export const connectFromInvitation = async (uri: string, agent: Agent | undefined) => {
+export const connectFromInvitation = async (
+  uri: string,
+  agent: Agent | undefined,
+  implicitInvitations: boolean = false,
+  reuseConnection: boolean = false
+) => {
   const invitation = await agent?.oob.parseInvitation(uri)
 
   if (!invitation) {
     throw new Error('Could not parse invitation from URL')
   }
 
-  const record = await agent?.oob.receiveInvitation(invitation)
+  let record
+  if (implicitInvitations) {
+    try {
+      if (invitation.getDidServices().length > 0) {
+        const did = parseDid(invitation.getDidServices()[0])
+        record = await agent?.oob.receiveImplicitInvitation({
+          did: did.did,
+          label: invitation.label,
+          handshakeProtocols: invitation.handshakeProtocols,
+        })
+      }
+    } catch (e) {
+      // don't throw an error, will try to connect again below
+    }
+  }
+  if (!record) {
+    record = await agent?.oob.receiveInvitation(invitation, { reuseConnection })
+  }
 
   return record
 }
@@ -839,7 +862,6 @@ export const createConnectionInvitation = async (agent: Agent | undefined, goalC
   if (!record) {
     throw new Error('Could not create new invitation')
   }
-
   const invitationUrl = record.outOfBandInvitation.toUrl({ domain })
 
   return {
