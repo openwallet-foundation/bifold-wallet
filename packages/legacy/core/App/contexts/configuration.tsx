@@ -24,6 +24,7 @@ export interface ConfigurationContext {
   pages: typeof OnboardingPages
   splash: React.FC
   terms: React.FC
+  preface: React.FC
   homeHeaderView: React.FC
   homeFooterView: React.FC
   credentialListHeaderRight: React.FC
@@ -39,11 +40,12 @@ export interface ConfigurationContext {
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
+  supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
   enableTours?: boolean
-  supportedLanguages: Locales[]
+  showPreface?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

@@ -45,3 +45,12 @@ export const appleAttestation = async (
 
   return Buffer.from(bytes);
 };
+
+export const googleAttestation = async (nonce: string): Promise<string> => {
+  const token: string = await Attestation.googleAttestation(nonce);
+  return token;
+};
+
+export const isPlayIntegrityAvailable = async (): Promise<boolean> => {
+  return Attestation.isPlayIntegrityAvailable();
+};
