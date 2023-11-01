@@ -50,7 +50,17 @@ const RootStack: React.FC = () => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
-  const { pages, terms, splash, useBiometry, developer, preface, showPreface } = useConfiguration()
+  const {
+    pages,
+    terms,
+    splash,
+    useBiometry,
+    developer,
+    preface,
+    showPreface,
+    enableImplicitInvitations,
+    enableReuseConnections,
+  } = useConfiguration()
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
@@ -96,7 +106,12 @@ const RootStack: React.FC = () => {
 
       try {
         // Try connection based
-        const receivedInvitation = await connectFromInvitation(deepLink, agent)
+        const receivedInvitation = await connectFromInvitation(
+          deepLink,
+          agent,
+          enableImplicitInvitations,
+          enableReuseConnections
+        )
         navigation.navigate(Stacks.ConnectionStack as any, {
           screen: Screens.Connection,
           params: { connectionId: receivedInvitation?.connectionRecord?.id },
