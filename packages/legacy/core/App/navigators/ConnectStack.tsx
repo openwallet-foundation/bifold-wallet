@@ -3,7 +3,6 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useConfiguration } from '../contexts/configuration'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import NameWallet from '../screens/NameWallet'
 import ScanHelp from '../screens/ScanHelp'
@@ -18,7 +17,6 @@ const ConnectStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const { scan } = useConfiguration()
   const { t } = useTranslation()
-  const [store] = useStore()
   
   return (
     <Stack.Navigator

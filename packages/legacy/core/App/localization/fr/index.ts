@@ -352,6 +352,8 @@ const translation = {
         "Torch": "Flash",
         "ScanHelp": "Scan Help (FR)",
         "ScanNow": "Scan Now (FR)",
+        "BadQRCode": "QR Code Not Recognized (FR)",
+        "BadQRCodeDescription": "Ths QR code scanned doesn\'t work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can\'t add digital credentials by taking photos of physical ones. (FR)",
     },
     "Connection": {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",

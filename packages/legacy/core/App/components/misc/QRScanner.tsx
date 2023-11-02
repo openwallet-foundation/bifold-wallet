@@ -55,7 +55,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       flexGrow: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      // backgroundColor: 'blue',
     },
     errorContainer: {
       flexDirection: 'row',
@@ -77,8 +76,8 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
         <View style={{ flex: 1, paddingHorizontal: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.6)' }}>
           <InfoBox
             notificationType={InfoBoxType.Info}
-            title={'QR Code Not Recognized'}
-            description={'Ths QR code scanned doesn\'t work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can\'t add digital credentials by taking photos of physical ones.'}
+            title={t('Scan.BadQRCode')}
+            description={t('Scan.BadQRCodeDescription')}
             onCallToActionPressed={toggleShowInfoBox}
           />
         </View>
