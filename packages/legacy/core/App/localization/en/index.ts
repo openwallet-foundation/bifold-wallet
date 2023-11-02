@@ -350,7 +350,9 @@ const translation = {
     "MyQRCode": "My QR code",
     "UnableToHandleRedirection": "Unable to handle redirection",
     "Close": "Close",
-    "Torch": "Flash"
+    "Torch": "Flash",
+    "ScanHelp": "Scan Help",
+    "ScanNow": "Scan Now",
   },
   "Connection": {
     "JustAMoment": "Just a moment while we make a secure connection...",

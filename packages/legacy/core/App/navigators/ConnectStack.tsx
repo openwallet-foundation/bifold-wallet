@@ -20,8 +20,6 @@ const ConnectStack: React.FC = () => {
   const { t } = useTranslation()
   const [store] = useStore()
   
-  console.log(defaultStackOptions)
-
   return (
     <Stack.Navigator
       screenOptions={{

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Vibration, Pressable, View, StyleSheet, Text } from 'react-native'
+import { View, Modal, Vibration, Pressable, StyleSheet, Text } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -11,6 +11,8 @@ import { testIdWithKey } from '../../utils/testable'
 
 import QRScannerTorch from './QRScannerTorch'
 import { Screens } from '../../types/navigators'
+import { hitSlop } from '../../constants'
+import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
@@ -34,6 +36,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const navigation = useNavigation()
   const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
+  const [showInfoBox, setShowInfoBox] = useState(false)
   const { t } = useTranslation()
   const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
@@ -52,7 +55,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       flexGrow: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'blue',
+      // backgroundColor: 'blue',
     },
     errorContainer: {
       flexDirection: 'row',
@@ -64,8 +67,22 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
     },
   })
 
+  const styleForState = ({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.2 : 1 }]
+
+  const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
+
   return (
     <View style={styles.container}>
+      <Modal visible={showInfoBox} animationType='fade' transparent>
+        <View style={{ flex: 1, paddingHorizontal: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.6)' }}>
+          <InfoBox
+            notificationType={InfoBoxType.Info}
+            title={'QR Code Not Recognized'}
+            description={'Ths QR code scanned doesn\'t work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can\'t add digital credentials by taking photos of physical ones.'}
+            onCallToActionPressed={toggleShowInfoBox}
+          />
+        </View>
+      </Modal>
       <RNCamera
         style={styles.container}
         type={RNCamera.Constants.Type.back}
@@ -86,7 +103,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           if (error?.data === event?.data) {
             invalidQrCodes.add(error.data)
             if (enableCameraOnError) {
-
               return setCameraActive(true)
             }
           }
@@ -99,7 +115,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           }
         }}
       >
-
         <View style={{ flex: 1 }}>          
           <View style={styles.errorContainer}>
             {error ? (
@@ -116,27 +131,34 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white, height: 30, margin: 4 }]}> </Text>
             )}
           </View>
-
-          <View style={{ backgroundColor: 'green', flexDirection: 'row', marginHorizontal: 40, alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', marginHorizontal: 40, alignItems: 'center' }}>
             <Icon name="qrcode-scan" size={46} style={{color: 'white'}}/>
             <Text style={{color: 'white', fontSize: 21, marginHorizontal: 10}}>A valid QR code will scan automatically.</Text>
-          </View>
-          
+          </View> 
           <View style={styles.viewFinderContainer}>
             <View style={styles.viewFinder} />
           </View>
-
-          <View style={{ justifyContent: 'center', alignItems: 'center', }}>
-            <Icon name="circle-outline" size={60} style={{color: 'white', marginBottom: -15  }}/>
+          <View style={{ justifyContent: 'center', alignItems: 'center', }}> 
+            <Pressable
+              accessibilityLabel={t('Scan.ScanNow')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey('ScanNow')}
+              onPress={toggleShowInfoBox}
+              style={styleForState}
+              hitSlop={hitSlop}
+              >
+                <Icon name="circle-outline" size={60} style={{color: 'white', marginBottom: -15  }}/>
+            </Pressable>
           </View>
-
           <View style={{ marginHorizontal: 24, height: 24, marginBottom: 60, flexDirection: 'row'}}>
             <Pressable
-              accessibilityLabel={t('Verifier.Toggle')}
+              accessibilityLabel={t('Scan.ScanHelp')}
               accessibilityRole={'button'}
-              testID={testIdWithKey('XXX')}
+              testID={testIdWithKey('ScanHelp')}
               onPress={() => navigation.navigate(Screens.ScanHelp)}
-              >
+              style={styleForState}
+              hitSlop={hitSlop}
+            >
               <Icon name="help-circle" size={24} style={{color: 'white'}}/>
             </Pressable>
             <View style={{ width: 10, marginLeft: 'auto' }}/>

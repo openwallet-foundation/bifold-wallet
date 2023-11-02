@@ -21,6 +21,7 @@ const Link: React.FC<LinkProps> = ({ linkText, onPress, style = {}, ...textProps
       alignSelf: 'flex-start',
     },
   })
+  
   return (
     <Text
       style={[styles.link, style]}
