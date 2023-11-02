@@ -1,16 +1,16 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Vibration, View, StyleSheet, Text } from 'react-native'
+import { Vibration, Pressable, View, StyleSheet, Text } from 'react-native'
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
 import { testIdWithKey } from '../../utils/testable'
 
-import QRScannerClose from './QRScannerClose'
 import QRScannerTorch from './QRScannerTorch'
+import { Screens } from '../../types/navigators'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
@@ -23,8 +23,6 @@ const CameraViewContainer: React.FC<React.PropsWithChildren> = ({ children }) =>
     <View
       style={{
         flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
       }}
     >
       {children}
@@ -41,8 +39,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      height: '100%',
-      width: '100%',
+      flex: 1,
     },
     viewFinder: {
       width: 250,
@@ -52,9 +49,10 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       borderColor: ColorPallet.grayscale.white,
     },
     viewFinderContainer: {
-      flex: 1,
+      flexGrow: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: 'blue',
     },
     errorContainer: {
       flexDirection: 'row',
@@ -84,25 +82,29 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           if (invalidQrCodes.has(event.data)) {
             return
           }
+
           if (error?.data === event?.data) {
             invalidQrCodes.add(error.data)
             if (enableCameraOnError) {
+
               return setCameraActive(true)
             }
           }
+
           if (cameraActive) {
             Vibration.vibrate()
             handleCodeScan(event)
+
             return setCameraActive(false)
           }
         }}
       >
-        <CameraViewContainer>
-          <QRScannerClose onPress={() => navigation.goBack()}></QRScannerClose>
+
+        <View style={{ flex: 1 }}>          
           <View style={styles.errorContainer}>
             {error ? (
               <>
-                <Icon style={styles.icon} name="cancel" size={30}></Icon>
+                <Icon style={styles.icon} name="cancel" size={30} />
                 <Text
                   testID={testIdWithKey('ErrorMessage')}
                   style={[TextTheme.caption, { color: ColorPallet.grayscale.white }]}
@@ -114,11 +116,33 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               <Text style={[TextTheme.caption, { color: ColorPallet.grayscale.white, height: 30, margin: 4 }]}> </Text>
             )}
           </View>
+
+          <View style={{ backgroundColor: 'green', flexDirection: 'row', marginHorizontal: 40, alignItems: 'center' }}>
+            <Icon name="qrcode-scan" size={46} style={{color: 'white'}}/>
+            <Text style={{color: 'white', fontSize: 21, marginHorizontal: 10}}>A valid QR code will scan automatically.</Text>
+          </View>
+          
           <View style={styles.viewFinderContainer}>
             <View style={styles.viewFinder} />
           </View>
-          <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
-        </CameraViewContainer>
+
+          <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+            <Icon name="circle-outline" size={60} style={{color: 'white', marginBottom: -15  }}/>
+          </View>
+
+          <View style={{ marginHorizontal: 24, height: 24, marginBottom: 60, flexDirection: 'row'}}>
+            <Pressable
+              accessibilityLabel={t('Verifier.Toggle')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey('XXX')}
+              onPress={() => navigation.navigate(Screens.ScanHelp)}
+              >
+              <Icon name="help-circle" size={24} style={{color: 'white'}}/>
+            </Pressable>
+            <View style={{ width: 10, marginLeft: 'auto' }}/>
+            <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
+          </View>
+        </View>
       </RNCamera>
     </View>
   )

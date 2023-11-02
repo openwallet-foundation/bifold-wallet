@@ -6,6 +6,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import NameWallet from '../screens/NameWallet'
+import ScanHelp from '../screens/ScanHelp'
 import { ConnectStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -18,16 +19,27 @@ const ConnectStack: React.FC = () => {
   const { scan } = useConfiguration()
   const { t } = useTranslation()
   const [store] = useStore()
+  
+  console.log(defaultStackOptions)
+
   return (
     <Stack.Navigator
-      // below is part of the temporary gating of the new scan screen tabs feature
-      screenOptions={{ ...defaultStackOptions, headerShown: store.preferences.useConnectionInviterCapability }}
+      screenOptions={{
+        ...defaultStackOptions,
+      }}
     >
       <Stack.Screen name={Screens.Scan} component={scan} />
       <Stack.Screen
+        name={Screens.ScanHelp}
+        component={ScanHelp}
+      />
+      <Stack.Screen
         name={Screens.NameWallet}
         component={NameWallet}
-        options={{ title: t('Screens.NameWallet'), headerBackTestID: testIdWithKey('Back') }}
+        options={{ 
+          title: t('Screens.NameWallet'),
+          headerBackTestID: testIdWithKey('Back')
+        }}
       />
     </Stack.Navigator>
   )

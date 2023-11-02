@@ -266,8 +266,6 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Stacks.ConnectStack}
           component={ConnectStack}
-          // below is part of the temporary gating of the new scan screen tabs feature
-          options={{ presentation: state.preferences.useConnectionInviterCapability ? 'card' : 'modal' }}
         />
         <Stack.Screen
           name={Stacks.SettingStack}
