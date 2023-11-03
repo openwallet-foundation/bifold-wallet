@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, StyleSheet, useWindowDimensions } from 'react-native'
+import { StyleSheet, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useAnimatedComponents } from '../../contexts/animated-components'
@@ -20,11 +20,9 @@ const LoadingModal: React.FC = () => {
   })
 
   return (
-    <Modal visible={true} transparent={true}>
-      <SafeAreaView style={[styles.container]}>
-        <LoadingIndicator />
-      </SafeAreaView>
-    </Modal>
+    <SafeAreaView style={[styles.container]}>
+      <LoadingIndicator />
+    </SafeAreaView>
   )
 }
 
