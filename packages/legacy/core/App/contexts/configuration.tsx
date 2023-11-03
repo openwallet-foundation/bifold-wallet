@@ -45,6 +45,8 @@ export interface ConfigurationContext {
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
   enableTours?: boolean
+  enableImplicitInvitations?: boolean
+  enableReuseConnections?: boolean
   showPreface?: boolean
 }
 
