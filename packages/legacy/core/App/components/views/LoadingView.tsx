@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useTheme } from '../../contexts/theme'
 
-const LoadingModal: React.FC = () => {
+const LoadingView: React.FC = () => {
   const { height } = useWindowDimensions()
   const { LoadingTheme } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
@@ -26,4 +26,4 @@ const LoadingModal: React.FC = () => {
   )
 }
 
-export default LoadingModal
+export default LoadingView
