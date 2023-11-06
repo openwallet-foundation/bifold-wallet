@@ -11,8 +11,8 @@ import Toast from 'react-native-toast-message'
 import NewQRView from '../components/misc/NewQRView'
 import QRScanner from '../components/misc/QRScanner'
 import CameraDisclosureModal from '../components/modals/CameraDisclosureModal'
-import LoadingModal from '../components/modals/LoadingModal'
 import { ToastType } from '../components/toast/BaseToast'
+import LoadingView from '../components/views/LoadingView'
 import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams, Screens, Stacks } from '../types/navigators'
@@ -150,7 +150,7 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   }, [])
 
   if (loading) {
-    return <LoadingModal />
+    return <LoadingView />
   }
 
   if (showDisclosureModal) {
