@@ -234,16 +234,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
           const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials
             ? {
-              ...retrievedCredentials,
-              attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
-                string,
-                AnonCredsRequestedAttributeMatch[]
-              >,
-              predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
-                string,
-                AnonCredsRequestedPredicateMatch[]
-              >,
-            }
+                ...retrievedCredentials,
+                attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
+                  string,
+                  AnonCredsRequestedAttributeMatch[]
+                >,
+                predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
+                  string,
+                  AnonCredsRequestedPredicateMatch[]
+                >,
+              }
             : undefined
           setRetrievedCredentials(selectRetrievedCredentials)
 
@@ -552,8 +552,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     handleAltCredChange={
                       item.altCredentials && item.altCredentials.length > 1
                         ? () => {
-                          handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
-                        }
+                            handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
+                          }
                         : undefined
                     }
                     proof={true}
