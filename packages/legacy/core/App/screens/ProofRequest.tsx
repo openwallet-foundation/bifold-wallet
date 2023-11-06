@@ -376,13 +376,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const handleDeclineTouched = async () => {
     try {
       if (agent && proof) {
+        await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
-        // sending a problem report fails if there is neither a connectionId nor a ~service decorator
-        if (proof.connectionId) {
-          await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
-          if (goalCode && goalCode.endsWith('verify.once')) {
-            agent.connections.deleteById(proof.connectionId)
-          }
+
+        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+          agent.connections.deleteById(proof.connectionId)
         }
       }
     } catch (err: unknown) {
