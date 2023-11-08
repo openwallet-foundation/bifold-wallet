@@ -5,6 +5,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Locales, storeLanguage } from '../localization'
 import { testIdWithKey } from '../utils/testable'
@@ -14,14 +15,14 @@ interface Language {
 }
 
 const Language = () => {
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
   const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
-  // List of available languages into the localization directory
-  const languages = [
-    { id: Locales.en, value: t('Language.English', { lng: Locales.en }) },
-    { id: Locales.fr, value: t('Language.French', { lng: Locales.fr }) },
-    { id: Locales.ptBr, value: t('Language.Portuguese', { lng: Locales.ptBr }) },
-  ]
+  const { supportedLanguages } = useConfiguration()
+
+  const languages: Language[] = supportedLanguages.map((lang) => ({
+    id: lang,
+    value: i18n.t(`Language.code`, { context: lang }),
+  }))
 
   const styles = StyleSheet.create({
     container: {

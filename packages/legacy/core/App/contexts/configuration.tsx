@@ -5,6 +5,7 @@ import { createContext, ReducerAction, useContext } from 'react'
 import { ProofRequestTemplate } from '../../verifier'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
+import { Locales } from '../localization'
 import OnboardingPages from '../screens/OnboardingPages'
 import { ScanProps } from '../screens/Scan'
 import { PINSecurityParams } from '../types/security'
@@ -39,6 +40,7 @@ export interface ConfigurationContext {
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
+  supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
   proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
