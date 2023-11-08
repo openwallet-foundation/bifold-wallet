@@ -8,7 +8,8 @@ import { NetworkProvider } from '../../App/contexts/network'
 import configurationContext from '../contexts/configuration'
 import { useProofRequestTemplates } from '../../verifier/request-templates'
 import ProofRequestDetails from '../../App/screens/ProofRequestDetails'
-import { testIdWithKey } from '../../App'
+import { ProofRequestType, testIdWithKey } from '../../App'
+import { useTemplates, useTemplate } from '../../App/hooks/proof-request-templates'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -23,12 +24,47 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => {})
+jest.mock('react-native-localize', () => { })
 jest.mock('react-native-device-info', () => () => jest.fn())
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
-const templates = useProofRequestTemplates(false)
+
+jest.mock('../../App/hooks/proof-request-templates', () => ({
+  useTemplates: jest.fn(),
+  useTemplate: jest.fn(),
+}))
+
+const templates = [
+  {
+    id: 'Aries:5:StudentFullName:0.0.1:indy',
+    name: 'Student full name',
+    description: 'Verify the full name of a student',
+    version: '0.0.1',
+    payload: {
+      type: ProofRequestType.AnonCreds,
+      data: [
+        {
+          schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
+          requestedAttributes: [
+            {
+              name: 'student_first_name',
+              restrictions:[{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
+            },
+            {
+              name: 'student_last_name',
+              restrictions:[{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
+            },
+          ],
+        },
+      ],
+    },
+  }
+]
+// @ts-ignore
+useTemplates.mockImplementation(() => templates)
+// @ts-ignore
+useTemplate.mockImplementation((id) => templates[0])
 const templateId = templates[0].id
 const connectionId = 'test'
 const navigation = useNavigation()
@@ -50,7 +86,7 @@ describe('ProofRequestDetails Component', () => {
 
   test('Renders correctly', async () => {
     const tree = renderView({ templateId })
-    await act(async () => {})
+    await act(async () => { })
     expect(tree).toMatchSnapshot()
   })
 

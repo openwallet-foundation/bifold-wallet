@@ -31,6 +31,7 @@ export interface ConfigurationContext {
   credentialEmptyList: React.FC<EmptyListProps>
   developer: React.FC
   OCABundleResolver: OCABundleResolverType
+  proofTemplateBaseUrl?: string
   scan: React.FC<ScanProps>
   useBiometry: React.FC
   record: React.FC<RecordProps>
