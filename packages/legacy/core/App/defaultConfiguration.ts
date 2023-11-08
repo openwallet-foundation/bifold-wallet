@@ -12,6 +12,7 @@ import HomeHeaderView from './components/views/HomeHeaderView'
 import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
+import { Locales, translationResources } from './localization'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
 import Preface from './screens/Preface'
@@ -51,5 +52,6 @@ export const defaultConfiguration: ConfigurationContext = {
   useCustomNotifications: useNotifications,
   proofRequestTemplates: useProofRequestTemplates,
   enableTours: false,
+  supportedLanguages: Object.keys(translationResources) as Locales[],
   showPreface: false,
 }
