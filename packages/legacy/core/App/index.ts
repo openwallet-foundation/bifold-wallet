@@ -45,7 +45,7 @@ import UseBiometry from './screens/UseBiometry'
 import * as types from './types'
 
 export { LocalStorageKeys } from './constants'
-export { initLanguages, initStoredLanguage, translationResources } from './localization'
+export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
 export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'

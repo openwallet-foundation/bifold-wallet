@@ -1,6 +1,5 @@
 import { PINValidationRules } from './types/security'
 
-export const defaultLanguage = 'en'
 export const dateIntFormat = 'YYYYMMDD'
 
 const lengthOfhiddenAttributes = 10

@@ -34,11 +34,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
   const { settings, enableTours } = useConfiguration()
-  const languages = [
-    { id: Locales.en, value: t('Language.English') },
-    { id: Locales.fr, value: t('Language.French') },
-    { id: Locales.ptBr, value: t('Language.Portuguese') },
-  ]
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
@@ -83,7 +78,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
   })
 
-  const currentLanguage = languages.find((l) => l.id === i18n.language)?.value
+  const currentLanguage = i18n.t('Language.code', { context: i18n.language as Locales })
 
   const incrementDeveloperMenuCounter = () => {
     if (developerOptionCount.current >= touchCountToEnableBiometrics) {

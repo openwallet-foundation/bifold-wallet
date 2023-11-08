@@ -4,15 +4,13 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import * as RNLocalize from 'react-native-localize'
 
-import { defaultLanguage } from '../constants'
-
 import en from './en'
 import fr from './fr'
 import ptBr from './pt-br'
 
 export type Translation = typeof en
 
-type TranslationResources = {
+export type TranslationResources = {
   [key: string]: any
 }
 
@@ -41,10 +39,10 @@ const storeLanguage = async (id: string) => {
   await AsyncStorage.setItem('language', id)
 }
 
-const initLanguages = (resources: TranslationResources) => {
+const initLanguages = (resources: TranslationResources, fallbackLng: Locales = Locales.en) => {
   const availableLanguages = Object.keys(resources)
   const bestLanguageMatch = RNLocalize.findBestAvailableLanguage(availableLanguages)
-  let translationToUse = defaultLanguage
+  let translationToUse = fallbackLng as string
 
   if (bestLanguageMatch && availableLanguages.includes(bestLanguageMatch.languageTag)) {
     translationToUse = bestLanguageMatch.languageTag
@@ -53,7 +51,7 @@ const initLanguages = (resources: TranslationResources) => {
   i18n.use(initReactI18next).init({
     debug: true,
     lng: translationToUse,
-    fallbackLng: defaultLanguage,
+    fallbackLng,
     resources,
   })
 }
