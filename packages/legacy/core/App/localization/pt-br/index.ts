@@ -72,9 +72,9 @@ const translation = {
     "JustNow": "Agora",
   },
   "Language": {
-    "English": "Inglês",
-    "French": "Francês",
-    "Portuguese": "Português",
+    "code_en": "Inglês",
+    "code_fr": "Francês",
+    "code_pt-BR": "Português",
   },
   "Error": {
     "Unknown": "Erro Desconhecido",
@@ -493,7 +493,7 @@ const translation = {
     "Notifications": "Notificações",
     "CredentialOffer": "Oferta de Credencial",
     "ProofRequest": "Requisição de Prova",
-    "ProofChangeCredential":"Escolha uma credencial",
+    "ProofChangeCredential": "Escolha uma credencial",
     "ProofRequestDetails": "Detalhes Da Solicitação De Comprovação",
     "ProofRequestAttributeDetails": "Atributos de Requisição de Prova",
     "ProofDetails": "Detalhes da prova",
