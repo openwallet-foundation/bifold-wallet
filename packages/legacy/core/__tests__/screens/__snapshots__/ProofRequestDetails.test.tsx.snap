@@ -35,15 +35,35 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
         Object {
           "requestedAttributes": Array [
             Object {
-              "name": "student_first_name",
+              "devRestrictions": Array [
+                Object {
+                  "schema_name": "student_card",
+                },
+              ],
+              "names": Array [
+                "student_first_name",
+                "student_last_name",
+              ],
+              "non_revoked": Object {
+                "to": "@{now}",
+              },
               "restrictions": Array [
                 Object {
                   "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
                 },
               ],
             },
+          ],
+          "requestedPredicates": Array [
             Object {
-              "name": "student_last_name",
+              "devRestrictions": Array [
+                Object {
+                  "schema_name": "student_card",
+                },
+              ],
+              "name": "expiry_date",
+              "predicateType": ">=",
+              "predicateValue": "@{currentDate(0)}",
               "restrictions": Array [
                 Object {
                   "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",

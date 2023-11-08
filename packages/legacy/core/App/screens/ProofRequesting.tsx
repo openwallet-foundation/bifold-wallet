@@ -123,10 +123,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
   })
 
-  if (!template) {
-    throw new Error('Unable to find proof request template')
-  }
-
   const createProofRequest = useCallback(async () => {
     try {
       setMessage(undefined)
@@ -165,6 +161,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }, [isFocused])
 
   useEffect(() => {
+    if (!template) {
+      return
+    }
     const sendAsyncProof = async () => {
       if (record && record.state === DidExchangeState.Completed) {
         //send haptic feedback to verifier that connection is completed
@@ -181,7 +180,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       }
     }
     sendAsyncProof()
-  }, [record])
+  }, [record, template])
 
   useEffect(() => {
     if (proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))) {

@@ -257,11 +257,11 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   >(undefined)
 
   const template = useTemplate(templateId)
-  if (!template) {
-    throw new Error('Unable to find proof request template')
-  }
 
   useEffect(() => {
+    if (!template) {
+      return
+    }
     const attributes = template.payload.type === ProofRequestType.AnonCreds ? template.payload.data : []
 
     OCABundleResolver.resolve({ identifiers: { templateId }, language: i18n.language }).then((bundle) => {
@@ -282,7 +282,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       setMeta(metaOverlay)
       setAttributes(attributes)
     })
-  }, [templateId])
+  }, [templateId, template])
 
   const onlyNumberRegex = /^\d+$/
 
@@ -305,6 +305,10 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   )
 
   const useProofRequest = useCallback(async () => {
+    if (!template) {
+      return
+    }
+
     if (invalidPredicate) {
       setInvalidPredicate({ visible: true, predicate: invalidPredicate.predicate })
       return
@@ -323,7 +327,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       // Else redirect to the screen with connectionless request
       navigation.navigate(Screens.ProofRequesting, { templateId, predicateValues: customPredicateValues })
     }
-  }, [agent, templateId, connectionId, customPredicateValues, invalidPredicate])
+  }, [agent, template, templateId, connectionId, customPredicateValues, invalidPredicate])
 
   const showTemplateUsageHistory = useCallback(async () => {
     navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })
