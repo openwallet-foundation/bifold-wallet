@@ -16,6 +16,7 @@ export const applyTemplateMarkers = (templates: any): any => {
     currentDate: (offset: string) => calculatePreviousYear(parseInt(offset)).toString(),
   }
   let templateString = JSON.stringify(templates)
+  // regex to find all markers in the template so we can replace them with computed values
   const markers = [...templateString.matchAll(/"@\{(\w+)(?:\((\S*)\))?\}"/gm)]
 
   markers.forEach((marker) => {
