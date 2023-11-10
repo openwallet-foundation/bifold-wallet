@@ -15,6 +15,10 @@ jobs:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v3
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
+
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
 
@@ -40,6 +44,10 @@ jobs:
     steps:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
