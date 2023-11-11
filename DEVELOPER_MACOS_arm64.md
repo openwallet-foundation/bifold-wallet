@@ -31,12 +31,12 @@
     ```
 1.  Install Node
     ```sh
-    nvm install 16.15.0
+    nvm install 18.18.2
     ```
     Activate node version by adding the following to your `~/.zprofile`
     ```sh
     source $(brew --prefix nvm)/nvm.sh
-    nvm use 16.15.0
+    nvm use 18.18.2
     ```
 1.  Install Yarn
     ```sh
