@@ -154,6 +154,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               accessibilityLabel={t('Scan.ScanHelp')}
               accessibilityRole={'button'}
               testID={testIdWithKey('ScanHelp')}
+              // @ts-ignore
               onPress={() => navigation.navigate(Screens.ScanHelp)}
               style={styleForState}
               hitSlop={hitSlop}
