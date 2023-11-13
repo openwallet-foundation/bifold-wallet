@@ -5,31 +5,19 @@ import { View, Modal, Vibration, Pressable, StyleSheet, Text } from 'react-nativ
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
+import { Screens } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
+import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 import QRScannerTorch from './QRScannerTorch'
-import { Screens } from '../../types/navigators'
-import { hitSlop } from '../../constants'
-import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 interface Props {
   handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
-}
-
-const CameraViewContainer: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      {children}
-    </View>
-  )
 }
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError }) => {
@@ -72,8 +60,16 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
 
   return (
     <View style={styles.container}>
-      <Modal visible={showInfoBox} animationType='fade' transparent>
-        <View style={{ flex: 1, paddingHorizontal: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.6)' }}>
+      <Modal visible={showInfoBox} animationType="fade" transparent>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.6)',
+          }}
+        >
           <InfoBox
             notificationType={InfoBoxType.Info}
             title={t('Scan.BadQRCode')}
@@ -114,7 +110,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           }
         }}
       >
-        <View style={{ flex: 1 }}>          
+        <View style={{ flex: 1 }}>
           <View style={styles.errorContainer}>
             {error ? (
               <>
@@ -131,13 +127,15 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
             )}
           </View>
           <View style={{ flexDirection: 'row', marginHorizontal: 40, alignItems: 'center' }}>
-            <Icon name="qrcode-scan" size={46} style={{color: 'white'}}/>
-            <Text style={{color: 'white', fontSize: 21, marginHorizontal: 10}}>A valid QR code will scan automatically.</Text>
-          </View> 
+            <Icon name="qrcode-scan" size={46} style={{ color: 'white' }} />
+            <Text style={{ color: 'white', fontSize: 21, marginHorizontal: 10 }}>
+              A valid QR code will scan automatically.
+            </Text>
+          </View>
           <View style={styles.viewFinderContainer}>
             <View style={styles.viewFinder} />
           </View>
-          <View style={{ justifyContent: 'center', alignItems: 'center', }}> 
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Pressable
               accessibilityLabel={t('Scan.ScanNow')}
               accessibilityRole={'button'}
@@ -145,11 +143,11 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               onPress={toggleShowInfoBox}
               style={styleForState}
               hitSlop={hitSlop}
-              >
-                <Icon name="circle-outline" size={60} style={{color: 'white', marginBottom: -15  }}/>
+            >
+              <Icon name="circle-outline" size={60} style={{ color: 'white', marginBottom: -15 }} />
             </Pressable>
           </View>
-          <View style={{ marginHorizontal: 24, height: 24, marginBottom: 60, flexDirection: 'row'}}>
+          <View style={{ marginHorizontal: 24, height: 24, marginBottom: 60, flexDirection: 'row' }}>
             <Pressable
               accessibilityLabel={t('Scan.ScanHelp')}
               accessibilityRole={'button'}
@@ -159,9 +157,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               style={styleForState}
               hitSlop={hitSlop}
             >
-              <Icon name="help-circle" size={24} style={{color: 'white'}}/>
+              <Icon name="help-circle" size={24} style={{ color: 'white' }} />
             </Pressable>
-            <View style={{ width: 10, marginLeft: 'auto' }}/>
+            <View style={{ width: 10, marginLeft: 'auto' }} />
             <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
           </View>
         </View>

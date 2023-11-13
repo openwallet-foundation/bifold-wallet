@@ -337,7 +337,7 @@ const translation = {
     "ScanOnlySpecial3": "Bifold Wallet currently doesn't support adding digital credential by scanning or taking photos of physical ones. (PB)",
     "WhereToUseLink": "See where you can use Bifold Wallet (PB)",    
     "BadQRCode": "QR Code Not Recognized (PB)",
-    "BadQRCodeDescription": "Ths QR code scanned doesn\'t work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can\'t add digital credentials by taking photos of physical ones. (PB)",
+    "BadQRCodeDescription": "Ths QR code scanned doesn't work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can't add digital credentials by taking photos of physical ones. (PB)",
   },
   "Connection": {
     "JustAMoment": "Aguarde um momento enquanto fazemos uma conexão segura...",
