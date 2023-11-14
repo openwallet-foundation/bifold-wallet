@@ -263,10 +263,7 @@ const RootStack: React.FC = () => {
             ),
           })}
         />
-        <Stack.Screen
-          name={Stacks.ConnectStack}
-          component={ConnectStack}
-        />
+        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} />
         <Stack.Screen
           name={Stacks.SettingStack}
           component={SettingStack}

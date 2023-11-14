@@ -17,7 +17,7 @@ const ConnectStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const { scan } = useConfiguration()
   const { t } = useTranslation()
-  
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -25,16 +25,13 @@ const ConnectStack: React.FC = () => {
       }}
     >
       <Stack.Screen name={Screens.Scan} component={scan} />
-      <Stack.Screen
-        name={Screens.ScanHelp}
-        component={ScanHelp}
-      />
+      <Stack.Screen name={Screens.ScanHelp} component={ScanHelp} />
       <Stack.Screen
         name={Screens.NameWallet}
         component={NameWallet}
-        options={{ 
+        options={{
           title: t('Screens.NameWallet'),
-          headerBackTestID: testIdWithKey('Back')
+          headerBackTestID: testIdWithKey('Back'),
         }}
       />
     </Stack.Navigator>

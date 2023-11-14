@@ -35,7 +35,7 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const styles = createStyles(theme)
-  
+
   return (
     <TouchableOpacity
       accessible={true}

@@ -5,7 +5,6 @@ const unicodeForBulletCharacter = '\u2022'
 
 export const whereToUseWalletUrl = 'http://example.com'
 
-
 export const dateIntFormat = 'YYYYMMDD'
 
 export const hiddenFieldValue = Array(lengthOfhiddenAttributes).fill(unicodeForBulletCharacter).join('')
