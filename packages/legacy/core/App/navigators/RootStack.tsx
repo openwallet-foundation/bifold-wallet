@@ -60,6 +60,7 @@ const RootStack: React.FC = () => {
     showPreface,
     enableImplicitInvitations,
     enableReuseConnections,
+    disableOnboardingSkip,
   } = useConfiguration()
   useDeepLinks()
 
@@ -310,6 +311,7 @@ const RootStack: React.FC = () => {
               nextButtonText={t('Global.Next')}
               previousButtonText={t('Global.Back')}
               pages={pages(onTutorialCompleted, OnboardingTheme)}
+              disableSkip={disableOnboardingSkip}
               style={carousel}
             />
           )}

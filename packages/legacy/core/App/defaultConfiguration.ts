@@ -54,4 +54,5 @@ export const defaultConfiguration: ConfigurationContext = {
   enableTours: false,
   supportedLanguages: Object.keys(translationResources) as Locales[],
   showPreface: false,
+  disableOnboardingSkip: false,
 }
