@@ -49,6 +49,7 @@ export interface ConfigurationContext {
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
   showPreface?: boolean
+  disableOnboardingSkip?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
