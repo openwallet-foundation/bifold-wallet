@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Link from '../components/texts/Link'
 import { whereToUseWalletUrl } from '../constants'
 import { useTheme } from '../contexts/theme'
+import { testIdWithKey } from '../utils/testable'
 
 const ScanHelp: React.FC = () => {
   const { t } = useTranslation()
@@ -35,6 +36,7 @@ const ScanHelp: React.FC = () => {
           linkText={t('Scan.WhereToUseLink')}
           style={style.text}
           onPress={() => Linking.openURL(whereToUseWalletUrl)}
+          testID={testIdWithKey('WhereToUseLink')}
         />
         <Text style={style.text}>{t('Scan.ScanOnlySpecial3')}</Text>
       </ScrollView>

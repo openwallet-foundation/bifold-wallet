@@ -9,9 +9,10 @@ interface LinkProps {
   style?: TextStyle
   textProps?: TextProps
   onPress: () => void
+  testID?: string
 }
 
-const Link: React.FC<LinkProps> = ({ linkText, onPress, style = {}, ...textProps }) => {
+const Link: React.FC<LinkProps> = ({ linkText, onPress, style = {}, testID, ...textProps }) => {
   const { TextTheme, ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     link: {
@@ -28,7 +29,7 @@ const Link: React.FC<LinkProps> = ({ linkText, onPress, style = {}, ...textProps
       accessibilityLabel={linkText}
       accessible
       accessibilityRole={'link'}
-      testID={testIdWithKey(testIdForAccessabilityLabel(linkText))}
+      testID={testID ? testID : testIdWithKey(testIdForAccessabilityLabel(linkText))}
       onPress={onPress}
       {...textProps}
     >
