@@ -17,7 +17,7 @@ describe('ScanHelp Screen', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Button  being checked', async () => {
+  test('Link button exists and is accessible', async () => {
     const tree = render(<ScanHelp />)
     const { getByTestId } = tree
     const linkButton = getByTestId(testIdWithKey('WhereToUseLink'))
