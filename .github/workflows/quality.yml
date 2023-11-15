@@ -13,7 +13,7 @@ jobs:
     name: Linting
     steps:
       - name: Checkout aries-mobile-agent-react-native
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/setup-python@v4
         with:
@@ -43,7 +43,7 @@ jobs:
     name: Testing
     steps:
       - name: Checkout aries-mobile-agent-react-native
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/setup-python@v4
         with:
