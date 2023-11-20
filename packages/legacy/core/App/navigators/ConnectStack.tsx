@@ -23,7 +23,7 @@ const ConnectStack: React.FC = () => {
       // below is part of the temporary gating of the new scan screen tabs feature
       screenOptions={{ ...defaultStackOptions, headerShown: store.preferences.useConnectionInviterCapability }}
     >
-      <Stack.Screen name={Screens.Scan} component={scan} />
+      <Stack.Screen name={Screens.Scan} component={scan} options={{ headerBackTestID: testIdWithKey('Back') }} />
       <Stack.Screen
         name={Screens.NameWallet}
         component={NameWallet}
