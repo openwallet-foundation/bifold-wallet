@@ -41,7 +41,7 @@ const MessageIcon: React.FC<{ type: CallbackType }> = ({ type }) => {
   const { ChatTheme: theme, Assets } = useTheme()
 
   return (
-    <View style={{ ...theme.documentIconContainer, marginBottom: 16 }}>
+    <View style={{ ...theme.documentIconContainer }}>
       {type === CallbackType.CredentialOffer && <Assets.svg.iconCredentialOfferLight width={40} height={40} />}
       {type === CallbackType.PresentationSent && <Assets.svg.iconInfoSentLight width={40} height={40} />}
       {type === CallbackType.ProofRequest && <Assets.svg.iconProofRequestLight width={40} height={40} />}

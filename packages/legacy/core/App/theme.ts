@@ -715,7 +715,7 @@ export const ChatTheme = {
     backgroundColor: ColorPallet.brand.primary,
     alignSelf: 'flex-start',
     borderRadius: 4,
-    marginBottom: 8,
+    marginBottom: 16,
     justifyContent: 'center',
     alignItems: 'center',
     width: 50,
