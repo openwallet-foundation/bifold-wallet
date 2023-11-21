@@ -319,7 +319,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
           _id: Role.me,
         }}
         renderActions={(props) => renderActions(props, theme, actions)}
-        onPressActionButton={() => setShowActionSlider(true)}
+        onPressActionButton={actions ? () => setShowActionSlider(true) : undefined}
       />
       {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
     </SafeAreaView>
