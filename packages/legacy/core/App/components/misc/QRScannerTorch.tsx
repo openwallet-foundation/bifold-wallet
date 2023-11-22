@@ -16,8 +16,8 @@ interface Props extends React.PropsWithChildren {
 function createStyles({ ColorPallet }: ITheme) {
   return StyleSheet.create({
     container: {
-      width: 48,
-      height: 48,
+      width: 24,
+      height: 24,
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
@@ -35,6 +35,7 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
   const { t } = useTranslation()
   const theme = useTheme()
   const styles = createStyles(theme)
+
   return (
     <TouchableOpacity
       accessible={true}

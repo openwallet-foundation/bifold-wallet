@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.11' 
+          python-version: '3.11'
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
@@ -47,7 +47,7 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.11' 
+          python-version: '3.11'
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
@@ -65,3 +65,4 @@ jobs:
           yarn run test:coverage
 
       - uses: codecov/codecov-action@v3
+        if: always()

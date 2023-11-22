@@ -37,6 +37,7 @@ export enum Screens {
   ProofDetails = 'Proof Details',
   NameWallet = 'Name Wallet',
   RenameContact = 'Rename Contact',
+  ScanHelp = 'Scan Help',
 }
 
 export enum Stacks {
@@ -128,6 +129,7 @@ export type HomeStackParams = {
 export type ConnectStackParams = {
   [Screens.Scan]: undefined
   [Screens.NameWallet]: undefined
+  [Screens.ScanHelp]: undefined
 }
 
 export type SettingStackParams = {
