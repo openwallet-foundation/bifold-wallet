@@ -22,6 +22,7 @@ export interface SettingSection {
     title: string
     icon: SettingIcon
     iconRight?: SettingIcon
+    titleTestID?: string
   }
   data: Setting[]
 }

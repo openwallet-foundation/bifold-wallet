@@ -24,7 +24,7 @@ const ConnectStack: React.FC = () => {
         ...defaultStackOptions,
       }}
     >
-      <Stack.Screen name={Screens.Scan} component={scan} />
+      <Stack.Screen name={Screens.Scan} component={scan} options={{ headerBackTestID: testIdWithKey('Back') }} />
       <Stack.Screen name={Screens.ScanHelp} component={ScanHelp} />
       <Stack.Screen
         name={Screens.NameWallet}
