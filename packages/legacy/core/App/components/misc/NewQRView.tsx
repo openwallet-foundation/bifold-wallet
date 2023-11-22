@@ -48,12 +48,9 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     container: {
       flex: 1,
       backgroundColor: ColorPallet.brand.secondaryBackground,
-      justifyContent: 'space-between',
-      alignItems: 'center',
     },
     camera: {
       flex: 1,
-      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
     },

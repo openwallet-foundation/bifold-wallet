@@ -1,9 +1,12 @@
 import { PINValidationRules } from './types/security'
 
-export const dateIntFormat = 'YYYYMMDD'
-
 const lengthOfhiddenAttributes = 10
 const unicodeForBulletCharacter = '\u2022'
+
+export const whereToUseWalletUrl = 'http://example.com'
+
+export const dateIntFormat = 'YYYYMMDD'
+
 export const hiddenFieldValue = Array(lengthOfhiddenAttributes).fill(unicodeForBulletCharacter).join('')
 // Used to property prefix TestIDs so they can be looked up
 // by on-device automated testing systems like SauceLabs.
