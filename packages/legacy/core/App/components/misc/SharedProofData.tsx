@@ -11,13 +11,13 @@ import {
   getProofData,
   groupSharedProofDataByCredential,
 } from '../../../verifier'
+import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
 import { formatIfDate, pTypeToText } from '../../utils/helpers'
 import { buildFieldsFromSharedAnonCredsProof } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
-import LoadingIndicator from '../animated/LoadingIndicator'
 import { AttributeValue } from '../record/RecordField'
 
 interface SharedProofDataProps {
@@ -190,6 +190,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
 
 const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedProofDataLoad }: SharedProofDataProps) => {
   const { agent } = useAgent()
+  const { LoadingIndicator } = useAnimatedComponents()
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
