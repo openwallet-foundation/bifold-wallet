@@ -349,7 +349,15 @@ const translation = {
         "MyQRCode": "My QR code (FR)",
         "UnableToHandleRedirection": "Impossible de traiter la redirection",
         "Close": "Fermer",
-        "Torch": "Flash"
+        "Torch": "Flash",
+        "ScanHelp": "Scan Help (FR)",
+        "ScanNow": "Scan Now (FR)",
+        "ScanOnySpecial": "Only special QR codes can be scanned by Bifold Wallet. (FR)",
+        "ScanOnlySpecial2": "These are presented by participating services or people to receive a credential offer, request for information or to connect. (FR)",
+        "ScanOnlySpecial3": "Bifold Wallet currently doesn't support adding digital credential by scanning or taking photos of physical ones. (FR)",
+        "WhereToUseLink": "See where you can use Bifold Wallet (FR)",    
+        "BadQRCode": "QR Code Not Recognized (FR)",
+        "BadQRCodeDescription": "Ths QR code scanned doesn't work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can't add digital credentials by taking photos of physical ones. (FR)",
     },
     "Connection": {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",

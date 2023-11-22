@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScanHelp Screen Renders correctly 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "top",
+      "left",
+      "right",
+      "bottom",
+    ]
+  }
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "flexGrow": 1,
+        "paddingHorizontal": 26,
+      }
+    }
+  >
+    <View>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 26,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Scan.WhatToScan
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "marginTop": 15,
+            },
+            Object {
+              "marginTop": 20,
+            },
+          ]
+        }
+      >
+        Scan.ScanOnySpecial
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+            "marginTop": 15,
+          }
+        }
+      >
+        Scan.ScanOnlySpecial2
+      </Text>
+      <Text
+        accessibilityLabel="Scan.WhereToUseLink"
+        accessibilityRole="link"
+        accessible={true}
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "textDecorationLine": "underline",
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "marginTop": 15,
+            },
+          ]
+        }
+        testID="com.ariesbifold:id/WhereToUseLink"
+      >
+        Scan.WhereToUseLink
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+            "marginTop": 15,
+          }
+        }
+      >
+        Scan.ScanOnlySpecial3
+      </Text>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
