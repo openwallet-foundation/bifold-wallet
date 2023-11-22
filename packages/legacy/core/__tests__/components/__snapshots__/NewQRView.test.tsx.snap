@@ -297,6 +297,7 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
                   },
                 ]
               }
+              testID="com.ariesbifold:id/WalletName"
             >
               My Wallet - 1234
             </Text>

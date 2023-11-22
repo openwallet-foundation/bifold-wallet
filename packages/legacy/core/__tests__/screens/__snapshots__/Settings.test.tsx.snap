@@ -51,6 +51,7 @@ exports[`Settings Screen Renders correctly 1`] = `
               "testID": "com.ariesbifold:id/EditWalletName",
             },
             "title": "Screens.Contacts",
+            "titleTestID": undefined,
           },
         },
         Object {
