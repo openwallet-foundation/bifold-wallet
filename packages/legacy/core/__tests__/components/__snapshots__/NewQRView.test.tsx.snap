@@ -11,10 +11,8 @@ exports[`NewQRView Component Renders correctly on first tab 1`] = `
   }
   style={
     Object {
-      "alignItems": "center",
       "backgroundColor": "#313132",
       "flex": 1,
-      "justifyContent": "space-between",
     }
   }
 >
@@ -200,10 +198,8 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
   }
   style={
     Object {
-      "alignItems": "center",
       "backgroundColor": "#313132",
       "flex": 1,
-      "justifyContent": "space-between",
     }
   }
 >
