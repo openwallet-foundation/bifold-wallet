@@ -141,7 +141,8 @@
     "react-native-vision-camera": "^3.6.16",
     "react-test-renderer": "^18.2.0",
     "typescript": "^5.0.4",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "tsyringe": "^4.7.0"
   },
   "peerDependencies": {
     "@aries-framework/anoncreds": "^0.4.0",
@@ -210,7 +211,8 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^10.0.0",
     "react-native-vision-camera": "*",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "tsyringe": "^4.7.0"
   },
   "installConfig": {
     "hoistingLimits": "workspaces"

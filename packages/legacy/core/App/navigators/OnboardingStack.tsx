@@ -1,0 +1,131 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/core'
+import { StackNavigationOptions, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
+import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { TOKENS, useSystem } from '../container-api'
+import { useConfiguration } from '../contexts/configuration'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
+import { useTheme } from '../contexts/theme'
+import NameWallet from '../screens/NameWallet'
+import { createCarouselStyle } from '../screens/OnboardingPages'
+import PINCreate from '../screens/PINCreate'
+import { OnboardingTheme } from '../theme'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
+
+import { createDefaultStackOptions } from './defaultStackOptions'
+
+const OnboardingStack: React.FC = () => {
+  const [, dispatch] = useStore()
+  const { t } = useTranslation()
+  const system = useSystem()
+  const Stack = createStackNavigator()
+  const carousel = createCarouselStyle(OnboardingTheme)
+  const Onboarding = system.resolve(TOKENS.SCREEN_ONBOARDING)
+  const { pages, splash, useBiometry } = useConfiguration()
+  const theme = useTheme()
+  const defaultStackOptions = createDefaultStackOptions(theme)
+  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const onTutorialCompleted = system.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
+  const terms = system.resolve(TOKENS.SCREEN_TERMS)
+  const onAuthenticated = (status: boolean): void => {
+    if (!status) {
+      return
+    }
+
+    dispatch({
+      type: DispatchAction.DID_AUTHENTICATE,
+    })
+  }
+  const OnBoardingScreen: React.FC = () => {
+    return (
+      <Onboarding
+        nextButtonText={t('Global.Next')}
+        previousButtonText={t('Global.Back')}
+        pages={pages(onTutorialCompleted, OnboardingTheme)}
+        style={carousel}
+      />
+    )
+  }
+  const CreatePINScreen: React.FC = () => {
+    return <PINCreate setAuthenticated={onAuthenticated} />
+  }
+  type ScreenOptions = RouteConfig<
+    ParamListBase,
+    Screens,
+    StackNavigationState<ParamListBase>,
+    StackNavigationOptions,
+    StackNavigationEventMap
+  >
+  const screens: ScreenOptions[] = [
+    { name: Screens.Splash, component: splash },
+    {
+      name: Screens.Onboarding,
+      component: OnBoardingScreen,
+      options: () => {
+        return {
+          title: t('Screens.Onboarding'),
+          headerTintColor: OnboardingTheme.headerTintColor,
+          headerShown: true,
+          gestureEnabled: false,
+          headerLeft: () => false,
+        }
+      },
+    },
+    {
+      name: Screens.Terms,
+      options: () => ({
+        title: t('Screens.Terms'),
+        headerTintColor: OnboardingTheme.headerTintColor,
+        headerShown: true,
+        headerLeft: () => false,
+        rightLeft: () => false,
+      }),
+      component: terms,
+    },
+    {
+      name: Screens.CreatePIN,
+      component: CreatePINScreen,
+      options: () => ({
+        title: t('Screens.CreatePIN'),
+        headerShown: true,
+        headerLeft: () => false,
+        rightLeft: () => false,
+      }),
+    },
+    {
+      name: Screens.NameWallet,
+      options: () => ({
+        title: t('Screens.NameWallet'),
+        headerTintColor: OnboardingTheme.headerTintColor,
+        headerShown: true,
+        headerLeft: () => false,
+        rightLeft: () => false,
+      }),
+      component: NameWallet,
+    },
+    {
+      name: Screens.UseBiometry,
+      options: () => ({
+        title: t('Screens.Biometry'),
+        headerTintColor: OnboardingTheme.headerTintColor,
+        headerShown: true,
+        headerLeft: () => false,
+        rightLeft: () => false,
+      }),
+      component: useBiometry,
+    },
+  ]
+  return (
+    <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+      {screens.map((item) => {
+        return <Stack.Screen key={item.name} {...item} />
+      })}
+    </Stack.Navigator>
+  )
+}
+
+export default OnboardingStack
