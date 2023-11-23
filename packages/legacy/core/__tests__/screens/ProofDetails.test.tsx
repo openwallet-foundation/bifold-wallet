@@ -184,7 +184,7 @@ describe('ProofDetails Component', () => {
       const navigation = useNavigation()
       const { findByTestId } = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
 
-      const doneButton = await findByTestId(testIdWithKey('Done'))
+      const doneButton = await findByTestId(testIdWithKey('BackToList'))
       fireEvent(doneButton, 'press')
 
       expect(doneButton).not.toBeNull()

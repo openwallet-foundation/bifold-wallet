@@ -418,7 +418,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
             }
           >
             <View
-              accessibilityLabel="Global.Done"
+              accessibilityLabel="Verifier.GenerateNewQR"
               accessibilityRole="button"
               accessibilityState={
                 Object {
@@ -455,7 +455,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                   "padding": 16,
                 }
               }
-              testID="com.ariesbifold:id/Done"
+              testID="com.ariesbifold:id/GenerateNewQR"
             >
               <View
                 style={
@@ -481,13 +481,13 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                     ]
                   }
                 >
-                  Global.Done
+                  Verifier.GenerateNewQR
                 </Text>
               </View>
             </View>
           </View>
           <View
-            accessibilityLabel="Verifier.GenerateNewQR"
+            accessibilityLabel="Verifier.BackToList"
             accessibilityRole="button"
             accessibilityState={
               Object {
@@ -525,7 +525,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                 "padding": 16,
               }
             }
-            testID="com.ariesbifold:id/GenerateNewQR"
+            testID="com.ariesbifold:id/BackToList"
           >
             <View
               style={
@@ -551,7 +551,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                   ]
                 }
               >
-                Verifier.GenerateNewQR
+                Verifier.BackToList
               </Text>
             </View>
           </View>
