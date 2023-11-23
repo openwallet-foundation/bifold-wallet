@@ -122,7 +122,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
     }
   }, [navigation])
 
-  const onDone = useCallback(() => {
+  const onBack = useCallback(() => {
     navigation.navigate(Screens.ProofRequests, {})
   }, [navigation])
 
@@ -178,19 +178,19 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
         <View style={styles.footerButton}>
           <View style={{ marginBottom: 15 }}>
             <Button
-              title={t('Global.Done')}
-              accessibilityLabel={t('Global.Done')}
-              testID={testIdWithKey('Done')}
+              title={t('Verifier.GenerateNewQR')}
+              accessibilityLabel={t('Verifier.GenerateNewQR')}
+              testID={testIdWithKey('GenerateNewQR')}
               buttonType={ButtonType.Primary}
-              onPress={onDone}
+              onPress={onGenerateNew}
             />
           </View>
           <Button
-            title={t('Verifier.GenerateNewQR')}
-            accessibilityLabel={t('Verifier.GenerateNewQR')}
-            testID={testIdWithKey('GenerateNewQR')}
+            title={t('Verifier.BackToList')}
+            accessibilityLabel={t('Verifier.BackToList')}
+            testID={testIdWithKey('BackToList')}
             buttonType={ButtonType.Secondary}
-            onPress={onGenerateNew}
+            onPress={onBack}
           />
         </View>
       </View>
