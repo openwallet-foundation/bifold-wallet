@@ -610,6 +610,7 @@ const translation = {
         "Parameterizable": "Paramétrable",
         "RefreshQR": "Refresh QR Code (FR)",
         "GenerateNewQR": "Request another proof (FR)",
+        "BackToList": "Back to list (FR)",
         "ShareLink": "Lien de partage",
         "ScanQR": "Show this QR code to the other person (FR)",
         "ScanQRComment": "After the QR code is scanned, a proof request will be sent. (FR)",

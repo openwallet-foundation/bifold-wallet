@@ -628,6 +628,7 @@ const translation = {
     "Parameterizable": "Parameterizable",
     "RefreshQR": "Refresh QR Code",
     "GenerateNewQR": "Request another proof",
+    "BackToList": "Back to list",
     "ShareLink": "Share link",
     "ScanQR": "Show this QR code to the other person",
     "ScanQRComment": "After the QR code is scanned, a proof request will be sent.",
