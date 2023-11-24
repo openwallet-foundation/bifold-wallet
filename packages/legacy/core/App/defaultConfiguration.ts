@@ -55,4 +55,6 @@ export const defaultConfiguration: ConfigurationContext = {
   supportedLanguages: Object.keys(translationResources) as Locales[],
   showPreface: false,
   disableOnboardingSkip: false,
+  showScanHelp: false,
+  showScanButton: false,
 }

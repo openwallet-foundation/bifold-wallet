@@ -18,7 +18,7 @@ const ScanHelp: React.FC = () => {
     },
     scrollView: {
       flexGrow: 1,
-      paddingHorizontal: 26,
+      padding: 26,
     },
     text: {
       ...TextTheme.normal,

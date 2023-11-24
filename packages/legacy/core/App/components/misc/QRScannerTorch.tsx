@@ -26,8 +26,7 @@ function createStyles({ ColorPallet }: ITheme) {
       marginBottom: 50,
     },
     icon: {
-      marginLeft: 2,
-      marginTop: 2,
+      alignItems: 'center',
     },
   })
 }
