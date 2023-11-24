@@ -25,6 +25,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
 import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
@@ -36,7 +37,6 @@ import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
-import { useOutOfBandByConnectionId } from '../hooks/connections'
 
 type CredentialOfferProps = StackScreenProps<NotificationStackParams, Screens.CredentialOffer>
 
@@ -222,7 +222,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         }}
       >
         {loading ? <RecordLoading /> : null}
-        {credentialConnectionLabel && goalCode === 'aries.vc.issue' ? (<ConnectionAlert connectionID={credentialConnectionLabel} />) : null}
+        {credentialConnectionLabel && goalCode === 'aries.vc.issue' ? (
+          <ConnectionAlert connectionID={credentialConnectionLabel} />
+        ) : null}
         <View style={styles.footerButton}>
           <Button
             title={t('Global.Accept')}
