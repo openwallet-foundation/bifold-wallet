@@ -18,14 +18,13 @@ import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
-  const { width, height } = useWindowDimensions()
+  const { width, height, fontScale } = useWindowDimensions()
   const { useCustomNotifications, enableReuseConnections, enableImplicitInvitations } = useConfiguration()
   const { total } = useCustomNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertConnectedNetwork } = useNetwork()
   const { ColorPallet, TabTheme } = useTheme()
-  const { fontScale } = useWindowDimensions()
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
   const styles = StyleSheet.create({
     tabBarIcon: {
