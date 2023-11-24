@@ -36,6 +36,7 @@ import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 
 type CredentialOfferProps = StackScreenProps<NotificationStackParams, Screens.CredentialOffer>
 
@@ -62,6 +63,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [store, dispatch] = useStore()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
+  const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -220,7 +222,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         }}
       >
         {loading ? <RecordLoading /> : null}
-        <ConnectionAlert connectionID={credentialConnectionLabel} />
+        {credentialConnectionLabel && goalCode === 'aries.vc.issue' ? (<ConnectionAlert connectionID={credentialConnectionLabel} />) : null}
         <View style={styles.footerButton}>
           <Button
             title={t('Global.Accept')}
