@@ -1,32 +1,30 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
-interface Props {
+interface ScanTabProps {
   onPress: () => void
   active: boolean
   iconName: string
   title: string
 }
 
-const ScanTab: React.FC<Props> = ({ onPress, active, iconName, title }) => {
-  const { ColorPallet, TextTheme } = useTheme()
+const ScanTab: React.FC<ScanTabProps> = ({ onPress, active, iconName, title }) => {
+  const { TabTheme } = useTheme()
+  const { fontScale } = useWindowDimensions()
+  const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
+
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: ColorPallet.grayscale.white,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 10,
+      ...TabTheme.tabBarContainerStyle,
     },
     text: {
-      ...TextTheme.normal,
-    },
-    textActive: {
-      color: ColorPallet.brand.primary,
+      ...TabTheme.tabBarTextStyle,
+      color: active ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+      fontWeight: active ? 'bold' : 'normal',
     },
   })
   return (
@@ -36,8 +34,8 @@ const ScanTab: React.FC<Props> = ({ onPress, active, iconName, title }) => {
       accessibilityLabel={title}
       testID={testIdWithKey(title)}
     >
-      <Icon name={iconName} size={20} color={active ? styles.textActive.color : styles.text.color}></Icon>
-      <Text style={[styles.text, active && styles.textActive]}>{title}</Text>
+      <Icon name={iconName} size={30} color={styles.text.color}></Icon>
+      {showLabels ? <Text style={styles.text}>{title}</Text> : null}
     </TouchableOpacity>
   )
 }
