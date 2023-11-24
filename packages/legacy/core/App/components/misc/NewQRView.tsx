@@ -42,7 +42,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
   const { t } = useTranslation()
   const invalidQrCodes = new Set<string>()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, TabTheme } = useTheme()
   const { agent } = useAgent()
   const styles = StyleSheet.create({
     container: {
@@ -84,10 +84,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     },
     tabContainer: {
       flexDirection: 'row',
-      flexShrink: 1,
-      width: '100%',
-      borderTopWidth: 4,
-      borderTopColor: ColorPallet.brand.primaryBackground,
+      ...TabTheme.tabBarStyle,
     },
     qrContainer: {
       marginTop: 10,

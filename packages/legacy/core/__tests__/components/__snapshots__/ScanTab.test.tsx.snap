@@ -33,11 +33,9 @@ exports[`ScanTab Renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#FFFFFF",
       "flex": 1,
       "justifyContent": "center",
       "opacity": 1,
-      "padding": 10,
     }
   }
   testID="com.ariesbifold:id/title"
@@ -49,7 +47,7 @@ exports[`ScanTab Renders correctly 1`] = `
       Array [
         Object {
           "color": "#42803E",
-          "fontSize": 20,
+          "fontSize": 30,
         },
         undefined,
         Object {
@@ -62,22 +60,6 @@ exports[`ScanTab Renders correctly 1`] = `
     }
   >
     
-  </Text>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "normal",
-        },
-        Object {
-          "color": "#42803E",
-        },
-      ]
-    }
-  >
-    title
   </Text>
 </View>
 `;
