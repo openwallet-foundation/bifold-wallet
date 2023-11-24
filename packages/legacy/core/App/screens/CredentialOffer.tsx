@@ -25,6 +25,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
 import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
@@ -62,6 +63,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [store, dispatch] = useStore()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
+  const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation.goalCode
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -220,7 +222,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         }}
       >
         {loading ? <RecordLoading /> : null}
-        <ConnectionAlert connectionID={credentialConnectionLabel} />
+        {credentialConnectionLabel && goalCode === 'aries.vc.issue' ? (
+          <ConnectionAlert connectionID={credentialConnectionLabel} />
+        ) : null}
         <View style={styles.footerButton}>
           <Button
             title={t('Global.Accept')}
