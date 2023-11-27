@@ -494,7 +494,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const proofPageFooter = () => {
     return (
       <View style={[styles.pageFooter, styles.pageMargin]}>
-        {!loading && proofConnectionLabel && goalCode !== 'aries.vc.verify.once' ? (
+        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         ) : null}
         <View style={styles.footerButton}>
