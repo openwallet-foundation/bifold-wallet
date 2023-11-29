@@ -4,9 +4,9 @@ import { Linking, ScrollView, StyleSheet, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Link from '../components/texts/Link'
+import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
-import { useConfiguration } from '../contexts/configuration'
 
 const ScanHelp: React.FC = () => {
   const { t } = useTranslation()
