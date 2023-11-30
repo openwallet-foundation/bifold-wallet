@@ -3,7 +3,7 @@ import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build
 import { CredentialPreviewAttribute } from '@aries-framework/core'
 import { useCredentialById } from '@aries-framework/react-hooks'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
@@ -151,7 +151,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
       .then(({ fields }) => {
-        setOverlay({ ...overlay, presentationFields: fields })
+        setOverlay({ ...overlay, presentationFields: (fields as Attribute[]).filter((field) => field.value) })
         setLoading(false)
       })
   }, [credential])

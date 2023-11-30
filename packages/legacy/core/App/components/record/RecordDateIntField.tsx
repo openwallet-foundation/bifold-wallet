@@ -22,6 +22,10 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown, st
 
   useEffect(() => {
     const dateint = field.value as string
+    if (!dateint) {
+      setDate('')
+      return
+    }
     if (dateint.length === dateIntFormat.length) {
       const year = dateint.substring(0, 4)
       const month = dateint.substring(4, 6)
