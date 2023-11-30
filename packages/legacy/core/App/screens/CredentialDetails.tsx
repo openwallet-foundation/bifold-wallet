@@ -3,7 +3,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { useAgent } from '@aries-framework/react-hooks'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
@@ -148,7 +148,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     OCABundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay({ ...overlay, ...(bundle as CredentialOverlay<BrandingOverlay>) })
+      setOverlay({
+        ...overlay,
+        ...(bundle as CredentialOverlay<BrandingOverlay>),
+        presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
+      })
     })
   }, [credential])
 
