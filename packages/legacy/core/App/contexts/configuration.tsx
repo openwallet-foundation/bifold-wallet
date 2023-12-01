@@ -35,13 +35,11 @@ export interface ConfigurationContext {
   OCABundleResolver: OCABundleResolverType
   proofTemplateBaseUrl?: string
   scan: React.FC<StackScreenProps<ConnectStackParams>>
-  useBiometry: React.FC
   record: React.FC<RecordProps>
   PINSecurity: PINSecurityParams
   indyLedgers: IndyVdrPoolConfig[]
   settings: SettingSection[]
   customNotification: NotificationConfiguration
-  useCustomNotifications: () => { total: number; notifications: any }
   supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
@@ -51,6 +49,9 @@ export interface ConfigurationContext {
   enableReuseConnections?: boolean
   showPreface?: boolean
   disableOnboardingSkip?: boolean
+  useBiometry: React.FC
+  useCustomNotifications: () => { total: number; notifications: any }
+  whereToUseWalletUrl: string
   showScanHelp?: boolean
   showScanButton?: boolean
 }
