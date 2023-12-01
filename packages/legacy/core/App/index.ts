@@ -4,7 +4,7 @@ import type { OnboardingStyleSheet } from './screens/Onboarding'
 import { Agent } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 
-import indyLedgers from '../configs/ledgers/indy'
+import indyLedgers from './configs/ledgers/indy'
 
 import * as components from './components'
 import Button, { ButtonType } from './components/buttons/Button'

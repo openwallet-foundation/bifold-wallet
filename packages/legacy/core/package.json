@@ -12,7 +12,6 @@
   "files": [
     "App",
     "lib",
-    "configs",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
