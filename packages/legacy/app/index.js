@@ -20,8 +20,8 @@ import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
 
+import { NavigationTheme } from '@hyperledger/aries-bifold-core'
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
-import { NavigationTheme } from 'aries-bifold'
 import * as React from 'react'
 import { AppRegistry, LogBox } from 'react-native'
 //import { version as ReactNativeVersion } from 'react-native/Libraries/Core/ReactNativeVersion'

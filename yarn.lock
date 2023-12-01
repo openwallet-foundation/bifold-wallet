@@ -3968,22 +3968,209 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-bifold-core@workspace:packages/core":
+"@hyperledger/aries-bifold-core@^1.0.0, @hyperledger/aries-bifold-core@workspace:packages/legacy/core":
   version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-bifold-core@workspace:packages/core"
+  resolution: "@hyperledger/aries-bifold-core@workspace:packages/legacy/core"
   dependencies:
+    "@aries-framework/anoncreds": ^0.4.0
+    "@aries-framework/anoncreds-rs": ^0.4.0
+    "@aries-framework/askar": ^0.4.0
+    "@aries-framework/core": ^0.4.0
+    "@aries-framework/indy-sdk-to-askar-migration": 0.4.0
+    "@aries-framework/indy-vdr": ^0.4.0
+    "@aries-framework/push-notifications": 0.5.0
+    "@aries-framework/react-hooks": ^0.4.2
+    "@aries-framework/react-native": ^0.4.0
+    "@babel/core": ^7.20.0
+    "@babel/runtime": ^7.20.0
+    "@commitlint/cli": ^11.0.0
+    "@formatjs/intl-datetimeformat": 4.2.4
+    "@formatjs/intl-displaynames": 5.2.4
+    "@formatjs/intl-getcanonicallocales": 1.7.3
+    "@formatjs/intl-listformat": 6.3.4
+    "@formatjs/intl-locale": 2.4.38
+    "@formatjs/intl-numberformat": 7.2.4
+    "@formatjs/intl-pluralrules": 4.1.4
+    "@formatjs/intl-relativetimeformat": 9.3.1
+    "@hyperledger/anoncreds-react-native": ^0.1.0
+    "@hyperledger/aries-askar-react-native": ^0.1.1
+    "@hyperledger/aries-bifold-verifier": ^1.0.0
+    "@hyperledger/aries-oca": ^1.0.0
+    "@hyperledger/indy-vdr-react-native": ^0.1.0
+    "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/eslint-config": ^3.2.0
+    "@react-native-community/eslint-plugin": ^1.3.0
+    "@react-native-community/masked-view": 0.1.11
+    "@react-native-community/netinfo": ^9.3.0
+    "@react-navigation/bottom-tabs": 6.0.9
+    "@react-navigation/core": 6.1.0
+    "@react-navigation/devtools": ^6.0.8
+    "@react-navigation/native": 6.0.6
+    "@react-navigation/stack": 6.0.11
+    "@team-griffin/install-self-peers": ^1.1.1
+    "@testing-library/jest-native": ^5.4.3
+    "@testing-library/react-native": ^12.3.0
+    "@types/jest": ^29.5.5
+    "@types/lodash.flatten": ^4.4.6
+    "@types/lodash.startcase": ^4.4.7
+    "@types/react": ^18.0.24
+    "@types/react-native": ~0.72.3
+    "@types/react-native-vector-icons": ^6.4.6
+    "@types/react-test-renderer": ^18.0.1
+    "@typescript-eslint/eslint-plugin": ^6.6.0
+    "@typescript-eslint/parser": ^6.6.0
+    axios: ^1.4.0
+    babel-jest: ^27.5.1
+    babel-plugin-module-resolver: ^5.0.0
+    commitlint: ^17.7.1
+    eslint: ^8.48.0
+    eslint-import-resolver-typescript: ^2.5.0
+    eslint-plugin-import: ^2.28.1
+    eslint-plugin-prettier: ^4.0.0
+    husky: ^7.0.0
+    i18next: ^21.4.0
+    install-peerdeps: ^3.0.3
+    jest: ^29.6.4
+    lint-staged: ^11.2.6
+    lodash.flatten: ^4.4.0
+    lodash.startcase: ^4.4.0
+    metro-react-native-babel-preset: ^0.77.0
+    mockdate: ^3.0.5
+    moment: ^2.29.4
+    node-notifier: ^10.0.1
+    patch-package: ^6.4.4
+    prettier: ^2.8.4
+    query-string: ^7.0.1
+    react: ^18.2.0
+    react-i18next: 11.13.0
+    react-native: ~0.72.5
+    react-native-animated-pagination-dots: ^0.1.72
+    react-native-argon2: ^2.0.1
+    react-native-bouncy-checkbox: ^3.0.5
+    react-native-builder-bob: ^0.21.3
+    react-native-camera: ^3.31.1
+    react-native-collapsible: ^1.6.1
+    react-native-config: ^1.4.2
+    react-native-confirmation-code-field: ^7.3.0
+    react-native-device-info: ^8.4.9
+    react-native-encrypted-storage: ^4.0.2
+    react-native-fs: ^2.16.6
+    react-native-gesture-handler: ^1.10.3
+    react-native-get-random-values: ^1.7.0
+    react-native-gifted-chat: "*"
+    react-native-keychain: ^8.1.1
+    react-native-localize: ^2.2.4
+    react-native-permissions: ^3.8.4
+    react-native-qrcode-svg: ^6.2.0
+    react-native-reanimated: ^3.4.2
+    react-native-safe-area-context: ^3.2.0
+    react-native-scalable-image: ^1.1.0
+    react-native-screens: ^3.24.0
+    react-native-splash-screen: ^3.3.0
+    react-native-svg: ^12.1.1
+    react-native-svg-transformer: ^0.14.3
+    react-native-tcp-socket: ^6.0.6
+    react-native-toast-message: ^2.1.6
+    react-native-uuid: ^2.0.1
+    react-native-vector-icons: ^10.0.0
+    react-test-renderer: ^18.2.0
+    typescript: ^5.0.4
+    uuid: ^9.0.0
+  peerDependencies:
+    "@aries-framework/anoncreds": ^0.4.0
+    "@aries-framework/anoncreds-rs": ^0.4.0
+    "@aries-framework/askar": ^0.4.0
+    "@aries-framework/core": ^0.4.0
+    "@aries-framework/indy-sdk-to-askar-migration": 0.4.0
+    "@aries-framework/indy-vdr": ^0.4.0
+    "@aries-framework/push-notifications": 0.5.0
+    "@aries-framework/react-hooks": ^0.4.2
+    "@aries-framework/react-native": ^0.4.0
+    "@formatjs/intl-datetimeformat": 4.2.4
+    "@formatjs/intl-displaynames": 5.2.4
+    "@formatjs/intl-getcanonicallocales": 1.7.3
+    "@formatjs/intl-listformat": 6.3.4
+    "@formatjs/intl-locale": 2.4.38
+    "@formatjs/intl-numberformat": 7.2.4
+    "@formatjs/intl-pluralrules": 4.1.4
+    "@formatjs/intl-relativetimeformat": 9.3.1
+    "@hyperledger/anoncreds-react-native": ^0.1.0
+    "@hyperledger/aries-askar-react-native": ^0.1.1
+    "@hyperledger/aries-bifold-verifier": ^1.0.0
+    "@hyperledger/aries-oca": ^1.0.0
+    "@hyperledger/indy-vdr-react-native": ^0.1.0
+    "@react-native-async-storage/async-storage": 1.15.11
+    "@react-native-community/masked-view": 0.1.11
+    "@react-native-community/netinfo": ^9.3.0
+    "@react-navigation/bottom-tabs": 6.0.9
+    "@react-navigation/core": 6.1.0
+    "@react-navigation/devtools": ^6.0.8
+    "@react-navigation/native": 6.0.6
+    "@react-navigation/stack": 6.0.11
+    axios: ^1.4.0
+    i18next: ^21.4.0
+    lodash.flatten: ^4.4.0
+    lodash.startcase: ^4.4.0
+    moment: ^2.29.4
+    query-string: ^7.0.1
+    react: ^18.2.0
+    react-i18next: 11.13.0
+    react-native: "*"
+    react-native-animated-pagination-dots: ^0.1.72
+    react-native-argon2: ^2.0.1
+    react-native-bouncy-checkbox: ^3.0.5
+    react-native-camera: ^3.31.1
+    react-native-collapsible: ^1.6.1
+    react-native-config: ^1.4.2
+    react-native-confirmation-code-field: ^7.3.0
+    react-native-device-info: ^8.4.9
+    react-native-encrypted-storage: ^4.0.2
+    react-native-fs: ^2.16.6
+    react-native-gesture-handler: ^1.10.3
+    react-native-get-random-values: ^1.7.0
+    react-native-gifted-chat: "*"
+    react-native-keychain: ^8.1.1
+    react-native-localize: ^2.2.4
+    react-native-permissions: ^3.8.4
+    react-native-qrcode-svg: ^6.2.0
+    react-native-reanimated: ^3.4.2
+    react-native-safe-area-context: ^3.2.0
+    react-native-screens: ^3.24.0
+    react-native-splash-screen: ^3.3.0
+    react-native-svg: ^12.1.1
+    react-native-tcp-socket: ^6.0.6
+    react-native-toast-message: ^2.1.6
+    react-native-uuid: ^2.0.1
+    react-native-vector-icons: ^10.0.0
+    uuid: ^9.0.0
+  bin:
+    bifold: bin/bifold
+  languageName: unknown
+  linkType: soft
+
+"@hyperledger/aries-bifold-verifier@^1.0.0, @hyperledger/aries-bifold-verifier@workspace:packages/verifier":
+  version: 0.0.0-use.local
+  resolution: "@hyperledger/aries-bifold-verifier@workspace:packages/verifier"
+  dependencies:
+    "@aries-framework/anoncreds": ^0.4.0
+    "@aries-framework/core": ^0.4.0
+    "@aries-framework/react-hooks": ^0.4.2
+    "@babel/core": ^7.20.0
     "@types/jest": ^29.5.5
     "@types/react": ^18.0.24
-    "@types/react-native": 0.71.5
-    "@types/ws": ^7.4.6
-    react: "*"
-    react-native: "*"
+    babel-jest: ^27.5.1
+    eslint: ^8.48.0
+    jest: ^29.6.4
+    metro-react-native-babel-preset: ^0.77.0
+    react: ^18.2.0
+    react-native-builder-bob: ^0.21.3
     rimraf: ^5.0.0
     typescript: ^5.0.4
   peerDependencies:
-    react: "*"
-    react-native: "*"
+    "@aries-framework/anoncreds": ^0.4.0
+    "@aries-framework/core": ^0.4.0
+    "@aries-framework/react-hooks": ^0.4.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -3993,6 +4180,7 @@ __metadata:
   dependencies:
     "@aries-framework/anoncreds": ^0.4.0
     "@aries-framework/core": ^0.4.0
+    "@babel/runtime": ^7.20.0
     "@types/lodash.startcase": ^4.4.7
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
@@ -5697,7 +5885,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/virtualized-lists@npm:^0.72.8":
+"@react-native/virtualized-lists@npm:^0.72.4, @react-native/virtualized-lists@npm:^0.72.8":
   version: 0.72.8
   resolution: "@react-native/virtualized-lists@npm:0.72.8"
   dependencies:
@@ -6552,6 +6740,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-native@npm:~0.72.3":
+  version: 0.72.5
+  resolution: "@types/react-native@npm:0.72.5"
+  dependencies:
+    "@react-native/virtualized-lists": ^0.72.4
+    "@types/react": "*"
+  checksum: b6d93762c20001488a529f2f5c1e9c4874ed854ea96dd923929cdb4c8b5854332a9d44755c454a63e315c8bab69beb86173d4490e364b82a382f695b7de35aa2
+  languageName: node
+  linkType: hard
+
 "@types/react-test-renderer@npm:^18.0.1":
   version: 18.0.2
   resolution: "@types/react-test-renderer@npm:18.0.2"
@@ -6614,15 +6812,6 @@ __metadata:
   version: 13.7.12
   resolution: "@types/validator@npm:13.7.12"
   checksum: 98fc9cb0e0af31a8cf7f3234dbd8391a937b1596cdfea16f21f4228f46d70eea2ebc1128ff6c4041ec7db2d94f093eeb441e66ce1eb9902157b6c44d01066fe2
-  languageName: node
-  linkType: hard
-
-"@types/ws@npm:^7.4.6":
-  version: 7.4.7
-  resolution: "@types/ws@npm:7.4.7"
-  dependencies:
-    "@types/node": "*"
-  checksum: b4c9b8ad209620c9b21e78314ce4ff07515c0cadab9af101c1651e7bfb992d7fd933bd8b9c99d110738fd6db523ed15f82f29f50b45510288da72e964dedb1a3
   languageName: node
   linkType: hard
 
@@ -7268,6 +7457,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": ^0.1.0
     "@hyperledger/aries-askar-react-native": ^0.1.1
+    "@hyperledger/aries-bifold-core": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": 1.15.11
@@ -7286,7 +7476,6 @@ __metadata:
     "@types/lodash.startcase": ^4.4.7
     "@types/react": ^18.0.24
     "@types/react-native": 0.71.5
-    aries-bifold: ^1.0.0
     axios: ^1.4.0
     babel-plugin-module-resolver: ^5.0.0
     eslint: ^8.48.0
@@ -7356,184 +7545,6 @@ __metadata:
     prettier: ^2.8.4
     ts-node: ^10.0.0
     typescript: ^5.0.4
-  languageName: unknown
-  linkType: soft
-
-"aries-bifold@^1.0.0, aries-bifold@workspace:packages/legacy/core":
-  version: 0.0.0-use.local
-  resolution: "aries-bifold@workspace:packages/legacy/core"
-  dependencies:
-    "@aries-framework/anoncreds": ^0.4.0
-    "@aries-framework/anoncreds-rs": ^0.4.0
-    "@aries-framework/askar": ^0.4.0
-    "@aries-framework/core": ^0.4.0
-    "@aries-framework/indy-sdk-to-askar-migration": 0.4.0
-    "@aries-framework/indy-vdr": ^0.4.0
-    "@aries-framework/push-notifications": 0.5.0
-    "@aries-framework/react-hooks": ^0.4.2
-    "@aries-framework/react-native": ^0.4.0
-    "@babel/core": ^7.20.0
-    "@babel/runtime": ^7.20.0
-    "@commitlint/cli": ^11.0.0
-    "@formatjs/intl-datetimeformat": 4.2.4
-    "@formatjs/intl-displaynames": 5.2.4
-    "@formatjs/intl-getcanonicallocales": 1.7.3
-    "@formatjs/intl-listformat": 6.3.4
-    "@formatjs/intl-locale": 2.4.38
-    "@formatjs/intl-numberformat": 7.2.4
-    "@formatjs/intl-pluralrules": 4.1.4
-    "@formatjs/intl-relativetimeformat": 9.3.1
-    "@hyperledger/anoncreds-react-native": ^0.1.0
-    "@hyperledger/aries-askar-react-native": ^0.1.1
-    "@hyperledger/aries-oca": ^1.0.0
-    "@hyperledger/indy-vdr-react-native": ^0.1.0
-    "@react-native-async-storage/async-storage": 1.15.11
-    "@react-native-community/eslint-config": ^3.2.0
-    "@react-native-community/eslint-plugin": ^1.3.0
-    "@react-native-community/masked-view": 0.1.11
-    "@react-native-community/netinfo": ^9.3.0
-    "@react-navigation/bottom-tabs": 6.0.9
-    "@react-navigation/core": 6.1.0
-    "@react-navigation/devtools": ^6.0.8
-    "@react-navigation/native": 6.0.6
-    "@react-navigation/stack": 6.0.11
-    "@team-griffin/install-self-peers": ^1.1.1
-    "@testing-library/jest-native": ^5.4.3
-    "@testing-library/react-native": ^12.3.0
-    "@types/jest": ^29.5.5
-    "@types/lodash.flatten": ^4.4.6
-    "@types/lodash.startcase": ^4.4.7
-    "@types/react": ^18.0.24
-    "@types/react-native": 0.71.5
-    "@types/react-native-vector-icons": ^6.4.6
-    "@types/react-test-renderer": ^18.0.1
-    "@typescript-eslint/eslint-plugin": ^6.6.0
-    "@typescript-eslint/parser": ^6.6.0
-    axios: ^1.4.0
-    babel-jest: ^27.5.1
-    babel-plugin-module-resolver: ^5.0.0
-    commitlint: ^17.7.1
-    eslint: ^8.48.0
-    eslint-import-resolver-typescript: ^2.5.0
-    eslint-plugin-import: ^2.28.1
-    eslint-plugin-prettier: ^4.0.0
-    husky: ^7.0.0
-    i18next: ^21.4.0
-    install-peerdeps: ^3.0.3
-    jest: ^29.6.4
-    lint-staged: ^11.2.6
-    lodash.flatten: ^4.4.0
-    lodash.startcase: ^4.4.0
-    metro-react-native-babel-preset: ^0.77.0
-    mockdate: ^3.0.5
-    moment: ^2.29.4
-    node-notifier: ^10.0.1
-    patch-package: ^6.4.4
-    prettier: ^2.8.4
-    query-string: ^7.0.1
-    react: "*"
-    react-i18next: 11.13.0
-    react-native: "*"
-    react-native-animated-pagination-dots: ^0.1.72
-    react-native-argon2: ^2.0.1
-    react-native-bouncy-checkbox: ^3.0.5
-    react-native-builder-bob: ^0.21.3
-    react-native-camera: ^3.31.1
-    react-native-collapsible: ^1.6.1
-    react-native-config: ^1.4.2
-    react-native-confirmation-code-field: ^7.3.0
-    react-native-device-info: ^8.4.9
-    react-native-encrypted-storage: ^4.0.2
-    react-native-fs: ^2.16.6
-    react-native-gesture-handler: ^1.10.3
-    react-native-get-random-values: ^1.7.0
-    react-native-gifted-chat: "*"
-    react-native-keychain: ^8.1.1
-    react-native-localize: ^2.2.4
-    react-native-permissions: ^3.8.4
-    react-native-qrcode-svg: ^6.2.0
-    react-native-reanimated: ^3.4.2
-    react-native-safe-area-context: ^3.2.0
-    react-native-scalable-image: ^1.1.0
-    react-native-screens: ^3.24.0
-    react-native-splash-screen: ^3.3.0
-    react-native-svg: ^12.1.1
-    react-native-svg-transformer: ^0.14.3
-    react-native-tcp-socket: ^6.0.6
-    react-native-toast-message: ^2.1.6
-    react-native-uuid: ^2.0.1
-    react-native-vector-icons: ^10.0.0
-    react-test-renderer: ^18.2.0
-    typescript: ^5.0.4
-    uuid: ^9.0.0
-  peerDependencies:
-    "@aries-framework/anoncreds": ^0.4.0
-    "@aries-framework/anoncreds-rs": ^0.4.0
-    "@aries-framework/askar": ^0.4.0
-    "@aries-framework/core": ^0.4.0
-    "@aries-framework/indy-sdk-to-askar-migration": 0.4.0
-    "@aries-framework/indy-vdr": ^0.4.0
-    "@aries-framework/push-notifications": 0.5.0
-    "@aries-framework/react-hooks": ^0.4.2
-    "@aries-framework/react-native": ^0.4.0
-    "@formatjs/intl-datetimeformat": 4.2.4
-    "@formatjs/intl-displaynames": 5.2.4
-    "@formatjs/intl-getcanonicallocales": 1.7.3
-    "@formatjs/intl-listformat": 6.3.4
-    "@formatjs/intl-locale": 2.4.38
-    "@formatjs/intl-numberformat": 7.2.4
-    "@formatjs/intl-pluralrules": 4.1.4
-    "@formatjs/intl-relativetimeformat": 9.3.1
-    "@hyperledger/anoncreds-react-native": ^0.1.0
-    "@hyperledger/aries-askar-react-native": ^0.1.1
-    "@hyperledger/aries-oca": 0.0.0
-    "@hyperledger/indy-vdr-react-native": ^0.1.0
-    "@react-native-async-storage/async-storage": 1.15.11
-    "@react-native-community/masked-view": 0.1.11
-    "@react-native-community/netinfo": ^9.3.0
-    "@react-navigation/bottom-tabs": 6.0.9
-    "@react-navigation/core": 6.1.0
-    "@react-navigation/devtools": ^6.0.8
-    "@react-navigation/native": 6.0.6
-    "@react-navigation/stack": 6.0.11
-    axios: ^1.4.0
-    i18next: ^21.4.0
-    lodash.flatten: ^4.4.0
-    lodash.startcase: ^4.4.0
-    moment: ^2.29.4
-    query-string: ^7.0.1
-    react: "*"
-    react-i18next: 11.13.0
-    react-native: "*"
-    react-native-animated-pagination-dots: ^0.1.72
-    react-native-argon2: ^2.0.1
-    react-native-bouncy-checkbox: ^3.0.5
-    react-native-camera: ^3.31.1
-    react-native-collapsible: ^1.6.1
-    react-native-config: ^1.4.2
-    react-native-confirmation-code-field: ^7.3.0
-    react-native-device-info: ^8.4.9
-    react-native-encrypted-storage: ^4.0.2
-    react-native-fs: ^2.16.6
-    react-native-gesture-handler: ^1.10.3
-    react-native-get-random-values: ^1.7.0
-    react-native-gifted-chat: "*"
-    react-native-keychain: ^8.1.1
-    react-native-localize: ^2.2.4
-    react-native-permissions: ^3.8.4
-    react-native-qrcode-svg: ^6.2.0
-    react-native-reanimated: ^3.4.2
-    react-native-safe-area-context: ^3.2.0
-    react-native-screens: ^3.24.0
-    react-native-splash-screen: ^3.3.0
-    react-native-svg: ^12.1.1
-    react-native-tcp-socket: ^6.0.6
-    react-native-toast-message: ^2.1.6
-    react-native-uuid: ^2.0.1
-    react-native-vector-icons: ^10.0.0
-    uuid: ^9.0.0
-  bin:
-    bifold: bin/bifold
   languageName: unknown
   linkType: soft
 
@@ -18869,6 +18880,54 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native@npm:~0.72.5":
+  version: 0.72.6
+  resolution: "react-native@npm:0.72.6"
+  dependencies:
+    "@jest/create-cache-key-function": ^29.2.1
+    "@react-native-community/cli": 11.3.7
+    "@react-native-community/cli-platform-android": 11.3.7
+    "@react-native-community/cli-platform-ios": 11.3.7
+    "@react-native/assets-registry": ^0.72.0
+    "@react-native/codegen": ^0.72.7
+    "@react-native/gradle-plugin": ^0.72.11
+    "@react-native/js-polyfills": ^0.72.1
+    "@react-native/normalize-colors": ^0.72.0
+    "@react-native/virtualized-lists": ^0.72.8
+    abort-controller: ^3.0.0
+    anser: ^1.4.9
+    base64-js: ^1.1.2
+    deprecated-react-native-prop-types: 4.1.0
+    event-target-shim: ^5.0.1
+    flow-enums-runtime: ^0.0.5
+    invariant: ^2.2.4
+    jest-environment-node: ^29.2.1
+    jsc-android: ^250231.0.0
+    memoize-one: ^5.0.0
+    metro-runtime: 0.76.8
+    metro-source-map: 0.76.8
+    mkdirp: ^0.5.1
+    nullthrows: ^1.1.1
+    pretty-format: ^26.5.2
+    promise: ^8.3.0
+    react-devtools-core: ^4.27.2
+    react-refresh: ^0.4.0
+    react-shallow-renderer: ^16.15.0
+    regenerator-runtime: ^0.13.2
+    scheduler: 0.24.0-canary-efb381bbf-20230505
+    stacktrace-parser: ^0.1.10
+    use-sync-external-store: ^1.0.0
+    whatwg-fetch: ^3.0.0
+    ws: ^6.2.2
+    yargs: ^17.6.2
+  peerDependencies:
+    react: 18.2.0
+  bin:
+    react-native: cli.js
+  checksum: 3cf0af092c0d6b9b6e67795664e324136f6d1a41c6a889737fb612e5ddb93d0537c890fe733e751fe3bbc139cbb4f9f6d9eff4467e8d8dc67194ac8b382fa168
+  languageName: node
+  linkType: hard
+
 "react-refresh@npm:^0.4.0":
   version: 0.4.3
   resolution: "react-refresh@npm:0.4.3"
@@ -18901,7 +18960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:*":
+"react@npm:*, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:

@@ -62,7 +62,7 @@ jobs:
 
       - name: Automated testing
         run: |
-          yarn run test:coverage
+          yarn lerna run --stream test:coverage
 
       - uses: codecov/codecov-action@v3
         if: always()
