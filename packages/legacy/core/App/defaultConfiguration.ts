@@ -2,12 +2,11 @@ import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { IOverlayBundleData } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
-import defaultIndyLedgers from './configs/ledgers/indy'
-
 import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
+import defaultIndyLedgers from './configs/ledgers/indy'
 import HomeHeaderView from './components/views/HomeHeaderView'
 import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
