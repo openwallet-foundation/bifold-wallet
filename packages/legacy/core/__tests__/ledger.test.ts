@@ -1,7 +1,7 @@
 import { canConnectToLedgerNode, fetchLedgerNodes } from '../App/utils/ledger'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
-jest.mock('../configs/ledgers/indy')
+jest.mock('../App/configs/ledgers/indy')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
