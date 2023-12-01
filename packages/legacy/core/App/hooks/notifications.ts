@@ -6,8 +6,8 @@ import {
   ProofState,
 } from '@aries-framework/core'
 import { useBasicMessages, useCredentialByState, useProofByState } from '@aries-framework/react-hooks'
+import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
 
-import { ProofCustomMetadata, ProofMetadata } from '../../verifier'
 import {
   BasicMessageMetadata,
   CredentialMetadata,

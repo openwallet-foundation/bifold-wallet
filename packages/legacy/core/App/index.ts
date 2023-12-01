@@ -96,7 +96,6 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
-export * from '../verifier'
 
 export {
   indyLedgers,

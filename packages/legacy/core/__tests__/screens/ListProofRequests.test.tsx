@@ -7,7 +7,7 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import configurationContext from '../contexts/configuration'
 import ListProofRequests from '../../App/screens/ListProofRequests'
-import { useProofRequestTemplates } from '../../verifier/request-templates'
+import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)

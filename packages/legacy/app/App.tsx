@@ -22,7 +22,7 @@ import {
   defaultConfiguration,
   animatedComponents,
   AnimatedComponentsProvider,
-} from 'aries-bifold'
+} from '@hyperledger/aries-bifold-core'
 import * as React from 'react'
 import { useEffect, useMemo } from 'react'
 import { StatusBar } from 'react-native'

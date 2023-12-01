@@ -28,6 +28,14 @@ module.exports = {
     '<rootDir>/__tests__/contexts/',
     '<rootDir>/__tests__/helpers/',
   ],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/__tests__/',
+    '<rootDir>/App/navigators/defaultStackOptions.tsx',
+    '<rootDir>/App/defaultConfiguration.ts',
+    '<rootDir>/App/components/buttons/InfoIcon.tsx',
+    '<rootDir>/App/hooks/deep-links.ts',
+  ],
   cacheDirectory: '.jest/cache',
   snapshotFormat: {
     escapeString: true,

@@ -4,6 +4,11 @@
   "description": "TypeScript implementation of Overlay Capture Architecture (OCA) for styling Aries Verifiable Credentials",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "build"
+  ],
   "license": "Apache-2.0",
   "scripts": {
     "build": "yarn run clean && yarn run compile",
@@ -26,6 +31,7 @@
   },
   "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
   "devDependencies": {
+    "@babel/runtime": "^7.20.0",
     "@types/lodash.startcase": "^4.4.7",
     "@typescript-eslint/parser": "^6.6.0",
     "eslint": "^8.48.0",

@@ -4,10 +4,11 @@ import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { useProofRequestTemplates } from '../../verifier/request-templates'
+import * as verifier from '@hyperledger/aries-bifold-verifier'
+import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
-import * as proofRequestUtils from '../../verifier/utils/proof-request'
+
 import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
 import {
   ConnectionRecord,
@@ -31,6 +32,14 @@ jest.mock('@react-navigation/core', () => {
 })
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
+})
+jest.mock('@hyperledger/aries-bifold-verifier',() => {
+  const original = jest. requireActual('@hyperledger/aries-bifold-verifier')
+  return {
+    ...original,
+     __esModule: true,
+     createConnectionlessProofRequestInvitation: jest.fn(original.createConnectionlessProofRequestInvitation)
+  }
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
@@ -116,7 +125,7 @@ describe('ProofRequesting Component', () => {
 
     // @ts-ignore
     useConnections.mockReturnValue({ records: [testContactRecord1, testContactRecord2] })
-    jest.spyOn(proofRequestUtils, 'createConnectionlessProofRequestInvitation').mockReturnValue(Promise.resolve(data))
+    jest.spyOn(verifier, 'createConnectionlessProofRequestInvitation').mockReturnValue(Promise.resolve(data))
     jest.spyOn(proofRequestTemplatesHooks, 'useTemplate').mockReturnValue(template)
   })
 

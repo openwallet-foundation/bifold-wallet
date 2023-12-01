@@ -1,7 +1,7 @@
 import { AnonCredsProof, AnonCredsProofRequest } from '@aries-framework/anoncreds'
 import { Agent, ProofExchangeRecord, ProofState } from '@aries-framework/core'
 
-import { BifoldAgent } from '../../App/utils/agent'
+import { BifoldAgent } from '../types/agent'
 import { ProofMetadata } from '../types/metadata'
 import {
   CredentialSharedProofData,

@@ -6,7 +6,7 @@ import {
 } from '@aries-framework/anoncreds'
 import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@aries-framework/core'
 
-import { BifoldAgent } from '../../App/utils/agent'
+import { BifoldAgent } from '../types/agent'
 import { ProofRequestTemplate, ProofRequestType } from '../types/proof-reqeust-template'
 
 const protocolVersion = 'v2'

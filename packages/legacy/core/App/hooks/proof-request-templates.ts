@@ -1,6 +1,6 @@
+import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { useEffect, useState } from 'react'
 
-import { ProofRequestTemplate } from '../../verifier'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../utils/proofBundle'

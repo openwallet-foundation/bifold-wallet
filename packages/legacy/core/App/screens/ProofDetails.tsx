@@ -2,6 +2,12 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useAgent, useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import {
+  ProofCustomMetadata,
+  ProofMetadata,
+  GroupedSharedProofDataItem,
+  markProofAsViewed,
+} from '@hyperledger/aries-bifold-verifier'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -10,7 +16,6 @@ import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { ProofCustomMetadata, ProofMetadata, GroupedSharedProofDataItem, markProofAsViewed } from '../../verifier'
 import InformationReceived from '../assets/img/information-received.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
