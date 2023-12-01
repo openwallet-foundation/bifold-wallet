@@ -10,7 +10,7 @@ import React from 'react'
 
 import { testIdWithKey } from '../../App/utils/testable'
 import ProofDetails from '../../App/screens/ProofDetails'
-import * as proofUtils from '../../verifier/utils/proof'
+import * as verifier from '@hyperledger/aries-bifold-verifier'
 import { AnonCredsProof } from '@aries-framework/anoncreds'
 import configurationContext from '../contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
@@ -23,6 +23,14 @@ jest.mock('@react-navigation/core', () => {
 })
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
+})
+jest.mock('@hyperledger/aries-bifold-verifier',() => {
+  const original = jest. requireActual('@hyperledger/aries-bifold-verifier')
+  return {
+    ...original,
+     __esModule: true,
+     getProofData: jest.fn(original.getProofData)
+  }
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
@@ -94,7 +102,7 @@ const requestPresentationMessage = new V1RequestPresentationMessage({
   ],
 })
 
-const data = proofUtils.parseAnonCredsProof(proof_request, proof)
+const data = verifier.parseAnonCredsProof(proof_request, proof)
 
 describe('ProofDetails Component', () => {
   afterEach(() => {
@@ -142,7 +150,7 @@ describe('ProofDetails Component', () => {
       // @ts-ignore
       useProofById.mockReturnValue(testVerifiedProofRequest)
       // @ts-ignore
-      jest.spyOn(proofUtils, 'getProofData').mockReturnValue(Promise.resolve(data))
+      jest.spyOn(verifier, 'getProofData').mockReturnValue(Promise.resolve(data))
     })
 
     test('renders correctly when history is true', async () => {

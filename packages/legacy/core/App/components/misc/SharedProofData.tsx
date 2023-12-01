@@ -1,16 +1,16 @@
 import { useAgent } from '@aries-framework/react-hooks'
+import {
+  GroupedSharedProofData,
+  GroupedSharedProofDataItem,
+  getProofData,
+  groupSharedProofDataByCredential,
+} from '@hyperledger/aries-bifold-verifier'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowDimensions, Image, StyleSheet, Text, View } from 'react-native'
 
-import {
-  GroupedSharedProofData,
-  GroupedSharedProofDataItem,
-  getProofData,
-  groupSharedProofDataByCredential,
-} from '../../../verifier'
 import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'

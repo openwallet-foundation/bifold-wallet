@@ -1,6 +1,10 @@
+import {
+  AnonCredsProofRequestTemplatePayload,
+  ProofRequestTemplate,
+  useProofRequestTemplates,
+} from '@hyperledger/aries-bifold-verifier'
 import axios from 'axios'
 
-import { AnonCredsProofRequestTemplatePayload, ProofRequestTemplate, useProofRequestTemplates } from '../../verifier'
 import { useConfiguration } from '../contexts/configuration'
 
 const calculatePreviousYear = (yearOffset: number) => {

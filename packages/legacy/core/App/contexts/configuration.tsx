@@ -1,9 +1,9 @@
 import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
+import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackScreenProps } from '@react-navigation/stack'
 import { createContext, ReducerAction, useContext } from 'react'
 
-import { ProofRequestTemplate } from '../../verifier'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import { Locales } from '../localization'

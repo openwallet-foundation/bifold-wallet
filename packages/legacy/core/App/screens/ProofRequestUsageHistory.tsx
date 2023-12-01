@@ -1,5 +1,6 @@
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
+import { useProofsByTemplateId, isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +8,6 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { useProofsByTemplateId, isPresentationReceived } from '../../verifier'
 import EmptyList from '../components/misc/EmptyList'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
