@@ -62,8 +62,10 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
         <Text style={styles.title}>{t('WhatAreContacts.Title')}</Text>
         <Text style={TextTheme.normal}>{t('WhatAreContacts.Preamble')}</Text>
         {bulletPoints}
-        <Text style={TextTheme.normal}>{`${t('WhatAreContacts.RemoveContacts')} `}</Text>
-        <Link linkText={t('WhatAreContacts.ContactsLink')} onPress={goToContactList} />
+        <Text style={TextTheme.normal}>
+          {`${t('WhatAreContacts.RemoveContacts')} `}
+          <Link linkText={t('WhatAreContacts.ContactsLink')} onPress={goToContactList} />
+        </Text>
       </ScrollView>
     </SafeAreaView>
   )

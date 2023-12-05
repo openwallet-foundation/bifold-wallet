@@ -204,27 +204,27 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
         }
       >
         WhatAreContacts.RemoveContacts 
-      </Text>
-      <Text
-        accessibilityLabel="WhatAreContacts.ContactsLink"
-        accessibilityRole="link"
-        accessible={true}
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "alignSelf": "flex-start",
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "textDecorationLine": "underline",
-            },
-            Object {},
-          ]
-        }
-        testID="com.ariesbifold:id/WhatAreContacts.ContactsLink"
-      >
-        WhatAreContacts.ContactsLink
+        <Text
+          accessibilityLabel="WhatAreContacts.ContactsLink"
+          accessibilityRole="link"
+          accessible={true}
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "alignSelf": "flex-start",
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+                "textDecorationLine": "underline",
+              },
+              Object {},
+            ]
+          }
+          testID="com.ariesbifold:id/WhatAreContacts.ContactsLink"
+        >
+          WhatAreContacts.ContactsLink
+        </Text>
       </Text>
     </View>
   </RCTScrollView>

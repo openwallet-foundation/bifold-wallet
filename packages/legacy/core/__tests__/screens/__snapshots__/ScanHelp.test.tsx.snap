@@ -20,7 +20,7 @@ exports[`ScanHelp Screen Renders correctly 1`] = `
     contentContainerStyle={
       Object {
         "flexGrow": 1,
-        "paddingHorizontal": 26,
+        "padding": 26,
       }
     }
   >
