@@ -55,4 +55,6 @@ export const defaultConfiguration: ConfigurationContext = {
   useCustomNotifications: useNotifications,
   useBiometry: UseBiometry,
   whereToUseWalletUrl: 'https://example.com',
+  showScanHelp: true,
+  showScanButton: true,
 }
