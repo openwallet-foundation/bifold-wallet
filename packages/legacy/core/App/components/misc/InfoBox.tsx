@@ -25,6 +25,8 @@ interface BifoldErrorProps {
   description?: string
   bodyContent?: Element
   message?: string
+  secondaryCallToActionTitle?: string
+  secondaryCallToActionPressed?: GenericFn
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
   onClosePressed?: GenericFn
@@ -36,6 +38,8 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   description,
   bodyContent,
   message,
+  secondaryCallToActionTitle,
+  secondaryCallToActionPressed,
   onCallToActionPressed,
   onCallToActionLabel,
   onClosePressed,
@@ -225,6 +229,17 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
                 testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
                 buttonType={ButtonType.Primary}
                 onPress={onCallToActionPressed}
+              />
+            </View>
+          )}
+          {secondaryCallToActionTitle && secondaryCallToActionPressed && (
+            <View style={{ paddingTop: 10 }}>
+              <Button
+                title={secondaryCallToActionTitle}
+                accessibilityLabel={secondaryCallToActionTitle}
+                testID={testIdWithKey(secondaryCallToActionTitle)}
+                buttonType={ButtonType.Secondary}
+                onPress={secondaryCallToActionPressed}
               />
             </View>
           )}
