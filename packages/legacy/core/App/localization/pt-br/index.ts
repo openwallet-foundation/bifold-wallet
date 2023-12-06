@@ -77,6 +77,7 @@ const translation = {
     "code_pt-BR": "Português",
   },
   "Error": {
+    "ReportThisProblem": "Report this problem (PB)",
     "Unknown": "Erro Desconhecido",
     "Problem": "Ocorreu um problema",
     "ErrorCode": "Código de Erro",

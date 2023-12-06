@@ -78,6 +78,7 @@ const translation = {
         "code_pt-BR": "Portugais",
     },
     "Error": {
+        "ReportThisProblem": "Report this problem (FR)",
         "Unknown": "Erreur inconnue",
         "Problem": "Un problème est survenu",
         "ErrorCode": "Code d'erreur",
