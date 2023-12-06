@@ -30,11 +30,8 @@ export default class LocalizedCredential {
 
     this.attributes =
       credentialAttributes
-        ?.filter((attribute) => bundle.getFlaggedAttribute(attribute.name))
-        .map((attribute) => {
-          const overlayOptions = bundle.getAttribute(attribute.name) ?? { name: attribute.name, type: '' }
-          return new DisplayAttribute(attribute, overlayOptions, language)
-        }) ?? []
+        ?.filter((attribute) => bundle.getAttribute(attribute.name))
+        .map((attribute) => new DisplayAttribute(attribute, { name: attribute.name, type: '' }, language)) ?? []
   }
 
   get primaryAttribute(): DisplayAttribute | undefined {
