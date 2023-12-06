@@ -14,7 +14,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import InformationReceived from '../assets/img/information-received.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -205,33 +204,29 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
 
 const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation }) => {
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { TextTheme, Assets } = useTheme()
 
   const styles = StyleSheet.create({
     header: {
-      backgroundColor: ColorPallet.semantic.error,
-      paddingHorizontal: 30,
-      paddingVertical: 20,
+      paddingHorizontal: 20,
+      paddingVertical: 30,
     },
     headerTitleContainer: {
-      flexDirection: 'row',
+      marginTop: 70,
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
     headerTitle: {
-      marginHorizontal: 8,
-      color: ColorPallet.grayscale.white,
-      fontSize: 34,
-      fontWeight: 'bold',
+      ...TextTheme.headingTwo,
+      fontWeight: 'normal',
     },
-    headerDetails: {
-      color: ColorPallet.grayscale.white,
-      marginVertical: 10,
-      fontSize: 18,
-    },
-    footerButton: {
+    footerButtons: {
       margin: 20,
       marginTop: 'auto',
+    },
+    buttonContainer: {
+      marginBottom: 10,
+      width: '100%',
     },
   })
 
@@ -244,27 +239,42 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
     }
   }, [navigation])
 
+  const onBackToList = useCallback(() => {
+    navigation.navigate(Screens.ProofRequests, {})
+  }, [navigation])
+
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('UnverifiedProofView')}>
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
-          <Icon name="bookmark-remove" size={45} color={'white'} />
           {record.state === ProofState.Abandoned && (
-            <Text style={styles.headerTitle}>{t('Verifier.PresentationDeclined')}</Text>
+            <Text style={styles.headerTitle}>{t('ProofRequest.ProofRequestDeclined')}</Text>
           )}
           {record.isVerified === false && (
             <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
           )}
         </View>
+        <Assets.svg.verifierRequestDeclined style={{ alignSelf: 'center', marginTop: 20 }} height={200} />
       </View>
-      <View style={styles.footerButton}>
-        <Button
-          title={t('Verifier.GenerateNewQR')}
-          accessibilityLabel={t('Verifier.GenerateNewQR')}
-          testID={testIdWithKey('GenerateNewQR')}
-          buttonType={ButtonType.Primary}
-          onPress={onGenerateNew}
-        />
+      <View style={styles.footerButtons}>
+        <View style={styles.buttonContainer}>
+          <Button
+            title={t('Verifier.GenerateNewQR')}
+            accessibilityLabel={t('Verifier.GenerateNewQR')}
+            testID={testIdWithKey('GenerateNewQR')}
+            buttonType={ButtonType.Primary}
+            onPress={onGenerateNew}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            title={t('Verifier.BackToList')}
+            accessibilityLabel={t('Verifier.BackToList')}
+            testID={testIdWithKey('BackToList')}
+            buttonType={ButtonType.Secondary}
+            onPress={onBackToList}
+          />
+        </View>
       </View>
     </ScrollView>
   )
