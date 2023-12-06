@@ -157,7 +157,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aries-framework/react-hooks@npm:^0.4.2":
+"@aries-framework/react-hooks@npm:0.4.2":
   version: 0.4.2
   resolution: "@aries-framework/react-hooks@npm:0.4.2"
   dependencies:
@@ -166,6 +166,18 @@ __metadata:
     "@aries-framework/core": ^0.3.2
     react: ">=17.0.0 <19.0.0"
   checksum: fc34499dc82535904479f9a0e4c396c6c67eba211596fd7447e198f9980b6667f444293de5eb9d988e93261f0b526bb084039a6bac28bd2700722acfeff26f52
+  languageName: node
+  linkType: hard
+
+"@aries-framework/react-hooks@patch:@aries-framework/react-hooks@npm:0.4.2#./.yarn/patches/@aries-framework-react-hooks-npm-0.4.2-84b7eb8764.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.4.2
+  resolution: "@aries-framework/react-hooks@patch:@aries-framework/react-hooks@npm%3A0.4.2#./.yarn/patches/@aries-framework-react-hooks-npm-0.4.2-84b7eb8764.patch::version=0.4.2&hash=486b38&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    rxjs: ^7.2.0
+  peerDependencies:
+    "@aries-framework/core": ^0.3.2
+    react: ">=17.0.0 <19.0.0"
+  checksum: f34dcedc0cb778e520b9eabc8d933c0c9bd7138cfc83cba3e664c56edc5ca3723094be79ac26b3f767d69dd0e0acc875d2e72a1afdcfce07225dcb0f7072d01e
   languageName: node
   linkType: hard
 
