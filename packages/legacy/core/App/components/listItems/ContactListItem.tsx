@@ -85,6 +85,9 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
       paddingVertical: 4,
       alignSelf: 'center',
     },
+    timeText: {
+      color: TextTheme.normal.color,
+    },
   })
 
   useEffect(() => {
@@ -166,7 +169,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
               <Text style={styles.contactNameText}>{contactLabel}</Text>
             </View>
             <View style={styles.timeContainer}>
-              <Text>{formatTime(message.createdAt, { shortMonth: true, trim: true })}</Text>
+              <Text style={styles.timeText}>{formatTime(message.createdAt, { shortMonth: true, trim: true })}</Text>
             </View>
           </View>
           <View>
