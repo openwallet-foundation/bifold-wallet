@@ -194,7 +194,13 @@ exports[`ListContacts Component Renders correctly 1`] = `
                     }
                   }
                 >
-                  <Text>
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                      }
+                    }
+                  >
                     Jan 1, 2020
                   </Text>
                 </View>
@@ -346,7 +352,13 @@ exports[`ListContacts Component Renders correctly 1`] = `
                     }
                   }
                 >
-                  <Text>
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                      }
+                    }
+                  >
                     Jan 1, 2020
                   </Text>
                 </View>
