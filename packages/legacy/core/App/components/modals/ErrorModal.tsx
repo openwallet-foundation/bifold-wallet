@@ -8,7 +8,11 @@ import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
-const ErrorModal: React.FC = () => {
+interface ErrorModalProps {
+  reportProblemAction?: (error: BifoldError) => void
+}
+
+const ErrorModal: React.FC<ErrorModalProps> = ({ reportProblemAction }) => {
   const { height } = useWindowDimensions()
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -64,6 +68,8 @@ const ErrorModal: React.FC = () => {
           description={error ? error.description : t('Error.Problem')}
           message={formattedMessageForError(error ?? null)}
           onCallToActionPressed={onDismissModalTouched}
+          secondaryCallToActionTitle={t('Error.ReportThisProblem')}
+          secondaryCallToActionPressed={reportProblemAction && error ? () => reportProblemAction(error) : undefined}
         />
       </SafeAreaView>
     </Modal>

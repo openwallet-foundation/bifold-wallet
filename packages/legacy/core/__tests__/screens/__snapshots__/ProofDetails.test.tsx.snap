@@ -26,9 +26,8 @@ exports[`ProofDetails Component renders correctly with an unverified proof Unver
       <View
         style={
           Object {
-            "backgroundColor": "#D8292F",
-            "paddingHorizontal": 30,
-            "paddingVertical": 20,
+            "paddingHorizontal": 20,
+            "paddingVertical": 30,
           }
         }
       >
@@ -36,45 +35,32 @@ exports[`ProofDetails Component renders correctly with an unverified proof Unver
           style={
             Object {
               "alignItems": "center",
-              "flexDirection": "row",
               "justifyContent": "flex-start",
+              "marginTop": 70,
             }
           }
         >
           <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              Array [
-                Object {
-                  "color": "white",
-                  "fontSize": 45,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Design Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            󰃆
-          </Text>
-          <Text
             style={
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 34,
-                "fontWeight": "bold",
-                "marginHorizontal": 8,
+                "fontSize": 32,
+                "fontWeight": "normal",
               }
             }
           >
             Verifier.ProofVerificationFailed
           </Text>
         </View>
+        <
+          height={200}
+          style={
+            Object {
+              "alignSelf": "center",
+              "marginTop": 20,
+            }
+          }
+        />
       </View>
       <View
         style={
@@ -85,71 +71,158 @@ exports[`ProofDetails Component renders correctly with an unverified proof Unver
         }
       >
         <View
-          accessibilityLabel="Verifier.GenerateNewQR"
-          accessibilityRole="button"
-          accessibilityState={
-            Object {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": false,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            Object {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "backgroundColor": "#42803E",
-              "borderRadius": 4,
-              "opacity": 1,
-              "padding": 16,
+              "marginBottom": 10,
+              "width": "100%",
             }
           }
-          testID="com.ariesbifold:id/GenerateNewQR"
         >
           <View
-            style={
+            accessibilityLabel="Verifier.GenerateNewQR"
+            accessibilityRole="button"
+            accessibilityState={
               Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
               }
             }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/GenerateNewQR"
           >
-            <Text
+            <View
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
-                  },
-                  false,
-                  false,
-                  false,
-                ]
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
               }
             >
-              Verifier.GenerateNewQR
-            </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Verifier.GenerateNewQR
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "marginBottom": 10,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Verifier.BackToList"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "borderColor": "#42803E",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/BackToList"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Verifier.BackToList
+              </Text>
+            </View>
           </View>
         </View>
       </View>
