@@ -25,12 +25,37 @@ const Attestation = AttestationModule
       }
     );
 
-export const generateKey = async (): Promise<string> => {
-  return Attestation.generateKey();
+// TODO: Make available from Android.
+export const sha256 = async (stringToHash: string): Promise<Buffer> => {
+  if (Platform.OS !== 'ios') {
+    throw new Error('sha256 is only available on iOS');
+  }
+
+  const bytes: Uint8Array = await Attestation.sha256(stringToHash);
+  return Buffer.from(bytes);
 };
 
-export const sha256 = async (stringToHash: string): Promise<Buffer> => {
-  const bytes: Uint8Array = await Attestation.sha256(stringToHash);
+export const generateKey = async (cache: boolean = false): Promise<string> => {
+  if (Platform.OS !== 'ios') {
+    throw new Error('generateKey is only available on iOS');
+  }
+
+  return Attestation.generateKey(cache);
+};
+
+export const appleKeyAttestation = async (
+  keyId: string,
+  challenge: string
+): Promise<Buffer> => {
+  if (Platform.OS !== 'ios') {
+    throw new Error('appleKeyAttestation is only available on iOS');
+  }
+
+  const bytes: Uint8Array = await Attestation.appleKeyAttestation(
+    keyId,
+    challenge
+  );
+
   return Buffer.from(bytes);
 };
 
@@ -38,6 +63,10 @@ export const appleAttestation = async (
   keyId: string,
   challenge: string
 ): Promise<Buffer> => {
+  if (Platform.OS !== 'ios') {
+    throw new Error('appleAttestation is only available on iOS');
+  }
+
   const bytes: Uint8Array = await Attestation.appleAttestation(
     keyId,
     challenge
@@ -47,10 +76,18 @@ export const appleAttestation = async (
 };
 
 export const googleAttestation = async (nonce: string): Promise<string> => {
+  if (Platform.OS !== 'android') {
+    throw new Error('googleAttestation is only available on Android');
+  }
+
   const token: string = await Attestation.googleAttestation(nonce);
   return token;
 };
 
 export const isPlayIntegrityAvailable = async (): Promise<boolean> => {
+  if (Platform.OS !== 'android') {
+    throw new Error('isPlayIntegrityAvailable is only available on Android');
+  }
+
   return Attestation.isPlayIntegrityAvailable();
 };
