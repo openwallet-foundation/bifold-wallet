@@ -21,12 +21,13 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanTab from './ScanTab'
+import { Camera, Code, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
 interface Props extends ConnectProps {
   defaultToConnect: boolean
-  handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
+  handleCodeScan: (value: string) => Promise<void>
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
 }
@@ -44,6 +45,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme, TabTheme } = useTheme()
   const { agent } = useAgent()
+  const device = useCameraDevice('back')
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -133,38 +135,44 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     }
   }, [record])
 
+  const onCodeScanned = useCallback((codes: Code[]) => {
+    const value = codes[0].value
+    if (!value || invalidQrCodes.has(value)) {
+      return
+    }
+
+    if (error?.data === value) {
+      invalidQrCodes.add(value)
+      if (enableCameraOnError) {
+        return setCameraActive(true)
+      }
+    }
+
+    if (cameraActive) {
+      Vibration.vibrate()
+      handleCodeScan(value)
+      return setCameraActive(false)
+    }
+  }, [])
+
+  const codeScanner = useCodeScanner({
+    codeTypes: ['qr'],
+    onCodeScanned: onCodeScanned,
+  })
+
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {firstTabActive ? (
-        <RNCamera
-          style={styles.camera}
-          type={RNCamera.Constants.Type.back}
-          flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
-          captureAudio={false}
-          androidCameraPermissionOptions={{
-            title: t('QRScanner.PermissionToUseCamera'),
-            message: t('QRScanner.WeNeedYourPermissionToUseYourCamera'),
-            buttonPositive: t('QRScanner.Ok'),
-            buttonNegative: t('Global.Cancel'),
-          }}
-          barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          onBarCodeRead={(event: BarCodeReadEvent) => {
-            if (invalidQrCodes.has(event.data)) {
-              return
-            }
-            if (error?.data === event?.data) {
-              invalidQrCodes.add(error.data)
-              if (enableCameraOnError) {
-                return setCameraActive(true)
-              }
-            }
-            if (cameraActive) {
-              Vibration.vibrate()
-              handleCodeScan(event)
-              return setCameraActive(false)
-            }
-          }}
-        >
+        <>
+          {device && (
+            <Camera
+              style={StyleSheet.absoluteFill}
+              device={device}
+              torch={torchActive ? 'on' : 'off'}
+              isActive={cameraActive}
+              codeScanner={codeScanner}
+            />
+          )}
           <View style={styles.cameraViewContainer}>
             <View style={styles.errorContainer}>
               {error ? (
@@ -188,7 +196,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
             </View>
             <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
           </View>
-        </RNCamera>
+        </>
       ) : (
         <ScrollView>
           <View style={{ alignItems: 'center' }}>
@@ -213,7 +221,8 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
             </View>
           </View>
         </ScrollView>
-      )}
+      )
+      }
 
       <View style={styles.tabContainer}>
         <ScanTab
@@ -229,7 +238,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
           active={!firstTabActive}
         />
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 

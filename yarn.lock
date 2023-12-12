@@ -4085,6 +4085,7 @@ __metadata:
     react-native-toast-message: ^2.1.6
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
+    react-native-vision-camera: ^3.6.16
     react-test-renderer: ^18.2.0
     typescript: ^5.0.4
     uuid: ^9.0.0
@@ -4154,6 +4155,7 @@ __metadata:
     react-native-toast-message: ^2.1.6
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
+    react-native-vision-camera: "*"
     uuid: ^9.0.0
   bin:
     bifold: bin/bifold
@@ -18828,6 +18830,20 @@ __metadata:
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
   checksum: c4e39deb5218b6ba047c378217bbc7f24c1db153d2171e42176703a775049ed24f2a140f35d962d215265032722a24cba8acc83397ef6e14bd300db470609bf5
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:^3.6.16":
+  version: 3.6.16
+  resolution: "react-native-vision-camera@npm:3.6.16"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-worklets-core: "*"
+  peerDependenciesMeta:
+    react-native-worklets-core:
+      optional: true
+  checksum: 66828a81962e3a2cac8eced1321c62f5b53338b6b8df971820e771365b96bfe2f314533452ece0a194b542ce4bdf21e45f9bd50cd9f21d452e4ca5128bcb150d
   languageName: node
   linkType: hard
 
