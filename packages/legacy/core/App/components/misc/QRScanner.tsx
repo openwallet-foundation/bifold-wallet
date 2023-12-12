@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Vibration, Pressable, StyleSheet, Text, PermissionsAndroid } from 'react-native'
-import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
+import { View, Modal, Vibration, Pressable, StyleSheet, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Camera, Code, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
 
 import { hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
@@ -14,8 +14,6 @@ import { testIdWithKey } from '../../utils/testable'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 import QRScannerTorch from './QRScannerTorch'
-
-import { Camera, Code, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera'
 
 interface Props {
   handleCodeScan: (value: string) => Promise<void>
@@ -32,7 +30,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const { t } = useTranslation()
   const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
-  const { hasPermission, requestPermission } = useCameraPermission()
   const device = useCameraDevice('back')
 
   const styles = StyleSheet.create({

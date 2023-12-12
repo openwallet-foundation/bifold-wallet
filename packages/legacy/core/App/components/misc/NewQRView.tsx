@@ -4,10 +4,10 @@ import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Vibration, View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
-import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { Camera, Code, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
 
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
@@ -21,7 +21,6 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanTab from './ScanTab'
-import { Camera, Code, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
@@ -221,8 +220,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
             </View>
           </View>
         </ScrollView>
-      )
-      }
+      )}
 
       <View style={styles.tabContainer}>
         <ScanTab
@@ -238,7 +236,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
           active={!firstTabActive}
         />
       </View>
-    </SafeAreaView >
+    </SafeAreaView>
   )
 }
 

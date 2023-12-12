@@ -44,6 +44,9 @@ jest.mock('@hyperledger/aries-bifold-verifier',() => {
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
 jest.mock('react-native-device-info', () => () => jest.fn())
+jest.mock('react-native-vision-camera', () => {
+  return require('../../__mocks__/custom/react-native-camera')
+})
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
