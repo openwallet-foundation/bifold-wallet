@@ -4060,7 +4060,6 @@ __metadata:
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
     react-native-builder-bob: ^0.21.3
-    react-native-camera: ^3.31.1
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -4132,7 +4131,6 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
-    react-native-camera: ^3.31.1
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -7509,7 +7507,6 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
-    react-native-camera: ^3.31.1
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -18109,7 +18106,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
+"prop-types@npm:*, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -18457,15 +18454,6 @@ __metadata:
   bin:
     bob: bin/bob
   checksum: 0a7b05926556dcba0ed9dbadd1316136886bcb054b2229ff58af6ba71178c0add0bcbd31d78b11683f05cacfd8ba408f1d50d7ec6c413ae694a51b11f02ea2de
-  languageName: node
-  linkType: hard
-
-"react-native-camera@npm:^3.31.1":
-  version: 3.44.3
-  resolution: "react-native-camera@npm:3.44.3"
-  dependencies:
-    prop-types: ^15.6.2
-  checksum: 3c9757e2c75f5083c966394234c06fce9b87b9580e9421720e49de72e5f53aa70d2135bbea304e1b1c07ab443bbd8d62dee87eeec19feb7c37ddf328f140552e
   languageName: node
   linkType: hard
 
