@@ -63,11 +63,7 @@ const Home: React.FC<HomeProps> = () => {
   }
 
   useEffect(() => {
-    const shouldShowTour =
-      store.preferences.developerModeEnabled &&
-      enableToursConfig &&
-      store.tours.enableTours &&
-      !store.tours.seenHomeTour
+    const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
 
     if (shouldShowTour && screenIsFocused) {
       if (store.tours.seenToursPrompt) {

@@ -127,11 +127,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   })
 
   useEffect(() => {
-    const shouldShowTour =
-      store.preferences.developerModeEnabled &&
-      enableToursConfig &&
-      store.tours.enableTours &&
-      !store.tours.seenProofRequestTour
+    const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
       start(TourID.ProofRequestTour)
