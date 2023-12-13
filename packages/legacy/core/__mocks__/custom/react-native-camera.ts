@@ -21,4 +21,5 @@ class Camera extends React.Component {
 Camera.Constants = Constants
 const useCameraDevice = jest.fn();
 const useCodeScanner = jest.fn();
-export { Camera, useCameraDevice, useCodeScanner };
+const useCameraFormat = jest.fn();
+export { Camera, useCameraDevice, useCodeScanner, useCameraFormat};
