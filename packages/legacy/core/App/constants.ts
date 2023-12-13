@@ -1,6 +1,7 @@
 import { Dimensions, Platform } from 'react-native'
-import { PINValidationRules } from './types/security'
 import StaticSafeAreaInsets from 'react-native-static-safe-area-insets'
+
+import { PINValidationRules } from './types/security'
 
 export const SCREEN_WIDTH = Dimensions.get('window').width
 export const SCREEN_HEIGHT = Platform.select<number>({

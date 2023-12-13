@@ -1,11 +1,9 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Vibration, Pressable, StyleSheet, Text, Dimensions, Platform } from 'react-native'
+import { View, Modal, Vibration, Pressable, StyleSheet, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
-import StaticSafeAreaInsets from 'react-native-static-safe-area-insets'
-
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH, hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
@@ -33,7 +31,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
   const device = useCameraDevice('back')
-  
+
   const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
   const format = useCameraFormat(device, [
     { fps: 60 },
@@ -135,7 +133,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           isActive={cameraActive}
           codeScanner={codeScanner}
           format={format}
-          orientation='portrait'
+          orientation="portrait"
         />
       )}
       <View style={{ flex: 1 }}>
