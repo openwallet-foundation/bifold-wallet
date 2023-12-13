@@ -1,11 +1,13 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Vibration, Pressable, StyleSheet, Text } from 'react-native'
+import { View, Modal, Vibration, Pressable, StyleSheet, Text, Dimensions, Platform } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Camera, Code, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
+import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
+import StaticSafeAreaInsets from 'react-native-static-safe-area-insets'
 
-import { hitSlop } from '../../constants'
+
+import { SCREEN_HEIGHT, SCREEN_WIDTH, hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
@@ -31,6 +33,15 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
   const device = useCameraDevice('back')
+  
+  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
+  const format = useCameraFormat(device, [
+    { fps: 60 },
+    { videoAspectRatio: screenAspectRatio },
+    { videoResolution: 'max' },
+    { photoAspectRatio: screenAspectRatio },
+    { photoResolution: 'max' },
+  ])
 
   const styles = StyleSheet.create({
     container: {
@@ -123,6 +134,8 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           torch={torchActive ? 'on' : 'off'}
           isActive={cameraActive}
           codeScanner={codeScanner}
+          format={format}
+          orientation='portrait'
         />
       )}
       <View style={{ flex: 1 }}>

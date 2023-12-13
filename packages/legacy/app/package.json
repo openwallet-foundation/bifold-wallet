@@ -75,6 +75,7 @@
     "react-native-scalable-image": "^1.1.0",
     "react-native-screens": "^3.24.0",
     "react-native-splash-screen": "^3.3.0",
+    "react-native-static-safe-area-insets": "^2.2.0",
     "react-native-svg": "^12.1.1",
     "react-native-tcp-socket": "^6.0.6",
     "react-native-toast-message": "^2.1.6",

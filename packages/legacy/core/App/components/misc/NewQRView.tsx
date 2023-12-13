@@ -7,7 +7,7 @@ import { Vibration, View, StyleSheet, Text, ScrollView, useWindowDimensions } fr
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { Camera, Code, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
+import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
@@ -21,6 +21,8 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanTab from './ScanTab'
+import { SCREEN_HEIGHT } from '../../constants'
+import { SCREEN_WIDTH } from '../../constants'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
@@ -45,6 +47,16 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const { ColorPallet, TextTheme, TabTheme } = useTheme()
   const { agent } = useAgent()
   const device = useCameraDevice('back')
+  
+  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
+  const format = useCameraFormat(device, [
+    { fps: 60 },
+    { videoAspectRatio: screenAspectRatio },
+    { videoResolution: 'max' },
+    { photoAspectRatio: screenAspectRatio },
+    { photoResolution: 'max' },
+  ])
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -170,6 +182,8 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
               torch={torchActive ? 'on' : 'off'}
               isActive={cameraActive}
               codeScanner={codeScanner}
+              format={format}
+              orientation='portrait'
             />
           )}
           <View style={styles.cameraViewContainer}>

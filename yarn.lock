@@ -4078,6 +4078,7 @@ __metadata:
     react-native-scalable-image: ^1.1.0
     react-native-screens: ^3.24.0
     react-native-splash-screen: ^3.3.0
+    react-native-static-safe-area-insets: ^2.2.0
     react-native-svg: ^12.1.1
     react-native-svg-transformer: ^0.14.3
     react-native-tcp-socket: ^6.0.6
@@ -4148,6 +4149,7 @@ __metadata:
     react-native-safe-area-context: ^3.2.0
     react-native-screens: ^3.24.0
     react-native-splash-screen: ^3.3.0
+    react-native-static-safe-area-insets: "*"
     react-native-svg: ^12.1.1
     react-native-tcp-socket: ^6.0.6
     react-native-toast-message: ^2.1.6
@@ -7525,6 +7527,7 @@ __metadata:
     react-native-scalable-image: ^1.1.0
     react-native-screens: ^3.24.0
     react-native-splash-screen: ^3.3.0
+    react-native-static-safe-area-insets: ^2.2.0
     react-native-svg: ^12.1.1
     react-native-svg-transformer: ^0.14.3
     react-native-tcp-socket: ^6.0.6
@@ -18736,6 +18739,13 @@ __metadata:
   peerDependencies:
     react-native: ">=0.57.0"
   checksum: 14c565d5d4214f55586dcf6f7abd12d99d3e0667f67de3bda7aa24988971567b283a4187fbc0c6269c83b3c21d59d1950335c61bb0780ec2d065e20b3b9199d0
+  languageName: node
+  linkType: hard
+
+"react-native-static-safe-area-insets@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "react-native-static-safe-area-insets@npm:2.2.0"
+  checksum: 04ceb3cabfb874dc78276c2c9f5889cf19fdb930cbcc00a8ab2aae1fb7c3eca384a1e9131a23f1bc1de2158bb81940d5175606cd7cab5371aa86049d52c82a14
   languageName: node
   linkType: hard
 
