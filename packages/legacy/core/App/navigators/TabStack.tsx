@@ -78,9 +78,7 @@ const TabStack: React.FC = () => {
               </AttachTourStep>
             ),
             tabBarShowLabel: false,
-            tabBarAccessibilityLabel: `${t('TabStack.Home')} (${
-              total === 1 ? t('Home.OneNotification') : t('Home.CountNotifications', { count: total || 0 })
-            })`,
+            tabBarAccessibilityLabel: `${t('TabStack.Home')} (${total ?? 0})`,
             tabBarTestID: testIdWithKey(t('TabStack.Home')),
             tabBarBadge: total || undefined,
             tabBarBadgeStyle: {
