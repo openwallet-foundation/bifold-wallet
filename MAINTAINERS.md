@@ -14,6 +14,7 @@
 | Jason C. Leach         | jleach       |      |
 | Mostafa Gamal          | MosCD3       |      |
 | Ryan Koch              | ryankoch13   |      |
+| Thiago Romano          | thiagoromanos|      |
 | Wade King              | wadeking98   |      |
 
 ## Emeritus Maintainers
