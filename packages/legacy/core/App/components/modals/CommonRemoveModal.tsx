@@ -110,6 +110,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       marginBottom: Platform.OS === 'ios' ? 108 : 80,
       position: 'relative',
     },
+    overlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.5)',
+    },
     headerView: {
       alignItems: 'flex-end',
       marginTop: 65,
@@ -286,55 +290,57 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
 
   return (
     <Modal transparent={true} visible={visible} animationType="slide">
-      <View style={[styles.headerView]}>
-        <TouchableOpacity
-          accessibilityLabel={t('Global.Close')}
-          accessibilityRole={'button'}
-          testID={testIdWithKey('Close')}
-          onPress={() => onCancel && onCancel()}
-          hitSlop={hitSlop}
-        >
-          <Icon name={'close'} size={42} color={ColorPallet.brand.modalIcon} />
-        </TouchableOpacity>
-      </View>
-      <SafeAreaView
-        edges={['left', 'right', 'bottom']}
-        style={[
-          {
-            backgroundColor: ColorPallet.brand.modalPrimaryBackground,
-          },
-        ]}
-      >
-        <ScrollView style={[styles.container]}>
-          <>
-            {headerImageForType()}
-            {contentForType()}
-          </>
-        </ScrollView>
-        <View style={[styles.controlsContainer]}>
-          <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />
-          <View style={[{ paddingTop: 10 }]}>
-            <Button
-              title={titleForConfirmButton()}
-              accessibilityLabel={labelForConfirmButton()}
-              testID={testIdForConfirmButton()}
-              onPress={onSubmit}
-              buttonType={
-                usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
-              }
-            />
-          </View>
-          <View style={[{ paddingTop: 10 }]}>
-            <Button
-              title={t('Global.Cancel')}
-              accessibilityLabel={t('Global.Cancel')}
-              testID={testIdForCancelButton()}
-              onPress={onCancel}
-              buttonType={ButtonType.ModalSecondary}
-            />
-          </View>
+      <View style={styles.overlay}>
+        <View style={[styles.headerView]}>
+          <TouchableOpacity
+            accessibilityLabel={t('Global.Close')}
+            accessibilityRole={'button'}
+            testID={testIdWithKey('Close')}
+            onPress={() => onCancel && onCancel()}
+            hitSlop={hitSlop}
+          >
+            <Icon name={'close'} size={42} color={ColorPallet.brand.modalIcon} />
+          </TouchableOpacity>
         </View>
-      </SafeAreaView>
+        <SafeAreaView
+          edges={['left', 'right', 'bottom']}
+          style={[
+            {
+              backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+            },
+          ]}
+        >
+          <ScrollView style={[styles.container]}>
+            <>
+              {headerImageForType()}
+              {contentForType()}
+            </>
+          </ScrollView>
+          <View style={[styles.controlsContainer]}>
+            <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />
+            <View style={[{ paddingTop: 10 }]}>
+              <Button
+                title={titleForConfirmButton()}
+                accessibilityLabel={labelForConfirmButton()}
+                testID={testIdForConfirmButton()}
+                onPress={onSubmit}
+                buttonType={
+                  usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
+                }
+              />
+            </View>
+            <View style={[{ paddingTop: 10 }]}>
+              <Button
+                title={t('Global.Cancel')}
+                accessibilityLabel={t('Global.Cancel')}
+                testID={testIdForCancelButton()}
+                onPress={onCancel}
+                buttonType={ButtonType.ModalSecondary}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+      </View>
     </Modal>
   )
 }
