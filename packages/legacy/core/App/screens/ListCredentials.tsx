@@ -34,11 +34,7 @@ const ListCredentials: React.FC = () => {
   const screenIsFocused = useIsFocused()
 
   useEffect(() => {
-    const shouldShowTour =
-      store.preferences.developerModeEnabled &&
-      enableToursConfig &&
-      store.tours.enableTours &&
-      !store.tours.seenCredentialsTour
+    const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
     if (shouldShowTour && screenIsFocused) {
       start(TourID.CredentialsTour)

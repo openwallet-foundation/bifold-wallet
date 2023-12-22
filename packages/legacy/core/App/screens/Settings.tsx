@@ -164,7 +164,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     ...(settings || []),
   ]
 
-  if (enableTours && store.preferences.developerModeEnabled) {
+  if (enableTours) {
     const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
     if (section) {
       section.data = [

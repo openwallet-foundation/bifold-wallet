@@ -80,11 +80,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   })
 
   useEffect(() => {
-    const shouldShowTour =
-      store.preferences.developerModeEnabled &&
-      enableToursConfig &&
-      store.tours.enableTours &&
-      !store.tours.seenCredentialOfferTour
+    const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialOfferTour
     if (shouldShowTour && screenIsFocused) {
       start(TourID.CredentialOfferTour)
       dispatch({

@@ -15,16 +15,13 @@ NSString *keychainIdentifier2() {
     return concatenatedString;
 }
 
-NSArray<NSNumber *> *sha256Of(NSString *stringToBeHashed) {
+NSData *sha256Of(NSString *stringToBeHashed) {
     NSData *data = [stringToBeHashed dataUsingEncoding:NSUTF8StringEncoding];
     uint8_t hash[CC_SHA256_DIGEST_LENGTH];
     CC_SHA256(data.bytes, (CC_LONG)data.length, hash);
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:CC_SHA256_DIGEST_LENGTH];
-    for (NSUInteger i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
-        [array addObject:@(hash[i])];
-    }
-    
-    return [array copy];
+    NSData *hashData = [NSData dataWithBytes:hash length:CC_SHA256_DIGEST_LENGTH];
+
+    return hashData;
 }
 
 NSArray<NSNumber *> *dataToBytes(NSData *data) {
@@ -106,7 +103,14 @@ NSError *errorWithReason(NSString *reason, NSInteger code) {
 NSString *messageAttestationErrorCode(NSInteger code) {
     NSString *result;
     
+    // See https://developer.apple.com/documentation/devicecheck/dcerror
+    // for a full list and description of errors.
     switch (code) {
+        case 2: // DCErrorInvalidInput
+            // This may occur if the key is no longer valid or other
+            // unexpected input is provided.
+            result = @"The provided input is not formatted correctly.";
+            break;
         case 3:
             result = @"The provided key ID is invalid or the key is not found.";
             break;
@@ -136,14 +140,14 @@ DCAppAttestService *sharedService() {
     return nil;
 }
 
-
 // See // https://reactnative.dev/docs/native-modules-ios
 
-RCT_EXPORT_METHOD(generateKey:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(generateKey:(BOOL)cache
+                  resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {
-    NSLog(@"**************************** XXXX **********************************");
-
+    NSString *keyId = nil;
+    
     DCAppAttestService *attestService = sharedService();
     if (attestService == nil) {
         NSString *message = @"The device is not eligible for App Attestation.";
@@ -153,7 +157,12 @@ RCT_EXPORT_METHOD(generateKey:(RCTPromiseResolveBlock)resolve
     }
     
     NSString *keychainIdentifier = keychainIdentifier2();
-    NSString *keyId = stringFromKeychainWithIdentifier(keychainIdentifier);
+
+    if (cache) {
+        keyId = stringFromKeychainWithIdentifier(keychainIdentifier);
+    } else {
+        clearStoredKeyIfExists(keychainIdentifier);
+    }
 
     if (keyId != nil) {
         NSLog(@"returning existing key...");
@@ -170,9 +179,11 @@ RCT_EXPORT_METHOD(generateKey:(RCTPromiseResolveBlock)resolve
             return;
         }
         
-        NSLog(@"saving key to KC = ", keyId);
+        NSLog(@"saving key to KC = %@", keyId);
 
-        saveStringToKeychain(keyId, keychainIdentifier);
+        if (cache) {
+            saveStringToKeychain(keyId, keychainIdentifier);
+        }
         
         resolve(keyId);
     }];
@@ -182,9 +193,44 @@ RCT_EXPORT_METHOD(sha256:(NSString *)stringToBeHashed
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {
-    NSArray<NSNumber *> *result = sha256Of(stringToBeHashed);
+    NSArray<NSNumber *> *result = [dataToBytes(sha256Of(stringToBeHashed)) copy];
 
     resolve(result);
+}
+
+RCT_EXPORT_METHOD(appleKeyAttestation:(NSString *)keyId
+                  challenge:(NSString *)challenge
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+    NSInteger InvalidKeyErrorCode = 3;
+    DCAppAttestService *attestService = sharedService();
+    if (attestService == nil) {
+        NSString *message = @"The device is not eligible for App Attestation.";
+        reject(@"error", message, errorWithReason(message, 22));
+        
+        return;
+    }
+
+    NSData *hashData = sha256Of(challenge);
+
+    [attestService attestKey:keyId clientDataHash:hashData completionHandler:^(NSData * _Nullable attestationObject, NSError * _Nullable error) {
+
+        if (error) {
+            NSLog(@"attestKey error %@", error);
+            NSString *message = messageAttestationErrorCode(error.code);
+            
+            if (error.code == InvalidKeyErrorCode) {
+                NSString *keychainIdentifier = keychainIdentifier2();
+                clearStoredKeyIfExists(keychainIdentifier);
+            }
+            
+            reject(@"error", message, errorWithReason(message, error.code));
+        } else {
+            NSArray<NSNumber *> *result = dataToBytes(attestationObject);
+            resolve(result);
+        }
+    }];
 }
 
 RCT_EXPORT_METHOD(appleAttestation:(NSString *)keyId
@@ -200,12 +246,9 @@ RCT_EXPORT_METHOD(appleAttestation:(NSString *)keyId
         
         return;
     }
-    
-    NSData *data = [challenge dataUsingEncoding:NSUTF8StringEncoding];
-    uint8_t hash[CC_SHA256_DIGEST_LENGTH];
-    CC_SHA256(data.bytes, (CC_LONG)data.length, hash);
-    NSData *hashData = [NSData dataWithBytes:hash length:CC_SHA256_DIGEST_LENGTH];
-        
+
+    NSData *hashData = sha256Of(challenge);
+
     [attestService attestKey:keyId clientDataHash:hashData completionHandler:^(NSData * _Nullable attestationObject, NSError * _Nullable error) {
 
         if (error) {
