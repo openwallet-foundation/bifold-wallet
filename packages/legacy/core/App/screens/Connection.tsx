@@ -3,7 +3,7 @@ import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { AccessibilityInfo, BackHandler, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -118,6 +118,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     dispatch({ shouldShowDelayMessage: false, isVisible: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+    return () => backHandler.remove()
+  }, [])
 
   useEffect(() => {
     if (state.shouldShowDelayMessage && !state.notificationRecord) {

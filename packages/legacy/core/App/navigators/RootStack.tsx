@@ -273,7 +273,7 @@ const RootStack: React.FC = () => {
         />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
-        <Stack.Screen name={Stacks.ConnectionStack} component={DeliveryStack} />
+        <Stack.Screen name={Stacks.ConnectionStack} component={DeliveryStack} options={{ gestureEnabled: false }} />
         <Stack.Screen name={Stacks.ProofRequestsStack} component={ProofRequestStack} />
       </Stack.Navigator>
     )
