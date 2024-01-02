@@ -24,7 +24,7 @@ interface TourOverlayProps {
 export const TourOverlay = (props: TourOverlayProps) => {
   const { width: windowWidth, height: windowHeight } = useWindowDimensions()
   const { color, currentTour, currentStep, onBackdropPress, backdropOpacity, changeSpot, spot, tourStep } = props
-
+  const [viewBox, setViewBox] = useState(`0 0 ${windowWidth} ${windowHeight}`)
   const { next, previous, start, stop } = useContext(TourContext)
 
   const [tooltipStyle, setTooltipStyle] = useState<ViewStyle>({})
@@ -75,7 +75,11 @@ export const TourOverlay = (props: TourOverlayProps) => {
         top,
       })
     }
-  }, [spot.height, spot.width, spot.x, spot.y])
+  }, [windowWidth, windowHeight, spot.width, spot.height, spot.x, spot.y])
+
+  useEffect(() => {
+    setViewBox(`0 0 ${windowWidth} ${windowHeight}`)
+  }, [windowWidth, windowHeight])
 
   return (
     <Modal
@@ -89,7 +93,7 @@ export const TourOverlay = (props: TourOverlayProps) => {
           testID={testIdWithKey('SpotOverlay')}
           height="100%"
           width="100%"
-          viewBox={`0 0 ${windowWidth} ${windowHeight}`}
+          viewBox={viewBox}
           onPress={handleBackdropPress}
           shouldRasterizeIOS={true}
           renderToHardwareTextureAndroid={true}
