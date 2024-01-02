@@ -52,7 +52,7 @@ export const TourOverlay = (props: TourOverlayProps) => {
     const gapBetweenSpotAndTooltip = 50
     // if origin spot (ie. no spotlight)
     if (spot.x === 0 && spot.y === 0) {
-      const top = windowHeight / 5
+      const top = windowHeight / 6
       setTooltipStyle({
         left: tourMargin,
         right: tourMargin,
@@ -78,7 +78,9 @@ export const TourOverlay = (props: TourOverlayProps) => {
   }, [windowWidth, windowHeight, spot.width, spot.height, spot.x, spot.y])
 
   useEffect(() => {
-    setViewBox(`0 0 ${windowWidth} ${windowHeight}`)
+    // + 1 pixel to account for an svg size rounding issue that would cause
+    // a tiny gap around the overlay
+    setViewBox(`0 0 ${windowWidth + 1} ${windowHeight + 1}`)
   }, [windowWidth, windowHeight])
 
   return (
@@ -88,24 +90,30 @@ export const TourOverlay = (props: TourOverlayProps) => {
       transparent={true}
       visible={currentStep !== undefined}
     >
-      <View style={{ height: windowHeight, width: windowWidth }} testID={testIdWithKey('SpotlightOverlay')}>
+      <View style={{ height: windowHeight + 1, width: windowWidth + 1 }} testID={testIdWithKey('SpotlightOverlay')}>
         <Svg
           testID={testIdWithKey('SpotOverlay')}
-          height="100%"
-          width="100%"
+          height={windowHeight + 1}
+          width={windowWidth + 1}
           viewBox={viewBox}
           onPress={handleBackdropPress}
           shouldRasterizeIOS={true}
           renderToHardwareTextureAndroid={true}
         >
           <Defs>
-            <Mask id="mask" x={0} y={0} height="100%" width="100%">
-              <Rect height="100%" width="100%" fill="#fff" />
+            <Mask id="mask" x={0} y={0} height={windowHeight + 1} width={windowWidth + 1}>
+              <Rect height={windowHeight + 1} width={windowWidth + 1} fill="#fff" />
               <SpotCutout />
             </Mask>
           </Defs>
 
-          <Rect height="100%" width="100%" fill={color} mask="url(#mask)" opacity={backdropOpacity} />
+          <Rect
+            height={windowHeight + 1}
+            width={windowWidth + 1}
+            fill={color}
+            mask="url(#mask)"
+            opacity={backdropOpacity}
+          />
         </Svg>
 
         <View
