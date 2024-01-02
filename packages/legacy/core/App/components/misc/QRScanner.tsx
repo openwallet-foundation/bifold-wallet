@@ -133,7 +133,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           isActive={cameraActive}
           codeScanner={codeScanner}
           format={format}
-          orientation="portrait"
         />
       )}
       <View style={{ flex: 1 }}>

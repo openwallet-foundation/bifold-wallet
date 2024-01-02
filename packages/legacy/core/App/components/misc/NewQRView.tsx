@@ -182,7 +182,6 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
               isActive={cameraActive}
               codeScanner={codeScanner}
               format={format}
-              orientation="portrait"
             />
           )}
           <View style={styles.cameraViewContainer}>
