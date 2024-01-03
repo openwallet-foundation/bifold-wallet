@@ -52,11 +52,12 @@ export const TourOverlay = (props: TourOverlayProps) => {
     const gapBetweenSpotAndTooltip = 50
     // if origin spot (ie. no spotlight)
     if (spot.x === 0 && spot.y === 0) {
-      const top = windowHeight / 6
+      // a relative margin so that the tooltip doesn't start at the very top of the screen
+      const oneSixthOfScreenHeight = windowHeight / 6
       setTooltipStyle({
         left: tourMargin,
         right: tourMargin,
-        top,
+        top: oneSixthOfScreenHeight,
       })
       // if spot is in the lower half of the screen
     } else if (spot.y >= windowHeight / 2) {
