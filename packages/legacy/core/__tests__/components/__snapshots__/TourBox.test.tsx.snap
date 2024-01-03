@@ -11,9 +11,9 @@ Array [
         "borderColor": "#0099FF",
         "borderRadius": 5,
         "borderWidth": 1,
+        "flex": 1,
         "margin": "auto",
         "padding": 20,
-        "width": 700,
       }
     }
   >
