@@ -118,9 +118,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       marginTop: 'auto',
       marginHorizontal: 20,
     },
-    footerButton: {
-      marginBottom: 10,
-    },
   })
 
   const createProofRequest = useCallback(async () => {
@@ -192,7 +189,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }, [proofRecord])
 
   return (
-    <SafeAreaView style={styles.container} edges={['left', 'right']}>
+    <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
       <ScrollView>
         <View style={styles.qrContainer}>
           {generating && <LoadingIndicator />}
@@ -204,16 +201,14 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Verifier.RefreshQR')}
-            accessibilityLabel={t('Verifier.RefreshQR')}
-            testID={testIdWithKey('GenerateNewQR')}
-            buttonType={ButtonType.Primary}
-            onPress={() => createProofRequest()}
-            disabled={generating}
-          />
-        </View>
+        <Button
+          title={t('Verifier.RefreshQR')}
+          accessibilityLabel={t('Verifier.RefreshQR')}
+          testID={testIdWithKey('GenerateNewQR')}
+          buttonType={ButtonType.Primary}
+          onPress={() => createProofRequest()}
+          disabled={generating}
+        />
       </View>
     </SafeAreaView>
   )
