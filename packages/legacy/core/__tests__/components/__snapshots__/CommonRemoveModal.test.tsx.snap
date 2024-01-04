@@ -12,93 +12,10 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
       Object {
         "backgroundColor": "rgba(0,0,0,0.5)",
         "flex": 1,
+        "paddingTop": 65,
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#000000",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": 55,
-            "marginTop": 65,
-            "paddingRight": 20,
-            "paddingTop": 10,
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Global.Close"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 44,
-            "left": 44,
-            "right": 44,
-            "top": 44,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="com.ariesbifold:id/Close"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 42,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
     <RNCSafeAreaView
       edges={
         Array [
@@ -108,22 +25,98 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
         ]
       }
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+        }
       }
     >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "height": 55,
+            "paddingRight": 20,
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 42,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
       <RCTScrollView
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "padding": 20,
-            },
-          ]
+          Object {
+            "height": "100%",
+            "paddingHorizontal": 20,
+            "paddingTop": 10,
+          }
         }
       >
         <View>
@@ -198,14 +191,12 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 108,
-              "marginHorizontal": 20,
-              "marginTop": "auto",
-              "position": "relative",
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -287,11 +278,9 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -365,11 +354,9 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -460,93 +447,10 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
       Object {
         "backgroundColor": "rgba(0,0,0,0.5)",
         "flex": 1,
+        "paddingTop": 65,
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#000000",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": 55,
-            "marginTop": 65,
-            "paddingRight": 20,
-            "paddingTop": 10,
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Global.Close"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 44,
-            "left": 44,
-            "right": 44,
-            "top": 44,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="com.ariesbifold:id/Close"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 42,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
     <RNCSafeAreaView
       edges={
         Array [
@@ -556,22 +460,98 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
         ]
       }
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+        }
       }
     >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "height": 55,
+            "paddingRight": 20,
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 42,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
       <RCTScrollView
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "padding": 20,
-            },
-          ]
+          Object {
+            "height": "100%",
+            "paddingHorizontal": 20,
+            "paddingTop": 10,
+          }
         }
       >
         <View>
@@ -651,14 +631,12 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 108,
-              "marginHorizontal": 20,
-              "marginTop": "auto",
-              "position": "relative",
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -740,11 +718,9 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -818,11 +794,9 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -913,93 +887,10 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
       Object {
         "backgroundColor": "rgba(0,0,0,0.5)",
         "flex": 1,
+        "paddingTop": 65,
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#000000",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": 55,
-            "marginTop": 65,
-            "paddingRight": 20,
-            "paddingTop": 10,
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Global.Close"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 44,
-            "left": 44,
-            "right": 44,
-            "top": 44,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="com.ariesbifold:id/Close"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 42,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
     <RNCSafeAreaView
       edges={
         Array [
@@ -1009,22 +900,98 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
         ]
       }
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+        }
       }
     >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "height": 55,
+            "paddingRight": 20,
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 42,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
       <RCTScrollView
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "padding": 20,
-            },
-          ]
+          Object {
+            "height": "100%",
+            "paddingHorizontal": 20,
+            "paddingTop": 10,
+          }
         }
       >
         <View>
@@ -1113,14 +1080,12 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 108,
-              "marginHorizontal": 20,
-              "marginTop": "auto",
-              "position": "relative",
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -1202,11 +1167,9 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -1280,11 +1243,9 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -1375,93 +1336,10 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
       Object {
         "backgroundColor": "rgba(0,0,0,0.5)",
         "flex": 1,
+        "paddingTop": 65,
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#000000",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": 55,
-            "marginTop": 65,
-            "paddingRight": 20,
-            "paddingTop": 10,
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Global.Close"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 44,
-            "left": 44,
-            "right": 44,
-            "top": 44,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="com.ariesbifold:id/Close"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 42,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
     <RNCSafeAreaView
       edges={
         Array [
@@ -1471,22 +1349,98 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
         ]
       }
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+        }
       }
     >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "height": 55,
+            "paddingRight": 20,
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 42,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
       <RCTScrollView
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "padding": 20,
-            },
-          ]
+          Object {
+            "height": "100%",
+            "paddingHorizontal": 20,
+            "paddingTop": 10,
+          }
         }
       >
         <View>
@@ -1790,14 +1744,12 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 108,
-              "marginHorizontal": 20,
-              "marginTop": "auto",
-              "position": "relative",
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -1879,11 +1831,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -1957,11 +1907,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -2052,93 +2000,10 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
       Object {
         "backgroundColor": "rgba(0,0,0,0.5)",
         "flex": 1,
+        "paddingTop": 65,
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#000000",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": 55,
-            "marginTop": 65,
-            "paddingRight": 20,
-            "paddingTop": 10,
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Global.Close"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 44,
-            "left": 44,
-            "right": 44,
-            "top": 44,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="com.ariesbifold:id/Close"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 42,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
     <RNCSafeAreaView
       edges={
         Array [
@@ -2148,22 +2013,98 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
         ]
       }
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+        }
       }
     >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "height": 55,
+            "paddingRight": 20,
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 42,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
       <RCTScrollView
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "padding": 20,
-            },
-          ]
+          Object {
+            "height": "100%",
+            "paddingHorizontal": 20,
+            "paddingTop": 10,
+          }
         }
       >
         <View>
@@ -2227,14 +2168,12 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 108,
-              "marginHorizontal": 20,
-              "marginTop": "auto",
-              "position": "relative",
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -2316,11 +2255,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -2394,11 +2331,9 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -2489,93 +2424,10 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
       Object {
         "backgroundColor": "rgba(0,0,0,0.5)",
         "flex": 1,
+        "paddingTop": 65,
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#000000",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": 55,
-            "marginTop": 65,
-            "paddingRight": 20,
-            "paddingTop": 10,
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Global.Close"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 44,
-            "left": 44,
-            "right": 44,
-            "top": 44,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="com.ariesbifold:id/Close"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 42,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
     <RNCSafeAreaView
       edges={
         Array [
@@ -2585,22 +2437,98 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
         ]
       }
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+        }
       }
     >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "height": 55,
+            "paddingRight": 20,
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 42,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
       <RCTScrollView
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "padding": 20,
-            },
-          ]
+          Object {
+            "height": "100%",
+            "paddingHorizontal": 20,
+            "paddingTop": 10,
+          }
         }
       >
         <View>
@@ -3037,14 +2965,12 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 108,
-              "marginHorizontal": 20,
-              "marginTop": "auto",
-              "position": "relative",
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -3126,11 +3052,9 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -3204,11 +3128,9 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -3299,93 +3221,10 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
       Object {
         "backgroundColor": "rgba(0,0,0,0.5)",
         "flex": 1,
+        "paddingTop": 65,
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#000000",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": 55,
-            "marginTop": 65,
-            "paddingRight": 20,
-            "paddingTop": 10,
-          },
-        ]
-      }
-    >
-      <View
-        accessibilityLabel="Global.Close"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 44,
-            "left": 44,
-            "right": 44,
-            "top": 44,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="com.ariesbifold:id/Close"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 42,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
     <RNCSafeAreaView
       edges={
         Array [
@@ -3395,22 +3234,98 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
         ]
       }
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "borderTopLeftRadius": 10,
+          "borderTopRightRadius": 10,
+        }
       }
     >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "height": 55,
+            "paddingRight": 20,
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Close"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Close"
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 42,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
       <RCTScrollView
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "padding": 20,
-            },
-          ]
+          Object {
+            "height": "100%",
+            "paddingHorizontal": 20,
+            "paddingTop": 10,
+          }
         }
       >
         <View>
@@ -3714,14 +3629,12 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 108,
-              "marginHorizontal": 20,
-              "marginTop": "auto",
-              "position": "relative",
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+            "marginHorizontal": 20,
+            "marginTop": "auto",
+            "position": "relative",
+          }
         }
       >
         <View
@@ -3803,11 +3716,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -3881,11 +3792,9 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View

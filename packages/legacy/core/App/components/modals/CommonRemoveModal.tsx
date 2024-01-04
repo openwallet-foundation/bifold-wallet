@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -99,30 +99,32 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   }
 
   const styles = StyleSheet.create({
+    safeAreaView: {
+      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+    },
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
-      padding: 20,
+      paddingTop: 10,
+      paddingHorizontal: 20,
     },
     controlsContainer: {
       marginTop: 'auto',
       marginHorizontal: 20,
-      marginBottom: Platform.OS === 'ios' ? 108 : 80,
+      marginBottom: 10,
       position: 'relative',
     },
     overlay: {
       flex: 1,
       backgroundColor: 'rgba(0,0,0,0.5)',
+      paddingTop: 65,
     },
     headerView: {
       alignItems: 'flex-end',
-      marginTop: 65,
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
       height: 55,
       paddingTop: 10,
       paddingRight: 20,
-      borderTopRightRadius: 10,
-      borderTopLeftRadius: 10,
     },
     bodyText: {
       ...TextTheme.modalNormal,
@@ -291,34 +293,27 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   return (
     <Modal transparent={true} visible={visible} animationType="slide">
       <View style={styles.overlay}>
-        <View style={[styles.headerView]}>
-          <TouchableOpacity
-            accessibilityLabel={t('Global.Close')}
-            accessibilityRole={'button'}
-            testID={testIdWithKey('Close')}
-            onPress={() => onCancel && onCancel()}
-            hitSlop={hitSlop}
-          >
-            <Icon name={'close'} size={42} color={ColorPallet.brand.modalIcon} />
-          </TouchableOpacity>
-        </View>
-        <SafeAreaView
-          edges={['left', 'right', 'bottom']}
-          style={[
-            {
-              backgroundColor: ColorPallet.brand.modalPrimaryBackground,
-            },
-          ]}
-        >
-          <ScrollView style={[styles.container]}>
+        <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeAreaView}>
+          <View style={styles.headerView}>
+            <TouchableOpacity
+              accessibilityLabel={t('Global.Close')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey('Close')}
+              onPress={() => onCancel && onCancel()}
+              hitSlop={hitSlop}
+            >
+              <Icon name={'close'} size={42} color={ColorPallet.brand.modalIcon} />
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={styles.container}>
             <>
               {headerImageForType()}
               {contentForType()}
             </>
           </ScrollView>
-          <View style={[styles.controlsContainer]}>
+          <View style={styles.controlsContainer}>
             <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />
-            <View style={[{ paddingTop: 10 }]}>
+            <View style={{ paddingTop: 10 }}>
               <Button
                 title={titleForConfirmButton()}
                 accessibilityLabel={labelForConfirmButton()}
@@ -329,7 +324,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
                 }
               />
             </View>
-            <View style={[{ paddingTop: 10 }]}>
+            <View style={{ paddingTop: 10 }}>
               <Button
                 title={t('Global.Cancel')}
                 accessibilityLabel={t('Global.Cancel')}
