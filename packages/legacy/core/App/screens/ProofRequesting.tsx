@@ -117,6 +117,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     buttonContainer: {
       marginTop: 'auto',
       marginHorizontal: 20,
+      marginBottom: 10,
     },
   })
 

@@ -114,6 +114,7 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
   <View
     style={
       Object {
+        "marginBottom": 10,
         "marginHorizontal": 20,
         "marginTop": "auto",
       }
@@ -310,6 +311,7 @@ exports[`ProofRequesting Component renders correctly 1`] = `
   <View
     style={
       Object {
+        "marginBottom": 10,
         "marginHorizontal": 20,
         "marginTop": "auto",
       }
@@ -462,6 +464,7 @@ exports[`ProofRequesting Component renders correctly 2`] = `
   <View
     style={
       Object {
+        "marginBottom": 10,
         "marginHorizontal": 20,
         "marginTop": "auto",
       }
