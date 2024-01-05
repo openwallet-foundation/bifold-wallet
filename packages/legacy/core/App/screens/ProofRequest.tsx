@@ -5,7 +5,7 @@ import {
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@aries-framework/anoncreds'
-import { CredentialExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord, ProofState } from '@aries-framework/core'
 import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
@@ -500,7 +500,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             testID={testIdWithKey('Share')}
             buttonType={ButtonType.Primary}
             onPress={handleAcceptPress}
-            disabled={!hasAvailableCredentials || !hasSatisfiedPredicates(getCredentialsFields()) || revocationOffense}
+            disabled={
+              !hasAvailableCredentials ||
+              !hasSatisfiedPredicates(getCredentialsFields()) ||
+              revocationOffense ||
+              proof?.state !== ProofState.RequestReceived
+            }
           />
         </View>
         <View style={styles.footerButton}>
