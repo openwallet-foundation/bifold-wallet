@@ -1,9 +1,9 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { tourMargin, hitSlop } from '../../constants'
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { RenderProps } from '../../contexts/tour/tour-context'
 import { testIdWithKey } from '../../utils/testable'
@@ -74,7 +74,6 @@ export function TourBox(props: TourBoxProps): ReactElement {
     stepsOutOf,
   } = props
   const { TextTheme, ColorPallet, OnboardingTheme } = useTheme()
-  const { width } = useWindowDimensions()
   const iconSize = 30
   const dismissIconName = 'clear'
   const iconColor = ColorPallet.notification.infoIcon
@@ -89,7 +88,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
       borderRadius: 5,
       borderWidth: 1,
       padding: 20,
-      width: width - tourMargin * 2,
+      flex: 1,
       margin: 'auto',
     },
     headerContainer: {

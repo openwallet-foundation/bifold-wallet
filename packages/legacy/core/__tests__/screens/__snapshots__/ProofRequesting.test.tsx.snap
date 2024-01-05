@@ -6,6 +6,7 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
     Array [
       "left",
       "right",
+      "bottom",
     ]
   }
   style={
@@ -119,84 +120,76 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
     }
   >
     <View
-      style={
+      accessibilityLabel="Verifier.RefreshQR"
+      accessibilityRole="button"
+      accessibilityState={
         Object {
-          "marginBottom": 10,
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": true,
+          "expanded": undefined,
+          "selected": undefined,
         }
       }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "rgba(53, 130, 63, 0.35)",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+      testID="com.ariesbifold:id/GenerateNewQR"
     >
       <View
-        accessibilityLabel="Verifier.RefreshQR"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": true,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": "rgba(53, 130, 63, 0.35)",
-            "borderRadius": 4,
-            "opacity": 1,
-            "padding": 16,
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
           }
         }
-        testID="com.ariesbifold:id/GenerateNewQR"
       >
-        <View
+        <Text
           style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+              false,
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-                false,
-              ]
-            }
-          >
-            Verifier.RefreshQR
-          </Text>
-        </View>
+          Verifier.RefreshQR
+        </Text>
       </View>
     </View>
   </View>
@@ -209,6 +202,7 @@ exports[`ProofRequesting Component renders correctly 1`] = `
     Array [
       "left",
       "right",
+      "bottom",
     ]
   }
   style={
@@ -322,84 +316,76 @@ exports[`ProofRequesting Component renders correctly 1`] = `
     }
   >
     <View
-      style={
+      accessibilityLabel="Verifier.RefreshQR"
+      accessibilityRole="button"
+      accessibilityState={
         Object {
-          "marginBottom": 10,
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": true,
+          "expanded": undefined,
+          "selected": undefined,
         }
       }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "rgba(53, 130, 63, 0.35)",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+      testID="com.ariesbifold:id/GenerateNewQR"
     >
       <View
-        accessibilityLabel="Verifier.RefreshQR"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": true,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": "rgba(53, 130, 63, 0.35)",
-            "borderRadius": 4,
-            "opacity": 1,
-            "padding": 16,
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
           }
         }
-        testID="com.ariesbifold:id/GenerateNewQR"
       >
-        <View
+        <Text
           style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+              false,
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-                false,
-              ]
-            }
-          >
-            Verifier.RefreshQR
-          </Text>
-        </View>
+          Verifier.RefreshQR
+        </Text>
       </View>
     </View>
   </View>
@@ -412,6 +398,7 @@ exports[`ProofRequesting Component renders correctly 2`] = `
     Array [
       "left",
       "right",
+      "bottom",
     ]
   }
   style={
@@ -481,79 +468,71 @@ exports[`ProofRequesting Component renders correctly 2`] = `
     }
   >
     <View
-      style={
+      accessibilityLabel="Verifier.RefreshQR"
+      accessibilityRole="button"
+      accessibilityState={
         Object {
-          "marginBottom": 10,
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
         }
       }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+      testID="com.ariesbifold:id/GenerateNewQR"
     >
       <View
-        accessibilityLabel="Verifier.RefreshQR"
-        accessibilityRole="button"
-        accessibilityState={
-          Object {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": false,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          Object {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": "#42803E",
-            "borderRadius": 4,
-            "opacity": 1,
-            "padding": 16,
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
           }
         }
-        testID="com.ariesbifold:id/GenerateNewQR"
       >
-        <View
+        <Text
           style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              },
+              false,
+              false,
+              false,
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                false,
-                false,
-                false,
-              ]
-            }
-          >
-            Verifier.RefreshQR
-          </Text>
-        </View>
+          Verifier.RefreshQR
+        </Text>
       </View>
     </View>
   </View>

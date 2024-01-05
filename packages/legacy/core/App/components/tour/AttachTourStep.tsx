@@ -1,5 +1,5 @@
 import React, { cloneElement, ReactElement, ReactNode, RefObject, useContext, useEffect, useRef } from 'react'
-import { StyleProp, View } from 'react-native'
+import { StyleProp, useWindowDimensions, View } from 'react-native'
 
 import { TourContext } from '../../contexts/tour/tour-context'
 import { TourID } from '../../types/tour'
@@ -46,7 +46,7 @@ export interface AttachTourStepProps<T> {
  */
 export function AttachTourStep<T>({ children, fill = false, index, tourID }: AttachTourStepProps<T>): ReactElement {
   const { currentStep, currentTour, changeSpot } = useContext(TourContext)
-
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions()
   const childRef = useRef<View>(null)
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function AttachTourStep<T>({ children, fill = false, index, tourID }: Att
         changeSpot({ height, width, x, y })
       })
     }
-  }, [changeSpot, currentTour, currentStep, index])
+  }, [windowWidth, windowHeight, changeSpot, currentTour, currentStep, index])
 
   const { style, ...rest } = children.props
   const childStyle = style ?? {}
