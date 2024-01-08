@@ -62,7 +62,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       alignItems: 'center',
     },
     messageText: {
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       textAlign: 'center',
       marginTop: 30,
     },

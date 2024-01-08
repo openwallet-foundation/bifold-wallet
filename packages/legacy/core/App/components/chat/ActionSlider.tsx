@@ -45,8 +45,7 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
       elevation: 5,
     },
     drawerTitleText: {
-      ...TextTheme.normal,
-      fontWeight: 'bold',
+      ...TextTheme.bold,
       textAlign: 'center',
       marginVertical: 10,
     },

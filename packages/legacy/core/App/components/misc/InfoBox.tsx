@@ -70,9 +70,8 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       flexGrow: 0,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...TextTheme.bold,
       flexShrink: 1,
-      fontWeight: 'bold',
       alignSelf: 'center',
       color: ColorPallet.notification.infoText,
     },
@@ -88,7 +87,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
     },
     showDetailsText: {
       ...TextTheme.title,
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       color: ColorPallet.brand.link,
     },
   })

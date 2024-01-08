@@ -61,6 +61,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
                   "alignSelf": "center",
                   "height": 120,
                   "marginBottom": 20,
+                  "marginTop": 30,
                   "resizeMode": "contain",
                   "width": 120,
                 }
@@ -526,6 +527,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                   "alignSelf": "center",
                   "height": 120,
                   "marginBottom": 20,
+                  "marginTop": 30,
                   "resizeMode": "contain",
                   "width": 120,
                 }

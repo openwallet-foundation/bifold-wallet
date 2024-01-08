@@ -24,7 +24,7 @@ const TabStack: React.FC = () => {
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertConnectedNetwork } = useNetwork()
-  const { ColorPallet, TabTheme } = useTheme()
+  const { ColorPallet, TabTheme, TextTheme } = useTheme()
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
   const styles = StyleSheet.create({
     tabBarIcon: {
@@ -68,7 +68,7 @@ const TabStack: React.FC = () => {
                       style={{
                         ...TabTheme.tabBarTextStyle,
                         color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                        fontWeight: focused ? 'bold' : 'normal',
+                        fontWeight: focused ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
                       }}
                     >
                       {t('TabStack.Home')}
@@ -183,7 +183,7 @@ const TabStack: React.FC = () => {
                       style={{
                         ...TabTheme.tabBarTextStyle,
                         color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                        fontWeight: focused ? 'bold' : 'normal',
+                        fontWeight: focused ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
                       }}
                     >
                       {t('TabStack.Credentials')}

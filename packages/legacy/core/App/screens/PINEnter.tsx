@@ -302,6 +302,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
               resizeMode: Assets.img.logoSecondary.resizeMode,
               alignSelf: 'center',
               marginBottom: 20,
+              marginTop: 30,
             }}
           />
           {biometricsEnrollmentChange ? (
