@@ -2,9 +2,10 @@ import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View, Linking } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, View, Linking, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { Screens, HomeStackParams, TabStacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
@@ -19,6 +20,7 @@ interface CameraDisclosureModalProps {
 const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCameraUse }) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
+  const { modalStatusBarStyles } = useConfiguration()
   const [modalVisible, setModalVisible] = useState(true)
   const [showSettingsPopup, setShowSettingsPopup] = useState(false)
   const [requestInProgress, setRequestInProgress] = useState(false)
@@ -79,6 +81,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
         />
       )}
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
+        <StatusBar barStyle={modalStatusBarStyles} />
         <ScrollView style={[styles.container]}>
           <Text style={[TextTheme.modalHeadingOne]} testID={testIdWithKey('AllowCameraUse')}>
             {t('CameraDisclosure.AllowCameraUse')}

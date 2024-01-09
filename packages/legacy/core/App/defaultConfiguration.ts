@@ -19,6 +19,7 @@ import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
+import { StatusBarStyles } from './utils/luminance'
 
 export const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
@@ -57,4 +58,5 @@ export const defaultConfiguration: ConfigurationContext = {
   whereToUseWalletUrl: 'https://example.com',
   showScanHelp: true,
   showScanButton: true,
+  modalStatusBarStyles: StatusBarStyles.Light,
 }

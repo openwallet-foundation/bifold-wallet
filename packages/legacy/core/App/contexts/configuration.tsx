@@ -3,6 +3,7 @@ import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackScreenProps } from '@react-navigation/stack'
 import { createContext, ReducerAction, useContext } from 'react'
+import { StatusBarStyle } from 'react-native'
 
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
@@ -54,6 +55,7 @@ export interface ConfigurationContext {
   whereToUseWalletUrl: string
   showScanHelp?: boolean
   showScanButton?: boolean
+  modalStatusBarStyles?: StatusBarStyle
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)
