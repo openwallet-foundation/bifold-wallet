@@ -12,18 +12,18 @@ Array [
     <View
       style={
         Object {
-          "height": 1334,
-          "width": 750,
+          "height": 1335,
+          "width": 751,
         }
       }
       testID="com.ariesbifold:id/SpotlightOverlay"
     >
       <RNSVGSvgView
         align="xMidYMid"
-        bbHeight="100%"
-        bbWidth="100%"
+        bbHeight={1335}
+        bbWidth={751}
         focusable={false}
-        height="100%"
+        height={1335}
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -45,20 +45,20 @@ Array [
             },
             Object {
               "flex": 0,
-              "height": "100%",
-              "width": "100%",
+              "height": 1335,
+              "width": 751,
             },
           ]
         }
         testID="com.ariesbifold:id/SpotOverlay"
-        vbHeight={1334}
-        vbWidth={750}
-        width="100%"
+        vbHeight={1335}
+        vbWidth={751}
+        width={751}
       >
         <RNSVGGroup>
           <RNSVGDefs>
             <RNSVGMask
-              height="100%"
+              height={1335}
               maskContentUnits={1}
               maskTransform={
                 Array [
@@ -72,19 +72,19 @@ Array [
               }
               maskUnits={0}
               name="mask"
-              width="100%"
+              width={751}
               x={0}
               y={0}
             >
               <RNSVGRect
                 fill={4294967295}
-                height="100%"
+                height={1335}
                 propList={
                   Array [
                     "fill",
                   ]
                 }
-                width="100%"
+                width={751}
                 x={0}
                 y={0}
               />
@@ -92,7 +92,7 @@ Array [
           </RNSVGDefs>
           <RNSVGRect
             fill={4286611584}
-            height="100%"
+            height={1335}
             mask="mask"
             opacity={0.7}
             propList={
@@ -100,7 +100,7 @@ Array [
                 "fill",
               ]
             }
-            width="100%"
+            width={751}
             x={0}
             y={0}
           />
@@ -113,7 +113,7 @@ Array [
             "opacity": 1,
             "position": "absolute",
             "right": 25,
-            "top": 266.8,
+            "top": 222.33333333333334,
           }
         }
         testID="com.ariesbifold:id/SpotTooltip"

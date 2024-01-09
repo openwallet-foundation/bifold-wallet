@@ -24,7 +24,7 @@ interface TourOverlayProps {
 export const TourOverlay = (props: TourOverlayProps) => {
   const { width: windowWidth, height: windowHeight } = useWindowDimensions()
   const { color, currentTour, currentStep, onBackdropPress, backdropOpacity, changeSpot, spot, tourStep } = props
-
+  const [viewBox, setViewBox] = useState(`0 0 ${windowWidth} ${windowHeight}`)
   const { next, previous, start, stop } = useContext(TourContext)
 
   const [tooltipStyle, setTooltipStyle] = useState<ViewStyle>({})
@@ -52,11 +52,12 @@ export const TourOverlay = (props: TourOverlayProps) => {
     const gapBetweenSpotAndTooltip = 50
     // if origin spot (ie. no spotlight)
     if (spot.x === 0 && spot.y === 0) {
-      const top = windowHeight / 5
+      // a relative margin so that the tooltip doesn't start at the very top of the screen
+      const oneSixthOfScreenHeight = windowHeight / 6
       setTooltipStyle({
         left: tourMargin,
         right: tourMargin,
-        top,
+        top: oneSixthOfScreenHeight,
       })
       // if spot is in the lower half of the screen
     } else if (spot.y >= windowHeight / 2) {
@@ -75,7 +76,13 @@ export const TourOverlay = (props: TourOverlayProps) => {
         top,
       })
     }
-  }, [spot.height, spot.width, spot.x, spot.y])
+  }, [windowWidth, windowHeight, spot.width, spot.height, spot.x, spot.y])
+
+  useEffect(() => {
+    // + 1 pixel to account for an svg size rounding issue that would cause
+    // a tiny gap around the overlay
+    setViewBox(`0 0 ${windowWidth + 1} ${windowHeight + 1}`)
+  }, [windowWidth, windowHeight])
 
   return (
     <Modal
@@ -84,24 +91,30 @@ export const TourOverlay = (props: TourOverlayProps) => {
       transparent={true}
       visible={currentStep !== undefined}
     >
-      <View style={{ height: windowHeight, width: windowWidth }} testID={testIdWithKey('SpotlightOverlay')}>
+      <View style={{ height: windowHeight + 1, width: windowWidth + 1 }} testID={testIdWithKey('SpotlightOverlay')}>
         <Svg
           testID={testIdWithKey('SpotOverlay')}
-          height="100%"
-          width="100%"
-          viewBox={`0 0 ${windowWidth} ${windowHeight}`}
+          height={windowHeight + 1}
+          width={windowWidth + 1}
+          viewBox={viewBox}
           onPress={handleBackdropPress}
           shouldRasterizeIOS={true}
           renderToHardwareTextureAndroid={true}
         >
           <Defs>
-            <Mask id="mask" x={0} y={0} height="100%" width="100%">
-              <Rect height="100%" width="100%" fill="#fff" />
+            <Mask id="mask" x={0} y={0} height={windowHeight + 1} width={windowWidth + 1}>
+              <Rect height={windowHeight + 1} width={windowWidth + 1} fill="#fff" />
               <SpotCutout />
             </Mask>
           </Defs>
 
-          <Rect height="100%" width="100%" fill={color} mask="url(#mask)" opacity={backdropOpacity} />
+          <Rect
+            height={windowHeight + 1}
+            width={windowWidth + 1}
+            fill={color}
+            mask="url(#mask)"
+            opacity={backdropOpacity}
+          />
         </Svg>
 
         <View
