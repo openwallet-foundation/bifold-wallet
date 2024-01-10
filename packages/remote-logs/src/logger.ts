@@ -1,74 +1,10 @@
-import axios from 'axios'
 import { BaseLogger } from '@aries-framework/core'
-import { logger, transportFunctionType, consoleTransport } from 'react-native-logs'
+import { logger, consoleTransport } from 'react-native-logs'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
-
-export interface RemoteLoggerOptions {
-  lokiUrl?: string
-  lokiLabels?: Record<string, string>
-  autoDisableRemoteLoggingIntervalInMinutes?: number
-}
-
-type LokiTransportProps = {
-  msg: any
-  rawMsg: any
-  level: {
-    severity: number
-    text: string
-  }
-  options?: RemoteLoggerOptions
-}
+import { RemoteLoggerOptions, lokiTransport } from './transports'
 
 export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
-}
-
-const lokiTransport: transportFunctionType = (props: LokiTransportProps) => {
-  // Loki requires a timestamp with nanosecond precision
-  // however Date.now() only returns milliseconds precision.
-  const timestampEndPadding = '000000'
-
-  if (!props.options) {
-    throw Error('props.options is required')
-  }
-
-  if (!props.options.lokiUrl) {
-    throw Error('props.options.lokiUrl is required')
-  }
-
-  if (!props.options.lokiLabels) {
-    throw Error('props.options.labels is required')
-  }
-
-  if (!props.options.lokiUrl) {
-    throw new Error('Loki URL is missing')
-  }
-
-  const { lokiUrl, lokiLabels } = props.options
-  const { message, data } = props.rawMsg.pop()
-  const payload = {
-    streams: [
-      {
-        stream: {
-          job: 'react-native-logs',
-          level: props.level.text,
-          ...lokiLabels,
-        },
-        values: [[`${Date.now()}${timestampEndPadding}`, JSON.stringify({ message, data })]],
-      },
-    ],
-  }
-
-  axios
-    .post(lokiUrl, payload)
-    .then((res) => {
-      if (res.status !== 204) {
-        console.warn(`Expected Loki to return 204, received ${res.status}`)
-      }
-    })
-    .catch((error) => {
-      console.error(`Error while sending to Loki, ${error}`)
-    })
 }
 
 export class RemoteLogger extends BaseLogger {
