@@ -85,7 +85,7 @@ const agent = new Agent(options)
 
 ```typescript
 import { DeviceEventEmitter } from 'react-native'
-import { RemoteLoggerEventTypes } from '../logger'
+import { RemoteLoggerEventTypes } from '@hyperledger/aries-remote-logs'
 
 // ...
 
