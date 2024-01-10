@@ -1,6 +1,7 @@
 import { BaseLogger } from '@aries-framework/core'
-import { logger, consoleTransport } from 'react-native-logs'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
+import { logger, consoleTransport } from 'react-native-logs'
+
 import { RemoteLoggerOptions, lokiTransport } from './transports'
 
 export enum RemoteLoggerEventTypes {
@@ -15,6 +16,7 @@ export class RemoteLogger extends BaseLogger {
   private lokiLabels: Record<string, string>
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private log: any
   private config = {
     levels: {
@@ -107,31 +109,31 @@ export class RemoteLogger extends BaseLogger {
     this.eventListener = undefined
   }
 
-  public test(message: string, data?: Record<string, any> | undefined): void {
-    this.log.test({ message, data })
+  public test(message: string, data?: object | undefined): void {
+    this.log?.test({ message, data })
   }
 
-  public trace(message: string, data?: Record<string, any> | undefined): void {
-    this.log.trace({ message, data })
+  public trace(message: string, data?: object | undefined): void {
+    this.log?.trace({ message, data })
   }
 
-  public debug(message: string, data?: Record<string, any> | undefined): void {
-    this.log.debug({ message, data })
+  public debug(message: string, data?: object | undefined): void {
+    this.log?.debug({ message, data })
   }
 
-  public info(message: string, data?: Record<string, any> | undefined): void {
-    this.log.info({ message, data })
+  public info(message: string, data?: object | undefined): void {
+    this.log?.info({ message, data })
   }
 
-  public warn(message: string, data?: Record<string, any> | undefined): void {
-    this.log.warn({ message, data })
+  public warn(message: string, data?: object | undefined): void {
+    this.log?.warn({ message, data })
   }
 
-  public error(message: string, data?: Record<string, any> | undefined): void {
-    this.log.error({ message, data })
+  public error(message: string, data?: object | undefined): void {
+    this.log?.error({ message, data })
   }
 
-  public fatal(message: string, data?: Record<string, any> | undefined): void {
-    this.log.fatal({ message, data })
+  public fatal(message: string, data?: object | undefined): void {
+    this.log?.fatal({ message, data })
   }
 }

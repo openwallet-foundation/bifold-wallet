@@ -8,7 +8,9 @@ export interface RemoteLoggerOptions {
 }
 
 export type LokiTransportProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   msg: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rawMsg: any
   level: {
     severity: number
@@ -57,10 +59,10 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
     .post(lokiUrl, payload)
     .then((res) => {
       if (res.status !== 204) {
-        console.warn(`Expected Loki to return 204, received ${res.status}`)
+        throw new Error(`Expected Loki to return 204, received ${res.status}`)
       }
     })
     .catch((error) => {
-      console.error(`Error while sending to Loki, ${error}`)
+      throw new Error(`Error while sending to Loki, ${error}`)
     })
 }
