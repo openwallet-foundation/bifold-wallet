@@ -12,7 +12,11 @@ Due to the sensitive nature of Verifiable Credentials and Digital Identity in ge
 
 When remote logging is enabled the `RemoteLogger` will generate a session ID automatically. This ID is then set as a label on all logs sent to the remote server. This allows the logs to be filtered by session ID. This is useful when debugging issues that are specific to a single user.
 
-When the end user enables remote logging they will be presented with a session ID. This ID should be recorded and provided to the support team. The support team can then use this ID to identify the correct logs. This session ID is also helpful to minimize corelation of the logs with the end user.
+When the end user enables remote logging present them with the a session ID. This ID should be recorded and provided to the support team. The support team can then use this ID to identify the correct logs. This session ID is also helpful to minimize corelation of the logs with the end user.
+
+![Remote Warning Screenshot](./doc/assets/warning-screenshot.jpeg)
+
+Fetch the session ID with the following code:
 
 ```typescript
 // ...
