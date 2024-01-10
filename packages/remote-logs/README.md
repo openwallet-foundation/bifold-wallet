@@ -8,7 +8,7 @@ This package allows a copy of the AFJ logs to be sent to a remote Loki server. T
 
 Due to the sensitive nature of Verifiable Credentials and Digital Identity in general, the logs are not sent automatically. Instead, this feature must be enabled. It is **highly recommended** that this feature be disabled by default in production environments and only enabled, by the end user, when needed, and even then automatically disabled after a short period of time.
 
-## Considerations
+### Considerations
 
 When remote logging is enabled the `RemoteLogger` will generate a session ID automatically. This ID is then set as a label on all logs sent to the remote server. This allows the logs to be filtered by session ID. This is useful when debugging issues that are specific to a single user.
 
@@ -26,7 +26,7 @@ const logger = agent?.config.logger as RemoteLogger
 console.log(`Session ID: ${logger.sessionId}`)
 ```
 
-## Configuration
+### Configuration
 
 The `RemoteLogger` is configured with a set of options. These options are passed to the constructor of the `RemoteLogger` class. The options are as follows:
 
@@ -102,3 +102,19 @@ DeviceEventEmitter.emit(RemoteLoggerEventTypes.ENABLE_REMOTE_LOGGING, true)
 
 // ...
 ```
+
+### Including the Package
+
+**Metro**
+
+Metro can't handle symlinks. Therefore, you need to specify the `@hyperledger/aries-remote-logs` location in the `metro.config.js` file of your application. Check out the example below, or view this [complete example](https://github.com/bcgov/bc-wallet-mobile/blob/main/app/metro.config.js) for more information.
+
+```javascript
+// ...
+fs.realpathSync(path.join(__dirname, 'node_modules', '@hyperledger/aries-remote-logs')),
+// ...
+```
+
+**Yarn**
+
+Yarn struggles to include `react-native` peer-dependencies from the local file system. To fix this, add any `react-native` dependencies from this package's `peerDependencies` in `package.json` to your own `package.json`. Use a command like `yarn add react-native-logs@^5.0.1` to do this.

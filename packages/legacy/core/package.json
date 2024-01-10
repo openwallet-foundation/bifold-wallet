@@ -61,6 +61,7 @@
     "@hyperledger/aries-askar-react-native": "^0.1.1",
     "@hyperledger/aries-bifold-verifier": "^1.0.0",
     "@hyperledger/aries-oca": "^1.0.0",
+    "@hyperledger/aries-remote-logs": "^1.0.0",
     "@hyperledger/indy-vdr-react-native": "^0.1.0",
     "@react-native-async-storage/async-storage": "1.15.11",
     "@react-native-community/eslint-config": "^3.2.0",
