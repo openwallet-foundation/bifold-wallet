@@ -42,6 +42,8 @@ The image below shows what a typical Grafana log query looks like. The query is 
 
 ### Example Usage
 
+Setup the `RemoteLogger` and pass it to the AFJ `Agent` as shown below:
+
 ```typescript
 import { RemoteLogger, RemoteLoggerOptions } from '@hyperledger/aries-remote-logs'
 
@@ -49,7 +51,7 @@ import { RemoteLogger, RemoteLoggerOptions } from '@hyperledger/aries-remote-log
 
 const autoDisableRemoteLoggingIntervalInMinutes = 90 // important
 const lokiUrl = 'https://logs.example.com:3100/loki/api/v1/push'
-const options: RemoteLoggerOptions = {
+const logOptions: RemoteLoggerOptions = {
   lokiUrl,
   lokiLabels: {
     application: 'bifold-wallet',
@@ -85,7 +87,7 @@ const agent = new Agent(options)
 // ...
 ```
 
-## Example Implementation
+Enable and disable remote logging by sending events as shown below:
 
 ```typescript
 import { DeviceEventEmitter } from 'react-native'
