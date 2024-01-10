@@ -6,7 +6,7 @@ The `@hyperledger/aries-remote-logs` package provides a simple way to send [Arie
 
 This package allows a copy of the AFJ logs to be sent to a remote Loki server. This is useful for debugging issues in environments where the logs are not easily accessible, yet the logs are needed to provide [Tier 3](https://en.wikipedia.org/wiki/Technical_support) support.
 
-Due to the sensitive nature of Verifiable Credentials and Digital Identity in general, the logs are not sent automatically. Instead, this feature must be enabled. It is **highly recommended** that this feature be disabled by default production environments and only enabled, by the end user, when needed, and even then automatically disabled after a short period of time.
+Due to the sensitive nature of Verifiable Credentials and Digital Identity in general, the logs are not sent automatically. Instead, this feature must be enabled. It is **highly recommended** that this feature be disabled by default in production environments and only enabled, by the end user, when needed, and even then automatically disabled after a short period of time.
 
 ## Considerations
 
@@ -36,7 +36,7 @@ The `RemoteLogger` is configured with a set of options. These options are passed
 | `lokiLabels`                                | `Record<string, string>` | A set of labels to be applied to all logs sent to the Loki server.           |
 | `autoDisableRemoteLoggingIntervalInMinutes` | `number`                 | The number of minutes to wait before automatically disabling remote logging. |
 
-The image below shows what a typical Grafana log query looks like. The query is filtered by the `application` and `job` labels. The `sessionId` label is used to filter the logs for a specific wallet instance / session.
+The image below shows what a typical Grafana log query looks like. The query is filtered by the `application` and `job` labels. The `sessionId` label is used to filter the logs for a specific debug session.
 
 ![Grafana Screenshot](./doc/assets/grafana-screenshot.png)
 
