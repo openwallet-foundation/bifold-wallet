@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Vibration, Pressable, StyleSheet, Text } from 'react-native'
+import { View, Modal, Vibration, Pressable, StyleSheet, Text, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
@@ -27,6 +27,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
+  const [orientation, setOrientation] = useState(
+    Dimensions.get('window').width < Dimensions.get('window').height ? 'portrait' : 'landscape'
+  )
   const { t } = useTranslation()
   const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
@@ -80,6 +83,19 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
 
   const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
 
+  useEffect(() => {
+    const handle = Dimensions.addEventListener('change', ({ window: { width, height } }) => {
+      if (width < height) {
+        setOrientation('portrait')
+      } else {
+        setOrientation('landscape')
+      }
+    })
+    return () => {
+      handle.remove()
+    }
+  }, [])
+
   const onCodeScanned = useCallback((codes: Code[]) => {
     const value = codes[0].value
     if (!value || invalidQrCodes.has(value)) {
@@ -126,14 +142,18 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
         </View>
       </Modal>
       {device && (
-        <Camera
-          style={StyleSheet.absoluteFill}
-          device={device}
-          torch={torchActive ? 'on' : 'off'}
-          isActive={cameraActive}
-          codeScanner={codeScanner}
-          format={format}
-        />
+        <View
+          style={[StyleSheet.absoluteFill, { transform: [{ rotate: orientation === 'portrait' ? '0deg' : '-90deg' }] }]}
+        >
+          <Camera
+            style={StyleSheet.absoluteFill}
+            device={device}
+            torch={torchActive ? 'on' : 'off'}
+            isActive={cameraActive}
+            codeScanner={codeScanner}
+            format={format}
+          />
+        </View>
       )}
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
