@@ -58,5 +58,5 @@ export const defaultConfiguration: ConfigurationContext = {
   whereToUseWalletUrl: 'https://example.com',
   showScanHelp: true,
   showScanButton: true,
-  modalStatusBarStyles: StatusBarStyles.Light,
+  modalStatusBarStyle: StatusBarStyles.Light,
 }

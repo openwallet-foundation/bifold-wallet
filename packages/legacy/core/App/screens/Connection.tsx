@@ -31,7 +31,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
   // logic should be: if this property is set, rather than showing the
   // delay message, the user should be redirected to the home screen.
-  const { connectionTimerDelay, autoRedirectConnectionToHome, modalStatusBarStyles } = useConfiguration()
+  const { connectionTimerDelay, autoRedirectConnectionToHome, modalStatusBarStyle } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const { connectionId, threadId } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
@@ -216,7 +216,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }}
     >
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-        <StatusBar barStyle={modalStatusBarStyles} />
+        <StatusBar barStyle={modalStatusBarStyle} />
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
             <Text

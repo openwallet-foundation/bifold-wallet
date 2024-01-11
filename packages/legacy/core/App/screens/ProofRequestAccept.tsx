@@ -20,7 +20,7 @@ export interface ProofRequestAcceptProps {
 
 const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofId }) => {
   const { t } = useTranslation()
-  const { modalStatusBarStyles } = useConfiguration()
+  const { modalStatusBarStyle } = useConfiguration()
   const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
   const proof = useProofById(proofId)
   const navigation = useNavigation()
@@ -75,7 +75,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-        <StatusBar barStyle={modalStatusBarStyles} />
+        <StatusBar barStyle={modalStatusBarStyle} />
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
             {proofDeliveryStatus === ProofState.RequestReceived && (

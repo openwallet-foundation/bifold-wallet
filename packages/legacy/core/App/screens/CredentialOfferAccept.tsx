@@ -34,7 +34,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const navigation = useNavigation()
   const { ListItems } = useTheme()
   const { CredentialAdded, CredentialPending } = useAnimatedComponents()
-  const { connectionTimerDelay, modalStatusBarStyles } = useConfiguration()
+  const { connectionTimerDelay, modalStatusBarStyle } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
     container: {
@@ -107,7 +107,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
-      <StatusBar barStyle={modalStatusBarStyles} />
+      <StatusBar barStyle={modalStatusBarStyle} />
       <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>

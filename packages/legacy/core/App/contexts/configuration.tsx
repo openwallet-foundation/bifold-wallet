@@ -55,7 +55,7 @@ export interface ConfigurationContext {
   whereToUseWalletUrl: string
   showScanHelp?: boolean
   showScanButton?: boolean
-  modalStatusBarStyles?: StatusBarStyle
+  modalStatusBarStyle: StatusBarStyle
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

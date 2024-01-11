@@ -20,7 +20,7 @@ interface CameraDisclosureModalProps {
 const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCameraUse }) => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
-  const { modalStatusBarStyles } = useConfiguration()
+  const { modalStatusBarStyle } = useConfiguration()
   const [modalVisible, setModalVisible] = useState(true)
   const [showSettingsPopup, setShowSettingsPopup] = useState(false)
   const [requestInProgress, setRequestInProgress] = useState(false)
@@ -81,7 +81,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
         />
       )}
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-        <StatusBar barStyle={modalStatusBarStyles} />
+        <StatusBar barStyle={modalStatusBarStyle} />
         <ScrollView style={[styles.container]}>
           <Text style={[TextTheme.modalHeadingOne]} testID={testIdWithKey('AllowCameraUse')}>
             {t('CameraDisclosure.AllowCameraUse')}
