@@ -1,0 +1,19 @@
+version: '3'
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - '3100:3100'
+    command: -config.file=/etc/loki/loki-config.yaml -config.expand-env=true
+    volumes:
+      - ./loki-config.yaml:/etc/loki/loki-config.yaml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    depends_on:
+      - loki
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: secret
+      GF_LOKI_URL: http://loki:3100
