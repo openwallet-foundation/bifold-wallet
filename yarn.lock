@@ -4008,7 +4008,6 @@ __metadata:
     "@hyperledger/aries-askar-react-native": ^0.1.1
     "@hyperledger/aries-bifold-verifier": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
-    "@hyperledger/aries-remote-logs": ^1.0.0
     "@hyperledger/indy-vdr-react-native": ^0.1.0
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/eslint-config": ^3.2.0
@@ -4161,6 +4160,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@hyperledger/aries-bifold-remote-logs@workspace:packages/remote-logs":
+  version: 0.0.0-use.local
+  resolution: "@hyperledger/aries-bifold-remote-logs@workspace:packages/remote-logs"
+  dependencies:
+    "@aries-framework/core": 0.4.0
+    "@babel/runtime": ^7.20.0
+    "@typescript-eslint/parser": ^6.6.0
+    axios: ^1.4.0
+    eslint: ^8.48.0
+    eslint-import-resolver-typescript: ^2.5.0
+    react-native: 0.72.5
+    react-native-logs: ^5.0.1
+    rimraf: ^5.0.0
+    typescript: ^5.0.4
+  peerDependencies:
+    react-native: 0.72.5
+    react-native-logs: ^5.0.1
+  languageName: unknown
+  linkType: soft
+
 "@hyperledger/aries-bifold-verifier@^1.0.0, @hyperledger/aries-bifold-verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-bifold-verifier@workspace:packages/verifier"
@@ -4238,26 +4257,6 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
-  languageName: unknown
-  linkType: soft
-
-"@hyperledger/aries-remote-logs@^1.0.0, @hyperledger/aries-remote-logs@workspace:packages/remote-logs":
-  version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-remote-logs@workspace:packages/remote-logs"
-  dependencies:
-    "@aries-framework/core": 0.4.0
-    "@babel/runtime": ^7.20.0
-    "@typescript-eslint/parser": ^6.6.0
-    axios: ^1.4.0
-    eslint: ^8.48.0
-    eslint-import-resolver-typescript: ^2.5.0
-    react-native: 0.72.5
-    react-native-logs: ^5.0.1
-    rimraf: ^5.0.0
-    typescript: ^5.0.4
-  peerDependencies:
-    react-native: 0.72.5
-    react-native-logs: ^5.0.1
   languageName: unknown
   linkType: soft
 
