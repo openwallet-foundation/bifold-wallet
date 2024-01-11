@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Vibration, Pressable, StyleSheet, Text, Dimensions } from 'react-native'
+import { View, Modal, Pressable, StyleSheet, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH, hitSlop } from '../../constants'
+import { hitSlop } from '../../constants'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
@@ -29,8 +28,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const [showInfoBox, setShowInfoBox] = useState(false)
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
-
-  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
 
   const styles = StyleSheet.create({
     container: {

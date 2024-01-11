@@ -3,13 +3,11 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Vibration, View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
+import { View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { useConnectionByOutOfBandId } from '../../hooks/connections'
@@ -21,8 +19,8 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
-import ScanTab from './ScanTab'
 import ScanCamera from './ScanCamera'
+import ScanTab from './ScanTab'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
@@ -138,7 +136,12 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {firstTabActive ? (
         <>
-          <ScanCamera handleCodeScan={handleCodeScan} enableCameraOnError={enableCameraOnError} error={error} torchActive={torchActive}></ScanCamera>
+          <ScanCamera
+            handleCodeScan={handleCodeScan}
+            enableCameraOnError={enableCameraOnError}
+            error={error}
+            torchActive={torchActive}
+          ></ScanCamera>
           <View style={styles.cameraViewContainer}>
             <View style={styles.errorContainer}>
               {error ? (

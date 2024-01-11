@@ -18,6 +18,26 @@ exports[`NewQRView Component Renders correctly on first tab 1`] = `
 >
   <View
     style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "transform": Array [
+            Object {
+              "rotate": "0deg",
+            },
+          ],
+        },
+      ]
+    }
+  />
+  <View
+    style={
       Object {
         "alignItems": "center",
         "flex": 1,

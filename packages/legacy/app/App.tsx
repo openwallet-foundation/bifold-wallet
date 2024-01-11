@@ -26,10 +26,10 @@ import {
 import * as React from 'react'
 import { useEffect, useMemo } from 'react'
 import { StatusBar } from 'react-native'
+import { isTablet } from 'react-native-device-info'
+import Orientation from 'react-native-orientation-locker'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
-import {isTablet} from 'react-native-device-info'
-import Orientation from "react-native-orientation-locker";
 
 initLanguages(translationResources)
 
@@ -44,8 +44,8 @@ const App = () => {
     SplashScreen.hide()
   }, [])
 
-  if (!isTablet()){
-    Orientation.lockToPortrait();
+  if (!isTablet()) {
+    Orientation.lockToPortrait()
   }
 
   return (
