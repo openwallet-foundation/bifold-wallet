@@ -22,6 +22,7 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanTab from './ScanTab'
+import ScanCamera from './ScanCamera'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
@@ -36,25 +37,13 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const { width } = useWindowDimensions()
   const qrSize = width - 40
   const [store] = useStore()
-  const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
   const [firstTabActive, setFirstTabActive] = useState(!defaultToConnect)
   const [invitation, setInvitation] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
   const { t } = useTranslation()
-  const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme, TabTheme } = useTheme()
   const { agent } = useAgent()
-  const device = useCameraDevice('back')
-
-  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
-  const format = useCameraFormat(device, [
-    { fps: 60 },
-    { videoAspectRatio: screenAspectRatio },
-    { videoResolution: 'max' },
-    { photoAspectRatio: screenAspectRatio },
-    { photoResolution: 'max' },
-  ])
 
   const styles = StyleSheet.create({
     container: {
@@ -145,45 +134,11 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     }
   }, [record])
 
-  const onCodeScanned = useCallback((codes: Code[]) => {
-    const value = codes[0].value
-    if (!value || invalidQrCodes.has(value)) {
-      return
-    }
-
-    if (error?.data === value) {
-      invalidQrCodes.add(value)
-      if (enableCameraOnError) {
-        return setCameraActive(true)
-      }
-    }
-
-    if (cameraActive) {
-      Vibration.vibrate()
-      handleCodeScan(value)
-      return setCameraActive(false)
-    }
-  }, [])
-
-  const codeScanner = useCodeScanner({
-    codeTypes: ['qr'],
-    onCodeScanned: onCodeScanned,
-  })
-
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {firstTabActive ? (
         <>
-          {device && (
-            <Camera
-              style={StyleSheet.absoluteFill}
-              device={device}
-              torch={torchActive ? 'on' : 'off'}
-              isActive={cameraActive}
-              codeScanner={codeScanner}
-              format={format}
-            />
-          )}
+          <ScanCamera handleCodeScan={handleCodeScan} enableCameraOnError={enableCameraOnError} error={error} torchActive={torchActive}></ScanCamera>
           <View style={styles.cameraViewContainer}>
             <View style={styles.errorContainer}>
               {error ? (

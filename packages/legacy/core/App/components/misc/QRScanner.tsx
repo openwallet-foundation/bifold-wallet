@@ -14,6 +14,7 @@ import { testIdWithKey } from '../../utils/testable'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 import QRScannerTorch from './QRScannerTorch'
+import ScanCamera from './ScanCamera'
 
 interface Props {
   handleCodeScan: (value: string) => Promise<void>
@@ -24,25 +25,12 @@ interface Props {
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError }) => {
   const navigation = useNavigation()
   const { showScanHelp, showScanButton } = useConfiguration()
-  const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
-  const [orientation, setOrientation] = useState(
-    Dimensions.get('window').width < Dimensions.get('window').height ? 'portrait' : 'landscape'
-  )
   const { t } = useTranslation()
-  const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
-  const device = useCameraDevice('back')
 
   const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
-  const format = useCameraFormat(device, [
-    { fps: 60 },
-    { videoAspectRatio: screenAspectRatio },
-    { videoResolution: 'max' },
-    { photoAspectRatio: screenAspectRatio },
-    { photoResolution: 'max' },
-  ])
 
   const styles = StyleSheet.create({
     container: {
@@ -83,44 +71,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
 
   const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
 
-  useEffect(() => {
-    const handle = Dimensions.addEventListener('change', ({ window: { width, height } }) => {
-      if (width < height) {
-        setOrientation('portrait')
-      } else {
-        setOrientation('landscape')
-      }
-    })
-    return () => {
-      handle.remove()
-    }
-  }, [])
-
-  const onCodeScanned = useCallback((codes: Code[]) => {
-    const value = codes[0].value
-    if (!value || invalidQrCodes.has(value)) {
-      return
-    }
-
-    if (error?.data === value) {
-      invalidQrCodes.add(value)
-      if (enableCameraOnError) {
-        return setCameraActive(true)
-      }
-    }
-
-    if (cameraActive) {
-      Vibration.vibrate()
-      handleCodeScan(value)
-      return setCameraActive(false)
-    }
-  }, [])
-
-  const codeScanner = useCodeScanner({
-    codeTypes: ['qr'],
-    onCodeScanned: onCodeScanned,
-  })
-
   return (
     <View style={styles.container}>
       <Modal visible={showInfoBox} animationType="fade" transparent>
@@ -141,20 +91,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           />
         </View>
       </Modal>
-      {device && (
-        <View
-          style={[StyleSheet.absoluteFill, { transform: [{ rotate: orientation === 'portrait' ? '0deg' : '-90deg' }] }]}
-        >
-          <Camera
-            style={StyleSheet.absoluteFill}
-            device={device}
-            torch={torchActive ? 'on' : 'off'}
-            isActive={cameraActive}
-            codeScanner={codeScanner}
-            format={format}
-          />
-        </View>
-      )}
+      <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError}></ScanCamera>
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
           {error ? (
