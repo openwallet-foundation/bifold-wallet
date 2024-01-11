@@ -28,6 +28,8 @@ import { useEffect, useMemo } from 'react'
 import { StatusBar } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
+import {isTablet} from 'react-native-device-info'
+import Orientation from "react-native-orientation-locker";
 
 initLanguages(translationResources)
 
@@ -41,6 +43,10 @@ const App = () => {
     // RN version can be displayed.
     SplashScreen.hide()
   }, [])
+
+  if (!isTablet()){
+    Orientation.lockToPortrait();
+  }
 
   return (
     <StoreProvider>
