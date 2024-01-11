@@ -118,3 +118,20 @@ fs.realpathSync(path.join(__dirname, 'node_modules', '@hyperledger/aries-remote-
 **Yarn**
 
 Yarn struggles to include `react-native` peer-dependencies from the local file system. To fix this, add any `react-native` dependencies from this package's `peerDependencies` in `package.json` to your own `package.json`. Use a command like `yarn add react-native-logs@^5.0.1` to do this.
+
+## Development
+
+This package ships with a docker-compose file that can be used to run a local Grafana Loki stack. To start the containers run the following command:
+
+```bash
+docker compose up -d
+```
+
+The Loki server will be available at `http://localhost:3100`. The Grafana server will be available at `http://localhost:3000`. The default username and password for Grafana is `admin` and the password is specified, can can be changed, in the `docker-compose.yaml` file:
+
+```yaml
+environment:
+  GF_SECURITY_ADMIN_PASSWORD: secret
+```
+
+Once the stack is running, and you have logged into Grafana, you may need to add a Loki data source from the main landing page. The only value you need set is the URL where Loki is running. The value, as per the docker stack is: `http://loki:3100`
