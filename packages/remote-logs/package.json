@@ -1,5 +1,5 @@
 {
-  "name": "@hyperledger/aries-remote-logs",
+  "name": "@hyperledger/aries-bifold-remote-logs",
   "version": "1.0.0",
   "description": "Remote logging for Aries Framework Javascript agents",
   "main": "build/index.js",
