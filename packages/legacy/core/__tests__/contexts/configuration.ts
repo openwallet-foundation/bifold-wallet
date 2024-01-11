@@ -1,6 +1,6 @@
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
-import { ConfigurationContext, StatusBarStyles } from '../../App'
+import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
 import { Locales } from '../../App/localization'
@@ -48,7 +48,7 @@ const configurationContext: ConfigurationContext = {
   proofRequestTemplates: useProofRequestTemplates,
   supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   whereToUseWalletUrl: 'https://example.com',
-  modalStatusBarStyle: StatusBarStyles.Light,
+  modalStatusBarStyle: 'light-content',
 }
 
 export default configurationContext
