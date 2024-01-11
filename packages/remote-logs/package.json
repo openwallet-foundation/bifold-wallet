@@ -1,0 +1,51 @@
+{
+  "name": "@hyperledger/aries-bifold-remote-logs",
+  "version": "1.0.0",
+  "description": "Remote logging for Aries Framework Javascript agents",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "build"
+  ],
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf ./build",
+    "compile": "tsc",
+    "prepublishOnly": "yarn run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyperledger/aries-mobile-agent-react-native.git",
+    "directory": "packages/remote-logging"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native/issues"
+  },
+  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
+  "devDependencies": {
+    "@babel/runtime": "^7.20.0",
+    "@typescript-eslint/parser": "^6.6.0",
+    "eslint": "^8.48.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "react-native": "0.72.5",
+    "react-native-logs": "^5.0.1",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@aries-framework/core": "0.4.0",
+    "axios": "^1.4.0"
+  },
+  "peerDependencies": {
+    "react-native": "0.72.5",
+    "react-native-logs": "^5.0.1"
+  }
+}
