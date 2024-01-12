@@ -3,6 +3,7 @@
   "packages": [
     "packages/oca",
     "packages/verifier",
+    "packages/remote-logs",
     "packages/react-native-attestation",
     "packages/legacy/core"
   ],
