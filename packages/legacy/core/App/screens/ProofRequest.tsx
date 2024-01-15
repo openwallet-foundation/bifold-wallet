@@ -272,7 +272,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
-  }, [selectedCredentials])
+  }, [selectedCredentials, credProofPromise])
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
