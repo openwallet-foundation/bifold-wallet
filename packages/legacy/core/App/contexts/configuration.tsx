@@ -1,7 +1,7 @@
 import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
-import { StackScreenProps } from '@react-navigation/stack'
+import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
 import { createContext, ReducerAction, useContext } from 'react'
 import { StatusBarStyle } from 'react-native'
 
@@ -55,6 +55,7 @@ export interface ConfigurationContext {
   whereToUseWalletUrl: string
   showScanHelp?: boolean
   showScanButton?: boolean
+  globalScreenOptions?: StackNavigationOptions
   modalStatusBarStyle: StatusBarStyle
 }
 
