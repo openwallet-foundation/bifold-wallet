@@ -81,6 +81,7 @@ export type {
   ITheme,
 } from './theme'
 export type { ConfigurationContext } from './contexts/configuration'
+export type { BifoldAgent } from './utils/agent'
 export type { TourStep } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams, OnboardingStackParams } from './types/navigators'
