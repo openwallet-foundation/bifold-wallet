@@ -23,5 +23,5 @@ export const useAllCredentialsForProof = (proofId: string) => {
       return
     }
     return retrieveCredentialsForProof(agent, proof, fullCredentials, t)
-  }, [proofId])
+  }, [proofId, fullCredentials])
 }
