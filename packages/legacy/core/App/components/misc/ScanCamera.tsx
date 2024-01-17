@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from 'react'
-import { StyleSheet, Vibration, View } from 'react-native'
+import { StyleSheet, Vibration, View, useWindowDimensions } from 'react-native'
 import { useOrientationChange } from 'react-native-orientation-locker'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants'
 import { QrCodeScanError } from '../../types/error'
 
 interface Props {
@@ -23,8 +22,7 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
   }
   const invalidQrCodes = new Set<string>()
   const device = useCameraDevice('back')
-
-  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
+  const screenAspectRatio = useWindowDimensions().scale
   const format = useCameraFormat(device, [
     { fps: 60 },
     { videoAspectRatio: screenAspectRatio },
