@@ -9,6 +9,3 @@ jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('react-native-localize', () => mockRNLocalize)
-jest.mock('react-native-static-safe-area-insets', () => {
-  return { safeAreaInsetsBottom: 0 }
-})
