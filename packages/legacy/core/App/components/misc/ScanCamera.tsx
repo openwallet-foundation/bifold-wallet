@@ -18,7 +18,7 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
     [OrientationType.PORTRAIT]: '0deg',
     [OrientationType['LANDSCAPE-LEFT']]: '270deg',
     [OrientationType['PORTRAIT-UPSIDEDOWN']]: '180deg',
-    [OrientationType['PORTRAIT-UPSIDEDOWN']]: '90deg',
+    [OrientationType['LANDSCAPE-RIGHT']]: '90deg',
   }
   const invalidQrCodes = new Set<string>()
   const device = useCameraDevice('back')
