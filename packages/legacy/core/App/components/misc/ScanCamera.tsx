@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, Vibration, View, useWindowDimensions } from 'react-native'
-import { useOrientationChange } from 'react-native-orientation-locker'
+import { useOrientationChange, OrientationType } from 'react-native-orientation-locker'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
 import { QrCodeScanError } from '../../types/error'
@@ -12,13 +12,13 @@ interface Props {
   torchActive?: boolean
 }
 const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError, torchActive }) => {
-  const [orientation, setOrientation] = useState('PORTRAIT')
+  const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const [cameraActive, setCameraActive] = useState(true)
   const orientationDegrees: { [key: string]: string } = {
-    PORTRAIT: '0deg',
-    'LANDSCAPE-LEFT': '270deg',
-    'PORTRAIT-UPSIDEDOWN': '180deg',
-    'LANDSCAPE-RIGHT': '90deg',
+    [OrientationType.PORTRAIT]: '0deg',
+    [OrientationType['LANDSCAPE-LEFT']]: '270deg',
+    [OrientationType['PORTRAIT-UPSIDEDOWN']]: '180deg',
+    [OrientationType['PORTRAIT-UPSIDEDOWN']]: '90deg',
   }
   const invalidQrCodes = new Set<string>()
   const device = useCameraDevice('back')

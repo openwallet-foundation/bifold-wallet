@@ -1,7 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, useWindowDimensions, View, StyleSheet } from 'react-native'
+import { isTablet } from 'react-native-device-info'
+import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -11,20 +13,20 @@ import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 import { TourID } from '../types/tour'
-import { isTablet, orientation, Orientation } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
-  const { width, height, fontScale } = useWindowDimensions()
+  const { fontScale } = useWindowDimensions()
   const { useCustomNotifications, enableReuseConnections, enableImplicitInvitations } = useConfiguration()
   const { total } = useCustomNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertConnectedNetwork } = useNetwork()
   const { ColorPallet, TabTheme } = useTheme()
+  const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
   const styles = StyleSheet.create({
     tabBarIcon: {
@@ -32,9 +34,13 @@ const TabStack: React.FC = () => {
     },
   })
 
-  const leftMarginForDevice = (width: number, height: number) => {
-    if (isTablet(width, height)) {
-      return orientation(width, height) === Orientation.Portrait ? 130 : 170
+  useOrientationChange((orientationType) => {
+    setOrientation(orientationType)
+  })
+
+  const leftMarginForDevice = () => {
+    if (isTablet()) {
+      return orientation in [OrientationType.PORTRAIT, OrientationType['PORTRAIT-UPSIDEDOWN']] ? 130 : 170
     }
 
     return 0
@@ -82,7 +88,7 @@ const TabStack: React.FC = () => {
             tabBarTestID: testIdWithKey(t('TabStack.Home')),
             tabBarBadge: total || undefined,
             tabBarBadgeStyle: {
-              marginLeft: leftMarginForDevice(width, height),
+              marginLeft: leftMarginForDevice(),
               backgroundColor: ColorPallet.semantic.error,
             },
           }}

@@ -3,8 +3,13 @@ const Orientation = {
 }
 
 const useOrientationChange = jest.fn()
+enum OrientationType {
+    PORTRAIT = 'PORTRAIT',
+
+}
 
 export {
     Orientation,
-    useOrientationChange
+    useOrientationChange,
+    OrientationType
 }
