@@ -811,7 +811,7 @@ export const receiveMessageFromDeepLink = async (url: string, agent: Agent | und
 }
 
 /**
- *
+ * Useful for multi use invitations
  * @param agent an Agent instance
  * @param invitationId id of invitation
  */
@@ -820,15 +820,13 @@ export const removeExistingInvitationIfRequired = async (
   invitationId: string
 ): Promise<void> => {
   try {
-    // If something fails before we get the credential we need to
-    // cleanup the old invitation before it can be used again.
     const oobRecord = await agent?.oob.findByReceivedInvitationId(invitationId)
     if (oobRecord) {
       await agent?.oob.deleteById(oobRecord.id)
     }
   } catch (error) {
-    // findByInvitationId with throw if unsuccessful but that's not a problem.
-    // It just means there is nothing to delete.
+    // findByReceivedInvitationId will throw if unsuccessful but that's not a problem
+    // it just means there is nothing to delete
   }
 }
 
