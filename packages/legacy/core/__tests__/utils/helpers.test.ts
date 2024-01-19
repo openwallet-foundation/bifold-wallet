@@ -9,6 +9,8 @@ import {
   formatIfDate,
   formatTime,
   getConnectionName,
+  removeExistingInvitationIfRequired,
+  connectFromInvitation,
 } from '../../App/utils/helpers'
 
 const proofCredentialPath = path.join(__dirname, '../fixtures/proof-credential.json')
@@ -62,7 +64,6 @@ describe('formatTime', () => {
 })
 
 describe('formatIfDate', () => {
-
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -74,12 +75,12 @@ describe('formatIfDate', () => {
 
   test('with format and string date', () => {
     const result = formatIfDate('YYYYMMDD', '20020523')
-    expect(result).toEqual("May 23, 2002")
+    expect(result).toEqual('May 23, 2002')
   })
 
   test('with format and number date', () => {
     const result = formatIfDate('YYYYMMDD', 20020523)
-    expect(result).toEqual("May 23, 2002")
+    expect(result).toEqual('May 23, 2002')
   })
 
   test('with format but invalid string date', () => {
@@ -113,6 +114,49 @@ describe('createConnectionInvitation', () => {
     const { agent } = useAgent()
 
     await expect(createConnectionInvitation(agent, 'aries.foo')).rejects.toThrow()
+  })
+})
+
+describe('removeExistingInvitationIfRequired', () => {
+  test('without an existing oobRecord', async () => {
+    const { agent } = useAgent()
+    const invitationId = '1'
+    agent!.oob.findByReceivedInvitationId = jest
+      .fn()
+      .mockReturnValueOnce(Promise.reject('No received invitation with this id exists'))
+    const deleteById = jest.fn()
+    agent!.oob.deleteById = deleteById
+
+    await removeExistingInvitationIfRequired(agent, invitationId)
+
+    expect(deleteById).not.toBeCalled()
+  })
+  test('with an existing oobRecord', async () => {
+    const { agent } = useAgent()
+    const invitationId = '1'
+    agent!.oob.findByReceivedInvitationId = jest.fn().mockReturnValueOnce(Promise.resolve({ id: '123' }))
+    const deleteById = jest.fn()
+    agent!.oob.deleteById = deleteById
+
+    await removeExistingInvitationIfRequired(agent, invitationId)
+
+    expect(deleteById).toBeCalledWith('123')
+  })
+})
+
+describe('connectFromInvitation', () => {
+  test('ordinary connection, default options', async () => {
+    const { agent } = useAgent()
+    const uri = ''
+    const parseInvitation = jest.fn().mockReturnValueOnce(Promise.resolve({ id: '123' }))
+    agent!.oob.parseInvitation = parseInvitation
+    const record = {}
+    const receiveInvitation = jest.fn().mockReturnValueOnce(Promise.resolve(record))
+    agent!.oob.receiveInvitation = receiveInvitation
+    const result = await connectFromInvitation(uri, agent)
+    expect(parseInvitation).toBeCalled()
+    expect(receiveInvitation).toBeCalled()
+    expect(result).toBe(record)
   })
 })
 
