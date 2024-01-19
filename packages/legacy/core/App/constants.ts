@@ -12,7 +12,6 @@ export const testIdPrefix = 'com.ariesbifold:id/'
 
 export enum LocalStorageKeys {
   Onboarding = 'OnboardingState',
-  LoginAttempts = 'LoginAttempts',
   // FIXME: Once hooks are updated this should no longer be necessary
   RevokedCredentials = 'RevokedCredentials',
   RevokedCredentialsMessageDismissed = 'RevokedCredentialsMessageDismissed',
@@ -24,6 +23,7 @@ export enum LocalStorageKeys {
 export enum KeychainServices {
   Salt = 'secret.wallet.salt',
   Key = 'secret.wallet.key',
+  LoginAttempt = 'wallet.loginAttempt',
 }
 
 export enum EventTypes {

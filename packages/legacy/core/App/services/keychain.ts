@@ -4,11 +4,12 @@ import uuid from 'react-native-uuid'
 
 import { walletId, KeychainServices } from '../constants'
 import { WalletSecret } from '../types/security'
+import { LoginAttempt } from '../types/state'
 import { hashPIN } from '../utils/crypto'
 
 const keyFauxUserName = 'WalletFauxPINUserName'
 const saltFauxUserName = 'WalletFauxSaltUserName'
-
+const loginAttemptFauxUserName = 'WalletFauxLoginAttemptUserName'
 export interface WalletSalt {
   id: string
   salt: string
@@ -72,6 +73,13 @@ export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
   return typeof result === 'boolean' ? false : true
 }
 
+export const storeLoginAttempt = async (loginAttempt: LoginAttempt): Promise<boolean> => {
+  const opts = optionsForKeychainAccess(KeychainServices.LoginAttempt, false)
+  const loginAttemptAsString = JSON.stringify(loginAttempt)
+  const result = await Keychain.setGenericPassword(loginAttemptFauxUserName, loginAttemptAsString, opts)
+  return typeof result !== 'boolean'
+}
+
 export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = false): Promise<boolean> => {
   let keyResult = false
   if (secret.key) {
@@ -93,6 +101,19 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
   }
 
   return JSON.parse(result.password) as WalletSalt
+}
+
+export const loadLoginAttempt = async (): Promise<LoginAttempt | undefined> => {
+  const opts: Keychain.Options = {
+    service: KeychainServices.LoginAttempt,
+  }
+
+  const result = await Keychain.getGenericPassword(opts)
+  if (!result) {
+    return
+  }
+
+  return JSON.parse(result.password) as LoginAttempt
 }
 
 export const loadWalletKey = async (title?: string, description?: string): Promise<WalletKey | undefined> => {
