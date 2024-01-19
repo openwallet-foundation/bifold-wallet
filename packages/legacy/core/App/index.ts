@@ -64,6 +64,7 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { didMigrateToAskar, migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
+export { removeExistingInvitationIfRequired } from './utils/helpers'
 
 export type { AnimatedComponents } from './animated-components'
 export type {
