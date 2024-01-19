@@ -811,6 +811,26 @@ export const receiveMessageFromDeepLink = async (url: string, agent: Agent | und
 }
 
 /**
+ * Useful for multi use invitations
+ * @param agent an Agent instance
+ * @param invitationId id of invitation
+ */
+export const removeExistingInvitationIfRequired = async (
+  agent: Agent | undefined,
+  invitationId: string
+): Promise<void> => {
+  try {
+    const oobRecord = await agent?.oob.findByReceivedInvitationId(invitationId)
+    if (oobRecord) {
+      await agent?.oob.deleteById(oobRecord.id)
+    }
+  } catch (error) {
+    // findByReceivedInvitationId will throw if unsuccessful but that's not a problem
+    // it just means there is nothing to delete
+  }
+}
+
+/**
  *
  * @param uri a URI containing a base64 encoded connection invite in the query parameter
  * @param agent an Agent instance
@@ -843,7 +863,9 @@ export const connectFromInvitation = async (
       // don't throw an error, will try to connect again below
     }
   }
+
   if (!record) {
+    await removeExistingInvitationIfRequired(agent, invitation.id)
     record = await agent?.oob.receiveInvitation(invitation, { reuseConnection })
   }
 

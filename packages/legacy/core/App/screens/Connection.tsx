@@ -1,3 +1,4 @@
+import { DidExchangeState } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -136,6 +137,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.shouldShowDelayMessage])
 
   useEffect(() => {
+    // for non-connectionless, invalid connections stay in the below state
+    if (connection && connection.state === DidExchangeState.RequestSent) {
+      return
+    }
+
     if (
       !connectionId &&
       !oobRecord &&

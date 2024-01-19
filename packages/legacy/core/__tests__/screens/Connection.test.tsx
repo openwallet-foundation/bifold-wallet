@@ -19,6 +19,8 @@ const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
 const connectionPath = path.join(__dirname, '../fixtures/connection-v1.json')
 const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
+const connectionResponseReceivedPath = path.join(__dirname, '../fixtures/connection-v1-response-received.json')
+const connectionResponseReceived = JSON.parse(fs.readFileSync(connectionResponseReceivedPath, 'utf8'))
 const outOfBandInvitation = { goalCode: 'aries.vc.verify.once' }
 const props = { params: { connectionId: connection.id } }
 
@@ -134,7 +136,7 @@ describe('ConnectionModal Component', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Connection with no goal code', async () => {
+  test('Connection with no goal code, request-sent state', async () => {
     const navigation = useNavigation()
     // @ts-ignore-next-line
     useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
@@ -153,10 +155,32 @@ describe('ConnectionModal Component', () => {
     const tree = render(element)
 
     expect(tree).toMatchSnapshot()
+    expect(navigation.getParent()?.dispatch).not.toBeCalled()
+  })
+
+  test('Connection with no goal code, response-received state', async () => {
+    const navigation = useNavigation()
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    // @ts-ignore-next-line
+    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: {} })
+    // @ts-ignore-next-line
+    useConnectionById.mockReturnValue(connectionResponseReceived)
+    // @ts-ignore-next-line
+    useProofById.mockReturnValue(proofNotif)
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={props as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    expect(tree).toMatchSnapshot()
     expect(navigation.getParent()?.dispatch).toBeCalledTimes(1)
     expect(CommonActions.reset).toBeCalledWith({
       index: 1,
-      routes: [{ name: 'Tab Stack' }, { name: 'Chat', params: { connectionId: connection.id } }],
+      routes: [{ name: 'Tab Stack' }, { name: 'Chat', params: { connectionId: connectionResponseReceived.id } }],
     })
   })
 
