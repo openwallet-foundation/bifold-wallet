@@ -4060,7 +4060,6 @@ __metadata:
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
     react-native-builder-bob: ^0.21.3
-    react-native-camera: ^3.31.1
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -4072,6 +4071,7 @@ __metadata:
     react-native-gifted-chat: "*"
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
+    react-native-orientation-locker: ^1.6.0
     react-native-permissions: ^3.8.4
     react-native-qrcode-svg: ^6.2.0
     react-native-reanimated: ^3.4.2
@@ -4085,6 +4085,7 @@ __metadata:
     react-native-toast-message: ^2.1.6
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
+    react-native-vision-camera: ^3.6.16
     react-test-renderer: ^18.2.0
     typescript: ^5.0.4
     uuid: ^9.0.0
@@ -4131,7 +4132,6 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
-    react-native-camera: ^3.31.1
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -4143,6 +4143,7 @@ __metadata:
     react-native-gifted-chat: "*"
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
+    react-native-orientation-locker: "*"
     react-native-permissions: ^3.8.4
     react-native-qrcode-svg: ^6.2.0
     react-native-reanimated: ^3.4.2
@@ -4154,6 +4155,7 @@ __metadata:
     react-native-toast-message: ^2.1.6
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
+    react-native-vision-camera: "*"
     uuid: ^9.0.0
   bin:
     bifold: bin/bifold
@@ -7527,7 +7529,6 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
-    react-native-camera: ^3.31.1
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -7539,6 +7540,7 @@ __metadata:
     react-native-gifted-chat: "*"
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
+    react-native-orientation-locker: ^1.6.0
     react-native-permissions: ^3.8.4
     react-native-qrcode-svg: ^6.2.0
     react-native-reanimated: ^3.4.2
@@ -7552,6 +7554,7 @@ __metadata:
     react-native-toast-message: ^2.1.6
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
+    react-native-vision-camera: ^3.6.16
     react-native-webview: ^11.22.3
     typescript: ^5.0.4
     uuid: ^9.0.0
@@ -18126,7 +18129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
+"prop-types@npm:*, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -18477,15 +18480,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-camera@npm:^3.31.1":
-  version: 3.44.3
-  resolution: "react-native-camera@npm:3.44.3"
-  dependencies:
-    prop-types: ^15.6.2
-  checksum: 3c9757e2c75f5083c966394234c06fce9b87b9580e9421720e49de72e5f53aa70d2135bbea304e1b1c07ab443bbd8d62dee87eeec19feb7c37ddf328f140552e
-  languageName: node
-  linkType: hard
-
 "react-native-collapsible@npm:^1.6.1":
   version: 1.6.1
   resolution: "react-native-collapsible@npm:1.6.1"
@@ -18657,6 +18651,20 @@ __metadata:
   version: 5.0.1
   resolution: "react-native-logs@npm:5.0.1"
   checksum: 71af385c85a7d45d2046ee9fa05ec49e989a446660742d732e2ba210528fb5145f81308af3f65be607bbf207a875480344cca3ec5e7943a7c10ba2d882f28266
+  languageName: node
+  linkType: hard
+
+"react-native-orientation-locker@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "react-native-orientation-locker@npm:1.6.0"
+  peerDependencies:
+    react: ">=16.13.1"
+    react-native: ">=0.63.2"
+    react-native-windows: ">=0.63.3"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: c7fb829f38d98dd937dc0df0f84c26dec553defe387aa9f806d9926c51cb7cf81d6e79ebbf481bc401743ff2228a8d1fe3981b1c5fe7ae975954d328c47b138a
   languageName: node
   linkType: hard
 
@@ -18855,6 +18863,20 @@ __metadata:
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
   checksum: c4e39deb5218b6ba047c378217bbc7f24c1db153d2171e42176703a775049ed24f2a140f35d962d215265032722a24cba8acc83397ef6e14bd300db470609bf5
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:^3.6.16":
+  version: 3.6.16
+  resolution: "react-native-vision-camera@npm:3.6.16"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-worklets-core: "*"
+  peerDependenciesMeta:
+    react-native-worklets-core:
+      optional: true
+  checksum: 66828a81962e3a2cac8eced1321c62f5b53338b6b8df971820e771365b96bfe2f314533452ece0a194b542ce4bdf21e45f9bd50cd9f21d452e4ca5128bcb150d
   languageName: node
   linkType: hard
 

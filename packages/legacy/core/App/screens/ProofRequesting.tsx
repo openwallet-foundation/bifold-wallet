@@ -24,6 +24,7 @@ import {
   View,
   Vibration,
 } from 'react-native'
+import { isTablet } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import LoadingIndicator from '../components/animated/LoadingIndicator'
@@ -35,14 +36,14 @@ import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { createTempConnectionInvitation, isTablet } from '../utils/helpers'
+import { createTempConnectionInvitation } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
 const useQrSizeForDevice = () => {
-  const { width, height } = useWindowDimensions()
-  const qrContainerSize = isTablet(width, height) ? width - width * 0.3 : width - 20
+  const { width } = useWindowDimensions()
+  const qrContainerSize = isTablet() ? width - width * 0.3 : width - 20
   const qrSize = qrContainerSize - 20
 
   return { qrSize, qrContainerSize }

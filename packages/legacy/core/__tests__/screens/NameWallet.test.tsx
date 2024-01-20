@@ -19,6 +19,9 @@ jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
+jest.mock('react-native-vision-camera', () => {
+  return require('../../__mocks__/custom/react-native-camera')
+})
 
 jest.mock('react-native-device-info', () => {
   return {
