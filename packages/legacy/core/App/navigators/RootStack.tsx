@@ -283,19 +283,14 @@ const RootStack: React.FC = () => {
     const Stack = createStackNavigator()
     const carousel = createCarouselStyle(OnboardingTheme)
     return (
-      <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+      <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
-        <Stack.Screen
-          name={Screens.Preface}
-          component={preface}
-          options={{ title: t('Screens.Preface'), headerShown: true }}
-        />
+        <Stack.Screen name={Screens.Preface} component={preface} options={{ title: t('Screens.Preface') }} />
         <Stack.Screen
           name={Screens.Onboarding}
           options={() => ({
             title: t('Screens.Onboarding'),
             headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
             gestureEnabled: false,
             headerLeft: () => false,
           })}
@@ -316,7 +311,6 @@ const RootStack: React.FC = () => {
           options={() => ({
             title: t('Screens.Terms'),
             headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
           })}
@@ -326,7 +320,6 @@ const RootStack: React.FC = () => {
           name={Screens.CreatePIN}
           options={() => ({
             title: t('Screens.CreatePIN'),
-            headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
           })}
@@ -338,7 +331,6 @@ const RootStack: React.FC = () => {
           options={() => ({
             title: t('Screens.NameWallet'),
             headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
           })}
@@ -349,7 +341,6 @@ const RootStack: React.FC = () => {
           options={() => ({
             title: t('Screens.Biometry'),
             headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
             headerLeft: () => false,
             rightLeft: () => false,
           })}
