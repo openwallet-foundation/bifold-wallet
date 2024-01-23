@@ -55,6 +55,9 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                 "alignSelf": "center",
                 "marginRight": 10,
               },
+              Object {
+                "flexDirection": "row",
+              },
             ]
           }
         >
@@ -80,21 +83,22 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           >
             
           </Text>
-        </View>
-        <Text
-          style={
-            Object {
-              "alignSelf": "center",
-              "color": "#FFFFFF",
-              "flexShrink": 1,
-              "fontSize": 18,
-              "fontWeight": "bold",
+          <Text
+            style={
+              Object {
+                "alignSelf": "center",
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginLeft": 7,
+              }
             }
-          }
-          testID="com.ariesbifold:id/HeaderText"
-        >
-          title
-        </Text>
+            testID="com.ariesbifold:id/HeaderText"
+          >
+            title
+          </Text>
+        </View>
       </View>
       <RCTScrollView
         style={
@@ -108,93 +112,6 @@ exports[`ErrorModal Component Renders correctly 1`] = `
         }
       >
         <View>
-          <View
-            accessibilityLabel="Global.ShowDetails"
-            accessibilityState={
-              Object {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              Object {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 44,
-                "left": 44,
-                "right": 44,
-                "top": 44,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "marginVertical": 14,
-                "opacity": 1,
-              }
-            }
-            testID="com.ariesbifold:id/ShowDetails"
-          >
-            <View
-              style={
-                Object {
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <Text
-                style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 20,
-                    "fontWeight": "normal",
-                  }
-                }
-              >
-                Global.ShowDetails
-                 
-              </Text>
-              <Text
-                allowFontScaling={false}
-                selectable={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 30,
-                    },
-                    undefined,
-                    Object {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-              >
-                
-              </Text>
-            </View>
-          </View>
           <View
             style={
               Object {
