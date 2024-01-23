@@ -6,6 +6,7 @@ import { StoreProvider, defaultState } from '../../App/contexts/store'
 import PINEnter from '../../App/screens/PINEnter'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
+import { useConfiguration } from '../../App/contexts/configuration'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -17,6 +18,10 @@ jest.mock('react-native-fs', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
+
+jest.mock('../../App/contexts/configuration', () => ({
+  useConfiguration: jest.fn(),
+}))
 
 describe('displays a PIN Enter screen', () => {
   test('PIN Enter renders correctly', () => {
@@ -69,4 +74,11 @@ describe('displays a PIN Enter screen', () => {
     const EnterButton = await tree.getByTestId(testIdWithKey('Enter'))
     expect(EnterButton).not.toBeNull()
   })
+
+  beforeEach(() => {
+    // @ts-ignore-next-line
+    useConfiguration.mockReturnValue({ showDetailsInfo: true })
+    jest.clearAllMocks()
+  })
+
 })
