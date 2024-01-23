@@ -210,7 +210,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
               {showDetails ? message : description}
             </Text>
           )}
-          {message && !showDetails && showDetailsInfo && (
+          {message && !showDetails && (showDetailsInfo ?? true) && (
             <TouchableOpacity
               accessibilityLabel={t('Global.ShowDetails')}
               testID={testIdWithKey('ShowDetails')}
