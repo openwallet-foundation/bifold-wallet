@@ -55,6 +55,9 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                 "alignSelf": "center",
                 "marginRight": 10,
               },
+              Object {
+                "flexDirection": "row",
+              },
             ]
           }
         >
@@ -80,21 +83,22 @@ exports[`ErrorModal Component Renders correctly 1`] = `
           >
             
           </Text>
-        </View>
-        <Text
-          style={
-            Object {
-              "alignSelf": "center",
-              "color": "#FFFFFF",
-              "flexShrink": 1,
-              "fontSize": 18,
-              "fontWeight": "bold",
+          <Text
+            style={
+              Object {
+                "alignSelf": "center",
+                "color": "#FFFFFF",
+                "flexShrink": 1,
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginLeft": 7,
+              }
             }
-          }
-          testID="com.ariesbifold:id/HeaderText"
-        >
-          title
-        </Text>
+            testID="com.ariesbifold:id/HeaderText"
+          >
+            title
+          </Text>
+        </View>
       </View>
       <RCTScrollView
         style={

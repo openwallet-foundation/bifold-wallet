@@ -2,8 +2,13 @@ import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
 import InfoBox, { InfoBoxType } from '../../App/components/misc/InfoBox'
+import { useConfiguration } from '../../App/contexts/configuration'
 
 const callToAction = jest.fn()
+
+jest.mock('../../App/contexts/configuration', () => ({
+  useConfiguration: jest.fn(),
+}))
 
 describe('ErrorModal Component', () => {
   test('Renders correctly as Info', async () => {
@@ -89,5 +94,10 @@ describe('ErrorModal Component', () => {
     fireEvent(dismissBtn, 'press')
 
     expect(callToAction).toBeCalledTimes(1)
+  })
+  beforeEach(() => {
+    // @ts-ignore-next-line
+    useConfiguration.mockReturnValue({ showDetailsInfo: true })
+    jest.clearAllMocks()
   })
 })
