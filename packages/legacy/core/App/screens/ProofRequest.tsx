@@ -197,6 +197,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       ?.then((value) => {
         if (value) {
           const { groupedProof, retrievedCredentials, fullCredentials } = value
+          setLoading(false)
           let credList: string[] = []
           if (selectedCredentials.length > 0) {
             credList = selectedCredentials
@@ -271,9 +272,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           1026
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-      })
-      .finally(() => {
-        setLoading(false)
       })
   }, [selectedCredentials, credProofPromise])
 
