@@ -85,7 +85,7 @@ export class RemoteLogger extends BaseLogger {
         lokiUrl: this.lokiUrl,
         lokiLabels: {
           ...this.lokiLabels,
-          sessionId: this.sessionId,
+          session_id: this.sessionId,
         },
       }
 

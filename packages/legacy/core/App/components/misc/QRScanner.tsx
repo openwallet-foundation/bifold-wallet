@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Vibration, Pressable, StyleSheet, Text } from 'react-native'
-import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
+import { View, Modal, Pressable, StyleSheet, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
@@ -14,9 +13,10 @@ import { testIdWithKey } from '../../utils/testable'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 
 import QRScannerTorch from './QRScannerTorch'
+import ScanCamera from './ScanCamera'
 
 interface Props {
-  handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
+  handleCodeScan: (value: string) => Promise<void>
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
 }
@@ -24,12 +24,11 @@ interface Props {
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError }) => {
   const navigation = useNavigation()
   const { showScanHelp, showScanButton } = useConfiguration()
-  const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
   const { t } = useTranslation()
-  const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme } = useTheme()
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -89,92 +88,60 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           />
         </View>
       </Modal>
-      <RNCamera
-        style={styles.container}
-        type={RNCamera.Constants.Type.back}
-        flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
-        captureAudio={false}
-        androidCameraPermissionOptions={{
-          title: t('QRScanner.PermissionToUseCamera'),
-          message: t('QRScanner.WeNeedYourPermissionToUseYourCamera'),
-          buttonPositive: t('QRScanner.Ok'),
-          buttonNegative: t('Global.Cancel'),
-        }}
-        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-        onBarCodeRead={(event: BarCodeReadEvent) => {
-          if (invalidQrCodes.has(event.data)) {
-            return
-          }
-
-          if (error?.data === event?.data) {
-            invalidQrCodes.add(error.data)
-            if (enableCameraOnError) {
-              return setCameraActive(true)
-            }
-          }
-
-          if (cameraActive) {
-            Vibration.vibrate()
-            handleCodeScan(event)
-
-            return setCameraActive(false)
-          }
-        }}
-      >
-        <View style={{ flex: 1 }}>
-          <View style={styles.messageContainer}>
-            {error ? (
-              <>
-                <Icon style={styles.icon} name="cancel" size={40} />
-                <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
-                  {error.message}
-                </Text>
-              </>
-            ) : (
-              <>
-                <Icon name="qrcode-scan" size={40} style={styles.icon} />
-                <Text style={styles.textStyle}>{t('Scan.WillScanAutomatically')}</Text>
-              </>
-            )}
+      <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError}></ScanCamera>
+      <View style={{ flex: 1 }}>
+        <View style={styles.messageContainer}>
+          {error ? (
+            <>
+              <Icon style={styles.icon} name="cancel" size={40} />
+              <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
+                {error.message}
+              </Text>
+            </>
+          ) : (
+            <>
+              <Icon name="qrcode-scan" size={40} style={styles.icon} />
+              <Text style={styles.textStyle}>{t('Scan.WillScanAutomatically')}</Text>
+            </>
+          )}
+        </View>
+        <View style={styles.viewFinderContainer}>
+          <View style={styles.viewFinder} />
+        </View>
+        {showScanButton && (
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Pressable
+              accessibilityLabel={t('Scan.ScanNow')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey('ScanNow')}
+              onPress={toggleShowInfoBox}
+              style={styleForState}
+              hitSlop={hitSlop}
+            >
+              <Icon name="circle-outline" size={60} style={{ color: 'white', marginBottom: -15 }} />
+            </Pressable>
           </View>
-          <View style={styles.viewFinderContainer}>
-            <View style={styles.viewFinder} />
-          </View>
-          {showScanButton && (
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <Pressable
-                accessibilityLabel={t('Scan.ScanNow')}
-                accessibilityRole={'button'}
-                testID={testIdWithKey('ScanNow')}
-                onPress={toggleShowInfoBox}
-                style={styleForState}
-                hitSlop={hitSlop}
-              >
-                <Icon name="circle-outline" size={60} style={{ color: 'white', marginBottom: -15 }} />
-              </Pressable>
-            </View>
+        )}
+
+        <View style={{ marginHorizontal: 24, height: 24, marginBottom: 60, flexDirection: 'row' }}>
+          {showScanHelp && (
+            <Pressable
+              accessibilityLabel={t('Scan.ScanHelp')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey('ScanHelp')}
+              // @ts-ignore
+              onPress={() => navigation.navigate(Screens.ScanHelp)}
+              style={styleForState}
+              hitSlop={hitSlop}
+            >
+              <Icon name="help-circle" size={24} style={{ color: 'white' }} />
+            </Pressable>
           )}
 
-          <View style={{ marginHorizontal: 24, height: 24, marginBottom: 60, flexDirection: 'row' }}>
-            {showScanHelp && (
-              <Pressable
-                accessibilityLabel={t('Scan.ScanHelp')}
-                accessibilityRole={'button'}
-                testID={testIdWithKey('ScanHelp')}
-                // @ts-ignore
-                onPress={() => navigation.navigate(Screens.ScanHelp)}
-                style={styleForState}
-                hitSlop={hitSlop}
-              >
-                <Icon name="help-circle" size={24} style={{ color: 'white' }} />
-              </Pressable>
-            )}
-
-            <View style={{ width: 10, marginLeft: 'auto' }} />
-            <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
-          </View>
+          <View style={{ width: 10, marginLeft: 'auto' }} />
+          <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
         </View>
-      </RNCamera>
+      </View>
     </View>
   )
 }

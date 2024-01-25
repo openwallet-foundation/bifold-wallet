@@ -57,4 +57,5 @@ export const defaultConfiguration: ConfigurationContext = {
   whereToUseWalletUrl: 'https://example.com',
   showScanHelp: true,
   showScanButton: true,
+  showDetailsInfo: true,
 }

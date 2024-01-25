@@ -3,8 +3,7 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Vibration, View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
-import { BarCodeReadEvent, RNCamera } from 'react-native-camera'
+import { View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -20,13 +19,14 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
+import ScanCamera from './ScanCamera'
 import ScanTab from './ScanTab'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
 interface Props extends ConnectProps {
   defaultToConnect: boolean
-  handleCodeScan: (event: BarCodeReadEvent) => Promise<void>
+  handleCodeScan: (value: string) => Promise<void>
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
 }
@@ -35,15 +35,14 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const { width } = useWindowDimensions()
   const qrSize = width - 40
   const [store] = useStore()
-  const [cameraActive, setCameraActive] = useState(true)
   const [torchActive, setTorchActive] = useState(false)
   const [firstTabActive, setFirstTabActive] = useState(!defaultToConnect)
   const [invitation, setInvitation] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
   const { t } = useTranslation()
-  const invalidQrCodes = new Set<string>()
   const { ColorPallet, TextTheme, TabTheme } = useTheme()
   const { agent } = useAgent()
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -136,35 +135,13 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       {firstTabActive ? (
-        <RNCamera
-          style={styles.camera}
-          type={RNCamera.Constants.Type.back}
-          flashMode={torchActive ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
-          captureAudio={false}
-          androidCameraPermissionOptions={{
-            title: t('QRScanner.PermissionToUseCamera'),
-            message: t('QRScanner.WeNeedYourPermissionToUseYourCamera'),
-            buttonPositive: t('QRScanner.Ok'),
-            buttonNegative: t('Global.Cancel'),
-          }}
-          barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          onBarCodeRead={(event: BarCodeReadEvent) => {
-            if (invalidQrCodes.has(event.data)) {
-              return
-            }
-            if (error?.data === event?.data) {
-              invalidQrCodes.add(error.data)
-              if (enableCameraOnError) {
-                return setCameraActive(true)
-              }
-            }
-            if (cameraActive) {
-              Vibration.vibrate()
-              handleCodeScan(event)
-              return setCameraActive(false)
-            }
-          }}
-        >
+        <>
+          <ScanCamera
+            handleCodeScan={handleCodeScan}
+            enableCameraOnError={enableCameraOnError}
+            error={error}
+            torchActive={torchActive}
+          ></ScanCamera>
           <View style={styles.cameraViewContainer}>
             <View style={styles.errorContainer}>
               {error ? (
@@ -188,7 +165,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
             </View>
             <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
           </View>
-        </RNCamera>
+        </>
       ) : (
         <ScrollView>
           <View style={{ alignItems: 'center' }}>
