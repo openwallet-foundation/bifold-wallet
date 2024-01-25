@@ -34,25 +34,28 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
     setOrientation(orientationType)
   })
 
-  const onCodeScanned = useCallback((codes: Code[]) => {
-    const value = codes[0].value
-    if (!value || invalidQrCodes.has(value)) {
-      return
-    }
-
-    if (error?.data === value) {
-      invalidQrCodes.add(value)
-      if (enableCameraOnError) {
-        return setCameraActive(true)
+  const onCodeScanned = useCallback(
+    (codes: Code[]) => {
+      const value = codes[0].value
+      if (!value || invalidQrCodes.has(value)) {
+        return
       }
-    }
 
-    if (cameraActive) {
-      Vibration.vibrate()
-      handleCodeScan(value)
-      return setCameraActive(false)
-    }
-  }, [])
+      if (error?.data === value) {
+        invalidQrCodes.add(value)
+        if (enableCameraOnError) {
+          return setCameraActive(true)
+        }
+      }
+
+      if (cameraActive) {
+        Vibration.vibrate()
+        handleCodeScan(value)
+        return setCameraActive(false)
+      }
+    },
+    [cameraActive]
+  )
 
   const codeScanner = useCodeScanner({
     codeTypes: ['qr'],

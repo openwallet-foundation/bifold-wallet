@@ -176,7 +176,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (state.notificationRecord && goalCode) {
       goalCodeAction(goalCode)()
     }
-  }, [connection, oobRecord, goalCode, state.notificationRecord])
+  }, [connection, connection?.state, oobRecord, goalCode, state.notificationRecord])
 
   useMemo(() => {
     startTimer()
