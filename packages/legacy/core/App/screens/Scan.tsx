@@ -1,11 +1,9 @@
-import type { BarCodeReadEvent } from 'react-native-camera'
-
 import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import { check, Permission, PERMISSIONS, request, RESULTS } from 'react-native-permissions'
+import { check, Permission, PERMISSIONS, request, RESULTS, Rationale } from 'react-native-permissions'
 import Toast from 'react-native-toast-message'
 
 import NewQRView from '../components/misc/NewQRView'
@@ -95,20 +93,24 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
     }
   }
 
-  const handleCodeScan = async (event: BarCodeReadEvent) => {
+  const handleCodeScan = async (value: string) => {
     setQrCodeScanError(null)
     try {
-      const uri = event.data
+      const uri = value
       await handleInvitation(uri)
     } catch (e: unknown) {
-      const error = new QrCodeScanError(t('Scan.InvalidQrCode'), event.data)
+      const error = new QrCodeScanError(t('Scan.InvalidQrCode'), value)
       setQrCodeScanError(error)
     }
   }
 
-  const permissionFlow = async (method: PermissionContract, permission: Permission): Promise<boolean> => {
+  const permissionFlow = async (
+    method: PermissionContract,
+    permission: Permission,
+    rationale?: Rationale
+  ): Promise<boolean> => {
     try {
-      const permissionResult = await method(permission)
+      const permissionResult = await method(permission, rationale)
       if (permissionResult === RESULTS.GRANTED) {
         setShowDisclosureModal(false)
         return true
@@ -126,11 +128,11 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
     return false
   }
 
-  const requestCameraUse = async (): Promise<boolean> => {
+  const requestCameraUse = async (rationale?: Rationale): Promise<boolean> => {
     if (Platform.OS === 'android') {
-      return await permissionFlow(request, PERMISSIONS.ANDROID.CAMERA)
+      return await permissionFlow(request, PERMISSIONS.ANDROID.CAMERA, rationale)
     } else if (Platform.OS === 'ios') {
-      return await permissionFlow(request, PERMISSIONS.IOS.CAMERA)
+      return await permissionFlow(request, PERMISSIONS.IOS.CAMERA, rationale)
     }
 
     return false

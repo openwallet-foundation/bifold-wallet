@@ -16,6 +16,7 @@ import NetInfo from './components/network/NetInfo'
 import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
 import Link from './components/texts/Link'
+import Text from './components/texts/Text'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import { AttachTourStep } from './components/tour/AttachTourStep'
@@ -64,6 +65,7 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { didMigrateToAskar, migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
+export { removeExistingInvitationIfRequired } from './utils/helpers'
 
 export type { AnimatedComponents } from './animated-components'
 export type {
@@ -141,4 +143,5 @@ export {
   types,
   components,
   contexts,
+  Text,
 }
