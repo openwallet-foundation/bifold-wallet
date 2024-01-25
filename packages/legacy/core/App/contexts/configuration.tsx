@@ -51,6 +51,7 @@ export interface ConfigurationContext {
   disableOnboardingSkip?: boolean
   useBiometry: React.FC
   useCustomNotifications: () => { total: number; notifications: any }
+  useAttestation?: () => { start: () => void; stop: () => void; loading: boolean }
   whereToUseWalletUrl: string
   showScanHelp?: boolean
   showScanButton?: boolean
