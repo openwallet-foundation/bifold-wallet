@@ -24,7 +24,7 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
   const device = useCameraDevice('back')
   const screenAspectRatio = useWindowDimensions().scale
   const format = useCameraFormat(device, [
-    { fps: 60 },
+    { fps: 20 },
     { videoAspectRatio: screenAspectRatio },
     { videoResolution: 'max' },
     { photoAspectRatio: screenAspectRatio },
