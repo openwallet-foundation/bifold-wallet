@@ -59,4 +59,5 @@ export const defaultConfiguration: ConfigurationContext = {
   showScanHelp: true,
   showScanButton: true,
   modalStatusBarStyle: StatusBarStyles.Light,
+  showDetailsInfo: true,
 }

@@ -57,6 +57,7 @@ export interface ConfigurationContext {
   showScanButton?: boolean
   globalScreenOptions?: StackNavigationOptions
   modalStatusBarStyle: StatusBarStyle
+  showDetailsInfo?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

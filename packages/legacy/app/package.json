@@ -57,7 +57,6 @@
     "react-native-animated-pagination-dots": "^0.1.72",
     "react-native-argon2": "^2.0.1",
     "react-native-bouncy-checkbox": "^3.0.5",
-    "react-native-camera": "^3.31.1",
     "react-native-collapsible": "^1.6.1",
     "react-native-config": "^1.4.2",
     "react-native-confirmation-code-field": "^7.3.0",
@@ -69,6 +68,7 @@
     "react-native-gifted-chat": "*",
     "react-native-keychain": "^8.1.1",
     "react-native-localize": "^2.2.4",
+    "react-native-orientation-locker": "^1.6.0",
     "react-native-permissions": "^3.8.4",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-reanimated": "^3.4.2",
@@ -81,6 +81,7 @@
     "react-native-toast-message": "^2.1.6",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^10.0.0",
+    "react-native-vision-camera": "^3.6.16",
     "react-native-webview": "^11.22.3",
     "uuid": "^9.0.0"
   },
