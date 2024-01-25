@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { transportFunctionType } from 'react-native-logs'
 
 export interface RemoteLoggerOptions {
@@ -54,9 +54,28 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
       },
     ],
   }
+  const url = new URL(lokiUrl)
+  const axiosConfig: AxiosRequestConfig = {
+    method: 'post',
+    url: lokiUrl,
+    data: payload,
+  }
 
-  axios
-    .post(lokiUrl, payload)
+  // If username and password are present
+  // in the URL, use them for auth
+  if (url.username && url.password) {
+    axiosConfig.auth = {
+      username: url.username,
+      password: url.password,
+    }
+    // Clear the username and password from
+    // the URL
+    url.username = ''
+    url.password = ''
+    axiosConfig.url = url.href
+  }
+
+  axios(axiosConfig)
     .then((res) => {
       if (res.status !== 204) {
         throw new Error(`Expected Loki to return 204, received ${res.status}`)

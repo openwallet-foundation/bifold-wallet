@@ -12,8 +12,11 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
-jest.mock('react-native-camera', () => {
+jest.mock('react-native-vision-camera', () => {
   return require('../../__mocks__/custom/react-native-camera')
+})
+jest.mock('react-native-orientation-locker', () => {
+  return require('../../__mocks__/custom/react-native-orientation-locker')
 })
 jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn(),
