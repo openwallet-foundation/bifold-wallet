@@ -10,7 +10,7 @@ import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import toastConfig from './components/toast/ToastConfig'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
-import { System, SystemProvider } from './container-api'
+import { Container, SystemProvider } from './container-api'
 import { AnimatedComponentsProvider } from './contexts/animated-components'
 import { AuthProvider } from './contexts/auth'
 import { CommonUtilProvider } from './contexts/commons'
@@ -26,7 +26,7 @@ import { theme } from './theme'
 
 initLanguages(translationResources)
 
-function App(sytem: System) {
+function App(sytem: Container) {
   return () => {
     useMemo(() => {
       initStoredLanguage().then()

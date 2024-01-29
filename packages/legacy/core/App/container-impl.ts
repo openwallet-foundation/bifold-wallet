@@ -3,20 +3,20 @@ import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
 import Button from './components/buttons/Button'
-import { TOKENS, System, TokenMapping } from './container-api'
+import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import OnboardingStack from './navigators/OnboardingStack'
 import Onboarding from './screens/Onboarding'
 import ScreenTerms from './screens/Terms'
 import { AuthenticateStackParams, Screens } from './types/navigators'
 
-export class MainSystem implements System {
+export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private container: DependencyContainer
   public constructor(container: DependencyContainer) {
     this.container = container
   }
-  public init(): System {
+  public init(): Container {
     // eslint-disable-next-line no-console
     console.log(`initializing System`)
     this.container.registerInstance(TOKENS.SCREEN_TERMS, ScreenTerms)
@@ -44,7 +44,7 @@ export class MainSystem implements System {
   }
 }
 
-export const SystemContext = createContext<System | undefined>(undefined)
+export const SystemContext = createContext<Container | undefined>(undefined)
 
 export const SystemProvider = SystemContext.Provider
 

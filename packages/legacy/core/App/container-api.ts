@@ -42,12 +42,12 @@ export interface TokenMapping {
   [TOKENS.COMP_BUTTON]: Button
 }
 
-export interface System {
-  init(): System
+export interface Container {
+  init(): Container
   resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K]
 }
 
-export const SystemContext = createContext<System | undefined>(undefined)
+export const SystemContext = createContext<Container | undefined>(undefined)
 
 export const SystemProvider = SystemContext.Provider
 
