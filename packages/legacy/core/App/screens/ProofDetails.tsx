@@ -75,8 +75,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
       alignItems: 'center',
     },
     headerTitle: {
-      ...TextTheme.normal,
-      fontWeight: 'bold',
+      ...TextTheme.bold,
     },
     headerDetails: {
       ...TextTheme.normal,
@@ -90,7 +89,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
       color: TextTheme.normal.color,
     },
     label: {
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
     },
     content: {
       flexGrow: 1,
@@ -218,7 +217,7 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
     },
     headerTitle: {
       ...TextTheme.headingTwo,
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
     },
     footerButtons: {
       margin: 20,

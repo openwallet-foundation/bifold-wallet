@@ -50,7 +50,6 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       alignItems: 'center',
     },
     messageText: {
-      fontWeight: 'normal',
       textAlign: 'center',
       marginTop: 30,
     },

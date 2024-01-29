@@ -133,7 +133,7 @@ const UseBiometry: React.FC = () => {
             <Text></Text>
             <Text style={[TextTheme.normal]}>
               {t('Biometry.EnabledText2')}
-              <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}> {t('Biometry.Warning')}</Text>
+              <Text style={[TextTheme.bold]}> {t('Biometry.Warning')}</Text>
             </Text>
           </View>
         ) : (
@@ -150,7 +150,7 @@ const UseBiometry: React.FC = () => {
           }}
         >
           <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
-            <Text style={[TextTheme.normal, { fontWeight: 'bold' }]}>{t('Biometry.UseToUnlock')}</Text>
+            <Text style={[TextTheme.bold]}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
             <Pressable

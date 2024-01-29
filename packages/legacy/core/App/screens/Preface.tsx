@@ -55,7 +55,7 @@ const Preface: React.FC = () => {
               checked={checked}
               onPress={() => setChecked(!checked)}
               reverse
-              titleStyle={{ fontWeight: 'bold' }}
+              titleStyle={{ fontWeight: TextTheme.bold.fontWeight }}
             />
             <View style={[{ paddingTop: 10 }]}>
               <Button

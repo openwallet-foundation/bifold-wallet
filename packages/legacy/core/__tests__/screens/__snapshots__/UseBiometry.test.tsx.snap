@@ -72,9 +72,6 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                 Object {
                   "color": "#FFFFFF",
                   "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
                   "fontWeight": "bold",
                 },
               ]
@@ -108,9 +105,6 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                 Object {
                   "color": "#FFFFFF",
                   "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
                   "fontWeight": "bold",
                 },
               ]
@@ -370,9 +364,6 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                 Object {
                   "color": "#FFFFFF",
                   "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
                   "fontWeight": "bold",
                 },
               ]
@@ -613,9 +604,6 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                 Object {
                   "color": "#FFFFFF",
                   "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
                   "fontWeight": "bold",
                 },
               ]
@@ -649,9 +637,6 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                 Object {
                   "color": "#FFFFFF",
                   "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
                   "fontWeight": "bold",
                 },
               ]

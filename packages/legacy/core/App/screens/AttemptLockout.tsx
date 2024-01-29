@@ -49,9 +49,8 @@ const AttemptLockout: React.FC = () => {
       textAlign: 'center',
     },
     countDown: {
-      ...TextTheme.normal,
+      ...TextTheme.bold,
       textAlign: 'center',
-      fontWeight: 'bold',
     },
     image: {
       width: 150,

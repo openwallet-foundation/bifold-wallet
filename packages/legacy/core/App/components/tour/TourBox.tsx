@@ -100,7 +100,6 @@ export function TourBox(props: TourBoxProps): ReactElement {
     },
     headerText: {
       ...TextTheme.headingThree,
-      fontWeight: 'bold',
       alignSelf: 'flex-start',
       color: ColorPallet.notification.infoText,
     },
@@ -116,9 +115,8 @@ export function TourBox(props: TourBoxProps): ReactElement {
       justifyContent: 'space-around',
     },
     navText: {
-      ...TextTheme.normal,
+      ...TextTheme.bold,
       color: ColorPallet.brand.primary,
-      fontWeight: 'bold',
     },
     pagerContainer: {
       flexDirection: 'row',

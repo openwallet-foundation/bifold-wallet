@@ -20,7 +20,7 @@ const Terms: React.FC = () => {
   const [checked, setChecked] = useState(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const { OnboardingTheme } = useTheme()
+  const { OnboardingTheme, TextTheme } = useTheme()
   const onSubmitPressed = () => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,
@@ -59,7 +59,7 @@ const Terms: React.FC = () => {
       <ScrollView style={[style.container]}>
         <InfoTextBox>Please agree to the terms and conditions below before using this application.</InfoTextBox>
         <Text style={[style.bodyText, { marginTop: 20, marginBottom: 20 }]}>
-          <Text style={[style.bodyText, { fontWeight: 'bold' }]}>
+          <Text style={[style.bodyText, { fontWeight: TextTheme.bold.fontWeight }]}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </Text>{' '}
           Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud

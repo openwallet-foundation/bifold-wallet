@@ -49,7 +49,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
-  const { ListItems, ColorPallet } = useTheme()
+  const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertConnectedNetwork } = useNetwork()
   const { OCABundleResolver, enableTours: enableToursConfig } = useConfiguration()
@@ -71,7 +71,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       paddingVertical: 16,
     },
     headerText: {
-      ...ListItems.recordAttributeLabel,
+      ...TextTheme.normal,
       flexShrink: 1,
     },
     footerButton: {

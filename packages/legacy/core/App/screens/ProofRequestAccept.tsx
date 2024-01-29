@@ -39,7 +39,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
       alignItems: 'center',
     },
     messageText: {
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       textAlign: 'center',
       marginTop: 30,
     },

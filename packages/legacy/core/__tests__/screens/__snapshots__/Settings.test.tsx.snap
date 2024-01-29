@@ -254,10 +254,9 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
-                        "fontWeight": "normal",
                         "marginRight": 14,
                       },
                     ]
@@ -271,11 +270,10 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
                         "color": "#FFFFFF",
-                        "fontWeight": "normal",
                       },
                     ]
                   }
@@ -373,10 +371,9 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
-                        "fontWeight": "normal",
                         "marginRight": 14,
                       },
                     ]
@@ -390,11 +387,10 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
                         "color": "#FFFFFF",
-                        "fontWeight": "normal",
                       },
                     ]
                   }
@@ -564,10 +560,9 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
-                        "fontWeight": "normal",
                         "marginRight": 14,
                       },
                     ]
@@ -581,11 +576,10 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
                         "color": "#FFFFFF",
-                        "fontWeight": "normal",
                       },
                     ]
                   }
@@ -685,10 +679,9 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
-                        "fontWeight": "normal",
                         "marginRight": 14,
                       },
                     ]
@@ -702,11 +695,10 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
                         "color": "#FFFFFF",
-                        "fontWeight": "normal",
                       },
                     ]
                   }
@@ -804,10 +796,9 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
-                        "fontWeight": "normal",
                         "marginRight": 14,
                       },
                     ]
@@ -821,11 +812,10 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
                         "color": "#FFFFFF",
-                        "fontWeight": "normal",
                       },
                     ]
                   }
@@ -925,10 +915,9 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
-                        "fontWeight": "normal",
                         "marginRight": 14,
                       },
                     ]
@@ -942,11 +931,10 @@ exports[`Settings Screen Renders correctly 1`] = `
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 21,
-                        "fontWeight": "bold",
+                        "fontWeight": "normal",
                       },
                       Object {
                         "color": "#FFFFFF",
-                        "fontWeight": "normal",
                       },
                     ]
                   }

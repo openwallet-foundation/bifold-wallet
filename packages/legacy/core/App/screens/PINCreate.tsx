@@ -175,7 +175,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
-            <Text style={{ fontWeight: 'bold' }}>
+            <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>
               {updatePin ? t('PINCreate.RememberChangePIN') : t('PINCreate.RememberPIN')}
             </Text>{' '}
             {t('PINCreate.PINDisclaimer')}

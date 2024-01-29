@@ -52,7 +52,7 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
           },
         ]}
       >
-        <Text style={[TextTheme.modalNormal, { fontWeight: 'bold' }]}>{title}</Text>
+        <Text style={[TextTheme.modalNormal, { fontWeight: TextTheme.bold.fontWeight }]}>{title}</Text>
         <Icon name={isCollapsed ? 'expand-more' : 'expand-less'} size={24} color={TextTheme.modalNormal.color} />
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed} enablePointerEvents={true}>

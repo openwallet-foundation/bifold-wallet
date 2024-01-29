@@ -50,7 +50,7 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
       marginHorizontal: 15,
     },
     title: {
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
     },
     body: {
       marginTop: 10,

@@ -97,13 +97,11 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardParams> = (
     },
     schemaTitle: {
       ...ListItems.requestTemplateTitle,
-      fontWeight: 'bold',
       fontSize: 20,
       paddingVertical: 8,
     },
     attributeTitle: {
       ...ListItems.requestTemplateTitle,
-      fontWeight: 'bold',
       fontSize: 18,
       marginRight: 8,
     },
@@ -234,7 +232,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     title: {
       color: TextTheme.title.color,
       fontSize: 28,
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
     },
     description: {
       marginTop: 10,

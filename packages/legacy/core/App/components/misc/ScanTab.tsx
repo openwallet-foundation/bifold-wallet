@@ -13,7 +13,7 @@ interface ScanTabProps {
 }
 
 const ScanTab: React.FC<ScanTabProps> = ({ onPress, active, iconName, title }) => {
-  const { TabTheme } = useTheme()
+  const { TabTheme, TextTheme } = useTheme()
   const { fontScale } = useWindowDimensions()
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
 
@@ -24,7 +24,7 @@ const ScanTab: React.FC<ScanTabProps> = ({ onPress, active, iconName, title }) =
     text: {
       ...TabTheme.tabBarTextStyle,
       color: active ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-      fontWeight: active ? 'bold' : 'normal',
+      fontWeight: active ? TextTheme.bold.fontWeight : TextTheme.normal.fontWeight,
     },
   })
   return (

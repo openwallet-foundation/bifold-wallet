@@ -382,13 +382,12 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                         Object {
                           "color": "#FFFFFF",
                           "fontSize": 18,
-                          "fontWeight": "normal",
+                          "fontWeight": "bold",
                         },
                         Object {
                           "alignSelf": "center",
                           "color": "#000000",
                           "fontSize": 45,
-                          "fontWeight": "bold",
                         },
                       ]
                     }
@@ -763,13 +762,12 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
                         Object {
                           "color": "#FFFFFF",
                           "fontSize": 18,
-                          "fontWeight": "normal",
+                          "fontWeight": "bold",
                         },
                         Object {
                           "alignSelf": "center",
                           "color": "#000000",
                           "fontSize": 45,
-                          "fontWeight": "bold",
                         },
                       ]
                     }

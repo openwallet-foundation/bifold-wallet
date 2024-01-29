@@ -51,8 +51,6 @@ export const createCarouselStyle = (OnboardingTheme: any): OnboardingStyleSheet 
     },
     pagerNavigationButton: {
       ...OnboardingTheme.pagerNavigationButton,
-      fontSize: 18,
-      fontWeight: 'bold',
     },
   })
 }

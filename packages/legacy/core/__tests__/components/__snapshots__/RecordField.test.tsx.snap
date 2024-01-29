@@ -25,9 +25,6 @@ exports[`Record Field Component Shown binary field should render a binary field 
           Object {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "fontWeight": "normal",
-          },
-          Object {
             "fontWeight": "bold",
           },
         ]
@@ -152,9 +149,6 @@ exports[`Record Field Component Shown date field should render a date field 1`] 
           Object {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "fontWeight": "normal",
-          },
-          Object {
             "fontWeight": "bold",
           },
         ]

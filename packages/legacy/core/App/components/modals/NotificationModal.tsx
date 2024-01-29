@@ -101,7 +101,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           </View>
         ) : null}
         <View style={styles.childContainer}>
-          <Text style={[TextTheme.headingThree, { fontWeight: 'normal', textAlign: 'center' }]}>{title}</Text>
+          <Text style={[TextTheme.headingThree, { fontWeight: TextTheme.normal.fontWeight, textAlign: 'center' }]}>
+            {title}
+          </Text>
           {children}
         </View>
         {doneVisible ? (
