@@ -63,7 +63,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
-  const { enableTours: enableToursConfig, OCABundleResolver } = useConfiguration()
+  const { enableTours: enableToursConfig, OCABundleResolver, useAttestation } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
@@ -73,6 +73,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
   )
+  const { loading: attestationLoading } = useAttestation ? useAttestation() : { loading: false }
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
 
@@ -392,7 +393,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const proofPageHeader = () => {
     return (
       <View style={styles.pageMargin}>
-        {loading ? (
+        {loading || attestationLoading ? (
           <View style={styles.cardLoading}>
             <RecordLoading />
           </View>
@@ -490,7 +491,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const proofPageFooter = () => {
     return (
       <View style={[styles.pageFooter, styles.pageMargin]}>
-        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
+        {!(loading || attestationLoading) && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         ) : null}
         <View style={styles.footerButton}>
@@ -536,7 +537,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         renderItem={({ item }) => {
           return (
             <View>
-              {loading ? null : (
+              {loading || attestationLoading ? null : (
                 <View style={{ marginTop: 10, marginHorizontal: 20 }}>
                   <CredentialCard
                     credential={item.credExchangeRecord}
@@ -581,7 +582,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             <CredentialList
               header={
                 <View style={styles.pageMargin}>
-                  {!loading && (
+                  {!(loading || attestationLoading) && (
                     <>
                       {hasMatchingCredDef && (
                         <View
