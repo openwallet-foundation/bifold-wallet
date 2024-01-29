@@ -9,7 +9,7 @@ import { ButtonType } from '../components/buttons/Button-api'
 import CheckBoxRow from '../components/inputs/CheckBoxRow'
 import HighlightTextBox from '../components/texts/HighlightTextBox'
 import InfoTextBox from '../components/texts/InfoTextBox'
-import { TOKENS, useSystem } from '../container-api'
+import { TOKENS, useContainer } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -22,8 +22,8 @@ const Terms: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
-  const system = useSystem()
-  const Button = system.resolve(TOKENS.COMP_BUTTON)
+  const container = useContainer()
+  const Button = container.resolve(TOKENS.COMP_BUTTON)
   const onSubmitPressed = () => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,

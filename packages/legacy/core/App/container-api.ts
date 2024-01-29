@@ -1,7 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 
-import { IButton } from './components/buttons/Button-api'
+import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
@@ -39,7 +39,7 @@ export interface TokenMapping {
   [TOKENS.SCREEN_TERMS]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
-  [TOKENS.COMP_BUTTON]: IButton
+  [TOKENS.COMP_BUTTON]: Button
 }
 
 export interface System {
@@ -52,4 +52,4 @@ export const SystemContext = createContext<System | undefined>(undefined)
 export const SystemProvider = SystemContext.Provider
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-export const useSystem = () => useContext(SystemContext)!
+export const useContainer = () => useContext(SystemContext)!

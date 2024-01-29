@@ -10,7 +10,7 @@ import { AppState, DeviceEventEmitter } from 'react-native'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { EventTypes, walletTimeout } from '../constants'
-import { TOKENS, useSystem } from '../container-api'
+import { TOKENS, useContainer } from '../container-api'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -19,10 +19,6 @@ import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
 import Chat from '../screens/Chat'
-import NameWallet from '../screens/NameWallet'
-import Onboarding from '../screens/Onboarding'
-import { createCarouselStyle } from '../screens/OnboardingPages'
-import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
@@ -50,22 +46,10 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const OnboardingTheme = theme.OnboardingTheme
-  const {
-    pages,
-    terms,
-    splash,
-    useBiometry,
-    developer,
-    preface,
-    showPreface,
-    enableImplicitInvitations,
-    enableReuseConnections,
-    disableOnboardingSkip,
-    enableUseMultUseInvitation,
-  } = useConfiguration()
-  const system = useSystem()
-  const OnboardingStack = system.resolve(TOKENS.STACK_ONBOARDING)
+  const { splash, showPreface, enableImplicitInvitations, enableReuseConnections, enableUseMultUseInvitation } =
+    useConfiguration()
+  const container = useContainer()
+  const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
@@ -74,6 +58,7 @@ const RootStack: React.FC = () => {
     declinedProofs.forEach((proof) => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }

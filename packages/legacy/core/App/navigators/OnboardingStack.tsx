@@ -5,7 +5,7 @@ import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TOKENS, useSystem } from '../container-api'
+import { TOKENS, useContainer } from '../container-api'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -21,16 +21,16 @@ import { createDefaultStackOptions } from './defaultStackOptions'
 const OnboardingStack: React.FC = () => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const system = useSystem()
+  const container = useContainer()
   const Stack = createStackNavigator()
   const carousel = createCarouselStyle(OnboardingTheme)
-  const Onboarding = system.resolve(TOKENS.SCREEN_ONBOARDING)
+  const Onboarding = container.resolve(TOKENS.SCREEN_ONBOARDING)
   const { pages, splash, useBiometry } = useConfiguration()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const onTutorialCompleted = system.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
-  const terms = system.resolve(TOKENS.SCREEN_TERMS)
+  const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
+  const terms = container.resolve(TOKENS.SCREEN_TERMS)
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
       return

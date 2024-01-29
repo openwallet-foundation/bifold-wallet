@@ -22,7 +22,7 @@ import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
 import { EventTypes, minPINLength } from '../constants'
-import { TOKENS, useSystem } from '../container-api'
+import { TOKENS, useContainer } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
@@ -74,8 +74,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const system = useSystem()
-  const Button = system.resolve(TOKENS.COMP_BUTTON)
+  const container = useContainer()
+  const Button = container.resolve(TOKENS.COMP_BUTTON)
 
   const style = StyleSheet.create({
     screenContainer: {
