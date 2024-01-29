@@ -786,7 +786,12 @@ export const DialogTheme = {
 const LoadingTheme = {
   backgroundColor: ColorPallet.brand.modalPrimaryBackground,
 }
-
+const PINEnterTheme = {
+  image: {
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+}
 const PINInputTheme = {
   cell: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -858,6 +863,7 @@ export interface ITheme {
   OnboardingTheme: any
   DialogTheme: any
   LoadingTheme: any
+  PINEnterTheme: any
   PINInputTheme: any
   heavyOpacity: any
   borderRadius: any
@@ -879,6 +885,7 @@ export const theme: ITheme = {
   OnboardingTheme,
   DialogTheme,
   LoadingTheme,
+  PINEnterTheme,
   PINInputTheme,
   heavyOpacity,
   borderRadius,
