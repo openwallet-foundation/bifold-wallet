@@ -35,10 +35,9 @@ const Developer: React.FC = () => {
       alignItems: 'center',
     },
     settingLabelText: {
-      ...TextTheme.normal,
+      ...TextTheme.bold,
       marginRight: 10,
       textAlign: 'left',
-      fontWeight: 'bold',
     },
     settingSwitchContainer: {
       justifyContent: 'center',

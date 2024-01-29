@@ -43,7 +43,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [displayNotification, setDisplayNotification] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPallet, TextTheme, Assets, PINEnterTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
 
   const style = StyleSheet.create({
@@ -68,6 +68,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     modalText: {
       ...TextTheme.popupModalText,
       marginVertical: 5,
+    },
+    image: {
+      ...PINEnterTheme.image,
+      height: Assets.img.logoSecondary.height,
+      width: Assets.img.logoSecondary.width,
+      resizeMode: Assets.img.logoSecondary.resizeMode,
     },
   })
 
@@ -292,16 +298,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <Image
-            source={Assets.img.logoSecondary.src}
-            style={{
-              height: Assets.img.logoSecondary.height,
-              width: Assets.img.logoSecondary.width,
-              resizeMode: Assets.img.logoSecondary.resizeMode,
-              alignSelf: 'center',
-              marginBottom: 20,
-            }}
-          />
+          <Image source={Assets.img.logoSecondary.src} style={style.image} />
           {biometricsEnrollmentChange ? (
             <>
               <Text style={[TextTheme.normal, { alignSelf: 'center', textAlign: 'center' }]}>
