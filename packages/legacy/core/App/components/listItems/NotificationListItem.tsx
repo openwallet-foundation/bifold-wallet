@@ -115,9 +115,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
       paddingBottom: 5,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...TextTheme.bold,
       flexGrow: 1,
-      fontWeight: 'bold',
       alignSelf: 'center',
       flex: 1,
     },

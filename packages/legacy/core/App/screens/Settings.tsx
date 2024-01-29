@@ -314,8 +314,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         style={styles.sectionRow}
         onPress={onPress}
       >
-        <Text style={[TextTheme.headingFour, { fontWeight: 'normal', marginRight: 14 }]}>{title}</Text>
-        <Text style={[TextTheme.headingFour, { fontWeight: 'normal', color: ColorPallet.brand.link }]}>{value}</Text>
+        <Text style={[TextTheme.settingsText, { marginRight: 14 }]}>{title}</Text>
+        <Text style={[TextTheme.settingsText, { color: ColorPallet.brand.link }]}>{value}</Text>
       </TouchableOpacity>
     </ScrollView>
   )

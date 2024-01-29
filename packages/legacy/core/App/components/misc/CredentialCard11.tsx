@@ -218,7 +218,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     },
     credActionText: {
       fontSize: 20,
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
       color: ColorPallet.brand.link,
     },
   })
@@ -298,10 +298,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         ) : (
           <Text
             style={[
-              TextTheme.normal,
+              TextTheme.bold,
               {
                 fontSize: 0.5 * logoHeight,
-                fontWeight: 'bold',
                 alignSelf: 'center',
                 color: '#000',
               },
@@ -346,11 +345,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         ) : (
           <Text
             style={[
-              TextTheme.normal,
+              TextTheme.bold,
               styles.textContainer,
               {
                 lineHeight: 24,
-                fontWeight: 'bold',
               },
               { color: warn ? ColorPallet.notification.warnText : styles.textContainer.color },
             ]}
@@ -432,10 +430,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             <Text
               testID={testIdWithKey('CredentialName')}
               style={[
-                TextTheme.normal,
+                TextTheme.bold,
                 styles.textContainer,
                 {
-                  fontWeight: 'bold',
                   lineHeight: 24,
                   flex: 1,
                   flexWrap: 'wrap',

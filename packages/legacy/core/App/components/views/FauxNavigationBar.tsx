@@ -33,10 +33,9 @@ const FauxNavigationBar: React.FC<FauxNavigationBarProps> = ({ title, onHomeTouc
       justifyContent: 'space-between',
     },
     label: {
-      ...TextTheme.normal,
+      ...TextTheme.bold,
       color: ColorPallet.brand.headerText,
       fontSize: 17,
-      fontWeight: 'bold',
       flexGrow: 1,
       textAlign: 'center',
       paddingBottom: 12,
