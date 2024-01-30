@@ -1,4 +1,4 @@
-import { ImageStyle, StyleSheet, TextStyle, TouchableOpacity, ViewStyle } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 
 export enum ButtonType {
   Critical,

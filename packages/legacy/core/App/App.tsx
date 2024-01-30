@@ -9,7 +9,10 @@ import { animatedComponents } from './animated-components'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import toastConfig from './components/toast/ToastConfig'
+import { credentialOfferTourSteps } from './components/tour/CredentialOfferTourSteps'
+import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
+import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { Container, ContainerProvider } from './container-api'
 import { AnimatedComponentsProvider } from './contexts/animated-components'
 import { AuthProvider } from './contexts/auth'
@@ -23,7 +26,7 @@ import { defaultConfiguration } from './defaultConfiguration'
 import { initLanguages, initStoredLanguage, translationResources } from './localization'
 import RootStack from './navigators/RootStack'
 import { theme } from './theme'
-import { credentialOfferTourSteps, credentialsTourSteps, proofRequestTourSteps } from 'index'
+//import { credentialOfferTourSteps, credentialsTourSteps, proofRequestTourSteps } from './index'
 
 initLanguages(translationResources)
 
@@ -58,13 +61,13 @@ function App(sytem: Container) {
                         <NetInfo />
                         <ErrorModal />
                         <TourProvider
-                      homeTourSteps={homeTourSteps}
-                      credentialsTourSteps={credentialsTourSteps}
-                      credentialOfferTourSteps={credentialOfferTourSteps}
-                      proofRequestTourSteps={proofRequestTourSteps}
-                      overlayColor={'gray'}
-                      overlayOpacity={0.7}
-                    >
+                          homeTourSteps={homeTourSteps}
+                          credentialsTourSteps={credentialsTourSteps}
+                          credentialOfferTourSteps={credentialOfferTourSteps}
+                          proofRequestTourSteps={proofRequestTourSteps}
+                          overlayColor={'gray'}
+                          overlayOpacity={0.7}
+                        >
                           <RootStack />
                         </TourProvider>
                         <Toast topOffset={15} config={toastConfig} />
