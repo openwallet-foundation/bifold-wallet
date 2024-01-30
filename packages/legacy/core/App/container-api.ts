@@ -47,9 +47,9 @@ export interface Container {
   resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K]
 }
 
-export const SystemContext = createContext<Container | undefined>(undefined)
+export const ContainerContext = createContext<Container | undefined>(undefined)
 
-export const SystemProvider = SystemContext.Provider
+export const ContainerProvider = ContainerContext.Provider
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-export const useContainer = () => useContext(SystemContext)!
+export const useContainer = () => useContext(ContainerContext)!

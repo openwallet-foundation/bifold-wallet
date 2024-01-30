@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/core'
-import { StackNavigationOptions, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
+import {
+  StackNavigationOptions,
+  StackNavigationProp,
+  createStackNavigator,
+  StackScreenProps,
+} from '@react-navigation/stack'
 import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -50,8 +55,9 @@ const OnboardingStack: React.FC = () => {
       />
     )
   }
-  const CreatePINScreen: React.FC = () => {
-    return <PINCreate setAuthenticated={onAuthenticated} />
+  interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> {}
+  const CreatePINScreen: React.FC<CreatePINScreenParams> = (props) => {
+    return <PINCreate setAuthenticated={onAuthenticated} {...props} />
   }
   type ScreenOptions = RouteConfig<
     ParamListBase,
@@ -89,6 +95,7 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.CreatePIN,
       component: CreatePINScreen,
+      initialParams: {},
       options: () => ({
         title: t('Screens.CreatePIN'),
         headerShown: true,

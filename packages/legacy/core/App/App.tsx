@@ -10,7 +10,7 @@ import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import toastConfig from './components/toast/ToastConfig'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
-import { Container, SystemProvider } from './container-api'
+import { Container, ContainerProvider } from './container-api'
 import { AnimatedComponentsProvider } from './contexts/animated-components'
 import { AuthProvider } from './contexts/auth'
 import { CommonUtilProvider } from './contexts/commons'
@@ -23,6 +23,7 @@ import { defaultConfiguration } from './defaultConfiguration'
 import { initLanguages, initStoredLanguage, translationResources } from './localization'
 import RootStack from './navigators/RootStack'
 import { theme } from './theme'
+import { credentialOfferTourSteps, credentialsTourSteps, proofRequestTourSteps } from 'index'
 
 initLanguages(translationResources)
 
@@ -39,7 +40,7 @@ function App(sytem: Container) {
     }, [])
 
     return (
-      <SystemProvider value={sytem}>
+      <ContainerProvider value={sytem}>
         <StoreProvider>
           <AgentProvider>
             <ThemeProvider value={theme}>
@@ -56,7 +57,14 @@ function App(sytem: Container) {
                         />
                         <NetInfo />
                         <ErrorModal />
-                        <TourProvider steps={homeTourSteps} overlayColor={'gray'} overlayOpacity={0.7}>
+                        <TourProvider
+                      homeTourSteps={homeTourSteps}
+                      credentialsTourSteps={credentialsTourSteps}
+                      credentialOfferTourSteps={credentialOfferTourSteps}
+                      proofRequestTourSteps={proofRequestTourSteps}
+                      overlayColor={'gray'}
+                      overlayOpacity={0.7}
+                    >
                           <RootStack />
                         </TourProvider>
                         <Toast topOffset={15} config={toastConfig} />
@@ -68,7 +76,7 @@ function App(sytem: Container) {
             </ThemeProvider>
           </AgentProvider>
         </StoreProvider>
-      </SystemProvider>
+      </ContainerProvider>
     )
   }
 }

@@ -64,5 +64,6 @@ const ButtonImpl: Button = forwardRef(
     )
   }
 )
+export default ButtonImpl
 export { ButtonType, ButtonImpl }
 export type { Button, ButtonProps }

@@ -44,8 +44,6 @@ jest.mock('@hyperledger/aries-bifold-verifier',() => {
 jest.mock('react-native-device-info', () => {
   return require('../../__mocks__/custom/react-native-device-info')
 })
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => {})
 jest.mock('react-native-vision-camera', () => {
   return require('../../__mocks__/custom/react-native-camera')
 })
