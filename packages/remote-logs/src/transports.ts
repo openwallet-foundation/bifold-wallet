@@ -54,7 +54,10 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
       },
     ],
   }
-  const url = new URL(lokiUrl)
+
+  const [credentials, href] = lokiUrl.split('@')
+  const [username, password] = credentials.split('//')[1].split(':')
+  const protocol = credentials.split('//')[0]
   const axiosConfig: AxiosRequestConfig = {
     method: 'post',
     url: lokiUrl,
@@ -63,16 +66,12 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
 
   // If username and password are present
   // in the URL, use them for auth
-  if (url.username && url.password) {
+  if (username && password) {
     axiosConfig.auth = {
-      username: url.username,
-      password: url.password,
+      username,
+      password,
     }
-    // Clear the username and password from
-    // the URL
-    url.username = ''
-    url.password = ''
-    axiosConfig.url = url.href
+    axiosConfig.url = `${protocol}//${href}`
   }
 
   axios(axiosConfig)
