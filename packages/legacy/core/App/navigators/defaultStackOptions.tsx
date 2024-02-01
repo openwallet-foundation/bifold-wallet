@@ -4,7 +4,36 @@ import { useTranslation } from 'react-i18next'
 
 import HeaderTitle from '../components/texts/HeaderTitle'
 import { useConfiguration } from '../contexts/configuration'
-import { ITheme } from '../theme'
+import { ITheme, OnboardingTheme } from '../theme'
+import { ScreenOptionsType, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
+
+const defaultScreenOptionsDictionary: ScreenOptionsType = {
+  [Screens.Onboarding]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerLeft: () => false,
+  },
+  [Screens.Terms]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerLeft: () => false,
+  },
+  [Screens.CreatePIN]: {
+    headerLeft: () => false,
+  },
+  [Screens.NameWallet]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerLeft: () => false,
+  },
+  [Screens.UseBiometry]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerLeft: () => false,
+  },
+  [Screens.Developer]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerShown: false,
+    headerBackTestID: testIdWithKey('Back'),
+  },
+}
 
 export function createDefaultStackOptions({ ColorPallet }: ITheme): StackNavigationOptions {
   const { t } = useTranslation()
@@ -33,4 +62,10 @@ export function createDefaultStackOptions({ ColorPallet }: ITheme): StackNavigat
       headerBackAccessibilityLabel: t('Global.Back'),
     }
   )
+}
+
+export function createDefaultScreenStackOptions(): ScreenOptionsType {
+  const { screenOptionsDictionary } = useConfiguration()
+
+  return screenOptionsDictionary ?? defaultScreenOptionsDictionary
 }

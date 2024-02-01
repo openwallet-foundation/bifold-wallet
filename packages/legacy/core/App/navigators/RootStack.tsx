@@ -61,6 +61,7 @@ const RootStack: React.FC = () => {
     enableImplicitInvitations,
     enableReuseConnections,
     disableOnboardingSkip,
+    screenOptionsDictionary,
   } = useConfiguration()
   useDeepLinks()
 
@@ -283,7 +284,7 @@ const RootStack: React.FC = () => {
     const Stack = createStackNavigator()
     const carousel = createCarouselStyle(OnboardingTheme)
     return (
-      <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+      <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen
           name={Screens.Preface}
@@ -292,13 +293,10 @@ const RootStack: React.FC = () => {
         />
         <Stack.Screen
           name={Screens.Onboarding}
-          options={() => ({
+          options={{
+            ...screenOptionsDictionary?.[Screens.Onboarding],
             title: t('Screens.Onboarding'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            gestureEnabled: false,
-            headerLeft: () => false,
-          })}
+          }}
         >
           {(props) => (
             <Onboarding
@@ -313,52 +311,44 @@ const RootStack: React.FC = () => {
         </Stack.Screen>
         <Stack.Screen
           name={Screens.Terms}
-          options={() => ({
+          options={{
+            ...screenOptionsDictionary?.[Screens.Terms],
             title: t('Screens.Terms'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
+          }}
           component={terms}
         />
         <Stack.Screen
           name={Screens.CreatePIN}
-          options={() => ({
+          options={{
+            ...screenOptionsDictionary?.[Screens.CreatePIN],
             title: t('Screens.CreatePIN'),
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
+          }}
         >
           {(props) => <PINCreate {...props} setAuthenticated={onAuthenticated} />}
         </Stack.Screen>
         <Stack.Screen
           name={Screens.NameWallet}
-          options={() => ({
+          options={{
+            ...screenOptionsDictionary?.[Screens.NameWallet],
             title: t('Screens.NameWallet'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
+          }}
           component={NameWallet}
         />
         <Stack.Screen
           name={Screens.UseBiometry}
-          options={() => ({
+          options={{
+            ...screenOptionsDictionary?.[Screens.UseBiometry],
             title: t('Screens.Biometry'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
+          }}
           component={useBiometry}
         />
         <Stack.Screen
           name={Screens.Developer}
           component={developer}
-          options={{ ...defaultStackOptions, title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
+          options={{
+            ...screenOptionsDictionary?.[Screens.Developer],
+            title: t('Screens.Developer'),
+          }}
         />
       </Stack.Navigator>
     )
