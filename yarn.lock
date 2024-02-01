@@ -4072,7 +4072,7 @@ __metadata:
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-orientation-locker: ^1.6.0
-    react-native-permissions: ^3.8.4
+    react-native-permissions: ^4.0.1
     react-native-qrcode-svg: ^6.2.0
     react-native-reanimated: ^3.4.2
     react-native-safe-area-context: ^3.2.0
@@ -4144,7 +4144,7 @@ __metadata:
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-orientation-locker: "*"
-    react-native-permissions: ^3.8.4
+    react-native-permissions: ^4.0.1
     react-native-qrcode-svg: ^6.2.0
     react-native-reanimated: ^3.4.2
     react-native-safe-area-context: ^3.2.0
@@ -7541,7 +7541,7 @@ __metadata:
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-orientation-locker: ^1.6.0
-    react-native-permissions: ^3.8.4
+    react-native-permissions: ^4.0.1
     react-native-qrcode-svg: ^6.2.0
     react-native-reanimated: ^3.4.2
     react-native-safe-area-context: ^3.2.0
@@ -18680,17 +18680,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-permissions@npm:^3.8.4":
-  version: 3.9.2
-  resolution: "react-native-permissions@npm:3.9.2"
+"react-native-permissions@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "react-native-permissions@npm:4.0.1"
   peerDependencies:
-    react: ">=16.13.1"
-    react-native: ">=0.63.3"
-    react-native-windows: ">=0.62.0"
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+    react-native-windows: ">=0.70.0"
   peerDependenciesMeta:
     react-native-windows:
       optional: true
-  checksum: 047540958d415e62ea2359f8f5da392a345cec11d7bbe14b065459375b1185431bc98ac144595b9db27376ebb059811f79d9f3c80d61508aeecc3cb5e7c49996
+  checksum: d8124c032f1cfce114839ad18101d14c13ae74e9075f978f9f3ecdef490411ec9fe7b134744a5ebe58eb4d2307d00db4d2af6fa1985c564488dcae477b6255e7
   languageName: node
   linkType: hard
 
