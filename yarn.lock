@@ -4170,14 +4170,18 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
+    buffer: ^6.0.3
     eslint: ^8.48.0
     eslint-import-resolver-typescript: ^2.5.0
-    react-native: 0.72.5
+    react: "*"
+    react-native: "*"
     react-native-logs: ^5.0.1
     rimraf: ^5.0.0
     typescript: ^5.0.4
   peerDependencies:
-    react-native: 0.72.5
+    "@aries-framework/core": ^0.4.0
+    react: "*"
+    react-native: "*"
     react-native-logs: ^5.0.1
   languageName: unknown
   linkType: soft
@@ -18893,7 +18897,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native@npm:*, react-native@npm:0.72.5":
+"react-native@npm:*":
   version: 0.72.5
   resolution: "react-native@npm:0.72.5"
   dependencies:

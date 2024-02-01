@@ -56,30 +56,25 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
     ],
   }
 
-  // const [credentials, href] = lokiUrl.split('@')
-  // const [username, password] = credentials.split('//')[1].split(':')
-  // const protocol = credentials.split('//')[0]
-  // const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
-
-  // console.log('Sending to Loki at:', `${protocol}//${href}`)
-  // console.log('authHeader:', authHeader)
-  // console.log('payload:', JSON.stringify(payload))
-
-  // const config = {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     Authorization: authHeader,
-  //   },
-  // }
+  const [credentials, href] = lokiUrl.split('@')
+  const [username, password] = credentials.split('//')[1].split(':')
+  const protocol = credentials.split('//')[0]
+  const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authHeader,
+    },
+  }
 
   axios
-    .post(lokiUrl, payload)
+    .post(`${protocol}//${href}`, payload, config)
     .then((res) => {
       if (res.status !== 204) {
-        throw new Error(`Expected Loki to return 204, received ${res.status}`)
+        console.warn(`Expected Loki to return 204, received ${res.status}`)
       }
     })
     .catch((error) => {
-      throw new Error(`Error while sending to Loki, ${error}`)
+      console.error(`Error while sending to Loki, ${error}`)
     })
 }
