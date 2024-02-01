@@ -882,6 +882,9 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                           "alignSelf": "center",
                           "marginRight": 10,
                         },
+                        Object {
+                          "flexDirection": "row",
+                        },
                       ]
                     }
                   >
@@ -907,21 +910,22 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
                     >
                       
                     </Text>
-                  </View>
-                  <Text
-                    style={
-                      Object {
-                        "alignSelf": "center",
-                        "color": "#FFFFFF",
-                        "flexShrink": 1,
-                        "fontSize": 18,
-                        "fontWeight": "bold",
+                    <Text
+                      style={
+                        Object {
+                          "alignSelf": "center",
+                          "color": "#FFFFFF",
+                          "flexShrink": 1,
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "marginLeft": 7,
+                        }
                       }
-                    }
-                    testID="com.ariesbifold:id/HeaderText"
-                  >
-                    PINEnter.LoggedOut
-                  </Text>
+                      testID="com.ariesbifold:id/HeaderText"
+                    >
+                      PINEnter.LoggedOut
+                    </Text>
+                  </View>
                 </View>
                 <RCTScrollView
                   style={

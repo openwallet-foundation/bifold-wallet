@@ -5,7 +5,7 @@ Mobile app attestation
 ## Installation
 
 ```sh
-npm install react-native-attestation
+yarn add @hyperledger/react-native-attestation
 ```
 
 ## Usage

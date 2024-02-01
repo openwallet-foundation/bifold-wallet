@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useWindowDimensio
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
+import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
@@ -48,6 +49,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const [showDetails, setShowDetails] = useState<boolean>(false)
+  const { showDetailsInfo } = useConfiguration()
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.modalPrimaryBackground,
@@ -70,9 +72,9 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
       flexGrow: 0,
     },
     headerText: {
-      ...TextTheme.normal,
+      ...TextTheme.bold,
+      marginLeft: 7,
       flexShrink: 1,
-      fontWeight: 'bold',
       alignSelf: 'center',
       color: ColorPallet.notification.infoText,
     },
@@ -88,7 +90,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
     },
     showDetailsText: {
       ...TextTheme.title,
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       color: ColorPallet.brand.link,
     },
   })
@@ -179,12 +181,12 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <View style={[styles.icon]}>
+        <View style={[styles.icon, { flexDirection: 'row' }]}>
           <Icon accessible={false} name={iconName} size={iconSize} color={iconColor} />
+          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+            {title}
+          </Text>
         </View>
-        <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-          {title}
-        </Text>
         {onClosePressed && (
           <View>
             <TouchableOpacity
@@ -207,7 +209,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
               {showDetails ? message : description}
             </Text>
           )}
-          {message && !showDetails && (
+          {message && !showDetails && (showDetailsInfo ?? true) && (
             <TouchableOpacity
               accessibilityLabel={t('Global.ShowDetails')}
               testID={testIdWithKey('ShowDetails')}

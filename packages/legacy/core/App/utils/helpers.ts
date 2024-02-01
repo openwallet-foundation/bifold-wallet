@@ -51,21 +51,6 @@ import { parseCredDefFromId } from './cred-def'
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
 
-export enum Orientation {
-  Landscape = 'landscape',
-  Portrait = 'portrait',
-}
-
-export const orientation = (width: number, height: number) => {
-  return width > height ? Orientation.Landscape : Orientation.Portrait
-}
-
-export const isTablet = (width: number, height: number) => {
-  const aspectRatio = height / width
-
-  return aspectRatio < 1.6 // assume 4:3 for tablets
-}
-
 /**
  * Generates a numerical hash based on a given string
  * @see https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
@@ -811,6 +796,26 @@ export const receiveMessageFromDeepLink = async (url: string, agent: Agent | und
 }
 
 /**
+ * Useful for multi use invitations
+ * @param agent an Agent instance
+ * @param invitationId id of invitation
+ */
+export const removeExistingInvitationIfRequired = async (
+  agent: Agent | undefined,
+  invitationId: string
+): Promise<void> => {
+  try {
+    const oobRecord = await agent?.oob.findByReceivedInvitationId(invitationId)
+    if (oobRecord) {
+      await agent?.oob.deleteById(oobRecord.id)
+    }
+  } catch (error) {
+    // findByReceivedInvitationId will throw if unsuccessful but that's not a problem
+    // it just means there is nothing to delete
+  }
+}
+
+/**
  *
  * @param uri a URI containing a base64 encoded connection invite in the query parameter
  * @param agent an Agent instance
@@ -843,7 +848,9 @@ export const connectFromInvitation = async (
       // don't throw an error, will try to connect again below
     }
   }
+
   if (!record) {
+    await removeExistingInvitationIfRequired(agent, invitation.id)
     record = await agent?.oob.receiveInvitation(invitation, { reuseConnection })
   }
 

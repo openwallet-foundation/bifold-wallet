@@ -24,6 +24,7 @@ import {
   View,
   Vibration,
 } from 'react-native'
+import { isTablet } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import LoadingIndicator from '../components/animated/LoadingIndicator'
@@ -35,14 +36,14 @@ import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
-import { createTempConnectionInvitation, isTablet } from '../utils/helpers'
+import { createTempConnectionInvitation } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
 const useQrSizeForDevice = () => {
-  const { width, height } = useWindowDimensions()
-  const qrContainerSize = isTablet(width, height) ? width - width * 0.3 : width - 20
+  const { width } = useWindowDimensions()
+  const qrContainerSize = isTablet() ? width - width * 0.3 : width - 20
   const qrSize = qrContainerSize - 20
 
   return { qrSize, qrContainerSize }
@@ -60,7 +61,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }
 
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const isFocused = useIsFocused()
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
@@ -84,13 +85,12 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       textAlign: 'center',
     },
     primaryHeaderText: {
-      fontWeight: 'bold',
-      fontSize: 28,
+      ...TextTheme.headerTitle,
       textAlign: 'center',
       color: ColorPallet.grayscale.black,
     },
     secondaryHeaderText: {
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       fontSize: 20,
       textAlign: 'center',
       marginTop: 8,
@@ -103,7 +103,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       backgroundColor: ColorPallet.grayscale.white,
       zIndex: 100,
       textAlign: 'center',
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
       fontSize: 22,
       color: ColorPallet.brand.primary,
     },
@@ -117,8 +117,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     buttonContainer: {
       marginTop: 'auto',
       marginHorizontal: 20,
-    },
-    footerButton: {
       marginBottom: 10,
     },
   })
@@ -192,7 +190,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }, [proofRecord])
 
   return (
-    <SafeAreaView style={styles.container} edges={['left', 'right']}>
+    <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
       <ScrollView>
         <View style={styles.qrContainer}>
           {generating && <LoadingIndicator />}
@@ -204,16 +202,14 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Verifier.RefreshQR')}
-            accessibilityLabel={t('Verifier.RefreshQR')}
-            testID={testIdWithKey('GenerateNewQR')}
-            buttonType={ButtonType.Primary}
-            onPress={() => createProofRequest()}
-            disabled={generating}
-          />
-        </View>
+        <Button
+          title={t('Verifier.RefreshQR')}
+          accessibilityLabel={t('Verifier.RefreshQR')}
+          testID={testIdWithKey('GenerateNewQR')}
+          buttonType={ButtonType.Primary}
+          onPress={() => createProofRequest()}
+          disabled={generating}
+        />
       </View>
     </SafeAreaView>
   )

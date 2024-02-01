@@ -72,8 +72,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       flexGrow: 1,
     },
     headerText: {
-      ...TextTheme.normal,
-      fontWeight: 'bold',
+      ...TextTheme.bold,
       alignSelf: 'flex-start',
       color: ColorPallet.notification.infoText,
     },

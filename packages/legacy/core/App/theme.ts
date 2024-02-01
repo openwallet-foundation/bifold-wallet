@@ -47,7 +47,7 @@ export interface IFontAttributes {
   fontFamily?: string
   fontStyle?: 'normal' | 'italic'
   fontSize: number
-  fontWeight: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
+  fontWeight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
   color: string
 }
 
@@ -78,6 +78,7 @@ export interface ITextTheme {
   headingThree: IFontAttributes
   headingFour: IFontAttributes
   normal: IFontAttributes
+  bold: IFontAttributes
   label: IFontAttributes
   labelTitle: IFontAttributes
   labelSubtitle: IFontAttributes
@@ -90,6 +91,7 @@ export interface ITextTheme {
   popupModalText: IFontAttributes
   modalHeadingOne: IFontAttributes
   modalHeadingThree: IFontAttributes
+  settingsText: IFontAttributes
 }
 
 export interface IBrandColors {
@@ -267,6 +269,11 @@ export const TextTheme: ITextTheme = {
     fontWeight: 'normal',
     color: ColorPallet.brand.text,
   },
+  bold: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: ColorPallet.brand.text,
+  },
   label: {
     fontSize: 14,
     fontWeight: 'bold',
@@ -328,6 +335,11 @@ export const TextTheme: ITextTheme = {
     fontWeight: 'normal',
     color: ColorPallet.grayscale.white,
   },
+  settingsText: {
+    fontSize: 21,
+    fontWeight: 'normal',
+    color: ColorPallet.brand.text,
+  },
 }
 
 export const Inputs: IInputs = StyleSheet.create({
@@ -382,14 +394,12 @@ export const Buttons = StyleSheet.create({
     backgroundColor: ColorPallet.brand.primaryDisabled,
   },
   primaryText: {
-    ...TextTheme.normal,
+    ...TextTheme.bold,
     color: ColorPallet.brand.buttonText,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   primaryTextDisabled: {
-    ...TextTheme.normal,
-    fontWeight: 'bold',
+    ...TextTheme.bold,
     textAlign: 'center',
   },
   secondary: {
@@ -405,14 +415,12 @@ export const Buttons = StyleSheet.create({
     borderColor: ColorPallet.brand.secondaryDisabled,
   },
   secondaryText: {
-    ...TextTheme.normal,
-    fontWeight: 'bold',
+    ...TextTheme.bold,
     color: ColorPallet.brand.primary,
     textAlign: 'center',
   },
   secondaryTextDisabled: {
-    ...TextTheme.normal,
-    fontWeight: 'bold',
+    ...TextTheme.bold,
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
@@ -427,8 +435,7 @@ export const Buttons = StyleSheet.create({
     backgroundColor: ColorPallet.brand.modalPrimary,
   },
   modalPrimaryText: {
-    ...TextTheme.normal,
-    fontWeight: 'bold',
+    ...TextTheme.bold,
     textAlign: 'center',
   },
   modalSecondary: {
@@ -438,8 +445,7 @@ export const Buttons = StyleSheet.create({
     borderColor: ColorPallet.brand.modalPrimary,
   },
   modalSecondaryText: {
-    ...TextTheme.normal,
-    fontWeight: 'bold',
+    ...TextTheme.bold,
     color: ColorPallet.brand.modalPrimary,
     textAlign: 'center',
   },
@@ -460,6 +466,7 @@ export const ListItems = StyleSheet.create({
   },
   credentialOfferTitle: {
     ...TextTheme.modalHeadingThree,
+    fontWeight: 'normal',
   },
   credentialOfferDetails: {
     ...TextTheme.normal,
@@ -488,7 +495,7 @@ export const ListItems = StyleSheet.create({
     color: ColorPallet.grayscale.white,
   },
   recordAttributeLabel: {
-    ...TextTheme.normal,
+    ...TextTheme.bold,
   },
   recordContainer: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -565,8 +572,7 @@ export const TabTheme = {
   tabBarActiveTintColor: ColorPallet.brand.primary,
   tabBarInactiveTintColor: ColorPallet.brand.tabBarInactive,
   tabBarTextStyle: {
-    ...TextTheme.label,
-    fontWeight: 'normal',
+    ...TextTheme.labelSubtitle,
     paddingBottom: 5,
   },
   tabBarButtonIconStyle: {
@@ -666,18 +672,16 @@ export const ChatTheme = {
     fontSize: TextTheme.normal.fontSize,
   },
   leftTextHighlighted: {
+    ...TextTheme.bold,
     color: ColorPallet.brand.secondary,
-    fontSize: TextTheme.normal.fontSize,
-    fontWeight: 'bold',
   },
   rightText: {
     color: ColorPallet.brand.secondary,
     fontSize: TextTheme.normal.fontSize,
   },
   rightTextHighlighted: {
+    ...TextTheme.bold,
     color: ColorPallet.brand.secondary,
-    fontSize: TextTheme.normal.fontSize,
-    fontWeight: 'bold',
   },
   inputToolbar: {
     backgroundColor: ColorPallet.brand.secondary,
@@ -746,6 +750,8 @@ export const OnboardingTheme = {
   },
   pagerNavigationButton: {
     color: ColorPallet.brand.primary,
+    fontWeight: 'bold',
+    fontSize: 18,
   },
   headerTintColor: ColorPallet.grayscale.white,
   headerText: {
@@ -780,7 +786,12 @@ export const DialogTheme = {
 const LoadingTheme = {
   backgroundColor: ColorPallet.brand.modalPrimaryBackground,
 }
-
+const PINEnterTheme = {
+  image: {
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+}
 const PINInputTheme = {
   cell: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -852,6 +863,7 @@ export interface ITheme {
   OnboardingTheme: any
   DialogTheme: any
   LoadingTheme: any
+  PINEnterTheme: any
   PINInputTheme: any
   heavyOpacity: any
   borderRadius: any
@@ -873,6 +885,7 @@ export const theme: ITheme = {
   OnboardingTheme,
   DialogTheme,
   LoadingTheme,
+  PINEnterTheme,
   PINInputTheme,
   heavyOpacity,
   borderRadius,

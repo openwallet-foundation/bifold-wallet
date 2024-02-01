@@ -1,3 +1,4 @@
+import { DidExchangeState } from '@aries-framework/core'
 import { useConnectionById } from '@aries-framework/react-hooks'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -62,7 +63,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       alignItems: 'center',
     },
     messageText: {
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       textAlign: 'center',
       marginTop: 30,
     },
@@ -136,6 +137,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.shouldShowDelayMessage])
 
   useEffect(() => {
+    // for non-connectionless, invalid connections stay in the below state
+    if (connection && connection.state === DidExchangeState.RequestSent) {
+      return
+    }
+
     if (
       !connectionId &&
       !oobRecord &&
@@ -170,7 +176,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (state.notificationRecord && goalCode) {
       goalCodeAction(goalCode)()
     }
-  }, [connection, oobRecord, goalCode, state.notificationRecord])
+  }, [connection, connection?.state, oobRecord, goalCode, state.notificationRecord])
 
   useMemo(() => {
     startTimer()

@@ -1,7 +1,7 @@
 import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
-import { StackScreenProps } from '@react-navigation/stack'
+import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
 import { createContext, ReducerAction, useContext } from 'react'
 
 import { EmptyListProps } from '../components/misc/EmptyList'
@@ -51,9 +51,12 @@ export interface ConfigurationContext {
   disableOnboardingSkip?: boolean
   useBiometry: React.FC
   useCustomNotifications: () => { total: number; notifications: any }
+  useAttestation?: () => { start: () => void; stop: () => void; loading: boolean }
   whereToUseWalletUrl: string
   showScanHelp?: boolean
   showScanButton?: boolean
+  globalScreenOptions?: StackNavigationOptions
+  showDetailsInfo?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

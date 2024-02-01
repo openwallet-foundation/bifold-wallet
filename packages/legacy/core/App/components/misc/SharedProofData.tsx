@@ -69,12 +69,12 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
     },
     attributeName: {
       fontSize: 16,
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       color: ColorPallet.grayscale.black,
     },
     attributeValue: {
       fontSize: 18,
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
       color: ColorPallet.grayscale.black,
     },
   })
@@ -161,10 +161,9 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
         ) : (
           <Text
             style={[
-              TextTheme.normal,
+              TextTheme.bold,
               {
                 fontSize: 0.5 * logoHeight,
-                fontWeight: 'bold',
                 alignSelf: 'center',
                 color: ColorPallet.grayscale.black,
               },
