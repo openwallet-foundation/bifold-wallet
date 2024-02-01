@@ -56,36 +56,24 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
     ],
   }
 
-  const lokiUrl2 =
-    'https://90e08348:acf0bb5692b8ecea193d9da458dade0c@bcwallet-logstack-proxy-e79518-dev.apps.silver.devops.gov.bc.ca/loki/api/v1/push'
+  // const [credentials, href] = lokiUrl.split('@')
+  // const [username, password] = credentials.split('//')[1].split(':')
+  // const protocol = credentials.split('//')[0]
+  // const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
 
-  const [credentials, href] = lokiUrl2.split('@')
-  const [username, password] = credentials.split('//')[1].split(':')
-  const protocol = credentials.split('//')[0]
-  // const axiosConfig: AxiosRequestConfig = {
-  //   method: 'post',
-  //   url: lokiUrl2,
-  //   data: payload,
+  // console.log('Sending to Loki at:', `${protocol}//${href}`)
+  // console.log('authHeader:', authHeader)
+  // console.log('payload:', JSON.stringify(payload))
+
+  // const config = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     Authorization: authHeader,
+  //   },
   // }
-
-  // // If username and password are present
-  // // in the URL, use them for auth
-  // if (username && password) {
-  //   axiosConfig.auth = {
-  //     username,
-  //     password,
-  //   }
-  //   axiosConfig.url = `${protocol}//${href}`
-  // }
-
-  // console.log(axiosConfig)
-
-  const authHeader = Buffer.from(`Basic ${username}:${password}`).toString('base64')
 
   axios
-    .post(`${protocol}//${href}`, payload, {
-      headers: { Authorization: authHeader },
-    })
+    .post(lokiUrl, payload)
     .then((res) => {
       if (res.status !== 204) {
         throw new Error(`Expected Loki to return 204, received ${res.status}`)
