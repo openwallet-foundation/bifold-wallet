@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import axios from 'axios'
-import { transportFunctionType } from 'react-native-logs'
 import { Buffer } from 'buffer'
+import { transportFunctionType } from 'react-native-logs'
 
 export interface RemoteLoggerOptions {
   lokiUrl?: string
