@@ -14,6 +14,7 @@ interface CredentialCardProps {
   credential?: CredentialExchangeRecord
   credDefId?: string
   schemaId?: string
+  proofCredDefId?: string
   credName?: string
   onPress?: GenericFn
   style?: ViewStyle
@@ -29,6 +30,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   credential,
   credDefId,
   schemaId,
+  proofCredDefId,
   proof,
   displayItems,
   credName,
@@ -53,6 +55,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
+          proofCredDefId={proofCredDefId}
           credential={credential}
           handleAltCredChange={handleAltCredChange}
           hasAltCredentials={hasAltCredentials}

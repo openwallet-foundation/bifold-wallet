@@ -431,6 +431,7 @@ const translation = {
     "RequestProcessing": "Just a moment...",
     "OfferDelay": "Offer delay",
     "ChangeCredential": "Change credential",
+    "GetThisCredential": "Get this credential",
     "RejectThisProof?": "Reject this Proof Request?",
     "DeclineThisProof?": "Decline this Proof Request?",
     "MultipleCredentials": "You have multiple credentials to choose from:",

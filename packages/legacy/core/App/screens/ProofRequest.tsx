@@ -543,6 +543,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}
                     schemaId={item.schemaId}
+                    proofCredDefId={item.proofCredDefId}
                     displayItems={[
                       ...(item.attributes ?? []),
                       ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
