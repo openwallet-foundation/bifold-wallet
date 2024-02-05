@@ -58,7 +58,7 @@ export interface ConfigurationContext {
   showScanButton?: boolean
   globalScreenOptions?: StackNavigationOptions
   showDetailsInfo?: boolean
-  credentialHelpDictionary?: GetCredentialHelpEntry[]
+  getCredentialHelpDictionary?: GetCredentialHelpEntry[]
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

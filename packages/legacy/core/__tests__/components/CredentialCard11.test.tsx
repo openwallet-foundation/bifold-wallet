@@ -75,7 +75,7 @@ describe('CredentialCard11 component', () => {
         <ConfigurationContext.Provider
           value={{
             ...configurationContext,
-            credentialHelpDictionary: [{ credDefIds: ['proof_cred_def_id'], action: helpAction }],
+            getCredentialHelpDictionary: [{ credDefIds: ['proof_cred_def_id'], action: helpAction }],
           }}
         >
           <CredentialCard11 proof proofCredDefId={'proof_cred_def_id'} error={true} />

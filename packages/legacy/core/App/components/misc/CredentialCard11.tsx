@@ -90,7 +90,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const logoHeight = width * 0.12
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
-  const { OCABundleResolver, credentialHelpDictionary } = useConfiguration()
+  const { OCABundleResolver, getCredentialHelpDictionary } = useConfiguration()
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
@@ -291,7 +291,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }, [credential?.revocationNotification])
 
   useEffect(() => {
-    credentialHelpDictionary?.some((entry) => {
+    getCredentialHelpDictionary?.some((entry) => {
       if (proofCredDefId && entry.credDefIds.includes(proofCredDefId)) {
         setHelpAction(() => () => {
           entry.action(navigation)
