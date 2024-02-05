@@ -8,7 +8,7 @@ import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import { Locales } from '../localization'
 import OnboardingPages from '../screens/OnboardingPages'
-import { HelpEntry } from '../types/help'
+import { CredentialHelpEntry } from '../types/credential-help'
 import { ConnectStackParams } from '../types/navigators'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
@@ -58,7 +58,7 @@ export interface ConfigurationContext {
   showScanButton?: boolean
   globalScreenOptions?: StackNavigationOptions
   showDetailsInfo?: boolean
-  credentialHelpDictionary?: HelpEntry[]
+  credentialHelpDictionary?: CredentialHelpEntry[]
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

@@ -19,50 +19,7 @@ import { formatIfDate, getCredentialConnectionLabel, isDataUrl, pTypeToText } fr
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
-
-interface CredentialActionFooterProps {
-  onPress: GenericFn
-  text: string
-  testID: string
-}
-
-const CredentialActionFooter = ({ onPress, text, testID }: CredentialActionFooterProps) => {
-  const { ColorPallet, TextTheme } = useTheme()
-  const styles = StyleSheet.create({
-    seperator: {
-      width: '100%',
-      height: 2,
-      marginVertical: 10,
-      backgroundColor: ColorPallet.grayscale.lightGrey,
-    },
-    touchable: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    credActionText: {
-      fontSize: 20,
-      fontWeight: TextTheme.bold.fontWeight,
-      color: ColorPallet.brand.link,
-    },
-  })
-
-  return (
-    <View>
-      <View style={styles.seperator}></View>
-      <View>
-        <TouchableOpacity onPress={onPress} testID={testIdWithKey(testID)} style={styles.touchable}>
-          <Text style={styles.credActionText}>{text}</Text>
-          <Icon
-            style={[styles.credActionText, { fontSize: styles.credActionText.fontSize + 5 }]}
-            name="chevron-right"
-          ></Icon>
-        </TouchableOpacity>
-      </View>
-    </View>
-  )
-}
+import CredentialActionFooter from './CredentialCard11ActionFooter'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
