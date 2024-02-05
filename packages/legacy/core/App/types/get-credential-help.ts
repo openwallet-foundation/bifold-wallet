@@ -2,11 +2,11 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 import { NotificationStackParams, Screens } from './navigators'
 
-export type CredentialHelpAction = (
+export type GetCredentialHelpAction = (
   navigation: StackNavigationProp<NotificationStackParams, Screens.ProofRequest>
 ) => void
 
-export interface CredentialHelpEntry {
+export interface GetCredentialHelpEntry {
   credDefIds: string[]
-  action: CredentialHelpAction
+  action: GetCredentialHelpAction
 }
