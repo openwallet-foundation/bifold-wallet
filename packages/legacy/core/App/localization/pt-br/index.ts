@@ -412,6 +412,7 @@ const translation = {
     "RequestProcessing": "Só um momento...",
     "OfferDelay": "Atrasar oferta",
     "ChangeCredential": "Escolher credencial",
+    "GetThisCredential": "Get this credential (PT-BR)",
     "RejectThisProof?": "Rejeitar esta Requisição de Prova?",
     "DeclineThisProof?": "Recusar esta Requisição de Prova?",
     "AcceptingProof": "Aceitando Prova",

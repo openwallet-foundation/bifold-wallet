@@ -61,7 +61,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }
 
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const isFocused = useIsFocused()
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
@@ -85,13 +85,12 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       textAlign: 'center',
     },
     primaryHeaderText: {
-      fontWeight: 'bold',
-      fontSize: 28,
+      ...TextTheme.headerTitle,
       textAlign: 'center',
       color: ColorPallet.grayscale.black,
     },
     secondaryHeaderText: {
-      fontWeight: 'normal',
+      fontWeight: TextTheme.normal.fontWeight,
       fontSize: 20,
       textAlign: 'center',
       marginTop: 8,
@@ -104,7 +103,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       backgroundColor: ColorPallet.grayscale.white,
       zIndex: 100,
       textAlign: 'center',
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
       fontSize: 22,
       color: ColorPallet.brand.primary,
     },

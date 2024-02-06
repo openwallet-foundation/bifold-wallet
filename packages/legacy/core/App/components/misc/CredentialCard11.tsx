@@ -1,6 +1,8 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,11 +13,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
+import { NotificationStackParams, Screens } from '../../types/navigators'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { formatIfDate, getCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
+import CredentialActionFooter from './CredentialCard11ActionFooter'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -29,6 +33,7 @@ interface CredentialCard11Props {
   credName?: string
   credDefId?: string
   schemaId?: string
+  proofCredDefId?: string
   proof?: boolean
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
@@ -74,6 +79,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   credName,
   credDefId,
   schemaId,
+  proofCredDefId,
   proof,
   hasAltCredentials,
   handleAltCredChange,
@@ -84,7 +90,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const logoHeight = width * 0.12
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
-  const { OCABundleResolver } = useConfiguration()
+  const { OCABundleResolver, getCredentialHelpDictionary } = useConfiguration()
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
@@ -92,8 +98,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
     credential?.revocationNotification !== undefined && !!proof
   )
-
+  const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
+  // below navigation only to be used from proof request screen
+  const navigation = useNavigation<StackNavigationProp<NotificationStackParams, Screens.ProofRequest>>()
 
   const primaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
@@ -218,7 +226,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     },
     credActionText: {
       fontSize: 20,
-      fontWeight: 'bold',
+      fontWeight: TextTheme.bold.fontWeight,
       color: ColorPallet.brand.link,
     },
   })
@@ -282,6 +290,16 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     setIsProofRevoked(credential?.revocationNotification !== undefined && !!proof)
   }, [credential?.revocationNotification])
 
+  useEffect(() => {
+    getCredentialHelpDictionary?.some((entry) => {
+      if (proofCredDefId && entry.credDefIds.includes(proofCredDefId)) {
+        setHelpAction(() => () => {
+          entry.action(navigation)
+        })
+      }
+    })
+  }, [proofCredDefId])
+
   const CredentialCardLogo: React.FC = () => {
     return (
       <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
@@ -298,10 +316,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         ) : (
           <Text
             style={[
-              TextTheme.normal,
+              TextTheme.bold,
               {
                 fontSize: 0.5 * logoHeight,
-                fontWeight: 'bold',
                 alignSelf: 'center',
                 color: '#000',
               },
@@ -346,11 +363,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         ) : (
           <Text
             style={[
-              TextTheme.normal,
+              TextTheme.bold,
               styles.textContainer,
               {
                 lineHeight: 24,
-                fontWeight: 'bold',
               },
               { color: warn ? ColorPallet.notification.warnText : styles.textContainer.color },
             ]}
@@ -432,10 +448,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             <Text
               testID={testIdWithKey('CredentialName')}
               style={[
-                TextTheme.normal,
+                TextTheme.bold,
                 styles.textContainer,
                 {
-                  fontWeight: 'bold',
                   lineHeight: 24,
                   flex: 1,
                   flexWrap: 'wrap',
@@ -464,23 +479,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             return renderCardAttribute(item as Attribute & Predicate)
           }}
           ListFooterComponent={
-            hasAltCredentials ? (
-              <View>
-                <View style={styles.seperator}></View>
-                <View>
-                  <TouchableOpacity
-                    onPress={handleAltCredChange}
-                    testID={testIdWithKey('changeCredential')}
-                    style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    <Text style={styles.credActionText}>{t('ProofRequest.ChangeCredential')}</Text>
-                    <Icon
-                      style={{ ...styles.credActionText, fontSize: styles.credActionText.fontSize + 5 }}
-                      name="chevron-right"
-                    ></Icon>
-                  </TouchableOpacity>
-                </View>
-              </View>
+            hasAltCredentials && handleAltCredChange ? (
+              <CredentialActionFooter
+                onPress={handleAltCredChange}
+                text={t('ProofRequest.ChangeCredential')}
+                testID={'ChangeCredential'}
+              />
+            ) : error && helpAction ? (
+              <CredentialActionFooter
+                onPress={helpAction}
+                text={t('ProofRequest.GetThisCredential')}
+                testID={'GetThisCredential'}
+              />
             ) : null
           }
         />

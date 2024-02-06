@@ -19,7 +19,7 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     ...useCredentialByState(CredentialState.Done),
   ]
   const notifications = useNotifications()
-  const { HomeTheme } = useTheme()
+  const { HomeTheme, TextTheme } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
     container: {
@@ -45,15 +45,15 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     if (credentialCount === 1) {
       credentialMsg = (
         <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credential')}{' '}
-          {t('Home.InYourWallet')}
+          {t('Home.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
+          {t('Home.Credential')} {t('Home.InYourWallet')}
         </Text>
       )
     } else if (credentialCount > 1) {
       credentialMsg = (
         <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: 'bold' }}>{credentialCount}</Text> {t('Home.Credentials')}{' '}
-          {t('Home.InYourWallet')}
+          {t('Home.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
+          {t('Home.Credentials')} {t('Home.InYourWallet')}
         </Text>
       )
     } else {

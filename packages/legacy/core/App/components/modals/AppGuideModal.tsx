@@ -63,7 +63,6 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
     },
     headerText: {
       ...TextTheme.headingThree,
-      fontWeight: 'bold',
       alignSelf: 'flex-start',
       flexWrap: 'wrap',
       color: ColorPallet.notification.infoText,
