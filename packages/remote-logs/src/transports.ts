@@ -1,4 +1,6 @@
-import axios, { AxiosRequestConfig } from 'axios'
+/* eslint-disable no-console */
+import axios from 'axios'
+import { Buffer } from 'buffer'
 import { transportFunctionType } from 'react-native-logs'
 
 export interface RemoteLoggerOptions {
@@ -54,34 +56,26 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
       },
     ],
   }
-  const url = new URL(lokiUrl)
-  const axiosConfig: AxiosRequestConfig = {
-    method: 'post',
-    url: lokiUrl,
-    data: payload,
+
+  const [credentials, href] = lokiUrl.split('@')
+  const [username, password] = credentials.split('//')[1].split(':')
+  const protocol = credentials.split('//')[0]
+  const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authHeader,
+    },
   }
 
-  // If username and password are present
-  // in the URL, use them for auth
-  if (url.username && url.password) {
-    axiosConfig.auth = {
-      username: url.username,
-      password: url.password,
-    }
-    // Clear the username and password from
-    // the URL
-    url.username = ''
-    url.password = ''
-    axiosConfig.url = url.href
-  }
-
-  axios(axiosConfig)
+  axios
+    .post(`${protocol}//${href}`, payload, config)
     .then((res) => {
       if (res.status !== 204) {
-        throw new Error(`Expected Loki to return 204, received ${res.status}`)
+        console.warn(`Expected Loki to return 204, received ${res.status}`)
       }
     })
     .catch((error) => {
-      throw new Error(`Error while sending to Loki, ${error}`)
+      console.error(`Error while sending to Loki, ${error}`)
     })
 }
