@@ -52,7 +52,6 @@ describe('CredentialCard11 component', () => {
             credential={credentialRecord}
             credDefId={'cred_def_id'}
             proof
-            proofCredDefId={'proof_cred_def'}
             error={false}
             handleAltCredChange={handleAltCredChange}
             hasAltCredentials
@@ -68,17 +67,39 @@ describe('CredentialCard11 component', () => {
       expect(handleAltCredChange).toBeCalled()
     })
 
-    test('Missing credential with help action', async () => {
+    test('Missing credential with help action (cred def ID)', async () => {
       const helpAction = jest.fn()
 
       const { findByTestId } = render(
         <ConfigurationContext.Provider
           value={{
             ...configurationContext,
-            getCredentialHelpDictionary: [{ credDefIds: ['proof_cred_def_id'], action: helpAction }],
+            getCredentialHelpDictionary: [{ credDefIds: ['proof_cred_def_id'], schemaIds: [], action: helpAction }],
           }}
         >
           <CredentialCard11 proof proofCredDefId={'proof_cred_def_id'} error={true} />
+        </ConfigurationContext.Provider>
+      )
+
+      const getThisCredentialButton = await findByTestId(testIdWithKey('GetThisCredential'))
+
+      expect(getThisCredentialButton).toBeTruthy()
+
+      fireEvent(getThisCredentialButton, 'press')
+      expect(helpAction).toBeCalled()
+    })
+
+    test('Missing credential with help action (schema ID)', async () => {
+      const helpAction = jest.fn()
+
+      const { findByTestId } = render(
+        <ConfigurationContext.Provider
+          value={{
+            ...configurationContext,
+            getCredentialHelpDictionary: [{ credDefIds: [], schemaIds: ['proof_schema_id'], action: helpAction }],
+          }}
+        >
+          <CredentialCard11 proof proofSchemaId={'proof_schema_id'} error={true} />
         </ConfigurationContext.Provider>
       )
 

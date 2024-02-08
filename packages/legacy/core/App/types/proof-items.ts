@@ -8,6 +8,7 @@ export interface ProofCredentialAttributes {
   credDefId?: string
   proofCredDefId?: string
   schemaId?: string
+  proofSchemaId?: string
   credName: string
   attributes?: Attribute[]
 }
@@ -19,6 +20,7 @@ export interface ProofCredentialPredicates {
   credDefId?: string
   proofCredDefId?: string
   schemaId?: string
+  proofSchemaId?: string
   credName: string
   predicates?: Predicate[]
 }

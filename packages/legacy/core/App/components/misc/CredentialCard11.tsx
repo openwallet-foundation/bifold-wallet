@@ -34,6 +34,7 @@ interface CredentialCard11Props {
   credDefId?: string
   schemaId?: string
   proofCredDefId?: string
+  proofSchemaId?: string
   proof?: boolean
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
@@ -80,6 +81,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   credDefId,
   schemaId,
   proofCredDefId,
+  proofSchemaId,
   proof,
   hasAltCredentials,
   handleAltCredChange,
@@ -291,14 +293,25 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }, [credential?.revocationNotification])
 
   useEffect(() => {
+    if (!error) {
+      return
+    }
+
     getCredentialHelpDictionary?.some((entry) => {
       if (proofCredDefId && entry.credDefIds.includes(proofCredDefId)) {
         setHelpAction(() => () => {
           entry.action(navigation)
         })
+        return true
+      }
+      if (proofSchemaId && entry.schemaIds.includes(proofSchemaId)) {
+        setHelpAction(() => () => {
+          entry.action(navigation)
+        })
+        return true
       }
     })
-  }, [proofCredDefId])
+  }, [proofCredDefId, proofSchemaId])
 
   const CredentialCardLogo: React.FC = () => {
     return (

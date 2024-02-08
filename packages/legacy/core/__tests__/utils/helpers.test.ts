@@ -11,6 +11,8 @@ import {
   getConnectionName,
   removeExistingInvitationIfRequired,
   connectFromInvitation,
+  credDefIdFromRestrictions,
+  schemaIdFromRestrictions,
 } from '../../App/utils/helpers'
 
 const proofCredentialPath = path.join(__dirname, '../fixtures/proof-credential.json')
@@ -195,5 +197,65 @@ describe('getConnectionName', () => {
 
     const result = getConnectionName(connection as unknown as ConnectionRecord, alternateContactNames)
     expect(result).toBe('')
+  })
+})
+
+describe('credDefIdFromRestrictions', () => {
+  test('With no cred_def_id in any restrictions', async () => {
+    const expected = ''
+    const restrictions = [{}, {}]
+
+    const result = credDefIdFromRestrictions(restrictions)
+    expect(result).toBe(expected)
+  })
+
+  test('With cred_def_id in restriction', async () => {
+    const expected = 'cred_def_id'
+    const restrictions = [{ cred_def_id: expected }]
+
+    const result = credDefIdFromRestrictions(restrictions)
+    expect(result).toBe(expected)
+  })
+
+  test('With cred_def_id in later restriction', async () => {
+    const expected = 'cred_def_id'
+    const restrictions = [{}, { cred_def_id: expected }]
+
+    const result = credDefIdFromRestrictions(restrictions)
+    expect(result).toBe(expected)
+  })
+})
+
+describe('schemaIdFromRestrictions', () => {
+  test('With no schema_id or schema ID subproperties in any restrictions', async () => {
+    const expected = ''
+    const restrictions = [{}, {}]
+
+    const result = schemaIdFromRestrictions(restrictions)
+    expect(result).toBe(expected)
+  })
+
+  test('With schema_id in restriction', async () => {
+    const expected = 'schema_id'
+    const restrictions = [{}, { schema_id: expected }]
+
+    const result = schemaIdFromRestrictions(restrictions)
+    expect(result).toBe(expected)
+  })
+
+  test('With all subproperties of schema ID in restriction', async () => {
+    const expected = 'abc123:2:Student Card:1.0'
+    const restrictions = [{ schema_name: 'Student Card', schema_version: '1.0', issuer_did: 'abc123' }]
+
+    const result = schemaIdFromRestrictions(restrictions)
+    expect(result).toBe(expected)
+  })
+
+  test('With only some subproperties of schema ID in restriction', async () => {
+    const expected = ''
+    const restrictions = [{ schema_name: 'Student Card', issuer_did: 'abc123' }]
+
+    const result = schemaIdFromRestrictions(restrictions)
+    expect(result).toBe(expected)
   })
 })
