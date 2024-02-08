@@ -8,5 +8,6 @@ export type GetCredentialHelpAction = (
 
 export interface GetCredentialHelpEntry {
   credDefIds: string[]
+  schemaIds: string[]
   action: GetCredentialHelpAction
 }
