@@ -320,8 +320,21 @@ const credNameFromRestriction = (queries?: AnonCredsProofRequestRestriction[]): 
   }
 }
 
-const credDefIdFromRestrictions = (queries?: AnonCredsProofRequestRestriction[]): string => {
+export const credDefIdFromRestrictions = (queries?: AnonCredsProofRequestRestriction[]): string => {
   return queries?.filter((rstr) => rstr.cred_def_id)[0]?.cred_def_id ?? ''
+}
+
+export const schemaIdFromRestrictions = (queries?: AnonCredsProofRequestRestriction[]): string => {
+  const rstrWithSchemaId = queries?.filter(
+    (rstr) => rstr.schema_id || (rstr.issuer_did && rstr.schema_name && rstr.schema_version)
+  )[0]
+
+  // the '2' here is the enum of the transaction type which, for schemas, is always 2
+  const schemaId = rstrWithSchemaId
+    ? rstrWithSchemaId.schema_id ||
+      `${rstrWithSchemaId.issuer_did}:2:${rstrWithSchemaId.schema_name}:${rstrWithSchemaId.schema_version}`
+    : ''
+  return schemaId
 }
 
 export const isDataUrl = (value: string | number | null) => {
@@ -409,6 +422,7 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
   const { name, names, restrictions } = attrReq
   const credName = credNameFromRestriction(restrictions)
   const proofCredDefId = credDefIdFromRestrictions(restrictions)
+  const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
   //there is no credId in this context so use credName as a placeholder
   const processedAttributes: ProofCredentialAttributes = {
@@ -419,6 +433,7 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
     credDefId: undefined,
     credName: credName,
     proofCredDefId,
+    proofSchemaId,
     attributes: [] as Attribute[],
   }
 
@@ -461,6 +476,7 @@ export const processProofAttributes = (
     const { name, names, non_revoked, restrictions } = requestedProofAttributes[key]
 
     const proofCredDefId = credDefIdFromRestrictions(restrictions)
+    const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
     if (credentialList.length <= 0) {
       const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key])
@@ -500,6 +516,7 @@ export const processProofAttributes = (
             schemaId: credential?.credentialInfo?.schemaId,
             credDefId: credential?.credentialInfo?.credentialDefinitionId,
             proofCredDefId,
+            proofSchemaId,
             credName,
             attributes: [],
           }
@@ -550,6 +567,7 @@ const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
 
   const credName = credNameFromRestriction(restrictions)
   const proofCredDefId = credDefIdFromRestrictions(restrictions)
+  const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
   //there is no credId in this context so use credName as a placeholder
   const processedPredicates: ProofCredentialPredicates = {
@@ -559,6 +577,7 @@ const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
     schemaId: undefined,
     credDefId: undefined,
     proofCredDefId,
+    proofSchemaId,
     credName: credName,
     predicates: [] as Predicate[],
   }
@@ -599,6 +618,7 @@ export const processProofPredicates = (
     const credentialList = [...(retrievedCredentialPredicates[key] ?? [])].sort(credentialSortFn)
     const { name, p_type: pType, p_value: pValue, non_revoked, restrictions } = requestedProofPredicates[key]
     const proofCredDefId = credDefIdFromRestrictions(restrictions)
+    const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
     if (credentialList.length <= 0) {
       const missingPredicates = addMissingDisplayPredicates(requestedProofPredicates[key])
@@ -640,6 +660,7 @@ export const processProofPredicates = (
           schemaId,
           credDefId: credentialDefinitionId,
           proofCredDefId,
+          proofSchemaId,
           credName: credName,
           predicates: [],
         }
