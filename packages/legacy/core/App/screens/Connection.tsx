@@ -4,7 +4,7 @@ import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, BackHandler, Modal, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { AccessibilityInfo, BackHandler, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -32,7 +32,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
   // logic should be: if this property is set, rather than showing the
   // delay message, the user should be redirected to the home screen.
-  const { connectionTimerDelay, autoRedirectConnectionToHome, modalStatusBarStyle } = useConfiguration()
+  const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const { connectionId, threadId } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
@@ -222,7 +222,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }}
     >
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-        <StatusBar barStyle={modalStatusBarStyle} />
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
             <Text

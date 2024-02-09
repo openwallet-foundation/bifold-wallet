@@ -1,8 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { render, fireEvent, act } from '@testing-library/react-native'
 import React from 'react'
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import configurationContext from '../contexts/configuration'
 import CameraDisclosureModal from '../../App/components/modals/CameraDisclosureModal'
 import { testIdWithKey } from '../../App/utils/testable'
 
@@ -27,20 +25,12 @@ describe('CameraDisclosureModal Component', () => {
   })
 
   test('Renders correctly', () => {
-    const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <CameraDisclosureModal requestCameraUse={requestCameraUse} />
-      </ConfigurationContext.Provider>
-    )
+    const tree = render(<CameraDisclosureModal requestCameraUse={requestCameraUse} />)
     expect(tree).toMatchSnapshot()
   })
 
   test('Pressing "Continue" triggers requestCameraUse callback', async () => {
-    const { getByTestId } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <CameraDisclosureModal requestCameraUse={requestCameraUse} />
-      </ConfigurationContext.Provider>
-    )
+    const { getByTestId } = render(<CameraDisclosureModal requestCameraUse={requestCameraUse} />)
     const continueButton = getByTestId(testIdWithKey('Continue'))
     await act(async () => {
       fireEvent(continueButton, 'press')
@@ -50,11 +40,7 @@ describe('CameraDisclosureModal Component', () => {
 
   test('Pressing "Not now" navigates correctly', async () => {
     const navigation = useNavigation()
-    const { getByTestId } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <CameraDisclosureModal requestCameraUse={requestCameraUse} />
-      </ConfigurationContext.Provider>
-    )
+    const { getByTestId } = render(<CameraDisclosureModal requestCameraUse={requestCameraUse} />)
     const notNowButton = getByTestId(testIdWithKey('NotNow'))
     await act(async () => {
       fireEvent(notNowButton, 'press')

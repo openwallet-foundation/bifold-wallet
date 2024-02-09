@@ -48,7 +48,6 @@ const configurationContext: ConfigurationContext = {
   proofRequestTemplates: useProofRequestTemplates,
   supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   whereToUseWalletUrl: 'https://example.com',
-  modalStatusBarStyle: 'light-content',
 }
 
 export default configurationContext

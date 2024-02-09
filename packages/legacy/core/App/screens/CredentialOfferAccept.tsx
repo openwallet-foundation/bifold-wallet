@@ -3,7 +3,7 @@ import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, View, ScrollView, AccessibilityInfo, StatusBar } from 'react-native'
+import { Modal, StyleSheet, Text, View, ScrollView, AccessibilityInfo } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -34,7 +34,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const navigation = useNavigation()
   const { ListItems } = useTheme()
   const { CredentialAdded, CredentialPending } = useAnimatedComponents()
-  const { connectionTimerDelay, modalStatusBarStyle } = useConfiguration()
+  const { connectionTimerDelay } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
     container: {
@@ -106,7 +106,6 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
-      <StatusBar barStyle={modalStatusBarStyle} />
       <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
