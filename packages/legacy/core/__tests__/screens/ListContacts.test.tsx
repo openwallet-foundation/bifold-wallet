@@ -5,6 +5,7 @@ import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
+import { StoreProvider, defaultState } from '../../App/contexts/store'
 import ListContacts from '../../App/screens/ListContacts'
 import configurationContext from '../contexts/configuration'
 
@@ -82,5 +83,57 @@ describe('ListContacts Component', () => {
         },
       })
     })
+  })
+
+  test('Hide list filters out specific contacts', async () => {
+    const navigation = useNavigation()
+    const tree = render(
+      <StoreProvider
+        initialState={{
+          ...defaultState,
+          preferences: {
+            ...defaultState.preferences,
+            developerModeEnabled: false,
+          },
+        }}
+      >
+        <ConfigurationContext.Provider value={{ ...configurationContext, contactHideList: ['Faber'] }}>
+          <ListContacts navigation={navigation as any} />
+        </ConfigurationContext.Provider>
+      </StoreProvider>
+    )
+    await act(async () => {})
+
+    const faberContact = await tree.queryByText('Faber', { exact: false })
+    const bobContact = await tree.queryByText('Bob', { exact: false })
+
+    expect(faberContact).toBe(null)
+    expect(bobContact).not.toBe(null)
+  })
+
+  test('Hide list does not filter out specific contacts when developer mode is enabled', async () => {
+    const navigation = useNavigation()
+    const tree = render(
+      <StoreProvider
+        initialState={{
+          ...defaultState,
+          preferences: {
+            ...defaultState.preferences,
+            developerModeEnabled: true,
+          },
+        }}
+      >
+        <ConfigurationContext.Provider value={{ ...configurationContext, contactHideList: ['Faber'] }}>
+          <ListContacts navigation={navigation as any} />
+        </ConfigurationContext.Provider>
+      </StoreProvider>
+    )
+    await act(async () => {})
+
+    const faberContact = await tree.queryByText('Faber', { exact: false })
+    const bobContact = await tree.queryByText('Bob', { exact: false })
+
+    expect(faberContact).not.toBe(null)
+    expect(bobContact).not.toBe(null)
   })
 })
