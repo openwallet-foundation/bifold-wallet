@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusBar, Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter } from 'react-native'
+import { Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
@@ -18,7 +18,6 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
-import { StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 interface PINEnterProps {
@@ -297,7 +296,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
   return (
     <KeyboardView>
-      <StatusBar barStyle={StatusBarStyles.Light} />
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <Image source={Assets.img.logoSecondary.src} style={style.image} />
