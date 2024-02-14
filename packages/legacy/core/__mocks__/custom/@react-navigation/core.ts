@@ -1,12 +1,15 @@
 const navigate = jest.fn()
 const dispatch = jest.fn()
+const replace = jest.fn()
 const navigation = {
   __timestamp: process.hrtime(),
   navigate,
+  replace,
   setOptions: jest.fn(),
   getParent: () => {return {
     navigate,
     dispatch,
+    replace,
   }},
   getState: jest.fn(() => ({
     index: jest.fn(),
