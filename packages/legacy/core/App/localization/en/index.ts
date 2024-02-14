@@ -419,6 +419,7 @@ const translation = {
     "DeleteOfferDescription": "Don't recognize the organization? Check your Contacts list. You only receive notifications from Contacts you've initiated",
   },
   "ProofRequest": {
+    "JustAMoment": "Just a moment while we prepare things for you...",
     "FromYourWallet": "From your wallet",
     "MissingCredentials": "Missing credentials",
     "PredicateGeDate": "is after",

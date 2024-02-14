@@ -21,6 +21,7 @@ import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
+import InfoTextBox from '../components/texts/InfoTextBox'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
@@ -393,6 +394,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const proofPageHeader = () => {
     return (
       <View style={styles.pageMargin}>
+        {attestationLoading && (
+          <View style={{ paddingTop: 20 }}>
+            <InfoTextBox>{t('ProofRequest.JustAMoment')}</InfoTextBox>
+          </View>
+        )}
         {loading || attestationLoading ? (
           <View style={styles.cardLoading}>
             <RecordLoading />

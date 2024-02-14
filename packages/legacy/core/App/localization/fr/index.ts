@@ -416,6 +416,7 @@ const translation = {
         "CustomOfferParagraph2": "Vous ne reconnaissez pas l'organisation? Vérifiez votre liste de Contacts. Vous ne recevez des notifications que des Contacts que vous avez initiés."
     },
     "ProofRequest": {
+        "JustAMoment": "Just a moment while we prepare things for you... (FR)",
         "FromYourWallet": "From your wallet (FR)",
         "MissingCredentials": "Missing credentials (FR)",
         "PredicateGeDate": "is after (FR)",
