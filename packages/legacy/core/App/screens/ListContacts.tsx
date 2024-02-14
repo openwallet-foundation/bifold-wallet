@@ -8,6 +8,7 @@ import { FlatList, StyleSheet, View } from 'react-native'
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import ContactListItem from '../components/listItems/ContactListItem'
 import EmptyListContacts from '../components/misc/EmptyListContacts'
+import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens, Stacks } from '../types/navigators'
@@ -32,10 +33,16 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   })
   const { records } = useConnections()
   const [store] = useStore()
-  // Filter out mediator agents
+  const { contactHideList } = useConfiguration()
+  // Filter out mediator agents and hidden contacts when not in dev mode
   let connections: ConnectionRecord[] = records
   if (!store.preferences.developerModeEnabled) {
-    connections = records.filter((r) => !r.connectionTypes.includes(ConnectionType.Mediator))
+    connections = records.filter((r) => {
+      return (
+        !r.connectionTypes.includes(ConnectionType.Mediator) &&
+        !contactHideList?.includes((r.theirLabel || r.alias) ?? '')
+      )
+    })
   }
 
   const onPressAddContact = () => {
