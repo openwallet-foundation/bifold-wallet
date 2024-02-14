@@ -9,6 +9,7 @@ import { ReactTestInstance } from 'react-test-renderer'
 
 import CredentialCard from '../../App/components/misc/CredentialCard'
 import { ConfigurationContext } from '../../App/contexts/configuration'
+import { StoreProvider, defaultState } from '../../App/contexts/store'
 import ListCredentials from '../../App/screens/ListCredentials'
 import configurationContext from '../contexts/configuration'
 
@@ -26,6 +27,8 @@ jest.mock('@react-navigation/native', () => {
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
 
+const credentialDefinitionId = 'xxxxxxxxxxxxxxxxxx:3:CL:11111:default'
+
 describe('displays a credentials list screen', () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
     threadId: '1',
@@ -35,6 +38,7 @@ describe('displays a credentials list screen', () => {
   })
   testOpenVPCredentialRecord.metadata.set(AnonCredsCredentialMetadataKey, {
     schemaId: 'Ui6HA36FvN83cEtmYYHxrn:2:unverified_person:0.1.0',
+    credentialDefinitionId,
   })
   testOpenVPCredentialRecord.credentials.push({
     credentialRecordType: 'anoncreds',
@@ -124,6 +128,56 @@ describe('displays a credentials list screen', () => {
       expect(new Date(createdAtDates[0])).toEqual(new Date('2020-01-02T00:00:00'))
       expect(new Date(createdAtDates[1])).toEqual(new Date('2020-01-01T00:01:00'))
       expect(new Date(createdAtDates[2])).toEqual(new Date('2020-01-01T00:00:00'))
+    })
+  })
+
+  test('Hide list filters out specific credentials', async () => {
+    const tree = render(
+      <StoreProvider
+        initialState={{
+          ...defaultState,
+          preferences: {
+            ...defaultState.preferences,
+            developerModeEnabled: false,
+          },
+        }}
+      >
+        <ConfigurationContext.Provider
+          value={{ ...configurationContext, credentialHideList: [credentialDefinitionId] }}
+        >
+          <ListCredentials />
+        </ConfigurationContext.Provider>
+      </StoreProvider>
+    )
+    await act(async () => {
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+
+      expect(credentialCards.length).toBe(2)
+    })
+  })
+
+  test('Hide list does not filter out specific credentials when developer mode is enabled', async () => {
+    const tree = render(
+      <StoreProvider
+        initialState={{
+          ...defaultState,
+          preferences: {
+            ...defaultState.preferences,
+            developerModeEnabled: true,
+          },
+        }}
+      >
+        <ConfigurationContext.Provider
+          value={{ ...configurationContext, credentialHideList: [credentialDefinitionId] }}
+        >
+          <ListCredentials />
+        </ConfigurationContext.Provider>
+      </StoreProvider>
+    )
+    await act(async () => {
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+
+      expect(credentialCards.length).toBe(3)
     })
   })
 })
