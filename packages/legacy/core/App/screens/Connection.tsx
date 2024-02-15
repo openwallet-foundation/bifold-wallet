@@ -149,7 +149,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       state.notificationRecord &&
       state.notificationRecord.state === 'request-received'
     ) {
-      navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
       dispatch({ isVisible: false })
 
       return

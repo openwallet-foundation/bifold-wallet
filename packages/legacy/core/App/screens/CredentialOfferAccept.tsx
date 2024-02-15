@@ -3,7 +3,7 @@ import { useCredentialById } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Modal, StatusBar, StyleSheet, Text, View, ScrollView, AccessibilityInfo } from 'react-native'
+import { Modal, StyleSheet, Text, View, ScrollView, AccessibilityInfo } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -11,7 +11,6 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
-import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 enum DeliveryStatus {
@@ -108,11 +107,6 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
-        <StatusBar
-          barStyle={
-            Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(styles.container.backgroundColor)
-          }
-        />
         <ScrollView style={[styles.container]}>
           <View style={[styles.messageContainer]}>
             {credentialDeliveryStatus === DeliveryStatus.Pending && (
