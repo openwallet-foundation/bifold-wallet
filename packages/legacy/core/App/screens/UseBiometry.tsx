@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Modal,
-  Switch,
-  StatusBar,
-  Platform,
-  ScrollView,
-  Pressable,
-  DeviceEventEmitter,
-} from 'react-native'
+import { StyleSheet, Text, View, Modal, Switch, ScrollView, Pressable, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -21,7 +10,6 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { statusBarStyleForColor, StatusBarStyles } from '../utils/luminance'
 import { testIdWithKey } from '../utils/testable'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
@@ -120,9 +108,6 @@ const UseBiometry: React.FC = () => {
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
-      <StatusBar
-        barStyle={Platform.OS === 'android' ? StatusBarStyles.Light : statusBarStyleForColor(ColorPallet.brand.primary)}
-      />
       <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center' }}>
           <Assets.svg.biometrics style={[styles.image]} />

@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { render, fireEvent, act } from '@testing-library/react-native'
 import React from 'react'
-
 import CameraDisclosureModal from '../../App/components/modals/CameraDisclosureModal'
 import { testIdWithKey } from '../../App/utils/testable'
 
@@ -14,10 +13,10 @@ jest.mock('@react-navigation/native', () => {
 })
 
 describe('CameraDisclosureModal Component', () => {
-  beforeAll(()=>{
+  beforeAll(() => {
     jest.useFakeTimers()
   })
-  afterAll(()=>{
+  afterAll(() => {
     jest.useRealTimers()
   })
   beforeEach(() => {

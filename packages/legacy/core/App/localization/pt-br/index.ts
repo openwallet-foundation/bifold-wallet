@@ -400,6 +400,7 @@ const translation = {
     "CustomOfferParagraph2": "Não reconhece a organização. Verifique sua lista de Contatos. Você só recebe notificões de Contatos que você tenha adicionado.",
   },
   "ProofRequest": {
+    "JustAMoment": "Just a moment while we prepare things for you... (PT-BR)",
     "FromYourWallet": "From your wallet (PB)",
     "MissingCredentials": "Missing credentials (PB)",
     "PredicateGeDate": "é posterior a",
@@ -412,6 +413,7 @@ const translation = {
     "RequestProcessing": "Só um momento...",
     "OfferDelay": "Atrasar oferta",
     "ChangeCredential": "Escolher credencial",
+    "GetThisCredential": "Get this credential (PT-BR)",
     "RejectThisProof?": "Rejeitar esta Requisição de Prova?",
     "DeclineThisProof?": "Recusar esta Requisição de Prova?",
     "AcceptingProof": "Aceitando Prova",
