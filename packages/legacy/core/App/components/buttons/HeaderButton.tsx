@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
+import { StyleSheet, Pressable, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
@@ -19,6 +19,7 @@ interface HeaderButtonProps {
   onPress: () => void
   icon: string
   text?: string
+  iconTintColor?: string
 }
 
 const HeaderButton: React.FC<HeaderButtonProps> = ({
@@ -28,6 +29,7 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
   accessibilityLabel,
   testID,
   onPress,
+  iconTintColor,
 }) => {
   const { ColorPallet, TextTheme } = useTheme()
   const style = StyleSheet.create({
@@ -46,26 +48,30 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
     },
   })
 
+  const myIcon = () => <Icon name={icon} size={defaultIconSize} color={iconTintColor ?? ColorPallet.brand.headerIcon} />
+
+  const myText = () => (text ? <Text style={[style.title]}>{text}</Text> : null)
+
   const layoutForButtonLocation = (buttonLocation: ButtonLocation) => {
     switch (buttonLocation) {
       case ButtonLocation.Left:
         return (
           <>
-            <Icon name={icon} size={defaultIconSize} color={ColorPallet.brand.headerIcon} />
-            {text && <Text style={[style.title]}>{text}</Text>}
+            {myIcon()}
+            {myText()}
           </>
         )
       case ButtonLocation.Right:
         return (
           <>
-            {text && <Text style={[style.title]}>{text}</Text>}
-            <Icon name={icon} size={defaultIconSize} color={ColorPallet.brand.headerIcon} />
+            {myText()}
+            {myIcon()}
           </>
         )
     }
   }
   return (
-    <TouchableOpacity
+    <Pressable
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={'button'}
       testID={testID}
@@ -73,7 +79,7 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
       hitSlop={hitSlop}
     >
       <View style={style.container}>{layoutForButtonLocation(buttonLocation)}</View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

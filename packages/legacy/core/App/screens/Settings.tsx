@@ -23,6 +23,7 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -77,6 +78,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       alignItems: 'center',
     },
   })
+
+  const xxx = (): void => {}
 
   const currentLanguage = i18n.t('Language.code', { context: i18n.language as Locales })
 
@@ -270,18 +273,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           </Text>
         </View>
         {iconRight && (
-          <TouchableOpacity
-            accessible={iconRight.action !== undefined}
-            accessibilityLabel={iconRight.action ? iconRight.accessibilityLabel : undefined}
-            testID={iconRight.testID ? iconRight.testID : undefined}
-            onPress={iconRight.action}
-          >
-            <Icon
-              name={iconRight.name}
-              size={iconRight.size ?? defaultIconSize}
-              style={[{ color: SettingsTheme.iconColor }, iconRight.style]}
-            ></Icon>
-          </TouchableOpacity>
+          <HeaderButton
+            buttonLocation={ButtonLocation.Right}
+            accessibilityLabel={iconRight.accessibilityLabel!}
+            testID={iconRight.testID!}
+            onPress={iconRight.action!}
+            icon={'pencil'}
+            iconTintColor="black"
+          />
         )}
       </View>
     ) : (
