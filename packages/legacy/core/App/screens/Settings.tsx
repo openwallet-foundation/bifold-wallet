@@ -14,6 +14,7 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -23,7 +24,6 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -78,8 +78,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       alignItems: 'center',
     },
   })
-
-  const xxx = (): void => {}
 
   const currentLanguage = i18n.t('Language.code', { context: i18n.language as Locales })
 

@@ -3,8 +3,7 @@ import { useAgent } from '@aries-framework/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text, ScrollView, useWindowDimensions, Pressable } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -16,12 +15,12 @@ import { Screens, Stacks, ConnectStackParams } from '../../types/navigators'
 import { createConnectionInvitation } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
+import HeaderButton, { ButtonLocation } from '../buttons/HeaderButton'
 
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
 import ScanTab from './ScanTab'
-import HeaderButton, { ButtonLocation } from '../buttons/HeaderButton'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
