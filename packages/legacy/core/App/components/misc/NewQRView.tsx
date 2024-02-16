@@ -191,7 +191,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                   testID={testIdWithKey('EditWalletName')}
                   onPress={handleEdit}
                   icon={'pencil'}
-                  iconTintColor={'black'}
+                  iconTintColor={styles.walletName.color}
                 />
               </View>
               <Text style={styles.secondaryText}>{t('Connection.ShareQR')}</Text>

@@ -277,7 +277,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             testID={iconRight.testID!}
             onPress={iconRight.action!}
             icon={'pencil'}
-            iconTintColor="black"
+            iconTintColor={TextTheme.headingThree.color}
           />
         )}
       </View>
