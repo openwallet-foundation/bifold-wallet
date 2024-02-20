@@ -20,7 +20,8 @@ import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const { useCustomNotifications, enableReuseConnections, enableImplicitInvitations } = useConfiguration()
+  const { useCustomNotifications, enableReuseConnections, enableImplicitInvitations, enableUseMultUseInvitation } =
+    useConfiguration()
   const { total } = useCustomNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
@@ -168,6 +169,7 @@ const TabStack: React.FC = () => {
                 params: {
                   implicitInvitations: enableImplicitInvitations,
                   reuseConnections: enableReuseConnections,
+                  useMultUseInvitation: enableUseMultUseInvitation,
                 },
               })
             },

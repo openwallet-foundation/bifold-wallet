@@ -864,7 +864,8 @@ export const connectFromInvitation = async (
   uri: string,
   agent: Agent | undefined,
   implicitInvitations: boolean = false,
-  reuseConnection: boolean = false
+  reuseConnection: boolean = false,
+  useMultUseInvitation: boolean = false
 ) => {
   const invitation = await agent?.oob.parseInvitation(uri)
 
@@ -889,7 +890,9 @@ export const connectFromInvitation = async (
   }
 
   if (!record) {
-    await removeExistingInvitationIfRequired(agent, invitation.id)
+    if (useMultUseInvitation) {
+      await removeExistingInvitationIfRequired(agent, invitation.id)
+    }
     record = await agent?.oob.receiveInvitation(invitation, { reuseConnection })
   }
 

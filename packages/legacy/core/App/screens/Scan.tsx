@@ -38,10 +38,20 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   if (route?.params && route.params['reuseConnections']) {
     reuseConnections = route.params['reuseConnections']
   }
+  let useMultUseInvitation = false
+  if (route?.params && route.params['useMultUseInvitation']) {
+    useMultUseInvitation = route.params['useMultUseInvitation']
+  }
 
   const handleInvitation = async (value: string): Promise<void> => {
     try {
-      const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnections)
+      const receivedInvitation = await connectFromInvitation(
+        value,
+        agent,
+        implicitInvitations,
+        reuseConnections,
+        useMultUseInvitation
+      )
       if (receivedInvitation?.connectionRecord?.id) {
         // not connectionless
         navigation.getParent()?.navigate(Stacks.ConnectionStack, {
