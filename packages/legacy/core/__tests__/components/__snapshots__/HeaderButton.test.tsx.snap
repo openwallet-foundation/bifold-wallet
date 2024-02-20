@@ -32,18 +32,15 @@ exports[`HeaderButton Component Left alignment renders correctly 1`] = `
       "top": 44,
     }
   }
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "opacity": 1,
-    }
-  }
   testID="com.ariesbifold:id/LeftButton"
 >
   <View
@@ -115,18 +112,15 @@ exports[`HeaderButton Component Right alignment renders correctly 1`] = `
       "top": 44,
     }
   }
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "opacity": 1,
-    }
-  }
   testID="com.ariesbifold:id/RightButton"
 >
   <View
@@ -198,18 +192,15 @@ exports[`HeaderButton Component Right alignment with text renders correctly 1`] 
       "top": 44,
     }
   }
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "opacity": 1,
-    }
-  }
   testID="com.ariesbifold:id/RightButton"
 >
   <View

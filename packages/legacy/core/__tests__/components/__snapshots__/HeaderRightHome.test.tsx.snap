@@ -32,18 +32,15 @@ exports[`Header Right Home Component Renders correctly 1`] = `
       "top": 44,
     }
   }
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "opacity": 1,
-    }
-  }
   testID="com.ariesbifold:id/HomeButton"
 >
   <View

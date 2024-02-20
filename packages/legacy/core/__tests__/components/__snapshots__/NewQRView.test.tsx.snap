@@ -419,7 +419,6 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
                     "color": "#FFFFFF",
                     "fontSize": 32,
                     "fontWeight": "bold",
-                    "marginBottom": 20,
                     "textAlign": "center",
                   },
                   Object {
@@ -431,22 +430,57 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
             >
               My Wallet - 1234
             </Text>
-            <RNGestureHandlerButton
+            <View
+              accessibilityLabel="NameWallet.EditWalletName"
+              accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
               collapsable={false}
-              onGestureEvent={[Function]}
-              onGestureHandlerEvent={[Function]}
-              onGestureHandlerStateChange={[Function]}
-              onHandlerStateChange={[Function]}
-              rippleColor={0}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 44,
+                  "left": 44,
+                  "right": 44,
+                  "top": 44,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               testID="com.ariesbifold:id/EditWalletName"
             >
               <View
-                accessibilityLabel="NameWallet.EditWalletName"
-                accessible={true}
-                collapsable={false}
                 style={
                   Object {
-                    "opacity": 1,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "marginLeft": 0,
+                    "marginRight": 15,
+                    "minHeight": 26,
+                    "minWidth": 26,
                   }
                 }
               >
@@ -456,18 +490,12 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": undefined,
-                        "fontSize": 24,
+                        "color": "#FFFFFF",
+                        "fontSize": 26,
                       },
+                      undefined,
                       Object {
-                        "color": "#42803E",
-                        "fontSize": 32,
-                        "fontWeight": "bold",
-                        "marginBottom": 20,
-                        "marginLeft": 10,
-                      },
-                      Object {
-                        "fontFamily": "Material Icons",
+                        "fontFamily": "Material Design Icons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
@@ -475,10 +503,10 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
                     ]
                   }
                 >
-                  
+                  󰏫
                 </Text>
               </View>
-            </RNGestureHandlerButton>
+            </View>
           </View>
           <Text
             style={
@@ -486,6 +514,7 @@ exports[`NewQRView Component Renders correctly on second tab 1`] = `
                 "color": "#FFFFFF",
                 "fontSize": 18,
                 "fontWeight": "normal",
+                "marginTop": 20,
                 "textAlign": "center",
               }
             }

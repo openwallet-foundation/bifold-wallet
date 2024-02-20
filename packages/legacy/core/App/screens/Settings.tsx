@@ -14,6 +14,7 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -270,18 +271,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           </Text>
         </View>
         {iconRight && (
-          <TouchableOpacity
-            accessible={iconRight.action !== undefined}
-            accessibilityLabel={iconRight.action ? iconRight.accessibilityLabel : undefined}
-            testID={iconRight.testID ? iconRight.testID : undefined}
-            onPress={iconRight.action}
-          >
-            <Icon
-              name={iconRight.name}
-              size={iconRight.size ?? defaultIconSize}
-              style={[{ color: SettingsTheme.iconColor }, iconRight.style]}
-            ></Icon>
-          </TouchableOpacity>
+          <HeaderButton
+            buttonLocation={ButtonLocation.Right}
+            accessibilityLabel={iconRight.accessibilityLabel!}
+            testID={iconRight.testID!}
+            onPress={iconRight.action!}
+            icon={'pencil'}
+            iconTintColor={TextTheme.headingThree.color}
+          />
         )}
       </View>
     ) : (

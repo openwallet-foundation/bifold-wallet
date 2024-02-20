@@ -4,7 +4,6 @@ import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Text, ScrollView, useWindowDimensions } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -16,6 +15,7 @@ import { Screens, Stacks, ConnectStackParams } from '../../types/navigators'
 import { createConnectionInvitation } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
+import HeaderButton, { ButtonLocation } from '../buttons/HeaderButton'
 
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
@@ -92,10 +92,10 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     walletName: {
       ...TextTheme.headingTwo,
       textAlign: 'center',
-      marginBottom: 20,
     },
     secondaryText: {
       ...TextTheme.normal,
+      marginTop: 20,
       textAlign: 'center',
     },
     editButton: { ...TextTheme.headingTwo, marginBottom: 20, marginLeft: 10, color: ColorPallet.brand.primary },
@@ -141,7 +141,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
             enableCameraOnError={enableCameraOnError}
             error={error}
             torchActive={torchActive}
-          ></ScanCamera>
+          />
           <View style={styles.cameraViewContainer}>
             <View style={styles.errorContainer}>
               {error ? (
@@ -174,17 +174,25 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
               {invitation && <QRRenderer value={invitation} size={qrSize} />}
             </View>
             <View style={{ paddingHorizontal: 20, flex: 1 }}>
-              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
                 <Text testID={testIdWithKey('WalletName')} style={[styles.walletName, { paddingHorizontal: 20 }]}>
                   {store.preferences.walletName}
                 </Text>
-                <TouchableOpacity
+                <HeaderButton
+                  buttonLocation={ButtonLocation.Right}
                   accessibilityLabel={t('NameWallet.EditWalletName')}
                   testID={testIdWithKey('EditWalletName')}
                   onPress={handleEdit}
-                >
-                  <Icon style={styles.editButton} name="edit" size={24}></Icon>
-                </TouchableOpacity>
+                  icon={'pencil'}
+                  iconTintColor={styles.walletName.color}
+                />
               </View>
               <Text style={styles.secondaryText}>{t('Connection.ShareQR')}</Text>
             </View>
