@@ -42,6 +42,7 @@ import Preface from './screens/Preface'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
+import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 
 export { LocalStorageKeys } from './constants'
@@ -144,4 +145,5 @@ export {
   components,
   contexts,
   Text,
+  loadLoginAttempt,
 }

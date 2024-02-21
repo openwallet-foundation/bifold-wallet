@@ -17,6 +17,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { loadLoginAttempt } from '../services/keychain'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
 import {
@@ -104,9 +105,8 @@ const Splash: React.FC = () => {
   })
 
   const loadAuthAttempts = async (): Promise<LoginAttemptState | undefined> => {
-    const attemptsData = await AsyncStorage.getItem(LocalStorageKeys.LoginAttempts)
-    if (attemptsData) {
-      const attempts = JSON.parse(attemptsData) as LoginAttemptState
+    const attempts = await loadLoginAttempt()
+    if (attempts) {
       dispatch({
         type: DispatchAction.ATTEMPT_UPDATED,
         payload: [attempts],
