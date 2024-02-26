@@ -22,6 +22,7 @@ import UseBiometry from './screens/UseBiometry'
 
 export const defaultConfiguration: ConfigurationContext = {
   pages: OnboardingPages,
+  initialLanguage: () => null,
   splash: Splash,
   terms: Terms,
   preface: Preface,

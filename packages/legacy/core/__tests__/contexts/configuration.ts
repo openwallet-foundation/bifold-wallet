@@ -11,6 +11,7 @@ const configurationContext: ConfigurationContext = {
   terms: () => null,
   splash: () => null,
   preface: () => null,
+  initialLanguage: () => null,
   homeHeaderView: () => null,
   homeFooterView: () => null,
   credentialListHeaderRight: () => null,
