@@ -7564,6 +7564,7 @@ __metadata:
     react-native-vector-icons: ^10.0.0
     react-native-vision-camera: ^3.6.16
     react-native-webview: ^11.22.3
+    tsyringe: ^4.7.0
     typescript: ^5.0.4
     uuid: ^9.0.0
   languageName: unknown
