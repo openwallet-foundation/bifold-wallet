@@ -21,7 +21,7 @@ import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
 import 'reflect-metadata'
 
-import { NavigationTheme, App, MainSystem } from '@hyperledger/aries-bifold-core'
+import { NavigationTheme, App as BifoldApp, MainContainer } from '@hyperledger/aries-bifold-core'
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
 import * as React from 'react'
 import { AppRegistry, LogBox } from 'react-native'
@@ -29,6 +29,7 @@ import { container } from 'tsyringe'
 
 //import App from './App'
 import { name as appName } from './app.json'
+import { AppContainer } from './container-imp'
 
 const navigationTheme = {
   ...NavigationTheme,
@@ -36,14 +37,15 @@ const navigationTheme = {
 
 LogBox.ignoreAllLogs()
 // console.log(`React Native Version:${ReactNativeVersion.major}.${ReactNativeVersion.minor}.${ReactNativeVersion.patch}`)
-const MyApp = App(new MainSystem(container.createChildContainer()).init())
+const bifoldContainer = new MainContainer(container.createChildContainer()).init()
+const App = BifoldApp(new AppContainer(bifoldContainer).init())
 
 const Base = () => {
   const navigationRef = useNavigationContainerRef()
 
   return (
     <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-      <MyApp />
+      <App />
     </NavigationContainer>
   )
 }

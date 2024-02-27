@@ -1,5 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
+import { DependencyContainer } from 'tsyringe'
 
 import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
@@ -45,6 +46,7 @@ export interface TokenMapping {
 export interface Container {
   init(): Container
   resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K]
+  getContainer(): DependencyContainer
 }
 
 export const ContainerContext = createContext<Container | undefined>(undefined)

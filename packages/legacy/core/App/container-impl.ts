@@ -18,7 +18,7 @@ export class MainContainer implements Container {
   }
   public init(): Container {
     // eslint-disable-next-line no-console
-    console.log(`initializing System`)
+    console.log(`Initializing Bifold container`)
     this.container.registerInstance(TOKENS.SCREEN_TERMS, ScreenTerms)
     this.container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
     this.container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
@@ -41,6 +41,10 @@ export class MainContainer implements Container {
     // eslint-disable-next-line no-console
     console.log(`resolving ${token}`)
     return this.container.resolve(token) as TokenMapping[K]
+  }
+
+  public getContainer(): DependencyContainer {
+    return this.container
   }
 }
 
