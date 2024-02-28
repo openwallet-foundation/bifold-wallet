@@ -1,12 +1,12 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
+import { useConnectionById, useProofById } from '@credo-ts-ext/react-hooks'
 import {
   AnonCredsCredentialsForProofRequest,
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
-} from '@aries-framework/anoncreds'
-import { CredentialExchangeRecord, ProofState } from '@aries-framework/core'
-import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
+} from '@credo-ts/anoncreds'
+import { CredentialExchangeRecord, ProofState } from '@credo-ts/core'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
 import moment from 'moment'
@@ -38,7 +38,7 @@ import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredica
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
-import { getConnectionName, Fields, evaluatePredicates } from '../utils/helpers'
+import { Fields, evaluatePredicates, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'

@@ -6,7 +6,7 @@ import {
   LegacyIndyProofFormatService,
   V1CredentialProtocol,
   V1ProofProtocol,
-} from '@aries-framework/anoncreds'
+} from '@credo-ts/anoncreds'
 import {
   Agent,
   ConnectionsModule,
@@ -15,7 +15,7 @@ import {
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
-} from '@aries-framework/core'
+} from '@credo-ts/core'
 
 function getAgentModules() {
   return null as unknown as {

@@ -1,6 +1,6 @@
-import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
-import { agentDependencies } from '@aries-framework/react-native'
+import { useAgent } from '@credo-ts-ext/react-hooks'
+import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@credo-ts/core'
+import { agentDependencies } from '@credo-ts/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
@@ -26,8 +26,8 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from '../types/state'
-import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
-import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
+import { createLinkSecretIfRequired, getAgentModules } from '../utils/agent'
+import { didMigrateToAskar, migrateToAskar } from '../utils/migration'
 
 const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry

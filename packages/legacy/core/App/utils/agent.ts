@@ -1,29 +1,28 @@
+import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts-ext/push-notifications'
+import { useAgent } from '@credo-ts-ext/react-hooks'
 import {
+  AnonCredsCredentialFormatService,
   AnonCredsModule,
+  AnonCredsProofFormatService,
   LegacyIndyCredentialFormatService,
   LegacyIndyProofFormatService,
   V1CredentialProtocol,
   V1ProofProtocol,
-  AnonCredsCredentialFormatService,
-  AnonCredsProofFormatService,
-} from '@aries-framework/anoncreds'
-import { AnonCredsRsModule } from '@aries-framework/anoncreds-rs'
-import { AskarModule } from '@aries-framework/askar'
+} from '@credo-ts/anoncreds'
+import { AskarModule } from '@credo-ts/askar'
 import {
   Agent,
   AutoAcceptCredential,
+  AutoAcceptProof,
   ConnectionsModule,
   CredentialsModule,
+  MediationRecipientModule,
   MediatorPickupStrategy,
   ProofsModule,
-  MediationRecipientModule,
   V2CredentialProtocol,
   V2ProofProtocol,
-  AutoAcceptProof,
-} from '@aries-framework/core'
-import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
-import { PushNotificationsFcmModule, PushNotificationsApnsModule } from '@aries-framework/push-notifications'
-import { useAgent } from '@aries-framework/react-hooks'
+} from '@credo-ts/core'
+import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { ariesAskar } from '@hyperledger/aries-askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
@@ -43,10 +42,8 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
     askar: new AskarModule({
       ariesAskar,
     }),
-    anoncredsRs: new AnonCredsRsModule({
-      anoncreds,
-    }),
     anoncreds: new AnonCredsModule({
+      anoncreds,
       registries: [new IndyVdrAnonCredsRegistry()],
     }),
     indyVdr: new IndyVdrModule({

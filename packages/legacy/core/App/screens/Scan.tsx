@@ -1,9 +1,9 @@
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent } from '@credo-ts-ext/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import { check, Permission, PERMISSIONS, request, RESULTS, Rationale } from 'react-native-permissions'
+import { PERMISSIONS, Permission, RESULTS, Rationale, check, request } from 'react-native-permissions'
 import Toast from 'react-native-toast-message'
 
 import NewQRView from '../components/misc/NewQRView'

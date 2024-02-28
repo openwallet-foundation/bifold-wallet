@@ -1,4 +1,4 @@
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent } from '@credo-ts-ext/react-hooks'
 import {
   AnonCredsProofRequestTemplatePayloadData,
   ProofRequestType,
@@ -20,7 +20,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplate } from '../hooks/proof-request-templates'
-import { Screens, ProofRequestsStackParams } from '../types/navigators'
+import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { formatIfDate, pTypeToText } from '../utils/helpers'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { parseSchemaFromId } from '../utils/schema'

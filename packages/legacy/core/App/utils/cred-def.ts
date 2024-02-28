@@ -1,8 +1,8 @@
-// TODO: export this from @aries-framework/anoncreds
-import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
-import { CredentialExchangeRecord as CredentialRecord } from '@aries-framework/core'
+// TODO: export this from @credo-ts/anoncreds
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
+import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
 
-import { parseSchemaFromId, credentialSchema } from './schema'
+import { credentialSchema, parseSchemaFromId } from './schema'
 
 export function parseCredDefFromId(credDefId?: string, schemaId?: string): string {
   let name = 'Credential'

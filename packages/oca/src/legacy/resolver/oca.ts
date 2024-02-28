@@ -1,4 +1,4 @@
-// TODO: export this from @aries-framework/anoncreds
+// TODO: export this from @credo-ts/anoncreds
 import startCase from 'lodash.startcase'
 
 import {
@@ -9,7 +9,6 @@ import {
 } from '../../interfaces'
 import {
   BaseOverlay,
-  OverlayType,
   BrandingOverlay,
   CaptureBase,
   CharacterEncodingOverlay,
@@ -18,6 +17,7 @@ import {
   LegacyBrandingOverlay,
   MetaOverlay,
   OverlayBundle,
+  OverlayType,
 } from '../../types'
 import { generateColor } from '../../utils/color'
 import { parseCredDefFromId } from '../../utils/credential-definition'

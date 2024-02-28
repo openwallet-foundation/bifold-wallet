@@ -1,5 +1,5 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+import { useCredentialByState } from '@credo-ts-ext/react-hooks'
+import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@credo-ts/core'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 

@@ -1,5 +1,5 @@
-import { ProofExchangeRecord } from '@aries-framework/core'
-import { useAgent, useCredentials, useProofById, useProofs } from '@aries-framework/react-hooks'
+import { useAgent, useCredentials, useProofById, useProofs } from '@credo-ts-ext/react-hooks'
+import { ProofExchangeRecord } from '@credo-ts/core'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -1,5 +1,5 @@
-import { ConnectionRecord, DidExchangeRole, DidExchangeState } from '@aries-framework/core'
-import { useConnections } from '@aries-framework/react-hooks'
+import { useConnections } from '@credo-ts-ext/react-hooks'
+import { ConnectionRecord, DidExchangeRole, DidExchangeState } from '@credo-ts/core'
 import { useNavigation } from '@react-navigation/core'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'

@@ -1,6 +1,6 @@
-// TODO: export this from @aries-framework/anoncreds
-import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
+// TODO: export this from @credo-ts/anoncreds
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
+import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'

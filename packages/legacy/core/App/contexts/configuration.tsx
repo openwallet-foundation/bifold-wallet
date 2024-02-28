@@ -1,8 +1,8 @@
-import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
+import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
-import { createContext, ReducerAction, useContext } from 'react'
+import { ReducerAction, createContext, useContext } from 'react'
 
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'

@@ -1,17 +1,17 @@
-import { ConnectionRecord } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent } from '@credo-ts-ext/react-hooks'
+import { ConnectionRecord } from '@credo-ts/core'
 import fs from 'fs'
 import path from 'path'
 
 import {
+  connectFromInvitation,
   createConnectionInvitation,
+  credDefIdFromRestrictions,
   credentialSortFn,
   formatIfDate,
   formatTime,
   getConnectionName,
   removeExistingInvitationIfRequired,
-  connectFromInvitation,
-  credDefIdFromRestrictions,
   schemaIdFromRestrictions,
 } from '../../App/utils/helpers'
 

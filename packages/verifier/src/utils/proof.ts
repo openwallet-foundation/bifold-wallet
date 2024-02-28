@@ -1,5 +1,5 @@
-import { AnonCredsProof, AnonCredsProofRequest } from '@aries-framework/anoncreds'
-import { Agent, ProofExchangeRecord, ProofState } from '@aries-framework/core'
+import { AnonCredsProof, AnonCredsProofRequest } from '@credo-ts/anoncreds'
+import { Agent, ProofExchangeRecord, ProofState } from '@credo-ts/core'
 
 import { BifoldAgent } from '../types/agent'
 import { ProofMetadata } from '../types/metadata'

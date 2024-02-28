@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import type { OnboardingStyleSheet } from './screens/Onboarding'
 
-import { Agent } from '@aries-framework/core'
-import AgentProvider from '@aries-framework/react-hooks'
+import AgentProvider from '@credo-ts-ext/react-hooks'
+import { Agent } from '@credo-ts/core'
 
 import * as components from './components'
 import Button, { ButtonType } from './components/buttons/Button'
@@ -44,104 +44,100 @@ import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
 import * as types from './types'
 
-export { LocalStorageKeys } from './constants'
-export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
-export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
-export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
-export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
-export { Assets as ImageAssets } from './theme'
-export { ThemeProvider, useTheme } from './contexts/theme'
-export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
-export { ColorPallet } from './theme'
 export { animatedComponents } from './animated-components'
-export { theme } from './theme'
+export { EventTypes, LocalStorageKeys } from './constants'
+export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
 export { useAuth } from './contexts/auth'
-export { NavigationTheme } from './theme'
-export { testIdWithKey, testIdForAccessabilityLabel } from './utils/testable'
-export { Screens, Stacks, TabStacks } from './types/navigators'
+export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
+export { DispatchAction, default as Store, reducer } from './contexts/reducers/store'
+export { StoreContext, StoreProvider, defaultState, mergeReducers, useStore } from './contexts/store'
+export { ThemeProvider, useTheme } from './contexts/theme'
+export { Locales, initLanguages, initStoredLanguage, translationResources } from './localization'
 export { createStyles } from './screens/OnboardingPages'
-export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
+export { ColorPallet, Assets as ImageAssets, NavigationTheme, theme } from './theme'
 export { BifoldError } from './types/error'
-export { EventTypes } from './constants'
-export { didMigrateToAskar, migrateToAskar } from './utils/migration'
+export { Screens, Stacks, TabStacks } from './types/navigators'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { removeExistingInvitationIfRequired } from './utils/helpers'
+export { StatusBarStyles, statusBarStyleForColor } from './utils/luminance'
+export { didMigrateToAskar, migrateToAskar } from './utils/migration'
+export { testIdForAccessabilityLabel, testIdWithKey } from './utils/testable'
 
 export type { AnimatedComponents } from './animated-components'
+export type { ConfigurationContext } from './contexts/configuration'
+export type { ReducerAction } from './contexts/reducers/store'
+export type { TourStep } from './contexts/tour/tour-context'
 export type {
-  ISVGAssets,
+  IAssets,
+  IBrandColors,
+  IColorPallet,
   IFontAttributes,
+  IGrayscaleColors,
   IInputAttributes,
   IInputs,
-  ITextTheme,
-  IBrandColors,
-  ISemanticColors,
   INotificationColors,
-  IGrayscaleColors,
-  IColorPallet,
-  IAssets,
+  ISVGAssets,
+  ISemanticColors,
+  ITextTheme,
   ITheme,
 } from './theme'
-export type { ConfigurationContext } from './contexts/configuration'
-export type { BifoldAgent } from './utils/agent'
-export type { TourStep } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams, OnboardingStackParams } from './types/navigators'
-export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
-export type { ReducerAction } from './contexts/reducers/store'
 export type {
-  State,
-  Onboarding as OnboardingState,
   LoginAttempt as LoginAttemptState,
-  Preferences as PreferencesState,
   Migration as MigrationState,
+  Onboarding as OnboardingState,
+  Preferences as PreferencesState,
+  State,
   Tours as ToursState,
 } from './types/state'
+export type { BifoldAgent } from './utils/agent'
+export type { OnboardingStyleSheet }
 
 export {
-  indyLedgers,
   Agent,
-  CommonUtilProvider,
   AgentProvider,
-  AuthProvider,
-  NetworkProvider,
-  TourProvider,
-  useTour,
   AttachTourStep,
-  TourBox,
-  homeTourSteps,
-  credentialsTourSteps,
-  credentialOfferTourSteps,
-  proofRequestTourSteps,
+  AttemptLockout,
+  AuthProvider,
   Button,
-  ButtonType,
-  HeaderButton,
   ButtonLocation,
+  ButtonType,
   CheckBoxRow,
-  CredentialCard,
+  CommonUtilProvider,
   ContentGradient,
+  CredentialCard,
+  Developer,
   ErrorModal,
-  InfoTextBox,
+  HeaderButton,
+  HomeFooterView as HomeContentView,
   InfoBox,
   InfoBoxType,
+  InfoTextBox,
   Link,
-  ToastType,
-  toastConfig,
-  RootStack,
   NetInfo,
+  NetworkProvider,
   OnboardingPages,
-  Splash,
-  Developer,
-  Terms,
   Preface,
-  HomeFooterView as HomeContentView,
-  UseBiometry,
-  AttemptLockout,
   Record,
-  defaultConfiguration,
-  types,
+  RootStack,
+  Splash,
+  Terms,
+  Text,
+  ToastType,
+  TourBox,
+  TourProvider,
+  UseBiometry,
   components,
   contexts,
-  Text,
+  credentialOfferTourSteps,
+  credentialsTourSteps,
+  defaultConfiguration,
+  homeTourSteps,
+  indyLedgers,
+  proofRequestTourSteps,
+  toastConfig,
+  types,
+  useTour,
 }

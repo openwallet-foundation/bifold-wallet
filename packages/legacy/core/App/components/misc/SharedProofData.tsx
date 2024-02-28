@@ -1,4 +1,4 @@
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent } from '@credo-ts-ext/react-hooks'
 import {
   GroupedSharedProofData,
   GroupedSharedProofDataItem,
@@ -9,7 +9,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useWindowDimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 
 import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useConfiguration } from '../../contexts/configuration'

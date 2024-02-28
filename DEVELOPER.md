@@ -8,7 +8,6 @@ The Aries Mobile Agent React Native (Bifold) is a user-friendly mobile agent tha
 
 Key points to note:
 
-- AFJ uses some Rust libraries, specifically Indy-SDK, which are compiled into native code. These libraries will soon be replaced by Indy-VDR and AnonCreds-rs.
 - Bifold uses the AFJ library, which in turn uses these Rust libraries.
 - The Indy-SDK library has been cross-compiled for ARM CPU architecture, meaning it works on iOS devices and Android devices/emulators but not on iOS simulators.
 - Indy-SDK uses the ZMQ protocol to interact with the Indy ledgers. This might be blocked by some corporate firewalls as it's a non-standard protocol that doesn't use HTTP/s.

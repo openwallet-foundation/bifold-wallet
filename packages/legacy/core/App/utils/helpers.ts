@@ -1,3 +1,4 @@
+import { useConnectionById } from '@credo-ts-ext/react-hooks'
 import {
   AnonCredsCredentialInfo,
   AnonCredsCredentialsForProofRequest,
@@ -11,23 +12,23 @@ import {
   AnonCredsRequestedPredicateMatch,
   LegacyIndyProofFormat,
   LegacyIndyProofFormatService,
-} from '@aries-framework/anoncreds'
+} from '@credo-ts/anoncreds'
 import {
   Agent,
+  BasicMessageRecord,
   ConnectionRecord,
   CredentialExchangeRecord,
   CredentialState,
-  BasicMessageRecord,
+  HandshakeProtocol,
   ProofExchangeRecord,
   ProofState,
   parseDid,
-} from '@aries-framework/core'
-import { BasicMessageRole } from '@aries-framework/core/build/modules/basic-messages/BasicMessageRole'
+} from '@credo-ts/core'
+import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
 import {
   GetCredentialsForRequestReturn,
   ProofFormatDataMessagePayload,
-} from '@aries-framework/core/build/modules/proofs/protocol/ProofProtocolOptions'
-import { useConnectionById } from '@aries-framework/react-hooks'
+} from '@credo-ts/core/build/modules/proofs/protocol/ProofProtocolOptions'
 import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
@@ -44,9 +45,10 @@ import { BifoldError } from '../types/error'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ChildFn } from '../types/tour'
 
-export { parsedCredDefNameFromCredential } from './cred-def'
 import { BifoldAgent } from './agent'
 import { parseCredDefFromId } from './cred-def'
+
+export { parsedCredDefNameFromCredential } from './cred-def'
 
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
@@ -522,10 +524,7 @@ export const processProofAttributes = (
           }
         }
 
-        let attributeValue = ''
-        if (credential) {
-          attributeValue = credential.credentialInfo.attributes[attributeName]
-        }
+        const attributeValue = credential ? credential.credentialInfo.attributes[attributeName] : null
         processedAttributes[credential.credentialId].attributes?.push(
           new Attribute({
             ...requestedProofAttributes[key],

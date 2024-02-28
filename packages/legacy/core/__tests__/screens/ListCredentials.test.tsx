@@ -1,7 +1,7 @@
-// TODO: export this from @aries-framework/anoncreds
-import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+// TODO: export this from @credo-ts/anoncreds
+import { useCredentialByState } from '@credo-ts-ext/react-hooks'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
+import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
