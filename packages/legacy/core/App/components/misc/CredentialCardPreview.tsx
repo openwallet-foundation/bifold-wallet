@@ -217,6 +217,7 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
   }> = ({ item }) => {
     const { ColorPallet } = useTheme()
     const label = (item.label || item.name)!
+    const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
     const [currentValue, setCurrentValue] = useState(`${item.pValue ?? ''}`)
 
     const predicateStyles = StyleSheet.create({
@@ -242,7 +243,7 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
           style={[TextTheme.labelSubtitle, styles.textContainer, predicateStyles.predicateLabel]}
           testID={testIdWithKey('PredicateName')}
         >
-          {label}
+          {ylabel}
         </Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' }}>
           <Text style={[styles.textContainer, predicateStyles.predicateType, styles.valueText]}>{item.pType}</Text>
