@@ -3277,6 +3277,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@breeztech/react-native-breez-sdk@npm:0.3.1":
+  version: 0.3.1
+  resolution: "@breeztech/react-native-breez-sdk@npm:0.3.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 569e540d0cafd05b161e178f8efcf918cb6bee563062005ec5bcd4d7767447e1dd5aa7c3e1042413b7142361f5ae99265e0cf304ce5f9987db841cc61a29b721
+  languageName: node
+  linkType: hard
+
 "@commitlint/cli@npm:^11.0.0":
   version: 11.0.0
   resolution: "@commitlint/cli@npm:11.0.0"
@@ -7487,6 +7497,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
+    "@breeztech/react-native-breez-sdk": 0.3.1
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
     "@formatjs/intl-getcanonicallocales": 1.7.3

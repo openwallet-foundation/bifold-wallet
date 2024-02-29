@@ -23,6 +23,7 @@
     "@aries-framework/push-notifications": "0.5.0",
     "@aries-framework/react-hooks": "^0.4.2",
     "@aries-framework/react-native": "^0.4.0",
+    "@breeztech/react-native-breez-sdk": "0.3.1",
     "@formatjs/intl-datetimeformat": "4.2.4",
     "@formatjs/intl-displaynames": "5.2.4",
     "@formatjs/intl-getcanonicallocales": "1.7.3",

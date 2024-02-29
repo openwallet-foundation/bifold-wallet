@@ -34,14 +34,26 @@ allprojects {
         google()
         maven { url 'https://www.jitpack.io' }
     }
-}
-subprojects {
     configurations.all {
-       it.resolutionStrategy.activateDependencyLocking()
+        resolutionStrategy {
+            force 'net.java.dev.jna:jna:5.8.0'
+        }
     }
 }
 
-dependencyLocking {
-    lockAllConfigurations()
-}
+configurations.all {
+        resolutionStrategy {
+            force 'net.java.dev.jna:jna:5.8.0'
+        }
+    }
+
+// subprojects {
+//     configurations.all {
+//        it.resolutionStrategy.activateDependencyLocking()
+//     }
+// }
+
+// dependencyLocking {
+//     lockAllConfigurations()
+// }
 
