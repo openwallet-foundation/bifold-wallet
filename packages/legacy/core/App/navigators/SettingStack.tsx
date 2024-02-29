@@ -15,6 +15,7 @@ import PINCreate from '../screens/PINCreate'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
 import UseBiometry from '../screens/UseBiometry'
+import LightningWallet from '../screens/LightningWallet'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -73,6 +74,15 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Biometry'),
           headerLeft: biometryUpdatePending ? () => null : undefined,
+          headerBackTestID: testIdWithKey('Back'),
+        }}
+      />
+      <Stack.Screen
+        name={Screens.LightningWallet}
+        component={LightningWallet}
+        options={{
+          title: 'BTC L... Wallet',
+          // headerLeft: biometryUpdatePending ? () => null : undefined,
           headerBackTestID: testIdWithKey('Back'),
         }}
       />
