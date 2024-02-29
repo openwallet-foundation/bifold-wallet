@@ -4005,6 +4005,7 @@ __metadata:
     "@aries-framework/react-native": ^0.4.0
     "@babel/core": ^7.20.0
     "@babel/runtime": ^7.20.0
+    "@breeztech/react-native-breez-sdk": 0.3.1
     "@commitlint/cli": ^11.0.0
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
@@ -4083,6 +4084,7 @@ __metadata:
     react-native-localize: ^2.2.4
     react-native-orientation-locker: ^1.6.0
     react-native-permissions: ^4.0.1
+    react-native-qrcode-scanner: ^1.5.5
     react-native-qrcode-svg: ^6.2.0
     react-native-reanimated: ^3.4.2
     react-native-safe-area-context: ^3.2.0
@@ -5600,6 +5602,18 @@ __metadata:
   peerDependencies:
     react-native: ^0.0.0-0 || ^0.60.6 || ^0.61.5 || ^0.62.2 || ^0.63.2 || ^0.64.0 || ^0.65.0 || ^0.66.0 || 1000.0.0
   checksum: 5fca2395ceede9f8537552f3f4c5b933ae4040312e25d20c5a2a66cb357917ea40c7f87110aea28911ba67f1309df0f8cefaee5d0c0ab3e6b0f663d53192d1d5
+  languageName: node
+  linkType: hard
+
+"@react-native-community/async-storage@npm:^1.6.1":
+  version: 1.12.1
+  resolution: "@react-native-community/async-storage@npm:1.12.1"
+  dependencies:
+    deep-assign: ^3.0.0
+  peerDependencies:
+    react: ^16.8
+    react-native: ">=0.59"
+  checksum: 68b519eb9fc50899257878440fd49a500d4b35c3899311c56c672e779df6516f0760204f6c8edcb3e83398c61a775822996aac6974be4b55a04ad30448d8662d
   languageName: node
   linkType: hard
 
@@ -9994,6 +10008,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deep-assign@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "deep-assign@npm:3.0.0"
+  dependencies:
+    is-obj: ^1.0.0
+  checksum: 9041ccc72ae1980f014d4b745d6135d8f0e71d60ac433397550789c27e6b4d14bc0de2af69777e09f97e1d0da3007a8d78de36f7bf9df931c9968b68fc9546ab
+  languageName: node
+  linkType: hard
+
 "deep-equal@npm:^2.0.5":
   version: 2.2.0
   resolution: "deep-equal@npm:2.2.0"
@@ -13472,7 +13495,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-obj@npm:^1.0.1":
+"is-obj@npm:^1.0.0, is-obj@npm:^1.0.1":
   version: 1.0.1
   resolution: "is-obj@npm:1.0.1"
   checksum: 3ccf0efdea12951e0b9c784e2b00e77e87b2f8bd30b42a498548a8afcc11b3287342a2030c308e473e93a7a19c9ea7854c99a8832a476591c727df2a9c79796c
@@ -18146,7 +18169,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
+"prop-types@npm:*, prop-types@npm:^15.5.10, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -18697,6 +18720,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-permissions@npm:^2.0.2":
+  version: 2.2.2
+  resolution: "react-native-permissions@npm:2.2.2"
+  peerDependencies:
+    react: ">=16.8.6"
+    react-native: ">=0.60.0"
+  checksum: cfc2b9d9c1e70a965faea108f546b34909cff36bc453e854ea6f129d3fa41c67d0db2fedd13d6041417276f9fd30c03b1aa44e0e20ffb883be3135a28fc94993
+  languageName: node
+  linkType: hard
+
 "react-native-permissions@npm:^4.0.1":
   version: 4.0.1
   resolution: "react-native-permissions@npm:4.0.1"
@@ -18708,6 +18741,19 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: d8124c032f1cfce114839ad18101d14c13ae74e9075f978f9f3ecdef490411ec9fe7b134744a5ebe58eb4d2307d00db4d2af6fa1985c564488dcae477b6255e7
+  languageName: node
+  linkType: hard
+
+"react-native-qrcode-scanner@npm:^1.5.5":
+  version: 1.6.0
+  resolution: "react-native-qrcode-scanner@npm:1.6.0"
+  dependencies:
+    "@react-native-community/async-storage": ^1.6.1
+    prop-types: ^15.5.10
+    react-native-permissions: ^2.0.2
+  peerDependencies:
+    react-native-camera: ">=1.0.2"
+  checksum: 89fdd8132fa0944949f54d902c7245da96cd488536eae0b2f9923d518a822a4dec606f22001871344b6438149f446639b952fe2be281965d1be91b9af1a47bed
   languageName: node
   linkType: hard
 

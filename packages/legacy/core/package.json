@@ -223,5 +223,9 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "@breeztech/react-native-breez-sdk": "0.3.1",
+    "react-native-qrcode-scanner": "^1.5.5"
   }
 }
