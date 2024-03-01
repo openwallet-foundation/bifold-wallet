@@ -1,20 +1,23 @@
-import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@aries-framework/anoncreds'
+import {
+  INDY_PROOF_REQUEST_ATTACHMENT_ID,
+  V1RequestPresentationMessage,
+  AnonCredsProof,
+} from '@aries-framework/anoncreds'
 import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
 import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
 import { useProofById } from '@aries-framework/react-hooks'
+import * as verifier from '@hyperledger/aries-bifold-verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import '@testing-library/jest-native/extend-expect'
-import { act, cleanup, fireEvent, render, RenderAPI } from '@testing-library/react-native'
+import { cleanup, fireEvent, render, RenderAPI } from '@testing-library/react-native'
 import React from 'react'
 
-import { testIdWithKey } from '../../App/utils/testable'
-import ProofDetails from '../../App/screens/ProofDetails'
-import * as verifier from '@hyperledger/aries-bifold-verifier'
-import { AnonCredsProof } from '@aries-framework/anoncreds'
-import configurationContext from '../contexts/configuration'
-import { NetworkProvider } from '../../App/contexts/network'
 import { ConfigurationContext } from '../../App/contexts/configuration'
+import { NetworkProvider } from '../../App/contexts/network'
+import ProofDetails from '../../App/screens/ProofDetails'
+import { testIdWithKey } from '../../App/utils/testable'
+import configurationContext from '../contexts/configuration'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -24,12 +27,12 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
-jest.mock('@hyperledger/aries-bifold-verifier',() => {
-  const original = jest. requireActual('@hyperledger/aries-bifold-verifier')
+jest.mock('@hyperledger/aries-bifold-verifier', () => {
+  const original = jest.requireActual('@hyperledger/aries-bifold-verifier')
   return {
     ...original,
-     __esModule: true,
-     getProofData: jest.fn(original.getProofData)
+    __esModule: true,
+    getProofData: jest.fn(original.getProofData),
   }
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -133,9 +136,9 @@ describe('ProofDetails Component', () => {
     })
 
     const checkAttributes = async (tree: RenderAPI) => {
-      const firstNameAttribute = await tree.findByText('first_name', { exact: true })
+      const firstNameAttribute = await tree.findByText('First Name', { exact: true })
       const firstNameAttributeValue = await tree.findByText('Aries', { exact: true })
-      const secondNameAttribute = await tree.findByText('second_name', { exact: true })
+      const secondNameAttribute = await tree.findByText('Second Name', { exact: true })
       const secondNameAttributeValue = await tree.findByText('Bifold', { exact: true })
 
       expect(firstNameAttribute).not.toBe(null)
