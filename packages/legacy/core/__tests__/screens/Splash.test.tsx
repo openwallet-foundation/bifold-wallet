@@ -9,6 +9,7 @@ import Splash from '../../App/screens/Splash'
 import AsyncStorage from '../../__mocks__/@react-native-async-storage/async-storage'
 import authContext from '../contexts/auth'
 import configurationContext from '../contexts/configuration'
+import { loadLoginAttempt } from '../../App/services/keychain'
 
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
@@ -24,12 +25,15 @@ jest.mock('@react-navigation/core', () => {
     }),
   }
 })
+jest.mock('../../App/services/keychain', () => ({
+  loadLoginAttempt: jest.fn(),
+}))
 
 describe('Splash Screen', () => {
-  beforeAll(()=>{
+  beforeAll(() => {
     jest.useFakeTimers()
   })
-  afterAll(()=>{
+  afterAll(() => {
     jest.useRealTimers()
   })
   test('Renders default correctly', async () => {
@@ -40,18 +44,18 @@ describe('Splash Screen', () => {
         </AuthContext.Provider>
       </ConfigurationContext.Provider>
     )
-    await act(()=>{ jest.runAllTimers() })
+    await act(() => {
+      jest.runAllTimers()
+    })
     expect(tree).toMatchSnapshot()
   })
 
   test('Starts onboarding correctly', async () => {
+    // @ts-ignore-next-line
+    loadLoginAttempt.mockReturnValue({ servedPenalty: true, loginAttempts: 0 })
+
     AsyncStorage.getItem = jest.fn().mockImplementation((key: string) => {
       switch (key) {
-        case LocalStorageKeys.LoginAttempts:
-          return JSON.stringify({
-            servedPenalty: true,
-            loginAttempts: 0,
-          })
         case LocalStorageKeys.Preferences:
           return JSON.stringify({
             useBiometry: false,
@@ -101,7 +105,9 @@ describe('Splash Screen', () => {
         </StoreProvider>
       )
     })
-    await act(()=>{ jest.runAllTimers() })
+    await act(() => {
+      jest.runAllTimers()
+    })
     expect(mockedDispatch).toHaveBeenCalled()
   })
 })

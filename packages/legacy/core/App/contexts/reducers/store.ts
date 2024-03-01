@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
+import { storeLoginAttempt } from '../../services/keychain'
 import {
   Preferences as PreferencesState,
   Tours as ToursState,
@@ -415,7 +416,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         loginAttempt,
       }
-      AsyncStorage.setItem(LocalStorageKeys.LoginAttempts, JSON.stringify(newState.loginAttempt))
+      storeLoginAttempt(loginAttempt)
       return newState
     }
     case LockoutDispatchAction.LOCKOUT_UPDATED: {

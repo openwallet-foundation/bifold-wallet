@@ -62,6 +62,7 @@ export interface ConfigurationContext {
   getCredentialHelpDictionary?: GetCredentialHelpEntry[]
   contactHideList?: string[]
   credentialHideList?: string[]
+  enableUseMultUseInvitation?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

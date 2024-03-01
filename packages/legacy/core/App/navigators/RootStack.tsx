@@ -62,6 +62,7 @@ const RootStack: React.FC = () => {
     enableReuseConnections,
     disableOnboardingSkip,
     screenOptionsDictionary,
+    enableUseMultUseInvitation,
   } = useConfiguration()
   useDeepLinks()
 
@@ -112,7 +113,8 @@ const RootStack: React.FC = () => {
           deepLink,
           agent,
           enableImplicitInvitations,
-          enableReuseConnections
+          enableReuseConnections,
+          enableUseMultUseInvitation
         )
         navigation.navigate(Stacks.ConnectionStack as any, {
           screen: Screens.Connection,
