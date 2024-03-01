@@ -11,11 +11,11 @@ import { OverlayType } from '@hyperledger/aries-oca/build/types/TypeEnums'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import CredentialCardPreview from '../components/misc/CredentialCardPreview'
+import VerifierCredentialCard from '../components/misc/VerifierCredentialCard'
 import AlertModal from '../components/modals/AlertModal'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
@@ -59,13 +59,14 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardProps> = ({
   }, [data.requestedAttributes, data.requestedPredicates])
 
   return (
-    <View style={{ marginTop: 15 }}>
-      <CredentialCardPreview
+    <View style={{ marginBottom: 15 }}>
+      <VerifierCredentialCard
         onChangeValue={onChangeValue}
         displayItems={attributes}
         style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
         credDefId={credDefId}
         schemaId={data.schema}
+        preview
         elevated
       />
     </View>
@@ -79,14 +80,9 @@ interface ProofRequestCardsProps {
 
 // memo'd to prevent rerendering when onChangeValue is called from child and updates parent
 const ProofRequestCards: React.FC<ProofRequestCardsProps> = memo(({ attributes = [], onChangeValue }) => {
-  return (
-    <FlatList
-      data={attributes}
-      keyExtractor={(item) => item.schema}
-      renderItem={({ item }) => <ProofRequestAttributesCard data={item} onChangeValue={onChangeValue} />}
-      contentContainerStyle={{ flexGrow: 1 }}
-    />
-  )
+  return attributes.map((item) => (
+    <ProofRequestAttributesCard key={item.schema} data={item} onChangeValue={onChangeValue} />
+  ))
 })
 
 const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, navigation }) => {
@@ -258,9 +254,11 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
           submit={() => setInvalidPredicate({ visible: false, predicate: invalidPredicate.predicate })}
         />
       )}
-      <Header />
-      <ProofRequestCards attributes={attributes} onChangeValue={onChangeValue} />
-      <Footer />
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <Header />
+        <ProofRequestCards attributes={attributes} onChangeValue={onChangeValue} />
+        <Footer />
+      </ScrollView>
     </SafeAreaView>
   )
 }
