@@ -53,7 +53,12 @@ const config = {
   },
   resolver: {
     blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
-    extraNodeModules: extraNodeModules,
+    extraNodeModules: {
+      ...extraNodeModules
+      , stream: require.resolve('stream-browserify')
+      , crypto: require.resolve('react-native-quick-crypto')
+      , buffer: require.resolve('@craftzdog/react-native-buffer'),
+    },
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg', 'cjs'],
   },

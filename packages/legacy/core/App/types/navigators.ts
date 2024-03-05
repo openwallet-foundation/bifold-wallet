@@ -38,6 +38,7 @@ export enum Screens {
   NameWallet = 'Name Wallet',
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
+  LightningWallet = 'Lightning Wallet',
 }
 
 export enum Stacks {
@@ -85,7 +86,6 @@ export type AuthenticateStackParams = {
   [Screens.UseBiometry]: undefined
   [Screens.NameWallet]: undefined
 }
-
 export type OnboardingStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
@@ -143,6 +143,7 @@ export type SettingStackParams = {
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
+  [Screens.LightningWallet]: undefined
 }
 
 export type NotificationStackParams = {
