@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Alert, Modal } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, Alert, Modal, TextInput, ActivityIndicator } from 'react-native';
 import {
     BreezEvent,
     defaultConfig,
@@ -37,6 +37,10 @@ const LightningWallet = () => {
     const [invoice, setInvoice] = useState<LnInvoice | undefined>(undefined);
     const [scannedData, setScannedData] = useState<string | undefined>(undefined);
     const [scannerActive, setScannerActive] = useState(false);
+    const [showInvoiceQR, setShowInvoiceQR] = useState(false);
+    const [satsAmount, setSatsAmount] = useState('1000');
+    const [invoiceGenLoading, setInvoiceGenLoading] = useState(false);
+    const [addressInfoLoading, setAddressInfoLoading] = useState(false);
 
     const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
@@ -45,12 +49,10 @@ const LightningWallet = () => {
     }
 
     useEffect(() => {
-        let eventSubscription
+        let eventSubscription: any
         const initializeSDK = async () => {
             // SDK events listener
-            const onBreezEvent = (e: any) => {
-                console.log(`Received event ${e.type}`);
-            };
+
 
             try {
                 // Assuming mnemonicToSeed, defaultConfig, connect and other necessary methods are imported
@@ -73,7 +75,7 @@ const LightningWallet = () => {
                 );
 
                 // Connect to the Breez SDK make it ready for use
-                await connect(config, seed, onBreezEvent);
+                eventSubscription = await connect(config, seed, eventHandler);
                 console.log('Connected to Breez');
                 let balances = await getBalances();
 
@@ -84,9 +86,10 @@ const LightningWallet = () => {
 
         const initNodeAndSdk = async () => {
             try {
-                const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
+                // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
+                const apiKey = '5481cee312d7c8fe3891bdff8953a1ce57f57790b73e0884a8bfc119f4399bba';
                 let mnemonic = await getItem(MNEMONIC_STORE)
-                const inviteCode = 'EXG4-SJP8';
+                const inviteCode = '6FUD-Z8A9';
 
                 if (!mnemonic) {
                     console.log("No mnemonic found, generating new one");
@@ -98,28 +101,27 @@ const LightningWallet = () => {
                     console.log("Mnemonic found: ", mnemonic);
                 }
 
-
-                //const seed = await mnemonicToSeed(mnemonic);
-                const seed = await mnemonicToSeed('embark category force toward husband snake rose result sugar select enrich trap');
+                const seed = await mnemonicToSeed(mnemonic);
+                // const seed = await mnemonicToSeed('embark category force toward husband snake rose result sugar select enrich trap');
                 console.log("Seed: ", seed);
 
                 const keys = loadAndConvert();
 
                 let nodeConfig
-                if (keys !== undefined && keys.deviceCert !== undefined && keys.deviceKey !== undefined) {
-                    const partneCreds = { deviceCert: keys.deviceCert, deviceKey: keys.deviceKey };
-                    nodeConfig = {
-                        type: NodeConfigVariant.GREENLIGHT,
-                        config: { partnerCredentials: partneCreds }
-                    };
-                    console.log("Going with partner credentials")
-                } else {
-                    nodeConfig = {
-                        type: NodeConfigVariant.GREENLIGHT,
-                        config: { inviteCode }
-                    };
-                    console.log("Going with invite code")
-                }
+                // if (keys !== undefined && keys.deviceCert !== undefined && keys.deviceKey !== undefined) {
+                //     const partneCreds = { deviceCert: keys.deviceCert, deviceKey: keys.deviceKey };
+                //     nodeConfig = {
+                //         type: NodeConfigVariant.GREENLIGHT,
+                //         config: { partnerCredentials: partneCreds }
+                //     };
+                //     console.log("Going with partner credentials")
+                // } else {
+                nodeConfig = {
+                    type: NodeConfigVariant.GREENLIGHT,
+                    config: { inviteCode }
+                };
+                console.log("Going with invite code")
+                // }
 
                 const config = await defaultConfig(
                     EnvironmentType.PRODUCTION,
@@ -137,6 +139,14 @@ const LightningWallet = () => {
         // initializeSDK();
         initNodeAndSdk();
     }, []);
+
+    function convertStringToByteArray(str: string) {
+        var bytes = [];
+        for (var i = 0; i < str.length; ++i) {
+            bytes.push(str.charCodeAt(i));
+        }
+        return bytes
+    }
 
     const pemToByteArray = (pem: any) => {
         // Remove the PEM headers and footers
@@ -162,52 +172,53 @@ const LightningWallet = () => {
             // const keyContent = await readFile('../assets/res/client-key.pem', 'utf8');
 
             // Convert PEM to byte array
-            const deviceCert = undefined
-            // pemToByteArray('-----BEGIN CERTIFICATE-----\
-            // MIICrzCCAlSgAwIBAgIUNFMoSTHXXkJ3ZoYXFjpJ5GG7VIswCgYIKoZIzj0EAwIw\
-            // gYMxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\
-            // YW4gRnJhbmNpc2NvMRQwEgYDVQQKEwtCbG9ja3N0cmVhbTEdMBsGA1UECxMUQ2Vy\
-            // dGlmaWNhdGVBdXRob3JpdHkxEjAQBgNVBAMTCUdMIC91c2VyczAeFw0yNDAyMjkx\
-            // MTU5MDBaFw0zNDAyMjYxMTU5MDBaMIGoMQswCQYDVQQGEwJVUzETMBEGA1UECBMK\
-            // Q2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxv\
-            // Y2tzdHJlYW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MTcwNQYDVQQD\
-            // Ey5HTCAvdXNlcnMvYWM3ZDRjMjUtNTNiNS00ZWE0LTlhMGEtOGU5NGRjNGNmZTZj\
-            // MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEr5jR+En/xCOlcfTSc6IBb2Z0FP5A\
-            // gTLifJpgI3RRw7OMdxaFMiiFIM3ZfaQ7uDMQYoTeajhRSDxIgiU3AA4T/6N/MH0w\
-            // DgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAM\
-            // BgNVHRMBAf8EAjAAMB0GA1UdDgQWBBQeMTv7ZLflWVgBRtsNcJxc+6nqazAfBgNV\
-            // HSMEGDAWgBRNDvcXUwxuk6LEG10+ig8mBsMllDAKBggqhkjOPQQDAgNJADBGAiEA\
-            // 3+LLTj7FsoD68ULDFcwForQyrhndNt0MqBOdAluxpjACIQDmw4VTuHDe9V2gbZtE\
-            // YutbBEk0Z0/HTf71V/gDZU2j+g==\
-            // -----END CERTIFICATE-----\
-            // -----BEGIN CERTIFICATE-----\
-            // MIICijCCAjGgAwIBAgIUJ06syYB1TPRbSmTD4UCpT0PmA+UwCgYIKoZIzj0EAwIw\
-            // fjELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\
-            // biBGcmFuY2lzY28xFDASBgNVBAoTC0Jsb2Nrc3RyZWFtMR0wGwYDVQQLExRDZXJ0\
-            // aWZpY2F0ZUF1dGhvcml0eTENMAsGA1UEAxMER0wgLzAeFw0yMTA0MjYxNzE0MDBa\
-            // Fw0zMTA0MjQxNzE0MDBaMIGDMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv\
-            // cm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxvY2tzdHJl\
-            // YW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MRIwEAYDVQQDEwlHTCAv\
-            // dXNlcnMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATWlNi+9P8ZdRfaP1VOOMb9\
-            // e+VSugDxwvN41ZTdq5aQ1yTXHx2fcMyowoDaSCBg44rzPJ/TDOrIH2WWWCaHmHgT\
-            // o4GGMIGDMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYB\
-            // BQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBAzAdBgNVHQ4EFgQUTQ73F1MMbpOixBtd\
-            // PooPJgbDJZQwHwYDVR0jBBgwFoAUzqFr6jvlx3blZtYapcZHVYpOKSMwCgYIKoZI\
-            // zj0EAwIDRwAwRAIgJvgJ8ehKx0VenMyUT/MRXlmClARc1Np39/Fbp4GIbd8CIGhk\
-            // MKVcDA5iuQZ7xhZU1S8POh1L9uT35UkE7+xmGNjr \
-            // -----END CERTIFICATE-----\
-            // ');
-            const deviceKey = undefined
-            // pemToByteArray(
-            //     '-----BEGIN PRIVATE KEY-----\
-            //     MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgla0zarg8zKsqXC5h\
-            //     br3B5imA2JJziD7zj6iYVQwsPLehRANCAASvmNH4Sf/EI6Vx9NJzogFvZnQU/kCB\
-            //     MuJ8mmAjdFHDs4x3FoUyKIUgzdl9pDu4MxBihN5qOFFIPEiCJTcADhP/\
-            //     -----END PRIVATE KEY-----'
-            // );
 
-            console.log(deviceCert);
-            console.log(deviceKey);
+            const deviceCert =
+                convertStringToByteArray('-----BEGIN CERTIFICATE-----\
+            MIICrzCCAlSgAwIBAgIUNFMoSTHXXkJ3ZoYXFjpJ5GG7VIswCgYIKoZIzj0EAwIw\
+            gYMxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\
+            YW4gRnJhbmNpc2NvMRQwEgYDVQQKEwtCbG9ja3N0cmVhbTEdMBsGA1UECxMUQ2Vy\
+            dGlmaWNhdGVBdXRob3JpdHkxEjAQBgNVBAMTCUdMIC91c2VyczAeFw0yNDAyMjkx\
+            MTU5MDBaFw0zNDAyMjYxMTU5MDBaMIGoMQswCQYDVQQGEwJVUzETMBEGA1UECBMK\
+            Q2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxv\
+            Y2tzdHJlYW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MTcwNQYDVQQD\
+            Ey5HTCAvdXNlcnMvYWM3ZDRjMjUtNTNiNS00ZWE0LTlhMGEtOGU5NGRjNGNmZTZj\
+            MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEr5jR+En/xCOlcfTSc6IBb2Z0FP5A\
+            gTLifJpgI3RRw7OMdxaFMiiFIM3ZfaQ7uDMQYoTeajhRSDxIgiU3AA4T/6N/MH0w\
+            DgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAM\
+            BgNVHRMBAf8EAjAAMB0GA1UdDgQWBBQeMTv7ZLflWVgBRtsNcJxc+6nqazAfBgNV\
+            HSMEGDAWgBRNDvcXUwxuk6LEG10+ig8mBsMllDAKBggqhkjOPQQDAgNJADBGAiEA\
+            3+LLTj7FsoD68ULDFcwForQyrhndNt0MqBOdAluxpjACIQDmw4VTuHDe9V2gbZtE\
+            YutbBEk0Z0/HTf71V/gDZU2j+g==\
+            -----END CERTIFICATE-----\
+            -----BEGIN CERTIFICATE-----\
+            MIICijCCAjGgAwIBAgIUJ06syYB1TPRbSmTD4UCpT0PmA+UwCgYIKoZIzj0EAwIw\
+            fjELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\
+            biBGcmFuY2lzY28xFDASBgNVBAoTC0Jsb2Nrc3RyZWFtMR0wGwYDVQQLExRDZXJ0\
+            aWZpY2F0ZUF1dGhvcml0eTENMAsGA1UEAxMER0wgLzAeFw0yMTA0MjYxNzE0MDBa\
+            Fw0zMTA0MjQxNzE0MDBaMIGDMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv\
+            cm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxvY2tzdHJl\
+            YW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MRIwEAYDVQQDEwlHTCAv\
+            dXNlcnMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATWlNi+9P8ZdRfaP1VOOMb9\
+            e+VSugDxwvN41ZTdq5aQ1yTXHx2fcMyowoDaSCBg44rzPJ/TDOrIH2WWWCaHmHgT\
+            o4GGMIGDMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYB\
+            BQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBAzAdBgNVHQ4EFgQUTQ73F1MMbpOixBtd\
+            PooPJgbDJZQwHwYDVR0jBBgwFoAUzqFr6jvlx3blZtYapcZHVYpOKSMwCgYIKoZI\
+            zj0EAwIDRwAwRAIgJvgJ8ehKx0VenMyUT/MRXlmClARc1Np39/Fbp4GIbd8CIGhk\
+            MKVcDA5iuQZ7xhZU1S8POh1L9uT35UkE7+xmGNjr\
+            -----END CERTIFICATE-----\
+            ');
+            const deviceKey =
+                convertStringToByteArray(
+                    '-----BEGIN PRIVATE KEY-----\
+                MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgla0zarg8zKsqXC5h\
+                br3B5imA2JJziD7zj6iYVQwsPLehRANCAASvmNH4Sf/EI6Vx9NJzogFvZnQU/kCB\
+                MuJ8mmAjdFHDs4x3FoUyKIUgzdl9pDu4MxBihN5qOFFIPEiCJTcADhP/\
+                -----END PRIVATE KEY-----'
+                );
+
+            // console.log(deviceCert);
+            // console.log(deviceKey);
 
             return { deviceCert, deviceKey };
 
@@ -252,7 +263,7 @@ const LightningWallet = () => {
     const getInvoice = async () => {
         try {
             const receivePaymentResponse = await receivePayment({
-                amountMsat: 1_000_000,
+                amountMsat: Number(satsAmount) * 1000,
                 description: 'Invoice for 1000 sats'
             })
 
@@ -280,7 +291,10 @@ const LightningWallet = () => {
     }
 
     const handleGetInvoiceButtonPress = async () => {
+        setInvoiceGenLoading(true);
         const invoice = await getInvoice();
+        setInvoiceGenLoading(false);
+        setShowInvoiceQR(true);
 
         setInvoice(invoice);
     }
@@ -293,7 +307,9 @@ const LightningWallet = () => {
     }
 
     const handleGetDepositButtonPress = async () => {
+        setAddressInfoLoading(true);
         const depositInfo = await getBTCDepositInfo();
+        setAddressInfoLoading(false);
 
         setDepositInfo(depositInfo?.swapInfo ?? undefined);
     }
@@ -371,35 +387,74 @@ const LightningWallet = () => {
             )}
 
             <View style={styles.buttonPadding}>
+                <Text style={theme.TextTheme.label}>Enter amount in sats:</Text>
+                <TextInput
+                    style={theme.Inputs.textInput}
+                    onChangeText={setSatsAmount}
+                    value={satsAmount}
+                    placeholder="Amount in sats"
+                    keyboardType="numeric"
+                />
+            </View>
+
+            <View style={styles.buttonPadding}>
                 <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetInvoiceButtonPress}>
-                    <Text style={theme.TextTheme.label}>Invoice for 1000 sats</Text>
+                    {invoiceGenLoading ? (
+                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                    ) : (
+                        <Text style={theme.TextTheme.label}>Invoice for {satsAmount} sats</Text>
+                    )}
+
                 </TouchableOpacity>
             </View>
 
-            {invoice !== undefined && (
-                <View style={styles.center}>
-                    <QRCode
-                        value={invoice.bolt11}
-                        size={200}
-                    />
-                </View>
-            )}
+
+
+            <Modal
+                animationType="slide"
+                transparent={true} // Set to true to allow custom styling to be visible
+                visible={showInvoiceQR}
+                onRequestClose={() => {
+                    setScannerActive(!showInvoiceQR);
+                }}
+            >
+                <TouchableOpacity
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}
+                    activeOpacity={1}
+                    onPressOut={() => setShowInvoiceQR(false)} // Use onPressOut for better handling
+                >
+                    {invoice !== undefined && (
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <QRCode
+                                value={invoice.bolt11}
+                                size={250}
+                            />
+                        </View>)}
+                </TouchableOpacity>
+            </Modal>
 
             <View style={styles.buttonPadding}>
                 <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetDepositButtonPress}>
-                    <Text style={theme.TextTheme.label}>Show BTC Deposit Address</Text>
+                    {addressInfoLoading ? (
+                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                    ) : (
+                        <Text style={theme.TextTheme.label}>Show BTC Deposit Address</Text>
+                    )}
+
                 </TouchableOpacity>
             </View>
 
-            {depositInfo !== undefined && (
-                <View style={styles.textPadding}>
-                    <Text style={theme.TextTheme.label}>Deposit Address: {depositInfo.bitcoinAddress}</Text>
-                    <Text style={theme.TextTheme.label}>Minimum Deposit: {depositInfo.minAllowedDeposit} MSats</Text>
-                    <Text style={theme.TextTheme.label}>Maximum Deposit: {depositInfo.maxAllowedDeposit} MSats</Text>
-                </View>
-            )}
+            {
+                depositInfo !== undefined && (
+                    <View style={styles.textPadding}>
+                        <Text style={theme.TextTheme.label}>Deposit Address: {depositInfo.bitcoinAddress}</Text>
+                        <Text style={theme.TextTheme.label}>Minimum Deposit: {depositInfo.minAllowedDeposit} MSats</Text>
+                        <Text style={theme.TextTheme.label}>Maximum Deposit: {depositInfo.maxAllowedDeposit} MSats</Text>
+                    </View>
+                )
+            }
 
-        </ScrollView>
+        </ScrollView >
     );
 };
 
