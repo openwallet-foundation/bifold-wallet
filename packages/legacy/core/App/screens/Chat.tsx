@@ -10,7 +10,7 @@ import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@ar
 import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Text } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
@@ -111,7 +111,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
             if (i < links.length) {
               const link = links[i]
               return (
-                <>
+                <Fragment key={`${record.id}-${i}`}>
                   <Text>{split}</Text>
                   <Text
                     onPress={() => handleLinkPress(link)}
@@ -120,10 +120,10 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
                   >
                     {link}
                   </Text>
-                </>
+                </Fragment>
               )
             }
-            return <Text>{split}</Text>
+            return <Text key={`${record.id}-${i}`}>{split}</Text>
           })}
         </Text>
       )
