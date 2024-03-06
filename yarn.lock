@@ -4087,6 +4087,7 @@ __metadata:
     react-native-vector-icons: ^10.0.0
     react-native-vision-camera: ^3.6.16
     react-test-renderer: ^18.2.0
+    tsyringe: ^4.7.0
     typescript: ^5.0.4
     uuid: ^9.0.0
   peerDependencies:
@@ -4156,6 +4157,7 @@ __metadata:
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
     react-native-vision-camera: "*"
+    tsyringe: ^4.7.0
     uuid: ^9.0.0
   bin:
     bifold: bin/bifold
@@ -7562,6 +7564,7 @@ __metadata:
     react-native-vector-icons: ^10.0.0
     react-native-vision-camera: ^3.6.16
     react-native-webview: ^11.22.3
+    tsyringe: ^4.7.0
     typescript: ^5.0.4
     uuid: ^9.0.0
   languageName: unknown
@@ -21158,21 +21161,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsyringe@npm:^4.6.0":
+"tsyringe@npm:4.8.0":
   version: 4.8.0
   resolution: "tsyringe@npm:4.8.0"
   dependencies:
     tslib: ^1.9.3
   checksum: 6bf13235cc1ae86829169e3a887c3ff6ee2d220678df01dd0fff202b5a533d4eb47a52334b76d2b1b1cf80c8c92ff22173a54ad72c9f1b8ea0ea4957304966f0
-  languageName: node
-  linkType: hard
-
-"tsyringe@npm:^4.7.0":
-  version: 4.7.0
-  resolution: "tsyringe@npm:4.7.0"
-  dependencies:
-    tslib: ^1.9.3
-  checksum: 6d84e0767538fabf60eafb926bd285d08d25847875b635f8a3ab8b3093c8814aca4f47072fbb51837bd431259dc2464572e5c28a838b833c9ef097d5b1a895b3
   languageName: node
   linkType: hard
 

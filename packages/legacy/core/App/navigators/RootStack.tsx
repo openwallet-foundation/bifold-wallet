@@ -10,6 +10,7 @@ import { AppState, DeviceEventEmitter } from 'react-native'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { EventTypes, walletTimeout } from '../constants'
+import { TOKENS, useContainer } from '../container-api'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -18,10 +19,6 @@ import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
 import Chat from '../screens/Chat'
-import NameWallet from '../screens/NameWallet'
-import Onboarding from '../screens/Onboarding'
-import { createCarouselStyle } from '../screens/OnboardingPages'
-import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
@@ -49,20 +46,10 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const OnboardingTheme = theme.OnboardingTheme
-  const {
-    pages,
-    terms,
-    splash,
-    useBiometry,
-    developer,
-    preface,
-    showPreface,
-    enableImplicitInvitations,
-    enableReuseConnections,
-    disableOnboardingSkip,
-    enableUseMultUseInvitation,
-  } = useConfiguration()
+  const { splash, showPreface, enableImplicitInvitations, enableReuseConnections, enableUseMultUseInvitation } =
+    useConfiguration()
+  const container = useContainer()
+  const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
@@ -71,6 +58,7 @@ const RootStack: React.FC = () => {
     declinedProofs.forEach((proof) => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
@@ -189,13 +177,6 @@ const RootStack: React.FC = () => {
     }
   }, [appStateVisible, prevAppStateVisible, backgroundTime])
 
-  const onTutorialCompleted = () => {
-    dispatch({
-      type: DispatchAction.DID_COMPLETE_TUTORIAL,
-    })
-    navigation.navigate(Screens.Terms)
-  }
-
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
       return
@@ -281,91 +262,6 @@ const RootStack: React.FC = () => {
     )
   }
 
-  const onboardingStack = () => {
-    const Stack = createStackNavigator()
-    const carousel = createCarouselStyle(OnboardingTheme)
-    return (
-      <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
-        <Stack.Screen name={Screens.Splash} component={splash} />
-        <Stack.Screen
-          name={Screens.Preface}
-          component={preface}
-          options={{ title: t('Screens.Preface'), headerShown: true }}
-        />
-        <Stack.Screen
-          name={Screens.Onboarding}
-          options={() => ({
-            title: t('Screens.Onboarding'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            gestureEnabled: false,
-            headerLeft: () => false,
-          })}
-        >
-          {(props) => (
-            <Onboarding
-              {...props}
-              nextButtonText={t('Global.Next')}
-              previousButtonText={t('Global.Back')}
-              pages={pages(onTutorialCompleted, OnboardingTheme)}
-              disableSkip={disableOnboardingSkip}
-              style={carousel}
-            />
-          )}
-        </Stack.Screen>
-        <Stack.Screen
-          name={Screens.Terms}
-          options={() => ({
-            title: t('Screens.Terms'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
-          component={terms}
-        />
-        <Stack.Screen
-          name={Screens.CreatePIN}
-          options={() => ({
-            title: t('Screens.CreatePIN'),
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
-        >
-          {(props) => <PINCreate {...props} setAuthenticated={onAuthenticated} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name={Screens.NameWallet}
-          options={() => ({
-            title: t('Screens.NameWallet'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
-          component={NameWallet}
-        />
-        <Stack.Screen
-          name={Screens.UseBiometry}
-          options={() => ({
-            title: t('Screens.Biometry'),
-            headerTintColor: OnboardingTheme.headerTintColor,
-            headerShown: true,
-            headerLeft: () => false,
-            rightLeft: () => false,
-          })}
-          component={useBiometry}
-        />
-        <Stack.Screen
-          name={Screens.Developer}
-          component={developer}
-          options={{ ...defaultStackOptions, title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
-        />
-      </Stack.Navigator>
-    )
-  }
-
   if (
     (!showPreface || state.onboarding.didSeePreface) &&
     state.onboarding.didAgreeToTerms &&
@@ -377,7 +273,7 @@ const RootStack: React.FC = () => {
     return state.authentication.didAuthenticate ? mainStack() : authStack()
   }
 
-  return onboardingStack()
+  return <OnboardingStack />
 }
 
 export default RootStack

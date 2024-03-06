@@ -5,10 +5,11 @@ import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import Button, { ButtonType } from '../components/buttons/Button'
+import { ButtonType } from '../components/buttons/Button-api'
 import CheckBoxRow from '../components/inputs/CheckBoxRow'
 import HighlightTextBox from '../components/texts/HighlightTextBox'
 import InfoTextBox from '../components/texts/InfoTextBox'
+import { TOKENS, useContainer } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -21,6 +22,8 @@ const Terms: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
+  const container = useContainer()
+  const Button = container.resolve(TOKENS.COMP_BUTTON)
   const onSubmitPressed = () => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,
