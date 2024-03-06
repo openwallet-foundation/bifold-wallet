@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, Vibration, View, useWindowDimensions } from 'react-native'
 import { useOrientationChange, OrientationType } from 'react-native-orientation-locker'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
@@ -56,6 +56,12 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
     },
     [cameraActive]
   )
+
+  useEffect(() => {
+    if (error?.data && enableCameraOnError) {
+      setCameraActive(true)
+    }
+  }, [error])
 
   const codeScanner = useCodeScanner({
     codeTypes: ['qr'],
