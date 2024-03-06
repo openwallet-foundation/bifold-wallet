@@ -31,18 +31,6 @@ jest.mock('react-native-device-info', () => {
   }
 })
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: any) => key,
-    i18n: {
-      t: (key: any, props: Record<string, unknown>) => {
-        return `${key}_${props.context}`
-      },
-      language: 'en',
-    },
-  }),
-}))
-
 describe('Settings Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()

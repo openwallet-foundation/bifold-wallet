@@ -3,25 +3,9 @@ import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
-export enum ButtonType {
-  Critical,
-  Primary,
-  Secondary,
-  ModalCritical,
-  ModalPrimary,
-  ModalSecondary,
-}
+import { Button, ButtonType, ButtonProps } from './Button-api'
 
-export interface ButtonProps extends React.PropsWithChildren {
-  title: string
-  buttonType: ButtonType
-  accessibilityLabel?: string
-  testID?: string
-  onPress?: () => void
-  disabled?: boolean
-}
-
-const Button: React.FC<ButtonProps & React.RefAttributes<TouchableOpacity>> = forwardRef(
+const ButtonImpl: Button = forwardRef(
   (
     { title, buttonType, accessibilityLabel, testID, onPress, disabled = false, children },
     ref: React.LegacyRef<TouchableOpacity>
@@ -80,5 +64,6 @@ const Button: React.FC<ButtonProps & React.RefAttributes<TouchableOpacity>> = fo
     )
   }
 )
-
-export default Button
+export default ButtonImpl
+export { ButtonType, ButtonImpl }
+export type { Button, ButtonProps }

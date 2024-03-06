@@ -80,7 +80,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   })
 
   const currentLanguage = i18n.t('Language.code', { context: i18n.language as Locales })
-
   const incrementDeveloperMenuCounter = () => {
     if (developerOptionCount.current >= touchCountToEnableBiometrics) {
       developerOptionCount.current = 0
