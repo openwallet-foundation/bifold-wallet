@@ -601,6 +601,7 @@ const translation = {
   },
   "Chat": {
     "OpenPresentation": "Open presentation",
+    "LightningPaymentRequest": "Lightning payment request",
     "ViewRequest": "View request",
     "ViewOffer": "View offer",
     "OpenItem": "Open",

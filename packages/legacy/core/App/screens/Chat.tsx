@@ -12,7 +12,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, Text } from 'react-native'
+import { ActivityIndicator, Linking, Modal, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -38,6 +38,9 @@ import {
   getProofEventLabel,
   getProofEventRole,
 } from '../utils/helpers'
+import { theme as globalTheme } from '../theme';
+import { initNodeAndSdk, payInvoice } from '../utils/lightningHelpers'
+import { PaymentStatus } from '@breeztech/react-native-breez-sdk'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat> | StackScreenProps<RootStackParams, Screens.Chat>
 
@@ -62,6 +65,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const { ChatTheme: theme, Assets } = useTheme()
   const { ColorPallet } = useTheme()
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
+  const [showLightningPayModal, setShowLightningPayModal] = useState(false)
+  const [startingNode, setStartingNode] = useState(false)
+  const [invoiceText, setInvoiceText] = useState<string | null>(null)
+  const [paymentInProgress, setPaymentInProgress] = useState(false)
+  const [paymentStatusDesc, setPaymentStatusDesc] = useState<string | undefined>(undefined)
 
   // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up
   useEffect(() => {
@@ -91,7 +99,51 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     })
   }, [basicMessages])
 
+  const eventHandler = (breezEvent: any) => {
+    console.log("event", JSON.stringify(breezEvent))
+  }
+
   useEffect(() => {
+
+    const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord | BasicMessageRecord) => {
+      console.log('record', record)
+      if (record instanceof CredentialExchangeRecord || record instanceof ProofExchangeRecord) {
+        if (
+          record instanceof CredentialExchangeRecord &&
+          (record.state === CredentialState.Done || record.state === CredentialState.OfferReceived)
+        ) {
+          return CallbackType.CredentialOffer
+        }
+
+        if (
+          (record instanceof ProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
+          record.state === ProofState.RequestReceived ||
+          (record.state === ProofState.Done && record.isVerified === undefined)
+        ) {
+          return CallbackType.ProofRequest
+        }
+
+        if (
+          record instanceof ProofExchangeRecord &&
+          (record.state === ProofState.PresentationSent || record.state === ProofState.Done)
+        ) {
+          return CallbackType.PresentationSent
+        }
+      } else
+        if (
+          record instanceof BasicMessageRecord && record.content.includes('Lightning Invoice:') && record.content.includes('lnbc')
+        ) {
+          console.log('Lightning invoice detected!!!')
+          return CallbackType.LightningPaymentInvoice
+        }
+
+    }
+
+    const extractLightningInvoice = (inputString: string) => {
+      const match = inputString.match(/lnbc[a-zA-Z0-9]+/);
+      return match ? match[0] : null;
+    };
+
     const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
       const role = getMessageEventRole(record)
       // eslint-disable-next-line
@@ -99,6 +151,20 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       // eslint-disable-next-line
       const mailRegex = /^[\w\d\.\_\-]+@\w+(?:\.\w+)+$/gm
       const links = record.content.match(linkRegex) ?? []
+      const callbackType = callbackTypeForMessage(record)
+      const handleLightningPayPress = (content: string) => {
+
+        setStartingNode(true)
+        initNodeAndSdk(eventHandler)
+        setStartingNode(false)
+
+        setShowLightningPayModal(true)
+
+        console.log('Lightning invoice pressed', content)
+        let invoice = extractLightningInvoice(content)
+        console.log('Invoice:', invoice)
+        setInvoiceText(invoice)
+      }
       const handleLinkPress = (link: string) => {
         if (link.match(mailRegex)) {
           link = 'mailto:' + link
@@ -108,7 +174,24 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       const msgText = (
         <Text style={role === Role.me ? theme.rightText : theme.leftText}>
           {record.content.split(linkRegex).map((split, i) => {
-            if (i < links.length) {
+            if (callbackType === CallbackType.LightningPaymentInvoice) {
+              return (
+                <View>
+                  <Text>{split}</Text>
+                  <Text
+                    //TODO Elmer: Add LightningPaymentInvoice onpress handle logic
+                    onPress={() => handleLightningPayPress(record.content)}
+                    style={{ color: ColorPallet.brand.link, textDecorationLine: 'underline' }}
+                    accessibilityRole={'link'}
+                  >
+
+                    {'\n'}
+                    Pay Invoice
+                  </Text>
+                </View>
+              )
+            }
+            else if (i < links.length) {
               const link = links[i]
               return (
                 <>
@@ -125,7 +208,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
             }
             return <Text>{split}</Text>
           })}
-        </Text>
+        </Text >
       )
       return {
         _id: record.id,
@@ -137,29 +220,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       }
     })
 
-    const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord) => {
-      if (
-        record instanceof CredentialExchangeRecord &&
-        (record.state === CredentialState.Done || record.state === CredentialState.OfferReceived)
-      ) {
-        return CallbackType.CredentialOffer
-      }
 
-      if (
-        (record instanceof ProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
-        record.state === ProofState.RequestReceived ||
-        (record.state === ProofState.Done && record.isVerified === undefined)
-      ) {
-        return CallbackType.ProofRequest
-      }
-
-      if (
-        record instanceof ProofExchangeRecord &&
-        (record.state === ProofState.PresentationSent || record.state === ProofState.Done)
-      ) {
-        return CallbackType.PresentationSent
-      }
-    }
 
     transformedMessages.push(
       ...credentials.map((record: CredentialExchangeRecord) => {
@@ -212,7 +273,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
           createdAt: record.updatedAt || record.createdAt,
           type: record.type,
           user: { _id: role },
-          messageOpensCallbackType: callbackTypeForMessage(record),
+          messageOpensCallbackType: callbackTypeForMessage(record), //TODO: Add LightningPaymentInvoice callback type
           onDetails: () => {
             const toProofDetails = () => {
               navigation.navigate(Stacks.ContactStack as any, {
@@ -248,17 +309,17 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
 
     const connectedMessage = connection
       ? {
-          _id: 'connected',
-          text: `${t('Chat.YouConnected')} ${theirLabel}`,
-          renderEvent: () => (
-            <Text style={theme.rightText}>
-              {t('Chat.YouConnected')}
-              <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
-            </Text>
-          ),
-          createdAt: connection.createdAt,
-          user: { _id: Role.me },
-        }
+        _id: 'connected',
+        text: `${t('Chat.YouConnected')} ${theirLabel}`,
+        renderEvent: () => (
+          <Text style={theme.rightText}>
+            {t('Chat.YouConnected')}
+            <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
+          </Text>
+        ),
+        createdAt: connection.createdAt,
+        user: { _id: Role.me },
+      }
       : undefined
 
     setMessages(
@@ -285,20 +346,54 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const actions = useMemo(() => {
     return store.preferences.useVerifierCapability
       ? [
-          {
-            text: t('Verifier.SendProofRequest'),
-            onPress: () => {
-              setShowActionSlider(false)
-              onSendRequest()
-            },
-            icon: () => <Assets.svg.iconInfoSentDark height={30} width={30} />,
+        {
+          text: t('Verifier.SendProofRequest'),
+          onPress: () => {
+            setShowActionSlider(false)
+            onSendRequest()
           },
-        ]
+          icon: () => <Assets.svg.iconInfoSentDark height={30} width={30} />,
+        },
+      ]
       : undefined
   }, [t, store.preferences.useVerifierCapability, onSendRequest])
 
   const onDismiss = () => {
     setShowActionSlider(false)
+  }
+
+  const payInvoiceHandler = async (invoice: string | null) => {
+    console.log('Pay invoice handler called')
+    let paymentStatus;
+    try {
+      setPaymentInProgress(true);
+      paymentStatus = await payInvoice(invoice);
+      setPaymentInProgress(false)
+
+      if (paymentStatus.payment.status === PaymentStatus.COMPLETE) {
+        console.log('Payment succeeded');
+        setPaymentStatusDesc('Payment Successful');
+      }
+      else if (paymentStatus.payment.status === PaymentStatus.FAILED) {
+        console.log('Payment failed');
+        setPaymentStatusDesc('Payment Failed');
+      }
+      else if (paymentStatus.payment.status === PaymentStatus.PENDING) {
+        console.log('Payment pending');
+        setPaymentStatusDesc('Payment Pending');
+      }
+      else {
+        console.log(paymentStatus);
+
+        setPaymentStatusDesc(JSON.stringify(paymentStatus));
+      }
+
+    } catch (err: any) {
+      console.log("Hello 2")
+      console.error(err);
+
+      setPaymentStatusDesc(JSON.stringify(paymentStatus));
+    }
   }
 
   return (
@@ -322,6 +417,52 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         onPressActionButton={actions ? () => setShowActionSlider(true) : undefined}
       />
       {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showLightningPayModal}
+        onRequestClose={() => {
+          setShowLightningPayModal(false)
+        }}
+      >
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Pay with Bitcoin</Text>
+
+          {/* Pay Button centered vertically and horizontally */}
+          <Text style={{ ...globalTheme.TextTheme.modalNormal, marginTop: 20, padding: 10 }}>Invoice: {invoiceText}</Text>
+          {!startingNode && (
+            <TouchableOpacity
+              style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 200, alignItems: 'center', justifyContent: 'center' }}
+              onPress={() => {
+                // Add your payment logic here
+                console.log('Pay button pressed');
+                payInvoiceHandler(invoiceText)
+              }}>
+              {paymentInProgress ? (
+                <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+              ) : (
+                <Text style={globalTheme.TextTheme.label}>Pay Invoice</Text>
+              )}
+
+
+
+            </TouchableOpacity>
+          )}
+          {paymentStatusDesc && (
+            <Text style={{ color: '#fff', }}>{paymentStatusDesc}</Text>
+
+          )}
+
+          {/* Close Button at the bottom */}
+          <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
+            <TouchableOpacity
+              style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 100, alignItems: 'center' }}
+              onPress={() => setShowLightningPayModal(false)}>
+              <Text style={{ color: '#fff' }}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   )
 }

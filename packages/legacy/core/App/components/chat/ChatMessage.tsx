@@ -14,6 +14,7 @@ export enum CallbackType {
   CredentialOffer = 'CredentialOffer',
   ProofRequest = 'ProofRequest',
   PresentationSent = 'PresentationSent',
+  LightningPaymentInvoice = 'LightningPaymentInvoice',
 }
 
 export interface ChatMessageProps {
@@ -45,6 +46,7 @@ const MessageIcon: React.FC<{ type: CallbackType }> = ({ type }) => {
       {type === CallbackType.CredentialOffer && <Assets.svg.iconCredentialOfferLight width={40} height={40} />}
       {type === CallbackType.PresentationSent && <Assets.svg.iconInfoSentLight width={40} height={40} />}
       {type === CallbackType.ProofRequest && <Assets.svg.iconProofRequestLight width={40} height={40} />}
+      {type === CallbackType.LightningPaymentInvoice && <Assets.svg.iconProofRequestLight width={40} height={40} />}
     </View>
   )
 }
@@ -68,6 +70,11 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
     // After a presentation of a proof
     if (callbackType === CallbackType.PresentationSent) {
       return t('Chat.OpenPresentation')
+    }
+
+    // Receiving a payment request
+    if (callbackType === CallbackType.LightningPaymentInvoice) {
+      return t('Chat.LightningPaymentRequest')
     }
 
     return t('Chat.OpenItem')

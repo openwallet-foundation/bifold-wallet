@@ -16,6 +16,7 @@ import {
     GreenlightNodeConfig,
     NodeConfig,
     Config,
+    PaymentStatus,
 
 } from "@breeztech/react-native-breez-sdk";
 import { theme } from '../theme';
@@ -28,6 +29,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { RNCamera } from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { set } from 'mockdate';
+import { getBTCDepositInfo, getBalances, getInvoice, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers';
 
 const LightningWallet = () => {
     //make a state varialbe to store the balance
@@ -41,258 +43,36 @@ const LightningWallet = () => {
     const [satsAmount, setSatsAmount] = useState('1000');
     const [invoiceGenLoading, setInvoiceGenLoading] = useState(false);
     const [addressInfoLoading, setAddressInfoLoading] = useState(false);
+    const [paymentPending, setPaymentPending] = useState(false);
+    const [paymentStatusDesc, setPaymentStatusDesc] = useState('Scan Something First');
+    const [logs, setLogs] = useState<string[]>([]);
 
     const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
     const eventHandler = (breezEvent: any) => {
         console.log("event", JSON.stringify(breezEvent))
+        // Add the event to the logs
+        addLog(JSON.stringify(breezEvent));
     }
 
     useEffect(() => {
-        let eventSubscription: any
-        const initializeSDK = async () => {
-            // SDK events listener
-
-
-            try {
-                // Assuming mnemonicToSeed, defaultConfig, connect and other necessary methods are imported
-                // Create the default config
-                const seed = await mnemonicToSeed('embark category force toward husband snake rose result sugar select enrich trap');
-                const inviteCode = 'EXG4-SJP8';
-                const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
-
-                const nodeConfig = {
-                    type: NodeConfigVariant.GREENLIGHT,
-                    config: {
-                        inviteCode,
-                    },
-                };
-
-                const config = await defaultConfig(
-                    EnvironmentType.PRODUCTION,
-                    apiKey,
-                    nodeConfig
-                );
-
-                // Connect to the Breez SDK make it ready for use
-                eventSubscription = await connect(config, seed, eventHandler);
-                console.log('Connected to Breez');
-                let balances = await getBalances();
-
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        const initNodeAndSdk = async () => {
-            try {
-                // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
-                const apiKey = '5481cee312d7c8fe3891bdff8953a1ce57f57790b73e0884a8bfc119f4399bba';
-                let mnemonic = await getItem(MNEMONIC_STORE)
-                const inviteCode = '6FUD-Z8A9';
-
-                if (!mnemonic) {
-                    console.log("No mnemonic found, generating new one");
-                    mnemonic = generateMnemonic();
-                    console.log("Generated mnemonic: ", mnemonic);
-                    await setItem(MNEMONIC_STORE, mnemonic);
-                }
-                else {
-                    console.log("Mnemonic found: ", mnemonic);
-                }
-
-                const seed = await mnemonicToSeed(mnemonic);
-                // const seed = await mnemonicToSeed('embark category force toward husband snake rose result sugar select enrich trap');
-                console.log("Seed: ", seed);
-
-                const keys = loadAndConvert();
-
-                let nodeConfig
-                // if (keys !== undefined && keys.deviceCert !== undefined && keys.deviceKey !== undefined) {
-                //     const partneCreds = { deviceCert: keys.deviceCert, deviceKey: keys.deviceKey };
-                //     nodeConfig = {
-                //         type: NodeConfigVariant.GREENLIGHT,
-                //         config: { partnerCredentials: partneCreds }
-                //     };
-                //     console.log("Going with partner credentials")
-                // } else {
-                nodeConfig = {
-                    type: NodeConfigVariant.GREENLIGHT,
-                    config: { inviteCode }
-                };
-                console.log("Going with invite code")
-                // }
-
-                const config = await defaultConfig(
-                    EnvironmentType.PRODUCTION,
-                    apiKey,
-                    nodeConfig
-                );
-
-                eventSubscription = await connect(config, seed, eventHandler);
-            }
-            catch (err) {
-                console.error(err);
-            }
-        }
-
-        // initializeSDK();
-        initNodeAndSdk();
+        const eventSubscription = initNodeAndSdk(eventHandler);
     }, []);
-
-    function convertStringToByteArray(str: string) {
-        var bytes = [];
-        for (var i = 0; i < str.length; ++i) {
-            bytes.push(str.charCodeAt(i));
-        }
-        return bytes
-    }
-
-    const pemToByteArray = (pem: any) => {
-        // Remove the PEM headers and footers
-        const base64String = pem
-            // .replace('-----BEGIN CERTIFICATE-----', '')
-            // .replace('-----END CERTIFICATE-----', '')
-            // .replace('-----BEGIN PRIVATE KEY-----', '')
-            // .replace('-----END PRIVATE KEY-----', '')
-            .replace(/\s+/g, ''); // Remove whitespace
-
-        // Decode base64 to binary string
-        const binaryString = Buffer.from(base64String, 'base64').toString('binary');
-
-        // Convert binary string to byte array
-        const byteArray = Array.from(binaryString, (char) => char.charCodeAt(0));
-        return byteArray;
-    };
-
-    const loadAndConvert = () => {
-        try {
-            // Read the certificate and key from files
-            // const certContent = await readFile('../assets/res/client.crt', 'utf8');
-            // const keyContent = await readFile('../assets/res/client-key.pem', 'utf8');
-
-            // Convert PEM to byte array
-
-            const deviceCert =
-                convertStringToByteArray('-----BEGIN CERTIFICATE-----\
-            MIICrzCCAlSgAwIBAgIUNFMoSTHXXkJ3ZoYXFjpJ5GG7VIswCgYIKoZIzj0EAwIw\
-            gYMxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\
-            YW4gRnJhbmNpc2NvMRQwEgYDVQQKEwtCbG9ja3N0cmVhbTEdMBsGA1UECxMUQ2Vy\
-            dGlmaWNhdGVBdXRob3JpdHkxEjAQBgNVBAMTCUdMIC91c2VyczAeFw0yNDAyMjkx\
-            MTU5MDBaFw0zNDAyMjYxMTU5MDBaMIGoMQswCQYDVQQGEwJVUzETMBEGA1UECBMK\
-            Q2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxv\
-            Y2tzdHJlYW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MTcwNQYDVQQD\
-            Ey5HTCAvdXNlcnMvYWM3ZDRjMjUtNTNiNS00ZWE0LTlhMGEtOGU5NGRjNGNmZTZj\
-            MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEr5jR+En/xCOlcfTSc6IBb2Z0FP5A\
-            gTLifJpgI3RRw7OMdxaFMiiFIM3ZfaQ7uDMQYoTeajhRSDxIgiU3AA4T/6N/MH0w\
-            DgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAM\
-            BgNVHRMBAf8EAjAAMB0GA1UdDgQWBBQeMTv7ZLflWVgBRtsNcJxc+6nqazAfBgNV\
-            HSMEGDAWgBRNDvcXUwxuk6LEG10+ig8mBsMllDAKBggqhkjOPQQDAgNJADBGAiEA\
-            3+LLTj7FsoD68ULDFcwForQyrhndNt0MqBOdAluxpjACIQDmw4VTuHDe9V2gbZtE\
-            YutbBEk0Z0/HTf71V/gDZU2j+g==\
-            -----END CERTIFICATE-----\
-            -----BEGIN CERTIFICATE-----\
-            MIICijCCAjGgAwIBAgIUJ06syYB1TPRbSmTD4UCpT0PmA+UwCgYIKoZIzj0EAwIw\
-            fjELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\
-            biBGcmFuY2lzY28xFDASBgNVBAoTC0Jsb2Nrc3RyZWFtMR0wGwYDVQQLExRDZXJ0\
-            aWZpY2F0ZUF1dGhvcml0eTENMAsGA1UEAxMER0wgLzAeFw0yMTA0MjYxNzE0MDBa\
-            Fw0zMTA0MjQxNzE0MDBaMIGDMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv\
-            cm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxvY2tzdHJl\
-            YW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MRIwEAYDVQQDEwlHTCAv\
-            dXNlcnMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATWlNi+9P8ZdRfaP1VOOMb9\
-            e+VSugDxwvN41ZTdq5aQ1yTXHx2fcMyowoDaSCBg44rzPJ/TDOrIH2WWWCaHmHgT\
-            o4GGMIGDMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYB\
-            BQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBAzAdBgNVHQ4EFgQUTQ73F1MMbpOixBtd\
-            PooPJgbDJZQwHwYDVR0jBBgwFoAUzqFr6jvlx3blZtYapcZHVYpOKSMwCgYIKoZI\
-            zj0EAwIDRwAwRAIgJvgJ8ehKx0VenMyUT/MRXlmClARc1Np39/Fbp4GIbd8CIGhk\
-            MKVcDA5iuQZ7xhZU1S8POh1L9uT35UkE7+xmGNjr\
-            -----END CERTIFICATE-----\
-            ');
-            const deviceKey =
-                convertStringToByteArray(
-                    '-----BEGIN PRIVATE KEY-----\
-                MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgla0zarg8zKsqXC5h\
-                br3B5imA2JJziD7zj6iYVQwsPLehRANCAASvmNH4Sf/EI6Vx9NJzogFvZnQU/kCB\
-                MuJ8mmAjdFHDs4x3FoUyKIUgzdl9pDu4MxBihN5qOFFIPEiCJTcADhP/\
-                -----END PRIVATE KEY-----'
-                );
-
-            // console.log(deviceCert);
-            // console.log(deviceKey);
-
-            return { deviceCert, deviceKey };
-
-            // Now deviceCert and deviceKey are arrays of numbers
-        } catch (error) {
-            console.error('Error reading or converting files:', error);
-        }
-    };
 
     const removeMnemonic = async () => {
         try {
             await removeItem(MNEMONIC_STORE);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
+            addLog(err.message);
         }
     }
 
-    const getBalances = async () => {
-        try {
-            const nodeStateRes = await nodeInfo();
-            console.log("Node state response: ", nodeStateRes);
-            const channelBalance = nodeStateRes?.channelsBalanceMsat;
-            console.log("Channel balance: ", channelBalance);
-            const chainBalance = nodeStateRes?.onchainBalanceMsat;
-            console.log("Chain balance: ", chainBalance);
-            return { channelBalance, chainBalance }
-        } catch (err) {
-            console.error(err);
-        }
-    }
 
-    const getBTCDepositInfo = async () => {
-        try {
-            const swapInfo = await receiveOnchain({});
-            console.log("Deposit info: ", swapInfo);
-            return { swapInfo }
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    const getInvoice = async () => {
-        try {
-            const receivePaymentResponse = await receivePayment({
-                amountMsat: Number(satsAmount) * 1000,
-                description: 'Invoice for 1000 sats'
-            })
-
-            return receivePaymentResponse.lnInvoice
-        } catch (err) {
-            console.error(err)
-        }
-    }
-
-    const payInvoice = async () => {
-        try {
-            const bolt11 = scannedData
-            // The `amountMsat` param is optional and should only passed if the bolt11 doesn't specify an amount.
-            // The amountMsat is required in case an amount is not specified in the bolt11 invoice'.
-            // const amountMsat = 3000000
-            if (bolt11 !== undefined) {
-                const response = await sendPayment({ bolt11 })
-                console.log('Payment response:', response)
-            } else {
-                console.log('No invoice to pay')
-            }
-        } catch (err) {
-            console.error(err)
-        }
-    }
 
     const handleGetInvoiceButtonPress = async () => {
         setInvoiceGenLoading(true);
-        const invoice = await getInvoice();
+        const invoice = await getInvoice(satsAmount);
         setInvoiceGenLoading(false);
         setShowInvoiceQR(true);
 
@@ -301,7 +81,7 @@ const LightningWallet = () => {
 
     const handleGetBalancesButtonPress = async () => {
         const balances = await getBalances();
-
+        addLog(balances);
         setChannelBalance(balances?.channelBalance ?? 0);
         setChainBalance(balances?.chainBalance ?? 0);
     }
@@ -313,6 +93,37 @@ const LightningWallet = () => {
 
         setDepositInfo(depositInfo?.swapInfo ?? undefined);
     }
+
+    const handlePayInvoiceButtonPress = async () => {
+        try {
+            setPaymentPending(true);
+            const paymentStatus = await payInvoice(scannedData);
+            setPaymentPending(false)
+
+            if (paymentStatus.payment.status === PaymentStatus.COMPLETE) {
+                console.log('Payment succeeded');
+                setPaymentStatusDesc('Payment Successful');
+            }
+            else if (paymentStatus.payment.status === PaymentStatus.FAILED) {
+                console.log('Payment failed');
+                setPaymentStatusDesc('Payment Failed');
+            }
+            else if (paymentStatus.payment.status === PaymentStatus.PENDING) {
+                console.log('Payment pending');
+                setPaymentStatusDesc('Payment Pending');
+            }
+            addLog(paymentStatus);
+        } catch (err: any) {
+            console.error(err);
+            addLog(err.message);
+        }
+    }
+
+    const addLog = (message: any) => {
+        const time = `${new Date().toISOString()}: `;
+        // Prepend new error messages to keep the newest at the top
+        setLogs([time + JSON.stringify(message), ...logs]);
+    };
 
     return (
         <ScrollView>
@@ -337,7 +148,7 @@ const LightningWallet = () => {
                 {/* Wrap the content in a View with a style that sets the background color */}
                 <View style={{ flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
                     <QRCodeScanner
-                        onRead={({ data }) => { setScannedData(data); setScannerActive(false); }}
+                        onRead={({ data }) => { setScannedData(data); addLog(JSON.stringify("Scanned: " + data)); setScannerActive(false); setPaymentStatusDesc('Invoice Scanned'); }}
                         reactivate={true}
                         reactivateTimeout={3000}
                         showMarker={true}
@@ -356,16 +167,21 @@ const LightningWallet = () => {
 
 
             <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={payInvoice}>
-                    <Text style={theme.TextTheme.label}>Pay Invoice ({scannedData})</Text>
+                <TouchableOpacity style={theme.Buttons.primary} onPress={handlePayInvoiceButtonPress}>
+                    {paymentPending ? (
+                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                    ) : (
+                        <Text style={theme.TextTheme.label}>Pay Invoice ({paymentStatusDesc})</Text>
+                    )}
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.buttonPadding}>
+
+            {/* <View style={styles.buttonPadding}>
                 <TouchableOpacity style={theme.Buttons.primary} onPress={loadAndConvert}>
                     <Text style={theme.TextTheme.label}>Process Keys</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
             <View style={styles.buttonPadding}>
                 <TouchableOpacity style={theme.Buttons.primary} onPress={removeMnemonic}>
@@ -379,12 +195,12 @@ const LightningWallet = () => {
                 </TouchableOpacity>
             </View>
 
-            {channelBalance !== -1 && chainBalance !== -1 && (
+            {/* {channelBalance !== -1 && chainBalance !== -1 && (
                 <View style={styles.textPadding}>
                     <Text style={theme.TextTheme.label}>Channel balance: {channelBalance} MSats</Text>
                     <Text style={theme.TextTheme.label}>Chain balance: {chainBalance} MSats</Text>
                 </View>
-            )}
+            )} */}
 
             <View style={styles.buttonPadding}>
                 <Text style={theme.TextTheme.label}>Enter amount in sats:</Text>
@@ -444,7 +260,7 @@ const LightningWallet = () => {
                 </TouchableOpacity>
             </View>
 
-            {
+            {/* {
                 depositInfo !== undefined && (
                     <View style={styles.textPadding}>
                         <Text style={theme.TextTheme.label}>Deposit Address: {depositInfo.bitcoinAddress}</Text>
@@ -452,7 +268,22 @@ const LightningWallet = () => {
                         <Text style={theme.TextTheme.label}>Maximum Deposit: {depositInfo.maxAllowedDeposit} MSats</Text>
                     </View>
                 )
-            }
+            } */}
+
+            <View style={{ margin: 10 }}>
+                {/* Trigger error generation for demonstration */}
+                <Text >
+                    <Text>Logs</Text>
+                </Text>
+
+                <ScrollView style={{ maxHeight: 200, flex: 1 }}>
+                    {logs.map((log, index) => (
+                        <Text key={index} style={{ backgroundColor: 'grey', color: 'black', padding: 10 }}>
+                            {log}
+                        </Text>
+                    ))}
+                </ScrollView>
+            </View>
 
         </ScrollView >
     );

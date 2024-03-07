@@ -16,6 +16,7 @@ import IconInfoSentDark from './assets/img/icon-info-sent-dark.svg'
 import IconInfoSentLight from './assets/img/icon-info-sent-light.svg'
 import IconProofRequestDark from './assets/img/icon-proof-request-dark.svg'
 import IconProofRequestLight from './assets/img/icon-proof-request-light.svg'
+import IconLightningPaymentInvoice from './assets/img/icon-lightning-payment-invoice.svg'
 import Logo from './assets/img/logo.svg'
 import Preface from './assets/img/preface.svg'
 import ProofRequestDeclined from './assets/img/proof-declined.svg'
@@ -39,6 +40,7 @@ export interface ISVGAssets {
   iconInfoSentLight: React.FC<SvgProps>
   iconProofRequestDark: React.FC<SvgProps>
   iconProofRequestLight: React.FC<SvgProps>
+  iconLightningPaymentInvoice: React.FC<SvgProps>
   preface: React.FC<SvgProps>
   verifierRequestDeclined: React.FC<SvgProps>
 }
@@ -692,6 +694,7 @@ export const ChatTheme = {
     lineHeight: undefined,
     fontWeight: '500',
     fontSize: TextTheme.normal.fontSize,
+    color: 'black'
   },
   placeholderText: ColorPallet.grayscale.lightGrey,
   sendContainer: {
@@ -828,6 +831,7 @@ export const Assets = {
     iconInfoSentLight: IconInfoSentLight,
     iconProofRequestDark: IconProofRequestDark,
     iconProofRequestLight: IconProofRequestLight,
+    iconLightningPaymentInvoice: IconLightningPaymentInvoice,
     preface: Preface,
     verifierRequestDeclined: VerifierRequestDeclined,
   },
