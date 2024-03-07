@@ -6,7 +6,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -33,6 +33,8 @@ import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
+import CardWatermark from '../components/misc/CardWatermark'
+
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
 const paddingHorizontal = 24
@@ -57,15 +59,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     (credential!.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
       ?.revoked_detail_dismissed ?? false
   )
-
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
     presentationFields: [],
     metaOverlay: undefined,
     brandingOverlay: undefined,
   })
-
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+  const { width, height } = useWindowDimensions()
 
   const styles = StyleSheet.create({
     container: {
@@ -231,8 +232,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const CredentialDetailPrimaryHeader: React.FC = () => {
     return (
-      <View testID={testIdWithKey('CredentialDetailsPrimaryHeader')} style={styles.primaryHeaderContainer}>
+      <View
+        testID={testIdWithKey('CredentialDetailsPrimaryHeader')}
+        style={[styles.primaryHeaderContainer, { overflow: 'hidden', zIndex: -1 }]}
+      >
         <View>
+          {overlay.metaOverlay?.watermark && (
+            <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
+          )}
           <Text
             testID={testIdWithKey('CredentialIssuer')}
             style={[
@@ -316,6 +323,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         <CredentialDetailSecondaryHeader />
         <CredentialCardLogo />
         <CredentialDetailPrimaryHeader />
+
         {isRevoked && !isRevokedMessageHidden ? (
           <View style={{ padding: paddingVertical, paddingTop: 0 }}>
             {credential && <CredentialRevocationMessage credential={credential} />}
