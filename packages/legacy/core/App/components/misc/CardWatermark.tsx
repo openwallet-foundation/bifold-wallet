@@ -13,16 +13,14 @@ interface CardWatermarkProps {
 export const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    // left: '-50%',
-    // top: '-100%',
-    width: '300%',
-    height: '300%',
-    // margin: -220,
-    transform: [{ rotate: '-30deg' }],
+    width: '200%',
+    height: '200%',
+    marginTop: -220,
   },
   watermarkText: {
     opacity: 0.16,
-    // transform: [{ rotate: '-30deg' }],
+    marginLeft: -80,
+    transform: [{ rotate: '-30deg' }],
     overflow: 'hidden',
   },
 })

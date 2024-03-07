@@ -104,7 +104,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     },
     textContainer: {
       color: credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
-      flexShrink: 1,
     },
   })
 
@@ -234,7 +233,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     return (
       <View
         testID={testIdWithKey('CredentialDetailsPrimaryHeader')}
-        style={[styles.primaryHeaderContainer, { overflow: 'hidden', zIndex: -1 }]}
+        style={[styles.primaryHeaderContainer, { zIndex: -1 }]}
       >
         <View>
           {overlay.metaOverlay?.watermark && (
