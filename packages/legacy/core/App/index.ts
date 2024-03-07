@@ -6,7 +6,7 @@ import AgentProvider from '@aries-framework/react-hooks'
 
 import App from './App'
 import * as components from './components'
-import { Button, ButtonType } from './components/buttons/Button'
+import { Button as IButton, ButtonImpl as Button, ButtonType } from './components/buttons/Button'
 import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ContentGradient from './components/misc/ContentGradient'
@@ -149,5 +149,6 @@ export {
   contexts,
   Text,
   loadLoginAttempt,
+  Button,
 }
-export type { Button }
+export type { IButton }
