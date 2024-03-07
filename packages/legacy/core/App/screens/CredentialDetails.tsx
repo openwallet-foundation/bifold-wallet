@@ -10,6 +10,7 @@ import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, View, use
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
+import CardWatermark from '../components/misc/CardWatermark'
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
@@ -32,8 +33,6 @@ import {
 import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
-
-import CardWatermark from '../components/misc/CardWatermark'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 

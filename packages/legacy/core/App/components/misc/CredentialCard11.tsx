@@ -16,12 +16,11 @@ import { GenericFn } from '../../types/fn'
 import { NotificationStackParams, Screens } from '../../types/navigators'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { formatIfDate, getCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
+import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
-
-import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -92,6 +91,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const borderRadius = 10
   const padding = width * 0.05
   const logoHeight = width * 0.12
+  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const { OCABundleResolver, getCredentialHelpDictionary } = useConfiguration()
@@ -106,7 +106,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   // below navigation only to be used from proof request screen
   const navigation = useNavigation<StackNavigationProp<NotificationStackParams, Screens.ProofRequest>>()
-  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const primaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
   )
@@ -235,7 +234,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     const c = colorIfErrorState() ?? ColorPallet.grayscale.lightGrey
     const shade = shadeIsLightOrDark(c)
 
-    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey
+    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.mediumGrey
   }
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
@@ -532,6 +531,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           <CardWatermark
             width={dimensions.cardWidth}
             height={dimensions.cardHeight}
+            style={{ color: fontColorWithHighContrast() }}
             watermark={overlay.metaOverlay?.watermark}
           />
         )}
@@ -653,6 +653,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             <CardWatermark
               width={dimensions.cardWidth}
               height={dimensions.cardHeight}
+              style={{ color: fontColorWithHighContrast() }}
               watermark={overlay.metaOverlay?.watermark}
             />
           )}
