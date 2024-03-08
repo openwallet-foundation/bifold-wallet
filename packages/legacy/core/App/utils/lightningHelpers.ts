@@ -200,3 +200,17 @@ export const payInvoice = async (scannedData: any) => {
         return err.message
     }
 }
+
+export const getBTCPrice = async () => {
+    try {
+        let btcZarPrice = 0;
+        await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=zar')
+            .then(response => response.json())
+            .then(data => { console.log(data.bitcoin.zar); btcZarPrice = data.bitcoin.zar })
+            .catch(error => console.error('Error:', error));
+
+        return btcZarPrice
+    } catch (error) {
+        console.error('Error fetching btc price:', error);
+    }
+}
