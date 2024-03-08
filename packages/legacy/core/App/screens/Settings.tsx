@@ -132,7 +132,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     {
       header: {
-        icon: { name: 'settings' },
+        icon: { name: 'bolt' },
         title: 'Lightning Wallet',
       },
       data: [
