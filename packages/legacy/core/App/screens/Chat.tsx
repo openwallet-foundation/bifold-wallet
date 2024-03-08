@@ -41,6 +41,7 @@ import {
 import { theme as globalTheme } from '../theme';
 import { initNodeAndSdk, payInvoice } from '../utils/lightningHelpers'
 import { PaymentStatus } from '@breeztech/react-native-breez-sdk'
+import * as lightningPayReq from 'bolt11';
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat> | StackScreenProps<RootStackParams, Screens.Chat>
 
@@ -154,6 +155,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       const callbackType = callbackTypeForMessage(record)
       const handleLightningPayPress = (content: string) => {
 
+        setPaymentStatusDesc(undefined)
         setStartingNode(true)
         initNodeAndSdk(eventHandler)
         setStartingNode(false)
@@ -177,9 +179,8 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
             if (callbackType === CallbackType.LightningPaymentInvoice) {
               return (
                 <View>
-                  <Text>{split}</Text>
+                  <Text>⚡ Lightning Invoice Received</Text>
                   <Text
-                    //TODO Elmer: Add LightningPaymentInvoice onpress handle logic
                     onPress={() => handleLightningPayPress(record.content)}
                     style={{ color: ColorPallet.brand.link, textDecorationLine: 'underline' }}
                     accessibilityRole={'link'}
@@ -429,7 +430,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
           <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Pay with Bitcoin</Text>
 
           {/* Pay Button centered vertically and horizontally */}
-          <Text style={{ ...globalTheme.TextTheme.modalNormal, marginTop: 20, padding: 10 }}>Invoice: {invoiceText}</Text>
+          <Text style={{ ...globalTheme.TextTheme.modalNormal, marginTop: 20, padding: 10 }}>
+            {invoiceText &&
+              'Amount: \n\n    ' + lightningPayReq.decode(invoiceText).millisatoshis + " mSats"}
+
+          </Text>
           {!startingNode && (
             <TouchableOpacity
               style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 200, alignItems: 'center', justifyContent: 'center' }}
