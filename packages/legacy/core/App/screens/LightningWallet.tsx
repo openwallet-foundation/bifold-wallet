@@ -89,6 +89,7 @@ const LightningWallet = () => {
     const handleGetDepositButtonPress = async () => {
         setAddressInfoLoading(true);
         const depositInfo = await getBTCDepositInfo();
+        addLog(depositInfo);
         setAddressInfoLoading(false);
 
         setDepositInfo(depositInfo?.swapInfo ?? undefined);
