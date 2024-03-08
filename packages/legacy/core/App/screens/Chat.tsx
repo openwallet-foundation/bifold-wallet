@@ -39,7 +39,7 @@ import {
   getProofEventRole,
 } from '../utils/helpers'
 import { theme as globalTheme } from '../theme';
-import { initNodeAndSdk, payInvoice } from '../utils/lightningHelpers'
+import { getBTCPrice, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers'
 import { PaymentStatus } from '@breeztech/react-native-breez-sdk'
 import * as lightningPayReq from 'bolt11';
 
@@ -71,6 +71,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const [invoiceText, setInvoiceText] = useState<string | null>(null)
   const [paymentInProgress, setPaymentInProgress] = useState(false)
   const [paymentStatusDesc, setPaymentStatusDesc] = useState<string | undefined>(undefined)
+  const [btcZarPrice, setBtcZarPrice] = useState<number | undefined>(undefined)
 
   // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up
   useEffect(() => {
@@ -161,6 +162,14 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         setStartingNode(false)
 
         setShowLightningPayModal(true)
+
+        try {
+          getBTCPrice().then((response) => {
+            setBtcZarPrice(response)
+          })
+        } catch (err: any) {
+          console.error(err)
+        }
 
         console.log('Lightning invoice pressed', content)
         let invoice = extractLightningInvoice(content)
@@ -423,7 +432,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         transparent={true}
         visible={showLightningPayModal}
         onRequestClose={() => {
-          setShowLightningPayModal(false)
+          setShowLightningPayModal(false);
         }}
       >
         <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -432,8 +441,8 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
           {/* Pay Button centered vertically and horizontally */}
           <Text style={{ ...globalTheme.TextTheme.modalNormal, marginTop: 20, padding: 10 }}>
             {invoiceText &&
-              'Amount: \n\n    ' + lightningPayReq.decode(invoiceText).millisatoshis + " mSats"}
-
+              'Amount: \n\n    ' + (Number(lightningPayReq.decode(invoiceText).millisatoshis) / 1000) + " Satoshi"}
+            {btcZarPrice && invoiceText && ('\n\n    (R' + (Number(lightningPayReq.decode(invoiceText).millisatoshis) / 100000000000 * btcZarPrice).toFixed(2) + ')')}
           </Text>
           {!startingNode && (
             <TouchableOpacity
