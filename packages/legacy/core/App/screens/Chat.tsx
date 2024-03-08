@@ -426,7 +426,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
           setShowLightningPayModal(false)
         }}
       >
-        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Pay with Bitcoin</Text>
 
           {/* Pay Button centered vertically and horizontally */}
