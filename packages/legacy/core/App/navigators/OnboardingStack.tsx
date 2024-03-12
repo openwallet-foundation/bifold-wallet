@@ -47,9 +47,6 @@ const OnboardingStack: React.FC = () => {
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
   const terms = container.resolve(TOKENS.SCREEN_TERMS)
   const developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
-  console.log('cat ******************')
-  console.log('developer = ', developer)
-  console.log('cat ******************')
 
   const onAuthenticated = (status: boolean): void => {
     if (!status) {

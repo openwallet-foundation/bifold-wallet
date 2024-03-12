@@ -6,9 +6,9 @@ import Button from './components/buttons/Button'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import OnboardingStack from './navigators/OnboardingStack'
+import Developer from './screens/Developer'
 import Onboarding from './screens/Onboarding'
 import ScreenTerms from './screens/Terms'
-import Developer from './screens/Developer'
 import { AuthenticateStackParams, Screens } from './types/navigators'
 
 export class MainContainer implements Container {
