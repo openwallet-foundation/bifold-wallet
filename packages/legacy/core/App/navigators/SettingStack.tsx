@@ -16,6 +16,7 @@ import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
 import UseBiometry from '../screens/UseBiometry'
 import LightningWallet from '../screens/LightningWallet'
+import SmartProxy from '../screens/SmartProxy'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -82,6 +83,15 @@ const SettingStack: React.FC = () => {
         component={LightningWallet}
         options={{
           title: 'BTC L... Wallet',
+          // headerLeft: biometryUpdatePending ? () => null : undefined,
+          headerBackTestID: testIdWithKey('Back'),
+        }}
+      />
+      <Stack.Screen
+        name={Screens.SmartProxy}
+        component={SmartProxy}
+        options={{
+          title: 'Smart Proxy',
           // headerLeft: biometryUpdatePending ? () => null : undefined,
           headerBackTestID: testIdWithKey('Back'),
         }}

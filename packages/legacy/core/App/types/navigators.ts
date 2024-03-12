@@ -39,6 +39,7 @@ export enum Screens {
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
   LightningWallet = 'Lightning Wallet',
+  SmartProxy = 'Smart Proxy',
 }
 
 export enum Stacks {
@@ -144,6 +145,7 @@ export type SettingStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
   [Screens.LightningWallet]: undefined
+  [Screens.SmartProxy]: undefined
 }
 
 export type NotificationStackParams = {

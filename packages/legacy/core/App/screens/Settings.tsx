@@ -146,6 +146,20 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     {
       header: {
+        icon: { name: 'link' },
+        title: 'Smart Proxy',
+      },
+      data: [
+        {
+          title: 'Smart Payment Links',
+          accessibilityLabel: 'Wallet Settings',
+          testID: 'WalletSettings',
+          onPress: () => navigation.navigate(Screens.SmartProxy),
+        },
+      ],
+    },
+    {
+      header: {
         icon: { name: 'settings' },
         title: t('Settings.AppSettings'),
       },
