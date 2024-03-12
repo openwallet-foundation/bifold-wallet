@@ -40,7 +40,6 @@ enum PreferencesDispatchAction {
   ENABLE_DEVELOPER_MODE = 'preferences/enableDeveloperMode',
   USE_BIOMETRY = 'preferences/useBiometry',
   USE_PUSH_NOTIFICATIONS = 'preferences/usePushNotifications',
-  PUSH_NOTIFICATION_STATUS = 'preferences/pushNotificationStatus',
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
@@ -151,7 +150,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
-
     }
     case PreferencesDispatchAction.USE_VERIFIER_CAPABILITY: {
       const choice = (action?.payload ?? []).pop() ?? false

@@ -23,17 +23,11 @@ exports[`displays a push notification screen Push notification screen renders co
     }
   >
     <View>
-      <Modal
-        animationType="fade"
-        hardwareAccelerated={false}
-        transparent={true}
-        visible={false}
-      />
       <View
         style={
           Object {
             "flex": 1,
-            "padding": 25,
+            "padding": 30,
           }
         }
       >
@@ -211,47 +205,54 @@ exports[`displays a push notification screen Push notification screen renders co
         <View
           style={
             Object {
-              "display": "flex",
-              "flexDirection": "row",
-              "justifyContent": "space-between",
               "marginTop": 25,
             }
           }
         >
-          <Text
+          <View
             style={
               Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
+                "display": "flex",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
               }
             }
           >
-            PushNotifications.ReceiveNotifications
-          </Text>
-          <RCTSwitch
-            accessibilityRole="switch"
-            onChange={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            onTintColor="rgba(53, 130, 63, 0.35)"
-            style={
-              Array [
+            <Text
+              style={
                 Object {
-                  "height": 31,
-                  "width": 51,
-                },
-                Object {
-                  "backgroundColor": "#D3D3D3",
-                  "borderRadius": 16,
-                },
-              ]
-            }
-            testID="com.ariesbifold:id/PushNotificationSwitch"
-            thumbTintColor="#606060"
-            tintColor="#D3D3D3"
-            value={false}
-          />
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                }
+              }
+            >
+              PushNotifications.ReceiveNotifications
+            </Text>
+            <RCTSwitch
+              accessibilityRole="switch"
+              onChange={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              onTintColor="rgba(53, 130, 63, 0.35)"
+              style={
+                Array [
+                  Object {
+                    "height": 31,
+                    "width": 51,
+                  },
+                  Object {
+                    "backgroundColor": "#D3D3D3",
+                    "borderRadius": 16,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/PushNotificationSwitch"
+              thumbTintColor="#606060"
+              tintColor="#D3D3D3"
+              value={false}
+            />
+          </View>
         </View>
       </View>
     </View>

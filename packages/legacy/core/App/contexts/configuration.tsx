@@ -1,3 +1,4 @@
+import { Agent } from '@aries-framework/core'
 import { IndyVdrPoolConfig } from '@aries-framework/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -12,7 +13,6 @@ import { GetCredentialHelpEntry } from '../types/get-credential-help'
 import { ConnectStackParams } from '../types/navigators'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
-import { Agent } from '@aries-framework/core'
 
 interface NotificationConfiguration {
   component: React.FC
@@ -25,11 +25,11 @@ interface NotificationConfiguration {
 
 interface PushNotificationConfiguration {
   // function to get the current push notification permission status
-  status: () => Promise<'denied' | 'granted' | 'unknown'>,
+  status: () => Promise<'denied' | 'granted' | 'unknown'>
   // function to request permission for push notifications
-  setup: () => Promise<'denied' | 'granted' | 'unknown'>,
+  setup: () => Promise<'denied' | 'granted' | 'unknown'>
   //function to call when the user changes the push notification setting
-  toggle: (state: boolean, agent: Agent<any>) => Promise<void>,
+  toggle: (state: boolean, agent: Agent<any>) => Promise<void>
 }
 
 export interface ConfigurationContext {

@@ -25,9 +25,10 @@ jest.mock('../../App/contexts/configuration', () => ({
 describe('displays a push notification screen', () => {
   const setup = jest.fn()
   const toggle = jest.fn()
+  const status = async () => await Promise.resolve('denied')
   beforeEach(() => {
     // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({ pushNotification: { setup, toggle } })
+    useConfiguration.mockReturnValue({ pushNotification: { setup, toggle, status } })
     jest.clearAllMocks()
   })
 

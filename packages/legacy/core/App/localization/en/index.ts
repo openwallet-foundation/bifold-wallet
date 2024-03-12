@@ -298,7 +298,7 @@ const translation = {
     "Credential": "credential"
   },
   "PushNotifications": {
-    "EnableNotifiactions": "Enable Notifications",
+    "EnableNotifiactions": "Enable Notifications to get instant alerts",
     "BeNotified": "Be notified when you receive:",
     "ReceiveNotifications": "Receive notifications",
     "BulletFour": "new messages",
@@ -312,8 +312,13 @@ const translation = {
     "Title": "Notifications",
     "PushNotifications": "Push Notifications",
     "Continue": "Continue",
-    "BlockedTitle": "Notifications are blocked",
-    "BlockedMessage": "You have blocked notifications for this app. Please go to your device settings and enable notifications for this app.",
+    "NotificationsOffMessage": "Be notified when you receive new credential offers, proof requests, updates to your credentials, new messages and more.",
+    "NotificationsOffTitle": "Notifications for BC Wallet are turned off",
+    "NotificationsInstructionTitle": "To enable notifications:",
+    "InstructionsOne": "Open the app's settings",
+    "InstructionsTwo": "Tap Notifications",
+    "InstructionsThree": "Enable notifications",
+    "OpenSettigns": "Open settings",
   },
   "CredentialDetails": {
     "Id": "Id:",
