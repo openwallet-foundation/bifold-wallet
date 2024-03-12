@@ -3,6 +3,11 @@ export enum StatusBarStyles {
   Dark = 'dark-content',
 }
 
+export enum Shade {
+  Light = 'light',
+  Dark = 'dark',
+}
+
 export const luminanceForHexColor = (hex: string): number | undefined => {
   if (!/^#([A-Fa-f0-9]{6})$/.test(hex)) {
     return
@@ -14,6 +19,13 @@ export const luminanceForHexColor = (hex: string): number | undefined => {
   const y = 0.2126 * r + 0.7152 * g + 0.0722 * b
 
   return Math.round(y)
+}
+
+export const shadeIsLightOrDark = (hex: string): Shade => {
+  const rgbMidPoint = 255 / 2
+  const y = luminanceForHexColor(hex) ?? 0
+
+  return y <= rgbMidPoint ? Shade.Dark : Shade.Light
 }
 
 export const statusBarStyleForColor = (hex: string): StatusBarStyles | undefined => {
