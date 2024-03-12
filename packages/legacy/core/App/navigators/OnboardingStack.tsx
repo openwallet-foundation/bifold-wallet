@@ -21,8 +21,9 @@ import PINCreate from '../screens/PINCreate'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
+import PushNotification from '../screens/PushNotification'
 
-interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> {}
+interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> { }
 
 type ScreenOptions = RouteConfig<
   ParamListBase,
@@ -137,6 +138,17 @@ const OnboardingStack: React.FC = () => {
       }),
       component: useBiometry,
     },
+    {
+      name: Screens.UsePushNotifications,
+      options: () => ({
+        title: t('Screens.UsePushNotifications'),
+        headerTintColor: OnboardingTheme.headerTintColor,
+        headerShown: true,
+        headerLeft: () => false,
+        rightLeft: () => false,
+      }),
+      component: PushNotification
+    }
   ]
 
   return (
