@@ -31,12 +31,15 @@ export class MainContainer implements Container {
           dispatch({
             type: DispatchAction.DID_COMPLETE_TUTORIAL,
           })
+
           navigation.navigate(Screens.Terms)
         }
       }
     )
+
     return this
   }
+
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
     // eslint-disable-next-line no-console
     console.log(`resolving ${token}`)
