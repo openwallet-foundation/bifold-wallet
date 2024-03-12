@@ -29,7 +29,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { RNCamera } from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { set } from 'mockdate';
-import { getBTCDepositInfo, getBalances, getInvoice, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers';
+import { getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers';
+import * as lightningPayReq from 'bolt11';
 
 const LightningWallet = () => {
     //make a state varialbe to store the balance
@@ -46,6 +47,8 @@ const LightningWallet = () => {
     const [paymentPending, setPaymentPending] = useState(false);
     const [paymentStatusDesc, setPaymentStatusDesc] = useState('Scan Something First');
     const [logs, setLogs] = useState<string[]>([]);
+    const [btcZarPrice, setBtcZarPrice] = useState<number | undefined>(0);
+    const [amoutZar, setAmountZar] = useState<string | undefined>(undefined);
 
     const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
@@ -57,7 +60,26 @@ const LightningWallet = () => {
 
     useEffect(() => {
         const eventSubscription = initNodeAndSdk(eventHandler);
+        try {
+            getBTCPrice().then((response) => {
+                setBtcZarPrice(response)
+            })
+        } catch (err: any) {
+            console.error(err)
+        }
     }, []);
+
+    useEffect(() => {
+        if (scannedData) {
+            getLInvoiceZarAmount(scannedData).then((response) => {
+                if (response !== undefined) {
+                    setAmountZar(response)
+                }
+
+            })
+
+        }
+    }, [scannedData])
 
     const removeMnemonic = async () => {
         try {
@@ -138,6 +160,8 @@ const LightningWallet = () => {
                 </TouchableOpacity>
             </View>
 
+
+
             <Modal
                 animationType="slide"
                 transparent={true} // Set to true to allow custom styling to be visible
@@ -165,6 +189,18 @@ const LightningWallet = () => {
                     />
                 </View>
             </Modal>
+
+            <View style={styles.buttonPadding}>
+                <Text style={theme.TextTheme.label}>Invoice Data:</Text>
+                <TextInput
+                    style={theme.Inputs.textInput}
+                    onChangeText={setScannedData}
+                    value={scannedData}
+                    placeholder="Nothing scanned yet"
+                    keyboardType="default"
+                />
+                <Text style={theme.TextTheme.label}>{scannedData && btcZarPrice && ('(R' + amoutZar + ')')}</Text>
+            </View>
 
 
             <View style={styles.buttonPadding}>

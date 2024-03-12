@@ -1,6 +1,8 @@
 import { EnvironmentType, NodeConfigVariant, PaymentStatus, connect, defaultConfig, mnemonicToSeed, nodeInfo, receiveOnchain, receivePayment, sendPayment } from "@breeztech/react-native-breez-sdk";
 import { getItem, setItem } from "./storage";
 import { generateMnemonic } from "@dreson4/react-native-quick-bip39";
+import { t } from "i18next";
+import * as lightningPayReq from 'bolt11';
 
 const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
@@ -8,21 +10,22 @@ export const initNodeAndSdk = async (eventHandler: any) => {
     try {
         // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
         const apiKey = '5481cee312d7c8fe3891bdff8953a1ce57f57790b73e0884a8bfc119f4399bba';
-        let mnemonic = await getItem(MNEMONIC_STORE)
+        // let mnemonic = await getItem(MNEMONIC_STORE)
         const inviteCode = '6FUD-Z8A9';
 
-        if (!mnemonic) {
-            console.log("No mnemonic found, generating new one");
-            mnemonic = generateMnemonic();
-            console.log("Generated mnemonic: ", mnemonic);
-            await setItem(MNEMONIC_STORE, mnemonic);
-        }
-        else {
-            console.log("Mnemonic found: ", mnemonic);
-        }
+        // if (!mnemonic) {
+        //     console.log("No mnemonic found, generating new one");
+        //     mnemonic = generateMnemonic();
+        //     console.log("Generated mnemonic: ", mnemonic);
+        //     await setItem(MNEMONIC_STORE, mnemonic);
+        // }
+        // else {
+        //     console.log("Mnemonic found: ", mnemonic);
+        // }
 
-        const seed = await mnemonicToSeed(mnemonic);
-        // const seed = await mnemonicToSeed('embark category force toward husband snake rose result sugar select enrich trap');
+        // const seed = await mnemonicToSeed(mnemonic);
+        // TODO Elmer: Remove hardcoded seed
+        const seed = await mnemonicToSeed('spring business health luggage word spin start column pipe giant pink spoon');
         console.log("Seed: ", seed);
 
         const keys = loadAndConvert();
@@ -213,4 +216,20 @@ export const getBTCPrice = async () => {
     } catch (error) {
         console.error('Error fetching btc price:', error);
     }
+}
+
+export const getLInvoiceZarAmount = async (lightningInvoice: string) => {
+    const btcZarPrice = await getBTCPrice();
+
+    try {
+        if (btcZarPrice !== undefined) {
+            return (Number(lightningPayReq.decode(lightningInvoice).millisatoshis) / 100000000000 * btcZarPrice).toFixed(2)
+        }
+        else {
+            return undefined
+        }
+    } catch (error) {
+        console.error('Error getting invoice amount:', error);
+    }
+
 }
