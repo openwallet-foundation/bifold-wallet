@@ -41,11 +41,12 @@ const OnboardingStack: React.FC = () => {
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
   const Onboarding = container.resolve(TOKENS.SCREEN_ONBOARDING)
-  const { pages, splash, useBiometry, preface, screenOptionsDictionary } = useConfiguration()
+  const { pages, splash, useBiometry, preface } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
   const terms = container.resolve(TOKENS.SCREEN_TERMS)
+  const screenOptionsDictionary = container.resolve(TOKENS.OBJECT_ONBOARDINGCONFIG)
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
       return
@@ -75,19 +76,19 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.Preface,
       component: preface,
-      options: screenOptionsDictionary?.[Screens.Preface],
+      options: screenOptionsDictionary[Screens.Preface],
     },
     {
       name: Screens.Splash,
       component: splash,
-      options: screenOptionsDictionary?.[Screens.Splash],
+      options: screenOptionsDictionary[Screens.Splash],
     },
     {
       name: Screens.Onboarding,
       component: OnBoardingScreen,
       options: () => {
         return {
-          ...screenOptionsDictionary?.[Screens.Onboarding],
+          ...screenOptionsDictionary[Screens.Onboarding],
           title: t('Screens.Onboarding'),
         }
       },
@@ -95,7 +96,7 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.Terms,
       options: () => ({
-        ...screenOptionsDictionary?.[Screens.Terms],
+        ...screenOptionsDictionary[Screens.Terms],
         title: t('Screens.Terms'),
       }),
       component: terms,
@@ -105,14 +106,14 @@ const OnboardingStack: React.FC = () => {
       component: CreatePINScreen,
       initialParams: {},
       options: () => ({
-        ...screenOptionsDictionary?.[Screens.CreatePIN],
+        ...screenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.CreatePIN'),
       }),
     },
     {
       name: Screens.NameWallet,
       options: () => ({
-        ...screenOptionsDictionary?.[Screens.CreatePIN],
+        ...screenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.NameWallet'),
       }),
       component: NameWallet,
@@ -120,7 +121,7 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.UseBiometry,
       options: () => ({
-        ...screenOptionsDictionary?.[Screens.CreatePIN],
+        ...screenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.Biometry'),
       }),
       component: useBiometry,

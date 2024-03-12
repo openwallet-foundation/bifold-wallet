@@ -9,7 +9,7 @@ import { RecordProps } from '../components/record/Record'
 import { Locales } from '../localization'
 import OnboardingPages from '../screens/OnboardingPages'
 import { GetCredentialHelpEntry } from '../types/get-credential-help'
-import { ConnectStackParams, ScreenOptionsType } from '../types/navigators'
+import { ConnectStackParams } from '../types/navigators'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
 
@@ -57,7 +57,6 @@ export interface ConfigurationContext {
   showScanHelp?: boolean
   showScanButton?: boolean
   globalScreenOptions?: StackNavigationOptions
-  screenOptionsDictionary?: ScreenOptionsType
   showDetailsInfo?: boolean
   getCredentialHelpDictionary?: GetCredentialHelpEntry[]
   contactHideList?: string[]

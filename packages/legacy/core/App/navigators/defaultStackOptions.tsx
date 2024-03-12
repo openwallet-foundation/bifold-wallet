@@ -8,7 +8,7 @@ import { ITheme, OnboardingTheme } from '../theme'
 import { ScreenOptionsType, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-const defaultScreenOptionsDictionary: ScreenOptionsType = {
+export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.Preface]: {
     headerShown: false,
   },
@@ -69,10 +69,4 @@ export function createDefaultStackOptions({ ColorPallet }: ITheme): StackNavigat
       headerBackAccessibilityLabel: t('Global.Back'),
     }
   )
-}
-
-export function createDefaultScreenStackOptions(): ScreenOptionsType {
-  const { screenOptionsDictionary } = useConfiguration()
-
-  return screenOptionsDictionary ?? defaultScreenOptionsDictionary
 }
