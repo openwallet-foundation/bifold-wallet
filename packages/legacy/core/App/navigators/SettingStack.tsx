@@ -19,6 +19,7 @@ import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
+import PushNotification from '../screens/PushNotification'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -80,6 +81,11 @@ const SettingStack: React.FC = () => {
         name={Screens.CreatePIN}
         component={PINCreate}
         options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.UsePushNotifications}
+        component={PushNotification}
+        options={{ title: t('Screens.UsePushNotifications'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.Terms}

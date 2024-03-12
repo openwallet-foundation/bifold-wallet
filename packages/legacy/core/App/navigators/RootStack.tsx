@@ -23,6 +23,7 @@ import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
+import PushNotification from '../screens/PushNotification'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
@@ -71,7 +72,7 @@ const RootStack: React.FC = () => {
     declinedProofs.forEach((proof) => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => { })
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
@@ -357,6 +358,18 @@ const RootStack: React.FC = () => {
           })}
           component={useBiometry}
         />
+
+        <Stack.Screen
+          name={Screens.UsePushNotifications}
+          options={() => ({
+            title: t('Screens.UsePushNotifications'),
+            headerTintColor: OnboardingTheme.headerTintColor,
+            headerShown: true,
+            headerLeft: () => false,
+            rightLeft: () => false,
+          })}
+          component={PushNotification} />
+
         <Stack.Screen
           name={Screens.Developer}
           component={developer}

@@ -297,6 +297,24 @@ const translation = {
     "IssuedBy": "Issued by",
     "Credential": "credential"
   },
+  "PushNotifications": {
+    "EnableNotifiactions": "Enable Notifications",
+    "BeNotified": "Be notified when you receive:",
+    "ReceiveNotifications": "Receive notifications",
+    "BulletFour": "new messages",
+    "BulletOne": "new credential offers",
+    "BulletThree": "updates to your credentials",
+    "BulletTwo": "new proof requests",
+    "DeveloperTitle": "Push Notifications",
+    "HeadingOne": "It is recommended you allow this app to receive push notifications.",
+    "HeadingTwo": "Notifications will be sent to you when you receive:",
+    "NotAvailable": " (Not Available)",
+    "Title": "Notifications",
+    "PushNotifications": "Push Notifications",
+    "Continue": "Continue",
+    "BlockedTitle": "Notifications are blocked",
+    "BlockedMessage": "You have blocked notifications for this app. Please go to your device settings and enable notifications for this app.",
+  },
   "CredentialDetails": {
     "Id": "Id:",
     "CreatedAt": "Created At:",
@@ -491,7 +509,8 @@ const translation = {
     "ScanMyQR": "Scan my QR code",
     "Help": "Help",
     "MoreInformation": "More information",
-    "Developer": "Developer options"
+    "Developer": "Developer options",
+    "Notifications": "Notifications",
   },
   "TabStack": {
     "Home": "Notifications",
@@ -557,6 +576,7 @@ const translation = {
     "OnTheWay": 'On The Way',
     "Declined": 'Declined',
     "UseBiometry": 'Use Biometry',
+    "UsePushNotifications": 'Use Push Notifications',
     "CustomNotification": 'Custom Notification',
     "ProofRequesting": 'Proof Requesting',
     "NameWallet": "Name your wallet",
