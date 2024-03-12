@@ -13,23 +13,26 @@ import {
   View,
   ViewStyle,
   TextInput,
+  TouchableOpacity,
 } from 'react-native'
 
+import ImageModal from '../../components/modals/ImageModal'
 import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
-import { formatIfDate, pTypeToText } from '../../utils/helpers'
+import { formatIfDate, isDataUrl, pTypeToText } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
 
-interface CredentialCardPreviewProps {
+interface VerifierCredentialCardProps {
   style?: ViewStyle
   displayItems?: Field[]
   elevated?: boolean
   credDefId?: string
   schemaId: string
-  onChangeValue: (schema: string, label: string, name: string, value: string) => void
+  preview?: boolean
+  onChangeValue?: (schema: string, label: string, name: string, value: string) => void
 }
 
 /**
@@ -37,12 +40,13 @@ interface CredentialCardPreviewProps {
  * a proof request will look like with proper branding etc. and allow for the changing
  * of predicate values. It is a greatly trimmed-down version of the CredentialCard11.
  */
-const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
+const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   style = {},
   displayItems = [],
   elevated = false,
   credDefId,
   schemaId,
+  preview,
   onChangeValue,
 }) => {
   const { width } = useWindowDimensions()
@@ -50,7 +54,7 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
   const padding = width * 0.05
   const logoHeight = width * 0.12
   const { i18n, t } = useTranslation()
-  const { TextTheme, ListItems } = useTheme()
+  const { TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
 
@@ -85,6 +89,12 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
       padding,
       marginLeft: -1 * logoHeight + padding,
     },
+    imageAttr: {
+      height: 150,
+      aspectRatio: 1,
+      resizeMode: 'contain',
+      borderRadius: 10,
+    },
     logoContainer: {
       top: padding,
       left: -1 * logoHeight + padding,
@@ -100,11 +110,6 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
         height: 1,
       },
       shadowOpacity: 0.3,
-    },
-    valueText: {
-      ...TextTheme.normal,
-      minHeight: ListItems.recordAttributeText.fontSize,
-      paddingVertical: 4,
     },
     textContainer: {
       color: TextTheme.normal.color,
@@ -135,7 +140,7 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
   useEffect(() => {
     const params = {
       identifiers: { schemaId, credentialDefinitionId: credDefId },
-      attributes: [],
+      attributes: displayItems,
       language: i18n.language,
     }
     OCABundleResolver.resolveAllBundles(params).then((bundle) => {
@@ -179,16 +184,17 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
   }
 
   const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
-    const label = (item.label || item.name)!
+    const label = (item.name || item.label)!
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
     const [value, setValue] = useState(item.value)
+    const [showImageModal, setShowImageModal] = useState(false)
 
     useEffect(() => {
       setValue(formatIfDate(item.format, value))
     }, [])
 
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View>
         <Text
           style={[
             TextTheme.labelSubtitle,
@@ -202,12 +208,24 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
         >
           {ylabel}
         </Text>
-        <Text
-          style={[TextTheme.labelSubtitle, styles.textContainer, styles.valueText]}
-          testID={testIdWithKey('AttributeValue')}
-        >
-          {value}
-        </Text>
+        {value && (
+          <View>
+            {isDataUrl(value) ? (
+              <TouchableOpacity
+                accessibilityLabel={t('Record.Zoom')}
+                testID={testIdWithKey('zoom')}
+                onPress={() => setShowImageModal(true)}
+              >
+                <Image style={styles.imageAttr} source={{ uri: value as string }} />
+              </TouchableOpacity>
+            ) : (
+              <Text style={[TextTheme.bold, styles.textContainer]} testID={testIdWithKey('AttributeValue')}>
+                {value}
+              </Text>
+            )}
+          </View>
+        )}
+        {showImageModal && <ImageModal uri={value as string} onDismissPressed={() => setShowImageModal(false)} />}
       </View>
     )
   }
@@ -223,9 +241,12 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
     const predicateStyles = StyleSheet.create({
       input: {
         textAlign: 'center',
+        textAlignVertical: 'bottom',
         borderBottomColor: ColorPallet.grayscale.black,
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
         borderBottomWidth: 1,
+        lineHeight: 19,
+        padding: 0,
       },
       predicateLabel: {
         lineHeight: 19,
@@ -238,7 +259,7 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
     })
 
     return (
-      <View style={{ flexWrap: 'wrap' }}>
+      <View>
         <Text
           style={[TextTheme.labelSubtitle, styles.textContainer, predicateStyles.predicateLabel]}
           testID={testIdWithKey('PredicateName')}
@@ -246,11 +267,12 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
           {ylabel}
         </Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' }}>
-          <Text style={[styles.textContainer, predicateStyles.predicateType, styles.valueText]}>{item.pType}</Text>
-          {item.parameterizable && (
+          <Text style={[TextTheme.bold, styles.textContainer, predicateStyles.predicateType]}>{item.pType}</Text>
+          {/* Only allow editing parametrizable predicates in preview mode */}
+          {item.parameterizable && preview && onChangeValue ? (
             <TextInput
               keyboardType="numeric"
-              style={[styles.valueText, predicateStyles.input]}
+              style={[TextTheme.bold, predicateStyles.input]}
               onChangeText={(value) => setCurrentValue(value)}
               onBlur={() => {
                 onChangeValue(schemaId, item.label || item.name || '', item.name || '', currentValue)
@@ -259,9 +281,8 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
             >
               {currentValue}
             </TextInput>
-          )}
-          {!item.parameterizable && (
-            <Text style={[styles.textContainer, styles.valueText]} testID={testIdWithKey('PredicateValue')}>
+          ) : (
+            <Text style={[TextTheme.bold, styles.textContainer]} testID={testIdWithKey('PredicateValue')}>
               {item.pValue}
             </Text>
           )}
@@ -296,6 +317,25 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View>
+          {!(overlay.metaOverlay?.issuer === 'Unknown Contact') && (
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                testID={testIdWithKey('CredentialIssuer')}
+                style={[
+                  TextTheme.label,
+                  styles.textContainer,
+                  {
+                    lineHeight: 19,
+                    opacity: 0.8,
+                    flex: 1,
+                    flexWrap: 'wrap',
+                  },
+                ]}
+              >
+                {overlay.metaOverlay?.issuer}
+              </Text>
+            </View>
+          )}
           <View style={{ flexDirection: 'row' }}>
             <Text
               testID={testIdWithKey('CredentialName')}
@@ -356,9 +396,9 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
             overlay.metaOverlay?.watermark ?? ''
           } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
           displayItems.map((item) => {
-            const { label } = parseAttribute(item as (Attribute & Predicate) | undefined)
+            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
             if (label) {
-              return ` ${label}`
+              return value ? ` ${label}, ${value}` : ` ${label}`
             }
           })
         }
@@ -392,4 +432,4 @@ const CredentialCardPreview: React.FC<CredentialCardPreviewProps> = ({
   ) : null
 }
 
-export default CredentialCardPreview
+export default VerifierCredentialCard

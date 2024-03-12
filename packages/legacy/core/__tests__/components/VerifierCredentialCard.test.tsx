@@ -1,7 +1,7 @@
 import { act, render } from '@testing-library/react-native'
 import React from 'react'
 
-import CredentialCardPreview from '../../App/components/misc/CredentialCardPreview'
+import VerifierCredentialCard from '../../App/components/misc/VerifierCredentialCard'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import configurationContext from '../contexts/configuration'
 
@@ -28,11 +28,11 @@ const displayItems = [
   },
 ]
 
-describe('CredentialCardPreview Component', () => {
+describe('VerifierCredentialCard Component', () => {
   test('Renders correctly', async () => {
     const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
-        <CredentialCardPreview
+        <VerifierCredentialCard
           schemaId={'4eCXHS79ykiMv2PoBxPK23:2:unverified_person:0.1.0'}
           onChangeValue={jest.fn()}
           displayItems={displayItems}

@@ -10,6 +10,7 @@ import { AppState, DeviceEventEmitter } from 'react-native'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { EventTypes, walletTimeout } from '../constants'
+import { TOKENS, useContainer } from '../container-api'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -18,10 +19,6 @@ import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
 import AttemptLockout from '../screens/AttemptLockout'
 import Chat from '../screens/Chat'
-import NameWallet from '../screens/NameWallet'
-import Onboarding from '../screens/Onboarding'
-import { createCarouselStyle } from '../screens/OnboardingPages'
-import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
@@ -49,21 +46,10 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const OnboardingTheme = theme.OnboardingTheme
-  const {
-    pages,
-    terms,
-    splash,
-    useBiometry,
-    developer,
-    preface,
-    showPreface,
-    enableImplicitInvitations,
-    enableReuseConnections,
-    disableOnboardingSkip,
-    screenOptionsDictionary,
-    enableUseMultUseInvitation,
-  } = useConfiguration()
+  const { splash, showPreface, enableImplicitInvitations, enableReuseConnections, enableUseMultUseInvitation } =
+    useConfiguration()
+  const container = useContainer()
+  const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
@@ -72,6 +58,7 @@ const RootStack: React.FC = () => {
     declinedProofs.forEach((proof) => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
@@ -190,13 +177,6 @@ const RootStack: React.FC = () => {
     }
   }, [appStateVisible, prevAppStateVisible, backgroundTime])
 
-  const onTutorialCompleted = () => {
-    dispatch({
-      type: DispatchAction.DID_COMPLETE_TUTORIAL,
-    })
-    navigation.navigate(Screens.Terms)
-  }
-
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
       return
@@ -282,80 +262,6 @@ const RootStack: React.FC = () => {
     )
   }
 
-  const onboardingStack = () => {
-    const Stack = createStackNavigator()
-    const carousel = createCarouselStyle(OnboardingTheme)
-    return (
-      <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions }}>
-        <Stack.Screen name={Screens.Splash} component={splash} />
-        <Stack.Screen
-          name={Screens.Preface}
-          component={preface}
-          options={{ title: t('Screens.Preface'), headerShown: true }}
-        />
-        <Stack.Screen
-          name={Screens.Onboarding}
-          options={{
-            ...screenOptionsDictionary?.[Screens.Onboarding],
-            title: t('Screens.Onboarding'),
-          }}
-        >
-          {(props) => (
-            <Onboarding
-              {...props}
-              nextButtonText={t('Global.Next')}
-              previousButtonText={t('Global.Back')}
-              pages={pages(onTutorialCompleted, OnboardingTheme)}
-              disableSkip={disableOnboardingSkip}
-              style={carousel}
-            />
-          )}
-        </Stack.Screen>
-        <Stack.Screen
-          name={Screens.Terms}
-          options={{
-            ...screenOptionsDictionary?.[Screens.Terms],
-            title: t('Screens.Terms'),
-          }}
-          component={terms}
-        />
-        <Stack.Screen
-          name={Screens.CreatePIN}
-          options={{
-            ...screenOptionsDictionary?.[Screens.CreatePIN],
-            title: t('Screens.CreatePIN'),
-          }}
-        >
-          {(props) => <PINCreate {...props} setAuthenticated={onAuthenticated} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name={Screens.NameWallet}
-          options={{
-            ...screenOptionsDictionary?.[Screens.NameWallet],
-            title: t('Screens.NameWallet'),
-          }}
-          component={NameWallet}
-        />
-        <Stack.Screen
-          name={Screens.UseBiometry}
-          options={{
-            ...screenOptionsDictionary?.[Screens.UseBiometry],
-            title: t('Screens.Biometry'),
-          }}
-          component={useBiometry}
-        />
-        <Stack.Screen
-          name={Screens.Developer}
-          component={developer}
-          options={{
-            ...screenOptionsDictionary?.[Screens.Developer],
-            title: t('Screens.Developer'),
-          }}
-        />
-      </Stack.Navigator>
-    )
-  }
-
   if (
     (!showPreface || state.onboarding.didSeePreface) &&
     state.onboarding.didAgreeToTerms &&
@@ -367,7 +273,7 @@ const RootStack: React.FC = () => {
     return state.authentication.didAuthenticate ? mainStack() : authStack()
   }
 
-  return onboardingStack()
+  return <OnboardingStack />
 }
 
 export default RootStack

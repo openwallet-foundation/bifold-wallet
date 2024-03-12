@@ -12,10 +12,10 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
 import ProofRequest from '../../App/screens/ProofRequest'
 import { testIdWithKey } from '../../App/utils/testable'
-import { useTranslation } from '../../__mocks__/react-i18next'
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
+import { useTranslation } from 'react-i18next'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)

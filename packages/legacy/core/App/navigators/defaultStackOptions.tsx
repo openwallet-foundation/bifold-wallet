@@ -9,6 +9,12 @@ import { ScreenOptionsType, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 const defaultScreenOptionsDictionary: ScreenOptionsType = {
+  [Screens.Preface]: {
+    headerShown: false,
+  },
+  [Screens.Splash]: {
+    headerShown: false,
+  },
   [Screens.Onboarding]: {
     headerTintColor: OnboardingTheme.headerTintColor,
     headerLeft: () => false,
