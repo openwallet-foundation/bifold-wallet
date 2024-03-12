@@ -16,6 +16,7 @@ import { GenericFn } from '../../types/fn'
 import { NotificationStackParams, Screens } from '../../types/navigators'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { formatIfDate, getCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
+import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
@@ -90,6 +91,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const borderRadius = 10
   const padding = width * 0.05
   const logoHeight = width * 0.12
+  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const { OCABundleResolver, getCredentialHelpDictionary } = useConfiguration()
@@ -104,14 +106,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   // below navigation only to be used from proof request screen
   const navigation = useNavigation<StackNavigationProp<NotificationStackParams, Screens.ProofRequest>>()
-
   const primaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
   )
   const secondaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
   )
-
   const attributeTypes = overlay.bundle?.captureBase.attributes
   const attributeFormats: Record<string, string | undefined> = (overlay.bundle as any)?.bundle.attributes
     .map((attr: any) => {
@@ -120,7 +120,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
       return { ...prev, [curr.name]: curr.format }
     }, {})
-
   const cardData = [...(displayItems ?? []), primaryField, secondaryField]
 
   const getSecondaryBackgroundColor = () => {
@@ -132,8 +131,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         : overlay.brandingOverlay?.secondaryBackgroundColor
     }
   }
-
-  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const styles = StyleSheet.create({
     container: {
@@ -210,11 +207,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     errorIcon: {
       color: ListItems.proofError.color,
     },
-    watermark: {
-      opacity: 0.16,
-      fontSize: 22,
-      transform: [{ rotate: '-30deg' }],
-    },
     selectedCred: {
       borderWidth: 5,
       borderRadius: 15,
@@ -232,6 +224,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       color: ColorPallet.brand.link,
     },
   })
+
+  const colorIfErrorState = () =>
+    error || predicateError || isProofRevoked
+      ? ColorPallet.notification.errorBorder
+      : styles.secondaryBodyContainer.backgroundColor
+
+  const fontColorWithHighContrast = () => {
+    const c = colorIfErrorState() ?? ColorPallet.grayscale.lightGrey
+    const shade = shadeIsLightOrDark(c)
+
+    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.mediumGrey
+  }
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
     let parsedItem = item
@@ -518,13 +522,19 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor:
-              error || predicateError || isProofRevoked
-                ? ColorPallet.notification.errorBorder
-                : styles.secondaryBodyContainer.backgroundColor,
+            backgroundColor: colorIfErrorState(),
+            overflow: 'hidden',
           },
         ]}
       >
+        {overlay.metaOverlay?.watermark && (
+          <CardWatermark
+            width={dimensions.cardWidth}
+            height={dimensions.cardHeight}
+            style={{ color: fontColorWithHighContrast() }}
+            watermark={overlay.metaOverlay?.watermark}
+          />
+        )}
         {overlay.brandingOverlay?.backgroundImageSlice && !displayItems ? (
           <ImageBackground
             source={toImageSource(overlay.brandingOverlay?.backgroundImageSlice)}
@@ -533,9 +543,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               borderTopLeftRadius: borderRadius,
               borderBottomLeftRadius: borderRadius,
             }}
-          >
-            {null}
-          </ImageBackground>
+          />
         ) : (
           !(error || predicateError || proof || getSecondaryBackgroundColor()) && (
             <View
@@ -549,7 +557,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   backgroundColor: 'rgba(0,0,0,0.24)',
                 },
               ]}
-            ></View>
+            />
           )
         )}
       </View>
@@ -645,7 +653,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             <CardWatermark
               width={dimensions.cardWidth}
               height={dimensions.cardHeight}
-              style={styles.watermark}
+              style={{ color: fontColorWithHighContrast() }}
               watermark={overlay.metaOverlay?.watermark}
             />
           )}
