@@ -18,20 +18,30 @@ import { useTheme } from '../contexts/theme'
 import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
-import { OnboardingTheme } from '../theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
+
+interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> {}
+
+type ScreenOptions = RouteConfig<
+  ParamListBase,
+  Screens,
+  StackNavigationState<ParamListBase>,
+  StackNavigationOptions,
+  StackNavigationEventMap
+>
 
 const OnboardingStack: React.FC = () => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
   const container = useContainer()
   const Stack = createStackNavigator()
+  const theme = useTheme()
+  const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
   const Onboarding = container.resolve(TOKENS.SCREEN_ONBOARDING)
-  const { pages, splash, useBiometry } = useConfiguration()
-  const theme = useTheme()
+  const { pages, splash, useBiometry, preface } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
@@ -50,24 +60,26 @@ const OnboardingStack: React.FC = () => {
       <Onboarding
         nextButtonText={t('Global.Next')}
         previousButtonText={t('Global.Back')}
+        disableSkip={true}
         pages={pages(onTutorialCompleted, OnboardingTheme)}
         style={carousel}
       />
     )
   }
-  interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> {}
+
   const CreatePINScreen: React.FC<CreatePINScreenParams> = (props) => {
     return <PINCreate setAuthenticated={onAuthenticated} {...props} />
   }
-  type ScreenOptions = RouteConfig<
-    ParamListBase,
-    Screens,
-    StackNavigationState<ParamListBase>,
-    StackNavigationOptions,
-    StackNavigationEventMap
-  >
+
   const screens: ScreenOptions[] = [
-    { name: Screens.Splash, component: splash },
+    {
+      name: Screens.Preface,
+      component: preface,
+    },
+    {
+      name: Screens.Splash,
+      component: splash,
+    },
     {
       name: Screens.Onboarding,
       component: OnBoardingScreen,
@@ -126,6 +138,7 @@ const OnboardingStack: React.FC = () => {
       component: useBiometry,
     },
   ]
+
   return (
     <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
       {screens.map((item) => {
