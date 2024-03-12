@@ -8,6 +8,7 @@ import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import OnboardingStack from './navigators/OnboardingStack'
 import Onboarding from './screens/Onboarding'
 import ScreenTerms from './screens/Terms'
+import Developer from './screens/Developer'
 import { AuthenticateStackParams, Screens } from './types/navigators'
 
 export class MainContainer implements Container {
@@ -19,6 +20,7 @@ export class MainContainer implements Container {
   public init(): Container {
     // eslint-disable-next-line no-console
     console.log(`Initializing Bifold container`)
+    this.container.registerInstance(TOKENS.SCREEN_DEVELOPER, Developer)
     this.container.registerInstance(TOKENS.SCREEN_TERMS, ScreenTerms)
     this.container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
     this.container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)

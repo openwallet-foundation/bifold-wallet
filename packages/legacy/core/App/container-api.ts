@@ -9,6 +9,7 @@ import { GenericFn } from './types/fn'
 import { AuthenticateStackParams } from './types/navigators'
 
 export enum SCREEN_TOKENS {
+  SCREEN_DEVELOPER = 'screen.developer',
   SCREEN_TERMS = 'screen.terms',
   SCREEN_ONBOARDING = 'screen.onboarding',
   SCREEN_ONBOARDING_ITEM = 'screen.onboarding.item',
@@ -36,6 +37,7 @@ export type FN_ONBOARDING_DONE = (
 ) => GenericFn
 
 export interface TokenMapping {
+  [TOKENS.SCREEN_DEVELOPER]: React.FC
   [TOKENS.STACK_ONBOARDING]: React.FC
   [TOKENS.SCREEN_TERMS]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
