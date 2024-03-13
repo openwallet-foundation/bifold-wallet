@@ -29,4 +29,10 @@ const useIsFocused = () => {
   return true
 }
 
-export { useNavigation, useIsFocused }
+const CommonActions = {
+  navigate: jest.fn(),
+  reset: jest.fn(),
+  goBack: jest.fn(),
+}
+
+export { useNavigation, useIsFocused, CommonActions }

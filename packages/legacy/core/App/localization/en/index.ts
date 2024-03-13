@@ -297,6 +297,22 @@ const translation = {
     "IssuedBy": "Issued by",
     "Credential": "credential"
   },
+  "PushNotifications": {
+    "EnableNotifiactions": "Enable Notifications to get instant alerts",
+    "BeNotified": "Be notified when you receive:",
+    "ReceiveNotifications": "Receive notifications",
+    "BulletFour": "new messages",
+    "BulletOne": "new credential offers",
+    "BulletThree": "updates to your credentials",
+    "BulletTwo": "new proof requests",
+    "NotificationsOffMessage": "Be notified when you receive new credential offers, proof requests, updates to your credentials, new messages and more.",
+    "NotificationsOffTitle": "Notifications for Bifold are turned off",
+    "NotificationsInstructionTitle": "To enable notifications:",
+    "InstructionsOne": "Open the app's settings",
+    "InstructionsTwo": "Tap Notifications",
+    "InstructionsThree": "Enable notifications",
+    "OpenSettigns": "Open settings",
+  },
   "CredentialDetails": {
     "Id": "Id:",
     "CreatedAt": "Created At:",
@@ -491,7 +507,8 @@ const translation = {
     "ScanMyQR": "Scan my QR code",
     "Help": "Help",
     "MoreInformation": "More information",
-    "Developer": "Developer options"
+    "Developer": "Developer options",
+    "Notifications": "Notifications",
   },
   "TabStack": {
     "Home": "Notifications",
@@ -557,6 +574,7 @@ const translation = {
     "OnTheWay": 'On The Way',
     "Declined": 'Declined',
     "UseBiometry": 'Use Biometry',
+    "UsePushNotifications": 'Use Push Notifications',
     "CustomNotification": 'Custom Notification',
     "ProofRequesting": 'Proof Requesting',
     "NameWallet": "Name your wallet",
