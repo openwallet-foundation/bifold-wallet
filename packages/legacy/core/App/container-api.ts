@@ -1,5 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack'
-import { createContext, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
 import { Button } from './components/buttons/Button-api'
@@ -9,8 +9,10 @@ import { GenericFn } from './types/fn'
 import { AuthenticateStackParams } from './types/navigators'
 
 export enum SCREEN_TOKENS {
+  SCREEN_PREFACE = 'screen.preface',
   SCREEN_TERMS = 'screen.terms',
   SCREEN_ONBOARDING = 'screen.onboarding',
+  SCREEN_DEVELOPER = 'screen.developer',
   SCREEN_ONBOARDING_ITEM = 'screen.onboarding.item',
 }
 export enum STACK_TOKENS {
@@ -36,8 +38,10 @@ export type FN_ONBOARDING_DONE = (
 ) => GenericFn
 
 export interface TokenMapping {
+  [TOKENS.SCREEN_PREFACE]: React.FC
   [TOKENS.STACK_ONBOARDING]: React.FC
   [TOKENS.SCREEN_TERMS]: React.FC
+  [TOKENS.SCREEN_DEVELOPER]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.COMP_BUTTON]: Button

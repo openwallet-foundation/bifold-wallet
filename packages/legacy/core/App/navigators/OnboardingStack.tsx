@@ -19,6 +19,7 @@ import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -41,11 +42,14 @@ const OnboardingStack: React.FC = () => {
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
   const Onboarding = container.resolve(TOKENS.SCREEN_ONBOARDING)
-  const { pages, splash, useBiometry, preface } = useConfiguration()
+  const { pages, splash, useBiometry } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
   const terms = container.resolve(TOKENS.SCREEN_TERMS)
+  const developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
+  const preface = container.resolve(TOKENS.SCREEN_PREFACE)
+
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
       return
@@ -55,6 +59,7 @@ const OnboardingStack: React.FC = () => {
       type: DispatchAction.DID_AUTHENTICATE,
     })
   }
+
   const OnBoardingScreen: React.FC = () => {
     return (
       <Onboarding
@@ -75,6 +80,14 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.Preface,
       component: preface,
+      options: () => {
+        return {
+          title: t('Screens.Preface'),
+          headerTintColor: OnboardingTheme.headerTintColor,
+          headerShown: true,
+          headerLeft: () => false,
+        }
+      },
     },
     {
       name: Screens.Splash,
@@ -136,6 +149,19 @@ const OnboardingStack: React.FC = () => {
         rightLeft: () => false,
       }),
       component: useBiometry,
+    },
+    {
+      name: Screens.Developer,
+      component: developer,
+      options: () => {
+        return {
+          title: t('Screens.Developer'),
+          headerTintColor: OnboardingTheme.headerTintColor,
+          headerShown: true,
+          headerBackAccessibilityLabel: t('Global.Back'),
+          headerBackTestID: testIdWithKey('Back'),
+        }
+      },
     },
   ]
 
