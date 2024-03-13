@@ -52,7 +52,7 @@ const RootStack: React.FC = () => {
     enableImplicitInvitations,
     enableReuseConnections,
     enableUseMultUseInvitation,
-    pushNotification,
+    enablePushNotifications,
   } = useConfiguration()
   const container = useContainer()
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
@@ -274,7 +274,7 @@ const RootStack: React.FC = () => {
     state.onboarding.didCompleteTutorial &&
     state.onboarding.didCreatePIN &&
     (!state.preferences.enableWalletNaming || state.onboarding.didNameWallet) &&
-    (state.onboarding.didConsiderPushNotifications || !pushNotification) &&
+    (state.onboarding.didConsiderPushNotifications || !enablePushNotifications) &&
     state.onboarding.didConsiderBiometry
   ) {
     return state.authentication.didAuthenticate ? mainStack() : authStack()

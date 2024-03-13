@@ -28,7 +28,7 @@ describe('displays a push notification screen', () => {
   const status = async () => await Promise.resolve('denied')
   beforeEach(() => {
     // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({ pushNotification: { setup, toggle, status } })
+    useConfiguration.mockReturnValue({ enablePushNotifications: { setup, toggle, status } })
     jest.clearAllMocks()
   })
 

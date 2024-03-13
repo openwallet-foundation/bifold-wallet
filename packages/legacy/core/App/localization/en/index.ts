@@ -306,7 +306,7 @@ const translation = {
     "BulletThree": "updates to your credentials",
     "BulletTwo": "new proof requests",
     "NotificationsOffMessage": "Be notified when you receive new credential offers, proof requests, updates to your credentials, new messages and more.",
-    "NotificationsOffTitle": "Notifications for BC Wallet are turned off",
+    "NotificationsOffTitle": "Notifications for Bifold are turned off",
     "NotificationsInstructionTitle": "To enable notifications:",
     "InstructionsOne": "Open the app's settings",
     "InstructionsTwo": "Tap Notifications",

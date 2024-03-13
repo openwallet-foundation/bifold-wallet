@@ -21,16 +21,16 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
   const { TextTheme, ColorPallet } = useTheme()
-  const { pushNotification } = useConfiguration()
+  const { enablePushNotifications } = useConfiguration()
   const [notificationState, setNotificationState] = useState<boolean>(store.preferences.usePushNotifications)
   const [notificationStatus, setNotificationStatus] = useState<'denied' | 'granted' | 'unknown'>('unknown')
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  if (!pushNotification) {
+  if (!enablePushNotifications) {
     throw new Error('Push notification configuration not found')
   }
   const isMenu = (route.params as any)?.isMenu
   const updateNotificationState = async () => {
-    const status = await pushNotification.status()
+    const status = await enablePushNotifications.status()
     setNotificationStatus(status)
   }
   useMemo(() => {
@@ -72,7 +72,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
   const hasNotificationsDisabled = notificationStatus === 'denied' && store.onboarding.didConsiderPushNotifications
 
   const activatePushNotifications = async () => {
-    const state = await pushNotification.setup()
+    const state = await enablePushNotifications.setup()
     dispatch({ type: DispatchAction.USE_PUSH_NOTIFICATIONS, payload: [state === 'granted'] })
     if (store.preferences.enableWalletNaming) {
       navigation.dispatch(
@@ -94,13 +94,13 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
   const toggleSwitch = async () => {
     if (agent) {
       if (!notificationState) {
-        const res = await pushNotification.setup()
+        const res = await enablePushNotifications.setup()
         if (res === 'denied') {
           return
         }
       }
       dispatch({ type: DispatchAction.USE_PUSH_NOTIFICATIONS, payload: [!notificationState] })
-      pushNotification.toggle(!notificationState, agent)
+      enablePushNotifications.toggle(!notificationState, agent)
       setNotificationState(!notificationState)
     }
   }

@@ -34,7 +34,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const { settings, enableTours, pushNotification } = useConfiguration()
+  const { settings, enableTours, enablePushNotifications } = useConfiguration()
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
@@ -165,7 +165,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   ]
 
   // add optional push notifications menu to settings
-  if (pushNotification) {
+  if (enablePushNotifications) {
     settingsSections
       .find((item) => item.header.title === t('Settings.AppSettings'))
       ?.data.push({

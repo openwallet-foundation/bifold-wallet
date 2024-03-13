@@ -61,7 +61,7 @@ export interface ConfigurationContext {
   showPreface?: boolean
   disableOnboardingSkip?: boolean
   useBiometry: React.FC
-  pushNotification?: PushNotificationConfiguration
+  enablePushNotifications?: PushNotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
   useAttestation?: () => { start: () => void; stop: () => void; loading: boolean }
   whereToUseWalletUrl: string
