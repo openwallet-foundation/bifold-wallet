@@ -18,6 +18,7 @@ import { useTheme } from '../contexts/theme'
 import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
+import PushNotification from '../screens/PushNotification'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -149,6 +150,17 @@ const OnboardingStack: React.FC = () => {
         rightLeft: () => false,
       }),
       component: useBiometry,
+    },
+    {
+      name: Screens.UsePushNotifications,
+      options: () => ({
+        title: t('Screens.UsePushNotifications'),
+        headerTintColor: OnboardingTheme.headerTintColor,
+        headerShown: true,
+        headerLeft: () => false,
+        rightLeft: () => false,
+      }),
+      component: PushNotification,
     },
     {
       name: Screens.Developer,

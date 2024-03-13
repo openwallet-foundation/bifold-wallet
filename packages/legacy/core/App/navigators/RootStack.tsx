@@ -46,8 +46,14 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const { splash, showPreface, enableImplicitInvitations, enableReuseConnections, enableUseMultUseInvitation } =
-    useConfiguration()
+  const {
+    splash,
+    showPreface,
+    enableImplicitInvitations,
+    enableReuseConnections,
+    enableUseMultUseInvitation,
+    enablePushNotifications,
+  } = useConfiguration()
   const container = useContainer()
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   useDeepLinks()
@@ -268,6 +274,7 @@ const RootStack: React.FC = () => {
     state.onboarding.didCompleteTutorial &&
     state.onboarding.didCreatePIN &&
     (!state.preferences.enableWalletNaming || state.onboarding.didNameWallet) &&
+    (state.onboarding.didConsiderPushNotifications || !enablePushNotifications) &&
     state.onboarding.didConsiderBiometry
   ) {
     return state.authentication.didAuthenticate ? mainStack() : authStack()

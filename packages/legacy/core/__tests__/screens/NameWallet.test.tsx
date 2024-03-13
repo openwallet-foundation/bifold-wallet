@@ -52,6 +52,7 @@ describe('NameWallet Screen', () => {
         didConsiderBiometry: true,
         didNameWallet: true,
         didSeePreface: true,
+        didConsiderPushNotifications: true,
       },
     }
     const tree = render(

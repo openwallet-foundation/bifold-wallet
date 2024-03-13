@@ -4,6 +4,7 @@ export interface Onboarding {
   didAgreeToTerms: boolean
   didCreatePIN: boolean
   didConsiderBiometry: boolean
+  didConsiderPushNotifications: boolean
   didNameWallet: boolean
 }
 
@@ -13,6 +14,7 @@ export interface Migration {
 
 export interface Preferences {
   useBiometry: boolean
+  usePushNotifications: boolean
   biometryPreferencesUpdated: boolean
   developerModeEnabled: boolean
   useVerifierCapability?: boolean
