@@ -24,7 +24,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
-interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> { }
+interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> {}
 
 type ScreenOptions = RouteConfig<
   ParamListBase,
