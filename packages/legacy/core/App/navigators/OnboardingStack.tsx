@@ -46,9 +46,9 @@ const OnboardingStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
-  const terms = container.resolve(TOKENS.SCREEN_TERMS)
-  const developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
-  const preface = container.resolve(TOKENS.SCREEN_PREFACE)
+  const Terms = container.resolve(TOKENS.SCREEN_TERMS)
+  const Developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
+  const Preface = container.resolve(TOKENS.SCREEN_PREFACE)
 
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
@@ -79,7 +79,7 @@ const OnboardingStack: React.FC = () => {
   const screens: ScreenOptions[] = [
     {
       name: Screens.Preface,
-      component: preface,
+      component: Preface,
       options: () => {
         return {
           title: t('Screens.Preface'),
@@ -115,7 +115,7 @@ const OnboardingStack: React.FC = () => {
         headerLeft: () => false,
         rightLeft: () => false,
       }),
-      component: terms,
+      component: Terms,
     },
     {
       name: Screens.CreatePIN,
@@ -152,7 +152,7 @@ const OnboardingStack: React.FC = () => {
     },
     {
       name: Screens.Developer,
-      component: developer,
+      component: Developer,
       options: () => {
         return {
           title: t('Screens.Developer'),
