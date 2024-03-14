@@ -733,12 +733,12 @@ export const retrieveCredentialsForProof = async (
 
       const descriptorMetadata = await getDescriptorMetadata(agent.context, difPexCredentialsForRequest)
       const anonCredsProofRequest = await createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
-      const anonCredsProofFormatService = agent.dependencyManager.resolve(AnonCredsProofFormatService)
-      const anonCredsCredentialsForRequest = await anonCredsProofFormatService._getCredentialsForRequest(
-        agent.context,
-        anonCredsProofRequest,
-        { filterByNonRevocationRequirements: false }
-      )
+      const anonCredsProofFormatService = agent.dependencyManager.resolve(AnonCredsProofFormatService) as any
+      // TODO:
+      const anonCredsCredentialsForRequest: AnonCredsCredentialsForProofRequest =
+        await anonCredsProofFormatService._getCredentialsForRequest(agent.context, anonCredsProofRequest, {
+          filterByNonRevocationRequirements: false,
+        })
 
       // The matches returned by our artificial anonCredsProofRequest could contain matches which are not valid thus we need to filter them out
       anonCredsCredentialsForRequest.attributes = Object.fromEntries(

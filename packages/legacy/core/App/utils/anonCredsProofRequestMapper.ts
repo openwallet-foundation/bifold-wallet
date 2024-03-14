@@ -35,21 +35,6 @@ type FieldV2 = NonNullable<
   DifPresentationExchangeDefinitionV2['input_descriptors'][number]['constraints']['fields']
 >[number]
 
-const descriptorRequiresRevocationStatus = (
-  descriptor: DifPresentationExchangeDefinition['input_descriptors'][number]
-) => {
-  const statuses = descriptor.constraints?.statuses
-  if (!statuses) return false
-  if (
-    statuses?.active?.directive &&
-    (statuses.active.directive === 'allowed' || statuses.active.directive === 'required')
-  ) {
-    return true
-  } else {
-    throw new Error('Unsupported status directive')
-  }
-}
-
 const getPredicateTypeAndValues = (predicateFilter: NonNullable<FieldV2['filter']>) => {
   const predicates: {
     predicateType: AnonCredsRequestedPredicate['p_type']
@@ -113,7 +98,11 @@ export const createAnonCredsProofRequest = async (
     const fields = descriptor.constraints?.fields
     if (!fields) throw new Error('Unclear mapping of constraint with no fields.')
 
-    const requiresRevocationStatus = descriptorRequiresRevocationStatus(descriptor)
+    // Setting `requiresRevocationStatus` to `false` returns all
+    // credentials even if they are revokable (and revoked). We need this to
+    // be able to show why a proof cannot be satisfied. Otherwise we can only
+    // show failure.
+    const requiresRevocationStatus = false
 
     const credentialMeta = descriptorMetadata[descriptor.id]
     const restrictions: AnonCredsProofRequestRestriction[] = credentialMeta.map((credentialMeta) => {
