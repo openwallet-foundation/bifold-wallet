@@ -1,4 +1,3 @@
-import { useAgent, useConnectionById } from '@credo-ts-ext/react-hooks'
 import { V1RequestPresentationMessage } from '@credo-ts/anoncreds'
 import {
   Agent,
@@ -8,6 +7,7 @@ import {
   ProofExchangeRecord,
   ProofState,
 } from '@credo-ts/core'
+import { useAgent, useConnectionById } from '@credo-ts/react-hooks'
 import { markProofAsViewed } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'

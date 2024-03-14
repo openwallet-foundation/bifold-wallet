@@ -1,5 +1,5 @@
-import { useAgent } from '@credo-ts-ext/react-hooks'
 import { ConnectionRecord } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
 import fs from 'fs'
 import path from 'path'
 

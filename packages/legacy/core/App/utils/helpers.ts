@@ -1,17 +1,14 @@
-import { useConnectionById } from '@credo-ts-ext/react-hooks'
 import {
   AnonCredsCredentialInfo,
   AnonCredsCredentialsForProofRequest,
   AnonCredsPredicateType,
-  AnonCredsProofFormat,
   AnonCredsProofFormatService,
+  AnonCredsProofRequest,
   AnonCredsProofRequestRestriction,
   AnonCredsRequestedAttribute,
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicate,
   AnonCredsRequestedPredicateMatch,
-  LegacyIndyProofFormat,
-  LegacyIndyProofFormatService,
 } from '@credo-ts/anoncreds'
 import {
   Agent,
@@ -25,10 +22,7 @@ import {
   parseDid,
 } from '@credo-ts/core'
 import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
-import {
-  GetCredentialsForRequestReturn,
-  ProofFormatDataMessagePayload,
-} from '@credo-ts/core/build/modules/proofs/protocol/ProofProtocolOptions'
+import { useConnectionById } from '@credo-ts/react-hooks'
 import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
@@ -46,6 +40,7 @@ import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredica
 import { ChildFn } from '../types/tour'
 
 import { BifoldAgent } from './agent'
+import { createAnonCredsProofRequest, getDescriptorMetadata } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
@@ -452,18 +447,15 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
   return processedAttributes
 }
 export const processProofAttributes = (
-  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
-  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
+  request?: AnonCredsProofRequest,
+  credentials?: AnonCredsCredentialsForProofRequest,
   credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
-  const requestedProofAttributes = request?.indy?.requested_attributes ?? request?.anoncreds?.requested_attributes
-  const retrievedCredentialAttributes =
-    credentials?.proofFormats?.indy?.attributes ?? credentials?.proofFormats?.anoncreds?.attributes
-
-  // non_revoked interval can sometimes be top level
-  const requestNonRevoked = request?.indy?.non_revoked ?? request?.anoncreds?.non_revoked
+  const requestedProofAttributes = request?.requested_attributes
+  const retrievedCredentialAttributes = credentials?.attributes
+  const requestNonRevoked = request?.non_revoked // non_revoked interval can sometimes be top level
 
   if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
@@ -593,21 +585,18 @@ const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
   return processedPredicates
 }
 export const processProofPredicates = (
-  request?: ProofFormatDataMessagePayload<[LegacyIndyProofFormat, AnonCredsProofFormat], 'request'> | undefined,
-  credentials?: GetCredentialsForRequestReturn<[LegacyIndyProofFormatService, AnonCredsProofFormatService]>,
+  request?: AnonCredsProofRequest,
+  credentials?: AnonCredsCredentialsForProofRequest,
   credentialRecords?: CredentialExchangeRecord[]
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
-  const requestedProofPredicates = request?.anoncreds?.requested_predicates ?? request?.indy?.requested_predicates
-  const retrievedCredentialPredicates =
-    credentials?.proofFormats?.anoncreds?.predicates ?? credentials?.proofFormats?.indy?.predicates
+  const requestedProofPredicates = request?.requested_predicates
+  const retrievedCredentialPredicates = credentials?.predicates
+  const requestNonRevoked = request?.non_revoked // // non_revoked interval can sometimes be top level
 
   if (!requestedProofPredicates || !retrievedCredentialPredicates) {
     return {}
   }
-
-  // non_revoked interval can sometimes be top level
-  const requestNonRevoked = request?.indy?.non_revoked ?? request?.anoncreds?.non_revoked
 
   for (const key of Object.keys(retrievedCredentialPredicates)) {
     const altCredentials = [...(retrievedCredentialPredicates[key] ?? [])]
@@ -689,6 +678,7 @@ export const retrieveCredentialsForProof = async (
 ) => {
   try {
     const format = await agent.proofs.getFormatData(proof.id)
+    const hasPresentationExchange = format.request?.presentationExchange !== undefined
     const hasAnonCreds = format.request?.anoncreds !== undefined
     const hasIndy = format.request?.indy !== undefined
     const credentials = await agent.proofs.getCredentialsForRequest({
@@ -707,7 +697,6 @@ export const retrieveCredentialsForProof = async (
               },
             }
           : {}),
-
         ...(hasAnonCreds
           ? {
               anoncreds: {
@@ -719,6 +708,7 @@ export const retrieveCredentialsForProof = async (
               },
             }
           : {}),
+        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
       },
     })
     if (!credentials) {
@@ -733,13 +723,76 @@ export const retrieveCredentialsForProof = async (
       return
     }
 
+    if (hasPresentationExchange) {
+      const presentationExchange = format.request?.presentationExchange
+      const difPexCredentialsForRequest = credentials.proofFormats.presentationExchange
+
+      if (!difPexCredentialsForRequest || !presentationExchange) throw new Error('Invalid presentation request')
+
+      const presentationDefinition = presentationExchange.presentation_definition
+
+      const descriptorMetadata = await getDescriptorMetadata(agent.context, difPexCredentialsForRequest)
+      const anonCredsProofRequest = await createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
+      const anonCredsProofFormatService = agent.dependencyManager.resolve(AnonCredsProofFormatService)
+      const anonCredsCredentialsForRequest = await anonCredsProofFormatService._getCredentialsForRequest(
+        agent.context,
+        anonCredsProofRequest,
+        { filterByNonRevocationRequirements: false }
+      )
+
+      // The matches returned by our artificial anonCredsProofRequest could contain matches which are not valid thus we need to filter them out
+      anonCredsCredentialsForRequest.attributes = Object.fromEntries(
+        Object.entries(anonCredsCredentialsForRequest.attributes).map(([referent, matches]) => {
+          const descriptorId = anonCredsProofRequest.requested_attributes[referent].descriptorId
+          if (!descriptorId || !descriptorMetadata[descriptorId]) throw new Error('Could filter valid credentials')
+          const descriptorMeta = descriptorMetadata[descriptorId]
+          const validCredentialsForReferent = descriptorMeta.map((meta) => meta.record.id)
+          const validMatches = matches.filter((match) => validCredentialsForReferent.includes(match.credentialId))
+          return [referent, validMatches]
+        })
+      )
+
+      anonCredsCredentialsForRequest.predicates = Object.fromEntries(
+        Object.entries(anonCredsCredentialsForRequest.predicates).map(([referent, matches]) => {
+          const descriptorId = anonCredsProofRequest.requested_predicates[referent].descriptorId
+          if (!descriptorId || !descriptorMetadata[descriptorId]) throw new Error('Could filter valid credentials')
+          const descriptorMeta = descriptorMetadata[descriptorId]
+          const validCredentialsForReferent = descriptorMeta.map((meta) => meta.record.id)
+          const validMatches = matches.filter((match) => validCredentialsForReferent.includes(match.credentialId))
+          return [referent, validMatches]
+        })
+      )
+
+      const processedAttributes = processProofAttributes(
+        anonCredsProofRequest,
+        anonCredsCredentialsForRequest,
+        fullCredentials
+      )
+
+      const processedPredicates = processProofPredicates(
+        anonCredsProofRequest,
+        anonCredsCredentialsForRequest,
+        fullCredentials
+      )
+
+      const groupedProof = Object.values(mergeAttributesAndPredicates(processedAttributes, processedPredicates))
+
+      return {
+        groupedProof,
+        retrievedCredentials: anonCredsCredentialsForRequest,
+        fullCredentials,
+        descriptorMetadata,
+      }
+    }
+
+    const proofRequest = format.request?.anoncreds ?? format.request?.indy
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
 
-    const attributes = processProofAttributes(format.request, credentials, fullCredentials)
-    const predicates = processProofPredicates(format.request, credentials, fullCredentials)
-
+    const attributes = processProofAttributes(proofRequest, proofFormat, fullCredentials)
+    const predicates = processProofPredicates(proofRequest, proofFormat, fullCredentials)
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
-    return { groupedProof: groupedProof, retrievedCredentials: proofFormat, fullCredentials }
+
+    return { groupedProof, retrievedCredentials: proofFormat, fullCredentials }
   } catch (err: unknown) {
     const error = new BifoldError(t('Error.Title1043'), t('Error.Message1043'), (err as Error)?.message ?? err, 1043)
     DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
@@ -879,7 +932,7 @@ export const connectFromInvitation = async (
         record = await agent?.oob.receiveImplicitInvitation({
           did: did.did,
           label: invitation.label,
-          handshakeProtocols: invitation.handshakeProtocols,
+          handshakeProtocols: invitation.handshakeProtocols as HandshakeProtocol[] | undefined,
         })
       }
     } catch (e) {

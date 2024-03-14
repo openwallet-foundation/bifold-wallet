@@ -1,4 +1,4 @@
-import { useAgent, useConnections } from '@credo-ts-ext/react-hooks'
+import { useAgent, useConnections } from '@credo-ts/react-hooks'
 import { act, render } from '@testing-library/react-native'
 import React from 'react'
 

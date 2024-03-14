@@ -1,5 +1,5 @@
-import { useCredentials } from '@credo-ts-ext/react-hooks'
 import { CredentialExchangeRecord } from '@credo-ts/core'
+import { useCredentials } from '@credo-ts/react-hooks'
 import { useMemo } from 'react'
 
 export const useCredentialsByConnectionId = (connectionId: string): CredentialExchangeRecord[] => {

@@ -1,4 +1,4 @@
-import { useAgent } from '@credo-ts-ext/react-hooks'
+import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

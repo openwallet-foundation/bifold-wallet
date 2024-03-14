@@ -1,9 +1,8 @@
-import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts-ext/push-notifications'
-import { useAgent } from '@credo-ts-ext/react-hooks'
 import {
   AnonCredsCredentialFormatService,
   AnonCredsModule,
   AnonCredsProofFormatService,
+  DataIntegrityCredentialFormatService,
   LegacyIndyCredentialFormatService,
   LegacyIndyProofFormatService,
   V1CredentialProtocol,
@@ -16,6 +15,7 @@ import {
   AutoAcceptProof,
   ConnectionsModule,
   CredentialsModule,
+  DifPresentationExchangeProofFormatService,
   MediationRecipientModule,
   MediatorPickupStrategy,
   ProofsModule,
@@ -23,6 +23,8 @@ import {
   V2ProofProtocol,
 } from '@credo-ts/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
+import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
+import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { ariesAskar } from '@hyperledger/aries-askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
@@ -58,7 +60,11 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
       credentialProtocols: [
         new V1CredentialProtocol({ indyCredentialFormat }),
         new V2CredentialProtocol({
-          credentialFormats: [indyCredentialFormat, new AnonCredsCredentialFormatService()],
+          credentialFormats: [
+            indyCredentialFormat,
+            new AnonCredsCredentialFormatService(),
+            new DataIntegrityCredentialFormatService(),
+          ],
         }),
       ],
     }),
@@ -67,7 +73,11 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgen
       proofProtocols: [
         new V1ProofProtocol({ indyProofFormat }),
         new V2ProofProtocol({
-          proofFormats: [indyProofFormat, new AnonCredsProofFormatService()],
+          proofFormats: [
+            indyProofFormat,
+            new AnonCredsProofFormatService(),
+            new DifPresentationExchangeProofFormatService(),
+          ],
         }),
       ],
     }),

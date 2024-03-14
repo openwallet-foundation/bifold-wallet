@@ -1,7 +1,14 @@
-import { useAgent, useProofById } from '@credo-ts-ext/react-hooks'
 import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialState, ProofExchangeRecord, ProofState } from '@credo-ts/core'
+import {
+  CredentialExchangeRecord,
+  CredentialRole,
+  CredentialState,
+  ProofExchangeRecord,
+  ProofRole,
+  ProofState,
+} from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
+import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import '@testing-library/jest-native/extend-expect'
@@ -79,6 +86,7 @@ describe('displays a credential selection screen', () => {
   }
 
   const testProofRequest = new ProofExchangeRecord({
+    role: ProofRole.Prover,
     connectionId: '',
     threadId: presentationMessageId,
     state: ProofState.RequestReceived,
@@ -119,6 +127,7 @@ describe('displays a credential selection screen', () => {
   }
 
   const { id: credentialId } = new CredentialExchangeRecord({
+    role: CredentialRole.Holder,
     threadId: '1',
     state: CredentialState.Done,
     credentialAttributes: [
@@ -141,6 +150,7 @@ describe('displays a credential selection screen', () => {
     protocolVersion: 'v1',
   })
   const { id: credentialId2 } = new CredentialExchangeRecord({
+    role: CredentialRole.Holder,
     threadId: '1',
     state: CredentialState.Done,
     credentialAttributes: [

@@ -1,12 +1,12 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { useConnectionById, useProofById } from '@credo-ts-ext/react-hooks'
 import {
   AnonCredsCredentialsForProofRequest,
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, ProofState } from '@credo-ts/core'
+import { CredentialExchangeRecord, DifPexInputDescriptorToCredentials, ProofState } from '@credo-ts/core'
+import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
 import moment from 'moment'
@@ -38,6 +38,7 @@ import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredica
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
+import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import { Fields, evaluatePredicates, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -59,6 +60,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
+  const [descriptorMetadata, setDescriptorMetadata] = useState<DescriptorMetadata | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
@@ -197,8 +199,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     credProofPromise
       ?.then((value) => {
         if (value) {
-          const { groupedProof, retrievedCredentials, fullCredentials } = value
+          const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
           setLoading(false)
+          setDescriptorMetadata(descriptorMetadata)
+
           let credList: string[] = []
           if (selectedCredentials.length > 0) {
             credList = selectedCredentials
@@ -320,6 +324,29 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
       const format = await agent.proofs.getFormatData(proof.id)
+
+      if (format.request?.presentationExchange) {
+        if (!descriptorMetadata) throw new Error(t('ProofRequest.PresentationMetadataNotFound'))
+
+        const selectedCredentials: DifPexInputDescriptorToCredentials = Object.fromEntries(
+          Object.entries(descriptorMetadata).map(([descriptorId, meta]) => {
+            const activeCredentialIds = activeCreds.map((cred) => cred.credId)
+            const selectedRecord = meta.find((item) => activeCredentialIds.includes(item.record.id))
+            if (!selectedRecord) throw new Error(t('ProofRequest.CredentialMetadataNotFound'))
+            return [descriptorId, [selectedRecord.record]]
+          })
+        )
+
+        await agent.proofs.acceptRequest({
+          proofRecordId: proof.id,
+          proofFormats: { presentationExchange: { credentials: selectedCredentials } },
+        })
+
+        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+          agent.connections.deleteById(proof.connectionId)
+        }
+        return
+      }
 
       const formatToUse = format.request?.anoncreds ? 'anoncreds' : 'indy'
 

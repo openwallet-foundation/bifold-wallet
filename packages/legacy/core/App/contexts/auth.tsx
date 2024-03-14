@@ -3,9 +3,9 @@ import '@hyperledger/aries-askar-react-native'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'reflect-metadata'
 
-import { useAgent } from '@credo-ts-ext/react-hooks'
 import { AskarWallet } from '@credo-ts/askar'
 import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'

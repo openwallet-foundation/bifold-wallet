@@ -1,5 +1,5 @@
-import { useCredentialByState } from '@credo-ts-ext/react-hooks'
 import { CredentialState } from '@credo-ts/core'
+import { useCredentialByState } from '@credo-ts/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'

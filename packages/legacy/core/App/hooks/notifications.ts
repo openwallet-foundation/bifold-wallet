@@ -1,4 +1,3 @@
-import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts-ext/react-hooks'
 import {
   BasicMessageRecord,
   CredentialExchangeRecord as CredentialRecord,
@@ -6,6 +5,7 @@ import {
   ProofExchangeRecord,
   ProofState,
 } from '@credo-ts/core'
+import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
 
 import {

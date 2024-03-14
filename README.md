@@ -8,7 +8,7 @@ Designed with React Native, Bifold offers cross-platform capabilities, supportin
 
 Our aim is to cultivate a collaborative environment, bringing together organizations and individuals to prevent duplicate efforts and to promote shared solutions. By doing so, we hope to accelerate the adoption of VC technology across various sectors.
 
-One of Bifold's key features is its capacity to hold and utilize VCs in the AnonCreds format. We are also diligently working towards supporting other formats, such as W3C, through the AFJ project. This flexibility makes Bifold a versatile tool for complex or specific use-case projects, streamlining the process of initiating and managing VCs.
+One of Bifold's key features is its capacity to hold and utilize AnonCreds VCs. We are also diligently working towards supporting other formats, such as W3C, through the AFJ project. This flexibility makes Bifold a versatile tool for complex or specific use-case projects, streamlining the process of initiating and managing VCs.
 
 Join us as we work towards a future where verifiable credentials are easily accessible and widely adopted, enhancing trust and security in the digital world.
 

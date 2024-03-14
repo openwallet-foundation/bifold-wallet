@@ -1,4 +1,4 @@
-import { useConnections } from '@credo-ts-ext/react-hooks'
+import { useConnections } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
@@ -16,6 +16,7 @@ import {
   DidExchangeState,
   OutOfBandInvitation,
   ProofExchangeRecord,
+  ProofRole,
   ProofState,
 } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
@@ -86,6 +87,7 @@ const proofRecord = new ProofExchangeRecord({
   state: ProofState.RequestSent,
   protocolVersion: 'V1',
   isVerified: true,
+  role: ProofRole.Prover,
 })
 const invitation = new OutOfBandInvitation({
   id: 'test',

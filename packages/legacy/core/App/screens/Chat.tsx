@@ -1,4 +1,3 @@
-import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts-ext/react-hooks'
 import {
   BasicMessageRecord,
   BasicMessageRepository,
@@ -7,6 +6,7 @@ import {
   ProofExchangeRecord,
   ProofState,
 } from '@credo-ts/core'
+import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
 import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'

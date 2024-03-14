@@ -1,5 +1,5 @@
-import { useAgent, useConnectionById, useConnections } from '@credo-ts-ext/react-hooks'
 import { ConnectionRecord, OutOfBandRecord } from '@credo-ts/core'
+import { useAgent, useConnectionById, useConnections } from '@credo-ts/react-hooks'
 import { useMemo, useState } from 'react'
 
 export const useConnectionByOutOfBandId = (outOfBandId: string): ConnectionRecord | undefined => {

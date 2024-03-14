@@ -1,5 +1,5 @@
-import { useAgent, useProofByState } from '@credo-ts-ext/react-hooks'
 import { ProofState } from '@credo-ts/core'
+import { useAgent, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/core'
 import { StackCardStyleInterpolator, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'

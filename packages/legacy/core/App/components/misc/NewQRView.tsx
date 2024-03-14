@@ -1,5 +1,5 @@
-import { useAgent } from '@credo-ts-ext/react-hooks'
 import { DidExchangeState } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

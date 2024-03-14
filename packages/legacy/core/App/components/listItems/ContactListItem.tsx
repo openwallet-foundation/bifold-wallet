@@ -5,7 +5,7 @@ import type {
   ProofExchangeRecord,
 } from '@credo-ts/core'
 
-import { useBasicMessagesByConnectionId } from '@credo-ts-ext/react-hooks'
+import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

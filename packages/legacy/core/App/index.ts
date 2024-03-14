@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import type { OnboardingStyleSheet } from './screens/Onboarding'
 
-import AgentProvider from '@credo-ts-ext/react-hooks'
 import { Agent } from '@credo-ts/core'
+import AgentProvider from '@credo-ts/react-hooks'
 
 import * as components from './components'
 import Button, { ButtonType } from './components/buttons/Button'

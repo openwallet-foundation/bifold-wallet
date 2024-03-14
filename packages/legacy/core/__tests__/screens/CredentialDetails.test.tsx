@@ -1,7 +1,7 @@
 // TODO: export this from @credo-ts/anoncreds
-import { useCredentialById } from '@credo-ts-ext/react-hooks'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
-import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
+import { CredentialExchangeRecord, CredentialRole, CredentialState } from '@credo-ts/core'
+import { useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
@@ -15,6 +15,7 @@ import configurationContext from '../contexts/configuration'
 
 const buildCredentialExchangeRecord = () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
+    role: CredentialRole.Holder,
     protocolVersion: 'v1',
     threadId: '1',
     state: CredentialState.Done,

@@ -1,7 +1,7 @@
 // TODO: export this from @credo-ts/anoncreds
-import { useCredentialById } from '@credo-ts-ext/react-hooks'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
 import { CredentialPreviewAttribute } from '@credo-ts/core'
+import { useCredentialById } from '@credo-ts/react-hooks'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'

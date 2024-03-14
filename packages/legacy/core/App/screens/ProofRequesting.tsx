@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { useAgent, useProofById } from '@credo-ts-ext/react-hooks'
 import { DidExchangeState } from '@credo-ts/core'
+import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import {
   ProofCustomMetadata,
   ProofMetadata,

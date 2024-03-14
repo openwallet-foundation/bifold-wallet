@@ -1,4 +1,4 @@
-import { useAgent } from '@credo-ts-ext/react-hooks'
+import { useAgent } from '@credo-ts/react-hooks'
 import {
   GroupedSharedProofData,
   GroupedSharedProofDataItem,

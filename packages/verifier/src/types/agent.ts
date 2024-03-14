@@ -2,6 +2,7 @@ import {
   AnonCredsCredentialFormatService,
   AnonCredsModule,
   AnonCredsProofFormatService,
+  DataIntegrityCredentialFormatService,
   LegacyIndyCredentialFormatService,
   LegacyIndyProofFormatService,
   V1CredentialProtocol,
@@ -11,6 +12,7 @@ import {
   Agent,
   ConnectionsModule,
   CredentialsModule,
+  DifPresentationExchangeProofFormatService,
   MediationRecipientModule,
   ProofsModule,
   V2CredentialProtocol,
@@ -27,11 +29,22 @@ function getAgentModules() {
     credentials: CredentialsModule<
       (
         | V1CredentialProtocol
-        | V2CredentialProtocol<(LegacyIndyCredentialFormatService | AnonCredsCredentialFormatService)[]>
+        | V2CredentialProtocol<
+            (
+              | LegacyIndyCredentialFormatService
+              | AnonCredsCredentialFormatService
+              | DataIntegrityCredentialFormatService
+            )[]
+          >
       )[]
     >
     proofs: ProofsModule<
-      (V1ProofProtocol | V2ProofProtocol<(LegacyIndyProofFormatService | AnonCredsProofFormatService)[]>)[]
+      (
+        | V1ProofProtocol
+        | V2ProofProtocol<
+            (LegacyIndyProofFormatService | AnonCredsProofFormatService | DifPresentationExchangeProofFormatService)[]
+          >
+      )[]
     >
     mediationRecipient: MediationRecipientModule
   }

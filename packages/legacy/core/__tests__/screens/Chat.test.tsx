@@ -1,5 +1,5 @@
-import { useBasicMessagesByConnectionId } from '@credo-ts-ext/react-hooks'
 import { BasicMessageRecord, BasicMessageRole } from '@credo-ts/core'
+import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 

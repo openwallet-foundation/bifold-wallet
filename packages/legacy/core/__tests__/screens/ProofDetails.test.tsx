@@ -1,7 +1,7 @@
-import { useProofById } from '@credo-ts-ext/react-hooks'
 import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
-import { ProofExchangeRecord, ProofState } from '@credo-ts/core'
+import { ProofExchangeRecord, ProofRole, ProofState } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
+import { useProofById } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import '@testing-library/jest-native/extend-expect'
@@ -126,6 +126,7 @@ describe('ProofDetails Component', () => {
 
   describe('with a verified proof record', () => {
     const testVerifiedProofRequest = new ProofExchangeRecord({
+      role: ProofRole.Prover,
       connectionId: undefined,
       threadId: requestPresentationMessage.id,
       state: ProofState.Done,
@@ -208,6 +209,7 @@ describe('ProofDetails Component', () => {
       state: ProofState.Done,
       protocolVersion: 'V1',
       isVerified: false,
+      role: ProofRole.Verifier,
     })
 
     beforeEach(() => {

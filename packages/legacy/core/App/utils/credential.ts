@@ -9,7 +9,8 @@ export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord)
   return (
     credential &&
     (credential.state === CredentialState.OfferReceived ||
-      credential.credentials.find((c) => c.credentialRecordType === 'anoncreds'))
+      (Boolean(credential.metadata.get(AnonCredsCredentialMetadataKey)) &&
+        credential.credentials.find((c) => c.credentialRecordType === 'anoncreds' || c.credentialRecordType === 'w3c')))
   )
 }
 

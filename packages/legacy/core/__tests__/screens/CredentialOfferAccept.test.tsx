@@ -1,5 +1,5 @@
-import { useCredentialById } from '@credo-ts-ext/react-hooks'
 import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@credo-ts/core'
+import { useCredentialById } from '@credo-ts/react-hooks'
 import { render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useConnectionById, useProofById } from '@credo-ts-ext/react-hooks'
+import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'

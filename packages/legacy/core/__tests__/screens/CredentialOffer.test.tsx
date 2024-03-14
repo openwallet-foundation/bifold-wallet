@@ -1,5 +1,5 @@
-import { useConnectionById, useCredentialById } from '@credo-ts-ext/react-hooks'
 import { ConnectionRecord, CredentialExchangeRecord } from '@credo-ts/core'
+import { useConnectionById, useCredentialById } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import { act, fireEvent, render } from '@testing-library/react-native'

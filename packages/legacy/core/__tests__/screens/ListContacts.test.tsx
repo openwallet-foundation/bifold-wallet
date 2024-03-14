@@ -1,5 +1,5 @@
-import { useConnections } from '@credo-ts-ext/react-hooks'
 import { ConnectionRecord, DidExchangeRole, DidExchangeState } from '@credo-ts/core'
+import { useConnections } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
