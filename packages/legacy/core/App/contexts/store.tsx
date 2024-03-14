@@ -41,7 +41,7 @@ export const defaultState: State = {
     biometryPreferencesUpdated: false,
     useBiometry: false,
     useVerifierCapability: false,
-    useConnectionInviterCapability: false,
+    useConnectionInviterCapability: true,
     useDevVerifierTemplates: false,
     acceptDevCredentials: false,
     useDataRetention: true,
