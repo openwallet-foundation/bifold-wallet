@@ -1,15 +1,13 @@
-import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
+import { AnonCredsProof, INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
 import { ProofExchangeRecord, ProofRole, ProofState } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
 import { useProofById } from '@credo-ts/react-hooks'
+import * as verifier from '@hyperledger/aries-bifold-verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import '@testing-library/jest-native/extend-expect'
 import { RenderAPI, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-
-import { AnonCredsProof } from '@credo-ts/anoncreds'
-import * as verifier from '@hyperledger/aries-bifold-verifier'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import ProofDetails from '../../App/screens/ProofDetails'
@@ -135,9 +133,9 @@ describe('ProofDetails Component', () => {
     })
 
     const checkAttributes = async (tree: RenderAPI) => {
-      const firstNameAttribute = await tree.findByText('first_name', { exact: true })
+      const firstNameAttribute = await tree.findByText('First Name', { exact: true })
       const firstNameAttributeValue = await tree.findByText('Aries', { exact: true })
-      const secondNameAttribute = await tree.findByText('second_name', { exact: true })
+      const secondNameAttribute = await tree.findByText('Second Name', { exact: true })
       const secondNameAttributeValue = await tree.findByText('Bifold', { exact: true })
 
       expect(firstNameAttribute).not.toBe(null)

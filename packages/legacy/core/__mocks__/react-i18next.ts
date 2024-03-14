@@ -1,11 +1,21 @@
-const mockT = jest.fn((key: string) => key)
-const useTranslation = () => {
+const reactI18Next: any = jest.createMockFromModule('react-i18next');
+
+reactI18Next.useTranslation = () => {
   return {
-    t: mockT,
+    t: (str: string) => str,
     i18n: {
+      changeLanguage: () => new Promise(() => {}),
       language: 'en',
+      t: (str: string) => str,
     },
-  }
+  };
+};
+
+reactI18Next.initReactI18next = {
+  type: "3rdParty",
+  init: jest.fn(),
 }
 
-export { useTranslation }
+module.exports = reactI18Next;
+
+export default {};

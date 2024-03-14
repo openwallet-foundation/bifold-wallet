@@ -1,4 +1,4 @@
-import { ConnectionRecord, ConnectionType } from '@credo-ts/core'
+import { ConnectionRecord, ConnectionType, DidExchangeState } from '@credo-ts/core'
 import { useConnections } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
@@ -40,7 +40,8 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
     connections = records.filter((r) => {
       return (
         !r.connectionTypes.includes(ConnectionType.Mediator) &&
-        !contactHideList?.includes((r.theirLabel || r.alias) ?? '')
+        !contactHideList?.includes((r.theirLabel || r.alias) ?? '') &&
+        r.state === DidExchangeState.Completed
       )
     })
   }

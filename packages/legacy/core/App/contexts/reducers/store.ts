@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { LocalStorageKeys } from '../../constants'
+import { storeLoginAttempt } from '../../services/keychain'
 import {
   Preferences as PreferencesState,
   Tours as ToursState,
@@ -38,6 +39,7 @@ enum LoginAttemptDispatchAction {
 enum PreferencesDispatchAction {
   ENABLE_DEVELOPER_MODE = 'preferences/enableDeveloperMode',
   USE_BIOMETRY = 'preferences/useBiometry',
+  USE_PUSH_NOTIFICATIONS = 'preferences/usePushNotifications',
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
@@ -116,6 +118,27 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const onboarding = {
         ...state.onboarding,
         didConsiderBiometry: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+        preferences,
+      }
+
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return newState
+    }
+    case PreferencesDispatchAction.USE_PUSH_NOTIFICATIONS: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        usePushNotifications: choice,
+      }
+      const onboarding = {
+        ...state.onboarding,
+        didConsiderPushNotifications: true,
       }
       const newState = {
         ...state,
@@ -415,7 +438,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         loginAttempt,
       }
-      AsyncStorage.setItem(LocalStorageKeys.LoginAttempts, JSON.stringify(newState.loginAttempt))
+      storeLoginAttempt(loginAttempt)
       return newState
     }
     case LockoutDispatchAction.LOCKOUT_UPDATED: {

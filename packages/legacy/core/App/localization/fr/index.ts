@@ -296,6 +296,22 @@ const translation = {
         "IssuedBy": "Issued by (FR)",
         "Credential": "credential (FR)"
     },
+    "PushNotifications": {
+        "EnableNotifiactions": "Enable Notifications to get instant alerts (FR)",
+        "BeNotified": "Be notified when you receive: (FR)",
+        "ReceiveNotifications": "Receive notifications (FR)",
+        "BulletFour": "new messages (FR)",
+        "BulletOne": "new credential offers (FR)",
+        "BulletThree": "updates to your credentials (FR)",
+        "BulletTwo": "new proof requests (FR)",
+        "NotificationsOffMessage": "Be notified when you receive new credential offers, proof requests, updates to your credentials, new messages and more. (FR)",
+        "NotificationsOffTitle": "Notifications for Bifold are turned off (FR)",
+        "NotificationsInstructionTitle": "To enable notifications: (FR)",
+        "InstructionsOne": "Open the app's settings (FR)",
+        "InstructionsTwo": "Tap Notifications (FR)",
+        "InstructionsThree": "Enable notifications (FR)",
+        "OpenSettigns": "Open settings (FR)",
+    },
     "CredentialDetails": {
         "Id": "Identifiant :",
         "CreatedAt": "Créé à :",

@@ -1,3 +1,4 @@
+import { Agent } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -20,6 +21,15 @@ interface NotificationConfiguration {
   description: string
   buttonTitle: string
   pageTitle: string
+}
+
+interface PushNotificationConfiguration {
+  // function to get the current push notification permission status
+  status: () => Promise<'denied' | 'granted' | 'unknown'>
+  // function to request permission for push notifications
+  setup: () => Promise<'denied' | 'granted' | 'unknown'>
+  //function to call when the user changes the push notification setting
+  toggle: (state: boolean, agent: Agent<any>) => Promise<void>
 }
 
 export interface ConfigurationContext {
@@ -51,6 +61,7 @@ export interface ConfigurationContext {
   showPreface?: boolean
   disableOnboardingSkip?: boolean
   useBiometry: React.FC
+  enablePushNotifications?: PushNotificationConfiguration
   useCustomNotifications: () => { total: number; notifications: any }
   useAttestation?: () => { start: () => void; stop: () => void; loading: boolean }
   whereToUseWalletUrl: string
@@ -61,6 +72,7 @@ export interface ConfigurationContext {
   getCredentialHelpDictionary?: GetCredentialHelpEntry[]
   contactHideList?: string[]
   credentialHideList?: string[]
+  enableUseMultUseInvitation?: boolean
 }
 
 export const ConfigurationContext = createContext<ConfigurationContext>(null as unknown as ConfigurationContext)

@@ -17,397 +17,116 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
   }
 >
   <RCTScrollView
-    ListFooterComponent={[Function]}
-    ListFooterComponentStyle={
-      Object {
-        "flexGrow": 1,
-        "justifyContent": "flex-end",
-      }
-    }
-    ListHeaderComponent={[Function]}
     contentContainerStyle={
       Object {
         "flexGrow": 1,
       }
     }
-    data={
-      Array [
-        Object {
-          "requestedAttributes": Array [
-            Object {
-              "devRestrictions": Array [
-                Object {
-                  "schema_name": "student_card",
-                },
-              ],
-              "names": Array [
-                "student_first_name",
-                "student_last_name",
-              ],
-              "non_revoked": Object {
-                "to": "@{now}",
-              },
-              "restrictions": Array [
-                Object {
-                  "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-                },
-              ],
-            },
-          ],
-          "requestedPredicates": Array [
-            Object {
-              "devRestrictions": Array [
-                Object {
-                  "schema_name": "student_card",
-                },
-              ],
-              "name": "expiry_date",
-              "predicateType": ">=",
-              "predicateValue": "@{currentDate(0)}",
-              "restrictions": Array [
-                Object {
-                  "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-                },
-              ],
-            },
-          ],
-          "schema": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card",
-        },
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
-    keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
-    renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
-    style={
-      Object {
-        "backgroundColor": "#000000",
-      }
-    }
-    viewabilityConfigCallbackPairs={Array []}
   >
     <View>
       <View
-        collapsable={false}
-        onLayout={[Function]}
+        style={
+          Object {
+            "marginBottom": 36,
+            "marginTop": 12,
+          }
+        }
       >
-        <View
+        <Text
           style={
             Object {
-              "marginBottom": 36,
-              "marginTop": 12,
+              "color": "#FFFFFF",
+              "fontSize": 28,
+              "fontWeight": "bold",
             }
           }
         >
-          <Text
-            style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 28,
-                "fontWeight": "bold",
-              }
+          Student full name
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 20,
+              "marginTop": 10,
             }
-          >
-            Student full name
-          </Text>
-          <Text
-            style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 20,
-                "marginTop": 10,
-              }
-            }
-          >
-            Verify the full name of a student
-          </Text>
-        </View>
+          }
+        >
+          Verify the full name of a student
+        </Text>
       </View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
+        style={
+          Object {
+            "marginBottom": 15,
+          }
+        }
       >
         <View
+          onLayout={[Function]}
           style={
             Array [
               Object {
-                "backgroundColor": "#FFFFFF",
-                "borderLeftColor": "#42803E",
-                "borderLeftWidth": 8,
-                "borderRadius": 8,
-                "marginBottom": 16,
-                "padding": 16,
+                "backgroundColor": undefined,
+                "borderRadius": 10,
+              },
+              Object {
+                "backgroundColor": "#313132",
+              },
+              Object {
+                "elevation": 5,
+                "overflow": "hidden",
               },
             ]
           }
         >
-          <Text
-            style={
-              Object {
-                "color": "#000000",
-                "fontSize": 20,
-                "fontWeight": "bold",
-                "paddingVertical": 8,
-              }
-            }
-          >
-            Student
-          </Text>
           <View
-            data={
-              Array [
-                Attribute {
-                  "credentialId": undefined,
-                  "encoding": undefined,
-                  "format": undefined,
-                  "label": "First Name",
-                  "mimeType": undefined,
-                  "name": "student_first_name",
-                  "nonRevoked": undefined,
-                  "restrictions": Array [
-                    Object {
-                      "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-                    },
-                  ],
-                  "revealed": undefined,
-                  "revoked": undefined,
-                  "type": "Text",
-                  "value": null,
-                },
-                Attribute {
-                  "credentialId": undefined,
-                  "encoding": undefined,
-                  "format": undefined,
-                  "label": "Last Name",
-                  "mimeType": undefined,
-                  "name": "student_last_name",
-                  "nonRevoked": undefined,
-                  "restrictions": Array [
-                    Object {
-                      "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
-                    },
-                  ],
-                  "revealed": undefined,
-                  "revoked": undefined,
-                  "type": "Text",
-                  "value": null,
-                },
-              ]
-            }
-            getItem={[Function]}
-            getItemCount={[Function]}
-            keyExtractor={[Function]}
-            onContentSizeChange={[Function]}
-            onLayout={[Function]}
-            onMomentumScrollBegin={[Function]}
-            onMomentumScrollEnd={[Function]}
-            onScroll={[Function]}
-            onScrollBeginDrag={[Function]}
-            onScrollEndDrag={[Function]}
-            removeClippedSubviews={false}
-            renderItem={[Function]}
-            scrollEventThrottle={50}
-            stickyHeaderIndices={Array []}
-            style={
-              Object {
-                "paddingLeft": 14,
-              }
-            }
-            viewabilityConfigCallbackPairs={Array []}
+            testID="com.ariesbifold:id/CredentialCard"
           >
             <View
-              onFocusCapture={[Function]}
-              onLayout={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                    "paddingVertical": 8,
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "color": "#000000",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  •
-                </Text>
-                <View
-                  style={
-                    Object {
-                      "flexDirection": "row",
-                    }
-                  }
-                >
-                  <Text
-                    style={
-                      Object {
-                        "color": "#000000",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "marginRight": 8,
-                      }
-                    }
-                  >
-                    First Name
-                  </Text>
-                  <Text
-                    style={
-                      Object {
-                        "color": "#000000",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "marginRight": 8,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
-            <View
-              onFocusCapture={[Function]}
-              onLayout={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                    "paddingVertical": 8,
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "color": "#000000",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  •
-                </Text>
-                <View
-                  style={
-                    Object {
-                      "flexDirection": "row",
-                    }
-                  }
-                >
-                  <Text
-                    style={
-                      Object {
-                        "color": "#000000",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "marginRight": 8,
-                      }
-                    }
-                  >
-                    Last Name
-                  </Text>
-                  <Text
-                    style={
-                      Object {
-                        "color": "#000000",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "marginRight": 8,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          Object {
-            "flexGrow": 1,
-            "justifyContent": "flex-end",
-          }
-        }
-      >
-        <View>
-          <View
-            style={
-              Object {
-                "marginBottom": 10,
-                "marginTop": "auto",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="Verifier.UseProofRequest"
-              accessibilityRole="button"
-              accessibilityState={
-                Object {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": false,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                Object {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
+              accessibilityLabel=",  Student Credentials.Credential. First Name, undefined null, Last Name, undefined null"
               accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "opacity": 1,
-                  "padding": 16,
+                  "flexDirection": "row",
+                  "minHeight": 247.5,
                 }
               }
-              testID="com.ariesbifold:id/UseProofRequest"
             >
               <View
                 style={
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "backgroundColor": undefined,
+                    "borderBottomLeftRadius": 10,
+                    "borderTopLeftRadius": 10,
+                    "width": 90,
                   }
+                }
+                testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+              />
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#ffffff",
+                      "borderRadius": 8,
+                      "height": 90,
+                      "justifyContent": "center",
+                      "left": -52.5,
+                      "shadowColor": "#000",
+                      "shadowOffset": Object {
+                        "height": 1,
+                        "width": 1,
+                      },
+                      "shadowOpacity": 0.3,
+                      "top": 37.5,
+                      "width": 90,
+                    },
+                    Object {
+                      "elevation": 5,
+                    },
+                  ]
                 }
               >
                 <Text
@@ -417,95 +136,388 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
                         "color": "#FFFFFF",
                         "fontSize": 18,
                         "fontWeight": "bold",
-                        "textAlign": "center",
                       },
-                      false,
-                      false,
-                      false,
+                      Object {
+                        "alignSelf": "center",
+                        "color": "#000",
+                        "fontSize": 45,
+                      },
                     ]
                   }
                 >
-                  Verifier.UseProofRequest
+                  S
                 </Text>
               </View>
-            </View>
-          </View>
-          <View
-            style={
-              Object {
-                "marginBottom": 10,
-                "marginTop": "auto",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="Verifier.ShowTemplateUsageHistory"
-              accessibilityRole="button"
-              accessibilityState={
-                Object {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": false,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                Object {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "borderColor": "#42803E",
-                  "borderRadius": 4,
-                  "borderWidth": 2,
-                  "opacity": 1,
-                  "padding": 16,
-                }
-              }
-              testID="com.ariesbifold:id/ShowTemplateUsageHistory"
-            >
               <View
                 style={
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "flex": 1,
+                    "marginLeft": -52.5,
+                    "padding": 37.5,
                   }
                 }
+                testID="com.ariesbifold:id/CredentialCardPrimaryBody"
               >
-                <Text
-                  style={
-                    Array [
+                <View>
+                  <View
+                    style={
                       Object {
-                        "color": "#42803E",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 14,
+                            "fontWeight": "bold",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "flexShrink": 1,
+                          },
+                          Object {
+                            "flex": 1,
+                            "flexWrap": "wrap",
+                            "lineHeight": 19,
+                            "opacity": 0.8,
+                          },
+                        ]
+                      }
+                      testID="com.ariesbifold:id/CredentialIssuer"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "bold",
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "flexShrink": 1,
+                          },
+                          Object {
+                            "color": "#FFFFFF",
+                            "flex": 1,
+                            "flexWrap": "wrap",
+                            "lineHeight": 24,
+                          },
+                        ]
+                      }
+                      testID="com.ariesbifold:id/CredentialName"
+                    >
+                      Student
+                    </Text>
+                  </View>
+                </View>
+                <RCTScrollView
+                  data={
+                    Array [
+                      Attribute {
+                        "credentialId": undefined,
+                        "encoding": undefined,
+                        "format": undefined,
+                        "label": "First Name",
+                        "mimeType": undefined,
+                        "name": "student_first_name",
+                        "nonRevoked": undefined,
+                        "restrictions": Array [
+                          Object {
+                            "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+                          },
+                        ],
+                        "revealed": undefined,
+                        "revoked": undefined,
+                        "type": "Text",
+                        "value": null,
                       },
-                      false,
-                      false,
-                      false,
+                      Attribute {
+                        "credentialId": undefined,
+                        "encoding": undefined,
+                        "format": undefined,
+                        "label": "Last Name",
+                        "mimeType": undefined,
+                        "name": "student_last_name",
+                        "nonRevoked": undefined,
+                        "restrictions": Array [
+                          Object {
+                            "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+                          },
+                        ],
+                        "revealed": undefined,
+                        "revoked": undefined,
+                        "type": "Text",
+                        "value": null,
+                      },
                     ]
                   }
+                  getItem={[Function]}
+                  getItemCount={[Function]}
+                  initialNumToRender={2}
+                  keyExtractor={[Function]}
+                  onContentSizeChange={[Function]}
+                  onLayout={[Function]}
+                  onMomentumScrollBegin={[Function]}
+                  onMomentumScrollEnd={[Function]}
+                  onScroll={[Function]}
+                  onScrollBeginDrag={[Function]}
+                  onScrollEndDrag={[Function]}
+                  removeClippedSubviews={false}
+                  renderItem={[Function]}
+                  scrollEnabled={false}
+                  scrollEventThrottle={50}
+                  stickyHeaderIndices={Array []}
+                  viewabilityConfigCallbackPairs={Array []}
                 >
-                  Verifier.ShowTemplateUsageHistory
-                </Text>
+                  <View>
+                    <View
+                      onFocusCapture={[Function]}
+                      onLayout={[Function]}
+                      style={null}
+                    >
+                      <View
+                        style={
+                          Object {
+                            "marginTop": 15,
+                          }
+                        }
+                      >
+                        <View>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 14,
+                                  "fontWeight": "normal",
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "flexShrink": 1,
+                                },
+                                Object {
+                                  "lineHeight": 19,
+                                  "opacity": 0.8,
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/AttributeName"
+                          >
+                            First Name
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      onFocusCapture={[Function]}
+                      onLayout={[Function]}
+                      style={null}
+                    >
+                      <View
+                        style={
+                          Object {
+                            "marginTop": 15,
+                          }
+                        }
+                      >
+                        <View>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 14,
+                                  "fontWeight": "normal",
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "flexShrink": 1,
+                                },
+                                Object {
+                                  "lineHeight": 19,
+                                  "opacity": 0.8,
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/AttributeName"
+                          >
+                            Last Name
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </RCTScrollView>
               </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          style={
+            Object {
+              "marginBottom": 10,
+              "marginTop": "auto",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Verifier.UseProofRequest"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/UseProofRequest"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Verifier.UseProofRequest
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "marginBottom": 10,
+              "marginTop": "auto",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Verifier.ShowTemplateUsageHistory"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "borderColor": "#42803E",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/ShowTemplateUsageHistory"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ]
+                }
+              >
+                Verifier.ShowTemplateUsageHistory
+              </Text>
             </View>
           </View>
         </View>

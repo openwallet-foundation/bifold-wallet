@@ -17,11 +17,12 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // eslint-disable-next-line import/no-named-as-default
-import Button, { ButtonType } from '../components/buttons/Button'
+import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
 import { EventTypes, minPINLength } from '../constants'
+import { TOKENS, useContainer } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
@@ -61,7 +62,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { PINSecurity } = useConfiguration()
+  const { PINSecurity, enablePushNotifications } = useConfiguration()
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     PINCreationValidations(PIN, PINSecurity.rules)
@@ -73,6 +74,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
+  const container = useContainer()
+  const Button = container.resolve(TOKENS.COMP_BUTTON)
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -98,8 +101,14 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
         type: DispatchAction.DID_CREATE_PIN,
       })
 
-      // TODO: Navigate back if in settings
-      if (store.preferences.enableWalletNaming) {
+      if (enablePushNotifications) {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: Screens.UsePushNotifications }],
+          })
+        )
+      } else if (store.preferences.enableWalletNaming) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
