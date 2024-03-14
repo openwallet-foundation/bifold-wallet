@@ -138,7 +138,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
 
     /**
-     * FIXME: Formatted data needs to be added to the record in AFJ extensions
+     * FIXME: Formatted data needs to be added to the record in Credo extensions
      * For now the order here matters. The credential preview must be updated to
      * add attributes (since these are not available in the offer).
      * Once the credential is updated the presentation fields can be correctly resolved

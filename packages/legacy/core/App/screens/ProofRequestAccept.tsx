@@ -53,7 +53,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   })
 
   if (!proof) {
-    throw new Error('Unable to fetch proof from AFJ')
+    throw new Error('Unable to fetch proof from Credo')
   }
 
   const onBackToHomeTouched = () => {

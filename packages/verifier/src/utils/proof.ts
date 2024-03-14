@@ -69,7 +69,7 @@ export const parseAnonCredsProof = (request: AnonCredsProofRequest, proof: AnonC
   }
 
   for (const [referent, requestedPredicate] of Object.entries(request.requested_predicates)) {
-    // @ts-ignore Mistake in AFJ type definition
+    // @ts-ignore Mistake in Credo type definition
     const shared = proof.requested_proof.predicates[referent]
     if (shared) {
       const identifiers = getProofIdentifiers(proof, shared.sub_proof_index)
@@ -127,7 +127,7 @@ export const groupSharedProofDataByCredential = (data: ParsedAnonCredsProof): Gr
 }
 
 /*
- * Retrieve proof details from AFJ record
+ * Retrieve proof details from Credo record
  * */
 export const getProofData = async (agent: BifoldAgent, recordId: string): Promise<ParsedAnonCredsProof | undefined> => {
   const data = await agent.proofs.getFormatData(recordId)

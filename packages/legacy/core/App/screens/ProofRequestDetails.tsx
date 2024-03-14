@@ -216,7 +216,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const { agent } = useAgent()
   if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
+    throw new Error('Unable to fetch agent from Credo')
   }
 
   const style = StyleSheet.create({

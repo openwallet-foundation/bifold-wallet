@@ -63,7 +63,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   })
 
   if (!credential) {
-    throw new Error('Unable to fetch credential from AFJ')
+    throw new Error('Unable to fetch credential from Credo')
   }
 
   const onBackToHomeTouched = () => {

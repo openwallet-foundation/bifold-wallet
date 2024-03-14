@@ -684,7 +684,7 @@ export const retrieveCredentialsForProof = async (
     const credentials = await agent.proofs.getCredentialsForRequest({
       proofRecordId: proof.id,
       proofFormats: {
-        // FIXME: AFJ will try to use the format, even if the value is undefined (but the key is present)
+        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
         // We should ignore the key, if the value is undefined. For now this is a workaround.
         ...(hasIndy
           ? {

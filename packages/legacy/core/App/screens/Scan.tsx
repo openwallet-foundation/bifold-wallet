@@ -59,7 +59,7 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
       // [Error: Connection does not have an ID]
       // [AriesFrameworkError: An out of band record with invitation 05fe3693-2c12-4165-a3b6-370280ccd43b has already been received. Invitations should have a unique id.]
       try {
-        // if scanned value is json -> pass into AFJ as is
+        // if scanned value is json -> pass into Credo as is
         const json = getJson(value)
         if (json) {
           await agent?.receiveMessage(json)

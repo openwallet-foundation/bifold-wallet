@@ -57,7 +57,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const { templateId, predicateValues } = route?.params
   const { agent } = useAgent()
   if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
+    throw new Error('Unable to fetch agent from Credo')
   }
 
   const { t } = useTranslation()

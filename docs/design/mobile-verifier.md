@@ -139,7 +139,7 @@ interface IndyRequestedPredicate {
 
 ## Proof Request Generation
 
-Due to the [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1250) at Aries Framework JavaScript we cannot use Out-of-Band protocol covering both possible cases (with connection / connectionless).
+Due to the [issue](https://github.com/openwallet-foundation/credo-ts/issues/1250) at credo-ts we cannot use Out-of-Band protocol covering both possible cases (with connection / connectionless).
 
 Instead, we have to use two legacy approaches to cover our cases:
 
@@ -189,7 +189,7 @@ Aries Bifold Scanner updated to handle raw json messages -> pass them to AFJ mes
 - In order to show the processing loader we need to new intermediate state `ProcessingPresentation` which will be raised by AFJ at the beginning of the Proof handler.
 - Very likely the state will be changed from `ProcessingPresentation` to `PresentationReceived` very quickly making UI flash. In this case, do we need to add some delay on the loader view?
 
-> Issue: Created AFJ [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1379)
+> Issue: Created AFJ [issue](https://github.com/openwallet-foundation/credo-ts/issues/1379)
 
 ## Contact History
 
@@ -211,7 +211,7 @@ Aries Bifold Scanner updated to handle raw json messages -> pass them to AFJ mes
       ```
 - Some events will also contain `Open` button tapping which a User will be able ti see the details of the event.
 
-> Issue: Right now we are able to show only the latest event for a protocol instance (for instance `PROOF_RECEIVED` but not `PROOF_REQUESTED`). In order to show all event properly we need to do changes in Aries Framework JavaScript (see corresponding [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1380)).
+> Issue: Right now we are able to show only the latest event for a protocol instance (for instance `PROOF_RECEIVED` but not `PROOF_REQUESTED`). In order to show all event properly we need to do changes in credo-ts (see corresponding [issue](https://github.com/openwallet-foundation/credo-ts/issues/1380)).
 
 ## Proof Request Template usage history
 
