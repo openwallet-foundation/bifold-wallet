@@ -480,9 +480,11 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return newState
     }
     case OnboardingDispatchAction.DID_AGREE_TO_TERMS: {
+      const terms = (action?.payload || []).pop()
+      const version = terms?.DidAgreeToTerms
       const onboarding: OnboardingState = {
         ...state.onboarding,
-        didAgreeToTerms: true,
+        didAgreeToTerms: version ?? true,
       }
       const newState = {
         ...state,
