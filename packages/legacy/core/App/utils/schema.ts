@@ -1,5 +1,5 @@
 // TODO: export from @credo-ts/anoncreds
-import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
 
 export function parseSchemaFromId(schemaId?: string): { name: string; version: string } {

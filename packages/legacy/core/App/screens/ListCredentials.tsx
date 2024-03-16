@@ -1,4 +1,4 @@
-import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialState } from '@credo-ts/core'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'

@@ -40,7 +40,11 @@ import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredica
 import { ChildFn } from '../types/tour'
 
 import { BifoldAgent } from './agent'
-import { createAnonCredsProofRequest, getDescriptorMetadata } from './anonCredsProofRequestMapper'
+import {
+  createAnonCredsProofRequest,
+  filterInvalidProofRequestMatches,
+  getDescriptorMetadata,
+} from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
@@ -723,6 +727,7 @@ export const retrieveCredentialsForProof = async (
       return
     }
 
+    // TODO: non revocation requirements
     if (hasPresentationExchange) {
       const presentationExchange = format.request?.presentationExchange
       const difPexCredentialsForRequest = credentials.proofFormats.presentationExchange
@@ -731,55 +736,26 @@ export const retrieveCredentialsForProof = async (
 
       const presentationDefinition = presentationExchange.presentation_definition
 
-      const descriptorMetadata = await getDescriptorMetadata(agent.context, difPexCredentialsForRequest)
-      const anonCredsProofRequest = await createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
-      const anonCredsProofFormatService = agent.dependencyManager.resolve(AnonCredsProofFormatService) as any
+      const descriptorMetadata = getDescriptorMetadata(difPexCredentialsForRequest)
+      const anonCredsProofRequest = createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
+
       // TODO:
+      const anonCredsProofFormatService = await agent.context.dependencyManager.resolve(AnonCredsProofFormatService)
+      anonCredsProofFormatService.getCredentialsForRequest(agent.context, {})
+
       const anonCredsCredentialsForRequest: AnonCredsCredentialsForProofRequest =
         await anonCredsProofFormatService._getCredentialsForRequest(agent.context, anonCredsProofRequest, {
           filterByNonRevocationRequirements: false,
         })
 
-      // The matches returned by our artificial anonCredsProofRequest could contain matches which are not valid thus we need to filter them out
-      anonCredsCredentialsForRequest.attributes = Object.fromEntries(
-        Object.entries(anonCredsCredentialsForRequest.attributes).map(([referent, matches]) => {
-          const descriptorId = anonCredsProofRequest.requested_attributes[referent].descriptorId
-          if (!descriptorId || !descriptorMetadata[descriptorId]) throw new Error('Could filter valid credentials')
-          const descriptorMeta = descriptorMetadata[descriptorId]
-          const validCredentialsForReferent = descriptorMeta.map((meta) => meta.record.id)
-          const validMatches = matches.filter((match) => validCredentialsForReferent.includes(match.credentialId))
-          return [referent, validMatches]
-        })
-      )
-
-      anonCredsCredentialsForRequest.predicates = Object.fromEntries(
-        Object.entries(anonCredsCredentialsForRequest.predicates).map(([referent, matches]) => {
-          const descriptorId = anonCredsProofRequest.requested_predicates[referent].descriptorId
-          if (!descriptorId || !descriptorMetadata[descriptorId]) throw new Error('Could filter valid credentials')
-          const descriptorMeta = descriptorMetadata[descriptorId]
-          const validCredentialsForReferent = descriptorMeta.map((meta) => meta.record.id)
-          const validMatches = matches.filter((match) => validCredentialsForReferent.includes(match.credentialId))
-          return [referent, validMatches]
-        })
-      )
-
-      const processedAttributes = processProofAttributes(
-        anonCredsProofRequest,
-        anonCredsCredentialsForRequest,
-        fullCredentials
-      )
-
-      const processedPredicates = processProofPredicates(
-        anonCredsProofRequest,
-        anonCredsCredentialsForRequest,
-        fullCredentials
-      )
-
+      const filtered = filterInvalidProofRequestMatches(anonCredsCredentialsForRequest, descriptorMetadata)
+      const processedAttributes = processProofAttributes(anonCredsProofRequest, filtered, fullCredentials)
+      const processedPredicates = processProofPredicates(anonCredsProofRequest, filtered, fullCredentials)
       const groupedProof = Object.values(mergeAttributesAndPredicates(processedAttributes, processedPredicates))
 
       return {
         groupedProof,
-        retrievedCredentials: anonCredsCredentialsForRequest,
+        retrievedCredentials: filtered,
         fullCredentials,
         descriptorMetadata,
       }

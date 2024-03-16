@@ -1,28 +1,24 @@
 import {
-  AnonCredsCredentialInfo,
-  AnonCredsHolderService,
-  AnonCredsHolderServiceSymbol,
+  AnonCredsCredentialTags,
+  AnonCredsCredentialsForProofRequest,
   AnonCredsProofRequest,
   AnonCredsProofRequestRestriction,
   AnonCredsRequestedAttribute,
   AnonCredsRequestedPredicate,
+  getAnonCredsTagsFromRecord,
 } from '@credo-ts/anoncreds'
-import { AnonCredsCredentialTags, getAnonCredsTagsFromRecord } from '@credo-ts/anoncreds/build/utils/w3cAnonCredsUtils'
 import {
-  AgentContext,
   DifPexCredentialsForRequest,
   DifPresentationExchangeDefinition,
   DifPresentationExchangeDefinitionV2,
   W3cCredentialRecord,
 } from '@credo-ts/core'
-import { uuid } from '@credo-ts/core/build/utils/uuid'
 
 import { ProofCredentialAttributes, ProofCredentialPredicates } from '../types/proof-items'
 
 export type RecordWithMetadata = {
   record: W3cCredentialRecord
   anonCredsTags: AnonCredsCredentialTags
-  credentialInfo: AnonCredsCredentialInfo
 }
 export type DescriptorMetadata = { [key: string]: RecordWithMetadata[] }
 
@@ -74,14 +70,14 @@ const getClaimNameForField = (field: FieldV2) => {
 export type ProcessedAttributes = { [key: string]: ProofCredentialAttributes }
 export type ProcessedPredicates = { [key: string]: ProofCredentialPredicates }
 
-export const createAnonCredsProofRequest = async (
+export const createAnonCredsProofRequest = (
   presentationDefinition: DifPresentationExchangeDefinition,
   descriptorMetadata: DescriptorMetadata
 ) => {
   const anonCredsProofRequest: DifPexAnonCredsProofRequest = {
     version: '1.0',
     name: presentationDefinition.name ?? 'Proof request',
-    nonce: uuid(),
+    nonce: 'nonce',
     requested_attributes: {},
     requested_predicates: {},
   }
@@ -91,8 +87,6 @@ export const createAnonCredsProofRequest = async (
 
   for (const descriptor of presentationDefinition.input_descriptors) {
     const referent = descriptor.id
-    const attributeReferent = `${referent}_attribute`
-    const predicateReferentBase = `${referent}_predicate`
     let predicateReferentIndex = 0
 
     const fields = descriptor.constraints?.fields
@@ -120,7 +114,7 @@ export const createAnonCredsProofRequest = async (
         if (!field.filter) throw new Error('Missing required predicate filter property.')
         const predicateTypeAndValues = getPredicateTypeAndValues(field.filter)
         for (const { predicateType, predicateValue } of predicateTypeAndValues) {
-          const predicateReferent = `${predicateReferentBase}_${predicateReferentIndex++}`
+          const predicateReferent = `${referent}_${predicateReferentIndex++}`
           anonCredsProofRequest.requested_predicates[predicateReferent] = {
             name: propertyName,
             p_type: predicateType,
@@ -131,16 +125,16 @@ export const createAnonCredsProofRequest = async (
           }
         }
       } else {
-        if (!anonCredsProofRequest.requested_attributes[attributeReferent]) {
-          anonCredsProofRequest.requested_attributes[attributeReferent] = {
+        if (!anonCredsProofRequest.requested_attributes[referent]) {
+          anonCredsProofRequest.requested_attributes[referent] = {
             names: [propertyName],
             restrictions,
             non_revoked: requiresRevocationStatus ? nonRevokedInterval : undefined,
             descriptorId: descriptor.id,
           }
         } else {
-          const names = anonCredsProofRequest.requested_attributes[attributeReferent].names ?? []
-          anonCredsProofRequest.requested_attributes[attributeReferent].names = [...names, propertyName]
+          const names = anonCredsProofRequest.requested_attributes[referent].names ?? []
+          anonCredsProofRequest.requested_attributes[referent].names = [...names, propertyName]
         }
       }
     }
@@ -149,26 +143,18 @@ export const createAnonCredsProofRequest = async (
   return anonCredsProofRequest
 }
 
-export const getDescriptorMetadata = async (
-  agentContext: AgentContext,
-  credentialsForRequest: DifPexCredentialsForRequest
-) => {
+export const getDescriptorMetadata = (credentialsForRequest: DifPexCredentialsForRequest) => {
   const descriptorMetadata: DescriptorMetadata = {}
 
   for (const requestedAttribute of Object.values(credentialsForRequest.requirements)) {
     for (const entry of requestedAttribute.submissionEntry) {
       const inputDescriptorId = entry.inputDescriptorId
 
-      const recordsWithMetadata = await Promise.all(
-        entry.verifiableCredentials.map(async (record) => {
-          const anonCredsTags = getAnonCredsTagsFromRecord(record as W3cCredentialRecord)
-          if (!anonCredsTags) throw new Error('Missing AnonCreds tags from credential record')
-          const holderService =
-            agentContext.dependencyManager.resolve<AnonCredsHolderService>(AnonCredsHolderServiceSymbol)
-          const credentialInfo = await holderService.getCredential(agentContext, { id: record.id })
-          return { record: record as W3cCredentialRecord, anonCredsTags, credentialInfo }
-        })
-      )
+      const recordsWithMetadata = entry.verifiableCredentials.map((record) => {
+        const anonCredsTags = getAnonCredsTagsFromRecord(record as W3cCredentialRecord)
+        if (!anonCredsTags) throw new Error('Missing AnonCreds tags from credential record')
+        return { record: record as W3cCredentialRecord, anonCredsTags }
+      })
 
       if (!descriptorMetadata[inputDescriptorId]) descriptorMetadata[inputDescriptorId] = []
 
@@ -181,4 +167,34 @@ export const getDescriptorMetadata = async (
   }
 
   return descriptorMetadata
+}
+
+/**
+ * The matches returned by our artificial anonCredsProofRequest could contain matches,
+ * which are not valid thus we need to filter them out
+ */
+export const filterInvalidProofRequestMatches = (
+  anonCredsCredentialsForRequest: AnonCredsCredentialsForProofRequest,
+  descriptorMetadata: DescriptorMetadata
+) => {
+  anonCredsCredentialsForRequest.attributes = Object.fromEntries(
+    Object.entries(anonCredsCredentialsForRequest.attributes).map(([referent, matches]) => {
+      const descriptorMeta = descriptorMetadata[referent]
+      const validCredentialsForReferent = descriptorMeta.map((meta) => meta.record.id)
+      const validMatches = matches.filter((match) => validCredentialsForReferent.includes(match.credentialId))
+      return [referent, validMatches]
+    })
+  )
+
+  anonCredsCredentialsForRequest.predicates = Object.fromEntries(
+    Object.entries(anonCredsCredentialsForRequest.predicates).map(([_referent, matches]) => {
+      const referent = _referent.split('_').slice(0, -1).join('_')
+      const descriptorMeta = descriptorMetadata[referent]
+      const validCredentialsForReferent = descriptorMeta.map((meta) => meta.record.id)
+      const validMatches = matches.filter((match) => validCredentialsForReferent.includes(match.credentialId))
+      return [_referent, validMatches]
+    })
+  )
+
+  return anonCredsCredentialsForRequest
 }

@@ -1,4 +1,3 @@
-import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
 import {
   CredentialExchangeRecord,
   CredentialRole,
@@ -7,7 +6,6 @@ import {
   ProofRole,
   ProofState,
 } from '@credo-ts/core'
-import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
 import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
@@ -15,6 +13,7 @@ import '@testing-library/jest-native/extend-expect'
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
+import { AnonCredsCredentialsForProofRequest } from '@credo-ts/anoncreds'
 import { useTranslation } from 'react-i18next'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
@@ -23,6 +22,13 @@ import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
+import {
+  anonCredsCredentialsForProofRequest,
+  difPexCredentialsForRequest,
+  difPexCredentialsForRequest2,
+  testPresentationDefinition1,
+  testW3cCredentialRecord,
+} from './fixtures/w3c-proof-request'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -69,6 +75,7 @@ describe('displays a proof request screen', () => {
     const { t } = useTranslation()
 
     const { id: credentialId } = new CredentialExchangeRecord({
+      id: '8eba4449-8a85-4954-b11c-e0590f39cbdb',
       role: CredentialRole.Holder,
       threadId: '1',
       state: CredentialState.Done,
@@ -92,128 +99,19 @@ describe('displays a proof request screen', () => {
       protocolVersion: 'v1',
     })
 
-    const { id: presentationMessageId } = new V1RequestPresentationMessage({
-      comment: 'some comment',
-      requestAttachments: [
-        new Attachment({
-          id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
-          mimeType: 'application/json',
-          data: new AttachmentData({
-            json: {
-              name: 'test proof request',
-              version: '1.0.0',
-              nonce: '1',
-              requestedAttributes: {
-                email: {
-                  name: 'email',
-                },
-                time: {
-                  name: 'time',
-                },
-              },
-              requestedPredicates: {
-                age: {
-                  name: 'age',
-                  pType: '<=',
-                  pValue: 18,
-                },
-              },
-            },
-          }),
-        }),
-      ],
-    })
-
     const testProofRequest = new ProofExchangeRecord({
-      role: ProofRole.Prover,
       connectionId: '',
-      threadId: presentationMessageId,
       state: ProofState.RequestReceived,
-      protocolVersion: 'V1',
+      role: ProofRole.Prover,
+      threadId: '4f5659a4-1aea-4f42-8c22-9a9985b35e38',
+      protocolVersion: 'v1',
     })
 
     const attributeBase = {
       referent: '',
       schemaId: '',
-      credentialDefinitionId: 'AAAAAAAAAAAAAAAAAAAAAA:1:AA:1234:test',
+      credentialDefinitionId: 'did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/CLAIM_DEF/462230/latest',
       toJSON: jest.fn(),
-    }
-
-    const testProofFormatData = {
-      request: {
-        indy: {
-          requested_attributes: {
-            email: {
-              name: 'email',
-              restrictions: [
-                {
-                  cred_def_id: attributeBase.credentialDefinitionId,
-                },
-              ],
-            },
-            time: {
-              name: 'time',
-              restrictions: [
-                {
-                  cred_def_id: attributeBase.credentialDefinitionId,
-                },
-              ],
-            },
-          },
-          requested_predicates: {
-            age: {
-              name: 'age',
-              p_type: '<=',
-              p_value: 18,
-              restrictions: [{ cred_def_id: attributeBase.credentialDefinitionId }],
-            },
-          },
-        },
-      },
-    }
-
-    const testRetrievedCredentials = {
-      proofFormats: {
-        indy: {
-          predicates: {
-            age: [
-              {
-                credentialId: credentialId,
-                revealed: true,
-                credentialInfo: {
-                  ...attributeBase,
-                  credentialId: credentialId,
-                  attributes: { age: testAge },
-                },
-              },
-            ],
-          },
-          attributes: {
-            email: [
-              {
-                credentialId: credentialId,
-                revealed: true,
-                credentialInfo: {
-                  ...attributeBase,
-                  credentialId: credentialId,
-                  attributes: { email: testEmail },
-                },
-              },
-            ],
-            time: [
-              {
-                credentialId: credentialId,
-                revealed: true,
-                credentialInfo: {
-                  ...attributeBase,
-                  attributes: { time: testTime },
-                  credentialId: credentialId,
-                },
-              },
-            ],
-          },
-        },
-      },
     }
 
     beforeEach(() => {
@@ -251,10 +149,19 @@ describe('displays a proof request screen', () => {
       const { agent } = useAgent()
 
       // @ts-ignore-next-line
-      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+      agent?.proofs.getFormatData.mockResolvedValue({
+        request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
+      })
 
       // @ts-ignore-next-line
-      agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue({
+        proofFormats: { presentationExchange: difPexCredentialsForRequest },
+      })
+
+      // @ts-ignore-next-line
+      agent?.context.dependencyManager.resolve.mockResolvedValue({
+        _getCredentialsForRequest: jest.fn().mockResolvedValue(anonCredsCredentialsForProofRequest),
+      })
 
       const { getByText, getByTestId, queryByText } = render(
         <ConfigurationContext.Provider value={configurationContext}>
@@ -302,6 +209,7 @@ describe('displays a proof request screen', () => {
       const testAge2 = '17'
 
       const { id: credentialId2 } = new CredentialExchangeRecord({
+        id: '8eba4449-8a85-4954-b11c-e0590f39cbdc',
         role: CredentialRole.Holder,
         threadId: '1',
         state: CredentialState.Done,
@@ -329,7 +237,7 @@ describe('displays a proof request screen', () => {
         proofFormats: {
           indy: {
             predicates: {
-              age: [
+              age_0: [
                 {
                   credentialId: credentialId,
                   revealed: true,
@@ -397,10 +305,19 @@ describe('displays a proof request screen', () => {
       }
 
       // @ts-ignore-next-line
-      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+      agent?.proofs.getFormatData.mockResolvedValue({
+        request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
+      })
 
       // @ts-ignore-next-line
-      agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials2)
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue({
+        proofFormats: { presentationExchange: difPexCredentialsForRequest2 },
+      })
+
+      // @ts-ignore-next-line
+      agent?.context.dependencyManager.resolve.mockResolvedValue({
+        _getCredentialsForRequest: jest.fn().mockResolvedValue(testRetrievedCredentials2.proofFormats.indy),
+      })
 
       const navigation = useNavigation()
 
@@ -453,19 +370,32 @@ describe('displays a proof request screen', () => {
       const { agent } = useAgent()
 
       // @ts-ignore-next-line
-      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+      agent?.proofs.getFormatData.mockResolvedValue({
+        request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
+      })
 
       // @ts-ignore-next-line
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
-        proofFormats: {
-          indy: {
-            attributes: {
-              ...testRetrievedCredentials.proofFormats.indy.attributes,
-              time: [],
-            },
-            predicates: {},
-          },
+        proofFormats: { presentationExchange: difPexCredentialsForRequest },
+      })
+
+      // @ts-ignore-next-line
+      agent?.context.dependencyManager.resolve.mockResolvedValue({
+        _getCredentialsForRequest: jest.fn().mockResolvedValue(anonCredsCredentialsForProofRequest),
+      })
+
+      const credentialsForRequest: AnonCredsCredentialsForProofRequest = {
+        ...anonCredsCredentialsForProofRequest,
+        attributes: {
+          ...anonCredsCredentialsForProofRequest.attributes,
+          time: [],
         },
+        predicates: {},
+      }
+
+      // @ts-ignore-next-line
+      agent?.context.dependencyManager.resolve.mockResolvedValue({
+        _getCredentialsForRequest: jest.fn().mockResolvedValue(credentialsForRequest),
       })
 
       const tree = render(
@@ -492,28 +422,82 @@ describe('displays a proof request screen', () => {
       const { agent } = useAgent()
 
       // @ts-ignore-next-line
-      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+      agent?.proofs.getFormatData.mockResolvedValue({
+        request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
+      })
 
       // @ts-ignore-next-line
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
-          indy: {
-            attributes: testRetrievedCredentials.proofFormats.indy.attributes,
-            predicates: {
-              age: [
-                {
-                  credentialId: credentialId,
-                  revealed: true,
-                  credentialInfo: {
-                    ...attributeBase,
-                    credentialId: credentialId,
-                    attributes: { age: 20 },
+          presentationExchange: {
+            requirements: [
+              {
+                rule: 'pick',
+                needsCount: 1,
+                submissionEntry: [
+                  {
+                    inputDescriptorId: 'age',
+                    name: undefined,
+                    purpose: undefined,
+                    verifiableCredentials: [],
                   },
-                },
-              ],
-            },
+                ],
+                isRequirementSatisfied: false,
+              },
+              {
+                rule: 'pick',
+                needsCount: 1,
+                submissionEntry: [
+                  {
+                    inputDescriptorId: 'email',
+                    name: undefined,
+                    purpose: undefined,
+                    verifiableCredentials: [testW3cCredentialRecord],
+                  },
+                ],
+                isRequirementSatisfied: true,
+              },
+              {
+                rule: 'pick',
+                needsCount: 1,
+                submissionEntry: [
+                  {
+                    inputDescriptorId: 'time',
+                    name: undefined,
+                    purpose: undefined,
+                    verifiableCredentials: [testW3cCredentialRecord],
+                  },
+                ],
+                isRequirementSatisfied: true,
+              },
+            ],
           },
         },
+      })
+
+      // @ts-ignore-next-line
+      agent?.context.dependencyManager.resolve.mockResolvedValue({
+        _getCredentialsForRequest: jest.fn().mockResolvedValue(anonCredsCredentialsForProofRequest),
+      })
+
+      // @ts-ignore-next-line
+      agent?.context.dependencyManager.resolve.mockResolvedValue({
+        _getCredentialsForRequest: jest.fn().mockResolvedValue({
+          attributes: anonCredsCredentialsForProofRequest.attributes,
+          predicates: {
+            age_0: [
+              {
+                credentialId: credentialId,
+                revealed: true,
+                credentialInfo: {
+                  ...attributeBase,
+                  credentialId: credentialId,
+                  attributes: { age: 20 },
+                },
+              },
+            ],
+          },
+        }),
       })
 
       const { getByText, getByTestId } = render(

@@ -1,5 +1,5 @@
 // TODO: export this from @credo-ts/anoncreds
-import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds/build/utils/metadata'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 import { ImageSourcePropType } from 'react-native'
 
