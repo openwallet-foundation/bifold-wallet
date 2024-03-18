@@ -18,7 +18,7 @@ export const registerOnSmartProxy = async (identifier: string, externalIdentifie
 
         if (storedData) {
             console.log('Already Registered: ' + storedData.id);
-            return;
+            return 'Already Registered';
         }
 
         const response = await fetch(smartproxyUrl + '/owners', {
@@ -36,15 +36,18 @@ export const registerOnSmartProxy = async (identifier: string, externalIdentifie
         console.log("HTTP Response Code:", response.status); // Log the HTTP status code
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            // throw new Error('Network response was not ok');
+            return "Error Registering"
         }
 
         const data = await response.json();
         console.log("DATA: " + data);
         await setItem('proxyOwner', data);
+        return response
 
     } catch (error) {
         console.error('Error Registering on proxy:', error);
+        return "Error Registering"
     }
 };
 
@@ -61,11 +64,15 @@ export const deRegisterOnSmartProxy = async (identifier: string) => {
         console.log("HTTP Response Code:", response.status); // Log the HTTP status code
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            // throw new Error('Network response was not ok');
+            return "Error Deregistering"
         }
+
+        return response
 
     } catch (error) {
         console.error('Error Deregistering on proxy:', error);
+        return "Error Deregistering"
     }
 };
 
@@ -82,11 +89,15 @@ export const deleteSmartProxyEntry = async (id: string) => {
         console.log("HTTP Response Code:", response.status); // Log the HTTP status code
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            // throw new Error('Network response was not ok');
+            return "Error Deleting"
         }
+
+        return response
 
     } catch (error) {
         console.error('Error Deleting proxy entry:', error);
+        return "Error Deleting"
     }
 };
 
@@ -110,14 +121,19 @@ export const createSmartProxyEntry = async (proxyKey: string, details: string, o
 
         if (!response.ok) {
             console.error(response)
-            throw new Error('Network response was not ok');
+            // throw new Error('Network response was not ok');
+            return "Error Creating Entry"
         }
 
         const data = await response.json();
         console.log(data);
 
+        return response
+
     } catch (error) {
         console.error('Error Creating proxy entry:', error);
+
+        return "Error Creating Entry"
     }
 };
 
@@ -126,7 +142,9 @@ export const getProxies = async (did: string) => {
     try {
         const response = await fetch(smartproxyUrl + '/proxies');
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            // throw new Error('Network response was not ok');
+            console.log("Error fetching proxies")
+            return "Error fetching proxies"
         }
         const data = await response.json();
         console.log(data);

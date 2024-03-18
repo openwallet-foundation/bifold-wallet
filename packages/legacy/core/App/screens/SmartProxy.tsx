@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAgent, useProofByState } from '@aries-framework/react-hooks'
 import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry } from '../utils/smartProxyHelpers';
 import { getItem, removeItem } from '../utils/storage';
+import BottomPopup from '../components/toast/popup';
 
 const SmartProxy = () => {
     //make a state varialbe to store the balance
@@ -20,6 +21,8 @@ const SmartProxy = () => {
     const [proxyList, setProxyList] = useState<any[]>([])
     const [selectedProxyEntry, setSelectedProxyEntry] = useState<string | undefined>(undefined)
     const [showDeleteOption, setShowDeleteOption] = useState<boolean>(false)
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupMessage, setPopupMessage] = useState('');
 
     const { agent } = useAgent()
 
@@ -50,8 +53,17 @@ const SmartProxy = () => {
     };
 
     const handleRegistration = async () => {
+
         if (did) {
-            registerOnSmartProxy(did, "externalIdentifier", "details")
+            const response = await registerOnSmartProxy(did, "externalIdentifier", "details")
+
+            if (typeof response === 'object' && response.status === 200) {
+                setPopupMessage("DID registered successfully")
+                setPopupVisible(true);
+            } else if (typeof response === 'string') {
+                setPopupMessage(response)
+                setPopupVisible(true);
+            }
         }
         else {
             console.error("DID not found")
@@ -61,9 +73,17 @@ const SmartProxy = () => {
     const handleDeregistration = async () => {
         const storedData = await getItem('proxyOwner');
         if (did) {
-            deRegisterOnSmartProxy(did)
+            const response = await deRegisterOnSmartProxy(did)
             if (storedData) {
                 await removeItem('proxyOwner')
+            }
+
+            if (typeof response === 'object' && response.status === 204) {
+                setPopupMessage("DID deregistered successfully")
+                setPopupVisible(true);
+            } else if (typeof response === 'string') {
+                setPopupMessage(response)
+                setPopupVisible(true);
             }
         }
         else {
@@ -76,10 +96,20 @@ const SmartProxy = () => {
         console.log(storedData?.id);
 
         if (storedData?.id && proxyIdentifier && proxyValue) {
-            createSmartProxyEntry(proxyIdentifier, proxyValue, storedData.id)
+            const response = await createSmartProxyEntry(proxyIdentifier, proxyValue, storedData.id)
+
+            if (typeof response === 'object' && response.status === 200) {
+                setPopupMessage("Proxy created successfully")
+                setPopupVisible(true);
+            } else if (typeof response === 'string') {
+                setPopupMessage(response)
+                setPopupVisible(true);
+            }
         }
         else {
             console.error("Owner, proxyIdentifier or proxyValue not found")
+            setPopupMessage("Owner, proxyIdentifier or proxyValue not found")
+            setPopupVisible(true);
         }
     }
 
@@ -87,23 +117,45 @@ const SmartProxy = () => {
         if (did) {
 
             // Store proxies in an array using getProxies(did)
-            const proxies = await getProxies(did)
-            setProxyList(proxies)
+            const response = await getProxies(did)
 
+            if (typeof response === 'string') {
+                setPopupMessage(response)
+                setPopupVisible(true);
+            } else if (Array.isArray(response) && response.length === 0) {
+                setPopupMessage("No proxies found")
+                setPopupVisible(true);
+            } else if (Array.isArray(response) && response?.length > 0) {
+                setPopupMessage("Proxies fetched successfully")
+                setPopupVisible(true);
+                setProxyList(response)
+            }
         }
         else {
             console.error("DID not found")
+            setPopupMessage("DID not found")
+            setPopupVisible(true);
         }
     }
 
     const handleProxyEntryDeletion = async () => {
         if (selectedProxyEntry) {
-            await deleteSmartProxyEntry(selectedProxyEntry)
+            const response = await deleteSmartProxyEntry(selectedProxyEntry)
             // Update the list of proxies after deletion
-            if (did) {
-                const proxies = await getProxies(did)
-                setProxyList(proxies)
+
+            if (typeof response === 'object' && response.status === 204) {
+                setPopupMessage("Proxy deleted successfully")
+                setPopupVisible(true);
+                if (did) {
+                    const proxies = await getProxies(did)
+                    setProxyList(proxies)
+                }
+            } else if (typeof response === 'string') {
+                setPopupMessage(response)
+                setPopupVisible(true);
             }
+
+
         }
         else {
             console.error("No proxy entry selected")
@@ -113,10 +165,7 @@ const SmartProxy = () => {
 
     return (
         <ScrollView>
-            <View style={styles.textPadding}>
-                <Text style={theme.TextTheme.headerTitle}>Smart Proxy Tests</Text>
 
-            </View>
             <View style={styles.textPadding}>
                 <Text style={theme.TextTheme.labelTitle}>Your DID: {'\n'}{did}</Text>
 
@@ -134,6 +183,7 @@ const SmartProxy = () => {
                 visible={showRegisterScreen}
                 onRequestClose={() => {
                     setShowRegisterScreen(false); // Corrected typo from setShowRegisterScreem to setShowRegisterScreen
+                    setPopupVisible(false);
                 }}
             >
                 <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.9)', justifyContent: 'center', alignItems: 'center' }}>
@@ -141,7 +191,7 @@ const SmartProxy = () => {
                     <View style={styles.backButtonContainer}>
                         <TouchableOpacity
                             style={styles.backButton}
-                            onPress={() => setShowRegisterScreen(false)} // Assuming you want the back button to close the modal
+                            onPress={() => { setPopupVisible(false); setShowRegisterScreen(false); }} // Assuming you want the back button to close the modal
                         >
                             {/* Replace "Back" with an icon or custom design as needed */}
                             <Text style={{ color: 'white', fontSize: 15.0 }}>Back</Text>
@@ -149,7 +199,7 @@ const SmartProxy = () => {
                     </View>
 
                     {/* Modal Content */}
-                    <View style={{ backgroundColor: 'black', padding: 20, borderRadius: 10, alignItems: 'center' }}>
+                    <View style={{ padding: 20, borderRadius: 10, alignItems: 'center' }}>
                         <Text>Register my DID on the proxy server</Text>
                         <View style={styles.buttonPadding}>
                             <TouchableOpacity style={theme.Buttons.primary} onPress={() => handleRegistration()}>
@@ -164,6 +214,11 @@ const SmartProxy = () => {
                         </View>
                     </View>
                 </View>
+                {showRegisterScreen && <BottomPopup
+                    message={popupMessage}
+                    isVisible={popupVisible}
+                    onClose={() => setPopupVisible(false)}
+                />}
             </Modal>
 
             <View style={styles.buttonPadding}>
@@ -178,14 +233,15 @@ const SmartProxy = () => {
                 visible={showProxyCreateScreen}
                 onRequestClose={() => {
                     setShowProxyCreateScreen(false); // Corrected typo from setShowRegisterScreem to setShowRegisterScreen
+                    setPopupVisible(false);
                 }}
             >
-                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,1)', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.9)', justifyContent: 'center', alignItems: 'center' }}>
                     {/* Back Button Container */}
                     <View style={styles.backButtonContainer}>
                         <TouchableOpacity
                             style={styles.backButton}
-                            onPress={() => setShowProxyCreateScreen(false)} // Assuming you want the back button to close the modal
+                            onPress={() => { setShowProxyCreateScreen(false); setPopupVisible(false); }} // Assuming you want the back button to close the modal
                         >
                             {/* Replace "Back" with an icon or custom design as needed */}
                             <Text style={{ color: 'white', fontSize: 15.0 }}>Back</Text>
@@ -193,7 +249,7 @@ const SmartProxy = () => {
                     </View>
 
                     {/* Modal Content */}
-                    <View style={{ backgroundColor: 'black', padding: 20, borderRadius: 10, alignItems: 'center', maxWidth: 320 }}>
+                    <View style={{ padding: 20, borderRadius: 10, alignItems: 'center', maxWidth: 320 }}>
                         <View style={styles.textPadding}>
                             <Text style={{ ...theme.TextTheme.headingFour }}>Create proxy link</Text>
                         </View>
@@ -226,11 +282,16 @@ const SmartProxy = () => {
                         </View>
                     </View>
                 </View>
+                {showProxyCreateScreen && <BottomPopup
+                    message={popupMessage}
+                    isVisible={popupVisible}
+                    onClose={() => setPopupVisible(false)}
+                />}
             </Modal>
 
 
             <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={() => setShowListProxiesScreen(true)}>
+                <TouchableOpacity style={theme.Buttons.primary} onPress={() => { setShowListProxiesScreen(true); handleProxyList() }}>
                     <Text style={theme.TextTheme.label}>Manage My Proxies</Text>
                 </TouchableOpacity>
             </View>
@@ -241,14 +302,15 @@ const SmartProxy = () => {
                 visible={showListProxiesScreen}
                 onRequestClose={() => {
                     setShowListProxiesScreen(false); // Corrected typo from setShowRegisterScreem to setShowRegisterScreen
+                    setPopupVisible(false);
                 }}
             >
-                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,1)', justifyContent: 'top', alignItems: 'center', width: '100%' }}>
+                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.9)', justifyContent: 'top', alignItems: 'center', width: '100%' }}>
                     {/* Back Button Container */}
                     <View style={styles.backButtonContainer}>
                         <TouchableOpacity
                             style={styles.backButton}
-                            onPress={() => setShowListProxiesScreen(false)} // Assuming you want the back button to close the modal
+                            onPress={() => { setShowListProxiesScreen(false); setPopupVisible(false); }} // Assuming you want the back button to close the modal
                         >
                             {/* Replace "Back" with an icon or custom design as needed */}
                             <Text style={{ color: 'white', fontSize: 15.0 }}>Back</Text>
@@ -256,16 +318,16 @@ const SmartProxy = () => {
                     </View>
 
                     {/* Modal Content */}
-                    <View style={{ backgroundColor: 'black', padding: 20, borderRadius: 10, alignItems: 'center', width: '100%' }}>
+                    <View style={{ padding: 20, borderRadius: 10, alignItems: 'center', width: '100%' }}>
                         <View style={styles.textPadding}>
                             <Text style={{ ...theme.TextTheme.headingFour, padding: 20 }}>Manage Proxies</Text>
                         </View>
 
                         <View style={{ ...styles.buttonPadding, width: '100%' }}>
-                            <TouchableOpacity style={{ ...theme.Buttons.primary, marginBottom: 20 }} onPress={() => handleProxyList()}>
+                            {/* <TouchableOpacity style={{ ...theme.Buttons.primary, marginBottom: 20 }} onPress={() => handleProxyList()}>
                                 <Text style={theme.TextTheme.label}>Fetch Proxies</Text>
 
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                             {/* Display the list of fetched proxies */}
                             {proxyList?.length > 0 && (<ScrollView style={styles.proxyList}>
                                 {proxyList.map((proxy, index) => (
@@ -304,7 +366,13 @@ const SmartProxy = () => {
                         </View>
                     </View>
                 </View>
+                {showListProxiesScreen && <BottomPopup
+                    message={popupMessage}
+                    isVisible={popupVisible}
+                    onClose={() => setPopupVisible(false)}
+                />}
             </Modal>
+
         </ScrollView >
     );
 };
@@ -335,7 +403,7 @@ const styles = StyleSheet.create({
         // Add more styles as needed, like background color, border, etc.
     },
     proxyList: {
-        backgroundColor: theme.ColorPallet.grayscale.black,
+        // backgroundColor: theme.ColorPallet.grayscale.black,
         padding: 10,
         marginBottom: 20,
         borderRadius: 5,
