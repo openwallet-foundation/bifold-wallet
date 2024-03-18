@@ -11,6 +11,7 @@ import { Config } from 'react-native-config'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { EventTypes, LocalStorageKeys } from '../constants'
+import { TOKENS, useContainer } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
@@ -30,51 +31,54 @@ import {
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
-const onboardingComplete = (state: StoreOnboardingState): boolean => {
-  return state.didCompleteTutorial && state.didAgreeToTerms && state.didCreatePIN && state.didConsiderBiometry
+const onboardingComplete = (state: StoreOnboardingState, params: { termsVersion?: boolean | string }): boolean => {
+  const termsVer = params.termsVersion ?? true
+  return (
+    state.didCompleteTutorial && state.didAgreeToTerms === termsVer && state.didCreatePIN && state.didConsiderBiometry
+  )
 }
 
 const resumeOnboardingAt = (
   state: StoreOnboardingState,
-  enableWalletNaming: boolean | undefined,
-  showPreface: boolean | undefined
+  params: { enableWalletNaming?: boolean; showPreface?: boolean; termsVersion?: boolean | string }
 ): Screens => {
+  const termsVer = params.termsVersion ?? true
   if (
-    (state.didSeePreface || !showPreface) &&
+    (state.didSeePreface || !params.showPreface) &&
     state.didCompleteTutorial &&
-    state.didAgreeToTerms &&
+    state.didAgreeToTerms === termsVer &&
     state.didCreatePIN &&
-    (state.didNameWallet || !enableWalletNaming) &&
+    (state.didNameWallet || !params.enableWalletNaming) &&
     !state.didConsiderBiometry
   ) {
     return Screens.UseBiometry
   }
 
   if (
-    (state.didSeePreface || !showPreface) &&
+    (state.didSeePreface || !params.showPreface) &&
     state.didCompleteTutorial &&
-    state.didAgreeToTerms &&
+    state.didAgreeToTerms === termsVer &&
     state.didCreatePIN &&
-    enableWalletNaming &&
+    params.enableWalletNaming &&
     !state.didNameWallet
   ) {
     return Screens.NameWallet
   }
 
   if (
-    (state.didSeePreface || !showPreface) &&
+    (state.didSeePreface || !params.showPreface) &&
     state.didCompleteTutorial &&
-    state.didAgreeToTerms &&
+    state.didAgreeToTerms === termsVer &&
     !state.didCreatePIN
   ) {
     return Screens.CreatePIN
   }
 
-  if ((state.didSeePreface || !showPreface) && state.didCompleteTutorial && !state.didAgreeToTerms) {
+  if ((state.didSeePreface || !params.showPreface) && state.didCompleteTutorial && state.didAgreeToTerms !== termsVer) {
     return Screens.Terms
   }
 
-  if (state.didSeePreface || !showPreface) {
+  if (state.didSeePreface || !params.showPreface) {
     return Screens.Onboarding
   }
 
@@ -95,6 +99,8 @@ const Splash: React.FC = () => {
   const { getWalletCredentials } = useAuth()
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
+  const container = useContainer()
+  const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -159,7 +165,7 @@ const Splash: React.FC = () => {
         if (data) {
           const onboardingState = JSON.parse(data) as StoreOnboardingState
           dispatch({ type: DispatchAction.ONBOARDING_UPDATED, payload: [onboardingState] })
-          if (onboardingComplete(onboardingState)) {
+          if (onboardingComplete(onboardingState, { termsVersion: TermsVersion })) {
             // if they previously completed onboarding before wallet naming was enabled, mark complete
             if (!store.onboarding.didNameWallet) {
               dispatch({ type: DispatchAction.DID_NAME_WALLET, payload: [true] })
@@ -193,7 +199,13 @@ const Splash: React.FC = () => {
               CommonActions.reset({
                 index: 0,
                 routes: [
-                  { name: resumeOnboardingAt(onboardingState, store.preferences.enableWalletNaming, showPreface) },
+                  {
+                    name: resumeOnboardingAt(onboardingState, {
+                      enableWalletNaming: store.preferences.enableWalletNaming,
+                      showPreface,
+                      termsVersion: TermsVersion,
+                    }),
+                  },
                 ],
               })
             )

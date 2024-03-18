@@ -9,7 +9,7 @@ import OnboardingStack from './navigators/OnboardingStack'
 import Developer from './screens/Developer'
 import Onboarding from './screens/Onboarding'
 import Preface from './screens/Preface'
-import ScreenTerms from './screens/Terms'
+import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { AuthenticateStackParams, Screens } from './types/navigators'
 
 export class MainContainer implements Container {
@@ -23,7 +23,7 @@ export class MainContainer implements Container {
     console.log(`Initializing Bifold container`)
     this.container.registerInstance(TOKENS.SCREEN_PREFACE, Preface)
     this.container.registerInstance(TOKENS.SCREEN_DEVELOPER, Developer)
-    this.container.registerInstance(TOKENS.SCREEN_TERMS, ScreenTerms)
+    this.container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
     this.container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
     this.container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this.container.registerInstance(TOKENS.COMP_BUTTON, Button)

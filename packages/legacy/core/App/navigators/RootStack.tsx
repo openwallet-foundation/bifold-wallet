@@ -56,6 +56,7 @@ const RootStack: React.FC = () => {
   } = useConfiguration()
   const container = useContainer()
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
+  const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
@@ -270,7 +271,7 @@ const RootStack: React.FC = () => {
 
   if (
     (!showPreface || state.onboarding.didSeePreface) &&
-    state.onboarding.didAgreeToTerms &&
+    state.onboarding.didAgreeToTerms === TermsVersion &&
     state.onboarding.didCompleteTutorial &&
     state.onboarding.didCreatePIN &&
     (!state.preferences.enableWalletNaming || state.onboarding.didNameWallet) &&
