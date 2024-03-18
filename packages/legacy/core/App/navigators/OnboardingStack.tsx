@@ -18,7 +18,9 @@ import { useTheme } from '../contexts/theme'
 import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
+import PushNotification from '../screens/PushNotification'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -41,12 +43,15 @@ const OnboardingStack: React.FC = () => {
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
   const Onboarding = container.resolve(TOKENS.SCREEN_ONBOARDING)
-  const { pages, splash, useBiometry, preface } = useConfiguration()
+  const { pages, splash, useBiometry } = useConfiguration()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
-  const terms = container.resolve(TOKENS.SCREEN_TERMS)
-  const screenOptionsDictionary = container.resolve(TOKENS.OBJECT_ONBOARDINGCONFIG)
+  const Terms = container.resolve(TOKENS.SCREEN_TERMS)
+  const Developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
+  const ScreenOptionsDictionary = container.resolve(TOKENS.OBJECT_ONBOARDINGCONFIG)
+  const Preface = container.resolve(TOKENS.SCREEN_PREFACE)
+
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
       return
@@ -56,6 +61,7 @@ const OnboardingStack: React.FC = () => {
       type: DispatchAction.DID_AUTHENTICATE,
     })
   }
+
   const OnBoardingScreen: React.FC = () => {
     return (
       <Onboarding
@@ -75,20 +81,25 @@ const OnboardingStack: React.FC = () => {
   const screens: ScreenOptions[] = [
     {
       name: Screens.Preface,
-      component: preface,
-      options: screenOptionsDictionary[Screens.Preface],
+      component: Preface,
+      options: () => {
+        return {
+          ...ScreenOptionsDictionary[Screens.Preface],
+          title: t('Screens.Preface'),
+        }
+      },
     },
     {
       name: Screens.Splash,
       component: splash,
-      options: screenOptionsDictionary[Screens.Splash],
+      options: ScreenOptionsDictionary[Screens.Splash],
     },
     {
       name: Screens.Onboarding,
       component: OnBoardingScreen,
       options: () => {
         return {
-          ...screenOptionsDictionary[Screens.Onboarding],
+          ...ScreenOptionsDictionary[Screens.Onboarding],
           title: t('Screens.Onboarding'),
         }
       },
@@ -96,24 +107,24 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.Terms,
       options: () => ({
-        ...screenOptionsDictionary[Screens.Terms],
+        ...ScreenOptionsDictionary[Screens.Terms],
         title: t('Screens.Terms'),
       }),
-      component: terms,
+      component: Terms,
     },
     {
       name: Screens.CreatePIN,
       component: CreatePINScreen,
       initialParams: {},
       options: () => ({
-        ...screenOptionsDictionary[Screens.CreatePIN],
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.CreatePIN'),
       }),
     },
     {
       name: Screens.NameWallet,
       options: () => ({
-        ...screenOptionsDictionary[Screens.CreatePIN],
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.NameWallet'),
       }),
       component: NameWallet,
@@ -121,10 +132,29 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.UseBiometry,
       options: () => ({
-        ...screenOptionsDictionary[Screens.CreatePIN],
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.Biometry'),
       }),
       component: useBiometry,
+    },
+    {
+      name: Screens.UsePushNotifications,
+      options: () => ({
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
+        title: t('Screens.UsePushNotifications'),
+      }),
+      component: PushNotification,
+    },
+    {
+      name: Screens.Developer,
+      component: Developer,
+      options: () => {
+        return {
+          ...ScreenOptionsDictionary[Screens.Developer],
+          title: t('Screens.Developer'),
+          headerBackAccessibilityLabel: t('Global.Back'),
+        }
+      },
     },
   ]
 

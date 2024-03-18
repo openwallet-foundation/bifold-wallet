@@ -62,7 +62,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { PINSecurity } = useConfiguration()
+  const { PINSecurity, enablePushNotifications } = useConfiguration()
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     PINCreationValidations(PIN, PINSecurity.rules)
@@ -101,8 +101,14 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
         type: DispatchAction.DID_CREATE_PIN,
       })
 
-      // TODO: Navigate back if in settings
-      if (store.preferences.enableWalletNaming) {
+      if (enablePushNotifications) {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: Screens.UsePushNotifications }],
+          })
+        )
+      } else if (store.preferences.enableWalletNaming) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,

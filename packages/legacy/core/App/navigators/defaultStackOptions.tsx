@@ -10,7 +10,8 @@ import { testIdWithKey } from '../utils/testable'
 
 export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.Preface]: {
-    headerShown: false,
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerLeft: () => false,
   },
   [Screens.Splash]: {
     headerShown: false,
@@ -39,6 +40,10 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
     headerTintColor: OnboardingTheme.headerTintColor,
     headerShown: false,
     headerBackTestID: testIdWithKey('Back'),
+  },
+  [Screens.UsePushNotifications]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerLeft: () => false,
   },
 }
 
