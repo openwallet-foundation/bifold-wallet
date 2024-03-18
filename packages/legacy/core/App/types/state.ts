@@ -1,7 +1,7 @@
 export interface Onboarding {
   didSeePreface: boolean
   didCompleteTutorial: boolean
-  didAgreeToTerms: boolean
+  didAgreeToTerms: boolean | string
   didCreatePIN: boolean
   didConsiderBiometry: boolean
   didConsiderPushNotifications: boolean

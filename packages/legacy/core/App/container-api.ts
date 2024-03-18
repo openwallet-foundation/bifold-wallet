@@ -40,7 +40,7 @@ export type FN_ONBOARDING_DONE = (
 export interface TokenMapping {
   [TOKENS.SCREEN_PREFACE]: React.FC
   [TOKENS.STACK_ONBOARDING]: React.FC
-  [TOKENS.SCREEN_TERMS]: React.FC
+  [TOKENS.SCREEN_TERMS]: { screen: React.FC; version: boolean | string }
   [TOKENS.SCREEN_DEVELOPER]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
