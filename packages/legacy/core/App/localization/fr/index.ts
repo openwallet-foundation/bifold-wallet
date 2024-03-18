@@ -32,6 +32,8 @@ const translation = {
         "ShowDetails": "Afficher les détails",
         "TryAgain": "Réessayer",
         "Biometrics": "Biométrie",
+        "History": "Histoire",
+        "SaveSettings": "Enregistrer les paramètres",
         "On": "Activé",
         "Off": "Désactivé",
         "Remove": "Supprimer",
@@ -126,6 +128,10 @@ const translation = {
         "Message1044": "There was a problem while initializing onboarding. (FR)",
         "Title1045": "Unable to initialize agent. (FR)",
         "Message1045": "There was a problem while initializing agent. (FR)",
+    },
+    "SelectionAxs": {
+        "RadioChecked": "coché.",
+        "RadioUnchecked": "décoché."
     },
     "ActivityLog": {
         "Your": "Votre ",
@@ -252,6 +258,58 @@ const translation = {
         "UseToUnlock": "Utiliser la biométrie pour déverrouiller le portefeuille ?",
         "UnlockPromptTitle": "Déverrouillage du portefeuille",
         "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille"
+    },
+    "ActivityHistory": {
+        "Header": "Historique des activités",
+        "Title": "Gérer l'historique des activités",
+        "Description": "Définissez la durée pendant laquelle vous souhaitez conserver l'historique de vos activités avant qu'il ne soit supprimé de votre appareil (il n'est stocké nulle part ailleurs).",
+        "DeleteActivity": "Supprimer l'historique des activités après:",
+        "DeleteActivityAfter": {
+          "1month":"1 mois",
+          "6month":"6 mois",
+          "1year":"1 année",
+          "Always":"Toujours",
+        },
+        "WarningDisclaimerAlert": {
+          "Title": "L'activité passée sera supprimée",
+          "Description": "Toute activité antérieure à la période que vous venez de sélectionner sera supprimée dès que vous enregistrerez."
+        },
+        "SettingsSaved": "Paramètres d'historique enregistrés",
+        "NoOptionSelectedError": "Aucune option sélectionnée",
+        "StopKeepingHistory": "Arrêter de conserver l'historique des activités",
+        "StoppedLoggingAlert": "Vous n'enregistrez pas l'historique de vos activités.",
+        "StoppedLoggingAlertYes": "Activer l'historique des activités",
+        "DeleteActivityHistory": {
+          "Title": "Supprimer l'historique des activités",
+          "Description": "L'historique individuel peut être supprimé dans l'onglet Historique ou vous pouvez supprimer tout l'historique des activités. Cette action ne peut pas être annulée.",
+          "Link": "Supprimer tout l'historique des activités"
+        },
+        "StopActivityHistoryScreen": {
+          "Header": "Désactiver l'historique des activités?",
+          "Title": "Voulez-vous vraiment désactiver l'historique?",
+          "Description": "Aucun autre historique d'activité ne sera conservé dans le portefeuille de l'Ontario. Toute l'histoire précédente restera.",
+          "Yes": "Oui désactiver l'historique des activités",
+          "No": "Non, reviens"
+        },
+        "StopActivityHistoryScreenConfirmed": {
+          "Header": "Historique des activités désactivé",
+          "Title": "Historique désactivé",
+          "Description": "Le Portefeuille Ontario ne stocke plus l'historique de vos activités",
+          "Back": "Retour aux paramètres",
+        },
+        "DeleteActivityHistoryScreen": {
+          "Header": "Supprimer tout l'historique des activités?",
+          "Title": "Voulez-vous vraiment supprimer tout l'historique?",
+          "Description": "Vous ne pourrez pas récupérer votre historique d'activité après l'avoir supprimé.",
+          "Yes": "Oui, supprimer tout l'historique des activités",
+          "No": "Non, reviens"
+        },
+        "DeleteActivityHistoryScreenConfirmed": {
+          "Header": "Activité historique supprimée",
+          "Title": "Toutes les activités de l'historique supprimées",
+          "Description": "Le portefeuille de l'Ontario a supprimé tout l'historique de vos activités.",
+          "Continue": "Continuer",
+        },
     },
     "Contacts": {
         "EmptyList": "Your Contacts is empty! (FR)",
@@ -547,6 +605,7 @@ const translation = {
         "ProofRequesting": 'Demande de preuve',
         "NameWallet": "Name your wallet (FR)",
         "RenameContact": "Edit Contact Name (FR)",
+        "HistorySettings": "Paramètres de l'historique",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",

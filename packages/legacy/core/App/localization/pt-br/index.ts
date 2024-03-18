@@ -31,6 +31,8 @@ const translation = {
     "Dismiss": "Dispensar",
     "ShowDetails": "Mostrar Detalhes",
     "Biometrics": "Biometria",
+    "History": "História",
+    "SaveSettings": "Salvar configurações",
     "On": "Ligado",
     "Off": "Desligado",
     "Close": "Fechar",
@@ -125,6 +127,10 @@ const translation = {
     "Message1044": "Ocorreu um problema ao incializar o onboarding.",
     "Title1045": "Não foi possível inicializar o agente.",
     "Message1045": "Ocorreu um erro ao inicializar o agente.",
+  },
+  "SelectionAxs": {
+    "RadioChecked": "verificada.",
+    "RadioUnchecked": "não verificado."
   },
   "StatusMessages": {
     "InitAgent": "Iniciando agente .."
@@ -235,6 +241,58 @@ const translation = {
     "NoBiometricsErrorDetails": "Para arrumar isso, habilite a biometria nas configurações do seu dispositivo.",
     "UnlockPromptTitle": "Destravar carteira",
     "UnlockPromptDescription": "Utilize a biometria para destravar sua carteira"
+  },
+  "ActivityHistory": {
+    "Header": "Activity history",
+    "Title": "Manage activity history",
+    "Description": "Set how long you want to keep your activity history before it is deleted from your device (it is not stored anywhere else).",
+    "DeleteActivity": "Delete activity history after:",
+    "DeleteActivityAfter": {
+      "1month":"1 month",
+      "6month":"6 month",
+      "1year":"1 year",
+      "Always":"Always",
+    },
+    "WarningDisclaimerAlert": {
+      "Title": "Past activity will be deleted",
+      "Description": "Any activity before the period you've just selected will be deleted as soon as you save."
+    },
+    "SettingsSaved": "History settings saved",
+    "NoOptionSelectedError": "No option selected",
+    "StopKeepingHistory": "Stop keeping activity history",
+    "StoppedLoggingAlert": "You are not logging your activity history.",
+    "StoppedLoggingAlertYes": "Turn on activity history",
+    "DeleteActivityHistory": {
+      "Title": "Delete activity history",
+      "Description": "Individual history can be deleted in the history tab or you can delete all activity history. This action cannot be undone.",
+      "Link": "Delete all activity history"
+    },
+    "StopActivityHistoryScreen": {
+      "Header": "Turn off activity history?",
+      "Title": "Are you sure you want to turn off history?",
+      "Description": "No further activity history will be kept in the Ontario Wallet. All previous history will remain.",
+      "Yes": "Yes turn off activity history",
+      "No": "No, go back"
+    },
+    "StopActivityHistoryScreenConfirmed": {
+      "Header": "Activity history turned off",
+      "Title": "History turned off",
+      "Description": "The Ontario Wallet is no longer storing your activity history",
+      "Back": "Back to settings",
+    },
+    "DeleteActivityHistoryScreen": {
+      "Header": "Delete all activity history?",
+      "Title": "Are you sure you want to delete all history?",
+      "Description": "You will not be able to get your activity history back after you delete it.",
+      "Yes": "Yes, delete all activity history",
+      "No": "No, go back"
+    },
+    "DeleteActivityHistoryScreenConfirmed": {
+      "Header": "History activty deleted",
+      "Title": "All history activity deleted",
+      "Description": "The Ontario Wallet deleted all your activity history.",
+      "Continue": "Continue",
+    },
   },
   "Contacts": {
     "EmptyList": "Seus Contatos esta vazio!",
@@ -525,6 +583,7 @@ const translation = {
     "CreateConnectionInvitation": "Criar um convite de conexão",
     "NameWallet": "Nomear sua carteira",
     "RenameContact": "Editar nome do contato",
+    "HistorySettings": "Configurações do histórico",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",

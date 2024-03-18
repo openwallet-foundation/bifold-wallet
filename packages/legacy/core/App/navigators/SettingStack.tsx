@@ -6,6 +6,7 @@ import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
+import HistorySettings from '../modules/history/ui/HistorySettings'
 import DataRetention from '../screens/DataRetention'
 import Language from '../screens/Language'
 import NameWallet from '../screens/NameWallet'
@@ -80,6 +81,11 @@ const SettingStack: React.FC = () => {
         name={Screens.CreatePIN}
         component={PINCreate}
         options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.HistorySettings}
+        component={HistorySettings}
+        options={{ title: t('Screens.HistorySettings'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.Terms}

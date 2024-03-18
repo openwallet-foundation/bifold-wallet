@@ -1,7 +1,9 @@
 import { GenericRecordTags } from '@aries-framework/core/build/modules/generic-records/repository/GenericRecord'
 import { useAgent } from '@aries-framework/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import moment from 'moment'
 import React, { createContext, useContext, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { useCommons } from '../../../contexts/commons'
 import { LogLevel } from '../../../services/logger'
@@ -14,10 +16,18 @@ import {
   NotificationRecord,
   RecordType,
 } from '../types'
+import { BlockSelection } from '../ui/components/SingleSelectBlock'
+
+enum HistorySettingsOptionStorageKey {
+  HistorySettingsOption = 'historySettingsOption',
+}
 
 export interface IHistoryContext {
+  historySettingsOptionList: Array<BlockSelection>
   saveHistory(recordData: HistoryRecord): Promise<void>
   getHistoryItems(query: HistoryQuery): Promise<CustomRecord[]>
+  handleStoreHistorySettings(selectedValue: BlockSelection | undefined): Promise<void>
+  getStoredHistorySettingsOption(): Promise<string | null>
 }
 
 export const HistoryContext = createContext<IHistoryContext>(null as unknown as IHistoryContext)
@@ -25,6 +35,18 @@ export const HistoryContext = createContext<IHistoryContext>(null as unknown as 
 export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { agent } = useAgent()
   const { log } = useCommons()
+  const { t } = useTranslation()
+
+  //Constants
+  const oneMonth = moment().subtract(1, 'month')
+  const sixMonth = moment().subtract(6, 'month')
+  const oneYear = moment().subtract(1, 'year')
+  const historySettingsOptionList = [
+    { key: 0, id: '1 month', date: oneMonth, value: t('ActivityHistory.DeleteActivityAfter.1month') },
+    { key: 1, id: '6 month', date: sixMonth, value: t('ActivityHistory.DeleteActivityAfter.6month') },
+    { key: 2, id: '1 year', date: oneYear, value: t('ActivityHistory.DeleteActivityAfter.1year') },
+    { key: 3, id: 'Always', value: t('ActivityHistory.DeleteActivityAfter.Always') },
+  ]
 
   async function saveHistory(recordData: HistoryRecord) {
     const historySettingsOption = await AsyncStorage.getItem('historySettingsOption')
@@ -41,6 +63,41 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
 
   async function getHistoryItems(query: HistoryQuery): Promise<CustomRecord[]> {
     return getGenericRecordsbyQuery(query)
+  }
+
+  //History Settings
+  async function getStoredHistorySettingsOption(): Promise<string | null> {
+    return await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
+  }
+
+  const handleStoreHistorySettings = async (selectedValue: BlockSelection | undefined) => {
+    if (!selectedValue) {
+      throw new Error(t('ActivityHistory.NoOptionSelectedError'))
+    }
+
+    await AsyncStorage.setItem(HistorySettingsOptionStorageKey.HistorySettingsOption, selectedValue.id)
+
+    //TODO: Delete old history
+    /*
+    if (selectedValue.id !== 'Always') {
+      // Filter history record data and get the ones that needs to be deleted.
+      const selectedHistoryRecords = historyItems && filterDataByGivenDate(historyItems, selectedValue.date)
+      // Remove history past the selected date.
+      if (selectedHistoryRecords) {
+        for await (const record of selectedHistoryRecords) {
+          const recordHistory = record.content as HistoryRecord
+          if (!recordHistory || !recordHistory.id) {
+            return
+          }
+          const deleteRecord = await findGenericRecordById(recordHistory.id)
+          if (!deleteRecord) {
+            return
+          }
+          await removeGenericRecord(deleteRecord)
+        }
+      }
+    }
+    */
   }
 
   //Internal
@@ -160,6 +217,9 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
       value={{
         saveHistory: saveHistory,
         getHistoryItems: getHistoryItems,
+        historySettingsOptionList: historySettingsOptionList,
+        handleStoreHistorySettings: handleStoreHistorySettings,
+        getStoredHistorySettingsOption: getStoredHistorySettingsOption,
       }}
     >
       {children}

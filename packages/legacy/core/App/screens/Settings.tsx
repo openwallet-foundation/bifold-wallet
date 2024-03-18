@@ -143,6 +143,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.UseBiometry),
         },
         {
+          title: t('Global.History'),
+          value: undefined,
+          accessibilityLabel: t('Global.History'),
+          testID: testIdWithKey('History'),
+          onPress: () => navigation.navigate(Screens.HistorySettings),
+        },
+        {
           title: t('Settings.ChangePin'),
           value: undefined,
           accessibilityLabel: t('Settings.ChangePin'),

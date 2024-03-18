@@ -38,6 +38,7 @@ export enum Screens {
   NameWallet = 'Name Wallet',
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
+  HistorySettings = 'History Settings',
 }
 
 export enum Stacks {
@@ -143,6 +144,7 @@ export type SettingStackParams = {
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
+  [Screens.HistorySettings]: undefined
 }
 
 export type NotificationStackParams = {
