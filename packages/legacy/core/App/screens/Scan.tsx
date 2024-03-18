@@ -169,7 +169,7 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
     return <CameraDisclosureModal requestCameraUse={requestCameraUse} />
   }
 
-  if (store.preferences.useConnectionInviterCapability) {
+  if (true) {
     return (
       <NewQRView
         defaultToConnect={defaultToConnect}
