@@ -20,7 +20,6 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PushNotification from '../screens/PushNotification'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
