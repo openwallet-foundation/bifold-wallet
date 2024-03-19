@@ -5,6 +5,9 @@ import { LocalStorageKeys } from '../../App/constants'
 import { AuthContext } from '../../App/contexts/auth'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
+import { ContainerProvider } from '../../App/container-api'
+import { MainContainer } from '../../App/container-impl'
+import { container } from 'tsyringe'
 import Splash from '../../App/screens/Splash'
 import AsyncStorage from '../../__mocks__/@react-native-async-storage/async-storage'
 import authContext from '../contexts/auth'
@@ -37,12 +40,15 @@ describe('Splash Screen', () => {
     jest.useRealTimers()
   })
   test('Renders default correctly', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <AuthContext.Provider value={authContext}>
-          <Splash />
-        </AuthContext.Provider>
-      </ConfigurationContext.Provider>
+      <ContainerProvider value={main}>
+        <ConfigurationContext.Provider value={configurationContext}>
+          <AuthContext.Provider value={authContext}>
+            <Splash />
+          </AuthContext.Provider>
+        </ConfigurationContext.Provider>
+      </ContainerProvider>
     )
     await act(() => {
       jest.runAllTimers()
@@ -51,6 +57,7 @@ describe('Splash Screen', () => {
   })
 
   test('Starts onboarding correctly', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
     // @ts-ignore-next-line
     loadLoginAttempt.mockReturnValue({ servedPenalty: true, loginAttempts: 0 })
 
@@ -92,17 +99,19 @@ describe('Splash Screen', () => {
     })
     await waitFor(() => {
       render(
-        <StoreProvider
-          initialState={{
-            ...defaultState,
-          }}
-        >
-          <ConfigurationContext.Provider value={configurationContext}>
-            <AuthContext.Provider value={authContext}>
-              <Splash />
-            </AuthContext.Provider>
-          </ConfigurationContext.Provider>
-        </StoreProvider>
+        <ContainerProvider value={main}>
+          <StoreProvider
+            initialState={{
+              ...defaultState,
+            }}
+          >
+            <ConfigurationContext.Provider value={configurationContext}>
+              <AuthContext.Provider value={authContext}>
+                <Splash />
+              </AuthContext.Provider>
+            </ConfigurationContext.Provider>
+          </StoreProvider>
+        </ContainerProvider>
       )
     })
     await act(() => {

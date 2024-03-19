@@ -47,7 +47,7 @@ const OnboardingStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
-  const Terms = container.resolve(TOKENS.SCREEN_TERMS)
+  const { screen: Terms } = container.resolve(TOKENS.SCREEN_TERMS)
   const Developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
   const Preface = container.resolve(TOKENS.SCREEN_PREFACE)
 
