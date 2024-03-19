@@ -89,6 +89,7 @@
     "react-native-vision-camera": "^3.6.16",
     "react-native-webview": "^11.22.3",
     "stream-browserify": "^3.0.0",
+    "tsyringe": "^4.7.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

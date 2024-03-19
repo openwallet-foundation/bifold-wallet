@@ -75,7 +75,7 @@ exports[`Settings Screen Renders correctly 1`] = `
               "onPress": [Function],
               "testID": "com.ariesbifold:id/Language",
               "title": "Settings.Language",
-              "value": "Language.code_en",
+              "value": "Language.code",
             },
             Object {
               "accessibilityLabel": "Settings.Developer",
@@ -820,7 +820,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                     ]
                   }
                 >
-                  Language.code_en
+                  Language.code
                 </Text>
               </View>
             </View>
