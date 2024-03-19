@@ -305,7 +305,7 @@ const SmartProxy = () => {
                     setPopupVisible(false);
                 }}
             >
-                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.9)', justifyContent: 'top', alignItems: 'center', width: '100%' }}>
+                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.9)', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }}>
                     {/* Back Button Container */}
                     <View style={styles.backButtonContainer}>
                         <TouchableOpacity

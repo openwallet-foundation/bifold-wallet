@@ -1,6 +1,7 @@
 import { getItem, setItem } from "./storage";
+import Config from "react-native-config";
 
-const smartproxyUrl = 'https://7660-197-255-153-28.ngrok-free.app'
+const smartproxyUrl = Config.PROXY_SERVER_URL
 
 interface OwnerResponse {
     createdAt: string;
