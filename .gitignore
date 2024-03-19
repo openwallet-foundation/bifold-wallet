@@ -75,7 +75,7 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# Development of Credo-Ts in a React Native environment
+# Development of credo-ts in a React Native environment
 credo-ts/
 
 # Yarn Integrity file

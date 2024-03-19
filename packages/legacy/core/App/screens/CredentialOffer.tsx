@@ -1,4 +1,3 @@
-// TODO: export this from @credo-ts/anoncreds
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialPreviewAttribute } from '@credo-ts/core'
 import { useCredentialById } from '@credo-ts/react-hooks'

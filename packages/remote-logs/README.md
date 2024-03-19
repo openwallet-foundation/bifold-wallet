@@ -1,6 +1,6 @@
 # TL;DR
 
-The `@hyperledger/aries-remote-logs` package provides a simple way to send [Credo-Ts](https://github.com/openwallet-foundation/credo-ts) (Credo) logs to a remote [Loki](https://grafana.com/docs/loki/latest/) server.
+The `@hyperledger/aries-remote-logs` package provides a simple way to send [credo-ts](https://github.com/openwallet-foundation/credo-ts) (Credo) logs to a remote [Loki](https://grafana.com/docs/loki/latest/) server.
 
 ## Usage
 

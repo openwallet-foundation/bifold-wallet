@@ -1,4 +1,3 @@
-// TODO: export this from @credo-ts/anoncreds
 import startCase from 'lodash.startcase'
 
 import {
