@@ -2,13 +2,13 @@ import {
   AnonCredsCredentialInfo,
   AnonCredsCredentialsForProofRequest,
   AnonCredsPredicateType,
-  AnonCredsProofFormatService,
   AnonCredsProofRequest,
   AnonCredsProofRequestRestriction,
   AnonCredsRequestedAttribute,
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicate,
   AnonCredsRequestedPredicateMatch,
+  getCredentialsForAnonCredsProofRequest,
 } from '@credo-ts/anoncreds'
 import {
   Agent,
@@ -727,8 +727,8 @@ export const retrieveCredentialsForProof = async (
       return
     }
 
-    // TODO: non revocation requirements
     if (hasPresentationExchange) {
+      // FIXME: non revocation requirements
       const presentationExchange = format.request?.presentationExchange
       const difPexCredentialsForRequest = credentials.proofFormats.presentationExchange
 
@@ -739,14 +739,11 @@ export const retrieveCredentialsForProof = async (
       const descriptorMetadata = getDescriptorMetadata(difPexCredentialsForRequest)
       const anonCredsProofRequest = createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
 
-      // TODO:
-      const anonCredsProofFormatService = await agent.context.dependencyManager.resolve(AnonCredsProofFormatService)
-      anonCredsProofFormatService.getCredentialsForRequest(agent.context, {})
-
-      const anonCredsCredentialsForRequest: AnonCredsCredentialsForProofRequest =
-        await anonCredsProofFormatService._getCredentialsForRequest(agent.context, anonCredsProofRequest, {
-          filterByNonRevocationRequirements: false,
-        })
+      const anonCredsCredentialsForRequest = await getCredentialsForAnonCredsProofRequest(
+        agent.context,
+        anonCredsProofRequest,
+        { filterByNonRevocationRequirements: false }
+      )
 
       const filtered = filterInvalidProofRequestMatches(anonCredsCredentialsForRequest, descriptorMetadata)
       const processedAttributes = processProofAttributes(anonCredsProofRequest, filtered, fullCredentials)
