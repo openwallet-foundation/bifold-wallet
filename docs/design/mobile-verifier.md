@@ -139,7 +139,7 @@ interface IndyRequestedPredicate {
 
 ## Proof Request Generation
 
-Due to the [issue](https://github.com/openwallet-foundation/credo-ts/issues/1250) at credo-ts we cannot use Out-of-Band protocol covering both possible cases (with connection / connectionless).
+Due to the [issue](https://github.com/openwallet-foundation/credo-ts/issues/1250) at credo we cannot use Out-of-Band protocol covering both possible cases (with connection / connectionless).
 
 Instead, we have to use two legacy approaches to cover our cases:
 
@@ -211,7 +211,7 @@ Aries Bifold Scanner updated to handle raw json messages -> pass them to Credo m
       ```
 - Some events will also contain `Open` button tapping which a User will be able ti see the details of the event.
 
-> Issue: Right now we are able to show only the latest event for a protocol instance (for instance `PROOF_RECEIVED` but not `PROOF_REQUESTED`). In order to show all event properly we need to do changes in credo-ts (see corresponding [issue](https://github.com/openwallet-foundation/credo-ts/issues/1380)).
+> Issue: Right now we are able to show only the latest event for a protocol instance (for instance `PROOF_RECEIVED` but not `PROOF_REQUESTED`). In order to show all event properly we need to do changes in credo (see corresponding [issue](https://github.com/openwallet-foundation/credo-ts/issues/1380)).
 
 ## Proof Request Template usage history
 
