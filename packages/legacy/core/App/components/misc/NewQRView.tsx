@@ -51,7 +51,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const styles = StyleSheet.create({
     mainSafeArea: {
       flex: 1,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPallet.brand.highlight,
     },
     bottomSafeArea: {
       flex: 0,

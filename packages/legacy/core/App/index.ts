@@ -4,8 +4,9 @@ import type { OnboardingStyleSheet } from './screens/Onboarding'
 import { Agent } from '@aries-framework/core'
 import AgentProvider from '@aries-framework/react-hooks'
 
+import App from './App'
 import * as components from './components'
-import Button, { ButtonType } from './components/buttons/Button'
+import { Button as IButton, ButtonImpl as Button, ButtonType } from './components/buttons/Button'
 import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ContentGradient from './components/misc/ContentGradient'
@@ -99,8 +100,11 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
+export * from './container-api'
+export { MainContainer } from './container-impl'
 
 export {
+  App,
   indyLedgers,
   Agent,
   CommonUtilProvider,
@@ -115,7 +119,6 @@ export {
   credentialsTourSteps,
   credentialOfferTourSteps,
   proofRequestTourSteps,
-  Button,
   ButtonType,
   HeaderButton,
   ButtonLocation,
@@ -146,4 +149,6 @@ export {
   contexts,
   Text,
   loadLoginAttempt,
+  Button,
 }
+export type { IButton }

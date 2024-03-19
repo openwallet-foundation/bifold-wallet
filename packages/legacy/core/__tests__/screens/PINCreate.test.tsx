@@ -8,6 +8,9 @@ import { StoreProvider, defaultState } from '../../App/contexts/store'
 import PINCreate from '../../App/screens/PINCreate'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
+import { ContainerProvider } from '../../App/container-api'
+import { MainContainer } from '../../App/container-impl'
+import { container } from 'tsyringe'
 
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
@@ -30,16 +33,19 @@ describe('displays a PIN create screen', () => {
     jest.clearAllMocks()
   })
   test('PIN create renders correctly', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
-      <StoreProvider
-        initialState={{
-          ...defaultState,
-        }}
-      >
-        <AuthContext.Provider value={authContext}>
-          <PINCreate route={{} as any} navigation={jest.fn() as any} setAuthenticated={jest.fn()} />
-        </AuthContext.Provider>
-      </StoreProvider>
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINCreate route={{} as any} navigation={jest.fn() as any} setAuthenticated={jest.fn()} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
     )
 
     // Causes RangeError: Invalid string length

@@ -29,6 +29,7 @@ export enum Screens {
   OnTheWay = 'On The Way',
   Declined = 'Declined',
   UseBiometry = 'Use Biometry',
+  UsePushNotifications = 'Use Push Notifications',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofChangeCredential = 'Choose a credential',
@@ -39,6 +40,7 @@ export enum Screens {
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
   LightningWallet = 'Lightning Wallet',
+  SmartProxy = 'Smart Proxy',
 }
 
 export enum Stacks {
@@ -85,6 +87,7 @@ export type AuthenticateStackParams = {
   [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.UseBiometry]: undefined
   [Screens.NameWallet]: undefined
+  [Screens.UsePushNotifications]: undefined
 }
 export type OnboardingStackParams = {
   [Screens.Onboarding]: undefined
@@ -144,6 +147,8 @@ export type SettingStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
   [Screens.LightningWallet]: undefined
+  [Screens.SmartProxy]: undefined
+  [Screens.UsePushNotifications]: { isMenu?: boolean }
 }
 
 export type NotificationStackParams = {
