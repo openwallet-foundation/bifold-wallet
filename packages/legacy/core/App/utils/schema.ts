@@ -1,4 +1,3 @@
-// TODO: export from @credo-ts/anoncreds
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
 

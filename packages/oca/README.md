@@ -1,8 +1,8 @@
 <p align="center">
   <br />
   <img
-    alt="Credo Logo"
-    src="https://github.com/openwallet-foundation/credo-ts/blob/c7886cb8377ceb8ee4efe8d264211e561a75072d/images/credo-logo.png"
+    alt="Hyperledger Aries logo"
+    src="https://raw.githubusercontent.com/hyperledger/aries-framework-javascript/aa31131825e3331dc93694bc58414d955dcb1129/images/aries-logo.png"
     height="250px"
   />
 </p>
