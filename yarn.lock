@@ -4369,7 +4369,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-shared@npm:0.2.1":
+"@hyperledger/anoncreds-shared@npm:0.2.1, @hyperledger/anoncreds-shared@npm:^0.2.1":
   version: 0.2.1
   resolution: "@hyperledger/anoncreds-shared@npm:0.2.1"
   checksum: 3d0472ac85d7aa530c07965005826855fd38c309880b4462ce76e276a113699e6d4916e856a7e19ebbf3cc7fe443f8362e55fd187e72b4f8e5a17a4f0b13a8d7
@@ -4638,6 +4638,7 @@ __metadata:
     "@credo-ts/anoncreds": ^0.5.1-alpha.1
     "@credo-ts/core": ^0.5.1-alpha.1
     "@credo-ts/react-hooks": ^0.6.0
+    "@hyperledger/anoncreds-shared": ^0.2.1
     "@types/jest": ^29.5.5
     "@types/react": ^18.0.24
     babel-jest: ^27.5.1
@@ -4652,6 +4653,7 @@ __metadata:
     "@credo-ts/anoncreds": ^0.5.1-alpha.1
     "@credo-ts/core": ^0.5.1-alpha.1
     "@credo-ts/react-hooks": ^0.6.0
+    "@hyperledger/anoncreds-shared": ^0.2.1
     react: ^18.2.0
   languageName: unknown
   linkType: soft
