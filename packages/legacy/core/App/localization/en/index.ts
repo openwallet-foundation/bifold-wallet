@@ -311,7 +311,8 @@ const translation = {
     "InstructionsOne": "Open the app's settings",
     "InstructionsTwo": "Tap Notifications",
     "InstructionsThree": "Enable notifications",
-    "OpenSettigns": "Open settings",
+    "OpenSettings": "Open settings",
+    "Toggle": "Toggle Push Notifications",
   },
   "CredentialDetails": {
     "Id": "Id:",
