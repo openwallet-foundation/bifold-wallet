@@ -1,3 +1,4 @@
+import { getCredentialsForAnonCredsProofRequest } from '@credo-ts/anoncreds'
 import {
   CredentialExchangeRecord,
   CredentialRole,
@@ -43,6 +44,12 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
+jest.mock('@credo-ts/anoncreds', () => {
+  return {
+    ...jest.requireActual('@credo-ts/anoncreds'),
+    getCredentialsForAnonCredsProofRequest: jest.fn(),
+  }
+})
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
@@ -159,9 +166,7 @@ describe('displays a proof request screen', () => {
       })
 
       // @ts-ignore-next-line
-      agent?.context.dependencyManager.resolve.mockResolvedValue({
-        _getCredentialsForRequest: jest.fn().mockResolvedValue(anonCredsCredentialsForProofRequest),
-      })
+      getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       const { getByText, getByTestId, queryByText } = render(
         <ConfigurationContext.Provider value={configurationContext}>
@@ -315,9 +320,7 @@ describe('displays a proof request screen', () => {
       })
 
       // @ts-ignore-next-line
-      agent?.context.dependencyManager.resolve.mockResolvedValue({
-        _getCredentialsForRequest: jest.fn().mockResolvedValue(testRetrievedCredentials2.proofFormats.indy),
-      })
+      getCredentialsForAnonCredsProofRequest.mockResolvedValue(testRetrievedCredentials2.proofFormats.indy)
 
       const navigation = useNavigation()
 
@@ -380,9 +383,7 @@ describe('displays a proof request screen', () => {
       })
 
       // @ts-ignore-next-line
-      agent?.context.dependencyManager.resolve.mockResolvedValue({
-        _getCredentialsForRequest: jest.fn().mockResolvedValue(anonCredsCredentialsForProofRequest),
-      })
+      getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       const credentialsForRequest: AnonCredsCredentialsForProofRequest = {
         ...anonCredsCredentialsForProofRequest,
@@ -394,9 +395,7 @@ describe('displays a proof request screen', () => {
       }
 
       // @ts-ignore-next-line
-      agent?.context.dependencyManager.resolve.mockResolvedValue({
-        _getCredentialsForRequest: jest.fn().mockResolvedValue(credentialsForRequest),
-      })
+      getCredentialsForAnonCredsProofRequest.mockResolvedValue(credentialsForRequest)
 
       const tree = render(
         <ConfigurationContext.Provider value={configurationContext}>
@@ -476,28 +475,24 @@ describe('displays a proof request screen', () => {
       })
 
       // @ts-ignore-next-line
-      agent?.context.dependencyManager.resolve.mockResolvedValue({
-        _getCredentialsForRequest: jest.fn().mockResolvedValue(anonCredsCredentialsForProofRequest),
-      })
+      getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       // @ts-ignore-next-line
-      agent?.context.dependencyManager.resolve.mockResolvedValue({
-        _getCredentialsForRequest: jest.fn().mockResolvedValue({
-          attributes: anonCredsCredentialsForProofRequest.attributes,
-          predicates: {
-            age_0: [
-              {
+      getCredentialsForAnonCredsProofRequest.mockResolvedValue({
+        attributes: anonCredsCredentialsForProofRequest.attributes,
+        predicates: {
+          age_0: [
+            {
+              credentialId: credentialId,
+              revealed: true,
+              credentialInfo: {
+                ...attributeBase,
                 credentialId: credentialId,
-                revealed: true,
-                credentialInfo: {
-                  ...attributeBase,
-                  credentialId: credentialId,
-                  attributes: { age: 20 },
-                },
+                attributes: { age: 20 },
               },
-            ],
-          },
-        }),
+            },
+          ],
+        },
       })
 
       const { getByText, getByTestId } = render(

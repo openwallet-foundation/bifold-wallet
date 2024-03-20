@@ -25,6 +25,7 @@ module.exports = {
     '<rootDir>/lib',
     '<rootDir>/__tests__/contexts/',
     '<rootDir>/__tests__/helpers/',
+    '<rootDir>/__tests__/screens/fixtures',
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
