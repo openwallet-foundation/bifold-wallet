@@ -101,14 +101,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
         type: DispatchAction.DID_CREATE_PIN,
       })
 
-      if (enablePushNotifications) {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: Screens.UsePushNotifications }],
-          })
-        )
-      } else if (store.preferences.enableWalletNaming) {
+      if (store.preferences.enableWalletNaming) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,

@@ -81,13 +81,6 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
           routes: [{ name: Screens.NameWallet }],
         })
       )
-    } else {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.UseBiometry }],
-        })
-      )
     }
   }
 

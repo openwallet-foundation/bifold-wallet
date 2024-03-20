@@ -13,6 +13,10 @@ import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
+import { OnboardingStackParams, Screens } from '../types/navigators'
+import { CommonActions, useNavigation } from '@react-navigation/core'
+import { useConfiguration } from '../contexts/configuration'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -22,6 +26,7 @@ enum UseBiometryUsage {
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
+  const { enablePushNotifications } = useConfiguration()
   const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
@@ -29,6 +34,7 @@ const UseBiometry: React.FC = () => {
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const screenUsage = store.onboarding.didConsiderBiometry
     ? UseBiometryUsage.ToggleOnOff
     : UseBiometryUsage.InitialSetup
@@ -83,6 +89,14 @@ const UseBiometry: React.FC = () => {
       type: DispatchAction.USE_BIOMETRY,
       payload: [biometryEnabled],
     })
+    if( enablePushNotifications ) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: Screens.UsePushNotifications }],
+        })
+      )
+    }
   }
 
   const toggleSwitch = () => {
