@@ -230,6 +230,7 @@ exports[`displays a push notification screen Push notification screen renders co
               PushNotifications.ReceiveNotifications
             </Text>
             <RCTSwitch
+              accessibilityLabel="PushNotifications.ReceiveNotifications"
               accessibilityRole="switch"
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
