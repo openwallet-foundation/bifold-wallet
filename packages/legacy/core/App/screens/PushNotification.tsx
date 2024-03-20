@@ -153,6 +153,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
                       ios_backgroundColor={ColorPallet.grayscale.lightGrey}
                       onValueChange={toggleSwitch}
                       testID={testIdWithKey('PushNotificationSwitch')}
+                      accessibilityLabel={t('PushNotifications.Toggle')}
                       value={notificationState}
                     />
                   </View>
@@ -161,22 +162,24 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
               {hasNotificationsDisabled && (
                 <View style={{ marginTop: 'auto' }}>
                   <Button
-                    buttonType={ButtonType.Primary}
-                    title={t('PushNotifications.OpenSettigns')}
+                    title={t('PushNotifications.OpenSettings')}
+                    accessibilityLabel={t('PushNotifications.OpenSettings')}
                     testID={testIdWithKey('PushNotificationSettings')}
+                    buttonType={ButtonType.Primary}
                     onPress={() => Linking.openSettings()}
-                  ></Button>
+                  />
                 </View>
               )}
             </>
           ) : (
             <View style={{ marginTop: 'auto' }}>
               <Button
-                buttonType={ButtonType.Primary}
                 title={t('Global.Continue')}
+                accessibilityLabel={t('Global.Continue')}
                 testID={testIdWithKey('PushNotificationContinue')}
+                buttonType={ButtonType.Primary}
                 onPress={activatePushNotifications}
-              ></Button>
+              />
             </View>
           )}
         </View>
