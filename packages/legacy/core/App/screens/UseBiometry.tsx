@@ -1,3 +1,5 @@
+import { CommonActions, useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Modal, Switch, ScrollView, Pressable, DeviceEventEmitter } from 'react-native'
@@ -7,16 +9,14 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
+import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
-import { OnboardingStackParams, Screens } from '../types/navigators'
-import { CommonActions, useNavigation } from '@react-navigation/core'
-import { useConfiguration } from '../contexts/configuration'
-import { StackNavigationProp } from '@react-navigation/stack'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -89,7 +89,7 @@ const UseBiometry: React.FC = () => {
       type: DispatchAction.USE_BIOMETRY,
       payload: [biometryEnabled],
     })
-    if( enablePushNotifications ) {
+    if (enablePushNotifications) {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
