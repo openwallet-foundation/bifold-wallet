@@ -145,6 +145,8 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
                       thumbColor={notificationState ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
                       ios_backgroundColor={ColorPallet.grayscale.lightGrey}
                       onValueChange={toggleSwitch}
+                      accessibilityLabel={t('PushNotifications.ReceiveNotifications')}
+                      accessibilityRole="switch"
                       testID={testIdWithKey('PushNotificationSwitch')}
                       value={notificationState}
                     />
@@ -155,7 +157,8 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
                 <View style={{ marginTop: 'auto' }}>
                   <Button
                     buttonType={ButtonType.Primary}
-                    title={t('PushNotifications.OpenSettigns')}
+                    title={t('PushNotifications.OpenSettings')}
+                    accessibilityLabel={t('PushNotifications.OpenSettings')}
                     testID={testIdWithKey('PushNotificationSettings')}
                     onPress={() => Linking.openSettings()}
                   ></Button>
@@ -167,6 +170,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
               <Button
                 buttonType={ButtonType.Primary}
                 title={t('Global.Continue')}
+                accessibilityLabel={t('Global.Continue')}
                 testID={testIdWithKey('PushNotificationContinue')}
                 onPress={activatePushNotifications}
               ></Button>
