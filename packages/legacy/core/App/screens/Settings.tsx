@@ -70,8 +70,9 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     logo: {
       height: 64,
-      width: '50%',
+      width: '100%',
       marginVertical: 16,
+      backgroundColor: 'orange',
     },
     footer: {
       marginVertical: 25,
@@ -365,7 +366,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
                 <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
                   {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
                 </Text>
-                <Assets.svg.logo {...styles.logo} />
+                {/* <Assets.svg.logo {...styles.logo} /> */}
+                <Assets.svg.logo style={{ alignSelf: 'center' }} width={150} height={75} />
               </View>
             </TouchableWithoutFeedback>
           </View>
