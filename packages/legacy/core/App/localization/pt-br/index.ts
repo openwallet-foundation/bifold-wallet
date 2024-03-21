@@ -293,7 +293,7 @@ const translation = {
     "InstructionsOne": "Open the app's settings (PT-BR)",
     "InstructionsTwo": "Tap Notifications (PT-BR)",
     "InstructionsThree": "Enable notifications (PT-BR)",
-    "OpenSettigns": "Open settings (PT-BR)",
+    "OpenSettings": "Open settings (PT-BR)",
   },
   "CredentialDetails": {
     "Id": "Id:",
