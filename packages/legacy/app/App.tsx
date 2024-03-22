@@ -1,27 +1,27 @@
 import {
   AgentProvider,
-  TourProvider,
-  homeTourSteps,
-  credentialsTourSteps,
-  credentialOfferTourSteps,
-  proofRequestTourSteps,
-  CommonUtilProvider,
+  AnimatedComponentsProvider,
   AuthProvider,
+  CommonUtilProvider,
   ConfigurationProvider,
+  ErrorModal,
+  NetInfo,
   NetworkProvider,
+  RootStack,
   StoreProvider,
   ThemeProvider,
-  theme,
+  TourProvider,
+  animatedComponents,
+  credentialOfferTourSteps,
+  credentialsTourSteps,
+  defaultConfiguration,
+  homeTourSteps,
   initLanguages,
   initStoredLanguage,
-  translationResources,
-  ErrorModal,
+  proofRequestTourSteps,
+  theme,
   toastConfig,
-  RootStack,
-  NetInfo,
-  defaultConfiguration,
-  animatedComponents,
-  AnimatedComponentsProvider,
+  translationResources,
 } from '@hyperledger/aries-bifold-core'
 import * as React from 'react'
 import { useEffect, useMemo } from 'react'
@@ -50,7 +50,7 @@ const App = () => {
 
   return (
     <StoreProvider>
-      <AgentProvider>
+      <AgentProvider agent={undefined}>
         <ThemeProvider value={theme}>
           <AnimatedComponentsProvider value={animatedComponents}>
             <ConfigurationProvider value={defaultConfiguration}>

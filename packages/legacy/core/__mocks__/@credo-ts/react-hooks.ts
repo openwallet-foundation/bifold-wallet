@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LegacyIndyCredentialFormat } from '@aries-framework/anoncreds'
+import { LegacyIndyCredentialFormat } from '@credo-ts/anoncreds'
 import {
   BasicMessageRecord,
   CredentialExchangeRecord,
   CredentialProtocolOptions,
   ProofExchangeRecord,
-} from '@aries-framework/core'
+} from '@credo-ts/core'
 
 const useCredentials = jest.fn().mockReturnValue({ records: [] } as any)
 const useProofs = jest.fn().mockReturnValue({ records: [] } as any)
@@ -64,14 +64,14 @@ const useConnections = jest.fn()
 
 export {
   useAgent,
-  useConnectionById,
-  useCredentials,
-  useProofs,
-  useCredentialById,
-  useCredentialByState,
-  useProofById,
-  useProofByState,
-  useConnections,
   useBasicMessages,
   useBasicMessagesByConnectionId,
+  useConnectionById,
+  useConnections,
+  useCredentialById,
+  useCredentialByState,
+  useCredentials,
+  useProofById,
+  useProofByState,
+  useProofs,
 }

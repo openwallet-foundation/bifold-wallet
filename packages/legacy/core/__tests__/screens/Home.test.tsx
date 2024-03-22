@@ -1,4 +1,3 @@
-
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })
@@ -6,9 +5,9 @@ jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
 
-jest.mock('@aries-framework/react-hooks', ()=>({
-  ...jest.requireActual('@aries-framework/react-hooks'),
-  useBasicMessages: jest.fn().mockReturnValue({records: []}),
+jest.mock('@credo-ts/react-hooks', () => ({
+  ...jest.requireActual('@credo-ts/react-hooks'),
+  useBasicMessages: jest.fn().mockReturnValue({ records: [] }),
   useCredentialByState: jest.fn().mockReturnValue([]),
   useProofByState: jest.fn().mockReturnValue([]),
   useAgent: jest.fn(),
@@ -18,16 +17,24 @@ import {
   BasicMessageRecord,
   BasicMessageRole,
   CredentialExchangeRecord as CredentialRecord,
+  CredentialRole,
   CredentialState,
   ProofExchangeRecord,
+  ProofRole,
   ProofState,
-} from '@aries-framework/core'
-//import { useBasicMessages, useCredentialByState, useProofByState, useAgent } from '@aries-framework/react-hooks'
+} from '@credo-ts/core'
+//import { useBasicMessages, useCredentialByState, useProofByState, useAgent } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { act, fireEvent, render } from '@testing-library/react-native'
 
+import {
+  useAgent,
+  useBasicMessages,
+  useConnectionById,
+  useCredentialByState,
+  useProofByState,
+} from '@credo-ts/react-hooks'
 import React from 'react'
-import { useBasicMessages, useCredentialByState, useProofByState, useAgent, useConnectionById } from '@aries-framework/react-hooks'
 
 // eslint-disable-next-line import/no-named-as-default
 import { ConfigurationContext } from '../../App/contexts/configuration'
@@ -35,11 +42,8 @@ import Home from '../../App/screens/Home'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 
-import { useTranslation } from 'react-i18next'
-
 describe('displays a home screen', () => {
-  beforeEach(() => {
-  })
+  beforeEach(() => {})
 
   test('renders correctly', () => {
     const tree = render(
@@ -73,6 +77,7 @@ describe('displays a home screen', () => {
 describe('with a notifications module, when an issuer sends a credential offer', () => {
   const testCredentialRecords: CredentialRecord[] = [
     new CredentialRecord({
+      role: CredentialRole.Holder,
       threadId: '1',
       state: CredentialState.OfferReceived,
       protocolVersion: 'v1',
@@ -80,11 +85,13 @@ describe('with a notifications module, when an issuer sends a credential offer',
   ]
   const testProofRecords: ProofExchangeRecord[] = [
     new ProofExchangeRecord({
+      role: ProofRole.Prover,
       threadId: '2',
       state: ProofState.RequestReceived,
       protocolVersion: 'v1',
     }),
     new ProofExchangeRecord({
+      role: ProofRole.Prover,
       threadId: '3',
       state: ProofState.Done,
       protocolVersion: 'v1',
@@ -110,7 +117,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
   beforeEach(() => {
     jest.resetAllMocks()
     // @ts-ignore
-    useBasicMessages.mockReturnValue({records: testBasicMessages})
+    useBasicMessages.mockReturnValue({ records: testBasicMessages })
 
     // @ts-ignore
     useProofByState.mockReturnValue(testProofRecords)
@@ -121,7 +128,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
     useAgent.mockReturnValue({})
 
     // @ts-ignore
-    useConnectionById.mockReturnValue({theirLabel:'ACME'})
+    useConnectionById.mockReturnValue({ theirLabel: 'ACME' })
   })
 
   /**
@@ -157,14 +164,13 @@ describe('with a notifications module, when an issuer sends a credential offer',
     )
 
     const button = await view.findByTestId(testIdWithKey('ViewOffer'))
-    
 
     expect(button).toBeDefined()
     //view.debug()
     await act(() => {
       fireEvent(button, 'press')
     })
-    
+
     expect(navigation.navigate).toHaveBeenCalledTimes(1)
     expect(navigation.navigate).toHaveBeenCalledWith('Notifications Stack', {
       screen: 'Credential Offer',

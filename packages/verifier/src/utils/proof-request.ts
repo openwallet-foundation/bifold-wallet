@@ -3,8 +3,8 @@ import {
   AnonCredsRequestedPredicate,
   LegacyIndyProofRequest,
   V1RequestPresentationMessage,
-} from '@aries-framework/anoncreds'
-import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@aries-framework/core'
+} from '@credo-ts/anoncreds'
+import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@credo-ts/core'
 
 import { BifoldAgent } from '../types/agent'
 import { ProofRequestTemplate, ProofRequestType } from '../types/proof-reqeust-template'

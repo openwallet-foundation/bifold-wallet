@@ -1,7 +1,7 @@
+import { useConnections } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
-import { useConnections } from '@aries-framework/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { act, cleanup, render, fireEvent, waitFor } from '@testing-library/react-native'
+import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import * as verifier from '@hyperledger/aries-bifold-verifier'
@@ -9,17 +9,18 @@ import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { testIdWithKey } from '../../App'
 import ProofRequesting from '../../App/screens/ProofRequesting'
 
-import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
+import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
 import {
   ConnectionRecord,
   DidExchangeRole,
   DidExchangeState,
   OutOfBandInvitation,
   ProofExchangeRecord,
+  ProofRole,
   ProofState,
-} from '@aries-framework/core'
-import { V1RequestPresentationMessage, INDY_PROOF_REQUEST_ATTACHMENT_ID } from '@aries-framework/anoncreds'
-import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
+} from '@credo-ts/core'
+import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
+import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -33,12 +34,12 @@ jest.mock('@react-navigation/core', () => {
 jest.mock('@react-navigation/native', () => {
   return require('../../__mocks__/custom/@react-navigation/native')
 })
-jest.mock('@hyperledger/aries-bifold-verifier',() => {
-  const original = jest. requireActual('@hyperledger/aries-bifold-verifier')
+jest.mock('@hyperledger/aries-bifold-verifier', () => {
+  const original = jest.requireActual('@hyperledger/aries-bifold-verifier')
   return {
     ...original,
-     __esModule: true,
-     createConnectionlessProofRequestInvitation: jest.fn(original.createConnectionlessProofRequestInvitation)
+    __esModule: true,
+    createConnectionlessProofRequestInvitation: jest.fn(original.createConnectionlessProofRequestInvitation),
   }
 })
 jest.mock('react-native-device-info', () => {
@@ -84,6 +85,7 @@ const proofRecord = new ProofExchangeRecord({
   state: ProofState.RequestSent,
   protocolVersion: 'V1',
   isVerified: true,
+  role: ProofRole.Prover,
 })
 const invitation = new OutOfBandInvitation({
   id: 'test',

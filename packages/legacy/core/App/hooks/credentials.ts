@@ -1,5 +1,5 @@
-import { CredentialExchangeRecord } from '@aries-framework/core'
-import { useCredentials } from '@aries-framework/react-hooks'
+import { CredentialExchangeRecord } from '@credo-ts/core'
+import { useCredentials } from '@credo-ts/react-hooks'
 import { useMemo } from 'react'
 
 export const useCredentialsByConnectionId = (connectionId: string): CredentialExchangeRecord[] => {

@@ -2,7 +2,7 @@ import {
   AnonCredsNonRevokedInterval,
   AnonCredsPredicateType,
   AnonCredsProofRequestRestriction,
-} from '@aries-framework/anoncreds'
+} from '@credo-ts/anoncreds'
 
 export interface AnonCredsRequestedPredicate {
   label?: string

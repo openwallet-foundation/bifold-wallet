@@ -1,4 +1,4 @@
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent } from '@credo-ts/react-hooks'
 import {
   GroupedSharedProofDataItem,
   getProofData,
@@ -53,7 +53,7 @@ const SharedProofData: React.FC<SharedProofDataProps> = ({ recordId, onSharedPro
   })
 
   if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
+    throw new Error('Unable to fetch agent from Credo')
   }
 
   const [loading, setLoading] = useState<boolean>(true)

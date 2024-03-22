@@ -1,4 +1,4 @@
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent } from '@credo-ts/react-hooks'
 import {
   AnonCredsProofRequestTemplatePayloadData,
   ProofRequestType,
@@ -21,7 +21,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplate } from '../hooks/proof-request-templates'
-import { Screens, ProofRequestsStackParams } from '../types/navigators'
+import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
@@ -94,7 +94,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const { agent } = useAgent()
   if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
+    throw new Error('Unable to fetch agent from Credo')
   }
 
   const style = StyleSheet.create({

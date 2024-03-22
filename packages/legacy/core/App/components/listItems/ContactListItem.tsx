@@ -3,13 +3,13 @@ import type {
   ConnectionRecord,
   CredentialExchangeRecord,
   ProofExchangeRecord,
-} from '@aries-framework/core'
+} from '@credo-ts/core'
 
-import { useBasicMessagesByConnectionId } from '@aries-framework/react-hooks'
+import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'

@@ -1,4 +1,4 @@
-import { V1RequestPresentationMessage } from '@aries-framework/anoncreds'
+import { V1RequestPresentationMessage } from '@credo-ts/anoncreds'
 import {
   Agent,
   BasicMessageRecord,
@@ -6,14 +6,14 @@ import {
   CredentialExchangeRecord,
   ProofExchangeRecord,
   ProofState,
-} from '@aries-framework/core'
-import { useAgent, useConnectionById } from '@aries-framework/react-hooks'
+} from '@credo-ts/core'
+import { useAgent, useConnectionById } from '@credo-ts/react-hooks'
 import { markProofAsViewed } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle, Text, TextStyle, DeviceEventEmitter, TouchableOpacity } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { EventTypes, hitSlop } from '../../constants'

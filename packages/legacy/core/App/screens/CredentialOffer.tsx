@@ -1,7 +1,6 @@
-// TODO: export this from @aries-framework/anoncreds
-import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
-import { CredentialPreviewAttribute } from '@aries-framework/core'
-import { useCredentialById } from '@aries-framework/react-hooks'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
+import { CredentialPreviewAttribute } from '@credo-ts/core'
+import { useCredentialById } from '@credo-ts/react-hooks'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/core'
@@ -27,7 +26,7 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { BifoldError } from '../types/error'
-import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
+import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
@@ -138,7 +137,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     }
 
     /**
-     * FIXME: Formatted data needs to be added to the record in AFJ extensions
+     * FIXME: Formatted data needs to be added to the record in Credo extensions
      * For now the order here matters. The credential preview must be updated to
      * add attributes (since these are not available in the offer).
      * Once the credential is updated the presentation fields can be correctly resolved

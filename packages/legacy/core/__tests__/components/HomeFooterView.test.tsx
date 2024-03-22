@@ -1,5 +1,5 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+import { CredentialExchangeRecord as CredentialRecord, CredentialRole, CredentialState } from '@credo-ts/core'
+import { useCredentialByState } from '@credo-ts/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
@@ -15,6 +15,7 @@ describe('HomeFooterView Component', () => {
   test('Renders correctly with notifications', async () => {
     const testCredentialRecords: CredentialRecord[] = [
       new CredentialRecord({
+        role: CredentialRole.Holder,
         threadId: '1',
         state: CredentialState.OfferReceived,
         protocolVersion: 'v1',

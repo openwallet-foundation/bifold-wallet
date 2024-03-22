@@ -1,5 +1,5 @@
-import { ConnectionRecord, ConnectionType, DidExchangeState } from '@aries-framework/core'
-import { useConnections } from '@aries-framework/react-hooks'
+import { ConnectionRecord, ConnectionType, DidExchangeState } from '@credo-ts/core'
+import { useConnections } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

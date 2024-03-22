@@ -1,4 +1,4 @@
-import { useConnectionById } from '@aries-framework/react-hooks'
+import { useConnectionById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { act, fireEvent, render } from '@testing-library/react-native'

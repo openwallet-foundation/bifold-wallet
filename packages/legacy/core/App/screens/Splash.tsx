@@ -1,6 +1,6 @@
-import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
-import { agentDependencies } from '@aries-framework/react-native'
+import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
+import { agentDependencies } from '@credo-ts/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
@@ -28,8 +28,8 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from '../types/state'
-import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
-import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
+import { createLinkSecretIfRequired, getAgentModules } from '../utils/agent'
+import { didMigrateToAskar, migrateToAskar } from '../utils/migration'
 
 const onboardingComplete = (state: StoreOnboardingState, params: { termsVersion?: boolean | string }): boolean => {
   const termsVer = params.termsVersion ?? true

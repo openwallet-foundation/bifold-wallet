@@ -1,5 +1,5 @@
-import { DidExchangeState } from '@aries-framework/core'
-import { useConnectionById } from '@aries-framework/react-hooks'
+import { DidExchangeState } from '@credo-ts/core'
+import { useConnectionById } from '@credo-ts/react-hooks'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -13,7 +13,7 @@ import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
-import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
+import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>

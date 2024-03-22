@@ -1,10 +1,10 @@
 # TL;DR
 
-The `@hyperledger/aries-remote-logs` package provides a simple way to send [Aries Framework Javascript](https://github.com/openwallet-foundation/agent-framework-javascript) (AFJ) logs to a remote [Loki](https://grafana.com/docs/loki/latest/) server.
+The `@hyperledger/aries-remote-logs` package provides a simple way to send [credo-ts](https://github.com/openwallet-foundation/credo-ts) (Credo) logs to a remote [Loki](https://grafana.com/docs/loki/latest/) server.
 
 ## Usage
 
-This package allows a copy of the AFJ logs to be sent to a remote Loki server. This is useful for debugging issues in environments where the logs are not easily accessible, yet the logs are needed to provide [Tier 3](https://en.wikipedia.org/wiki/Technical_support) support.
+This package allows a copy of the Credo logs to be sent to a remote Loki server. This is useful for debugging issues in environments where the logs are not easily accessible, yet the logs are needed to provide [Tier 3](https://en.wikipedia.org/wiki/Technical_support) support.
 
 Due to the sensitive nature of Verifiable Credentials and Digital Identity in general, the logs are not sent automatically. Instead, this feature must be enabled. It is **highly recommended** that this feature be disabled by default in production environments and only enabled, by the end user, when needed, and even then automatically disabled after a short period of time.
 
@@ -42,7 +42,7 @@ The image below shows what a typical Grafana log query looks like. The query is 
 
 ### Example Usage
 
-Setup the `RemoteLogger` and pass it to the AFJ `Agent` as shown below:
+Setup the `RemoteLogger` and pass it to the Credo `Agent` as shown below:
 
 ```typescript
 import { RemoteLogger, RemoteLoggerOptions } from '@hyperledger/aries-remote-logs'
@@ -63,7 +63,7 @@ const logOptions: RemoteLoggerOptions = {
 const logger = new RemoteLogger(logOptions)
 logger.startEventListeners()
 
-const afjConfigOpts = {
+const credoConfigOpts = {
   config: {
     label: 'Bifold Wallet',
     walletConfig: {
@@ -82,7 +82,7 @@ const afjConfigOpts = {
   }),
 }
 
-const agent = new Agent(options)
+const agent = new Agent(credoConfigOpts)
 
 // ...
 ```
