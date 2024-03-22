@@ -204,6 +204,30 @@ export const payInvoice = async (scannedData: any) => {
     }
 }
 
+export const payInvoiceWithAmount = async (scannedData: any, amount: number) => {
+
+    try {
+        const bolt11 = scannedData
+        // The `amountMsat` param is optional and should only passed if the bolt11 doesn't specify an amount.
+        // The amountMsat is required in case an amount is not specified in the bolt11 invoice'.
+        const amountMsat = amount * 1000
+        if (bolt11 !== undefined && amountMsat !== undefined) {
+
+            const response = await sendPayment({ bolt11, amountMsat })
+
+            console.log('Payment response:', response)
+
+            return response
+        } else {
+            console.log('No invoice to pay')
+            return 'No invoice to pay'
+        }
+    } catch (err: any) {
+        console.error(err)
+        return "Error paying invoice"
+    }
+}
+
 export const getBTCPrice = async () => {
     try {
         let btcZarPrice = 0;
@@ -230,6 +254,22 @@ export const getLInvoiceZarAmount = async (lightningInvoice: string) => {
         }
     } catch (error) {
         console.error('Error getting invoice amount:', error);
+    }
+
+}
+
+export const getBTCToZarAmount = async (satoshis: number) => {
+    const btcZarPrice = await getBTCPrice();
+
+    try {
+        if (btcZarPrice !== undefined) {
+            return (satoshis / 100000000 * btcZarPrice).toFixed(2)
+        }
+        else {
+            return undefined
+        }
+    } catch (error) {
+        console.error('Error getting zar amount:', error);
     }
 
 }

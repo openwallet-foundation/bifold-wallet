@@ -34,10 +34,9 @@ export const registerOnSmartProxy = async (identifier: string, externalIdentifie
             }),
         });
 
-        console.log("HTTP Response Code:", response.status); // Log the HTTP status code
+        console.log("HTTP Response Code:", response.status);
 
         if (!response.ok) {
-            // throw new Error('Network response was not ok');
             return "Error Registering"
         }
 
@@ -62,10 +61,9 @@ export const deRegisterOnSmartProxy = async (identifier: string) => {
             }
         });
 
-        console.log("HTTP Response Code:", response.status); // Log the HTTP status code
+        console.log("HTTP Response Code:", response.status);
 
         if (!response.ok) {
-            // throw new Error('Network response was not ok');
             return "Error Deregistering"
         }
 
@@ -87,10 +85,9 @@ export const deleteSmartProxyEntry = async (id: string) => {
             }
         });
 
-        console.log("HTTP Response Code:", response.status); // Log the HTTP status code
+        console.log("HTTP Response Code:", response.status);
 
         if (!response.ok) {
-            // throw new Error('Network response was not ok');
             return "Error Deleting"
         }
 
@@ -118,11 +115,10 @@ export const createSmartProxyEntry = async (proxyKey: string, details: string, o
             }),
         });
 
-        console.log("HTTP Response Code:", response.status); // Log the HTTP status code
+        console.log("HTTP Response Code:", response.status);
 
         if (!response.ok) {
             console.error(response)
-            // throw new Error('Network response was not ok');
             return "Error Creating Entry"
         }
 
@@ -143,7 +139,6 @@ export const getProxies = async (did: string) => {
     try {
         const response = await fetch(smartproxyUrl + '/proxies');
         if (!response.ok) {
-            // throw new Error('Network response was not ok');
             console.log("Error fetching proxies")
             return "Error fetching proxies"
         }
@@ -154,3 +149,44 @@ export const getProxies = async (did: string) => {
         console.error('Error fetching proxies:', error);
     }
 };
+
+export const querySmartProxyEntry = async (identifier: string) => {
+    try {
+
+        const response = await fetch(smartproxyUrl + '/proxies/search?proxyKey=' + identifier, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        console.log("HTTP Response Code:", response.status);
+
+        if (!response.ok) {
+            return "Error Searching for Proxy entry"
+        }
+        const data = await response.json();
+
+        console.log(data);
+
+        return data
+
+    } catch (error) {
+        console.error('Error Searching for proxy entry:', error);
+        return "Error Searching"
+    }
+};
+
+export const getOwner = async (identifier: string) => {
+    try {
+        const response = await fetch(smartproxyUrl + '/owners/search?identifier=' + identifier);
+        if (!response.ok) {
+            return "Error fetching owner"
+        }
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching owner:', error);
+    }
+}
