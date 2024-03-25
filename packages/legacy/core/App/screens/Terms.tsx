@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -16,21 +16,25 @@ import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
+export const TermsVersion = true
+
 const Terms: React.FC = () => {
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const [checked, setChecked] = useState(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
   const container = useContainer()
   const Button = container.resolve(TOKENS.COMP_BUTTON)
-  const onSubmitPressed = () => {
+  const agreedToPreviousTerms = store.onboarding.didAgreeToTerms
+  const onSubmitPressed = useCallback(() => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,
+      payload: [{ DidAgreeToTerms: TermsVersion }],
     })
 
     navigation.navigate(Screens.CreatePIN)
-  }
+  }, [])
   const style = StyleSheet.create({
     container: {
       ...OnboardingTheme.container,
@@ -81,32 +85,36 @@ const Terms: React.FC = () => {
           est laborum.
         </Text>
         <View style={[style.controlsContainer]}>
-          <CheckBoxRow
-            title={t('Terms.Attestation')}
-            accessibilityLabel={t('Terms.IAgree')}
-            testID={testIdWithKey('IAgree')}
-            checked={checked}
-            onPress={() => setChecked(!checked)}
-          />
+          {!agreedToPreviousTerms && (
+            <CheckBoxRow
+              title={t('Terms.Attestation')}
+              accessibilityLabel={t('Terms.IAgree')}
+              testID={testIdWithKey('IAgree')}
+              checked={checked}
+              onPress={() => setChecked(!checked)}
+            />
+          )}
           <View style={[{ paddingTop: 10 }]}>
             <Button
-              title={t('Global.Continue')}
-              accessibilityLabel={t('Global.Continue')}
-              testID={testIdWithKey('Continue')}
-              disabled={!checked}
+              title={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
+              accessibilityLabel={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
+              testID={agreedToPreviousTerms ? testIdWithKey('Accept') : testIdWithKey('Continue')}
+              disabled={!checked && !agreedToPreviousTerms}
               onPress={onSubmitPressed}
               buttonType={ButtonType.Primary}
             />
           </View>
-          <View style={[{ paddingTop: 10, marginBottom: 20 }]}>
-            <Button
-              title={t('Global.Back')}
-              accessibilityLabel={t('Global.Back')}
-              testID={testIdWithKey('Back')}
-              onPress={onBackPressed}
-              buttonType={ButtonType.Secondary}
-            />
-          </View>
+          {!agreedToPreviousTerms && (
+            <View style={[{ paddingTop: 10, marginBottom: 20 }]}>
+              <Button
+                title={t('Global.Back')}
+                accessibilityLabel={t('Global.Back')}
+                testID={testIdWithKey('Back')}
+                onPress={onBackPressed}
+                buttonType={ButtonType.Secondary}
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

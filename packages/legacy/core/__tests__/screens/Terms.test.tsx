@@ -12,7 +12,6 @@ import authContext from '../contexts/auth'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import configurationContext from '../contexts/configuration'
 
-
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })
