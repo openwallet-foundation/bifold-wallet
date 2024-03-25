@@ -126,14 +126,12 @@ const Splash: React.FC = () => {
           }
 
           if (!store.loginAttempt.lockoutDate) {
-            setTimeout(() => {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [{ name: Screens.EnterPIN }],
-                })
-              )
-            }, 500)
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: Screens.EnterPIN }],
+              })
+            )
           } else {
             // return to lockout screen if lockout date is set
             navigation.dispatch(
@@ -161,23 +159,6 @@ const Splash: React.FC = () => {
             })
           )
         }
-
-        // We have no onboarding state, starting from step zero.
-        // if (showPreface) {
-        //   navigation.dispatch(
-        //     CommonActions.reset({
-        //       index: 0,
-        //       routes: [{ name: Screens.Preface }],
-        //     })
-        //   )
-        // } else {
-        //   navigation.dispatch(
-        //     CommonActions.reset({
-        //       index: 0,
-        //       routes: [{ name: Screens.Onboarding }],
-        //     })
-        //   )
-        // }
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1044'),
