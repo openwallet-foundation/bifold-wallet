@@ -20,7 +20,6 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PushNotification from '../screens/PushNotification'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
 
@@ -49,6 +48,7 @@ const OnboardingStack: React.FC = () => {
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
   const { screen: Terms } = container.resolve(TOKENS.SCREEN_TERMS)
   const Developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
+  const ScreenOptionsDictionary = container.resolve(TOKENS.OBJECT_ONBOARDINGCONFIG)
   const Preface = container.resolve(TOKENS.SCREEN_PREFACE)
 
   const onAuthenticated = (status: boolean): void => {
@@ -83,38 +83,31 @@ const OnboardingStack: React.FC = () => {
       component: Preface,
       options: () => {
         return {
+          ...ScreenOptionsDictionary[Screens.Preface],
           title: t('Screens.Preface'),
-          headerTintColor: OnboardingTheme.headerTintColor,
-          headerShown: true,
-          headerLeft: () => false,
         }
       },
     },
     {
       name: Screens.Splash,
       component: splash,
+      options: ScreenOptionsDictionary[Screens.Splash],
     },
     {
       name: Screens.Onboarding,
       component: OnBoardingScreen,
       options: () => {
         return {
+          ...ScreenOptionsDictionary[Screens.Onboarding],
           title: t('Screens.Onboarding'),
-          headerTintColor: OnboardingTheme.headerTintColor,
-          headerShown: true,
-          gestureEnabled: false,
-          headerLeft: () => false,
         }
       },
     },
     {
       name: Screens.Terms,
       options: () => ({
+        ...ScreenOptionsDictionary[Screens.Terms],
         title: t('Screens.Terms'),
-        headerTintColor: OnboardingTheme.headerTintColor,
-        headerShown: true,
-        headerLeft: () => false,
-        rightLeft: () => false,
       }),
       component: Terms,
     },
@@ -123,42 +116,31 @@ const OnboardingStack: React.FC = () => {
       component: CreatePINScreen,
       initialParams: {},
       options: () => ({
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.CreatePIN'),
-        headerShown: true,
-        headerLeft: () => false,
-        rightLeft: () => false,
       }),
     },
     {
       name: Screens.NameWallet,
       options: () => ({
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.NameWallet'),
-        headerTintColor: OnboardingTheme.headerTintColor,
-        headerShown: true,
-        headerLeft: () => false,
-        rightLeft: () => false,
       }),
       component: NameWallet,
     },
     {
       name: Screens.UseBiometry,
       options: () => ({
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.Biometry'),
-        headerTintColor: OnboardingTheme.headerTintColor,
-        headerShown: true,
-        headerLeft: () => false,
-        rightLeft: () => false,
       }),
       component: useBiometry,
     },
     {
       name: Screens.UsePushNotifications,
       options: () => ({
+        ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.UsePushNotifications'),
-        headerTintColor: OnboardingTheme.headerTintColor,
-        headerShown: true,
-        headerLeft: () => false,
-        rightLeft: () => false,
       }),
       component: PushNotification,
     },
@@ -167,18 +149,16 @@ const OnboardingStack: React.FC = () => {
       component: Developer,
       options: () => {
         return {
+          ...ScreenOptionsDictionary[Screens.Developer],
           title: t('Screens.Developer'),
-          headerTintColor: OnboardingTheme.headerTintColor,
-          headerShown: true,
           headerBackAccessibilityLabel: t('Global.Back'),
-          headerBackTestID: testIdWithKey('Back'),
         }
       },
     },
   ]
 
   return (
-    <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
+    <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions }}>
       {screens.map((item) => {
         return <Stack.Screen key={item.name} {...item} />
       })}

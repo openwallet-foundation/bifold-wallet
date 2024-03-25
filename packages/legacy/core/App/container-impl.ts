@@ -6,6 +6,7 @@ import Button from './components/buttons/Button'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import OnboardingStack from './navigators/OnboardingStack'
+import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions'
 import Developer from './screens/Developer'
 import Onboarding from './screens/Onboarding'
 import Preface from './screens/Preface'
@@ -27,6 +28,7 @@ export class MainContainer implements Container {
     this.container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
     this.container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this.container.registerInstance(TOKENS.COMP_BUTTON, Button)
+    this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
 
     this.container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
