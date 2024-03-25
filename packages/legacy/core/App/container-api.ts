@@ -6,7 +6,7 @@ import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
-import { AuthenticateStackParams } from './types/navigators'
+import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 
 export enum SCREEN_TOKENS {
   SCREEN_PREFACE = 'screen.preface',
@@ -34,6 +34,10 @@ export enum LOAD_STATE_TOKENS {
   LOAD_STATE = 'state.load',
 }
 
+export enum OBJECT_TOKENS {
+  OBJECT_ONBOARDINGCONFIG = 'object.onboarding-config',
+}
+
 export const TOKENS = {
   ...SCREEN_TOKENS,
   ...SERVICE_TOKENS,
@@ -41,6 +45,7 @@ export const TOKENS = {
   ...FN_TOKENS,
   ...COMP_TOKENS,
   ...LOAD_STATE_TOKENS,
+  ...OBJECT_TOKENS,
 }
 
 export type FN_ONBOARDING_DONE = (
@@ -59,6 +64,7 @@ export interface TokenMapping {
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.LOAD_STATE]: FN_LOADSTATE
   [TOKENS.COMP_BUTTON]: Button
+  [TOKENS.OBJECT_ONBOARDINGCONFIG]: ScreenOptionsType
 }
 
 export interface Container {
