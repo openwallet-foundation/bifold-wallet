@@ -451,6 +451,18 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.modalPrimary,
     textAlign: 'center',
   },
+  lightningInvoice: {
+    backgroundColor: "black",
+    width: 30,
+    height: 30,
+    margin: 5,
+    padding: 0,
+    borderRadius: 100,
+    alignContent: 'center',
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 
 export const ListItems = StyleSheet.create({

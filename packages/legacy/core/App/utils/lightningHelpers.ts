@@ -1,4 +1,4 @@
-import { EnvironmentType, NodeConfigVariant, PaymentStatus, connect, defaultConfig, mnemonicToSeed, nodeInfo, receiveOnchain, receivePayment, sendPayment } from "@breeztech/react-native-breez-sdk";
+import { EnvironmentType, NodeConfigVariant, PaymentStatus, connect, defaultConfig, mnemonicToSeed, nodeInfo, receiveOnchain, receivePayment, sendPayment, paymentByHash } from "@breeztech/react-native-breez-sdk";
 import { getItem, setItem } from "./storage";
 import { generateMnemonic } from "@dreson4/react-native-quick-bip39";
 import { t } from "i18next";
@@ -11,7 +11,8 @@ export const initNodeAndSdk = async (eventHandler: any) => {
         // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
         const apiKey = '5481cee312d7c8fe3891bdff8953a1ce57f57790b73e0884a8bfc119f4399bba';
         // let mnemonic = await getItem(MNEMONIC_STORE)
-        const inviteCode = '6FUD-Z8A9';
+        // const inviteCode = '6FUD-Z8A9';
+        const inviteCode = 'XLT3-8WFJ';
 
         // if (!mnemonic) {
         //     console.log("No mnemonic found, generating new one");
@@ -25,7 +26,9 @@ export const initNodeAndSdk = async (eventHandler: any) => {
 
         // const seed = await mnemonicToSeed(mnemonic);
         // TODO Elmer: Remove hardcoded seed
-        const seed = await mnemonicToSeed('spring business health luggage word spin start column pipe giant pink spoon');
+        // const seed = await mnemonicToSeed('spring business health luggage word spin start column pipe giant pink spoon');
+        const seed = await mnemonicToSeed('large artefact physical panel shed movie inhale sausage sense bundle depart ribbon');
+
         console.log("Seed: ", seed);
 
         const keys = loadAndConvert();
@@ -201,6 +204,42 @@ export const payInvoice = async (scannedData: any) => {
     } catch (err: any) {
         console.error(err)
         return err.message
+    }
+}
+
+export const checkStatus = async (hash: string) => {
+    try {
+        console.log('Checking payment status for hash:', hash)
+        const paymentInfo = await paymentByHash(hash)
+
+        console.log('Status:', paymentInfo)
+
+        if (paymentInfo?.status === PaymentStatus.COMPLETE) {
+            console.log('Payment Completed');
+            return 'Payment Completed';
+        }
+        else if (paymentInfo?.status === PaymentStatus.FAILED) {
+            console.log('Payment failed');
+            return ('Payment Failed');
+        }
+        else if (paymentInfo?.status === PaymentStatus.PENDING) {
+            console.log('Payment pending');
+            return ('Payment Pending');
+        }
+        else if (paymentInfo === null) {
+            console.log(paymentInfo);
+
+            return ('Payment not Completed');
+        }
+        else {
+            console.log(paymentInfo);
+            return ('Payment status unknown');
+        }
+    }
+    catch (err: any) {
+        console.error("Error checking payment status:", err)
+        console.error(err)
+        return String(err.message)
     }
 }
 
