@@ -465,6 +465,8 @@ const translation = {
     "DeclineBulletPoint1": "Organizações e serviços requerem que você prove que é elegível para continuar com os serviços ou acessos delas.",
     "DeclineBulletPoint2": "Para obter a requisição de prova novamente, você precisará iniciar novamente o processo com o serviço.",
     "DeclineBulletPoint3": "Você tem certeza que quer recusar esta requisição de prova?",
+    "NoInfoShared": "No information was shared (PT-BR)",
+    "YourInfo": "Your information was not shared (PT-BR)",
   },
   "Settings": {
     "Version": "Versão",
