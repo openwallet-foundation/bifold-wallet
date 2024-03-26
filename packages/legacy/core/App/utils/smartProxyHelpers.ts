@@ -137,7 +137,7 @@ export const createSmartProxyEntry = async (proxyKey: string, details: string, o
 // Fetch a list of proxies via the 'proxies' endpoint
 export const getProxies = async (did: string) => {
     try {
-        const response = await fetch(smartproxyUrl + '/proxies');
+        const response = await fetch(smartproxyUrl + '/proxies/search?ownerIdentifier=' + did);
         if (!response.ok) {
             console.log("Error fetching proxies")
             return "Error fetching proxies"

@@ -63,10 +63,10 @@ const SmartProxy = () => {
 
 
             const eventSubscription = initNodeAndSdk(eventHandler).then((res) => {
-                const nodeId = getNodeId().then((nodeId) => {
-                    setNodeId(nodeId)
-                    setProxyValue(nodeId)
-                })
+                // const nodeId = getNodeId().then((nodeId) => {
+                //     setNodeId(nodeId)
+                //     setProxyValue(nodeId)
+                // })
             })
         } catch (err: any) {
             console.error(err)
@@ -242,7 +242,7 @@ const SmartProxy = () => {
             setPaymentLoading(true)
             Number(paymentAmount)
             if (proxyInvoiceSearchResult && paymentAmount) {
-                const response = await sendSpontaneousPaymentToNode(proxyInvoiceSearchResult, Number(paymentAmount))
+                const response = await payInvoiceWithAmount(proxyInvoiceSearchResult, Number(paymentAmount))
                 if (typeof response === 'object' && response.payment.status === 'complete') {
                     setPopupMessage("Payment successful")
                     setPopupVisible(true);
@@ -420,7 +420,7 @@ const SmartProxy = () => {
                                     placeholderTextColor={'white'}
                                     onChangeText={setProxyValue}
                                     value={proxyValue}
-                                    placeholder={nodeId !== undefined ? nodeId : "eg. Wallet Address"}
+                                    placeholder={"eg. Wallet Address"}
                                     keyboardType="default"
                                 />
 
@@ -608,7 +608,7 @@ const SmartProxy = () => {
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.buttonPadding}>
-                                        {proxyIdentifier && <Text style={theme.TextTheme.label}>Identifier: {proxyIdentifier}</Text>}
+                                        {proxyIdToQuery && <Text style={theme.TextTheme.label}>Identifier: {proxyIdToQuery}</Text>}
                                     </View>
                                     <View style={styles.buttonPadding}>
                                         {proxyInvoiceSearchResult && <Text style={theme.TextTheme.label}>Payment Address: {proxyInvoiceSearchResult}</Text>}
