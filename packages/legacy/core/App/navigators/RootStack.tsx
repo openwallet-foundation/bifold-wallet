@@ -67,7 +67,7 @@ const RootStack: React.FC = () => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => { })
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
@@ -93,6 +93,14 @@ const RootStack: React.FC = () => {
   useEffect(() => {
     loadState(dispatch).then(() => {
       dispatch({ type: DispatchAction.STATE_LOADED })
+    }).catch((err) => {
+      const error = new BifoldError(
+        t('Error.Title1044'),
+        t('Error.Message1044'),
+        err.message,
+        1001
+      )
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     })
   }, [])
 
