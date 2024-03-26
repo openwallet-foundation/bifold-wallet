@@ -16,7 +16,7 @@ import { ActivityIndicator, Linking, Modal, Text, TextInput, Touchable, Touchabl
 import { GiftedChat, IMessage } from 'react-native-gifted-chat'
 import RequestPaymentModal from '../components/modals/RequestLightningPaymentModal'
 import PayWithBitcoinLightningModal from '../components/modals/MakeLightningPaymentModal'
-import CheckLightningTransactionModal from '../components/modals/checkLightningPaymentModal'
+import CheckLightningTransactionModal from '../components/modals/CheckLightningPaymentModal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import InfoIcon from '../components/buttons/InfoIcon'
@@ -460,7 +460,6 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       }
 
     } catch (err: any) {
-      console.log("Hello 2")
       console.error(err);
 
       setPaymentStatusDesc(JSON.stringify(paymentStatus));
@@ -481,7 +480,6 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       }
 
     } catch (err: any) {
-      console.log("Hello 2")
       console.error(err);
 
       setcheckStatusDesc(JSON.stringify(paymentStatus));
@@ -504,7 +502,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         setShowRequestLightningPaymentModal(true);
       }
       }>
-        <Text style={globalTheme.TextTheme.label}>⚡</Text>
+        <Text style={globalTheme.TextTheme.label}>Request Payment ⚡</Text>
       </TouchableOpacity>
 
       <GiftedChat

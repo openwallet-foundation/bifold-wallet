@@ -47,7 +47,7 @@ const CheckLightningTransactionModal: React.FC<CheckLightningTransactionModalPro
             visible={showLightningPayModal}
             onRequestClose={() => setShowLightningPayModal(false)}
         >
-            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', justifyContent: 'space-evenly', alignItems: 'center' }}>
                 <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Check Payment Status</Text>
 
                 {/* Show if node is busy initializing */}
@@ -85,7 +85,7 @@ const CheckLightningTransactionModal: React.FC<CheckLightningTransactionModalPro
                 )}
 
 
-                <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
+                <View style={{ width: '100%', alignItems: 'center', marginBottom: 20, alignSelf: 'flex-end' }}>
                     <TouchableOpacity
                         style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 100, alignItems: 'center' }}
                         onPress={() => setShowLightningPayModal(false)}>

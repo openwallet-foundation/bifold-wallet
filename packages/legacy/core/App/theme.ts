@@ -453,7 +453,7 @@ export const Buttons = StyleSheet.create({
   },
   lightningInvoice: {
     backgroundColor: "black",
-    width: 30,
+    // width: 30,
     height: 30,
     margin: 5,
     padding: 0,
