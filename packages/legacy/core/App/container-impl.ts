@@ -1,17 +1,28 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
 import Button from './components/buttons/Button'
+import { LocalStorageKeys } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
+import { defaultState } from './contexts/store'
 import OnboardingStack from './navigators/OnboardingStack'
 import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions'
 import Developer from './screens/Developer'
 import Onboarding from './screens/Onboarding'
 import Preface from './screens/Preface'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
+import { loadLoginAttempt } from './services/keychain'
 import { AuthenticateStackParams, Screens } from './types/navigators'
+import {
+  Migration as MigrationState,
+  Preferences as PreferencesState,
+  State,
+  Onboarding as StoreOnboardingState,
+  Tours as ToursState,
+} from './types/state'
 
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
@@ -43,12 +54,48 @@ export class MainContainer implements Container {
       }
     )
 
+    this.container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
+      const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
+        const data = await AsyncStorage.getItem(key)
+        if (data) {
+          const dataAsJSON = JSON.parse(data) as Type
+          updateVal(dataAsJSON)
+        }
+      }
+
+      let loginAttempt = defaultState.loginAttempt
+      let preferences = defaultState.preferences
+      let migration = defaultState.migration
+      let tours = defaultState.tours
+      let onboarding = defaultState.onboarding
+
+      await Promise.all([
+        loadLoginAttempt().then((data) => {
+          if (data) {
+            loginAttempt = data
+          }
+        }),
+        loadState<PreferencesState>(LocalStorageKeys.Preferences, (val) => (preferences = val)),
+        loadState<MigrationState>(LocalStorageKeys.Migration, (val) => (migration = val)),
+        loadState<ToursState>(LocalStorageKeys.Tours, (val) => (tours = val)),
+        loadState<StoreOnboardingState>(LocalStorageKeys.Onboarding, (val) => (onboarding = val)),
+      ])
+
+      const state: State = {
+        ...defaultState,
+        loginAttempt: loginAttempt,
+        preferences: preferences,
+        migration: migration,
+        tours: tours,
+        onboarding: onboarding,
+      }
+      dispatch({ type: DispatchAction.STATE_DISPATCH, payload: [state] })
+    })
+
     return this
   }
 
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
-    // eslint-disable-next-line no-console
-    console.log(`resolving ${token}`)
     return this.container.resolve(token) as TokenMapping[K]
   }
 

@@ -30,6 +30,10 @@ export enum SERVICE_TOKENS {
   SERVICE_TERMS = 'screen.terms',
 }
 
+export enum LOAD_STATE_TOKENS {
+  LOAD_STATE = 'state.load',
+}
+
 export enum OBJECT_TOKENS {
   OBJECT_ONBOARDINGCONFIG = 'object.onboarding-config',
 }
@@ -40,6 +44,7 @@ export const TOKENS = {
   ...STACK_TOKENS,
   ...FN_TOKENS,
   ...COMP_TOKENS,
+  ...LOAD_STATE_TOKENS,
   ...OBJECT_TOKENS,
 }
 
@@ -48,6 +53,8 @@ export type FN_ONBOARDING_DONE = (
   navigation: StackNavigationProp<AuthenticateStackParams>
 ) => GenericFn
 
+type FN_LOADSTATE = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
+
 export interface TokenMapping {
   [TOKENS.SCREEN_PREFACE]: React.FC
   [TOKENS.STACK_ONBOARDING]: React.FC
@@ -55,6 +62,7 @@ export interface TokenMapping {
   [TOKENS.SCREEN_DEVELOPER]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
+  [TOKENS.LOAD_STATE]: FN_LOADSTATE
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.OBJECT_ONBOARDINGCONFIG]: ScreenOptionsType
 }
