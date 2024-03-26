@@ -7,7 +7,7 @@ import { useAgent, useProofByState } from '@aries-framework/react-hooks'
 import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry, querySmartProxyEntry, getOwner } from '../utils/smartProxyHelpers';
 import { getItem, removeItem } from '../utils/storage';
 import BottomPopup from '../components/toast/popup';
-import { getBTCToZarAmount, initNodeAndSdk, payInvoice, payInvoiceWithAmount } from '../utils/lightningHelpers';
+import { getBTCToZarAmount, getNodeId, initNodeAndSdk, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode } from '../utils/lightningHelpers';
 import { set } from 'mockdate';
 
 const SmartProxy = () => {
@@ -35,6 +35,7 @@ const SmartProxy = () => {
     const [checkedIfRegistered, setCheckedIfRegistered] = useState<boolean>(false)
     const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false)
+    const [nodeId, setNodeId] = useState<string | undefined>(undefined)
 
     const { agent } = useAgent()
 
@@ -61,7 +62,12 @@ const SmartProxy = () => {
             })
 
 
-            const eventSubscription = initNodeAndSdk(eventHandler);
+            const eventSubscription = initNodeAndSdk(eventHandler).then((res) => {
+                const nodeId = getNodeId().then((nodeId) => {
+                    setNodeId(nodeId)
+                    setProxyValue(nodeId)
+                })
+            })
         } catch (err: any) {
             console.error(err)
         }
@@ -235,14 +241,21 @@ const SmartProxy = () => {
         try {
             setPaymentLoading(true)
             Number(paymentAmount)
-            const response = await payInvoiceWithAmount(proxyInvoiceSearchResult, Number(paymentAmount))
-            if (typeof response === 'object' && response.payment.status === 'complete') {
-                setPopupMessage("Payment successful")
-                setPopupVisible(true);
-                setPaymentStep(3)
-                setPaymentLoading(false)
-            } else if (typeof response === 'string') {
-                setPopupMessage(response)
+            if (proxyInvoiceSearchResult && paymentAmount) {
+                const response = await sendSpontaneousPaymentToNode(proxyInvoiceSearchResult, Number(paymentAmount))
+                if (typeof response === 'object' && response.payment.status === 'complete') {
+                    setPopupMessage("Payment successful")
+                    setPopupVisible(true);
+                    setPaymentStep(3)
+                    setPaymentLoading(false)
+                } else if (typeof response === 'string') {
+                    setPopupMessage(response)
+                    setPopupVisible(true);
+                    setPaymentStep(-1)
+                    setPaymentLoading(false)
+                }
+            } else {
+                setPopupMessage("Error During Payment")
                 setPopupVisible(true);
                 setPaymentStep(-1)
                 setPaymentLoading(false)
@@ -392,6 +405,7 @@ const SmartProxy = () => {
                                 <Text style={{ ...theme.TextTheme.label, minWidth: 250 }}>Link (Identifier)</Text>
                                 <TextInput
                                     style={theme.Inputs.textInput}
+                                    placeholderTextColor={'white'}
                                     onChangeText={setProxyIdentifier}
                                     value={proxyIdentifier}
                                     placeholder="eg. phone number"
@@ -403,9 +417,10 @@ const SmartProxy = () => {
                                 <Text style={{ ...theme.TextTheme.label, minWidth: 250 }}>To (Destination)</Text>
                                 <TextInput
                                     style={theme.Inputs.textInput}
+                                    placeholderTextColor={'white'}
                                     onChangeText={setProxyValue}
                                     value={proxyValue}
-                                    placeholder="eg. Wallet Address"
+                                    placeholder={nodeId !== undefined ? nodeId : "eg. Wallet Address"}
                                     keyboardType="default"
                                 />
 
@@ -475,7 +490,7 @@ const SmartProxy = () => {
 
                                                 {proxy?.id === selectedProxyEntry &&
                                                     <TouchableOpacity onPress={() => setShowDeleteOption(!showDeleteOption)} style={styles.deleteButton}>
-                                                        <Text>
+                                                        <Text style={{ color: 'white' }}>
                                                             ⓧ
                                                         </Text>
                                                     </TouchableOpacity>}
@@ -490,9 +505,9 @@ const SmartProxy = () => {
                                                     </View>
                                                 )}
 
-                                                <Text >{proxy?.proxyKey}</Text>
-                                                <Text style={{ fontSize: 20 }}>⇓</Text>
-                                                <Text >{proxy?.details}</Text>
+                                                <Text style={{ color: 'white' }}>{proxy?.proxyKey}</Text>
+                                                <Text style={{ fontSize: 20, color: 'white' }}>⇓</Text>
+                                                <Text style={{ color: 'white' }}>{proxy?.details}</Text>
 
                                             </TouchableOpacity>
                                         </View>
@@ -545,6 +560,7 @@ const SmartProxy = () => {
                                     <TextInput
                                         style={theme.Inputs.textInput}
                                         onChangeText={setProxyIdToQuery}
+                                        placeholderTextColor={'white'}
                                         value={proxyIdToQuery}
                                         placeholder="eg. phone number"
                                         keyboardType="default"
@@ -564,6 +580,7 @@ const SmartProxy = () => {
                                     <Text>Amount (Sats)</Text>
                                     <TextInput
                                         style={theme.Inputs.textInput}
+                                        placeholderTextColor={'white'}
                                         onChangeText={(value) => {
                                             setPaymentAmount(value);
                                         }}
@@ -589,6 +606,9 @@ const SmartProxy = () => {
                                         <TouchableOpacity style={theme.Buttons.primary} onPress={() => setPaymentStep(1)}>
                                             <Text style={theme.TextTheme.label}>Back</Text>
                                         </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.buttonPadding}>
+                                        {proxyIdentifier && <Text style={theme.TextTheme.label}>Identifier: {proxyIdentifier}</Text>}
                                     </View>
                                     <View style={styles.buttonPadding}>
                                         {proxyInvoiceSearchResult && <Text style={theme.TextTheme.label}>Payment Address: {proxyInvoiceSearchResult}</Text>}

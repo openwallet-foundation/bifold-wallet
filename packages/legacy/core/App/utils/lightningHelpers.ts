@@ -1,4 +1,4 @@
-import { EnvironmentType, NodeConfigVariant, PaymentStatus, connect, defaultConfig, mnemonicToSeed, nodeInfo, receiveOnchain, receivePayment, sendPayment, paymentByHash } from "@breeztech/react-native-breez-sdk";
+import { EnvironmentType, NodeConfigVariant, PaymentStatus, connect, defaultConfig, mnemonicToSeed, nodeInfo, receiveOnchain, receivePayment, sendPayment, paymentByHash, sendSpontaneousPayment } from "@breeztech/react-native-breez-sdk";
 import { getItem, setItem } from "./storage";
 import { generateMnemonic } from "@dreson4/react-native-quick-bip39";
 import { t } from "i18next";
@@ -155,6 +155,20 @@ export const getBalances = async () => {
     }
 }
 
+export const getNodeId = async () => {
+    try {
+        const nodeStateRes = await nodeInfo();
+        console.log("Node state response: ", nodeStateRes);
+        const nodeId = nodeStateRes?.id;
+        console.log("Node ID: ", nodeId);
+
+        return nodeId
+    } catch (err: any) {
+        console.error(err);
+        return undefined
+    }
+}
+
 export const getBTCDepositInfo = async () => {
     try {
         const swapInfo = await receiveOnchain({});
@@ -264,6 +278,19 @@ export const payInvoiceWithAmount = async (scannedData: any, amount: number) => 
     } catch (err: any) {
         console.error(err)
         return "Error paying invoice"
+    }
+}
+
+export const sendSpontaneousPaymentToNode = async (nodeId: string, amount: number) => {
+    try {
+        const response = await sendSpontaneousPayment({ nodeId, amountMsat: amount * 1000 })
+
+        console.log('Spontaneous payment response:', response)
+
+        return response
+    } catch (err: any) {
+        console.error(err)
+        return err.message
     }
 }
 

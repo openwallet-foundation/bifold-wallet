@@ -500,6 +500,13 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>
       <TouchableOpacity style={globalTheme.Buttons.lightningInvoice} onPress={() => {
         setShowRequestLightningPaymentModal(true);
+        try {
+          getBTCPrice().then((response) => {
+            setBtcZarPrice(response)
+          })
+        } catch (err: any) {
+          console.error(err)
+        }
       }
       }>
         <Text style={globalTheme.TextTheme.label}>Request Payment ⚡</Text>
@@ -531,6 +538,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         setShowRequestLightningPaymentModal={setShowRequestLightningPaymentModal}
         setSatsAmount={setSatsAmount}
         satsAmount={satsAmount}
+        btcZarPrice={btcZarPrice}
         invoiceGenLoading={invoiceGenLoading}
         handleGetInvoiceButtonPress={handleGetInvoiceButtonPress}
         paymentStatusDesc={paymentStatusDesc}

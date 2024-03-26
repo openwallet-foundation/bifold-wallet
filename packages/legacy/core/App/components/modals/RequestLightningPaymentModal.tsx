@@ -10,6 +10,7 @@ interface RequestPaymentModalProps {
     setShowRequestLightningPaymentModal: (show: boolean) => void;
     satsAmount: string;
     setSatsAmount: (amount: string) => void;
+    btcZarPrice?: number;
     invoiceGenLoading: boolean;
     handleGetInvoiceButtonPress: () => void;
     paymentStatusDesc?: string;
@@ -21,6 +22,7 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
     showRequestLightningPaymentModal,
     setShowRequestLightningPaymentModal,
     satsAmount,
+    btcZarPrice,
     setSatsAmount,
     invoiceGenLoading,
     handleGetInvoiceButtonPress,
@@ -62,6 +64,7 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
                                 placeholder="Amount in sats"
                                 keyboardType="numeric"
                             />
+                            <Text style={globalTheme.TextTheme.label}>{btcZarPrice && ('    (R' + (Number(satsAmount) / 100000000 * btcZarPrice).toFixed(2) + ')\n')}</Text>
                         </View>
                         <TouchableOpacity
                             style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 230, alignItems: 'center', justifyContent: 'center' }}
