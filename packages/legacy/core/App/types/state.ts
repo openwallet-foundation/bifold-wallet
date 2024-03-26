@@ -56,6 +56,7 @@ export interface DeepLink {
 }
 
 export interface State {
+  stateLoaded: boolean
   onboarding: Onboarding
   authentication: Authentication
   lockout: Lockout

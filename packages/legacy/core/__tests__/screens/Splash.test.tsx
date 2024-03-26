@@ -4,7 +4,8 @@ import React from 'react'
 import { LocalStorageKeys } from '../../App/constants'
 import { AuthContext } from '../../App/contexts/auth'
 import { ConfigurationContext } from '../../App/contexts/configuration'
-import { StoreProvider, defaultState } from '../../App/contexts/store'
+import { testDefaultState } from '../contexts/store'
+import { StoreProvider } from '../../App/contexts/store'
 import { ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
@@ -102,7 +103,7 @@ describe('Splash Screen', () => {
         <ContainerProvider value={main}>
           <StoreProvider
             initialState={{
-              ...defaultState,
+              ...testDefaultState,
             }}
           >
             <ConfigurationContext.Provider value={configurationContext}>

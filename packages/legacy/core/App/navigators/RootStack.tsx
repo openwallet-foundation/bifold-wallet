@@ -56,6 +56,7 @@ const RootStack: React.FC = () => {
   } = useConfiguration()
   const container = useContainer()
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
+  const loadState = container.resolve(TOKENS.LOAD_STATE)
   const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   useDeepLinks()
 
@@ -88,6 +89,17 @@ const RootStack: React.FC = () => {
       })
     }
   }
+
+  useEffect(() => {
+    loadState(dispatch)
+      .then(() => {
+        dispatch({ type: DispatchAction.STATE_LOADED })
+      })
+      .catch((err) => {
+        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), err.message, 1001)
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+      })
+  }, [])
 
   // handle deeplink events
   useEffect(() => {
@@ -280,7 +292,6 @@ const RootStack: React.FC = () => {
   ) {
     return state.authentication.didAuthenticate ? mainStack() : authStack()
   }
-
   return <OnboardingStack />
 }
 
