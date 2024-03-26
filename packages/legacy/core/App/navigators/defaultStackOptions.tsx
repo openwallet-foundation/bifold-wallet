@@ -38,7 +38,6 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   },
   [Screens.Developer]: {
     headerTintColor: OnboardingTheme.headerTintColor,
-    headerShown: false,
     headerBackTestID: testIdWithKey('Back'),
   },
   [Screens.UsePushNotifications]: {

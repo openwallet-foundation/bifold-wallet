@@ -478,6 +478,8 @@ const translation = {
         "DeclineBulletPoint1": "Les organisations et les services exigent que vous prouviez que vous êtes éligible pour continuer avec leur service ou leur accès.",
         "DeclineBulletPoint2": "Afin de recevoir à nouveau la demande de preuve, vous devrez relancer le processus avec le service.",
         "DeclineBulletPoint3": "Etes-vous sûr vous voulez refuser cette demande de preuve?",
+        "NoInfoShared": "No information was shared (FR)",
+        "YourInfo": "Your information was not shared (FR)",
     },
     "Settings": {
         "Version": "Version",

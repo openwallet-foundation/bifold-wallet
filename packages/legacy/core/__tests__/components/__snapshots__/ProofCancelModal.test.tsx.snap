@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
+<Modal
+  animationType="slide"
+  hardwareAccelerated={false}
+  visible={true}
+>
+  <RNCSafeAreaView
+    style={
+      Object {
+        "backgroundColor": "#000000",
+        "flex": 1,
+      }
+    }
+  >
+    <RCTScrollView
+      style={
+        Object {
+          "flexGrow": 1,
+          "padding": 20,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "justifyContent": "space-around",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 38,
+                "fontWeight": "bold",
+                "marginBottom": 30,
+                "marginTop": 60,
+                "textAlign": "center",
+              }
+            }
+          >
+            ProofRequest.NoInfoShared
+          </Text>
+          <
+            height={200}
+            style={
+              Object {
+                "alignSelf": "center",
+                "marginBottom": 50,
+              }
+            }
+          />
+          <Text
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 22,
+                "fontWeight": "normal",
+                "textAlign": "center",
+              }
+            }
+          >
+            ProofRequest.YourInfo
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Object {
+          "marginBottom": 10,
+          "marginHorizontal": 20,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "paddingTop": 10,
+          }
+        }
+      >
+        <View
+          accessibilityLabel="Global.Done"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#42803E",
+              "borderRadius": 4,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+          testID="com.ariesbifold:id/Done"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ]
+              }
+            >
+              Global.Done
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;

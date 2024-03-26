@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/core'
 import '@testing-library/jest-native/extend-expect'
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
@@ -15,7 +16,6 @@ import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
-import { useTranslation } from 'react-i18next'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -227,15 +227,12 @@ describe('displays a proof request screen', () => {
         timeTravel(1000)
       })
 
-      const shareButton = tree.getByTestId(testIdWithKey('Share'))
-      const declineButton = tree.getByTestId(testIdWithKey('Decline'))
+      const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
       const recordLoading = tree.getByTestId(testIdWithKey('RecordLoading'))
 
       expect(recordLoading).not.toBeNull()
-      expect(shareButton).not.toBeNull()
-      expect(shareButton).toBeDisabled()
-      expect(declineButton).not.toBeNull()
-      expect(declineButton).not.toBeDisabled()
+      expect(cancelButton).not.toBeNull()
+      expect(cancelButton).not.toBeDisabled()
     })
 
     test('displays a proof request with all claims available', async () => {
@@ -470,12 +467,10 @@ describe('displays a proof request screen', () => {
         timeTravel(1000)
       })
 
-      const shareButton = tree.getByTestId(testIdWithKey('Share'))
-      const declineButton = tree.getByTestId(testIdWithKey('Decline'))
+      const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
 
-      expect(shareButton).not.toBeNull()
-      expect(shareButton).toBeDisabled()
-      expect(declineButton).not.toBeNull()
+      expect(cancelButton).not.toBeNull()
+      expect(cancelButton).not.toBeDisabled()
     })
 
     test('displays a proof request with one or more predicates not satisfied', async () => {
@@ -525,8 +520,7 @@ describe('displays a proof request screen', () => {
       const ageLabel = getByText(/Age/, { exact: false })
       const ageValue = getByText(t('ProofRequest.PredicateLe') + ' 18')
       const ageNotSatisfied = getByText('ProofRequest.PredicateNotSatisfied', { exact: false })
-      const shareButton = getByTestId(testIdWithKey('Share'))
-      const declineButton = getByTestId(testIdWithKey('Decline'))
+      const cancelButton = getByTestId(testIdWithKey('Cancel'))
 
       expect(predicateMessage).not.toBeNull()
       expect(predicateMessage).toBeTruthy()
@@ -542,9 +536,8 @@ describe('displays a proof request screen', () => {
       expect(ageValue).toBeTruthy()
       expect(ageNotSatisfied).not.toBeNull()
       expect(ageNotSatisfied).toBeTruthy()
-      expect(shareButton).not.toBeNull()
-      expect(shareButton).toBeDisabled()
-      expect(declineButton).not.toBeNull()
+      expect(cancelButton).not.toBeNull()
+      expect(cancelButton).not.toBeDisabled()
     })
   })
 })
