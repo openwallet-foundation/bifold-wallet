@@ -13,6 +13,7 @@ import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
+import PushNotification from '../screens/PushNotification'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
 import UseBiometry from '../screens/UseBiometry'
@@ -81,6 +82,11 @@ const SettingStack: React.FC = () => {
         name={Screens.CreatePIN}
         component={PINCreate}
         options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.UsePushNotifications}
+        component={PushNotification}
+        options={{ title: t('Screens.UsePushNotifications'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.HistorySettings}

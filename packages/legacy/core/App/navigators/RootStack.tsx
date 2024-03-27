@@ -46,10 +46,18 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const { splash, showPreface, enableImplicitInvitations, enableReuseConnections, enableUseMultUseInvitation } =
-    useConfiguration()
+  const {
+    splash,
+    showPreface,
+    enableImplicitInvitations,
+    enableReuseConnections,
+    enableUseMultUseInvitation,
+    enablePushNotifications,
+  } = useConfiguration()
   const container = useContainer()
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
+  const loadState = container.resolve(TOKENS.LOAD_STATE)
+  const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened
@@ -81,6 +89,17 @@ const RootStack: React.FC = () => {
       })
     }
   }
+
+  useEffect(() => {
+    loadState(dispatch)
+      .then(() => {
+        dispatch({ type: DispatchAction.STATE_LOADED })
+      })
+      .catch((err) => {
+        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), err.message, 1001)
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+      })
+  }, [])
 
   // handle deeplink events
   useEffect(() => {
@@ -264,15 +283,15 @@ const RootStack: React.FC = () => {
 
   if (
     (!showPreface || state.onboarding.didSeePreface) &&
-    state.onboarding.didAgreeToTerms &&
+    state.onboarding.didAgreeToTerms === TermsVersion &&
     state.onboarding.didCompleteTutorial &&
     state.onboarding.didCreatePIN &&
     (!state.preferences.enableWalletNaming || state.onboarding.didNameWallet) &&
+    (state.onboarding.didConsiderPushNotifications || !enablePushNotifications) &&
     state.onboarding.didConsiderBiometry
   ) {
     return state.authentication.didAuthenticate ? mainStack() : authStack()
   }
-
   return <OnboardingStack />
 }
 

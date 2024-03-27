@@ -1002,9 +1002,13 @@ exports[`Settings Screen Renders correctly 1`] = `
               Settings.Version 1 Settings.Build (1)
             </Text>
             <
-              height={64}
-              marginVertical={16}
-              width="50%"
+              height={75}
+              style={
+                Object {
+                  "alignSelf": "center",
+                }
+              }
+              width={150}
             />
           </View>
         </View>

@@ -101,7 +101,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
         type: DispatchAction.DID_CREATE_PIN,
       })
 
-      // TODO: Navigate back if in settings
       if (store.preferences.enableWalletNaming) {
         navigation.dispatch(
           CommonActions.reset({

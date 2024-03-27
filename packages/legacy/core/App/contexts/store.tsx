@@ -18,6 +18,7 @@ export const defaultState: State = {
     didAgreeToTerms: false,
     didCompleteTutorial: false,
     didCreatePIN: false,
+    didConsiderPushNotifications: false,
     didConsiderBiometry: false,
     didNameWallet: false,
   },
@@ -40,6 +41,7 @@ export const defaultState: State = {
     developerModeEnabled: false,
     biometryPreferencesUpdated: false,
     useBiometry: false,
+    usePushNotifications: false,
     useVerifierCapability: false,
     useConnectionInviterCapability: false,
     useDevVerifierTemplates: false,
@@ -62,6 +64,7 @@ export const defaultState: State = {
     activeDeepLink: '',
   },
   loading: false,
+  stateLoaded: false,
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction<any>>]>([

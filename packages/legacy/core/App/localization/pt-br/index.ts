@@ -337,6 +337,22 @@ const translation = {
     "IssuedBy": "Emitida por",
     "Credential": "credencial"
   },
+  "PushNotifications": {
+    "EnableNotifiactions": "Enable Notifications to get instant alerts (PT-BR)",
+    "BeNotified": "Be notified when you receive: (PT-BR)",
+    "ReceiveNotifications": "Receive notifications (PT-BR)",
+    "BulletFour": "new messages (PT-BR)",
+    "BulletOne": "new credential offers (PT-BR)",
+    "BulletThree": "updates to your credentials (PT-BR)",
+    "BulletTwo": "new proof requests (PT-BR)",
+    "NotificationsOffMessage": "Be notified when you receive new credential offers, proof requests, updates to your credentials, new messages and more. (PT-BR)",
+    "NotificationsOffTitle": "Notifications for Bifold are turned off (PT-BR)",
+    "NotificationsInstructionTitle": "To enable notifications: (PT-BR)",
+    "InstructionsOne": "Open the app's settings (PT-BR)",
+    "InstructionsTwo": "Tap Notifications (PT-BR)",
+    "InstructionsThree": "Enable notifications (PT-BR)",
+    "OpenSettings": "Open settings (PT-BR)",
+  },
   "CredentialDetails": {
     "Id": "Id:",
     "CreatedAt": "Criada em:",
@@ -507,6 +523,8 @@ const translation = {
     "DeclineBulletPoint1": "Organizações e serviços requerem que você prove que é elegível para continuar com os serviços ou acessos delas.",
     "DeclineBulletPoint2": "Para obter a requisição de prova novamente, você precisará iniciar novamente o processo com o serviço.",
     "DeclineBulletPoint3": "Você tem certeza que quer recusar esta requisição de prova?",
+    "NoInfoShared": "No information was shared (PT-BR)",
+    "YourInfo": "Your information was not shared (PT-BR)",
   },
   "Settings": {
     "Version": "Versão",

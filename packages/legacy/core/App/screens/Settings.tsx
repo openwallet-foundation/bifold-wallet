@@ -34,7 +34,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const { settings, enableTours } = useConfiguration()
+  const { settings, enableTours, enablePushNotifications } = useConfiguration()
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
@@ -67,11 +67,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       borderBottomWidth: 1,
       borderBottomColor: ColorPallet.brand.primaryBackground,
       marginHorizontal: 25,
-    },
-    logo: {
-      height: 64,
-      width: '50%',
-      marginVertical: 16,
     },
     footer: {
       marginVertical: 25,
@@ -170,6 +165,22 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     ...(settings || []),
   ]
+
+  // add optional push notifications menu to settings
+  if (enablePushNotifications) {
+    settingsSections
+      .find((item) => item.header.title === t('Settings.AppSettings'))
+      ?.data.push({
+        title: t('Settings.Notifications'),
+        value: undefined,
+        accessibilityLabel: t('Settings.Notifications'),
+        testID: testIdWithKey('Notifications'),
+        onPress: () =>
+          navigation
+            .getParent()
+            ?.navigate(Stacks.SettingStack, { screen: Screens.UsePushNotifications, params: { isMenu: true } }),
+      })
+  }
 
   if (enableTours) {
     const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
@@ -356,7 +367,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
                 <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
                   {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
                 </Text>
-                <Assets.svg.logo {...styles.logo} />
+                <Assets.svg.logo style={{ alignSelf: 'center' }} width={150} height={75} />
               </View>
             </TouchableWithoutFeedback>
           </View>

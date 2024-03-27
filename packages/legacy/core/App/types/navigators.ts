@@ -1,5 +1,6 @@
 import { CredentialExchangeRecord } from '@aries-framework/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
+import { StackNavigationOptions } from '@react-navigation/stack'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -29,6 +30,7 @@ export enum Screens {
   OnTheWay = 'On The Way',
   Declined = 'Declined',
   UseBiometry = 'Use Biometry',
+  UsePushNotifications = 'Use Push Notifications',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofChangeCredential = 'Choose a credential',
@@ -85,6 +87,7 @@ export type AuthenticateStackParams = {
   [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.UseBiometry]: undefined
   [Screens.NameWallet]: undefined
+  [Screens.UsePushNotifications]: undefined
 }
 
 export type OnboardingStackParams = {
@@ -144,6 +147,7 @@ export type SettingStackParams = {
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
+  [Screens.UsePushNotifications]: { isMenu?: boolean }
   [Screens.HistorySettings]: undefined
 }
 
@@ -163,3 +167,5 @@ export type DeliveryStackParams = {
   [Screens.Declined]: { credentialId: string }
   [Screens.Chat]: { connectionId: string }
 }
+
+export type ScreenOptionsType = Partial<Record<Screens, StackNavigationOptions>>
