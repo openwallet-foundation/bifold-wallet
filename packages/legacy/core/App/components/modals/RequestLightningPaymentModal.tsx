@@ -15,6 +15,7 @@ interface RequestPaymentModalProps {
     handleGetInvoiceButtonPress: () => void;
     paymentStatusDesc?: string;
     startingNode?: boolean; // Assuming startingNode might be a prop as well
+    breezInitializing: boolean;
     eventHandler: any;
 }
 
@@ -28,16 +29,16 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
     handleGetInvoiceButtonPress,
     paymentStatusDesc,
     startingNode,
+    breezInitializing,
     eventHandler,
 }) => {
-    const [nodeAndSdkInitialized, setNodeAndSdkInitialized] = React.useState(false);
 
     React.useEffect(() => {
 
-        setNodeAndSdkInitialized(false);
-        initNodeAndSdk(eventHandler).then((res) => {
-            setNodeAndSdkInitialized(true);
-        })
+        // setNodeAndSdkInitialized(false);
+        // initNodeAndSdk(eventHandler).then((res) => {
+        //     setNodeAndSdkInitialized(true);
+        // })
 
     }, [])
 
@@ -52,6 +53,14 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
         >
             <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Request Payment</Text>
+
+                {/* Show if node is busy initializing */}
+                {breezInitializing && (
+                    <View>
+                        <Text style={{ color: '#fff', marginTop: 20 }}>Initializing node...</Text>
+                        <ActivityIndicator size="large" color="#FFF" />
+                    </View>
+                )}
 
                 {!startingNode && (
                     <View>
@@ -81,7 +90,7 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
                         </TouchableOpacity>
                     </View>
                 )}
-                {paymentStatusDesc && <Text style={{ color: '#fff' }}>{paymentStatusDesc}</Text>}
+                {paymentStatusDesc && <Text style={{ color: 'white' }}>{paymentStatusDesc}</Text>}
 
                 {/* Close Button at the bottom */}
                 <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>

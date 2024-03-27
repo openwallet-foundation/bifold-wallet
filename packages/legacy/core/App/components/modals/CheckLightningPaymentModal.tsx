@@ -14,6 +14,7 @@ interface CheckLightningTransactionModalProps {
     paymentInProgress: boolean;
     statusCheckHandler: (invoiceText?: string | undefined) => void;
     checkStatusDesc?: string;
+    breezInitializing: boolean;
     eventHandler: any
 }
 
@@ -26,19 +27,9 @@ const CheckLightningTransactionModal: React.FC<CheckLightningTransactionModalPro
     paymentInProgress,
     statusCheckHandler,
     checkStatusDesc,
+    breezInitializing,
     eventHandler
 }) => {
-
-    const [nodeAndSdkInitialized, setNodeAndSdkInitialized] = React.useState(false);
-
-    useEffect(() => {
-
-        setNodeAndSdkInitialized(false);
-        initNodeAndSdk(eventHandler).then((res) => {
-            setNodeAndSdkInitialized(true);
-        })
-
-    }, [])
 
     return (
         <Modal
@@ -51,7 +42,7 @@ const CheckLightningTransactionModal: React.FC<CheckLightningTransactionModalPro
                 <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Check Payment Status</Text>
 
                 {/* Show if node is busy initializing */}
-                {!nodeAndSdkInitialized && (
+                {breezInitializing && (
                     <View>
                         <Text style={{ color: '#fff', marginTop: 20 }}>Initializing node...</Text>
                         <ActivityIndicator size="large" color="#FFF" />

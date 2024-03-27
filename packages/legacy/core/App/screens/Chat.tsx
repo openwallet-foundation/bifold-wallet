@@ -42,7 +42,7 @@ import {
   getProofEventRole,
 } from '../utils/helpers'
 import { theme as globalTheme } from '../theme';
-import { checkStatus, getBTCPrice, getInvoice, payInvoice } from '../utils/lightningHelpers'
+import { checkStatus, getBTCPrice, getInvoice, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers'
 import { PaymentStatus, paymentByHash } from '@breeztech/react-native-breez-sdk'
 import { set } from 'mockdate'
 import { extract } from 'query-string'
@@ -82,8 +82,9 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const [paymentCheckInProgress, setPaymentCheckInProgress] = useState(false)
   const [satsAmount, setSatsAmount] = useState('10000');
   const [paymentStatusDesc, setPaymentStatusDesc] = useState<string | undefined>(undefined)
-  const [checkStatusDesc, setcheckStatusDesc] = useState<string | undefined>(undefined)
+  const [checkStatusDesc, setCheckStatusDesc] = useState<string | undefined>(undefined)
   const [btcZarPrice, setBtcZarPrice] = useState<number | undefined>(undefined)
+  const [nodeAndSdkInitializing, setNodeAndSdkInitializing] = React.useState(false);
 
   // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up
   useEffect(() => {
@@ -211,7 +212,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         setShowTransactionStatusModal(true)
         let hash = extractHashFromInvoiceMessage(content)
         console.log('Raw Content:', content)
-        setcheckStatusDesc(undefined)
+        setCheckStatusDesc(undefined)
         if (hash !== null) {
           setInvoiceHash(hash)
         } else {
@@ -438,6 +439,16 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     let paymentStatus;
     try {
       setPaymentInProgress(true);
+      setNodeAndSdkInitializing(true);
+      const initRes = await initNodeAndSdk(eventHandler)
+      setNodeAndSdkInitializing(false);
+      if (typeof initRes === 'string') {
+        console.error('Error initializing node and sdk')
+        setPaymentStatusDesc('Error connecting to lightning node')
+        setInvoiceGenLoading(false);
+        return;
+      }
+
       paymentStatus = await payInvoice(invoice);
       setPaymentInProgress(false)
 
@@ -472,27 +483,48 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     console.log('Hash:', invoiceHash)
     try {
       if (invoiceHash) {
+        setNodeAndSdkInitializing(true);
+        const initRes = await initNodeAndSdk(eventHandler)
+        setNodeAndSdkInitializing(false);
+        if (typeof initRes === 'string') {
+          console.error('Error initializing node and sdk')
+          setCheckStatusDesc('Error connecting to lightning node')
+          setInvoiceGenLoading(false);
+          return;
+        }
+
         setPaymentCheckInProgress(true);
         paymentStatus = await checkStatus(invoiceHash);
-        setPaymentCheckInProgress(false)
+        setPaymentCheckInProgress(false);
 
-        setcheckStatusDesc(paymentStatus)
+        setCheckStatusDesc(paymentStatus);
       }
 
     } catch (err: any) {
       console.error(err);
 
-      setcheckStatusDesc(JSON.stringify(paymentStatus));
+      setCheckStatusDesc(JSON.stringify(paymentStatus));
     }
   }
 
   const handleGetInvoiceButtonPress = async () => {
     setInvoiceGenLoading(true);
+    setNodeAndSdkInitializing(true);
+    const initRes = await initNodeAndSdk(eventHandler)
+    setNodeAndSdkInitializing(false);
+    if (typeof initRes === 'string') {
+      console.error('Error String: ', initRes)
+      setPaymentStatusDesc('Error connecting to lightning node')
+      setInvoiceGenLoading(false);
+      return;
+    }
+
     const tmpInvoice = await getInvoice(satsAmount);
     setInvoiceGenLoading(false);
     if (tmpInvoice?.amountMsat) {
       setGeneratedInvoice((tmpInvoice.amountMsat).toString());
       agent?.basicMessages.sendMessage(connectionId, tmpInvoice.bolt11 + "," + tmpInvoice.paymentHash)
+      setShowRequestLightningPaymentModal(false);
     }
   }
 
@@ -542,6 +574,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         invoiceGenLoading={invoiceGenLoading}
         handleGetInvoiceButtonPress={handleGetInvoiceButtonPress}
         paymentStatusDesc={paymentStatusDesc}
+        breezInitializing={nodeAndSdkInitializing}
         eventHandler={eventHandler}
       />
 
@@ -553,6 +586,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         paymentInProgress={paymentInProgress}
         payInvoiceHandler={payInvoiceHandler}
         paymentStatusDesc={paymentStatusDesc}
+        breezInitializing={nodeAndSdkInitializing}
         eventHandler={eventHandler}
       />
 
@@ -564,6 +598,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         paymentInProgress={paymentCheckInProgress}
         statusCheckHandler={checkStatusHandler}
         checkStatusDesc={checkStatusDesc}
+        breezInitializing={nodeAndSdkInitializing}
         eventHandler={eventHandler} />
     </SafeAreaView >
   )

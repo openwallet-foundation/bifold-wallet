@@ -61,7 +61,15 @@ export const initNodeAndSdk = async (eventHandler: any) => {
         return eventSubscription
     }
     catch (err: any) {
+        const errorString = JSON.stringify(err)
+
+        if (errorString.includes("already initialized")) {
+            console.log("Breez already initialized.")
+            return undefined
+        }
+
         console.error(err);
+        return JSON.stringify(err)
     }
 }
 
@@ -186,7 +194,7 @@ export const getInvoice = async (satsAmount: string) => {
     try {
         const receivePaymentResponse = await receivePayment({
             amountMsat: Number(satsAmount) * 1000,
-            description: `Invoice for ${satsAmount} sats`
+            description: `Invoice for ${satsAmount} sats`,
         })
 
         //addLog(receivePaymentResponse.lnInvoice);

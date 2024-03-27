@@ -420,7 +420,7 @@ const SmartProxy = () => {
                                     placeholderTextColor={'white'}
                                     onChangeText={setProxyValue}
                                     value={proxyValue}
-                                    placeholder={"eg. Wallet Address"}
+                                    placeholder={"eg. Lightning Invoice"}
                                     keyboardType="default"
                                 />
 

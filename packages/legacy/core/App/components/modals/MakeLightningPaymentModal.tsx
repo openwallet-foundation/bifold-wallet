@@ -14,6 +14,7 @@ interface PayWithBitcoinModalProps {
     paymentInProgress: boolean;
     payInvoiceHandler: (invoiceText?: string | undefined) => void;
     paymentStatusDesc?: string;
+    breezInitializing: boolean;
     eventHandler: any
 }
 
@@ -26,17 +27,16 @@ const PayWithBitcoinLightningModal: React.FC<PayWithBitcoinModalProps> = ({
     paymentInProgress,
     payInvoiceHandler,
     paymentStatusDesc,
+    breezInitializing,
     eventHandler
 }) => {
 
-    const [nodeAndSdkInitialized, setNodeAndSdkInitialized] = React.useState(false);
-
     useEffect(() => {
 
-        setNodeAndSdkInitialized(false);
-        initNodeAndSdk(eventHandler).then((res) => {
-            setNodeAndSdkInitialized(true);
-        })
+        // setNodeAndSdkInitialized(false);
+        // initNodeAndSdk(eventHandler).then((res) => {
+        //     setNodeAndSdkInitialized(true);
+        // })
 
     }, [])
 
@@ -51,7 +51,7 @@ const PayWithBitcoinLightningModal: React.FC<PayWithBitcoinModalProps> = ({
                 <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Pay with Bitcoin</Text>
 
                 {/* Show if node is busy initializing */}
-                {!nodeAndSdkInitialized && (
+                {breezInitializing && (
                     <View>
                         <Text style={{ color: '#fff', marginTop: 20 }}>Initializing node...</Text>
                         <ActivityIndicator size="large" color="#FFF" />
