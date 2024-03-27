@@ -1,4 +1,7 @@
-import { GenericRecordTags } from '@aries-framework/core/build/modules/generic-records/repository/GenericRecord'
+import {
+  GenericRecord,
+  GenericRecordTags,
+} from '@aries-framework/core/build/modules/generic-records/repository/GenericRecord'
 import { useAgent } from '@aries-framework/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import moment from 'moment'
@@ -18,7 +21,7 @@ import {
 } from '../types'
 import { BlockSelection } from '../ui/components/SingleSelectBlock'
 
-enum HistorySettingsOptionStorageKey {
+export enum HistorySettingsOptionStorageKey {
   HistorySettingsOption = 'historySettingsOption',
 }
 
@@ -28,6 +31,8 @@ export interface IHistoryContext {
   getHistoryItems(query: HistoryQuery): Promise<CustomRecord[]>
   handleStoreHistorySettings(selectedValue: BlockSelection | undefined): Promise<void>
   getStoredHistorySettingsOption(): Promise<string | null>
+  findGenericRecordById(id: string): Promise<GenericRecord | null>
+  removeGenericRecord(genericRecord: GenericRecord): Promise<void>
 }
 
 export const HistoryContext = createContext<IHistoryContext>(null as unknown as IHistoryContext)
@@ -49,7 +54,7 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
   ]
 
   async function saveHistory(recordData: HistoryRecord) {
-    const historySettingsOption = await AsyncStorage.getItem('historySettingsOption')
+    const historySettingsOption = await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
     // Save History when history settigs option is not 'Never'
     if (!(historySettingsOption === 'Never')) {
       await addGenericRecord(
@@ -100,6 +105,32 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
     */
   }
 
+  async function findGenericRecordById(id: string): Promise<GenericRecord | null> {
+    try {
+      if (!agent) {
+        log(`[${HistoryProvider.name}]: Find generic record by id: Agent not set`, LogLevel.error)
+        throw new Error(`Agent not set `)
+      }
+      return await agent.genericRecords.findById(id)
+    } catch (e: unknown) {
+      log(`[${HistoryProvider.name}]: Find generic record by id: ${e}`, LogLevel.error)
+      throw new Error(`${e}`)
+    }
+  }
+
+  async function removeGenericRecord(genericRecord: GenericRecord): Promise<void> {
+    try {
+      if (!agent) {
+        log(`[${HistoryProvider.name}]: Remove generic record: Agent not set`, LogLevel.error)
+        throw new Error(`Agent not set `)
+      }
+      return await agent.genericRecords.delete(genericRecord)
+    } catch (e: unknown) {
+      log(`[${HistoryProvider.name}]: Remove generic record: ${e}`, LogLevel.error)
+      throw new Error(`${e}`)
+    }
+  }
+
   //Internal
   async function addGenericRecord(customRecord: CustomRecord, type: RecordType): Promise<void> {
     try {
@@ -115,6 +146,8 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
         type: type,
       }
       const storedContent = customRecord.content as unknown as Record<string, unknown>
+      log(`[${HistoryProvider.name}]: Adding history record:${JSON.stringify(storedContent)}`, LogLevel.trace)
+      log(`[${HistoryProvider.name}]: >> Tags:${JSON.stringify(tags)}`, LogLevel.trace)
       await agent.genericRecords.save({
         content: storedContent,
         tags: tags,
@@ -130,6 +163,7 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
         log(`[${HistoryProvider.name}]: Find generic record by query: Agent not set`, LogLevel.error)
         throw new Error(`Agent not set `)
       }
+      log(`[${HistoryProvider.name}]: Searching saved history by query:${JSON.stringify(query)}`, LogLevel.trace)
 
       const retrievedRecords: CustomRecord[] = []
 
@@ -180,6 +214,7 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
           }
         })
       }
+      log(`[${HistoryProvider.name}]: Found saved history length:${retrievedRecords.length}`, LogLevel.trace)
       return retrievedRecords
     } catch (e: unknown) {
       log(`[${HistoryProvider.name}]: Find generic record by query: ${e}`, LogLevel.error)
@@ -220,6 +255,8 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
         historySettingsOptionList: historySettingsOptionList,
         handleStoreHistorySettings: handleStoreHistorySettings,
         getStoredHistorySettingsOption: getStoredHistorySettingsOption,
+        findGenericRecordById: findGenericRecordById,
+        removeGenericRecord: removeGenericRecord,
       }}
     >
       {children}

@@ -26,6 +26,8 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
+import { useHistory } from '../modules/history/context/history'
+import { HistoryCardType, HistoryRecord, RecordType } from '../modules/history/types'
 import { BifoldError } from '../types/error'
 import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
@@ -52,6 +54,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertConnectedNetwork } = useNetwork()
+  const { saveHistory } = useHistory()
   const { OCABundleResolver, enableTours: enableToursConfig } = useConfiguration()
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
@@ -154,6 +157,21 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
+  const saveHistoryFor = async () => {
+    if (!credential) {
+      return
+    }
+    /** Save history record for card accepted */
+    const recordData: HistoryRecord = {
+      type: HistoryCardType.CardAccepted,
+      message: 'CardAccepted',
+      createdAt: credential?.createdAt,
+      correspondenceId: credentialId,
+      correspondenceName: overlay.metaOverlay?.name,
+    }
+    await saveHistory(recordData)
+  }
+
   const handleAcceptTouched = async () => {
     try {
       if (!(agent && credential && assertConnectedNetwork())) {
@@ -163,6 +181,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       setAcceptModalVisible(true)
 
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
+      saveHistoryFor()
     } catch (err: unknown) {
       setButtonsVisible(true)
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error)?.message ?? err, 1024)

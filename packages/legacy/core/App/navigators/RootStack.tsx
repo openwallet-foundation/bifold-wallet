@@ -17,6 +17,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
+import HistoryStack from '../modules/history/navigation/HistoryStack'
 import AttemptLockout from '../screens/AttemptLockout'
 import Chat from '../screens/Chat'
 import PINEnter from '../screens/PINEnter'
@@ -269,6 +270,13 @@ const RootStack: React.FC = () => {
         <Stack.Screen
           name={Stacks.SettingStack}
           component={SettingStack}
+          options={{
+            cardStyleInterpolator: forFade,
+          }}
+        />
+        <Stack.Screen
+          name={Stacks.HistoryStack}
+          component={HistoryStack}
           options={{
             cardStyleInterpolator: forFade,
           }}

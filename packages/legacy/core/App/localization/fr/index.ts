@@ -310,6 +310,68 @@ const translation = {
           "Description": "Le portefeuille de l'Ontario a supprimé tout l'historique de vos activités.",
           "Continue": "Continuer",
         },
+        "NoHistory": "Pas d'historique",
+    },
+    "History": {
+        "SortFilterButton":"Sort/Filter",
+        "SortBy": "Sort by",
+        "Sort": {
+          "Newest": "Newest to oldest",
+          "Oldest": "Oldest to Newest"
+        },
+        "Filter": {
+          "FilterByDate": "Filter by date range",
+          "Select": "Select",
+          "Today": "Today",
+          "Week": "Last week",
+          "Month": "Last 30 days",
+          "TwoMonth": "Last 60 days",
+          "ThreeMonth": "Last 90 days",
+          "Year": "This year",
+          "AllTime": "All time",
+          "FilterByActivity": "Filter by activity type",
+          "CardUpdates": "Card updates",
+          "InformationRequests": "Information requests",
+          "WalletPinUpdates": "Wallet PIN updates",
+          "Buttons": {
+            "Apply": "Apply filters",
+            "Close": "Close"
+          }
+        },
+        "Initial":{
+          "Title": "Do you want to log your wallet activity?",
+          "Description": {
+            "Header": "This History section can list when:\n",
+            "PointA": "You have <b>shared information</b> with a verifier",
+            "PointAAxs": "You have shared information with a verifier",
+            "PointB": "A card is <b>accepted, revoked or expired</b>",
+            "PointBAxs": "A card is accepted, revoked or expired",
+            "PointC": "You have updated your <b>PIN</b>",
+            "PointCAxs": "You have updated your PIN",
+            "Footer": "\nYour wallet activity will <b>only be stored on your device</b>, and you can choose how often it is automatically deleted.",
+            "FooterAxs": "Your wallet activity will only be stored on your device, and you can choose how often it is automatically deleted."
+          },
+          "Button": {
+            "SetUpHistoryLog": "Set up your History log",
+            "StartLoggingWalletActivity": "Start logging wallet activity",
+            "DoNotLogWalletActivity": "Do not log any wallet activity"
+          }
+        },
+        "Button":"Sort/Filter",
+        "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.",
+        "CardTitle":{
+          "CardAccepted": "Card accepted:",
+          "CardExpired": "Card expired",
+          "CardRevoked": "Card revoked",
+          "InformationSent": "Information sent to:",
+          "WalletPinUpdated": "Wallet PIN updated",
+        },
+        "CardDescription":{
+          "CardExpired": "{{cardName}} expired",
+          "CardRevoked": "{{cardName}} revoked",
+          "WalletPinUpdated": "New PIN set",
+        },
+        "Today": "Today"
     },
     "Contacts": {
         "EmptyList": "Your Contacts is empty! (FR)",
@@ -624,6 +686,7 @@ const translation = {
         "NameWallet": "Name your wallet (FR)",
         "RenameContact": "Edit Contact Name (FR)",
         "HistorySettings": "Paramètres de l'historique",
+        "History": "Histoire",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
