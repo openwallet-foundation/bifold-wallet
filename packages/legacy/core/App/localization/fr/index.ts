@@ -362,6 +362,7 @@ const translation = {
         "CardTitle":{
           "CardAccepted": "Card accepted:",
           "CardExpired": "Card expired",
+          "CardDeclined": "Card declined:",
           "CardRevoked": "Card revoked",
           "InformationSent": "Information sent to:",
           "WalletPinUpdated": "Wallet PIN updated",

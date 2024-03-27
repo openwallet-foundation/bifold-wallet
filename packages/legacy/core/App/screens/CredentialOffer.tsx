@@ -27,12 +27,13 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useHistory } from '../modules/history/context/history'
-import { HistoryCardType, HistoryRecord, RecordType } from '../modules/history/types'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
 import { TabStacks, NotificationStackParams, Screens } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
+import { parseCredDefFromId } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
@@ -157,17 +158,20 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
-  const saveHistoryFor = async () => {
+  const saveHistoryFor = async (type: HistoryCardType) => {
     if (!credential) {
       return
     }
+    const ids = getCredentialIdentifiers(credential)
+    const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+
     /** Save history record for card accepted */
     const recordData: HistoryRecord = {
-      type: HistoryCardType.CardAccepted,
+      type: type,
       message: 'CardAccepted',
       createdAt: credential?.createdAt,
       correspondenceId: credentialId,
-      correspondenceName: overlay.metaOverlay?.name,
+      correspondenceName: name,
     }
     await saveHistory(recordData)
   }
@@ -181,7 +185,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       setAcceptModalVisible(true)
 
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
-      saveHistoryFor()
+      saveHistoryFor(HistoryCardType.CardAccepted)
     } catch (err: unknown) {
       setButtonsVisible(true)
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error)?.message ?? err, 1024)
@@ -193,6 +197,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     try {
       if (agent && credential) {
         await agent.credentials.declineOffer(credential.id)
+
+        saveHistoryFor(HistoryCardType.CardDeclined)
+
         await agent.credentials.sendProblemReport({
           credentialRecordId: credential.id,
           description: t('CredentialOffer.Declined'),

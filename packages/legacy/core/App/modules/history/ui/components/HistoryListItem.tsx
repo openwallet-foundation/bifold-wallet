@@ -3,6 +3,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../../../contexts/theme'
 import { CustomRecord, HistoryCardType } from '../../types'
+import HistoryCardAcceptedIcon from '../assets/img/HistoryCardAcceptedIcon.svg'
+import HistoryCardExpiredIcon from '../assets/img/HistoryCardExpiredIcon.svg'
+import HistoryCardRevokedIcon from '../assets/img/HistoryCardRevokedIcon.svg'
+import HistoryInformationSentIcon from '../assets/img/HistoryInformationSentIcon.svg'
+import HistoryPinUpdatedIcon from '../assets/img/HistoryPinUpdatedIcon.svg'
+import IconChevronRight from '../assets/img/IconChevronRight.svg'
 
 interface Props {
   item: CustomRecord
@@ -15,8 +21,12 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: 'column',
-    marginHorizontal: 8,
+    marginHorizontal: 12,
     maxWidth: 200,
+  },
+  cardDescriptionContent: {
+    marginTop: 5,
+    marginBottom: 10,
   },
   cardDate: {
     color: '#666666',
@@ -48,32 +58,43 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
   //   const navigation = useNavigation<StackNavigationProp<RootStackParams, 'HistoryDetails'>>()
 
   //TODO: render icon
-  //   const renderCardIcon = (item: CustomRecord) => {
-  //     switch (item.content.type) {
-  //       case HistoryCardType.CardAccepted: {
-  //         return <HistoryCardAcceptedIcon />
-  //       }
-  //       case HistoryCardType.CardExpired: {
-  //         return <HistoryCardExpiredIcon />
-  //       }
-  //       case HistoryCardType.CardRevoked: {
-  //         return <HistoryCardRevokedIcon />
-  //       }
-  //       case HistoryCardType.InformationSent: {
-  //         return <HistoryInformationSentIcon />
-  //       }
-  //       case HistoryCardType.PinChanged: {
-  //         return <HistoryPinUpdatedIcon />
-  //       }
-  //       default:
-  //         return null
-  //     }
-  //   }
+  const renderCardIcon = (item: CustomRecord) => {
+    switch (item.content.type) {
+      case HistoryCardType.CardAccepted: {
+        return <HistoryCardAcceptedIcon />
+      }
+      case HistoryCardType.CardDeclined: {
+        //TODO: return different icon
+        return <HistoryCardRevokedIcon />
+      }
+      case HistoryCardType.CardExpired: {
+        return <HistoryCardExpiredIcon />
+      }
+      case HistoryCardType.CardRevoked: {
+        return <HistoryCardRevokedIcon />
+      }
+      case HistoryCardType.InformationSent: {
+        return <HistoryInformationSentIcon />
+      }
+      case HistoryCardType.PinChanged: {
+        return <HistoryPinUpdatedIcon />
+      }
+      default:
+        return null
+    }
+  }
 
   const renderCardTitle = (item: CustomRecord) => {
     switch (item.content.type) {
       case HistoryCardType.CardAccepted: {
-        return <Text style={TextTheme.headerTitle}>{t('History.CardTitle.CardAccepted')}</Text>
+        return <Text style={TextTheme.headingThree}>{t('History.CardTitle.CardAccepted')}</Text>
+      }
+      case HistoryCardType.CardDeclined: {
+        return (
+          <Text style={[TextTheme.headerTitle, { color: styles.historyCardRevoked.color }]}>
+            {t('History.CardTitle.CardDeclined')}
+          </Text>
+        )
       }
       case HistoryCardType.CardExpired: {
         return <Text style={TextTheme.headerTitle}>{t('History.CardTitle.CardExpired')}</Text>
@@ -107,6 +128,9 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
   const renderCardDescription = (item: CustomRecord) => {
     switch (item.content.type) {
       case HistoryCardType.CardAccepted: {
+        return <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+      }
+      case HistoryCardType.CardDeclined: {
         return <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
       }
       case HistoryCardType.CardExpired: {
@@ -160,14 +184,15 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
     return (
       <View>
         <View style={styles.card}>
-          {/* TODO: render icon */}
-          {/* {renderCardIcon(item)} */}
+          {renderCardIcon(item)}
           <View style={styles.cardContent}>
             {renderCardTitle(item)}
-            {renderCardDescription(item)}
+            <View style={styles.cardDescriptionContent}>{renderCardDescription(item)}</View>
             {renderCardDate(item.content.createdAt)}
           </View>
-          <View style={styles.arrowContainer}>{/* //TODO: add icon */}</View>
+          <View style={styles.arrowContainer}>
+            <IconChevronRight />
+          </View>
         </View>
         <View style={styles.cardBottomBorder} />
       </View>

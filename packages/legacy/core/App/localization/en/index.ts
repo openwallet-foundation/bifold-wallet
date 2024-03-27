@@ -362,6 +362,7 @@ const translation = {
     "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.",
     "CardTitle":{
       "CardAccepted": "Card accepted:",
+      "CardDeclined": "Card declined:",
       "CardExpired": "Card expired",
       "CardRevoked": "Card revoked",
       "InformationSent": "Information sent to:",

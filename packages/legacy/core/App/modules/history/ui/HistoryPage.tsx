@@ -11,7 +11,6 @@ import { ButtonType } from '../../../components/buttons/Button-api'
 import KeyboardView from '../../../components/views/KeyboardView'
 import { TOKENS, useContainer } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
-import { useStore } from '../../../contexts/store'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
@@ -27,9 +26,6 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [isLoading, setLoading] = useState(false)
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
-
-  const iconSize = 24
-  const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { getHistoryItems, findGenericRecordById, removeGenericRecord } = useHistory()
 
@@ -137,8 +133,17 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <View>
-            <Text style={[style.title, TextTheme.headerTitle]}>{t('ActivityHistory.Title')}</Text>
-            <Text style={[style.title, TextTheme.normal]}>{t('ActivityHistory.Description')}</Text>
+            <Button
+              title={t('History.SortFilterButton')}
+              testID={actionButtonTestId}
+              accessibilityLabel={actionButtonLabel}
+              buttonType={ButtonType.Secondary}
+              onPress={async () => {
+                console.log('save history')
+              }}
+            >
+              {!continueEnabled && isLoading ? <ButtonLoading /> : null}
+            </Button>
             <View style={style.gap} />
 
             <FlatList
@@ -149,29 +154,6 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
               renderItem={(element) => <HistoryListItem item={element.item} />}
             />
           </View>
-        </View>
-        <View style={style.controlsContainer}>
-          <Button
-            title={actionButtonLabel}
-            testID={actionButtonTestId}
-            accessibilityLabel={actionButtonLabel}
-            buttonType={ButtonType.Primary}
-            onPress={() => {}}
-          >
-            {!continueEnabled && isLoading ? <ButtonLoading /> : null}
-          </Button>
-          <View style={{ marginBottom: 10 }} />
-          <Button
-            title={t('ActivityHistory.StopKeepingHistory')}
-            testID={actionButtonTestId}
-            accessibilityLabel={actionButtonLabel}
-            buttonType={ButtonType.Secondary}
-            onPress={async () => {
-              console.log('save history')
-            }}
-          >
-            {!continueEnabled && isLoading ? <ButtonLoading /> : null}
-          </Button>
         </View>
       </View>
     </KeyboardView>

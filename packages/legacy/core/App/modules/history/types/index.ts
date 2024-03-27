@@ -1,5 +1,6 @@
 export enum HistoryCardType {
   CardAccepted = 'CardAccepted',
+  CardDeclined = 'CardDeclined',
   CardExpired = 'CardExpired',
   CardRevoked = 'CardRevoked',
   InformationSent = 'InformationSent',
