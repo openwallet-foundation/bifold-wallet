@@ -32,6 +32,8 @@ const translation = {
         "ShowDetails": "Afficher les détails",
         "TryAgain": "Réessayer",
         "Biometrics": "Biométrie",
+        "History": "Histoire",
+        "SaveSettings": "Enregistrer les paramètres",
         "On": "Activé",
         "Off": "Désactivé",
         "Remove": "Supprimer",
@@ -126,6 +128,10 @@ const translation = {
         "Message1044": "There was a problem while initializing onboarding. (FR)",
         "Title1045": "Unable to initialize agent. (FR)",
         "Message1045": "There was a problem while initializing agent. (FR)",
+    },
+    "SelectionAxs": {
+        "RadioChecked": "coché.",
+        "RadioUnchecked": "décoché."
     },
     "ActivityLog": {
         "Your": "Votre ",
@@ -252,6 +258,121 @@ const translation = {
         "UseToUnlock": "Utiliser la biométrie pour déverrouiller le portefeuille ?",
         "UnlockPromptTitle": "Déverrouillage du portefeuille",
         "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille"
+    },
+    "ActivityHistory": {
+        "Header": "Historique des activités",
+        "Title": "Gérer l'historique des activités",
+        "Description": "Définissez la durée pendant laquelle vous souhaitez conserver l'historique de vos activités avant qu'il ne soit supprimé de votre appareil (il n'est stocké nulle part ailleurs).",
+        "DeleteActivity": "Supprimer l'historique des activités après:",
+        "DeleteActivityAfter": {
+          "1month":"1 mois",
+          "6month":"6 mois",
+          "1year":"1 année",
+          "Always":"Toujours",
+        },
+        "WarningDisclaimerAlert": {
+          "Title": "L'activité passée sera supprimée",
+          "Description": "Toute activité antérieure à la période que vous venez de sélectionner sera supprimée dès que vous enregistrerez."
+        },
+        "SettingsSaved": "Paramètres d'historique enregistrés",
+        "NoOptionSelectedError": "Aucune option sélectionnée",
+        "StopKeepingHistory": "Arrêter de conserver l'historique des activités",
+        "StoppedLoggingAlert": "Vous n'enregistrez pas l'historique de vos activités.",
+        "StoppedLoggingAlertYes": "Activer l'historique des activités",
+        "DeleteActivityHistory": {
+          "Title": "Supprimer l'historique des activités",
+          "Description": "L'historique individuel peut être supprimé dans l'onglet Historique ou vous pouvez supprimer tout l'historique des activités. Cette action ne peut pas être annulée.",
+          "Link": "Supprimer tout l'historique des activités"
+        },
+        "StopActivityHistoryScreen": {
+          "Header": "Désactiver l'historique des activités?",
+          "Title": "Voulez-vous vraiment désactiver l'historique?",
+          "Description": "Aucun autre historique d'activité ne sera conservé dans le portefeuille de l'Ontario. Toute l'histoire précédente restera.",
+          "Yes": "Oui désactiver l'historique des activités",
+          "No": "Non, reviens"
+        },
+        "StopActivityHistoryScreenConfirmed": {
+          "Header": "Historique des activités désactivé",
+          "Title": "Historique désactivé",
+          "Description": "Le Portefeuille Ontario ne stocke plus l'historique de vos activités",
+          "Back": "Retour aux paramètres",
+        },
+        "DeleteActivityHistoryScreen": {
+          "Header": "Supprimer tout l'historique des activités?",
+          "Title": "Voulez-vous vraiment supprimer tout l'historique?",
+          "Description": "Vous ne pourrez pas récupérer votre historique d'activité après l'avoir supprimé.",
+          "Yes": "Oui, supprimer tout l'historique des activités",
+          "No": "Non, reviens"
+        },
+        "DeleteActivityHistoryScreenConfirmed": {
+          "Header": "Activité historique supprimée",
+          "Title": "Toutes les activités de l'historique supprimées",
+          "Description": "Le portefeuille de l'Ontario a supprimé tout l'historique de vos activités.",
+          "Continue": "Continuer",
+        },
+        "NoHistory": "Pas d'historique",
+    },
+    "History": {
+        "SortFilterButton":"Sort/Filter",
+        "SortBy": "Sort by",
+        "Sort": {
+          "Newest": "Newest to oldest",
+          "Oldest": "Oldest to Newest"
+        },
+        "Filter": {
+          "FilterByDate": "Filter by date range",
+          "Select": "Select",
+          "Today": "Today",
+          "Week": "Last week",
+          "Month": "Last 30 days",
+          "TwoMonth": "Last 60 days",
+          "ThreeMonth": "Last 90 days",
+          "Year": "This year",
+          "AllTime": "All time",
+          "FilterByActivity": "Filter by activity type",
+          "CardUpdates": "Card updates",
+          "InformationRequests": "Information requests",
+          "WalletPinUpdates": "Wallet PIN updates",
+          "Buttons": {
+            "Apply": "Apply filters",
+            "Close": "Close"
+          }
+        },
+        "Initial":{
+          "Title": "Do you want to log your wallet activity?",
+          "Description": {
+            "Header": "This History section can list when:\n",
+            "PointA": "You have <b>shared information</b> with a verifier",
+            "PointAAxs": "You have shared information with a verifier",
+            "PointB": "A card is <b>accepted, revoked or expired</b>",
+            "PointBAxs": "A card is accepted, revoked or expired",
+            "PointC": "You have updated your <b>PIN</b>",
+            "PointCAxs": "You have updated your PIN",
+            "Footer": "\nYour wallet activity will <b>only be stored on your device</b>, and you can choose how often it is automatically deleted.",
+            "FooterAxs": "Your wallet activity will only be stored on your device, and you can choose how often it is automatically deleted."
+          },
+          "Button": {
+            "SetUpHistoryLog": "Set up your History log",
+            "StartLoggingWalletActivity": "Start logging wallet activity",
+            "DoNotLogWalletActivity": "Do not log any wallet activity"
+          }
+        },
+        "Button":"Sort/Filter",
+        "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.",
+        "CardTitle":{
+          "CardAccepted": "Card accepted:",
+          "CardExpired": "Card expired",
+          "CardDeclined": "Card declined:",
+          "CardRevoked": "Card revoked",
+          "InformationSent": "Information sent to:",
+          "WalletPinUpdated": "Wallet PIN updated",
+        },
+        "CardDescription":{
+          "CardExpired": "{{cardName}} expired",
+          "CardRevoked": "{{cardName}} revoked",
+          "WalletPinUpdated": "New PIN set",
+        },
+        "Today": "Today"
     },
     "Contacts": {
         "EmptyList": "Your Contacts is empty! (FR)",
@@ -565,6 +686,8 @@ const translation = {
         "ProofRequesting": 'Demande de preuve',
         "NameWallet": "Name your wallet (FR)",
         "RenameContact": "Edit Contact Name (FR)",
+        "HistorySettings": "Paramètres de l'historique",
+        "History": "Histoire",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",

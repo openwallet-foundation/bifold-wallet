@@ -31,6 +31,8 @@ const translation = {
     "Dismiss": "Dispensar",
     "ShowDetails": "Mostrar Detalhes",
     "Biometrics": "Biometria",
+    "History": "História",
+    "SaveSettings": "Salvar configurações",
     "On": "Ligado",
     "Off": "Desligado",
     "Close": "Fechar",
@@ -125,6 +127,10 @@ const translation = {
     "Message1044": "Ocorreu um problema ao incializar o onboarding.",
     "Title1045": "Não foi possível inicializar o agente.",
     "Message1045": "Ocorreu um erro ao inicializar o agente.",
+  },
+  "SelectionAxs": {
+    "RadioChecked": "verificada.",
+    "RadioUnchecked": "não verificado."
   },
   "StatusMessages": {
     "InitAgent": "Iniciando agente .."
@@ -235,6 +241,121 @@ const translation = {
     "NoBiometricsErrorDetails": "Para arrumar isso, habilite a biometria nas configurações do seu dispositivo.",
     "UnlockPromptTitle": "Destravar carteira",
     "UnlockPromptDescription": "Utilize a biometria para destravar sua carteira"
+  },
+  "ActivityHistory": {
+    "Header": "Activity history",
+    "Title": "Manage activity history",
+    "Description": "Set how long you want to keep your activity history before it is deleted from your device (it is not stored anywhere else).",
+    "DeleteActivity": "Delete activity history after:",
+    "DeleteActivityAfter": {
+      "1month":"1 month",
+      "6month":"6 month",
+      "1year":"1 year",
+      "Always":"Always",
+    },
+    "WarningDisclaimerAlert": {
+      "Title": "Past activity will be deleted",
+      "Description": "Any activity before the period you've just selected will be deleted as soon as you save."
+    },
+    "SettingsSaved": "History settings saved",
+    "NoOptionSelectedError": "No option selected",
+    "StopKeepingHistory": "Stop keeping activity history",
+    "StoppedLoggingAlert": "You are not logging your activity history.",
+    "StoppedLoggingAlertYes": "Turn on activity history",
+    "DeleteActivityHistory": {
+      "Title": "Delete activity history",
+      "Description": "Individual history can be deleted in the history tab or you can delete all activity history. This action cannot be undone.",
+      "Link": "Delete all activity history"
+    },
+    "StopActivityHistoryScreen": {
+      "Header": "Turn off activity history?",
+      "Title": "Are you sure you want to turn off history?",
+      "Description": "No further activity history will be kept in the Ontario Wallet. All previous history will remain.",
+      "Yes": "Yes turn off activity history",
+      "No": "No, go back"
+    },
+    "StopActivityHistoryScreenConfirmed": {
+      "Header": "Activity history turned off",
+      "Title": "History turned off",
+      "Description": "The Ontario Wallet is no longer storing your activity history",
+      "Back": "Back to settings",
+    },
+    "DeleteActivityHistoryScreen": {
+      "Header": "Delete all activity history?",
+      "Title": "Are you sure you want to delete all history?",
+      "Description": "You will not be able to get your activity history back after you delete it.",
+      "Yes": "Yes, delete all activity history",
+      "No": "No, go back"
+    },
+    "DeleteActivityHistoryScreenConfirmed": {
+      "Header": "History activty deleted",
+      "Title": "All history activity deleted",
+      "Description": "The Ontario Wallet deleted all your activity history.",
+      "Continue": "Continue",
+    },
+    "NoHistory": "Sem histórico",
+  },
+  "History": {
+    "SortFilterButton":"Sort/Filter",
+    "SortBy": "Sort by",
+    "Sort": {
+      "Newest": "Newest to oldest",
+      "Oldest": "Oldest to Newest"
+    },
+    "Filter": {
+      "FilterByDate": "Filter by date range",
+      "Select": "Select",
+      "Today": "Today",
+      "Week": "Last week",
+      "Month": "Last 30 days",
+      "TwoMonth": "Last 60 days",
+      "ThreeMonth": "Last 90 days",
+      "Year": "This year",
+      "AllTime": "All time",
+      "FilterByActivity": "Filter by activity type",
+      "CardUpdates": "Card updates",
+      "InformationRequests": "Information requests",
+      "WalletPinUpdates": "Wallet PIN updates",
+      "Buttons": {
+        "Apply": "Apply filters",
+        "Close": "Close"
+      }
+    },
+    "Initial":{
+      "Title": "Do you want to log your wallet activity?",
+      "Description": {
+        "Header": "This History section can list when:\n",
+        "PointA": "You have <b>shared information</b> with a verifier",
+        "PointAAxs": "You have shared information with a verifier",
+        "PointB": "A card is <b>accepted, revoked or expired</b>",
+        "PointBAxs": "A card is accepted, revoked or expired",
+        "PointC": "You have updated your <b>PIN</b>",
+        "PointCAxs": "You have updated your PIN",
+        "Footer": "\nYour wallet activity will <b>only be stored on your device</b>, and you can choose how often it is automatically deleted.",
+        "FooterAxs": "Your wallet activity will only be stored on your device, and you can choose how often it is automatically deleted."
+      },
+      "Button": {
+        "SetUpHistoryLog": "Set up your History log",
+        "StartLoggingWalletActivity": "Start logging wallet activity",
+        "DoNotLogWalletActivity": "Do not log any wallet activity"
+      }
+    },
+    "Button":"Sort/Filter",
+    "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.",
+    "CardTitle":{
+      "CardAccepted": "Card accepted:",
+      "CardExpired": "Card expired",
+      "CardDeclined": "Card declined:",
+      "CardRevoked": "Card revoked",
+      "InformationSent": "Information sent to:",
+      "WalletPinUpdated": "Wallet PIN updated",
+    },
+    "CardDescription":{
+      "CardExpired": "{{cardName}} expired",
+      "CardRevoked": "{{cardName}} revoked",
+      "WalletPinUpdated": "New PIN set",
+    },
+    "Today": "Today"
   },
   "Contacts": {
     "EmptyList": "Seus Contatos esta vazio!",
@@ -543,6 +664,8 @@ const translation = {
     "CreateConnectionInvitation": "Criar um convite de conexão",
     "NameWallet": "Nomear sua carteira",
     "RenameContact": "Editar nome do contato",
+    "HistorySettings": "Configurações do histórico",
+    "History": "História",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",

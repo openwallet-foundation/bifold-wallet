@@ -40,6 +40,8 @@ export enum Screens {
   NameWallet = 'Name Wallet',
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
+  HistorySettings = 'History Settings',
+  HistoryPage = 'History',
 }
 
 export enum Stacks {
@@ -48,6 +50,7 @@ export enum Stacks {
   ConnectStack = 'Connect Stack',
   CredentialStack = 'Credentials Stack',
   SettingStack = 'Settings Stack',
+  HistoryStack = 'History Stack',
   ContactStack = 'Contacts Stack',
   ProofRequestsStack = 'Proof Requests Stack',
   NotificationStack = 'Notifications Stack',
@@ -66,6 +69,7 @@ export type RootStackParams = {
   [Screens.Chat]: { connectionId: string }
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
+  [Stacks.HistoryStack]: NavigatorScreenParams<HistoryStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
@@ -147,6 +151,11 @@ export type SettingStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
   [Screens.UsePushNotifications]: { isMenu?: boolean }
+  [Screens.HistorySettings]: undefined
+}
+
+export type HistoryStackParams = {
+  [Screens.HistoryPage]: undefined
 }
 
 export type NotificationStackParams = {
