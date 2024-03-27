@@ -36,6 +36,7 @@ export interface ConfigurationContext {
   pages: typeof OnboardingPages
   splash: React.FC
   terms: React.FC
+  initialLanguage: React.FC
   preface: React.FC
   homeHeaderView: React.FC
   homeFooterView: React.FC
