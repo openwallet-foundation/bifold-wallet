@@ -13,7 +13,6 @@ import KeyboardView from '../components/views/KeyboardView'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { Screens } from '../types/navigators'
 import { generateRandomWalletName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -94,10 +93,10 @@ const NameWallet: React.FC = () => {
         agent.config.label = walletName
       }
       dispatch({ type: DispatchAction.DID_NAME_WALLET })
-      if (onBoardingComplete) {
+      if (store.onboarding.didCompleteOnboarding) {
         navigation.goBack()
       } else {
-        navigation.navigate({ name: Screens.UseBiometry } as never)
+        dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
       }
     }
   }

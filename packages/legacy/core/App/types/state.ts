@@ -6,6 +6,9 @@ export interface Onboarding {
   didConsiderBiometry: boolean
   didConsiderPushNotifications: boolean
   didNameWallet: boolean
+  onboardingVersion: number
+  didCompleteOnboarding: boolean
+  postAuthScreens: string[]
 }
 
 export interface Migration {
