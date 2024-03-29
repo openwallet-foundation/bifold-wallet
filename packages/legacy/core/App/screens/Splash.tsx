@@ -116,10 +116,11 @@ const Splash: React.FC = () => {
           return
         }
 
+        if (store.onboarding.onboardingVersion !== OnboardingVersion) {
+          dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
+        }
+
         if (onboardingComplete(store.onboarding)) {
-          if (!store.onboarding.didCompleteOnboarding) {
-            dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING })
-          }
           if (store.onboarding.onboardingVersion !== OnboardingVersion) {
             dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
           }
@@ -162,9 +163,6 @@ const Splash: React.FC = () => {
           return
         } else {
           // If onboarding was interrupted we need to pickup from where we left off.
-          if (store.onboarding.onboardingVersion !== OnboardingVersion) {
-            dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
-          }
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
