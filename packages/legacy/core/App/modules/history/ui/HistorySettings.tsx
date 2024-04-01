@@ -21,10 +21,8 @@ interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.H
 
 const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
   //   const updatePin = (route.params as any)?.updatePin
-  const [continueEnabled, setContinueEnabled] = useState(true)
-  const [isLoading, setLoading] = useState(false)
-  const iconSize = 24
-  const [store, dispatch] = useStore()
+  const [continueEnabled] = useState(true)
+  const [isLoading] = useState(false)
   const { t } = useTranslation()
   const { historySettingsOptionList, handleStoreHistorySettings, getStoredHistorySettingsOption } = useHistory()
 
@@ -67,7 +65,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
   })
 
   const onSelectHistory = (newHistoryOption: BlockSelection) => {
-    console.log('on select history:', JSON.stringify(newHistoryOption))
+    // console.log('on select history:', JSON.stringify(newHistoryOption))
     //TODO: Impliment warning of old history clearing on the below condition
     // if (newHistoryOption && newHistoryOption.key) {
     //   if ((initialHistory?.key as number) > newHistoryOption.key) {
@@ -95,10 +93,10 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
       //     y: 0,
       //     animated: true,
       //   })
-      console.log('History option saved')
+      // console.log('History option saved')
     } catch (e: unknown) {
       //TODO: Impliment Alert
-      console.log('Error:', e)
+      // console.log('Error:', e)
       //   log(`[${SettingsActivityHistory.name}]: Handle history save: ${e}`, LogLevel.error)
       //   Toast.show({
       //     type: 'error',
@@ -161,7 +159,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
             accessibilityLabel={actionButtonLabel}
             buttonType={ButtonType.Secondary}
             onPress={async () => {
-              console.log('save history')
+              // console.log('save history')
             }}
           >
             {!continueEnabled && isLoading ? <ButtonLoading /> : null}

@@ -2,6 +2,8 @@ import { CredentialExchangeRecord } from '@aries-framework/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 import { StackNavigationOptions } from '@react-navigation/stack'
 
+import { CustomRecord } from '../modules/history/types'
+
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
   Splash = 'Splash',
@@ -42,6 +44,7 @@ export enum Screens {
   ScanHelp = 'Scan Help',
   HistorySettings = 'History Settings',
   HistoryPage = 'History',
+  HistoryDetails = 'History details',
 }
 
 export enum Stacks {
@@ -156,6 +159,7 @@ export type SettingStackParams = {
 
 export type HistoryStackParams = {
   [Screens.HistoryPage]: undefined
+  [Screens.HistoryDetails]: { historyRecord: CustomRecord }
 }
 
 export type NotificationStackParams = {

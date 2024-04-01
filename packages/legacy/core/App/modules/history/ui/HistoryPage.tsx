@@ -5,14 +5,14 @@ import moment, { Moment } from 'moment'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 
-// eslint-disable-next-line import/no-named-as-default
 import { ButtonType } from '../../../components/buttons/Button-api'
 import KeyboardView from '../../../components/views/KeyboardView'
 import { TOKENS, useContainer } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
-import { HistoryStackParams } from '../../../types/navigators'
+import { HistoryStackParams, Screens } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
 import { HistorySettingsOptionStorageKey, useHistory } from '../context/history'
 import { CustomRecord, HistoryRecord, RecordType } from '../types'
@@ -122,6 +122,19 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
     )
   }
 
+  const renderHistoryListItem = (item: CustomRecord) => {
+    return (
+      <HistoryListItem item={item} />
+      // <TouchableOpacity
+      //   onPress={() => {
+      //     navigation.navigate(Screens.HistoryDetails, { historyRecord: item })
+      //   }}
+      // >
+      //   <HistoryListItem item={item} />
+      // </TouchableOpacity>
+    )
+  }
+
   useFocusEffect(
     useCallback(() => {
       getAllHistory()
@@ -151,7 +164,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
               style={{ flexGrow: 0 }}
               data={historyItems}
               ListEmptyComponent={renderEmptyListComponent}
-              renderItem={(element) => <HistoryListItem item={element.item} />}
+              renderItem={(element) => renderHistoryListItem(element.item)}
             />
           </View>
         </View>

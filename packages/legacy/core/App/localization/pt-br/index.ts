@@ -37,6 +37,15 @@ const translation = {
     "Off": "Desligado",
     "Close": "Fechar",
     "Remove": "Remover",
+    "organization": "Organization",
+    "Issuer": "Issuer",
+    "RevokedByIssuer": "Revoked by this issuer",
+    "Verifier": "Verifier",
+    "Expired": "Expired",
+    "Revoked": "Revoked",
+    "Issued": "Issued",
+    "Requested": "Requested",
+    "Updated": "Updated",
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -355,7 +364,7 @@ const translation = {
       "CardRevoked": "{{cardName}} revoked",
       "WalletPinUpdated": "New PIN set",
     },
-    "Today": "Today"
+    "Today": "Today",
   },
   "Contacts": {
     "EmptyList": "Seus Contatos esta vazio!",
@@ -666,6 +675,7 @@ const translation = {
     "RenameContact": "Editar nome do contato",
     "HistorySettings": "Configurações do histórico",
     "History": "História",
+    "HistoryDetails": "History Details"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
