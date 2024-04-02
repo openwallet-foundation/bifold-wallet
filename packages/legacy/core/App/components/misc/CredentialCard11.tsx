@@ -225,16 +225,19 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     },
   })
 
-  const colorIfErrorState = () =>
-    error || predicateError || isProofRevoked
-      ? ColorPallet.notification.errorBorder
-      : styles.secondaryBodyContainer.backgroundColor
+  const backgroundColorIfErrorState = (backgroundColor?: string) =>
+    error || predicateError || isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
 
   const fontColorWithHighContrast = () => {
-    const c = colorIfErrorState() ?? ColorPallet.grayscale.lightGrey
+    if (proof) {
+      return ColorPallet.grayscale.mediumGrey
+    }
+
+    const c =
+      backgroundColorIfErrorState(overlay.brandingOverlay?.primaryBackgroundColor) ?? ColorPallet.grayscale.lightGrey
     const shade = shadeIsLightOrDark(c)
 
-    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.mediumGrey
+    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey
   }
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
@@ -522,19 +525,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor: colorIfErrorState(),
+            backgroundColor: backgroundColorIfErrorState(styles.secondaryBodyContainer.backgroundColor),
             overflow: 'hidden',
           },
         ]}
       >
-        {overlay.metaOverlay?.watermark && (
-          <CardWatermark
-            width={dimensions.cardWidth}
-            height={dimensions.cardHeight}
-            style={{ color: fontColorWithHighContrast() }}
-            watermark={overlay.metaOverlay?.watermark}
-          />
-        )}
         {overlay.brandingOverlay?.backgroundImageSlice && !displayItems ? (
           <ImageBackground
             source={toImageSource(overlay.brandingOverlay?.backgroundImageSlice)}
