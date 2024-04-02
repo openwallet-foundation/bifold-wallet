@@ -211,7 +211,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       const handleCheckStatusPress = (content: string) => {
         setShowTransactionStatusModal(true)
         let hash = extractHashFromInvoiceMessage(content)
+        let invoice = extractLightningInvoiceMessage(content)
         console.log('Raw Content:', content)
+        if (invoice !== null) {
+          setInvoiceText(invoice)
+        }
         setCheckStatusDesc(undefined)
         if (hash !== null) {
           setInvoiceHash(hash)

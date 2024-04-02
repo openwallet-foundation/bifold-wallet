@@ -38,25 +38,27 @@ const CheckLightningTransactionModal: React.FC<CheckLightningTransactionModalPro
             visible={showLightningPayModal}
             onRequestClose={() => setShowLightningPayModal(false)}
         >
-            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', justifyContent: 'space-evenly', alignItems: 'center' }}>
+            <View style={globalTheme.ChatTheme.paymentModals.modalView}>
                 <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Check Payment Status</Text>
 
                 {/* Show if node is busy initializing */}
-                {breezInitializing && (
-                    <View>
+                {breezInitializing ? (
+                    <View style={globalTheme.ChatTheme.paymentModals.breezInitView}>
                         <Text style={{ color: '#fff', marginTop: 20 }}>Initializing node...</Text>
                         <ActivityIndicator size="large" color="#FFF" />
                     </View>
-                )}
+                ) : <View style={globalTheme.ChatTheme.paymentModals.breezInitView}></View>}
 
-                <Text style={{ ...globalTheme.TextTheme.modalNormal, marginTop: 20, padding: 10 }}>
+                <Text style={{ ...globalTheme.TextTheme.modalNormal, marginTop: 20, padding: 10, color: 'white' }}>
                     {invoiceText &&
                         'Amount: \n\n    ' + (Number(lightningPayReq.decode(invoiceText).millisatoshis) / 1000) + " Satoshi"}
                     {btcZarPrice && invoiceText && ('\n\n    (R' + (Number(lightningPayReq.decode(invoiceText).millisatoshis) / 100000000000 * btcZarPrice).toFixed(2) + ')')}
+                    {!invoiceText && 'No invoice text'}
                 </Text>
+
                 {!startingNode && (
                     <TouchableOpacity
-                        style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 200, alignItems: 'center', justifyContent: 'center' }}
+                        style={globalTheme.ChatTheme.paymentModals.mainButton}
                         onPress={() => {
                             // Add your payment logic here
                             console.log('Status Check button pressed');
@@ -70,15 +72,15 @@ const CheckLightningTransactionModal: React.FC<CheckLightningTransactionModalPro
 
                     </TouchableOpacity>
                 )}
-                {checkStatusDesc && (
-                    <Text style={{ color: '#fff', }}>{checkStatusDesc}</Text>
+                {checkStatusDesc ? (
+                    <Text style={{ color: '#fff', minHeight: 50 }}>{checkStatusDesc}</Text>
 
-                )}
+                ) : <Text style={{ minHeight: 50 }}></Text>}
 
 
                 <View style={{ width: '100%', alignItems: 'center', marginBottom: 20, alignSelf: 'flex-end' }}>
                     <TouchableOpacity
-                        style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 100, alignItems: 'center' }}
+                        style={globalTheme.ChatTheme.paymentModals.closeButton}
                         onPress={() => setShowLightningPayModal(false)}>
                         <Text style={{ color: '#fff' }}>Close</Text>
                     </TouchableOpacity>

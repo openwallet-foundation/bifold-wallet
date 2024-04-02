@@ -51,16 +51,16 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
                 setShowRequestLightningPaymentModal(false);
             }}
         >
-            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', alignItems: 'center' }}>
+            <View style={globalTheme.ChatTheme.paymentModals.modalView}>
                 <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Request Payment</Text>
 
                 {/* Show if node is busy initializing */}
                 {breezInitializing ? (
-                    <View style={{ minHeight: 80, margin: 10 }}>
+                    <View style={globalTheme.ChatTheme.paymentModals.breezInitView}>
                         <Text style={{ color: '#fff', marginTop: 20 }}>Initializing node...</Text>
                         <ActivityIndicator size="large" color="#FFF" />
                     </View>
-                ) : <View style={{ minHeight: 80, margin: 10 }}></View>}
+                ) : <View style={globalTheme.ChatTheme.paymentModals.breezInitView}></View>}
 
                 {!startingNode && (
                     <View>
@@ -90,7 +90,7 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
                         </TouchableOpacity>
                     </View>
                 )}
-                {paymentStatusDesc && <Text style={{ color: 'white' }}>{paymentStatusDesc}</Text>}
+                {paymentStatusDesc ? <Text style={{ color: 'white', minHeight: 50 }}>{paymentStatusDesc}</Text> : <Text style={{ minHeight: 50 }}></Text>}
 
                 {/* Close Button at the bottom */}
                 <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
