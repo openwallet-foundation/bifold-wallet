@@ -185,6 +185,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       const mailRegex = /^[\w\d\.\_\-]+@\w+(?:\.\w+)+$/gm
       const links = record.content.match(linkRegex) ?? []
       const callbackType = callbackTypeForMessage(record)
+
       const handleLightningPayPress = (content: string) => {
 
         setPaymentStatusDesc(undefined)
@@ -471,13 +472,13 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       else {
         console.log(paymentStatus);
 
-        setPaymentStatusDesc(JSON.stringify(paymentStatus));
+        setPaymentStatusDesc(JSON.stringify(paymentStatus).replace(/^"|"$/g, ''));
       }
 
     } catch (err: any) {
       console.error(err);
 
-      setPaymentStatusDesc(JSON.stringify(paymentStatus));
+      setPaymentStatusDesc(JSON.stringify(paymentStatus).replace(/^"|"$/g, ''));
     }
   }
 
