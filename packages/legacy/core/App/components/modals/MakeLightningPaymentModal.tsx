@@ -79,10 +79,10 @@ const PayWithBitcoinLightningModal: React.FC<PayWithBitcoinModalProps> = ({
 
                     </TouchableOpacity>
                 )}
-                {paymentStatusDesc && (
-                    <Text style={{ color: '#fff', }}>{paymentStatusDesc}</Text>
+                {paymentStatusDesc ? (
+                    <Text style={{ color: '#fff', minHeight: 50 }}>{paymentStatusDesc}</Text>
 
-                )}
+                ) : <Text style={{ minHeight: 50 }}></Text>}
 
                 <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
                     <TouchableOpacity
