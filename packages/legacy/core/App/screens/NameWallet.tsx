@@ -31,10 +31,8 @@ const NameWallet: React.FC = () => {
   const [walletName, setWalletName] = useState(store.preferences.walletName ?? generateRandomWalletName())
   const [loading, setLoading] = useState(false)
   const onBoardingComplete =
-    store.onboarding.didCompleteTutorial &&
-    store.onboarding.didAgreeToTerms &&
-    store.onboarding.didCreatePIN &&
-    store.onboarding.didConsiderBiometry
+    (store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
+    (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry)
   const [errorState, setErrorState] = useState<ErrorState>({
     visible: false,
     title: '',
