@@ -745,6 +745,23 @@ export const ChatTheme = {
   documentIcon: {
     color: ColorPallet.grayscale.white,
   },
+  paymentModals: {
+    modalView: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.87)',
+      alignItems: 'center'
+    },
+    breezInitView: {
+      minHeight: 80,
+      margin: 10
+    },
+    mainButton: {
+      ...Buttons.primary, padding: 10, borderRadius: 20, width: 230, alignItems: 'center', justifyContent: 'center', margin: 10
+    },
+    closeButton: {
+      ...Buttons.primary, padding: 10, borderRadius: 20, width: 150, alignItems: 'center', justifyContent: 'center', marginTop: 100
+    }
+  }
 }
 
 export const OnboardingTheme = {

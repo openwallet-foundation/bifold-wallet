@@ -47,7 +47,7 @@ export const initNodeAndSdk = async (eventHandler: any) => {
             type: NodeConfigVariant.GREENLIGHT,
             config: { inviteCode }
         };
-        console.log("Going with invite code")
+        console.log("Using invite code")
         // }
 
         const config = await defaultConfig(
@@ -202,6 +202,7 @@ export const getInvoice = async (satsAmount: string) => {
         return receivePaymentResponse.lnInvoice
     } catch (err: any) {
         console.error(err)
+        return "An error occurred while generating the invoice"
         // addLog(err.message);
     }
 }

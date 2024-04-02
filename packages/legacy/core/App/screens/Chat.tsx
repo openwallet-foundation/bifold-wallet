@@ -521,10 +521,14 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
 
     const tmpInvoice = await getInvoice(satsAmount);
     setInvoiceGenLoading(false);
-    if (tmpInvoice?.amountMsat) {
-      setGeneratedInvoice((tmpInvoice.amountMsat).toString());
-      agent?.basicMessages.sendMessage(connectionId, tmpInvoice.bolt11 + "," + tmpInvoice.paymentHash)
-      setShowRequestLightningPaymentModal(false);
+    if (typeof tmpInvoice !== 'string' && tmpInvoice?.amountMsat !== undefined) {
+      if (tmpInvoice?.amountMsat) {
+        setGeneratedInvoice((tmpInvoice.amountMsat).toString());
+        agent?.basicMessages.sendMessage(connectionId, tmpInvoice.bolt11 + "," + tmpInvoice.paymentHash)
+        setShowRequestLightningPaymentModal(false);
+      } else {
+        setPaymentStatusDesc('Error generating invoice')
+      }
     }
   }
 
@@ -532,6 +536,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>
       <TouchableOpacity style={globalTheme.Buttons.lightningInvoice} onPress={() => {
         setShowRequestLightningPaymentModal(true);
+        setPaymentStatusDesc(undefined);
         try {
           getBTCPrice().then((response) => {
             setBtcZarPrice(response)

@@ -51,16 +51,16 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
                 setShowRequestLightningPaymentModal(false);
             }}
         >
-            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.87)', alignItems: 'center' }}>
                 <Text style={{ ...globalTheme.TextTheme.headerTitle, marginTop: 20 }}>Request Payment</Text>
 
                 {/* Show if node is busy initializing */}
-                {breezInitializing && (
-                    <View>
+                {breezInitializing ? (
+                    <View style={{ minHeight: 80, margin: 10 }}>
                         <Text style={{ color: '#fff', marginTop: 20 }}>Initializing node...</Text>
                         <ActivityIndicator size="large" color="#FFF" />
                     </View>
-                )}
+                ) : <View style={{ minHeight: 80, margin: 10 }}></View>}
 
                 {!startingNode && (
                     <View>
@@ -73,10 +73,10 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
                                 placeholder="Amount in sats"
                                 keyboardType="numeric"
                             />
-                            <Text style={globalTheme.TextTheme.label}>{btcZarPrice && ('    (R' + (Number(satsAmount) / 100000000 * btcZarPrice).toFixed(2) + ')\n')}</Text>
+                            <Text style={globalTheme.TextTheme.label}>{btcZarPrice ? ('    (R' + (Number(satsAmount) / 100000000 * btcZarPrice).toFixed(2) + ')\n') : ('Fetching price')}</Text>
                         </View>
                         <TouchableOpacity
-                            style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 230, alignItems: 'center', justifyContent: 'center' }}
+                            style={globalTheme.ChatTheme.paymentModals.mainButton}
                             onPress={() => {
                                 console.log('Generate invoice button pressed');
                                 handleGetInvoiceButtonPress();
@@ -95,7 +95,7 @@ const RequestPaymentModal: React.FC<RequestPaymentModalProps> = ({
                 {/* Close Button at the bottom */}
                 <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
                     <TouchableOpacity
-                        style={{ ...globalTheme.Buttons.primary, padding: 10, borderRadius: 20, width: 100, alignItems: 'center' }}
+                        style={globalTheme.ChatTheme.paymentModals.closeButton}
                         onPress={() => setShowRequestLightningPaymentModal(false)}
                     >
                         <Text style={{ color: '#fff' }}>Close</Text>
