@@ -312,7 +312,7 @@ const SmartProxy = () => {
             )}
             {!isRegistered && checkedIfRegistered && (
                 <View style={styles.textPadding}>
-                    <Text style={theme.TextTheme.labelTitle}>You're DID is not registered on the proxy</Text>
+                    <Text style={theme.TextTheme.labelTitle}>Your DID is not registered on the proxy</Text>
                 </View>
             )}
 

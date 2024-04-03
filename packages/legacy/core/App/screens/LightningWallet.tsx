@@ -97,8 +97,10 @@ const LightningWallet = () => {
         const invoice = await getInvoice(satsAmount);
         setInvoiceGenLoading(false);
         setShowInvoiceQR(true);
+        if (invoice !== undefined && invoice !== "An error occurred while generating the invoice") {
+            setInvoice(invoice);
+        }
 
-        setInvoice(invoice);
     }
 
     const handleGetBalancesButtonPress = async () => {

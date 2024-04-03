@@ -2,6 +2,7 @@ import { getItem, setItem } from "./storage";
 import Config from "react-native-config";
 
 const smartproxyUrl = Config.PROXY_SERVER_URL
+const connectionApiUrl = Config.CONNECTION_API_URL
 
 interface OwnerResponse {
     createdAt: string;

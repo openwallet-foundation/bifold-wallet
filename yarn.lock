@@ -4047,6 +4047,7 @@ __metadata:
     "@react-native-community/eslint-plugin": ^1.3.0
     "@react-native-community/masked-view": 0.1.11
     "@react-native-community/netinfo": ^9.3.0
+    "@react-native-picker/picker": ^2.7.2
     "@react-navigation/bottom-tabs": 6.0.9
     "@react-navigation/core": 6.1.0
     "@react-navigation/devtools": ^6.0.8
@@ -5891,6 +5892,16 @@ __metadata:
   peerDependencies:
     react-native: ">=0.59"
   checksum: 556e47312be4b3d74c4c8fa7ab0b526a9d8395745c4d94d813cd8f08284d2a16ba274d8a8fdc38d5a273c913ebbc356bc15e65a8c8ab4506f7612a08e43da83d
+  languageName: node
+  linkType: hard
+
+"@react-native-picker/picker@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "@react-native-picker/picker@npm:2.7.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 2e6f0a40545538dfe70a58c4e837497737f0cc8812155d77d81090333e85cd064272724fb9c66a9230124890066ced3da16d95c9a28c51ba44368a53d959257e
   languageName: node
   linkType: hard
 
