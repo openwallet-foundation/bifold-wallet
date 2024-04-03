@@ -9,7 +9,6 @@ import { ButtonType } from '../../../components/buttons/Button-api'
 import KeyboardView from '../../../components/views/KeyboardView'
 import { TOKENS, useContainer } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
-import { useStore } from '../../../contexts/store'
 import { useTheme } from '../../../contexts/theme'
 import { Screens } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
@@ -19,7 +18,7 @@ import SingleSelectBlock, { BlockSelection } from './components/SingleSelectBloc
 
 interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.HistorySettings> {}
 
-const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
+const HistorySettings: React.FC<HistorySettingsProps> = () => {
   //   const updatePin = (route.params as any)?.updatePin
   const [continueEnabled] = useState(true)
   const [isLoading] = useState(false)
