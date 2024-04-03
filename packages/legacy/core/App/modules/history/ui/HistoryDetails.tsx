@@ -1,5 +1,4 @@
-import { ConnectionRecord, CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
-import { useConnectionById, useCredentialById, useProofById } from '@aries-framework/react-hooks'
+import { ConnectionRecord, CredentialExchangeRecord } from '@aries-framework/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,10 +7,11 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import CredentialCard from '../../../components/misc/CredentialCard'
 import Link from '../../../components/texts/Link'
 import KeyboardView from '../../../components/views/KeyboardView'
-import { TOKENS, useContainer } from '../../../container-api'
+import { useCommons } from '../../../contexts/commons'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams } from '../../../types/navigators'
-import { CustomRecord, HistoryCardType } from '../types'
+import { formatTime } from '../../../utils/helpers'
+import { HistoryCardType } from '../types'
 
 type HistoryDetailsPageProps = StackScreenProps<HistoryStackParams>
 
@@ -23,17 +23,18 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
   //   const updatePin = (route.params as any)?.updatePin
   const { historyRecord } = route.params
   const { t } = useTranslation()
+
+  //State
   const [credential, setCredential] = useState<CredentialExchangeRecord>()
-  const [proof, setProof] = useState<ProofExchangeRecord>()
+  // const [proof, setProof] = useState<ProofExchangeRecord>()
+  const [connection, setConnection] = useState<ConnectionRecord>()
 
   const { ColorPallet, TextTheme } = useTheme()
 
   const historyCardType = historyRecord.content.type
-  const container = useContainer()
-  const Button = container.resolve(TOKENS.COMP_BUTTON)
+  const { getCredentialById, getConnectionById } = useCommons()
 
-  //State
-
+  //Style
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
@@ -51,7 +52,9 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
     dividerLine: {
       width: '100%',
       height: 1,
-      backgroundColor: '#D9D9D9',
+      backgroundColor: '#212121',
+      marginTop: 20,
+      marginBottom: 20,
     },
     connectionDetailSection: {
       alignSelf: 'flex-start',
@@ -77,32 +80,20 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
       marginBottom: 10,
     },
   })
-  /** Get credential using item's corresponse id */
-  const getCredential = (credentialId: string | undefined) => {
-    if (!credentialId) {
-      throw new Error()
-    }
-    const credentialRecord = useCredentialById(credentialId)
-    setCredential(credentialRecord)
-    // return credentialRecord
-  }
 
-  /** Get proof using item's corresponse id */
-  const getProof = (proofId: string | undefined) => {
-    if (!proofId) {
-      throw new Error()
-    }
-    const proof = useProofById(proofId)
-    setProof(proof)
+  const renderDivider = () => {
+    return <View style={style.dividerLine} />
   }
 
   const renderCredentialDetails = () => {
-    ;<CredentialCard
-      credential={credential}
-      onPress={() => {
-        // console.log('Nav to credential details screen')
-      }}
-    />
+    return (
+      <CredentialCard
+        credential={credential}
+        onPress={() => {
+          // console.log('Nav to credential details screen')
+        }}
+      />
+    )
   }
 
   const renderConnectionHeader = () => {
@@ -135,21 +126,12 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
   }
 
   const renderConnectionDetails = () => {
-    let connectionId: string | undefined
-    let connectionRecord: ConnectionRecord | undefined
-    let connectionName: string | undefined
-    let connectionLogo: string | undefined
-    if (credential) {
-      connectionId = credential?.connectionId
-      connectionRecord = connectionId ? useConnectionById(connectionId) : undefined
-      connectionName = connectionRecord ? connectionRecord.theirLabel : t('Global.organization')
-      connectionLogo = connectionRecord ? connectionRecord.imageUrl : undefined
-    } else if (proof) {
-      connectionId = proof?.connectionId
-      connectionRecord = connectionId ? useConnectionById(connectionId) : undefined
-      connectionName = connectionRecord ? connectionRecord.theirLabel : t('Global.organization')
-      connectionLogo = connectionRecord ? connectionRecord.imageUrl : undefined
+    if (!connection) {
+      return <></>
     }
+    const connectionName: string | undefined = connection.theirLabel
+    const connectionLogo: string | undefined = connection.imageUrl
+    const connectionId: string | undefined = connection.id
 
     return (
       <View style={style.connectionDetailSection}>
@@ -177,16 +159,14 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
     )
   }
 
-  /*
-  const renderDateDetails = (item: CustomRecord) => {
+  const renderDateDetails = () => {
     //TODO:
-    const createdAt = item.content.createdAt
+    const createdAt = historyRecord.content.createdAt
     let displayDateTime
 
     if (createdAt) {
-      const createdAtDate = DateTime.fromJSDate(createdAt)
-      const createdAtTime = parseTime(getCurrentTime(createdAt))
-      const createdAtDateTime = createdAtDate.toFormat('LLLL d, yyyy') + ' ' + createdAtTime
+      const createdAtDate = new Date(createdAt)
+      const createdAtDateTime = formatTime(createdAtDate, { shortMonth: true })
       if (historyCardType === HistoryCardType.CardExpired || historyCardType === HistoryCardType.CardRevoked) {
         displayDateTime = '--'
         //TODO: impliment revocation/expiry
@@ -203,26 +183,24 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
       </View>
     ) : null
   }
-  */
-
-  const renderBar = () => {
-    return <View style={style.dividerLine} />
-  }
 
   const renderDetails = () => {
+    if (!credential) {
+      return <></>
+    }
     if (
       historyCardType === HistoryCardType.CardAccepted ||
       historyCardType === HistoryCardType.CardExpired ||
-      historyCardType === HistoryCardType.CardRevoked
+      historyCardType === HistoryCardType.CardRevoked ||
+      historyCardType === HistoryCardType.CardDeclined
     ) {
       return (
         <>
           {renderCredentialDetails()}
-          {renderBar()}
+          {renderDivider()}
           {renderConnectionDetails()}
-          {renderBar()}
-          {/* {renderDateDetails(item)} */}
-          {renderBar()}
+          {renderDivider()}
+          {renderDateDetails()}
         </>
       )
     } else if (historyCardType === HistoryCardType.InformationSent) {
@@ -276,17 +254,50 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
     }
   }, [credential])
   */
+  async function getCredential(id: string) {
+    try {
+      const credentialRecord = await getCredentialById(id)
+      setCredential(credentialRecord)
+    } catch {
+      //TODO: Display error to user
+    }
+  }
+  async function getConnection(id: string) {
+    try {
+      const connectionRecord = await getConnectionById(id)
+      setConnection(connectionRecord)
+    } catch {
+      //TODO: Display error to user
+    }
+  }
+
   useEffect(() => {
     if (
-      historyCardType === HistoryCardType.CardAccepted ||
-      historyCardType === HistoryCardType.CardExpired ||
-      historyCardType === HistoryCardType.CardRevoked
+      (historyCardType === HistoryCardType.CardAccepted ||
+        historyCardType === HistoryCardType.CardExpired ||
+        historyCardType === HistoryCardType.CardRevoked) &&
+      historyRecord.content.correspondenceId != undefined
     ) {
       getCredential(historyRecord.content.correspondenceId)
-    } else if (historyCardType === HistoryCardType.InformationSent) {
-      getProof(historyRecord.content.correspondenceId)
     }
+    // else if (
+    //   historyCardType === HistoryCardType.InformationSent &&
+    //   historyRecord.content.correspondenceId != undefined
+    // ) {
+    //   const proof = useProofById(historyRecord.content.correspondenceId)
+    //   setProof(proof)
+    // }
   }, [])
+
+  useEffect(() => {
+    if (!credential) {
+      return
+    }
+    if (!credential.connectionId) {
+      return
+    }
+    getConnection(credential.connectionId)
+  }, [credential])
 
   return (
     <KeyboardView>

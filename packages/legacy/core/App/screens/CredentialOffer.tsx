@@ -168,7 +168,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     /** Save history record for card accepted */
     const recordData: HistoryRecord = {
       type: type,
-      message: 'CardAccepted',
+      message: type,
       createdAt: credential?.createdAt,
       correspondenceId: credentialId,
       correspondenceName: name,

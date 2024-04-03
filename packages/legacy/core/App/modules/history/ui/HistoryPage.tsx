@@ -4,16 +4,11 @@ import { StackScreenProps } from '@react-navigation/stack'
 import moment, { Moment } from 'moment'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-// import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import { ButtonType } from '../../../components/buttons/Button-api'
 import KeyboardView from '../../../components/views/KeyboardView'
-import { TOKENS, useContainer } from '../../../container-api'
-import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams, Screens } from '../../../types/navigators'
-import { testIdWithKey } from '../../../utils/testable'
 import { HistorySettingsOptionStorageKey, useHistory } from '../context/history'
 import { CustomRecord, HistoryRecord, RecordType } from '../types'
 
@@ -23,18 +18,13 @@ type HistoryPageProps = StackScreenProps<HistoryStackParams>
 
 const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
   //   const updatePin = (route.params as any)?.updatePin
-  const [continueEnabled, setContinueEnabled] = useState(true)
-  const [isLoading, setLoading] = useState(false)
+  // const [continueEnabled, setContinueEnabled] = useState(true)
+  // const [isLoading, setLoading] = useState(false)
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
   const { t } = useTranslation()
   const { getHistoryItems, findGenericRecordById, removeGenericRecord } = useHistory()
 
   const { ColorPallet, TextTheme } = useTheme()
-  const { ButtonLoading } = useAnimatedComponents()
-  const actionButtonLabel = t('Global.SaveSettings')
-  const actionButtonTestId = testIdWithKey('Save')
-  const container = useContainer()
-  const Button = container.resolve(TOKENS.COMP_BUTTON)
 
   //State
 
@@ -124,14 +114,13 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
 
   const renderHistoryListItem = (item: CustomRecord) => {
     return (
-      <HistoryListItem item={item} />
-      // <TouchableOpacity
-      //   onPress={() => {
-      //     navigation.navigate(Screens.HistoryDetails, { historyRecord: item })
-      //   }}
-      // >
-      //   <HistoryListItem item={item} />
-      // </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate(Screens.HistoryDetails, { historyRecord: item })
+        }}
+      >
+        <HistoryListItem item={item} />
+      </TouchableOpacity>
     )
   }
 
@@ -146,17 +135,17 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <View>
-            <Button
+            {/* <Button
               title={t('History.SortFilterButton')}
               testID={actionButtonTestId}
               accessibilityLabel={actionButtonLabel}
               buttonType={ButtonType.Secondary}
               onPress={async () => {
-                console.log('save history')
+                //TODO: Save history
               }}
             >
               {!continueEnabled && isLoading ? <ButtonLoading /> : null}
-            </Button>
+            </Button> */}
             <View style={style.gap} />
 
             <FlatList

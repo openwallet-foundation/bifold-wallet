@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { useTheme } from '../../../../contexts/theme'
 import { CustomRecord, HistoryCardType } from '../../types'
@@ -180,33 +180,21 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
     )
   }
 
-  const renderCard = (item: CustomRecord) => {
-    return (
-      <View>
-        <View style={styles.card}>
-          {renderCardIcon(item)}
-          <View style={styles.cardContent}>
-            {renderCardTitle(item)}
-            <View style={styles.cardDescriptionContent}>{renderCardDescription(item)}</View>
-            {renderCardDate(item.content.createdAt)}
-          </View>
-          <View style={styles.arrowContainer}>
-            <IconChevronRight />
-          </View>
-        </View>
-        <View style={styles.cardBottomBorder} />
-      </View>
-    )
-  }
-
   return (
-    <TouchableOpacity
-      onPress={() => {
-        //TODO: navigate to history details
-      }}
-    >
-      {renderCard(item)}
-    </TouchableOpacity>
+    <View>
+      <View style={styles.card}>
+        {renderCardIcon(item)}
+        <View style={styles.cardContent}>
+          {renderCardTitle(item)}
+          <View style={styles.cardDescriptionContent}>{renderCardDescription(item)}</View>
+          {renderCardDate(item.content.createdAt)}
+        </View>
+        <View style={styles.arrowContainer}>
+          <IconChevronRight />
+        </View>
+      </View>
+      <View style={styles.cardBottomBorder} />
+    </View>
   )
 }
 
