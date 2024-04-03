@@ -12,6 +12,8 @@ import { NetworkProvider } from '../../App/contexts/network'
 import CredentialOffer from '../../App/screens/CredentialOffer'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
+import { HistoryProvider } from '../../App/modules/history'
+import { CommonUtilProvider } from '../../App/contexts/commons'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -55,9 +57,13 @@ describe('displays a credential offer screen', () => {
   test('renders correctly', async () => {
     const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
-        </NetworkProvider>
+        <CommonUtilProvider>
+          <HistoryProvider>
+            <NetworkProvider>
+              <CredentialOffer route={props as any} navigation={useNavigation()} />
+            </NetworkProvider>
+          </HistoryProvider>
+        </CommonUtilProvider>
       </ConfigurationContext.Provider>
     )
 
@@ -69,9 +75,13 @@ describe('displays a credential offer screen', () => {
   test('shows offer controls', async () => {
     const { getByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
-        </NetworkProvider>
+          <CommonUtilProvider>
+            <HistoryProvider>
+              <NetworkProvider>
+                <CredentialOffer route={props as any} navigation={useNavigation()} />
+              </NetworkProvider>
+            </HistoryProvider>
+          </CommonUtilProvider>
       </ConfigurationContext.Provider>
     )
 
@@ -87,9 +97,13 @@ describe('displays a credential offer screen', () => {
   test('accepting a credential', async () => {
     const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
-        </NetworkProvider>
+         <CommonUtilProvider>
+            <HistoryProvider>
+              <NetworkProvider>
+                <CredentialOffer route={props as any} navigation={useNavigation()} />
+              </NetworkProvider>
+            </HistoryProvider>
+          </CommonUtilProvider>
       </ConfigurationContext.Provider>
     )
 
@@ -105,9 +119,13 @@ describe('displays a credential offer screen', () => {
   test('declining a credential', async () => {
     const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
-        </NetworkProvider>
+         <CommonUtilProvider>
+            <HistoryProvider>
+              <NetworkProvider>
+                <CredentialOffer route={props as any} navigation={useNavigation()} />
+              </NetworkProvider>
+            </HistoryProvider>
+          </CommonUtilProvider>
       </ConfigurationContext.Provider>
     )
 
