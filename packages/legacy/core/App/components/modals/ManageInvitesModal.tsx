@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Modal, View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, ScrollView, StyleSheet, Switch } from 'react-native';
 import { theme } from '../../theme';
 import BottomPopup from '../toast/popup';
 import { getItem } from '../../utils/storage';
@@ -31,9 +31,9 @@ const ManageInvitesModal: React.FC<ManageInvitesModalProps> = ({
     const [selectedInviteEntry, setSelectedInviteEntry] = React.useState<string | null>(null);
     const [showDeclineOption, setShowDeclineOption] = React.useState<boolean>(false);
     const [popupMessage, setPopupMessage] = React.useState<string>('');
+    const [showNonPendingInvites, setShowNonPendingInvites] = React.useState(false);
 
 
-    let defaultToConnect = false
     let implicitInvitations = false
     let reuseConnections = false
     let useMultUseInvitation = false
@@ -138,6 +138,7 @@ const ManageInvitesModal: React.FC<ManageInvitesModalProps> = ({
             } else {
                 setPopupMessage('Invite declined successfully')
                 setPopupVisible(true);
+                handleGetInvites();
             }
         }
         catch (error) {
@@ -160,6 +161,7 @@ const ManageInvitesModal: React.FC<ManageInvitesModalProps> = ({
             } else {
                 setPopupMessage('Invite accepted successfully')
                 setPopupVisible(true);
+                handleGetInvites();
             }
         }
         catch (error) {
@@ -197,10 +199,25 @@ const ManageInvitesModal: React.FC<ManageInvitesModalProps> = ({
                         <Text style={{ ...theme.TextTheme.headingFour, padding: 20 }}>Manage Invites</Text>
                     </View>
 
+                    <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}>
+                        <Switch
+                            trackColor={{ false: 'white', true: theme.ColorPallet.brand.highlight }}
+                            thumbColor={showNonPendingInvites ? "#f5dd4b" : "#f4f3f4"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={() => setShowNonPendingInvites(!showNonPendingInvites)}
+                            value={showNonPendingInvites}
+                        />
+                        <Text style={{ color: 'white', marginLeft: 8 }}>
+                            Show Past Invites
+                        </Text>
+
+                    </View>
+
                     <View style={{ ...styles.buttonPadding, width: '100%' }}>
                         {inviteList?.length > 0 ? (<ScrollView style={styles.proxyList}>
                             {inviteList.map((invite, index) => (
-                                <View style={{ flex: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+
+                                ((showNonPendingInvites && invite?.status !== "PENDING" || invite?.status === "PENDING") && <View style={{ flex: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
                                     <TouchableOpacity key={index} style={invite?.id === selectedInviteEntry ? styles.selectedForDeletionInviteItem : styles.inviteItem}
                                         onPress={() => {
                                             setSelectedInviteEntry(invite?.id);
@@ -229,7 +246,7 @@ const ManageInvitesModal: React.FC<ManageInvitesModalProps> = ({
                                             </View>
                                         )}
 
-                                        {invite?.status === "DECLINED" && (
+                                        {invite?.status === "REJECTED" && (
                                             <View style={styles.overlayContainer}>
                                                 <Text style={{ color: 'white', fontWeight: 'bold', marginRight: 10 }}>Declined</Text>
                                             </View>
@@ -242,7 +259,7 @@ const ManageInvitesModal: React.FC<ManageInvitesModalProps> = ({
                                         )}
 
                                     </TouchableOpacity>
-                                </View>
+                                </View>)
                             ))}
                         </ScrollView>) : <Text style={{ color: 'white', fontSize: 15.0, textAlign: 'center' }}>No invites found</Text>}
                     </View>
