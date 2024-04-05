@@ -28,6 +28,8 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const [showInviteModal, setShowInviteModal] = React.useState(false)
   const [showSendInviteModal, setShowSendInviteModal] = React.useState(false)
 
+
+
   const { ColorPallet } = useTheme()
   const { t } = useTranslation()
   const style = StyleSheet.create({
@@ -111,6 +113,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       <SendInviteModal
         showSendInviteScreen={showSendInviteModal}
         setShowSendInviteScreen={setShowSendInviteModal}
+        navigation={navigation}
       />
 
 

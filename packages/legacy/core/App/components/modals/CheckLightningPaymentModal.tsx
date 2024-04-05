@@ -52,7 +52,7 @@ const CheckLightningTransactionModal: React.FC<CheckLightningTransactionModalPro
                 <Text style={{ ...globalTheme.TextTheme.modalNormal, marginTop: 20, padding: 10, color: 'white' }}>
                     {invoiceText &&
                         'Amount: \n\n    ' + (Number(lightningPayReq.decode(invoiceText).millisatoshis) / 1000) + " Satoshi"}
-                    {btcZarPrice && invoiceText ? ('\n\n    (R' + (Number(lightningPayReq.decode(invoiceText).millisatoshis) / 100000000000 * btcZarPrice).toFixed(2) + ')') : "Fetching price..."}
+                    {btcZarPrice && invoiceText ? ('\n\n    (R' + (Number(lightningPayReq.decode(invoiceText).millisatoshis) / 100000000000 * btcZarPrice).toFixed(2) + ')') : "\n\n Fetching price..."}
                     {!invoiceText && 'No invoice found'}
                 </Text>
 

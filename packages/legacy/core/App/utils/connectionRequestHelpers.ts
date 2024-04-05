@@ -91,3 +91,17 @@ export const sendConnectionInvite = async (walletName: string, identifier: strin
         return "Error sending invite"
     }
 }
+
+export const getConnectionRequestCount = async (id: string) => {
+    try {
+        const response = await fetch(connectionApiUrl + '/connection-requests/search?respondentId=' + id);
+        if (!response.ok) {
+            return "Error fetching connections"
+        }
+        const data = await response.json();
+        return Number(data.length);
+    } catch (error) {
+        console.error('Error fetching connections:', error);
+        return "Error fetching connections"
+    }
+}

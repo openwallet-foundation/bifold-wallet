@@ -32,6 +32,7 @@ import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
 import { CommonUtilProvider } from './contexts/commons'
 import { NetworkProvider } from './contexts/network'
+import { NotificationProvider } from './contexts/notifications'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
 import { defaultConfiguration } from './defaultConfiguration'
@@ -111,6 +112,7 @@ export {
   AgentProvider,
   AuthProvider,
   NetworkProvider,
+  NotificationProvider,
   TourProvider,
   useTour,
   AttachTourStep,

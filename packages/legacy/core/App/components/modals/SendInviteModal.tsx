@@ -13,19 +13,24 @@ import { set } from 'mockdate';
 import { getOwner, getProxies } from '../../utils/smartProxyHelpers';
 import { useStore } from '../../contexts/store';
 import { TextInput } from 'react-native';
+import HeaderButton, { ButtonLocation } from '../../components/buttons/HeaderButton';
+import { testIdWithKey } from '../../utils/testable';
 // import { Picker } from '@react-native-picker/picker';
 
 
 interface SendInvitesModalProps {
     showSendInviteScreen: boolean;
     setShowSendInviteScreen: (show: boolean) => void;
+    navigation: any;
 }
 
 const SendInviteModal: React.FC<SendInvitesModalProps> = ({
     showSendInviteScreen,
     setShowSendInviteScreen,
+    navigation
 }) => {
 
+    const { t } = useTranslation()
     const { agent } = useAgent()
     const [store] = useStore()
     const [popupVisible, setPopupVisible] = React.useState<boolean>(false);
@@ -71,6 +76,10 @@ const SendInviteModal: React.FC<SendInvitesModalProps> = ({
         }
     }
 
+    const handleEdit = () => {
+        navigation.navigate(Screens.NameWallet)
+    }
+
     const handleSendConnectionInvite = async () => {
         try {
             setSendingInvite(true)
@@ -97,7 +106,6 @@ const SendInviteModal: React.FC<SendInvitesModalProps> = ({
             setSendingInvite(false)
         }
     }
-
 
     return (
         <Modal
@@ -127,7 +135,18 @@ const SendInviteModal: React.FC<SendInvitesModalProps> = ({
                         <Text style={{ ...theme.TextTheme.headingFour, padding: 20 }}>Send Invite</Text>
                     </View>
 
-                    <Text style={{ ...theme.TextTheme.label, minWidth: 250, margin: 15 }}>My Device Name:  {store.preferences.walletName}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ ...theme.TextTheme.label, minWidth: 250, margin: 25 }}>My Device Name:          {store.preferences.walletName}</Text>
+
+                        <HeaderButton
+                            buttonLocation={ButtonLocation.Right}
+                            accessibilityLabel={t('NameWallet.EditWalletName')}
+                            testID={testIdWithKey('EditWalletName')}
+                            onPress={handleEdit}
+                            icon={'pencil'}
+                            iconTintColor={'white'}
+                        />
+                    </View>
 
                     <Text style={{ ...theme.TextTheme.label, minWidth: 250 }}>Link (Identifier)</Text>
                     <TextInput
@@ -141,7 +160,7 @@ const SendInviteModal: React.FC<SendInvitesModalProps> = ({
 
 
                     <View style={styles.buttonPadding}>
-                        <TouchableOpacity style={{ ...theme.Buttons.primary, minWidth: 200 }} onPress={handleSendConnectionInvite}>
+                        <TouchableOpacity style={{ ...theme.Buttons.primary, marginTop: 100, minWidth: 200 }} onPress={handleSendConnectionInvite}>
                             {sendingInvite ? (
                                 <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
                             ) : (
