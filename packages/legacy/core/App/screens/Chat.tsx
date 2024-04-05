@@ -213,6 +213,15 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         setShowTransactionStatusModal(true)
         let hash = extractHashFromInvoiceMessage(content)
         let invoice = extractLightningInvoiceMessage(content)
+
+        try {
+          getBTCPrice().then((response) => {
+            setBtcZarPrice(response)
+          })
+        } catch (err: any) {
+          console.error(err)
+        }
+
         console.log('Raw Content:', content)
         if (invoice !== null) {
           setInvoiceText(invoice)
