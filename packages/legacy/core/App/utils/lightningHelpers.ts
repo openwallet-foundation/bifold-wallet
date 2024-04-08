@@ -8,57 +8,73 @@ const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
 export const initNodeAndSdk = async (eventHandler: any) => {
     try {
-        // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
+        const useInviteCode = true;
+
+        let seed = <any>[];
+        let nodeConfig
         const apiKey = '5481cee312d7c8fe3891bdff8953a1ce57f57790b73e0884a8bfc119f4399bba';
-        // let mnemonic = await getItem(MNEMONIC_STORE)
-        // const inviteCode = '6FUD-Z8A9';
-        const inviteCode = 'XLT3-8WFJ';
 
-        // if (!mnemonic) {
-        //     console.log("No mnemonic found, generating new one");
-        //     mnemonic = generateMnemonic();
-        //     console.log("Generated mnemonic: ", mnemonic);
-        //     await setItem(MNEMONIC_STORE, mnemonic);
-        // }
-        // else {
-        //     console.log("Mnemonic found: ", mnemonic);
-        // }
+        // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
+        if (useInviteCode) {
 
-        // const seed = await mnemonicToSeed(mnemonic);
-        // TODO Elmer: Remove hardcoded seed
-        // const seed = await mnemonicToSeed('spring business health luggage word spin start column pipe giant pink spoon');
-        const seed = await mnemonicToSeed('large artefact physical panel shed movie inhale sausage sense bundle depart ribbon');
+            // Physical phone invite code
+            // const inviteCode = '6FUD-Z8A9';
+
+            // Emulator invite code
+            const inviteCode = 'XLT3-8WFJ';
+
+            // Physical phone seed
+            // seed = await mnemonicToSeed('spring business health luggage word spin start column pipe giant pink spoon');
+
+            // Emulator seed
+            seed = await mnemonicToSeed('large artefact physical panel shed movie inhale sausage sense bundle depart ribbon');
+
+            nodeConfig = {
+                type: NodeConfigVariant.GREENLIGHT,
+                config: { inviteCode }
+            };
+            console.log("Using invite code")
+        } else {
+            let mnemonic = undefined //await getItem(MNEMONIC_STORE)
+            if (!mnemonic) {
+                console.log("No mnemonic found, generating new one");
+                mnemonic = generateMnemonic();
+                console.log("Generated mnemonic: ", mnemonic);
+                await setItem(MNEMONIC_STORE, mnemonic);
+            }
+            else {
+                console.log("Mnemonic found: ", mnemonic);
+            }
+
+            seed = await mnemonicToSeed(mnemonic);
+            const keys = convertCerts();
+
+            // TODO Elmer: Figure out partner credentials
+            if (keys !== undefined && keys.deviceCert !== undefined && keys.deviceKey !== undefined) {
+                const partnerCreds = { deviceCert: keys.deviceCert, deviceKey: keys.deviceKey };
+                nodeConfig = {
+                    type: NodeConfigVariant.GREENLIGHT,
+                    config: { partnerCredentials: partnerCreds }
+                };
+                console.log("Going with partner credentials")
+            }
+        }
 
         console.log("Seed: ", seed);
 
-        const keys = loadAndConvert();
-
-        let nodeConfig
-        // TODO Elmer: Figure out partner credentials
-        // if (keys !== undefined && keys.deviceCert !== undefined && keys.deviceKey !== undefined) {
-        //     const partneCreds = { deviceCert: keys.deviceCert, deviceKey: keys.deviceKey };
-        //     nodeConfig = {
-        //         type: NodeConfigVariant.GREENLIGHT,
-        //         config: { partnerCredentials: partneCreds }
-        //     };
-        //     console.log("Going with partner credentials")
-        // } else {
-        nodeConfig = {
-            type: NodeConfigVariant.GREENLIGHT,
-            config: { inviteCode }
-        };
-        console.log("Using invite code")
-        // }
-
-        const config = await defaultConfig(
-            EnvironmentType.PRODUCTION,
-            apiKey,
-            nodeConfig
-        );
-
-        const eventSubscription = await connect(config, seed, eventHandler);
-        console.log('Breez Initialized');
-        return eventSubscription
+        if (nodeConfig) {
+            const config = await defaultConfig(
+                EnvironmentType.PRODUCTION,
+                apiKey,
+                nodeConfig
+            );
+            const eventSubscription = await connect(config, seed, eventHandler);
+            console.log('Breez Initialized');
+            return eventSubscription
+        }
+        else {
+            console.error("No node config found")
+        }
     }
     catch (err: any) {
         const errorString = JSON.stringify(err)
@@ -81,67 +97,17 @@ function convertStringToByteArray(str: string) {
     return bytes
 }
 
-const loadAndConvert = () => {
+const convertCerts = () => {
     try {
-        // Read the certificate and key from files
-        // const certContent = await readFile('../assets/res/client.crt', 'utf8');
-        // const keyContent = await readFile('../assets/res/client-key.pem', 'utf8');
-
-        // Convert PEM to byte array
-
         const deviceCert =
-            convertStringToByteArray('-----BEGIN CERTIFICATE-----\
-        MIICrzCCAlSgAwIBAgIUNFMoSTHXXkJ3ZoYXFjpJ5GG7VIswCgYIKoZIzj0EAwIw\
-        gYMxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\
-        YW4gRnJhbmNpc2NvMRQwEgYDVQQKEwtCbG9ja3N0cmVhbTEdMBsGA1UECxMUQ2Vy\
-        dGlmaWNhdGVBdXRob3JpdHkxEjAQBgNVBAMTCUdMIC91c2VyczAeFw0yNDAyMjkx\
-        MTU5MDBaFw0zNDAyMjYxMTU5MDBaMIGoMQswCQYDVQQGEwJVUzETMBEGA1UECBMK\
-        Q2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxv\
-        Y2tzdHJlYW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MTcwNQYDVQQD\
-        Ey5HTCAvdXNlcnMvYWM3ZDRjMjUtNTNiNS00ZWE0LTlhMGEtOGU5NGRjNGNmZTZj\
-        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEr5jR+En/xCOlcfTSc6IBb2Z0FP5A\
-        gTLifJpgI3RRw7OMdxaFMiiFIM3ZfaQ7uDMQYoTeajhRSDxIgiU3AA4T/6N/MH0w\
-        DgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAM\
-        BgNVHRMBAf8EAjAAMB0GA1UdDgQWBBQeMTv7ZLflWVgBRtsNcJxc+6nqazAfBgNV\
-        HSMEGDAWgBRNDvcXUwxuk6LEG10+ig8mBsMllDAKBggqhkjOPQQDAgNJADBGAiEA\
-        3+LLTj7FsoD68ULDFcwForQyrhndNt0MqBOdAluxpjACIQDmw4VTuHDe9V2gbZtE\
-        YutbBEk0Z0/HTf71V/gDZU2j+g==\
-        -----END CERTIFICATE-----\
-        -----BEGIN CERTIFICATE-----\
-        MIICijCCAjGgAwIBAgIUJ06syYB1TPRbSmTD4UCpT0PmA+UwCgYIKoZIzj0EAwIw\
-        fjELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\
-        biBGcmFuY2lzY28xFDASBgNVBAoTC0Jsb2Nrc3RyZWFtMR0wGwYDVQQLExRDZXJ0\
-        aWZpY2F0ZUF1dGhvcml0eTENMAsGA1UEAxMER0wgLzAeFw0yMTA0MjYxNzE0MDBa\
-        Fw0zMTA0MjQxNzE0MDBaMIGDMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv\
-        cm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxvY2tzdHJl\
-        YW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MRIwEAYDVQQDEwlHTCAv\
-        dXNlcnMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATWlNi+9P8ZdRfaP1VOOMb9\
-        e+VSugDxwvN41ZTdq5aQ1yTXHx2fcMyowoDaSCBg44rzPJ/TDOrIH2WWWCaHmHgT\
-        o4GGMIGDMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYB\
-        BQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBAzAdBgNVHQ4EFgQUTQ73F1MMbpOixBtd\
-        PooPJgbDJZQwHwYDVR0jBBgwFoAUzqFr6jvlx3blZtYapcZHVYpOKSMwCgYIKoZI\
-        zj0EAwIDRwAwRAIgJvgJ8ehKx0VenMyUT/MRXlmClARc1Np39/Fbp4GIbd8CIGhk\
-        MKVcDA5iuQZ7xhZU1S8POh1L9uT35UkE7+xmGNjr\
-        -----END CERTIFICATE-----\
-        ');
+            convertStringToByteArray('-----BEGIN CERTIFICATE-----MIICrzCCAlSgAwIBAgIUNFMoSTHXXkJ3ZoYXFjpJ5GG7VIswCgYIKoZIzj0EAwIwgYMxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRQwEgYDVQQKEwtCbG9ja3N0cmVhbTEdMBsGA1UECxMUQ2VydGlmaWNhdGVBdXRob3JpdHkxEjAQBgNVBAMTCUdMIC91c2VyczAeFw0yNDAyMjkxMTU5MDBaFw0zNDAyMjYxMTU5MDBaMIGoMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxvY2tzdHJlYW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MTcwNQYDVQQDEy5HTCAvdXNlcnMvYWM3ZDRjMjUtNTNiNS00ZWE0LTlhMGEtOGU5NGRjNGNmZTZjMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEr5jR+En/xCOlcfTSc6IBb2Z0FP5AgTLifJpgI3RRw7OMdxaFMiiFIM3ZfaQ7uDMQYoTeajhRSDxIgiU3AA4T/6N/MH0wDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBQeMTv7ZLflWVgBRtsNcJxc+6nqazAfBgNVHSMEGDAWgBRNDvcXUwxuk6LEG10+ig8mBsMllDAKBggqhkjOPQQDAgNJADBGAiEA3+LLTj7FsoD68ULDFcwForQyrhndNt0MqBOdAluxpjACIQDmw4VTuHDe9V2gbZtEYutbBEk0Z0/HTf71V/gDZU2j+g==-----END CERTIFICATE----------BEGIN CERTIFICATE-----MIICijCCAjGgAwIBAgIUJ06syYB1TPRbSmTD4UCpT0PmA+UwCgYIKoZIzj0EAwIwfjELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28xFDASBgNVBAoTC0Jsb2Nrc3RyZWFtMR0wGwYDVQQLExRDZXJ0aWZpY2F0ZUF1dGhvcml0eTENMAsGA1UEAxMER0wgLzAeFw0yMTA0MjYxNzE0MDBaFw0zMTA0MjQxNzE0MDBaMIGDMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEChMLQmxvY2tzdHJlYW0xHTAbBgNVBAsTFENlcnRpZmljYXRlQXV0aG9yaXR5MRIwEAYDVQQDEwlHTCAvdXNlcnMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATWlNi+9P8ZdRfaP1VOOMb9e+VSugDxwvN41ZTdq5aQ1yTXHx2fcMyowoDaSCBg44rzPJ/TDOrIH2WWWCaHmHgTo4GGMIGDMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBAzAdBgNVHQ4EFgQUTQ73F1MMbpOixBtdPooPJgbDJZQwHwYDVR0jBBgwFoAUzqFr6jvlx3blZtYapcZHVYpOKSMwCgYIKoZIzj0EAwIDRwAwRAIgJvgJ8ehKx0VenMyUT/MRXlmClARc1Np39/Fbp4GIbd8CIGhkMKVcDA5iuQZ7xhZU1S8POh1L9uT35UkE7+xmGNjr-----END CERTIFICATE-----');
         const deviceKey =
-            convertStringToByteArray(
-                '-----BEGIN PRIVATE KEY-----\
-            MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgla0zarg8zKsqXC5h\
-            br3B5imA2JJziD7zj6iYVQwsPLehRANCAASvmNH4Sf/EI6Vx9NJzogFvZnQU/kCB\
-            MuJ8mmAjdFHDs4x3FoUyKIUgzdl9pDu4MxBihN5qOFFIPEiCJTcADhP/\
-            -----END PRIVATE KEY-----'
-            );
-
-        // console.log(deviceCert);
-        // console.log(deviceKey);
+            convertStringToByteArray('-----BEGIN PRIVATE KEY-----MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgla0zarg8zKsqXC5hbr3B5imA2JJziD7zj6iYVQwsPLehRANCAASvmNH4Sf/EI6Vx9NJzogFvZnQU/kCBMuJ8mmAjdFHDs4x3FoUyKIUgzdl9pDu4MxBihN5qOFFIPEiCJTcADhP/-----END PRIVATE KEY-----');
 
         return { deviceCert, deviceKey };
 
-        // Now deviceCert and deviceKey are arrays of numbers
     } catch (error: any) {
-        console.error('Error reading or converting files:', error);
-
+        console.error('Error converting certificates:', error);
     }
 };
 
