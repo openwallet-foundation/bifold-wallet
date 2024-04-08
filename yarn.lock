@@ -4070,6 +4070,7 @@ __metadata:
     babel-jest: ^27.5.1
     babel-plugin-module-resolver: ^5.0.0
     bolt11: ^1.4.1
+    byte-base64: ^1.1.0
     commitlint: ^17.7.1
     eslint: ^8.48.0
     eslint-import-resolver-typescript: ^2.5.0
@@ -8715,6 +8716,13 @@ __metadata:
   dependencies:
     run-applescript: ^5.0.0
   checksum: edf2b1fbe6096ed32e7566947ace2ea937ee427391744d7510a2880c4b9a5b3543d3f6c551236a29e5c87d3195f8e2912516290e638c15bcbede7b37cc375615
+  languageName: node
+  linkType: hard
+
+"byte-base64@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "byte-base64@npm:1.1.0"
+  checksum: 95851fc758882ba6b28422d70c685f86257eb635be10eb37528765f39fc1c8766972f9bb39e0684539fafc7d9625145d26e5ab310a52c9eb9df3506952586e0c
   languageName: node
   linkType: hard
 
