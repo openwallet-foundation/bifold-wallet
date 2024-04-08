@@ -7,7 +7,7 @@ import { useAgent, useProofByState } from '@aries-framework/react-hooks'
 import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry, querySmartProxyEntry, getOwner } from '../utils/smartProxyHelpers';
 import { getItem, removeItem } from '../utils/storage';
 import BottomPopup from '../components/toast/popup';
-import { getBTCToZarAmount, getNodeId, initNodeAndSdk, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode } from '../utils/lightningHelpers';
+import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode } from '../utils/lightningHelpers';
 import { set } from 'mockdate';
 
 const SmartProxy = () => {
@@ -62,7 +62,7 @@ const SmartProxy = () => {
             })
 
 
-            const eventSubscription = initNodeAndSdk(eventHandler).then((res) => {
+            const eventSubscription = breezInitHandler(eventHandler).then((res) => {
                 // const nodeId = getNodeId().then((nodeId) => {
                 //     setNodeId(nodeId)
                 //     setProxyValue(nodeId)

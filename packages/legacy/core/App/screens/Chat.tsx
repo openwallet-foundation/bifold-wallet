@@ -42,7 +42,7 @@ import {
   getProofEventRole,
 } from '../utils/helpers'
 import { theme as globalTheme } from '../theme';
-import { checkStatus, getBTCPrice, getInvoice, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers'
+import { checkStatus, getBTCPrice, getInvoice, initNodeAndSdk, breezInitHandler, payInvoice } from '../utils/lightningHelpers'
 import { PaymentStatus, paymentByHash } from '@breeztech/react-native-breez-sdk'
 import { set } from 'mockdate'
 import { extract } from 'query-string'
@@ -454,7 +454,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     try {
       setPaymentInProgress(true);
       setNodeAndSdkInitializing(true);
-      const initRes = await initNodeAndSdk(eventHandler)
+      const initRes = await breezInitHandler(eventHandler)
       setNodeAndSdkInitializing(false);
       if (typeof initRes === 'string') {
         console.error('Error initializing node and sdk')
@@ -498,7 +498,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     try {
       if (invoiceHash) {
         setNodeAndSdkInitializing(true);
-        const initRes = await initNodeAndSdk(eventHandler)
+        const initRes = await breezInitHandler(eventHandler)
         setNodeAndSdkInitializing(false);
         if (typeof initRes === 'string') {
           console.error('Error initializing node and sdk')
@@ -524,7 +524,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const handleGetInvoiceButtonPress = async () => {
     setInvoiceGenLoading(true);
     setNodeAndSdkInitializing(true);
-    const initRes = await initNodeAndSdk(eventHandler)
+    const initRes = await breezInitHandler(eventHandler)
     setNodeAndSdkInitializing(false);
     if (typeof initRes === 'string') {
       console.error('Error String: ', initRes)

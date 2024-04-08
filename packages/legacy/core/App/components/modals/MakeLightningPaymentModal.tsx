@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Modal, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { theme as globalTheme } from '../../theme';
 import * as lightningPayReq from 'bolt11';
-import { initNodeAndSdk } from '../../utils/lightningHelpers';
 import { set } from 'mockdate';
 
 interface PayWithBitcoinModalProps {

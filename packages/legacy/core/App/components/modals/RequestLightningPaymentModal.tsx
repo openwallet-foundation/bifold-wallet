@@ -3,7 +3,6 @@ import React from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 // Import your theme or any other necessary elements here
 import { theme as globalTheme } from '../../theme';
-import { initNodeAndSdk } from '../../utils/lightningHelpers';
 
 interface RequestPaymentModalProps {
     showRequestLightningPaymentModal: boolean;

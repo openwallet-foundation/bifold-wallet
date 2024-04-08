@@ -89,6 +89,28 @@ export const initNodeAndSdk = async (eventHandler: any) => {
     }
 }
 
+export const breezInitHandler = async (event: any) => {
+    try {
+        const retries = 10;
+        let retryCount = 0;
+
+        while (retryCount < retries) {
+            const res = await initNodeAndSdk(event);
+
+            if (typeof res === 'string' && JSON.stringify(res).includes("os error")) {
+                retryCount++;
+                console.log("Retrying Breez initialization")
+            } else {
+                return res
+            }
+        }
+
+    } catch (err: any) {
+        console.error(err);
+        return JSON.stringify(err)
+    }
+}
+
 const convertCerts = () => {
     try {
         const deviceCert =

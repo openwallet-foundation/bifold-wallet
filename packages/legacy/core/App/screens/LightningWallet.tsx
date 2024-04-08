@@ -29,7 +29,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { RNCamera } from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { set } from 'mockdate';
-import { getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers';
+import { breezInitHandler, getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers';
 import * as lightningPayReq from 'bolt11';
 
 const LightningWallet = () => {
@@ -59,7 +59,7 @@ const LightningWallet = () => {
     }
 
     useEffect(() => {
-        const eventSubscription = initNodeAndSdk(eventHandler);
+        const eventSubscription = breezInitHandler(eventHandler);
         try {
             getBTCPrice().then((response) => {
                 setBtcZarPrice(response)
