@@ -48,8 +48,8 @@ export const NotificationProvider: React.FC<React.PropsWithChildren> = ({ childr
             })
           }
         })
-      }, 5000)
-    }, 5000)
+      }, 10000)
+    }, 10000)
     return () => clearInterval(interval)
   }, [])
 

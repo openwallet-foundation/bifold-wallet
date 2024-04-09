@@ -36,6 +36,7 @@ const SmartProxy = () => {
     const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false)
     const [nodeId, setNodeId] = useState<string | undefined>(undefined)
+    const [errorCheckingRegistration, setErrorCheckingRegistration] = useState<boolean>(false)
 
     const { agent } = useAgent()
 
@@ -85,15 +86,23 @@ const SmartProxy = () => {
             if (Array.isArray(response) && response.length > 0) {
                 setIsRegistered(true)
                 setCheckedIfRegistered(true)
+                setErrorCheckingRegistration(false)
             } else if (Array.isArray(response) && response.length === 0) {
                 setIsRegistered(false)
                 setCheckedIfRegistered(true)
+                setErrorCheckingRegistration(false)
+            } else {
+                console.log("Test error output 2")
+                console.error(JSON.stringify(response))
+                setCheckedIfRegistered(true)
+                setErrorCheckingRegistration(true)
             }
         }
         catch (err: any) {
             console.error(err)
-            setPopupMessage("Error checking registration")
+            setPopupMessage("Error checking registration status")
             setPopupVisible(true);
+            setErrorCheckingRegistration(true)
         }
     }
 
@@ -298,23 +307,34 @@ const SmartProxy = () => {
 
     return (
         <View>
-            {isRegistered && (
+            {isRegistered && !errorCheckingRegistration && (
                 <View style={styles.textPadding}>
                     <Text style={theme.TextTheme.labelTitle}>Your DID: </Text>
                     <Text style={theme.TextTheme.labelTitle} numberOfLines={1} ellipsizeMode="tail" >{did}</Text>
                     <Text style={theme.TextTheme.labelTitle}>is registered on the Proxy</Text>
                 </View>
             )}
-            {!isRegistered && !checkedIfRegistered && (
+            {!isRegistered && !checkedIfRegistered && !errorCheckingRegistration && (
                 <View style={styles.textPadding}>
                     <Text style={theme.TextTheme.labelTitle}>Searching for DID on proxy...</Text>
                 </View>
             )}
-            {!isRegistered && checkedIfRegistered && (
+            {!isRegistered && checkedIfRegistered && !errorCheckingRegistration && (
                 <View style={styles.textPadding}>
                     <Text style={theme.TextTheme.labelTitle}>Your DID is not registered on the proxy</Text>
                 </View>
             )}
+            {errorCheckingRegistration && (
+                <View style={styles.textPadding}>
+                    <Text style={theme.TextTheme.labelTitle}>Error checking proxy registration status</Text>
+                </View>
+            )}
+
+            {showProxyCreateScreen && <BottomPopup
+                message={popupMessage}
+                isVisible={popupVisible}
+                onClose={() => setPopupVisible(false)}
+            />}
 
             <ScrollView>
 
@@ -641,6 +661,8 @@ const SmartProxy = () => {
                         onClose={() => setPopupVisible(false)}
                     />}
                 </Modal>
+
+
 
             </ScrollView >
         </View>
