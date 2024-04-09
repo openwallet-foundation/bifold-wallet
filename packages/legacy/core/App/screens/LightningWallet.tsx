@@ -29,8 +29,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { RNCamera } from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { set } from 'mockdate';
-import { breezInitHandler, getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, initNodeAndSdk, payInvoice } from '../utils/lightningHelpers';
+import { breezInitHandler, getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, initNodeAndSdk, invoicePaymentHandler, payInvoice } from '../utils/lightningHelpers';
 import * as lightningPayReq from 'bolt11';
+import Clipboard from '@react-native-community/clipboard';
 
 const LightningWallet = () => {
     //make a state varialbe to store the balance
@@ -122,7 +123,7 @@ const LightningWallet = () => {
     const handlePayInvoiceButtonPress = async () => {
         try {
             setPaymentPending(true);
-            const paymentStatus = await payInvoice(scannedData);
+            const paymentStatus = await invoicePaymentHandler(scannedData);
             setPaymentPending(false)
 
             if (paymentStatus.payment.status === PaymentStatus.COMPLETE) {
@@ -284,6 +285,15 @@ const LightningWallet = () => {
                                 value={invoice.bolt11}
                                 size={250}
                             />
+                            <TouchableOpacity
+                                onPress={() => {
+                                    Clipboard.setString(invoice.bolt11);
+                                    // Optionally, add feedback to the user (e.g., Toast, alert)
+                                    console.log('Invoice copied to clipboard!');
+                                }}
+                            >
+                                <Text style={{ ...theme.TextTheme.label, fontSize: 35, marginTop: 20 }}>Copy Invoice ⧉</Text>
+                            </TouchableOpacity>
                         </View>)}
                 </TouchableOpacity>
             </Modal>
