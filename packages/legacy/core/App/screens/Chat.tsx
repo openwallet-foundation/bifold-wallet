@@ -42,7 +42,7 @@ import {
   getProofEventRole,
 } from '../utils/helpers'
 import { theme as globalTheme } from '../theme';
-import { checkStatus, getBTCPrice, getInvoice, initNodeAndSdk, breezInitHandler, payInvoice } from '../utils/lightningHelpers'
+import { checkStatus, getBTCPrice, getInvoice, initNodeAndSdk, breezInitHandler, payInvoice, invoicePaymentHandler } from '../utils/lightningHelpers'
 import { PaymentStatus, paymentByHash } from '@breeztech/react-native-breez-sdk'
 import { set } from 'mockdate'
 import { extract } from 'query-string'
@@ -80,7 +80,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const [invoiceGenLoading, setInvoiceGenLoading] = useState(false)
   const [paymentInProgress, setPaymentInProgress] = useState(false)
   const [paymentCheckInProgress, setPaymentCheckInProgress] = useState(false)
-  const [satsAmount, setSatsAmount] = useState('10000');
+  const [satsAmount, setSatsAmount] = useState('100');
   const [paymentStatusDesc, setPaymentStatusDesc] = useState<string | undefined>(undefined)
   const [checkStatusDesc, setCheckStatusDesc] = useState<string | undefined>(undefined)
   const [btcZarPrice, setBtcZarPrice] = useState<number | undefined>(undefined)
@@ -448,7 +448,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     setShowActionSlider(false)
   }
 
-  const payInvoiceHandler = async (invoice: string | undefined) => {
+  const payInvoiceButtonHandler = async (invoice: string | undefined) => {
     console.log('Pay invoice handler called')
     let paymentStatus;
     try {
@@ -463,7 +463,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         return;
       }
 
-      paymentStatus = await payInvoice(invoice);
+      paymentStatus = await invoicePaymentHandler(invoice);
       setPaymentInProgress(false)
 
       if (paymentStatus.payment.status === PaymentStatus.COMPLETE) {
@@ -603,7 +603,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         invoiceText={invoiceText}
         btcZarPrice={btcZarPrice}
         paymentInProgress={paymentInProgress}
-        payInvoiceHandler={payInvoiceHandler}
+        payInvoiceHandler={payInvoiceButtonHandler}
         paymentStatusDesc={paymentStatusDesc}
         breezInitializing={nodeAndSdkInitializing}
         eventHandler={eventHandler}

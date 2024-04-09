@@ -215,6 +215,37 @@ export const payInvoice = async (scannedData: any) => {
     }
 }
 
+export const invoicePaymentHandler = async (scannedData: any) => {
+    try {
+        const retries = 3;
+        let retryCount = 0;
+        let res;
+        while (retryCount < retries) {
+            res = await payInvoice(scannedData);
+
+            const responseString = JSON.stringify(res)
+            if (responseString.includes("transport error") ||
+                responseString.includes("out of routes to try after 2 attempts") ||
+                responseString.includes("is not reachable directly and all routehints were unusable") ||
+                responseString.includes("No such file or directory")) {
+
+                retryCount++;
+                console.log("Retrying payment")
+                // Wait 2 seconds before retrying
+                await new Promise(r => setTimeout(r, 2000));
+            } else {
+                return res
+            }
+        }
+        return res
+
+    } catch (err: any) {
+        console.error(err);
+        return JSON.stringify(err)
+    }
+}
+
+
 export const checkStatus = async (hash: string) => {
     try {
         console.log('Checking payment status for hash:', hash)
