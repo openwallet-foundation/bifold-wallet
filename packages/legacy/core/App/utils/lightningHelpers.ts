@@ -1,4 +1,4 @@
-import { EnvironmentType, NodeConfigVariant, PaymentStatus, connect, defaultConfig, mnemonicToSeed, nodeInfo, receiveOnchain, receivePayment, sendPayment, paymentByHash, sendSpontaneousPayment } from "@breeztech/react-native-breez-sdk";
+import { EnvironmentType, NodeConfigVariant, PaymentStatus, connect, defaultConfig, mnemonicToSeed, nodeInfo, receiveOnchain, receivePayment, sendPayment, paymentByHash, sendSpontaneousPayment, listLsps } from "@breeztech/react-native-breez-sdk";
 import { getItem, setItem } from "./storage";
 import { generateMnemonic } from "@dreson4/react-native-quick-bip39";
 import { t } from "i18next";
@@ -363,4 +363,13 @@ export const getBTCToZarAmount = async (satoshis: number) => {
         console.error('Error getting zar amount:', error);
     }
 
+}
+
+export const getLSPInfo = async () => {
+    try {
+        const availableLsps = await listLsps()
+        return JSON.stringify(availableLsps)
+    } catch (err) {
+        console.error(err)
+    }
 }

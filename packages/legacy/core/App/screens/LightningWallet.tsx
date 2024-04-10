@@ -29,7 +29,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { RNCamera } from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { set } from 'mockdate';
-import { breezInitHandler, getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, initNodeAndSdk, invoicePaymentHandler, payInvoice } from '../utils/lightningHelpers';
+import { breezInitHandler, getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, getLSPInfo, initNodeAndSdk, invoicePaymentHandler, payInvoice } from '../utils/lightningHelpers';
 import * as lightningPayReq from 'bolt11';
 import Clipboard from '@react-native-community/clipboard';
 
@@ -91,8 +91,6 @@ const LightningWallet = () => {
         }
     }
 
-
-
     const handleGetInvoiceButtonPress = async () => {
         setInvoiceGenLoading(true);
         const invoice = await getInvoice(satsAmount);
@@ -102,6 +100,12 @@ const LightningWallet = () => {
             setInvoice(invoice);
         }
 
+    }
+
+    const handleGetLSPInfo = async () => {
+        console.log('Getting LSP info');
+        const res = await getLSPInfo();
+        addLog(res);
     }
 
     const handleGetBalancesButtonPress = async () => {
@@ -264,7 +268,16 @@ const LightningWallet = () => {
                 </TouchableOpacity>
             </View>
 
+            <View style={styles.buttonPadding}>
+                <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetLSPInfo}>
+                    {invoiceGenLoading ? (
+                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                    ) : (
+                        <Text style={theme.TextTheme.label}>Get LSP Info</Text>
+                    )}
 
+                </TouchableOpacity>
+            </View>
 
             <Modal
                 animationType="slide"
