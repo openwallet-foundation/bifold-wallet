@@ -23,10 +23,12 @@ import { Onboarding as StoreOnboardingState } from '../types/state'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 
-const onboardingComplete = (state: StoreOnboardingState, params: { termsVersion?: boolean | string }): boolean => {
-  const termsVer = params.termsVersion ?? true
+const OnboardingVersion = 1
+
+const onboardingComplete = (state: StoreOnboardingState): boolean => {
   return (
-    state.didCompleteTutorial && state.didAgreeToTerms === termsVer && state.didCreatePIN && state.didConsiderBiometry
+    (state.onboardingVersion !== 0 && state.didCompleteOnboarding) ||
+    (state.onboardingVersion === 0 && state.didConsiderBiometry)
   )
 }
 
@@ -83,7 +85,7 @@ const resumeOnboardingAt = (
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { indyLedgers, showPreface } = useConfiguration()
+  const { indyLedgers, showPreface, enablePushNotifications } = useConfiguration()
   const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
@@ -114,7 +116,14 @@ const Splash: React.FC = () => {
           return
         }
 
-        if (onboardingComplete(store.onboarding, { termsVersion: TermsVersion })) {
+        if (store.onboarding.onboardingVersion !== OnboardingVersion) {
+          dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
+        }
+
+        if (onboardingComplete(store.onboarding)) {
+          if (store.onboarding.onboardingVersion !== OnboardingVersion) {
+            dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
+          }
           // if they previously completed onboarding before wallet naming was enabled, mark complete
           if (!store.onboarding.didNameWallet) {
             dispatch({ type: DispatchAction.DID_NAME_WALLET, payload: [true] })
@@ -124,6 +133,16 @@ const Splash: React.FC = () => {
           if (!store.onboarding.didSeePreface) {
             dispatch({ type: DispatchAction.DID_SEE_PREFACE })
           }
+
+          // add post authentication screens
+          const postAuthScreens = []
+          if (store.onboarding.didAgreeToTerms !== TermsVersion) {
+            postAuthScreens.push(Screens.Terms)
+          }
+          if (!store.onboarding.didConsiderPushNotifications && enablePushNotifications) {
+            postAuthScreens.push(Screens.UsePushNotifications)
+          }
+          dispatch({ type: DispatchAction.SET_POST_AUTH_SCREENS, payload: [postAuthScreens] })
 
           if (!store.loginAttempt.lockoutDate) {
             navigation.dispatch(

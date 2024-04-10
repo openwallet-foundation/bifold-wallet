@@ -35,7 +35,7 @@ const UseBiometry: React.FC = () => {
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
-  const screenUsage = store.onboarding.didConsiderBiometry
+  const screenUsage = store.onboarding.didCompleteOnboarding
     ? UseBiometryUsage.ToggleOnOff
     : UseBiometryUsage.InitialSetup
 
@@ -96,6 +96,8 @@ const UseBiometry: React.FC = () => {
           routes: [{ name: Screens.UsePushNotifications }],
         })
       )
+    } else {
+      dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
     }
   }
 
@@ -171,7 +173,7 @@ const UseBiometry: React.FC = () => {
         </View>
       </ScrollView>
       <View style={{ marginTop: 'auto', margin: 20 }}>
-        {store.onboarding.didConsiderBiometry || (
+        {store.onboarding.didCompleteOnboarding || (
           <Button
             title={'Continue'}
             accessibilityLabel={'Continue'}

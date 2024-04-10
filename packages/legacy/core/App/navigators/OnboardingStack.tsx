@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/core'
-import {
-  StackNavigationOptions,
-  StackNavigationProp,
-  createStackNavigator,
-  StackScreenProps,
-} from '@react-navigation/stack'
+import { StackNavigationOptions, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
 import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,15 +10,15 @@ import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import AttemptLockout from '../screens/AttemptLockout'
 import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
+import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
-
-interface CreatePINScreenParams extends StackScreenProps<ParamListBase, Screens.CreatePIN> {}
 
 type ScreenOptions = RouteConfig<
   ParamListBase,
@@ -61,7 +56,7 @@ const OnboardingStack: React.FC = () => {
     })
   }
 
-  const OnBoardingScreen: React.FC = () => {
+  const OnBoardingScreen = () => {
     return (
       <Onboarding
         nextButtonText={t('Global.Next')}
@@ -73,8 +68,13 @@ const OnboardingStack: React.FC = () => {
     )
   }
 
-  const CreatePINScreen: React.FC<CreatePINScreenParams> = (props) => {
+  // these need to be in the children of the stack screen otherwise they will unmount/remount which resets the component state in memory and causes issues
+  const CreatePINScreen = (props: any) => {
     return <PINCreate setAuthenticated={onAuthenticated} {...props} />
+  }
+
+  const EnterPINScreen = (props: any) => {
+    return <PINEnter setAuthenticated={onAuthenticated} {...props} />
   }
 
   const screens: ScreenOptions[] = [
@@ -95,7 +95,7 @@ const OnboardingStack: React.FC = () => {
     },
     {
       name: Screens.Onboarding,
-      component: OnBoardingScreen,
+      children: OnBoardingScreen,
       options: () => {
         return {
           ...ScreenOptionsDictionary[Screens.Onboarding],
@@ -113,7 +113,7 @@ const OnboardingStack: React.FC = () => {
     },
     {
       name: Screens.CreatePIN,
-      component: CreatePINScreen,
+      children: CreatePINScreen,
       initialParams: {},
       options: () => ({
         ...ScreenOptionsDictionary[Screens.CreatePIN],
@@ -123,7 +123,7 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.NameWallet,
       options: () => ({
-        ...ScreenOptionsDictionary[Screens.CreatePIN],
+        ...ScreenOptionsDictionary[Screens.NameWallet],
         title: t('Screens.NameWallet'),
       }),
       component: NameWallet,
@@ -131,7 +131,7 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.UseBiometry,
       options: () => ({
-        ...ScreenOptionsDictionary[Screens.CreatePIN],
+        ...ScreenOptionsDictionary[Screens.UseBiometry],
         title: t('Screens.Biometry'),
       }),
       component: useBiometry,
@@ -139,10 +139,10 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.UsePushNotifications,
       options: () => ({
-        ...ScreenOptionsDictionary[Screens.CreatePIN],
+        ...ScreenOptionsDictionary[Screens.UsePushNotifications],
         title: t('Screens.UsePushNotifications'),
       }),
-      component: PushNotification,
+      children: PushNotification as any,
     },
     {
       name: Screens.Developer,
@@ -154,6 +154,23 @@ const OnboardingStack: React.FC = () => {
           headerBackAccessibilityLabel: t('Global.Back'),
         }
       },
+    },
+    {
+      name: Screens.EnterPIN,
+      children: EnterPINScreen,
+      options: () => {
+        return {
+          title: t('Screens.EnterPIN'),
+          headerShown: true,
+          headerLeft: () => false,
+          rightLeft: () => false,
+        }
+      },
+    },
+    {
+      name: Screens.AttemptLockout,
+      component: AttemptLockout,
+      options: () => ({ headerShown: true, headerLeft: () => null }),
     },
   ]
 
