@@ -33,7 +33,18 @@ const Terms: React.FC = () => {
       payload: [{ DidAgreeToTerms: TermsVersion }],
     })
 
-    navigation.navigate(Screens.CreatePIN)
+    if (!agreedToPreviousTerms) {
+      navigation.navigate(Screens.CreatePIN)
+    } else if (store.onboarding.postAuthScreens.length) {
+      const screens: string[] = store.onboarding.postAuthScreens
+      screens.shift()
+      dispatch({ type: DispatchAction.SET_POST_AUTH_SCREENS, payload: [screens] })
+      if (screens.length) {
+        navigation.navigate(screens[0] as never)
+      } else {
+        dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
+      }
+    }
   }, [])
   const style = StyleSheet.create({
     container: {

@@ -26,6 +26,9 @@ enum OnboardingDispatchAction {
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
   DID_NAME_WALLET = 'onboarding/didNameWallet',
+  DID_COMPLETE_ONBOARDING = 'onboarding/didCompleteOnboarding',
+  ONBOARDING_VERSION = 'onboarding/onboardingVersion',
+  SET_POST_AUTH_SCREENS = 'onboarding/postAuthScreens',
 }
 
 enum MigrationDispatchAction {
@@ -462,6 +465,31 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         lockout,
       }
     }
+    case OnboardingDispatchAction.ONBOARDING_VERSION: {
+      const version = (action?.payload || []).pop()
+      const onboarding = {
+        ...state.onboarding,
+        onboardingVersion: version,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_COMPLETE_ONBOARDING: {
+      const onboarding = {
+        ...state.onboarding,
+        didCompleteOnboarding: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
     case OnboardingDispatchAction.ONBOARDING_UPDATED: {
       const onboarding: OnboardingState = (action?.payload || []).pop()
       return {
@@ -541,6 +569,18 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
 
+      return newState
+    }
+    case OnboardingDispatchAction.SET_POST_AUTH_SCREENS: {
+      const value = (action?.payload || []).pop()
+      const onboarding = {
+        ...state.onboarding,
+        postAuthScreens: value,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
       return newState
     }
     case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {

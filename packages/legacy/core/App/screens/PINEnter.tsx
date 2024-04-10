@@ -77,6 +77,15 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
   })
 
+  const gotoPostAuthScreens = () => {
+    if (store.onboarding.postAuthScreens.length) {
+      const screen = store.onboarding.postAuthScreens[0]
+      if (screen) {
+        navigation.navigate(screen as never)
+      }
+    }
+  }
+
   // listen for biometrics error event
   useEffect(() => {
     const handle = DeviceEventEmitter.addListener(EventTypes.BIOMETRY_ERROR, (value?: boolean) => {
@@ -151,6 +160,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       })
 
       setAuthenticated(true)
+      gotoPostAuthScreens()
     }
   }
 
@@ -225,6 +235,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       })
 
       setAuthenticated(true)
+      gotoPostAuthScreens()
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1041'), t('Error.Message1041'), (err as Error)?.message ?? err, 1041)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
