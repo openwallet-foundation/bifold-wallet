@@ -83,11 +83,11 @@ export class MainContainer implements Container {
 
       const state: State = {
         ...defaultState,
-        loginAttempt: loginAttempt,
-        preferences: preferences,
-        migration: migration,
-        tours: tours,
-        onboarding: onboarding,
+        loginAttempt: { ...defaultState.loginAttempt, ...loginAttempt },
+        preferences: { ...defaultState.preferences, ...preferences },
+        migration: { ...defaultState.migration, ...migration },
+        tours: { ...defaultState.tours, ...tours },
+        onboarding: { ...defaultState.onboarding, ...onboarding },
       }
       dispatch({ type: DispatchAction.STATE_DISPATCH, payload: [state] })
     })
