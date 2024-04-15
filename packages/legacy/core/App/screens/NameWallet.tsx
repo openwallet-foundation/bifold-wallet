@@ -13,7 +13,6 @@ import KeyboardView from '../components/views/KeyboardView'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { Screens } from '../types/navigators'
 import { generateRandomWalletName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -32,10 +31,8 @@ const NameWallet: React.FC = () => {
   const [walletName, setWalletName] = useState(store.preferences.walletName ?? generateRandomWalletName())
   const [loading, setLoading] = useState(false)
   const onBoardingComplete =
-    store.onboarding.didCompleteTutorial &&
-    store.onboarding.didAgreeToTerms &&
-    store.onboarding.didCreatePIN &&
-    store.onboarding.didConsiderBiometry
+    (store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
+    (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry)
   const [errorState, setErrorState] = useState<ErrorState>({
     visible: false,
     title: '',
@@ -94,10 +91,10 @@ const NameWallet: React.FC = () => {
         agent.config.label = walletName
       }
       dispatch({ type: DispatchAction.DID_NAME_WALLET })
-      if (onBoardingComplete) {
+      if (store.onboarding.didCompleteOnboarding) {
         navigation.goBack()
       } else {
-        navigation.navigate({ name: Screens.UseBiometry } as never)
+        dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
       }
     }
   }

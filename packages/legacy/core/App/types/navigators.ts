@@ -1,5 +1,6 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
+import { StackNavigationOptions } from '@react-navigation/stack'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -164,3 +165,5 @@ export type DeliveryStackParams = {
   [Screens.Declined]: { credentialId: string }
   [Screens.Chat]: { connectionId: string }
 }
+
+export type ScreenOptionsType = Partial<Record<Screens, StackNavigationOptions>>

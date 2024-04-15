@@ -6,6 +6,9 @@ export interface Onboarding {
   didConsiderBiometry: boolean
   didConsiderPushNotifications: boolean
   didNameWallet: boolean
+  onboardingVersion: number
+  didCompleteOnboarding: boolean
+  postAuthScreens: string[]
 }
 
 export interface Migration {
@@ -56,6 +59,7 @@ export interface DeepLink {
 }
 
 export interface State {
+  stateLoaded: boolean
   onboarding: Onboarding
   authentication: Authentication
   lockout: Lockout

@@ -14,6 +14,11 @@ import {
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 
+enum StateDispatchAction {
+  STATE_DISPATCH = 'state/stateDispatch',
+  STATE_LOADED = 'state/stateLoaded',
+}
+
 enum OnboardingDispatchAction {
   ONBOARDING_UPDATED = 'onboarding/onboardingStateLoaded',
   DID_SEE_PREFACE = 'onboarding/didSeePreface',
@@ -21,6 +26,9 @@ enum OnboardingDispatchAction {
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
   DID_NAME_WALLET = 'onboarding/didNameWallet',
+  DID_COMPLETE_ONBOARDING = 'onboarding/didCompleteOnboarding',
+  ONBOARDING_VERSION = 'onboarding/onboardingVersion',
+  SET_POST_AUTH_SCREENS = 'onboarding/postAuthScreens',
 }
 
 enum MigrationDispatchAction {
@@ -71,6 +79,7 @@ enum DeepLinkDispatchAction {
 }
 
 export type DispatchAction =
+  | StateDispatchAction
   | OnboardingDispatchAction
   | LoginAttemptDispatchAction
   | LockoutDispatchAction
@@ -81,6 +90,7 @@ export type DispatchAction =
   | MigrationDispatchAction
 
 export const DispatchAction = {
+  ...StateDispatchAction,
   ...OnboardingDispatchAction,
   ...LoginAttemptDispatchAction,
   ...LockoutDispatchAction,
@@ -98,6 +108,13 @@ export interface ReducerAction<R> {
 
 export const reducer = <S extends State>(state: S, action: ReducerAction<DispatchAction>): S => {
   switch (action.type) {
+    case StateDispatchAction.STATE_LOADED: {
+      return { ...state, stateLoaded: true }
+    }
+    case StateDispatchAction.STATE_DISPATCH: {
+      const newState: State = (action?.payload || []).pop()
+      return { ...state, ...newState }
+    }
     case PreferencesDispatchAction.ENABLE_DEVELOPER_MODE: {
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, developerModeEnabled: choice }
@@ -448,6 +465,31 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         lockout,
       }
     }
+    case OnboardingDispatchAction.ONBOARDING_VERSION: {
+      const version = (action?.payload || []).pop()
+      const onboarding = {
+        ...state.onboarding,
+        onboardingVersion: version,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
+    case OnboardingDispatchAction.DID_COMPLETE_ONBOARDING: {
+      const onboarding = {
+        ...state.onboarding,
+        didCompleteOnboarding: true,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      return newState
+    }
     case OnboardingDispatchAction.ONBOARDING_UPDATED: {
       const onboarding: OnboardingState = (action?.payload || []).pop()
       return {
@@ -527,6 +569,18 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
 
+      return newState
+    }
+    case OnboardingDispatchAction.SET_POST_AUTH_SCREENS: {
+      const value = (action?.payload || []).pop()
+      const onboarding = {
+        ...state.onboarding,
+        postAuthScreens: value,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
       return newState
     }
     case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {

@@ -21,6 +21,7 @@ import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
+import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -63,6 +64,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [descriptorMetadata, setDescriptorMetadata] = useState<DescriptorMetadata | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
+  const [cancelModalVisible, setCancelModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
@@ -94,7 +96,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       marginHorizontal: 20,
     },
     pageFooter: {
-      marginBottom: 15,
+      marginVertical: 15,
     },
     headerTextContainer: {
       paddingVertical: 16,
@@ -281,6 +283,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }, [selectedCredentials, credProofPromise])
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
+  const toggleCancelModalVisible = () => setCancelModalVisible(!cancelModalVisible)
 
   const getCredentialsFields = (): Fields => ({
     ...retrievedCredentials?.attributes,
@@ -418,6 +421,28 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
+  const handleCancelTouched = async () => {
+    try {
+      toggleCancelModalVisible()
+
+      if (agent && proof) {
+        await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        await agent.proofs.declineRequest({ proofRecordId: proof.id })
+
+        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+          agent.connections.deleteById(proof.connectionId)
+        }
+      }
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+  }
+
+  const onCancelDone = () => {
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
   const proofPageHeader = () => {
     return (
       <View style={styles.pageMargin}>
@@ -527,30 +552,41 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         {!(loading || attestationLoading) && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         ) : null}
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Global.Share')}
-            accessibilityLabel={t('Global.Share')}
-            testID={testIdWithKey('Share')}
-            buttonType={ButtonType.Primary}
-            onPress={handleAcceptPress}
-            disabled={
-              !hasAvailableCredentials ||
-              !hasSatisfiedPredicates(getCredentialsFields()) ||
-              revocationOffense ||
-              proof?.state !== ProofState.RequestReceived
-            }
-          />
-        </View>
-        <View style={styles.footerButton}>
-          <Button
-            title={t('Global.Decline')}
-            accessibilityLabel={t('Global.Decline')}
-            testID={testIdWithKey('Decline')}
-            buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
-            onPress={toggleDeclineModalVisible}
-          />
-        </View>
+        {!hasAvailableCredentials ||
+        !hasSatisfiedPredicates(getCredentialsFields()) ||
+        revocationOffense ||
+        proof?.state !== ProofState.RequestReceived ? (
+          <View style={styles.footerButton}>
+            <Button
+              title={t('Global.Cancel')}
+              accessibilityLabel={t('Global.Cancel')}
+              testID={testIdWithKey('Cancel')}
+              buttonType={ButtonType.Primary}
+              onPress={handleCancelTouched}
+            />
+          </View>
+        ) : (
+          <>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Share')}
+                accessibilityLabel={t('Global.Share')}
+                testID={testIdWithKey('Share')}
+                buttonType={ButtonType.Primary}
+                onPress={handleAcceptPress}
+              />
+            </View>
+            <View style={styles.footerButton}>
+              <Button
+                title={t('Global.Decline')}
+                accessibilityLabel={t('Global.Decline')}
+                testID={testIdWithKey('Decline')}
+                buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
+                onPress={toggleDeclineModalVisible}
+              />
+            </View>
+          </>
+        )}
       </View>
     )
   }
@@ -653,6 +689,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           onSubmit={handleDeclineTouched}
           onCancel={toggleDeclineModalVisible}
         />
+        <ProofCancelModal visible={cancelModalVisible} onDone={onCancelDone} />
       </ScrollView>
     </SafeAreaView>
   )

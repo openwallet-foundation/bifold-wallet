@@ -7,4 +7,5 @@ export const testDefaultState: State = {
     ...defaultState.preferences,
     walletName: 'test-wallet',
   },
+  stateLoaded: true,
 }

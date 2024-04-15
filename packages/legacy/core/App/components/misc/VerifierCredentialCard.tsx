@@ -53,8 +53,9 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   const borderRadius = 10
   const padding = width * 0.05
   const logoHeight = width * 0.12
+  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { TextTheme } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const { OCABundleResolver } = useConfiguration()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
 
@@ -66,8 +67,6 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
       return { ...prev, [curr.name]: curr.format }
     }, {})
-
-  const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const styles = StyleSheet.create({
     container: {
@@ -114,11 +113,6 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     textContainer: {
       color: TextTheme.normal.color,
       flexShrink: 1,
-    },
-    watermark: {
-      opacity: 0.16,
-      fontSize: 22,
-      transform: [{ rotate: '-30deg' }],
     },
   })
 
@@ -422,7 +416,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
           <CardWatermark
             width={dimensions.cardWidth}
             height={dimensions.cardHeight}
-            style={styles.watermark}
+            style={{ color: ColorPallet.grayscale.mediumGrey }}
             watermark={overlay.metaOverlay?.watermark}
           />
         )}

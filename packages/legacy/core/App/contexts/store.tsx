@@ -21,6 +21,9 @@ export const defaultState: State = {
     didConsiderPushNotifications: false,
     didConsiderBiometry: false,
     didNameWallet: false,
+    onboardingVersion: 0,
+    didCompleteOnboarding: false,
+    postAuthScreens: [],
   },
   authentication: {
     didAuthenticate: false,
@@ -64,6 +67,7 @@ export const defaultState: State = {
     activeDeepLink: '',
   },
   loading: false,
+  stateLoaded: false,
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction<any>>]>([
